@@ -90,6 +90,7 @@ return [
     'required_without'     => ':attribute ist erforderlich, wenn :values nicht vorhanden ist.',
     'required_without_all' => ':attribute ist erforderlich, wenn :values nicht vorhanden sind.',
     'same'                 => ':attribute und :other müssen übereinstimmen.',
+    'safe_url'             => 'Der angegebene Link ist möglicherweise nicht sicher.',
     'size'                 => [
         'numeric' => ':attribute muss :size sein.',
         'file'    => ':attribute muss :size Kilobytes groß sein.',

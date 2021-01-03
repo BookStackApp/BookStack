@@ -1,8 +1,9 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\CommentRepo;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -13,7 +14,6 @@ class CommentController extends Controller
     public function __construct(CommentRepo $commentRepo)
     {
         $this->commentRepo = $commentRepo;
-        parent::__construct();
     }
 
     /**
@@ -40,7 +40,6 @@ class CommentController extends Controller
         // Create a new comment.
         $this->checkPermission('comment-create-all');
         $comment = $this->commentRepo->create($page, $request->get('text'), $request->get('parent_id'));
-        Activity::add($page, 'commented_on', $page->book->id);
         return view('comments.comment', ['comment' => $comment]);
     }
 

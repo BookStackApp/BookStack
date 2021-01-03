@@ -19,9 +19,7 @@
     {
       "name": "Category",
       "value": "Guide",
-      "order": 0,
-      "created_at": "2020-05-22 22:51:51",
-      "updated_at": "2020-05-22 22:51:51"
+      "order": 0
     }
   ],
   "pages": [
@@ -36,9 +34,9 @@
       "updated_at": "2019-08-26 14:32:59",
       "created_by": 1,
       "updated_by": 1,
-      "draft": 0,
+      "draft": false,
       "revision_count": 2,
-      "template": 0
+      "template": false
     },
     {
       "id": 7,
@@ -51,9 +49,9 @@
       "updated_at": "2019-06-06 12:03:04",
       "created_by": 3,
       "updated_by": 3,
-      "draft": 0,
+      "draft": false,
       "revision_count": 1,
-      "template": 0
+      "template": false
     }
   ]
 }

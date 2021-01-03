@@ -1,8 +1,8 @@
 <?php namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\Book;
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\EntityProvider;
 use DB;
 use Illuminate\Support\Collection;
@@ -28,7 +28,7 @@ class ViewService
 
     /**
      * Add a view to the given entity.
-     * @param \BookStack\Entities\Entity $entity
+     * @param \BookStack\Entities\Models\Entity $entity
      * @return int
      */
     public function add(Entity $entity)
@@ -74,34 +74,36 @@ class ViewService
             $query->whereIn('viewable_type', $this->entityProvider->getMorphClasses($filterModels));
         }
 
-        return $query->with('viewable')->skip($skipCount)->take($count)->get()->pluck('viewable');
+        return $query->with('viewable')
+            ->skip($skipCount)
+            ->take($count)
+            ->get()
+            ->pluck('viewable')
+            ->filter();
     }
 
     /**
      * Get all recently viewed entities for the current user.
-     * @param int $count
-     * @param int $page
-     * @param Entity|bool $filterModel
-     * @return mixed
      */
-    public function getUserRecentlyViewed($count = 10, $page = 0, $filterModel = false)
+    public function getUserRecentlyViewed(int $count = 10, int $page = 1)
     {
         $user = user();
         if ($user === null || $user->isDefault()) {
             return collect();
         }
 
-        $query = $this->permissionService
-            ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type');
-
-        if ($filterModel) {
-            $query = $query->where('viewable_type', '=', $filterModel->getMorphClass());
+        $all = collect();
+        /** @var Entity $instance */
+        foreach ($this->entityProvider->all() as $name => $instance) {
+            $items = $instance::visible()->withLastView()
+                ->orderBy('last_viewed_at', 'desc')
+                ->skip($count * ($page - 1))
+                ->take($count)
+                ->get();
+            $all = $all->concat($items);
         }
-        $query = $query->where('user_id', '=', $user->id);
 
-        $viewables = $query->with('viewable')->orderBy('updated_at', 'desc')
-            ->skip($count * $page)->take($count)->get()->pluck('viewable');
-        return $viewables;
+        return $all->sortByDesc('last_viewed_at')->slice(0, $count);
     }
 
     /**

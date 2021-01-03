@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Erstellt: :timeLength von :user',
     'meta_updated' => 'Zuletzt aktualisiert: :timeLength',
     'meta_updated_name' => 'Zuletzt aktualisiert: :timeLength von :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Eintrag auswählen',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Meine kürzlichen Entwürfe',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Wenn individuelle Berechtigungen aktiviert werden, überschreiben diese Einstellungen durch Rollen zugewiesene Berechtigungen.',
     'permissions_enable' => 'Individuelle Berechtigungen aktivieren',
     'permissions_save' => 'Berechtigungen speichern',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Suchergebnisse',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Neues Kapitel anlegen',
     'chapters_delete' => 'Kapitel entfernen',
     'chapters_delete_named' => 'Kapitel ":chapterName" entfernen',
-    'chapters_delete_explain' => 'Das Kapitel ":chapterName" wird gelöscht und alle zugehörigen Seiten dem übergeordneten Buch zugeordnet.',
+    'chapters_delete_explain' => 'Dies löscht das Kapitel mit dem Namen \':chapterName\'. Alle Seiten, die innerhalb dieses Kapitels existieren, werden ebenfalls gelöscht.',
     'chapters_delete_confirm' => 'Sind Sie sicher, dass Sie dieses Kapitel löschen möchten?',
     'chapters_edit' => 'Kapitel bearbeiten',
     'chapters_edit_named' => 'Kapitel ":chapterName" bearbeiten',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Seitenversionen',
     'pages_revisions_named' => 'Seitenversionen von ":pageName"',
     'pages_revision_named' => 'Seitenversion von ":pageName"',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Erstellt von',
     'pages_revisions_date' => 'Versionsdatum',
     'pages_revisions_number' => '#',

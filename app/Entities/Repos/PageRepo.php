@@ -1,17 +1,19 @@
 <?php namespace BookStack\Entities\Repos;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Managers\BookContents;
-use BookStack\Entities\Managers\PageContent;
-use BookStack\Entities\Managers\TrashCan;
-use BookStack\Entities\Page;
-use BookStack\Entities\PageRevision;
+use BookStack\Actions\ActivityType;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\PageContent;
+use BookStack\Entities\Tools\TrashCan;
+use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\PageRevision;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
+use BookStack\Facades\Activity;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -33,9 +35,9 @@ class PageRepo
      * Get a page by ID.
      * @throws NotFoundException
      */
-    public function getById(int $id): Page
+    public function getById(int $id, array $relations = ['book']): Page
     {
-        $page = Page::visible()->with(['book'])->find($id);
+        $page = Page::visible()->with($relations)->find($id);
 
         if (!$page) {
             throw new NotFoundException(trans('errors.page_not_found'));
@@ -128,6 +130,7 @@ class PageRepo
         $page = (new Page())->forceFill([
             'name' => trans('entities.pages_initial_name'),
             'created_by' => user()->id,
+            'owned_by' => user()->id,
             'updated_by' => user()->id,
             'draft' => true,
         ]);
@@ -150,12 +153,8 @@ class PageRepo
     public function publishDraft(Page $draft, array $input): Page
     {
         $this->baseRepo->update($draft, $input);
-        if (isset($input['template']) && userCan('templates-manage')) {
-            $draft->template = ($input['template'] === 'true');
-        }
+        $this->updateTemplateStatusAndContentFromInput($draft, $input);
 
-        $pageContent = new PageContent($draft);
-        $pageContent->setNewHTML($input['html']);
         $draft->draft = false;
         $draft->revision_count = 1;
         $draft->priority = $this->getNewPriority($draft);
@@ -164,7 +163,10 @@ class PageRepo
 
         $this->savePageRevision($draft, trans('entities.pages_initial_revision'));
         $draft->indexForSearch();
-        return $draft->refresh();
+        $draft->refresh();
+
+        Activity::addForEntity($draft, ActivityType::PAGE_CREATE);
+        return $draft;
     }
 
     /**
@@ -176,12 +178,7 @@ class PageRepo
         $oldHtml = $page->html;
         $oldName = $page->name;
 
-        if (isset($input['template']) && userCan('templates-manage')) {
-            $page->template = ($input['template'] === 'true');
-        }
-
-        $pageContent = new PageContent($page);
-        $pageContent->setNewHTML($input['html']);
+        $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
 
         // Update with new details
@@ -202,13 +199,28 @@ class PageRepo
             $this->savePageRevision($page, $summary);
         }
 
+        Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
         return $page;
+    }
+
+    protected function updateTemplateStatusAndContentFromInput(Page $page, array $input)
+    {
+        if (isset($input['template']) && userCan('templates-manage')) {
+            $page->template = ($input['template'] === 'true');
+        }
+
+        $pageContent = new PageContent($page);
+        if (isset($input['html'])) {
+            $pageContent->setNewHTML($input['html']);
+        } else {
+            $pageContent->setNewMarkdown($input['markdown']);
+        }
     }
 
     /**
      * Saves a page revision into the system.
      */
-    protected function savePageRevision(Page $page, string $summary = null)
+    protected function savePageRevision(Page $page, string $summary = null): PageRevision
     {
         $revision = new PageRevision($page->getAttributes());
 
@@ -237,11 +249,10 @@ class PageRepo
     {
         // If the page itself is a draft simply update that
         if ($page->draft) {
-            $page->fill($input);
             if (isset($input['html'])) {
-                $content = new PageContent($page);
-                $content->setNewHTML($input['html']);
+                (new PageContent($page))->setNewHTML($input['html']);
             }
+            $page->fill($input);
             $page->save();
             return $page;
         }
@@ -259,12 +270,14 @@ class PageRepo
 
     /**
      * Destroy a page from the system.
-     * @throws NotifyException
+     * @throws Exception
      */
     public function destroy(Page $page)
     {
         $trashCan = new TrashCan();
-        $trashCan->destroyPage($page);
+        $trashCan->softDestroyPage($page);
+        Activity::addForEntity($page, ActivityType::PAGE_DELETE);
+        $trashCan->autoClearOld();
     }
 
     /**
@@ -273,17 +286,20 @@ class PageRepo
     public function restoreRevision(Page $page, int $revisionId): Page
     {
         $page->revision_count++;
-        $this->savePageRevision($page);
-
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
+
         $page->fill($revision->toArray());
         $content = new PageContent($page);
         $content->setNewHTML($revision->html);
         $page->updated_by = user()->id;
         $page->refreshSlug();
         $page->save();
-
         $page->indexForSearch();
+
+        $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
+        $this->savePageRevision($page, $summary);
+
+        Activity::addForEntity($page, ActivityType::PAGE_RESTORE);
         return $page;
     }
 
@@ -294,7 +310,7 @@ class PageRepo
      * @throws MoveOperationException
      * @throws PermissionsException
      */
-    public function move(Page $page, string $parentIdentifier): Book
+    public function move(Page $page, string $parentIdentifier): Entity
     {
         $parent = $this->findParentByIdentifier($parentIdentifier);
         if ($parent === null) {
@@ -309,7 +325,8 @@ class PageRepo
         $page->changeBook($parent instanceof Book ? $parent->id : $parent->book->id);
         $page->rebuildPermissions();
 
-        return ($parent instanceof Book ? $parent : $parent->book);
+        Activity::addForEntity($page, ActivityType::PAGE_MOVE);
+        return $parent;
     }
 
     /**
@@ -320,7 +337,7 @@ class PageRepo
      */
     public function copy(Page $page, string $parentIdentifier = null, string $newName = null): Page
     {
-        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->parent();
+        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->getParent();
         if ($parent === null) {
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
@@ -366,14 +383,6 @@ class PageRepo
 
         $parentClass = $entityType === 'book' ? Book::class : Chapter::class;
         return $parentClass::visible()->where('id', '=', $entityId)->first();
-    }
-
-    /**
-     * Update the permissions of a page.
-     */
-    public function updatePermissions(Page $page, bool $restricted, Collection $permissions = null)
-    {
-        $this->baseRepo->updatePermissions($page, $restricted, $permissions);
     }
 
     /**
@@ -439,8 +448,9 @@ class PageRepo
      */
     protected function getNewPriority(Page $page): int
     {
-        if ($page->parent() instanceof Chapter) {
-            $lastPage = $page->parent()->pages('desc')->first();
+        $parent = $page->getParent();
+        if ($parent instanceof Chapter) {
+            $lastPage = $parent->pages('desc')->first();
             return $lastPage ? $lastPage->priority + 1 : 0;
         }
 

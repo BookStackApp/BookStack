@@ -1,6 +1,6 @@
 <?php namespace Tests\Api;
 
-use BookStack\Entities\Book;
+use BookStack\Entities\Models\Book;
 use Tests\TestCase;
 
 class ApiListingTest extends TestCase

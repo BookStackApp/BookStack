@@ -15,7 +15,6 @@ class Saml2Controller extends Controller
      */
     public function __construct(Saml2Service $samlService)
     {
-        parent::__construct();
         $this->samlService = $samlService;
         $this->middleware('guard:saml2');
     }

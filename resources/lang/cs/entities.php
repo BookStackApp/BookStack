@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Vytvořeno :timeLength uživatelem :user',
     'meta_updated' => 'Aktualizováno :timeLength',
     'meta_updated_name' => 'Aktualizováno :timeLength uživatelem :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Výběr entity',
     'images' => 'Obrázky',
     'my_recent_drafts' => 'Mé nedávné koncepty',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Pokud je povoleno, tato oprávnění budou mít přednost před všemi nastavenými oprávněními role.',
     'permissions_enable' => 'Povolit vlastní oprávnění',
     'permissions_save' => 'Uložit oprávnění',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Výsledky hledání',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Vytvořit novou kapitolu',
     'chapters_delete' => 'Smazat kapitolu',
     'chapters_delete_named' => 'Smazat kapitolu :chapterName',
-    'chapters_delete_explain' => 'Kapitola \':chapterName\' bude smazána. Všechny stránky v ní obsažené budou přesunuty přímo pod samotnou knihu.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Opravdu chcete tuto kapitolu smazat?',
     'chapters_edit' => 'Upravit kapitolu',
     'chapters_edit_named' => 'Upravit kapitolu :chapterName',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Revize stránky',
     'pages_revisions_named' => 'Revize stránky pro :pageName',
     'pages_revision_named' => 'Revize stránky pro :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Vytvořeno uživatelem',
     'pages_revisions_date' => 'Datum revize',
     'pages_revisions_number' => 'Č.',

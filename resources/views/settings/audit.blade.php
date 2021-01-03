@@ -19,8 +19,8 @@
                 <button refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('common.sort_options') }}" class="input-base text-left">{{ $listDetails['event'] ?: trans('settings.audit_event_filter_no_filter') }}</button>
                 <ul refs="dropdown@menu" class="dropdown-menu">
                     <li @if($listDetails['event'] === '') class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => '']) }}">{{ trans('settings.audit_event_filter_no_filter') }}</a></li>
-                    @foreach($activityKeys as $key)
-                        <li @if($key === $listDetails['event']) class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => $key]) }}">{{ $key }}</a></li>
+                    @foreach($activityTypes as $type)
+                        <li @if($type === $listDetails['event']) class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => $type]) }}">{{ $type }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -53,36 +53,31 @@
                 <th>
                     <a href="{{ sortUrl('/settings/audit', $listDetails, ['sort' => 'key']) }}">{{ trans('settings.audit_table_event') }}</a>
                 </th>
-                <th>{{ trans('settings.audit_table_item') }}</th>
+                <th>{{ trans('settings.audit_table_related') }}</th>
                 <th>
                     <a href="{{ sortUrl('/settings/audit', $listDetails, ['sort' => 'created_at']) }}">{{ trans('settings.audit_table_date') }}</a></th>
             </tr>
             @foreach($activities as $activity)
                 <tr>
                     <td>
-                        @if($activity->user)
-                            <a href="{{ $activity->user->getEditUrl() }}" class="audit-log-user">
-                                <div><img class="avatar block" src="{{ $activity->user->getAvatar(40)}}" alt="{{ $activity->user->name }}"></div>
-                                <div>{{ $activity->user->name }}</div>
-                            </a>
-                        @else
-                            [ID: {{ $activity->user_id }}] {{ trans('common.deleted_user') }}
-                        @endif
+                        @include('partials.table-user', ['user' => $activity->user, 'user_id' => $activity->user_id])
                     </td>
-                    <td>{{ $activity->key }}</td>
-                    <td>
+                    <td>{{ $activity->type }}</td>
+                    <td width="40%">
                         @if($activity->entity)
-                            <a href="{{ $activity->entity->getUrl() }}" class="icon-list-item">
+                            <a href="{{ $activity->entity->getUrl() }}" class="table-entity-item">
                                 <span role="presentation" class="icon text-{{$activity->entity->getType()}}">@icon($activity->entity->getType())</span>
                                 <div class="text-{{ $activity->entity->getType() }}">
                                     {{ $activity->entity->name }}
                                 </div>
                             </a>
-                        @elseif($activity->extra)
+                        @elseif($activity->detail && $activity->isForEntity())
                             <div class="px-m">
                                 {{ trans('settings.audit_deleted_item') }} <br>
-                                {{ trans('settings.audit_deleted_item_name', ['name' => $activity->extra]) }}
+                                {{ trans('settings.audit_deleted_item_name', ['name' => $activity->detail]) }}
                             </div>
+                        @elseif($activity->detail)
+                            <div class="px-m">{{ $activity->detail }}</div>
                         @endif
                     </td>
                     <td>{{ $activity->created_at }}</td>

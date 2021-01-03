@@ -14,7 +14,6 @@ class TagController extends Controller
     public function __construct(TagRepo $tagRepo)
     {
         $this->tagRepo = $tagRepo;
-        parent::__construct();
     }
 
     /**

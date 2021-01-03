@@ -1,7 +1,7 @@
 <?php namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\Entity;
+use BookStack\Entities\Models\Entity;
 use DB;
 use Illuminate\Support\Collection;
 

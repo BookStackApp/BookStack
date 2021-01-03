@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\User;
@@ -26,7 +27,6 @@ class UserController extends Controller
         $this->userRepo = $userRepo;
         $this->inviteService = $inviteService;
         $this->imageRepo = $imageRepo;
-        parent::__construct();
     }
 
     /**
@@ -102,6 +102,7 @@ class UserController extends Controller
 
         $this->userRepo->downloadAndAssignUserAvatar($user);
 
+        $this->logActivity(ActivityType::USER_CREATE, $user);
         return redirect('/settings/users');
     }
 
@@ -187,13 +188,14 @@ class UserController extends Controller
             $user->image_id = $image->id;
         }
 
-        // Delete the profile image if set to
+        // Delete the profile image if reset option is in request
         if ($request->has('profile_image_reset')) {
             $this->imageRepo->destroyImage($user->avatar);
         }
 
         $user->save();
         $this->showSuccessNotification(trans('settings.users_edit_success'));
+        $this->logActivity(ActivityType::USER_UPDATE, $user);
 
         $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/' . $user->id);
         return redirect($redirectUrl);
@@ -215,12 +217,13 @@ class UserController extends Controller
      * Remove the specified user from storage.
      * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(Request $request, int $id)
     {
         $this->preventAccessInDemoMode();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
+        $newOwnerId = $request->get('new_owner_id', null);
 
         if ($this->userRepo->isOnlyAdmin($user)) {
             $this->showErrorNotification(trans('errors.users_cannot_delete_only_admin'));
@@ -232,8 +235,9 @@ class UserController extends Controller
             return redirect($user->getEditUrl());
         }
 
-        $this->userRepo->destroy($user);
+        $this->userRepo->destroy($user, $newOwnerId);
         $this->showSuccessNotification(trans('settings.users_delete_success'));
+        $this->logActivity(ActivityType::USER_DELETE, $user);
 
         return redirect('/settings/users');
     }

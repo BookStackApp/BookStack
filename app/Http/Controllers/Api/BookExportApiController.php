@@ -1,23 +1,16 @@
 <?php namespace BookStack\Http\Controllers\Api;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\ExportService;
-use BookStack\Entities\Repos\BookRepo;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Tools\ExportFormatter;
 use Throwable;
 
 class BookExportApiController extends ApiController
 {
-    protected $bookRepo;
-    protected $exportService;
+    protected $exportFormatter;
 
-    /**
-     * BookExportController constructor.
-     */
-    public function __construct(BookRepo $bookRepo, ExportService $exportService)
+    public function __construct(ExportFormatter $exportFormatter)
     {
-        $this->bookRepo = $bookRepo;
-        $this->exportService = $exportService;
-        parent::__construct();
+        $this->exportFormatter = $exportFormatter;
     }
 
     /**
@@ -27,7 +20,7 @@ class BookExportApiController extends ApiController
     public function exportPdf(int $id)
     {
         $book = Book::visible()->findOrFail($id);
-        $pdfContent = $this->exportService->bookToPdf($book);
+        $pdfContent = $this->exportFormatter->bookToPdf($book);
         return $this->downloadResponse($pdfContent, $book->slug . '.pdf');
     }
 
@@ -38,7 +31,7 @@ class BookExportApiController extends ApiController
     public function exportHtml(int $id)
     {
         $book = Book::visible()->findOrFail($id);
-        $htmlContent = $this->exportService->bookToContainedHtml($book);
+        $htmlContent = $this->exportFormatter->bookToContainedHtml($book);
         return $this->downloadResponse($htmlContent, $book->slug . '.html');
     }
 
@@ -48,7 +41,7 @@ class BookExportApiController extends ApiController
     public function exportPlainText(int $id)
     {
         $book = Book::visible()->findOrFail($id);
-        $textContent = $this->exportService->bookToPlainText($book);
+        $textContent = $this->exportFormatter->bookToPlainText($book);
         return $this->downloadResponse($textContent, $book->slug . '.txt');
     }
 }

@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'נוצר :timeLength על ידי :user',
     'meta_updated' => 'עודכן :timeLength',
     'meta_updated_name' => 'עודכן :timeLength על ידי :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'בחר יישות',
     'images' => 'תמונות',
     'my_recent_drafts' => 'הטיוטות האחרונות שלי',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'ברגע שמסומן, הרשאות אלו יגברו על כל הרשאת תפקיד שקיימת',
     'permissions_enable' => 'הפעל הרשאות מותאמות אישית',
     'permissions_save' => 'שמור הרשאות',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'תוצאות חיפוש',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'צור פרק חדש',
     'chapters_delete' => 'מחק פרק',
     'chapters_delete_named' => 'מחק את פרק :chapterName',
-    'chapters_delete_explain' => 'פעולה זו תמחוק את הפרק בשם \':chapterName\'. כל הדפים יועברו אוטומטית לספר עצמו',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'האם ברצונך למחוק פרק זה?',
     'chapters_edit' => 'ערוך פרק',
     'chapters_edit_named' => 'ערוך פרק :chapterName',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'נוסחי דף',
     'pages_revisions_named' => 'נוסחי דף עבור :pageName',
     'pages_revision_named' => 'נוסח דף עבור :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'נוצר על ידי',
     'pages_revisions_date' => 'תאריך נוסח',
     'pages_revisions_number' => '#',

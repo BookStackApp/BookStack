@@ -16,13 +16,9 @@
   "tags": [
     {
       "id": 16,
-      "entity_id": 14,
-      "entity_type": "BookStack\\Bookshelf",
       "name": "Category",
       "value": "Guide",
-      "order": 0,
-      "created_at": "2020-04-10 13:31:04",
-      "updated_at": "2020-04-10 13:31:04"
+      "order": 0
     }
   ],
   "cover": {

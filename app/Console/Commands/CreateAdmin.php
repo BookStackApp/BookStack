@@ -28,8 +28,6 @@ class CreateAdmin extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @param UserRepo $userRepo
      */
     public function __construct(UserRepo $userRepo)
     {

@@ -17,6 +17,7 @@ class DropDown {
         this.body = document.body;
         this.showing = false;
         this.setupListeners();
+        this.hide = this.hide.bind(this);
     }
 
     show(event = null) {

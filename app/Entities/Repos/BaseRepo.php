@@ -2,11 +2,13 @@
 
 namespace BookStack\Entities\Repos;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\TagRepo;
-use BookStack\Entities\Book;
-use BookStack\Entities\Entity;
-use BookStack\Entities\HasCoverImage;
+use BookStack\Auth\User;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Facades\Activity;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
@@ -18,10 +20,6 @@ class BaseRepo
     protected $imageRepo;
 
 
-    /**
-     * BaseRepo constructor.
-     * @param $tagRepo
-     */
     public function __construct(TagRepo $tagRepo, ImageRepo $imageRepo)
     {
         $this->tagRepo = $tagRepo;
@@ -37,6 +35,7 @@ class BaseRepo
         $entity->forceFill([
             'created_by' => user()->id,
             'updated_by' => user()->id,
+            'owned_by' => user()->id,
         ]);
         $entity->refreshSlug();
         $entity->save();
@@ -90,30 +89,5 @@ class BaseRepo
             $entity->image_id = 0;
             $entity->save();
         }
-    }
-
-    /**
-     * Update the permissions of an entity.
-     */
-    public function updatePermissions(Entity $entity, bool $restricted, Collection $permissions = null)
-    {
-        $entity->restricted = $restricted;
-        $entity->permissions()->delete();
-
-        if (!is_null($permissions)) {
-            $entityPermissionData = $permissions->flatMap(function ($restrictions, $roleId) {
-                return collect($restrictions)->keys()->map(function ($action) use ($roleId) {
-                    return [
-                        'role_id' => $roleId,
-                        'action' => strtolower($action),
-                    ] ;
-                });
-            });
-
-            $entity->permissions()->createMany($entityPermissionData);
-        }
-
-        $entity->save();
-        $entity->rebuildPermissions();
     }
 }

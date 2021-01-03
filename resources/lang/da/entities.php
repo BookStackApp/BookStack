@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Oprettet :timeLength af :user',
     'meta_updated' => 'Opdateret :timeLength',
     'meta_updated_name' => 'Opdateret :timeLength af :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Vælg emne',
     'images' => 'Billeder',
     'my_recent_drafts' => 'Mine seneste kladder',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Når de er aktiveret, vil disse tilladelser have prioritet over alle indstillede rolletilladelser.',
     'permissions_enable' => 'Aktivér tilpassede tilladelser',
     'permissions_save' => 'Gem tilladelser',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Søgeresultater',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Opret nyt kapitel',
     'chapters_delete' => 'Slet kapitel',
     'chapters_delete_named' => 'Slet kapitel :chapterName',
-    'chapters_delete_explain' => 'Dette vil slette kapitlet med navnet \':chapterName\'. Alle sider fjernes og tilføjes direkte til den tilhørende bog.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Er du sikker på du vil slette dette kapitel?',
     'chapters_edit' => 'Rediger kapitel',
     'chapters_edit_named' => 'Rediger kapitel :chapterName',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Sidserevisioner',
     'pages_revisions_named' => 'Siderevisioner for :pageName',
     'pages_revision_named' => 'Siderevision for :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Oprettet af',
     'pages_revisions_date' => 'Revisionsdato',
     'pages_revisions_number' => '#',

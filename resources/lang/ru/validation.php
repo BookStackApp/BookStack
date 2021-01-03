@@ -90,6 +90,7 @@ return [
     'required_without'     => ':attribute обязательное поле когда :values не установлены.',
     'required_without_all' => ':attribute обязательное поле когда ни одно из :values не установлены.',
     'same'                 => ':attribute и :other должны совпадать.',
+    'safe_url'             => 'Предоставленная ссылка может быть небезопасной.',
     'size'                 => [
         'numeric' => ':attribute должен быть :size.',
         'file'    => ':attribute должен быть :size килобайт.',

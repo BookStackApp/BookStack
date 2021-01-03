@@ -90,6 +90,7 @@ return [
     'required_without'     => ':values değerinin bulunmuyor olması, :attribute alanını zorunlu kılar.',
     'required_without_all' => ':values değerlerinden hiçbirinin bulunmuyor olması, :attribute alanını zorunlu kılar.',
     'same'                 => ':attribute ve :other eşleşmelidir.',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attribute, :size boyutunda olmalıdır.',
         'file'    => ':attribute, :size kilobayt olmalıdır.',

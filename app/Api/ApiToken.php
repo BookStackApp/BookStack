@@ -1,11 +1,21 @@
 <?php namespace BookStack\Api;
 
 use BookStack\Auth\User;
+use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
-class ApiToken extends Model
+/**
+ * Class ApiToken
+ * @property int $id
+ * @property string $token_id
+ * @property string $secret
+ * @property string $name
+ * @property Carbon $expires_at
+ * @property User $user
+ */
+class ApiToken extends Model implements Loggable
 {
     protected $fillable = ['name', 'expires_at'];
     protected $casts = [
@@ -27,5 +37,13 @@ class ApiToken extends Model
     public static function defaultExpiry(): string
     {
         return Carbon::now()->addYears(100)->format('Y-m-d');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function logDescriptor(): string
+    {
+        return "({$this->id}) {$this->name}; User: {$this->user->logDescriptor()}";
     }
 }

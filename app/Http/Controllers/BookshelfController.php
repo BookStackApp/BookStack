@@ -1,8 +1,9 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Entities\Book;
-use BookStack\Entities\Managers\EntityContext;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Tools\PermissionsUpdater;
+use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
@@ -19,15 +20,11 @@ class BookshelfController extends Controller
     protected $entityContextManager;
     protected $imageRepo;
 
-    /**
-     * BookController constructor.
-     */
-    public function __construct(BookshelfRepo $bookshelfRepo, EntityContext $entityContextManager, ImageRepo $imageRepo)
+    public function __construct(BookshelfRepo $bookshelfRepo, ShelfContext $entityContextManager, ImageRepo $imageRepo)
     {
         $this->bookshelfRepo = $bookshelfRepo;
         $this->entityContextManager = $entityContextManager;
         $this->imageRepo = $imageRepo;
-        parent::__construct();
     }
 
     /**
@@ -92,7 +89,6 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->create($request->all(), $bookIds);
         $this->bookshelfRepo->updateCoverImage($shelf, $request->file('image', null));
 
-        Activity::add($shelf, 'bookshelf_create');
         return redirect($shelf->getUrl());
     }
 
@@ -156,7 +152,6 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->update($shelf, $request->all(), $bookIds);
         $resetCover = $request->has('image_reset');
         $this->bookshelfRepo->updateCoverImage($shelf, $request->file('image', null), $resetCover);
-        Activity::add($shelf, 'bookshelf_update');
 
         return redirect($shelf->getUrl());
     }
@@ -182,7 +177,6 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
-        Activity::addMessage('bookshelf_delete', $shelf->name);
         $this->bookshelfRepo->destroy($shelf);
 
         return redirect('/shelves');
@@ -204,14 +198,12 @@ class BookshelfController extends Controller
     /**
      * Set the permissions for this bookshelf.
      */
-    public function permissions(Request $request, string $slug)
+    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $slug)
     {
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
-        $restricted = $request->get('restricted') === 'true';
-        $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
-        $this->bookshelfRepo->updatePermissions($shelf, $restricted, $permissions);
+        $permissionsUpdater->updateFromPermissionsForm($shelf, $request);
 
         $this->showSuccessNotification(trans('entities.shelves_permissions_updated'));
         return redirect($shelf->getUrl());

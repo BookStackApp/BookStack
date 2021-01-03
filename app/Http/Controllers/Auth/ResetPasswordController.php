@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
@@ -33,7 +34,6 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
         $this->middleware('guard:standard');
-        parent::__construct();
     }
 
     /**
@@ -47,6 +47,7 @@ class ResetPasswordController extends Controller
     {
         $message = trans('auth.reset_password_success');
         $this->showSuccessNotification($message);
+        $this->logActivity(ActivityType::AUTH_PASSWORD_RESET_UPDATE, user());
         return redirect($this->redirectPath())
             ->with('status', trans($response));
     }

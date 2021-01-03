@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Създадено преди :timeLength от :user',
     'meta_updated' => 'Актуализирано :timeLength',
     'meta_updated_name' => 'Актуализирано преди :timeLength от :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Избор на обект',
     'images' => 'Изображения',
     'my_recent_drafts' => 'Моите скорошни драфтове',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Веднъж добавени, тези права ще вземат приоритет над всички други установени права.',
     'permissions_enable' => 'Разреши уникални права',
     'permissions_save' => 'Запази права',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Резултати от търсенето',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Създай нова глава',
     'chapters_delete' => 'Изтрий глава',
     'chapters_delete_named' => 'Изтрий глава :chapterName',
-    'chapters_delete_explain' => 'Ще бъде изтрита глава с име \':chapterName\'. Всички страници в нея ще бъдат премахнати и добавени в основната книга.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Сигурни ли сте, че искате да изтриете тази глава?',
     'chapters_edit' => 'Редактирай глава',
     'chapters_edit_named' => 'Актуализирай глава :chapterName',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Ревизии на страницата',
     'pages_revisions_named' => 'Ревизии на страницата :pageName',
     'pages_revision_named' => 'Ревизия на страницата :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Създадено от',
     'pages_revisions_date' => 'Дата на ревизията',
     'pages_revisions_number' => '№',

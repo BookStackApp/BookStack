@@ -1,12 +1,13 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
-use BookStack\Entities\Managers\BookContents;
-use BookStack\Entities\Bookshelf;
-use BookStack\Entities\Managers\EntityContext;
+use BookStack\Actions\ActivityType;
+use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Tools\PermissionsUpdater;
+use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Exceptions\ImageUploadException;
-use BookStack\Exceptions\NotifyException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -18,14 +19,10 @@ class BookController extends Controller
     protected $bookRepo;
     protected $entityContextManager;
 
-    /**
-     * BookController constructor.
-     */
-    public function __construct(EntityContext $entityContextManager, BookRepo $bookRepo)
+    public function __construct(ShelfContext $entityContextManager, BookRepo $bookRepo)
     {
         $this->bookRepo = $bookRepo;
         $this->entityContextManager = $entityContextManager;
-        parent::__construct();
     }
 
     /**
@@ -97,11 +94,10 @@ class BookController extends Controller
 
         $book = $this->bookRepo->create($request->all());
         $this->bookRepo->updateCoverImage($book, $request->file('image', null));
-        Activity::add($book, 'book_create', $book->id);
 
         if ($bookshelf) {
             $bookshelf->appendBook($book);
-            Activity::add($bookshelf, 'bookshelf_update');
+            Activity::addForEntity($bookshelf, ActivityType::BOOKSHELF_UPDATE);
         }
 
         return redirect($book->getUrl());
@@ -162,8 +158,6 @@ class BookController extends Controller
         $resetCover = $request->has('image_reset');
         $this->bookRepo->updateCoverImage($book, $request->file('image', null), $resetCover);
 
-        Activity::add($book, 'book_update', $book->id);
-
         return redirect($book->getUrl());
     }
 
@@ -181,14 +175,12 @@ class BookController extends Controller
     /**
      * Remove the specified book from the system.
      * @throws Throwable
-     * @throws NotifyException
      */
     public function destroy(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
 
-        Activity::addMessage('book_delete', $book->name);
         $this->bookRepo->destroy($book);
 
         return redirect('/books');
@@ -211,14 +203,12 @@ class BookController extends Controller
      * Set the restrictions for this book.
      * @throws Throwable
      */
-    public function permissions(Request $request, string $bookSlug)
+    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('restrictions-manage', $book);
 
-        $restricted = $request->get('restricted') === 'true';
-        $permissions = $request->filled('restrictions') ? collect($request->get('restrictions')) : null;
-        $this->bookRepo->updatePermissions($book, $restricted, $permissions);
+        $permissionsUpdater->updateFromPermissionsForm($book, $request);
 
         $this->showSuccessNotification(trans('entities.books_permissions_updated'));
         return redirect($book->getUrl());

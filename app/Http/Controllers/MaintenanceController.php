@@ -2,6 +2,8 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
+use BookStack\Entities\Tools\TrashCan;
 use BookStack\Notifications\TestEmail;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
@@ -19,7 +21,13 @@ class MaintenanceController extends Controller
         // Get application version
         $version = trim(file_get_contents(base_path('version')));
 
-        return view('settings.maintenance', ['version' => $version]);
+        // Recycle bin details
+        $recycleStats = (new TrashCan())->getTrashedCounts();
+
+        return view('settings.maintenance', [
+            'version' => $version,
+            'recycleStats' => $recycleStats,
+        ]);
     }
 
     /**
@@ -28,6 +36,7 @@ class MaintenanceController extends Controller
     public function cleanupImages(Request $request, ImageService $imageService)
     {
         $this->checkPermission('settings-manage');
+        $this->logActivity(ActivityType::MAINTENANCE_ACTION_RUN, 'cleanup-images');
 
         $checkRevisions = !($request->get('ignore_revisions', 'false') === 'true');
         $dryRun = !($request->has('confirm'));
@@ -54,6 +63,7 @@ class MaintenanceController extends Controller
     public function sendTestEmail()
     {
         $this->checkPermission('settings-manage');
+        $this->logActivity(ActivityType::MAINTENANCE_ACTION_RUN, 'send-test-email');
 
         try {
             user()->notify(new TestEmail());

@@ -1,10 +1,10 @@
 <?php namespace Tests\Entity;
 
-use BookStack\Entities\Book;
-use BookStack\Entities\Chapter;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Actions\Tag;
-use BookStack\Entities\Entity;
-use BookStack\Entities\Page;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 use BookStack\Auth\Permissions\PermissionService;
 use Tests\BrowserKitTest;
 

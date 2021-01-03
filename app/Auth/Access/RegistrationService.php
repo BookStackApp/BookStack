@@ -1,9 +1,11 @@
 <?php namespace BookStack\Auth\Access;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\SocialAccount;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\UserRegistrationException;
+use BookStack\Facades\Activity;
 use Exception;
 
 class RegistrationService
@@ -67,6 +69,8 @@ class RegistrationService
         if ($socialAccount) {
             $newUser->socialAccounts()->save($socialAccount);
         }
+
+        Activity::add(ActivityType::AUTH_REGISTER, $socialAccount ?? $newUser);
 
         // Start email confirmation flow if required
         if ($this->emailConfirmationService->confirmationRequired() && !$emailConfirmed) {

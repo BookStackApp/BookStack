@@ -45,4 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'đã bình luận về',
+    'permissions_update'          => 'updated permissions',
 ];
