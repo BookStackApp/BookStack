@@ -5,6 +5,7 @@
   "description": "This is a great new chapter that I've created via the API",
   "created_by": 1,
   "updated_by": 1,
+  "owned_by": 1,
   "slug": "my-fantastic-new-chapter",
   "updated_at": "2020-05-22 22:59:55",
   "created_at": "2020-05-22 22:59:55",

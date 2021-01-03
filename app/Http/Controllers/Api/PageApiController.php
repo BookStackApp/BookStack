@@ -47,7 +47,8 @@ class PageApiController extends ApiController
         return $this->apiListingResponse($pages, [
             'id', 'book_id', 'chapter_id', 'name', 'slug', 'priority',
             'draft', 'template',
-            'created_at', 'updated_at', 'created_by', 'updated_by',
+            'created_at', 'updated_at',
+            'created_by', 'updated_by', 'owned_by',
         ]);
     }
 

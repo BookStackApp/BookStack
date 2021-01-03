@@ -85,7 +85,10 @@ class ShelvesApiTest extends TestCase
             ],
             'updated_by' => [
                 'name' => $shelf->createdBy->name,
-            ]
+            ],
+            'owned_by' => [
+                'name' => $shelf->ownedBy->name
+            ],
         ]);
     }
 

@@ -43,7 +43,7 @@ class BookshelfApiController extends ApiController
     {
         $shelves = Bookshelf::visible();
         return $this->apiListingResponse($shelves, [
-            'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'image_id',
+            'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by', 'image_id',
         ]);
     }
 
@@ -70,7 +70,7 @@ class BookshelfApiController extends ApiController
     public function read(string $id)
     {
         $shelf = Bookshelf::visible()->with([
-            'tags', 'cover', 'createdBy', 'updatedBy',
+            'tags', 'cover', 'createdBy', 'updatedBy', 'ownedBy',
             'books' => function (BelongsToMany $query) {
                 $query->visible()->get(['id', 'name', 'slug']);
             }

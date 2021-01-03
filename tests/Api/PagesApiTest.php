@@ -136,6 +136,9 @@ class PagesApiTest extends TestCase
             'updated_by' => [
                 'name' => $page->createdBy->name,
             ],
+            'owned_by' => [
+                'name' => $page->ownedBy->name
+            ],
         ]);
     }
 

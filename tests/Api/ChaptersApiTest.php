@@ -106,6 +106,9 @@ class ChaptersApiTest extends TestCase
             'updated_by' => [
                 'name' => $chapter->createdBy->name,
             ],
+            'owned_by' => [
+                'name' => $chapter->ownedBy->name
+            ],
             'pages' => [
                 [
                     'id' => $page->id,

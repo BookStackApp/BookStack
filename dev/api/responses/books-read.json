@@ -13,6 +13,10 @@
     "id": 1,
     "name": "Admin"
   },
+  "owned_by": {
+    "id": 1,
+    "name": "Admin"
+  },
   "tags": [
     {
       "id": 13,

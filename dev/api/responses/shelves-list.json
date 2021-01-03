@@ -9,6 +9,7 @@
       "updated_at": "2020-04-10 13:00:45",
       "created_by": 4,
       "updated_by": 1,
+      "owned_by": 1,
       "image_id": 31
     },
     {
@@ -20,6 +21,7 @@
       "updated_at": "2020-04-10 13:00:58",
       "created_by": 4,
       "updated_by": 1,
+      "owned_by": 1,
       "image_id": 28
     },
     {
@@ -31,6 +33,7 @@
       "updated_at": "2020-04-10 13:00:53",
       "created_by": 4,
       "updated_by": 1,
+      "owned_by": 4,
       "image_id": 30
     }
   ],
