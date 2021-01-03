@@ -1,9 +1,9 @@
 <?php
 /**
  * Validation Lines
- * following language lines contain default error messages used by
- * validator class. Some of these rules have multiple versions such
- * as size rules. Feel free to tweak each of these messages here.
+ * The following language lines contain the default error messages used by
+ * the validator class. Some of these rules have multiple versions such
+ * as the size rules. Feel free to tweak each of these messages here.
  */
 return [
 
@@ -90,6 +90,7 @@ return [
     'required_without'     => ':attribute feltet er påkrevt når :values ikke er tilgjengelig.',
     'required_without_all' => ':attribute feltet er påkrevt når ingen av :values er tilgjengelig.',
     'same'                 => ':attribute og :other må samsvare.',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attribute må være :size.',
         'file'    => ':attribute må være :size kilobytes.',

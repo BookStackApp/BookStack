@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Opprettet :timeLength av :user',
     'meta_updated' => 'Oppdatert :timeLength',
     'meta_updated_name' => 'Oppdatert :timeLength av :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Velg entitet',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Mine nylige utkast',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Når disse er tillatt, vil disse tillatelsene ha prioritet over alle angitte rolletillatelser.',
     'permissions_enable' => 'Aktiver egendefinerte tillatelser',
     'permissions_save' => 'Lagre tillatelser',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Søkeresultater',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Sidens revisjoner',
     'pages_revisions_named' => 'Revisjoner for :pageName',
     'pages_revision_named' => 'Revisjoner for :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Skrevet av',
     'pages_revisions_date' => 'Revideringsdato',
     'pages_revisions_number' => '#',
