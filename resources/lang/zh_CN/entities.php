@@ -40,7 +40,7 @@ return [
     'permissions_intro' => '本设置优先于每个用户角色本身所具有的权限。',
     'permissions_enable' => '启用自定义权限',
     'permissions_save' => '保存权限',
-    'permissions_owner' => 'Owner',
+    'permissions_owner' => '所有者',
 
     // Search
     'search_results' => '搜索结果',
@@ -210,7 +210,7 @@ return [
     'pages_revisions' => '页面修订',
     'pages_revisions_named' => '“:pageName”页面修订',
     'pages_revision_named' => '“:pageName”页面修订',
-    'pages_revision_restored_from' => 'Restored from #:id; :summary',
+    'pages_revision_restored_from' => '从 #:id; :summary 恢复',
     'pages_revisions_created_by' => '创建者',
     'pages_revisions_date' => '修订日期',
     'pages_revisions_number' => '#',
