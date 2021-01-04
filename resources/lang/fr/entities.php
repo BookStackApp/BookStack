@@ -22,7 +22,7 @@ return [
     'meta_created_name' => 'Créé :timeLength par :user',
     'meta_updated' => 'Mis à jour :timeLength',
     'meta_updated_name' => 'Mis à jour :timeLength par :user',
-    'meta_owned_name' => 'Owned by :user',
+    'meta_owned_name' => 'Possédé par :user',
     'entity_select' => 'Sélectionner l\'entité',
     'images' => 'Images',
     'my_recent_drafts' => 'Mes brouillons récents',
@@ -40,7 +40,7 @@ return [
     'permissions_intro' => 'Une fois activées ces permissions prendront la priorité sur tous les sets de permissions préexistants.',
     'permissions_enable' => 'Activer les permissions personnalisées',
     'permissions_save' => 'Enregistrer les permissions',
-    'permissions_owner' => 'Owner',
+    'permissions_owner' => 'Propriétaire',
 
     // Search
     'search_results' => 'Résultats de recherche',
@@ -210,7 +210,7 @@ return [
     'pages_revisions' => 'Révisions de la page',
     'pages_revisions_named' => 'Révisions pour :pageName',
     'pages_revision_named' => 'Révision pour :pageName',
-    'pages_revision_restored_from' => 'Restored from #:id; :summary',
+    'pages_revision_restored_from' => 'Restauré à partir de #:id; :summary',
     'pages_revisions_created_by' => 'Créé par',
     'pages_revisions_date' => 'Date de révision',
     'pages_revisions_number' => '#',
