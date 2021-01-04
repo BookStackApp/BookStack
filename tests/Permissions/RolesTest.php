@@ -216,15 +216,23 @@ class RolesTest extends BrowserKitTest
     {
         $otherUsersPage = Page::first();
         $content = $this->createEntityChainBelongingToUser($this->user);
+
+        // Set a different creator on the page we're checking to ensure
+        // that the owner fields are checked
+        $page = $content['page']; /** @var Page $page */
+        $page->created_by = $otherUsersPage->id;
+        $page->owned_by = $this->user->id;
+        $page->save();
+
         // Check can't restrict other's content
         $this->actingAs($this->user)->visit($otherUsersPage->getUrl())
             ->dontSee('Permissions')
             ->visit($otherUsersPage->getUrl() . '/permissions')
             ->seePageIs('/');
         // Check can't restrict own content
-        $this->actingAs($this->user)->visit($content['page']->getUrl())
+        $this->actingAs($this->user)->visit($page->getUrl())
             ->dontSee('Permissions')
-            ->visit($content['page']->getUrl() . '/permissions')
+            ->visit($page->getUrl() . '/permissions')
             ->seePageIs('/');
 
         $this->giveUserPermissions($this->user, ['restrictions-manage-own']);
@@ -235,10 +243,10 @@ class RolesTest extends BrowserKitTest
             ->visit($otherUsersPage->getUrl() . '/permissions')
             ->seePageIs('/');
         // Check can restrict own content
-        $this->actingAs($this->user)->visit($content['page']->getUrl())
+        $this->actingAs($this->user)->visit($page->getUrl())
             ->see('Permissions')
             ->click('Permissions')
-            ->seePageIs($content['page']->getUrl() . '/permissions');
+            ->seePageIs($page->getUrl() . '/permissions');
     }
 
     /**

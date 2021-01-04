@@ -533,7 +533,8 @@ class PermissionService
             $allPermission = $this->currentUser() && $this->currentUser()->can($permission . '-all');
             $ownPermission = $this->currentUser() && $this->currentUser()->can($permission . '-own');
             $this->currentAction = 'view';
-            $isOwner = $this->currentUser() && $this->currentUser()->id === $ownable->created_by;
+            $ownerField = ($ownable instanceof Entity) ? 'owned_by' : 'created_by';
+            $isOwner = $this->currentUser() && $this->currentUser()->id === $ownable->$ownerField;
             return ($allPermission || ($isOwner && $ownPermission));
         }
 
