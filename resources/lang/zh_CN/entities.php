@@ -308,7 +308,7 @@ return [
     'comment_deleted_success' => '评论已删除',
     'comment_created_success' => '评论已添加',
     'comment_updated_success' => '评论已更新',
-    'comment_delete_confirm' => '你确定要删除这条评论？',
+    'comment_delete_confirm' => '您确定要删除这条评论？',
     'comment_in_reply_to' => '回复 :commentId',
 
     // Revision
