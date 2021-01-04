@@ -41,10 +41,10 @@
 
             <table class="table">
                 <tr>
-                    <th>{{ trans('settings.recycle_bin_deleted_item') }}</th>
-                    <th>{{ trans('settings.recycle_bin_deleted_by') }}</th>
-                    <th>{{ trans('settings.recycle_bin_deleted_at') }}</th>
-                    <th></th>
+                    <th width="50%">{{ trans('settings.recycle_bin_deleted_item') }}</th>
+                    <th width="20%">{{ trans('settings.recycle_bin_deleted_by') }}</th>
+                    <th width="15%">{{ trans('settings.recycle_bin_deleted_at') }}</th>
+                    <th width="15%"></th>
                 </tr>
                 @if(count($deletions) === 0)
                     <tr>

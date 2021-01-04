@@ -28,6 +28,7 @@ table.table {
     padding: $-s $-s;
     vertical-align: middle;
     margin: 0;
+    overflow: visible;
   }
   th {
     font-weight: bold;
