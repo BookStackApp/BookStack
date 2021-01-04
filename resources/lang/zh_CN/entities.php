@@ -22,7 +22,7 @@ return [
     'meta_created_name' => '由 :user 创建于 :timeLength',
     'meta_updated' => '更新于 :timeLength',
     'meta_updated_name' => '由 :user 更新于 :timeLength',
-    'meta_owned_name' => 'Owned by :user',
+    'meta_owned_name' => '拥有者 :user',
     'entity_select' => '实体选择',
     'images' => '图片',
     'my_recent_drafts' => '我最近的草稿',
@@ -40,7 +40,7 @@ return [
     'permissions_intro' => '本设置优先于每个用户角色本身所具有的权限。',
     'permissions_enable' => '启用自定义权限',
     'permissions_save' => '保存权限',
-    'permissions_owner' => '所有者',
+    'permissions_owner' => '拥有者',
 
     // Search
     'search_results' => '搜索结果',
