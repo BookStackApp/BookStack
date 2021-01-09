@@ -210,7 +210,7 @@ class PageRepo
         }
 
         $pageContent = new PageContent($page);
-        if (isset($input['markdown'])) {
+        if (!empty($input['markdown'] ?? '')) {
             $pageContent->setNewMarkdown($input['markdown']);
         } else {
             $pageContent->setNewHTML($input['html']);

@@ -54,4 +54,95 @@ class PageTest extends TestCase
         $redirectReq = $this->get($deleteReq->baseResponse->headers->get('location'));
         $redirectReq->assertNotificationContains('Page Successfully Deleted');
     }
+
+    public function test_page_copy()
+    {
+        $page = Page::first();
+        $page->html = '<p>This is some test content</p>';
+        $page->save();
+
+        $currentBook = $page->book;
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
+
+        $resp = $this->asEditor()->get($page->getUrl('/copy'));
+        $resp->assertSee('Copy Page');
+
+        $movePageResp = $this->post($page->getUrl('/copy'), [
+            'entity_selection' => 'book:' . $newBook->id,
+            'name' => 'My copied test page'
+        ]);
+        $pageCopy = Page::where('name', '=', 'My copied test page')->first();
+
+        $movePageResp->assertRedirect($pageCopy->getUrl());
+        $this->assertTrue($pageCopy->book->id == $newBook->id, 'Page was copied to correct book');
+        $this->assertStringContainsString('This is some test content', $pageCopy->html);
+    }
+
+    public function test_page_copy_with_markdown_has_both_html_and_markdown()
+    {
+        $page = Page::first();
+        $page->html = '<h1>This is some test content</h1>';
+        $page->markdown = '# This is some test content';
+        $page->save();
+        $newBook = Book::where('id', '!=', $page->book->id)->first();
+
+        $this->asEditor()->post($page->getUrl('/copy'), [
+            'entity_selection' => 'book:' . $newBook->id,
+            'name' => 'My copied test page'
+        ]);
+        $pageCopy = Page::where('name', '=', 'My copied test page')->first();
+
+        $this->assertStringContainsString('This is some test content', $pageCopy->html);
+        $this->assertEquals('# This is some test content', $pageCopy->markdown);
+    }
+
+    public function test_page_copy_with_no_destination()
+    {
+        $page = Page::first();
+        $currentBook = $page->book;
+
+        $resp = $this->asEditor()->get($page->getUrl('/copy'));
+        $resp->assertSee('Copy Page');
+
+        $movePageResp = $this->post($page->getUrl('/copy'), [
+            'name' => 'My copied test page'
+        ]);
+
+        $pageCopy = Page::where('name', '=', 'My copied test page')->first();
+
+        $movePageResp->assertRedirect($pageCopy->getUrl());
+        $this->assertTrue($pageCopy->book->id == $currentBook->id, 'Page was copied to correct book');
+        $this->assertTrue($pageCopy->id !== $page->id, 'Page copy is not the same instance');
+    }
+
+    public function test_page_can_be_copied_without_edit_permission()
+    {
+        $page = Page::first();
+        $currentBook = $page->book;
+        $newBook = Book::where('id', '!=', $currentBook->id)->first();
+        $viewer = $this->getViewer();
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl());
+        $resp->assertDontSee($page->getUrl('/copy'));
+
+        $newBook->owned_by = $viewer->id;
+        $newBook->save();
+        $this->giveUserPermissions($viewer, ['page-create-own']);
+        $this->regenEntityPermissions($newBook);
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl());
+        $resp->assertSee($page->getUrl('/copy'));
+
+        $movePageResp = $this->post($page->getUrl('/copy'), [
+            'entity_selection' => 'book:' . $newBook->id,
+            'name' => 'My copied test page'
+        ]);
+        $movePageResp->assertRedirect();
+
+        $this->assertDatabaseHas('pages', [
+            'name' => 'My copied test page',
+            'created_by' => $viewer->id,
+            'book_id' => $newBook->id,
+        ]);
+    }
 }
