@@ -217,7 +217,7 @@ return [
     'pages_revisions_numbered' => '修訂編號:id',
     'pages_revisions_numbered_changes' => '修訂編號:id 更改',
     'pages_revisions_changelog' => '更新說明',
-    'pages_revisions_changes' => '說明',
+    'pages_revisions_changes' => '更新紀錄',
     'pages_revisions_current' => '目前版本',
     'pages_revisions_preview' => '預覽',
     'pages_revisions_restore' => '恢複',
