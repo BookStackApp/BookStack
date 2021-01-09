@@ -5,6 +5,9 @@ use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use League\CommonMark\Extension\Table\TableExtension;
+use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 class PageContent
 {
@@ -45,7 +48,10 @@ class PageContent
      */
     protected function markdownToHtml(string $markdown): string
     {
-        $converter = new CommonMarkConverter();
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new TableExtension());
+        $environment->addExtension(new TaskListExtension());
+        $converter = new CommonMarkConverter([], $environment);
         return $converter->convertToHtml($markdown);
     }
 
