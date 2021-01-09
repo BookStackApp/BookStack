@@ -74,7 +74,6 @@ class PageEditor {
     }
 
     setInitialFocus() {
-        console.log({'HAS': this.hasDefaultTitle});
         if (this.hasDefaultTitle) {
             return this.titleElem.select();
         }
