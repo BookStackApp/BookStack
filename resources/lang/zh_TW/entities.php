@@ -22,7 +22,7 @@ return [
     'meta_created_name' => '由 :user 建立於 :timeLength',
     'meta_updated' => '更新於 :timeLength',
     'meta_updated_name' => '由 :user 更新於 :timeLength',
-    'meta_owned_name' => 'Owned by :user',
+    'meta_owned_name' => ':user 所擁有',
     'entity_select' => '選擇項目',
     'images' => '圖片',
     'my_recent_drafts' => '我最近的草稿',
@@ -40,7 +40,7 @@ return [
     'permissions_intro' => '本設定優先權高於每個使用者角色本身所具有的權限。',
     'permissions_enable' => '啟用自訂權限',
     'permissions_save' => '儲存權限',
-    'permissions_owner' => 'Owner',
+    'permissions_owner' => '擁有者',
 
     // Search
     'search_results' => '搜尋結果',
