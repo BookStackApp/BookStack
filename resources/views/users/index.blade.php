@@ -37,7 +37,7 @@
                     </th>
                     <th>{{ trans('settings.role_user_roles') }}</th>
                     <th class="text-right">
-                        <a href="{{ sortUrl('/settings/users', $listDetails, ['sort' => 'latest_activity']) }}">{{ trans('settings.users_latest_activity') }}</a>
+                        <a href="{{ sortUrl('/settings/users', $listDetails, ['sort' => 'last_activity_at']) }}">{{ trans('settings.users_latest_activity') }}</a>
                     </th>
                 </tr>
                 @foreach($users as $user)
@@ -58,8 +58,8 @@
                             @endforeach
                         </td>
                         <td class="text-right text-muted">
-                            @if($user->latestActivity)
-                                <small title="{{ $user->latestActivity->created_at->format('Y-m-d H:i:s') }}">{{ $user->latestActivity->created_at->diffForHumans() }}</small>
+                            @if($user->last_activity_at)
+                                <small title="{{ $user->last_activity_at->format('Y-m-d H:i:s') }}">{{ $user->last_activity_at->diffForHumans() }}</small>
                             @endif
                         </td>
                     </tr>
