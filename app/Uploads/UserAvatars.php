@@ -3,6 +3,7 @@
 use BookStack\Auth\User;
 use BookStack\Exceptions\HttpFetchException;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class UserAvatars
 {
