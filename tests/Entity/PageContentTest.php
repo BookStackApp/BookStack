@@ -461,4 +461,22 @@ class PageContentTest extends TestCase
         $pageView = $this->get($page->getUrl());
         $pageView->assertElementExists('.page-content input[type=checkbox]');
     }
+
+    public function test_page_markdown_strikethrough_rendering()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $content = '~~some crossed out text~~';
+        $this->put($page->getUrl(), [
+            'name' => $page->name,  'markdown' => $content,
+            'html' => '', 'summary' => ''
+        ]);
+
+        $page->refresh();
+        $this->assertStringMatchesFormat('%A<s%A>some crossed out text</s>%A', $page->html);
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertElementExists('.page-content p > s');
+    }
 }
