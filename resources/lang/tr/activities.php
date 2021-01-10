@@ -45,5 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'yorum yaptı',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'güncellenmiş izinler',
 ];
