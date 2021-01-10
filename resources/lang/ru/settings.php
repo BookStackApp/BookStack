@@ -68,7 +68,7 @@ return [
     'maint' => 'Обслуживание',
     'maint_image_cleanup' => 'Очистка изображений',
     'maint_image_cleanup_desc' => "Сканирует содержимое страниц и предыдущих версий и определяет изображения, которые не используются. Убедитесь, что у вас есть резервная копия базы данных и папки изображений перед запуском этой функции.",
-    'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
+    'maint_delete_images_only_in_revisions' => 'Также удалять изображения, которые существуют только в старой версии страницы',
     'maint_image_cleanup_run' => 'Выполнить очистку',
     'maint_image_cleanup_warning' => 'Найдено :count возможно бесполезных изображений. Вы уверены, что хотите удалить эти изображения?',
     'maint_image_cleanup_success' => ':count возможно бесполезных изображений было найдено и удалено!',
@@ -80,7 +80,7 @@ return [
     'maint_send_test_email_mail_subject' => 'Проверка электронной почты',
     'maint_send_test_email_mail_greeting' => 'Доставка электронной почты работает!',
     'maint_send_test_email_mail_text' => 'Поздравляем! Поскольку вы получили это письмо, электронная почта настроена правильно.',
-    'maint_recycle_bin_desc' => 'Deleted shelves, books, chapters & pages are sent to the recycle bin so they can be restored or permanently deleted. Older items in the recycle bin may be automatically removed after a while depending on system configuration.',
+    'maint_recycle_bin_desc' => 'Удаленные полки, книги, главы и страницы отправляются в корзину, чтобы они могли быть восстановлены или удалены навсегда. Более старые элементы в корзине могут быть автоматически удалены через некоторое время в зависимости от системной конфигурации.',
     'maint_recycle_bin_open' => 'Open Recycle Bin',
 
     // Recycle Bin
