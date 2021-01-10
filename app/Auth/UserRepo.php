@@ -59,14 +59,10 @@ class UserRepo
     public function getAllUsersPaginatedAndSorted(int $count, array $sortData): LengthAwarePaginator
     {
         $sort = $sortData['sort'];
-        if ($sort === 'latest_activity') {
-            $sort = \BookStack\Actions\Activity::query()->select('created_at')
-                ->whereColumn('activities.user_id', 'users.id')
-                ->latest()
-                ->take(1);
-        }
 
-        $query = User::query()->with(['roles', 'avatar', 'latestActivity'])
+        $query = User::query()->select(['*'])
+            ->withLastActivityAt()
+            ->with(['roles', 'avatar'])
             ->orderBy($sort, $sortData['order']);
 
         if ($sortData['search']) {

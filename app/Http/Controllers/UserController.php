@@ -41,6 +41,7 @@ class UserController extends Controller
             'sort' => $request->get('sort', 'name'),
         ];
         $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
+
         $this->setPageTitle(trans('settings.users'));
         $users->appends($listDetails);
         return view('users.index', ['users' => $users, 'listDetails' => $listDetails]);
