@@ -1,7 +1,9 @@
 <?php namespace Tests\Uploads;
 
 use BookStack\Auth\User;
+use BookStack\Exceptions\HttpFetchException;
 use BookStack\Uploads\HttpFetcher;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 class AvatarTest extends TestCase
@@ -11,7 +13,7 @@ class AvatarTest extends TestCase
 
     protected function createUserRequest($user)
     {
-        $resp = $this->asAdmin()->post('/settings/users/create', [
+        $this->asAdmin()->post('/settings/users/create', [
             'name' => $user->name,
             'email' => $user->email,
             'password' => 'testing',
@@ -22,8 +24,7 @@ class AvatarTest extends TestCase
 
     protected function assertImageFetchFrom(string $url)
     {
-        $http = \Mockery::mock(HttpFetcher::class);
-        $this->app->instance(HttpFetcher::class, $http);
+        $http = $this->mock(HttpFetcher::class);
 
         $http->shouldReceive('fetch')
             ->once()->with($url)
@@ -55,6 +56,7 @@ class AvatarTest extends TestCase
     public function test_custom_url_used_if_set()
     {
         config()->set([
+            'services.disable_services' => false,
             'services.avatar_url' => 'https://example.com/${email}/${hash}/${size}',
         ]);
 
@@ -74,11 +76,26 @@ class AvatarTest extends TestCase
 
         $user = factory(User::class)->make();
 
-        $http = \Mockery::mock(HttpFetcher::class);
-        $this->app->instance(HttpFetcher::class, $http);
+        $http = $this->mock(HttpFetcher::class);
         $http->shouldNotReceive('fetch');
 
         $this->createUserRequest($user);
+    }
+
+    public function test_no_failure_but_error_logged_on_failed_avatar_fetch()
+    {
+        config()->set([
+            'services.disable_services' => false,
+        ]);
+
+        $http = $this->mock(HttpFetcher::class);
+        $http->shouldReceive('fetch')->andThrow(new HttpFetchException());
+
+        $logger = $this->withTestLogger();
+
+        $user = factory(User::class)->make();
+        $this->createUserRequest($user);
+        $this->assertTrue($logger->hasError('Failed to save user avatar image'));
     }
 
 }
