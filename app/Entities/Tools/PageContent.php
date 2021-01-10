@@ -1,6 +1,7 @@
 <?php namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
@@ -51,6 +52,7 @@ class PageContent
         $environment = Environment::createCommonMarkEnvironment();
         $environment->addExtension(new TableExtension());
         $environment->addExtension(new TaskListExtension());
+        $environment->addExtension(new CustomStrikeThroughExtension());
         $converter = new CommonMarkConverter([], $environment);
         return $converter->convertToHtml($markdown);
     }

@@ -1,19 +1,20 @@
 <?php namespace BookStack\Auth;
 
-use BookStack\Actions\Activity;
 use BookStack\Api\ApiToken;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use BookStack\Notifications\ResetPassword;
 use BookStack\Uploads\Image;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
@@ -45,6 +46,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $fillable = ['name', 'email'];
+
+    protected $casts = ['last_activity_at' => 'datetime'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -181,7 +184,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Get the social account associated with this user.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function socialAccounts()
     {
@@ -218,7 +221,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         try {
             $avatar = $this->avatar ? url($this->avatar->getThumb($size, $size, false)) : $default;
-        } catch (\Exception $err) {
+        } catch (Exception $err) {
             $avatar = $default;
         }
         return $avatar;
@@ -226,7 +229,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Get the avatar for the user.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function avatar()
     {
@@ -242,11 +245,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Get the latest activity instance for this user.
+     * Get the last activity time for this user.
      */
-    public function latestActivity(): HasOne
+    public function scopeWithLastActivityAt(Builder $query)
     {
-        return $this->hasOne(Activity::class)->latest();
+        $query->addSelect(['activities.created_at as last_activity_at'])
+            ->leftJoinSub(function (\Illuminate\Database\Query\Builder $query) {
+                $query->from('activities')->select('user_id')
+                    ->selectRaw('max(created_at) as created_at')
+                    ->groupBy('user_id');
+            }, 'activities', 'users.id', '=', 'activities.user_id');
     }
 
     /**
