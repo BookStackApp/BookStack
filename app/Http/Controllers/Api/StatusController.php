@@ -2,17 +2,10 @@
 
 namespace BookStack\Http\Controllers\Api;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
-use BookStack\Entities\Repos\PageRepo;
-use BookStack\Exceptions\PermissionsException;
-use Exception;
 use Illuminate\Contracts\Redis\Factory as RedisConnection;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
