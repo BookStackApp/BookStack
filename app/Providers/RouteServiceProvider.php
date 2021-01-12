@@ -17,6 +17,13 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'BookStack\Http\Controllers';
 
     /**
+     * This namespace is applied to the api routes in your routes file.
+     *
+     * @var string
+     */
+    protected $apiNamespace = 'BookStack\Http\Controllers\Api';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -35,6 +42,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
         $this->mapApiRoutes();
+        $this->mapNoAuthApiRoutes();
     }
     /**
      * Define the "web" routes for the application.
@@ -63,10 +71,23 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'api',
-            'namespace' => $this->namespace . '\Api',
+            'namespace' => $this->apiNamespace,
             'prefix' => 'api',
         ], function ($router) {
             require base_path('routes/api.php');
+        });
+    }
+
+    /**
+     * Define the "api" routes for the application that don't require authentication.
+     */
+    protected function mapNoAuthApiRoutes(): void
+    {
+        Route::group([
+            'namespace' => $this->apiNamespace,
+            'prefix' => 'api',
+        ], function ($router) {
+            require base_path('routes/no-auth-api.php');
         });
     }
 }
