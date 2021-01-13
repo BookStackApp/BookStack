@@ -74,7 +74,7 @@
             <div class="grid half mt-m gap-xl">
                 <div>
                     <label for="password">{{ trans('auth.password') }}</label>
-                    @include('form.password', ['name' => 'password'])
+                    @include('form.password', ['name' => 'password', autocomplete => 'new-password'])
                 </div>
                 <div>
                     <label for="password-confirm">{{ trans('auth.password_confirm') }}</label>
