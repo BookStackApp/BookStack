@@ -18,7 +18,7 @@
         "facade/ignition": "^1.16.4",
         "fideloper/proxy": "^4.4.1",
         "intervention/image": "^2.5.1",
-        "laravel/framework": "^6.20",
+        "laravel/framework": "^6.20.12",
         "laravel/socialite": "^5.1",
         "league/commonmark": "^1.5",
         "league/flysystem-aws-s3-v3": "^1.0.29",
