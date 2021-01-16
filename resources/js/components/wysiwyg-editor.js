@@ -422,7 +422,7 @@ class WysiwygEditor {
         this.imageUploadErrorText = this.$opts.imageUploadErrorText;
         this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
-        this.plugins = "image table textcolor paste link autolink fullscreen code customhr autosave lists codeeditor media";
+        this.plugins = "image imagetools table textcolor paste link autolink fullscreen code customhr autosave lists codeeditor media";
         this.loadPlugins();
 
         this.tinyMceConfig = this.getTinyMceConfig();
