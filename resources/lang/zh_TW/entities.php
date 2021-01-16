@@ -268,7 +268,7 @@ return [
     'attachments_link_url' => '連結到檔案',
     'attachments_link_url_hint' => '網站或檔案的網址',
     'attach' => '附加',
-    'attachments_insert_link' => 'Add Attachment Link to Page',
+    'attachments_insert_link' => '將附件連結增加到頁面',
     'attachments_edit_file' => '編輯檔案',
     'attachments_edit_file_name' => '檔案名稱',
     'attachments_edit_drop_upload' => '刪除檔案或點選這裡上傳並覆蓋',
