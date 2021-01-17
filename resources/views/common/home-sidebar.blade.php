@@ -6,11 +6,11 @@
 @endif
 
 <div class="mb-xl">
-    <h5>{{ trans('entities.' . ($signedIn ? 'my_recently_viewed' : 'books_recent')) }}</h5>
+    <h5>{{ trans('entities.' . (auth()->check() ? 'my_recently_viewed' : 'books_recent')) }}</h5>
     @include('partials.entity-list', [
         'entities' => $recents,
         'style' => 'compact',
-        'emptyText' => $signedIn ? trans('entities.no_pages_viewed') : trans('entities.books_empty')
+        'emptyText' => auth()->check() ? trans('entities.no_pages_viewed') : trans('entities.books_empty')
         ])
 </div>
 

@@ -29,13 +29,13 @@
                     </div>
                 @endif
 
-                <div id="{{ $signedIn ? 'recently-viewed' : 'recent-books' }}" class="card mb-xl">
-                    <h3 class="card-title">{{ trans('entities.' . ($signedIn ? 'my_recently_viewed' : 'books_recent')) }}</h3>
+                <div id="{{ auth()->check() ? 'recently-viewed' : 'recent-books' }}" class="card mb-xl">
+                    <h3 class="card-title">{{ trans('entities.' . (auth()->check() ? 'my_recently_viewed' : 'books_recent')) }}</h3>
                     <div class="px-m">
                         @include('partials.entity-list', [
                         'entities' => $recents,
                         'style' => 'compact',
-                        'emptyText' => $signedIn ? trans('entities.no_pages_viewed') : trans('entities.books_empty')
+                        'emptyText' => auth()->check() ? trans('entities.no_pages_viewed') : trans('entities.books_empty')
                         ])
                     </div>
                 </div>

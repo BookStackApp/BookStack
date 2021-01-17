@@ -21,9 +21,7 @@
                             <input type="text" name="search" placeholder="{{ trans('settings.users_search') }}" @if($listDetails['search']) value="{{$listDetails['search']}}" @endif>
                         </form>
                     </div>
-                    @if(userCan('users-manage'))
-                        <a href="{{ url("/settings/users/create") }}" style="margin-top: 0;" class="outline button">{{ trans('settings.users_add_new') }}</a>
-                    @endif
+                    <a href="{{ url("/settings/users/create") }}" class="outline button mt-none">{{ trans('settings.users_add_new') }}</a>
                 </div>
             </div>
 
@@ -44,13 +42,9 @@
                     <tr>
                         <td class="text-center" style="line-height: 0;"><img class="avatar med" src="{{ $user->getAvatar(40)}}" alt="{{ $user->name }}"></td>
                         <td>
-                            @if(userCan('users-manage') || $currentUser->id == $user->id)
-                                <a href="{{ url("/settings/users/{$user->id}") }}">
-                                    @endif
-                                    {{ $user->name }} <br> <span class="text-muted">{{ $user->email }}</span>
-                                    @if(userCan('users-manage') || $currentUser->id == $user->id)
-                                </a>
-                            @endif
+                            <a href="{{ url("/settings/users/{$user->id}") }}">
+                                {{ $user->name }} <br> <span class="text-muted">{{ $user->email }}</span>
+                            </a>
                         </td>
                         <td>
                             @foreach($user->roles as $index => $role)
