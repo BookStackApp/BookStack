@@ -1,5 +1,6 @@
 <?php
 
+Route::get('/status', 'StatusController@show');
 Route::get('/robots.txt', 'HomeController@getRobots');
 
 // Authenticated routes...
