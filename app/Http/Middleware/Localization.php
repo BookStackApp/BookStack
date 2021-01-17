@@ -57,12 +57,7 @@ class Localization
         $defaultLang = config('app.locale');
         config()->set('app.default_locale', $defaultLang);
 
-        if (user()->isDefault() && config('app.auto_detect_locale')) {
-            $locale = $this->autoDetectLocale($request, $defaultLang);
-        } else {
-            $locale = setting()->getUser(user(), 'language', $defaultLang);
-        }
-
+        $locale = $this->getUserLocale($request, $defaultLang);
         config()->set('app.lang', str_replace('_', '-', $this->getLocaleIso($locale)));
 
         // Set text direction
@@ -77,13 +72,28 @@ class Localization
     }
 
     /**
+     * Get the locale specifically for the currently logged in user if available.
+     */
+    protected function getUserLocale(Request $request, string $default): string
+    {
+        try {
+            $user = user();
+        } catch (\Exception $exception) {
+            return $default;
+        }
+
+        if ($user->isDefault() && config('app.auto_detect_locale')) {
+            return $this->autoDetectLocale($request, $default);
+        }
+
+        return setting()->getUser($user, 'language', $default);
+    }
+
+    /**
      * Autodetect the visitors locale by matching locales in their headers
      * against the locales supported by BookStack.
-     * @param Request $request
-     * @param string $default
-     * @return string
      */
-    protected function autoDetectLocale(Request $request, string $default)
+    protected function autoDetectLocale(Request $request, string $default): string
     {
         $availableLocales = config('app.locales');
         foreach ($request->getLanguages() as $lang) {
@@ -96,10 +106,8 @@ class Localization
 
     /**
      * Get the ISO version of a BookStack language name
-     * @param  string $locale
-     * @return string
      */
-    public function getLocaleIso(string $locale)
+    public function getLocaleIso(string $locale): string
     {
         return $this->localeMap[$locale] ?? $locale;
     }
@@ -107,7 +115,6 @@ class Localization
     /**
      * Set the system date locale for localized date formatting.
      * Will try both the standard locale name and the UTF8 variant.
-     * @param string $locale
      */
     protected function setSystemDateLocale(string $locale)
     {

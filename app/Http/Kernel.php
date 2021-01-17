@@ -29,7 +29,6 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \BookStack\Http\Middleware\VerifyCsrfToken::class,
             \BookStack\Http\Middleware\Localization::class,
-            \BookStack\Http\Middleware\GlobalViewData::class,
         ],
         'api' => [
             \BookStack\Http\Middleware\ThrottleApiRequests::class,

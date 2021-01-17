@@ -9,7 +9,7 @@
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
-            @if($currentUser->can('bookshelf-create-all'))
+            @if(userCan('bookshelf-create-all'))
                 <a href="{{ url("/create-shelf") }}" class="icon-list-item">
                     <span>@icon('add')</span>
                     <span>{{ trans('entities.shelves_new_action') }}</span>

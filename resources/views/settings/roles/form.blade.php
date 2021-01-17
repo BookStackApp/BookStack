@@ -244,11 +244,11 @@
                         <img class="avatar small" src="{{ $user->getAvatar(40) }}" alt="{{ $user->name }}">
                     </div>
                     <div>
-                        @if(userCan('users-manage') || $currentUser->id == $user->id)
+                        @if(userCan('users-manage') || user()->id == $user->id)
                             <a href="{{ url("/settings/users/{$user->id}") }}">
                                 @endif
                                 {{ $user->name }}
-                                @if(userCan('users-manage') || $currentUser->id == $user->id)
+                                @if(userCan('users-manage') || user()->id == $user->id)
                             </a>
                         @endif
                     </div>
