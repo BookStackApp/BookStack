@@ -175,7 +175,7 @@ return [
     'users_delete_named' => 'Видалити користувача :userName',
     'users_delete_warning' => 'Це повне видалення цього користувача з ім\'ям \':userName\' з системи.',
     'users_delete_confirm' => 'Ви впевнені, що хочете видалити цього користувача?',
-    'users_migrate_ownership' => 'Migrate Ownership',
+    'users_migrate_ownership' => 'Право власності при міграції',
     'users_migrate_ownership_desc' => 'Виберіть тут користувача, якщо ви хочете, щоб інший користувач став власником усіх елементів, які зараз належать цьому користувачеві.',
     'users_none_selected' => 'Не вибрано жодного користувача',
     'users_delete_success' => 'Користувача успішно видалено',
