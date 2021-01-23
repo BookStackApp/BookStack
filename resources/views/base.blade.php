@@ -43,6 +43,12 @@
         </div>
     </div>
 
+    <div class="block" id="footer">
+        <div class="tri-layout-middle-contents text-center">
+            {!! setting('app-custom-footer') !!}
+        </div>
+    </div>
+
     @yield('bottom')
     <script src="{{ versioned_asset('dist/app.js') }}"></script>
     @yield('scripts')
