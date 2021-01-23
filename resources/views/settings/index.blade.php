@@ -193,6 +193,12 @@
                         <p class="small text-right">{{ trans('settings.app_custom_html_disabled_notice') }}</p>
                     </div>
 
+                    <div>
+                        <label for="setting-app-custom-footer" class="setting-list-label">{{ trans('settings.app_custom_footer') }}</label>
+                        <p class="small">{{ trans('settings.app_custom_footer_desc') }}</p>
+                        <textarea name="setting-app-custom-footer" id="setting-app-custom-footer" class="simple-code-input mt-m">{{ setting('app-custom-footer', '') }}</textarea>
+                    </div>
+
 
                 </div>
 
