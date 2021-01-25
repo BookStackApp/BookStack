@@ -31,7 +31,7 @@ return [
     'app_custom_html_desc' => 'Any content added here will be inserted into the bottom of the <head> section of every page. This is handy for overriding styles or adding analytics code.',
     'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_custom_footer' => 'Custom HTML Footer',
-    'app_custom_footer_desc' => 'HTML here will be add to footer (before </body>). You can place content license or something to claim.',
+    'app_custom_footer_desc' => 'HTML here will be add to footer (before </body>). You can place contact information or put creative commons liked license here.',
     'app_logo' => 'Application Logo',
     'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
     'app_primary_color' => 'Application Primary Color',
