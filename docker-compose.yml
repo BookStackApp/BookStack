@@ -39,6 +39,7 @@ services:
   node:
     image: node:alpine
     working_dir: /app
+    user: node
     volumes:
       - ./:/app
     entrypoint: /app/dev/docker/entrypoint.node.sh
