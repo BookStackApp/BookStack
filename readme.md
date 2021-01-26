@@ -41,7 +41,7 @@ Below is a high-level road map view for BookStack to provide a sense of directio
 
 BookStack releases are each assigned a version number, such as "v0.25.2", in the format `v<phase>.<feature>.<patch>`. A change only in the `patch` number indicates a fairly minor release that mainly contains fixes and therefore is very unlikely to cause breakages upon update. A change in the `feature` number indicates a release which will generally bring new features in addition to fixes and enhancements. These releases have a small chance of introducing breaking changes upon update so it's worth checking for any notes in the [update guide](https://www.bookstackapp.com/docs/admin/updates/). A change in the `phase` indicates a much large change in BookStack that will likely incur breakages requiring manual intervention.
 
-Each BookStack release will have a [milestone](https://github.com/BookStackApp/BookStack/milestones) created with issues & pull requests assigned to it to define what will be in that release. Milestones are built up then worked through until complete at which point, after some testing and documentation updates, the release will be deployed. 
+Each BookStack release will have a [milestone](https://github.com/BookStackApp/BookStack/milestones) created with issues & pull requests assigned to it to define what will be in that release. Milestones are built up then worked through until complete at which point, after some testing and documentation updates, the release will be deployed.
 
 For feature releases, and some patch releases, the release will be accompanied by a post on the [BookStack blog](https://www.bookstackapp.com/blog/) which will provide additional detail on features, changes & updates otherwise the [GitHub release page](https://github.com/BookStackApp/BookStack/releases) will show a list of changes. You can sign up to be alerted to new BookStack blogs posts (once per week maximum) [at this link](https://updates.bookstackapp.com/signup/bookstack-news-and-updates).
 
@@ -96,13 +96,14 @@ If all the conditions are met, you can proceed with the following steps:
 1. **Copy `.env.example` to `.env`**, change `APP_KEY` to a random 32 char string and set `APP_ENV` to `local`.
 2. Make sure **port 8080 is unused** *or else* change `DEV_PORT` to a free port on your host.
 3. **Run `chgrp -R docker storage`**. The development container will chown the `storage` directory to the `www-data` user inside the container so BookStack can write to it. You need to change the group to your host's `docker` group here to not lose access to the `storage` directory.
-4. **Run `docker-compose up`** and wait until the image is built and all database migrations have been done.
-5. You can now login with `admin@admin.com` and `password` as password on `localhost:8080` (or another port if specified).
+4. **Run `echo -e "\n\nDOCKER_UID=$(id -u)" >> .env && echo "DOCKER_GID=$(id -g)" >> .env`** to add your UID/GID to the `.env` file. This is then used to set permissions inside the docker. This is necessary if you are working on Linux.
+5. **Run `docker-compose up`** and wait until the image is built and all database migrations have been done.
+6. You can now login with `admin@admin.com` and `password` as password on `localhost:8080` (or another port if specified).
 
 If needed, You'll be able to run any artisan commands via docker-compose like so:
 
  ```shell script
-docker-compose run app php artisan list 
+docker-compose run app php artisan list
 ```
 
 The docker-compose setup runs an instance of [MailHog](https://github.com/mailhog/MailHog) and sets environment variables to redirect any BookStack-sent emails to MailHog. You can view this mail via the MailHog web interface on `localhost:8025`. You can change the port MailHog is accessible on by setting a `DEV_MAIL_PORT` environment variable.
