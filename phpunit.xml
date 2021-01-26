@@ -19,7 +19,7 @@
         </whitelist>
     </filter>
     <php>
-        <server name="APP_ENV" value="testing"/>
+        <env name="APP_ENV" value="testing" force="true"/>
         <server name="APP_DEBUG" value="false"/>
         <server name="APP_LANG" value="en"/>
         <server name="APP_THEME" value="none"/>
@@ -29,7 +29,7 @@
         <server name="CACHE_DRIVER" value="array"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
-        <server name="DB_CONNECTION" value="mysql_testing"/>
+        <env name="DB_CONNECTION" value="mysql_testing" force="true"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="MAIL_DRIVER" value="array"/>
         <server name="LOG_CHANNEL" value="single"/>
@@ -56,5 +56,6 @@
         <server name="LOG_FAILED_LOGIN_MESSAGE" value=""/>
         <server name="LOG_FAILED_LOGIN_CHANNEL" value="testing"/>
         <server name="WKHTMLTOPDF" value="false"/>
+        <ini name="memory_limit" value="1024M"/>
     </php>
 </phpunit>

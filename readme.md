@@ -96,18 +96,29 @@ If all the conditions are met, you can proceed with the following steps:
 1. **Copy `.env.example` to `.env`**, change `APP_KEY` to a random 32 char string and set `APP_ENV` to `local`.
 2. Make sure **port 8080 is unused** *or else* change `DEV_PORT` to a free port on your host.
 3. **Run `chgrp -R docker storage`**. The development container will chown the `storage` directory to the `www-data` user inside the container so BookStack can write to it. You need to change the group to your host's `docker` group here to not lose access to the `storage` directory.
-4. **Run `echo -e "\n\nDOCKER_UID=$(id -u)" >> .env && echo "DOCKER_GID=$(id -g)" >> .env`** to add your UID/GID to the `.env` file. This is then used to set permissions inside the docker. This is necessary if you are working on Linux.
-5. **Run `docker-compose up`** and wait until the image is built and all database migrations have been done.
-6. You can now login with `admin@admin.com` and `password` as password on `localhost:8080` (or another port if specified).
+4. **Run `docker-compose up`** and wait until the image is built and all database migrations have been done.
+5. You can now login with `admin@admin.com` and `password` as password on `localhost:8080` (or another port if specified).
 
 If needed, You'll be able to run any artisan commands via docker-compose like so:
 
- ```shell script
+```shell script
 docker-compose run app php artisan list
 ```
 
 The docker-compose setup runs an instance of [MailHog](https://github.com/mailhog/MailHog) and sets environment variables to redirect any BookStack-sent emails to MailHog. You can view this mail via the MailHog web interface on `localhost:8025`. You can change the port MailHog is accessible on by setting a `DEV_MAIL_PORT` environment variable.
 
+#### Running tests
+
+After starting the general development Docker, seed the testing database:
+ ```shell script
+# this is to be done only once
+docker-compose run app php artisan db:seed --class=DummyContentSeeder --database=mysql_testing
+```
+
+Once the database has been seeded, you can run the tests by:
+ ```shell script
+docker-compose run app php vendor/bin/phpunit
+```
 ## 🌎 Translations
 
 Translations for text within BookStack is managed through the [BookStack project on Crowdin](https://crowdin.com/project/bookstack). Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time. Crowdin is the preferred way to provide translations, otherwise the raw translations files can be found within the `resources/lang` path.
