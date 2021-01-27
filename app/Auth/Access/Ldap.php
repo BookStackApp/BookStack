@@ -43,6 +43,16 @@ class Ldap
     }
 
     /**
+     * StartTLS for ldap servers which require tls
+     * @param resource $ldapConnection
+     * @return bool
+     */
+    public function startTLS($ldapConnection): bool
+    {
+        return ldap_start_tls($ldapConnection);
+    }
+
+    /**
      * Search LDAP tree using the provided filter.
      * @param resource   $ldapConnection
      * @param string     $baseDn

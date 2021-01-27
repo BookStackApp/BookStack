@@ -205,6 +205,11 @@ class LdapService extends ExternalAuthService
             $this->ldap->setVersion($ldapConnection, $this->config['version']);
         }
 
+        // use ldap protocol with StartTLS. Not to be confused with ldaps protocol which uses SSL.
+        if ($this->config['starttls']) {
+            $this->ldap->startTLS($ldapConnection);
+        }
+
         $this->ldapConnection = $ldapConnection;
         return $this->ldapConnection;
     }
