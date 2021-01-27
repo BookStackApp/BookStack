@@ -126,4 +126,13 @@ class Page extends BookChild
         $refreshed->html = (new PageContent($refreshed))->render();
         return $refreshed;
     }
+    /**
+     * Get the parent chapter ID.
+     */
+    public function getParentChapter()
+    {
+        $chapterId = $this->chapter()->visible()
+        ->get('id');
+        return $chapterId;
+    }
 }
