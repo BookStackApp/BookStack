@@ -55,5 +55,6 @@
         <server name="API_REQUESTS_PER_MIN" value="180"/>
         <server name="LOG_FAILED_LOGIN_MESSAGE" value=""/>
         <server name="LOG_FAILED_LOGIN_CHANNEL" value="testing"/>
+        <server name="WKHTMLTOPDF" value="false"/>
     </php>
 </phpunit>
