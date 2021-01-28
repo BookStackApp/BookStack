@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Cache\ArrayStore;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
@@ -31,7 +32,9 @@ class StatusTest extends TestCase
 
     public function test_returns_500_status_and_false_on_wrong_cache_return()
     {
-        Cache::partialMock()->shouldReceive('get')->andReturn('cat');
+        $mockStore = Mockery::mock(new ArrayStore())->makePartial();
+        Cache::swap($mockStore);
+        $mockStore->shouldReceive('get')->andReturn('cat');
 
         $resp = $this->get("/status");
         $resp->assertStatus(500);
