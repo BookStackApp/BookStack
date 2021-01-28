@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -59,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(SettingService::class, function ($app) {
-            return new SettingService($app->make(Setting::class), $app->make('Illuminate\Contracts\Cache\Repository'));
+            return new SettingService($app->make(Setting::class), $app->make(Repository::class));
         });
     }
 }
