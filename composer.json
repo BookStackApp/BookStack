@@ -31,7 +31,7 @@
         "socialiteproviders/okta": "^4.1",
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
-        "ssddanbrown/htmldiff": "^1.0"
+        "ssddanbrown/htmldiff": "^v1.0.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5.1",
