@@ -239,6 +239,7 @@ return [
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
     'pages_specific' => 'Specific Page',
     'pages_is_template' => 'Page Template',
+    'pages_time_reading' => 'min read',
 
     // Editor Sidebar
     'page_tags' => 'Page Tags',

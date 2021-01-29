@@ -133,6 +133,10 @@ class PageController extends Controller
 
         $pageContent = (new PageContent($page));
         $page->html = $pageContent->render();
+
+        $words = str_word_count(strip_tags($page->html));
+        $readingTimeInMinute = floor($words / 200);
+
         $sidebarTree = (new BookContents($page->book))->getTree();
         $pageNav = $pageContent->getNavigation($page->html);
 
@@ -146,6 +150,7 @@ class PageController extends Controller
         $this->setPageTitle($page->getShortName());
         return view('pages.show', [
             'page' => $page,
+            'readingTime' => $readingTimeInMinute,
             'book' => $page->book,
             'current' => $page,
             'sidebarTree' => $sidebarTree,
