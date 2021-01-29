@@ -101,6 +101,9 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-view', $shelf);
 
+        $sort = setting()->getForCurrentUser('books_sort', 'name');
+        $order = setting()->getForCurrentUser('books_sort_order', 'asc');
+
         Views::add($shelf);
         $this->entityContextManager->setShelfContext($shelf->id);
         $view = setting()->getForCurrentUser('bookshelf_view_type', config('app.views.books'));
@@ -109,7 +112,9 @@ class BookshelfController extends Controller
         return view('shelves.show', [
             'shelf' => $shelf,
             'view' => $view,
-            'activity' => Activity::entityActivity($shelf, 20, 1)
+            'activity' => Activity::entityActivity($shelf, 20, 1),
+            'order' => $order,
+            'sort' => $sort
         ]);
     }
 
