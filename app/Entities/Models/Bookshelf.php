@@ -1,6 +1,7 @@
 <?php namespace BookStack\Entities\Models;
 
 use BookStack\Uploads\Image;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -32,6 +33,20 @@ class Bookshelf extends Entity implements HasCoverImage
     public function visibleBooks(): BelongsToMany
     {
         return $this->books()->visible();
+    }
+
+    /**
+     * Get the books in this shelf that are visible to the current user with sorted by custom parameter
+     * @param string $sort - Chosen Column to be sorted
+     * @param string $order - Order of the sort
+     * @return Collection
+     */
+    public function visibleBooksByCustomSorting(string $sort = 'name', string $order = 'asc'): Collection
+    {
+        return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
+            ->orderBy($sort, $order)
+            ->visible()
+            ->get();
     }
 
     /**
