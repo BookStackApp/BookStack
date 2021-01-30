@@ -25,4 +25,8 @@ body {
   line-height: 1.6;
   @include lightDark(color, #444, #AAA);
   -webkit-font-smoothing: antialiased;
+  background-color: #F2F2F2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
