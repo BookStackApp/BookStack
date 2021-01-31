@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'Ak máte problém klinkúť na tlačidlo ":actionText", skopírujte a vložte URL uvedenú nižšie do Vášho prehliadača:',
     'email_rights' => 'Všetky práva vyhradené',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];
