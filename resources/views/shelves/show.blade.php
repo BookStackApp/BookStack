@@ -17,22 +17,22 @@
                     'name' => trans('common.sort_name'),
                     'created_at' => trans('common.sort_created_at'),
                     'updated_at' => trans('common.sort_updated_at'),
-                ], 'order' => $order, 'sort' => $sort, 'type' => 'books'])
+                ], 'order' => $order, 'sort' => $sort, 'type' => 'shelf_books'])
             </div>
         </div>
 
         <div class="book-content">
             <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
-            @if(count($shelf->visibleBooksByCustomSorting($sort, $order)) > 0)
+            @if(count($sortedVisibleShelfBooks) > 0)
                 @if($view === 'list')
                     <div class="entity-list">
-                        @foreach($shelf->visibleBooksByCustomSorting($sort, $order) as $book)
+                        @foreach($sortedVisibleShelfBooks as $book)
                             @include('books.list-item', ['book' => $book])
                         @endforeach
                     </div>
                 @else
                     <div class="grid third">
-                        @foreach($shelf->visibleBooksByCustomSorting($sort, $order) as $key => $book)
+                        @foreach($sortedVisibleShelfBooks as $key => $book)
                             @include('partials.entity-grid-item', ['entity' => $book])
                         @endforeach
                     </div>
