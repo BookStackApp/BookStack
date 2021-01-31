@@ -310,7 +310,7 @@ class UserController extends Controller
      */
     public function changeSort(Request $request, string $id, string $type)
     {
-        $validSortTypes = ['books', 'bookshelves'];
+        $validSortTypes = ['books', 'bookshelves', 'shelf_books'];
         if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }
