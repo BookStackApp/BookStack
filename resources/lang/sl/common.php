@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'V kolikor imate težave s klikom na gumb ":actionText", kopirajte in prilepite spodnjo povezavo v vaš brskalnik:',
     'email_rights' => 'Vse pravice pridržane',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];
