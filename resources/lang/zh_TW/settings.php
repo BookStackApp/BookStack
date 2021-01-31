@@ -30,6 +30,8 @@ return [
     'app_custom_html' => '自訂HTML頂端內容',
     'app_custom_html_desc' => '此處加入的任何內容都將插入到每個頁面的<head>部分的底部，這對於覆蓋樣式或加入分析程式碼很方便。',
     'app_custom_html_disabled_notice' => '在此設置頁面上禁用了自定義HTML標題內容，以確保可以恢復所有重大更改。',
+    'app_custom_footer' => '自訂頁尾',
+    'app_custom_footer_desc' => '你可以在頁尾提供您的聯絡方式，或相關合作夥。您也可以在頁尾加上 <a href="ihttps://creativecommons.org/">creative commoms here</a> 的說明',
     'app_logo' => 'App Logo',
     'app_logo_desc' => '這個圖片的高度應該為43px。<br>大圖片將會被縮小。',
     'app_primary_color' => 'App主要配色',
