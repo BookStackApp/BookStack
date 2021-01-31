@@ -238,9 +238,7 @@ function wysiwygView(elem) {
         theme: getTheme(),
         readOnly: true
     });
-    setTimeout(() => {
-        cm.refresh();
-    }, 300);
+
     return {wrap: newWrap, editor: cm};
 }
 
