@@ -181,17 +181,8 @@
 
                     <div>
                         <label for="setting-app-privacy-link" class="setting-list-label">{{ trans('settings.app_footer_links') }}</label>
-                        <p class="small">{{ trans('settings.app_footer_links_desc') }}</p>
-                        <div class="grid half pt-m">
-                            <div>
-                                <label for="setting-app-privacy-policy" class="text-dark">{{ trans('settings.app_privacy_policy') }}</label>
-                                <input type="text" value="{{ setting('app-privacy-policy', '') }}" name="setting-app-privacy-policy" id="setting-app-privacy-policy">
-                            </div>
-                            <div>
-                                <label for="setting-app-terms-of-service" class="text-dark">{{ trans('settings.app_terms_of_service') }}</label>
-                                <input type="text" value="{{ setting('app-terms-of-service', '') }}" name="setting-app-terms-of-service" id="setting-app-terms-of-service">
-                            </div>
-                        </div>
+                        <p class="small mb-m">{{ trans('settings.app_footer_links_desc') }}</p>
+                        @include('settings.footer-links', ['name' => 'setting-app-footer-links', 'value' => setting('app-footer-links', [])])
                     </div>
 
 
