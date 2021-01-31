@@ -1,10 +1,7 @@
-@if(setting('app-privacy-policy') | setting('app-terms-of-service'))
+@if(count(setting('app-footer-links', [])) > 0)
 <footer>
-    @if(setting('app-privacy-policy'))
-        <a href="{{ setting('app-privacy-policy') }}">{{ trans('settings.app_privacy_policy') }}</a>
-    @endif
-    @if(setting('app-terms-of-service'))
-        <a href="{{ setting('app-terms-of-service') }}">{{ trans('settings.app_terms_of_service') }}</a>
-    @endif
+    @foreach(setting('app-footer-links', []) as $link)
+        <a href="{{ $link['url'] }}" target="_blank">{{ strpos($link['label'], 'trans::') === 0 ? trans(str_replace('trans::', '', $link['label'])) : $link['label'] }}</a>
+    @endforeach
 </footer>
 @endif
