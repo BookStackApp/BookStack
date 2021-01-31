@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Пользовательский контент заголовка HTML',
     'app_custom_html_desc' => 'Любой контент, добавленный здесь, будет вставлен в нижнюю часть раздела <head> каждой страницы. Это удобно для переопределения стилей или добавления кода аналитики.',
     'app_custom_html_disabled_notice' => 'Пользовательский контент заголовка HTML отключен на этой странице, чтобы гарантировать отмену любых критических изменений',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Логотип приложения',
     'app_logo_desc' => 'Это изображение должно быть 43px в высоту. <br>Большое изображение будет уменьшено.',
     'app_primary_color' => 'Основной цвет приложения',

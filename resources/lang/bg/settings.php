@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Персонализирано съдържание на HTML шапката',
     'app_custom_html_desc' => 'Всяко съдържание, добавено тук, ще бъде поставено в долната част на секцията <head> на всяка страница. Това е удобно за преобладаващи стилове или добавяне на код за анализ.',
     'app_custom_html_disabled_notice' => 'Съдържанието на персонализираната HTML шапка е деактивирано на страницата с настройки, за да се гарантира, че евентуални лоши промени могат да бъдат върнати.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Лого на приложението',
     'app_logo_desc' => 'Това изображение трябва да е с 43px височина. <br> Големите изображения ще бъдат намалени.',
     'app_primary_color' => 'Основен цвят на приложението',

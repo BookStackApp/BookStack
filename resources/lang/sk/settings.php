@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Vlastný HTML obsah hlavičky',
     'app_custom_html_desc' => 'Všetok text pridaný sem bude vložený naspodok <head> sekcie na každej stránke. Môže sa to zísť pri zmene štýlu alebo pre pridanie analytického kódu.',
     'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Logo aplikácie',
     'app_logo_desc' => 'Tento obrázok by mal mať 43px na výšku. <br>Veľké obrázky budú preškálované na menší rozmer.',
     'app_primary_color' => 'Primárna farba pre aplikáciu',

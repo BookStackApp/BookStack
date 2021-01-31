@@ -30,6 +30,8 @@ return [
     'app_custom_html' => '自定义HTML头部内容',
     'app_custom_html_desc' => '此处添加的任何内容都将插入到每个页面的<head>部分的底部，这对于覆盖样式或添加分析代码很方便。',
     'app_custom_html_disabled_notice' => '在此设置页面上禁用了自定义HTML标题内容，以确保可以恢复所有重大更改。',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => '站点Logo',
     'app_logo_desc' => '这个图片的高度应该为43px。<br>大图片将会被缩小。',
     'app_primary_color' => '站点主色',

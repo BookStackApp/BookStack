@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Vlastní obsah hlavičky HTML',
     'app_custom_html_desc' => 'Cokoliv sem napíšete bude přidáno na konec sekce <head> v každém místě této aplikace. To se hodí pro přidávání nebo změnu CSS stylů nebo přidání kódu pro analýzu používání (např.: google analytics.).',
     'app_custom_html_disabled_notice' => 'Na této stránce nastavení je zakázán vlastní obsah HTML hlavičky, aby bylo zajištěno, že bude možné vrátit případnou problematickou úpravu.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Logo aplikace',
     'app_logo_desc' => 'Tento obrázek by měl mít výšku 43px. <br>Větší obrázky zmenšíme na tuto velikost.',
     'app_primary_color' => 'Hlavní barva aplikace',

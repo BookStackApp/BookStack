@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'HTML personnalisé dans l\'en-tête',
     'app_custom_html_desc' => 'Le contenu inséré ici sera ajouté en bas de la balise <head> de toutes les pages. Vous pouvez l\'utiliser pour ajouter du CSS personnalisé ou un tracker analytique.',
     'app_custom_html_disabled_notice' => 'Le contenu de la tête HTML personnalisée est désactivé sur cette page de paramètres pour garantir que les modifications les plus récentes peuvent être annulées.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Logo de l\'Application',
     'app_logo_desc' => 'Cette image doit faire 43px de hauteur. <br>Les images plus larges seront réduites.',
     'app_primary_color' => 'Couleur principale de l\'application',

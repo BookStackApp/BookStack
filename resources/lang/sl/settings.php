@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Po meri HTML vsebina glave',
     'app_custom_html_desc' => 'Katerakoli vsebina dodana tukaj, bo vstavljena na dno <head> dela vsake strani. To je uporabno za uporabo prevladujočih slogov ali dodajanje analitike.',
     'app_custom_html_disabled_notice' => 'Po meri narejena HTML glava vsebine je onemogočena na tej strani z nastavitvami, da se zagotovi, da bodo morebitne zrušitve lahko povrnjene.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Logotip aplikacije',
     'app_logo_desc' => 'Ta slika bi morala biti 43px visoka. <br>Velike slike bodo pomanjšane.',
     'app_primary_color' => 'Osnovna barva aplikacije',

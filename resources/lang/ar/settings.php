@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Custom HTML head content',
     'app_custom_html_desc' => 'سيتم إدراج أي محتوى مضاف هنا في الجزء السفلي من قسم <head> من كل صفحة. هذا أمر مفيد لتجاوز الأنماط أو إضافة رمز التحليل.',
     'app_custom_html_disabled_notice' => 'تم تعطيل محتوى HTML الرئيسي المخصص في صفحة الإعدادات هذه لضمان عكس أي تغييرات متتالية.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'شعار التطبيق',
     'app_logo_desc' => 'يجب أن تكون الصورة بارتفاع 43 بكسل. <br>سيتم تصغير الصور الأكبر من ذلك.',
     'app_primary_color' => 'اللون الأساسي للتطبيق',

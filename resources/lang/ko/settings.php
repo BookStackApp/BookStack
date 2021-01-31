@@ -30,6 +30,8 @@ return [
     'app_custom_html' => '헤드 작성',
     'app_custom_html_desc' => '설정 페이지를 제외한 모든 페이지 head 태그 끝머리에 추가합니다.',
     'app_custom_html_disabled_notice' => '문제가 생겨도 설정 페이지에서 되돌릴 수 있어요.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => '사이트 로고',
     'app_logo_desc' => '높이를 43px로 구성하세요. 큰 이미지는 축소합니다.',
     'app_primary_color' => '사이트 색채',

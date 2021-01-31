@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Користувацький вміст HTML-заголовку',
     'app_custom_html_desc' => 'Будь-який доданий тут вміст буде вставлено в нижню частину розділу <head> кожної сторінки. Це зручно для перевизначення стилів, або додавання коду аналітики.',
     'app_custom_html_disabled_notice' => 'На цій сторінці налаштувань відключений користувацький вміст заголовка HTML, щоб гарантувати, що будь-які невдалі зміни можна буде відновити.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Логотип програми',
     'app_logo_desc' => 'Це зображення має бути висотою 43px. <br>Великі зображення будуть зменшені.',
     'app_primary_color' => 'Основний колір програми',

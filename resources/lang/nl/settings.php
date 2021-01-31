@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Speciale HTML toevoegen',
     'app_custom_html_desc' => 'Alles wat je hier toevoegd wordt in de <head> sectie van elke pagina meengenomen. Dit kun je bijvoorbeeld voor analytics gebruiken.',
     'app_custom_html_disabled_notice' => 'Aangepaste HTML-hoofd-inhoud is uitgeschakeld op deze instellingenpagina om ervoor te zorgen dat breekbare wijzigingen ongedaan gemaakt kunnen worden.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Applicatielogo',
     'app_logo_desc' => 'De afbeelding moet 43px hoog zijn. <br>Grotere afbeeldingen worden geschaald.',
     'app_primary_color' => 'Applicatie hoofdkleur',

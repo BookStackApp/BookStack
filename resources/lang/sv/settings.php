@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Egen HTML i <head>',
     'app_custom_html_desc' => 'Eventuellt innehåll i det här fältet placeras längst ner i <head>-sektionen på varje sida. Detta är användbart för att skriva över stilmaller eller lägga in spårningskoder.',
     'app_custom_html_disabled_notice' => 'Anpassat innehåll i HTML-huvud är inaktiverat på denna inställningssida för att säkerställa att eventuella ändringar som påverkar funktionaliteten kan återställas.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Applikationslogotyp',
     'app_logo_desc' => 'Bilden bör vara minst 43px hög. <br>Större bilder skalas ner.',
     'app_primary_color' => 'Primärfärg',

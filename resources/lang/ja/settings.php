@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'カスタムheadタグ',
     'app_custom_html_desc' => 'スタイルシートやアナリティクスコード追加したい場合、ここを編集します。これは<head>の最下部に挿入されます。',
     'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'ロゴ',
     'app_logo_desc' => '高さ43pxで表示されます。これを上回る場合、自動で縮小されます。',
     'app_primary_color' => 'プライマリカラー',

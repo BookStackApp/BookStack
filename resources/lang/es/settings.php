@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Contenido de cabecera HTML personalizado',
     'app_custom_html_desc' => 'Cualquier contenido agregado aquí será insertado al final de la sección <head> de cada página. Esto es útil para sobreescribir estilos o agregar código para analíticas web.',
     'app_custom_html_disabled_notice' => 'El contenido personalizado para la cabecera está deshabilitado en esta página de ajustes para permitir que cualquier cambio que rompa la funcionalidad pueda ser revertido.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Logo de la Aplicación',
     'app_logo_desc' => 'Esta imagen debería de ser 43px de altura. <br> Las imágenes grandes serán escaladas.',
     'app_primary_color' => 'Color Primario de la Aplicación',

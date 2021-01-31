@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Własna zawartość w tagu <head>',
     'app_custom_html_desc' => 'Zawartość dodana tutaj zostanie dołączona na dole sekcji <head> każdej strony. Przydatne przy nadpisywaniu styli lub dodawaniu analityki.',
     'app_custom_html_disabled_notice' => 'Niestandardowa zawartość nagłówka HTML jest wyłączona na tej stronie ustawień aby zapewnić, że wszystkie błedne zmiany (braking change) mogą zostać cofnięte.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Logo aplikacji',
     'app_logo_desc' => 'Ten obrazek powinien mieć nie więcej niż 43px wysokosci. <br>Większe obrazki zostaną zmniejszone.',
     'app_primary_color' => 'Podstawowy kolor aplikacji',

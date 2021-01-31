@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Benutzerdefinierter HTML <head> Inhalt',
     'app_custom_html_desc' => 'Jeder Inhalt, der hier hinzugefügt wird, wird am Ende der <head> Sektion jeder Seite eingefügt. Diese kann praktisch sein, um CSS Styles anzupassen oder Analytics-Code hinzuzufügen.',
     'app_custom_html_disabled_notice' => 'Benutzerdefinierte HTML-Kopfzeileninhalte sind auf dieser Einstellungsseite deaktiviert, um sicherzustellen, dass alle Änderungen rückgängig gemacht werden können.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Anwendungslogo',
     'app_logo_desc' => 'Dieses Bild sollte 43px hoch sein.
 Größere Bilder werden verkleinert.',

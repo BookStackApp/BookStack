@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Egyéni HTML fejléc tartalom',
     'app_custom_html_desc' => 'Az itt hozzáadott bármilyen tartalom be lesz illesztve minden oldal <head> szekciójának aljára. Ez hasznos a stílusok felülírásához van analitikai kódok hozzáadásához.',
     'app_custom_html_disabled_notice' => 'Az egyéni HTML fejléc tartalom le van tiltva ezen a beállítási oldalon, hogy az esetleg hibásan megadott módosításokat vissza lehessen állítani.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Alkalmazás logó',
     'app_logo_desc' => 'A képnek 43px magasnak kell lennie.<br>A nagy képek át lesznek méretezve.',
     'app_primary_color' => 'Alkalmazás elsődleges színe',

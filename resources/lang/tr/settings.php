@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Özel HTML "Head" İçeriği',
     'app_custom_html_desc' => 'Buraya yazacağınız içerik, <head> etiketinin içine ve en sonuna eklenecektir. Bu işlem, stil değişikliklerinin uygulanmasında ya da analytics kodlarının eklenmesinde yararlı olmaktadır.',
     'app_custom_html_disabled_notice' => 'Olası hatalı değişikliklerin geriye alınabilmesi için bu sayfanın özelleştirilmiş HTML "head" içeriği devre dışı bırakıldı.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Uygulama Logosu',
     'app_logo_desc' => 'Bu görsel 43px yüksekliğinde olmalıdır. <br>Daha büyük görseller otomatik olarak küçültülecektir.',
     'app_primary_color' => 'Uygulamanın Birincil Rengi',

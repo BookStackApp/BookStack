@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Tilpasset HTML-hodeinnhold',
     'app_custom_html_desc' => 'Alt innhold som legges til her, blir satt inn i bunnen av <head> -delen på hver side. Dette er praktisk for å overstyre stiler eller legge til analysekode.',
     'app_custom_html_disabled_notice' => 'Tilpasset HTML-hodeinnhold er deaktivert på denne innstillingssiden for å sikre at eventuelle endringer ødelegger noe, kan tilbakestilles.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Applikasjonslogo',
     'app_logo_desc' => 'Dette bildet skal være 43 px høyt. <br> Store bilder blir nedskalert.',
     'app_primary_color' => 'Applikasjonens primærfarge',

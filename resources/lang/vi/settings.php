@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Tùy chọn nội dung Head HTML',
     'app_custom_html_desc' => 'Bất cứ nội dung nào được thêm vào đây sẽ được đưa vào phần cuối của khu vực <head> của mỗi trang. Tiện cho việc ghi đè style hoặc thêm mã phân tích dữ liệu.',
     'app_custom_html_disabled_notice' => 'Nội dung tùy biến HTML head bị tắt tại trang cài đặt này để đảm bảo mọi thay đổi làm hỏng hệ thống có để được khôi phục.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Logo Ứng dụng',
     'app_logo_desc' => 'Ảnh này nên có kích thước chiều cao là 43px. <br>Ảnh lớn sẽ được điều chỉnh tỷ lệ xuống.',
     'app_primary_color' => 'Màu chủ đạo của Ứng dụng',

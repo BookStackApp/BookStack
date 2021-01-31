@@ -30,6 +30,8 @@ return [
     'app_custom_html' => 'Tilpasset HTML head-indhold',
     'app_custom_html_desc' => 'Al indhold tilføjet her, vil blive indsat i bunden af <head> sektionen på alle sider. Dette er brugbart til overskrivning af styling og tilføjelse af analysekode.',
     'app_custom_html_disabled_notice' => 'Brugerdefineret HTML-head indhold er deaktiveret på denne indstillingsside for at sikre, at ødelæggende ændringer kan rettes.',
+    'app_custom_footer' => 'Custom HTML Footer',
+    'app_custom_footer_desc' => 'You can put contact infomation, partner\'s links. Or you can also add a <a href="ihttps://creativecommons.org/">creative commoms here</a>',
     'app_logo' => 'Programlogo',
     'app_logo_desc' => 'Dette billede skal være 43px højt. <br> Større billeder vil blive skaleret ned.',
     'app_primary_color' => 'Primær programfarve',
