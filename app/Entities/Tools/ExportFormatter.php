@@ -71,6 +71,54 @@ class ExportFormatter
     }
 
     /**
+     * Convert a page to a plain HTML file with original HREFs.
+     * Includes required CSS.
+     * @throws Throwable
+     */
+    public function pageToHtml(Page $page)
+    {
+        $page->html = (new PageContent($page))->render();
+        $pageHtml = view('pages.export', [
+            'page' => $page,
+            'format' => 'html',
+        ])->render();
+        return $pageHtml;
+    }
+
+    /**
+     * Convert a chapter to a plain HTML file with original HREFs.
+     * @throws Throwable
+     */
+    public function chapterToHtml(Chapter $chapter)
+    {
+        $pages = $chapter->getVisiblePages();
+        $pages->each(function ($page) {
+            $page->html = (new PageContent($page))->render();
+        });
+        $html = view('chapters.export', [
+            'chapter' => $chapter,
+            'pages' => $pages,
+            'format' => 'html',
+        ])->render();
+        return $html;
+    }
+
+    /**
+     * Convert a book to a plain HTML file with original HREFs.
+     * @throws Throwable
+     */
+    public function bookToHtml(Book $book)
+    {
+        $bookTree = (new BookContents($book))->getTree(false, true);
+        $html = view('books.export', [
+            'book' => $book,
+            'bookChildren' => $bookTree,
+            'format' => 'html',
+        ])->render();
+        return $html;
+    }
+
+    /**
      * Convert a page to a PDF file.
      * @throws Throwable
      */

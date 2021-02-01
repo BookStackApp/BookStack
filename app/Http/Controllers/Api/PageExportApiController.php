@@ -36,6 +36,17 @@ class PageExportApiController extends ApiController
     }
 
     /**
+     * Export a page as a plain HTML file with original HREFs.
+     * @throws Throwable
+     */
+    public function exportPlainHtml(int $id)
+    {
+        $page = Page::visible()->findOrFail($id);
+        $htmlContent = $this->exportFormatter->pageToHtml($page);
+        return $this->downloadResponse($htmlContent, $page->slug . '.html');
+    }
+
+    /**
      * Export a page as a plain text file.
      */
     public function exportPlainText(int $id)

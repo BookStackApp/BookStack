@@ -16,6 +16,7 @@ Route::put('books/{id}', 'BookApiController@update');
 Route::delete('books/{id}', 'BookApiController@delete');
 
 Route::get('books/{id}/export/html', 'BookExportApiController@exportHtml');
+Route::get('books/{id}/export/plainhtml', 'BookExportApiController@exportPlainHtml');
 Route::get('books/{id}/export/pdf', 'BookExportApiController@exportPdf');
 Route::get('books/{id}/export/plaintext', 'BookExportApiController@exportPlainText');
 
@@ -26,6 +27,7 @@ Route::put('chapters/{id}', 'ChapterApiController@update');
 Route::delete('chapters/{id}', 'ChapterApiController@delete');
 
 Route::get('chapters/{id}/export/html', 'ChapterExportApiController@exportHtml');
+Route::get('chapters/{id}/export/plainhtml', 'ChapterExportApiController@exportPlainHtml');
 Route::get('chapters/{id}/export/pdf', 'ChapterExportApiController@exportPdf');
 Route::get('chapters/{id}/export/plaintext', 'ChapterExportApiController@exportPlainText');
 
@@ -36,6 +38,7 @@ Route::put('pages/{id}', 'PageApiController@update');
 Route::delete('pages/{id}', 'PageApiController@delete');
 
 Route::get('pages/{id}/export/html', 'PageExportApiController@exportHtml');
+Route::get('pages/{id}/export/plainhtml', 'PageExportApiController@exportPlainHtml');
 Route::get('pages/{id}/export/pdf', 'PageExportApiController@exportPdf');
 Route::get('pages/{id}/export/plaintext', 'PageExportApiController@exportPlainText');
 

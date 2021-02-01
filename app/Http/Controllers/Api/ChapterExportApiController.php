@@ -40,6 +40,17 @@ class ChapterExportApiController extends ApiController
     }
 
     /**
+     * Export a chapter as a plain HTML file with original HREFs.
+     * @throws Throwable
+     */
+    public function exportPlainHtml(int $id)
+    {
+        $chapter = Chapter::visible()->findOrFail($id);
+        $htmlContent = $this->exportFormatter->chapterToHtml($chapter);
+        return $this->downloadResponse($htmlContent, $chapter->slug . '.html');
+    }
+
+    /**
      * Export a chapter as a plain text file.
      */
     public function exportPlainText(int $id)

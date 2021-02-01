@@ -36,6 +36,17 @@ class BookExportApiController extends ApiController
     }
 
     /**
+     * Export a book as a plain HTML file with original HREFs.
+     * @throws Throwable
+     */
+    public function exportPlainHtml(int $id)
+    {
+        $book = Book::visible()->findOrFail($id);
+        $htmlContent = $this->exportFormatter->bookToHtml($book);
+        return $this->downloadResponse($htmlContent, $book->slug . '.html');
+    }
+
+    /**
      * Export a book as a plain text file.
      */
     public function exportPlainText(int $id)
