@@ -146,7 +146,7 @@ return [
     'role_access_api' => 'גש ל-API המערכת',
     'role_manage_settings' => 'ניהול הגדרות יישום',
     'role_asset' => 'הרשאות משאבים',
-    'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
+    'roles_system_warning' => 'שימו לב לכך שגישה לכל אחת משלושת ההרשאות הנ"ל יכולה לאפשר למשתמש לשנות את הפריווילגיות שלהם או של אחרים במערכת. הגדירו תפקידים להרשאות אלה למשתמשים בהם אתם בוטחים בלבד.',
     'role_asset_desc' => 'הרשאות אלו שולטות בגישת ברירת המחדל למשאבים בתוך המערכת. הרשאות של ספרים, פרקים ודפים יגברו על הרשאות אלו.',
     'role_asset_admins' => 'מנהלים מקבלים הרשאה מלאה לכל התוכן אך אפשרויות אלו עלולות להציג או להסתיר אפשרויות בממשק',
     'role_all' => 'הכל',
