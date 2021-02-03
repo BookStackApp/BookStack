@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'user' => "We can't find a user with that e-mail address.",
+    'password' => 'Parolēm jābūt vismaz astoņu simbolu garām un jāatbilst apstiprinājumam.',
+    'user' => "Mēs nevaram atrast lietotāju ar tādu e-pasta adresi.",
     'token' => 'The password reset token is invalid for this email address.',
-    'sent' => 'We have e-mailed your password reset link!',
+    'sent' => 'Mēs jums esam nosūtījuši paroles atjaunošanas saiti!',
     'reset' => 'Your password has been reset!',
 
 ];
