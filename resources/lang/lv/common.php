@@ -10,7 +10,7 @@ return [
     'back' => 'Atpakaļ',
     'save' => 'Saglabāt',
     'continue' => 'Turpināt',
-    'select' => 'Select',
+    'select' => 'Atlasīt',
     'toggle_all' => 'Toggle All',
     'more' => 'Vairāk',
 
@@ -35,7 +35,7 @@ return [
     'delete' => 'Dzēst',
     'delete_confirm' => 'Confirm Deletion',
     'search' => 'Meklēt',
-    'search_clear' => 'Clear Search',
+    'search_clear' => 'Notīrīt meklēšanu',
     'reset' => 'Reset',
     'remove' => 'Noņemt',
     'add' => 'Pievienot',
