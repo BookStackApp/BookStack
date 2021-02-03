@@ -231,6 +231,7 @@ return [
         'en' => 'English',
         'ar' => 'العربية',
         'bg' => 'Bǎlgarski',
+        'ca' => 'Català',
         'cs' => 'Česky',
         'da' => 'Dansk',
         'de' => 'Deutsch (Sie)',
