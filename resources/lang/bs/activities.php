@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'created page',
+    'page_create'                 => 'je kreirao/la stranicu',
     'page_create_notification'    => 'Page Successfully Created',
     'page_update'                 => 'updated page',
     'page_update_notification'    => 'Page Successfully Updated',
