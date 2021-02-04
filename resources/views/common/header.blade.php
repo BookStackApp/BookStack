@@ -13,7 +13,7 @@
             <div class="mobile-menu-toggle hide-over-l">@icon('more')</div>
         </div>
 
-        <div class="header-search hide-under-l">
+        <div class="flex-container-row justify-center hide-under-l">
             @if (hasAppAccess())
             <form action="{{ url('/search') }}" method="GET" class="search-box" role="search">
                 <button id="header-search-box-button" type="submit" aria-label="{{ trans('common.search') }}" tabindex="-1">@icon('search') </button>
