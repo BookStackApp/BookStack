@@ -6,7 +6,7 @@
  */
 return [
 
-    'failed' => 'These credentials do not match our records.',
+    'failed' => 'Šie reģistrācijas dati neatbilst mūsu ierakstiem.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
     // Login & Register
@@ -23,12 +23,12 @@ return [
     'password_confirm' => 'Apstiprināt paroli',
     'password_hint' => 'Must be over 7 characters',
     'forgot_password' => 'Forgot Password?',
-    'remember_me' => 'Remember Me',
+    'remember_me' => 'Atcerēties mani',
     'ldap_email_hint' => 'Please enter an email to use for this account.',
-    'create_account' => 'Create Account',
-    'already_have_account' => 'Already have an account?',
-    'dont_have_account' => 'Don\'t have an account?',
-    'social_login' => 'Social Login',
+    'create_account' => 'Izveidot profilu',
+    'already_have_account' => 'Jau ir profils?',
+    'dont_have_account' => 'Nav profila?',
+    'social_login' => 'Pieteikšanās ar sociālo tīklu profilu',
     'social_registration' => 'Social Registration',
     'social_registration_text' => 'Register and sign in using another service.',
 
@@ -54,10 +54,10 @@ return [
     'email_confirm_subject' => 'Confirm your email on :appName',
     'email_confirm_greeting' => 'Thanks for joining :appName!',
     'email_confirm_text' => 'Please confirm your email address by clicking the button below:',
-    'email_confirm_action' => 'Confirm Email',
+    'email_confirm_action' => 'Apstiprināt e-pastu',
     'email_confirm_send_error' => 'Email confirmation required but the system could not send the email. Contact the admin to ensure email is set up correctly.',
-    'email_confirm_success' => 'Your email has been confirmed!',
-    'email_confirm_resent' => 'Confirmation email resent, Please check your inbox.',
+    'email_confirm_success' => 'Jūsu e-pasts ir apstiprināts!',
+    'email_confirm_resent' => 'Apstiprinājuma vēstule tika nosūtīta. Lūdzu, pārbaudiet jūsu e-pastu.',
 
     'email_not_confirmed' => 'Email Address Not Confirmed',
     'email_not_confirmed_text' => 'Your email address has not yet been confirmed.',
