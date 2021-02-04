@@ -3,7 +3,7 @@
  */
 
 header .grid {
-  grid-template-columns: auto min-content auto;
+  grid-template-columns: minmax(max-content, 2fr) 1fr minmax(max-content, 2fr);
 }
 
 @include smaller-than($l) {
@@ -77,9 +77,6 @@ header {
 }
 
 
-.header-search {
-  display: inline-block;
-}
 header .search-box {
   display: inline-block;
   margin-top: 10px;
