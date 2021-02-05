@@ -44,6 +44,6 @@ return [
     'bookshelf_delete_notification'    => 'Plaukts Veiksmīgi Dzēsts',
 
     // Other
-    'commented_on'                => 'commented on',
+    'commented_on'                => 'komentēts',
     'permissions_update'          => 'atjaunoja atļaujas',
 ];
