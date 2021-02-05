@@ -8,8 +8,8 @@ return [
 
     'password' => 'Parolēm jābūt vismaz astoņu simbolu garām un jāatbilst apstiprinājumam.',
     'user' => "Mēs nevaram atrast lietotāju ar šādu e-pasta adresi.",
-    'token' => 'The password reset token is invalid for this email address.',
-    'sent' => 'Mēs jums esam nosūtījuši paroles atjaunošanas saiti!',
+    'token' => 'Paroles atiestatīšanas atslēga neatbilst šai e-pasta adresei.',
+    'sent' => 'Esam nosūtījuši paroles atiestatīšanas saiti!',
     'reset' => 'Parole ir atiestatīta!',
 
 ];
