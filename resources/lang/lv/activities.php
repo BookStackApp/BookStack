@@ -32,8 +32,8 @@ return [
     'book_update_notification'    => 'Grāmata Veiksmīgi Atjaunota',
     'book_delete'                 => 'izdzēsa grāmatu',
     'book_delete_notification'    => 'Grāmata Veiksmīgi Dzēsta',
-    'book_sort'                   => 'sorted book',
-    'book_sort_notification'      => 'Book Successfully Re-sorted',
+    'book_sort'                   => 'kārtoja grāmatu',
+    'book_sort_notification'      => 'Grāmata Veiksmīgi Pārkārtota',
 
     // Bookshelves
     'bookshelf_create'            => 'izveidoja Plauktu',
