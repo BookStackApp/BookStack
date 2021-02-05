@@ -42,8 +42,8 @@ return [
     // Password Reset
     'reset_password' => 'Atiestatīt paroli',
     'reset_password_send_instructions' => 'Ievadiet savu e-pastu zemāk un nosūtīsim e-pastu ar paroles atiestatīšanas saiti.',
-    'reset_password_send_button' => 'Nosūtīt atjaunošanas saiti',
-    'reset_password_sent' => 'Paroles atiestatīšanas saite tiks nosūtīta uz :email, ja šāds e-pasts eksistē.',
+    'reset_password_send_button' => 'Nosūtīt atiestatīšanas saiti',
+    'reset_password_sent' => 'Paroles atiestatīšanas saite tiks nosūtīta uz :email, ja šāds e-pasts būs derīgs.',
     'reset_password_success' => 'Jūsu parole ir veiksmīgi atiestatīta.',
     'email_reset_subject' => 'Atiestatīt :appName paroli',
     'email_reset_text' => 'Jūs saņemat šo e-pastu, jo mēs saņēmām Jūsu profila paroles atiestatīšanas pieprasījumu.',
@@ -55,14 +55,14 @@ return [
     'email_confirm_greeting' => 'Paldies, ka pievienojāties :appName!',
     'email_confirm_text' => 'Lūdzu apstipriniet savu e-pastu nospiežot zemāk redzamo pogu:',
     'email_confirm_action' => 'Apstiprināt e-pastu',
-    'email_confirm_send_error' => 'Email confirmation required but the system could not send the email. Contact the admin to ensure email is set up correctly.',
+    'email_confirm_send_error' => 'E-pasta apriprināšana ir nepieciešama, bet sistēma nevarēja e-pastu nosūtīt. Lūdzu sazinaties ar administratoru, lai pārliecinātos, ka e-pasts ir iestatīts pareizi.',
     'email_confirm_success' => 'Jūsu e-pasts ir apstiprināts!',
     'email_confirm_resent' => 'Apstiprinājuma vēstule tika nosūtīta. Lūdzu, pārbaudiet jūsu e-pastu.',
 
     'email_not_confirmed' => 'E-pasts nav apstiprināts',
     'email_not_confirmed_text' => 'Jūsu e-pasta adrese vēl nav apstiprināta.',
-    'email_not_confirmed_click_link' => 'Please click the link in the email that was sent shortly after you registered.',
-    'email_not_confirmed_resend' => 'If you cannot find the email you can re-send the confirmation email by submitting the form below.',
+    'email_not_confirmed_click_link' => 'Lūdzu, noklikšķiniet uz saiti nosūtītajā e-pastā pēc reģistrēšanās.',
+    'email_not_confirmed_resend' => 'Ja neredzi e-pastu, tad vari atkārtoti nosūtīt apstiprinājuma e-pastu iesniedzot zemāk redzamo formu.',
     'email_not_confirmed_resend_button' => 'Atkārtoti nosūtīt apstiprinājuma e-pastu',
 
     // User Invite
