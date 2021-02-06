@@ -6,10 +6,9 @@ use Illuminate\Http\UploadedFile;
 trait UsesImages
 {
     /**
-     * Get the path to our basic test image.
-     * @return string
+     * Get the path to a file in the test-data-directory.
      */
-    protected function getTestImageFilePath(?string $fileName = null)
+    protected function getTestImageFilePath(?string $fileName = null): string
     {
         if (is_null($fileName)) {
             $fileName = 'test-image.png';
@@ -19,13 +18,26 @@ trait UsesImages
     }
 
     /**
-     * Get a test image that can be uploaded
-     * @param $fileName
-     * @return UploadedFile
+     * Creates a new temporary image file using the given name,
+     * with the content decoded from the given bas64 file name.
+     * Is generally used for testing sketchy files that could trip AV.
      */
-    protected function getTestImage($fileName, ?string $testDataFileName = null)
+    protected function newTestImageFromBase64(string $base64FileName, $imageFileName): UploadedFile
     {
-        return new UploadedFile($this->getTestImageFilePath($testDataFileName), $fileName, 'image/png', 5238, null, true);
+        $imagePath = implode(DIRECTORY_SEPARATOR, [sys_get_temp_dir(), $imageFileName]);
+        $base64FilePath = $this->getTestImageFilePath($base64FileName);
+        $data = file_get_contents($base64FilePath);
+        $decoded = base64_decode($data);
+        file_put_contents($imagePath, $decoded);
+        return new UploadedFile($imagePath, $imageFileName, 'image/png', null, true);
+    }
+
+    /**
+     * Get a test image that can be uploaded
+     */
+    protected function getTestImage(string $fileName, ?string $testDataFileName = null): UploadedFile
+    {
+        return new UploadedFile($this->getTestImageFilePath($testDataFileName), $fileName, 'image/png', null, true);
     }
 
     /**
