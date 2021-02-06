@@ -223,10 +223,6 @@ class PageRepo
     {
         $revision = new PageRevision($page->getAttributes());
 
-        if (setting('app-editor') !== 'markdown') {
-            $revision->markdown = '';
-        }
-
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
@@ -289,7 +285,13 @@ class PageRepo
 
         $page->fill($revision->toArray());
         $content = new PageContent($page);
-        $content->setNewHTML($revision->html);
+
+        if (!empty($revision->markdown)) {
+            $content->setNewMarkdown($revision->markdown);
+        } else {
+            $content->setNewHTML($revision->html);
+        }
+        
         $page->updated_by = user()->id;
         $page->refreshSlug();
         $page->save();

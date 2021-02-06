@@ -74,7 +74,7 @@ class PageRevisionTest extends TestCase
         $page = Page::first();
         $pageRepo->update($page, ['name' => 'updated page abc123', 'markdown' => '## New Content def456', 'summary' => 'initial page revision testing']);
         $pageRepo->update($page, ['name' => 'updated page again', 'markdown' => '## New Content Updated', 'summary' => 'page revision testing']);
-        $page =  Page::find($page->id);
+        $page = Page::find($page->id);
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee('abc123');
@@ -90,7 +90,7 @@ class PageRevisionTest extends TestCase
         $pageView = $this->get($page->getUrl());
         $this->assertDatabaseHas('pages', [
             'id' => $page->id,
-            'markdown' => '## New Content Updated',
+            'markdown' => '## New Content def456',
         ]);
         $pageView->assertSee('abc123');
         $pageView->assertSee('def456');
