@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df6e5d5d5debaaeab590da55c7d50ec2",
+    "content-hash": "d73b8bdf23e32f109f052ac18e20458f",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.172.3",
+            "version": "3.173.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "14fd73f12fc70d5f48e034f5dfc33136136adb61"
+                "reference": "ab3ee1cba4219d5262ecac8f011f267e9b7f3af9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/14fd73f12fc70d5f48e034f5dfc33136136adb61",
-                "reference": "14fd73f12fc70d5f48e034f5dfc33136136adb61",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ab3ee1cba4219d5262ecac8f011f267e9b7f3af9",
+                "reference": "ab3ee1cba4219d5262ecac8f011f267e9b7f3af9",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.172.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.173.0"
             },
-            "time": "2021-01-28T19:14:55+00:00"
+            "time": "2021-02-02T20:01:31+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1712,16 +1712,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.20.15",
+            "version": "v6.20.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b42c2d845cdd827ac5a53cacf16af4a0b5dd8be1"
+                "reference": "806082fb559fe595cb17cd6aa8571f03ed287814"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b42c2d845cdd827ac5a53cacf16af4a0b5dd8be1",
-                "reference": "b42c2d845cdd827ac5a53cacf16af4a0b5dd8be1",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/806082fb559fe595cb17cd6aa8571f03ed287814",
+                "reference": "806082fb559fe595cb17cd6aa8571f03ed287814",
                 "shasum": ""
             },
             "require": {
@@ -1861,7 +1861,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-01-26T14:39:47+00:00"
+            "time": "2021-02-02T13:50:12+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -3798,16 +3798,16 @@
         },
         {
             "name": "socialiteproviders/okta",
-            "version": "4.1.0",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SocialiteProviders/Okta.git",
-                "reference": "60f88b8e8c88508889c61346af83290131b72fe7"
+                "reference": "e3ef9f23c7d2f86b3b16a174b82333cf4e2459e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SocialiteProviders/Okta/zipball/60f88b8e8c88508889c61346af83290131b72fe7",
-                "reference": "60f88b8e8c88508889c61346af83290131b72fe7",
+                "url": "https://api.github.com/repos/SocialiteProviders/Okta/zipball/e3ef9f23c7d2f86b3b16a174b82333cf4e2459e8",
+                "reference": "e3ef9f23c7d2f86b3b16a174b82333cf4e2459e8",
                 "shasum": ""
             },
             "require": {
@@ -3833,9 +3833,9 @@
             ],
             "description": "Okta OAuth2 Provider for Laravel Socialite",
             "support": {
-                "source": "https://github.com/SocialiteProviders/Okta/tree/4.1.0"
+                "source": "https://github.com/SocialiteProviders/Okta/tree/4.1.1"
             },
-            "time": "2020-12-01T23:10:59+00:00"
+            "time": "2021-01-12T23:51:01+00:00"
         },
         {
             "name": "socialiteproviders/slack",
