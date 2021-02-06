@@ -273,11 +273,11 @@ class TrashCan
             $count++;
         };
 
-        if ($entity->isA('chapter') || $entity->isA('book')) {
+        if ($entity instanceof Chapter || $entity instanceof Book) {
             $entity->pages()->withTrashed()->withCount('deletions')->get()->each($restoreAction);
         }
 
-        if ($entity->isA('book')) {
+        if ($entity instanceof Book) {
             $entity->chapters()->withTrashed()->withCount('deletions')->get()->each($restoreAction);
         }
 
@@ -286,19 +286,20 @@ class TrashCan
 
     /**
      * Destroy the given entity.
+     * @throws Exception
      */
     protected function destroyEntity(Entity $entity): int
     {
-        if ($entity->isA('page')) {
+        if ($entity instanceof Page) {
             return $this->destroyPage($entity);
         }
-        if ($entity->isA('chapter')) {
+        if ($entity instanceof Chapter) {
             return $this->destroyChapter($entity);
         }
-        if ($entity->isA('book')) {
+        if ($entity instanceof Book) {
             return $this->destroyBook($entity);
         }
-        if ($entity->isA('bookshelf')) {
+        if ($entity instanceof Bookshelf) {
             return $this->destroyShelf($entity);
         }
     }
