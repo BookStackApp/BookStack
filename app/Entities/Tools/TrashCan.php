@@ -298,7 +298,7 @@ class TrashCan
         if ($entity->isA('book')) {
             return $this->destroyBook($entity);
         }
-        if ($entity->isA('shelf')) {
+        if ($entity->isA('bookshelf')) {
             return $this->destroyShelf($entity);
         }
     }
