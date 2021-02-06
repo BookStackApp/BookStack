@@ -136,7 +136,7 @@ class ImageTest extends TestCase
         $relPath = $this->getTestImagePath('gallery', $fileName);
         $this->deleteImage($relPath);
 
-        $file = $this->getTestImage($fileName);
+        $file = $this->newTestImageFromBase64('bad-php.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(302);
 
@@ -158,7 +158,7 @@ class ImageTest extends TestCase
         $relPath = $this->getTestImagePath('gallery', $fileName);
         $this->deleteImage($relPath);
 
-        $file = $this->getTestImage($fileName);
+        $file = $this->newTestImageFromBase64('bad-phtml.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(302);
 
@@ -175,7 +175,7 @@ class ImageTest extends TestCase
         $relPath = $this->getTestImagePath('gallery', $fileName);
         $this->deleteImage($relPath);
 
-        $file = $this->getTestImage($fileName);
+        $file = $this->newTestImageFromBase64('bad-phtml-png.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/png')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(302);
 
