@@ -22,7 +22,6 @@ class MarkdownEditor {
 
         this.displayStylesLoaded = false;
         this.input = this.elem.querySelector('textarea');
-        this.htmlInput = this.elem.querySelector('input[name=html]');
         this.cm = code.markdownEditor(this.input);
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
@@ -125,7 +124,6 @@ class MarkdownEditor {
         // Set body content
         this.displayDoc.body.className = 'page-content';
         this.displayDoc.body.innerHTML = html;
-        this.htmlInput.value = html;
 
         // Copy styles from page head and set custom styles for editor
         this.loadStylesIntoDisplay();
