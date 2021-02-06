@@ -177,17 +177,13 @@ class PageRepo
         // Hold the old details to compare later
         $oldHtml = $page->html;
         $oldName = $page->name;
+        $oldMarkdown = $page->markdown;
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
 
         // Update with new details
         $page->revision_count++;
-
-        if (setting('app-editor') !== 'markdown') {
-            $page->markdown = '';
-        }
-
         $page->save();
 
         // Remove all update drafts for this user & page.
@@ -195,7 +191,10 @@ class PageRepo
 
         // Save a revision after updating
         $summary = $input['summary'] ?? null;
-        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $summary !== null) {
+        $htmlChanged = isset($input['html']) && $input['html'] !== $oldHtml;
+        $nameChanged = isset($input['name']) && $input['name'] !== $oldName;
+        $markdownChanged = isset($input['markdown']) && $input['markdown'] !== $oldMarkdown;
+        if ($htmlChanged || $nameChanged || $markdownChanged || $summary !== null) {
             $this->savePageRevision($page, $summary);
         }
 

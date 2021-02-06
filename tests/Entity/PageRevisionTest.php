@@ -66,6 +66,36 @@ class PageRevisionTest extends TestCase
         $pageView->assertSee('def456');
     }
 
+    public function test_page_revision_restore_with_markdown_retains_markdown_content()
+    {
+        $this->asEditor();
+
+        $pageRepo = app(PageRepo::class);
+        $page = Page::first();
+        $pageRepo->update($page, ['name' => 'updated page abc123', 'markdown' => '## New Content def456', 'summary' => 'initial page revision testing']);
+        $pageRepo->update($page, ['name' => 'updated page again', 'markdown' => '## New Content Updated', 'summary' => 'page revision testing']);
+        $page =  Page::find($page->id);
+
+        $pageView = $this->get($page->getUrl());
+        $pageView->assertDontSee('abc123');
+        $pageView->assertDontSee('def456');
+
+        $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
+        $restoreReq = $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
+        $page = Page::find($page->id);
+
+        $restoreReq->assertStatus(302);
+        $restoreReq->assertRedirect($page->getUrl());
+
+        $pageView = $this->get($page->getUrl());
+        $this->assertDatabaseHas('pages', [
+            'id' => $page->id,
+            'markdown' => '## New Content Updated',
+        ]);
+        $pageView->assertSee('abc123');
+        $pageView->assertSee('def456');
+    }
+
     public function test_page_revision_restore_sets_new_revision_with_summary()
     {
         $this->asEditor();
