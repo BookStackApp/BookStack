@@ -36,6 +36,7 @@
         <server name="AUTH_METHOD" value="standard"/>
         <server name="DISABLE_EXTERNAL_SERVICES" value="true"/>
         <server name="AVATAR_URL" value=""/>
+        <server name="LDAP_START_TLS" value="false"/>
         <server name="LDAP_VERSION" value="3"/>
         <server name="SESSION_SECURE_COOKIE" value="null"/>
         <server name="STORAGE_TYPE" value="local"/>
