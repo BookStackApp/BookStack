@@ -201,13 +201,13 @@ return [
     'users_api_tokens_none' => 'No API tokens have been created for this user',
     'users_api_tokens_create' => 'Create Token',
     'users_api_tokens_expires' => 'Expires',
-    'users_api_tokens_docs' => 'API Documentation',
+    'users_api_tokens_docs' => 'API dokumentācija',
 
     // API Tokens
     'user_api_token_create' => 'Create API Token',
-    'user_api_token_name' => 'Name',
+    'user_api_token_name' => 'Vārds',
     'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
-    'user_api_token_expiry' => 'Expiry Date',
+    'user_api_token_expiry' => 'Derīgs līdz',
     'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
     'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
     'user_api_token_create_success' => 'API token successfully created',
