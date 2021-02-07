@@ -7,21 +7,21 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'settings_save_success' => 'Settings saved',
+    'settings' => 'Iestatījumi',
+    'settings_save' => 'Saglabāt iestatījumus',
+    'settings_save_success' => 'Iestatījumi saglabāti',
 
     // App Settings
-    'app_customization' => 'Customization',
-    'app_features_security' => 'Features & Security',
-    'app_name' => 'Application Name',
+    'app_customization' => 'Pielāgojumi',
+    'app_features_security' => 'Funkcijas un drošība',
+    'app_name' => 'Lietotnes nosaukums',
     'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
     'app_name_header' => 'Show name in header',
-    'app_public_access' => 'Public Access',
+    'app_public_access' => 'Publiska piekļuve',
     'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
     'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
-    'app_public_access_toggle' => 'Allow public access',
-    'app_public_viewing' => 'Allow public viewing?',
+    'app_public_access_toggle' => 'Atļaut publisku piekļuvi',
+    'app_public_viewing' => 'Atļaut publisku piekļuvi?',
     'app_secure_images' => 'Higher Security Image Uploads',
     'app_secure_images_toggle' => 'Enable higher security image uploads',
     'app_secure_images_desc' => 'For performance reasons, all images are public. This option adds a random, hard-to-guess string in front of image urls. Ensure directory indexes are not enabled to prevent easy access.',
@@ -30,7 +30,7 @@ return [
     'app_custom_html' => 'Custom HTML Head Content',
     'app_custom_html_desc' => 'Any content added here will be inserted into the bottom of the <head> section of every page. This is handy for overriding styles or adding analytics code.',
     'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
-    'app_logo' => 'Application Logo',
+    'app_logo' => 'Lietotnes logo',
     'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
     'app_primary_color' => 'Application Primary Color',
     'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
@@ -42,8 +42,8 @@ return [
     'app_footer_links_label' => 'Link Label',
     'app_footer_links_url' => 'Link URL',
     'app_footer_links_add' => 'Add Footer Link',
-    'app_disable_comments' => 'Disable Comments',
-    'app_disable_comments_toggle' => 'Disable comments',
+    'app_disable_comments' => 'Izslēgt komentārus',
+    'app_disable_comments_toggle' => 'Izslēgt komentārus',
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
 
     // Color settings
