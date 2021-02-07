@@ -56,7 +56,7 @@ class HomeController extends Controller
         // Add required list ordering & sorting for books & shelves views.
         if ($homepageOption === 'bookshelves' || $homepageOption === 'books') {
             $key = $homepageOption;
-            $view = setting()->getForCurrentUser($key . '_view_type', config('app.views.' . $key));
+            $view = setting()->getForCurrentUser($key . '_view_type');
             $sort = setting()->getForCurrentUser($key . '_sort', 'name');
             $order = setting()->getForCurrentUser($key . '_sort_order', 'asc');
 

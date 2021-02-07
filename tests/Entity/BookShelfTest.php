@@ -59,7 +59,7 @@ class BookShelfTest extends TestCase
     public function test_book_not_visible_in_shelf_list_view_if_user_cant_view_shelf()
     {
         config()->set([
-            'app.views.bookshelves' => 'list',
+            'setting-defaults.user.bookshelves_view_type' => 'list',
         ]);
         $shelf = Bookshelf::query()->first();
         $book = $shelf->books()->first();
