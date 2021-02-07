@@ -19,13 +19,6 @@ return [
     // private configuration variables so should remain disabled in public.
     'debug' => env('APP_DEBUG', false),
 
-    // Set the default view type for various lists. Can be overridden by user preferences.
-    // These will be used for public viewers and users that have not set a preference.
-    'views' => [
-        'books' => env('APP_VIEWS_BOOKS', 'list'),
-        'bookshelves' => env('APP_VIEWS_BOOKSHELVES', 'grid'),
-    ],
-
     // The number of revisions to keep in the database.
     // Once this limit is reached older revisions will be deleted.
     // If set to false then a limit will not be enforced.

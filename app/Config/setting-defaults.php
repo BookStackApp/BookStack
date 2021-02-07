@@ -24,4 +24,11 @@ return [
     'app-custom-head'      => false,
     'registration-enabled' => false,
 
+    // User-level default settings
+    'user' => [
+        'dark-mode-enabled' => env('APP_DEFAULT_DARK_MODE', false),
+        'bookshelves_view_type' => env('APP_VIEWS_BOOKSHELVES', 'grid'),
+        'books_view_type' => env('APP_VIEWS_BOOKS', 'grid'),
+    ],
+
 ];

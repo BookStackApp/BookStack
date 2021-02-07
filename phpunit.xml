@@ -57,5 +57,6 @@
         <server name="LOG_FAILED_LOGIN_MESSAGE" value=""/>
         <server name="LOG_FAILED_LOGIN_CHANNEL" value="testing"/>
         <server name="WKHTMLTOPDF" value="false"/>
+        <server name="APP_DEFAULT_DARK_MODE" value="false"/>
     </php>
 </phpunit>
