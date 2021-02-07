@@ -23,7 +23,7 @@ return [
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
-    'social_no_action_defined' => 'No action defined',
+    'social_no_action_defined' => 'Darbības nav definētas',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
     'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.',
     'social_account_email_in_use' => 'The email :email is already in use. If you already have an account you can connect your :socialAccount account from your profile settings.',
@@ -74,16 +74,16 @@ return [
 
     // Comments
     'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
+    'cannot_add_comment_to_draft' => 'Melnrakstam nevar pievienot komentārus.',
     'comment_add' => 'An error occurred while adding / updating the comment.',
     'comment_delete' => 'An error occurred while deleting the comment.',
-    'empty_comment' => 'Cannot add an empty comment.',
+    'empty_comment' => 'Nevar pievienot tukšu komentāru.',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
+    '404_page_not_found' => 'Lapa nav atrasta',
     'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
     'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
-    'return_home' => 'Return to home',
+    'return_home' => 'Atgriezties uz sākumu',
     'error_occurred' => 'An Error Occurred',
     'app_down' => ':appName is down right now',
     'back_soon' => 'It will be back up soon.',
