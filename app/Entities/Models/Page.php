@@ -127,17 +127,21 @@ class Page extends BookChild
         return $refreshed;
     }
 
+    /**
+     * Returns URL to a cover image for the page.
+     */
     public function getCoverImage(): string
     {
-        $dom = new \DomDocument();
-        $dom->loadHTML($this->html);
-        $images = $dom->getElementsByTagName('img');
+        $default = $this->book->getBookCover();
+
+        $firstImage = (new PageContent($this))->fetchFirstImage();
 
         try {
-            $cover = $images->length > 0 ? $images[0]->getAttribute('src') : $this->book->getBookCover();
-        } catch (Exception $err) {
-            $cover = $this->book->getBookCover();
+            $cover = $firstImage ? $firstImage : $default;
+        } catch (\Exception $err) {
+            $cover = $default;
         }
         return $cover;
     }
+    
 }

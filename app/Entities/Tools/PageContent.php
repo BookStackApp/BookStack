@@ -358,4 +358,18 @@ class PageContent
 
         return $html;
     }
+
+    /**
+     * Retrieve first image in page content and return the source URL.
+     */
+    public function fetchFirstImage(): string
+    {
+        $htmlContent = $this->page->html;
+
+        $dom = new \DomDocument();
+        $dom->loadHTML($htmlContent);
+        $images = $dom->getElementsByTagName('img');
+
+        return $images[0]->getAttribute('src');
+    }
 }

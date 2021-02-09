@@ -1,7 +1,7 @@
 @extends('tri-layout')
 
 @push('social-meta')
-    <meta property="og:description" content="{{ Str::words($shelf->description, 50, '...') }}">
+    <meta property="og:description" content="{{ Str::limit($shelf->description, 100) }}">
     <meta property="og:image" content="{{ $shelf->getBookCover() }}">
 @endpush
 
