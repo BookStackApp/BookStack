@@ -3,9 +3,6 @@
 @push('social-meta')
     <meta property="og:description" content="{{ Str::limit($page->text, 100, '...') }}">
     <meta property="og:image" content="{{ $page->getCoverImage() }}">
-
-
-    $pageContent->getNavigation($page->html);
 @endpush
 
 @section('body')

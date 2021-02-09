@@ -362,7 +362,7 @@ class PageContent
     /**
      * Retrieve first image in page content and return the source URL.
      */
-    public function fetchFirstImage(): string
+    public function fetchFirstImage()
     {
         $htmlContent = $this->page->html;
 
@@ -370,6 +370,6 @@ class PageContent
         $dom->loadHTML($htmlContent);
         $images = $dom->getElementsByTagName('img');
 
-        return $images ? $images[0]->getAttribute('src') : null;
+        return $images->length > 0 ? $images[0]->getAttribute('src') : null;
     }
 }

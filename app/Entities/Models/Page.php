@@ -130,9 +130,10 @@ class Page extends BookChild
     /**
      * Returns URL to a cover image for the page.
      */
-    public function getCoverImage(): string
+    public function getCoverImage()
     {
-        $default = $this->book->getBookCover();
+        //$default = $this->book->getBookCover();
+        $default = url('/logo.png');
 
         $firstImage = (new PageContent($this))->fetchFirstImage();
 
