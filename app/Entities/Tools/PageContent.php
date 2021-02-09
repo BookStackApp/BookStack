@@ -370,6 +370,6 @@ class PageContent
         $dom->loadHTML($htmlContent);
         $images = $dom->getElementsByTagName('img');
 
-        return $images[0]->getAttribute('src');
+        return $images ? $images[0]->getAttribute('src') : null;
     }
 }
