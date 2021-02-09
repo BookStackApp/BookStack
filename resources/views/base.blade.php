@@ -12,7 +12,6 @@
     <meta charset="utf-8">
 
     <!-- Social Cards Meta -->
-
     <meta property="og:title" content="{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     @stack('social-meta')
