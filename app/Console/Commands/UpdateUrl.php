@@ -60,6 +60,7 @@ class UpdateUrl extends Command
             "attachments" => ["path"],
             "pages" => ["html", "text", "markdown"],
             "images" => ["url"],
+            "settings" => ["value"],
             "comments" => ["html", "text"],
         ];
 
