@@ -16,7 +16,7 @@ return [
     'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
     'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
     'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
-    'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
+    'ldap_extension_not_installed' => 'LDAP PHP paplašinājums nav instalēts',
     'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
     'saml_already_logged_in' => 'Already logged in',
     'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
@@ -37,7 +37,7 @@ return [
 
     // System
     'path_not_writable' => 'File path :filePath could not be uploaded to. Ensure it is writable to the server.',
-    'cannot_get_image_from_url' => 'Cannot get image from :url',
+    'cannot_get_image_from_url' => 'Nevar iegūt bildi no :url',
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
@@ -53,18 +53,18 @@ return [
     'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
 
     // Entities
-    'entity_not_found' => 'Entity not found',
-    'bookshelf_not_found' => 'Bookshelf not found',
-    'book_not_found' => 'Book not found',
-    'page_not_found' => 'Page not found',
-    'chapter_not_found' => 'Chapter not found',
-    'selected_book_not_found' => 'The selected book was not found',
+    'entity_not_found' => 'Vienība nav atrasta',
+    'bookshelf_not_found' => 'Grāmatplaukts nav atrasts',
+    'book_not_found' => 'Grāmata nav atrasta',
+    'page_not_found' => 'Lapa nav atrasta',
+    'chapter_not_found' => 'Nodaļa nav atrasta',
+    'selected_book_not_found' => 'Iezīmētā grāmata nav atrasta',
     'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
-    'guests_cannot_save_drafts' => 'Guests cannot save drafts',
+    'guests_cannot_save_drafts' => 'Viesi nevar saglabāt melnrakstus',
 
     // Users
-    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
-    'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    'users_cannot_delete_only_admin' => 'Jūs nevarat dzēst vienīgo administratoru',
+    'users_cannot_delete_guest' => 'Jūs nevarat dzēst lietotāju "viesis"',
 
     // Roles
     'role_cannot_be_edited' => 'This role cannot be edited',
@@ -84,9 +84,9 @@ return [
     'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
     'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
     'return_home' => 'Atgriezties uz sākumu',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
-    'back_soon' => 'It will be back up soon.',
+    'error_occurred' => 'Radusies kļūda',
+    'app_down' => ':appName pagaidām nav pieejams',
+    'back_soon' => 'Drīz būs atkal pieejams.',
 
     // API errors
     'api_no_authorization_found' => 'No authorization token found on the request',
@@ -97,6 +97,6 @@ return [
     'api_user_token_expired' => 'The authorization token used has expired',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Radusies kļūda sūtot testa epastu:',
 
 ];
