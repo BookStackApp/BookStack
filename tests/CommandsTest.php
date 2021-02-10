@@ -2,7 +2,6 @@
 
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\Comment;
-use BookStack\Actions\CommentRepo;
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Page;
@@ -196,6 +195,17 @@ class CommandsTest extends TestCase
 
         $this->expectException(RuntimeException::class);
         $this->artisan('bookstack:update-url https://cats.example.com');
+    }
+
+    public function test_update_url_command_updates_settings()
+    {
+        setting()->put('my-custom-item', 'https://example.com/donkey/cat');
+        $this->artisan('bookstack:update-url https://example.com https://cats.example.com')
+            ->expectsQuestion("This will search for \"https://example.com\" in your database and replace it with  \"https://cats.example.com\".\nAre you sure you want to proceed?", 'y')
+            ->expectsQuestion("This operation could cause issues if used incorrectly. Have you made a backup of your existing database?", 'y');
+
+        $settingVal = setting('my-custom-item');
+        $this->assertEquals('https://cats.example.com/donkey/cat', $settingVal);
     }
 
     public function test_regenerate_comment_content_command()
