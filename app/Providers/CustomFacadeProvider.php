@@ -5,7 +5,6 @@ namespace BookStack\Providers;
 use BookStack\Actions\ActivityService;
 use BookStack\Actions\ViewService;
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Settings\SettingService;
 use BookStack\Uploads\ImageService;
 use Illuminate\Support\ServiceProvider;
 
@@ -34,10 +33,6 @@ class CustomFacadeProvider extends ServiceProvider
 
         $this->app->singleton('views', function () {
             return $this->app->make(ViewService::class);
-        });
-
-        $this->app->singleton('setting', function () {
-            return $this->app->make(SettingService::class);
         });
 
         $this->app->singleton('images', function () {
