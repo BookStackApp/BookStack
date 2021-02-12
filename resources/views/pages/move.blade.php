@@ -23,7 +23,7 @@
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="PUT">
 
-                @include('components.entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book,chapter', 'entityPermission' => 'page-create'])
+                @include('components.entity-selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book,chapter', 'entityPermission' => 'page-create', 'autofocus' => true])
 
                 <div class="form-group text-right">
                     <a href="{{ $page->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
