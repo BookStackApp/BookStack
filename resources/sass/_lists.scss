@@ -430,6 +430,9 @@ ul.pagination {
     flex: 1;
     text-align: start;
   }
+  > .content {
+    min-width: 0;
+  }
   &:not(.no-hover) {
     cursor: pointer;
   }
