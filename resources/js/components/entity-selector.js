@@ -1,22 +1,32 @@
+import {onChildEvent} from "../services/dom";
 
+/**
+ * Entity Selector
+ * @extends {Component}
+ */
 class EntitySelector {
 
-    constructor(elem) {
-        this.elem = elem;
+    setup() {
+        this.elem = this.$el;
+        this.entityTypes = this.$opts.entityTypes || 'page,book,chapter';
+        this.entityPermission = this.$opts.entityPermission || 'view';
+
+        this.input = this.$refs.input;
+        this.searchInput = this.$refs.search;
+        this.loading = this.$refs.loading;
+        this.resultsContainer = this.$refs.results;
+        this.addButton = this.$refs.add;
+
         this.search = '';
         this.lastClick = 0;
         this.selectedItemData = null;
 
-        const entityTypes = elem.hasAttribute('entity-types') ? elem.getAttribute('entity-types') : 'page,book,chapter';
-        const entityPermission = elem.hasAttribute('entity-permission') ? elem.getAttribute('entity-permission') : 'view';
-        this.searchUrl = window.baseUrl(`/ajax/search/entities?types=${encodeURIComponent(entityTypes)}&permission=${encodeURIComponent(entityPermission)}`);
+        this.setupListeners();
+        this.showLoading();
+        this.initialLoad();
+    }
 
-        this.input = elem.querySelector('[entity-selector-input]');
-        this.searchInput = elem.querySelector('[entity-selector-search]');
-        this.loading = elem.querySelector('[entity-selector-loading]');
-        this.resultsContainer = elem.querySelector('[entity-selector-results]');
-        this.addButton = elem.querySelector('[entity-selector-add-button]');
-
+    setupListeners() {
         this.elem.addEventListener('click', this.onClick.bind(this));
 
         let lastSearch = 0;
@@ -42,8 +52,39 @@ class EntitySelector {
             });
         }
 
-        this.showLoading();
-        this.initialLoad();
+        // Keyboard navigation
+        onChildEvent(this.$el, '[data-entity-type]', 'keydown', (e, el) => {
+            if (e.ctrlKey && e.code === 'Enter') {
+                const form = this.$el.closest('form');
+                if (form) {
+                    form.submit();
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+            if (e.code === 'ArrowDown') {
+                this.focusAdjacent(true);
+            }
+            if (e.code === 'ArrowUp') {
+                this.focusAdjacent(false);
+            }
+        });
+
+        this.searchInput.addEventListener('keydown', e => {
+            if (e.code === 'ArrowDown') {
+                this.focusAdjacent(true);
+            }
+        })
+    }
+
+    focusAdjacent(forward = true) {
+        const items = Array.from(this.resultsContainer.querySelectorAll('[data-entity-type]'));
+        const selectedIndex = items.indexOf(document.activeElement);
+        const newItem = items[selectedIndex+ (forward ? 1 : -1)] || items[0];
+        if (newItem) {
+            newItem.focus();
+        }
     }
 
     showLoading() {
@@ -57,15 +98,19 @@ class EntitySelector {
     }
 
     initialLoad() {
-        window.$http.get(this.searchUrl).then(resp => {
+        window.$http.get(this.searchUrl()).then(resp => {
             this.resultsContainer.innerHTML = resp.data;
             this.hideLoading();
         })
     }
 
+    searchUrl() {
+        return `/ajax/search/entities?types=${encodeURIComponent(this.entityTypes)}&permission=${encodeURIComponent(this.entityPermission)}`;
+    }
+
     searchEntities(searchTerm) {
         this.input.value = '';
-        let url = `${this.searchUrl}&term=${encodeURIComponent(searchTerm)}`;
+        const url = `${this.searchUrl()}&term=${encodeURIComponent(searchTerm)}`;
         window.$http.get(url).then(resp => {
             this.resultsContainer.innerHTML = resp.data;
             this.hideLoading();
@@ -73,8 +118,8 @@ class EntitySelector {
     }
 
     isDoubleClick() {
-        let now = Date.now();
-        let answer = now - this.lastClick < 300;
+        const now = Date.now();
+        const answer = now - this.lastClick < 300;
         this.lastClick = now;
         return answer;
     }
@@ -123,8 +168,8 @@ class EntitySelector {
     }
 
     unselectAll() {
-        let selected = this.elem.querySelectorAll('.selected');
-        for (let selectedElem of selected) {
+        const selected = this.elem.querySelectorAll('.selected');
+        for (const selectedElem of selected) {
             selectedElem.classList.remove('selected', 'primary-background');
         }
         this.selectedItemData = null;
