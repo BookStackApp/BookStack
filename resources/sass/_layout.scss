@@ -256,6 +256,7 @@ body.flexbox {
   .tri-layout-middle {
     grid-area: b;
     padding-top: $-m;
+    min-width: 0;
   }
 }
 @include smaller-than($xxl) {
