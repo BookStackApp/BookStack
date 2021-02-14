@@ -290,6 +290,17 @@ class SearchRunner
         $query->where('updated_by', '=', $input);
     }
 
+    protected function filterOwnedBy(EloquentBuilder $query, Entity $model, $input)
+    {
+        if (!is_numeric($input) && $input !== 'me') {
+            return;
+        }
+        if ($input === 'me') {
+            $input = user()->id;
+        }
+        $query->where('owned_by', '=', $input);
+    }
+
     protected function filterInName(EloquentBuilder $query, Entity $model, $input)
     {
         $query->where('name', 'like', '%' .$input. '%');
