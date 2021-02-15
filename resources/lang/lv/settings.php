@@ -56,13 +56,13 @@ return [
     'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
-    'reg_settings' => 'Registration',
-    'reg_enable' => 'Enable Registration',
-    'reg_enable_toggle' => 'Enable registration',
+    'reg_settings' => 'Reģistrācija',
+    'reg_enable' => 'Iespējot reģistrāciju',
+    'reg_enable_toggle' => 'Iespējot reģistrāciju',
     'reg_enable_desc' => 'When registration is enabled user will be able to sign themselves up as an application user. Upon registration they are given a single, default user role.',
     'reg_default_role' => 'Default user role after registration',
     'reg_enable_external_warning' => 'The option above is ignored while external LDAP or SAML authentication is active. User accounts for non-existing members will be auto-created if authentication, against the external system in use, is successful.',
-    'reg_email_confirmation' => 'Email Confirmation',
+    'reg_email_confirmation' => 'E-pasta apstiprinājums',
     'reg_email_confirmation_toggle' => 'Require email confirmation',
     'reg_confirm_email_desc' => 'If domain restriction is used then email confirmation will be required and this option will be ignored.',
     'reg_confirm_restrict_domain' => 'Domain Restriction',
@@ -71,10 +71,10 @@ return [
 
     // Maintenance settings
     'maint' => 'Maintenance',
-    'maint_image_cleanup' => 'Cleanup Images',
+    'maint_image_cleanup' => 'Tīrīt neizmantotās bildes',
     'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
-    'maint_image_cleanup_run' => 'Run Cleanup',
+    'maint_image_cleanup_run' => 'Veikt tīrīšanu',
     'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
     'maint_image_cleanup_success' => ':count potentially unused images found and deleted!',
     'maint_image_cleanup_nothing_found' => 'No unused images found, Nothing deleted!',
