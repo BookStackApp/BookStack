@@ -5,8 +5,8 @@
 return [
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
-    'permissionJson' => 'You do not have permission to perform the requested action.',
+    'permission' => 'Jums nav atļauts piekļūt šai lapai.',
+    'permissionJson' => 'Jums nav atļauts veikt konkrēto darbību.',
 
     // Auth
     'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
@@ -46,7 +46,7 @@ return [
     'file_upload_timeout' => 'The file upload has timed out.',
 
     // Attachments
-    'attachment_not_found' => 'Attachment not found',
+    'attachment_not_found' => 'Pielikums nav atrasts',
 
     // Pages
     'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
