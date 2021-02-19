@@ -9,17 +9,17 @@ return [
     'permissionJson' => 'Jums nav atļauts veikt konkrēto darbību.',
 
     // Auth
-    'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
-    'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
+    'error_user_exists_different_creds' => 'Lietotājs ar epastu :email bet ar citiem piekļuves datiem jau eksistē.',
+    'email_already_confirmed' => 'Epasts jau ir apstiprināts, mēģini ielogoties.',
     'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
     'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
     'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
-    'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
-    'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
+    'ldap_fail_anonymous' => 'LDAP piekļuve neveiksmīga izmantojot anonymous bind',
+    'ldap_fail_authed' => 'LDAP piekļuve neveiksmīga izmantojot norādīto dn un paroli',
     'ldap_extension_not_installed' => 'LDAP PHP paplašinājums nav instalēts',
-    'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
+    'ldap_cannot_connect' => 'Nav iespējams pieslēgties LDAP serverim, sākotnējais pieslēgums neveiksmīgs',
     'saml_already_logged_in' => 'Already logged in',
-    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
+    'saml_user_not_registered' => 'Lietotājs :name nav reģistrēts un automātiska reģistrācija ir izslēgta',
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
@@ -32,17 +32,17 @@ return [
     'social_account_not_used' => 'This :socialAccount account is not linked to any users. Please attach it in your profile settings. ',
     'social_account_register_instructions' => 'If you do not yet have an account, You can register an account using the :socialAccount option.',
     'social_driver_not_found' => 'Social driver not found',
-    'social_driver_not_configured' => 'Your :socialAccount social settings are not configured correctly.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'social_driver_not_configured' => 'Jūsu :socialAccount sociālie iestatījumi nav uzstādīti pareizi.',
+    'invite_token_expired' => 'Šī uzaicinājuma saite ir novecojusi. Tā vietā jūs varat mēģināt atiestatīt sava konta paroli.',
 
     // System
-    'path_not_writable' => 'File path :filePath could not be uploaded to. Ensure it is writable to the server.',
+    'path_not_writable' => 'Faila ceļā :filePath nav iespējams ielādēt failus. Lūdzu pārliecinieties, ka serverim tur ir rakstīšanas tiesības.',
     'cannot_get_image_from_url' => 'Nevar iegūt bildi no :url',
-    'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
-    'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'image_upload_error' => 'An error occurred uploading the image',
-    'image_upload_type_error' => 'The image type being uploaded is invalid',
+    'cannot_create_thumbs' => 'Serveris nevar izveidot samazinātus attēlus. Lūdzu pārbaudiet, vai ir uzstādīts PHP GD paplašinājums.',
+    'server_upload_limit' => 'Serveris neatļauj šāda izmēra failu ielādi. Lūdzu mēģiniet mazāka izmēra failu.',
+    'uploaded'  => 'Serveris neatļauj šāda izmēra failu ielādi. Lūdzu mēģiniet mazāka izmēra failu.',
+    'image_upload_error' => 'Radās kļūda augšupielādējot attēlu',
+    'image_upload_type_error' => 'Ielādējamā attēla tips nav derīgs',
     'file_upload_timeout' => 'The file upload has timed out.',
 
     // Attachments
@@ -67,16 +67,16 @@ return [
     'users_cannot_delete_guest' => 'Jūs nevarat dzēst lietotāju "viesis"',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
-    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
-    'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
+    'role_cannot_be_edited' => 'Šo lomu nevar rediģēt',
+    'role_system_cannot_be_deleted' => 'Šī ir sistēmas loma un nevar tikt izdzēsta',
+    'role_registration_default_cannot_delete' => 'Šī loma nevar tikt izdzēsta, kamēr tā uzstādīta kā noklusētā reģistrācijas loma',
     'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
 
     // Comments
-    'comment_list' => 'An error occurred while fetching the comments.',
+    'comment_list' => 'Radās kļūda ielasot komentārus.',
     'cannot_add_comment_to_draft' => 'Melnrakstam nevar pievienot komentārus.',
-    'comment_add' => 'An error occurred while adding / updating the comment.',
-    'comment_delete' => 'An error occurred while deleting the comment.',
+    'comment_add' => 'Radās kļūda pievienojot/atjaunojot komentāru.',
+    'comment_delete' => 'Radās kļūda dzēšot komentāru.',
     'empty_comment' => 'Nevar pievienot tukšu komentāru.',
 
     // Error pages
