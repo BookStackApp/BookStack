@@ -59,7 +59,7 @@ return [
     // The session cookie path determines the path for which the cookie will
     // be regarded as available. Typically, this will be the root path of
     // your application but you are free to change this when necessary.
-    'path' => '/',
+    'path' => env('SESSION_COOKIE_PATH', '/'),
 
     // Session Cookie Domain
     // Here you may change the domain of the cookie used to identify a session
