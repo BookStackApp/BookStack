@@ -20,7 +20,7 @@ class SocialAuthService
     protected $socialite;
     protected $socialAccount;
 
-    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter', 'azure', 'okta', 'gitlab', 'twitch', 'discord'];
+    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter', 'azure', 'okta', 'gitlab', 'twitch', 'discord', 'gitea'];
 
     /**
      * SocialAuthService constructor.
@@ -130,7 +130,7 @@ class SocialAuthService
         if (setting('registration-enabled') && config('auth.method') !== 'ldap' && config('auth.method') !== 'saml2') {
             $message .= trans('errors.social_account_register_instructions', ['socialAccount' => $titleCaseDriver]);
         }
-        
+
         throw new SocialSignInAccountNotUsed($message, '/login');
     }
 

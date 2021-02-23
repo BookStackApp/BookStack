@@ -116,6 +116,16 @@ return [
         'auto_confirm' => env('DISCORD_AUTO_CONFIRM_EMAIL', false),
     ],
 
+    'gitea' => [
+        'client_id' => env('GITEA_APP_ID'),
+        'client_secret' => env('GITEA_APP_SECRET'),
+        'redirect' => env('APP_URL') . '/login/service/gitea/callback',
+        'instance_uri'  => env('GITEA_BASE_URI'),
+        'name' => 'Gitea',
+        'auto_register' => env('GITEA_AUTO_REGISTER', false),
+        'auto_confirm' => env('GITEA_AUTO_CONFIRM_EMAIL', false),
+    ],
+
     'ldap' => [
         'server' => env('LDAP_SERVER', false),
         'dump_user_details' => env('LDAP_DUMP_USER_DETAILS', false),

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc011a4d14d89014565f53626a0e331c",
+    "content-hash": "3555cd74b318ac31c17411d97fb24cf9",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -3650,6 +3650,44 @@
                 "source": "https://github.com/SocialiteProviders/Discord/tree/4.1.1"
             },
             "time": "2021-01-05T22:03:58+00:00"
+        },
+        {
+            "name": "socialiteproviders/gitea",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Gitea.git",
+                "reference": "ce83a1730776751bc82a269bd858cadddf5c7640"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Gitea/zipball/ce83a1730776751bc82a269bd858cadddf5c7640",
+                "reference": "ce83a1730776751bc82a269bd858cadddf5c7640",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.2 || ^8.0",
+                "socialiteproviders/manager": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Gitea\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric de Ruiter",
+                    "email": "eric@thisisdevelopment.nl"
+                }
+            ],
+            "description": "Gitea OAuth2 Provider for Laravel Socialite",
+            "time": "2020-12-01T23:10:59+00:00"
         },
         {
             "name": "socialiteproviders/gitlab",
