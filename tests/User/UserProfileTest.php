@@ -126,7 +126,7 @@ class UserProfileTest extends BrowserKitTest
     {
         $editor = $this->getEditor();
         $shelf = Bookshelf::query()->first();
-        setting()->putUser($editor, 'bookshelf_view_type', 'list');
+        setting()->putUser($editor, 'bookshelves_view_type', 'list');
 
         $this->actingAs($editor)->visit($shelf->getUrl())
             ->pageNotHasElement('.featured-image-container')
