@@ -8,7 +8,7 @@ return [
     'cancel' => 'Cancelar',
     'confirm' => 'Confirmar',
     'back' => 'Voltar',
-    'save' => 'Salvar',
+    'save' => 'Guardar',
     'continue' => 'Continuar',
     'select' => 'Selecionar',
     'toggle_all' => 'Alternar Todos',
@@ -24,7 +24,7 @@ return [
     // Actions
     'actions' => 'Ações',
     'view' => 'Visualizar',
-    'view_all' => 'Visualizar Tudo',
+    'view_all' => 'Visualizar Todos',
     'create' => 'Criar',
     'update' => 'Atualizar',
     'edit' => 'Editar',
@@ -32,14 +32,14 @@ return [
     'move' => 'Mover',
     'copy' => 'Copiar',
     'reply' => 'Responder',
-    'delete' => 'Excluir',
-    'delete_confirm' => 'Confirmar Exclusão',
+    'delete' => 'Eliminar',
+    'delete_confirm' => 'Confirmar eliminação',
     'search' => 'Pesquisar',
     'search_clear' => 'Limpar Pesquisa',
     'reset' => 'Redefinir',
     'remove' => 'Remover',
     'add' => 'Adicionar',
-    'fullscreen' => 'Tela cheia',
+    'fullscreen' => 'Ecrã completo',
 
     // Sort Options
     'sort_options' => 'Opções de Ordenação',
@@ -51,7 +51,7 @@ return [
     'sort_updated_at' => 'Data de Atualização',
 
     // Misc
-    'deleted_user' => 'Usuário excluído',
+    'deleted_user' => 'Utilizador Eliminado',
     'no_activity' => 'Nenhuma atividade a mostrar',
     'no_items' => 'Nenhum item disponível',
     'back_to_top' => 'Voltar ao topo',
@@ -75,11 +75,11 @@ return [
     'tab_content' => 'Conteúdo',
 
     // Email Content
-    'email_action_help' => 'Se você estiver tendo problemas ao clicar o botão ":actionText", copie e cole a URL abaixo no seu navegador:',
+    'email_action_help' => 'Se estiver com problemas ao carregar no botão ":actionText", copie e cole o URL abaixo no seu navegador:',
     'email_rights' => 'Todos os direitos reservados',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Política de Privacidade',
+    'terms_of_service' => 'Termos de Utilização',
 ];
