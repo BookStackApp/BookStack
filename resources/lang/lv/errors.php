@@ -11,17 +11,17 @@ return [
     // Auth
     'error_user_exists_different_creds' => 'Lietotājs ar epastu :email bet ar citiem piekļuves datiem jau eksistē.',
     'email_already_confirmed' => 'Epasts jau ir apstiprināts, mēģini ielogoties.',
-    'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
-    'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_invalid' => 'Šis apstiprinājuma žetons nav derīgs vai jau ir izmantots. Lūdzu, mēģiniet reģistrēties vēlreiz.',
+    'email_confirmation_expired' => 'Apstiprinājuma žetona derīguma termiņš ir beidzies. Ir nosūtīts jauns apstiprinājuma e-pasts.',
+    'email_confirmation_awaiting' => 'Šī konta e-pasta adresei ir nepieciešms apstiprinājums',
     'ldap_fail_anonymous' => 'LDAP piekļuve neveiksmīga izmantojot anonymous bind',
     'ldap_fail_authed' => 'LDAP piekļuve neveiksmīga izmantojot norādīto dn un paroli',
     'ldap_extension_not_installed' => 'LDAP PHP paplašinājums nav instalēts',
     'ldap_cannot_connect' => 'Nav iespējams pieslēgties LDAP serverim, sākotnējais pieslēgums neveiksmīgs',
-    'saml_already_logged_in' => 'Already logged in',
+    'saml_already_logged_in' => 'Jau ielogojies',
     'saml_user_not_registered' => 'Lietotājs :name nav reģistrēts un automātiska reģistrācija ir izslēgta',
-    'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
+    'saml_no_email_address' => 'Ārējās autentifikācijas sistēmas sniegtajos datos nevarēja atrast šī lietotāja e-pasta adresi',
+    'saml_invalid_response_id' => 'Ārējās autentifikācijas sistēmas pieprasījums neatpazīst procesu, kuru sākusi šī lietojumprogramma. Pārvietojoties atpakaļ pēc pieteikšanās var rasties šāda problēma.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'Darbības nav definētas',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
@@ -43,7 +43,7 @@ return [
     'uploaded'  => 'Serveris neatļauj šāda izmēra failu ielādi. Lūdzu mēģiniet mazāka izmēra failu.',
     'image_upload_error' => 'Radās kļūda augšupielādējot attēlu',
     'image_upload_type_error' => 'Ielādējamā attēla tips nav derīgs',
-    'file_upload_timeout' => 'The file upload has timed out.',
+    'file_upload_timeout' => 'Faila augšupielādē ir iestājies noilgums.',
 
     // Attachments
     'attachment_not_found' => 'Pielikums nav atrasts',
@@ -59,7 +59,7 @@ return [
     'page_not_found' => 'Lapa nav atrasta',
     'chapter_not_found' => 'Nodaļa nav atrasta',
     'selected_book_not_found' => 'Iezīmētā grāmata nav atrasta',
-    'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
+    'selected_book_chapter_not_found' => 'Izvēlētā grāmata vai nodaļa nav atrasta',
     'guests_cannot_save_drafts' => 'Viesi nevar saglabāt melnrakstus',
 
     // Users
