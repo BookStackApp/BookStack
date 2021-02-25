@@ -37,9 +37,9 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Permissões',
-    'permissions_intro' => 'Uma vez habilitadas, estas permissões terão prioridade sobre outro conjunto de permissões.',
-    'permissions_enable' => 'Habilitar Permissões Customizadas',
-    'permissions_save' => 'Salvar Permissões',
+    'permissions_intro' => 'Uma vez ativadas, estas permissões terão prioridade sobre quaisquer outro conjunto de permissões.',
+    'permissions_enable' => 'Ativar Permissões Personalizadas',
+    'permissions_save' => 'Guardar Permissões',
     'permissions_owner' => 'Proprietário',
 
     // Search
