@@ -5,7 +5,7 @@
 return [
 
     // Permissions
-    'permission' => 'Você não tem permissão para acessar a página requerida.',
+    'permission' => 'Você não tem permissão para aceder à página requisitada.',
     'permissionJson' => 'Você não tem permissão para realizar a ação requerida.',
 
     // Auth
