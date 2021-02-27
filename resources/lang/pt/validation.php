@@ -8,13 +8,13 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'O campo :attribute deve ser aceito.',
-    'active_url'           => 'O campo :attribute não é uma URL válida.',
+    'accepted'             => 'O campo :attribute deve ser aceite.',
+    'active_url'           => 'O campo :attribute não é um URL válido.',
     'after'                => 'O campo :attribute deve ser uma data posterior à data :date.',
     'alpha'                => 'O campo :attribute deve conter apenas letras.',
-    'alpha_dash'           => 'O campo :attribute deve conter apenas letras, números, traços e underlines.',
+    'alpha_dash'           => 'O campo :attribute deve conter apenas letras, números, traços e sublinhado.',
     'alpha_num'            => 'O campo :attribute deve conter apenas letras e números.',
-    'array'                => 'O campo :attribute deve ser uma array.',
+    'array'                => 'O campo :attribute deve ser uma lista(array).',
     'before'               => 'O campo :attribute deve ser uma data anterior à data :date.',
     'between'              => [
         'numeric' => 'O campo :attribute deve estar entre :min e :max.',
@@ -24,12 +24,12 @@ return [
     ],
     'boolean'              => 'O campo :attribute deve ser verdadeiro ou falso.',
     'confirmed'            => 'O campo :attribute não é igual à sua confirmação.',
-    'date'                 => 'O campo :attribute não está em um formato de data válido.',
+    'date'                 => 'O campo :attribute não está num formato de data válido.',
     'date_format'          => 'O campo :attribute não tem a formatação :format.',
     'different'            => 'O campo :attribute e o campo :other devem ser diferentes.',
     'digits'               => 'O campo :attribute deve ter :digits dígitos.',
     'digits_between'       => 'O campo :attribute deve ter entre :min e :max dígitos.',
-    'email'                => 'O campo :attribute deve ser um e-mail válido.',
+    'email'                => 'O campo :attribute deve ser um endereço de e-mail válido.',
     'ends_with' => 'O campo :attribute deve terminar com um dos seguintes: :values',
     'filled'               => 'O campo :attribute é requerido.',
     'gt'                   => [
@@ -90,7 +90,7 @@ return [
     'required_without'     => 'O campo :attribute é requerido quando os valores :values não estiverem presentes.',
     'required_without_all' => 'O campo :attribute é requerido quando nenhum dos valores :values estiverem presentes.',
     'same'                 => 'O campo :attribute e o campo :other devem ser iguais.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'O link fornecido poderá não ser seguro.',
     'size'                 => [
         'numeric' => 'O tamanho do campo :attribute deve ser :size.',
         'file'    => 'O tamanho do arquivo :attribute deve ser de :size kilobytes.',
