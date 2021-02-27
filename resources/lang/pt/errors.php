@@ -26,66 +26,66 @@ return [
     'social_no_action_defined' => 'Nenhuma ação definida',
     'social_login_bad_response' => "Erro recebido durante o inicio de sessão :socialAccount: \n:error",
     'social_account_in_use' => 'Esta conta :socialAccount já está em uso. Por favor, tente entrar utilizando a opção :socialAccount.',
-    'social_account_email_in_use' => 'O e-mail :email já está em uso. Se você já tem uma conta você poderá se conectar a conta :socialAccount a partir das configurações de seu perfil.',
-    'social_account_existing' => 'Essa conta :socialAccount já está vinculada a esse perfil.',
-    'social_account_already_used_existing' => 'Essa conta :socialAccount já está sendo utilizada por outro usuário.',
-    'social_account_not_used' => 'Essa conta :socialAccount não está vinculada a nenhum usuário. Por favor vincule a conta nas suas configurações de perfil. ',
-    'social_account_register_instructions' => 'Se você não tem uma conta, você poderá se cadastrar usando a opção :socialAccount.',
+    'social_account_email_in_use' => 'O e-mail :email já está em uso. Se já possui uma conta poderá ligar a sua conta :socialAccount a partir das configurações do seu perfil.',
+    'social_account_existing' => 'Esta conta :socialAccount já está vinculada a este perfil.',
+    'social_account_already_used_existing' => 'Esta conta :socialAccount já está a ser utilizada por outro utilizador.',
+    'social_account_not_used' => 'Esta conta :socialAccount não está vinculada a nenhum utilizador. Por favor vincule a conta nas suas configurações de perfil. ',
+    'social_account_register_instructions' => 'Se não possui uma conta, poderá registar-se utilizando a opção :socialAccount.',
     'social_driver_not_found' => 'Social driver não encontrado',
-    'social_driver_not_configured' => 'Seus parâmetros socials de :socialAccount não estão configurados corretamente.',
-    'invite_token_expired' => 'Esse link de convite expirou. Alternativamente, você pode tentar redefinir a senha da sua conta.',
+    'social_driver_not_configured' => 'Os seus parâmetros sociais de :socialAccount não estão corretamente configurados.',
+    'invite_token_expired' => 'Este link de convite expirou. Alternativamente, pode tentar redefinir a senha da sua conta.',
 
     // System
-    'path_not_writable' => 'O caminho de destino (:filePath) de upload de arquivo não possui permissão de escrita. Certifique-se que ele possui direitos de escrita no servidor.',
+    'path_not_writable' => 'O caminho do arquivo :filePath não pôde ser carregado. Certifique-se de que tem permissões de escrita no servidor.',
     'cannot_get_image_from_url' => 'Não foi possível obter a imagem a partir de :url',
     'cannot_create_thumbs' => 'O servidor não pôde criar as miniaturas de imagem. Por favor, verifique se a extensão GD PHP está instalada.',
-    'server_upload_limit' => 'O servidor não permite o upload de arquivos com esse tamanho. Por favor, tente fazer o upload de arquivos de menor tamanho.',
-    'uploaded'  => 'O servidor não permite o upload de arquivos com esse tamanho. Por favor, tente fazer o upload de arquivos de menor tamanho.',
-    'image_upload_error' => 'Um erro aconteceu enquanto o servidor tentava efetuar o upload da imagem',
-    'image_upload_type_error' => 'O tipo de imagem que está sendo enviada é inválido',
-    'file_upload_timeout' => 'O upload do arquivo expirou.',
+    'server_upload_limit' => 'O servidor não permite o carregamento de arquivos com esse tamanho. Por favor, tente fazer o carregamento de arquivos mais pequenos.',
+    'uploaded'  => 'O servidor não permite o carregamento de arquivos com esse tamanho. Por favor, tente fazer o carregamento de arquivos mais pequenos.',
+    'image_upload_error' => 'Ocorreu um erro no carregamento da imagem',
+    'image_upload_type_error' => 'O tipo de imagem enviada é inválida',
+    'file_upload_timeout' => 'O carregamento do arquivo expirou.',
 
     // Attachments
     'attachment_not_found' => 'Anexo não encontrado',
 
     // Pages
-    'page_draft_autosave_fail' => 'Falha ao tentar salvar o rascunho. Certifique-se que a conexão de internet está funcional antes de tentar salvar essa página',
-    'page_custom_home_deletion' => 'Não é possível excluir uma página que está definida como página inicial',
+    'page_draft_autosave_fail' => 'Falha ao tentar guardar o rascunho. Certifique-se que a conexão de Internet está funcional antes de tentar guardar esta página',
+    'page_custom_home_deletion' => 'Não é possível eliminar uma página que está definida como página inicial',
 
     // Entities
     'entity_not_found' => 'Entidade não encontrada',
-    'bookshelf_not_found' => 'Prateleira de Livros não encontrada',
+    'bookshelf_not_found' => 'Estante de Livros não encontrada',
     'book_not_found' => 'Livro não encontrado',
     'page_not_found' => 'Página não encontrada',
     'chapter_not_found' => 'Capítulo não encontrado',
     'selected_book_not_found' => 'O livro selecionado não foi encontrado',
     'selected_book_chapter_not_found' => 'O Livro ou Capítulo selecionado não foi encontrado',
-    'guests_cannot_save_drafts' => 'Convidados não podem salvar rascunhos',
+    'guests_cannot_save_drafts' => 'Convidados não podem guardar rascunhos',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Você não pode excluir o único admin',
-    'users_cannot_delete_guest' => 'Você não pode excluir o usuário convidado',
+    'users_cannot_delete_only_admin' => 'Não pode excluir o único administrador',
+    'users_cannot_delete_guest' => 'Não pode excluir o usuário convidado',
 
     // Roles
-    'role_cannot_be_edited' => 'Esse cargo não pode ser editado',
-    'role_system_cannot_be_deleted' => 'Esse cargo é um cargo do sistema e não pode ser excluído',
-    'role_registration_default_cannot_delete' => 'Esse cargo não poderá se excluído enquanto estiver registrado como o cargo padrão',
-    'role_cannot_remove_only_admin' => 'Este usuário é o único usuário vinculado ao cargo de administrador. Atribua o cargo de administrador a outro usuário antes de tentar removê-lo aqui.',
+    'role_cannot_be_edited' => 'Este cargo não pode ser editado',
+    'role_system_cannot_be_deleted' => 'Este cargo é um cargo do sistema e não pode ser excluído',
+    'role_registration_default_cannot_delete' => 'Este cargo não poderá se excluído enquanto estiver definido como o cargo padrão',
+    'role_cannot_remove_only_admin' => 'Este utilizador é o único vinculado ao cargo de administrador. Atribua o cargo de administrador a outro antes de tentar removê-lo aqui.',
 
     // Comments
-    'comment_list' => 'Ocorreu um erro ao buscar os comentários.',
-    'cannot_add_comment_to_draft' => 'Você não pode adicionar comentários a um rascunho.',
-    'comment_add' => 'Ocorreu um erro ao adicionar o comentário.',
-    'comment_delete' => 'Ocorreu um erro ao excluir o comentário.',
+    'comment_list' => 'Ocorreu um erro ao recolher os comentários.',
+    'cannot_add_comment_to_draft' => 'Não pode adicionar comentários a um rascunho.',
+    'comment_add' => 'Ocorreu um erro ao adicionar/atualizar o comentário.',
+    'comment_delete' => 'Ocorreu um erro ao eliminar o comentário.',
     'empty_comment' => 'Não é possível adicionar um comentário vazio.',
 
     // Error pages
     '404_page_not_found' => 'Página Não Encontrada',
-    'sorry_page_not_found' => 'Desculpe, a página que você está procurando não pôde ser encontrada.',
-    'sorry_page_not_found_permission_warning' => 'Se você esperava que esta página existisse, talvez você não tenha permissão para visualizá-la.',
-    'return_home' => 'Retornar à página inicial',
+    'sorry_page_not_found' => 'Desculpe, a página que procura não foi encontrada.',
+    'sorry_page_not_found_permission_warning' => 'Se esperava que esta página existisse, talvez não tenha permissão para visualizá-la.',
+    'return_home' => 'Regressar à página inicial',
     'error_occurred' => 'Ocorreu um Erro',
-    'app_down' => ':appName está fora do ar no momento',
+    'app_down' => ':appName está fora do ar de momento',
     'back_soon' => 'Voltaremos em breve.',
 
     // API errors
@@ -97,6 +97,6 @@ return [
     'api_user_token_expired' => 'O token de autenticação expirou',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Erro encontrado ao enviar um e-mail de teste:',
+    'maintenance_test_email_failure' => 'Erro lançado ao enviar um e-mail de teste:',
 
 ];
