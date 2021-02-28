@@ -8,10 +8,10 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'The :attribute must be accepted.',
-    'active_url'           => 'The :attribute is not a valid URL.',
-    'after'                => 'The :attribute must be a date after :date.',
-    'alpha'                => 'The :attribute may only contain letters.',
+    'accepted'             => ':attribute mora biti prihvaćen.',
+    'active_url'           => ':attribute nije ispravan URL.',
+    'after'                => ':attribute mora biti datum nakon :date.',
+    'alpha'                => ':attribute može sadržavati samo slova.',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, dashes and underscores.',
     'alpha_num'            => 'The :attribute may only contain letters and numbers.',
     'array'                => 'The :attribute must be an array.',
