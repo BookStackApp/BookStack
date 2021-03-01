@@ -5,11 +5,11 @@
 return [
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
-    'permissionJson' => 'You do not have permission to perform the requested action.',
+    'permission' => 'Nemate ovlaštenje da pristupite ovoj stranici.',
+    'permissionJson' => 'Nemate ovlaštenje da izvršite tu akciju.',
 
     // Auth
-    'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
+    'error_user_exists_different_creds' => 'Korisnik sa e-mailom :email već postoji ali sa različitim podacima.',
     'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
     'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
     'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
