@@ -10,11 +10,11 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Korisnik sa e-mailom :email već postoji ali sa različitim podacima.',
-    'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
-    'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
-    'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
-    'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
+    'email_already_confirmed' => 'E-mail je već potvrđen, pokušajte se prijaviti.',
+    'email_confirmation_invalid' => 'Ovaj token za potvrdu nije ispravan ili je već iskorišten, molimo vas pokušajte se registrovati ponovno.',
+    'email_confirmation_expired' => 'Ovaj token za potvrdu je istekao, novi e-mail za potvrdu je poslan.',
+    'email_confirmation_awaiting' => 'E-mail adresa za račun koji se koristi mora biti potvrđena',
+    'ldap_fail_anonymous' => 'LDAP pristup nije uspio koristeći anonimno povezivanje',
     'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
     'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
     'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
