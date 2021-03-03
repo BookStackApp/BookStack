@@ -4,7 +4,6 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Auth\Role;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Page;
 use BookStack\Settings\SettingService;
