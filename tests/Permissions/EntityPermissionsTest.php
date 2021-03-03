@@ -29,13 +29,13 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->viewer = $this->getViewer();
     }
 
-    protected function setEntityRestrictions(Entity $entity, $actions = [], $roles = [])
+    protected function setRestrictionsForTestRoles(Entity $entity, array $actions = [])
     {
         $roles = [
             $this->user->roles->first(),
             $this->viewer->roles->first(),
         ];
-        parent::setEntityRestrictions($entity, $actions, $roles);
+        $this->setEntityRestrictions($entity, $actions, $roles);
     }
 
     public function test_bookshelf_view_restriction()
@@ -46,12 +46,12 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($shelf->getUrl())
             ->seePageIs($shelf->getUrl());
 
-        $this->setEntityRestrictions($shelf, []);
+        $this->setRestrictionsForTestRoles($shelf, []);
 
         $this->forceVisit($shelf->getUrl())
             ->see('Bookshelf not found');
 
-        $this->setEntityRestrictions($shelf, ['view']);
+        $this->setRestrictionsForTestRoles($shelf, ['view']);
 
         $this->visit($shelf->getUrl())
             ->see($shelf->name);
@@ -65,12 +65,12 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($shelf->getUrl('/edit'))
             ->see('Edit Book');
 
-        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
         $this->forceVisit($shelf->getUrl('/edit'))
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($shelf, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
         $this->visit($shelf->getUrl('/edit'))
             ->seePageIs($shelf->getUrl('/edit'));
@@ -84,12 +84,12 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($shelf->getUrl('/delete'))
             ->see('Delete Book');
 
-        $this->setEntityRestrictions($shelf, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
         $this->forceVisit($shelf->getUrl('/delete'))
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
         $this->visit($shelf->getUrl('/delete'))
             ->seePageIs($shelf->getUrl('/delete'))->see('Delete Book');
@@ -106,7 +106,7 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($bookUrl)
             ->seePageIs($bookUrl);
 
-        $this->setEntityRestrictions($book, []);
+        $this->setRestrictionsForTestRoles($book, []);
 
         $this->forceVisit($bookUrl)
             ->see('Book not found');
@@ -115,7 +115,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->forceVisit($bookChapter->getUrl())
             ->see('Chapter not found');
 
-        $this->setEntityRestrictions($book, ['view']);
+        $this->setRestrictionsForTestRoles($book, ['view']);
 
         $this->visit($bookUrl)
             ->see($book->name);
@@ -139,7 +139,7 @@ class EntityPermissionsTest extends BrowserKitTest
             ->seeInElement('.actions', 'New Page')
             ->seeInElement('.actions', 'New Chapter');
 
-        $this->setEntityRestrictions($book, ['view', 'delete', 'update']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'delete', 'update']);
 
         $this->forceVisit($bookUrl . '/create-chapter')
             ->see('You do not have permission')->seePageIs('/');
@@ -148,7 +148,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->visit($bookUrl)->dontSeeInElement('.actions', 'New Page')
             ->dontSeeInElement('.actions', 'New Chapter');
 
-        $this->setEntityRestrictions($book, ['view', 'create']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'create']);
 
         $this->visit($bookUrl . '/create-chapter')
             ->type('test chapter', 'name')
@@ -175,7 +175,7 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($bookUrl . '/edit')
             ->see('Edit Book');
 
-        $this->setEntityRestrictions($book, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
         $this->forceVisit($bookUrl . '/edit')
             ->see('You do not have permission')->seePageIs('/');
@@ -184,7 +184,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->forceVisit($bookChapter->getUrl() . '/edit')
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($book, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
         $this->visit($bookUrl . '/edit')
             ->seePageIs($bookUrl . '/edit');
@@ -205,7 +205,7 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($bookUrl . '/delete')
             ->see('Delete Book');
 
-        $this->setEntityRestrictions($book, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
         $this->forceVisit($bookUrl . '/delete')
             ->see('You do not have permission')->seePageIs('/');
@@ -214,7 +214,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->forceVisit($bookChapter->getUrl() . '/delete')
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($book, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
         $this->visit($bookUrl . '/delete')
             ->seePageIs($bookUrl . '/delete')->see('Delete Book');
@@ -234,14 +234,14 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($chapterUrl)
             ->seePageIs($chapterUrl);
 
-        $this->setEntityRestrictions($chapter, []);
+        $this->setRestrictionsForTestRoles($chapter, []);
 
         $this->forceVisit($chapterUrl)
             ->see('Chapter not found');
         $this->forceVisit($chapterPage->getUrl())
             ->see('Page not found');
 
-        $this->setEntityRestrictions($chapter, ['view']);
+        $this->setRestrictionsForTestRoles($chapter, ['view']);
 
         $this->visit($chapterUrl)
             ->see($chapter->name);
@@ -258,13 +258,13 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($chapterUrl)
             ->seeInElement('.actions', 'New Page');
 
-        $this->setEntityRestrictions($chapter, ['view', 'delete', 'update']);
+        $this->setRestrictionsForTestRoles($chapter, ['view', 'delete', 'update']);
 
         $this->forceVisit($chapterUrl . '/create-page')
             ->see('You do not have permission')->seePageIs('/');
         $this->visit($chapterUrl)->dontSeeInElement('.actions', 'New Page');
 
-        $this->setEntityRestrictions($chapter, ['view', 'create']);
+        $this->setRestrictionsForTestRoles($chapter, ['view', 'create']);
 
 
         $this->visit($chapterUrl . '/create-page')
@@ -286,14 +286,14 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($chapterUrl . '/edit')
             ->see('Edit Chapter');
 
-        $this->setEntityRestrictions($chapter, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($chapter, ['view', 'delete']);
 
         $this->forceVisit($chapterUrl . '/edit')
             ->see('You do not have permission')->seePageIs('/');
         $this->forceVisit($chapterPage->getUrl() . '/edit')
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($chapter, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($chapter, ['view', 'update']);
 
         $this->visit($chapterUrl . '/edit')
             ->seePageIs($chapterUrl . '/edit')->see('Edit Chapter');
@@ -311,14 +311,14 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($chapterUrl . '/delete')
             ->see('Delete Chapter');
 
-        $this->setEntityRestrictions($chapter, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($chapter, ['view', 'update']);
 
         $this->forceVisit($chapterUrl . '/delete')
             ->see('You do not have permission')->seePageIs('/');
         $this->forceVisit($chapterPage->getUrl() . '/delete')
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($chapter, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($chapter, ['view', 'delete']);
 
         $this->visit($chapterUrl . '/delete')
             ->seePageIs($chapterUrl . '/delete')->see('Delete Chapter');
@@ -335,12 +335,12 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($pageUrl)
             ->seePageIs($pageUrl);
 
-        $this->setEntityRestrictions($page, ['update', 'delete']);
+        $this->setRestrictionsForTestRoles($page, ['update', 'delete']);
 
         $this->forceVisit($pageUrl)
             ->see('Page not found');
 
-        $this->setEntityRestrictions($page, ['view']);
+        $this->setRestrictionsForTestRoles($page, ['view']);
 
         $this->visit($pageUrl)
             ->see($page->name);
@@ -355,12 +355,12 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($pageUrl . '/edit')
             ->seeInField('name', $page->name);
 
-        $this->setEntityRestrictions($page, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($page, ['view', 'delete']);
 
         $this->forceVisit($pageUrl . '/edit')
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($page, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($page, ['view', 'update']);
 
         $this->visit($pageUrl . '/edit')
             ->seePageIs($pageUrl . '/edit')->seeInField('name', $page->name);
@@ -375,12 +375,12 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($pageUrl . '/delete')
             ->see('Delete Page');
 
-        $this->setEntityRestrictions($page, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($page, ['view', 'update']);
 
         $this->forceVisit($pageUrl . '/delete')
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($page, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($page, ['view', 'delete']);
 
         $this->visit($pageUrl . '/delete')
             ->seePageIs($pageUrl . '/delete')->see('Delete Page');
@@ -460,7 +460,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $page = $chapter->pages->first();
         $page2 = $chapter->pages[2];
 
-        $this->setEntityRestrictions($page, []);
+        $this->setRestrictionsForTestRoles($page, []);
 
         $this->actingAs($this->user)
             ->visit($page2->getUrl())
@@ -472,7 +472,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $chapter = Chapter::first();
         $page = $chapter->pages->first();
 
-        $this->setEntityRestrictions($page, []);
+        $this->setRestrictionsForTestRoles($page, []);
 
         $this->actingAs($this->user)
             ->visit($chapter->getUrl())
@@ -484,7 +484,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $chapter = Chapter::first();
         $page = $chapter->pages->first();
 
-        $this->setEntityRestrictions($page, []);
+        $this->setRestrictionsForTestRoles($page, []);
 
         $this->actingAs($this->user)
             ->visit($chapter->getUrl())
@@ -499,7 +499,7 @@ class EntityPermissionsTest extends BrowserKitTest
             ->see($chapter->pages->first()->name);
 
         foreach ($chapter->pages as $page) {
-            $this->setEntityRestrictions($page, []);
+            $this->setRestrictionsForTestRoles($page, []);
         }
 
         $this->actingAs($this->user)
@@ -515,12 +515,12 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($shelf->getUrl('/edit'))
             ->dontSee('Edit Book');
 
-        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
         $this->forceVisit($shelf->getUrl('/edit'))
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($shelf, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
         $this->visit($shelf->getUrl('/edit'))
             ->seePageIs($shelf->getUrl('/edit'));
@@ -534,12 +534,12 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($shelf->getUrl('/delete'))
             ->dontSee('Delete Book');
 
-        $this->setEntityRestrictions($shelf, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
         $this->forceVisit($shelf->getUrl('/delete'))
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($shelf, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
         $this->visit($shelf->getUrl('/delete'))
             ->seePageIs($shelf->getUrl('/delete'))->see('Delete Book');
@@ -555,7 +555,7 @@ class EntityPermissionsTest extends BrowserKitTest
             ->dontSeeInElement('.actions', 'New Page')
             ->dontSeeInElement('.actions', 'New Chapter');
 
-        $this->setEntityRestrictions($book, ['view', 'delete', 'update']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'delete', 'update']);
 
         $this->forceVisit($bookUrl . '/create-chapter')
             ->see('You do not have permission')->seePageIs('/');
@@ -564,7 +564,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->visit($bookUrl)->dontSeeInElement('.actions', 'New Page')
             ->dontSeeInElement('.actions', 'New Chapter');
 
-        $this->setEntityRestrictions($book, ['view', 'create']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'create']);
 
         $this->visit($bookUrl . '/create-chapter')
             ->type('test chapter', 'name')
@@ -591,7 +591,7 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($bookUrl . '/edit')
             ->dontSee('Edit Book');
 
-        $this->setEntityRestrictions($book, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
         $this->forceVisit($bookUrl . '/edit')
             ->see('You do not have permission')->seePageIs('/');
@@ -600,7 +600,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->forceVisit($bookChapter->getUrl() . '/edit')
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($book, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
         $this->visit($bookUrl . '/edit')
             ->seePageIs($bookUrl . '/edit');
@@ -621,7 +621,7 @@ class EntityPermissionsTest extends BrowserKitTest
             ->visit($bookUrl . '/delete')
             ->dontSee('Delete Book');
 
-        $this->setEntityRestrictions($book, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
         $this->forceVisit($bookUrl . '/delete')
             ->see('You do not have permission')->seePageIs('/');
@@ -630,7 +630,7 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->forceVisit($bookChapter->getUrl() . '/delete')
             ->see('You do not have permission')->seePageIs('/');
 
-        $this->setEntityRestrictions($book, ['view', 'delete']);
+        $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
         $this->visit($bookUrl . '/delete')
             ->seePageIs($bookUrl . '/delete')->see('Delete Book');
@@ -651,8 +651,8 @@ class EntityPermissionsTest extends BrowserKitTest
             $entity->save();
         }
 
-        $this->setEntityRestrictions($book, []);
-        $this->setEntityRestrictions($bookPage, ['view']);
+        $this->setRestrictionsForTestRoles($book, []);
+        $this->setRestrictionsForTestRoles($bookPage, ['view']);
 
         $this->actingAs($this->viewer);
         $this->get($bookPage->getUrl());
@@ -667,8 +667,8 @@ class EntityPermissionsTest extends BrowserKitTest
         $firstBook = Book::first();
         $secondBook = Book::find(2);
 
-        $this->setEntityRestrictions($firstBook, ['view', 'update']);
-        $this->setEntityRestrictions($secondBook, ['view']);
+        $this->setRestrictionsForTestRoles($firstBook, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($secondBook, ['view']);
 
         // Test sort page visibility
         $this->actingAs($this->user)->visit($secondBook->getUrl() . '/sort')
@@ -683,8 +683,8 @@ class EntityPermissionsTest extends BrowserKitTest
         $firstBook = Book::first();
         $secondBook = Book::find(2);
 
-        $this->setEntityRestrictions($firstBook, ['view', 'update']);
-        $this->setEntityRestrictions($secondBook, ['view']);
+        $this->setRestrictionsForTestRoles($firstBook, ['view', 'update']);
+        $this->setRestrictionsForTestRoles($secondBook, ['view']);
 
         $firstBookChapter = $this->newChapter(['name' => 'first book chapter'], $firstBook);
         $secondBookChapter = $this->newChapter(['name' => 'second book chapter'], $secondBook);
@@ -726,14 +726,14 @@ class EntityPermissionsTest extends BrowserKitTest
     public function test_can_create_page_if_chapter_has_permissions_when_book_not_visible()
     {
         $book = Book::first();
-        $this->setEntityRestrictions($book, []);
+        $this->setRestrictionsForTestRoles($book, []);
         $bookChapter = $book->chapters->first();
-        $this->setEntityRestrictions($bookChapter, ['view']);
+        $this->setRestrictionsForTestRoles($bookChapter, ['view']);
 
         $this->actingAs($this->user)->visit($bookChapter->getUrl())
             ->dontSee('New Page');
 
-        $this->setEntityRestrictions($bookChapter, ['view', 'create']);
+        $this->setRestrictionsForTestRoles($bookChapter, ['view', 'create']);
 
         $this->actingAs($this->user)->visit($bookChapter->getUrl())
             ->click('New Page')
