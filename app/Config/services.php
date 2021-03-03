@@ -135,4 +135,14 @@ return [
         'start_tls' => env('LDAP_START_TLS', false),
     ],
 
+    'nextcloud' => [
+        'client_id'     => env('NEXTCLOUD_APP_ID', false),
+        'client_secret' => env('NEXTCLOUD_APP_SECRET', false),
+        'redirect'      => env('APP_URL') . '/login/service/nextcloud/callback',
+        'instance_uri'  => env('NEXTCLOUD_BASE_URI'),
+        'name'          => 'Nextcloud',
+        'auto_register' => env('NEXTCLOUD_AUTO_REGISTER', false),
+        'auto_confirm'  => env('NEXTCLOUD_AUTO_CONFIRM_EMAIL', false),
+    ]
+
 ];
