@@ -2,6 +2,7 @@
 
 Route::get('/status', 'StatusController@show');
 Route::get('/robots.txt', 'HomeController@getRobots');
+Route::get("/sitemap.xml", function() { return Redirect::to("/sitemap/sitemap.xml"); });
 
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
