@@ -6,14 +6,14 @@
  */
 return [
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Kredensial tidak cocok dengan catatan kami.',
+    'throttle' => 'Terlalu banyak upaya masuk. Silahkan mencoba lagi dalam :seconds detik.',
 
     // Login & Register
-    'sign_up' => 'Sign up',
-    'log_in' => 'Log in',
-    'log_in_with' => 'Login with :socialDriver',
-    'sign_up_with' => 'Sign up with :socialDriver',
+    'sign_up' => 'Daftar',
+    'log_in' => 'Gabung',
+    'log_in_with' => 'Masuk dengan :socialDriver',
+    'sign_up_with' => 'Mendaftar dengan :socialDriver',
     'logout' => 'Keluar',
 
     'name' => 'Nama',
@@ -21,14 +21,14 @@ return [
     'email' => 'Email',
     'password' => 'Kata Sandi',
     'password_confirm' => 'Konfirmasi Kata Sandi',
-    'password_hint' => 'Must be over 7 characters',
+    'password_hint' => 'Harus lebih dari 7 karakter',
     'forgot_password' => 'Lupa Password?',
-    'remember_me' => 'Remember Me',
-    'ldap_email_hint' => 'Please enter an email to use for this account.',
+    'remember_me' => 'Ingat saya',
+    'ldap_email_hint' => 'Harap masukkan email yang akan digunakan untuk akun ini.',
     'create_account' => 'Membuat Akun',
     'already_have_account' => 'Sudah punya akun?',
     'dont_have_account' => 'Tidak punya akun?',
-    'social_login' => 'Social Login',
+    'social_login' => 'Masuk dengan sosial media',
     'social_registration' => 'Social Registration',
     'social_registration_text' => 'Register and sign in using another service.',
 
