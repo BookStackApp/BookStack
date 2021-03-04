@@ -33,17 +33,17 @@ return [
     'book_delete'                 => 'hapus buku',
     'book_delete_notification'    => 'Buku berhasil dihapus',
     'book_sort'                   => 'urutkan buku',
-    'book_sort_notification'      => 'Book Successfully Re-sorted',
+    'book_sort_notification'      => 'Buku berhasil diurutkan',
 
     // Bookshelves
-    'bookshelf_create'            => 'created Bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf Successfully Created',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
+    'bookshelf_create'            => 'membuat rak',
+    'bookshelf_create_notification'    => 'Rak berhasil dibuat',
+    'bookshelf_update'                 => 'update rak',
+    'bookshelf_update_notification'    => 'Rak berhasil diupdate',
+    'bookshelf_delete'                 => 'hapus rak',
+    'bookshelf_delete_notification'    => 'Rak berhasil dihapus',
 
     // Other
-    'commented_on'                => 'commented on',
-    'permissions_update'          => 'updated permissions',
+    'commented_on'                => 'berkomentar pada',
+    'permissions_update'          => 'perbaharui izin',
 ];
