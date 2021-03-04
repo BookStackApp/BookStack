@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute(을)를 적어도 :value바이트로 구성하세요.',
         'array'   => ':attribute(을)를 적어도 :value개로 구성하세요..',
     ],
-    'no_double_extension'  => ':attribute(이)가 단일한 확장자를 가져야 합니다.',
     'not_in'               => '고른 :attribute(이)가 유효하지 않습니다.',
     'not_regex'            => ':attribute(은)는 유효하지 않은 형식입니다.',
     'numeric'              => ':attribute(을)를 숫자로만 구성하세요.',

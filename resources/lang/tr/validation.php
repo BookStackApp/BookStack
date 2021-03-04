@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute, en az :min karakter içermelidir.',
         'array'   => ':attribute, en az :min öge içermelidir.',
     ],
-    'no_double_extension'  => ':attribute, sadece tek bir dosya tipinde olmalıdır.',
     'not_in'               => 'Seçili :attribute geçersiz.',
     'not_regex'            => ':attribute formatı geçersiz.',
     'numeric'              => ':attribute, bir sayı olmalıdır.',

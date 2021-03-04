@@ -78,7 +78,6 @@ return [
         'string'  => 'שדה :attribute חייב להיות לפחות :min תווים.',
         'array'   => 'שדה :attribute חייב להיות לפחות :min פריטים.',
     ],
-    'no_double_extension'  => 'השדה :attribute חייב להיות בעל סיומת קובץ אחת בלבד.',
     'not_in'               => 'בחירת ה-:attribute אינה תקפה.',
     'not_regex'            => 'The :attribute format is invalid.',
     'numeric'              => 'שדה :attribute חייב להיות מספר.',
