@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute må være på minst :min tegn.',
         'array'   => ':attribute må minst ha :min ting.',
     ],
-    'no_double_extension'  => ':attribute kan bare ha en formattype spesifisert.',
     'not_in'               => 'Den valgte :attribute er ugyldig.',
     'not_regex'            => ':attribute format er ugyldig.',
     'numeric'              => ':attribute må være et nummer.',

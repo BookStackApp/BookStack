@@ -165,7 +165,7 @@ class ImageTest extends TestCase
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded php file was uploaded but should have been stopped');
     }
 
-    public function test_files_with_double_extensions_cannot_be_uploaded()
+    public function test_files_with_double_extensions_will_get_sanitized()
     {
         $page = Page::first();
         $admin = $this->getAdmin();
@@ -177,9 +177,17 @@ class ImageTest extends TestCase
 
         $file = $this->newTestImageFromBase64('bad-phtml-png.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/png')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
-        $upload->assertStatus(302);
+        $upload->assertStatus(200);
 
-        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded double extension file was uploaded but should have been stopped');
+        $lastImage = Image::query()->latest('id')->first();
+        $newFileName = explode('.', basename($lastImage->path))[0];
+
+        $this->assertEquals($lastImage->name, 'bad-phtml.png');
+        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image file name was not stripped of dots');
+
+        $this->assertTrue(strlen($newFileName) > 0, 'File name was reduced to nothing');
+
+        $this->deleteImage($lastImage->path);
     }
 
     public function test_url_entities_removed_from_filenames()

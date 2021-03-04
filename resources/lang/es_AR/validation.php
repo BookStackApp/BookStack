@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute debe ser al menos :min caracteres.',
         'array'   => ':attribute debe tener como mínimo :min items.',
     ],
-    'no_double_extension'  => 'El :attribute debe tener una única extensión de archivo.',
     'not_in'               => ':attribute seleccionado es inválido.',
     'not_regex'            => 'El formato de :attribute es inválido.',
     'numeric'              => ':attribute debe ser numérico.',

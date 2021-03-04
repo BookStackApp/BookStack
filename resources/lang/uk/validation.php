@@ -78,7 +78,6 @@ return [
         'string'  => 'Текст в полі :attribute повинен містити не менше :min символів.',
         'array'   => 'Поле :attribute повинне містити не менше :min елементів.',
     ],
-    'no_double_extension'  => 'Поле :attribute повинне містити тільки одне розширення файлу.',
     'not_in'               => 'Вибране для :attribute значення не коректне.',
     'not_regex'            => 'Формат поля :attribute не вірний.',
     'numeric'              => 'Поле :attribute повинно містити число.',
