@@ -27,12 +27,12 @@ return [
     'images' => 'Gambar-gambar',
     'my_recent_drafts' => 'Draf Terbaru Saya',
     'my_recently_viewed' => 'Baru saja saya lihat',
-    'no_pages_viewed' => 'You have not viewed any pages',
-    'no_pages_recently_created' => 'No pages have been recently created',
-    'no_pages_recently_updated' => 'No pages have been recently updated',
-    'export' => 'Export',
-    'export_html' => 'Contained Web File',
-    'export_pdf' => 'PDF File',
+    'no_pages_viewed' => 'Anda belum melihat halaman apa pun',
+    'no_pages_recently_created' => 'Tidak ada halaman yang baru saja dibuat',
+    'no_pages_recently_updated' => 'Tidak ada halaman yang baru-baru ini diperbarui',
+    'export' => 'Ekspor',
+    'export_html' => 'File Web Berisi',
+    'export_pdf' => 'File PDF',
     'export_text' => 'Plain Text File',
 
     // Permissions and restrictions
