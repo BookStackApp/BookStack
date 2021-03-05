@@ -22,16 +22,16 @@ return [
     'saml_user_not_registered' => 'Lietotājs :name nav reģistrēts un automātiska reģistrācija ir izslēgta',
     'saml_no_email_address' => 'Ārējās autentifikācijas sistēmas sniegtajos datos nevarēja atrast šī lietotāja e-pasta adresi',
     'saml_invalid_response_id' => 'Ārējās autentifikācijas sistēmas pieprasījums neatpazīst procesu, kuru sākusi šī lietojumprogramma. Pārvietojoties atpakaļ pēc pieteikšanās var rasties šāda problēma.',
-    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'saml_fail_authed' => 'Piekļuve ar :system neizdevās, sistēma nepieļāva veiksmīgu autorizāciju',
     'social_no_action_defined' => 'Darbības nav definētas',
-    'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
-    'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.',
-    'social_account_email_in_use' => 'The email :email is already in use. If you already have an account you can connect your :socialAccount account from your profile settings.',
-    'social_account_existing' => 'This :socialAccount is already attached to your profile.',
-    'social_account_already_used_existing' => 'This :socialAccount account is already used by another user.',
-    'social_account_not_used' => 'This :socialAccount account is not linked to any users. Please attach it in your profile settings. ',
-    'social_account_register_instructions' => 'If you do not yet have an account, You can register an account using the :socialAccount option.',
-    'social_driver_not_found' => 'Social driver not found',
+    'social_login_bad_response' => "Saņemta kļūda izmantojot :socialAccount piekļuvi:\n:error",
+    'social_account_in_use' => 'Šis :socialAccount konts jau tiek izmantots, mēģiniet ieiet ar :socialAccount piekļuves iespēju.',
+    'social_account_email_in_use' => 'Šis epasts :email jau tiek izmantots. Ja jums jau ir konts, jūs varat pieslēgt savu :socialAccount kontu savos profila uzstādījumos.',
+    'social_account_existing' => 'Šis :socialAccount konts jau ir piesaistīts jūsu profilam.',
+    'social_account_already_used_existing' => 'Šo :socialAccount konts jau ir piesaistīts citam lietotājam.',
+    'social_account_not_used' => 'Šis :socialAccount konts nav piesaistīts nevienam lietotājām. Lūdzu pievienojiet to savos profila uzstādījumos. ',
+    'social_account_register_instructions' => 'Ja jums vēl nav savs konts, jūs varat reģistrēt kontu izmantojot :socialAccount piekļuvi.',
+    'social_driver_not_found' => 'Sociālā tīkla savienojums nav atrasts',
     'social_driver_not_configured' => 'Jūsu :socialAccount sociālie iestatījumi nav uzstādīti pareizi.',
     'invite_token_expired' => 'Šī uzaicinājuma saite ir novecojusi. Tā vietā jūs varat mēģināt atiestatīt sava konta paroli.',
 
@@ -49,8 +49,8 @@ return [
     'attachment_not_found' => 'Pielikums nav atrasts',
 
     // Pages
-    'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
-    'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
+    'page_draft_autosave_fail' => 'Neizdevās saglabāt uzmetumu. Pārliecinieties, ka jūsu interneta pieslēgums ir aktīvs pirms saglabājiet šo lapu',
+    'page_custom_home_deletion' => 'Nav iespējams izdzēst lapu kamēr tā ir uzstādīta kā sākumlapa',
 
     // Entities
     'entity_not_found' => 'Vienība nav atrasta',
@@ -70,7 +70,7 @@ return [
     'role_cannot_be_edited' => 'Šo lomu nevar rediģēt',
     'role_system_cannot_be_deleted' => 'Šī ir sistēmas loma un nevar tikt izdzēsta',
     'role_registration_default_cannot_delete' => 'Šī loma nevar tikt izdzēsta, kamēr tā uzstādīta kā noklusētā reģistrācijas loma',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_remove_only_admin' => 'Šis ir vienīgais lietotājs, kam norādīta administratora loma. Pievienojiet administratora lomu citam lietotājam pirms mēģiniet to izslēgt šeit.',
 
     // Comments
     'comment_list' => 'Radās kļūda ielasot komentārus.',
@@ -81,20 +81,20 @@ return [
 
     // Error pages
     '404_page_not_found' => 'Lapa nav atrasta',
-    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found' => 'Atvainojiet, meklētā lapa nav atrasta.',
+    'sorry_page_not_found_permission_warning' => 'Ja šai lapai būtu bijis te jābūt, jums var nebūt pietiekamas piekļuves tiesības, lai to apskatītu.',
     'return_home' => 'Atgriezties uz sākumu',
     'error_occurred' => 'Radusies kļūda',
     'app_down' => ':appName pagaidām nav pieejams',
     'back_soon' => 'Drīz būs atkal pieejams.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Pieprasījumā nav atrasts autorizācijas žetons',
+    'api_bad_authorization_format' => 'Pieprasījumā atrasts autorizācijas žetons, taču tā formāts nav pareizs',
+    'api_user_token_not_found' => 'Nav atrasts norādītajam autorizācijas žetonam atbilstošs API žetons',
+    'api_incorrect_token_secret' => 'Norādītā slepenā atslēga izmantotajam API žetonam nav pareiza',
+    'api_user_no_api_permission' => 'Izmantotā API žetona īpašniekam nav tiesības veikt API izsaukumus',
+    'api_user_token_expired' => 'Autorizācijas žetona derīguma termiņš ir izbeidzies',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Radusies kļūda sūtot testa epastu:',
