@@ -83,7 +83,7 @@ return [
     '404_page_not_found' => 'Page Not Found',
     'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
     'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
-    'return_home' => 'Return to home',
+    'return_home' => 'Kembali ke home',
     'error_occurred' => 'An Error Occurred',
     'app_down' => ':appName is down right now',
     'back_soon' => 'It will be back up soon.',
