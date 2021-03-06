@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'user' => "We can't find a user with that e-mail address.",
-    'token' => 'The password reset token is invalid for this email address.',
-    'sent' => 'We have e-mailed your password reset link!',
-    'reset' => 'Your password has been reset!',
+    'password' => 'Kata sandi harus setidaknya delapan karakter dan sesuai dengan konfirmasi.',
+    'user' => "Kami tidak dapat menemukan pengguna dengan alamat email tersebut.",
+    'token' => 'Token setel ulang sandi tidak valid untuk alamat email ini.',
+    'sent' => 'Kami telah mengirimkan email tautan pengaturan ulang kata sandi Anda!',
+    'reset' => 'Kata sandi Anda telah disetel ulang!',
 
 ];
