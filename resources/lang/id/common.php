@@ -55,7 +55,7 @@ return [
     'no_activity' => 'Tidak ada aktifitas untuk ditampilkan',
     'no_items' => 'Tidak ada item yang tersedia',
     'back_to_top' => 'Kembali ke atas',
-    'toggle_details' => 'Toggle Details',
+    'toggle_details' => 'Detail Toggle',
     'toggle_thumbnails' => 'Alihkan Gambar Mini',
     'details' => 'Detail',
     'grid_view' => 'Tampilan bergaris',
