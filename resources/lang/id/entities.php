@@ -52,7 +52,7 @@ return [
     'search_advanced' => 'Pencarian Lanjutan',
     'search_terms' => 'Cari Istilah',
     'search_content_type' => 'Tipe Konten',
-    'search_exact_matches' => 'Exact Matches',
+    'search_exact_matches' => 'Pertandingan Persis',
     'search_tags' => 'Pencarian Tag',
     'search_options' => 'Pilihan',
     'search_viewed_by_me' => 'Dilihat oleh saya',
