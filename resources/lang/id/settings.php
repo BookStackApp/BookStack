@@ -67,11 +67,11 @@ return [
     'reg_confirm_email_desc' => 'If domain restriction is used then email confirmation will be required and this option will be ignored.',
     'reg_confirm_restrict_domain' => 'Domain Restriction',
     'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.',
-    'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
+    'reg_confirm_restrict_domain_placeholder' => 'Tidak ada batasan yang ditetapkan',
 
     // Maintenance settings
-    'maint' => 'Maintenance',
-    'maint_image_cleanup' => 'Cleanup Images',
+    'maint' => 'Pemeliharaan',
+    'maint_image_cleanup' => 'Gambar Bersihkan',
     'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Run Cleanup',
