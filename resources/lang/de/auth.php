@@ -66,7 +66,7 @@ return [
     'email_not_confirmed_resend_button' => 'Bestätigungs-E-Mail erneut senden',
 
     // User Invite
-    'user_invite_email_subject' => 'Du wurdest eingeladen :appName beizutreten!',
+    'user_invite_email_subject' => 'Sie wurden eingeladen :appName beizutreten!',
     'user_invite_email_greeting' => 'Ein Konto wurde für Sie auf :appName erstellt.',
     'user_invite_email_text' => 'Klicken Sie auf die Schaltfläche unten, um ein Passwort festzulegen und Zugriff zu erhalten:',
     'user_invite_email_action' => 'Account-Passwort festlegen',
