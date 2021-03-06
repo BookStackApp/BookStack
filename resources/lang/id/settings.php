@@ -7,17 +7,17 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'settings_save_success' => 'Settings saved',
+    'settings' => 'Pengaturan',
+    'settings_save' => 'Simpan Pengaturan',
+    'settings_save_success' => 'Pengaturan disimpan',
 
     // App Settings
-    'app_customization' => 'Customization',
-    'app_features_security' => 'Features & Security',
-    'app_name' => 'Application Name',
-    'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
-    'app_name_header' => 'Show name in header',
-    'app_public_access' => 'Public Access',
+    'app_customization' => 'Kustomisasi',
+    'app_features_security' => 'Fitur & Keamanan',
+    'app_name' => 'Nama aplikasi',
+    'app_name_desc' => 'Nama ini ditampilkan di tajuk dan di semua email yang dikirim oleh sistem.',
+    'app_name_header' => 'Tampilkan nama di header',
+    'app_public_access' => 'Akses publik',
     'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
     'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
     'app_public_access_toggle' => 'Allow public access',
