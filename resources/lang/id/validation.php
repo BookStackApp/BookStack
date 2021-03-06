@@ -8,17 +8,17 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'The :attribute must be accepted.',
-    'active_url'           => 'The :attribute is not a valid URL.',
-    'after'                => 'The :attribute must be a date after :date.',
+    'accepted'             => ':attribute harus diterima.',
+    'active_url'           => ':attribute bukan URL yang valid.',
+    'after'                => ':attribute harus setelah tanggal :date.',
     'alpha'                => ':attribute hanya boleh berisi huruf.',
     'alpha_dash'           => ':attribute hanya boleh berisi huruf, angka, tanda hubung, dan garis bawah.',
     'alpha_num'            => ':attribute hanya boleh berisi huruf dan angka.',
     'array'                => ':attribute harus berupa larik.',
     'before'               => ':attribute harus tanggal sebelum :date.',
     'between'              => [
-        'numeric' => 'The :attribute must be between :min and :max.',
-        'file'    => 'The :attribute must be between :min and :max kilobytes.',
+        'numeric' => ':attribute harus di antara :min dan :max.',
+        'file'    => ':attribute harus diantara :min dan :max kilobyte.',
         'string'  => 'The :attribute must be between :min and :max characters.',
         'array'   => 'The :attribute must have between :min and :max items.',
     ],
@@ -75,7 +75,7 @@ return [
     'min'                  => [
         'numeric' => 'The :attribute must be at least :min.',
         'file'    => 'The :attribute must be at least :min kilobytes.',
-        'string'  => 'The :attribute must be at least :min characters.',
+        'string'  => ':attribute setidaknya harus :min karakter.',
         'array'   => 'The :attribute must have at least :min items.',
     ],
     'no_double_extension'  => 'The :attribute must only have a single file extension.',
@@ -101,12 +101,12 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
-    'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
+    'uploaded'             => 'File tidak dapat diunggah. Server mungkin tidak menerima file dengan ukuran ini.',
 
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'Password confirmation required',
+            'required_with' => 'Konfirmasi kata sandi diperlukan',
         ],
     ],
 
