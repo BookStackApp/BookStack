@@ -235,6 +235,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'ar' => 'العربية',
         'bg' => 'Bulgarisch',
         'bs' => 'Bosanski',
+        'ca' => 'Català',
         'cs' => 'Česky',
         'da' => 'Dänisch',
         'de' => 'Deutsch (Sie)',
