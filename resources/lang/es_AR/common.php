@@ -80,6 +80,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Política de privacidad',
+    'terms_of_service' => 'Términos de Servicio',
 ];
