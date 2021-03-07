@@ -83,7 +83,6 @@ class RegistrationService
                 $message = trans('auth.email_confirm_send_error');
                 throw new UserRegistrationException($message, '/register/confirm');
             }
-
         }
 
         return $newUser;
@@ -109,5 +108,4 @@ class RegistrationService
             throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), $redirect);
         }
     }
-
 }
