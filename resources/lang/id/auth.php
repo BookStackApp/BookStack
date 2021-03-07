@@ -13,7 +13,7 @@ return [
     'sign_up' => 'Daftar',
     'log_in' => 'Gabung',
     'log_in_with' => 'Masuk dengan :socialDriver',
-    'sign_up_with' => 'Mendaftar dengan :socialDriver',
+    'sign_up_with' => 'Daftar dengan :socialDriver',
     'logout' => 'Keluar',
 
     'name' => 'Nama',
@@ -68,10 +68,10 @@ return [
     // User Invite
     'user_invite_email_subject' => 'Anda telah diundang untuk bergabung di :appName!',
     'user_invite_email_greeting' => 'Sebuah akun telah dibuat untuk Anda di :appName.',
-    'user_invite_email_text' => 'Klik tombol di bawah untuk menyetel kata sandi akun dan mendapatkan akses:',
-    'user_invite_email_action' => 'Setel Kata Sandi Akun',
+    'user_invite_email_text' => 'Klik tombol di bawah untuk mengatur kata sandi akun dan mendapatkan akses:',
+    'user_invite_email_action' => 'Atur Kata Sandi Akun',
     'user_invite_page_welcome' => 'Selamat datang di :appName!',
-    'user_invite_page_text' => 'Untuk menyelesaikan akun Anda dan mendapatkan akses, Anda perlu menyetel kata sandi yang akan digunakan untuk masuk ke: appName pada kunjungan berikutnya.',
+    'user_invite_page_text' => 'Untuk menyelesaikan akun Anda dan mendapatkan akses, Anda perlu mengatur kata sandi yang akan digunakan untuk masuk ke :appName pada kunjungan berikutnya.',
     'user_invite_page_confirm_button' => 'Konfirmasi Kata sandi',
     'user_invite_success' => 'Atur kata sandi, Anda sekarang memiliki akses ke :appName!'
 ];
