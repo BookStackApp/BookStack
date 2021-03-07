@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => '":actionText" をクリックできない場合、以下のURLをコピーしブラウザで開いてください:',
     'email_rights' => 'All rights reserved',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];
