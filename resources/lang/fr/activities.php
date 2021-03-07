@@ -45,5 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'a commenté',
-    'permissions_update'          => 'a mis à jour les autorisations',
+    'permissions_update'          => 'mettre à jour les autorisations',
 ];
