@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'Om du har problemer med å trykke på «:actionText»-knappen, bruk nettadressen under for å gå direkte dit:',
     'email_rights' => 'Kopibeskyttet',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];
