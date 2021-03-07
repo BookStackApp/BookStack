@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'Ако имате проблеми с бутона ":actionText" по-горе, копирайте и поставете URL адреса по-долу в уеб браузъра си:',
     'email_rights' => 'Всички права запазени',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

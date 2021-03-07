@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => '如果您無法點選“:actionText”按鈕，請將下面的網址複製到您的瀏覽器中打開：',
     'email_rights' => '版權所有',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];
