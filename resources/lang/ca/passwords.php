@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Les contrasenyes han de tenir com a mínim vuit caràcters i la confirmació ha de coincidir.',
-    'user' => "No s'ha trobat cap usuari amb aquesta adreça electrònica.",
-    'token' => 'El testimoni de reinicialització de la contrasenya no és vàlid per a aquesta adreça electrònica.',
-    'sent' => 'Us hem enviat un enllaç per a restablir la contrasenya!',
-    'reset' => 'S\'ha restablert la vostra contrasenya!',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'The password reset token is invalid for this email address.',
+    'sent' => 'We have e-mailed your password reset link!',
+    'reset' => 'Your password has been reset!',
 
 ];
