@@ -90,7 +90,7 @@ return [
     'required_without'     => 'Поле :attribute є обов\'язковим для заповнення, коли :values не вказано.',
     'required_without_all' => 'Поле :attribute є обов\'язковим для заповнення, коли :values не вказано.',
     'same'                 => 'Поля :attribute та :other мають збігатися.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'Надане посилання може бути небезпечним.',
     'size'                 => [
         'numeric' => 'Поле :attribute має бути довжини :size.',
         'file'    => 'Файл в полі :attribute має бути розміром :size кілобайт.',

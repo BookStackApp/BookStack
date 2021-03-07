@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'Als je de knop ":actionText" niet werkt, kopieer en plak de onderstaande URL in je web browser:',
     'email_rights' => 'Alle rechten voorbehouden',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

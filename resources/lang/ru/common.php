@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'Если у вас возникли проблемы с нажатием кнопки \':actionText\', то скопируйте и вставьте указанный URL-адрес в свой браузер:',
     'email_rights' => 'Все права защищены',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

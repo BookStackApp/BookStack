@@ -90,7 +90,7 @@ return [
     'required_without'     => ':attribute feltet er påkrevt når :values ikke er tilgjengelig.',
     'required_without_all' => ':attribute feltet er påkrevt når ingen av :values er tilgjengelig.',
     'same'                 => ':attribute og :other må samsvare.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'Den angitte lenken kan være farlig.',
     'size'                 => [
         'numeric' => ':attribute må være :size.',
         'file'    => ':attribute må være :size kilobytes.',
