@@ -186,10 +186,10 @@ return [
     'pages_editing_page' => 'Modification de la page',
     'pages_edit_draft_save_at' => 'Brouillon sauvé le ',
     'pages_edit_delete_draft' => 'Supprimer le brouillon',
-    'pages_edit_discard_draft' => 'Supprimer le brouillon',
-    'pages_edit_set_changelog' => 'Décrivez vos modifications',
-    'pages_edit_enter_changelog_desc' => 'Ecrivez une brève description des modifications effectuées',
-    'pages_edit_enter_changelog' => 'Ecrire dans le journal des modifications',
+    'pages_edit_discard_draft' => 'Ecarter le brouillon',
+    'pages_edit_set_changelog' => 'Remplir le journal des changements',
+    'pages_edit_enter_changelog_desc' => 'Entrez une brève description des changements effectués',
+    'pages_edit_enter_changelog' => 'Entrer dans le journal des changements',
     'pages_save' => 'Enregistrez la page',
     'pages_title' => 'Titre de la page',
     'pages_name' => 'Nom de la page',
@@ -216,8 +216,8 @@ return [
     'pages_revisions_number' => '#',
     'pages_revisions_numbered' => 'Révision #:id',
     'pages_revisions_numbered_changes' => 'Modification #:id',
-    'pages_revisions_changelog' => 'Journal des modifications',
-    'pages_revisions_changes' => 'Modifications',
+    'pages_revisions_changelog' => 'Journal des changements',
+    'pages_revisions_changes' => 'Changements',
     'pages_revisions_current' => 'Version courante',
     'pages_revisions_preview' => 'Prévisualisation',
     'pages_revisions_restore' => 'Restaurer',
@@ -228,7 +228,7 @@ return [
     'pages_initial_revision' => 'Publication initiale',
     'pages_initial_name' => 'Nouvelle page',
     'pages_editing_draft_notification' => 'Vous éditez actuellement un brouillon qui a été sauvé :timeDiff.',
-    'pages_draft_edited_notification' => 'La page a été mise à jour depuis votre dernière visite. Vous devriez supprimer ce brouillon.',
+    'pages_draft_edited_notification' => 'La page a été mise à jour depuis votre dernière visite. Vous devriez écarter ce brouillon.',
     'pages_draft_edit_active' => [
         'start_a' => ':count utilisateurs ont commencé à éditer cette page',
         'start_b' => ':userName a commencé à éditer cette page',
@@ -236,7 +236,7 @@ return [
         'time_b' => 'dans les :minCount dernières minutes',
         'message' => ':start :time. Attention à ne pas écraser les mises à jour de quelqu\'un d\'autre !',
     ],
-    'pages_draft_discarded' => 'Brouillon supprimé, la page est dans sa version actuelle.',
+    'pages_draft_discarded' => 'Brouillon écarté, la page est dans sa version actuelle.',
     'pages_specific' => 'Page Spécifique',
     'pages_is_template' => 'Modèle de page',
 
@@ -254,7 +254,7 @@ return [
     'tags_remove' => 'Supprimer le tag',
     'attachments' => 'Fichiers joints',
     'attachments_explain' => 'Ajouter des fichiers ou des liens pour les afficher sur votre page. Ils seront affichés dans la barre latérale',
-    'attachments_explain_instant_save' => 'Ces modifications sont enregistrées immédiatement.',
+    'attachments_explain_instant_save' => 'Ces changements sont enregistrés immédiatement.',
     'attachments_items' => 'Fichiers joints',
     'attachments_upload' => 'Uploader un fichier',
     'attachments_link' => 'Attacher un lien',
@@ -313,7 +313,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision ?',
-    'revision_restore_confirm' => 'Êtes-vous sûr de vouloir restaurer cette révision ? Le contenu actuel de la page va être remplacé.',
+    'revision_restore_confirm' => 'Êtes-vous sûr de vouloir restaurer cette révision ? Le contenu courant de la page va être remplacé.',
     'revision_delete_success' => 'Révision supprimée',
     'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.'
 ];
