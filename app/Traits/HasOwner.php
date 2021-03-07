@@ -15,5 +15,4 @@ trait HasOwner
     {
         return $this->belongsTo(User::class, 'owned_by');
     }
-
 }

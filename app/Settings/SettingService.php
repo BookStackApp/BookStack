@@ -176,7 +176,7 @@ class SettingService
      */
     protected function formatArrayValue(array $value): string
     {
-        $values = collect($value)->values()->filter(function(array $item) {
+        $values = collect($value)->values()->filter(function (array $item) {
             return count(array_filter($item)) > 0;
         });
         return json_encode($values);
