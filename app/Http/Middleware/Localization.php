@@ -19,6 +19,7 @@ class Localization
         'ar' => 'ar',
         'bg' => 'bg_BG',
         'bs' => 'bs_BA',
+        'ca' => 'ca',
         'da' => 'da_DK',
         'de' => 'de_DE',
         'de_informal' => 'de_DE',
