@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'Si vous rencontrez des problèmes pour cliquer sur le bouton ":actionText", copiez et collez l\'adresse ci-dessous dans votre navigateur :',
     'email_rights' => 'Tous droits réservés',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Politique de confidentialité',
+    'terms_of_service' => 'Conditions d\'utilisation',
 ];
