@@ -68,10 +68,10 @@ return [
     // User Invite
     'user_invite_email_subject' => '您被邀請加入 :appName！',
     'user_invite_email_greeting' => '我們為您在 :appName 上建立了一個新帳號。',
-    'user_invite_email_text' => '請點擊下面的按鈕設置賬戶密碼并獲取訪問權限:',
-    'user_invite_email_action' => '請設置賬戶密碼',
-    'user_invite_page_welcome' => '歡迎使用:appName',
-    'user_invite_page_text' => '要完成設置您的賬戶並獲取訪問權限，您需要設置一個密碼。該密碼將在以後訪問時用於登陸:appName',
-    'user_invite_page_confirm_button' => '請確定密碼',
-    'user_invite_success' => '密碼已設置，您現在可以進入:appName了啦！'
+    'user_invite_email_text' => '請點擊下方按鈕來設定帳號密碼並取得存取權：',
+    'user_invite_email_action' => '設定帳號密碼',
+    'user_invite_page_welcome' => '歡迎使用 :appName！',
+    'user_invite_page_text' => '要完成設定您的帳號並取得存取權，您必須設定密碼，此密碼將用於登入 :appName。',
+    'user_invite_page_confirm_button' => '確認密碼',
+    'user_invite_success' => '密碼已設定，您現在可以存取 :appName 了！'
 ];
