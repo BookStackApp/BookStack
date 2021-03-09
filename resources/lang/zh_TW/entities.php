@@ -148,7 +148,7 @@ return [
     'chapters_create' => '建立章節',
     'chapters_delete' => '刪除章節',
     'chapters_delete_named' => '刪除章節「:chapterName」',
-    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
+    'chapters_delete_explain' => '這將會刪除名稱為「:chapterName」的章節。此章節中的所有頁面都將會被刪除。',
     'chapters_delete_confirm' => '您確定要刪除此章節嗎？',
     'chapters_edit' => '編輯章節',
     'chapters_edit_named' => '編輯章節「:chapterName」',
