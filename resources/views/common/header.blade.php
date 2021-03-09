@@ -58,10 +58,10 @@
                         </span>
                         <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                             <li>
-                                <a href="{{ url("/user/{$currentUser->id}") }}">@icon('user'){{ trans('common.view_profile') }}</a>
+                                <a href="{{ $currentUser->getProfileUrl() }}">@icon('user'){{ trans('common.view_profile') }}</a>
                             </li>
                             <li>
-                                <a href="{{ url("/settings/users/{$currentUser->id}") }}">@icon('edit'){{ trans('common.edit_profile') }}</a>
+                                <a href="{{ $currentUser->getEditUrl() }}">@icon('edit'){{ trans('common.edit_profile') }}</a>
                             </li>
                             <li>
                                 @if(config('auth.method') === 'saml2')

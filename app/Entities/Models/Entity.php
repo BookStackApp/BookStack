@@ -290,11 +290,11 @@ abstract class Entity extends Model implements Sluggable
     }
 
     /**
-     * Generate and set a new URL slug for this model.
+     * @inheritdoc
      */
     public function refreshSlug(): string
     {
-        $this->slug = (new SlugGenerator)->generate($this);
+        $this->slug = app(SlugGenerator::class)->generate($this);
         return $this->slug;
     }
 }

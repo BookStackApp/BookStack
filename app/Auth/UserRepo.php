@@ -46,6 +46,14 @@ class UserRepo
     }
 
     /**
+     * Get a user by their slug.
+     */
+    public function getBySlug(string $slug): User
+    {
+        return User::query()->where('slug', '=', $slug)->firstOrFail();
+    }
+
+    /**
      * Get all the users with their permissions.
      */
     public function getAllUsers(): Collection

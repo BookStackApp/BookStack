@@ -1,6 +1,7 @@
 <?php namespace BookStack\Auth;
 
 use BookStack\Api\ApiToken;
+use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Interfaces\Loggable;
 use BookStack\Interfaces\Sluggable;
 use BookStack\Model;
@@ -266,7 +267,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getProfileUrl(): string
     {
-        return url('/user/' . $this->id);
+        return url('/user/' . $this->slug);
     }
 
     /**
@@ -302,5 +303,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function logDescriptor(): string
     {
         return "({$this->id}) {$this->name}";
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function refreshSlug(): string
+    {
+        $this->slug = app(SlugGenerator::class)->generate($this);
+        return $this->slug;
     }
 }
