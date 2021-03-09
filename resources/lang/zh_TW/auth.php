@@ -66,8 +66,8 @@ return [
     'email_not_confirmed_resend_button' => '重新傳送確認電子郵件',
 
     // User Invite
-    'user_invite_email_subject' => '您受邀請加入:appName！',
-    'user_invite_email_greeting' => '我們為您在:appName上創建了一個新賬戶。',
+    'user_invite_email_subject' => '您被邀請加入 :appName！',
+    'user_invite_email_greeting' => '我們為您在 :appName 上建立了一個新帳號。',
     'user_invite_email_text' => '請點擊下面的按鈕設置賬戶密碼并獲取訪問權限:',
     'user_invite_email_action' => '請設置賬戶密碼',
     'user_invite_page_welcome' => '歡迎使用:appName',
