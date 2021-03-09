@@ -178,7 +178,7 @@ return [
     'pages_delete_draft_success' => '草稿頁面已刪除',
     'pages_delete_confirm' => '您確定要刪除此頁面嗎？',
     'pages_delete_draft_confirm' => '您確定要刪除此草稿頁面嗎？',
-    'pages_editing_named' => '正在編輯頁面“:pageName”',
+    'pages_editing_named' => '正在編輯頁面 :pageName',
     'pages_edit_draft_options' => '草稿選項',
     'pages_edit_save_draft' => '儲存草稿',
     'pages_edit_draft' => '編輯頁面草稿',
