@@ -99,7 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // User Profile routes
-    Route::get('/user/{userId}', 'UserController@showProfilePage');
+    Route::get('/user/{slug}', 'UserProfileController@show');
 
     // Image routes
     Route::get('/images/gallery', 'Images\GalleryImageController@list');

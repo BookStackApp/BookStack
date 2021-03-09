@@ -15,4 +15,9 @@ use Illuminate\Database\Eloquent\Builder;
 interface Sluggable
 {
 
+    /**
+     * Regenerate the slug for this model.
+     */
+    public function refreshSlug(): string;
+
 }
