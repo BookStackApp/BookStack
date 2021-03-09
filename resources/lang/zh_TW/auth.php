@@ -53,17 +53,17 @@ return [
     // Email Confirmation
     'email_confirm_subject' => '確認您在 :appName 的電子郵件',
     'email_confirm_greeting' => '感謝您加入 :appName！',
-    'email_confirm_text' => '請點選下面的按鈕確認您的Email位址：',
-    'email_confirm_action' => '確認Email',
-    'email_confirm_send_error' => '需要Email驗證，但系統無法發送電子郵件，請聯繫網站管理員。',
-    'email_confirm_success' => '您的Email位址已成功驗證！',
-    'email_confirm_resent' => '驗證郵件已重新發送，請檢查收件箱。',
+    'email_confirm_text' => '請點選下面的按鈕來確認您的電子郵件地址：',
+    'email_confirm_action' => '確認電子郵件',
+    'email_confirm_send_error' => '需要電子郵件驗證，但系統無法傳送電子郵件。請與管理員聯絡以確保電子郵件正確設定。',
+    'email_confirm_success' => '您的電子郵件已成功驗證！',
+    'email_confirm_resent' => '確認電子郵件已重新傳送。請檢查您的收件匣。',
 
-    'email_not_confirmed' => 'Email位址未驗證',
+    'email_not_confirmed' => '電子郵件地址未確認',
     'email_not_confirmed_text' => '您的電子郵件位址尚未確認。',
     'email_not_confirmed_click_link' => '請檢查註冊時收到的電子郵件，然後點選確認連結。',
-    'email_not_confirmed_resend' => '如果找不到電子郵件，請透過下面的表單重新發送確認Email。',
-    'email_not_confirmed_resend_button' => '重新發送確認Email',
+    'email_not_confirmed_resend' => '如果找不到電子郵件，請透過下面的表單重新發送確認電子郵件。',
+    'email_not_confirmed_resend_button' => '重新傳送確認電子郵件',
 
     // User Invite
     'user_invite_email_subject' => '您受邀請加入:appName！',
