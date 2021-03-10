@@ -1,6 +1,7 @@
 <?php namespace BookStack\Entities\Tools;
 
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use Illuminate\Database\Connection;
@@ -270,24 +271,20 @@ class SearchRunner
 
     protected function filterCreatedBy(EloquentBuilder $query, Entity $model, $input)
     {
-        if (!is_numeric($input) && $input !== 'me') {
-            return;
+        $userSlug = $input === 'me' ? user()->slug : trim($input);
+        $user = User::query()->where('slug', '=', $userSlug)->first(['id']);
+        if ($user) {
+            $query->where('created_by', '=', $user->id);
         }
-        if ($input === 'me') {
-            $input = user()->id;
-        }
-        $query->where('created_by', '=', $input);
     }
 
     protected function filterUpdatedBy(EloquentBuilder $query, Entity $model, $input)
     {
-        if (!is_numeric($input) && $input !== 'me') {
-            return;
+        $userSlug = $input === 'me' ? user()->slug : trim($input);
+        $user = User::query()->where('slug', '=', $userSlug)->first(['id']);
+        if ($user) {
+            $query->where('updated_by', '=', $user->id);
         }
-        if ($input === 'me') {
-            $input = user()->id;
-        }
-        $query->where('updated_by', '=', $input);
     }
 
     protected function filterInName(EloquentBuilder $query, Entity $model, $input)

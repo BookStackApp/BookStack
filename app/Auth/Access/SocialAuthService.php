@@ -221,7 +221,7 @@ class SocialAuthService
      * Detach a social account from a user.
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function detachSocialAccount(string $socialDriver)
+    public function detachSocialAccount(string $socialDriver): void
     {
         user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
     }
