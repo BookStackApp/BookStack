@@ -39,28 +39,28 @@ return [
     'path_not_writable' => '無法上傳到 :filePath 檔案路徑。請確定其對伺服器來說是可寫入的。',
     'cannot_get_image_from_url' => '無法從 :url 取得圖片',
     'cannot_create_thumbs' => '伺服器無法建立縮圖。請檢查您是否安裝了 PHP 的 GD 擴充程式。',
-    'server_upload_limit' => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
-    'uploaded'  => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
+    'server_upload_limit' => '伺服器不允許上傳這個大的檔案。請嘗試較小的檔案。',
+    'uploaded'  => '伺服器不允許上傳這個大的檔案。請嘗試較小的檔案。',
     'image_upload_error' => '上傳圖片時發生錯誤',
-    'image_upload_type_error' => '上傳圖片類型錯誤',
-    'file_upload_timeout' => '文件上傳已超時。',
+    'image_upload_type_error' => '上傳圖片類型無效',
+    'file_upload_timeout' => '檔案上傳逾時。',
 
     // Attachments
-    'attachment_not_found' => '沒有找到附件',
+    'attachment_not_found' => '找不到附件',
 
     // Pages
-    'page_draft_autosave_fail' => '無法儲存草稿，確保您在儲存頁面之前已經連接到互聯網',
-    'page_custom_home_deletion' => '無法刪除一個被設定為首頁的頁面',
+    'page_draft_autosave_fail' => '無法儲存草稿。請確保您在儲存此頁面前已連線至網際網路',
+    'page_custom_home_deletion' => '無法刪除被設定為首頁的頁面',
 
     // Entities
-    'entity_not_found' => '未找到實體',
-    'bookshelf_not_found' => '未找到書架',
-    'book_not_found' => '未找到圖書',
-    'page_not_found' => '未找到頁面',
-    'chapter_not_found' => '未找到章節',
-    'selected_book_not_found' => '選中的書未找到',
-    'selected_book_chapter_not_found' => '未找到所選的圖書或章節',
-    'guests_cannot_save_drafts' => '訪客不能儲存草稿',
+    'entity_not_found' => '找不到實體',
+    'bookshelf_not_found' => '找不到書架',
+    'book_not_found' => '找不到書本',
+    'page_not_found' => '找不到頁面',
+    'chapter_not_found' => '找不到章節',
+    'selected_book_not_found' => '找不到選定的書本',
+    'selected_book_chapter_not_found' => '找不到選定的書本或章節',
+    'guests_cannot_save_drafts' => '訪客無法儲存草稿',
 
     // Users
     'users_cannot_delete_only_admin' => '您不能刪除唯一的管理員帳號',
@@ -69,32 +69,32 @@ return [
     // Roles
     'role_cannot_be_edited' => '無法編輯這個角色',
     'role_system_cannot_be_deleted' => '無法刪除系統角色',
-    'role_registration_default_cannot_delete' => '無法刪除設定為預設註冊的角色',
-    'role_cannot_remove_only_admin' => '該用戶是分配作為管理員職務的唯一用戶。 在嘗試在此處刪除管理員職務之前，請將其分配給其他用戶。',
+    'role_registration_default_cannot_delete' => '無法刪除設定預設註冊的角色',
+    'role_cannot_remove_only_admin' => '此使用者是唯一被指派為管理員角色的使用者。在試圖移除這裡前，請將管理員角色指派給其他使用者。',
 
     // Comments
-    'comment_list' => '讀取評論時發生錯誤。',
-    'cannot_add_comment_to_draft' => '您不能為草稿加入評論。',
-    'comment_add' => '加入/更新評論時發生錯誤。',
+    'comment_list' => '擷取評論時發生錯誤。',
+    'cannot_add_comment_to_draft' => '您無法新增評論到草稿中。',
+    'comment_add' => '新增／更新評論時發生錯誤。',
     'comment_delete' => '刪除評論時發生錯誤。',
-    'empty_comment' => '不能加入空的評論。',
+    'empty_comment' => '無法新增空評論。',
 
     // Error pages
-    '404_page_not_found' => '無法找到頁面',
-    'sorry_page_not_found' => '對不起，無法找到您想進入的頁面。',
+    '404_page_not_found' => '找不到頁面',
+    'sorry_page_not_found' => '抱歉，找不到您在尋找的頁面。',
     'sorry_page_not_found_permission_warning' => '如果您確認這個頁面存在，則代表可能沒有查看它的權限。',
-    'return_home' => '返回首頁',
+    'return_home' => '回到首頁',
     'error_occurred' => '發生錯誤',
-    'app_down' => ':appName現在正在關閉',
-    'back_soon' => '請耐心等待網站的恢複。',
+    'app_down' => ':appName 離線中',
+    'back_soon' => '它應該很快就會重新上線。',
 
     // API errors
-    'api_no_authorization_found' => '在請求上找不到授權令牌',
-    'api_bad_authorization_format' => '在請求中找到授權令牌，但格式似乎不正確',
-    'api_user_token_not_found' => '找不到提供的授權令牌的匹配API令牌',
-    'api_incorrect_token_secret' => '給定使用的API令牌提供的密鑰不正確',
-    'api_user_no_api_permission' => '使用的API令牌的擁有者者無權進行API調用',
-    'api_user_token_expired' => '授權令牌已過期',
+    'api_no_authorization_found' => '在請求上找不到授權權杖',
+    'api_bad_authorization_format' => '在請求中找到授權權杖，但格式似乎不正確',
+    'api_user_token_not_found' => '找不到與提供的授權權杖相符的 API 權杖',
+    'api_incorrect_token_secret' => '給定使用的 API 權杖的密碼錯誤',
+    'api_user_no_api_permission' => '使用的 API 權杖擁有者無權呼叫 API',
+    'api_user_token_expired' => '使用的授權權杖已過期',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => '寄送測試電子郵件時發生錯誤:',
