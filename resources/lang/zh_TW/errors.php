@@ -6,11 +6,11 @@ return [
 
     // Permissions
     'permission' => '您沒有權限進入所請求的頁面。',
-    'permissionJson' => '您沒有權限執行所請求的操作。',
+    'permissionJson' => '您沒有權限執行所請求的動作。',
 
     // Auth
-    'error_user_exists_different_creds' => 'Email為 :email 的使用者已經存在，但具有不同的憑據。',
-    'email_already_confirmed' => 'Email已被確認，請嘗試登錄。',
+    'error_user_exists_different_creds' => '電子郵件為 :email 已存在，但帳號密碼不同。',
+    'email_already_confirmed' => '已確認電子郵件，請嘗試登入。',
     'email_confirmation_invalid' => '此確認 Session 無效或已被使用，請重新註冊。',
     'email_confirmation_expired' => '確認 Session 已過期，已發送新的確認電子郵件。',
     'email_confirmation_awaiting' => '用於此賬戶的電子郵箱需要認證',
