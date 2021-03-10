@@ -32,13 +32,13 @@ return [
     'social_account_not_used' => '此 :socialAccount 帳號未連結至任何使用者。請至您的個人設定中連結。 ',
     'social_account_register_instructions' => '如果您還沒有帳號，您可以使用 :socialAccount 選項註冊帳號。',
     'social_driver_not_found' => '找不到社交驅動程式',
-    'social_driver_not_configured' => '您的:socialAccount社交設定不正確。',
-    'invite_token_expired' => '此邀請鏈接已過期，您可以嘗試重置您的賬戶密碼。',
+    'social_driver_not_configured' => '您的 :socialAccount 社交設定不正確。',
+    'invite_token_expired' => '此邀請連結已過期。您可以嘗試重設您的帳號密碼。',
 
     // System
-    'path_not_writable' => '無法上傳到檔案路徑“:filePath”，請確保它可寫入伺服器。',
-    'cannot_get_image_from_url' => '無法從 :url 中獲取圖片',
-    'cannot_create_thumbs' => '伺服器無法建立縮圖，請檢查您是否安裝了GD PHP外掛。',
+    'path_not_writable' => '無法上傳到 :filePath 檔案路徑。請確定其對伺服器來說是可寫入的。',
+    'cannot_get_image_from_url' => '無法從 :url 取得圖片',
+    'cannot_create_thumbs' => '伺服器無法建立縮圖。請檢查您是否安裝了 PHP 的 GD 擴充程式。',
     'server_upload_limit' => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
     'uploaded'  => '上傳的檔案大小超過伺服器允許上限。請嘗試較小的檔案。',
     'image_upload_error' => '上傳圖片時發生錯誤',
