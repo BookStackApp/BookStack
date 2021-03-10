@@ -122,6 +122,7 @@ class EntitySearchTest extends TestCase
         $page = $this->newPage(['name' => 'My new test quaffleachits', 'html' => 'this is about an orange donkey danzorbhsing']);
         $this->asEditor();
         $editorId = $this->getEditor()->id;
+        $editorSlug = $this->getEditor()->slug;
 
         // Viewed filter searches
         $this->get('/search?term=' . urlencode('danzorbhsing {not_viewed_by_me}'))->assertSee($page->name);
@@ -133,16 +134,16 @@ class EntitySearchTest extends TestCase
         // User filters
         $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:'.$editorId.'}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by: '.$editorSlug.'}'))->assertDontSee($page->name);
         $page->created_by = $editorId;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {created_by:'.$editorId.'}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_by: '.$editorSlug.'}'))->assertSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
         $page->updated_by = $editorId;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:'.$editorId.'}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by: '.$editorSlug.'}'))->assertSee($page->name);
 
         // Content filters
         $this->get('/search?term=' . urlencode('{in_name:danzorbhsing}'))->assertDontSee($page->name);
