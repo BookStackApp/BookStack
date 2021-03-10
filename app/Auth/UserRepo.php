@@ -167,7 +167,13 @@ class UserRepo
             'email_confirmed' => $emailConfirmed,
             'external_auth_id' => $data['external_auth_id'] ?? '',
         ];
-        return User::query()->forceCreate($details);
+
+        $user = new User();
+        $user->forceFill($details);
+        $user->refreshSlug();
+        $user->save();
+
+        return $user;
     }
 
     /**
