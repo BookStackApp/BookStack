@@ -9,9 +9,7 @@ use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
@@ -31,12 +29,11 @@ class SocialController extends Controller
         $this->registrationService = $registrationService;
     }
 
-
     /**
      * Redirect to the relevant social site.
-     * @throws \BookStack\Exceptions\SocialDriverNotConfigured
+     * @throws SocialDriverNotConfigured
      */
-    public function getSocialLogin(string $socialDriver)
+    public function login(string $socialDriver)
     {
         session()->put('social-callback', 'login');
         return $this->socialAuthService->startLogIn($socialDriver);
@@ -47,7 +44,7 @@ class SocialController extends Controller
      * @throws SocialDriverNotConfigured
      * @throws UserRegistrationException
      */
-    public function socialRegister(string $socialDriver)
+    public function register(string $socialDriver)
     {
         $this->registrationService->ensureRegistrationAllowed();
         session()->put('social-callback', 'register');
@@ -60,7 +57,7 @@ class SocialController extends Controller
      * @throws SocialDriverNotConfigured
      * @throws UserRegistrationException
      */
-    public function socialCallback(Request $request, string $socialDriver)
+    public function callback(Request $request, string $socialDriver)
     {
         if (!session()->has('social-callback')) {
             throw new SocialSignInException(trans('errors.social_no_action_defined'), '/login');
@@ -99,7 +96,7 @@ class SocialController extends Controller
     /**
      * Detach a social account from a user.
      */
-    public function detachSocialAccount(string $socialDriver)
+    public function detach(string $socialDriver)
     {
         $this->socialAuthService->detachSocialAccount($socialDriver);
         session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => Str::title($socialDriver)]));

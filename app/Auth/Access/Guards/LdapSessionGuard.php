@@ -23,13 +23,13 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     /**
      * LdapSessionGuard constructor.
      */
-    public function __construct($name,
+    public function __construct(
+        $name,
         UserProvider $provider,
         Session $session,
         LdapService $ldapService,
         RegistrationService $registrationService
-    )
-    {
+    ) {
         $this->ldapService = $ldapService;
         parent::__construct($name, $provider, $session, $registrationService);
     }
@@ -119,5 +119,4 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
 
         return $this->registrationService->registerUser($details, null, false);
     }
-
 }

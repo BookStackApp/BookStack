@@ -6,6 +6,7 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
 
 /**
@@ -23,7 +24,7 @@ class Activity extends Model
     /**
      * Get the entity for this activity.
      */
-    public function entity()
+    public function entity(): MorphTo
     {
         if ($this->entity_type === '') {
             $this->entity_type = null;

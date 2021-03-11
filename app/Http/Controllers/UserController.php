@@ -5,10 +5,13 @@ use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\ImageRepo;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -61,7 +64,7 @@ class UserController extends Controller
     /**
      * Store a newly created user in storage.
      * @throws UserUpdateException
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request)
     {
@@ -90,6 +93,7 @@ class UserController extends Controller
             $user->external_auth_id = $request->get('external_auth_id');
         }
 
+        $user->refreshSlug();
         $user->save();
 
         if ($sendInvite) {
@@ -132,8 +136,8 @@ class UserController extends Controller
     /**
      * Update the specified user in storage.
      * @throws UserUpdateException
-     * @throws \BookStack\Exceptions\ImageUploadException
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ImageUploadException
+     * @throws ValidationException
      */
     public function update(Request $request, int $id)
     {
@@ -155,6 +159,11 @@ class UserController extends Controller
         // Email updates
         if (userCan('users-manage') && $request->filled('email')) {
             $user->email = $request->get('email');
+        }
+
+        // Refresh the slug if the user's name has changed
+        if ($user->isDirty('name')) {
+            $user->refreshSlug();
         }
 
         // Role updates
@@ -216,7 +225,7 @@ class UserController extends Controller
 
     /**
      * Remove the specified user from storage.
-     * @throws \Exception
+     * @throws Exception
      */
     public function destroy(Request $request, int $id)
     {
@@ -241,25 +250,6 @@ class UserController extends Controller
         $this->logActivity(ActivityType::USER_DELETE, $user);
 
         return redirect('/settings/users');
-    }
-
-    /**
-     * Show the user profile page
-     */
-    public function showProfilePage($id)
-    {
-        $user = $this->userRepo->getById($id);
-
-        $userActivity = $this->userRepo->getActivity($user);
-        $recentlyCreated = $this->userRepo->getRecentlyCreated($user, 5);
-        $assetCounts = $this->userRepo->getAssetCounts($user);
-
-        return view('users.profile', [
-            'user' => $user,
-            'activity' => $userActivity,
-            'recentlyCreated' => $recentlyCreated,
-            'assetCounts' => $assetCounts
-        ]);
     }
 
     /**

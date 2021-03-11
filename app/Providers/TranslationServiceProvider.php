@@ -17,5 +17,4 @@ class TranslationServiceProvider extends BaseProvider
             return new FileLoader($app['files'], $app['path.lang']);
         });
     }
-
 }
