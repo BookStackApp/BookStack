@@ -9,17 +9,17 @@ return [
 
     // Standard laravel validation lines
     'accepted'             => '必須同意 :attribute。',
-    'active_url'           => ':attribute 並不是一個有效的網址',
+    'active_url'           => ':attribute 並非有效的網址。',
     'after'                => ':attribute 必須是在 :date 後的日期。',
     'alpha'                => ':attribute 只能包含字母。',
-    'alpha_dash'           => ':attribute 只能包含字母、數字和橫線。',
+    'alpha_dash'           => ':attribute 只能包含字母、數字、破折號與底線。',
     'alpha_num'            => ':attribute 只能包含字母和數字。',
     'array'                => ':attribute 必須是陣列。',
     'before'               => ':attribute 必須是在 :date 前的日期。',
     'between'              => [
-        'numeric' => ':attribute 必須在:min到:max之間。',
-        'file'    => ':attribute 必須為:min到:max KB。',
-        'string'  => ':attribute 必須在:min到:max個字元之間。',
+        'numeric' => ':attribute 必須在 :min 到 :max 之間。',
+        'file'    => ':attribute 必須為 :min 到 :max KB。',
+        'string'  => ':attribute 必須在 :min 到 :max 個字元之間。',
         'array'   => ':attribute 必須在:min到:max項之間.',
     ],
     'boolean'              => ':attribute 字段必須為 true 或 false。',
