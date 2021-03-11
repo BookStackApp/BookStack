@@ -8,7 +8,7 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => ':attribute 需要被同意。',
+    'accepted'             => '必須同意 :attribute。',
     'active_url'           => ':attribute 並不是一個有效的網址',
     'after'                => ':attribute 必須是在 :date 後的日期。',
     'alpha'                => ':attribute 只能包含字母。',
@@ -90,7 +90,7 @@ return [
     'required_without'     => '當:values不存在時，:attribute 字段是必需的。',
     'required_without_all' => '當:values均不存在時，:attribute 字段是必需的。',
     'same'                 => ':attribute 與 :other 必須匹配。',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => '提供的連結可能不安全。',
     'size'                 => [
         'numeric' => ':attribute 必須為:size。',
         'file'    => ':attribute 必須為:size KB。',
