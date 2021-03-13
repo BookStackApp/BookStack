@@ -1,8 +1,5 @@
 <?php namespace BookStack\Entities\Models;
 
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\Book;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -49,7 +46,7 @@ abstract class BookChild extends Entity
 
         // Update all child pages if a chapter
         if ($this instanceof Chapter) {
-            foreach ($this->pages as $page) {
+            foreach ($this->pages()->withTrashed()->get() as $page) {
                 $page->changeBook($newBookId);
             }
         }
