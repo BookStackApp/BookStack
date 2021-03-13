@@ -196,6 +196,24 @@ class SortTest extends TestCase
         $this->assertTrue($chapter->book->id == $newBook->id, 'Page book is now the new book');
     }
 
+    public function test_chapter_move_changes_book_for_deleted_pages_within()
+    {
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->whereHas('pages')->first();
+        $currentBook = $chapter->book;
+        $pageToCheck = $chapter->pages->first();
+        $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
+
+        $pageToCheck->delete();
+
+        $this->asEditor()->put($chapter->getUrl('/move'), [
+            'entity_selection' => 'book:' . $newBook->id
+        ]);
+
+        $pageToCheck->refresh();
+        $this->assertEquals($newBook->id, $pageToCheck->book_id);
+    }
+
     public function test_book_sort()
     {
         $oldBook = Book::query()->first();
