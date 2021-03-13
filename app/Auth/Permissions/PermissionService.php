@@ -3,8 +3,10 @@
 use BookStack\Auth\Permissions;
 use BookStack\Auth\Role;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
 use BookStack\Traits\HasOwner;
@@ -112,21 +114,16 @@ class PermissionService
 
     /**
      * Get a chapter via ID, Checks local cache
-     * @param $chapterId
-     * @return \BookStack\Entities\Models\Book
      */
-    protected function getChapter($chapterId)
+    protected function getChapter(int $chapterId): ?Chapter
     {
         if (isset($this->entityCache['chapter']) && $this->entityCache['chapter']->has($chapterId)) {
             return $this->entityCache['chapter']->get($chapterId);
         }
 
-        $chapter = $this->entityProvider->chapter->find($chapterId);
-        if ($chapter === null) {
-            $chapter = false;
-        }
-
-        return $chapter;
+        return $this->entityProvider->chapter->newQuery()
+            ->withTrashed()
+            ->find($chapterId);
     }
 
     /**
@@ -460,7 +457,7 @@ class PermissionService
         $hasPermissiveAccessToParents = !$book->restricted;
 
         // For pages with a chapter, Check if explicit permissions are set on the Chapter
-        if ($entity->isA('page') && $entity->chapter_id !== 0 && $entity->chapter_id !== '0') {
+        if ($entity instanceof Page && intval($entity->chapter_id) !== 0) {
             $chapter = $this->getChapter($entity->chapter_id);
             $hasPermissiveAccessToParents = $hasPermissiveAccessToParents && !$chapter->restricted;
             if ($chapter->restricted) {
