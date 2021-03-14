@@ -26,7 +26,9 @@ class TagRepo
      */
     public function getNameSuggestions(?string $searchTerm): Collection
     {
-        $query = $this->tag->select('*', DB::raw('count(*) as count'))->groupBy('name');
+        $query = $this->tag->newQuery()
+            ->select('*', DB::raw('count(*) as count'))
+            ->groupBy('name');
 
         if ($searchTerm) {
             $query = $query->where('name', 'LIKE', $searchTerm . '%')->orderBy('name', 'desc');
@@ -45,7 +47,9 @@ class TagRepo
      */
     public function getValueSuggestions(?string $searchTerm, ?string $tagName): Collection
     {
-        $query = $this->tag->select('*', DB::raw('count(*) as count'))->groupBy('value');
+        $query = $this->tag->newQuery()
+            ->select('*', DB::raw('count(*) as count'))
+            ->groupBy('value');
 
         if ($searchTerm) {
             $query = $query->where('value', 'LIKE', $searchTerm . '%')->orderBy('value', 'desc');
