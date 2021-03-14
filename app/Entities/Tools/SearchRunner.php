@@ -179,7 +179,7 @@ class SearchRunner
             }
         }
 
-        return $this->permissionService->enforceEntityRestrictions($entityType, $entitySelect, $action);
+        return $this->permissionService->enforceEntityRestrictions($entity, $entitySelect, $action);
     }
 
     /**

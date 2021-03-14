@@ -495,19 +495,15 @@ class PermissionService
         $userRoleIds = $this->currentUser()->roles()->select('id')->pluck('id')->toArray();
         $userId = $this->currentUser()->id;
 
-        $permissionQuery = $this->db->table('joint_permissions')
+        $permissionQuery = JointPermission::query()
             ->where('action', '=', $permission)
             ->whereIn('role_id', $userRoleIds)
-            ->where(function ($query) use ($userId) {
-                $query->where('has_permission', '=', 1)
-                    ->orWhere(function ($query2) use ($userId) {
-                        $query2->where('has_permission_own', '=', 1)
-                            ->where('owned_by', '=', $userId);
-                    });
+            ->where(function (Builder $query) use ($userId) {
+                $this->addJointHasPermissionCheck($query, $userId);
             });
 
         if (!is_null($entityClass)) {
-            $entityInstance = app()->make($entityClass);
+            $entityInstance = app($entityClass);
             $permissionQuery = $permissionQuery->where('entity_type', '=', $entityInstance->getMorphClass());
         }
 
@@ -526,12 +522,8 @@ class PermissionService
             $parentQuery->whereHas('jointPermissions', function ($permissionQuery) use ($action) {
                 $permissionQuery->whereIn('role_id', $this->getCurrentUserRoles())
                     ->where('action', '=', $action)
-                    ->where(function ($query) {
-                        $query->where('has_permission', '=', true)
-                            ->orWhere(function ($query) {
-                                $query->where('has_permission_own', '=', true)
-                                    ->where('owned_by', '=', $this->currentUser()->id);
-                            });
+                    ->where(function (Builder $query) {
+                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                     });
             });
         });
@@ -552,11 +544,7 @@ class PermissionService
                 $permissionQuery->whereIn('role_id', $this->getCurrentUserRoles())
                     ->where('action', '=', $ability)
                     ->where(function (Builder $query) {
-                        $query->where('has_permission', '=', true)
-                            ->orWhere(function (Builder $query) {
-                                $query->where('has_permission_own', '=', true)
-                                    ->where('owned_by', '=', $this->currentUser()->id);
-                            });
+                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                     });
             });
         });
@@ -580,17 +568,11 @@ class PermissionService
     /**
      * Add restrictions for a generic entity.
      */
-    public function enforceEntityRestrictions(string $entityType, Builder $query, string $action = 'view'): Builder
+    public function enforceEntityRestrictions(Entity $entity, Builder $query, string $action = 'view'): Builder
     {
-        if (strtolower($entityType) === 'page') {
+        if ($entity instanceof Page) {
             // Prevent drafts being visible to others.
-            $query->where(function ($query) {
-                $query->where('draft', '=', false)
-                    ->orWhere(function ($query) {
-                        $query->where('draft', '=', true)
-                            ->where('owned_by', '=', $this->currentUser()->id);
-                    });
-            });
+            $this->enforceDraftVisibilityOnQuery($query);
         }
 
         return $this->entityRestrictionQuery($query, $action);
@@ -610,11 +592,8 @@ class PermissionService
                     ->whereRaw('joint_permissions.entity_type=' . $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
                     ->where('action', '=', $action)
                     ->whereIn('role_id', $this->getCurrentUserRoles())
-                    ->where(function ($query) {
-                        $query->where('has_permission', '=', true)->orWhere(function ($query) {
-                            $query->where('has_permission_own', '=', true)
-                                ->where('owned_by', '=', $this->currentUser()->id);
-                        });
+                    ->where(function (QueryBuilder $query) {
+                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                     });
             });
         });
@@ -640,11 +619,8 @@ class PermissionService
                         ->where('entity_type', '=', $morphClass)
                         ->where('action', '=', 'view')
                         ->whereIn('role_id', $this->getCurrentUserRoles())
-                        ->where(function ($query) {
-                            $query->where('has_permission', '=', true)->orWhere(function ($query) {
-                                $query->where('has_permission_own', '=', true)
-                                    ->where('owned_by', '=', $this->currentUser()->id);
-                            });
+                        ->where(function (QueryBuilder $query) {
+                            $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                         });
                 });
             })->orWhere($tableDetails['entityIdColumn'], '=', 0);
@@ -652,6 +628,19 @@ class PermissionService
 
         $this->clean();
         return $q;
+    }
+
+    /**
+     * Add the query for checking the given user id has permission
+     * within the join_permissions table.
+     * @param QueryBuilder|Builder $query
+     */
+    protected function addJointHasPermissionCheck($query, int $userIdToCheck)
+    {
+        $query->where('has_permission', '=', true)->orWhere(function ($query) use ($userIdToCheck) {
+            $query->where('has_permission_own', '=', true)
+                ->where('owned_by', '=', $userIdToCheck);
+        });
     }
 
     /**
