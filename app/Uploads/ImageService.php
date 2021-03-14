@@ -60,7 +60,7 @@ class ImageService
         int $resizeHeight = null,
         bool $keepRatio = true
     ) {
-        $imageName = $this->sanitizeFileName($uploadedFile->getClientOriginalName());
+        $imageName = $uploadedFile->getClientOriginalName();
         $imageData = file_get_contents($uploadedFile->getRealPath());
 
         if ($resizeWidth !== null || $resizeHeight !== null) {
@@ -139,7 +139,7 @@ class ImageService
         $name = str_replace(' ', '-', $name);
         $nameParts = explode('.', $name);
         $extension = array_pop($nameParts);
-        $name = implode('.', $nameParts);
+        $name = implode('-', $nameParts);
         $name = Str::slug($name);
 
         if (strlen($name) === 0) {
@@ -425,16 +425,5 @@ class ImageService
 
         $basePath = ($this->storageUrl == false) ? url('/') : $this->storageUrl;
         return rtrim($basePath, '/') . $filePath;
-    }
-
-    /**
-     * Returns a sanitized filename with only one file extension
-     */
-    private function sanitizeFileName(string $fileName): string
-    {
-        $parts = explode('.', $fileName);
-        $extension = array_pop($parts);
-
-        return sprintf('%s.%s', implode('-', $parts), $extension);
     }
 }

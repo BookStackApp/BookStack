@@ -167,25 +167,25 @@ class ImageTest extends TestCase
 
     public function test_files_with_double_extensions_will_get_sanitized()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $admin = $this->getAdmin();
         $this->actingAs($admin);
 
         $fileName = 'bad.phtml.png';
         $relPath = $this->getTestImagePath('gallery', $fileName);
-        $this->deleteImage($relPath);
+        $expectedRelPath = dirname($relPath) . '/bad-phtml.png';
+        $this->deleteImage($expectedRelPath);
 
         $file = $this->newTestImageFromBase64('bad-phtml-png.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/png')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(200);
 
         $lastImage = Image::query()->latest('id')->first();
-        $newFileName = explode('.', basename($lastImage->path))[0];
 
-        $this->assertEquals($lastImage->name, 'bad-phtml.png');
-        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image file name was not stripped of dots');
-
-        $this->assertTrue(strlen($newFileName) > 0, 'File name was reduced to nothing');
+        $this->assertEquals('bad.phtml.png', $lastImage->name);
+        $this->assertEquals('bad-phtml.png', basename($lastImage->path));
+        $this->assertFileNotExists(public_path($relPath), 'Uploaded image file name was not stripped of dots');
+        $this->assertFileExists(public_path($expectedRelPath));
 
         $this->deleteImage($lastImage->path);
     }
