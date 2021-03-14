@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute måste vara minst :min tecken.',
         'array'   => ':attribute måste ha minst :min poster.',
     ],
-    'no_double_extension'  => ':attribute får bara ha ett filtillägg.',
     'not_in'               => 'Vald :attribute är inte giltig',
     'not_regex'            => 'Formatet på :attribute är ogiltigt.',
     'numeric'              => ':attribute måste vara ett nummer.',

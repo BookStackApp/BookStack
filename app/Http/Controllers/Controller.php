@@ -159,6 +159,6 @@ abstract class Controller extends BaseController
      */
     protected function getImageValidationRules(): string
     {
-        return 'image_extension|no_double_extension|mimes:jpeg,png,gif,webp';
+        return 'image_extension|mimes:jpeg,png,gif,webp';
     }
 }

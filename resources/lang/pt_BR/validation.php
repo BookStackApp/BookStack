@@ -78,7 +78,6 @@ return [
         'string'  => 'O campo :attribute não deve ter menos que :min caracteres.',
         'array'   => 'O campo :attribute não deve ter menos que :min itens.',
     ],
-    'no_double_extension'  => 'O campo :attribute deve ter apenas uma extensão de arquivo.',
     'not_in'               => 'O campo selecionado :attribute é inválido.',
     'not_regex'            => 'O formato do campo :attribute é inválido.',
     'numeric'              => 'O campo :attribute deve ser um número.',

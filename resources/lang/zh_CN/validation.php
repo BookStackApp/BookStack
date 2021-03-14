@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute 至少为:min个字符。',
         'array'   => ':attribute 至少有:min项。',
     ],
-    'no_double_extension'  => ':attribute 必须具有一个扩展名。',
     'not_in'               => '选中的 :attribute 无效。',
     'not_regex'            => ':attribute 格式错误。',
     'numeric'              => ':attribute 必须是一个数。',

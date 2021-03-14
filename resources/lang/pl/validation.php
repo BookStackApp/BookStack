@@ -78,7 +78,6 @@ return [
         'string'  => 'Długość :attribute nie może być mniejsza niż :min znaków.',
         'array'   => 'Rozmiar :attribute musi posiadać co najmniej :min elementy.',
     ],
-    'no_double_extension'  => ':attribute może mieć tylko jedno rozszerzenie.',
     'not_in'               => 'Wartość :attribute jest nieprawidłowa.',
     'not_regex'            => 'Format :attribute jest nieprawidłowy.',
     'numeric'              => ':attribute musi być liczbą.',
