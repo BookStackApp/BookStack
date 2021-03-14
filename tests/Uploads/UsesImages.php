@@ -100,9 +100,8 @@ trait UsesImages
 
     /**
      * Delete an uploaded image.
-     * @param $relPath
      */
-    protected function deleteImage($relPath)
+    protected function deleteImage(string $relPath)
     {
         $path = public_path($relPath);
         if (file_exists($path)) {
