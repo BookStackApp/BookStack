@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute skal mindst være :min tegn.',
         'array'   => ':attribute skal have mindst :min elementer.',
     ],
-    'no_double_extension'  => ':attribute må kun indeholde én filtype.',
     'not_in'               => 'Den valgte :attribute er ikke gyldig.',
     'not_regex'            => ':attribute-formatet er ugyldigt.',
     'numeric'              => ':attribute skal være et tal.',

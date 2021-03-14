@@ -78,7 +78,6 @@ return [
         'string'  => ':attributeは:min文字以上である必要があります。',
         'array'   => ':attributeは:min個以上である必要があります。',
     ],
-    'no_double_extension'  => 'The :attribute must only have a single file extension.',
     'not_in'               => '選択された:attributeは不正です。',
     'not_regex'            => 'The :attribute format is invalid.',
     'numeric'              => ':attributeは数値である必要があります。',

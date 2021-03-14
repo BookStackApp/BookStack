@@ -78,7 +78,6 @@ return [
         'string'  => 'يجب أن يكون :attribute على الأقل :min حرف / حروف.',
         'array'   => 'يجب أن يحتوي :attribute على :min عنصر / عناصر كحد أدنى.',
     ],
-    'no_double_extension'  => 'يجب أن يكون للسمة: امتداد ملف واحد فقط.',
     'not_in'               => ':attribute المحدد غير صالح.',
     'not_regex'            => 'صيغة السمة: غير صالحة.',
     'numeric'              => 'يجب أن يكون :attribute رقم.',

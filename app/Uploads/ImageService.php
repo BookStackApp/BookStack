@@ -60,7 +60,7 @@ class ImageService
         int $resizeHeight = null,
         bool $keepRatio = true
     ) {
-        $imageName = $uploadedFile->getClientOriginalName();
+        $imageName = $this->sanitizeFileName($uploadedFile->getClientOriginalName());
         $imageData = file_get_contents($uploadedFile->getRealPath());
 
         if ($resizeWidth !== null || $resizeHeight !== null) {
@@ -425,5 +425,16 @@ class ImageService
 
         $basePath = ($this->storageUrl == false) ? url('/') : $this->storageUrl;
         return rtrim($basePath, '/') . $filePath;
+    }
+
+    /**
+     * Returns a sanitized filename with only one file extension
+     */
+    private function sanitizeFileName(string $fileName): string
+    {
+        $parts = explode('.', $fileName);
+        $extension = array_pop($parts);
+
+        return sprintf('%s.%s', implode('-', $parts), $extension);
     }
 }
