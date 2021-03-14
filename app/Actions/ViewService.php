@@ -65,7 +65,7 @@ class ViewService
     {
         $skipCount = $count * $page;
         $query = $this->permissionService
-            ->filterRestrictedEntityRelations($this->view, 'views', 'viewable_id', 'viewable_type', $action)
+            ->filterRestrictedEntityRelations($this->view->newQuery(), 'views', 'viewable_id', 'viewable_type', $action)
             ->select('*', 'viewable_id', 'viewable_type', DB::raw('SUM(views) as view_count'))
             ->groupBy('viewable_id', 'viewable_type')
             ->orderBy('view_count', 'desc');
