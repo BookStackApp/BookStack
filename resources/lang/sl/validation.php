@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute mora biti najmanj :min znakov.',
         'array'   => ':attribute mora imeti vsaj :min elementov.',
     ],
-    'no_double_extension'  => ':attribute mora imeti samo eno razširitveno datoteko',
     'not_in'               => 'Izbrani atribut je neveljaven.',
     'not_regex'            => ':attribute oblika ni veljavna.',
     'numeric'              => 'Atribut mora biti število.',
