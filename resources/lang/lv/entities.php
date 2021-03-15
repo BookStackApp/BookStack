@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Iestatītās atļaujas',
     'search_created_by_me' => 'Manis izveidotie',
     'search_updated_by_me' => 'Manis atjauninātie',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Datuma iestarījumi',
     'search_updated_before' => 'Atjaunināts pirms',
     'search_updated_after' => 'Atjaunināts pēc',
