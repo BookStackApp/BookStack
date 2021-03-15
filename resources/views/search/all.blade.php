@@ -50,6 +50,9 @@
                             @component('search.form.boolean-filter', ['filters' => $options->filters, 'name' => 'updated_by', 'value' => 'me'])
                                 {{ trans('entities.search_updated_by_me') }}
                             @endcomponent
+                            @component('search.form.boolean-filter', ['filters' => $options->filters, 'name' => 'owned_by', 'value' => 'me'])
+                                {{ trans('entities.search_owned_by_me') }}
+                            @endcomponent
                         @endif
 
                         <h6>{{ trans('entities.search_date_options') }}</h6>
