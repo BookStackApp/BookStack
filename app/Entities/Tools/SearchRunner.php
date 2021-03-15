@@ -289,13 +289,11 @@ class SearchRunner
 
     protected function filterOwnedBy(EloquentBuilder $query, Entity $model, $input)
     {
-        if (!is_numeric($input) && $input !== 'me') {
-            return;
+        $userSlug = $input === 'me' ? user()->slug : trim($input);
+        $user = User::query()->where('slug', '=', $userSlug)->first(['id']);
+        if ($user) {
+            $query->where('owned_by', '=', $user->id);
         }
-        if ($input === 'me') {
-            $input = user()->id;
-        }
-        $query->where('owned_by', '=', $input);
     }
 
     protected function filterInName(EloquentBuilder $query, Entity $model, $input)
