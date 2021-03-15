@@ -135,7 +135,7 @@ class EntitySearchTest extends TestCase
         $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertDontSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:'.$editorId.'}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:'.$editorSlug.'}'))->assertDontSee($page->name);
         $page->created_by = $editorId;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertSee($page->name);
