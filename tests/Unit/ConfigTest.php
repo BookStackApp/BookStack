@@ -59,16 +59,20 @@ class ConfigTest extends TestCase
         $this->assertStringNotContainsString('testing', $output);
     }
 
+    public function test_session_cookie_uses_sub_path_from_app_url()
+    {
+        $this->checkEnvConfigResult('APP_URL', 'https://example.com', 'session.path', '/');
+        $this->checkEnvConfigResult('APP_URL', 'https://a.com/b', 'session.path', '/b');
+        $this->checkEnvConfigResult('APP_URL', 'https://a.com/b/d/e', 'session.path', '/b/d/e');
+        $this->checkEnvConfigResult('APP_URL', '', 'session.path', '/');
+    }
+
     /**
      * Set an environment variable of the given name and value
      * then check the given config key to see if it matches the given result.
      * Providing a null $envVal clears the variable.
-     * @param string $envName
-     * @param string|null $envVal
-     * @param string $configKey
-     * @param string $expectedResult
      */
-    protected function checkEnvConfigResult(string $envName, $envVal, string $configKey, string $expectedResult)
+    protected function checkEnvConfigResult(string $envName, ?string $envVal, string $configKey, string $expectedResult)
     {
         $this->runWithEnv($envName, $envVal, function() use ($configKey, $expectedResult) {
             $this->assertEquals($expectedResult, config($configKey));
