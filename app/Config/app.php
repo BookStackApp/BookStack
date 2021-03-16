@@ -115,6 +115,7 @@ return [
         BookStack\Providers\TranslationServiceProvider::class,
 
         // BookStack custom service providers
+        BookStack\Providers\ThemeServiceProvider::class,
         BookStack\Providers\AuthServiceProvider::class,
         BookStack\Providers\AppServiceProvider::class,
         BookStack\Providers\BroadcastServiceProvider::class,
@@ -186,6 +187,7 @@ return [
         'Views'    => BookStack\Facades\Views::class,
         'Images'   => BookStack\Facades\Images::class,
         'Permissions' => BookStack\Facades\Permissions::class,
+        'Theme'    => BookStack\Facades\Theme::class,
 
     ],
 

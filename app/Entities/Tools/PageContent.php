@@ -2,6 +2,8 @@
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
@@ -53,6 +55,7 @@ class PageContent
         $environment->addExtension(new TableExtension());
         $environment->addExtension(new TaskListExtension());
         $environment->addExtension(new CustomStrikeThroughExtension());
+        $environment = Theme::dispatch(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $environment) ?? $environment;
         $converter = new CommonMarkConverter([], $environment);
         return $converter->convertToHtml($markdown);
     }
