@@ -232,7 +232,7 @@ return [
         'ar' => 'العربية',
         'bg' => '保加利亚语',
         'bs' => 'Bosanski',
-        'ca' => 'Català',
+        'ca' => '加泰罗尼亚语',
         'cs' => 'Česky',
         'da' => '丹麦',
         'de' => 'Deutsch (Sie)',
