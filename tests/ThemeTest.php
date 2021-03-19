@@ -122,6 +122,34 @@ class ThemeTest extends TestCase
         $resp->assertStatus(443);
     }
 
+    public function test_add_social_driver()
+    {
+        Theme::addSocialDriver('catnet', [
+            'client_id' => 'abc123',
+            'client_secret' => 'def456'
+        ], 'SocialiteProviders\Discord\DiscordExtendSocialite@handleTesting');
+
+        $this->assertEquals('catnet', config('services.catnet.name'));
+        $this->assertEquals('abc123', config('services.catnet.client_id'));
+        $this->assertEquals(url('/login/service/catnet/callback'), config('services.catnet.redirect'));
+
+        $loginResp = $this->get('/login');
+        $loginResp->assertSee('login/service/catnet');
+    }
+
+    public function test_add_social_driver_uses_name_in_config_if_given()
+    {
+        Theme::addSocialDriver('catnet', [
+            'client_id' => 'abc123',
+            'client_secret' => 'def456',
+            'name' => 'Super Cat Name',
+        ], 'SocialiteProviders\Discord\DiscordExtendSocialite@handleTesting');
+
+        $this->assertEquals('Super Cat Name', config('services.catnet.name'));
+        $loginResp = $this->get('/login');
+        $loginResp->assertSee('Super Cat Name');
+    }
+
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
