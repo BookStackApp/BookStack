@@ -16,7 +16,7 @@ return [
     'app_features_security' => '功能与安全',
     'app_name' => '站点名称',
     'app_name_desc' => '此名称将在网页头部和Email中显示。',
-    'app_name_header' => '在网页头部显示应用名？',
+    'app_name_header' => '在网页头部显示站点名称？',
     'app_public_access' => '访问权限',
     'app_public_access_desc' => '启用此选项将允许未登录的用户访问站点内容。',
     'app_public_access_desc_guest' => '可以通过“访客”用户来控制公共访问者的访问。',
