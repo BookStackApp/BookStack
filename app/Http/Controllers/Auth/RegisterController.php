@@ -2,11 +2,14 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\UserRegistrationException;
+use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -93,6 +96,8 @@ class RegisterController extends Controller
         try {
             $user = $this->registrationService->registerUser($userData);
             auth()->login($user);
+            Theme::dispatch(ThemeEvents::AUTH_LOGIN, auth()->getDefaultDriver(), $user);
+            $this->logActivity(ActivityType::AUTH_LOGIN, $user);
         } catch (UserRegistrationException $exception) {
             if ($exception->getMessage()) {
                 $this->showErrorNotification($exception->getMessage());

@@ -7,6 +7,8 @@ use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Facades\Activity;
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\Factory as Socialite;
@@ -58,7 +60,7 @@ class SocialAuthService
     {
         // Check social account has not already been used
         if (SocialAccount::query()->where('driver_id', '=', $socialUser->getId())->exists()) {
-            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$socialDriver]), '/login');
+            throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount' => $socialDriver]), '/login');
         }
 
         if (User::query()->where('email', '=', $socialUser->getEmail())->exists()) {
@@ -98,6 +100,7 @@ class SocialAuthService
         if (!$isLoggedIn && $socialAccount !== null) {
             auth()->login($socialAccount->user);
             Activity::add(ActivityType::AUTH_LOGIN, $socialAccount);
+            Theme::dispatch(ThemeEvents::AUTH_LOGIN, $socialDriver, $socialAccount->user);
             return redirect()->intended('/');
         }
 
@@ -127,7 +130,7 @@ class SocialAuthService
         if (setting('registration-enabled') && config('auth.method') !== 'ldap' && config('auth.method') !== 'saml2') {
             $message .= trans('errors.social_account_register_instructions', ['socialAccount' => $titleCaseDriver]);
         }
-        
+
         throw new SocialSignInAccountNotUsed($message, '/login');
     }
 
@@ -207,9 +210,9 @@ class SocialAuthService
     public function newSocialAccount(string $socialDriver, SocialUser $socialUser): SocialAccount
     {
         return new SocialAccount([
-            'driver'    => $socialDriver,
+            'driver' => $socialDriver,
             'driver_id' => $socialUser->getId(),
-            'avatar'    => $socialUser->getAvatar()
+            'avatar' => $socialUser->getAvatar()
         ]);
     }
 

@@ -42,6 +42,26 @@ class ThemeEvents
     const WEB_MIDDLEWARE_AFTER = 'web_middleware_after';
 
     /**
+     * Auth login event.
+     * Runs right after a user is logged-in to the application by any authentication
+     * system as a standard app user. This includes a user becoming logged in
+     * after registration. This is not emitted upon API usage.
+     * @param string $authSystem
+     * @param \BookStack\Auth\User $user
+     */
+    const AUTH_LOGIN = 'auth_login';
+
+    /**
+     * Auth register event.
+     * Runs right after a user is newly registered to the application by any authentication
+     * system as a standard app user. This includes auto-registration systems used
+     * by LDAP, SAML and social systems. It only includes self-registrations.
+     * @param string $authSystem
+     * @param \BookStack\Auth\User $user
+     */
+    const AUTH_REGISTER = 'auth_register';
+
+    /**
      * Commonmark environment configure.
      * Provides the commonmark library environment for customization
      * before its used to render markdown content.

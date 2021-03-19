@@ -2,11 +2,14 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\UserTokenExpiredException;
 use BookStack\Exceptions\UserTokenNotFoundException;
+use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
+use BookStack\Theming\ThemeEvents;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -68,6 +71,8 @@ class UserInviteController extends Controller
         $user->save();
 
         auth()->login($user);
+        Theme::dispatch(ThemeEvents::AUTH_LOGIN, auth()->getDefaultDriver(), $user);
+        $this->logActivity(ActivityType::AUTH_LOGIN, $user);
         $this->showSuccessNotification(trans('auth.user_invite_success', ['appName' => setting('app-name')]));
         $this->inviteService->deleteByUser($user);
 

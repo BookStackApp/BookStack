@@ -1,5 +1,7 @@
 <?php namespace Tests;
 
+use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Facades\Theme;
@@ -120,6 +122,38 @@ class ThemeTest extends TestCase
         $resp = $this->get('/login', ['Donkey' => 'cat']);
         $resp->assertSee('cat456');
         $resp->assertStatus(443);
+    }
+
+    public function test_event_auth_login_standard()
+    {
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+        };
+
+        Theme::listen(ThemeEvents::AUTH_LOGIN, $callback);
+        $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+
+        $this->assertCount(2, $args);
+        $this->assertEquals('standard', $args[0]);
+        $this->assertInstanceOf(User::class, $args[1]);
+    }
+
+    public function test_event_auth_register_standard()
+    {
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+        };
+        Theme::listen(ThemeEvents::AUTH_REGISTER, $callback);
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        $user = factory(User::class)->make();
+        $this->post('/register', ['email' => $user->email, 'name' => $user->name,  'password' => 'password']);
+
+        $this->assertCount(2, $args);
+        $this->assertEquals('standard', $args[0]);
+        $this->assertInstanceOf(User::class, $args[1]);
     }
 
     public function test_add_social_driver()
