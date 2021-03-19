@@ -1,5 +1,7 @@
 <?php namespace BookStack\Theming;
 
+use BookStack\Auth\Access\SocialAuthService;
+
 class ThemeService
 {
     protected $listeners = [];
@@ -46,5 +48,14 @@ class ThemeService
         if (file_exists($themeActionsFile)) {
             require $themeActionsFile;
         }
+    }
+
+    /**
+     * @see SocialAuthService::addSocialDriver
+     */
+    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler)
+    {
+        $socialAuthService = app()->make(SocialAuthService::class);
+        $socialAuthService->addSocialDriver($driverName, $config, $socialiteHandler);
     }
 }

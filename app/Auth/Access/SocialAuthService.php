@@ -2,21 +2,21 @@
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\SocialAccount;
-use BookStack\Auth\UserRepo;
+use BookStack\Auth\User;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Facades\Activity;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Contracts\User as SocialUser;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SocialAuthService
 {
-
-    protected $userRepo;
     protected $socialite;
     protected $socialAccount;
 
@@ -25,13 +25,10 @@ class SocialAuthService
     /**
      * SocialAuthService constructor.
      */
-    public function __construct(UserRepo $userRepo, Socialite $socialite, SocialAccount $socialAccount)
+    public function __construct(Socialite $socialite)
     {
-        $this->userRepo = $userRepo;
         $this->socialite = $socialite;
-        $this->socialAccount = $socialAccount;
     }
-
 
     /**
      * Start the social login path.
@@ -60,11 +57,11 @@ class SocialAuthService
     public function handleRegistrationCallback(string $socialDriver, SocialUser $socialUser): SocialUser
     {
         // Check social account has not already been used
-        if ($this->socialAccount->where('driver_id', '=', $socialUser->getId())->exists()) {
+        if (SocialAccount::query()->where('driver_id', '=', $socialUser->getId())->exists()) {
             throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount'=>$socialDriver]), '/login');
         }
 
-        if ($this->userRepo->getByEmail($socialUser->getEmail())) {
+        if (User::query()->where('email', '=', $socialUser->getEmail())->exists()) {
             $email = $socialUser->getEmail();
             throw new UserRegistrationException(trans('errors.error_user_exists_different_creds', ['email' => $email]), '/login');
         }
@@ -91,7 +88,7 @@ class SocialAuthService
         $socialId = $socialUser->getId();
 
         // Get any attached social accounts or users
-        $socialAccount = $this->socialAccount->where('driver_id', '=', $socialId)->first();
+        $socialAccount = SocialAccount::query()->where('driver_id', '=', $socialId)->first();
         $isLoggedIn = auth()->check();
         $currentUser = user();
         $titleCaseDriver = Str::title($socialDriver);
@@ -107,8 +104,8 @@ class SocialAuthService
         // When a user is logged in but the social account does not exist,
         // Create the social account and attach it to the user & redirect to the profile page.
         if ($isLoggedIn && $socialAccount === null) {
-            $this->fillSocialAccount($socialDriver, $socialUser);
-            $currentUser->socialAccounts()->save($this->socialAccount);
+            $account = $this->newSocialAccount($socialDriver, $socialUser);
+            $currentUser->socialAccounts()->save($account);
             session()->flash('success', trans('settings.users_social_connected', ['socialAccount' => $titleCaseDriver]));
             return redirect($currentUser->getEditUrl());
         }
@@ -207,19 +204,17 @@ class SocialAuthService
     /**
      * Fill and return a SocialAccount from the given driver name and SocialUser.
      */
-    public function fillSocialAccount(string $socialDriver, SocialUser $socialUser): SocialAccount
+    public function newSocialAccount(string $socialDriver, SocialUser $socialUser): SocialAccount
     {
-        $this->socialAccount->fill([
+        return new SocialAccount([
             'driver'    => $socialDriver,
             'driver_id' => $socialUser->getId(),
             'avatar'    => $socialUser->getAvatar()
         ]);
-        return $this->socialAccount;
     }
 
     /**
      * Detach a social account from a user.
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function detachSocialAccount(string $socialDriver): void
     {
@@ -241,5 +236,21 @@ class SocialAuthService
         }
 
         return $driver;
+    }
+
+    /**
+     * Add a custom socialite driver to be used.
+     * Driver name should be lower_snake_case.
+     * Config array should mirror the structure of a service
+     * within the `Config/services.php` file.
+     * Handler should be a Class@method handler to the SocialiteWasCalled event.
+     */
+    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler)
+    {
+        $this->validSocialDrivers[] = $driverName;
+        config()->set('services.' . $driverName, $config);
+        config()->set('services.' . $driverName . '.redirect', url('/login/service/' . $driverName . '/callback'));
+        config()->set('services.' . $driverName . '.name', $config['name'] ?? $driverName);
+        Event::listen(SocialiteWasCalled::class, $socialiteHandler);
     }
 }

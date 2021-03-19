@@ -110,7 +110,7 @@ class SocialController extends Controller
     protected function socialRegisterCallback(string $socialDriver, SocialUser $socialUser)
     {
         $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver, $socialUser);
-        $socialAccount = $this->socialAuthService->fillSocialAccount($socialDriver, $socialUser);
+        $socialAccount = $this->socialAuthService->newSocialAccount($socialDriver, $socialUser);
         $emailVerified = $this->socialAuthService->driverAutoConfirmEmailEnabled($socialDriver);
 
         // Create an array of the user data to create a new user instance
