@@ -2,13 +2,16 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
+use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User as SocialUser;
@@ -127,6 +130,8 @@ class SocialController extends Controller
 
         $user = $this->registrationService->registerUser($userData, $socialAccount, $emailVerified);
         auth()->login($user);
+        Theme::dispatch(ThemeEvents::AUTH_LOGIN, $socialDriver, $user);
+        $this->logActivity(ActivityType::AUTH_LOGIN, $user);
 
         $this->showSuccessNotification(trans('auth.register_success'));
         return redirect('/');

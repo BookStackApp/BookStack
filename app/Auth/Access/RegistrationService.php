@@ -6,6 +6,8 @@ use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Facades\Activity;
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
 use Exception;
 
 class RegistrationService
@@ -71,6 +73,7 @@ class RegistrationService
         }
 
         Activity::add(ActivityType::AUTH_REGISTER, $socialAccount ?? $newUser);
+        Theme::dispatch(ThemeEvents::AUTH_REGISTER, $socialAccount ? $socialAccount->driver : auth()->getDefaultDriver(), $newUser);
 
         // Start email confirmation flow if required
         if ($this->emailConfirmationService->confirmationRequired() && !$emailConfirmed) {
