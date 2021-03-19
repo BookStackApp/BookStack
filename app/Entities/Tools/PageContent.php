@@ -345,7 +345,7 @@ class PageContent
         }
 
         // Remove data or JavaScript iFrames
-        $badIframes = $xPath->query('//*[contains(@src, \'data:\')] | //*[contains(@src, \'javascript:\')] | //*[@srcdoc]');
+        $badIframes = $xPath->query('//*[contains(@src, \'data:\') and not(contains(@src, \'data:image\'))] | //*[contains(@src, \'javascript:\')] | //*[@srcdoc]');
         foreach ($badIframes as $badIframe) {
             $badIframe->parentNode->removeChild($badIframe);
         }
