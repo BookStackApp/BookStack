@@ -2,6 +2,7 @@
 
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Page;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class ClearActivityCommandTest extends TestCase
@@ -18,7 +19,10 @@ class ClearActivityCommandTest extends TestCase
             'user_id' => $this->getEditor()->id
         ]);
 
+
+        DB::rollBack();
         $exitCode = \Artisan::call('bookstack:clear-activity');
+        DB::beginTransaction();
         $this->assertTrue($exitCode === 0, 'Command executed successfully');
 
 
