@@ -184,7 +184,7 @@ class ImageTest extends TestCase
 
         $this->assertEquals('bad.phtml.png', $lastImage->name);
         $this->assertEquals('bad-phtml.png', basename($lastImage->path));
-        $this->assertFileNotExists(public_path($relPath), 'Uploaded image file name was not stripped of dots');
+        $this->assertFileDoesNotExist(public_path($relPath), 'Uploaded image file name was not stripped of dots');
         $this->assertFileExists(public_path($expectedRelPath));
 
         $this->deleteImage($lastImage->path);
