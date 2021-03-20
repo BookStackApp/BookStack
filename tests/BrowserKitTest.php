@@ -119,7 +119,7 @@ abstract class BrowserKitTest extends TestCase
      */
     protected function seeInNthElement($element, $position, $text, $negate = false)
     {
-        $method = $negate ? 'assertNotRegExp' : 'assertRegExp';
+        $method = $negate ? 'assertDoesNotMatchRegularExpression' : 'assertMatchesRegularExpression';
 
         $rawPattern = preg_quote($text, '/');
 
