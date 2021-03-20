@@ -1,21 +1,21 @@
 # Logical Theme System
 
-BookStack allows logical customization via the theme system enables you to add, or extend, functionality within the PHP side of the system without needing to alter the core application files.
+BookStack allows logical customization via the theme system which enables you to add, or extend, functionality within the PHP side of the system without needing to alter the core application files.
 
 WARNING: This system is currently in alpha so may incur changes. Once we've gathered some feedback on usage we'll look to removing this warning. This system will be considered semi-stable in the future. The `Theme::` system will be kept maintained but specific customizations or deeper app/framework usage using this system will not be supported nor considered in any way stable. Customizations using this system should be checked after updates.
 
-### Getting Started
+## Getting Started
 
 This makes use of the theme system. Create a folder for your theme within your BookStack `themes` directory. As an example we'll use `my_theme`, so we'd create a `themes/my_theme` folder.
 You'll need to tell BookStack to use your theme via the `APP_THEME` option in your `.env` file. For example: `APP_THEME=my_theme`.
 
-Within your theme folder create a `functions.php` file. BookStack will look for this and run this during app boot-up. Within this file you can use the `Theme` facade API, described below, to hook into certain app events.
+Within your theme folder create a `functions.php` file. BookStack will look for this and run it during app boot-up. Within this file you can use the `Theme` facade API, described below, to hook into certain app events.
 
-### `Theme` Facade API
+## `Theme` Facade API
 
 Below details the public methods of the `Theme` facade that are considered stable:
 
-#### `Theme::listen`
+### `Theme::listen`
 
 This method listens to a system event and runs the given action when that event occurs. The arguments passed to the action depend on the event. Event names are exposed as static properties on the `\BookStack\Theming\ThemeEvents` class. 
 
@@ -24,7 +24,7 @@ If an action returns a non-null value then BookStack will stop cycling through a
 
 **Arguments**
 - string $event
-- callback $action
+- callable $action
 
 **Example**
 
@@ -37,7 +37,7 @@ Theme::listen(
 );
 ```
 
-#### `Theme::addSocialDriver`
+### `Theme::addSocialDriver`
 
 This method allows you to register a custom social authentication driver within the system. This is primarily intended to use with [Socialite Providers](https://socialiteproviders.com/).
 
@@ -50,13 +50,13 @@ This method allows you to register a custom social authentication driver within 
 
 *See "Custom Socialite Service Example" below.*
 
-### Available Events
+## Available Events
 
 All available events dispatched by BookStack are exposed as static properties on the `\BookStack\Theming\ThemeEvents` class, which can be found within the file `app/Theming/ThemeEvents.php` relative to your root BookStack folder. Alternatively, the events for the latest release can be [seen on GitHub here](https://github.com/BookStackApp/BookStack/blob/release/app/Theming/ThemeEvents.php).
 
 The comments above each constant with the `ThemeEvents.php` file describe the dispatch conditions of the event, in addition to the arguments the action will receive. The comments may also describe any ways the return value of the action may be used. 
 
-### Example `functions.php` file
+## Example `functions.php` file
 
 ```php
 <?php
@@ -64,20 +64,20 @@ The comments above each constant with the `ThemeEvents.php` file describe the di
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 
-// Log custom message on user login
+// Logs custom message on user login
 Theme::listen(ThemeEvents::AUTH_LOGIN, function($method, $user) {
     Log::info("Login via {$method} for {$user->name}");
 });
 
-// Add a `/info` public URL endpoint that emits php debug details
+// Adds a `/info` public URL endpoint that emits php debug details
 Theme::listen(ThemeEvents::APP_BOOT, function($app) {
     \Route::get('info', function() {
-        phpinfo(); // Don't do this on a production instance
+        phpinfo(); // Don't do this on a production instance!
     });
 });
 ```
 
-### Custom Socialite Service Example
+## Custom Socialite Service Example
 
 The below shows an example of adding a custom reddit socialite service to BookStack. 
 BookStack exposes a helper function for this via `Theme::addSocialDriver` which sets the required config and event listeners in the platform.
