@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'За зростанням',
     'sort_descending' => 'За спаданням',
     'sort_name' => 'Ім\'я',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Дата створення',
     'sort_updated_at' => 'Дата оновлення',
 
