@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class Setting extends Facade
+class Theme extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -11,6 +11,6 @@ class Setting extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'setting';
+        return 'theme';
     }
 }

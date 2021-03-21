@@ -85,9 +85,9 @@ class LdapService extends ExternalAuthService
 
         $userCn = $this->getUserResponseProperty($user, 'cn', null);
         $formatted = [
-            'uid'   => $this->getUserResponseProperty($user, $idAttr, $user['dn']),
-            'name'  => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
-            'dn'    => $user['dn'],
+            'uid' => $this->getUserResponseProperty($user, $idAttr, $user['dn']),
+            'name' => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
+            'dn' => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
         ];
 
@@ -187,8 +187,8 @@ class LdapService extends ExternalAuthService
             throw new LdapException(trans('errors.ldap_extension_not_installed'));
         }
 
-         // Check if TLS_INSECURE is set. The handle is set to NULL due to the nature of
-         // the LDAP_OPT_X_TLS_REQUIRE_CERT option. It can only be set globally and not per handle.
+        // Disable certificate verification.
+        // This option works globally and must be set before a connection is created.
         if ($this->config['tls_insecure']) {
             $this->ldap->setOption(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }
@@ -203,6 +203,14 @@ class LdapService extends ExternalAuthService
         // Set any required options
         if ($this->config['version']) {
             $this->ldap->setVersion($ldapConnection, $this->config['version']);
+        }
+
+        // Start and verify TLS if it's enabled
+        if ($this->config['start_tls']) {
+            $started = $this->ldap->startTls($ldapConnection);
+            if (!$started) {
+                throw new LdapException('Could not start TLS connection');
+            }
         }
 
         $this->ldapConnection = $ldapConnection;

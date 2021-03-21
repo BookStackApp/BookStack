@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'אם לא ניתן ללחות על כפתור ״:actionText״, יש להעתיק ולהדביק את הכתובת למטה אל דפדפן האינטרנט שלך:',
     'email_rights' => 'כל הזכויות שמורות',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

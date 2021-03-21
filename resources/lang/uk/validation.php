@@ -78,7 +78,6 @@ return [
         'string'  => 'Текст в полі :attribute повинен містити не менше :min символів.',
         'array'   => 'Поле :attribute повинне містити не менше :min елементів.',
     ],
-    'no_double_extension'  => 'Поле :attribute повинне містити тільки одне розширення файлу.',
     'not_in'               => 'Вибране для :attribute значення не коректне.',
     'not_regex'            => 'Формат поля :attribute не вірний.',
     'numeric'              => 'Поле :attribute повинно містити число.',
@@ -90,7 +89,7 @@ return [
     'required_without'     => 'Поле :attribute є обов\'язковим для заповнення, коли :values не вказано.',
     'required_without_all' => 'Поле :attribute є обов\'язковим для заповнення, коли :values не вказано.',
     'same'                 => 'Поля :attribute та :other мають збігатися.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'Надане посилання може бути небезпечним.',
     'size'                 => [
         'numeric' => 'Поле :attribute має бути довжини :size.',
         'file'    => 'Файл в полі :attribute має бути розміром :size кілобайт.',

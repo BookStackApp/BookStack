@@ -70,8 +70,7 @@ class ImageRepo
         int $uploadedTo = null,
         string $search = null,
         callable $whereClause = null
-    ): array
-    {
+    ): array {
         $imageQuery = $this->image->newQuery()->where('type', '=', strtolower($type));
 
         if ($uploadedTo !== null) {
@@ -83,7 +82,7 @@ class ImageRepo
         }
 
         // Filter by page access
-        $imageQuery = $this->restrictionService->filterRelatedEntity('page', $imageQuery, 'images', 'uploaded_to');
+        $imageQuery = $this->restrictionService->filterRelatedEntity(Page::class, $imageQuery, 'images', 'uploaded_to');
 
         if ($whereClause !== null) {
             $imageQuery = $imageQuery->where($whereClause);
@@ -102,8 +101,7 @@ class ImageRepo
         int $pageSize = 24,
         int $uploadedTo = null,
         string $search = null
-    ): array
-    {
+    ): array {
         $contextPage = $this->page->findOrFail($uploadedTo);
         $parentFilter = null;
 

@@ -17,8 +17,7 @@ class SocialAuthTest extends TestCase
         $this->setSettings(['registration-enabled' => 'true']);
         config(['GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
 
-        $mockSocialite = Mockery::mock(Factory::class);
-        $this->app[Factory::class] = $mockSocialite;
+        $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);
         $mockSocialUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
 
@@ -46,8 +45,7 @@ class SocialAuthTest extends TestCase
             'APP_URL' => 'http://localhost'
         ]);
 
-        $mockSocialite = Mockery::mock(Factory::class);
-        $this->app[Factory::class] = $mockSocialite;
+        $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);
         $mockSocialUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
 
@@ -93,8 +91,7 @@ class SocialAuthTest extends TestCase
         ]);
 
         $user = factory(User::class)->make();
-        $mockSocialite = Mockery::mock(Factory::class);
-        $this->app[Factory::class] = $mockSocialite;
+        $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);
         $mockSocialUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
 
@@ -132,8 +129,7 @@ class SocialAuthTest extends TestCase
         ]);
 
         $user = factory(User::class)->make();
-        $mockSocialite = Mockery::mock(Factory::class);
-        $this->app[Factory::class] = $mockSocialite;
+        $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);
         $mockSocialUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
 
@@ -169,8 +165,7 @@ class SocialAuthTest extends TestCase
         $this->setSettings(['registration-enabled' => 'true']);
         config(['GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
 
-        $mockSocialite = Mockery::mock(Factory::class);
-        $this->app[Factory::class] = $mockSocialite;
+        $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);
         $mockSocialUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
 

@@ -32,6 +32,14 @@ class Ldap
     }
 
     /**
+     * Start TLS on the given LDAP connection.
+     */
+    public function startTls($ldapConnection): bool
+    {
+        return ldap_start_tls($ldapConnection);
+    }
+
+    /**
      * Set the version number for the given ldap connection.
      * @param $ldapConnection
      * @param $version

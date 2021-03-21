@@ -91,19 +91,19 @@ class SortTest extends TestCase
 
     public function test_page_move_requires_create_permissions_on_parent()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $currentBook = $page->book;
-        $newBook = Book::where('id', '!=', $currentBook->id)->first();
+        $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
         $editor = $this->getEditor();
 
-        $this->setEntityRestrictions($newBook, ['view', 'update', 'delete'], $editor->roles);
+        $this->setEntityRestrictions($newBook, ['view', 'update', 'delete'], $editor->roles->all());
 
         $movePageResp = $this->actingAs($editor)->put($page->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
         ]);
         $this->assertPermissionError($movePageResp);
 
-        $this->setEntityRestrictions($newBook, ['view', 'update', 'delete', 'create'], $editor->roles);
+        $this->setEntityRestrictions($newBook, ['view', 'update', 'delete', 'create'], $editor->roles->all());
         $movePageResp = $this->put($page->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
         ]);
@@ -121,8 +121,8 @@ class SortTest extends TestCase
         $newBook = Book::where('id', '!=', $currentBook->id)->first();
         $editor = $this->getEditor();
 
-        $this->setEntityRestrictions($newBook, ['view', 'update', 'create', 'delete'], $editor->roles);
-        $this->setEntityRestrictions($page, ['view', 'update', 'create'], $editor->roles);
+        $this->setEntityRestrictions($newBook, ['view', 'update', 'create', 'delete'], $editor->roles->all());
+        $this->setEntityRestrictions($page, ['view', 'update', 'create'], $editor->roles->all());
 
         $movePageResp = $this->actingAs($editor)->put($page->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
@@ -131,7 +131,7 @@ class SortTest extends TestCase
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee($page->getUrl('/move'));
 
-        $this->setEntityRestrictions($page, ['view', 'update', 'create', 'delete'], $editor->roles);
+        $this->setEntityRestrictions($page, ['view', 'update', 'create', 'delete'], $editor->roles->all());
         $movePageResp = $this->put($page->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
         ]);
@@ -176,8 +176,8 @@ class SortTest extends TestCase
         $newBook = Book::where('id', '!=', $currentBook->id)->first();
         $editor = $this->getEditor();
 
-        $this->setEntityRestrictions($newBook, ['view', 'update', 'create', 'delete'], $editor->roles);
-        $this->setEntityRestrictions($chapter, ['view', 'update', 'create'], $editor->roles);
+        $this->setEntityRestrictions($newBook, ['view', 'update', 'create', 'delete'], $editor->roles->all());
+        $this->setEntityRestrictions($chapter, ['view', 'update', 'create'], $editor->roles->all());
 
         $moveChapterResp = $this->actingAs($editor)->put($chapter->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
@@ -186,7 +186,7 @@ class SortTest extends TestCase
         $pageView = $this->get($chapter->getUrl());
         $pageView->assertDontSee($chapter->getUrl('/move'));
 
-        $this->setEntityRestrictions($chapter, ['view', 'update', 'create', 'delete'], $editor->roles);
+        $this->setEntityRestrictions($chapter, ['view', 'update', 'create', 'delete'], $editor->roles->all());
         $moveChapterResp = $this->put($chapter->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id
         ]);
@@ -194,6 +194,24 @@ class SortTest extends TestCase
         $chapter = Chapter::find($chapter->id);
         $moveChapterResp->assertRedirect($chapter->getUrl());
         $this->assertTrue($chapter->book->id == $newBook->id, 'Page book is now the new book');
+    }
+
+    public function test_chapter_move_changes_book_for_deleted_pages_within()
+    {
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->whereHas('pages')->first();
+        $currentBook = $chapter->book;
+        $pageToCheck = $chapter->pages->first();
+        $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
+
+        $pageToCheck->delete();
+
+        $this->asEditor()->put($chapter->getUrl('/move'), [
+            'entity_selection' => 'book:' . $newBook->id
+        ]);
+
+        $pageToCheck->refresh();
+        $this->assertEquals($newBook->id, $pageToCheck->book_id);
     }
 
     public function test_book_sort()

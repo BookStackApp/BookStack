@@ -4,7 +4,6 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Auth\Role;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Page;
 use BookStack\Settings\SettingService;
@@ -120,7 +119,7 @@ abstract class BrowserKitTest extends TestCase
      */
     protected function seeInNthElement($element, $position, $text, $negate = false)
     {
-        $method = $negate ? 'assertNotRegExp' : 'assertRegExp';
+        $method = $negate ? 'assertDoesNotMatchRegularExpression' : 'assertMatchesRegularExpression';
 
         $rawPattern = preg_quote($text, '/');
 

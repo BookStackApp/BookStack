@@ -177,25 +177,24 @@ class PageRepo
         // Hold the old details to compare later
         $oldHtml = $page->html;
         $oldName = $page->name;
+        $oldMarkdown = $page->markdown;
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
 
         // Update with new details
         $page->revision_count++;
-
-        if (setting('app-editor') !== 'markdown') {
-            $page->markdown = '';
-        }
-
         $page->save();
 
         // Remove all update drafts for this user & page.
         $this->getUserDraftQuery($page)->delete();
 
         // Save a revision after updating
-        $summary = $input['summary'] ?? null;
-        if ($oldHtml !== $input['html'] || $oldName !== $input['name'] || $summary !== null) {
+        $summary = trim($input['summary'] ?? "");
+        $htmlChanged = isset($input['html']) && $input['html'] !== $oldHtml;
+        $nameChanged = isset($input['name']) && $input['name'] !== $oldName;
+        $markdownChanged = isset($input['markdown']) && $input['markdown'] !== $oldMarkdown;
+        if ($htmlChanged || $nameChanged || $markdownChanged || $summary) {
             $this->savePageRevision($page, $summary);
         }
 
@@ -223,10 +222,6 @@ class PageRepo
     protected function savePageRevision(Page $page, string $summary = null): PageRevision
     {
         $revision = new PageRevision($page->getAttributes());
-
-        if (setting('app-editor') !== 'markdown') {
-            $revision->markdown = '';
-        }
 
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
@@ -290,7 +285,13 @@ class PageRepo
 
         $page->fill($revision->toArray());
         $content = new PageContent($page);
-        $content->setNewHTML($revision->html);
+
+        if (!empty($revision->markdown)) {
+            $content->setNewMarkdown($revision->markdown);
+        } else {
+            $content->setNewHTML($revision->html);
+        }
+        
         $page->updated_by = user()->id;
         $page->refreshSlug();
         $page->save();

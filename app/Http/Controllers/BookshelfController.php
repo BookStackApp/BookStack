@@ -32,7 +32,7 @@ class BookshelfController extends Controller
      */
     public function index()
     {
-        $view = setting()->getForCurrentUser('bookshelves_view_type', config('app.views.bookshelves', 'grid'));
+        $view = setting()->getForCurrentUser('bookshelves_view_type');
         $sort = setting()->getForCurrentUser('bookshelves_sort', 'name');
         $order = setting()->getForCurrentUser('bookshelves_sort_order', 'asc');
         $sortOptions = [
@@ -103,7 +103,7 @@ class BookshelfController extends Controller
 
         Views::add($shelf);
         $this->entityContextManager->setShelfContext($shelf->id);
-        $view = setting()->getForCurrentUser('bookshelf_view_type', config('app.views.books'));
+        $view = setting()->getForCurrentUser('bookshelf_view_type');
 
         $this->setPageTitle($shelf->getShortName());
         return view('shelves.show', [

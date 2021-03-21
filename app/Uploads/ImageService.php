@@ -139,7 +139,7 @@ class ImageService
         $name = str_replace(' ', '-', $name);
         $nameParts = explode('.', $name);
         $extension = array_pop($nameParts);
-        $name = implode('.', $nameParts);
+        $name = implode('-', $nameParts);
         $name = Str::slug($name);
 
         if (strlen($name) === 0) {

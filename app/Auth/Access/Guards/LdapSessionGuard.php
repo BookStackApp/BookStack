@@ -5,14 +5,12 @@ namespace BookStack\Auth\Access\Guards;
 use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\LdapException;
 use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\UserRegistrationException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Session\Session;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class LdapSessionGuard extends ExternalBaseSessionGuard
@@ -23,13 +21,13 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     /**
      * LdapSessionGuard constructor.
      */
-    public function __construct($name,
+    public function __construct(
+        $name,
         UserProvider $provider,
         Session $session,
         LdapService $ldapService,
         RegistrationService $registrationService
-    )
-    {
+    ) {
         $this->ldapService = $ldapService;
         parent::__construct($name, $provider, $session, $registrationService);
     }
@@ -119,5 +117,4 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
 
         return $this->registrationService->registerUser($details, null, false);
     }
-
 }

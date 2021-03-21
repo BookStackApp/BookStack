@@ -77,4 +77,9 @@ return [
     // Email Content
     'email_action_help' => 'Hvis du har problemer med at trykke på ":actionText" knappen, prøv at kopiere og indsætte linket herunder ind i din webbrowser:',
     'email_rights' => 'Alle rettigheder forbeholdes',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

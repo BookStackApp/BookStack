@@ -28,7 +28,7 @@ return [
     'social_account_in_use' => 'Denne :socialAccount kontoen er allerede registrert, Prøv å logge inn med :socialAccount alternativet.',
     'social_account_email_in_use' => 'E-posten :email er allerede i bruk. Har du allerede en konto hos :socialAccount kan dette angis fra profilsiden din.',
     'social_account_existing' => 'Denne :socialAccount er allerede koblet til din konto.',
-    'social_account_already_used_existing' => 'This :socialAccount account is already used by another user.',
+    'social_account_already_used_existing' => 'Denne :socialAccount kontoen brukes allerede av noen andre.',
     'social_account_not_used' => 'Denne :socialAccount konten er ikke koblet til noen konto, angi denne i profilinnstillingene dine. ',
     'social_account_register_instructions' => 'Har du ikke en konto her ennå, kan du benytte :socialAccount alternativet for å registrere deg.',
     'social_driver_not_found' => 'Autentiseringstjeneste fra sosiale medier er ikke installert',

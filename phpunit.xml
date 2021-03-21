@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         backupGlobals="false"
          backupStaticAttributes="false"
          bootstrap="vendor/autoload.php"
          colors="true"
@@ -8,54 +10,55 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false">
-    <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./tests/</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">app/</directory>
-        </whitelist>
-    </filter>
-    <php>
-        <env name="APP_ENV" value="testing" force="true"/>
-        <server name="APP_DEBUG" value="false"/>
-        <server name="APP_LANG" value="en"/>
-        <server name="APP_THEME" value="none"/>
-        <server name="APP_AUTO_LANG_PUBLIC" value="true"/>
-        <server name="APP_URL" value="http://bookstack.dev"/>
-        <server name="ALLOWED_IFRAME_HOSTS" value=""/>
-        <server name="CACHE_DRIVER" value="array"/>
-        <server name="SESSION_DRIVER" value="array"/>
-        <server name="QUEUE_CONNECTION" value="sync"/>
-        <env name="DB_CONNECTION" value="mysql_testing" force="true"/>
-        <server name="BCRYPT_ROUNDS" value="4"/>
-        <server name="MAIL_DRIVER" value="array"/>
-        <server name="LOG_CHANNEL" value="single"/>
-        <server name="AUTH_METHOD" value="standard"/>
-        <server name="DISABLE_EXTERNAL_SERVICES" value="true"/>
-        <server name="AVATAR_URL" value=""/>
-        <server name="LDAP_VERSION" value="3"/>
-        <server name="SESSION_SECURE_COOKIE" value="null"/>
-        <server name="STORAGE_TYPE" value="local"/>
-        <server name="STORAGE_ATTACHMENT_TYPE" value="local"/>
-        <server name="STORAGE_IMAGE_TYPE" value="local"/>
-        <server name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
-        <server name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
-        <server name="GITHUB_AUTO_REGISTER" value=""/>
-        <server name="GITHUB_AUTO_CONFIRM_EMAIL" value=""/>
-        <server name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>
-        <server name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
-        <server name="GOOGLE_AUTO_REGISTER" value=""/>
-        <server name="GOOGLE_AUTO_CONFIRM_EMAIL" value=""/>
-        <server name="GOOGLE_SELECT_ACCOUNT" value=""/>
-        <server name="DEBUGBAR_ENABLED" value="false"/>
-        <server name="SAML2_ENABLED" value="false"/>
-        <server name="API_REQUESTS_PER_MIN" value="180"/>
-        <server name="LOG_FAILED_LOGIN_MESSAGE" value=""/>
-        <server name="LOG_FAILED_LOGIN_CHANNEL" value="testing"/>
-        <server name="WKHTMLTOPDF" value="false"/>
-        <ini name="memory_limit" value="1024M"/>
-    </php>
+  <coverage>
+    <include>
+      <directory suffix=".php">app/</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="Application Test Suite">
+      <directory>./tests/</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <server name="APP_ENV" value="testing"/>
+    <server name="APP_DEBUG" value="false"/>
+    <server name="APP_LANG" value="en"/>
+    <server name="APP_THEME" value="none"/>
+    <server name="APP_AUTO_LANG_PUBLIC" value="true"/>
+    <server name="APP_URL" value="http://bookstack.dev"/>
+    <server name="ALLOWED_IFRAME_HOSTS" value=""/>
+    <server name="CACHE_DRIVER" value="array"/>
+    <server name="SESSION_DRIVER" value="array"/>
+    <server name="QUEUE_CONNECTION" value="sync"/>
+    <server name="DB_CONNECTION" value="mysql_testing"/>
+    <server name="BCRYPT_ROUNDS" value="4"/>
+    <server name="MAIL_DRIVER" value="array"/>
+    <server name="LOG_CHANNEL" value="single"/>
+    <server name="AUTH_METHOD" value="standard"/>
+    <server name="DISABLE_EXTERNAL_SERVICES" value="true"/>
+    <server name="AVATAR_URL" value=""/>
+    <server name="LDAP_START_TLS" value="false"/>
+    <server name="LDAP_VERSION" value="3"/>
+    <server name="SESSION_SECURE_COOKIE" value="null"/>
+    <server name="STORAGE_TYPE" value="local"/>
+    <server name="STORAGE_ATTACHMENT_TYPE" value="local"/>
+    <server name="STORAGE_IMAGE_TYPE" value="local"/>
+    <server name="GITHUB_APP_ID" value="aaaaaaaaaaaaaa"/>
+    <server name="GITHUB_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+    <server name="GITHUB_AUTO_REGISTER" value=""/>
+    <server name="GITHUB_AUTO_CONFIRM_EMAIL" value=""/>
+    <server name="GOOGLE_APP_ID" value="aaaaaaaaaaaaaa"/>
+    <server name="GOOGLE_APP_SECRET" value="aaaaaaaaaaaaaa"/>
+    <server name="GOOGLE_AUTO_REGISTER" value=""/>
+    <server name="GOOGLE_AUTO_CONFIRM_EMAIL" value=""/>
+    <server name="GOOGLE_SELECT_ACCOUNT" value=""/>
+    <server name="DEBUGBAR_ENABLED" value="false"/>
+    <server name="SAML2_ENABLED" value="false"/>
+    <server name="API_REQUESTS_PER_MIN" value="180"/>
+    <server name="LOG_FAILED_LOGIN_MESSAGE" value=""/>
+    <server name="LOG_FAILED_LOGIN_CHANNEL" value="testing"/>
+    <server name="WKHTMLTOPDF" value="false"/>
+    <server name="APP_DEFAULT_DARK_MODE" value="false"/>
+  </php>
 </phpunit>

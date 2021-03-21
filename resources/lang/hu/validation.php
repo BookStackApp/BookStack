@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute legalább :min karakter kell legyen.',
         'array'   => ':attribute legalább :min elem kell legyen.',
     ],
-    'no_double_extension'  => ':attribute csak egy fájlkiterjesztéssel rendelkezhet.',
     'not_in'               => 'A kiválasztott :attribute érvénytelen.',
     'not_regex'            => ':attribute formátuma érvénytelen.',
     'numeric'              => ':attribute szám kell legyen.',
