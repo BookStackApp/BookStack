@@ -23,12 +23,14 @@ services:
       context: .
       dockerfile: ./dev/docker/Dockerfile
     environment:
+      APP_URL: http://localhost:${DEV_PORT:-8080}
       DB_CONNECTION: mysql
       DB_HOST: db
       DB_PORT: 3306
       DB_DATABASE: bookstack-dev
       DB_USERNAME: bookstack-test
       DB_PASSWORD: bookstack-test
+      TEST_DATABASE_URL: mysql://bookstack-test:bookstack-test@db/bookstack-test
       MAIL_DRIVER: smtp
       MAIL_HOST: mailhog
       MAIL_PORT: 1025
