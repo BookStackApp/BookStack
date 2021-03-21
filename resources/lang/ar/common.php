@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'فرز تصاعدي',
     'sort_descending' => 'فرز تنازلي',
     'sort_name' => 'الاسم',
+    'sort_default' => 'Default',
     'sort_created_at' => 'تاريخ الإنشاء',
     'sort_updated_at' => 'تاريخ التحديث',
 
