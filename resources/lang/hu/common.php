@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Növekvő sorrend',
     'sort_descending' => 'Csökkenő sorrend',
     'sort_name' => 'Név',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Létrehozás dátuma',
     'sort_updated_at' => 'Frissítés dátuma',
 
