@@ -60,13 +60,20 @@ class TestResponse extends BaseTestResponse {
 
     /**
      * Assert the response includes a specific element containing the given text.
+     * If an nth match is provided, only that will be checked otherwise all matching
+     * elements will be checked for the given text.
      * @return $this
      */
-    public function assertElementContains(string $selector, string $text)
+    public function assertElementContains(string $selector, string $text, ?int $nthMatch = null)
     {
         $elements = $this->crawler()->filter($selector);
         $matched = false;
         $pattern = $this->getEscapedPattern($text);
+
+        if (!is_null($nthMatch)) {
+            $elements = $elements->eq($nthMatch - 1);
+        }
+
         foreach ($elements as $element) {
             $element = new Crawler($element);
             if (preg_match("/$pattern/i", $element->html())) {
@@ -78,6 +85,7 @@ class TestResponse extends BaseTestResponse {
         PHPUnit::assertTrue(
             $matched,
             'Unable to find element of selector: '.PHP_EOL.PHP_EOL.
+            ($nthMatch ? ("at position {$nthMatch}".PHP_EOL.PHP_EOL) : '') .
             "[{$selector}]".PHP_EOL.PHP_EOL.
             'containing text'.PHP_EOL.PHP_EOL.
             "[{$text}]".PHP_EOL.PHP_EOL.
@@ -90,13 +98,20 @@ class TestResponse extends BaseTestResponse {
 
     /**
      * Assert the response does not include a specific element containing the given text.
+     * If an nth match is provided, only that will be checked otherwise all matching
+     * elements will be checked for the given text.
      * @return $this
      */
-    public function assertElementNotContains(string $selector, string $text)
+    public function assertElementNotContains(string $selector, string $text, ?int $nthMatch = null)
     {
         $elements = $this->crawler()->filter($selector);
         $matched = false;
         $pattern = $this->getEscapedPattern($text);
+
+        if (!is_null($nthMatch)) {
+            $elements = $elements->eq($nthMatch - 1);
+        }
+
         foreach ($elements as $element) {
             $element = new Crawler($element);
             if (preg_match("/$pattern/i", $element->html())) {
@@ -108,6 +123,7 @@ class TestResponse extends BaseTestResponse {
         PHPUnit::assertTrue(
             !$matched,
             'Found element of selector: '.PHP_EOL.PHP_EOL.
+            ($nthMatch ? ("at position {$nthMatch}".PHP_EOL.PHP_EOL) : '') .
             "[{$selector}]".PHP_EOL.PHP_EOL.
             'containing text'.PHP_EOL.PHP_EOL.
             "[{$text}]".PHP_EOL.PHP_EOL.
