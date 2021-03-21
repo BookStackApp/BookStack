@@ -81,7 +81,7 @@ return [
         'mysql_testing' => [
             'driver'    => 'mysql',
             'url' => env('TEST_DATABASE_URL'),
-            'host'      => $mysql_host,
+            'host'      => '127.0.0.1',
             'database'  => 'bookstack-test',
             'username'  => env('MYSQL_USER', 'bookstack-test'),
             'password'  => env('MYSQL_PASSWORD', 'bookstack-test'),

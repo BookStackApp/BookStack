@@ -102,7 +102,7 @@ If all the conditions are met, you can proceed with the following steps:
 
 If needed, You'll be able to run any artisan commands via docker-compose like so:
 
-```shell script
+```bash
 docker-compose run app php artisan list
 ```
 
@@ -110,16 +110,20 @@ The docker-compose setup runs an instance of [MailHog](https://github.com/mailho
 
 #### Running tests
 
-After starting the general development Docker, seed the testing database:
- ```shell script
-# this is to be done only once
+After starting the general development Docker, migrate & seed the testing database:
+
+ ```bash
+# This only needs to be done once
+docker-compose run app php artisan migrate --database=mysql_testing
 docker-compose run app php artisan db:seed --class=DummyContentSeeder --database=mysql_testing
 ```
 
-Once the database has been seeded, you can run the tests by:
- ```shell script
+Once the database has been migrated & seeded, you can run the tests like so:
+
+ ```bash
 docker-compose run app php vendor/bin/phpunit
 ```
+
 ## 🌎 Translations
 
 Translations for text within BookStack is managed through the [BookStack project on Crowdin](https://crowdin.com/project/bookstack). Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time. Crowdin is the preferred way to provide translations, otherwise the raw translations files can be found within the `resources/lang` path.
