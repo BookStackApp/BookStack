@@ -101,12 +101,11 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-view', $shelf);
 
-        $sort = setting()->getForCurrentUser('shelf_books_sort', 'name');
+        $sort = setting()->getForCurrentUser('shelf_books_sort', 'default');
         $order = setting()->getForCurrentUser('shelf_books_sort_order', 'asc');
 
-        $visibleShelfBooks = $shelf->visibleBooks()->get();
-        $sortedVisibleShelfBooks = $visibleShelfBooks
-            ->sortBy($sort, SORT_REGULAR, $order === 'desc')
+        $sortedVisibleShelfBooks = $shelf->visibleBooks()->get()
+            ->sortBy($sort === 'default' ? 'pivot.order' : $sort, SORT_REGULAR, $order === 'desc')
             ->values()
             ->all();
 
