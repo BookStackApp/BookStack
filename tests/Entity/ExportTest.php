@@ -1,6 +1,5 @@
 <?php namespace Tests\Entity;
 
-
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Facades\Storage;
@@ -149,6 +148,16 @@ class ExportTest extends TestCase
         $resp->assertDontSee($page->created_at->diffForHumans());
         $resp->assertSee($page->updated_at->toDayDateTimeString());
         $resp->assertDontSee($page->updated_at->diffForHumans());
+    }
+
+    public function test_page_export_does_not_include_user_or_revision_links()
+    {
+        $page = Page::first();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertDontSee($page->getUrl('/revisions'));
+        $resp->assertDontSee($page->createdBy->getProfileUrl());
+        $resp->assertSee($page->createdBy->name);
     }
 
     public function test_page_export_sets_right_data_type_for_svg_embeds()

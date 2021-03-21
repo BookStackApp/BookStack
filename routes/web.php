@@ -99,7 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // User Profile routes
-    Route::get('/user/{userId}', 'UserController@showProfilePage');
+    Route::get('/user/{slug}', 'UserProfileController@show');
 
     // Image routes
     Route::get('/images/gallery', 'Images\GalleryImageController@list');
@@ -217,12 +217,12 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Social auth routes
-Route::get('/login/service/{socialDriver}', 'Auth\SocialController@getSocialLogin');
-Route::get('/login/service/{socialDriver}/callback', 'Auth\SocialController@socialCallback');
+Route::get('/login/service/{socialDriver}', 'Auth\SocialController@login');
+Route::get('/login/service/{socialDriver}/callback', 'Auth\SocialController@callback');
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/login/service/{socialDriver}/detach', 'Auth\SocialController@detachSocialAccount');
+    Route::get('/login/service/{socialDriver}/detach', 'Auth\SocialController@detach');
 });
-Route::get('/register/service/{socialDriver}', 'Auth\SocialController@socialRegister');
+Route::get('/register/service/{socialDriver}', 'Auth\SocialController@register');
 
 // Login/Logout routes
 Route::get('/login', 'Auth\LoginController@getLogin');

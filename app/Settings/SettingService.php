@@ -29,9 +29,9 @@ class SettingService
      * Gets a setting from the database,
      * If not found, Returns default, Which is false by default.
      */
-    public function get(string $key, $default = false)
+    public function get(string $key, $default = null)
     {
-        if ($default === false) {
+        if (is_null($default)) {
             $default = config('setting-defaults.' . $key, false);
         }
 
@@ -57,8 +57,12 @@ class SettingService
     /**
      * Get a user-specific setting from the database or cache.
      */
-    public function getUser(User $user, string $key, $default = false)
+    public function getUser(User $user, string $key, $default = null)
     {
+        if (is_null($default)) {
+            $default = config('setting-defaults.user.' . $key, false);
+        }
+
         if ($user->isDefault()) {
             return $this->getFromSession($key, $default);
         }
@@ -68,7 +72,7 @@ class SettingService
     /**
      * Get a value for the current logged-in user.
      */
-    public function getForCurrentUser(string $key, $default = false)
+    public function getForCurrentUser(string $key, $default = null)
     {
         return $this->getUser(user(), $key, $default);
     }
@@ -172,7 +176,7 @@ class SettingService
      */
     protected function formatArrayValue(array $value): string
     {
-        $values = collect($value)->values()->filter(function(array $item) {
+        $values = collect($value)->values()->filter(function (array $item) {
             return count(array_filter($item)) > 0;
         });
         return json_encode($values);

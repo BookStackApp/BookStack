@@ -79,9 +79,9 @@ function userCanOnAny(string $permission, string $entityClass = null): bool
 
 /**
  * Helper to access system settings.
- * @return bool|string|SettingService
+ * @return mixed|SettingService
  */
-function setting(string $key = null, $default = false)
+function setting(string $key = null, $default = null)
 {
     $settingService = resolve(SettingService::class);
 

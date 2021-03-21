@@ -1,7 +1,10 @@
 <?php namespace Tests;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use DB;
 use Illuminate\Support\Carbon;
@@ -127,6 +130,21 @@ class RecycleBinTest extends TestCase
         $itemCount = 1 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
         $redirectReq->assertNotificationContains('Deleted '.$itemCount.' total items from the recycle bin');
+    }
+
+    public function test_permanent_delete_for_each_type()
+    {
+        /** @var Entity $entity */
+        foreach ([new Bookshelf, new Book, new Chapter, new Page] as $entity) {
+            $entity = $entity->newQuery()->first();
+            $this->asEditor()->delete($entity->getUrl());
+            $deletion = Deletion::query()->orderBy('id', 'desc')->firstOrFail();
+
+            $deleteReq = $this->asAdmin()->delete("/settings/recycle-bin/{$deletion->id}");
+            $deleteReq->assertRedirect('/settings/recycle-bin');
+            $this->assertDatabaseMissing('deletions', ['id' => $deletion->id]);
+            $this->assertDatabaseMissing($entity->getTable(), ['id' => $entity->id]);
+        }
     }
 
     public function test_permanent_entity_delete_updates_existing_activity_with_entity_name()

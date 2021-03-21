@@ -97,5 +97,4 @@ class UserAvatars
 
         return $url;
     }
-
 }

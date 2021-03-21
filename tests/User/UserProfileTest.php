@@ -19,7 +19,7 @@ class UserProfileTest extends BrowserKitTest
     public function test_profile_page_shows_name()
     {
         $this->asAdmin()
-            ->visit('/user/' . $this->user->id)
+            ->visit('/user/' . $this->user->slug)
             ->see($this->user->name);
     }
 
@@ -28,7 +28,7 @@ class UserProfileTest extends BrowserKitTest
         $content = $this->createEntityChainBelongingToUser($this->user, $this->user);
 
         $this->asAdmin()
-            ->visit('/user/' . $this->user->id)
+            ->visit('/user/' . $this->user->slug)
             // Check the recently created page is shown
             ->see($content['page']->name)
             // Check the recently created chapter is shown
@@ -41,7 +41,7 @@ class UserProfileTest extends BrowserKitTest
     {
         $newUser = $this->getNewBlankUser();
 
-        $this->asAdmin()->visit('/user/' . $newUser->id)
+        $this->asAdmin()->visit('/user/' . $newUser->slug)
             ->see($newUser->name)
             ->seeInElement('#content-counts', '0 Books')
             ->seeInElement('#content-counts', '0 Chapters')
@@ -49,7 +49,7 @@ class UserProfileTest extends BrowserKitTest
 
         $this->createEntityChainBelongingToUser($newUser, $newUser);
 
-        $this->asAdmin()->visit('/user/' . $newUser->id)
+        $this->asAdmin()->visit('/user/' . $newUser->slug)
             ->see($newUser->name)
             ->seeInElement('#content-counts', '1 Book')
             ->seeInElement('#content-counts', '1 Chapter')
@@ -64,7 +64,7 @@ class UserProfileTest extends BrowserKitTest
         Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
         Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
 
-        $this->asAdmin()->visit('/user/' . $newUser->id)
+        $this->asAdmin()->visit('/user/' . $newUser->slug)
             ->seeInElement('#recent-user-activity', 'updated book')
             ->seeInElement('#recent-user-activity', 'created page')
             ->seeInElement('#recent-user-activity', $entities['page']->name);
@@ -79,7 +79,7 @@ class UserProfileTest extends BrowserKitTest
         Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
 
         $this->asAdmin()->visit('/')->clickInElement('#recent-activity', $newUser->name)
-            ->seePageIs('/user/' . $newUser->id)
+            ->seePageIs('/user/' . $newUser->slug)
             ->see($newUser->name);
     }
 

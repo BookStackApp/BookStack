@@ -22,6 +22,7 @@ return [
     'meta_created_name' => 'Created :timeLength by :user',
     'meta_updated' => 'Updated :timeLength',
     'meta_updated_name' => 'Updated :timeLength by :user',
+    'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Entity Select',
     'images' => 'Images',
     'my_recent_drafts' => 'My Recent Drafts',
@@ -39,6 +40,7 @@ return [
     'permissions_intro' => 'Once enabled, These permissions will take priority over any set role permissions.',
     'permissions_enable' => 'Enable Custom Permissions',
     'permissions_save' => 'Save Permissions',
+    'permissions_owner' => 'Owner',
 
     // Search
     'search_results' => 'Search Results',
@@ -146,7 +148,7 @@ return [
     'chapters_create' => 'Create New Chapter',
     'chapters_delete' => 'Delete Chapter',
     'chapters_delete_named' => 'Delete Chapter :chapterName',
-    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages will be removed and added directly to the parent book.',
+    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
     'chapters_delete_confirm' => 'Are you sure you want to delete this chapter?',
     'chapters_edit' => 'Edit Chapter',
     'chapters_edit_named' => 'Edit Chapter :chapterName',
@@ -208,6 +210,7 @@ return [
     'pages_revisions' => 'Page Revisions',
     'pages_revisions_named' => 'Page Revisions for :pageName',
     'pages_revision_named' => 'Page Revision for :pageName',
+    'pages_revision_restored_from' => 'Restored from #:id; :summary',
     'pages_revisions_created_by' => 'Created By',
     'pages_revisions_date' => 'Revision Date',
     'pages_revisions_number' => '#',

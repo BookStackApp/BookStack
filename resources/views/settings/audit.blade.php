@@ -25,21 +25,27 @@
                 </ul>
             </div>
 
-            @foreach(['date_from', 'date_to'] as $filterKey)
-                <form action="{{ url('/settings/audit') }}" method="get" class="block mr-m">
-                    @foreach($listDetails as $param => $val)
-                        @if(!empty($val) && $param !== $filterKey)
-                            <input type="hidden" name="{{ $param }}" value="{{ $val }}">
-                        @endif
-                    @endforeach
-                    <label for="audit_filter_{{ $filterKey }}">{{ trans('settings.audit_' . $filterKey) }}</label>
-                    <input id="audit_filter_{{ $filterKey }}"
-                           component="submit-on-change"
-                           type="date"
-                           name="{{ $filterKey }}"
-                           value="{{ $listDetails[$filterKey] ?? '' }}">
-                </form>
-            @endforeach
+            <form action="{{ url('/settings/audit') }}" method="get" class="flex-container-row mr-m">
+                @if(!empty($listDetails['event']))
+                    <input type="hidden" name="event" value="{{ $listDetails['event'] }}">
+                @endif
+
+                @foreach(['date_from', 'date_to'] as $filterKey)
+                    <div class="mr-m">
+                        <label for="audit_filter_{{ $filterKey }}">{{ trans('settings.audit_' . $filterKey) }}</label>
+                        <input id="audit_filter_{{ $filterKey }}"
+                               component="submit-on-change"
+                               type="date"
+                               name="{{ $filterKey }}"
+                               value="{{ $listDetails[$filterKey] ?? '' }}">
+                    </div>
+                @endforeach
+
+                <div class="form-group ml-auto" component="submit-on-change">
+                    <label for="owner">{{ trans('settings.audit_table_user') }}</label>
+                    @include('components.user-select', ['user' => $listDetails['user'] ? \BookStack\Auth\User::query()->find($listDetails['user']) : null, 'name' => 'user', 'compact' =>  true])
+                </div>
+            </form>
         </div>
 
         <hr class="mt-l mb-s">

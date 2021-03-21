@@ -3,7 +3,7 @@
  */
 
 header .grid {
-  grid-template-columns: auto min-content auto;
+  grid-template-columns: minmax(max-content, 2fr) 1fr minmax(max-content, 2fr);
 }
 
 @include smaller-than($l) {
@@ -77,9 +77,6 @@ header {
 }
 
 
-.header-search {
-  display: inline-block;
-}
 header .search-box {
   display: inline-block;
   margin-top: 10px;
@@ -272,7 +269,7 @@ header .search-box {
 .dropdown-search {
   position: relative;
   .dropdown-search-toggle {
-    padding: 6px;
+    padding: $-xs;
     border: 1px solid transparent;
     border-radius: 4px;
     &:hover {
@@ -281,6 +278,14 @@ header .search-box {
   }
   .svg-icon {
     margin-inline-end: 0;
+  }
+}
+
+.dropdown-search-toggle.compact {
+  padding: $-xxs $-xs;
+  .avatar {
+    height: 22px;
+    width: 22px;
   }
 }
 

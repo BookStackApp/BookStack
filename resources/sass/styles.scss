@@ -193,8 +193,12 @@ $btt-size: 40px;
   .entity-list-item p {
     margin-bottom: 0;
   }
+  .entity-list-item:focus {
+    outline: 2px dotted var(--color-primary);
+    outline-offset: -4px;
+  }
   .entity-list-item.selected {
-    background-color: rgba(0, 0, 0, 0.05) !important;
+    @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
   }
   .loading {
     height: 400px;

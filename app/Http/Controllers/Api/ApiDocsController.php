@@ -25,5 +25,4 @@ class ApiDocsController extends ApiController
         $docs = ApiDocsGenerator::generateConsideringCache();
         return response()->json($docs);
     }
-
 }

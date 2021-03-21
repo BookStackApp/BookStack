@@ -78,7 +78,6 @@ return [
         'string'  => 'O campo :attribute não deve ter menos que :min caracteres.',
         'array'   => 'O campo :attribute não deve ter menos que :min itens.',
     ],
-    'no_double_extension'  => 'O campo :attribute deve ter apenas uma extensão de arquivo.',
     'not_in'               => 'O campo selecionado :attribute é inválido.',
     'not_regex'            => 'O formato do campo :attribute é inválido.',
     'numeric'              => 'O campo :attribute deve ser um número.',
@@ -90,7 +89,7 @@ return [
     'required_without'     => 'O campo :attribute é requerido quando os valores :values não estiverem presentes.',
     'required_without_all' => 'O campo :attribute é requerido quando nenhum dos valores :values estiverem presentes.',
     'same'                 => 'O campo :attribute e o campo :other devem ser iguais.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'O link fornecido pode não ser seguro.',
     'size'                 => [
         'numeric' => 'O tamanho do campo :attribute deve ser :size.',
         'file'    => 'O tamanho do arquivo :attribute deve ser de :size kilobytes.',

@@ -18,11 +18,6 @@ class CustomValidationServiceProvider extends ServiceProvider
             return in_array(strtolower($value->getClientOriginalExtension()), $validImageExtensions);
         });
 
-        Validator::extend('no_double_extension', function ($attribute, $value, $parameters, $validator) {
-            $uploadName = $value->getClientOriginalName();
-            return substr_count($uploadName, '.') < 2;
-        });
-
         Validator::extend('safe_url', function ($attribute, $value, $parameters, $validator) {
             $cleanLinkName = strtolower(trim($value));
             $isJs = strpos($cleanLinkName, 'javascript:') === 0;

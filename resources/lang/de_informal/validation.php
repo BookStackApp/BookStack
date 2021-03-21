@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute muss mindestens :min Zeichen lang sein.',
         'array'   => ':attribute muss mindesten :min Elemente enthalten.',
     ],
-    'no_double_extension'  => ':attribute darf nur eine gültige Dateiendung',
     'not_in'               => ':attribute ist ungültig.',
     'not_regex'            => ':attribute ist kein gültiges Format.',
     'numeric'              => ':attribute muss eine Zahl sein.',
