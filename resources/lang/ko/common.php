@@ -47,6 +47,7 @@ return [
     'sort_ascending' => '오름차 순서',
     'sort_descending' => '내림차 순서',
     'sort_name' => '제목',
+    'sort_default' => 'Default',
     'sort_created_at' => '만든 날짜',
     'sort_updated_at' => '수정한 날짜',
 
