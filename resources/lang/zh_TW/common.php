@@ -47,6 +47,7 @@ return [
     'sort_ascending' => '遞增排序',
     'sort_descending' => '遞減排序',
     'sort_name' => '名稱',
+    'sort_default' => 'Default',
     'sort_created_at' => '建立日期',
     'sort_updated_at' => '更新日期',
 
