@@ -9,19 +9,30 @@
     </div>
 
     <main class="card content-wrap">
-        <h1 class="break-text">{{$shelf->name}}</h1>
+
+        <div class="grid half v-center">
+            <h1 class="break-text">{{$shelf->name}}</h1>
+            <div class="text-m-right my-m">
+                @include('partials.sort', ['options' => [
+                    'name' => trans('common.sort_name'),
+                    'created_at' => trans('common.sort_created_at'),
+                    'updated_at' => trans('common.sort_updated_at'),
+                ], 'order' => $order, 'sort' => $sort, 'type' => 'shelf_books'])
+            </div>
+        </div>
+
         <div class="book-content">
             <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
-            @if(count($shelf->visibleBooks) > 0)
+            @if(count($sortedVisibleShelfBooks) > 0)
                 @if($view === 'list')
                     <div class="entity-list">
-                        @foreach($shelf->visibleBooks as $book)
+                        @foreach($sortedVisibleShelfBooks as $book)
                             @include('books.list-item', ['book' => $book])
                         @endforeach
                     </div>
                 @else
                     <div class="grid third">
-                        @foreach($shelf->visibleBooks as $key => $book)
+                        @foreach($sortedVisibleShelfBooks as $key => $book)
                             @include('partials.entity-grid-item', ['entity' => $book])
                         @endforeach
                     </div>
