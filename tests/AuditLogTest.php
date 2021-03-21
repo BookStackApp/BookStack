@@ -4,6 +4,7 @@ use BookStack\Actions\Activity;
 use BookStack\Actions\ActivityService;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\UserRepo;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
@@ -115,6 +116,28 @@ class AuditLogTest extends TestCase
 
         $resp = $this->get('settings/audit?date_to=' . $yesterday);
         $resp->assertDontSeeText($page->name);
+    }
+
+    public function test_user_filter()
+    {
+        $admin = $this->getAdmin();
+        $editor = $this->getEditor();
+        $this->actingAs($admin);
+        $page = Page::query()->first();
+        $this->activityService->addForEntity($page, ActivityType::PAGE_CREATE);
+
+        $this->actingAs($editor);
+        $chapter = Chapter::query()->first();
+        $this->activityService->addForEntity($chapter, ActivityType::CHAPTER_UPDATE);
+
+        $resp = $this->actingAs($admin)->get('settings/audit?user=' . $admin->id);
+        $resp->assertSeeText($page->name);
+        $resp->assertDontSeeText($chapter->name);
+
+        $resp = $this->actingAs($admin)->get('settings/audit?user=' . $editor->id);
+        $resp->assertSeeText($chapter->name);
+        $resp->assertDontSeeText($page->name);
+
     }
 
 }
