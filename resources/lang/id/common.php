@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'Sortir Naik',
     'sort_descending' => 'Urutkan Menurun',
     'sort_name' => 'Nama',
-    'sort_default' => 'Default',
+    'sort_default' => 'Bawaan',
     'sort_created_at' => 'Tanggal dibuat',
     'sort_updated_at' => 'Tanggal diperbaharui',
 
