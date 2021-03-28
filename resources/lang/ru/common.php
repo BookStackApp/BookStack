@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'По возрастанию',
     'sort_descending' => 'По убыванию',
     'sort_name' => 'По имени',
-    'sort_default' => 'Default',
+    'sort_default' => 'По умолчанию',
     'sort_created_at' => 'По дате создания',
     'sort_updated_at' => 'По дате обновления',
 
