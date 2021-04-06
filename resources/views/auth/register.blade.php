@@ -35,14 +35,13 @@
                     </div>
                 </div>
 
-
             </form>
 
             @if(count($socialDrivers) > 0)
                 <hr class="my-l">
                 @foreach($socialDrivers as $driver => $name)
                     <div>
-                        <a id="social-register-{{$driver}}" class="button block outline svg" href="{{ url("/register/service/" . $driver) }}">
+                        <a id="social-register-{{$driver}}" class="button outline svg" href="{{ url("/register/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             <span>{{ trans('auth.sign_up_with', ['socialDriver' => $name]) }}</span>
                         </a>
