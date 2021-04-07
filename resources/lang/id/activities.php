@@ -8,7 +8,7 @@ return [
     // Pages
     'page_create'                 => 'halaman dibuat',
     'page_create_notification'    => 'Halaman Berhasil dibuat',
-    'page_update'                 => 'halaman diupdate',
+    'page_update'                 => 'halaman diperbaharui',
     'page_update_notification'    => 'Berhasil mengupdate halaman',
     'page_delete'                 => 'halaman dihapus',
     'page_delete_notification'    => 'Berhasil menghapus halaman',
@@ -40,7 +40,7 @@ return [
     'bookshelf_create_notification'    => 'Rak berhasil dibuat',
     'bookshelf_update'                 => 'update rak',
     'bookshelf_update_notification'    => 'Rak berhasil diupdate',
-    'bookshelf_delete'                 => 'hapus rak',
+    'bookshelf_delete'                 => 'hapus rak buku',
     'bookshelf_delete_notification'    => 'Rak berhasil dihapus',
 
     // Other

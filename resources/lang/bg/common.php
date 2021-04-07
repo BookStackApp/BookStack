@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Сортирай възходящо',
     'sort_descending' => 'Низходящо сортиране',
     'sort_name' => 'Име',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Дата на създаване',
     'sort_updated_at' => 'Дата на обновяване',
 

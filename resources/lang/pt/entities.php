@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Permissão definida',
     'search_created_by_me' => 'Criado por mim',
     'search_updated_by_me' => 'Atualizado por mim',
+    'search_owned_by_me' => 'Propriedade minha',
     'search_date_options' => 'Opções de Data',
     'search_updated_before' => 'Atualizado antes de',
     'search_updated_after' => 'Atualizado depois de',

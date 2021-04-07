@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Sada oprávnění',
     'search_created_by_me' => 'Vytvořeno mnou',
     'search_updated_by_me' => 'Aktualizováno mnou',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Možnosti data',
     'search_updated_before' => 'Aktualizováno před',
     'search_updated_after' => 'Aktualizováno po',

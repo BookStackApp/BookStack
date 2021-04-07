@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => '权限设置',
     'search_created_by_me' => '我创建的',
     'search_updated_by_me' => '我更新的',
+    'search_owned_by_me' => '我拥有的',
     'search_date_options' => '日期选项',
     'search_updated_before' => '在此之前更新',
     'search_updated_after' => '在此之后更新',

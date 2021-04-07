@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Artan Sıralama',
     'sort_descending' => 'Azalan Sıralama',
     'sort_name' => 'İsim',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Oluşturulma Tarihi',
     'sort_updated_at' => 'Güncelleme Tarihi',
 

@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Zoradiť vzostupne',
     'sort_descending' => 'Zoradiť zostupne',
     'sort_name' => 'Meno',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Dátum vytvorenia',
     'sort_updated_at' => 'Aktualizované dňa',
 

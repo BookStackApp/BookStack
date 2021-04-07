@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Sorter stigende',
     'sort_descending' => 'Sorter faldende',
     'sort_name' => 'Navn',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Oprettelsesdato',
     'sort_updated_at' => 'Opdateringsdato',
 

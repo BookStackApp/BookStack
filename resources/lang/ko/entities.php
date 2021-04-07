@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => '권한 설정함',
     'search_created_by_me' => '내가 만듦',
     'search_updated_by_me' => '내가 수정함',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => '날짜',
     'search_updated_before' => '이전에 수정함',
     'search_updated_after' => '이후에 수정함',

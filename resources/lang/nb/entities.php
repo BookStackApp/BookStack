@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Tilganger er angitt',
     'search_created_by_me' => 'Opprettet av meg',
     'search_updated_by_me' => 'Oppdatert av meg',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Datoalternativer',
     'search_updated_before' => 'Oppdatert før',
     'search_updated_after' => 'Oppdatert etter',

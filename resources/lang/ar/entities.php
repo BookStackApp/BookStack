@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'حزمة الأذونات',
     'search_created_by_me' => 'أنشئت بواسطتي',
     'search_updated_by_me' => 'حُدثت بواسطتي',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'خيارات التاريخ',
     'search_updated_before' => 'حدثت قبل',
     'search_updated_after' => 'حدثت بعد',

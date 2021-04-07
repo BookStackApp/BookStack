@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute ir jābūt vismaz :min rakstzīmēm.',
         'array'   => ':attribute ir jābūt vismaz :min vienībām.',
     ],
-    'no_double_extension'  => ':attribute drīkst būt tikai viens faila paplašinājums.',
     'not_in'               => 'Izvēlētais: atribūts ir nederīgs.',
     'not_regex'            => ':attribute formāts nav derīgs.',
     'numeric'              => ':attribute ir jābūt skaitlim.',

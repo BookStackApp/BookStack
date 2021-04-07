@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Permissies gezet',
     'search_created_by_me' => 'Door mij gemaakt',
     'search_updated_by_me' => 'Door mij geupdate',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Datum Opties',
     'search_updated_before' => 'Geupdate voor',
     'search_updated_after' => 'Geupdate na',

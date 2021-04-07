@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'По возрастанию',
     'sort_descending' => 'По убыванию',
     'sort_name' => 'По имени',
+    'sort_default' => 'По умолчанию',
     'sort_created_at' => 'По дате создания',
     'sort_updated_at' => 'По дате обновления',
 
@@ -80,6 +81,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Политика конфиденциальности',
+    'terms_of_service' => 'Условия использования',
 ];

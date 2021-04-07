@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Sorteer oplopend',
     'sort_descending' => 'Sorteer teruglopend',
     'sort_name' => 'Naam',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Aanmaakdatum',
     'sort_updated_at' => 'Gewijzigd op',
 

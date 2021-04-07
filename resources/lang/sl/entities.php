@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Nastavljena dovoljenja',
     'search_created_by_me' => 'Ustvaril sem jaz',
     'search_updated_by_me' => 'Posodobil sem jaz',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Možnosti datuma',
     'search_updated_before' => 'Posodobljeno pred',
     'search_updated_after' => 'Posodobljeno po',

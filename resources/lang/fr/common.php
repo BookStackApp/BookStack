@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Tri ascendant',
     'sort_descending' => 'Tri descendant',
     'sort_name' => 'Nom',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Date de création',
     'sort_updated_at' => 'Date de mise à jour',
 

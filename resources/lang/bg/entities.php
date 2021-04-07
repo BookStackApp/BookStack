@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Задаване на права',
     'search_created_by_me' => 'Създадено от мен',
     'search_updated_by_me' => 'Обновено от мен',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Настройки на дати',
     'search_updated_before' => 'Обновено преди',
     'search_updated_after' => 'Обновено след',

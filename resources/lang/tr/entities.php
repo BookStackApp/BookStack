@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'İzinler ayarlanmış',
     'search_created_by_me' => 'Oluşturduklarım',
     'search_updated_by_me' => 'Güncellediklerim',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Tarih Seçenekleri',
     'search_updated_before' => 'Önce güncellendi',
     'search_updated_after' => 'Sonra güncellendi',

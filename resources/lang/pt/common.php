@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Ordenação Crescente',
     'sort_descending' => 'Ordenação Decrescente',
     'sort_name' => 'Nome',
+    'sort_default' => 'Padrão',
     'sort_created_at' => 'Data de Criação',
     'sort_updated_at' => 'Data de Atualização',
 

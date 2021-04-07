@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute mora imati najmanje :min karaktera.',
         'array'   => ':attribute mora imati najmanje :min stavki.',
     ],
-    'no_double_extension'  => ':attribute mora imati samo jednu fajl ekstenziju.',
     'not_in'               => 'Odabrani :attribute je neispravan.',
     'not_regex'            => 'Format :attribute je neispravan.',
     'numeric'              => ':attribute mora biti broj.',

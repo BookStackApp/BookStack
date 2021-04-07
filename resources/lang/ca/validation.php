@@ -78,7 +78,6 @@ return [
         'string'  => 'El camp :attribute no pot tenir menys de :min caràcters.',
         'array'   => 'El camp :attribute no pot tenir menys de :min elements.',
     ],
-    'no_double_extension'  => 'El camp :attribute només pot tenir una única extensió de fitxer.',
     'not_in'               => 'El camp :attribute seleccionat no és vàlid.',
     'not_regex'            => 'El format del camp :attribute no és vàlid.',
     'numeric'              => 'El camp :attribute ha de ser un número.',
