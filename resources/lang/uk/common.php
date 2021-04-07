@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'За зростанням',
     'sort_descending' => 'За спаданням',
     'sort_name' => 'Ім\'я',
+    'sort_default' => 'За замовчуванням',
     'sort_created_at' => 'Дата створення',
     'sort_updated_at' => 'Дата оновлення',
 
@@ -80,6 +81,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Політика приватності',
+    'terms_of_service' => 'Умови використання',
 ];

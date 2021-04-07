@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Sortera stigande',
     'sort_descending' => 'Sortera fallande',
     'sort_name' => 'Namn',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Skapad',
     'sort_updated_at' => 'Uppdaterad',
 

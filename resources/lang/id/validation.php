@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute setidaknya harus :min karakter.',
         'array'   => ':attribute minimal harus memiliki :min item.',
     ],
-    'no_double_extension'  => ':attribute hanya boleh memiliki satu ekstensi file.',
     'not_in'               => ':attribute yang dipilih tidak valid.',
     'not_regex'            => ':attribute format tidak valid.',
     'numeric'              => ':attribute harus berupa nomot.',

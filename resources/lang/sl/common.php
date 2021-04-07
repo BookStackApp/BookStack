@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Razvrsti naraščajoče',
     'sort_descending' => 'Razvrsti padajoče',
     'sort_name' => 'Ime',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Datum nastanka',
     'sort_updated_at' => 'Datum posodobitve',
 

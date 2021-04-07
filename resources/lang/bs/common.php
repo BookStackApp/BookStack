@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Sortiraj uzlazno',
     'sort_descending' => 'Sortiraj silazno',
     'sort_name' => 'Ime',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Datum kreiranja',
     'sort_updated_at' => 'Datum ažuriranja',
 

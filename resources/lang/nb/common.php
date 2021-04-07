@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Stigende sortering',
     'sort_descending' => 'Synkende sortering',
     'sort_name' => 'Navn',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Dato opprettet',
     'sort_updated_at' => 'Dato oppdatert',
 

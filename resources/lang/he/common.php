@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Sort Ascending',
     'sort_descending' => 'Sort Descending',
     'sort_name' => 'שם',
+    'sort_default' => 'Default',
     'sort_created_at' => 'תאריך יצירה',
     'sort_updated_at' => 'תאריך עדכון',
 

@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Řadit vzestupně',
     'sort_descending' => 'Řadit sestupně',
     'sort_name' => 'Název',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Datum vytvoření',
     'sort_updated_at' => 'Datum aktualizace',
 

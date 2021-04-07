@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Rettigheders sæt',
     'search_created_by_me' => 'Oprettet af mig',
     'search_updated_by_me' => 'Opdateret af mig',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Datoindstillinger',
     'search_updated_before' => 'Opdateret før',
     'search_updated_after' => 'Opdateret efter',

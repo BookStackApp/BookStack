@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Kārtot Augoši',
     'sort_descending' => 'Kārtot Dilstoši',
     'sort_name' => 'Vārds',
+    'sort_default' => 'Noklusējums',
     'sort_created_at' => 'Izveidošanas Datums',
     'sort_updated_at' => 'Atjaunināšanas datums',
 

@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Налаштування дозволів',
     'search_created_by_me' => 'Створено мною',
     'search_updated_by_me' => 'Оновлено мною',
+    'search_owned_by_me' => 'Належать мені',
     'search_date_options' => 'Параметри дати',
     'search_updated_before' => 'Оновлено до',
     'search_updated_after' => 'Оновлено після',

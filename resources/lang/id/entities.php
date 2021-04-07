@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Izin ditetapkan',
     'search_created_by_me' => 'Dibuat oleh saya',
     'search_updated_by_me' => 'Diperbaharui oleh saya',
+    'search_owned_by_me' => 'Milik Saya',
     'search_date_options' => 'Opsi Tanggal',
     'search_updated_before' => 'Diperbaharui sebelum',
     'search_updated_after' => 'Diperbaharui setelah',

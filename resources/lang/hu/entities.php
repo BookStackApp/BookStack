@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Jogosultságok beállítva',
     'search_created_by_me' => 'Általam létrehozott',
     'search_updated_by_me' => 'Általam frissített',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Dátum beállítások',
     'search_updated_before' => 'Frissítve ez előtt',
     'search_updated_after' => 'Frissítve ez után',

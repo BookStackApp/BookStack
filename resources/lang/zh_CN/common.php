@@ -47,6 +47,7 @@ return [
     'sort_ascending' => '升序',
     'sort_descending' => '降序',
     'sort_name' => '名称',
+    'sort_default' => '默认',
     'sort_created_at' => '创建时间',
     'sort_updated_at' => '更新时间',
 
