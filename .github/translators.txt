@@ -49,6 +49,11 @@ Name :: Languages
 @jzoy :: Simplified Chinese
 @ististudio :: Korean
 @leomartinez :: Spanish Argentina
+@geins :: German
+@Ereza :: Catalan
+@benediktvolke :: German
+@Baptistou :: French
+@arcoai :: Spanish
 cipi1965 :: Italian
 Mykola Ronik (Mantikor) :: Ukrainian
 furkanoyk :: Turkish
@@ -134,3 +139,20 @@ Douradinho :: Portuguese, Brazilian
 Gaku Yaguchi (tama11) :: Japanese
 johnroyer :: Chinese Traditional
 jackaaa :: Chinese Traditional
+Irfan Hukama Arsyad (IrfanArsyad) :: Indonesian
+Jeff Huang (s8321414) :: Chinese Traditional
+Luís Tiago Favas (starkyller) :: Portuguese
+semirte :: Bosnian
+aarchijs :: Latvian
+Martins Pilsetnieks (pilsetnieks) :: Latvian
+Yonatan Magier (yonatanmgr) :: Hebrew
+FastHogi :: German Informal; German
+Ole Anders (Swoy) :: Norwegian Bokmal
+Atlochowski (atlochowski) :: Polish
+Simon (DefaultSimon) :: Slovenian
+Reinis Mednis (Mednis) :: Latvian
+toisho (toishoki) :: Turkish
+nikservik :: Ukrainian; Russian; Polish
+HenrijsS :: Latvian
+Pascal R-B (pborgner) :: German
+Boris (Ginfred) :: Russian
