@@ -1,5 +1,6 @@
 <?php namespace BookStack\Facades;
 
+use BookStack\Theming\ThemeService;
 use Illuminate\Support\Facades\Facade;
 
 class Theme extends Facade
@@ -11,6 +12,6 @@ class Theme extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'theme';
+        return ThemeService::class;
     }
 }
