@@ -162,7 +162,7 @@ class EntityTest extends BrowserKitTest
             ->press('Save Book');
 
         $expectedPattern = '/\/books\/my-first-book-[0-9a-zA-Z]{3}/';
-        $this->assertRegExp($expectedPattern, $this->currentUri, "Did not land on expected page [$expectedPattern].\n");
+        $this->assertMatchesRegularExpression($expectedPattern, $this->currentUri, "Did not land on expected page [$expectedPattern].\n");
 
         $book = Book::where('slug', '=', 'my-first-book')->first();
         return $book;

@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute musí mať aspoň :min znakov.',
         'array'   => ':attribute musí mať aspoň :min položiek.',
     ],
-    'no_double_extension'  => 'The :attribute must only have a single file extension.',
     'not_in'               => 'Vybraný :attribute je neplatný.',
     'not_regex'            => 'The :attribute format is invalid.',
     'numeric'              => ':attribute musí byť číslo.',

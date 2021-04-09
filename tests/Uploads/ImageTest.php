@@ -136,7 +136,7 @@ class ImageTest extends TestCase
         $relPath = $this->getTestImagePath('gallery', $fileName);
         $this->deleteImage($relPath);
 
-        $file = $this->getTestImage($fileName);
+        $file = $this->newTestImageFromBase64('bad-php.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(302);
 
@@ -158,28 +158,36 @@ class ImageTest extends TestCase
         $relPath = $this->getTestImagePath('gallery', $fileName);
         $this->deleteImage($relPath);
 
-        $file = $this->getTestImage($fileName);
+        $file = $this->newTestImageFromBase64('bad-phtml.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
         $upload->assertStatus(302);
 
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded php file was uploaded but should have been stopped');
     }
 
-    public function test_files_with_double_extensions_cannot_be_uploaded()
+    public function test_files_with_double_extensions_will_get_sanitized()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $admin = $this->getAdmin();
         $this->actingAs($admin);
 
         $fileName = 'bad.phtml.png';
         $relPath = $this->getTestImagePath('gallery', $fileName);
-        $this->deleteImage($relPath);
+        $expectedRelPath = dirname($relPath) . '/bad-phtml.png';
+        $this->deleteImage($expectedRelPath);
 
-        $file = $this->getTestImage($fileName);
+        $file = $this->newTestImageFromBase64('bad-phtml-png.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/png')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
-        $upload->assertStatus(302);
+        $upload->assertStatus(200);
 
-        $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded double extension file was uploaded but should have been stopped');
+        $lastImage = Image::query()->latest('id')->first();
+
+        $this->assertEquals('bad.phtml.png', $lastImage->name);
+        $this->assertEquals('bad-phtml.png', basename($lastImage->path));
+        $this->assertFileDoesNotExist(public_path($relPath), 'Uploaded image file name was not stripped of dots');
+        $this->assertFileExists(public_path($expectedRelPath));
+
+        $this->deleteImage($lastImage->path);
     }
 
     public function test_url_entities_removed_from_filenames()

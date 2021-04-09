@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Ensemble d\'autorisations',
     'search_created_by_me' => 'Créé par moi',
     'search_updated_by_me' => 'Mis à jour par moi',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Recherche par date',
     'search_updated_before' => 'Mis à jour avant',
     'search_updated_after' => 'Mis à jour après',

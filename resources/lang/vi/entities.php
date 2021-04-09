@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'Phân quyền',
     'search_created_by_me' => 'Được tạo bởi tôi',
     'search_updated_by_me' => 'Được cập nhật bởi tôi',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Tùy chọn ngày',
     'search_updated_before' => 'Đã được cập nhật trước đó',
     'search_updated_after' => 'Đã được cập nhật sau',

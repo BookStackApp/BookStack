@@ -10,24 +10,27 @@ services:
   db:
     image: mysql:8
     environment:
-      MYSQL_DATABASE: bookstack-test
+      MYSQL_DATABASE: bookstack-dev
       MYSQL_USER: bookstack-test
       MYSQL_PASSWORD: bookstack-test
       MYSQL_RANDOM_ROOT_PASSWORD: 'true'
     command: --default-authentication-plugin=mysql_native_password
     volumes:
+      - ./dev/docker/init.db:/docker-entrypoint-initdb.d
       - db:/var/lib/mysql
   app:
     build:
       context: .
       dockerfile: ./dev/docker/Dockerfile
     environment:
+      APP_URL: http://localhost:${DEV_PORT:-8080}
       DB_CONNECTION: mysql
       DB_HOST: db
       DB_PORT: 3306
-      DB_DATABASE: bookstack-test
+      DB_DATABASE: bookstack-dev
       DB_USERNAME: bookstack-test
       DB_PASSWORD: bookstack-test
+      TEST_DATABASE_URL: mysql://bookstack-test:bookstack-test@db/bookstack-test
       MAIL_DRIVER: smtp
       MAIL_HOST: mailhog
       MAIL_PORT: 1025
@@ -39,6 +42,7 @@ services:
   node:
     image: node:alpine
     working_dir: /app
+    user: node
     volumes:
       - ./:/app
     entrypoint: /app/dev/docker/entrypoint.node.sh

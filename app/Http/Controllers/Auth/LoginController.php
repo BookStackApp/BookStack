@@ -7,7 +7,9 @@ use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
+use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -150,6 +152,7 @@ class LoginController extends Controller
             }
         }
 
+        Theme::dispatch(ThemeEvents::AUTH_LOGIN, auth()->getDefaultDriver(), $user);
         $this->logActivity(ActivityType::AUTH_LOGIN, $user);
         return redirect()->intended($this->redirectPath());
     }
@@ -195,5 +198,4 @@ class LoginController extends Controller
 
         return redirect('/login');
     }
-
 }

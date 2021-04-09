@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Ordine Ascendente',
     'sort_descending' => 'Ordine Discendente',
     'sort_name' => 'Nome',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Data Creazione',
     'sort_updated_at' => 'Data Aggiornamento',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => 'Se hai problemi nel cliccare il pulsante ":actionText", copia e incolla lo URL sotto nel tuo browser:',
     'email_rights' => 'Tutti i diritti riservati',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

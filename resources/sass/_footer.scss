@@ -1,0 +1,17 @@
+/**
+ * Includes the footer links.
+ */
+
+ footer {
+    flex-shrink: 0;
+    padding: 1rem 1rem 2rem 1rem;
+    text-align: center;
+  }
+  
+  footer a {
+    margin: 0 .5em;
+  }
+  
+  body.flexbox footer {
+    display: none;
+  }

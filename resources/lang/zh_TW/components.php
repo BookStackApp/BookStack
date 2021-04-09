@@ -5,7 +5,7 @@
 return [
 
     // Image Manager
-    'image_select' => '選擇圖片',
+    'image_select' => '選取圖片',
     'image_all' => '全部',
     'image_all_title' => '檢視所有圖片',
     'image_book_title' => '檢視上傳到此書本的圖片',
@@ -14,10 +14,10 @@ return [
     'image_uploaded' => '上傳於 :uploadedDate',
     'image_load_more' => '載入更多',
     'image_image_name' => '圖片名稱',
-    'image_delete_used' => '所使用圖片目前用於以下頁面。',
+    'image_delete_used' => '此圖片用於以下頁面。',
     'image_delete_confirm_text' => '您確認想要刪除這個圖片？',
-    'image_select_image' => '選擇圖片',
-    'image_dropzone' => '拖曳圖片或點選這裡上傳',
+    'image_select_image' => '選取圖片',
+    'image_dropzone' => '拖曳圖片或點擊此處上傳',
     'images_deleted' => '圖片已刪除',
     'image_preview' => '圖片預覽',
     'image_upload_success' => '圖片上傳成功',
@@ -29,6 +29,6 @@ return [
     'code_editor' => '編輯程式碼',
     'code_language' => '程式語言',
     'code_content' => '程式碼內容',
-    'code_session_history' => 'Session 歷程',
+    'code_session_history' => '工作階段歷史',
     'code_save' => '儲存程式碼',
 ];

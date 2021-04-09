@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Artan Sıralama',
     'sort_descending' => 'Azalan Sıralama',
     'sort_name' => 'İsim',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Oluşturulma Tarihi',
     'sort_updated_at' => 'Güncelleme Tarihi',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => '":actionText" butonuna tıklamada sorun yaşıyorsanız, aşağıda bulunan bağlantıyı kopyalayıp tarayıcınıza yapıştırın:',
     'email_rights' => 'Tüm hakları saklıdır',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

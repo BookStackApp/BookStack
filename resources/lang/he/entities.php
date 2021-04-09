@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => 'סט הרשאות',
     'search_created_by_me' => 'שנוצרו על ידי',
     'search_updated_by_me' => 'שעודכנו על ידי',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'אפשרויות תאריך',
     'search_updated_before' => 'שעודכנו לפני',
     'search_updated_after' => 'שעודכנו לאחר',

@@ -78,7 +78,6 @@ return [
         'string'  => 'Długość :attribute nie może być mniejsza niż :min znaków.',
         'array'   => 'Rozmiar :attribute musi posiadać co najmniej :min elementy.',
     ],
-    'no_double_extension'  => ':attribute może mieć tylko jedno rozszerzenie.',
     'not_in'               => 'Wartość :attribute jest nieprawidłowa.',
     'not_regex'            => 'Format :attribute jest nieprawidłowy.',
     'numeric'              => ':attribute musi być liczbą.',
@@ -90,7 +89,7 @@ return [
     'required_without'     => 'Pole :attribute jest wymagane jeśli :values nie zostało wprowadzone.',
     'required_without_all' => 'Pole :attribute jest wymagane jeśli żadna z wartości :values nie została podana.',
     'same'                 => 'Pole :attribute i :other muszą być takie same.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'Podany link może nie być bezpieczny.',
     'size'                 => [
         'numeric' => ':attribute musi mieć długość :size.',
         'file'    => ':attribute musi mieć :size kilobajtów.',

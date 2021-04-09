@@ -32,7 +32,7 @@ class BookshelfController extends Controller
      */
     public function index()
     {
-        $view = setting()->getForCurrentUser('bookshelves_view_type', config('app.views.bookshelves', 'grid'));
+        $view = setting()->getForCurrentUser('bookshelves_view_type');
         $sort = setting()->getForCurrentUser('bookshelves_sort', 'name');
         $order = setting()->getForCurrentUser('bookshelves_sort_order', 'asc');
         $sortOptions = [
@@ -101,15 +101,26 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-view', $shelf);
 
+        $sort = setting()->getForCurrentUser('shelf_books_sort', 'default');
+        $order = setting()->getForCurrentUser('shelf_books_sort_order', 'asc');
+
+        $sortedVisibleShelfBooks = $shelf->visibleBooks()->get()
+            ->sortBy($sort === 'default' ? 'pivot.order' : $sort, SORT_REGULAR, $order === 'desc')
+            ->values()
+            ->all();
+
         Views::add($shelf);
         $this->entityContextManager->setShelfContext($shelf->id);
-        $view = setting()->getForCurrentUser('bookshelf_view_type', config('app.views.books'));
+        $view = setting()->getForCurrentUser('bookshelf_view_type');
 
         $this->setPageTitle($shelf->getShortName());
         return view('shelves.show', [
             'shelf' => $shelf,
+            'sortedVisibleShelfBooks' => $sortedVisibleShelfBooks,
             'view' => $view,
-            'activity' => Activity::entityActivity($shelf, 20, 1)
+            'activity' => Activity::entityActivity($shelf, 20, 1),
+            'order' => $order,
+            'sort' => $sort
         ]);
     }
 

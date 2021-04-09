@@ -8,7 +8,7 @@
         </div>
 
         <section class="card content-wrap">
-            <h1 class="list-heading">{{ $user->id === $currentUser->id ? trans('settings.users_edit_profile') : trans('settings.users_edit') }}</h1>
+            <h1 class="list-heading">{{ $user->id === user()->id ? trans('settings.users_edit_profile') : trans('settings.users_edit') }}</h1>
             <form action="{{ url("/settings/users/{$user->id}") }}" method="post" enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="PUT">
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="text-right">
-                    <a href="{{  url($currentUser->can('users-manage') ? "/settings/users" : "/") }}" class="button outline">{{ trans('common.cancel') }}</a>
+                    <a href="{{  url(userCan('users-manage') ? "/settings/users" : "/") }}" class="button outline">{{ trans('common.cancel') }}</a>
                     @if($authMethod !== 'system')
                         <a href="{{ url("/settings/users/{$user->id}/delete") }}" class="button outline">{{ trans('settings.users_delete') }}</a>
                     @endif
@@ -63,7 +63,7 @@
             </form>
         </section>
 
-        @if($currentUser->id === $user->id && count($activeSocialDrivers) > 0)
+        @if(user()->id === $user->id && count($activeSocialDrivers) > 0)
             <section class="card content-wrap auto-height">
                 <h2 class="list-heading">{{ trans('settings.users_social_accounts') }}</h2>
                 <p class="text-muted">{{ trans('settings.users_social_accounts_info') }}</p>
@@ -88,7 +88,7 @@
             </section>
         @endif
 
-        @if(($currentUser->id === $user->id && userCan('access-api')) || userCan('users-manage'))
+        @if((user()->id === $user->id && userCan('access-api')) || userCan('users-manage'))
             @include('users.api-tokens.list', ['user' => $user])
         @endif
     </div>

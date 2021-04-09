@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Sortera stigande',
     'sort_descending' => 'Sortera fallande',
     'sort_name' => 'Namn',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Skapad',
     'sort_updated_at' => 'Uppdaterad',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => 'Om du har problem, klicka på knappen ":actionText", och kopiera och klistra in den här adressen i din webbläsare:',
     'email_rights' => 'Alla rättigheter är reserverade',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

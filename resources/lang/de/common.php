@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Aufsteigend sortieren',
     'sort_descending' => 'Absteigend sortieren',
     'sort_name' => 'Name',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Erstellungsdatum',
     'sort_updated_at' => 'Aktualisierungsdatum',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => 'Sollte es beim Anklicken der Schaltfläche ":action_text" Probleme geben, öffnen Sie folgende URL in Ihrem Browser:',
     'email_rights' => 'Alle Rechte vorbehalten',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Datenschutzbestimmungen',
+    'terms_of_service' => 'Allgemeine Geschäftsbedingungen',
 ];

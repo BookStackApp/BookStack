@@ -12,9 +12,11 @@
 */
 
 $factory->define(\BookStack\Auth\User::class, function ($faker) {
+    $name = $faker->name;
     return [
-        'name' => $faker->name,
+        'name' => $name,
         'email' => $faker->email,
+        'slug' => \Illuminate\Support\Str::slug($name . '-' . \Illuminate\Support\Str::random(5)),
         'password' => Str::random(10),
         'remember_token' => Str::random(10),
         'email_confirmed' => 1

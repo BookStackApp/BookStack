@@ -47,6 +47,7 @@ return [
     'sort_ascending' => '오름차 순서',
     'sort_descending' => '내림차 순서',
     'sort_name' => '제목',
+    'sort_default' => 'Default',
     'sort_created_at' => '만든 날짜',
     'sort_updated_at' => '수정한 날짜',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => ':actionText를 클릭할 수 없을 때는 웹 브라우저에서 다음 링크로 접속할 수 있습니다.',
     'email_rights' => '모든 권리 소유',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

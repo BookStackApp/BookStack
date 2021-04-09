@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Sortuj rosnąco',
     'sort_descending' => 'Sortuj malejąco',
     'sort_name' => 'Nazwa',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Data utworzenia',
     'sort_updated_at' => 'Data aktualizacji',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => 'Jeśli masz problem z kliknięciem przycisku ":actionText", skopiuj i wklej poniższy adres URL w nowej karcie swojej przeglądarki:',
     'email_rights' => 'Wszelkie prawa zastrzeżone',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Polityka prywatności',
+    'terms_of_service' => 'Warunki usługi',
 ];

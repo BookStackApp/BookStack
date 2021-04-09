@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discord chat support
+    url: https://discord.gg/ztkBqR2
+    about: Realtime support / chat with the community and the team.
+
+  - name: Debugging & Common Issues
+    url: https://www.bookstackapp.com/docs/admin/debugging/
+    about: Find details on how to debug issues and view common issues with thier resolutions.

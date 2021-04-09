@@ -4,7 +4,8 @@
 [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
 [![Crowdin](https://badges.crowdin.net/bookstack/localized.svg)](https://crowdin.com/project/bookstack)
 [![Build Status](https://github.com/BookStackApp/BookStack/workflows/phpunit/badge.svg)](https://github.com/BookStackApp/BookStack/actions)
-[![Discord](https://img.shields.io/static/v1?label=Chat&message=Discord&color=738adb&logo=discord)](https://discord.gg/ztkBqR2)
+[![Discord](https://img.shields.io/static/v1?label=chat&message=discord&color=738adb&logo=discord)](https://discord.gg/ztkBqR2)
+[![Repo Stats](https://img.shields.io/static/v1?label=GitHub+project&message=stats&color=f27e3f)](https://gh-stats.bookstackapp.com/)
 
 A platform for storing and organising information and documentation. Details for BookStack can be found on the official website at https://www.bookstackapp.com/.
 
@@ -41,7 +42,7 @@ Below is a high-level road map view for BookStack to provide a sense of directio
 
 BookStack releases are each assigned a version number, such as "v0.25.2", in the format `v<phase>.<feature>.<patch>`. A change only in the `patch` number indicates a fairly minor release that mainly contains fixes and therefore is very unlikely to cause breakages upon update. A change in the `feature` number indicates a release which will generally bring new features in addition to fixes and enhancements. These releases have a small chance of introducing breaking changes upon update so it's worth checking for any notes in the [update guide](https://www.bookstackapp.com/docs/admin/updates/). A change in the `phase` indicates a much large change in BookStack that will likely incur breakages requiring manual intervention.
 
-Each BookStack release will have a [milestone](https://github.com/BookStackApp/BookStack/milestones) created with issues & pull requests assigned to it to define what will be in that release. Milestones are built up then worked through until complete at which point, after some testing and documentation updates, the release will be deployed. 
+Each BookStack release will have a [milestone](https://github.com/BookStackApp/BookStack/milestones) created with issues & pull requests assigned to it to define what will be in that release. Milestones are built up then worked through until complete at which point, after some testing and documentation updates, the release will be deployed.
 
 For feature releases, and some patch releases, the release will be accompanied by a post on the [BookStack blog](https://www.bookstackapp.com/blog/) which will provide additional detail on features, changes & updates otherwise the [GitHub release page](https://github.com/BookStackApp/BookStack/releases) will show a list of changes. You can sign up to be alerted to new BookStack blogs posts (once per week maximum) [at this link](https://updates.bookstackapp.com/signup/bookstack-news-and-updates).
 
@@ -101,11 +102,27 @@ If all the conditions are met, you can proceed with the following steps:
 
 If needed, You'll be able to run any artisan commands via docker-compose like so:
 
- ```shell script
-docker-compose run app php artisan list 
+```bash
+docker-compose run app php artisan list
 ```
 
 The docker-compose setup runs an instance of [MailHog](https://github.com/mailhog/MailHog) and sets environment variables to redirect any BookStack-sent emails to MailHog. You can view this mail via the MailHog web interface on `localhost:8025`. You can change the port MailHog is accessible on by setting a `DEV_MAIL_PORT` environment variable.
+
+#### Running tests
+
+After starting the general development Docker, migrate & seed the testing database:
+
+ ```bash
+# This only needs to be done once
+docker-compose run app php artisan migrate --database=mysql_testing
+docker-compose run app php artisan db:seed --class=DummyContentSeeder --database=mysql_testing
+```
+
+Once the database has been migrated & seeded, you can run the tests like so:
+
+ ```bash
+docker-compose run app php vendor/bin/phpunit
+```
 
 ## 🌎 Translations
 
@@ -121,7 +138,7 @@ Feel free to create issues to request new features or to report bugs & problems.
 
 Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge. Just because a feature request exists, or is tagged, does not mean that feature would be accepted into the core project.
 
-Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
+Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
 The project's code of conduct [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/CODE_OF_CONDUCT.md).
 
@@ -169,3 +186,5 @@ These are the great open-source projects used to help build BookStack:
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
 * [diagrams.net](https://github.com/jgraph/drawio)
 * [OneLogin's SAML PHP Toolkit](https://github.com/onelogin/php-saml)
+* [League/CommonMark](https://commonmark.thephpleague.com/)
+* [League/Flysystem](https://flysystem.thephpleague.com)

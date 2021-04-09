@@ -4,6 +4,7 @@ namespace BookStack\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Connection;
+use Illuminate\Support\Facades\DB;
 
 class UpdateUrl extends Command
 {
@@ -60,20 +61,48 @@ class UpdateUrl extends Command
             "attachments" => ["path"],
             "pages" => ["html", "text", "markdown"],
             "images" => ["url"],
+            "settings" => ["value"],
             "comments" => ["html", "text"],
         ];
 
         foreach ($columnsToUpdateByTable as $table => $columns) {
             foreach ($columns as $column) {
-                $changeCount = $this->db->table($table)->update([
-                    $column => $this->db->raw("REPLACE({$column}, '{$oldUrl}', '{$newUrl}')")
-                ]);
+                $changeCount = $this->replaceValueInTable($table, $column, $oldUrl, $newUrl);
                 $this->info("Updated {$changeCount} rows in {$table}->{$column}");
             }
         }
 
+        $jsonColumnsToUpdateByTable = [
+            "settings" => ["value"],
+        ];
+
+        foreach ($jsonColumnsToUpdateByTable as $table => $columns) {
+            foreach ($columns as $column) {
+                $oldJson = trim(json_encode($oldUrl), '"');
+                $newJson = trim(json_encode($newUrl), '"');
+                $changeCount = $this->replaceValueInTable($table, $column, $oldJson, $newJson);
+                $this->info("Updated {$changeCount} JSON encoded rows in {$table}->{$column}");
+            }
+        }
+
         $this->info("URL update procedure complete.");
+        $this->info('============================================================================');
+        $this->info('Be sure to run "php artisan cache:clear" to clear any old URLs in the cache.');
+        $this->info('============================================================================');
         return 0;
+    }
+
+    /**
+     * Perform a find+replace operations in the provided table and column.
+     * Returns the count of rows changed.
+     */
+    protected function replaceValueInTable(string $table, string $column, string $oldUrl, string $newUrl): int
+    {
+        $oldQuoted = $this->db->getPdo()->quote($oldUrl);
+        $newQuoted = $this->db->getPdo()->quote($newUrl);
+        return $this->db->table($table)->update([
+            $column => $this->db->raw("REPLACE({$column}, {$oldQuoted}, {$newQuoted})")
+        ]);
     }
 
     /**

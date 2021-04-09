@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Сортирай възходящо',
     'sort_descending' => 'Низходящо сортиране',
     'sort_name' => 'Име',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Дата на създаване',
     'sort_updated_at' => 'Дата на обновяване',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => 'Ако имате проблеми с бутона ":actionText" по-горе, копирайте и поставете URL адреса по-долу в уеб браузъра си:',
     'email_rights' => 'Всички права запазени',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

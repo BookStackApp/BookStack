@@ -9,6 +9,7 @@ use BookStack\Settings\SettingService;
 use DB;
 use Hash;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 use Tests\BrowserKitTest;
 
 class AuthTest extends BrowserKitTest
@@ -221,6 +222,7 @@ class AuthTest extends BrowserKitTest
 
     public function test_user_creation()
     {
+        /** @var User $user */
         $user = factory(User::class)->make();
         $adminRole = Role::getRole('admin');
 
@@ -234,8 +236,11 @@ class AuthTest extends BrowserKitTest
             ->type($user->password, '#password-confirm')
             ->press('Save')
             ->seePageIs('/settings/users')
-            ->seeInDatabase('users', $user->toArray())
+            ->seeInDatabase('users', $user->only(['name', 'email']))
             ->see($user->name);
+
+        $user->refresh();
+        $this->assertStringStartsWith(Str::slug($user->name), $user->slug);
     }
 
     public function test_user_updating()
@@ -252,6 +257,9 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/settings/users')
             ->seeInDatabase('users', ['id' => $user->id, 'name' => 'Barry Scott', 'password' => $password])
             ->notSeeInDatabase('users', ['name' => $user->name]);
+
+        $user->refresh();
+        $this->assertStringStartsWith(Str::slug($user->name), $user->slug);
     }
 
     public function test_user_password_update()

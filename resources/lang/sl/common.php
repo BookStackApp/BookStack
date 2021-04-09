@@ -9,7 +9,7 @@ return [
     'confirm' => 'Potrdi',
     'back' => 'Nazaj',
     'save' => 'Shrani',
-    'continue' => 'Nadaljuj',
+    'continue' => 'Naprej',
     'select' => 'Izberi',
     'toggle_all' => 'Vklopi vse',
     'more' => 'Več',
@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Razvrsti naraščajoče',
     'sort_descending' => 'Razvrsti padajoče',
     'sort_name' => 'Ime',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Datum nastanka',
     'sort_updated_at' => 'Datum posodobitve',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => 'V kolikor imate težave s klikom na gumb ":actionText", kopirajte in prilepite spodnjo povezavo v vaš brskalnik:',
     'email_rights' => 'Vse pravice pridržane',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Pravilnik o zasebnosti',
+    'terms_of_service' => 'Pogoji uporabe',
 ];

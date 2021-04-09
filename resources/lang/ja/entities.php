@@ -60,6 +60,7 @@ return [
     'search_permissions_set' => '権限が設定されている',
     'search_created_by_me' => '自分が作成した',
     'search_updated_by_me' => '自分が更新した',
+    'search_owned_by_me' => 'Owned by me',
     'search_date_options' => 'Date Options',
     'search_updated_before' => '以前に更新',
     'search_updated_after' => '以降に更新',

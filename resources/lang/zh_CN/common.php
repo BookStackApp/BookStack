@@ -47,6 +47,7 @@ return [
     'sort_ascending' => '升序',
     'sort_descending' => '降序',
     'sort_name' => '名称',
+    'sort_default' => '默认',
     'sort_created_at' => '创建时间',
     'sort_updated_at' => '更新时间',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => '如果您无法点击“:actionText”按钮，请将下面的网址复制到您的浏览器中打开：',
     'email_rights' => '版权所有',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => '隐私政策',
+    'terms_of_service' => '服务条款',
 ];

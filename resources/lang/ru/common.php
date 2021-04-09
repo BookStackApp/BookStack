@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'По возрастанию',
     'sort_descending' => 'По убыванию',
     'sort_name' => 'По имени',
+    'sort_default' => 'По умолчанию',
     'sort_created_at' => 'По дате создания',
     'sort_updated_at' => 'По дате обновления',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => 'Если у вас возникли проблемы с нажатием кнопки \':actionText\', то скопируйте и вставьте указанный URL-адрес в свой браузер:',
     'email_rights' => 'Все права защищены',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Политика конфиденциальности',
+    'terms_of_service' => 'Условия использования',
 ];

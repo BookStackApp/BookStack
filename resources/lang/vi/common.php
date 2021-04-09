@@ -47,6 +47,7 @@ return [
     'sort_ascending' => 'Sắp xếp tăng dần',
     'sort_descending' => 'Sắp xếp giảm dần',
     'sort_name' => 'Tên',
+    'sort_default' => 'Default',
     'sort_created_at' => 'Ngày Tạo',
     'sort_updated_at' => 'Ngày cập nhật',
 
@@ -77,4 +78,9 @@ return [
     // Email Content
     'email_action_help' => 'Nếu bạn đang có vấn đề trong việc bấm nút ":actionText", sao chép và dán địa chỉ URL dưới đây vào trình duyệt web:',
     'email_rights' => 'Bản quyền đã được bảo hộ',
+
+    // Footer Link Options
+    // Not directly used but available for convenience to users.
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

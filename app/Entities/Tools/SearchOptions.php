@@ -137,5 +137,4 @@ class SearchOptions
 
         return $string;
     }
-
 }

@@ -78,7 +78,6 @@ return [
         'string'  => ':attribute phải có tối thiểu :min ký tự.',
         'array'   => ':attribute phải có tối thiểu :min mục.',
     ],
-    'no_double_extension'  => ':attribute chỉ được có một định dạng mở rộng duy nhất.',
     'not_in'               => ':attribute đã chọn không hợp lệ.',
     'not_regex'            => 'Định dạng của :attribute không hợp lệ.',
     'numeric'              => ':attribute phải là một số.',
