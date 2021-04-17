@@ -39,7 +39,8 @@
 
             <table class="table">
                 <tr>
-                    <th width="50%">{{ trans('settings.recycle_bin_deleted_item') }}</th>
+                    <th width="30%">{{ trans('settings.recycle_bin_deleted_item') }}</th>
+                    <th width="20%">{{ trans('settings.recycle_bin_deleted_parent') }}</th>
                     <th width="20%">{{ trans('settings.recycle_bin_deleted_by') }}</th>
                     <th width="15%">{{ trans('settings.recycle_bin_deleted_at') }}</th>
                     <th width="15%"></th>
@@ -74,6 +75,16 @@
                         <div class="pl-xl block inline">
                             <div class="text-page">
                                 @icon('page') {{ trans_choice('entities.x_pages', $deletion->deletable->pages()->withTrashed()->count()) }}
+                            </div>
+                        </div>
+                        @endif
+                    </td>
+                    <td>
+                        @if($deletion->deletable->getParent())
+                        <div class="table-entity-item">
+                            <span role="presentation" class="icon text-{{$deletion->deletable->getParent()->getType()}}">@icon($deletion->deletable->getParent()->getType())</span>
+                            <div class="text-{{ $deletion->deletable->getParent()->getType() }}">
+                                {{ $deletion->deletable->getParent()->name }}
                             </div>
                         </div>
                         @endif
