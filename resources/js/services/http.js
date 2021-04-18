@@ -149,8 +149,8 @@ async function getResponseContent(response) {
         return null;
     }
 
-    const responseContentType = response.headers.get('Content-Type');
-    const subType = responseContentType.split('/').pop();
+    const responseContentType = response.headers.get('Content-Type') || '';
+    const subType = responseContentType.split(';')[0].split('/').pop();
 
     if (subType === 'javascript' || subType === 'json') {
         return await response.json();
