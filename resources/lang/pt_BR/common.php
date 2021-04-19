@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Caminho',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Menu de Perfil',
     'view_profile' => 'Visualizar Perfil',
     'edit_profile' => 'Editar Perfil',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informações',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Conteúdo',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Se você estiver tendo problemas ao clicar o botão ":actionText", copie e cole a URL abaixo no seu navegador:',
