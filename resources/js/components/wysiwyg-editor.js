@@ -152,8 +152,8 @@ function codePlugin() {
             return;
         }
 
-        let lang = selectedNode.hasAttribute('data-lang') ? selectedNode.getAttribute('data-lang') : '';
-        let currentCode = selectedNode.querySelector('textarea').textContent;
+        const lang = selectedNode.hasAttribute('data-lang') ? selectedNode.getAttribute('data-lang') : '';
+        const currentCode = selectedNode.querySelector('textarea').textContent;
 
         window.components.first('code-editor').open(currentCode, lang, (code, lang) => {
             const editorElem = selectedNode.querySelector('.CodeMirror');
@@ -225,22 +225,23 @@ function codePlugin() {
                 return elem.contentEditable !== "false";
             });
 
-            if (!codeSamples.length) return;
-            editor.undoManager.transact(function () {
-                codeSamples.each((index, elem) => {
-                    Code.wysiwygView(elem);
-                });
+            codeSamples.each((index, elem) => {
+                Code.wysiwygView(elem);
             });
         }
 
         editor.on('init', function() {
             // Parse code mirror instances on init, but delay a little so this runs after
             // initial styles are fetched into the editor.
-            parseCodeMirrorInstances();
+            editor.undoManager.transact(function () {
+                parseCodeMirrorInstances();
+            });
             // Parsed code mirror blocks when content is set but wait before setting this handler
             // to avoid any init 'SetContent' events.
             setTimeout(() => {
-                editor.on('SetContent', parseCodeMirrorInstances);
+                editor.on('SetContent', () => {
+                    setTimeout(parseCodeMirrorInstances, 100);
+                });
             }, 200);
         });
 

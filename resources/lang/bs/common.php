@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Navigacijske stavke',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Meni profila',
     'view_profile' => 'Pogledaj profil',
     'edit_profile' => 'Izmjeni profil',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informacije',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Sadržaj',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Ukoliko imate poteškoća sa pritiskom na ":actionText" dugme, kopirajte i zaljepite URL koji se nalazi ispod u vaš web pretraživač:',

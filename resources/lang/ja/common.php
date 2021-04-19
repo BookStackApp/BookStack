@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Breadcrumb',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Profile Menu',
     'view_profile' => 'プロフィール表示',
     'edit_profile' => 'プロフィール編集',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Content',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => '":actionText" をクリックできない場合、以下のURLをコピーしブラウザで開いてください:',

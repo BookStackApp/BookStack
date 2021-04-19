@@ -109,6 +109,7 @@ class ImageService
             $storage->put($fullPath, $imageData);
             $storage->setVisibility($fullPath, 'public');
         } catch (Exception $e) {
+            \Log::error('Error when attempting image upload:' . $e->getMessage());
             throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $fullPath]));
         }
 
