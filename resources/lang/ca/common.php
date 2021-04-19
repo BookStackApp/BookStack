@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Ruta de navegació',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Menú del perfil',
     'view_profile' => 'Mostra el perfil',
     'edit_profile' => 'Edita el perfil',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informació',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Contingut',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Si teniu problemes per fer clic al botó ":actionText", copieu i enganxeu l\'URL següent al vostre navegador web:',

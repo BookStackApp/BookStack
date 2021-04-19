@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'شريط التنقل',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'قائمة ملف التعريف',
     'view_profile' => 'عرض الملف الشخصي',
     'edit_profile' => 'تعديل الملف الشخصي',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'معلومات',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'المحتوى',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'إذا واجهتكم مشكلة بضغط زر ":actionText" فبإمكانكم نسخ الرابط أدناه ولصقه بالمتصفح:',

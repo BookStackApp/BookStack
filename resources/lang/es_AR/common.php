@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'Orden Ascendente',
     'sort_descending' => 'Orden Descendente',
     'sort_name' => 'Nombre',
-    'sort_default' => 'Default',
+    'sort_default' => 'Por defecto',
     'sort_created_at' => 'Fecha de creación',
     'sort_updated_at' => 'Fecha de actualización',
 
@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Miga de Pan',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Menu del Perfil',
     'view_profile' => 'Ver Perfil',
     'edit_profile' => 'Editar Perfil',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Información',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Contenido',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Si está teniendo problemas haga click en el botón ":actionText", copie y pegue la siguiente URL en su navegador web:',

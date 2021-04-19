@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Brødkrumme',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Profilmenu',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Redigér Profil',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Indhold',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Hvis du har problemer med at trykke på ":actionText" knappen, prøv at kopiere og indsætte linket herunder ind i din webbrowser:',

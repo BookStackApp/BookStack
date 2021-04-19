@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Brotkrumen',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Profilmenü',
     'view_profile' => 'Profil ansehen',
     'edit_profile' => 'Profil bearbeiten',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Inhalt',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Sollte es beim Anklicken der Schaltfläche ":action_text" Probleme geben, öffnen Sie folgende URL in Ihrem Browser:',

@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Navigācija',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Profila izvēlne',
     'view_profile' => 'Apskatīt profilu',
     'edit_profile' => 'Rediģēt profilu',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informācija',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Saturs',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Ja ir problēmas noklikšķināt ":actionText" pogu, nokopē un ievieto saiti savā interneta pārlūkā:',

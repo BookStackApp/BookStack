@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Navigazione',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Menu del profilo',
     'view_profile' => 'Visualizza Profilo',
     'edit_profile' => 'Modifica Profilo',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Contenuto',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Se hai problemi nel cliccare il pulsante ":actionText", copia e incolla lo URL sotto nel tuo browser:',

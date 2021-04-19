@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Kruimelpad',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Profiel menu',
     'view_profile' => 'Profiel Weergeven',
     'edit_profile' => 'Profiel Bewerken',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Inhoud',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Als je de knop ":actionText" niet werkt, kopieer en plak de onderstaande URL in je web browser:',
