@@ -1,21 +1,31 @@
 @extends('base')
 
 @section('body-class', 'tri-layout')
+@section('content-components', 'tri-layout')
 
 @section('content')
 
-    <div class="tri-layout-mobile-tabs text-primary print-hidden">
+    <div class="tri-layout-mobile-tabs print-hidden">
         <div class="grid half no-break no-gap">
-            <div class="tri-layout-mobile-tab px-m py-s" tri-layout-mobile-tab="info">
+            <button type="button"
+                    refs="tri-layout@tab"
+                    data-tab="info"
+                    aria-label="{{ trans('common.tab_info_label') }}"
+                    class="tri-layout-mobile-tab px-m py-m text-primary">
                 {{ trans('common.tab_info') }}
-            </div>
-            <div class="tri-layout-mobile-tab px-m py-s active" tri-layout-mobile-tab="content">
+            </button>
+            <button type="button"
+                    refs="tri-layout@tab"
+                    data-tab="content"
+                    aria-label="{{ trans('common.tab_content_label') }}"
+                    aria-selected="true"
+                    class="tri-layout-mobile-tab px-m py-m text-primary active">
                 {{ trans('common.tab_content') }}
-            </div>
+            </button>
         </div>
     </div>
 
-    <div class="tri-layout-container" tri-layout @yield('container-attrs') >
+    <div refs="tri-layout@container" class="tri-layout-container" @yield('container-attrs') >
 
         <div class="tri-layout-left print-hidden pt-m" id="sidebar">
             <aside class="tri-layout-left-contents">

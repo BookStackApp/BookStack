@@ -191,6 +191,11 @@ header .search-box {
       @include lightDark(color, #000, #fff);
       text-decoration: none;
     }
+    &:focus {
+      @include lightDark(background-color, #eee, #333);
+      outline-color: var(--color-primary);
+      color: var(--color-primary);
+    }
   }
   header .dropdown-container {
     display: block;
@@ -225,7 +230,7 @@ header .search-box {
   &:first-child {
     border-inline-end: 1px solid #DDD;
   }
-  &.active {
+  &[aria-selected="true"] {
     border-bottom-color: currentColor;
   }
 }
