@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Drobečková navigace',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Nabídka profilu',
     'view_profile' => 'Zobrazit profil',
     'edit_profile' => 'Upravit profil',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informace',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Obsah',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Pokud se vám nedaří kliknout na tlačítko „:actionText“, zkopírujte a vložte níže uvedenou URL do vašeho webového prohlížeče:',
