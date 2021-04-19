@@ -12,6 +12,7 @@ class DropDown {
         this.menu = this.$refs.menu;
         this.toggle = this.$refs.toggle;
         this.moveMenu = this.$opts.moveMenu;
+        this.bubbleEscapes = this.$opts.bubbleEscapes === 'true';
 
         this.direction = (document.dir === 'rtl') ? 'right' : 'left';
         this.body = document.body;
@@ -137,7 +138,9 @@ class DropDown {
             } else if (event.key === 'Escape') {
                 this.hide();
                 this.toggle.focus();
-                event.stopPropagation();
+                if (!this.bubbleEscapes) {
+                    event.stopPropagation();
+                }
             }
         };
         this.container.addEventListener('keydown', keyboardNavigation);

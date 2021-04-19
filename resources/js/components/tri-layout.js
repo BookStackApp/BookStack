@@ -1,8 +1,9 @@
 
 class TriLayout {
 
-    constructor(elem) {
-        this.elem = elem;
+    setup() {
+        this.container = this.$refs.container;
+        this.tabs = this.$manyRefs.tab;
 
         this.lastLayoutType = 'none';
         this.onDestroy = null;
@@ -43,13 +44,12 @@ class TriLayout {
     }
 
     setupMobile() {
-        const layoutTabs = document.querySelectorAll('[tri-layout-mobile-tab]');
-        for (let tab of layoutTabs) {
+        for (const tab of this.tabs) {
             tab.addEventListener('click', this.mobileTabClick);
         }
 
         this.onDestroy = () => {
-            for (let tab of layoutTabs) {
+            for (const tab of this.tabs) {
                 tab.removeEventListener('click', this.mobileTabClick);
             }
         }
@@ -65,7 +65,7 @@ class TriLayout {
      * @param event
      */
     mobileTabClick(event) {
-        const tab = event.target.getAttribute('tri-layout-mobile-tab');
+        const tab = event.target.dataset.tab;
         this.showTab(tab);
     }
 
@@ -79,21 +79,21 @@ class TriLayout {
 
     /**
      * Show the given tab
-     * @param tabName
+     * @param {String} tabName
+     * @param {Boolean }scroll
      */
     showTab(tabName, scroll = true) {
         this.scrollCache[this.lastTabShown] = document.documentElement.scrollTop;
 
         // Set tab status
-        const tabs = document.querySelectorAll('.tri-layout-mobile-tab');
-        for (let tab of tabs) {
-            const isActive = (tab.getAttribute('tri-layout-mobile-tab') === tabName);
-            tab.classList.toggle('active', isActive);
+        for (const tab of this.tabs) {
+            const isActive = (tab.dataset.tab === tabName);
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
         }
 
         // Toggle section
         const showInfo = (tabName === 'info');
-        this.elem.classList.toggle('show-info', showInfo);
+        this.container.classList.toggle('show-info', showInfo);
 
         // Set the scroll position from cache
         if (scroll) {
