@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Навігація',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Меню профілю',
     'view_profile' => 'Переглянути профіль',
     'edit_profile' => 'Редагувати профіль',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Інфо',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Вміст',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Якщо у вас виникають проблеми при натисканні кнопки ":actionText", скопіюйте та вставте URL у свій веб-браузер:',

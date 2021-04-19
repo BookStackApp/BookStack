@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Breadcrumb',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Profile Menu',
     'view_profile' => 'Tampilkan profil',
     'edit_profile' => 'Sunting Profil',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informasi',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Konten',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Jika Anda mengalami masalah saat mengklik tombol ":actionText", salin dan tempel URL di bawah ini ke browser web Anda:',

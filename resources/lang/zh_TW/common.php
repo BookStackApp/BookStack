@@ -65,6 +65,7 @@ return [
     'breadcrumb' => '頁面路徑',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => '個人資料選單',
     'view_profile' => '檢視個人資料',
     'edit_profile' => '編輯個人資料',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => '資訊',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => '內容',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => '如果您無法點擊 ":actionText" 按鈕，請將下方的網址複製並貼上到您的網路瀏覽器中：',
