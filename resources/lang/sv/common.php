@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Brödsmula',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Profilmeny',
     'view_profile' => 'Visa profil',
     'edit_profile' => 'Redigera profil',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Information',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Innehåll',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Om du har problem, klicka på knappen ":actionText", och kopiera och klistra in den här adressen i din webbläsare:',
