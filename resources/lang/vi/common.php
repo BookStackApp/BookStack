@@ -65,6 +65,7 @@ return [
     'breadcrumb' => 'Đường dẫn liên kết',
 
     // Header
+    'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Menu Hồ sơ',
     'view_profile' => 'Xem Hồ sơ',
     'edit_profile' => 'Sửa Hồ sơ',
@@ -73,7 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Thông tin',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => 'Nội dung',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'Nếu bạn đang có vấn đề trong việc bấm nút ":actionText", sao chép và dán địa chỉ URL dưới đây vào trình duyệt web:',
