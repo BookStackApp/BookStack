@@ -202,6 +202,7 @@ class AttachmentService
         try {
             $storage->put($attachmentPath, $attachmentData);
         } catch (Exception $e) {
+            \Log::error('Error when attempting file upload:' . $e->getMessage());
             throw new FileUploadException(trans('errors.path_not_writable', ['filePath' => $attachmentPath]));
         }
 
