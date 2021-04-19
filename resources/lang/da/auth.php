@@ -6,8 +6,8 @@
  */
 return [
 
-    'failed' => 'Det indtastede stemmer ikke overens med vores registrering.',
-    'throttle' => 'For mange mislykkede loginforsøg. Prøv igen om :seconds seconds.',
+    'failed' => 'Dee indtastede brugeroplysninger stemmer ikke overens med vores registreringer.',
+    'throttle' => 'For mange mislykkede loginforsøg. Prøv igen om :seconds sekunder.',
 
     // Login & Register
     'sign_up' => 'Registrér',
