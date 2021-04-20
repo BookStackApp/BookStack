@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Indlæse mere',
     'image_image_name' => 'Billednavn',
     'image_delete_used' => 'Dette billede er brugt på siderne nedenfor.',
-    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
+    'image_delete_confirm_text' => 'Er du sikker på at du vil slette dette billede?',
     'image_select_image' => 'Vælg billede',
     'image_dropzone' => 'Træk-og-slip billede eller klik her for at uploade',
     'images_deleted' => 'Billede slettet',
@@ -29,6 +29,6 @@ return [
     'code_editor' => 'Rediger kode',
     'code_language' => 'Kodesprog',
     'code_content' => 'Kodeindhold',
-    'code_session_history' => 'Session History',
+    'code_session_history' => 'Sessionshistorik',
     'code_save' => 'Gem kode',
 ];

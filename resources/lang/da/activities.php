@@ -20,7 +20,7 @@ return [
     'chapter_create'              => 'oprettede kapitel',
     'chapter_create_notification' => 'Kapitel blev oprettet',
     'chapter_update'              => 'opdaterede kapitel',
-    'chapter_update_notification' => 'Kapitel blev opdateret',
+    'chapter_update_notification' => 'Kapitlet blev opdateret',
     'chapter_delete'              => 'slettede kapitel',
     'chapter_delete_notification' => 'Kapitel blev slettet',
     'chapter_move'                => 'flyttede kapitel',
@@ -45,5 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'kommenterede til',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'Tilladelser opdateret',
 ];

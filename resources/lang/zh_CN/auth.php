@@ -16,7 +16,7 @@ return [
     'sign_up_with' => '注册:socialDriver',
     'logout' => '注销',
 
-    'name' => '姓名',
+    'name' => '名称',
     'username' => '用户名',
     'email' => 'Email地址',
     'password' => '密码',

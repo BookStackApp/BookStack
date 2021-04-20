@@ -6,8 +6,8 @@
  */
 return [
 
-    'failed' => 'Det indtastede stemmer ikke overens med vores registrering.',
-    'throttle' => 'For mange mislykkede loginforsøg. Prøv igen om :seconds seconds.',
+    'failed' => 'Dee indtastede brugeroplysninger stemmer ikke overens med vores registreringer.',
+    'throttle' => 'For mange mislykkede loginforsøg. Prøv igen om :seconds sekunder.',
 
     // Login & Register
     'sign_up' => 'Registrér',
@@ -21,11 +21,11 @@ return [
     'email' => 'E-mail',
     'password' => 'Adgangskode',
     'password_confirm' => 'Bekræft adgangskode',
-    'password_hint' => 'Skal være på mindst 8 karakterer',
+    'password_hint' => 'Skal være på mindst 7 karakterer',
     'forgot_password' => 'Glemt Adgangskode?',
-    'remember_me' => 'Husk Mig',
+    'remember_me' => 'Husk mig',
     'ldap_email_hint' => 'Angiv venligst din kontos e-mail.',
-    'create_account' => 'Opret Konto',
+    'create_account' => 'Opret konto',
     'already_have_account' => 'Har du allerede en konto?',
     'dont_have_account' => 'Har du ikke en konto?',
     'social_login' => 'Social Log ind',
