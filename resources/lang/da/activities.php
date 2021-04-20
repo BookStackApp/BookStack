@@ -6,11 +6,11 @@
 return [
 
     // Pages
-    'page_create'                 => 'Side oprettet',
+    'page_create'                 => 'oprettede side',
     'page_create_notification'    => 'Siden blev oprettet',
-    'page_update'                 => 'Side opdateret',
+    'page_update'                 => 'opdaterede side',
     'page_update_notification'    => 'Siden blev opdateret',
-    'page_delete'                 => 'Side slettet',
+    'page_delete'                 => 'slettede side',
     'page_delete_notification'    => 'Siden blev slettet',
     'page_restore'                => 'gendannede side',
     'page_restore_notification'   => 'Siden blev gendannet',
@@ -20,7 +20,7 @@ return [
     'chapter_create'              => 'oprettede kapitel',
     'chapter_create_notification' => 'Kapitel blev oprettet',
     'chapter_update'              => 'opdaterede kapitel',
-    'chapter_update_notification' => 'Kapitel blev opdateret',
+    'chapter_update_notification' => 'Kapitlet blev opdateret',
     'chapter_delete'              => 'slettede kapitel',
     'chapter_delete_notification' => 'Kapitel blev slettet',
     'chapter_move'                => 'flyttede kapitel',
