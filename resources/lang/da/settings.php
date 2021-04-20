@@ -114,11 +114,11 @@ return [
     'audit_event_filter_no_filter' => 'Intet filter',
     'audit_deleted_item' => 'Element slettet',
     'audit_deleted_item_name' => 'Navn: :name',
-    'audit_table_user' => 'User',
-    'audit_table_event' => 'Event',
-    'audit_table_related' => 'Related Item or Detail',
-    'audit_table_date' => 'Activity Date',
-    'audit_date_from' => 'Date Range From',
+    'audit_table_user' => 'Bruger',
+    'audit_table_event' => 'Hændelse',
+    'audit_table_related' => 'Relateret element eller detalje',
+    'audit_table_date' => 'Aktivitetsdato',
+    'audit_date_from' => 'Datointerval fra',
     'audit_date_to' => 'Date Range To',
 
     // Role Settings
