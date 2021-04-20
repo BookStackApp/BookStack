@@ -156,3 +156,4 @@ nikservik :: Ukrainian; Russian; Polish
 HenrijsS :: Latvian
 Pascal R-B (pborgner) :: German
 Boris (Ginfred) :: Russian
+Jonas Anker Rasmussen (jonasanker) :: Danish

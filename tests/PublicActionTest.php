@@ -8,6 +8,7 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use Illuminate\Support\Facades\View;
 
 class PublicActionTest extends TestCase
 {
@@ -115,10 +116,12 @@ class PublicActionTest extends TestCase
     public function test_content_not_listed_on_404_for_public_users()
     {
         $page = Page::query()->first();
+        $page->fill(['name' => 'my testing random unique page name'])->save();
         $this->asAdmin()->get($page->getUrl()); // Fake visit to show on recents
         $resp = $this->get('/cats/dogs/hippos');
         $resp->assertStatus(404);
         $resp->assertSee($page->name);
+        View::share('pageTitle', '');
 
         Auth::logout();
         $resp = $this->get('/cats/dogs/hippos');

@@ -89,7 +89,7 @@ return [
     'required_without'     => ':attribute skal udfyldes når :values ikke er udfyldt.',
     'required_without_all' => ':attribute skal udfyldes når ingen af :values er udfyldt.',
     'same'                 => ':attribute og :other skal være ens.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'Det angivne link kan være usikkert.',
     'size'                 => [
         'numeric' => ':attribute skal være :size.',
         'file'    => ':attribute skal være :size kilobytes.',

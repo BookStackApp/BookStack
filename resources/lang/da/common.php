@@ -33,7 +33,7 @@ return [
     'copy' => 'Kopier',
     'reply' => 'Besvar',
     'delete' => 'Slet',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'Bekræft sletning',
     'search' => 'Søg',
     'search_clear' => 'Ryd søgning',
     'reset' => 'Nulstil',
@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'Sorter stigende',
     'sort_descending' => 'Sorter faldende',
     'sort_name' => 'Navn',
-    'sort_default' => 'Default',
+    'sort_default' => 'Standard',
     'sort_created_at' => 'Oprettelsesdato',
     'sort_updated_at' => 'Opdateringsdato',
 
@@ -65,7 +65,7 @@ return [
     'breadcrumb' => 'Brødkrumme',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Udvid header menu',
     'profile_menu' => 'Profilmenu',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Redigér Profil',
@@ -74,9 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Faneblad: Vis sekundær information',
     'tab_content' => 'Indhold',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Faneblad: Vis primær indhold',
 
     // Email Content
     'email_action_help' => 'Hvis du har problemer med at trykke på ":actionText" knappen, prøv at kopiere og indsætte linket herunder ind i din webbrowser:',
@@ -84,6 +84,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Privatlivspolitik',
+    'terms_of_service' => 'Tjenestevilkår',
 ];

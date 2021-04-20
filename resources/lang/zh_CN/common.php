@@ -65,7 +65,7 @@ return [
     'breadcrumb' => '面包屑导航',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => '展开标头菜单',
     'profile_menu' => '个人资料',
     'view_profile' => '查看资料',
     'edit_profile' => '编辑资料',
@@ -74,9 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => '信息',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => '标签：显示次要信息',
     'tab_content' => '内容',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => '标签：显示主要内容',
 
     // Email Content
     'email_action_help' => '如果您无法点击“:actionText”按钮，请将下面的网址复制到您的浏览器中打开：',
