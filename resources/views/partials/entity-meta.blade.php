@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    @if ($entity->ownedBy && $entity->ownedBy->id !== $entity->createdBy->id)
+    @if ($entity->ownedBy && $entity->owned_by !== $entity->created_by)
         <div>
             @icon('user'){!! trans('entities.meta_owned_name', [
             'user' => "<a href='{$entity->ownedBy->getProfileUrl()}'>".e($entity->ownedBy->name). "</a>"

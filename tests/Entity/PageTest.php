@@ -6,6 +6,22 @@ use Tests\TestCase;
 
 class PageTest extends TestCase
 {
+
+    public function test_page_view_when_creator_is_deleted_but_owner_exists()
+    {
+        $page = Page::query()->first();
+        $user = $this->getViewer();
+        $owner = $this->getEditor();
+        $page->created_by = $user->id;
+        $page->owned_by = $owner->id;
+        $page->save();
+        $user->delete();
+
+        $resp = $this->asAdmin()->get($page->getUrl());
+        $resp->assertStatus(200);
+        $resp->assertSeeText('Owned by ' . $owner->name);
+    }
+
     public function test_page_creation_with_markdown_content()
     {
         $this->setSettings(['app-editor' => 'markdown']);
