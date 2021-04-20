@@ -6,11 +6,11 @@
 return [
 
     // Pages
-    'page_create'                 => 'oprettede side',
+    'page_create'                 => 'Side oprettet',
     'page_create_notification'    => 'Siden blev oprettet',
-    'page_update'                 => 'opdaterede side',
+    'page_update'                 => 'Side opdateret',
     'page_update_notification'    => 'Siden blev opdateret',
-    'page_delete'                 => 'slettede side',
+    'page_delete'                 => 'Side slettet',
     'page_delete_notification'    => 'Siden blev slettet',
     'page_restore'                => 'gendannede side',
     'page_restore_notification'   => 'Siden blev gendannet',
@@ -45,5 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'kommenterede til',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'Tilladelser opdateret',
 ];
