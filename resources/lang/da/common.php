@@ -65,7 +65,7 @@ return [
     'breadcrumb' => 'Brødkrumme',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Udvid header menu',
     'profile_menu' => 'Profilmenu',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Redigér Profil',
