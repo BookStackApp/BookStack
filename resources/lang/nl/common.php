@@ -33,7 +33,7 @@ return [
     'copy' => 'Kopiëren',
     'reply' => 'Beantwoorden',
     'delete' => 'Verwijder',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'Verwijdering bevestigen',
     'search' => 'Zoek',
     'search_clear' => 'Zoekopdracht wissen',
     'reset' => 'Resetten',
@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'Sorteer oplopend',
     'sort_descending' => 'Sorteer teruglopend',
     'sort_name' => 'Naam',
-    'sort_default' => 'Default',
+    'sort_default' => 'Standaard',
     'sort_created_at' => 'Aanmaakdatum',
     'sort_updated_at' => 'Gewijzigd op',
 
@@ -65,7 +65,7 @@ return [
     'breadcrumb' => 'Kruimelpad',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Header menu uitvouwen',
     'profile_menu' => 'Profiel menu',
     'view_profile' => 'Profiel Weergeven',
     'edit_profile' => 'Profiel Bewerken',
@@ -74,9 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tabblad: Toon secundaire informatie',
     'tab_content' => 'Inhoud',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tabblad: Primaire inhoud tonen',
 
     // Email Content
     'email_action_help' => 'Als je de knop ":actionText" niet werkt, kopieer en plak de onderstaande URL in je web browser:',
@@ -84,6 +84,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Privacybeleid',
+    'terms_of_service' => 'Algemene voorwaarden',
 ];
