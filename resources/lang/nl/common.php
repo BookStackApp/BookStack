@@ -11,7 +11,7 @@ return [
     'save' => 'Opslaan',
     'continue' => 'Doorgaan',
     'select' => 'Kies',
-    'toggle_all' => 'Toggle Alles',
+    'toggle_all' => 'Toggle alles',
     'more' => 'Meer',
 
     // Form Labels
@@ -19,12 +19,12 @@ return [
     'description' => 'Beschrijving',
     'role' => 'Rol',
     'cover_image' => 'Omslagfoto',
-    'cover_image_description' => 'Deze afbeelding moet ongeveer 300x170px zijn.',
+    'cover_image_description' => 'Deze afbeelding moet ongeveer 440x250px zijn.',
     
     // Actions
     'actions' => 'Acties',
     'view' => 'Bekijk',
-    'view_all' => 'Bekijk Alle',
+    'view_all' => 'Bekijk alle',
     'create' => 'Aanmaken',
     'update' => 'Bijwerken',
     'edit' => 'Bewerk',
@@ -43,9 +43,9 @@ return [
 
     // Sort Options
     'sort_options' => 'Sorteeropties',
-    'sort_direction_toggle' => 'Sorteer richting',
+    'sort_direction_toggle' => 'Sorteerrichting',
     'sort_ascending' => 'Sorteer oplopend',
-    'sort_descending' => 'Sorteer teruglopend',
+    'sort_descending' => 'Sorteer aflopend',
     'sort_name' => 'Naam',
     'sort_default' => 'Standaard',
     'sort_created_at' => 'Aanmaakdatum',
@@ -53,33 +53,33 @@ return [
 
     // Misc
     'deleted_user' => 'Verwijderde gebruiker',
-    'no_activity' => 'Geen activiteiten',
+    'no_activity' => 'Geen activiteit om weer te geven',
     'no_items' => 'Geen items beschikbaar',
     'back_to_top' => 'Terug naar boven',
-    'toggle_details' => 'Details Weergeven',
-    'toggle_thumbnails' => 'Thumbnails Weergeven',
+    'toggle_details' => 'Details weergeven',
+    'toggle_thumbnails' => 'Thumbnails weergeven',
     'details' => 'Details',
     'grid_view' => 'Grid weergave',
-    'list_view' => 'Lijst weergave',
+    'list_view' => 'Lijstweergave',
     'default' => 'Standaard',
     'breadcrumb' => 'Kruimelpad',
 
     // Header
     'header_menu_expand' => 'Header menu uitvouwen',
     'profile_menu' => 'Profiel menu',
-    'view_profile' => 'Profiel Weergeven',
-    'edit_profile' => 'Profiel Bewerken',
-    'dark_mode' => 'Donkere Modus',
-    'light_mode' => 'Lichte Modus',
+    'view_profile' => 'Profiel weergeven',
+    'edit_profile' => 'Profiel bewerken',
+    'dark_mode' => 'Donkere modus',
+    'light_mode' => 'Lichte modus',
 
     // Layout tabs
     'tab_info' => 'Info',
     'tab_info_label' => 'Tabblad: Toon secundaire informatie',
     'tab_content' => 'Inhoud',
-    'tab_content_label' => 'Tabblad: Primaire inhoud tonen',
+    'tab_content_label' => 'Tabblad: Toon primaire inhoud',
 
     // Email Content
-    'email_action_help' => 'Als je de knop ":actionText" niet werkt, kopieer en plak de onderstaande URL in je web browser:',
+    'email_action_help' => 'Als je de knop ":actionText" niet werkt, kopieër en plak de onderstaande URL in je web browser:',
     'email_rights' => 'Alle rechten voorbehouden',
 
     // Footer Link Options
