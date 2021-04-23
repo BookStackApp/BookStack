@@ -8,8 +8,8 @@ return [
     // Pages
     'page_create'                 => 'maakte pagina',
     'page_create_notification'    => 'Pagina Succesvol Aangemaakt',
-    'page_update'                 => 'veranderde pagina',
-    'page_update_notification'    => 'Pagina Succesvol Bijgewerkt',
+    'page_update'                 => 'wijzigde pagina',
+    'page_update_notification'    => 'Pagina succesvol bijgewerkt',
     'page_delete'                 => 'verwijderde pagina',
     'page_delete_notification'    => 'Pagina Succesvol Verwijderd',
     'page_restore'                => 'herstelde pagina',
@@ -19,7 +19,7 @@ return [
     // Chapters
     'chapter_create'              => 'maakte hoofdstuk',
     'chapter_create_notification' => 'Hoofdstuk Succesvol Aangemaakt',
-    'chapter_update'              => 'veranderde hoofdstuk',
+    'chapter_update'              => 'wijzigde hoofdstuk',
     'chapter_update_notification' => 'Hoofdstuk Succesvol Bijgewerkt',
     'chapter_delete'              => 'verwijderde hoofdstuk',
     'chapter_delete_notification' => 'Hoofdstuk Succesvol Verwijderd',
@@ -38,12 +38,12 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'maakte Boekenplank',
     'bookshelf_create_notification'    => 'Boekenplank Succesvol Aangemaakt',
-    'bookshelf_update'                 => 'veranderde boekenplank',
+    'bookshelf_update'                 => 'wijzigde boekenplank',
     'bookshelf_update_notification'    => 'Boekenplank Succesvol Bijgewerkt',
     'bookshelf_delete'                 => 'verwijderde boekenplank',
     'bookshelf_delete_notification'    => 'Boekenplank Succesvol Verwijderd',
 
     // Other
-    'commented_on'                => 'reactie op',
+    'commented_on'                => 'reageerde op',
     'permissions_update'          => 'updated permissions',
 ];
