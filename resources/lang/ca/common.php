@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'Ordre ascendent',
     'sort_descending' => 'Ordre descendent',
     'sort_name' => 'Nom',
-    'sort_default' => 'Default',
+    'sort_default' => 'Per defecte',
     'sort_created_at' => 'Data de creació',
     'sort_updated_at' => 'Data d\'actualització',
 
