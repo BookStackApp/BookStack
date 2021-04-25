@@ -7,7 +7,7 @@ return [
     // Buttons
     'cancel' => 'Cancel·la',
     'confirm' => 'D\'acord',
-    'back' => 'Endarrere',
+    'back' => 'Enrere',
     'save' => 'Desa',
     'continue' => 'Continua',
     'select' => 'Selecciona',
