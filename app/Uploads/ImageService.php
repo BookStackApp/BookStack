@@ -106,8 +106,7 @@ class ImageService
         }
 
         try {
-            $storage->put($fullPath, $imageData);
-            $storage->setVisibility($fullPath, 'public');
+            $storage->put($fullPath, $imageData, ['visibility' => 'public']);
         } catch (Exception $e) {
             \Log::error('Error when attempting image upload:' . $e->getMessage());
             throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $fullPath]));
@@ -191,8 +190,7 @@ class ImageService
 
         $thumbData = $this->resizeImage($storage->get($imagePath), $width, $height, $keepRatio);
 
-        $storage->put($thumbFilePath, $thumbData);
-        $storage->setVisibility($thumbFilePath, 'public');
+        $storage->put($thumbFilePath, $thumbData, ['visibility' => 'public']);
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 60 * 72);
 
 
