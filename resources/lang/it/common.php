@@ -19,7 +19,7 @@ return [
     'description' => 'Descrizione',
     'role' => 'Ruolo',
     'cover_image' => 'Immagine di copertina',
-    'cover_image_description' => 'Questa immagine dovrebbe essere approssimatamente 440x250px.',
+    'cover_image_description' => 'Questa immagine dovrebbe essere approssimativamente 440x250px.',
     
     // Actions
     'actions' => 'Azioni',
@@ -33,7 +33,7 @@ return [
     'copy' => 'Copia',
     'reply' => 'Rispondi',
     'delete' => 'Elimina',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'Conferma Eliminazione',
     'search' => 'Cerca',
     'search_clear' => 'Pulisci Ricerca',
     'reset' => 'Azzera',
@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'Ordine Ascendente',
     'sort_descending' => 'Ordine Discendente',
     'sort_name' => 'Nome',
-    'sort_default' => 'Default',
+    'sort_default' => 'Predefinito',
     'sort_created_at' => 'Data Creazione',
     'sort_updated_at' => 'Data Aggiornamento',
 
