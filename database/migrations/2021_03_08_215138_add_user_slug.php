@@ -15,7 +15,7 @@ class AddUserSlug extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('slug', 250);
+            $table->string('slug', 180);
         });
 
         $slugMap = [];
