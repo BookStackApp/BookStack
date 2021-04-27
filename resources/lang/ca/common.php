@@ -7,7 +7,7 @@ return [
     // Buttons
     'cancel' => 'Cancel·la',
     'confirm' => 'D\'acord',
-    'back' => 'Endarrere',
+    'back' => 'Enrere',
     'save' => 'Desa',
     'continue' => 'Continua',
     'select' => 'Selecciona',
@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'Ordre ascendent',
     'sort_descending' => 'Ordre descendent',
     'sort_name' => 'Nom',
-    'sort_default' => 'Default',
+    'sort_default' => 'Per defecte',
     'sort_created_at' => 'Data de creació',
     'sort_updated_at' => 'Data d\'actualització',
 

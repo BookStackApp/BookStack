@@ -19,7 +19,7 @@ return [
     'description' => 'Descrizione',
     'role' => 'Ruolo',
     'cover_image' => 'Immagine di copertina',
-    'cover_image_description' => 'Questa immagine dovrebbe essere approssimatamente 440x250px.',
+    'cover_image_description' => 'Questa immagine dovrebbe essere approssimativamente 440x250px.',
     
     // Actions
     'actions' => 'Azioni',
@@ -33,7 +33,7 @@ return [
     'copy' => 'Copia',
     'reply' => 'Rispondi',
     'delete' => 'Elimina',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => 'Conferma Eliminazione',
     'search' => 'Cerca',
     'search_clear' => 'Pulisci Ricerca',
     'reset' => 'Azzera',
@@ -47,7 +47,7 @@ return [
     'sort_ascending' => 'Ordine Ascendente',
     'sort_descending' => 'Ordine Discendente',
     'sort_name' => 'Nome',
-    'sort_default' => 'Default',
+    'sort_default' => 'Predefinito',
     'sort_created_at' => 'Data Creazione',
     'sort_updated_at' => 'Data Aggiornamento',
 
@@ -65,8 +65,8 @@ return [
     'breadcrumb' => 'Navigazione',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
-    'profile_menu' => 'Menu del profilo',
+    'header_menu_expand' => 'Espandi Menù Intestazione',
+    'profile_menu' => 'Menù del profilo',
     'view_profile' => 'Visualizza Profilo',
     'edit_profile' => 'Modifica Profilo',
     'dark_mode' => 'Modalità Scura',
@@ -74,9 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tab: Mostra Informazioni Secondarie',
     'tab_content' => 'Contenuto',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tab: Mostra Contenuto Principale',
 
     // Email Content
     'email_action_help' => 'Se hai problemi nel cliccare il pulsante ":actionText", copia e incolla lo URL sotto nel tuo browser:',
@@ -84,6 +84,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Norme sulla privacy',
+    'terms_of_service' => 'Condizioni del Servizio',
 ];

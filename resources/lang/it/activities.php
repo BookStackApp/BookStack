@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'ha creato la pagina',
+    'page_create'                 => 'pagina creata',
     'page_create_notification'    => 'Pagina Creata Correttamente',
     'page_update'                 => 'ha aggiornato la pagina',
     'page_update_notification'    => 'Pagina Aggiornata Correttamente',
@@ -45,5 +45,5 @@ return [
 
     // Other
     'commented_on'                => 'ha commentato in',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'autorizzazioni aggiornate',
 ];
