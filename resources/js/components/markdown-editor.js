@@ -1,5 +1,6 @@
 import MarkdownIt from "markdown-it";
 import mdTasksLists from 'markdown-it-task-lists';
+import markdownItMermaid from "@liradb2000/markdown-it-mermaid";
 import code from '../services/code';
 import Clipboard from "../services/clipboard";
 import {debounce} from "../services/util";
@@ -17,6 +18,7 @@ class MarkdownEditor {
 
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
+        this.markdown.use(markdownItMermaid);
 
         this.display = this.elem.querySelector('.markdown-display');
 

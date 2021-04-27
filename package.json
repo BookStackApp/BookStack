@@ -28,6 +28,7 @@
     "dropzone": "^5.9.2",
     "markdown-it": "^11.0.1",
     "markdown-it-task-lists": "^2.1.1",
+    "@liradb2000/markdown-it-mermaid": "^0.4.2",
     "sortablejs": "^1.13.0"
   }
 }
