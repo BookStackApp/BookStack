@@ -14,7 +14,7 @@ class AddRoleExternalAuthId extends Migration
     public function up()
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->string('external_auth_id', 200)->default('');
+            $table->string('external_auth_id', 180)->default('');
             $table->index('external_auth_id');
         });
     }
