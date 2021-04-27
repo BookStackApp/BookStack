@@ -1,6 +1,9 @@
 <?php namespace Tests;
 
+use BookStack\Auth\Role;
+use BookStack\Auth\User;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Page;
 
 class HomepageTest extends TestCase
 {
@@ -140,5 +143,15 @@ class HomepageTest extends TestCase
         $homeVisit = $this->get('/');
         $homeVisit->assertElementContains('.content-wrap', $shelf->name);
         $homeVisit->assertElementContains('.content-wrap', $book->name);
+    }
+
+    public function test_new_users_dont_have_any_recently_viewed()
+    {
+        $user = factory(User::class)->create();
+        $viewRole = Role::getRole('Viewer');
+        $user->attachRole($viewRole);
+
+        $homeVisit = $this->actingAs($user)->get('/');
+        $homeVisit->assertElementContains('#recently-viewed', 'You have not viewed any pages');
     }
 }

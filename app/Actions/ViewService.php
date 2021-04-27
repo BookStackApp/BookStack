@@ -96,6 +96,7 @@ class ViewService
         /** @var Entity $instance */
         foreach ($this->entityProvider->all() as $name => $instance) {
             $items = $instance::visible()->withLastView()
+                ->having('last_viewed_at', '>', 0)
                 ->orderBy('last_viewed_at', 'desc')
                 ->skip($count * ($page - 1))
                 ->take($count)
