@@ -6,8 +6,8 @@
  */
 return [
 
-    'failed' => 'Les credencials no coincideixen amb les que tenim emmagatzemades.',
-    'throttle' => 'Massa intents d\'iniciar la sessió. Torneu-ho a provar d\'aquí a :seconds segons.',
+    'failed' => 'Les credencials no coincideixen amb les que hi ha emmagatzemades.',
+    'throttle' => 'Massa intents d\'inici de sessió. Torna-ho a provar d\'aquí a :seconds segons.',
 
     // Login & Register
     'sign_up' => 'Registra-m\'hi',
@@ -28,7 +28,7 @@ return [
     'create_account' => 'Crea el compte',
     'already_have_account' => 'Ja teniu un compte?',
     'dont_have_account' => 'No teniu cap compte?',
-    'social_login' => 'Inici de sessió social',
+    'social_login' => 'Inici de sessió amb xarxes social',
     'social_registration' => 'Registre social',
     'social_registration_text' => 'Registreu-vos i inicieu la sessió fent servir un altre servei.',
 

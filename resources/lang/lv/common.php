@@ -65,7 +65,7 @@ return [
     'breadcrumb' => 'Navigācija',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Izvērst galvenes izvēlni',
     'profile_menu' => 'Profila izvēlne',
     'view_profile' => 'Apskatīt profilu',
     'edit_profile' => 'Rediģēt profilu',
@@ -74,9 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informācija',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tab: Rādīt sekundāro informāciju',
     'tab_content' => 'Saturs',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tab: Rādīt galveno saturu',
 
     // Email Content
     'email_action_help' => 'Ja ir problēmas noklikšķināt ":actionText" pogu, nokopē un ievieto saiti savā interneta pārlūkā:',

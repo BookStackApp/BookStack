@@ -8,8 +8,8 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'Cal que accepteu el camp :attribute.',
-    'active_url'           => 'El camp :attribute no és un URL vàlid.',
+    'accepted'             => 'Cal que acceptis :attribute.',
+    'active_url'           => 'L\':attribute no és un URL vàlid.',
     'after'                => 'El camp :attribute ha de ser una data posterior a :date.',
     'alpha'                => 'El camp :attribute només pot contenir lletres.',
     'alpha_dash'           => 'El camp :attribute només pot contenir lletres, números, guions i guions baixos.',
