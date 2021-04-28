@@ -149,7 +149,7 @@ return [
     'chapters_create' => '챕터 만들기',
     'chapters_delete' => '챕터 삭제하기',
     'chapters_delete_named' => ':chapterName(을)를 지웁니다.',
-    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
+    'chapters_delete_explain' => '\':chapterName\'(을)를 지웁니다. 해당 챕터에 있는 모든 문서도 삭제됩니다.',
     'chapters_delete_confirm' => '이 챕터를 지울 건가요?',
     'chapters_edit' => '챕터 바꾸기',
     'chapters_edit_named' => ':chapterName 바꾸기',
