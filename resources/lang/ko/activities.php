@@ -45,5 +45,5 @@ return [
 
     // Other
     'commented_on'                => '댓글 쓰기',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => '업데이트된 권한',
 ];
