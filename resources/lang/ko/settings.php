@@ -73,7 +73,7 @@ return [
     'maint' => '데이터',
     'maint_image_cleanup' => '이미지 정리',
     'maint_image_cleanup_desc' => "중복한 이미지를 찾습니다. 실행하기 전에 이미지를 백업하세요.",
-    'maint_delete_images_only_in_revisions' => '또한 이전 페이지 수정본에만 있는 이미지 삭제하기',
+    'maint_delete_images_only_in_revisions' => '구 문서 수정본에만 있는 이미지도 삭제하기',
     'maint_image_cleanup_run' => '실행',
     'maint_image_cleanup_warning' => '이미지 :count개를 지울 건가요?',
     'maint_image_cleanup_success' => '이미지 :count개 삭제함',
