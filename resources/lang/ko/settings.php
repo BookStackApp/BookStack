@@ -38,7 +38,7 @@ return [
     'app_homepage_desc' => '고른 페이지에 설정한 권한은 무시합니다.',
     'app_homepage_select' => '문서 고르기',
     'app_footer_links' => '푸터 링크',
-    'app_footer_links_desc' => '사이트 푸터에 표시할 링크를 추가합니다. 로그인이 필요하지 않은 페이지들을 포함하여 대부분의 페이지 하단에 표시됩니다. 시스템 정의 번역을 사용하기 위해 "trans::"를 사용할 수 있습니다. 예를 들어: "trans::common.privacy_policy"를 사용하면 번역된 "개인정보처리방침"이 제공되며, "trans::common.terms_of_service"는 번역된 "이용약관"를 제공합니다.',
+    'app_footer_links_desc' => '사이트 푸터에 표시할 링크를 추가합니다. 로그인이 필요하지 않은 페이지들을 포함하여 대부분의 페이지 하단에 표시됩니다. 시스템 정의 번역을 사용하기 위해 "trans::<keys>"를 사용할 수 있습니다. 예를 들어: "trans::common.privacy_policy"를 사용하면 번역된 "개인정보처리방침"이 제공되며, "trans::common.terms_of_service"는 번역된 "이용약관"를 제공합니다.',
     'app_footer_links_label' => '링크 라벨',
     'app_footer_links_url' => '링크 URL',
     'app_footer_links_add' => '푸터 링크 추가',
@@ -104,7 +104,7 @@ return [
     'recycle_bin_restore_list' => '복원할 항목들',
     'recycle_bin_restore_confirm' => '이 작업을 수행하면 하위 요소를 포함하여 삭제된 항목이 원래 위치로 복원됩니다. 원래 위치가 삭제되고 현재 휴지통에 있는 경우 상위 항목도 복원해야 합니다.',
     'recycle_bin_restore_deleted_parent' => '이 항목의 상위 항목도 삭제되었습니다. 상위 항목도 복원될 때까지 삭제된 상태로 유지됩니다.',
-    'recycle_bin_destroy_notification' => '휴지통에서 총 :total 개의 항목들이 삭제되었습니다.',
+    'recycle_bin_destroy_notification' => '휴지통에서 총 :count 개의 항목들이 삭제되었습니다.',
     'recycle_bin_restore_notification' => '휴지통에서 총 :count 개의 항목들이 복원되었습니다.',
 
     // Audit Log
