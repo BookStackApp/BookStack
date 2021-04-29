@@ -1652,16 +1652,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.20.23",
+            "version": "v6.20.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d94c07d72c14f07e7d2027458e7f0a76f9ceb0d9"
+                "reference": "0117d797dc1ab64b1f88d4f6b966380ea7def091"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d94c07d72c14f07e7d2027458e7f0a76f9ceb0d9",
-                "reference": "d94c07d72c14f07e7d2027458e7f0a76f9ceb0d9",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0117d797dc1ab64b1f88d4f6b966380ea7def091",
+                "reference": "0117d797dc1ab64b1f88d4f6b966380ea7def091",
                 "shasum": ""
             },
             "require": {
@@ -1801,7 +1801,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-04-13T13:49:28+00:00"
+            "time": "2021-04-28T14:38:32+00:00"
         },
         {
             "name": "laravel/socialite",
