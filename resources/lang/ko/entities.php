@@ -211,7 +211,7 @@ return [
     'pages_revisions' => '문서 수정본',
     'pages_revisions_named' => ':pageName 수정본',
     'pages_revision_named' => ':pageName 수정본',
-    'pages_revision_restored_from' => 'Restored from #:id; :summary',
+    'pages_revision_restored_from' => '#:id 에서; :summary 복원',
     'pages_revisions_created_by' => '만든 사용자',
     'pages_revisions_date' => '수정한 날짜',
     'pages_revisions_number' => 'No.',
