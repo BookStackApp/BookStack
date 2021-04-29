@@ -38,7 +38,7 @@ return [
     'app_homepage_desc' => '고른 페이지에 설정한 권한은 무시합니다.',
     'app_homepage_select' => '문서 고르기',
     'app_footer_links' => '푸터 링크',
-    'app_footer_links_desc' => '사이트 푸터에 표시할 링크를 추가합니다. 로그인이 필요하지 않은 페이지들을 포함하여 대부분의 페이지 하단에 표시됩니다. 시스템 정의 번역을 사용하기 위해 "trans::<keys>"를 사용할 수 있습니다. 예를 들어: "trans::common.privacy_policy"를 사용하면 번역된 "개인정보처리방침"이 제공되며, "trans::common.terms_of_service"는 번역된 "이용약관"를 제공합니다.',
+    'app_footer_links_desc' => '사이트 푸터에 표시할 링크를 추가합니다. 로그인이 필요하지 않은 페이지들을 포함하여 대부분의 페이지 하단에 표시됩니다. 시스템 정의 번역을 사용하기 위해 "trans::<key>"를 사용할 수 있습니다. 예를 들어: "trans::common.privacy_policy"를 사용하면 번역된 "개인정보처리방침"이 제공되며, "trans::common.terms_of_service"는 번역된 "이용약관"를 제공합니다.',
     'app_footer_links_label' => '링크 라벨',
     'app_footer_links_url' => '링크 URL',
     'app_footer_links_add' => '푸터 링크 추가',
