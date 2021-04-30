@@ -40,7 +40,7 @@ return [
     'permissions_intro' => 'Una volta abilitati, questi permessi avranno la priorità su tutti gli altri.',
     'permissions_enable' => 'Abilita Permessi Custom',
     'permissions_save' => 'Salva Permessi',
-    'permissions_owner' => 'Owner',
+    'permissions_owner' => 'Proprietario',
 
     // Search
     'search_results' => 'Risultati Ricerca',
@@ -60,7 +60,7 @@ return [
     'search_permissions_set' => 'Permessi impostati',
     'search_created_by_me' => 'Creati da me',
     'search_updated_by_me' => 'Aggiornati da me',
-    'search_owned_by_me' => 'Owned by me',
+    'search_owned_by_me' => 'Creati da me',
     'search_date_options' => 'Opzioni Data',
     'search_updated_before' => 'Aggiornati prima del',
     'search_updated_after' => 'Aggiornati dopo il',
