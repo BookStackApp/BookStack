@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'Carica Altre',
     'image_image_name' => 'Nome Immagine',
     'image_delete_used' => 'Questa immagine è usata nelle pagine elencate.',
-    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
+    'image_delete_confirm_text' => 'Sei sicuro di voler eliminare questa immagine?',
     'image_select_image' => 'Seleziona Immagine',
     'image_dropzone' => 'Rilascia immagini o clicca qui per caricarle',
     'images_deleted' => 'Immagini Eliminate',
