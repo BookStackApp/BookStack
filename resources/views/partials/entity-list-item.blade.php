@@ -10,6 +10,8 @@
         @endif
     @endif
 
-    <p class="text-muted break-text">{{ $entity->getExcerpt() }}</p>
+    <p class="text-muted break-text">
+        {!! highlightText($entity->getExcerpt(), [request()->get('search'), request()->get('term')]) !!}
+    </p>
 </div>
 @endcomponent

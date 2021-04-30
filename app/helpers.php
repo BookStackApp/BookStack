@@ -169,3 +169,19 @@ function sortUrl(string $path, array $data, array $overrideData = []): string
 
     return url($path . '?' . implode('&', $queryStringSections));
 }
+
+/**
+ * highlight a word in text sentence injecting by a span element.
+ */
+function highlightText(string $text, array $wordsToHighlight): string
+{
+    $wordsToHighlight = array_map(fn ($w) => strtolower($w), array_filter($wordsToHighlight));
+
+    $html = '<span style="background-color: #f9ca24">%s</span>';
+
+    $text = preg_replace('/[^A-Za-z0-9\-]/', ' ', $text);
+
+    return collect(explode(' ', $text))->map(function ($word) use($wordsToHighlight, $html) {
+        return in_array(strtolower($word), $wordsToHighlight)  ? sprintf($html, $word) : $word;
+    })->implode(' ');
+}
