@@ -118,8 +118,8 @@ return [
     'audit_table_event' => 'Evento',
     'audit_table_related' => 'Related Item or Detail',
     'audit_table_date' => 'Activity Date',
-    'audit_date_from' => 'Date Range From',
-    'audit_date_to' => 'Date Range To',
+    'audit_date_from' => 'Dalla data',
+    'audit_date_to' => 'Alla data',
 
     // Role Settings
     'roles' => 'Ruoli',
@@ -180,7 +180,7 @@ return [
     'users_delete_named' => 'Elimina l\'utente :userName',
     'users_delete_warning' => 'Questo eliminerà completamente l\'utente \':userName\' dal sistema.',
     'users_delete_confirm' => 'Sei sicuro di voler eliminare questo utente?',
-    'users_migrate_ownership' => 'Migrate Ownership',
+    'users_migrate_ownership' => 'Cambia Proprietario',
     'users_migrate_ownership_desc' => 'Select a user here if you want another user to become the owner of all items currently owned by this user.',
     'users_none_selected' => 'Nessun utente selezionato',
     'users_delete_success' => 'Utente rimosso con successo',
@@ -220,7 +220,7 @@ return [
     'user_api_token_created' => 'Token Aggiornato :timeAgo',
     'user_api_token_updated' => 'Token Aggiornato :timeAgo',
     'user_api_token_delete' => 'Elimina Token',
-    'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
+    'user_api_token_delete_warning' => 'Questa operazione eliminerà irreversibilmente dal sistema il token API denominato \':tokenName\'.',
     'user_api_token_delete_confirm' => 'Sei sicuri di voler eliminare questo token API?',
     'user_api_token_delete_success' => 'Token API eliminato correttamente',
 
