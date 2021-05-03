@@ -105,7 +105,7 @@ class HomeController extends Controller
      */
     public function customHeadContent()
     {
-        return view('partials.custom-head-content');
+        return view('partials.custom-head');
     }
 
     /**
