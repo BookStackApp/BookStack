@@ -4,6 +4,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
+use BookStack\Util\HtmlContentFilter;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
@@ -169,7 +170,7 @@ class PageContent
         $content = $this->page->html;
 
         if (!config('app.allow_content_scripts')) {
-            $content = $this->escapeScripts($content);
+            $content = HtmlContentFilter::removeScripts($content);
         }
 
         if ($blankIncludes) {
@@ -307,66 +308,5 @@ class PageContent
         libxml_clear_errors();
 
         return $innerContent;
-    }
-
-    /**
-     * Escape script tags within HTML content.
-     */
-    protected function escapeScripts(string $html) : string
-    {
-        if (empty($html)) {
-            return $html;
-        }
-
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        $xPath = new DOMXPath($doc);
-
-        // Remove standard script tags
-        $scriptElems = $xPath->query('//script');
-        foreach ($scriptElems as $scriptElem) {
-            $scriptElem->parentNode->removeChild($scriptElem);
-        }
-
-        // Remove clickable links to JavaScript URI
-        $badLinks = $xPath->query('//*[contains(@href, \'javascript:\')]');
-        foreach ($badLinks as $badLink) {
-            $badLink->parentNode->removeChild($badLink);
-        }
-
-        // Remove forms with calls to JavaScript URI
-        $badForms = $xPath->query('//*[contains(@action, \'javascript:\')] | //*[contains(@formaction, \'javascript:\')]');
-        foreach ($badForms as $badForm) {
-            $badForm->parentNode->removeChild($badForm);
-        }
-
-        // Remove meta tag to prevent external redirects
-        $metaTags = $xPath->query('//meta[contains(@content, \'url\')]');
-        foreach ($metaTags as $metaTag) {
-            $metaTag->parentNode->removeChild($metaTag);
-        }
-
-        // Remove data or JavaScript iFrames
-        $badIframes = $xPath->query('//*[contains(@src, \'data:\')] | //*[contains(@src, \'javascript:\')] | //*[@srcdoc]');
-        foreach ($badIframes as $badIframe) {
-            $badIframe->parentNode->removeChild($badIframe);
-        }
-
-        // Remove 'on*' attributes
-        $onAttributes = $xPath->query('//@*[starts-with(name(), \'on\')]');
-        foreach ($onAttributes as $attr) {
-            /** @var \DOMAttr $attr*/
-            $attrName = $attr->nodeName;
-            $attr->parentNode->removeAttribute($attrName);
-        }
-
-        $html = '';
-        $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
-        foreach ($topElems as $child) {
-            $html .= $doc->saveHTML($child);
-        }
-
-        return $html;
     }
 }

@@ -27,7 +27,7 @@
         }
     </style>
     @yield('head')
-    @include('partials.custom-head')
+    @include('partials.export-custom-head')
 </head>
 <body>
 
