@@ -228,6 +228,7 @@ header .search-box {
   text-align: center;
   border-bottom: 3px solid #BBB;
   cursor: pointer;
+  margin: 0;
   @include lightDark(background-color, #FFF, #222);
   @include lightDark(border-bottom-color, #BBB, #333);
   &:first-child {
