@@ -1,51 +1,13 @@
-<!doctype html>
-<html lang="{{ config('app.lang') }}">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>{{ $page->name }}</title>
+@extends('export-layout')
 
-    @include('partials.export-styles', ['format' => $format])
+@section('title', $page->name)
 
-    @if($format === 'pdf')
-        <style>
-            body {
-                font-size: 14px;
-                line-height: 1.2;
-            }
+@section('content')
+    @include('pages.page-display')
 
-            h1, h2, h3, h4, h5, h6 {
-                line-height: 1.2;
-            }
+    <hr>
 
-            table {
-                max-width: 800px !important;
-                font-size: 0.8em;
-                width: 100% !important;
-            }
-
-            table td {
-                width: auto !important;
-            }
-        </style>
-    @endif
-
-    @include('partials.export-custom-head')
-</head>
-<body>
-
-<div id="page-show">
-    <div class="page-content">
-
-        @include('pages.page-display')
-
-        <hr>
-
-        <div class="text-muted text-small">
-            @include('partials.entity-export-meta', ['entity' => $page])
-        </div>
-
+    <div class="text-muted text-small">
+        @include('partials.entity-export-meta', ['entity' => $page])
     </div>
-</div>
-
-</body>
-</html>
+@endsection

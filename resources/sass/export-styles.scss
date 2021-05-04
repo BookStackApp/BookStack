@@ -1,15 +1,12 @@
 @import "variables";
 @import "mixins";
-@import "spacing";
 @import "html";
 @import "text";
 @import "layout";
 @import "blocks";
 @import "tables";
-@import "header";
 @import "lists";
 @import "pages";
-
 
 html, body {
   background-color: #FFF;
@@ -40,4 +37,25 @@ pre:after {
 }
 pre code {
   white-space: pre-wrap;
+}
+
+.page-break {
+  page-break-after: always;
+}
+@media screen {
+  .page-break {
+    border-top: 1px solid #DDD;
+  }
+}
+
+ul.contents ul li {
+  list-style: circle;
+}
+
+.chapter-hint {
+  color: #888;
+  margin-top: 32px;
+}
+.chapter-hint + h1 {
+  margin-top: 0;
 }
