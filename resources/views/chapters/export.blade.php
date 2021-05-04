@@ -1,30 +1,8 @@
-<!doctype html>
-<html lang="{{ config('app.lang') }}">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>{{ $chapter->name }}</title>
+@extends('export-layout')
 
-    @include('partials.export-styles', ['format' => $format])
+@section('title', $chapter->name)
 
-    <style>
-        .page-break {
-            page-break-after: always;
-        }
-        ul.contents ul li {
-            list-style: circle;
-        }
-        @media screen {
-            .page-break {
-                border-top: 1px solid #DDD;
-            }
-        }
-    </style>
-    @include('partials.export-custom-head')
-</head>
-<body>
-
-<div class="page-content">
-
+@section('content')
     <h1 style="font-size: 4.8em">{{$chapter->name}}</h1>
 
     <p>{{ $chapter->description }}</p>
@@ -42,8 +20,4 @@
         <h1 id="page-{{$page->id}}">{{ $page->name }}</h1>
         {!! $page->html !!}
     @endforeach
-
-</div>
-
-</body>
-</html>
+@endsection
