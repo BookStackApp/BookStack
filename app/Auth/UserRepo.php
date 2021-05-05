@@ -62,6 +62,14 @@ class UserRepo
     }
 
     /**
+     * Get all users as Builder for API
+     */
+    public function getUsersBuilder(): Builder
+    {
+        $query = User::query()->select(['*']);
+        return $query;
+    }
+    /**
      * Get all the users with their permissions in a paginated format.
      */
     public function getAllUsersPaginatedAndSorted(int $count, array $sortData): LengthAwarePaginator
