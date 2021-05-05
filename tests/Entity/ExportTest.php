@@ -230,4 +230,21 @@ class ExportTest extends TestCase
         }
     }
 
+    public function test_page_export_with_deleted_creator_and_updater()
+    {
+        $user = $this->getViewer(['name' => 'ExportWizardTheFifth']);
+        $page = Page::first();
+        $page->created_by = $user->id;
+        $page->updated_by = $user->id;
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertSee('ExportWizardTheFifth');
+
+        $user->delete();
+        $resp = $this->get($page->getUrl('/export/html'));
+        $resp->assertStatus(200);
+        $resp->assertDontSee('ExportWizardTheFifth');
+    }
+
 }

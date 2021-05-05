@@ -5,12 +5,12 @@
 
     @icon('star'){!! trans('entities.meta_created' . ($entity->createdBy ? '_name' : ''), [
         'timeLength' => $entity->created_at->toDayDateTimeString(),
-        'user' => htmlentities($entity->createdBy->name),
+        'user' => e($entity->createdBy->name ?? ''),
         ]) !!}
     <br>
 
     @icon('edit'){!! trans('entities.meta_updated' . ($entity->updatedBy ? '_name' : ''), [
             'timeLength' => $entity->updated_at->toDayDateTimeString(),
-            'user' => htmlentities($entity->updatedBy->name)
+            'user' => e($entity->updatedBy->name ?? '')
         ]) !!}
 </div>
