@@ -64,9 +64,11 @@ class UserRepo
     /**
      * Get all users as Builder for API
      */
-    public function getUsersBuilder(): Builder
+    public function getUsersBuilder(int $id = null ) : Builder
     {
-        $query = User::query()->select(['*']);
+        $query = User::query()->select(['*'])
+            ->withLastActivityAt()
+            ->with(['roles', 'avatar']);
         return $query;
     }
     /**
