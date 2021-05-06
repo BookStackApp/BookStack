@@ -42,8 +42,8 @@ return [
     'fullscreen' => 'شاشة كاملة',
 
     // Sort Options
-    'sort_options' => 'خيارات الترتيب',
-    'sort_direction_toggle' => 'الترتيب وفق الإتجاه',
+    'sort_options' => 'خيارات الفرز',
+    'sort_direction_toggle' => 'الفرز وفق الاتجاه',
     'sort_ascending' => 'فرز تصاعدي',
     'sort_descending' => 'فرز تنازلي',
     'sort_name' => 'الاسم',
@@ -52,10 +52,10 @@ return [
     'sort_updated_at' => 'تاريخ التحديث',
 
     // Misc
-    'deleted_user' => 'حذف مستخدم',
+    'deleted_user' => 'المستخدم المحذوف',
     'no_activity' => 'لا يوجد نشاط لعرضه',
     'no_items' => 'لا توجد عناصر متوفرة',
-    'back_to_top' => 'العودة للبداية',
+    'back_to_top' => 'العودة إلى الأعلى',
     'toggle_details' => 'عرض / إخفاء التفاصيل',
     'toggle_thumbnails' => 'عرض / إخفاء الصور المصغرة',
     'details' => 'التفاصيل',
@@ -79,7 +79,7 @@ return [
     'tab_content_label' => 'تبويب: إظهار المحتوى الأساسي',
 
     // Email Content
-    'email_action_help' => 'إذا واجهتكم مشكلة بضغط زر ":actionText" فبإمكانكم نسخ الرابط أدناه ولصقه بالمتصفح:',
+    'email_action_help' => 'إذا واجهتكم مشكلة عند ضغط زر ":actionText" فبإمكانكم نسخ الرابط أدناه ولصقه بالمتصفح:',
     'email_rights' => 'جميع الحقوق محفوظة',
 
     // Footer Link Options
