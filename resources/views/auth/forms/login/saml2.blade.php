@@ -2,7 +2,7 @@
     {!! csrf_field() !!}
 
     <div>
-        <button id="saml-login" class="button outline block svg">
+        <button id="saml-login" class="button outline svg">
             @icon('saml2')
             <span>{{ trans('auth.log_in_with', ['socialDriver' => config('saml2.name')]) }}</span>
         </button>
