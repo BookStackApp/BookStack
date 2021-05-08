@@ -67,12 +67,22 @@ class ConfigTest extends TestCase
         $this->checkEnvConfigResult('APP_URL', '', 'session.path', '/');
     }
 
+    public function test_saml2_idp_authn_context_string_parsed_as_space_separated_array()
+    {
+        $this->checkEnvConfigResult(
+            'SAML2_IDP_AUTHNCONTEXT',
+            'urn:federation:authentication:windows urn:federation:authentication:linux',
+            'saml2.onelogin.security.requestedAuthnContext',
+            ['urn:federation:authentication:windows', 'urn:federation:authentication:linux']
+        );
+    }
+
     /**
      * Set an environment variable of the given name and value
      * then check the given config key to see if it matches the given result.
      * Providing a null $envVal clears the variable.
      */
-    protected function checkEnvConfigResult(string $envName, ?string $envVal, string $configKey, string $expectedResult)
+    protected function checkEnvConfigResult(string $envName, ?string $envVal, string $configKey, mixed $expectedResult)
     {
         $this->runWithEnv($envName, $envVal, function() use ($configKey, $expectedResult) {
             $this->assertEquals($expectedResult, config($configKey));

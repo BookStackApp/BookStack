@@ -1,5 +1,7 @@
 <?php
 
+$SAML2_IDP_AUTHNCONTEXT = env('SAML2_IDP_AUTHNCONTEXT', true);
+
 return [
 
     // Display name, shown to users, for SAML2 option
@@ -140,10 +142,12 @@ return [
             // ),
         ],
         'security' => [
-            // Specifies Authentication context
-            // false means that IDP choose authentication method
-            // null force Form based authentication or is possible set via array supported methods. See to onelogin/php-sampl/advance_settings
-            'requestedAuthnContext' => env('SAML2_IDP_AUTHNCONTEXT',false), 
+            // SAML2 Authn context
+            // When set to false no AuthContext will be sent in the AuthNRequest,
+            // When set to true (Default) you will get an AuthContext 'exact' 'urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport'.
+            // Multiple forced values can be passed via a space separated array, For example:
+            // SAML2_IDP_AUTHNCONTEXT="urn:federation:authentication:windows urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
+            'requestedAuthnContext' => is_string($SAML2_IDP_AUTHNCONTEXT) ? explode(' ', $SAML2_IDP_AUTHNCONTEXT) : $SAML2_IDP_AUTHNCONTEXT,
         ],
     ],
 
