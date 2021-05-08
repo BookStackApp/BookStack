@@ -89,7 +89,7 @@ return [
     'required_without'     => 'Il campo :attribute è richiesto quando :values non è presente.',
     'required_without_all' => 'Il campo :attribute è richiesto quando nessuno dei :values sono presenti.',
     'same'                 => ':attribute e :other devono corrispondere.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'Il link inserito potrebbe non essere sicuro.',
     'size'                 => [
         'numeric' => 'Il campo :attribute deve essere :size.',
         'file'    => 'Il campo :attribute deve essere :size kilobytes.',

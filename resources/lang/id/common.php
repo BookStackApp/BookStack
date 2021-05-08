@@ -65,7 +65,7 @@ return [
     'breadcrumb' => 'Breadcrumb',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Perluas Menu Tajuk',
     'profile_menu' => 'Profile Menu',
     'view_profile' => 'Tampilkan profil',
     'edit_profile' => 'Sunting Profil',
@@ -74,9 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informasi',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tab Menampilkan Informasi Sekunder',
     'tab_content' => 'Konten',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tab Menampilkan Informasi Utama',
 
     // Email Content
     'email_action_help' => 'Jika Anda mengalami masalah saat mengklik tombol ":actionText", salin dan tempel URL di bawah ini ke browser web Anda:',

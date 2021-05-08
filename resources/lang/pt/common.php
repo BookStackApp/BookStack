@@ -74,9 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informações',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Separador: Mostrar Informação Secundária',
     'tab_content' => 'Conteúdo',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Separador: Mostrar Conteúdo Primário',
 
     // Email Content
     'email_action_help' => 'Se estiver com problemas ao carregar no botão ":actionText", copie e cole o URL abaixo no seu navegador:',
