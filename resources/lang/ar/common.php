@@ -42,20 +42,20 @@ return [
     'fullscreen' => 'شاشة كاملة',
 
     // Sort Options
-    'sort_options' => 'خيارات الترتيب',
-    'sort_direction_toggle' => 'الترتيب وفق الإتجاه',
+    'sort_options' => 'خيارات الفرز',
+    'sort_direction_toggle' => 'الفرز وفق الاتجاه',
     'sort_ascending' => 'فرز تصاعدي',
     'sort_descending' => 'فرز تنازلي',
     'sort_name' => 'الاسم',
-    'sort_default' => 'Default',
+    'sort_default' => 'افتراضي',
     'sort_created_at' => 'تاريخ الإنشاء',
     'sort_updated_at' => 'تاريخ التحديث',
 
     // Misc
-    'deleted_user' => 'حذف مستخدم',
+    'deleted_user' => 'المستخدم المحذوف',
     'no_activity' => 'لا يوجد نشاط لعرضه',
     'no_items' => 'لا توجد عناصر متوفرة',
-    'back_to_top' => 'العودة للبداية',
+    'back_to_top' => 'العودة إلى الأعلى',
     'toggle_details' => 'عرض / إخفاء التفاصيل',
     'toggle_thumbnails' => 'عرض / إخفاء الصور المصغرة',
     'details' => 'التفاصيل',
@@ -65,7 +65,7 @@ return [
     'breadcrumb' => 'شريط التنقل',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'عرض القائمة',
     'profile_menu' => 'قائمة ملف التعريف',
     'view_profile' => 'عرض الملف الشخصي',
     'edit_profile' => 'تعديل الملف الشخصي',
@@ -74,16 +74,16 @@ return [
 
     // Layout tabs
     'tab_info' => 'معلومات',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'تبويب: إظهار المعلومات الثانوية',
     'tab_content' => 'المحتوى',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'تبويب: إظهار المحتوى الأساسي',
 
     // Email Content
-    'email_action_help' => 'إذا واجهتكم مشكلة بضغط زر ":actionText" فبإمكانكم نسخ الرابط أدناه ولصقه بالمتصفح:',
+    'email_action_help' => 'إذا واجهتكم مشكلة عند ضغط زر ":actionText" فبإمكانكم نسخ الرابط أدناه ولصقه بالمتصفح:',
     'email_rights' => 'جميع الحقوق محفوظة',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'سياسة الخصوصية',
+    'terms_of_service' => 'اتفاقية شروط الخدمة',
 ];
