@@ -28,6 +28,7 @@ class Saml2Test extends TestCase
             'saml2.autoload_from_metadata' => false,
             'saml2.onelogin.idp.x509cert' => $this->testCert,
             'saml2.onelogin.debug' => false,
+            'saml2.onelogin.security.requestedAuthnContext' => true,
         ]);
     }
 
@@ -326,6 +327,40 @@ class Saml2Test extends TestCase
             $loginGet = $this->get('/login');
             $loginGet->assertSee("A user with the email user@example.com already exists but with different credentials");
         });
+    }
+
+    public function test_login_request_contains_expected_default_authncontext()
+    {
+        $authReq = $this->getAuthnRequest();
+        $this->assertStringContainsString('samlp:RequestedAuthnContext Comparison="exact"', $authReq);
+        $this->assertStringContainsString('<saml:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml:AuthnContextClassRef>', $authReq);
+    }
+
+    public function test_false_idp_authncontext_option_does_not_pass_authncontext_in_saml_request()
+    {
+        config()->set(['saml2.onelogin.security.requestedAuthnContext' => false]);
+        $authReq = $this->getAuthnRequest();
+        $this->assertStringNotContainsString('samlp:RequestedAuthnContext', $authReq);
+        $this->assertStringNotContainsString('<saml:AuthnContextClassRef>', $authReq);
+    }
+
+    public function test_array_idp_authncontext_option_passes_value_as_authncontextclassref_in_request()
+    {
+        config()->set(['saml2.onelogin.security.requestedAuthnContext' => ['urn:federation:authentication:windows', 'urn:federation:authentication:linux']]);
+        $authReq = $this->getAuthnRequest();
+        $this->assertStringContainsString('samlp:RequestedAuthnContext', $authReq);
+        $this->assertStringContainsString('<saml:AuthnContextClassRef>urn:federation:authentication:windows</saml:AuthnContextClassRef>', $authReq);
+        $this->assertStringContainsString('<saml:AuthnContextClassRef>urn:federation:authentication:linux</saml:AuthnContextClassRef>', $authReq);
+    }
+
+    protected function getAuthnRequest(): string
+    {
+        $req = $this->post('/saml2/login');
+        $location = $req->headers->get('Location');
+        $query = explode('?', $location)[1];
+        $params = [];
+        parse_str($query, $params);
+        return gzinflate(base64_decode($params['SAMLRequest']));
     }
 
     protected function withGet(array $options, callable $callback)
