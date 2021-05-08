@@ -7,7 +7,6 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use Exception;
 use Illuminate\Http\Request;
@@ -295,7 +294,6 @@ class PageController extends Controller
      * Remove the specified page from storage.
      * @throws NotFoundException
      * @throws Throwable
-     * @throws NotifyException
      */
     public function destroy(string $bookSlug, string $pageSlug)
     {
@@ -311,7 +309,6 @@ class PageController extends Controller
     /**
      * Remove the specified draft page from storage.
      * @throws NotFoundException
-     * @throws NotifyException
      * @throws Throwable
      */
     public function destroyDraft(string $bookSlug, int $pageId)

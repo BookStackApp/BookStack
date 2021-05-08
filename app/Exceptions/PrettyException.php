@@ -2,7 +2,6 @@
 
 use Exception;
 use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Http\Request;
 
 class PrettyException extends Exception implements Responsable
 {
@@ -18,7 +17,7 @@ class PrettyException extends Exception implements Responsable
 
     /**
      * Render a response for when this exception occurs.
-     * @param Request $request
+     * @inheritdoc
      */
     public function toResponse($request)
     {
