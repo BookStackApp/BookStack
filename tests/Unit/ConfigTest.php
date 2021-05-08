@@ -81,8 +81,9 @@ class ConfigTest extends TestCase
      * Set an environment variable of the given name and value
      * then check the given config key to see if it matches the given result.
      * Providing a null $envVal clears the variable.
+     * @param mixed $expectedResult
      */
-    protected function checkEnvConfigResult(string $envName, ?string $envVal, string $configKey, mixed $expectedResult)
+    protected function checkEnvConfigResult(string $envName, ?string $envVal, string $configKey, $expectedResult)
     {
         $this->runWithEnv($envName, $envVal, function() use ($configKey, $expectedResult) {
             $this->assertEquals($expectedResult, config($configKey));
