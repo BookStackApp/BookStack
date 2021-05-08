@@ -1,8 +1,10 @@
 <?php namespace BookStack\Exceptions;
 
-class NotifyException extends \Exception
-{
+use Exception;
+use Illuminate\Contracts\Support\Responsable;
 
+class NotifyException extends Exception implements Responsable
+{
     public $message;
     public $redirectLocation;
 
@@ -14,5 +16,20 @@ class NotifyException extends \Exception
         $this->message = $message;
         $this->redirectLocation = $redirectLocation;
         parent::__construct();
+    }
+
+    /**
+     * Send the response for this type of exception.
+     * @inheritdoc
+     */
+    public function toResponse($request)
+    {
+        $message = $this->getMessage();
+
+        if (!empty($message)) {
+            session()->flash('error', $message);
+        }
+
+        return redirect($this->redirectLocation);
     }
 }
