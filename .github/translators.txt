@@ -54,6 +54,7 @@ Name :: Languages
 @benediktvolke :: German
 @Baptistou :: French
 @arcoai :: Spanish
+@Jokuna :: Korean
 cipi1965 :: Italian
 Mykola Ronik (Mantikor) :: Ukrainian
 furkanoyk :: Turkish
@@ -161,3 +162,5 @@ Gerwin de Keijzer (gdekeijzer) :: Dutch; German Informal; German
 kometchtech :: Japanese
 Auri (Atalonica) :: Catalan
 Francesco Franchina (ffranchina) :: Italian
+Aimrane Kds (aimrane.kds) :: Arabic
+whenwesober :: Indonesian
