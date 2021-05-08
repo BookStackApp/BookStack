@@ -68,19 +68,6 @@ class Handler extends ExceptionHandler
             return redirect($e->redirectLocation);
         }
 
-        // Handle pretty exceptions which will show a friendly application-fitting page
-        // Which will include the basic message to point the user roughly to the cause.
-        if ($this->isExceptionType($e, PrettyException::class)  && !config('app.debug')) {
-            $message = $this->getOriginalMessage($e);
-            $code = ($e->getCode() === 0) ? 500 : $e->getCode();
-            return response()->view('errors/' . $code, ['message' => $message], $code);
-        }
-
-        // Handle 404 errors with a loaded session to enable showing user-specific information
-        if ($this->isExceptionType($e, NotFoundHttpException::class)) {
-            return \Route::respondWithRoute('fallback');
-        }
-
         return parent::render($request, $e);
     }
 
