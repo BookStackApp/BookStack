@@ -38,4 +38,11 @@ class ErrorTest extends TestCase
 
         $this->assertCount(1, $handler->getRecords());
     }
+
+    public function test_access_to_non_existing_image_location_provides_404_response()
+    {
+        $resp = $this->actingAs($this->getViewer())->get('/uploads/images/gallery/2021-05/anonexistingimage.png');
+        $resp->assertStatus(404);
+        $resp->assertSeeText('Image Not Found');
+    }
 }
