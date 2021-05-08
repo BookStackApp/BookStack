@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.180.0",
+            "version": "3.180.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "761d06d3d320bd1a0114f9d937eccd1613e1913b"
+                "reference": "948a4defbe2a571cc4460725015b8e98b7060f2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/761d06d3d320bd1a0114f9d937eccd1613e1913b",
-                "reference": "761d06d3d320bd1a0114f9d937eccd1613e1913b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/948a4defbe2a571cc4460725015b8e98b7060f2d",
+                "reference": "948a4defbe2a571cc4460725015b8e98b7060f2d",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.180.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.180.5"
             },
-            "time": "2021-05-03T20:41:22+00:00"
+            "time": "2021-05-07T18:12:43+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1873,16 +1873,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "19a9673b833cc37770439097b381d86cd125bfe8"
+                "reference": "2651c497f005de305c7ba3f232cbd87b8c00ee8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/19a9673b833cc37770439097b381d86cd125bfe8",
-                "reference": "19a9673b833cc37770439097b381d86cd125bfe8",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/2651c497f005de305c7ba3f232cbd87b8c00ee8c",
+                "reference": "2651c497f005de305c7ba3f232cbd87b8c00ee8c",
                 "shasum": ""
             },
             "require": {
@@ -1970,7 +1970,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-01T19:00:49+00:00"
+            "time": "2021-05-08T16:08:00+00:00"
         },
         {
             "name": "league/flysystem",
