@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers\Images;
 
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\Controllers\Controller;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
@@ -27,12 +28,15 @@ class ImageController extends Controller
 
     /**
      * Provide an image file from storage.
+     * @throws NotFoundException
      */
     public function showImage(string $path)
     {
         $path = storage_path('uploads/images/' . $path);
         if (!file_exists($path)) {
-            abort(404);
+            throw (new NotFoundException(trans('errors.image_not_found')))
+                ->setSubtitle(trans('errors.image_not_found_subtitle'))
+                ->setDetails(trans('errors.image_not_found_details'));
         }
 
         return response()->file($path);

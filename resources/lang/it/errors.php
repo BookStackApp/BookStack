@@ -89,14 +89,14 @@ return [
     'back_soon' => 'Ritornerà presto.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
+    'api_no_authorization_found' => 'Nessun token di autorizzazione trovato nella richiesta',
     'api_bad_authorization_format' => 'Un token di autorizzazione è stato trovato nella richiesta, ma il formato sembra non corretto',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_user_token_not_found' => 'Nessun token API valido è stato trovato nel token di autorizzazione fornito',
+    'api_incorrect_token_secret' => 'Il token segreto fornito per il token API utilizzato non è corretto',
     'api_user_no_api_permission' => 'Il proprietario del token API utilizzato non ha il permesso di effettuare chiamate API',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_user_token_expired' => 'Il token di autorizzazione utilizzato è scaduto',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Si è verificato un errore durante l\'invio di una e-mail di prova:',
 
 ];

@@ -1,5 +1,6 @@
 <?php namespace Tests\Entity;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Facades\Storage;
@@ -212,6 +213,38 @@ class ExportTest extends TestCase
         $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg');
         $resp->assertSee('http://localhost/uploads/svg_test.svg');
         $resp->assertSee('src="/uploads/svg_test.svg"');
+    }
+
+    public function test_exports_removes_scripts_from_custom_head()
+    {
+        $entities = [
+            Page::query()->first(), Chapter::query()->first(), Book::query()->first(),
+        ];
+        setting()->put('app-custom-head', '<script>window.donkey = "cat";</script><style>.my-test-class { color: red; }</style>');
+
+        foreach ($entities as $entity) {
+            $resp = $this->asEditor()->get($entity->getUrl('/export/html'));
+            $resp->assertDontSee('window.donkey');
+            $resp->assertDontSee('script');
+            $resp->assertSee('.my-test-class { color: red; }');
+        }
+    }
+
+    public function test_page_export_with_deleted_creator_and_updater()
+    {
+        $user = $this->getViewer(['name' => 'ExportWizardTheFifth']);
+        $page = Page::first();
+        $page->created_by = $user->id;
+        $page->updated_by = $user->id;
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertSee('ExportWizardTheFifth');
+
+        $user->delete();
+        $resp = $this->get($page->getUrl('/export/html'));
+        $resp->assertStatus(200);
+        $resp->assertDontSee('ExportWizardTheFifth');
     }
 
 }
