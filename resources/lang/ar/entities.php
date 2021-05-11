@@ -299,7 +299,7 @@ return [
     'comments' => 'تعليقات',
     'comment_add' => 'إضافة تعليق',
     'comment_placeholder' => 'ضع تعليقاً هنا',
-    'comment_count' => '{0} ا توجد تعليقات|{1} تعليق واحد|{2} تعليقان|[3,*] :count تعليقات',
+    'comment_count' => '{0} لا توجد تعليقات|{1} تعليق واحد|{2} تعليقان[3,*] :count تعليقات',
     'comment_save' => 'حفظ التعليق',
     'comment_saving' => 'جار حفظ التعليق...',
     'comment_deleting' => 'جار حذف التعليق...',
@@ -313,8 +313,8 @@ return [
     'comment_in_reply_to' => 'رداً على :commentId',
 
     // Revision
-    'revision_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف هذا الإصدار؟',
-    'revision_restore_confirm' => 'هل أنت متأكد من أنك تريد استعادة هذا الإصدار؟ سيتم استبدال محتوى الصفحة الحالية.',
-    'revision_delete_success' => 'تم حذف الإصدار',
-    'revision_cannot_delete_latest' => 'لايمكن حذف آخر إصدار.'
+    'revision_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف هذه المراجعة؟',
+    'revision_restore_confirm' => 'هل أنت متأكد من أنك تريد استعادة هذه المراجعة؟ سيتم استبدال محتوى الصفحة الحالية.',
+    'revision_delete_success' => 'تم حذف المراجعة',
+    'revision_cannot_delete_latest' => 'لايمكن حذف آخر مراجعة.'
 ];
