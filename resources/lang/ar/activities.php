@@ -33,7 +33,7 @@ return [
     'book_delete'                 => 'تم حذف الكتاب',
     'book_delete_notification'    => 'تم حذف الكتاب بنجاح',
     'book_sort'                   => 'تم سرد الكتاب',
-    'book_sort_notification'      => 'تمت إعادة سرد الكتاب بنجاح',
+    'book_sort_notification'      => 'أُعِيدَ سرد الكتاب بنجاح',
 
     // Bookshelves
     'bookshelf_create'            => 'تم إنشاء رف الكتب',
