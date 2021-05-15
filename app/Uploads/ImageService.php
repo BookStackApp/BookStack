@@ -8,6 +8,7 @@ use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Contracts\Filesystem\Filesystem as Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
@@ -106,7 +107,7 @@ class ImageService
         }
 
         try {
-            $storage->put($fullPath, $imageData, ['visibility' => 'public']);
+            $this->saveImageDataInPublicSpace($storage, $fullPath, $imageData);
         } catch (Exception $e) {
             \Log::error('Error when attempting image upload:' . $e->getMessage());
             throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $fullPath]));
@@ -129,6 +130,24 @@ class ImageService
         $image = $this->image->newInstance();
         $image->forceFill($imageDetails)->save();
         return $image;
+    }
+
+    /**
+     * Save image data for the given path in the public space, if possible,
+     * for the provided storage mechanism.
+     */
+    protected function saveImageDataInPublicSpace(Storage $storage, string $path, string $data)
+    {
+        $storage->put($path, $data);
+
+        // Set visibility if using s3 without an endpoint set.
+        // Done since this call can break s3-like services but desired for actual
+        // AWS s3 usage. Attempting to set ACL during above put request requires
+        // different permissions hence would technically be a breaking change.
+        $usingS3 = strtolower(config('filesystems.images')) === 's3';
+        if ($usingS3 && is_null(config('filesystems.disks.s3.endpoint'))) {
+            $storage->setVisibility($path, 'public');
+        }
     }
 
     /**
@@ -190,7 +209,7 @@ class ImageService
 
         $thumbData = $this->resizeImage($storage->get($imagePath), $width, $height, $keepRatio);
 
-        $storage->put($thumbFilePath, $thumbData, ['visibility' => 'public']);
+        $this->saveImageDataInPublicSpace($storage, $thumbFilePath, $thumbData);
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 60 * 72);
 
 
