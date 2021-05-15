@@ -11,6 +11,7 @@ table {
     border: 1px solid #DDD;
     overflow: auto;
     line-height: 1.2;
+	word-break: break-word;
   }
   td p, th p {
     margin: 0;
