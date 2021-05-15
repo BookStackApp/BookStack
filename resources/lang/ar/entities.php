@@ -91,7 +91,7 @@ return [
     'shelves_edit' => 'تحرير رف الكتب',
     'shelves_delete' => 'حذف رف الكتب',
     'shelves_delete_named' => 'حذف رف الكتب :name',
-    'shelves_delete_explain' => "سيؤدي هذا إلى حذف رف الكتب المسمى ':name'، ولن تحذف الكتب المتضمنة.",
+    'shelves_delete_explain' => "سيؤدي هذا إلى حذف رف الكتب المسمى ':name'، ولن تحذف الكتب المتضمنة فيه.",
     'shelves_delete_confirmation' => 'هل أنت متأكد من أنك تريد حذف هذا الرف؟',
     'shelves_permissions' => 'أذونات رف الكتب',
     'shelves_permissions_updated' => 'تم تحديث أذونات رف الكتب',
@@ -99,7 +99,7 @@ return [
     'shelves_copy_permissions_to_books' => 'نسخ أذونات الوصول إلى الكتب',
     'shelves_copy_permissions' => 'نسخ الأذونات',
     'shelves_copy_permissions_explain' => 'سيؤدي هذا إلى تطبيق إعدادات الأذونات الحالية لهذا الرف على جميع الكتب المتضمنة فيه. قبل التفعيل، تأكد من حفظ أي تغييرات في أذونات هذا الرف.',
-    'shelves_copy_permission_success' => 'تم نسخ أذونات رف الكتب إلى: عد الكتب',
+    'shelves_copy_permission_success' => 'تم نسخ أذونات رف الكتب إلى :count books',
 
     // Books
     'book' => 'كتاب',
@@ -115,7 +115,7 @@ return [
     'books_create' => 'إنشاء كتاب جديد',
     'books_delete' => 'حذف الكتاب',
     'books_delete_named' => 'حذف كتاب :bookName',
-    'books_delete_explain' => 'سيتم حذف كتاب \':bookName\'. ستتم إزالة جميع الفصول والصفحات.',
+    'books_delete_explain' => 'سيتم حذف كتاب \':bookName\'، وأيضا حذف جميع الفصول والصفحات.',
     'books_delete_confirmation' => 'تأكيد حذف الكتاب؟',
     'books_edit' => 'تعديل الكتاب',
     'books_edit_named' => 'تعديل كتاب :bookName',
@@ -215,7 +215,7 @@ return [
     'pages_revisions_created_by' => 'أنشئ بواسطة',
     'pages_revisions_date' => 'تاريخ المراجعة',
     'pages_revisions_number' => '#',
-    'pages_revisions_numbered' => 'مراجعة #: رقم تعريفي',
+    'pages_revisions_numbered' => 'مراجعة #:id',
     'pages_revisions_numbered_changes' => 'مراجعة #: رقم تعريفي التغييرات',
     'pages_revisions_changelog' => 'سجل التعديل',
     'pages_revisions_changes' => 'التعديلات',
@@ -228,7 +228,7 @@ return [
     'pages_permissions_active' => 'أذونات الصفحة مفعلة',
     'pages_initial_revision' => 'نشر مبدئي',
     'pages_initial_name' => 'صفحة جديدة',
-    'pages_editing_draft_notification' => 'جار تعديل مسودة لم يتم حفظها من :timeDiff.',
+    'pages_editing_draft_notification' => 'جارٍ تعديل مسودة لم يتم حفظها من :timeDiff.',
     'pages_draft_edited_notification' => 'تم تحديث هذه الصفحة منذ ذلك الوقت. من الأفضل التخلص من هذه المسودة.',
     'pages_draft_edit_active' => [
         'start_a' => ':count من المستخدمين بدأوا بتعديل هذه الصفحة',
@@ -237,7 +237,7 @@ return [
         'time_b' => 'في آخر :minCount دقيقة/دقائق',
         'message' => 'وقت البدء: احرص على عدم الكتابة فوق تحديثات بعضنا البعض!',
     ],
-    'pages_draft_discarded' => 'تم التخلص من المسودة. تم تحديث المحرر بمحتوى الصفحة الحالي',
+    'pages_draft_discarded' => 'تم التخلص من المسودة وتحديث المحرر بمحتوى الصفحة الحالي',
     'pages_specific' => 'صفحة محددة',
     'pages_is_template' => 'قالب الصفحة',
 
@@ -255,14 +255,14 @@ return [
     'tags_remove' => 'إزالة هذه العلامة',
     'attachments' => 'المرفقات',
     'attachments_explain' => 'ارفع بعض الملفات أو أرفق بعض الروابط لعرضها بصفحتك. ستكون الملفات والروابط معروضة في الشريط الجانبي للصفحة.',
-    'attachments_explain_instant_save' => 'سيتم حفظ التغييرات هنا بلحظتها',
+    'attachments_explain_instant_save' => 'سيتم حفظ التغييرات هنا آنيا.',
     'attachments_items' => 'العناصر المرفقة',
     'attachments_upload' => 'رفع ملف',
     'attachments_link' => 'إرفاق رابط',
     'attachments_set_link' => 'تحديد الرابط',
     'attachments_delete' => 'هل أنت متأكد من أنك تريد حذف هذا المرفق؟',
     'attachments_dropzone' => 'أسقط الملفات أو اضغط هنا لإرفاق ملف',
-    'attachments_no_files' => 'لم يتم رفع أي ملفات',
+    'attachments_no_files' => 'لم تُرفع أي ملفات',
     'attachments_explain_link' => 'بالإمكان إرفاق رابط في حال عدم تفضيل رفع ملف. قد يكون الرابط لصفحة أخرى أو لملف في أحد خدمات التخزين السحابي.',
     'attachments_link_name' => 'اسم الرابط',
     'attachment_link' => 'رابط المرفق',
@@ -287,7 +287,7 @@ return [
     'templates_prepend_content' => 'بادئة محتوى الصفحة',
 
     // Profile View
-    'profile_user_for_x' => 'المستخدم لـ : الوقت',
+    'profile_user_for_x' => 'المستخدم لـ :time',
     'profile_created_content' => 'المحتوى المنشأ',
     'profile_not_created_pages' => 'لم يتم إنشاء أي صفحات بواسطة :userName',
     'profile_not_created_chapters' => 'لم يتم إنشاء أي فصول بواسطة :userName',
@@ -299,7 +299,7 @@ return [
     'comments' => 'تعليقات',
     'comment_add' => 'إضافة تعليق',
     'comment_placeholder' => 'ضع تعليقاً هنا',
-    'comment_count' => '{0} ا توجد تعليقات|{1} تعليق واحد|{2} تعليقان|[3,*] :count تعليقات',
+    'comment_count' => '{0} لا توجد تعليقات|{1} تعليق واحد|{2} تعليقان[3,*] :count تعليقات',
     'comment_save' => 'حفظ التعليق',
     'comment_saving' => 'جار حفظ التعليق...',
     'comment_deleting' => 'جار حذف التعليق...',
@@ -313,8 +313,8 @@ return [
     'comment_in_reply_to' => 'رداً على :commentId',
 
     // Revision
-    'revision_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف هذا الإصدار؟',
-    'revision_restore_confirm' => 'هل أنت متأكد من أنك تريد استعادة هذا الإصدار؟ سيتم استبدال محتوى الصفحة الحالية.',
-    'revision_delete_success' => 'تم حذف الإصدار',
-    'revision_cannot_delete_latest' => 'لايمكن حذف آخر إصدار.'
+    'revision_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف هذه المراجعة؟',
+    'revision_restore_confirm' => 'هل أنت متأكد من أنك تريد استعادة هذه المراجعة؟ سيتم استبدال محتوى الصفحة الحالية.',
+    'revision_delete_success' => 'تم حذف المراجعة',
+    'revision_cannot_delete_latest' => 'لايمكن حذف آخر مراجعة.'
 ];
