@@ -212,7 +212,7 @@ class PageRepo
         if (!empty($input['markdown'] ?? '')) {
             $pageContent->setNewMarkdown($input['markdown']);
         } else {
-            $pageContent->setNewHTML($input['html']);
+            $pageContent->setNewHTML($input['html'] ?? '');
         }
     }
 
