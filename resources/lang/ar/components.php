@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'المزيد',
     'image_image_name' => 'اسم الصورة',
     'image_delete_used' => 'هذه الصورة مستخدمة بالصفحات أدناه.',
-    'image_delete_confirm_text' => 'هل أنت متأكد من أنك تريد حذف هذه الصورة ؟',
+    'image_delete_confirm_text' => 'هل أنت متأكد من أنك تريد حذف هذه الصورة؟',
     'image_select_image' => 'تحديد الصورة',
     'image_dropzone' => 'قم بإسقاط الصورة أو اضغط هنا للرفع',
     'images_deleted' => 'تم حذف الصور',

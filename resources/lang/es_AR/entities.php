@@ -281,7 +281,7 @@ return [
     'attachments_link_attached' => 'Enlace agregado exitosamente a la página',
     'templates' => 'Plantillas',
     'templates_set_as_template' => 'La Página es una plantilla',
-    'templates_explain_set_as_template' => 'Puede establecer esta página como plantilla para que el contenido pueda utilizarse para al crear otras páginas. Otris usuarios podrán utilizar esta plantilla si tienen permisos para ver de esta página.',
+    'templates_explain_set_as_template' => 'Puede establecer esta página como plantilla para que el contenido pueda utilizarse al crear otras páginas. Otros usuarios podrán utilizar esta plantilla si tienen permisos para ver de esta página.',
     'templates_replace_content' => 'Reemplazar el contenido de la página',
     'templates_append_content' => 'Incorporar al fina del contenido de la página',
     'templates_prepend_content' => 'Incorporar al principio del contenido de la página',

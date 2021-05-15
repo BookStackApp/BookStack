@@ -65,7 +65,7 @@ return [
     'breadcrumb' => 'Miga de Pan',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Expandir el Menú de Cabecera',
     'profile_menu' => 'Menu del Perfil',
     'view_profile' => 'Ver Perfil',
     'edit_profile' => 'Editar Perfil',
@@ -74,9 +74,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Información',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Pestaña: Mostrar Información Secundaria',
     'tab_content' => 'Contenido',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Pestaña: Mostrar Contenido Primario',
 
     // Email Content
     'email_action_help' => 'Si está teniendo problemas haga click en el botón ":actionText", copie y pegue la siguiente URL en su navegador web:',

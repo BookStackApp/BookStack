@@ -65,7 +65,7 @@ return [
     'breadcrumb' => 'Caminho',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Expandir Menu de Cabeçalho',
     'profile_menu' => 'Menu de Perfil',
     'view_profile' => 'Visualizar Perfil',
     'edit_profile' => 'Editar Perfil',

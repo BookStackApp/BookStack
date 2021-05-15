@@ -47,7 +47,7 @@ return [
     'reset_password_success' => 'تمت استعادة كلمة المرور بنجاح.',
     'email_reset_subject' => 'استعد كلمة المرور الخاصة بتطبيق :appName',
     'email_reset_text' => 'تم إرسال هذه الرسالة بسبب تلقينا لطلب استعادة كلمة المرور الخاصة بحسابكم.',
-    'email_reset_not_requested' => 'إذا لم يتم طلب استعادة كلمة المرور من قبلكم, فلا حاجة لاتخاذ أية خطوات.',
+    'email_reset_not_requested' => 'إذا لم يتم طلب استعادة كلمة المرور من قبلكم، فلا حاجة لاتخاذ أية خطوات.',
 
 
     // Email Confirmation
@@ -62,11 +62,11 @@ return [
     'email_not_confirmed' => 'لم يتم تأكيد البريد الإلكتروني',
     'email_not_confirmed_text' => 'لم يتم بعد تأكيد عنوان البريد الإلكتروني.',
     'email_not_confirmed_click_link' => 'الرجاء الضغط على الرابط المرسل إلى بريدكم الإلكتروني بعد تسجيلكم.',
-    'email_not_confirmed_resend' => 'إذا لم يتم إيجاد الرسالة, بإمكانكم إعادة إرسال رسالة التأكيد عن طريق تعبئة النموذج أدناه.',
+    'email_not_confirmed_resend' => 'إذا لم يتم إيجاد الرسالة، بإمكانكم إعادة إرسال رسالة التأكيد عن طريق تعبئة النموذج أدناه.',
     'email_not_confirmed_resend_button' => 'إعادة إرسال رسالة التأكيد',
 
     // User Invite
-    'user_invite_email_subject' => 'تم دعوتك للإنضمام إلى صفحة الحالة الخاصة بـ :app_name!',
+    'user_invite_email_subject' => 'تمت دعوتك للانضمام إلى صفحة الحالة الخاصة بـ :app_name!',
     'user_invite_email_greeting' => 'تم إنشاء حساب مستخدم لك على %site%.',
     'user_invite_email_text' => 'انقر على الزر أدناه لتعيين كلمة مرور الحساب والحصول على الوصول:',
     'user_invite_email_action' => 'كلمة سر المستخدم',
