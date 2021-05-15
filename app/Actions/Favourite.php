@@ -3,15 +3,14 @@
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class View extends Model
+class Favourite extends Model
 {
-
-    protected $fillable = ['user_id', 'views'];
+    protected $fillable = ['user_id'];
 
     /**
-     * Get all owning viewable models.
+     * Get the related model that can be favourited.
      */
-    public function viewable(): MorphTo
+    public function favouritable(): MorphTo
     {
         return $this->morphTo();
     }

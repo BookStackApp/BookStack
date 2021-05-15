@@ -151,6 +151,9 @@
             <hr class="primary-background"/>
 
             {{--Export--}}
+            @if(signedInUser())
+                @include('partials.entity-favourite-action', ['entity' => $page, 'alreadyFavourite' => $page->isFavourite()])
+            @endif
             @include('partials.entity-export-menu', ['entity' => $page])
         </div>
 
