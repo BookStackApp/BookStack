@@ -133,6 +133,11 @@
                 </a>
             @endif
 
+            @if(signedInUser())
+                <hr class="primary-background">
+                @include('partials.entity-favourite-action', ['entity' => $shelf])
+            @endif
+
         </div>
     </div>
 @stop
