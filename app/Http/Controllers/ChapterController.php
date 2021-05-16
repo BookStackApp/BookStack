@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\View;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Repos\ChapterRepo;
@@ -64,7 +65,7 @@ class ChapterController extends Controller
 
         $sidebarTree = (new BookContents($chapter->book))->getTree();
         $pages = $chapter->getVisiblePages();
-        Views::add($chapter);
+        View::incrementFor($chapter);
 
         $this->setPageTitle($chapter->getShortName());
         return view('chapters.show', [
