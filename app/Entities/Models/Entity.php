@@ -12,6 +12,7 @@ use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Facades\Permissions;
 use BookStack\Interfaces\Favouritable;
 use BookStack\Interfaces\Sluggable;
+use BookStack\Interfaces\Viewable;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
 use BookStack\Traits\HasOwner;
@@ -40,7 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
-abstract class Entity extends Model implements Sluggable, Favouritable
+abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
 {
     use SoftDeletes;
     use HasCreatorAndUpdater;

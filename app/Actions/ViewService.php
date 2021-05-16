@@ -1,7 +1,6 @@
 <?php namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\EntityProvider;
 use DB;
@@ -24,33 +23,6 @@ class ViewService
         $this->view = $view;
         $this->permissionService = $permissionService;
         $this->entityProvider = $entityProvider;
-    }
-
-    /**
-     * Add a view to the given entity.
-     * @param \BookStack\Entities\Models\Entity $entity
-     * @return int
-     */
-    public function add(Entity $entity)
-    {
-        $user = user();
-        if ($user === null || $user->isDefault()) {
-            return 0;
-        }
-        $view = $entity->views()->where('user_id', '=', $user->id)->first();
-        // Add view if model exists
-        if ($view) {
-            $view->increment('views');
-            return $view->views;
-        }
-
-        // Otherwise create new view count
-        $entity->views()->save($this->view->newInstance([
-            'user_id' => $user->id,
-            'views' => 1
-        ]));
-
-        return 1;
     }
 
     /**
@@ -105,13 +77,5 @@ class ViewService
         }
 
         return $all->sortByDesc('last_viewed_at')->slice(0, $count);
-    }
-
-    /**
-     * Reset all view counts by deleting all views.
-     */
-    public function resetAll()
-    {
-        $this->view->truncate();
     }
 }

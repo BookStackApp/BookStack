@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Actions\View;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
@@ -109,7 +110,7 @@ class BookshelfController extends Controller
             ->values()
             ->all();
 
-        Views::add($shelf);
+        View::incrementFor($shelf);
         $this->entityContextManager->setShelfContext($shelf->id);
         $view = setting()->getForCurrentUser('bookshelf_view_type');
 
