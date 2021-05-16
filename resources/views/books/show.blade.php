@@ -118,6 +118,9 @@
 
             <hr class="primary-background">
 
+            @if(signedInUser())
+                @include('partials.entity-favourite-action', ['entity' => $book])
+            @endif
             @include('partials.entity-export-menu', ['entity' => $book])
         </div>
     </div>

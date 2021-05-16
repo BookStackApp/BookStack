@@ -123,6 +123,9 @@
 
             <hr class="primary-background"/>
 
+            @if(signedInUser())
+                @include('partials.entity-favourite-action', ['entity' => $chapter])
+            @endif
             @include('partials.entity-export-menu', ['entity' => $chapter])
         </div>
     </div>
