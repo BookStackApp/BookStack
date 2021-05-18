@@ -63,7 +63,13 @@ class LdapService extends ExternalAuthService
             return null;
         }
 
-        return $users[0];
+        $rfc2307compatibility = $this->config['rfc2307compatibility'];
+        
+        if ($users['count'] > 1 && $rfc2307compatibility) {
+            return $users[1];
+        } else {
+            return $users[0];
+        }
     }
 
     /**
