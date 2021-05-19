@@ -237,6 +237,9 @@ class SocialAuthService
         if ($driverName === 'azure') {
             $driver->with(['resource' => 'https://graph.windows.net']);
         }
+        if ($driverName === 'keycloak') {
+            $driver->scopes(['openid']);
+        }
 
         return $driver;
     }
