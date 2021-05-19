@@ -580,8 +580,9 @@ class PermissionService
 
     /**
      * Filter items that have entities set as a polymorphic relation.
+     * @param Builder|\Illuminate\Database\Query\Builder $query
      */
-    public function filterRestrictedEntityRelations(Builder $query, string $tableName, string $entityIdColumn, string $entityTypeColumn, string $action = 'view'): Builder
+    public function filterRestrictedEntityRelations($query, string $tableName, string $entityIdColumn, string $entityTypeColumn, string $action = 'view')
     {
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
 
