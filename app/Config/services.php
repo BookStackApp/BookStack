@@ -119,8 +119,8 @@ return [
     'keycloak' => [
         'client_id' => env('KEYCLOAK_CLIENT_ID'),
         'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
-	'redirect' => env('APP_URL') . '/login/service/keycloak/callback',
-	'name' => 'Keycloak',
+        'redirect' => env('APP_URL') . '/login/service/keycloak/callback',
+        'name' => 'Keycloak',
         'base_url' => env('KEYCLOAK_BASE_URL'),
         'realms' => env('KEYCLOAK_REALM'),
         'auto_register' => env('KEYCLOAK_AUTO_REGISTER', false),
