@@ -19,7 +19,8 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\Okta\OktaExtendSocialite@handle',
             'SocialiteProviders\GitLab\GitLabExtendSocialite@handle',
             'SocialiteProviders\Twitch\TwitchExtendSocialite@handle',
-            'SocialiteProviders\Discord\DiscordExtendSocialite@handle',
+	    'SocialiteProviders\Discord\DiscordExtendSocialite@handle',
+	    'SocialiteProviders\Keycloak\KeycloakExtendSocialite@handle',
         ],
     ];
 

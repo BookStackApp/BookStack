@@ -31,6 +31,7 @@
         "socialiteproviders/okta": "^4.1",
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
+        "socialiteproviders/keycloak": "^4.1",
         "ssddanbrown/htmldiff": "^v1.0.1"
     },
     "require-dev": {
