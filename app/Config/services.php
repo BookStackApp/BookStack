@@ -122,7 +122,7 @@ return [
 	'redirect' => env('APP_URL') . '/login/service/keycloak/callback',
 	'name' => 'Keycloak',
         'base_url' => env('KEYCLOAK_BASE_URL'),
-        'realms' => env('KEYCLOAK_REALM')
+        'realms' => env('KEYCLOAK_REALM'),
         'auto_register' => env('KEYCLOAK_AUTO_REGISTER', false),
         'auto_confirm' => env('KEYCLOAK_AUTO_CONFIRM_EMAIL', false),
     ],
