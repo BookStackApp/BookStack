@@ -18,28 +18,6 @@ use Illuminate\Support\Collection;
  */
 class RelationMultiModelQuery
 {
-
-    // TODO - Hydrate results to models
-    // TODO - Allow setting additional wheres and all-model columns (From the core relation - eg, last_viewed_at)
-
-//select views.updated_at as last_viewed_at,
-//b.id as book_id, b.name as book_name, b.slug as book_slug, b.description as book_description,
-//s.id as bookshelf_id, s.name as bookshelf_name, s.slug as bookshelf_slug, s.description as bookshelf_description,
-//c.id as chapter_id, c.name as chapter_name, c.slug as chapter_slug, c.description as chapter_description,
-//p.id as page_id, p.name as page_name, p.slug as page_slug, p.text as page_description
-//from views
-//left join bookshelves s on (s.id = views.viewable_id and views.viewable_type = 'BookStack\\Bookshelf' and s.deleted_at is null)
-//left join books b on (b.id = views.viewable_id and views.viewable_type = 'BookStack\\Book' and b.deleted_at is null)
-//left join chapters c on (c.id = views.viewable_id and views.viewable_type = 'BookStack\\Chapter' and c.deleted_at is null)
-//left join pages p on (p.id = views.viewable_id and views.viewable_type = 'BookStack\\Page' and p.deleted_at is null)
-//#     Permissions
-//where exists(
-//select * from joint_permissions jp where jp.entity_id = views.viewable_id and jp.entity_type = views.viewable_type
-//and jp.action = 'view' and jp.role_id in (1, 2, 3, 6, 12) and (jp.has_permission = 1 or (jp.has_permission_own = 1 and jp.owned_by = 1))
-//)
-//and (s.id is not null or b.id is not null or c.id is not null or p.id is not null)
-//and views.user_id = 1
-
     /** @var array<string, array> */
     protected $lookupModels = [];
 
@@ -49,9 +27,52 @@ class RelationMultiModelQuery
     /** @var string */
     protected $polymorphicFieldName;
 
-    public function __construct(Model $relation, string $polymorphicFieldName)
+    /**
+     * The keys are relation fields to fetch.
+     * The values are the name to use for the resulting model attribute.
+     * @var array<string, string>
+     */
+    protected $relationFields = [];
+
+    /**
+     * An array of [string $col, string $operator, mixed $value] where conditions.
+     * @var array<array>>
+     */
+    protected $relationWheres = [];
+
+    /**
+     * Field on the relation field to order by.
+     * @var ?array[string $column, string $direction]
+     */
+    protected $orderByRelationField = null;
+
+    /**
+     * Number of results to take
+     * @var ?int
+     */
+    protected $take = null;
+
+    /**
+     * Number of results to skip.
+     * @var ?int
+     */
+    protected $skip = null;
+
+    /**
+     * Callback that will receive the query for any advanced customization.
+     * @var ?callable
+     */
+    protected $queryCustomizer = null;
+
+    /**
+     * @throws \Exception
+     */
+    public function __construct(string $relation, string $polymorphicFieldName)
     {
-        $this->relation = $relation;
+        $this->relation = (new $relation);
+        if (!$this->relation instanceof Model) {
+            throw new \Exception('Given relation must be a model instance class');
+        }
         $this->polymorphicFieldName = $polymorphicFieldName;
     }
 
@@ -77,6 +98,78 @@ class RelationMultiModelQuery
     }
 
     /**
+     * Bring back a field from the relation object with the model results.
+     */
+    public function withRelationField(string $fieldName, string $modelAttributeName): self
+    {
+        $this->relationFields[$fieldName] = $modelAttributeName;
+        return $this;
+    }
+
+    /**
+     * Add a where condition to the query for the main relation table.
+     */
+    public function whereRelation(string $column, string $operator, $value): self
+    {
+        $this->relationWheres[] = [$column, $operator, $value];
+        return $this;
+    }
+
+    /**
+     * Order by the given relation column.
+     */
+    public function orderByRelation(string $column, string $direction = 'asc'): self
+    {
+        $this->orderByRelationField = [$column, $direction];
+        return $this;
+    }
+
+    /**
+     * Skip the given $count of results in the query.
+     */
+    public function skip(?int $count): self
+    {
+        $this->skip = $count;
+        return $this;
+    }
+
+    /**
+     * Take the given $count of results in the query.
+     */
+    public function take(?int $count): self
+    {
+        $this->take = $count;
+        return $this;
+    }
+
+    /**
+     * Pass a callable, which will receive the base query
+     * to perform additional custom operations on the query.
+     */
+    public function customizeUsing(callable $customizer): self
+    {
+        $this->queryCustomizer = $customizer;
+        return $this;
+    }
+
+    /**
+     * Get the SQL from the core query being ran.
+     */
+    public function toSql(): string
+    {
+        return $this->build()->toSql();
+    }
+
+    /**
+     * Run the query and get the results.
+     */
+    public function run(): Collection
+    {
+        $results = $this->build()->get();
+        return $this->hydrateModelsFromResults($results);
+    }
+
+    /**
      * Build the core query to run.
      */
     protected function build(): Builder
@@ -84,6 +177,14 @@ class RelationMultiModelQuery
         $query = $this->relation->newQuery()->toBase();
         $relationTable = $this->relation->getTable();
         $modelTables = [];
+
+        // Load relation fields
+        foreach ($this->relationFields as $relationField => $alias) {
+            $query->addSelect(
+                $relationTable . '.' . $relationField . ' as '
+                . $relationTable . '@' . $relationField
+            );
+        }
 
         // Load model selects & joins
         foreach ($this->lookupModels as $lookupModel => $columns) {
@@ -107,11 +208,34 @@ class RelationMultiModelQuery
             }
         });
 
+        // Add relation wheres
+        foreach ($this->relationWheres as [$column, $operator, $value]) {
+            $query->where($relationTable . '.' . $column, $operator, $value);
+        }
+
+        // Skip and take
+        if (!is_null($this->skip)) {
+            $query->skip($this->skip);
+        }
+        if (!is_null($this->take)) {
+            $query->take($this->take);
+        }
+        if (!is_null($this->queryCustomizer)) {
+            $customizer = $this->queryCustomizer;
+            $customizer($query);
+        }
+        if (!is_null($this->orderByRelationField)) {
+            $query->orderBy($relationTable . '.' . $this->orderByRelationField[0], $this->orderByRelationField[1]);
+        }
+
         $this->applyPermissionsToQuery($query, 'view');
 
         return $query;
     }
 
+    /**
+     * Run the query through the permission system.
+     */
     protected function applyPermissionsToQuery(Builder $query, string $action)
     {
         $permissions = app()->make(PermissionService::class);
@@ -131,24 +255,54 @@ class RelationMultiModelQuery
     {
         $selectArray = [];
         foreach ($columns as $column) {
-            $selectArray[] = $table . '.' . $column . ' as '.  $table . '_' . $column;
+            $selectArray[] = $table . '.' . $column . ' as ' . $table . '@' . $column;
         }
         return $selectArray;
     }
 
     /**
-     * Get the SQL from the core query being ran.
+     * Hydrate a collection of result data into models.
      */
-    public function toSql(): string
+    protected function hydrateModelsFromResults(Collection $results): Collection
     {
-        return $this->build()->toSql();
+        $modelByIdColumn = [];
+        foreach ($this->lookupModels as $lookupModel => $columns) {
+            /** @var Model $model */
+            $model = new $lookupModel;
+            $modelByIdColumn[$model->getTable() . '@id'] = $model;
+        }
+
+        return $results->map(function ($result) use ($modelByIdColumn) {
+            foreach ($modelByIdColumn as $idColumn => $modelInstance) {
+                if (isset($result->$idColumn)) {
+                    return $this->hydrateModelFromResult($modelInstance, $result);
+                }
+            }
+            return null;
+        });
     }
 
     /**
-     * Run the query and get the results.
+     * Hydrate the given model type with the database result.
      */
-    public function run(): Collection
+    protected function hydrateModelFromResult(Model $model, \stdClass $result): Model
     {
-        return $this->build()->get();
+        $modelPrefix = $model->getTable() . '@';
+        $relationPrefix = $this->relation->getTable() . '@';
+        $attrs = [];
+
+        foreach ((array) $result as $col => $value) {
+            if (strpos($col, $modelPrefix) === 0) {
+                $attrName = substr($col, strlen($modelPrefix));
+                $attrs[$attrName] = $value;
+            }
+            if (strpos($col, $relationPrefix) === 0) {
+                $col = substr($col, strlen($relationPrefix));
+                $attrName = $this->relationFields[$col];
+                $attrs[$attrName] = $value;
+            }
+        }
+
+        return $model->newInstance()->forceFill($attrs);
     }
 }
