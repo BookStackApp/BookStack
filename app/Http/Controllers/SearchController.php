@@ -1,6 +1,7 @@
 <?php namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ViewService;
+use BookStack\Entities\Queries\Popular;
 use BookStack\Entities\Tools\SearchRunner;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Tools\SearchOptions;
@@ -82,7 +83,7 @@ class SearchController extends Controller
             $searchTerm .= ' {type:'. implode('|', $entityTypes) .'}';
             $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20, $permission)['results'];
         } else {
-            $entities = $this->viewService->getPopular(20, 0, $entityTypes, $permission);
+            $entities = (new Popular)->run(20, 0, $entityTypes, $permission);
         }
 
         return view('search.entity-ajax-list', ['entities' => $entities]);

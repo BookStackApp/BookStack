@@ -42,6 +42,18 @@
             </div>
 
             <div>
+                @if(count($favourites) > 0)
+                    <div id="top-favourites" class="card mb-xl">
+                        <h3 class="card-title">{{ trans('entities.my_most_viewed_favourites') }}</h3>
+                        <div class="px-m">
+                            @include('partials.entity-list', [
+                            'entities' => $favourites,
+                            'style' => 'compact',
+                            ])
+                        </div>
+                    </div>
+                @endif
+
                 <div id="recent-pages" class="card mb-xl">
                     <h3 class="card-title"><a class="no-color" href="{{ url("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h3>
                     <div id="recently-updated-pages" class="px-m">

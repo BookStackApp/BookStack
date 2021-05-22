@@ -42,7 +42,7 @@ class View extends Model
             'user_id' => $user->id,
         ], ['views' => 0]);
 
-        $view->save(['views' => $view->views + 1]);
+        $view->forceFill(['views' => $view->views + 1])->save();
 
         return $view->views;
     }
