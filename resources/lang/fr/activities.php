@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Étagère supprimée avec succès',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" a été ajouté dans vos favoris',
+    'favourite_remove_notification' => '":name" a été supprimé de vos favoris',
 
     // Other
     'commented_on'                => 'a commenté',
