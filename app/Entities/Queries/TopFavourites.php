@@ -1,34 +1,33 @@
 <?php namespace BookStack\Entities\Queries;
 
-use BookStack\Actions\View;
+use BookStack\Actions\Favourite;
 use Illuminate\Database\Query\JoinClause;
-use Illuminate\Support\Facades\DB;
 
 class TopFavourites extends EntityQuery
 {
     public function run(int $count, int $skip = 0)
     {
         $user = user();
-        if ($user === null || $user->isDefault()) {
+        if (is_null($user) || $user->isDefault()) {
             return collect();
         }
 
         $query = $this->permissionService()
-            ->filterRestrictedEntityRelations(View::query(), 'views', 'viewable_id', 'viewable_type', 'view')
-            ->select('*', 'viewable_id', 'viewable_type', DB::raw('SUM(views) as view_count'))
-            ->groupBy('viewable_id', 'viewable_type')
-            ->rightJoin('favourites', function (JoinClause $join) {
-                $join->on('views.viewable_id', '=', 'favourites.favouritable_id');
-                $join->on('views.viewable_type', '=', 'favourites.favouritable_type');
-                $join->where('favourites.user_id', '=', user()->id);
+            ->filterRestrictedEntityRelations(Favourite::query(), 'favourites', 'favouritable_id', 'favouritable_type', 'view')
+            ->select('favourites.*')
+            ->leftJoin('views', function (JoinClause $join) {
+                $join->on('favourites.favouritable_id', '=', 'views.viewable_id');
+                $join->on('favourites.favouritable_type', '=', 'views.viewable_type');
+                $join->where('views.user_id', '=', user()->id);
             })
-            ->orderBy('view_count', 'desc');
+            ->orderBy('views.views', 'desc')
+            ->where('favourites.user_id', '=', user()->id);
 
-        return $query->with('viewable')
+        return $query->with('favouritable')
             ->skip($skip)
             ->take($count)
             ->get()
-            ->pluck('viewable')
+            ->pluck('favouritable')
             ->filter();
     }
 }
