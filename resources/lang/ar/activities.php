@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'تم تحديث الرف',
     'bookshelf_delete_notification'    => 'تم حذف الرف بنجاح',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'تم التعليق',
     'permissions_update'          => 'تحديث الأذونات',
