@@ -1,5 +1,6 @@
 <?php namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\View;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditActivity;
@@ -141,7 +142,7 @@ class PageController extends Controller
             $page->load(['comments.createdBy']);
         }
 
-        Views::add($page);
+        View::incrementFor($page);
         $this->setPageTitle($page->getShortName());
         return view('pages.show', [
             'page' => $page,
@@ -337,9 +338,9 @@ class PageController extends Controller
             ->paginate(20)
             ->setPath(url('/pages/recently-updated'));
 
-        return view('pages.detailed-listing', [
+        return view('common.detailed-listing-paginated', [
             'title' => trans('entities.recently_updated_pages'),
-            'pages' => $pages
+            'entities' => $pages
         ]);
     }
 

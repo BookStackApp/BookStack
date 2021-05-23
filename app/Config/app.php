@@ -184,11 +184,9 @@ return [
 
         // Custom BookStack
         'Activity' => BookStack\Facades\Activity::class,
-        'Views'    => BookStack\Facades\Views::class,
         'Images'   => BookStack\Facades\Images::class,
         'Permissions' => BookStack\Facades\Permissions::class,
         'Theme'    => BookStack\Facades\Theme::class,
-
     ],
 
     // Proxy configuration

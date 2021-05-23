@@ -62,6 +62,9 @@
                         </span>
                         <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                             <li>
+                                <a href="{{ url('/favourites') }}">@icon('star'){{ trans('entities.my_favourites') }}</a>
+                            </li>
+                            <li>
                                 <a href="{{ $currentUser->getProfileUrl() }}">@icon('user'){{ trans('common.view_profile') }}</a>
                             </li>
                             <li>
