@@ -35,11 +35,11 @@ class HomeController extends Controller
         $recents = $this->isSignedIn() ?
             (new RecentlyViewed)->run(12*$recentFactor, 1)
             : Book::visible()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
-        $faviourites = (new TopFavourites)->run(6, 1);
+        $favourites = (new TopFavourites)->run(6);
         $recentlyUpdatedPages = Page::visible()->with('book')
             ->where('draft', false)
             ->orderBy('updated_at', 'desc')
-            ->take($faviourites->count() > 0 ? 6 : 12)
+            ->take($favourites->count() > 0 ? 6 : 12)
             ->get();
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
@@ -53,7 +53,7 @@ class HomeController extends Controller
             'recents' => $recents,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
             'draftPages' => $draftPages,
-            'favourites' => $faviourites,
+            'favourites' => $favourites,
         ];
 
         // Add required list ordering & sorting for books & shelves views.

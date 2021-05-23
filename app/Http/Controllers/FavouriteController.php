@@ -3,12 +3,31 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Queries\TopFavourites;
 use BookStack\Interfaces\Favouritable;
 use BookStack\Model;
 use Illuminate\Http\Request;
 
 class FavouriteController extends Controller
 {
+    /**
+     * Show a listing of all favourite items for the current user.
+     */
+    public function index(Request $request)
+    {
+        $viewCount = 20;
+        $page = intval($request->get('page', 1));
+        $favourites = (new TopFavourites)->run($viewCount + 1, (($page - 1) * $viewCount));
+
+        $hasMoreLink = ($favourites->count() > $viewCount) ? url("/favourites?page=" . ($page+1)) : null;
+
+        return view('common.detailed-listing-with-more', [
+            'title' => trans('entities.my_favourites'),
+            'entities' => $favourites->slice(0, $viewCount),
+            'hasMoreLink' => $hasMoreLink,
+        ]);
+    }
+
     /**
      * Add a new item as a favourite.
      */

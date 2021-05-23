@@ -1,13 +1,12 @@
 <?php namespace BookStack\Entities\Queries;
 
-
 use BookStack\Actions\View;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 
 class TopFavourites extends EntityQuery
 {
-    public function run(int $count, int $page)
+    public function run(int $count, int $skip = 0)
     {
         $user = user();
         if ($user === null || $user->isDefault()) {
@@ -26,11 +25,10 @@ class TopFavourites extends EntityQuery
             ->orderBy('view_count', 'desc');
 
         return $query->with('viewable')
-            ->skip($count * ($page - 1))
+            ->skip($skip)
             ->take($count)
             ->get()
             ->pluck('viewable')
             ->filter();
     }
-
 }

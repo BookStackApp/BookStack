@@ -157,6 +157,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/templates/{templateId}', 'PageTemplateController@get');
 
     // Favourites
+    Route::get('/favourites', 'FavouriteController@index');
     Route::post('/favourites/add', 'FavouriteController@add');
     Route::post('/favourites/remove', 'FavouriteController@remove');
 
