@@ -40,6 +40,8 @@ return [
     'remove' => 'Премахване',
     'add' => 'Добави',
     'fullscreen' => 'Пълен екран',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => 'Опции за сортиране',
