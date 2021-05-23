@@ -27,6 +27,8 @@ return [
     'images' => '画像',
     'my_recent_drafts' => '最近の下書き',
     'my_recently_viewed' => '閲覧履歴',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'なにもページを閲覧していません',
     'no_pages_recently_created' => '最近作成されたページはありません',
     'no_pages_recently_updated' => '最近更新されたページはありません。',
