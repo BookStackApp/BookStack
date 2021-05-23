@@ -40,6 +40,8 @@ return [
     'remove' => 'Видалити',
     'add' => 'Додати',
     'fullscreen' => 'На весь екран',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => 'Параметри сортування',
