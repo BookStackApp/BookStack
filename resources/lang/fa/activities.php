@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'deleted bookshelf',
     'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'commented on',
     'permissions_update'          => 'updated permissions',
