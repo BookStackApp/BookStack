@@ -338,9 +338,9 @@ class PageController extends Controller
             ->paginate(20)
             ->setPath(url('/pages/recently-updated'));
 
-        return view('pages.detailed-listing', [
+        return view('common.detailed-listing-paginated', [
             'title' => trans('entities.recently_updated_pages'),
-            'pages' => $pages
+            'entities' => $pages
         ]);
     }
 

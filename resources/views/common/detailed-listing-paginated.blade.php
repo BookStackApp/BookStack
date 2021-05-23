@@ -6,11 +6,11 @@
             <h1 class="list-heading">{{ $title }}</h1>
 
             <div class="book-contents">
-                @include('partials.entity-list', ['entities' => $pages, 'style' => 'detailed'])
+                @include('partials.entity-list', ['entities' => $entities, 'style' => 'detailed'])
             </div>
 
             <div class="text-center">
-                {!! $pages->links() !!}
+                {!! $entities->links() !!}
             </div>
         </main>
     </div>
