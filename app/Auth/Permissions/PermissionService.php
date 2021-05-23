@@ -588,7 +588,7 @@ class PermissionService
 
         $q = $query->where(function ($query) use ($tableDetails, $action) {
             $query->whereExists(function ($permissionQuery) use (&$tableDetails, $action) {
-                $permissionQuery->select('id')->from('joint_permissions')
+                $permissionQuery->select(['role_id'])->from('joint_permissions')
                     ->whereRaw('joint_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                     ->whereRaw('joint_permissions.entity_type=' . $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
                     ->where('action', '=', $action)

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Http\Controllers;
 
-use BookStack\Actions\ViewService;
 use BookStack\Entities\Queries\Popular;
 use BookStack\Entities\Tools\SearchRunner;
 use BookStack\Entities\Tools\ShelfContext;
@@ -10,16 +9,13 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    protected $viewService;
     protected $searchRunner;
     protected $entityContextManager;
 
     public function __construct(
-        ViewService $viewService,
         SearchRunner $searchRunner,
         ShelfContext $entityContextManager
     ) {
-        $this->viewService = $viewService;
         $this->searchRunner = $searchRunner;
         $this->entityContextManager = $entityContextManager;
     }
