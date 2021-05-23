@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => '已刪除書架',
     'bookshelf_delete_notification'    => '書架已刪除成功',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => '評論',
     'permissions_update'          => '更新權限',
