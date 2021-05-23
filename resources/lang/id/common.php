@@ -40,6 +40,8 @@ return [
     'remove' => 'Hapus',
     'add' => 'Tambah',
     'fullscreen' => 'Layar Penuh',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => 'Sortir Pilihan',
