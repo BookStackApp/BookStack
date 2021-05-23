@@ -27,6 +27,8 @@ return [
     'images' => 'Imagens',
     'my_recent_drafts' => 'Meus Rascunhos Recentes',
     'my_recently_viewed' => 'Visualizados por mim Recentemente',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Você não visualizou nenhuma página',
     'no_pages_recently_created' => 'Nenhuma página criada recentemente',
     'no_pages_recently_updated' => 'Nenhuma página atualizada recentemente',
