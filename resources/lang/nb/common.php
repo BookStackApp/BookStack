@@ -40,6 +40,8 @@ return [
     'remove' => 'Fjern',
     'add' => 'Legg til',
     'fullscreen' => 'Fullskjerm',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativer',
