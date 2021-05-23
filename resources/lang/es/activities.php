@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Estante eliminado correctamente',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '".name" ha sido añadido a sus favoritos',
+    'favourite_remove_notification' => '".name" ha sido eliminado de sus favoritos',
 
     // Other
     'commented_on'                => 'comentada el',
