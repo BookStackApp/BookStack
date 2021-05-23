@@ -40,6 +40,8 @@ return [
     'remove' => '移除',
     'add' => '新增',
     'fullscreen' => '全螢幕',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => '排序選項',
