@@ -40,6 +40,8 @@ return [
     'remove' => 'Xóa bỏ',
     'add' => 'Thêm',
     'fullscreen' => 'Toàn màn hình',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',
