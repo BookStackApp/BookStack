@@ -27,6 +27,8 @@ return [
     'images' => 'Afbeeldingen',
     'my_recent_drafts' => 'Mijn Concepten',
     'my_recently_viewed' => 'Mijn Recent Bekeken',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Je hebt nog niets bekeken',
     'no_pages_recently_created' => 'Er zijn geen recent aangemaakte pagina\'s',
     'no_pages_recently_updated' => 'Er zijn geen recente wijzigingen',
