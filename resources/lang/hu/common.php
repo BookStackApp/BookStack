@@ -40,6 +40,8 @@ return [
     'remove' => 'Eltávolítás',
     'add' => 'Hozzáadás',
     'fullscreen' => 'Teljes képernyő',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => 'Rendezési beállítások',
