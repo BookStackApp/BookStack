@@ -27,6 +27,8 @@ return [
     'images' => 'Imatges',
     'my_recent_drafts' => 'Els vostres esborranys recents',
     'my_recently_viewed' => 'Les vostres visualitzacions recents',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'No heu vist cap pàgina',
     'no_pages_recently_created' => 'No s\'ha creat cap pàgina fa poc',
     'no_pages_recently_updated' => 'No s\'ha actualitzat cap pàgina fa poc',
