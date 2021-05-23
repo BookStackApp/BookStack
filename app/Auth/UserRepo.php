@@ -184,6 +184,7 @@ class UserRepo
     {
         $user->socialAccounts()->delete();
         $user->apiTokens()->delete();
+        $user->favourites()->delete();
         $user->delete();
         
         // Delete user profile images
