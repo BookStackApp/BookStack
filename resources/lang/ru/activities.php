@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'удалил полку',
     'bookshelf_delete_notification'    => 'Полка успешно удалена',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'прокомментировал',
     'permissions_update'          => 'обновил разрешения',
