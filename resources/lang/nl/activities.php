@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'verwijderde boekenplank',
     'bookshelf_delete_notification'    => 'Boekenplank succesvol verwijderd',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'reageerde op',
     'permissions_update'          => 'wijzigde permissies',
