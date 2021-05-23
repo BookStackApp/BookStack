@@ -40,6 +40,8 @@ return [
     'remove' => 'Odebrat',
     'add' => 'Přidat',
     'fullscreen' => 'Celá obrazovka',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',
