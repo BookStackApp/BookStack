@@ -40,6 +40,8 @@ return [
     'remove' => 'Kaldır',
     'add' => 'Ekle',
     'fullscreen' => 'Tam Ekran',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
 
     // Sort Options
     'sort_options' => 'Sıralama Seçenekleri',
