@@ -1,5 +1,6 @@
 <?php namespace BookStack\Auth;
 
+use BookStack\Actions\Favourite;
 use BookStack\Api\ApiToken;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Interfaces\Loggable;
@@ -238,6 +239,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function apiTokens(): HasMany
     {
         return $this->hasMany(ApiToken::class);
+    }
+
+    /**
+     * Get the favourite instances for this user.
+     */
+    public function favourites(): HasMany
+    {
+        return $this->hasMany(Favourite::class);
     }
 
     /**

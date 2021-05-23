@@ -580,14 +580,15 @@ class PermissionService
 
     /**
      * Filter items that have entities set as a polymorphic relation.
+     * @param Builder|\Illuminate\Database\Query\Builder $query
      */
-    public function filterRestrictedEntityRelations(Builder $query, string $tableName, string $entityIdColumn, string $entityTypeColumn, string $action = 'view'): Builder
+    public function filterRestrictedEntityRelations($query, string $tableName, string $entityIdColumn, string $entityTypeColumn, string $action = 'view')
     {
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
 
         $q = $query->where(function ($query) use ($tableDetails, $action) {
             $query->whereExists(function ($permissionQuery) use (&$tableDetails, $action) {
-                $permissionQuery->select('id')->from('joint_permissions')
+                $permissionQuery->select(['role_id'])->from('joint_permissions')
                     ->whereRaw('joint_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                     ->whereRaw('joint_permissions.entity_type=' . $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
                     ->where('action', '=', $action)

@@ -317,6 +317,7 @@ class TrashCan
         $entity->jointPermissions()->delete();
         $entity->searchTerms()->delete();
         $entity->deletions()->delete();
+        $entity->favourites()->delete();
 
         if ($entity instanceof HasCoverImage && $entity->cover) {
             $imageService = app()->make(ImageService::class);

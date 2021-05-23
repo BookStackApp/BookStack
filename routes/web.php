@@ -152,8 +152,14 @@ Route::group(['middleware' => 'auth'], function () {
     // User Search
     Route::get('/search/users/select', 'UserSearchController@forSelect');
 
+    // Template System
     Route::get('/templates', 'PageTemplateController@list');
     Route::get('/templates/{templateId}', 'PageTemplateController@get');
+
+    // Favourites
+    Route::get('/favourites', 'FavouriteController@index');
+    Route::post('/favourites/add', 'FavouriteController@add');
+    Route::post('/favourites/remove', 'FavouriteController@remove');
 
     // Other Pages
     Route::get('/', 'HomeController@index');
