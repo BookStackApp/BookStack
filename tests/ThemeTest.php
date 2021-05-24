@@ -1,6 +1,5 @@
 <?php namespace Tests;
 
-use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
@@ -149,7 +148,7 @@ class ThemeTest extends TestCase
         $this->setSettings(['registration-enabled' => 'true']);
 
         $user = factory(User::class)->make();
-        $this->post('/register', ['email' => $user->email, 'name' => $user->name,  'password' => 'password']);
+        $this->post('/register', ['email' => $user->email, 'name' => $user->name, 'password' => 'password']);
 
         $this->assertCount(2, $args);
         $this->assertEquals('standard', $args[0]);
@@ -183,6 +182,28 @@ class ThemeTest extends TestCase
         $loginResp = $this->get('/login');
         $loginResp->assertSee('Super Cat Name');
     }
+
+
+    public function test_add_social_driver_allows_a_configure_for_redirect_callback_to_be_passed()
+    {
+        Theme::addSocialDriver(
+            'discord',
+            [
+                'client_id' => 'abc123',
+                'client_secret' => 'def456',
+                'name' => 'Super Cat Name',
+            ],
+            'SocialiteProviders\Discord\DiscordExtendSocialite@handle',
+            function ($driver) {
+                $driver->with(['donkey' => 'donut']);
+            }
+        );
+
+        $loginResp = $this->get('/login/service/discord');
+        $redirect = $loginResp->headers->get('location');
+        $this->assertStringContainsString('donkey=donut', $redirect);
+    }
+
 
     protected function usingThemeFolder(callable $callback)
     {
