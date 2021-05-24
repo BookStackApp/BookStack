@@ -190,7 +190,7 @@
                             <h5 id="{{ $endpoint['name'] }}" class="text-mono mb-m">
                                 <span class="api-method" data-method="{{ $endpoint['method'] }}">{{ $endpoint['method'] }}</span>
                                 @if($endpoint['controller_method_kebab'] === 'list')
-                                    <a style="color: inherit;" target="_blank" href="{{ url($endpoint['uri']) }}">{{ url($endpoint['uri']) }}</a>
+                                    <a style="color: inherit;" target="_blank" rel="noopener" href="{{ url($endpoint['uri']) }}">{{ url($endpoint['uri']) }}</a>
                                 @else
                                     {{ url($endpoint['uri']) }}
                                 @endif
