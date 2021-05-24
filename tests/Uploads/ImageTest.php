@@ -14,7 +14,7 @@ class ImageTest extends TestCase
 
     public function test_image_upload()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $admin = $this->getAdmin();
         $this->actingAs($admin);
 
@@ -38,7 +38,7 @@ class ImageTest extends TestCase
 
     public function test_image_display_thumbnail_generation_does_not_increase_image_size()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $admin = $this->getAdmin();
         $this->actingAs($admin);
 
@@ -108,7 +108,7 @@ class ImageTest extends TestCase
 
     public function test_image_usage()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
@@ -128,7 +128,7 @@ class ImageTest extends TestCase
 
     public function test_php_files_cannot_be_uploaded()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $admin = $this->getAdmin();
         $this->actingAs($admin);
 
@@ -150,7 +150,7 @@ class ImageTest extends TestCase
 
     public function test_php_like_files_cannot_be_uploaded()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $admin = $this->getAdmin();
         $this->actingAs($admin);
 
@@ -202,7 +202,7 @@ class ImageTest extends TestCase
         ];
         foreach ($badNames as $name) {
             $galleryFile = $this->getTestImage($name);
-            $page = Page::first();
+            $page = Page::query()->first();
             $badPath = $this->getTestImagePath('gallery', $name);
             $this->deleteImage($badPath);
 
@@ -227,7 +227,7 @@ class ImageTest extends TestCase
         config()->set('filesystems.images', 'local_secure');
         $this->asEditor();
         $galleryFile = $this->getTestImage('my-secure-test-upload.png');
-        $page = Page::first();
+        $page = Page::query()->first();
         $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m') . '/my-secure-test-upload.png');
 
         $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
@@ -245,7 +245,7 @@ class ImageTest extends TestCase
         config()->set('filesystems.images', 'local_secure');
         $this->asEditor();
         $galleryFile = $this->getTestImage('my-secure-test-upload.png');
-        $page = Page::first();
+        $page = Page::query()->first();
         $expectedPath = storage_path('uploads/images/gallery/' . Date('Y-m') . '/my-secure-test-upload.png');
 
         $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
@@ -282,7 +282,7 @@ class ImageTest extends TestCase
 
     public function test_image_delete()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $this->asAdmin();
         $imageName = 'first-image.png';
         $relPath = $this->getTestImagePath('gallery', $imageName);
@@ -304,7 +304,7 @@ class ImageTest extends TestCase
 
     public function test_image_delete_does_not_delete_similar_images()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $this->asAdmin();
         $imageName = 'first-image.png';
 
@@ -383,7 +383,7 @@ class ImageTest extends TestCase
 
     public function test_deleted_unused_images()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $admin = $this->getAdmin();
         $this->actingAs($admin);
 
