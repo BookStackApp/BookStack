@@ -8,13 +8,11 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\UserUpdateException;
-use BookStack\Uploads\Image;
 use BookStack\Uploads\UserAvatars;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Images;
 use Log;
 
 class UserRepo
@@ -188,13 +186,7 @@ class UserRepo
         $user->delete();
         
         // Delete user profile images
-        $profileImages = Image::query()->where('type', '=', 'user')
-            ->where('uploaded_to', '=', $user->id)
-            ->get();
-
-        foreach ($profileImages as $image) {
-            Images::destroy($image);
-        }
+        $this->userAvatar->destroyAllForUser($user);
 
         if (!empty($newOwnerId)) {
             $newOwner = User::query()->find($newOwnerId);
