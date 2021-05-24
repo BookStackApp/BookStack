@@ -227,7 +227,7 @@
   border: 1px solid #CCC;
   overflow: hidden;
   font-size: 0.85em;
-  a, a:hover, a:active {
+  a, span, a:hover, a:active {
     padding: 4px 8px;
     @include lightDark(color, #777, #999);
     transition: background-color ease-in-out 80ms;
