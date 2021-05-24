@@ -115,6 +115,16 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
             'password' => Str::random(32),
         ];
 
-        return $this->registrationService->registerUser($details, null, false);
+        $user = $this->registrationService->registerUser($details, null, false);
+
+        if (config('services.ldap.import_thumbnail_photos')) {
+            $imageService = app()->make(ImageService::class);
+            $image = $imageService->saveNewFromBase64Uri('data:image/jpg;base64,'.base64_encode($ldapUserDetails['avatar']), $ldapUserDetails['uid'].'.jpg', 'user');
+
+            $user['image_id'] = $image->id;
+            $user->save();
+        }
+
+        return $user;
     }
 }

@@ -76,6 +76,7 @@ class LdapService extends ExternalAuthService
         $idAttr = $this->config['id_attribute'];
         $emailAttr = $this->config['email_attribute'];
         $displayNameAttr = $this->config['display_name_attribute'];
+        $thumbnailAttr = $this->config['thumbnail_attribute'];
 
         $user = $this->getUserWithAttributes($userName, ['cn', 'dn', $idAttr, $emailAttr, $displayNameAttr]);
 
@@ -89,6 +90,7 @@ class LdapService extends ExternalAuthService
             'name' => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
             'dn' => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
+            'avatar'=> $this->getUserResponseProperty($user, $thumbnailAttr, null),
         ];
 
         if ($this->config['dump_user_details']) {
