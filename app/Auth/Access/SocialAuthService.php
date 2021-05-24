@@ -19,10 +19,37 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SocialAuthService
 {
+    /**
+     * The core socialite library used.
+     * @var Socialite
+     */
     protected $socialite;
-    protected $socialAccount;
 
-    protected $validSocialDrivers = ['google', 'github', 'facebook', 'slack', 'twitter', 'azure', 'okta', 'gitlab', 'twitch', 'discord'];
+    /**
+     * The default built-in social drivers we support.
+     * @var string[]
+     */
+    protected $validSocialDrivers = [
+        'google',
+        'github',
+        'facebook',
+        'slack',
+        'twitter',
+        'azure',
+        'okta',
+        'gitlab',
+        'twitch',
+        'discord'
+    ];
+
+    /**
+     * Callbacks to run when configuring a social driver
+     * for an initial redirect action.
+     * Array is keyed by social driver name.
+     * Callbacks are passed an instance of the driver.
+     * @var array<string, callable>
+     */
+    protected $configureForRedirectCallbacks = [];
 
     /**
      * SocialAuthService constructor.
@@ -39,7 +66,7 @@ class SocialAuthService
     public function startLogIn(string $socialDriver): RedirectResponse
     {
         $driver = $this->validateDriver($socialDriver);
-        return $this->getSocialDriver($driver)->redirect();
+        return $this->getDriverForRedirect($driver)->redirect();
     }
 
     /**
@@ -49,7 +76,7 @@ class SocialAuthService
     public function startRegister(string $socialDriver): RedirectResponse
     {
         $driver = $this->validateDriver($socialDriver);
-        return $this->getSocialDriver($driver)->redirect();
+        return $this->getDriverForRedirect($driver)->redirect();
     }
 
     /**
@@ -227,7 +254,7 @@ class SocialAuthService
     /**
      * Provide redirect options per service for the Laravel Socialite driver
      */
-    public function getSocialDriver(string $driverName): Provider
+    protected function getDriverForRedirect(string $driverName): Provider
     {
         $driver = $this->socialite->driver($driverName);
 
@@ -236,6 +263,10 @@ class SocialAuthService
         }
         if ($driverName === 'azure') {
             $driver->with(['resource' => 'https://graph.windows.net']);
+        }
+
+        if (isset($this->configureForRedirectCallbacks[$driverName])) {
+            $this->configureForRedirectCallbacks[$driverName]($driver);
         }
 
         return $driver;
@@ -248,12 +279,19 @@ class SocialAuthService
      * within the `Config/services.php` file.
      * Handler should be a Class@method handler to the SocialiteWasCalled event.
      */
-    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler)
-    {
+    public function addSocialDriver(
+        string $driverName,
+        array $config,
+        string $socialiteHandler,
+        callable $configureForRedirect = null
+    ) {
         $this->validSocialDrivers[] = $driverName;
         config()->set('services.' . $driverName, $config);
         config()->set('services.' . $driverName . '.redirect', url('/login/service/' . $driverName . '/callback'));
         config()->set('services.' . $driverName . '.name', $config['name'] ?? $driverName);
         Event::listen(SocialiteWasCalled::class, $socialiteHandler);
+        if (!is_null($configureForRedirect)) {
+            $this->configureForRedirectCallbacks[$driverName] = $configureForRedirect;
+        }
     }
 }
