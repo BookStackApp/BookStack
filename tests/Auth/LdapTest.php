@@ -4,7 +4,6 @@ use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Role;
 use BookStack\Auth\Access\Ldap;
 use BookStack\Auth\User;
-use BookStack\Exceptions\LdapException;
 use Mockery\MockInterface;
 use Tests\BrowserKitTest;
 
@@ -35,6 +34,7 @@ class LdapTest extends BrowserKitTest
             'services.ldap.user_filter' => '(&(uid=${user}))',
             'services.ldap.follow_referrals' => false,
             'services.ldap.tls_insecure' => false,
+            'services.ldap.thumbnail_attribute' => null,
         ]);
         $this->mockLdap = \Mockery::mock(Ldap::class);
         $this->app[Ldap::class] = $this->mockLdap;
@@ -667,5 +667,29 @@ class LdapTest extends BrowserKitTest
         config()->set(['logging.failed_login.message' => 'Failed login for %u']);
         $this->runFailedAuthLogin();
         $this->assertTrue($log->hasWarningThatContains('Failed login for timmyjenkins'));
+    }
+
+    public function test_thumbnail_attribute_used_as_user_avatar_if_configured()
+    {
+        config()->set(['services.ldap.thumbnail_attribute' => 'jpegPhoto']);
+
+        $this->commonLdapMocks(1, 1, 1, 2, 1);
+        $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'cn' => [$this->mockUser->name],
+                'dn' => $ldapDn,
+                'jpegphoto' => [base64_decode('/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8Q
+EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=')],
+                'mail' => [$this->mockUser->email]
+            ]]);
+
+        $this->mockUserLogin()
+            ->seePageIs('/');
+
+        $user = User::query()->where('email', '=' , $this->mockUser->email)->first();
+        $this->assertNotNull($user->avatar);
+        $this->assertEquals('8c90748342f19b195b9c6b4eff742ded', md5_file(public_path($user->avatar->path)));
     }
 }
