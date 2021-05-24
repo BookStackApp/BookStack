@@ -550,6 +550,17 @@ ul.pagination {
   }
 }
 
+.entity-item-tags {
+  font-size: .75rem;
+  opacity: 1;
+  .primary-background-light {
+    background: transparent;
+  }
+  .tag-name {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
 .dropdown-container {
   display: inline-block;
   vertical-align: top;

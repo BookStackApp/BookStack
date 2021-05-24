@@ -1,4 +1,5 @@
-@component('partials.entity-list-item-basic', ['entity' => $entity, 'showTags' => $showTags])
+@component('partials.entity-list-item-basic', ['entity' => $entity])
+
 <div class="entity-item-snippet">
 
     @if($showPath ?? false)
@@ -12,4 +13,11 @@
 
     <p class="text-muted break-text">{{ $entity->getExcerpt() }}</p>
 </div>
+
+@if(($showTags ?? false) && $entity->tags->count() > 0)
+    <div class="entity-item-tags mt-xs">
+        @include('components.tag-list', ['entity' => $entity, 'linked' => false ])
+    </div>
+@endif
+
 @endcomponent
