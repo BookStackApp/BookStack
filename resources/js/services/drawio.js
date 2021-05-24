@@ -1,5 +1,5 @@
 let iFrame = null;
-
+let lastApprovedOrigin;
 let onInit, onSave;
 
 /**
@@ -19,15 +19,22 @@ function show(drawioUrl, onInitCallback, onSaveCallback) {
     iFrame.setAttribute('class', 'fullscreen');
     iFrame.style.backgroundColor = '#FFFFFF';
     document.body.appendChild(iFrame);
+    lastApprovedOrigin = (new URL(drawioUrl)).origin;
 }
 
 function close() {
     drawEventClose();
 }
 
+/**
+ * Receive and handle a message event from the draw.io window.
+ * @param {MessageEvent} event
+ */
 function drawReceive(event) {
     if (!event.data || event.data.length < 1) return;
-    let message = JSON.parse(event.data);
+    if (event.origin !== lastApprovedOrigin) return;
+
+    const message = JSON.parse(event.data);
     if (message.event === 'init') {
         drawEventInit();
     } else if (message.event === 'exit') {
@@ -62,7 +69,7 @@ function drawEventClose() {
 }
 
 function drawPostMessage(data) {
-    iFrame.contentWindow.postMessage(JSON.stringify(data), '*');
+    iFrame.contentWindow.postMessage(JSON.stringify(data), lastApprovedOrigin);
 }
 
 async function upload(imageData, pageUploadedToId) {
