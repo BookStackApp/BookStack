@@ -140,12 +140,13 @@ class ImageService
     {
         $storage->put($path, $data);
 
-        // Set visibility if using s3 without an endpoint set.
-        // Done since this call can break s3-like services but desired for actual
-        // AWS s3 usage. Attempting to set ACL during above put request requires
-        // different permissions hence would technically be a breaking change.
+        // Set visibility when a non-AWS-s3, s3-like storage option is in use.
+        // Done since this call can break s3-like services but desired for other image stores.
+        // Attempting to set ACL during above put request requires different permissions
+        // hence would technically be a breaking change for actual s3 usage.
         $usingS3 = strtolower(config('filesystems.images')) === 's3';
-        if ($usingS3 && is_null(config('filesystems.disks.s3.endpoint'))) {
+        $usingS3Like = $usingS3 && !is_null(config('filesystems.disks.s3.endpoint'));
+        if (!$usingS3Like) {
             $storage->setVisibility($path, 'public');
         }
     }
