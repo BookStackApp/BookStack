@@ -1,28 +1,23 @@
 <?php namespace Tests\Entity;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Actions\Tag;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use BookStack\Auth\Permissions\PermissionService;
-use Tests\BrowserKitTest;
+use Tests\TestCase;
 
-class TagTest extends BrowserKitTest
+class TagTest extends TestCase
 {
 
     protected $defaultTagCount = 20;
 
     /**
      * Get an instance of a page that has many tags.
-     * @param \BookStack\Actions\Tag[]|bool $tags
-     * @return Entity
      */
-    protected function getEntityWithTags($class, $tags = false): Entity
+    protected function getEntityWithTags($class, ?array $tags = null): Entity
     {
         $entity = $class::first();
 
-        if (!$tags) {
+        if (is_null($tags)) {
             $tags = factory(Tag::class, $this->defaultTagCount)->make();
         }
 
@@ -68,8 +63,6 @@ class TagTest extends BrowserKitTest
 
     public function test_entity_permissions_effect_tag_suggestions()
     {
-        $permissionService = $this->app->make(PermissionService::class);
-
         // Create some tags with similar names to test with and save to a page
         $attrs = collect();
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'country']));
@@ -86,6 +79,22 @@ class TagTest extends BrowserKitTest
 
         $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
         $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals([]);
+    }
+
+    public function test_tags_shown_on_search_listing()
+    {
+        $tags = [
+            factory(Tag::class)->make(['name' => 'category', 'value' => 'buckets']),
+            factory(Tag::class)->make(['name' => 'color', 'value' => 'red']),
+        ];
+
+        $page = $this->getEntityWithTags(Page::class, $tags);
+        $resp = $this->asEditor()->get("/search?term=[category]");
+        $resp->assertSee($page->name);
+        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'category');
+        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'buckets');
+        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'color');
+        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'red');
     }
 
 }

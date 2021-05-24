@@ -224,12 +224,13 @@
   margin-bottom: $-xs;
   margin-inline-end: $-xs;
   border-radius: 4px;
-  border: 1px solid #CCC;
+  border: 1px solid;
   overflow: hidden;
   font-size: 0.85em;
+  @include lightDark(border-color, #CCC, #666);
   a, span, a:hover, a:active {
     padding: 4px 8px;
-    @include lightDark(color, #777, #999);
+    @include lightDark(color, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.8));
     transition: background-color ease-in-out 80ms;
     text-decoration: none;
   }
@@ -237,10 +238,11 @@
     @include lightDark(background-color, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   }
   svg {
-    fill: #888;
+    @include lightDark(fill, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
   }
   .tag-value {
-    border-inline-start: 1px solid #DDD;
+    border-inline-start: 1px solid;
+    @include lightDark(border-color, #DDD, #666);
     @include lightDark(background-color, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2))
   }
 }
