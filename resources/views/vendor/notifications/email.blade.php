@@ -35,10 +35,10 @@ $style = [
 
     /* Masthead ----------------------- */
 
-    'email-masthead' => 'padding: 18px 0; text-align: left;',
-    'email-masthead_name' => 'font-size: 24px; font-weight: 400; color: #FFFFFF; text-decoration: none;',
+    'email-masthead' => 'padding: 25px 0; text-align: center;',
+    'email-masthead_name' => 'font-size: 24px; font-weight: 400; color: #2F3133; text-decoration: none; text-shadow: 0 1px 0 white;',
 
-    'email-body' => 'width: 100%; margin: 0; padding: 0; border-bottom: 1px solid #EDEFF2; background-color: #FFF;',
+    'email-body' => 'width: 100%; margin: 0; padding: 0; border-top: 4px solid '.setting('app-color').'; border-bottom: 1px solid #EDEFF2; background-color: #FFF;',
     'email-body_inner' => 'width: auto; max-width: 100%; margin: 0 auto; padding: 0;',
     'email-body_cell' => 'padding: 35px;',
 
@@ -82,33 +82,10 @@ $style = [
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <!-- Logo -->
                                 <tr>
-                                    <td bgcolor="{{ setting('app-color') }}">
-                                        <table width="100%" cellpadding="0" cellspacing="0">
-                                            <tr>
-                                                <td width="35">&nbsp;</td>
-                                                <td>
-                                                    <table width="100%" cellpadding="0" cellspacing="0">
-                                                        <tr>
-                                                            @if(setting('app-logo', '') !== 'none')
-                                                                <td valign="middle" style="padding-right: 12px; padding-top: 4px; padding-bottom: 4px;">
-                                                                    <a style="border: none; vertical-align: middle; display: inline-block;" href="{{ url('/') }}" target="_blank">
-                                                                        <img class="logo-image" height="43"
-                                                                             src="{{ setting('app-logo', '') === '' ? url('/logo.png') : url(setting('app-logo', '')) }}"
-                                                                             alt="Logo">
-                                                                    </a>
-                                                                </td>
-                                                            @endif
-                                                            <td width="90%" valign="middle" style="{{ $style['email-masthead'] }}">
-                                                                <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ url('/') }}" target="_blank">
-                                                                    {{ setting('app-name') }}
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td width="35">&nbsp;</td>
-                                            </tr>
-                                        </table>
+                                    <td style="{{ $style['email-masthead'] }}">
+                                        <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="{{ url('/') }}" target="_blank">
+                                            {{ setting('app-name') }}
+                                        </a>
                                     </td>
                                 </tr>
 
