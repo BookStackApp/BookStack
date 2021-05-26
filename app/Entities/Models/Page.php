@@ -75,11 +75,23 @@ class Page extends BookChild
 
     /**
      * Get the associated page revisions, ordered by created date.
-     * @return mixed
+     * Only provides actual saved page revision instances, Not drafts.
      */
-    public function revisions()
+    public function revisions(): HasMany
     {
-        return $this->hasMany(PageRevision::class)->where('type', '=', 'version')->orderBy('created_at', 'desc')->orderBy('id', 'desc');
+        return $this->allRevisions()
+            ->where('type', '=', 'version')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc');
+    }
+
+    /**
+     * Get all revision instances assigned to this page.
+     * Includes all types of revisions.
+     */
+    public function allRevisions(): HasMany
+    {
+        return $this->hasMany(PageRevision::class);
     }
 
     /**
