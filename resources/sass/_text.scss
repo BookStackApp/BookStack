@@ -112,6 +112,12 @@ a {
   }
 }
 
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}
+
 .blended-links a {
   color: inherit;
   svg {
