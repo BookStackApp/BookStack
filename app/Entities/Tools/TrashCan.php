@@ -151,6 +151,7 @@ class TrashCan
     protected function destroyPage(Page $page): int
     {
         $this->destroyCommonRelations($page);
+        $page->allRevisions()->delete();
 
         // Delete Attached Files
         $attachmentService = app(AttachmentService::class);
