@@ -14,6 +14,7 @@ class MarkdownEditor {
         this.pageId = this.$opts.pageId;
         this.textDirection = this.$opts.textDirection;
         this.imageUploadErrorText = this.$opts.imageUploadErrorText;
+        this.serverUploadLimitText = this.$opts.serverUploadLimitText;
 
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
@@ -446,8 +447,7 @@ class MarkdownEditor {
                 this.insertDrawing(resp.data, cursorPos);
                 DrawIO.close();
             }).catch(err => {
-                window.$events.emit('error', trans('errors.image_upload_error'));
-                console.log(err);
+                this.handleDrawingUploadError(err);
             });
         });
     }
@@ -491,10 +491,18 @@ class MarkdownEditor {
                 this.cm.focus();
                 DrawIO.close();
             }).catch(err => {
-                window.$events.emit('error', this.imageUploadErrorText);
-                console.log(err);
+                this.handleDrawingUploadError(err);
             });
         });
+    }
+
+    handleDrawingUploadError(error) {
+        if (error.status === 413) {
+            window.$events.emit('error', this.serverUploadLimitText);
+        } else {
+            window.$events.emit('error', this.imageUploadErrorText);
+        }
+        console.log(error);
     }
 
     // Make the editor full screen
