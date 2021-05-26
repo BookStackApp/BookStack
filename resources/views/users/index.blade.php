@@ -9,11 +9,11 @@
 
         <main class="card content-wrap">
 
-            <div class="grid right-focus v-center">
+            <div class="flex-container-row wrap justify-space-between items-center">
                 <h1 class="list-heading">{{ trans('settings.users') }}</h1>
 
-                <div class="text-right">
-                    <div class="block inline mr-s">
+                <div>
+                    <div class="block inline mr-xs">
                         <form method="get" action="{{ url("/settings/users") }}">
                             @foreach(collect($listDetails)->except('search') as $name => $val)
                                 <input type="hidden" name="{{ $name }}" value="{{ $val }}">
