@@ -142,6 +142,39 @@ class PageController extends Controller
             $page->load(['comments.createdBy']);
         }
 
+        $chapterId = $page->getParentChapter();
+        $allPageSlugs = $this->pageRepo->getPageByChapterID($chapterId[0]->id);
+        $pos = 0;
+        foreach ($allPageSlugs as $slug){
+            if($pageSlug === $slug->slug){
+                $currPagePos = $pos;
+            }
+            $pos++;
+            $pageUrl = $this->pageRepo->getBySlug($bookSlug, $slug->slug);
+            $urlLink[] = $pageUrl->getUrl();
+        }
+        for($i=0; $i <= $currPagePos; $i++){
+            $nextCount = $i+1;
+            $prevCount = $i-1;
+            $prevPage = '#';
+            $nextPage = '#';
+            if($nextCount < count($urlLink)){
+                $nextPage = $urlLink[$nextCount];
+            }
+            if($currPagePos == $i && $currPagePos != 0){
+                $prevPage = $urlLink[$prevCount];    
+            }
+        }
+
+        $disablePrev = "";
+        $disableNxt = "";
+        if($prevPage == "#"){
+            $disablePrev = "disabled";
+        }
+        if($nextPage == "#"){
+            $disableNxt = "disabled";
+        }
+        
         View::incrementFor($page);
         $this->setPageTitle($page->getShortName());
         return view('pages.show', [
@@ -150,7 +183,11 @@ class PageController extends Controller
             'current' => $page,
             'sidebarTree' => $sidebarTree,
             'commentsEnabled' => $commentsEnabled,
-            'pageNav' => $pageNav
+            'pageNav' => $pageNav,
+            'prevPage' => $prevPage,
+            'nextPage' => $nextPage,
+            'disablePrev' => $disablePrev,
+            'disableNxt' => $disableNxt
         ]);
     }
 
