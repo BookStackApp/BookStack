@@ -2,7 +2,7 @@
 
 <div class="form-group title-input">
     <label for="name">{{ trans('common.name') }}</label>
-    @include('form.text', ['name' => 'name'])
+    @include('form.text', ['name' => 'name', 'autofocus' => true])
 </div>
 
 <div class="form-group description-input">
