@@ -40,8 +40,8 @@ return [
     'remove' => 'Verwijderen',
     'add' => 'Toevoegen',
     'fullscreen' => 'Volledig scherm',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
+    'favourite' => 'Favoriet',
+    'unfavourite' => 'Verwijderen uit favoriet',
 
     // Sort Options
     'sort_options' => 'Sorteeropties',
