@@ -42,6 +42,8 @@ return [
     'fullscreen' => 'Prikaz preko čitavog ekrana',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Opcije sortiranja',
