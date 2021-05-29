@@ -48,14 +48,6 @@ abstract class BrowserKitTest extends TestCase
 
 
     /**
-     * Get a user that's not a system user such as the guest user.
-     */
-    public function getNormalUser()
-    {
-        return User::where('system_name', '=', null)->get()->last();
-    }
-
-    /**
      * Quickly sets an array of settings.
      * @param $settingsArray
      */
