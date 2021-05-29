@@ -42,6 +42,8 @@ return [
     'fullscreen' => '全屏',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => '排序选项',
