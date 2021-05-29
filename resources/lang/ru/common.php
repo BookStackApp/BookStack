@@ -42,6 +42,8 @@ return [
     'fullscreen' => 'На весь экран',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',
