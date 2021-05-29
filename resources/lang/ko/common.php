@@ -42,6 +42,8 @@ return [
     'fullscreen' => '전체화면',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => '정렬 기준',
