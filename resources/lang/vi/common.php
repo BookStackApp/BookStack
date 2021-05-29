@@ -42,6 +42,8 @@ return [
     'fullscreen' => 'Toàn màn hình',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',
