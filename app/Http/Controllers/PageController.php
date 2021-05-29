@@ -14,7 +14,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
-use Views;
 
 class PageController extends Controller
 {
