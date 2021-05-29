@@ -42,6 +42,8 @@ return [
     'fullscreen' => 'Tela cheia',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Opções de Ordenação',
