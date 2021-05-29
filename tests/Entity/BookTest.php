@@ -39,11 +39,11 @@ class BookTest extends TestCase
 
         $resp = $this->asEditor()->get($chapter->getUrl());
         $resp->assertElementContains('#sibling-navigation', 'Next');
-        $resp->assertElementContains('#sibling-navigation', $chapter->pages[0]->name);
+        $resp->assertElementContains('#sibling-navigation', substr($chapter->pages[0]->name, 0, 20));
 
         $resp = $this->get($chapter->pages[0]->getUrl());
-        $resp->assertElementContains('#sibling-navigation', $chapter->pages[1]->name);
+        $resp->assertElementContains('#sibling-navigation', substr($chapter->pages[1]->name, 0, 20));
         $resp->assertElementContains('#sibling-navigation', 'Previous');
-        $resp->assertElementContains('#sibling-navigation', $chapter->name);
+        $resp->assertElementContains('#sibling-navigation', substr($chapter->name, 0, 20));
     }
 }
