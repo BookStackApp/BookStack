@@ -468,10 +468,4 @@ class PageRepo
             ->where('page_id', '=', $page->id)
             ->orderBy('created_at', 'desc');
     }
-    /**
-     * Get page details by chapter ID.
-     */
-    public function getPageByChapterID(int $id){
-        return Page::visible()->where('chapter_id', '=', $id)->get(['id','slug']);
-    }
 }

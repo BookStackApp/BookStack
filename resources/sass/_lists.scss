@@ -441,12 +441,8 @@ ul.pagination {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
   }
-  &.outline-hover {
-    border: 1px solid transparent;
-  }
   &.outline-hover:hover {
     background-color: transparent;
-    border-color: rgba(0, 0, 0, 0.1);
   }
   &:focus {
     @include lightDark(background-color, #eee, #222);

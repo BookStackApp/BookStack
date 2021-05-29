@@ -190,7 +190,7 @@
   padding: $-m $-xxl;
   margin-inline-start: auto;
   margin-inline-end: auto;
-  margin-bottom: $-xl;
+  margin-bottom: $-l;
   overflow: initial;
   min-height: 60vh;
   &.auto-height {
@@ -213,6 +213,21 @@
 @include smaller-than($s) {
   .content-wrap.card {
     padding: $-m $-m;
+  }
+}
+
+.outline-hover {
+  border: 1px solid transparent !important;
+  &:hover {
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+.fade-in-when-active {
+  opacity: 0.6;
+  transition: opacity ease-in-out 120ms;
+  &:hover, &:focus-within {
+    opacity: 1;
   }
 }
 

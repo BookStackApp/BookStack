@@ -112,10 +112,11 @@ a {
   }
 }
 
-a.disabled {
-  pointer-events: none;
-  cursor: default;
-  opacity: 0.6;
+a.no-link-style {
+  color: inherit;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .blended-links a {
@@ -140,6 +141,9 @@ hr {
   margin-bottom: $-l;
   &.faded {
     background-image: linear-gradient(to right, #FFF, #e3e0e0 20%, #e3e0e0 80%, #FFF);
+  }
+  &.darker {
+    @include lightDark(background, #DDD, #666);
   }
   &.margin-top, &.even {
     margin-top: $-l;

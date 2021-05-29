@@ -52,6 +52,8 @@
         @include('partials.entity-search-results')
     </main>
 
+    @include('partials.entity-sibling-navigation', ['next' => $next, 'previous' => $previous])
+
 @stop
 
 @section('right')

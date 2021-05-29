@@ -16,21 +16,17 @@
             @include('pages.page-display')
         </div>
     </main>
-       
-    <div class="prev-next-btn">
-        <div class="grid third no-row-gap prev-next">
-            <div class="text-m-left">
-                <a class="{{ $disablePrev }}" href="{{ $prevPage }}">Previous Page</a>
-            </div>
-            <div></div>
-            <div class="text-m-right">
-                <a class="{{ $disableNxt }}" href="{{ $nextPage }}">Next Page</a>
-            </div>
-        </div>
-    </div>
+
+    @include('partials.entity-sibling-navigation', ['next' => $next, 'previous' => $previous])
 
     @if ($commentsEnabled)
-        <div class="container small p-none comments-container mb-l print-hidden">
+        @if(($previous || $next))
+            <div class="px-xl">
+                <hr class="darker">
+            </div>
+        @endif
+
+        <div class="px-xl comments-container mb-l print-hidden">
             @include('comments.comments', ['page' => $page])
             <div class="clearfix"></div>
         </div>
