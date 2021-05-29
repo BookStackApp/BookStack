@@ -42,6 +42,8 @@ return [
     'fullscreen' => 'Pantalla completa',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Opcions d\'ordenació',
