@@ -11,7 +11,6 @@ use BookStack\Exceptions\NotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
-use Views;
 
 class ChapterController extends Controller
 {

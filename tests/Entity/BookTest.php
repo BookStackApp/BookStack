@@ -31,4 +31,19 @@ class BookTest extends TestCase
         $redirectReq = $this->get($deleteReq->baseResponse->headers->get('location'));
         $redirectReq->assertNotificationContains('Book Successfully Deleted');
     }
+
+    public function test_next_previous_navigation_controls_show_within_book_content()
+    {
+        $book = Book::query()->first();
+        $chapter = $book->chapters->first();
+
+        $resp = $this->asEditor()->get($chapter->getUrl());
+        $resp->assertElementContains('#sibling-navigation', 'Next');
+        $resp->assertElementContains('#sibling-navigation', $chapter->pages[0]->name);
+
+        $resp = $this->get($chapter->pages[0]->getUrl());
+        $resp->assertElementContains('#sibling-navigation', $chapter->pages[1]->name);
+        $resp->assertElementContains('#sibling-navigation', 'Previous');
+        $resp->assertElementContains('#sibling-navigation', $chapter->name);
+    }
 }

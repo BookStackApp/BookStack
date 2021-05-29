@@ -12,7 +12,6 @@ use BookStack\Exceptions\ImageUploadException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
-use Views;
 
 class BookController extends Controller
 {

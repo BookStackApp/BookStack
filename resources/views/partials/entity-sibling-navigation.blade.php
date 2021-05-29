@@ -1,4 +1,4 @@
-<div class="grid half collapse-xs items-center mb-m px-m no-row-gap fade-in-when-active print-hidden">
+<div id="sibling-navigation" class="grid half collapse-xs items-center mb-m px-m no-row-gap fade-in-when-active print-hidden">
     <div>
         @if($previous)
             <a href="{{  $previous->getUrl()  }}" class="outline-hover no-link-style block rounded">
