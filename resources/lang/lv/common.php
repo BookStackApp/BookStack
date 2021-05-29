@@ -42,6 +42,8 @@ return [
     'fullscreen' => 'Pilnekrāns',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Kārtošanas Opcijas',
