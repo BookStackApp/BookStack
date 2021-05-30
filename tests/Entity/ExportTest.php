@@ -145,9 +145,9 @@ class ExportTest extends TestCase
         $page = Page::first();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
-        $resp->assertSee($page->created_at->toDayDateTimeString());
+        $resp->assertSee($page->created_at->formatLocalized('%e %B %Y %H:%M:%S'));
         $resp->assertDontSee($page->created_at->diffForHumans());
-        $resp->assertSee($page->updated_at->toDayDateTimeString());
+        $resp->assertSee($page->updated_at->formatLocalized('%e %B %Y %H:%M:%S'));
         $resp->assertDontSee($page->updated_at->diffForHumans());
     }
 
