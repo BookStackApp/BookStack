@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => '书架已成功删除',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" 已添加到你的收藏',
+    'favourite_remove_notification' => '":name" 已从你的收藏中删除',
 
     // Other
     'commented_on'                => '评论',
