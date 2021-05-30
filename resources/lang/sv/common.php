@@ -40,6 +40,10 @@ return [
     'remove' => 'Radera',
     'add' => 'Lägg till',
     'fullscreen' => 'Helskärm',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativ',

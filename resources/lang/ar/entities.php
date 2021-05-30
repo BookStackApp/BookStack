@@ -27,6 +27,8 @@ return [
     'images' => 'صور',
     'my_recent_drafts' => 'مسوداتي الحديثة',
     'my_recently_viewed' => 'ما عرضته مؤخراً',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'لم تستعرض أي صفحات',
     'no_pages_recently_created' => 'لم تنشأ أي صفحات مؤخراً',
     'no_pages_recently_updated' => 'لم تُحدّث أي صفحات مؤخراً',

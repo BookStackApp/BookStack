@@ -27,6 +27,8 @@ return [
     'images' => 'Görseller',
     'my_recent_drafts' => 'Son Taslaklarım',
     'my_recently_viewed' => 'Son Görüntülediklerim',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Herhangi bir sayfa görüntülemediniz',
     'no_pages_recently_created' => 'Yakın zamanda bir sayfa oluşturulmadı',
     'no_pages_recently_updated' => 'Yakın zamanda bir sayfa güncellenmedi',

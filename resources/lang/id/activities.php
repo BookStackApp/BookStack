@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'hapus rak buku',
     'bookshelf_delete_notification'    => 'Rak berhasil dihapus',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'berkomentar pada',
     'permissions_update'          => 'perbaharui izin',

@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'odstránil(a) knižnicu',
     'bookshelf_delete_notification'    => 'Knižnica úspešne odstránená',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'komentoval(a)',
     'permissions_update'          => 'aktualizované oprávnenia',

@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'excluiu a prateleira',
     'bookshelf_delete_notification'    => 'Prateleira excluída com sucesso',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'comentou em',
     'permissions_update'          => 'atualizou permissões',

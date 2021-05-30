@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'изтрит рафт',
     'bookshelf_delete_notification'    => 'Рафтът беше успешно изтрит',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'коментирано на',
     'permissions_update'          => 'updated permissions',

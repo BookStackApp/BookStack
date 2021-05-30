@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'je izbrisao/la policu za knjige',
     'bookshelf_delete_notification'    => 'Polica za knjige Uspješno Izbrisana',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'je komentarisao/la na',
     'permissions_update'          => 'je ažurirao/la dozvole',

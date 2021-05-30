@@ -40,6 +40,10 @@ return [
     'remove' => 'הסר',
     'add' => 'הוסף',
     'fullscreen' => 'Fullscreen',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Sort Options',

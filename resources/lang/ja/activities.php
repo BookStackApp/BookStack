@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'ブックが削除されました。',
     'bookshelf_delete_notification'    => '本棚を削除しました',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'コメントする',
     'permissions_update'          => 'updated permissions',

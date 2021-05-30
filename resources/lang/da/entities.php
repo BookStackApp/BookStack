@@ -27,6 +27,8 @@ return [
     'images' => 'Billeder',
     'my_recent_drafts' => 'Mine seneste kladder',
     'my_recently_viewed' => 'Mine senest viste',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Du har ikke besøgt nogle sider',
     'no_pages_recently_created' => 'Ingen sider er blevet oprettet for nyligt',
     'no_pages_recently_updated' => 'Ingen sider er blevet opdateret for nyligt',

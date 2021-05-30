@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'slettede bogreol',
     'bookshelf_delete_notification'    => 'Bogreolen blev opdateret',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'kommenterede til',
     'permissions_update'          => 'Tilladelser opdateret',

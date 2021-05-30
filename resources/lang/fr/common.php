@@ -40,6 +40,10 @@ return [
     'remove' => 'Enlever',
     'add' => 'Ajouter',
     'fullscreen' => 'Plein écran',
+    'favourite' => 'Favoris',
+    'unfavourite' => 'Supprimer des favoris',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Options de tri',

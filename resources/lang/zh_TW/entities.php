@@ -27,6 +27,8 @@ return [
     'images' => '圖片',
     'my_recent_drafts' => '我最近的草稿',
     'my_recently_viewed' => '我最近檢視',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => '您尚未看過任何頁面',
     'no_pages_recently_created' => '最近未建立任何頁面',
     'no_pages_recently_updated' => '最近沒有頁面被更新',

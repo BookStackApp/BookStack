@@ -27,6 +27,8 @@ return [
     'images' => 'תמונות',
     'my_recent_drafts' => 'הטיוטות האחרונות שלי',
     'my_recently_viewed' => 'הנצפים לאחרונה שלי',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'לא צפית בדפים כלשהם',
     'no_pages_recently_created' => 'לא נוצרו דפים לאחרונה',
     'no_pages_recently_updated' => 'לא עודכנו דפים לאחרונה',

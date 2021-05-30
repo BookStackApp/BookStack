@@ -27,6 +27,8 @@ return [
     'images' => 'Зображення',
     'my_recent_drafts' => 'Мої останні чернетки',
     'my_recently_viewed' => 'Мої недавні перегляди',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Ви не переглядали жодної сторінки',
     'no_pages_recently_created' => 'Не було створено жодної сторінки',
     'no_pages_recently_updated' => 'Немає недавно оновлених сторінок',

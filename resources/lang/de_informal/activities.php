@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'löscht Bücherregal',
     'bookshelf_delete_notification'    => 'Das Bücherregal wurde erfolgreich gelöscht',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'kommentiert',
     'permissions_update'          => 'aktualisierte Berechtigungen',

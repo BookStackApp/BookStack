@@ -27,6 +27,8 @@ return [
     'images' => 'Képek',
     'my_recent_drafts' => 'Legutóbbi vázlataim',
     'my_recently_viewed' => 'Általam legutóbb megtekintett',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Még nincsenek általam megtekintett oldalak',
     'no_pages_recently_created' => 'Nincsenek legutóbb létrehozott oldalak',
     'no_pages_recently_updated' => 'Nincsenek legutóbb frissített oldalak',
