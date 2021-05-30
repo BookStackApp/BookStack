@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import "reset";
 @import "variables";
 @import "mixins";
@@ -109,8 +111,8 @@ $btt-size: 40px;
   color: #FFF;
   fill: #FFF;
   svg {
-    width: $btt-size / 1.5;
-    height: $btt-size / 1.5;
+    width: math.div($btt-size, 1.5);
+    height: math.div($btt-size, 1.5);
     margin-inline-end: 4px;
   }
   width: $btt-size;

@@ -2,6 +2,7 @@
 
 use Activity;
 use BookStack\Actions\ActivityType;
+use BookStack\Actions\View;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Tools\PermissionsUpdater;
@@ -11,7 +12,6 @@ use BookStack\Exceptions\ImageUploadException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
-use Views;
 
 class BookController extends Controller
 {
@@ -112,7 +112,7 @@ class BookController extends Controller
         $bookChildren = (new BookContents($book))->getTree(true);
         $bookParentShelves = $book->shelves()->visible()->get();
 
-        Views::add($book);
+        View::incrementFor($book);
         if ($request->has('shelf')) {
             $this->entityContextManager->setShelfContext(intval($request->get('shelf')));
         }

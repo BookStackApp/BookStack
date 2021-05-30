@@ -1,7 +1,7 @@
 @if(count($entities) > 0)
     <div class="entity-list {{ $style ?? '' }}">
         @foreach($entities as $index => $entity)
-            @include('partials.entity-list-item', ['entity' => $entity, 'showPath' => $showPath ?? false])
+            @include('partials.entity-list-item', ['entity' => $entity, 'showPath' => $showPath ?? false, 'showTags' => $showTags ?? false])
         @endforeach
     </div>
 @else

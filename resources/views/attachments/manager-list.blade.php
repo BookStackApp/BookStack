@@ -7,7 +7,7 @@
              class="card drag-card">
             <div class="handle">@icon('grip')</div>
             <div class="py-s">
-                <a href="{{ $attachment->getUrl() }}" target="_blank">{{ $attachment->name }}</a>
+                <a href="{{ $attachment->getUrl() }}" target="_blank" rel="noopener">{{ $attachment->name }}</a>
             </div>
             <div class="flex-fill justify-flex-end">
                 <button component="event-emit-select"

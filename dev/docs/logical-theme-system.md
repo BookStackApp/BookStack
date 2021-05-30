@@ -96,3 +96,17 @@ Theme::listen(ThemeEvents::APP_BOOT, function($app) {
     ], '\SocialiteProviders\Reddit\RedditExtendSocialite@handle');
 });
 ```
+
+In some cases you may need to customize the driver before it performs a redirect. 
+This can be done by providing a callback as a fourth parameter like so:
+
+```php
+Theme::addSocialDriver('reddit', [
+    'client_id' => 'abc123',
+    'client_secret' => 'def456789',
+    'name' => 'Reddit',
+], '\SocialiteProviders\Reddit\RedditExtendSocialite@handle', function($driver) {
+    $driver->with(['prompt' => 'select_account']);
+    $driver->scopes(['open_id']);
+});
+```

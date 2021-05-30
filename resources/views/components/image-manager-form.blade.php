@@ -7,7 +7,7 @@
           option:ajax-form:url="{{ url('images/' . $image->id) }}">
 
         <div class="image-manager-viewer">
-            <a href="{{ $image->url }}" target="_blank" class="block">
+            <a href="{{ $image->url }}" target="_blank" rel="noopener" class="block">
                 <img src="{{ $image->thumbs['display'] }}"
                      alt="{{ $image->name }}"
                      class="anim fadeIn"
@@ -40,6 +40,7 @@
                     <li>
                         <a href="{{ $page->url }}"
                            target="_blank"
+                           rel="noopener"
                            class="text-neg">{{ $page->name }}</a>
                     </li>
                 @endforeach

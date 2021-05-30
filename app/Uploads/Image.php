@@ -3,7 +3,6 @@
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
-use Images;
 
 class Image extends Model
 {
@@ -14,23 +13,18 @@ class Image extends Model
 
     /**
      * Get a thumbnail for this image.
-     * @param  int $width
-     * @param  int $height
-     * @param bool|false $keepRatio
-     * @return string
      * @throws \Exception
      */
-    public function getThumb($width, $height, $keepRatio = false)
+    public function getThumb(int $width, int $height, bool $keepRatio = false): string
     {
-        return Images::getThumbnail($this, $width, $height, $keepRatio);
+        return app()->make(ImageService::class)->getThumbnail($this, $width, $height, $keepRatio);
     }
 
     /**
      * Get the page this image has been uploaded to.
      * Only applicable to gallery or drawio image types.
-     * @return Page|null
      */
-    public function getPage()
+    public function getPage(): ?Page
     {
         return $this->belongsTo(Page::class, 'uploaded_to')->first();
     }

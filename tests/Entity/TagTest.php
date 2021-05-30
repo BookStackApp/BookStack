@@ -1,28 +1,23 @@
 <?php namespace Tests\Entity;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Actions\Tag;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use BookStack\Auth\Permissions\PermissionService;
-use Tests\BrowserKitTest;
+use Tests\TestCase;
 
-class TagTest extends BrowserKitTest
+class TagTest extends TestCase
 {
 
     protected $defaultTagCount = 20;
 
     /**
      * Get an instance of a page that has many tags.
-     * @param \BookStack\Actions\Tag[]|bool $tags
-     * @return Entity
      */
-    protected function getEntityWithTags($class, $tags = false): Entity
+    protected function getEntityWithTags($class, ?array $tags = null): Entity
     {
         $entity = $class::first();
 
-        if (!$tags) {
+        if (is_null($tags)) {
             $tags = factory(Tag::class, $this->defaultTagCount)->make();
         }
 
@@ -40,12 +35,12 @@ class TagTest extends BrowserKitTest
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'county']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'planet']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'plans']));
-        $page = $this->getEntityWithTags(Page::class, $attrs);
+        $page = $this->getEntityWithTags(Page::class, $attrs->all());
 
-        $this->asAdmin()->get('/ajax/tags/suggest/names?search=dog')->seeJsonEquals([]);
-        $this->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country', 'county']);
-        $this->get('/ajax/tags/suggest/names?search=cou')->seeJsonEquals(['country', 'county']);
-        $this->get('/ajax/tags/suggest/names?search=pla')->seeJsonEquals(['planet', 'plans']);
+        $this->asAdmin()->get('/ajax/tags/suggest/names?search=dog')->assertExactJson([]);
+        $this->get('/ajax/tags/suggest/names?search=co')->assertExactJson(['color', 'country', 'county']);
+        $this->get('/ajax/tags/suggest/names?search=cou')->assertExactJson(['country', 'county']);
+        $this->get('/ajax/tags/suggest/names?search=pla')->assertExactJson(['planet', 'plans']);
     }
 
     public function test_tag_value_suggestions()
@@ -58,34 +53,48 @@ class TagTest extends BrowserKitTest
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'county', 'value' => 'dog']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'planet', 'value' => 'catapult']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'plans', 'value' => 'dodgy']));
-        $page = $this->getEntityWithTags(Page::class, $attrs);
+        $page = $this->getEntityWithTags(Page::class, $attrs->all());
 
-        $this->asAdmin()->get('/ajax/tags/suggest/values?search=ora')->seeJsonEquals([]);
-        $this->get('/ajax/tags/suggest/values?search=cat')->seeJsonEquals(['cats', 'cattery', 'catapult']);
-        $this->get('/ajax/tags/suggest/values?search=do')->seeJsonEquals(['dog', 'dodgy']);
-        $this->get('/ajax/tags/suggest/values?search=cas')->seeJsonEquals(['castle']);
+        $this->asAdmin()->get('/ajax/tags/suggest/values?search=ora')->assertExactJson([]);
+        $this->get('/ajax/tags/suggest/values?search=cat')->assertExactJson(['cats', 'cattery', 'catapult']);
+        $this->get('/ajax/tags/suggest/values?search=do')->assertExactJson(['dog', 'dodgy']);
+        $this->get('/ajax/tags/suggest/values?search=cas')->assertExactJson(['castle']);
     }
 
     public function test_entity_permissions_effect_tag_suggestions()
     {
-        $permissionService = $this->app->make(PermissionService::class);
-
         // Create some tags with similar names to test with and save to a page
         $attrs = collect();
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'country']));
         $attrs = $attrs->merge(factory(Tag::class, 5)->make(['name' => 'color']));
-        $page = $this->getEntityWithTags(Page::class, $attrs);
+        $page = $this->getEntityWithTags(Page::class, $attrs->all());
 
-        $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
-        $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
+        $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->assertExactJson(['color', 'country']);
+        $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->assertExactJson(['color', 'country']);
 
         // Set restricted permission the page
         $page->restricted = true;
         $page->save();
         $page->rebuildPermissions();
 
-        $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals(['color', 'country']);
-        $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->seeJsonEquals([]);
+        $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->assertExactJson(['color', 'country']);
+        $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->assertExactJson([]);
+    }
+
+    public function test_tags_shown_on_search_listing()
+    {
+        $tags = [
+            factory(Tag::class)->make(['name' => 'category', 'value' => 'buckets']),
+            factory(Tag::class)->make(['name' => 'color', 'value' => 'red']),
+        ];
+
+        $page = $this->getEntityWithTags(Page::class, $tags);
+        $resp = $this->asEditor()->get("/search?term=[category]");
+        $resp->assertSee($page->name);
+        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'category');
+        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'buckets');
+        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'color');
+        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'red');
     }
 
 }

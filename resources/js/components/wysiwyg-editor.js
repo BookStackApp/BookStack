@@ -283,6 +283,15 @@ function drawIoPlugin(drawioUrl, isDarkMode, pageId, wysiwygComponent) {
         const id = "image-" + Math.random().toString(16).slice(2);
         const loadingImage = window.baseUrl('/loading.gif');
 
+        const handleUploadError = (error) => {
+            if (error.status === 413) {
+                window.$events.emit('error', wysiwygComponent.serverUploadLimitText);
+            } else {
+                window.$events.emit('error', wysiwygComponent.imageUploadErrorText);
+            }
+            console.log(error);
+        };
+
         // Handle updating an existing image
         if (currentNode) {
             DrawIO.close();
@@ -292,8 +301,7 @@ function drawIoPlugin(drawioUrl, isDarkMode, pageId, wysiwygComponent) {
                 pageEditor.dom.setAttrib(imgElem, 'src', img.url);
                 pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', img.id);
             } catch (err) {
-                window.$events.emit('error', wysiwygComponent.imageUploadErrorText);
-                console.log(err);
+                handleUploadError(err);
             }
             return;
         }
@@ -307,8 +315,7 @@ function drawIoPlugin(drawioUrl, isDarkMode, pageId, wysiwygComponent) {
                 pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
             } catch (err) {
                 pageEditor.dom.remove(id);
-                window.$events.emit('error', wysiwygComponent.imageUploadErrorText);
-                console.log(err);
+                handleUploadError(err);
             }
         }, 5);
     }
@@ -432,6 +439,7 @@ class WysiwygEditor {
         this.pageId = this.$opts.pageId;
         this.textDirection = this.$opts.textDirection;
         this.imageUploadErrorText = this.$opts.imageUploadErrorText;
+        this.serverUploadLimitText = this.$opts.serverUploadLimitText;
         this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
         this.plugins = "image imagetools table textcolor paste link autolink fullscreen code customhr autosave lists codeeditor media";

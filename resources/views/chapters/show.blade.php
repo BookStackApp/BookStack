@@ -52,6 +52,8 @@
         @include('partials.entity-search-results')
     </main>
 
+    @include('partials.entity-sibling-navigation', ['next' => $next, 'previous' => $previous])
+
 @stop
 
 @section('right')
@@ -123,6 +125,9 @@
 
             <hr class="primary-background"/>
 
+            @if(signedInUser())
+                @include('partials.entity-favourite-action', ['entity' => $chapter])
+            @endif
             @include('partials.entity-export-menu', ['entity' => $chapter])
         </div>
     </div>

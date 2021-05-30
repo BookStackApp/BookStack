@@ -53,9 +53,9 @@ class ThemeService
     /**
      * @see SocialAuthService::addSocialDriver
      */
-    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler)
+    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler, callable $configureForRedirect = null)
     {
         $socialAuthService = app()->make(SocialAuthService::class);
-        $socialAuthService->addSocialDriver($driverName, $config, $socialiteHandler);
+        $socialAuthService->addSocialDriver($driverName, $config, $socialiteHandler, $configureForRedirect);
     }
 }

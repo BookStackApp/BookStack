@@ -133,6 +133,7 @@ return [
         'remove_from_groups' => env('LDAP_REMOVE_FROM_GROUPS', false),
         'tls_insecure' => env('LDAP_TLS_INSECURE', false),
         'start_tls' => env('LDAP_START_TLS', false),
+        'thumbnail_attribute' => env('LDAP_THUMBNAIL_ATTRIBUTE', null),
     ],
 
 ];
