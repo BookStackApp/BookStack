@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'odstranil/a knihovnu',
     'bookshelf_delete_notification'    => 'Knihovna byla úspěšně odstraněna',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'okomentoval/a',
     'permissions_update'          => 'updated permissions',

@@ -90,6 +90,11 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
             $this->ldapService->syncGroups($user, $username);
         }
 
+        // Attach avatar if non-existent
+        if (is_null($user->avatar)) {
+            $this->ldapService->saveAndAttachAvatar($user, $userDetails);
+        }
+
         $this->login($user, $remember);
         return true;
     }
@@ -115,6 +120,8 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
             'password' => Str::random(32),
         ];
 
-        return $this->registrationService->registerUser($details, null, false);
+        $user = $this->registrationService->registerUser($details, null, false);
+        $this->ldapService->saveAndAttachAvatar($user, $ldapUserDetails);
+        return $user;
     }
 }

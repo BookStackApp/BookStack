@@ -83,6 +83,14 @@ trait SharedTestHelpers
     }
 
     /**
+     * Get a user that's not a system user such as the guest user.
+     */
+    public function getNormalUser()
+    {
+        return User::query()->where('system_name', '=', null)->get()->last();
+    }
+
+    /**
      * Regenerate the permission for an entity.
      */
     protected function regenEntityPermissions(Entity $entity): void

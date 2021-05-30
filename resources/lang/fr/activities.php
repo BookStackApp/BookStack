@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'a supprimé l\'étagère',
     'bookshelf_delete_notification'    => 'Étagère supprimée avec succès',
 
+    // Favourites
+    'favourite_add_notification' => '":name" a été ajouté dans vos favoris',
+    'favourite_remove_notification' => '":name" a été supprimé de vos favoris',
+
     // Other
     'commented_on'                => 'a commenté',
     'permissions_update'          => 'mettre à jour les autorisations',

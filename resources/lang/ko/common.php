@@ -40,6 +40,10 @@ return [
     'remove' => '제거',
     'add' => '추가',
     'fullscreen' => '전체화면',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => '정렬 기준',
@@ -74,9 +78,9 @@ return [
 
     // Layout tabs
     'tab_info' => '정보',
-    'tab_info_label' => '탭: 보조 정보 표시',
+    'tab_info_label' => 'Tab: Show Secondary Information',
     'tab_content' => '내용',
-    'tab_content_label' => '탭: 주요 내용 표시',
+    'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => ':actionText를 클릭할 수 없을 때는 웹 브라우저에서 다음 링크로 접속할 수 있습니다.',
@@ -84,6 +88,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => '개인정보처리방침',
-    'terms_of_service' => '이용약관',
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
 ];

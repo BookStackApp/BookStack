@@ -40,6 +40,10 @@ return [
     'remove' => 'إزالة',
     'add' => 'إضافة',
     'fullscreen' => 'شاشة كاملة',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'خيارات الفرز',

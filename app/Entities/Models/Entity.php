@@ -2,6 +2,7 @@
 
 use BookStack\Actions\Activity;
 use BookStack\Actions\Comment;
+use BookStack\Actions\Favourite;
 use BookStack\Actions\Tag;
 use BookStack\Actions\View;
 use BookStack\Auth\Permissions\EntityPermission;
@@ -9,7 +10,9 @@ use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Entities\Tools\SearchIndex;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Facades\Permissions;
+use BookStack\Interfaces\Favouritable;
 use BookStack\Interfaces\Sluggable;
+use BookStack\Interfaces\Viewable;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
 use BookStack\Traits\HasOwner;
@@ -38,7 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
-abstract class Entity extends Model implements Sluggable
+abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
 {
     use SoftDeletes;
     use HasCreatorAndUpdater;
@@ -296,5 +299,23 @@ abstract class Entity extends Model implements Sluggable
     {
         $this->slug = app(SlugGenerator::class)->generate($this);
         return $this->slug;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function favourites(): MorphMany
+    {
+        return $this->morphMany(Favourite::class, 'favouritable');
+    }
+
+    /**
+     * Check if the entity is a favourite of the current user.
+     */
+    public function isFavourite(): bool
+    {
+        return $this->favourites()
+            ->where('user_id', '=', user()->id)
+            ->exists();
     }
 }

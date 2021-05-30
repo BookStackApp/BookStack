@@ -187,7 +187,7 @@ table.form-table {
   max-width: 100%;
   td {
     overflow: hidden;
-    padding: $-xxs/2 0;
+    padding: math.div($-xxs, 2) 0;
   }
 }
 

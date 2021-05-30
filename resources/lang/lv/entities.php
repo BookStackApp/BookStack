@@ -27,6 +27,8 @@ return [
     'images' => 'Attēli',
     'my_recent_drafts' => 'Mani melnraksti',
     'my_recently_viewed' => 'Mani nesen skatītie',
+    'my_most_viewed_favourites' => 'Mani visvairāk skatītie favorīti',
+    'my_favourites' => 'Mani favorīti',
     'no_pages_viewed' => 'Neviena lapa vēl nav skatīta',
     'no_pages_recently_created' => 'Nav radīta neviena lapa',
     'no_pages_recently_updated' => 'Nav atjaunināta neviena lapa',
@@ -219,7 +221,7 @@ return [
     'pages_revisions_numbered_changes' => 'Revīzijas #:id izmaiņas',
     'pages_revisions_changelog' => 'Izmaiņu žurnāls',
     'pages_revisions_changes' => 'Izmaiņas',
-    'pages_revisions_current' => 'Tekošā versija',
+    'pages_revisions_current' => 'Pašreizējā versija',
     'pages_revisions_preview' => 'Priekšskatījums',
     'pages_revisions_restore' => 'Atjaunot',
     'pages_revisions_none' => 'Šai lapai nav revīziju',
@@ -314,7 +316,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo revīziju?',
-    'revision_restore_confirm' => 'Vai esat pārliecināts, ka vēlaties atjaunot šo revīziju? Tekošais lapas saturs tiks aizstāts.',
+    'revision_restore_confirm' => 'Vai tiešām vēlaties atjaunot šo revīziju? Pašreizējais lapas saturs tiks aizvietots.',
     'revision_delete_success' => 'Revīzija dzēsta',
-    'revision_cannot_delete_latest' => 'Nevar dzēst tekošo revīziju.'
+    'revision_cannot_delete_latest' => 'Nevar dzēst pašreizējo revīziju.'
 ];

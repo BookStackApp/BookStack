@@ -17,8 +17,16 @@
         </div>
     </main>
 
+    @include('partials.entity-sibling-navigation', ['next' => $next, 'previous' => $previous])
+
     @if ($commentsEnabled)
-        <div class="container small p-none comments-container mb-l print-hidden">
+        @if(($previous || $next))
+            <div class="px-xl">
+                <hr class="darker">
+            </div>
+        @endif
+
+        <div class="px-xl comments-container mb-l print-hidden">
             @include('comments.comments', ['page' => $page])
             <div class="clearfix"></div>
         </div>
@@ -150,7 +158,9 @@
 
             <hr class="primary-background"/>
 
-            {{--Export--}}
+            @if(signedInUser())
+                @include('partials.entity-favourite-action', ['entity' => $page])
+            @endif
             @include('partials.entity-export-menu', ['entity' => $page])
         </div>
 

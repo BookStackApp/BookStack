@@ -3,7 +3,9 @@
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\LdapException;
+use BookStack\Uploads\UserAvatars;
 use ErrorException;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class LdapService
@@ -14,15 +16,17 @@ class LdapService extends ExternalAuthService
 
     protected $ldap;
     protected $ldapConnection;
+    protected $userAvatars;
     protected $config;
     protected $enabled;
 
     /**
      * LdapService constructor.
      */
-    public function __construct(Ldap $ldap)
+    public function __construct(Ldap $ldap, UserAvatars $userAvatars)
     {
         $this->ldap = $ldap;
+        $this->userAvatars = $userAvatars;
         $this->config = config('services.ldap');
         $this->enabled = config('auth.method') === 'ldap';
     }
@@ -76,10 +80,13 @@ class LdapService extends ExternalAuthService
         $idAttr = $this->config['id_attribute'];
         $emailAttr = $this->config['email_attribute'];
         $displayNameAttr = $this->config['display_name_attribute'];
+        $thumbnailAttr = $this->config['thumbnail_attribute'];
 
-        $user = $this->getUserWithAttributes($userName, ['cn', 'dn', $idAttr, $emailAttr, $displayNameAttr]);
+        $user = $this->getUserWithAttributes($userName, array_filter([
+            'cn', 'dn', $idAttr, $emailAttr, $displayNameAttr, $thumbnailAttr,
+        ]));
 
-        if ($user === null) {
+        if (is_null($user)) {
             return null;
         }
 
@@ -89,6 +96,7 @@ class LdapService extends ExternalAuthService
             'name' => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
             'dn' => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
+            'avatar'=> $thumbnailAttr ? $this->getUserResponseProperty($user, $thumbnailAttr, null) : null,
         ];
 
         if ($this->config['dump_user_details']) {
@@ -349,5 +357,23 @@ class LdapService extends ExternalAuthService
     {
         $userLdapGroups = $this->getUserGroups($username);
         $this->syncWithGroups($user, $userLdapGroups);
+    }
+
+    /**
+     * Save and attach an avatar image, if found in the ldap details, and attach
+     * to the given user model.
+     */
+    public function saveAndAttachAvatar(User $user, array $ldapUserDetails): void
+    {
+        if (is_null(config('services.ldap.thumbnail_attribute')) || is_null($ldapUserDetails['avatar'])) {
+            return;
+        }
+
+        try {
+            $imageData = $ldapUserDetails['avatar'];
+            $this->userAvatars->assignToUserFromExistingData($user, $imageData, 'jpg');
+        } catch (\Exception $exception) {
+            Log::info("Failed to use avatar image from LDAP data for user id {$user->id}");
+        }
     }
 }

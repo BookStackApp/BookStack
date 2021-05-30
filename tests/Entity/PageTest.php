@@ -71,6 +71,33 @@ class PageTest extends TestCase
         $redirectReq->assertNotificationContains('Page Successfully Deleted');
     }
 
+    public function test_page_full_delete_removes_all_revisions()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->revisions()->create([
+            'html' => '<p>ducks</p>',
+            'name' => 'my page revision',
+            'type' => 'draft',
+        ]);
+        $page->revisions()->create([
+            'html' => '<p>ducks</p>',
+            'name' => 'my page revision',
+            'type' => 'revision',
+        ]);
+
+        $this->assertDatabaseHas('page_revisions', [
+            'page_id' => $page->id,
+        ]);
+
+        $this->asEditor()->delete($page->getUrl());
+        $this->asAdmin()->post('/settings/recycle-bin/empty');
+
+        $this->assertDatabaseMissing('page_revisions', [
+            'page_id' => $page->id,
+        ]);
+    }
+
     public function test_page_copy()
     {
         $page = Page::first();

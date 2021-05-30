@@ -41,14 +41,14 @@
                             <td><small>{{ $revision->created_at->formatLocalized('%e %B %Y %H:%M:%S') }} <br> ({{ $revision->created_at->diffForHumans() }})</small></td>
                             <td>{{ $revision->summary }}</td>
                             <td class="actions">
-                                <a href="{{ $revision->getUrl('changes') }}" target="_blank">{{ trans('entities.pages_revisions_changes') }}</a>
+                                <a href="{{ $revision->getUrl('changes') }}" target="_blank" rel="noopener">{{ trans('entities.pages_revisions_changes') }}</a>
                                 <span class="text-muted">&nbsp;|&nbsp;</span>
 
 
                                 @if ($index === 0)
-                                    <a target="_blank" href="{{ $page->getUrl() }}"><i>{{ trans('entities.pages_revisions_current') }}</i></a>
+                                    <a target="_blank" rel="noopener" href="{{ $page->getUrl() }}"><i>{{ trans('entities.pages_revisions_current') }}</i></a>
                                 @else
-                                    <a href="{{ $revision->getUrl() }}" target="_blank">{{ trans('entities.pages_revisions_preview') }}</a>
+                                    <a href="{{ $revision->getUrl() }}" target="_blank" rel="noopener">{{ trans('entities.pages_revisions_preview') }}</a>
                                     <span class="text-muted">&nbsp;|&nbsp;</span>
                                     <div component="dropdown" class="dropdown-container">
                                         <a refs="dropdown@toggle" href="#" aria-haspopup="true" aria-expanded="false">{{ trans('entities.pages_revisions_restore') }}</a>

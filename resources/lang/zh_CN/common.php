@@ -40,6 +40,10 @@ return [
     'remove' => '删除',
     'add' => '添加',
     'fullscreen' => '全屏',
+    'favourite' => '收藏',
+    'unfavourite' => '不喜欢',
+    'next' => '下一页',
+    'previous' => '上一页',
 
     // Sort Options
     'sort_options' => '排序选项',

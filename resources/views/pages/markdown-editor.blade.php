@@ -2,6 +2,7 @@
      option:markdown-editor:page-id="{{ $model->id ?? 0 }}"
      option:markdown-editor:text-direction="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
      option:markdown-editor:image-upload-error-text="{{ trans('errors.image_upload_error') }}"
+     option:markdown-editor:server-upload-limit-text="{{ trans('errors.server_upload_limit') }}"
      class="flex-fill flex code-fill">
 
     <div class="markdown-editor-wrap active">

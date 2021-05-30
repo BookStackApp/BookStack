@@ -27,6 +27,8 @@ return [
     'images' => 'Bilder',
     'my_recent_drafts' => 'Mine nylige utkast',
     'my_recently_viewed' => 'Mine nylige visninger',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Du har ikke sett på noen sider',
     'no_pages_recently_created' => 'Ingen sider har nylig blitt opprettet',
     'no_pages_recently_updated' => 'Ingen sider har nylig blitt oppdatert',

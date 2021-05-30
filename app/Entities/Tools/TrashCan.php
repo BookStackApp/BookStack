@@ -151,6 +151,7 @@ class TrashCan
     protected function destroyPage(Page $page): int
     {
         $this->destroyCommonRelations($page);
+        $page->allRevisions()->delete();
 
         // Delete Attached Files
         $attachmentService = app(AttachmentService::class);
@@ -317,6 +318,7 @@ class TrashCan
         $entity->jointPermissions()->delete();
         $entity->searchTerms()->delete();
         $entity->deletions()->delete();
+        $entity->favourites()->delete();
 
         if ($entity instanceof HasCoverImage && $entity->cover) {
             $imageService = app()->make(ImageService::class);

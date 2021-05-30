@@ -441,12 +441,8 @@ ul.pagination {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
   }
-  &.outline-hover {
-    border: 1px solid transparent;
-  }
   &.outline-hover:hover {
     background-color: transparent;
-    border-color: rgba(0, 0, 0, 0.1);
   }
   &:focus {
     @include lightDark(background-color, #eee, #222);
@@ -547,6 +543,17 @@ ul.pagination {
     h4 {
       font-size: 1.666em;
     }
+  }
+}
+
+.entity-item-tags {
+  font-size: .75rem;
+  opacity: 1;
+  .primary-background-light {
+    background: transparent;
+  }
+  .tag-name {
+    background-color: rgba(0, 0, 0, 0.05);
   }
 }
 

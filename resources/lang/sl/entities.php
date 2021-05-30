@@ -27,6 +27,8 @@ return [
     'images' => 'Slike',
     'my_recent_drafts' => 'Moji nedavni osnutki',
     'my_recently_viewed' => 'Nedavno prikazano',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Niste si ogledali še nobene strani',
     'no_pages_recently_created' => 'Nedavno ni bila ustvarjena nobena stran',
     'no_pages_recently_updated' => 'Nedavno ni bila posodobljena nobena stran',
