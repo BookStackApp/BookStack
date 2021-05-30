@@ -158,7 +158,7 @@ HenrijsS :: Latvian
 Pascal R-B (pborgner) :: German
 Boris (Ginfred) :: Russian
 Jonas Anker Rasmussen (jonasanker) :: Danish
-Gerwin de Keijzer (gdekeijzer) :: Dutch; German Informal; German
+Gerwin de Keijzer (gdekeijzer) :: Dutch; German; German Informal
 kometchtech :: Japanese
 Auri (Atalonica) :: Catalan
 Francesco Franchina (ffranchina) :: Italian
