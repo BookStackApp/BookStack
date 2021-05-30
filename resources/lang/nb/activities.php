@@ -44,6 +44,10 @@ return [
     'bookshelf_delete'                 => 'slettet bokhylle',
     'bookshelf_delete_notification'    => 'Bokhyllen ble slettet',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'kommenterte på',
     'permissions_update'          => 'oppdaterte tilganger',

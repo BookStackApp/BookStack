@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'kitaplığı sildi',
     'bookshelf_delete_notification'    => 'Kitaplık Başarıyla Silindi',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'yorum yaptı',
     'permissions_update'          => 'güncellenmiş izinler',

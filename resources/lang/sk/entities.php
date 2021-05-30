@@ -27,6 +27,8 @@ return [
     'images' => 'Obrázky',
     'my_recent_drafts' => 'Moje nedávne koncepty',
     'my_recently_viewed' => 'Nedávno mnou zobrazené',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Nepozreli ste si žiadne stránky',
     'no_pages_recently_created' => 'Žiadne stránky neboli nedávno vytvorené',
     'no_pages_recently_updated' => 'Žiadne stránky neboli nedávno aktualizované',

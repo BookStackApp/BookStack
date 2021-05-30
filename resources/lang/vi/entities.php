@@ -27,6 +27,8 @@ return [
     'images' => 'Ảnh',
     'my_recent_drafts' => 'Bản nháp gần đây của tôi',
     'my_recently_viewed' => 'Xem gần đây',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Bạn chưa xem bất cứ trang nào',
     'no_pages_recently_created' => 'Không có trang nào được tạo gần đây',
     'no_pages_recently_updated' => 'Không có trang nào được cập nhật gần đây',

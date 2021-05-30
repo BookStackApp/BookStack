@@ -40,6 +40,10 @@ return [
     'remove' => 'Odstrániť',
     'add' => 'Pridať',
     'fullscreen' => 'Celá obrazovka',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Možnosti triedenia',

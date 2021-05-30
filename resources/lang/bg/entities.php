@@ -27,6 +27,8 @@ return [
     'images' => 'Изображения',
     'my_recent_drafts' => 'Моите скорошни драфтове',
     'my_recently_viewed' => 'Моите скорошни преглеждания',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Не сте прегледали никакви страници',
     'no_pages_recently_created' => 'Не са били създавани страници скоро',
     'no_pages_recently_updated' => 'Не са били актуализирани страници скоро',

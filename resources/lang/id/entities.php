@@ -27,6 +27,8 @@ return [
     'images' => 'Gambar-gambar',
     'my_recent_drafts' => 'Draf Terbaru Saya',
     'my_recently_viewed' => 'Baru saja saya lihat',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Anda belum melihat halaman apa pun',
     'no_pages_recently_created' => 'Tidak ada halaman yang baru saja dibuat',
     'no_pages_recently_updated' => 'Tidak ada halaman yang baru-baru ini diperbarui',

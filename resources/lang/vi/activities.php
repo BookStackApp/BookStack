@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'đã xóa giá sách',
     'bookshelf_delete_notification'    => 'Giá sách đã được xóa thành công',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'đã bình luận về',
     'permissions_update'          => 'các quyền đã được cập nhật',

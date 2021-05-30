@@ -27,6 +27,8 @@ return [
     'images' => 'Images',
     'my_recent_drafts' => 'Mes brouillons récents',
     'my_recently_viewed' => 'Vus récemment',
+    'my_most_viewed_favourites' => 'Mes Favoris les plus vus',
+    'my_favourites' => 'Mes favoris',
     'no_pages_viewed' => 'Vous n\'avez rien visité récemment',
     'no_pages_recently_created' => 'Aucune page créée récemment',
     'no_pages_recently_updated' => 'Aucune page mise à jour récemment',

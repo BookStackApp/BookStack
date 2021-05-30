@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'ha suprimit un prestatge',
     'bookshelf_delete_notification'    => 'Prestatge suprimit correctament',
 
+    // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
     // Other
     'commented_on'                => 'ha comentat a',
     'permissions_update'          => 'ha actualitzat els permisos',

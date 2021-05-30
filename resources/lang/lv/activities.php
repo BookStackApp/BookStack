@@ -43,6 +43,10 @@ return [
     'bookshelf_delete'                 => 'izdzēsa plauktu',
     'bookshelf_delete_notification'    => 'Plaukts Veiksmīgi Dzēsts',
 
+    // Favourites
+    'favourite_add_notification' => '":name" ir pievienots jūsu favorītiem',
+    'favourite_remove_notification' => '":name" ir izņemts no jūsu favorītiem',
+
     // Other
     'commented_on'                => 'komentēts',
     'permissions_update'          => 'atjaunoja atļaujas',
