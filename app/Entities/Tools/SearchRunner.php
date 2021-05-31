@@ -149,7 +149,7 @@ class SearchRunner
             $subQuery->where('entity_type', '=', $entity->getMorphClass());
             $subQuery->where(function (Builder $query) use ($searchOpts) {
                 foreach ($searchOpts->searches as $inputTerm) {
-                    $query->orWhere('term', 'like', $inputTerm .'%');
+                    $query->orWhere('term', 'like', '%' . $inputTerm .'%');
                 }
             })->groupBy('entity_type', 'entity_id');
             $entitySelect->join($this->db->raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
