@@ -42,8 +42,8 @@ return [
     'fullscreen' => 'Helskärm',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'next' => 'Nästa',
+    'previous' => 'Föregående',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativ',
@@ -88,6 +88,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Integritetspolicy',
+    'terms_of_service' => 'Användarvillkor',
 ];
