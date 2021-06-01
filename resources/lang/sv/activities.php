@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Hyllan har tagits bort',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" har lagts till i dina favoriter',
+    'favourite_remove_notification' => '":name" har tagits bort från dina favoriter',
 
     // Other
     'commented_on'                => 'kommenterade',
