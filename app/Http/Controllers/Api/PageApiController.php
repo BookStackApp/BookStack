@@ -60,6 +60,8 @@ class PageApiController extends ApiController
      *
      * Any HTML content provided should be kept to a single-block depth of plain HTML
      * elements to remain compatible with the BookStack front-end and editors.
+     * Any images included via base64 data URIs will be extracted and saved as gallery
+     * images against the page during upload.
      */
     public function create(Request $request)
     {

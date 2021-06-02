@@ -3,9 +3,13 @@
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
+use Tests\Uploads\UsesImages;
 
 class PageContentTest extends TestCase
 {
+    use UsesImages;
+
+    protected $base64Jpeg = '/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=';
 
     public function test_page_includes()
     {
@@ -478,5 +482,65 @@ class PageContentTest extends TestCase
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertElementExists('.page-content p > s');
+    }
+
+    public function test_base64_images_get_extracted_from_page_content()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $this->put($page->getUrl(), [
+            'name' => $page->name, 'summary' => '',
+            'html' => '<p>test<img src="data:image/jpeg;base64,'.$this->base64Jpeg.'"/></p>',
+        ]);
+
+        $page->refresh();
+        $this->assertStringMatchesFormat('%A<p%A>test<img src="/uploads/images/gallery/%A.jpeg">%A</p>%A', $page->html);
+
+        $matches = [];
+        preg_match('/src="(.*?)"/', $page->html, $matches);
+        $imagePath = $matches[1];
+        $imageFile = public_path($imagePath);
+        $this->assertEquals(base64_decode($this->base64Jpeg), file_get_contents($imageFile));
+
+        $this->deleteImage($imagePath);
+    }
+
+    public function test_base64_images_get_extracted_when_containing_whitespace()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $base64PngWithWhitespace = "iVBORw0KGg\noAAAANSUhE\tUgAAAAEAAAA BCA   YAAAAfFcSJAAA\n\t ACklEQVR4nGMAAQAABQAB";
+        $base64PngWithoutWhitespace = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQAB';
+        $this->put($page->getUrl(), [
+            'name' => $page->name, 'summary' => '',
+            'html' => '<p>test<img src="data:image/png;base64,'.$base64PngWithWhitespace.'"/></p>',
+        ]);
+
+        $page->refresh();
+        $this->assertStringMatchesFormat('%A<p%A>test<img src="/uploads/images/gallery/%A.png">%A</p>%A', $page->html);
+
+        $matches = [];
+        preg_match('/src="(.*?)"/', $page->html, $matches);
+        $imagePath = $matches[1];
+        $imageFile = public_path($imagePath);
+        $this->assertEquals(base64_decode($base64PngWithoutWhitespace), file_get_contents($imageFile));
+
+        $this->deleteImage($imagePath);
+    }
+
+    public function test_base64_images_blanked_if_not_supported_extension_for_extract()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $this->put($page->getUrl(), [
+            'name' => $page->name, 'summary' => '',
+            'html' => '<p>test<img src="data:image/jiff;base64,'.$this->base64Jpeg.'"/></p>',
+        ]);
+
+        $page->refresh();
+        $this->assertStringContainsString('<img src=""', $page->html);
     }
 }
