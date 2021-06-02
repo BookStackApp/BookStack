@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Полка успешно удалена',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" добавлено в избранное',
+    'favourite_remove_notification' => ':name" удалено из избранного',
 
     // Other
     'commented_on'                => 'прокомментировал',

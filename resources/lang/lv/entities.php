@@ -27,7 +27,7 @@ return [
     'images' => 'Attēli',
     'my_recent_drafts' => 'Mani melnraksti',
     'my_recently_viewed' => 'Mani nesen skatītie',
-    'my_most_viewed_favourites' => 'Mani visvairāk skatītie favorīti',
+    'my_most_viewed_favourites' => 'Mani biežāk skatītie favorīti',
     'my_favourites' => 'Mani favorīti',
     'no_pages_viewed' => 'Neviena lapa vēl nav skatīta',
     'no_pages_recently_created' => 'Nav radīta neviena lapa',
