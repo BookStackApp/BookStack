@@ -40,7 +40,7 @@ return [
     'remove' => 'Удалить',
     'add' => 'Добавить',
     'fullscreen' => 'На весь экран',
-    'favourite' => 'Favourite',
+    'favourite' => 'Избранное',
     'unfavourite' => 'Unfavourite',
     'next' => 'Next',
     'previous' => 'Previous',
