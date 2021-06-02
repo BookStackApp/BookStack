@@ -131,6 +131,17 @@ class ImageRepo
     }
 
     /**
+     * Save a new image from an existing image data string.
+     * @throws ImageUploadException
+     */
+    public function saveNewFromData(string $imageName, string $imageData, string $type, int $uploadedTo = 0)
+    {
+        $image = $this->imageService->saveNew($imageName, $imageData, $type, $uploadedTo);
+        $this->loadThumbs($image);
+        return $image;
+    }
+
+    /**
      * Save a drawing the the database.
      * @throws ImageUploadException
      */
