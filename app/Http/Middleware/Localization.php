@@ -28,6 +28,7 @@ class Localization
         'es_AR' => 'es_AR',
         'fr' => 'fr_FR',
         'he' => 'he_IL',
+        'hr' => 'hr_HR',
         'id' => 'id_ID',
         'it' => 'it_IT',
         'ja' => 'ja',
