@@ -6,9 +6,9 @@
  */
 return [
 
-    'password' => 'Lozinka mora imati najmanje 8 znakova i biti potvrđena.'
-    'token' => 'Ponovno postavljanje lozinke nemoguće putem ove adrese.'
-    'sent' => 'Na vašu email adresu poslana je poveznica za ponovno postavljanje!'
-    'reset' => 'Vaša je lozinka ponovno postavljena!'
+    'password' => 'Lozinka mora imati najmanje 8 znakova i biti potvrđena.',
+    'token' => 'Ponovno postavljanje lozinke nemoguće putem ove adrese.',
+    'sent' => 'Na vašu email adresu poslana je poveznica za ponovno postavljanje!',
+    'reset' => 'Vaša je lozinka ponovno postavljena!',
 
 ];
