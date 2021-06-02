@@ -1,10 +1,14 @@
 <?php namespace BookStack\Entities\Tools;
 
+use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Util\HtmlContentFilter;
+use BookStack\Uploads\Image;
+use BookStack\Uploads\ImageRepo;
+use BookStack\Uploads\ImageService;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
@@ -31,6 +35,7 @@ class PageContent
      */
     public function setNewHTML(string $html)
     {
+        $html = $this->saveBase64Images($this->page, $html);
         $this->page->html = $this->formatHtml($html);
         $this->page->text = $this->toPlainText();
         $this->page->markdown = '';
@@ -59,6 +64,60 @@ class PageContent
         $environment = Theme::dispatch(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $environment) ?? $environment;
         $converter = new CommonMarkConverter([], $environment);
         return $converter->convertToHtml($markdown);
+    }
+
+    /**
+     * Convert all base64 image data to saved images
+     */
+    public function saveBase64Images(Page $page, string $htmlText): string
+    {
+        if ($htmlText == '') {
+            return $htmlText;
+        }
+
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));
+        $container = $doc->documentElement;
+        $body = $container->childNodes->item(0);
+        $childNodes = $body->childNodes;
+        $xPath = new DOMXPath($doc);
+
+        // Get all img elements with image data blobs
+        $imageNodes = $xPath->query('//img[contains(@src, \'data:image\')]');
+        foreach($imageNodes as $imageNode) {
+            $imageSrc = $imageNode->getAttribute('src');
+
+            # Parse base64 data
+            $result = preg_match('"data:image/[a-zA-Z]*(;base64,[a-zA-Z0-9+/\\= ]*)"', $imageSrc, $matches);
+
+            if($result === 1) {
+                $base64ImageData = $matches[1];
+
+                $image = new Image();
+                $imageService = app()->make(ImageService::class);
+                $permissionService = app(PermissionService::class);
+                $imageRepo = new ImageRepo(new Image(), $imageService, $permissionService, $page);
+
+                # Use existing saveDrawing method used for Drawio diagrams
+                $image = $imageRepo->saveDrawing($base64ImageData, $page->id);
+                
+                // Create a new img element with the saved image URI
+                $newNode = $doc->createElement('img');
+                $newNode->setAttribute('src', $image->path);
+
+                // Replace the old img element
+                $imageNode->parentNode->replaceChild($newNode, $imageNode);
+            }
+        }
+
+        // Generate inner html as a string
+        $html = '';
+        foreach ($childNodes as $childNode) {
+            $html .= $doc->saveHTML($childNode);
+        }
+
+        return $html;
     }
 
     /**
