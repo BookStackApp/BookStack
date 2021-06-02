@@ -89,7 +89,7 @@ return [
     'required_without'     => ':values(이)가 없을 때 :attribute(을)를 구성해야 합니다.',
     'required_without_all' => ':values(이)가 모두 없을 때 :attribute(을)를 구성해야 합니다.',
     'same'                 => ':attribute(와)과 :other(을)를 똑같이 구성하세요.',
-    'safe_url'             => '제공된 링크가 안전하지 않을 수 있습니다.',
+    'safe_url'             => 'The provided link may not be safe.',
     'size'                 => [
         'numeric' => ':attribute(을)를 :size(으)로 구성하세요.',
         'file'    => ':attribute(을)를 :size킬로바이트로 구성하세요.',

@@ -244,6 +244,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
         'he' => 'Hebräisch',
+        'hr' => 'Hrvatski',
         'hu' => 'Magyar',
         'id' => 'Bahasa Indonesia',
         'it' => 'Italian',
