@@ -92,7 +92,7 @@ class Role extends Model implements Loggable
     }
 
     /**
-     * Get all visible roles
+     * Get all visible roles.
      */
     public static function visible(): Collection
     {
@@ -104,7 +104,10 @@ class Role extends Model implements Loggable
      */
     public static function restrictable(): Collection
     {
-        return static::query()->where('system_name', '!=', 'admin')->get();
+        return static::query()
+            ->where('system_name', '!=', 'admin')
+            ->orderBy('display_name', 'asc')
+            ->get();
     }
 
     /**
