@@ -73,5 +73,5 @@ return [
     'user_invite_page_welcome' => 'Dobrodošli u :appName!',
     'user_invite_page_text' => 'Da biste postavili račun i dobili pristup trebate unijeti lozinku kojom ćete se ubuduće prijaviti na :appName.',
     'user_invite_page_confirm_button' => 'Potvrdite lozinku',
-    'user_invite_success' => 'Lozinka je postavljena, možete pristupiti :appName!',
+    'user_invite_success' => 'Lozinka je postavljena, možete pristupiti :appName!'
 ];
