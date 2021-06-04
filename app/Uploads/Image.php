@@ -4,6 +4,16 @@ use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $url
+ * @property string $path
+ * @property string $type
+ * @property int $uploaded_to
+ * @property int $created_by
+ * @property int $updated_by
+ */
 class Image extends Model
 {
     use HasCreatorAndUpdater;

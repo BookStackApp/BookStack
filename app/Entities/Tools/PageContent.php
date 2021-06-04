@@ -99,7 +99,7 @@ class PageContent
             $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
             try {
                 $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $page->id);
-                $imageNode->setAttribute('src', $image->path);
+                $imageNode->setAttribute('src', $image->url);
             } catch (ImageUploadException $exception) {
                 $imageNode->setAttribute('src', '');
             }

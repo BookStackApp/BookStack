@@ -495,10 +495,10 @@ class PageContentTest extends TestCase
         ]);
 
         $page->refresh();
-        $this->assertStringMatchesFormat('%A<p%A>test<img src="/uploads/images/gallery/%A.jpeg">%A</p>%A', $page->html);
+        $this->assertStringMatchesFormat('%A<p%A>test<img src="http://localhost/uploads/images/gallery/%A.jpeg">%A</p>%A', $page->html);
 
         $matches = [];
-        preg_match('/src="(.*?)"/', $page->html, $matches);
+        preg_match('/src="http:\/\/localhost(.*?)"/', $page->html, $matches);
         $imagePath = $matches[1];
         $imageFile = public_path($imagePath);
         $this->assertEquals(base64_decode($this->base64Jpeg), file_get_contents($imageFile));
@@ -519,10 +519,10 @@ class PageContentTest extends TestCase
         ]);
 
         $page->refresh();
-        $this->assertStringMatchesFormat('%A<p%A>test<img src="/uploads/images/gallery/%A.png">%A</p>%A', $page->html);
+        $this->assertStringMatchesFormat('%A<p%A>test<img src="http://localhost/uploads/images/gallery/%A.png">%A</p>%A', $page->html);
 
         $matches = [];
-        preg_match('/src="(.*?)"/', $page->html, $matches);
+        preg_match('/src="http:\/\/localhost(.*?)"/', $page->html, $matches);
         $imagePath = $matches[1];
         $imageFile = public_path($imagePath);
         $this->assertEquals(base64_decode($base64PngWithoutWhitespace), file_get_contents($imageFile));
