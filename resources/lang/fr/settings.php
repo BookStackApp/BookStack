@@ -241,6 +241,7 @@ return [
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
         'he' => 'Hébreu',
+        'hr' => 'Hrvatski',
         'hu' => 'Magyar',
         'id' => 'Bahasa Indonesia',
         'it' => 'Italian',

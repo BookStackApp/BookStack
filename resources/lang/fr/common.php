@@ -42,8 +42,8 @@ return [
     'fullscreen' => 'Plein écran',
     'favourite' => 'Favoris',
     'unfavourite' => 'Supprimer des favoris',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'next' => 'Suivant',
+    'previous' => 'Précédent',
 
     // Sort Options
     'sort_options' => 'Options de tri',

@@ -2,12 +2,15 @@
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
+use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Util\HtmlContentFilter;
+use BookStack\Uploads\ImageRepo;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
+use Illuminate\Support\Str;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
@@ -31,6 +34,7 @@ class PageContent
      */
     public function setNewHTML(string $html)
     {
+        $html = $this->extractBase64Images($this->page, $html);
         $this->page->html = $this->formatHtml($html);
         $this->page->text = $this->toPlainText();
         $this->page->markdown = '';
@@ -62,18 +66,64 @@ class PageContent
     }
 
     /**
+     * Convert all base64 image data to saved images
+     */
+    public function extractBase64Images(Page $page, string $htmlText): string
+    {
+        if (empty($htmlText) || strpos($htmlText, 'data:image') === false) {
+            return $htmlText;
+        }
+
+        $doc = $this->loadDocumentFromHtml($htmlText);
+        $container = $doc->documentElement;
+        $body = $container->childNodes->item(0);
+        $childNodes = $body->childNodes;
+        $xPath = new DOMXPath($doc);
+        $imageRepo = app()->make(ImageRepo::class);
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+        // Get all img elements with image data blobs
+        $imageNodes = $xPath->query('//img[contains(@src, \'data:image\')]');
+        foreach ($imageNodes as $imageNode) {
+            $imageSrc = $imageNode->getAttribute('src');
+            [$dataDefinition, $base64ImageData] = explode(',', $imageSrc, 2);
+            $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? 'png');
+
+            // Validate extension
+            if (!in_array($extension, $allowedExtensions)) {
+                $imageNode->setAttribute('src', '');
+                continue;
+            }
+
+            // Save image from data with a random name
+            $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
+            try {
+                $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $page->id);
+                $imageNode->setAttribute('src', $image->url);
+            } catch (ImageUploadException $exception) {
+                $imageNode->setAttribute('src', '');
+            }
+        }
+
+        // Generate inner html as a string
+        $html = '';
+        foreach ($childNodes as $childNode) {
+            $html .= $doc->saveHTML($childNode);
+        }
+
+        return $html;
+    }
+
+    /**
      * Formats a page's html to be tagged correctly within the system.
      */
     protected function formatHtml(string $htmlText): string
     {
-        if ($htmlText == '') {
+        if (empty($htmlText)) {
             return $htmlText;
         }
 
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));
-
+        $doc = $this->loadDocumentFromHtml($htmlText);
         $container = $doc->documentElement;
         $body = $container->childNodes->item(0);
         $childNodes = $body->childNodes;
@@ -112,7 +162,7 @@ class PageContent
     protected function updateLinks(DOMXPath $xpath, string $old, string $new)
     {
         $old = str_replace('"', '', $old);
-        $matchingLinks = $xpath->query('//body//*//*[@href="'.$old.'"]');
+        $matchingLinks = $xpath->query('//body//*//*[@href="' . $old . '"]');
         foreach ($matchingLinks as $domElem) {
             $domElem->setAttribute('href', $new);
         }
@@ -165,7 +215,7 @@ class PageContent
     /**
      * Render the page for viewing
      */
-    public function render(bool $blankIncludes = false) : string
+    public function render(bool $blankIncludes = false): string
     {
         $content = $this->page->html;
 
@@ -191,9 +241,7 @@ class PageContent
             return [];
         }
 
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($htmlContent, 'HTML-ENTITIES', 'UTF-8'));
+        $doc = $this->loadDocumentFromHtml($htmlContent);
         $xPath = new DOMXPath($doc);
         $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
 
@@ -233,7 +281,7 @@ class PageContent
     /**
      * Remove any page include tags within the given HTML.
      */
-    protected function blankPageIncludes(string $html) : string
+    protected function blankPageIncludes(string $html): string
     {
         return preg_replace("/{{@\s?([0-9].*?)}}/", '', $html);
     }
@@ -241,7 +289,7 @@ class PageContent
     /**
      * Parse any include tags "{{@<page_id>#section}}" to be part of the page.
      */
-    protected function parsePageIncludes(string $html) : string
+    protected function parsePageIncludes(string $html): string
     {
         $matches = [];
         preg_match_all("/{{@\s?([0-9].*?)}}/", $html, $matches);
@@ -284,9 +332,7 @@ class PageContent
     protected function fetchSectionOfPage(Page $page, string $sectionId): string
     {
         $topLevelTags = ['table', 'ul', 'ol'];
-        $doc = new DOMDocument();
-        libxml_use_internal_errors(true);
-        $doc->loadHTML(mb_convert_encoding('<body>'.$page->html.'</body>', 'HTML-ENTITIES', 'UTF-8'));
+        $doc = $this->loadDocumentFromHtml('<body>' . $page->html . '</body>');
 
         // Search included content for the id given and blank out if not exists.
         $matchingElem = $doc->getElementById($sectionId);
@@ -308,5 +354,16 @@ class PageContent
         libxml_clear_errors();
 
         return $innerContent;
+    }
+
+    /**
+     * Create and load a DOMDocument from the given html content.
+     */
+    protected function loadDocumentFromHtml(string $html): DOMDocument
+    {
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        return $doc;
     }
 }

@@ -42,8 +42,8 @@ return [
     'fullscreen' => 'Volledig scherm',
     'favourite' => 'Favoriet',
     'unfavourite' => 'Verwijderen uit favoriet',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'next' => 'Volgende',
+    'previous' => 'Vorige',
 
     // Sort Options
     'sort_options' => 'Sorteeropties',

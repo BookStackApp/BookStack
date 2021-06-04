@@ -6,7 +6,7 @@ $key - Unique key for checking existing stored state.
 <button type="button" expand-toggle="{{ $target }}"
    expand-toggle-update-endpoint="{{ url('/settings/users/'. user()->id .'/update-expansion-preference/' . $key) }}"
    expand-toggle-is-open="{{ $isOpen ? 'yes' : 'no' }}"
-   class="text-muted icon-list-item text-primary">
+   class="icon-list-item {{ $classes ?? '' }}">
     <span>@icon('expand-text')</span>
     <span>{{ trans('common.toggle_details') }}</span>
 </button>

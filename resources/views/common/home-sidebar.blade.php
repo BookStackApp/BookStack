@@ -6,16 +6,14 @@
 @endif
 
 @if(count($favourites) > 0)
-    <div id="top-favourites" class="card mb-xl">
-        <h3 class="card-title">
+    <div id="top-favourites" class="mb-xl">
+        <h5>
             <a href="{{ url('/favourites') }}" class="no-color">{{ trans('entities.my_most_viewed_favourites') }}</a>
-        </h3>
-        <div class="px-m">
-            @include('partials.entity-list', [
+        </h5>
+        @include('partials.entity-list', [
             'entities' => $favourites,
             'style' => 'compact',
-            ])
-        </div>
+        ])
     </div>
 @endif
 

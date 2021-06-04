@@ -25,7 +25,7 @@
     <table permissions-table class="table permissions-table toggle-switch-list" style="{{ !$model->restricted ? 'display: none' : '' }}">
         <tr>
             <th>{{ trans('common.role') }}</th>
-            <th @if($model->isA('page')) colspan="3" @else colspan="4" @endif>
+            <th colspan="{{ $model->isA('page') ? '3' : '4'  }}">
                 {{ trans('common.actions') }}
                 <a href="#" permissions-table-toggle-all class="text-small ml-m text-primary">{{ trans('common.toggle_all') }}</a>
             </th>
