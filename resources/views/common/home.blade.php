@@ -6,7 +6,7 @@
         <div class="grid half">
             <div>
                 <div class="icon-list inline block">
-                    @include('components.expand-toggle', ['target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
+                    @include('components.expand-toggle', ['classes' => 'text-muted text-primary', 'target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
                 </div>
             </div>
             <div class="text-m-right">
