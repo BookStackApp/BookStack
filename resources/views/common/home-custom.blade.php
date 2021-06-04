@@ -18,8 +18,8 @@
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
-            @include('components.expand-toggle', ['target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
-            @include('partials.dark-mode-toggle', ['classes' => 'text-muted icon-list-item text-primary'])
+            @include('components.expand-toggle', ['classes' => 'text-primary', 'target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
+            @include('partials.dark-mode-toggle', ['classes' => 'icon-list-item text-primary'])
         </div>
     </div>
 @stop
