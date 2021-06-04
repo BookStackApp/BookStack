@@ -40,6 +40,10 @@ return [
     'remove' => 'Ukloni',
     'add' => 'Dodaj',
     'fullscreen' => 'Cijeli zaslon',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Razvrstaj opcije',

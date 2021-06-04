@@ -72,6 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Održavanje',
     'maint_image_cleanup' => 'Čišćenje slika',
+    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
     'maint_delete_images_only_in_revisions' => 'Izbriši slike koje postoje u prijašnjim revizijama',
     'maint_image_cleanup_run' => 'Pokreni čišćenje',
     'maint_image_cleanup_warning' => ':count moguće neiskorištene slike. Jeste li sigurni da želite izbrisati ove slike?',
@@ -128,6 +129,7 @@ return [
     'role_delete' => 'Izbriši ulogu',
     'role_delete_confirm' => 'Ovo će izbrisati ulogu povezanu s imenom \':roleName\'.',
     'role_delete_users_assigned' => 'Ova uloga dodijeljena je :userCount. Ako želite premjestiti korisnike iz ove uloge odaberite novu ulogu u nastavku.',
+    'role_delete_no_migration' => "Don't migrate users",
     'role_delete_sure' => 'Jeste li sigurni da želite obrisati ovu ulogu?',
     'role_delete_success' => 'Uloga je uspješno izbrisana',
     'role_edit' => 'Uredi ulogu',
@@ -239,6 +241,7 @@ return [
         'es_AR' => 'Español Argentina',
         'fr' => 'Français',
         'he' => 'עברית',
+        'hr' => 'Hrvatski',
         'hu' => 'Magyar',
         'id' => 'Bahasa Indonesia',
         'it' => 'Italian',
