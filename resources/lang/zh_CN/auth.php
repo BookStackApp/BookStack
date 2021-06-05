@@ -27,7 +27,7 @@ return [
     'ldap_email_hint' => '请输入用于此帐户的电子邮件。',
     'create_account' => '创建账户',
     'already_have_account' => '您已经有账号？',
-    'dont_have_account' => '您还没有账户吗？',
+    'dont_have_account' => '您还没有账号吗？',
     'social_login' => 'SNS登录',
     'social_registration' => '使用社交网站账号注册',
     'social_registration_text' => '使用其他服务注册并登录。',
