@@ -14,16 +14,14 @@ use Illuminate\Validation\ValidationException;
 class AttachmentController extends Controller
 {
     protected $attachmentService;
-    protected $attachment;
     protected $pageRepo;
 
     /**
      * AttachmentController constructor.
      */
-    public function __construct(AttachmentService $attachmentService, Attachment $attachment, PageRepo $pageRepo)
+    public function __construct(AttachmentService $attachmentService, PageRepo $pageRepo)
     {
         $this->attachmentService = $attachmentService;
-        $this->attachment = $attachment;
         $this->pageRepo = $pageRepo;
     }
 
@@ -67,7 +65,7 @@ class AttachmentController extends Controller
             'file' => 'required|file'
         ]);
 
-        $attachment = $this->attachment->newQuery()->findOrFail($attachmentId);
+        $attachment = Attachment::query()->findOrFail($attachmentId);
         $this->checkOwnablePermission('view', $attachment->page);
         $this->checkOwnablePermission('page-update', $attachment->page);
         $this->checkOwnablePermission('attachment-create', $attachment);
@@ -89,7 +87,7 @@ class AttachmentController extends Controller
      */
     public function getUpdateForm(string $attachmentId)
     {
-        $attachment = $this->attachment->findOrFail($attachmentId);
+        $attachment = Attachment::query()->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $attachment->page);
         $this->checkOwnablePermission('attachment-create', $attachment);
@@ -202,9 +200,10 @@ class AttachmentController extends Controller
      * @throws FileNotFoundException
      * @throws NotFoundException
      */
-    public function get(string $attachmentId)
+    public function get(Request $request, string $attachmentId)
     {
-        $attachment = $this->attachment->findOrFail($attachmentId);
+        /** @var Attachment $attachment */
+        $attachment = Attachment::query()->findOrFail($attachmentId);
         try {
             $page = $this->pageRepo->getById($attachment->uploaded_to);
         } catch (NotFoundException $exception) {
@@ -217,8 +216,13 @@ class AttachmentController extends Controller
             return redirect($attachment->path);
         }
 
+        $fileName = $attachment->getFileName();
         $attachmentContents = $this->attachmentService->getAttachmentFromStorage($attachment);
-        return $this->downloadResponse($attachmentContents, $attachment->getFileName());
+
+        if ($request->get('open') === 'true') {
+            return $this->inlineDownloadResponse($attachmentContents, $fileName);
+        }
+        return $this->downloadResponse($attachmentContents, $fileName);
     }
 
     /**
@@ -227,7 +231,7 @@ class AttachmentController extends Controller
      */
     public function delete(string $attachmentId)
     {
-        $attachment = $this->attachment->findOrFail($attachmentId);
+        $attachment = Attachment::query()->findOrFail($attachmentId);
         $this->checkOwnablePermission('attachment-delete', $attachment);
         $this->attachmentService->deleteFile($attachment);
         return response()->json(['message' => trans('entities.attachments_deleted')]);
