@@ -2,6 +2,7 @@ import addRemoveRows from "./add-remove-rows.js"
 import ajaxDeleteRow from "./ajax-delete-row.js"
 import ajaxForm from "./ajax-form.js"
 import attachments from "./attachments.js"
+import attachmentsList from "./attachments-list.js"
 import autoSuggest from "./auto-suggest.js"
 import backToTop from "./back-to-top.js"
 import bookSort from "./book-sort.js"
@@ -56,6 +57,7 @@ const componentMapping = {
     "ajax-delete-row": ajaxDeleteRow,
     "ajax-form": ajaxForm,
     "attachments": attachments,
+    "attachments-list": attachmentsList,
     "auto-suggest": autoSuggest,
     "back-to-top": backToTop,
     "book-sort": bookSort,
