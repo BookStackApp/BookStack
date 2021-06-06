@@ -43,14 +43,14 @@ return [
     'uploaded'  => 'Server tidak mengizinkan unggahan dengan ukuran ini. Harap coba ukuran berkas yang lebih kecil.',
     'image_upload_error' => 'Terjadi kesalahan saat mengunggah gambar',
     'image_upload_type_error' => 'Jenis gambar yang diunggah tidak valid',
-    'file_upload_timeout' => 'Waktu unggah file telah habis.',
+    'file_upload_timeout' => 'Unggahan berkas telah habis waktu.',
 
     // Attachments
     'attachment_not_found' => 'Lampiran tidak ditemukan',
 
     // Pages
     'page_draft_autosave_fail' => 'Gagal menyimpan draf. Pastikan Anda memiliki koneksi internet sebelum menyimpan halaman ini',
-    'page_custom_home_deletion' => 'Tidak dapat menghapus halaman saat disetel sebagai beranda',
+    'page_custom_home_deletion' => 'Tidak dapat menghapus sebuah halaman saat diatur sebagai sebuah halaman beranda',
 
     // Entities
     'entity_not_found' => 'Entitas tidak ditemukan',
@@ -67,7 +67,7 @@ return [
     'users_cannot_delete_guest' => 'Anda tidak dapat menghapus pengguna tamu',
 
     // Roles
-    'role_cannot_be_edited' => 'Peran ini tidak dapat diedit',
+    'role_cannot_be_edited' => 'Peran ini tidak dapat disunting',
     'role_system_cannot_be_deleted' => 'Peran ini adalah peran sistem dan tidak dapat dihapus',
     'role_registration_default_cannot_delete' => 'Peran ini tidak dapat dihapus jika disetel sebagai peran pendaftaran default',
     'role_cannot_remove_only_admin' => 'Pengguna ini adalah satu-satunya pengguna yang ditetapkan ke peran administrator. Tetapkan peran administrator untuk pengguna lain sebelum mencoba untuk menghapusnya di sini.',
