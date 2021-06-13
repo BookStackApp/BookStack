@@ -214,7 +214,7 @@ return [
     'user_api_token_update_success' => 'Token API berhasil diperbarui',
     'user_api_token' => 'Token API',
     'user_api_token_id' => 'Token ID',
-    'user_api_token_id_desc' => 'Ini adalah pengenal yang dibuat oleh sistem yang tidak dapat diedit untuk token ini yang perlu disediakan dalam permintaan API.',
+    'user_api_token_id_desc' => 'Ini adalah sebuah pengenal yang dihasilkan oleh sistem yang tidak dapat disunting untuk token ini yang perlu untuk disediakan dalam permintaan API.',
     'user_api_token_secret' => 'Token Secret',
     'user_api_token_secret_desc' => 'Ini adalah rahasia yang dihasilkan sistem untuk token ini yang perlu disediakan dalam permintaan API. Ini hanya akan ditampilkan kali ini jadi salin nilai ini ke tempat yang aman dan terlindungi.',
     'user_api_token_created' => 'Token dibuat :timeAgo',

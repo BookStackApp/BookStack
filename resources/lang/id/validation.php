@@ -100,7 +100,7 @@ return [
     'timezone'             => ':attribute harus menjadi zona yang valid.',
     'unique'               => ':attribute sudah diambil.',
     'url'                  => ':attribute format tidak valid.',
-    'uploaded'             => 'File tidak dapat diunggah. Server mungkin tidak menerima file dengan ukuran ini.',
+    'uploaded'             => 'Berkas tidak dapat diunggah. Server mungkin tidak menerima berkas dengan ukuran ini.',
 
     // Custom validation lines
     'custom' => [
