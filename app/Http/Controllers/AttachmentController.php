@@ -102,8 +102,8 @@ class AttachmentController extends Controller
      */
     public function update(Request $request, string $attachmentId)
     {
-        $attachment = $this->attachment->newQuery()->findOrFail($attachmentId);
-
+        /** @var Attachment $attachment */
+        $attachment = Attachment::query()->findOrFail($attachmentId);
         try {
             $this->validate($request, [
                 'attachment_edit_name' => 'required|string|min:1|max:255',
@@ -158,7 +158,7 @@ class AttachmentController extends Controller
 
         $attachmentName = $request->get('attachment_link_name');
         $link = $request->get('attachment_link_url');
-        $attachment = $this->attachmentService->saveNewFromLink($attachmentName, $link, intval($pageId));
+        $this->attachmentService->saveNewFromLink($attachmentName, $link, intval($pageId));
 
         return view('attachments.manager-link-form', [
             'pageId' => $pageId,
@@ -231,6 +231,7 @@ class AttachmentController extends Controller
      */
     public function delete(string $attachmentId)
     {
+        /** @var Attachment $attachment */
         $attachment = Attachment::query()->findOrFail($attachmentId);
         $this->checkOwnablePermission('attachment-delete', $attachment);
         $this->attachmentService->deleteFile($attachment);
