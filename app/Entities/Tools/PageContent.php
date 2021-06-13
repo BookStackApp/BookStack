@@ -332,7 +332,7 @@ class PageContent
     protected function fetchSectionOfPage(Page $page, string $sectionId): string
     {
         $topLevelTags = ['table', 'ul', 'ol'];
-        $doc = $this->loadDocumentFromHtml('<body>' . $page->html . '</body>');
+        $doc = $this->loadDocumentFromHtml($page->html);
 
         // Search included content for the id given and blank out if not exists.
         $matchingElem = $doc->getElementById($sectionId);
@@ -363,6 +363,7 @@ class PageContent
     {
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
+        $html = '<body>' . $html . '</body>';
         $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         return $doc;
     }
