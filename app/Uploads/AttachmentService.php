@@ -3,8 +3,10 @@
 use BookStack\Exceptions\FileUploadException;
 use Exception;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Support\Str;
+use Log;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentService
@@ -38,11 +40,9 @@ class AttachmentService
 
     /**
      * Get an attachment from storage.
-     * @param Attachment $attachment
-     * @return string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
-    public function getAttachmentFromStorage(Attachment $attachment)
+    public function getAttachmentFromStorage(Attachment $attachment): string
     {
         return $this->getStorage()->get($attachment->path);
     }
@@ -202,7 +202,7 @@ class AttachmentService
         try {
             $storage->put($attachmentPath, $attachmentData);
         } catch (Exception $e) {
-            \Log::error('Error when attempting file upload:' . $e->getMessage());
+            Log::error('Error when attempting file upload:' . $e->getMessage());
             throw new FileUploadException(trans('errors.path_not_writable', ['filePath' => $attachmentPath]));
         }
 
