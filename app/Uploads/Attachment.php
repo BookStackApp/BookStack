@@ -3,12 +3,14 @@
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int id
  * @property string name
  * @property string path
  * @property string extension
+ * @property ?Page page
  * @property bool external
  */
 class Attachment extends Model
@@ -31,9 +33,8 @@ class Attachment extends Model
 
     /**
      * Get the page this file was uploaded to.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function page()
+    public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class, 'uploaded_to');
     }
