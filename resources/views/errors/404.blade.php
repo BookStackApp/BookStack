@@ -6,9 +6,11 @@
     <div class="card mb-xl px-l pb-l pt-l">
         <div class="grid half v-center">
             <div>
-                <h1 class="list-heading">{{ $message ?? trans('errors.404_page_not_found') }}</h1>
-                <h5>{{ $subtitle ?? trans('errors.sorry_page_not_found') }}</h5>
-                <p>{{ $details ?? trans('errors.sorry_page_not_found_permission_warning') }}</p>
+                @include('errors.parts.not-found-text', [
+                    'title' => $message ?? trans('errors.404_page_not_found'),
+                    'subtitle' => $subtitle ?? trans('errors.sorry_page_not_found'),
+                    'details' => $details ?? trans('errors.sorry_page_not_found_permission_warning'),
+                ])
             </div>
             <div class="text-right">
                 @if(!signedInUser())
