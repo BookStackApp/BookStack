@@ -13,7 +13,7 @@ return [
     'sign_up' => '注册',
     'log_in' => '登录',
     'log_in_with' => '以:socialDriver登录',
-    'sign_up_with' => '注册:socialDriver',
+    'sign_up_with' => '通过 :socialDriver 账号登录',
     'logout' => '注销',
 
     'name' => '名称',
@@ -27,10 +27,10 @@ return [
     'ldap_email_hint' => '请输入用于此帐户的电子邮件。',
     'create_account' => '创建账户',
     'already_have_account' => '您已经有账号？',
-    'dont_have_account' => '您还没注册？',
+    'dont_have_account' => '您还没有账号吗？',
     'social_login' => 'SNS登录',
-    'social_registration' => 'SNS注册',
-    'social_registration_text' => '其他服务注册/登录。',
+    'social_registration' => '使用社交网站账号注册',
+    'social_registration_text' => '使用其他服务注册并登录。',
 
     'register_thanks' => '注册完成！',
     'register_confirm' => '请点击查收您的Email，并点击确认。',

@@ -40,10 +40,10 @@ return [
     'remove' => 'Hapus',
     'add' => 'Tambah',
     'fullscreen' => 'Layar Penuh',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'favourite' => 'Favorit',
+    'unfavourite' => 'Tidak favorit',
+    'next' => 'Lanjut',
+    'previous' => 'Sebelumnya',
 
     // Sort Options
     'sort_options' => 'Sortir Pilihan',
