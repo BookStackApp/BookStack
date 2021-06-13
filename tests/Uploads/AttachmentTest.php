@@ -4,11 +4,9 @@ use BookStack\Entities\Tools\TrashCan;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Attachment;
 use BookStack\Entities\Models\Page;
-use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Uploads\AttachmentService;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
-use Tests\TestResponse;
 
 class AttachmentTest extends TestCase
 {
@@ -57,7 +55,7 @@ class AttachmentTest extends TestCase
 
     public function test_file_upload()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $this->asAdmin();
         $admin = $this->getAdmin();
         $fileName = 'upload_test_file.txt';
@@ -85,7 +83,7 @@ class AttachmentTest extends TestCase
 
     public function test_file_upload_does_not_use_filename()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $fileName = 'upload_test_file.txt';
 
 
@@ -99,7 +97,7 @@ class AttachmentTest extends TestCase
 
     public function test_file_display_and_access()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $this->asAdmin();
         $fileName = 'upload_test_file.txt';
 
@@ -119,7 +117,7 @@ class AttachmentTest extends TestCase
 
     public function test_attaching_link_to_page()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $admin = $this->getAdmin();
         $this->asAdmin();
 
@@ -156,7 +154,7 @@ class AttachmentTest extends TestCase
 
     public function test_attachment_updating()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $this->asAdmin();
 
         $attachment = $this->createAttachment($page);
@@ -180,7 +178,7 @@ class AttachmentTest extends TestCase
 
     public function test_file_deletion()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $this->asAdmin();
         $fileName = 'deletion_test.txt';
         $this->uploadFile($fileName, $page->id);
@@ -202,7 +200,7 @@ class AttachmentTest extends TestCase
 
     public function test_attachment_deletion_on_page_deletion()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $this->asAdmin();
         $fileName = 'deletion_test.txt';
         $this->uploadFile($fileName, $page->id);
@@ -230,7 +228,7 @@ class AttachmentTest extends TestCase
     {
         $admin = $this->getAdmin();
         $viewer = $this->getViewer();
-        $page = Page::first(); /** @var Page $page */
+        $page = Page::query()->first(); /** @var Page $page */
 
         $this->actingAs($admin);
         $fileName = 'permission_test.txt';
@@ -253,7 +251,7 @@ class AttachmentTest extends TestCase
 
     public function test_data_and_js_links_cannot_be_attached_to_a_page()
     {
-        $page = Page::first();
+        $page = Page::query()->first();
         $this->asAdmin();
 
         $badLinks = [
@@ -290,5 +288,23 @@ class AttachmentTest extends TestCase
                 'path' => $badLink,
             ]);
         }
+    }
+
+    public function test_file_access_with_open_query_param_provides_inline_response_with_correct_content_type()
+    {
+        $page = Page::query()->first();
+        $this->asAdmin();
+        $fileName = 'upload_test_file.txt';
+
+        $upload = $this->uploadFile($fileName, $page->id);
+        $upload->assertStatus(200);
+        $attachment = Attachment::query()->orderBy('id', 'desc')->take(1)->first();
+
+        $attachmentGet = $this->get($attachment->getUrl(true));
+        // http-foundation/Response does some 'fixing' of responses to add charsets to text responses.
+        $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
+        $attachmentGet->assertHeader('Content-Disposition', "inline; filename=\"upload_test_file.txt\"");
+
+        $this->deleteUploads();
     }
 }

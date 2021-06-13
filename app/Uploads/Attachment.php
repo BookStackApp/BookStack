@@ -41,12 +41,12 @@ class Attachment extends Model
     /**
      * Get the url of this file.
      */
-    public function getUrl(): string
+    public function getUrl($openInline = false): string
     {
         if ($this->external && strpos($this->path, 'http') !== 0) {
             return $this->path;
         }
-        return url('/attachments/' . $this->id);
+        return url('/attachments/' . $this->id . ($openInline ? '?open=true' : ''));
     }
 
     /**
