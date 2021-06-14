@@ -35,7 +35,7 @@ return [
     'app_primary_color' => '站点主色',
     'app_primary_color_desc' => '这应该是一个十六进制值。<br>保留为空以重置为默认颜色。',
     'app_homepage' => '站点主页',
-    'app_homepage_desc' => '选择要在主页上显示的页面来替换默认的视图，选定页面的访问权限将被忽略。',
+    'app_homepage_desc' => '选择要在主页上显示的页面来替换默认的页面，选定页面的访问权限将被忽略。',
     'app_homepage_select' => '选择一个页面',
     'app_footer_links' => '页脚链接',
     'app_footer_links_desc' => '添加在网站页脚中显示的链接。这些链接将显示在大多数页面的底部，也包括不需要登录的页面。您可以使用标签"trans::<key>"来使用系统定义的翻译。例如：使用"trans::common.privacy_policy"将显示为“隐私政策”，而"trans::common.terms_of_service"将显示为“服务条款”。',
@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => '维护',
     'maint_image_cleanup' => '清理图像',
-    'maint_image_cleanup_desc' => "扫描页面和修订内容以检查哪些图像是正在使用的以及哪些图像是多余的。确保在运行前创建完整的数据库和映像备份。",
+    'maint_image_cleanup_desc' => "扫描页面和修订内容以检查哪些图片是正在使用的以及哪些图片是多余的。确保在运行前完整备份数据库和图片。",
     'maint_delete_images_only_in_revisions' => '同时删除只存在于旧的页面修订中的图片',
     'maint_image_cleanup_run' => '运行清理',
     'maint_image_cleanup_warning' => '发现了 :count 张可能未使用的图像。您确定要删除这些图像吗？',
