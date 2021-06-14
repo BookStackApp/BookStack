@@ -173,7 +173,7 @@ return [
     'users_send_invite_text' => 'Puoi scegliere di inviare a questo utente un\'email di invito che permette loro di impostare la propria password altrimenti puoi impostare la password tu stesso.',
     'users_send_invite_option' => 'Invia email di invito',
     'users_external_auth_id' => 'ID Autenticazioni Esterna',
-    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your external authentication system.',
+    'users_external_auth_id_desc' => 'Questo è l\'ID usato per abbinare questo utente quando si comunica con il sistema di autenticazione esterno.',
     'users_password_warning' => 'Riempi solo se desideri cambiare la tua password:',
     'users_system_public' => 'Questo utente rappresente qualsiasi ospite che visita il sito. Non può essere usato per effettuare il login ma è assegnato automaticamente.',
     'users_delete' => 'Elimina Utente',
