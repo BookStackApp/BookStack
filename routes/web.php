@@ -14,7 +14,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Shelves
     Route::get('/create-shelf', 'BookshelfController@create');
-    Route::group(['prefix' => 'shelves'], function() {
+    Route::group(['prefix' => 'shelves'], function () {
         Route::get('/', 'BookshelfController@index');
         Route::post('/', 'BookshelfController@store');
         Route::get('/{slug}/edit', 'BookshelfController@edit');

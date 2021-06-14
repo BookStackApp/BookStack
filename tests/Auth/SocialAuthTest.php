@@ -1,5 +1,6 @@
 <?php namespace Tests\Auth;
 
+use BookStack\Auth\SocialAccount;
 use BookStack\Auth\User;
 use DB;
 use Laravel\Socialite\Contracts\Factory;
@@ -81,6 +82,31 @@ class SocialAuthTest extends TestCase
         ]);
         $resp = $this->followingRedirects()->get('/login/service/github/callback');
         $resp->assertDontSee("login-form");
+    }
+
+    public function test_social_account_detach()
+    {
+        $editor = $this->getEditor();
+        config([
+            'GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc',
+            'APP_URL' => 'http://localhost'
+        ]);
+
+        $socialAccount = SocialAccount::query()->forceCreate([
+            'user_id' => $editor->id,
+            'driver' => 'github',
+            'driver_id' => 'logintest123',
+        ]);
+
+        $resp = $this->actingAs($editor)->get($editor->getEditUrl());
+        $resp->assertElementContains('a[href$="/login/service/github/detach"]', 'Disconnect Account');
+
+        $resp = $this->get('/login/service/github/detach');
+        $resp->assertRedirect($editor->getEditUrl());
+        $resp = $this->followRedirects($resp);
+        $resp->assertSee('Github account was successfully disconnected from your profile.');
+
+        $this->assertDatabaseMissing('social_accounts', ['id' => $socialAccount->id]);
     }
 
     public function test_social_autoregister()
