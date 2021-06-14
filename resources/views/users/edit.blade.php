@@ -74,8 +74,11 @@
                                 <div role="presentation">@icon('auth/'. $driver, ['style' => 'width: 56px;height: 56px;'])</div>
                                 <div>
                                     @if($user->hasSocialAccount($driver))
-                                        <a href="{{ url("/login/service/{$driver}/detach") }}" aria-label="{{ trans('settings.users_social_disconnect') }} - {{ $driver }}"
-                                           class="button small outline">{{ trans('settings.users_social_disconnect') }}</a>
+                                        <form action="{{ url("/login/service/{$driver}/detach") }}" method="POST">
+                                            {{ csrf_field() }}
+                                            <button aria-label="{{ trans('settings.users_social_disconnect') }} - {{ $driver }}"
+                                                    class="button small outline">{{ trans('settings.users_social_disconnect') }}</button>
+                                        </form>
                                     @else
                                         <a href="{{ url("/login/service/{$driver}") }}" aria-label="{{ trans('settings.users_social_connect') }} - {{ $driver }}"
                                            class="button small outline">{{ trans('settings.users_social_connect') }}</a>

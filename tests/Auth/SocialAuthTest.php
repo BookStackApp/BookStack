@@ -99,9 +99,9 @@ class SocialAuthTest extends TestCase
         ]);
 
         $resp = $this->actingAs($editor)->get($editor->getEditUrl());
-        $resp->assertElementContains('a[href$="/login/service/github/detach"]', 'Disconnect Account');
+        $resp->assertElementContains('form[action$="/login/service/github/detach"]', 'Disconnect Account');
 
-        $resp = $this->get('/login/service/github/detach');
+        $resp = $this->post('/login/service/github/detach');
         $resp->assertRedirect($editor->getEditUrl());
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Github account was successfully disconnected from your profile.');
