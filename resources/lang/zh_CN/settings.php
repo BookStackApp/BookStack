@@ -15,7 +15,7 @@ return [
     'app_customization' => '定制',
     'app_features_security' => '功能与安全',
     'app_name' => '站点名称',
-    'app_name_desc' => '此名称将在网页头部和Email中显示。',
+    'app_name_desc' => '此名称将在网页头部和系统发送的电子邮件中显示。',
     'app_name_header' => '在网页头部显示站点名称？',
     'app_public_access' => '访问权限',
     'app_public_access_desc' => '启用此选项将允许未登录的用户访问站点内容。',
@@ -64,9 +64,9 @@ return [
     'reg_enable_external_warning' => '当启用外部LDAP或者SAML认证时，上面的选项会被忽略。当使用外部系统认证认证成功时，将自动创建非现有会员的用户账户。',
     'reg_email_confirmation' => '邮件确认',
     'reg_email_confirmation_toggle' => '需要电子邮件确认',
-    'reg_confirm_email_desc' => '如果使用域名限制，则需要Email验证，并且该值将被忽略。',
+    'reg_confirm_email_desc' => '如果使用域名限制，则需要电子邮件验证，并且该值将被忽略。',
     'reg_confirm_restrict_domain' => '域名限制',
-    'reg_confirm_restrict_domain_desc' => '输入您想要限制注册的Email域名列表，用逗号隔开。在被允许与应用程序交互之前，用户将被发送一封Email来确认他们的地址。<br>注意用户在注册成功后可以修改他们的Email地址。',
+    'reg_confirm_restrict_domain_desc' => '输入您想要限制注册的电子邮件域名列表，用逗号隔开（即只允许使用这些电子邮件域名注册）。在允许用户与应用程序交互之前，将向用户发送一封电子邮件以确认其地址。<br>请注意，用户在注册成功后仍然可以修改他们的电子邮件地址。',
     'reg_confirm_restrict_domain_placeholder' => '尚未设置限制',
 
     // Maintenance settings
