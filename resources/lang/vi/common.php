@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Không có hoạt động nào',
     'no_items' => 'Không có mục nào khả dụng',
     'back_to_top' => 'Lên đầu trang',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Bật/tắt chi tiết',
     'toggle_thumbnails' => 'Bật/tắt ảnh ảnh nhỏ',
     'details' => 'Chi tiết',
