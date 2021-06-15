@@ -60,6 +60,7 @@ return [
     'no_activity' => '활동 없음',
     'no_items' => '항목 없음',
     'back_to_top' => '맨 위로',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => '내용 보기',
     'toggle_thumbnails' => '섬네일 보기',
     'details' => '정보',
