@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Gösterilecek eylem bulunamadı',
     'no_items' => 'Herhangi bir öge bulunamadı',
     'back_to_top' => 'Başa dön',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Detayları Göster/Gizle',
     'toggle_thumbnails' => 'Ön İzleme Görsellerini Göster/Gizle',
     'details' => 'Detaylar',
