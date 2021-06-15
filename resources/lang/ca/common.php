@@ -60,6 +60,7 @@ return [
     'no_activity' => 'No hi ha activitat',
     'no_items' => 'No hi ha cap element',
     'back_to_top' => 'Torna a dalt',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Commuta els detalls',
     'toggle_thumbnails' => 'Commuta les miniatures',
     'details' => 'Detalls',
