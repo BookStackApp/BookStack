@@ -60,6 +60,7 @@ return [
     'no_activity' => '没有活动要显示',
     'no_items' => '没有可用的项目',
     'back_to_top' => '回到顶部',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => '显示/隐藏详细信息',
     'toggle_thumbnails' => '显示/隐藏缩略图',
     'details' => '详细信息',
