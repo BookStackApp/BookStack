@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Ingen aktivitet att visa',
     'no_items' => 'Inga tillgängliga föremål',
     'back_to_top' => 'Tillbaka till toppen',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Växla detaljer',
     'toggle_thumbnails' => 'Växla miniatyrer',
     'details' => 'Information',
