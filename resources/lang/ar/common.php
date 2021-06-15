@@ -60,6 +60,7 @@ return [
     'no_activity' => 'لا يوجد نشاط لعرضه',
     'no_items' => 'لا توجد عناصر متوفرة',
     'back_to_top' => 'العودة إلى الأعلى',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'عرض / إخفاء التفاصيل',
     'toggle_thumbnails' => 'عرض / إخفاء الصور المصغرة',
     'details' => 'التفاصيل',
