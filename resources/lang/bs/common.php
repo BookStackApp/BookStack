@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Nema aktivnosti za prikazivanje',
     'no_items' => 'Nema dostupnih stavki',
     'back_to_top' => 'Povratak na vrh',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Vidi detalje',
     'toggle_thumbnails' => 'Vidi prikaze slika',
     'details' => 'Detalji',
