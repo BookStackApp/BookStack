@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Немає активності для показу',
     'no_items' => 'Немає доступних елементів',
     'back_to_top' => 'Повернутися до початку',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Подробиці',
     'toggle_thumbnails' => 'Мініатюри',
     'details' => 'Деталі',
