@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Keine Aktivitäten zum Anzeigen',
     'no_items' => 'Keine Einträge gefunden.',
     'back_to_top' => 'nach oben',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Details zeigen/verstecken',
     'toggle_thumbnails' => 'Thumbnails zeigen/verstecken',
     'details' => 'Details',
