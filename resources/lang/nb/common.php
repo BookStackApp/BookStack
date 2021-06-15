@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Ingen aktivitet å vise',
     'no_items' => 'Ingen ting å vise',
     'back_to_top' => 'Hopp til toppen',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Vis/skjul detaljer',
     'toggle_thumbnails' => 'Vis/skjul miniatyrbilder',
     'details' => 'Detaljer',
