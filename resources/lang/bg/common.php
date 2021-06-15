@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Няма активност за показване',
     'no_items' => 'Няма налични артикули',
     'back_to_top' => 'Върнете се в началото',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Активирай детайли',
     'toggle_thumbnails' => 'Активирай миниатюри',
     'details' => 'Подробности',
