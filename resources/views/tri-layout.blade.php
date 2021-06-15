@@ -34,7 +34,7 @@
         </div>
 
         <div class="@yield('body-wrap-classes') tri-layout-middle">
-            <div class="tri-layout-middle-contents">
+            <div id="main-content" class="tri-layout-middle-contents">
                 @yield('body')
             </div>
         </div>

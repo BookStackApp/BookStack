@@ -136,6 +136,23 @@ $btt-size: 40px;
   }
 }
 
+.skip-to-content-link {
+  position: fixed;
+  top: -$-xxl;
+  left: 0;
+  background-color: #FFF;
+  z-index: 15;
+  border-radius: 0 4px 4px 0;
+  display: block;
+  box-shadow: $bs-dark;
+  font-weight: bold;
+  &:focus {
+    top: $-xl;
+    outline-offset: -10px;
+    outline: 2px dotted var(--color-primary);
+  }
+}
+
 .contained-search-box {
   display: flex;
   height: 38px;
