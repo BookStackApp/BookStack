@@ -60,6 +60,7 @@ return [
     'no_activity' => '表示するアクティビティがありません',
     'no_items' => 'アイテムはありません',
     'back_to_top' => '上に戻る',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => '概要の表示切替',
     'toggle_thumbnails' => 'Toggle Thumbnails',
     'details' => '詳細',
