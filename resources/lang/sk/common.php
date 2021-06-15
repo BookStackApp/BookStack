@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Žiadna aktivita na zobrazenie',
     'no_items' => 'Žiadne položky nie sú dostupné',
     'back_to_top' => 'Späť nahor',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Prepnúť detaily',
     'toggle_thumbnails' => 'Prepnúť náhľady',
     'details' => 'Podrobnosti',
