@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Нет действий для просмотра',
     'no_items' => 'Нет доступных элементов',
     'back_to_top' => 'Наверх',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Подробности',
     'toggle_thumbnails' => 'Миниатюры',
     'details' => 'Детали',
