@@ -60,6 +60,7 @@ return [
     'no_activity' => 'Nincs megjeleníthető aktivitás',
     'no_items' => 'Nincsenek elérhető elemek',
     'back_to_top' => 'Oldal eleje',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Részletek átkapcsolása',
     'toggle_thumbnails' => 'Bélyegképek átkapcsolása',
     'details' => 'Részletek',
