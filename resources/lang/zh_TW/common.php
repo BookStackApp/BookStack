@@ -60,6 +60,7 @@ return [
     'no_activity' => '無活動可顯示',
     'no_items' => '無可用項目',
     'back_to_top' => '回到頂端',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => '顯示／隱藏詳細資訊',
     'toggle_thumbnails' => '顯示／隱藏縮圖',
     'details' => '詳細資訊',
