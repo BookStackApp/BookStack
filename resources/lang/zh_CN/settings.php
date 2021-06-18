@@ -66,7 +66,7 @@ return [
     'reg_email_confirmation_toggle' => '需要电子邮件确认',
     'reg_confirm_email_desc' => '如果使用域名限制，则需要电子邮件验证，并且该值将被忽略。',
     'reg_confirm_restrict_domain' => '域名限制',
-    'reg_confirm_restrict_domain_desc' => '输入您想要限制注册的电子邮件域名列表，用逗号隔开（即只允许使用这些电子邮件域名注册）。在允许用户与应用程序交互之前，将向用户发送一封电子邮件以确认其地址。<br>请注意，用户在注册成功后仍然可以修改他们的电子邮件地址。',
+    'reg_confirm_restrict_domain_desc' => '输入您想要限制注册的电子邮件域名列表（即只允许使用这些电子邮件域名注册），多个域名用英文逗号隔开。在允许用户与应用程序交互之前，系统将向用户发送一封电子邮件以确认其电子邮件地址。<br>请注意，用户在注册成功后仍然可以更改他们的电子邮件地址。',
     'reg_confirm_restrict_domain_placeholder' => '尚未设置限制',
 
     // Maintenance settings
