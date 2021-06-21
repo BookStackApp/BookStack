@@ -45,7 +45,7 @@ return [
 
     // Favourites
     'favourite_add_notification' => '":name" добавлено в избранное',
-    'favourite_remove_notification' => ':name" удалено из избранного',
+    'favourite_remove_notification' => '":name" удалено из избранного',
 
     // Other
     'commented_on'                => 'прокомментировал',
