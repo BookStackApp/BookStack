@@ -60,7 +60,7 @@ return [
     'no_activity' => 'Aucune activité',
     'no_items' => 'Aucun élément',
     'back_to_top' => 'Retour en haut',
-    'skip_to_main_content' => 'Skip to main content',
+    'skip_to_main_content' => 'Passer au contenu principal',
     'toggle_details' => 'Afficher les détails',
     'toggle_thumbnails' => 'Afficher les vignettes',
     'details' => 'Détails',
