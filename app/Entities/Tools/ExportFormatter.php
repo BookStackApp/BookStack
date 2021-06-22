@@ -248,7 +248,7 @@ class ExportFormatter
         $text = "# " . $chapter->name . "\n\n";
         $text .= $chapter->description . "\n\n";
         foreach ($chapter->pages as $page) {
-            $text .= $this->pageToMarkdown($page);
+            $text .= $this->pageToMarkdown($page) . "\n\n";
         }
         return $text;
     }

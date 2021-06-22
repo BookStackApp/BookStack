@@ -258,4 +258,15 @@ class PagesApiTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.pdf"');
     }
+
+    public function test_export_markdown_endpoint()
+    {
+        $this->actingAsApiEditor();
+        $page = Page::visible()->first();
+
+        $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/markdown");
+        $resp->assertStatus(200);
+        $resp->assertSee('# ' . $page->name);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.md"');
+    }
 }

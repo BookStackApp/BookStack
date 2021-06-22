@@ -53,7 +53,21 @@ class HtmlToMarkdown
      */
     protected function getConverterEnvironment(): Environment
     {
-        $environment = new Environment(['header_style' => 'atx']);
+        $environment = new Environment([
+            'header_style' => 'atx', // Set to 'atx' to output H1 and H2 headers as # Header1 and ## Header2
+            'suppress_errors' => true, // Set to false to show warnings when loading malformed HTML
+            'strip_tags' => false, // Set to true to strip tags that don't have markdown equivalents. N.B. Strips tags, not their content. Useful to clean MS Word HTML output.
+            'strip_placeholder_links' => false, // Set to true to remove <a> that doesn't have href.
+            'bold_style' => '**', // DEPRECATED: Set to '__' if you prefer the underlined style
+            'italic_style' => '*', // DEPRECATED: Set to '_' if you prefer the underlined style
+            'remove_nodes' => '', // space-separated list of dom nodes that should be removed. example: 'meta style script'
+            'hard_break' => false, // Set to true to turn <br> into `\n` instead of `  \n`
+            'list_item_style' => '-', // Set the default character for each <li> in a <ul>. Can be '-', '*', or '+'
+            'preserve_comments' => false, // Set to true to preserve comments, or set to an array of strings to preserve specific comments
+            'use_autolinks' => false, // Set to true to use simple link syntax if possible. Will always use []() if set to false
+            'table_pipe_escape' => '\|', // Replacement string for pipe characters inside markdown table cells
+            'table_caption_side' => 'top', // Set to 'top' or 'bottom' to show <caption> content before or after table, null to suppress
+        ]);
 
         $environment->addConverter(new BlockquoteConverter());
         $environment->addConverter(new CodeConverter());

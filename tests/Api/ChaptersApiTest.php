@@ -186,4 +186,16 @@ class ChaptersApiTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.pdf"');
     }
+
+    public function test_export_markdown_endpoint()
+    {
+        $this->actingAsApiEditor();
+        $chapter = Chapter::visible()->has('pages')->first();
+
+        $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/markdown");
+        $resp->assertStatus(200);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.md"');
+        $resp->assertSee('# ' . $chapter->name);
+        $resp->assertSee('# ' . $chapter->pages()->first()->name);
+    }
 }

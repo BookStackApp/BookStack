@@ -18,6 +18,7 @@ Route::delete('books/{id}', 'BookApiController@delete');
 Route::get('books/{id}/export/html', 'BookExportApiController@exportHtml');
 Route::get('books/{id}/export/pdf', 'BookExportApiController@exportPdf');
 Route::get('books/{id}/export/plaintext', 'BookExportApiController@exportPlainText');
+Route::get('books/{id}/export/markdown', 'BookExportApiController@exportMarkdown');
 
 Route::get('chapters', 'ChapterApiController@list');
 Route::post('chapters', 'ChapterApiController@create');
@@ -28,6 +29,7 @@ Route::delete('chapters/{id}', 'ChapterApiController@delete');
 Route::get('chapters/{id}/export/html', 'ChapterExportApiController@exportHtml');
 Route::get('chapters/{id}/export/pdf', 'ChapterExportApiController@exportPdf');
 Route::get('chapters/{id}/export/plaintext', 'ChapterExportApiController@exportPlainText');
+Route::get('chapters/{id}/export/markdown', 'ChapterExportApiController@exportMarkdown');
 
 Route::get('pages', 'PageApiController@list');
 Route::post('pages', 'PageApiController@create');
@@ -38,6 +40,7 @@ Route::delete('pages/{id}', 'PageApiController@delete');
 Route::get('pages/{id}/export/html', 'PageExportApiController@exportHtml');
 Route::get('pages/{id}/export/pdf', 'PageExportApiController@exportPdf');
 Route::get('pages/{id}/export/plaintext', 'PageExportApiController@exportPlainText');
+Route::get('pages/{id}/export/markdown', 'PageExportApiController@exportMarkDown');
 
 Route::get('shelves', 'BookshelfApiController@list');
 Route::post('shelves', 'BookshelfApiController@create');
