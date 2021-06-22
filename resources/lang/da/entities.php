@@ -36,6 +36,7 @@ return [
     'export_html' => 'Indeholdt webfil',
     'export_pdf' => 'PDF-fil',
     'export_text' => 'Almindelig tekstfil',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Rettigheder',
