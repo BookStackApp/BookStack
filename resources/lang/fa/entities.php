@@ -36,6 +36,7 @@ return [
     'export_html' => 'Contained Web File',
     'export_pdf' => 'PDF File',
     'export_text' => 'Plain Text File',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Permissions',
