@@ -36,6 +36,7 @@ return [
     'export_html' => 'Веб файл',
     'export_pdf' => 'PDF файл',
     'export_text' => 'Текстовый файл',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Разрешения',
