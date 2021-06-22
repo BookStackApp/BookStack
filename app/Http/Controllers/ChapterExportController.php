@@ -54,4 +54,16 @@ class ChapterExportController extends Controller
         $chapterText = $this->exportFormatter->chapterToPlainText($chapter);
         return $this->downloadResponse($chapterText, $chapterSlug . '.txt');
     }
+
+    /**
+     * Export a chapter to a simple markdown file.
+     * @throws NotFoundException
+     */
+    public function markdown(string $bookSlug, string $chapterSlug)
+    {
+        // TODO: This should probably export to a zip file.
+        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
+        $chapterText = $this->exportService->chapterToMarkdown($chapter);
+        return $this->downloadResponse($chapterText, $chapterSlug . '.md');
+    }
 }
