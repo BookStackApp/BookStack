@@ -63,7 +63,7 @@ class ChapterExportController extends Controller
     {
         // TODO: This should probably export to a zip file.
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
-        $chapterText = $this->exportService->chapterToMarkdown($chapter);
+        $chapterText = $this->exportFormatter->chapterToMarkdown($chapter);
         return $this->downloadResponse($chapterText, $chapterSlug . '.md');
     }
 }

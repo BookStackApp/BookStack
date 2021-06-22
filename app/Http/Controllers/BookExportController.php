@@ -59,17 +59,7 @@ class BookExportController extends Controller
     public function markdown(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
-        $textContent = $this->exportService->bookToMarkdown($book);
+        $textContent = $this->exportFormatter->bookToMarkdown($book);
         return $this->downloadResponse($textContent, $bookSlug . '.md');
-    }
-
-    /**
-     * Export a book as a zip file, made of markdown files.
-     */
-    public function zip(string $bookSlug)
-    {
-        $book = $this->bookRepo->getBySlug($bookSlug);
-        $filename = $this->exportService->bookToZip($book);
-        return response()->download($filename);
     }
 }

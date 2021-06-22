@@ -259,4 +259,85 @@ class ExportTest extends TestCase
         $resp->assertDontSee('ExportWizardTheFifth');
     }
 
+    public function test_page_markdown_export()
+    {
+        $page = Page::query()->first();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertStatus(200);
+        $resp->assertSee($page->name);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.md"');
+    }
+
+    public function test_page_markdown_export_uses_existing_markdown_if_apparent()
+    {
+        $page = Page::query()->first()->forceFill([
+            'markdown' => '# A header',
+            'html' => '<h1>Dogcat</h1>',
+        ]);
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertSee('A header');
+        $resp->assertDontSee('Dogcat');
+    }
+
+    public function test_page_markdown_export_converts_html_where_no_markdown()
+    {
+        $page = Page::query()->first()->forceFill([
+            'markdown' => '',
+            'html' => "<h1>Dogcat</h1><p>Some <strong>bold</strong> text</p>",
+        ]);
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertSee("# Dogcat\n\nSome **bold** text");
+    }
+
+    public function test_page_markdown_export_does_not_convert_callouts()
+    {
+        $page = Page::query()->first()->forceFill([
+            'markdown' => '',
+            'html' => "<h1>Dogcat</h1><p class=\"callout info\">Some callout text</p><p>Another line</p>",
+        ]);
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertSee("# Dogcat\n\n<p class=\"callout info\">Some callout text</p>\n\nAnother line");
+    }
+
+    public function test_page_markdown_export_handles_bookstacks_wysiwyg_codeblock_format()
+    {
+        $page = Page::query()->first()->forceFill([
+            'markdown' => '',
+            'html' => '<h1>Dogcat</h1>'."\r\n".'<pre id="bkmrk-var-a-%3D-%27cat%27%3B"><code class="language-JavaScript">var a = \'cat\';</code></pre><p>Another line</p>',
+        ]);
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertSee("# Dogcat\n\n```JavaScript\nvar a = 'cat';\n```\n\nAnother line");
+    }
+
+    public function test_chapter_markdown_export()
+    {
+        $chapter = Chapter::query()->first();
+        $page = $chapter->pages()->first();
+        $resp = $this->asEditor()->get($chapter->getUrl('/export/markdown'));
+
+        $resp->assertSee('# ' . $chapter->name);
+        $resp->assertSee('# ' . $page->name);
+    }
+
+    public function test_book_markdown_export()
+    {
+        $book = Book::query()->whereHas('pages')->whereHas('chapters')->first();
+        $chapter = $book->chapters()->first();
+        $page = $chapter->pages()->first();
+        $resp = $this->asEditor()->get($book->getUrl('/export/markdown'));
+
+        $resp->assertSee('# ' . $book->name);
+        $resp->assertSee('# ' . $chapter->name);
+        $resp->assertSee('# ' . $page->name);
+    }
+
 }
