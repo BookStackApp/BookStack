@@ -36,6 +36,7 @@ return [
     'export_html' => '网页文件',
     'export_pdf' => 'PDF文件',
     'export_text' => '纯文本文件',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => '权限',
