@@ -44,4 +44,14 @@ class PageExportApiController extends ApiController
         $textContent = $this->exportFormatter->pageToPlainText($page);
         return $this->downloadResponse($textContent, $page->slug . '.txt');
     }
+
+    /**
+     * Export a page as a markdown file.
+     */
+    public function exportMarkdown(int $id)
+    {
+        $page = Page::visible()->findOrFail($id);
+        $markdown = $this->exportFormatter->pageToMarkdown($page);
+        return $this->downloadResponse($markdown, $page->slug . '.md');
+    }
 }

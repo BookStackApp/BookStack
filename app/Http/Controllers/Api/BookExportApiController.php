@@ -44,4 +44,14 @@ class BookExportApiController extends ApiController
         $textContent = $this->exportFormatter->bookToPlainText($book);
         return $this->downloadResponse($textContent, $book->slug . '.txt');
     }
+
+    /**
+     * Export a book as a markdown file.
+     */
+    public function exportMarkdown(int $id)
+    {
+        $book = Book::visible()->findOrFail($id);
+        $markdown = $this->exportFormatter->bookToMarkdown($book);
+        return $this->downloadResponse($markdown, $book->slug . '.md');
+    }
 }

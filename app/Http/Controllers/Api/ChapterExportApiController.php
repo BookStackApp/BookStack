@@ -2,7 +2,6 @@
 
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Tools\ExportFormatter;
-use BookStack\Entities\Repos\BookRepo;
 use Throwable;
 
 class ChapterExportApiController extends ApiController
@@ -47,5 +46,15 @@ class ChapterExportApiController extends ApiController
         $chapter = Chapter::visible()->findOrFail($id);
         $textContent = $this->exportFormatter->chapterToPlainText($chapter);
         return $this->downloadResponse($textContent, $chapter->slug . '.txt');
+    }
+
+    /**
+     * Export a chapter as a markdown file.
+     */
+    public function exportMarkdown(int $id)
+    {
+        $chapter = Chapter::visible()->findOrFail($id);
+        $markdown = $this->exportFormatter->chapterToMarkdown($chapter);
+        return $this->downloadResponse($markdown, $chapter->slug . '.md');
     }
 }

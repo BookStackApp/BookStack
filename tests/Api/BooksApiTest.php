@@ -140,4 +140,17 @@ class BooksApiTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.pdf"');
     }
+
+    public function test_export_markdown_endpoint()
+    {
+        $this->actingAsApiEditor();
+        $book = Book::visible()->has('pages')->has('chapters')->first();
+
+        $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/markdown");
+        $resp->assertStatus(200);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.md"');
+        $resp->assertSee('# ' . $book->name);
+        $resp->assertSee('# ' . $book->pages()->first()->name);
+        $resp->assertSee('# ' . $book->chapters()->first()->name);
+    }
 }
