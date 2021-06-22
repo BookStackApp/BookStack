@@ -36,6 +36,7 @@ return [
     'export_html' => 'Obsahovaný webový súbor',
     'export_pdf' => 'PDF súbor',
     'export_text' => 'Súbor s čistým textom',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Oprávnenia',
