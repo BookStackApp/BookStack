@@ -36,6 +36,7 @@ return [
     'export_html' => '網頁檔案',
     'export_pdf' => 'PDF 檔案',
     'export_text' => '純文字檔案',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => '權限',
