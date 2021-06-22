@@ -36,6 +36,7 @@ return [
     'export_html' => 'Nettside med alt',
     'export_pdf' => 'PDF Fil',
     'export_text' => 'Tekstfil',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Tilganger',
