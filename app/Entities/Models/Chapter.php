@@ -5,6 +5,7 @@ use Illuminate\Support\Collection;
 /**
  * Class Chapter
  * @property Collection<Page> $pages
+ * @property mixed description
  */
 class Chapter extends BookChild
 {

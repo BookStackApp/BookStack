@@ -3,13 +3,12 @@
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Uploads\ImageService;
 use DomPDF;
 use Exception;
 use SnappyPDF;
-use League\HTMLToMarkdown\HtmlConverter;
 use Throwable;
-use ZipArchive;
 
 class ExportFormatter
 {
@@ -231,23 +230,20 @@ class ExportFormatter
 
     /**
      * Convert a page to a Markdown file.
-     * @throws Throwable
      */
-    public function pageToMarkdown(Page $page)
+    public function pageToMarkdown(Page $page): string
     {
-        if (property_exists($page, 'markdown') && $page->markdown != '') {
+        if ($page->markdown) {
             return "# " . $page->name . "\n\n" . $page->markdown;
-        } else {
-            $converter = new HtmlConverter();
-            return "# " . $page->name . "\n\n" . $converter->convert($page->html);
         }
+
+        return "# " . $page->name . "\n\n" . (new HtmlToMarkdown($page->html))->convert();
     }
 
     /**
      * Convert a chapter to a Markdown file.
-     * @throws Throwable
      */
-    public function chapterToMarkdown(Chapter $chapter)
+    public function chapterToMarkdown(Chapter $chapter): string
     {
         $text = "# " . $chapter->name . "\n\n";
         $text .= $chapter->description . "\n\n";
@@ -265,35 +261,12 @@ class ExportFormatter
         $bookTree = (new BookContents($book))->getTree(false, true);
         $text = "# " . $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
-            if ($bookChild->isA('chapter')) {
+            if ($bookChild instanceof Chapter) {
                 $text .= $this->chapterToMarkdown($bookChild);
             } else {
                 $text .= $this->pageToMarkdown($bookChild);
             }
         }
         return $text;
-    }
-
-    /**
-     * Convert a book into a zip file.
-     */
-    public function bookToZip(Book $book): string
-    {
-        // TODO: Is not unlinking the file a security risk?
-        $z = new ZipArchive();
-        $z->open("book.zip", \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-        $bookTree = (new BookContents($book))->getTree(false, true);
-        foreach ($bookTree as $bookChild) {
-            if ($bookChild->isA('chapter')) {
-                $z->addEmptyDir($bookChild->name);
-                foreach ($bookChild->pages as $page) {
-                    $filename = $bookChild->name . "/" . $page->name . ".md";
-                    $z->addFromString($filename, $this->pageToMarkdown($page));
-                }
-            } else {
-                $z->addFromString($bookChild->name . ".md", $this->pageToMarkdown($bookChild));
-            }
-        }
-        return "book.zip";
     }
 }

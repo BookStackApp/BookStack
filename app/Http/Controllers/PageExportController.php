@@ -68,7 +68,7 @@ class PageExportController extends Controller
     public function markdown(string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $pageText = $this->exportService->pageToMarkdown($page);
+        $pageText = $this->exportFormatter->pageToMarkdown($page);
         return $this->downloadResponse($pageText, $pageSlug . '.md');
     }
 }
