@@ -36,6 +36,7 @@ return [
     'export_html' => 'דף אינטרנט',
     'export_pdf' => 'קובץ PDF',
     'export_text' => 'טקסט רגיל',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'הרשאות',
