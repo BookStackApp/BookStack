@@ -36,6 +36,7 @@ return [
     'export_html' => 'Sadržani web fajl',
     'export_pdf' => 'PDF fajl',
     'export_text' => 'Plain Text fajl',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Dozvole',
