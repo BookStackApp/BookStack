@@ -36,6 +36,7 @@ return [
     'export_html' => 'Arquivo Web Contained',
     'export_pdf' => 'Arquivo PDF',
     'export_text' => 'Arquivo Texto',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Permissões',
