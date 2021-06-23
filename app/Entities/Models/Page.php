@@ -138,4 +138,23 @@ class Page extends BookChild
         $refreshed->html = (new PageContent($refreshed))->render();
         return $refreshed;
     }
+
+    /**
+     * Returns URL to a cover image for the page.
+     */
+    public function getCoverImage()
+    {
+        //$default = $this->book->getBookCover();
+        $default = url('/logo.png');
+
+        $firstImage = (new PageContent($this))->fetchFirstImage();
+
+        try {
+            $cover = $firstImage ? $firstImage : $default;
+        } catch (\Exception $err) {
+            $cover = $default;
+        }
+        return $cover;
+    }
+    
 }

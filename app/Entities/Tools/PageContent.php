@@ -367,4 +367,18 @@ class PageContent
         $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         return $doc;
     }
+
+    /**
+     * Retrieve first image in page content and return the source URL.
+     */
+    public function fetchFirstImage()
+    {
+        $htmlContent = $this->page->html;
+
+        $dom = new \DomDocument();
+        $dom->loadHTML($htmlContent);
+        $images = $dom->getElementsByTagName('img');
+
+        return $images->length > 0 ? $images[0]->getAttribute('src') : null;
+    }
 }
