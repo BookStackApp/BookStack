@@ -11,6 +11,12 @@
     <meta name="base-url" content="{{ url('/') }}">
     <meta charset="utf-8">
 
+    <!-- Social Cards Meta -->
+    <meta property="og:title" content="{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @stack('social-meta')
+    
+
     <!-- Styles and Fonts -->
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
     <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">

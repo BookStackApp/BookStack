@@ -1,5 +1,10 @@
 @extends('tri-layout')
 
+@push('social-meta')
+    <meta property="og:description" content="{{ Str::limit($page->text, 100, '...') }}">
+    <meta property="og:image" content="{{ $page->getCoverImage() }}">
+@endpush
+
 @section('body')
 
     <div class="mb-m print-hidden">
