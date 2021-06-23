@@ -8,7 +8,9 @@
 
 @push('social-meta')
     <meta property="og:description" content="{{ Str::limit($book->description, 100, '...') }}">
-    <meta property="og:image" content="{{ $book->getBookCover() }}">
+    @if($book->cover)
+        <meta property="og:image" content="{{ $book->getBookCover() }}">
+    @endif
 @endpush
 
 @section('body')
