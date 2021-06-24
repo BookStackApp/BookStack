@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Polica za knjige Uspješno Izbrisana',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" je dodan u tvoje favorite',
+    'favourite_remove_notification' => '":name" je uklonjen iz tvojih favorita',
 
     // Other
     'commented_on'                => 'je komentarisao/la na',
