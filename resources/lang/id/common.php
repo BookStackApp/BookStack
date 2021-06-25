@@ -75,20 +75,20 @@ return [
     'view_profile' => 'Tampilkan Profil',
     'edit_profile' => 'Sunting Profil',
     'dark_mode' => 'Mode Gelap',
-    'light_mode' => 'Mode Cahaya',
+    'light_mode' => 'Mode Terang',
 
     // Layout tabs
     'tab_info' => 'Informasi',
-    'tab_info_label' => 'Tab Menampilkan Informasi Sekunder',
+    'tab_info_label' => 'Tab: Tampilkan Informasi Sekunder',
     'tab_content' => 'Konten',
-    'tab_content_label' => 'Tab Menampilkan Informasi Utama',
+    'tab_content_label' => 'Tab: Tampilkan Informasi Utama',
 
     // Email Content
-    'email_action_help' => 'Jika Anda mengalami masalah saat mengklik tombol ":actionText", salin dan tempel URL di bawah ini ke browser web Anda:',
-    'email_rights' => 'Seluruh hak cipta',
+    'email_action_help' => 'Jika Anda mengalami masalah saat mengklik tombol ":actionText", salin dan tempel URL di bawah ke dalam peramban web Anda:',
+    'email_rights' => 'Hak cipta dilindungi',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Rahasia pribadi',
-    'terms_of_service' => 'Persyaratan Layanan',
+    'privacy_policy' => 'Kebijakan Privasi',
+    'terms_of_service' => 'Ketentuan Layanan',
 ];
