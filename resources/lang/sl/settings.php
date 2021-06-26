@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Koš',
     'recycle_bin_desc' => 'Tu lahko obnovite predmete, ki so bili izbrisani, ali pa jih trajno odstranite s sistema. Ta seznam je nefiltriran, za razliko od podobnih seznamov dejavnosti v sistemu, kjer se uporabljajo filtri dovoljenj.',
     'recycle_bin_deleted_item' => 'Izbrisan element',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Izbrisal uporabnik',
     'recycle_bin_deleted_at' => 'Čas izbrisa',
     'recycle_bin_permanently_delete' => 'Trajno izbrišem?',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Predmeti, ki naj bodo obnovljeni',
     'recycle_bin_restore_confirm' => 'S tem dejanjem boste izbrisani element, vključno z vsemi podrejenimi elementi, obnovili na prvotno mesto. Če je bilo prvotno mesto od takrat izbrisano in je zdaj v košu, bo treba obnoviti tudi nadrejeni element.',
     'recycle_bin_restore_deleted_parent' => 'Nadrejeni element je bil prav tako izbrisan. Dokler se ne obnovi nadrejenega elementa, ni mogoče obnoviti njemu podrejenih elementov.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Izbrisano :count skupno število elementov iz koša.',
     'recycle_bin_restore_notification' => 'Obnovljeno :count skupno število elementov iz koša.',
 
