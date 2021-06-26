@@ -247,4 +247,22 @@ class RecycleBinTest extends TestCase
         $chapter->refresh();
         $this->assertNull($chapter->deleted_at);
     }
+
+    public function test_restore_page_shows_link_to_parent_restore_if_parent_also_deleted()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $chapter = $book->chapters->first();
+        /** @var Page $page */
+        $page = $chapter->pages->first();
+        $this->asEditor()->delete($page->getUrl());
+        $this->asEditor()->delete($book->getUrl());
+
+        $bookDeletion = $book->deletions()->first();
+        $pageDeletion = $page->deletions()->first();
+
+        $pageRestoreView = $this->asAdmin()->get("/settings/recycle-bin/{$pageDeletion->id}/restore");
+        $pageRestoreView->assertSee('The parent of this item has also been deleted.');
+        $pageRestoreView->assertElementContains('a[href$="/settings/recycle-bin/' . $bookDeletion->id. '/restore"]', 'Restore Parent');
+    }
 }

@@ -47,7 +47,7 @@
                 </tr>
                 @if(count($deletions) === 0)
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <p class="text-muted"><em>{{ trans('settings.recycle_bin_contents_empty') }}</em></p>
                         </td>
                     </tr>
@@ -95,8 +95,8 @@
                         <div component="dropdown" class="dropdown-container">
                             <button type="button" refs="dropdown@toggle" class="button outline">{{ trans('common.actions') }}</button>
                             <ul refs="dropdown@menu" class="dropdown-menu">
-                                <li><a class="block" href="{{ url('/settings/recycle-bin/'.$deletion->id.'/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
-                                <li><a class="block" href="{{ url('/settings/recycle-bin/'.$deletion->id.'/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
+                                <li><a class="block" href="{{ $deletion->getUrl('/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
+                                <li><a class="block" href="{{ $deletion->getUrl('/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
                             </ul>
                         </div>
                     </td>

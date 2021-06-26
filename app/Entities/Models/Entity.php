@@ -266,10 +266,10 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function getParent(): ?Entity
     {
-        if ($this->isA('page')) {
+        if ($this instanceof Page) {
             return $this->chapter_id ? $this->chapter()->withTrashed()->first() : $this->book()->withTrashed()->first();
         }
-        if ($this->isA('chapter')) {
+        if ($this instanceof Chapter) {
             return $this->book()->withTrashed()->first();
         }
         return null;
