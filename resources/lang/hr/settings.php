@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Recycle Bin',
     'recycle_bin_desc' => 'Ovdje možete vratiti izbrisane stavke ili ih trajno ukloniti iz sustava. Popis nije filtriran kao što su to popisi u kojima su omogućeni filteri.',
     'recycle_bin_deleted_item' => 'Izbrisane stavke',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Izbrisano od',
     'recycle_bin_deleted_at' => 'Vrijeme brisanja',
     'recycle_bin_permanently_delete' => 'Trajno izbrisano',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Stavke koje treba vratiti',
     'recycle_bin_restore_confirm' => 'Ova radnja vraća izbrisane stavke i njene podređene elemente na prvobitnu lokaciju. Ako je nadređena stavka izbrisana i nju treba vratiti.',
     'recycle_bin_restore_deleted_parent' => 'S obzirom da je nadređena stavka obrisana najprije treba vratiti nju.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Ukupno izbrisane :count stavke iz Recycle Bin',
     'recycle_bin_restore_notification' => 'Ukupno vraćene :count stavke iz Recycle Bin',
 
