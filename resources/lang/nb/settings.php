@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Papirkurven',
     'recycle_bin_desc' => 'Her kan du gjenopprette ting du har kastet i papirkurven eller velge å slette dem permanent fra systemet. Denne listen er ikke filtrert i motsetning til lignende lister i systemet hvor tilgangskontroll overholdes.',
     'recycle_bin_deleted_item' => 'Kastet element',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Kastet av',
     'recycle_bin_deleted_at' => 'Kastet den',
     'recycle_bin_permanently_delete' => 'Slett permanent',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Elementer som skal gjenopprettes',
     'recycle_bin_restore_confirm' => 'Denne handlingen vil hente opp elementet fra papirkurven, inkludert underliggende innhold, til sin opprinnelige sted. Om den opprinnelige plassen har blitt slettet i mellomtiden og nå befinner seg i papirkurven, vil også dette bli hentet opp igjen.',
     'recycle_bin_restore_deleted_parent' => 'Det overordnede elementet var også kastet i papirkurven. Disse elementene vil forbli kastet inntil det overordnede også hentes opp igjen.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Slettet :count elementer fra papirkurven.',
     'recycle_bin_restore_notification' => 'Gjenopprettet :count elementer fra papirkurven.',
 
