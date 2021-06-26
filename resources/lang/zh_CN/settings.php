@@ -92,6 +92,7 @@ return [
     'recycle_bin' => '回收站',
     'recycle_bin_desc' => '在这里，您可以还原已删除的项目，或选择将其从系统中永久删除。与系统中过滤过的类似的活动记录不同，这个表会显示所有操作。',
     'recycle_bin_deleted_item' => '被删除的项目',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => '删除者',
     'recycle_bin_deleted_at' => '删除时间',
     'recycle_bin_permanently_delete' => '永久删除',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => '要恢复的项目',
     'recycle_bin_restore_confirm' => '此操作会将已删除的项目及其所有子元素恢复到原始位置。如果项目的原始位置已被删除，并且现在位于回收站中，则要恢复项目的上级项目也需要恢复。',
     'recycle_bin_restore_deleted_parent' => '该项目的上级项目也已被删除。这些项目将保持被删除状态，直到上级项目被恢复。',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => '从回收站中删除了 :count 个项目。',
     'recycle_bin_restore_notification' => '从回收站中恢复了 :count 个项目。',
 
