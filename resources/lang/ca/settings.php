@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Paperera de reciclatge',
     'recycle_bin_desc' => 'Aquí podeu restaurar els elements que hàgiu suprimit o triar suprimir-los del sistema de manera permanent. Aquesta llista no té cap filtre, al contrari que altres llistes d\'activitat similars en què es tenen en compte els filtres de permisos.',
     'recycle_bin_deleted_item' => 'Element suprimit',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Suprimit per',
     'recycle_bin_deleted_at' => 'Moment de la supressió',
     'recycle_bin_permanently_delete' => 'Suprimeix permanentment',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Elements que es restauraran',
     'recycle_bin_restore_confirm' => 'Aquesta acció restaurarà l\'element suprimit, incloent-hi tots els elements fills, a la seva ubicació original. Si la ubicació original ha estat suprimida, i ara és a la paperera de reciclatge, caldrà que també en restaureu l\'element pare.',
     'recycle_bin_restore_deleted_parent' => 'El pare d\'aquest element també ha estat suprimit. L\'element es mantindrà suprimit fins que el pare també es restauri.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'S\'han suprimit :count elements en total de la paperera de reciclatge.',
     'recycle_bin_restore_notification' => 'S\'han restaurat :count elements en total de la paperera de reciclatge.',
 
