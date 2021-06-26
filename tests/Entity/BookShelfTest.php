@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
@@ -10,7 +12,6 @@ use Tests\Uploads\UsesImages;
 
 class BookShelfTest extends TestCase
 {
-
     use UsesImages;
 
     public function test_shelves_shows_in_header_if_have_view_permissions()
@@ -79,16 +80,16 @@ class BookShelfTest extends TestCase
     {
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
-            'name' => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10)
+            'name'        => 'My test book' . Str::random(4),
+            'description' => 'Test book description ' . Str::random(10),
         ];
         $resp = $this->asEditor()->post('/shelves', array_merge($shelfInfo, [
             'books' => $booksToInclude->implode('id', ','),
-            'tags' => [
+            'tags'  => [
                 [
-                    'name' => 'Test Category',
+                    'name'  => 'Test Category',
                     'value' => 'Test Tag Value',
-                ]
+                ],
             ],
         ]));
         $resp->assertRedirect();
@@ -109,8 +110,8 @@ class BookShelfTest extends TestCase
     public function test_shelves_create_sets_cover_image()
     {
         $shelfInfo = [
-            'name' => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10)
+            'name'        => 'My test book' . Str::random(4),
+            'description' => 'Test book description ' . Str::random(10),
         ];
 
         $imageFile = $this->getTestImage('shelf-test.png');
@@ -120,7 +121,7 @@ class BookShelfTest extends TestCase
         $lastImage = Image::query()->orderByDesc('id')->firstOrFail();
         $shelf = Bookshelf::query()->where('name', '=', $shelfInfo['name'])->first();
         $this->assertDatabaseHas('bookshelves', [
-            'id' => $shelf->id,
+            'id'       => $shelf->id,
             'image_id' => $lastImage->id,
         ]);
         $this->assertEquals($lastImage->id, $shelf->cover->id);
@@ -175,7 +176,7 @@ class BookShelfTest extends TestCase
         // Set book ordering
         $this->asAdmin()->put($shelf->getUrl(), [
             'books' => $books->implode('id', ','),
-            'tags' => [], 'description' => 'abc', 'name' => 'abc'
+            'tags'  => [], 'description' => 'abc', 'name' => 'abc',
         ]);
         $this->assertEquals(3, $shelf->books()->count());
         $shelf->refresh();
@@ -205,17 +206,17 @@ class BookShelfTest extends TestCase
 
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
-            'name' => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10)
+            'name'        => 'My test book' . Str::random(4),
+            'description' => 'Test book description ' . Str::random(10),
         ];
 
         $resp = $this->asEditor()->put($shelf->getUrl(), array_merge($shelfInfo, [
             'books' => $booksToInclude->implode('id', ','),
-            'tags' => [
+            'tags'  => [
                 [
-                    'name' => 'Test Category',
+                    'name'  => 'Test Category',
                     'value' => 'Test Tag Value',
-                ]
+                ],
             ],
         ]));
         $shelf = Bookshelf::find($shelf->id);
@@ -246,15 +247,15 @@ class BookShelfTest extends TestCase
         $testName = 'Test Book in Shelf Name';
 
         $createBookResp = $this->asEditor()->post($shelf->getUrl('/create-book'), [
-            'name' => $testName,
-            'description' => 'Book in shelf description'
+            'name'        => $testName,
+            'description' => 'Book in shelf description',
         ]);
         $createBookResp->assertRedirect();
 
         $newBook = Book::query()->orderBy('id', 'desc')->first();
         $this->assertDatabaseHas('bookshelves_books', [
             'bookshelf_id' => $shelf->id,
-            'book_id' => $newBook->id,
+            'book_id'      => $newBook->id,
         ]);
 
         $resp = $this->asEditor()->get($shelf->getUrl());
@@ -293,16 +294,16 @@ class BookShelfTest extends TestCase
 
         $child = $shelf->books()->first();
         $editorRole = $this->getEditor()->roles()->first();
-        $this->assertFalse(boolval($child->restricted), "Child book should not be restricted by default");
-        $this->assertTrue($child->permissions()->count() === 0, "Child book should have no permissions by default");
+        $this->assertFalse(boolval($child->restricted), 'Child book should not be restricted by default');
+        $this->assertTrue($child->permissions()->count() === 0, 'Child book should have no permissions by default');
 
         $this->setEntityRestrictions($shelf, ['view', 'update'], [$editorRole]);
         $resp = $this->post($shelf->getUrl('/copy-permissions'));
         $child = $shelf->books()->first();
 
         $resp->assertRedirect($shelf->getUrl());
-        $this->assertTrue(boolval($child->restricted), "Child book should now be restricted");
-        $this->assertTrue($child->permissions()->count() === 2, "Child book should have copied permissions");
+        $this->assertTrue(boolval($child->restricted), 'Child book should now be restricted');
+        $this->assertTrue($child->permissions()->count() === 2, 'Child book should have copied permissions');
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'view', 'role_id' => $editorRole->id]);
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'update', 'role_id' => $editorRole->id]);
     }
@@ -337,8 +338,8 @@ class BookShelfTest extends TestCase
     {
         // Create shelf
         $shelfInfo = [
-            'name' => 'My test shelf' . Str::random(4),
-            'description' => 'Test shelf description ' . Str::random(10)
+            'name'        => 'My test shelf' . Str::random(4),
+            'description' => 'Test shelf description ' . Str::random(10),
         ];
 
         $this->asEditor()->post('/shelves', $shelfInfo);
@@ -346,8 +347,8 @@ class BookShelfTest extends TestCase
 
         // Create book and add to shelf
         $this->asEditor()->post($shelf->getUrl('/create-book'), [
-            'name' => 'Test book name',
-            'description' => 'Book in shelf description'
+            'name'        => 'Test book name',
+            'description' => 'Book in shelf description',
         ]);
 
         $newBook = Book::query()->orderBy('id', 'desc')->first();

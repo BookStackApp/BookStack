@@ -3,13 +3,13 @@
 namespace BookStack\Http\Middleware;
 
 use BookStack\Exceptions\UnauthorizedException;
-use Illuminate\Http\Request;
 
 trait ChecksForEmailConfirmation
 {
     /**
      * Check if the current user has a confirmed email if the instance deems it as required.
      * Throws if confirmation is required by the user.
+     *
      * @throws UnauthorizedException
      */
     protected function ensureEmailConfirmedIfRequested()

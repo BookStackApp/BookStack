@@ -4,10 +4,9 @@ use Tests\TestCase;
 
 class FooterLinksTest extends TestCase
 {
-
     public function test_saving_setting()
     {
-        $resp = $this->asAdmin()->post("/settings", [
+        $resp = $this->asAdmin()->post('/settings', [
             'setting-app-footer-links' => [
                 ['label' => 'My custom link 1', 'url' => 'https://example.com/1'],
                 ['label' => 'My custom link 2', 'url' => 'https://example.com/2'],

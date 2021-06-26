@@ -16,7 +16,7 @@ class ThemeServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(ThemeService::class, function ($app) {
-            return new ThemeService;
+            return new ThemeService();
         });
     }
 

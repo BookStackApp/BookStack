@@ -1,4 +1,6 @@
-<?php namespace Tests\Api;
+<?php
+
+namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
@@ -18,12 +20,12 @@ class ChaptersApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
-                'id' => $firstChapter->id,
-                'name' => $firstChapter->name,
-                'slug' => $firstChapter->slug,
-                'book_id' => $firstChapter->book->id,
+                'id'       => $firstChapter->id,
+                'name'     => $firstChapter->name,
+                'slug'     => $firstChapter->slug,
+                'book_id'  => $firstChapter->book->id,
                 'priority' => $firstChapter->priority,
-            ]
+            ],
         ]]);
     }
 
@@ -32,15 +34,15 @@ class ChaptersApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::query()->first();
         $details = [
-            'name' => 'My API chapter',
+            'name'        => 'My API chapter',
             'description' => 'A chapter created via the API',
-            'book_id' => $book->id,
-            'tags' => [
+            'book_id'     => $book->id,
+            'tags'        => [
                 [
-                    'name' => 'tagname',
+                    'name'  => 'tagname',
                     'value' => 'tagvalue',
-                ]
-            ]
+                ],
+            ],
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
@@ -48,10 +50,10 @@ class ChaptersApiTest extends TestCase
         $newItem = Chapter::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
         $resp->assertJson(array_merge($details, ['id' => $newItem->id, 'slug' => $newItem->slug]));
         $this->assertDatabaseHas('tags', [
-            'entity_id' => $newItem->id,
+            'entity_id'   => $newItem->id,
             'entity_type' => $newItem->getMorphClass(),
-            'name' => 'tagname',
-            'value' => 'tagvalue',
+            'name'        => 'tagname',
+            'value'       => 'tagvalue',
         ]);
         $resp->assertJsonMissing(['pages' => []]);
         $this->assertActivityExists('chapter_create', $newItem);
@@ -62,14 +64,14 @@ class ChaptersApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::query()->first();
         $details = [
-            'book_id' => $book->id,
+            'book_id'     => $book->id,
             'description' => 'A chapter created via the API',
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
         $resp->assertJson($this->validationResponse([
-            "name" => ["The name field is required."]
+            'name' => ['The name field is required.'],
         ]));
     }
 
@@ -77,14 +79,14 @@ class ChaptersApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $details = [
-            'name' => 'My api chapter',
+            'name'        => 'My api chapter',
             'description' => 'A chapter created via the API',
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
         $resp->assertJson($this->validationResponse([
-            "book_id" => ["The book id field is required."]
+            'book_id' => ['The book id field is required.'],
         ]));
     }
 
@@ -97,24 +99,24 @@ class ChaptersApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . "/{$chapter->id}");
         $resp->assertStatus(200);
         $resp->assertJson([
-            'id' => $chapter->id,
-            'slug' => $chapter->slug,
+            'id'         => $chapter->id,
+            'slug'       => $chapter->slug,
             'created_by' => [
                 'name' => $chapter->createdBy->name,
             ],
-            'book_id' => $chapter->book_id,
+            'book_id'    => $chapter->book_id,
             'updated_by' => [
                 'name' => $chapter->createdBy->name,
             ],
             'owned_by' => [
-                'name' => $chapter->ownedBy->name
+                'name' => $chapter->ownedBy->name,
             ],
             'pages' => [
                 [
-                    'id' => $page->id,
+                    'id'   => $page->id,
                     'slug' => $page->slug,
                     'name' => $page->name,
-                ]
+                ],
             ],
         ]);
         $resp->assertJsonCount($chapter->pages()->count(), 'pages');
@@ -125,13 +127,13 @@ class ChaptersApiTest extends TestCase
         $this->actingAsApiEditor();
         $chapter = Chapter::visible()->first();
         $details = [
-            'name' => 'My updated API chapter',
+            'name'        => 'My updated API chapter',
             'description' => 'A chapter created via the API',
-            'tags' => [
+            'tags'        => [
                 [
-                    'name' => 'freshtag',
+                    'name'  => 'freshtag',
                     'value' => 'freshtagval',
-                ]
+                ],
             ],
         ];
 
@@ -140,7 +142,7 @@ class ChaptersApiTest extends TestCase
 
         $resp->assertStatus(200);
         $resp->assertJson(array_merge($details, [
-            'id' => $chapter->id, 'slug' => $chapter->slug, 'book_id' => $chapter->book_id
+            'id' => $chapter->id, 'slug' => $chapter->slug, 'book_id' => $chapter->book_id,
         ]));
         $this->assertActivityExists('chapter_update', $chapter);
     }

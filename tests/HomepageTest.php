@@ -1,13 +1,13 @@
-<?php namespace Tests;
+<?php
+
+namespace Tests;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Page;
 
 class HomepageTest extends TestCase
 {
-
     public function test_default_homepage_visible()
     {
         $this->asEditor();
@@ -42,8 +42,8 @@ class HomepageTest extends TestCase
         $content = str_repeat('This is the body content of my custom homepage.', 20);
         $customPage = $this->newPage(['name' => $name, 'html' => $content]);
         $this->setSettings([
-            'app-homepage' => $customPage->id,
-            'app-homepage-type' => 'page'
+            'app-homepage'      => $customPage->id,
+            'app-homepage-type' => 'page',
         ]);
 
         $homeVisit = $this->get('/');
@@ -68,8 +68,8 @@ class HomepageTest extends TestCase
         $content = str_repeat('This is the body content of my custom homepage.', 20);
         $customPage = $this->newPage(['name' => $name, 'html' => $content]);
         $this->setSettings([
-            'app-homepage' => $customPage->id,
-            'app-homepage-type' => 'default'
+            'app-homepage'      => $customPage->id,
+            'app-homepage-type' => 'default',
         ]);
 
         $pageDeleteReq = $this->delete($customPage->getUrl());

@@ -1,13 +1,11 @@
 <?php
 
-
 namespace BookStack\Entities\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 interface HasCoverImage
 {
-
     /**
      * Get the cover image for this item.
      */

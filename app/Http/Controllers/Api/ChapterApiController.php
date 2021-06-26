@@ -1,10 +1,10 @@
-<?php namespace BookStack\Http\Controllers\Api;
+<?php
 
-use BookStack\Actions\ActivityType;
+namespace BookStack\Http\Controllers\Api;
+
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Repos\ChapterRepo;
-use BookStack\Facades\Activity;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
@@ -14,16 +14,16 @@ class ChapterApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'book_id' => 'required|integer',
-            'name' => 'required|string|max:255',
+            'book_id'     => 'required|integer',
+            'name'        => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'tags' => 'array',
+            'tags'        => 'array',
         ],
         'update' => [
-            'book_id' => 'integer',
-            'name' => 'string|min:1|max:255',
+            'book_id'     => 'integer',
+            'name'        => 'string|min:1|max:255',
             'description' => 'string|max:1000',
-            'tags' => 'array',
+            'tags'        => 'array',
         ],
     ];
 
@@ -41,6 +41,7 @@ class ChapterApiController extends ApiController
     public function list()
     {
         $chapters = Chapter::visible();
+
         return $this->apiListingResponse($chapters, [
             'id', 'book_id', 'name', 'slug', 'description', 'priority',
             'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by',
@@ -59,6 +60,7 @@ class ChapterApiController extends ApiController
         $this->checkOwnablePermission('chapter-create', $book);
 
         $chapter = $this->chapterRepo->create($request->all(), $book);
+
         return response()->json($chapter->load(['tags']));
     }
 
@@ -70,6 +72,7 @@ class ChapterApiController extends ApiController
         $chapter = Chapter::visible()->with(['tags', 'createdBy', 'updatedBy', 'ownedBy', 'pages' => function (HasMany $query) {
             $query->visible()->get(['id', 'name', 'slug']);
         }])->findOrFail($id);
+
         return response()->json($chapter);
     }
 
@@ -82,6 +85,7 @@ class ChapterApiController extends ApiController
         $this->checkOwnablePermission('chapter-update', $chapter);
 
         $updatedChapter = $this->chapterRepo->update($chapter, $request->all());
+
         return response()->json($updatedChapter->load(['tags']));
     }
 
@@ -95,6 +99,7 @@ class ChapterApiController extends ApiController
         $this->checkOwnablePermission('chapter-delete', $chapter);
 
         $this->chapterRepo->destroy($chapter);
+
         return response('', 204);
     }
 }

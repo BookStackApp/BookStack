@@ -25,7 +25,7 @@ class MaintenanceController extends Controller
         $recycleStats = (new TrashCan())->getTrashedCounts();
 
         return view('settings.maintenance', [
-            'version' => $version,
+            'version'      => $version,
             'recycleStats' => $recycleStats,
         ]);
     }
@@ -45,6 +45,7 @@ class MaintenanceController extends Controller
         $deleteCount = count($imagesToDelete);
         if ($deleteCount === 0) {
             $this->showWarningNotification(trans('settings.maint_image_cleanup_nothing_found'));
+
             return redirect('/settings/maintenance')->withInput();
         }
 

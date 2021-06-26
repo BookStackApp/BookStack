@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Models;
+<?php
+
+namespace BookStack\Entities\Models;
 
 use BookStack\Uploads\Image;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +19,7 @@ class Bookshelf extends Entity implements HasCoverImage
     /**
      * Get the books in this shelf.
      * Should not be used directly since does not take into account permissions.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function books()
@@ -44,8 +47,10 @@ class Bookshelf extends Entity implements HasCoverImage
 
     /**
      * Returns BookShelf cover image, if cover does not exists return default cover image.
-     * @param int $width - Width of the image
+     *
+     * @param int $width  - Width of the image
      * @param int $height - Height of the image
+     *
      * @return string
      */
     public function getBookCover($width = 440, $height = 250)
@@ -61,11 +66,12 @@ class Bookshelf extends Entity implements HasCoverImage
         } catch (\Exception $err) {
             $cover = $default;
         }
+
         return $cover;
     }
 
     /**
-     * Get the cover image of the shelf
+     * Get the cover image of the shelf.
      */
     public function cover(): BelongsTo
     {
@@ -82,7 +88,9 @@ class Bookshelf extends Entity implements HasCoverImage
 
     /**
      * Check if this shelf contains the given book.
+     *
      * @param Book $book
+     *
      * @return bool
      */
     public function contains(Book $book): bool
@@ -92,6 +100,7 @@ class Bookshelf extends Entity implements HasCoverImage
 
     /**
      * Add a book to the end of this shelf.
+     *
      * @param Book $book
      */
     public function appendBook(Book $book)

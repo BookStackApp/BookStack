@@ -1,18 +1,21 @@
-<?php namespace BookStack\Entities\Models;
+<?php
+
+namespace BookStack\Entities\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class BookChild
- * @property int $book_id
- * @property int $priority
+ * Class BookChild.
+ *
+ * @property int  $book_id
+ * @property int  $priority
  * @property Book $book
+ *
  * @method Builder whereSlugs(string $bookSlug, string $childSlug)
  */
 abstract class BookChild extends Entity
 {
-
     /**
      * Scope a query to find items where the the child has the given childSlug
      * where its parent has the bookSlug.

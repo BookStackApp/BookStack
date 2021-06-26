@@ -1,4 +1,6 @@
-<?php namespace Tests\Commands;
+<?php
+
+namespace Tests\Commands;
 
 use BookStack\Entities\Models\Page;
 use Symfony\Component\Console\Exception\RuntimeException;
@@ -14,17 +16,17 @@ class UpdateUrlCommandTest extends TestCase
 
         $this->artisan('bookstack:update-url https://example.com https://cats.example.com')
             ->expectsQuestion("This will search for \"https://example.com\" in your database and replace it with  \"https://cats.example.com\".\nAre you sure you want to proceed?", 'y')
-            ->expectsQuestion("This operation could cause issues if used incorrectly. Have you made a backup of your existing database?", 'y');
+            ->expectsQuestion('This operation could cause issues if used incorrectly. Have you made a backup of your existing database?', 'y');
 
         $this->assertDatabaseHas('pages', [
-            'id' => $page->id,
-            'html' => '<a href="https://cats.example.com/donkeys"></a>'
+            'id'   => $page->id,
+            'html' => '<a href="https://cats.example.com/donkeys"></a>',
         ]);
     }
 
     public function test_command_requires_valid_url()
     {
-        $badUrlMessage = "The given urls are expected to be full urls starting with http:// or https://";
+        $badUrlMessage = 'The given urls are expected to be full urls starting with http:// or https://';
         $this->artisan('bookstack:update-url //example.com https://cats.example.com')->expectsOutput($badUrlMessage);
         $this->artisan('bookstack:update-url https://example.com htts://cats.example.com')->expectsOutput($badUrlMessage);
         $this->artisan('bookstack:update-url example.com https://cats.example.com')->expectsOutput($badUrlMessage);
@@ -54,6 +56,6 @@ class UpdateUrlCommandTest extends TestCase
     {
         $this->artisan("bookstack:update-url {$oldUrl} {$newUrl}")
             ->expectsQuestion("This will search for \"{$oldUrl}\" in your database and replace it with  \"{$newUrl}\".\nAre you sure you want to proceed?", 'y')
-            ->expectsQuestion("This operation could cause issues if used incorrectly. Have you made a backup of your existing database?", 'y');
+            ->expectsQuestion('This operation could cause issues if used incorrectly. Have you made a backup of your existing database?', 'y');
     }
 }

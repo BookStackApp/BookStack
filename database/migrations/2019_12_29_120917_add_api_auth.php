@@ -16,7 +16,7 @@ class AddApiAuth extends Migration
     {
 
         // Add API tokens table
-        Schema::create('api_tokens', function(Blueprint $table) {
+        Schema::create('api_tokens', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('token_id')->unique();
@@ -29,14 +29,14 @@ class AddApiAuth extends Migration
         // Add access-api permission
         $adminRoleId = DB::table('roles')->where('system_name', '=', 'admin')->first()->id;
         $permissionId = DB::table('role_permissions')->insertGetId([
-            'name' => 'access-api',
+            'name'         => 'access-api',
             'display_name' => 'Access system API',
-            'created_at' => Carbon::now()->toDateTimeString(),
-            'updated_at' => Carbon::now()->toDateTimeString()
+            'created_at'   => Carbon::now()->toDateTimeString(),
+            'updated_at'   => Carbon::now()->toDateTimeString(),
         ]);
         DB::table('permission_role')->insert([
-            'role_id' => $adminRoleId,
-            'permission_id' => $permissionId
+            'role_id'       => $adminRoleId,
+            'permission_id' => $permissionId,
         ]);
     }
 

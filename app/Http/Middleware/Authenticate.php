@@ -38,9 +38,9 @@ class Authenticate
         if ($request->wantsJson()) {
             return response()->json([
                 'error' => [
-                    'code' => 401,
-                    'message' => trans('errors.email_confirmation_awaiting')
-                ]
+                    'code'    => 401,
+                    'message' => trans('errors.email_confirmation_awaiting'),
+                ],
             ], 401);
         }
 

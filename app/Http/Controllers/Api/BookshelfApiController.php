@@ -1,7 +1,9 @@
-<?php namespace BookStack\Http\Controllers\Api;
+<?php
 
-use BookStack\Entities\Repos\BookshelfRepo;
+namespace BookStack\Http\Controllers\Api;
+
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Repos\BookshelfRepo;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
@@ -9,7 +11,6 @@ use Illuminate\Validation\ValidationException;
 
 class BookshelfApiController extends ApiController
 {
-
     /**
      * @var BookshelfRepo
      */
@@ -17,14 +18,14 @@ class BookshelfApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'name' => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'books' => 'array',
+            'books'       => 'array',
         ],
         'update' => [
-            'name' => 'string|min:1|max:255',
+            'name'        => 'string|min:1|max:255',
             'description' => 'string|max:1000',
-            'books' => 'array',
+            'books'       => 'array',
         ],
     ];
 
@@ -42,6 +43,7 @@ class BookshelfApiController extends ApiController
     public function list()
     {
         $shelves = Bookshelf::visible();
+
         return $this->apiListingResponse($shelves, [
             'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by', 'image_id',
         ]);
@@ -51,6 +53,7 @@ class BookshelfApiController extends ApiController
      * Create a new shelf in the system.
      * An array of books IDs can be provided in the request. These
      * will be added to the shelf in the same order as provided.
+     *
      * @throws ValidationException
      */
     public function create(Request $request)
@@ -73,8 +76,9 @@ class BookshelfApiController extends ApiController
             'tags', 'cover', 'createdBy', 'updatedBy', 'ownedBy',
             'books' => function (BelongsToMany $query) {
                 $query->visible()->get(['id', 'name', 'slug']);
-            }
+            },
         ])->findOrFail($id);
+
         return response()->json($shelf);
     }
 
@@ -83,6 +87,7 @@ class BookshelfApiController extends ApiController
      * An array of books IDs can be provided in the request. These
      * will be added to the shelf in the same order as provided and overwrite
      * any existing book assignments.
+     *
      * @throws ValidationException
      */
     public function update(Request $request, string $id)
@@ -94,14 +99,14 @@ class BookshelfApiController extends ApiController
         $bookIds = $request->get('books', null);
 
         $shelf = $this->bookshelfRepo->update($shelf, $requestData, $bookIds);
+
         return response()->json($shelf);
     }
-
-
 
     /**
      * Delete a single shelf.
      * This will typically send the shelf to the recycle bin.
+     *
      * @throws Exception
      */
     public function delete(string $id)
@@ -110,6 +115,7 @@ class BookshelfApiController extends ApiController
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->bookshelfRepo->destroy($shelf);
+
         return response('', 204);
     }
 }

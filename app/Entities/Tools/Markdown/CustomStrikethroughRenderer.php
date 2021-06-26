@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Tools\Markdown;
+<?php
+
+namespace BookStack\Entities\Tools\Markdown;
 
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Extension\Strikethrough\Strikethrough;

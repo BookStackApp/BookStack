@@ -2,23 +2,17 @@
 
 namespace BookStack\Entities\Repos;
 
-use BookStack\Actions\ActivityType;
 use BookStack\Actions\TagRepo;
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Exceptions\ImageUploadException;
-use BookStack\Facades\Activity;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Collection;
 
 class BaseRepo
 {
-
     protected $tagRepo;
     protected $imageRepo;
-
 
     public function __construct(TagRepo $tagRepo, ImageRepo $imageRepo)
     {
@@ -27,7 +21,7 @@ class BaseRepo
     }
 
     /**
-     * Create a new entity in the system
+     * Create a new entity in the system.
      */
     public function create(Entity $entity, array $input)
     {
@@ -35,7 +29,7 @@ class BaseRepo
         $entity->forceFill([
             'created_by' => user()->id,
             'updated_by' => user()->id,
-            'owned_by' => user()->id,
+            'owned_by'   => user()->id,
         ]);
         $entity->refreshSlug();
         $entity->save();
@@ -72,6 +66,7 @@ class BaseRepo
 
     /**
      * Update the given items' cover image, or clear it.
+     *
      * @throws ImageUploadException
      * @throws \Exception
      */

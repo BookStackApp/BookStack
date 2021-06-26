@@ -1,11 +1,11 @@
-<?php namespace Tests;
+<?php
 
+namespace Tests;
 
 use BookStack\Entities\Models\Book;
 
 class ActivityTrackingTest extends BrowserKitTest
 {
-
     public function test_recently_viewed_books()
     {
         $books = Book::all()->take(10);

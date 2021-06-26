@@ -1,10 +1,11 @@
-<?php namespace BookStack\Entities\Tools;
+<?php
+
+namespace BookStack\Entities\Tools;
 
 use Illuminate\Http\Request;
 
 class SearchOptions
 {
-
     /**
      * @var array
      */
@@ -35,6 +36,7 @@ class SearchOptions
         foreach ($decoded as $type => $value) {
             $instance->$type = $value;
         }
+
         return $instance;
     }
 
@@ -67,6 +69,7 @@ class SearchOptions
         if (isset($inputs['types']) && count($inputs['types']) < 4) {
             $instance->filters['type'] = implode('|', $inputs['types']);
         }
+
         return $instance;
     }
 
@@ -77,15 +80,15 @@ class SearchOptions
     {
         $terms = [
             'searches' => [],
-            'exacts' => [],
-            'tags' => [],
-            'filters' => []
+            'exacts'   => [],
+            'tags'     => [],
+            'filters'  => [],
         ];
 
         $patterns = [
-            'exacts' => '/"(.*?)"/',
-            'tags' => '/\[(.*?)\]/',
-            'filters' => '/\{(.*?)\}/'
+            'exacts'  => '/"(.*?)"/',
+            'tags'    => '/\[(.*?)\]/',
+            'filters' => '/\{(.*?)\}/',
         ];
 
         // Parse special terms

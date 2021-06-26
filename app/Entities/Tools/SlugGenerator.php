@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Tools;
+<?php
+
+namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\BookChild;
 use BookStack\Interfaces\Sluggable;
@@ -6,7 +8,6 @@ use Illuminate\Support\Str;
 
 class SlugGenerator
 {
-
     /**
      * Generate a fresh slug for the given entity.
      * The slug will generated so it does not conflict within the same parent item.
@@ -17,6 +18,7 @@ class SlugGenerator
         while ($this->slugInUse($slug, $model)) {
             $slug .= '-' . Str::random(3);
         }
+
         return $slug;
     }
 
@@ -26,9 +28,10 @@ class SlugGenerator
     protected function formatNameAsSlug(string $name): string
     {
         $slug = Str::slug($name);
-        if ($slug === "") {
+        if ($slug === '') {
             $slug = substr(md5(rand(1, 500)), 0, 5);
         }
+
         return $slug;
     }
 

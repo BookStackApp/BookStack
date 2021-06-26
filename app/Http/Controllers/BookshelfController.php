@@ -1,22 +1,22 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use Activity;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
-use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Views;
 
 class BookshelfController extends Controller
 {
-
     protected $bookshelfRepo;
     protected $entityContextManager;
     protected $imageRepo;
@@ -37,7 +37,7 @@ class BookshelfController extends Controller
         $sort = setting()->getForCurrentUser('bookshelves_sort', 'name');
         $order = setting()->getForCurrentUser('bookshelves_sort_order', 'asc');
         $sortOptions = [
-            'name' => trans('common.sort_name'),
+            'name'       => trans('common.sort_name'),
             'created_at' => trans('common.sort_created_at'),
             'updated_at' => trans('common.sort_updated_at'),
         ];
@@ -49,14 +49,15 @@ class BookshelfController extends Controller
 
         $this->entityContextManager->clearShelfContext();
         $this->setPageTitle(trans('entities.shelves'));
+
         return view('shelves.index', [
-            'shelves' => $shelves,
-            'recents' => $recents,
-            'popular' => $popular,
-            'new' => $new,
-            'view' => $view,
-            'sort' => $sort,
-            'order' => $order,
+            'shelves'     => $shelves,
+            'recents'     => $recents,
+            'popular'     => $popular,
+            'new'         => $new,
+            'view'        => $view,
+            'sort'        => $sort,
+            'order'       => $order,
             'sortOptions' => $sortOptions,
         ]);
     }
@@ -69,11 +70,13 @@ class BookshelfController extends Controller
         $this->checkPermission('bookshelf-create-all');
         $books = Book::hasPermission('update')->get();
         $this->setPageTitle(trans('entities.shelves_create'));
+
         return view('shelves.create', ['books' => $books]);
     }
 
     /**
      * Store a newly created bookshelf in storage.
+     *
      * @throws ValidationException
      * @throws ImageUploadException
      */
@@ -81,9 +84,9 @@ class BookshelfController extends Controller
     {
         $this->checkPermission('bookshelf-create-all');
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image' => 'nullable|' . $this->getImageValidationRules(),
+            'image'       => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));
@@ -95,6 +98,7 @@ class BookshelfController extends Controller
 
     /**
      * Display the bookshelf of the given slug.
+     *
      * @throws NotFoundException
      */
     public function show(string $slug)
@@ -115,13 +119,14 @@ class BookshelfController extends Controller
         $view = setting()->getForCurrentUser('bookshelf_view_type');
 
         $this->setPageTitle($shelf->getShortName());
+
         return view('shelves.show', [
-            'shelf' => $shelf,
+            'shelf'                   => $shelf,
             'sortedVisibleShelfBooks' => $sortedVisibleShelfBooks,
-            'view' => $view,
-            'activity' => Activity::entityActivity($shelf, 20, 1),
-            'order' => $order,
-            'sort' => $sort
+            'view'                    => $view,
+            'activity'                => Activity::entityActivity($shelf, 20, 1),
+            'order'                   => $order,
+            'sort'                    => $sort,
         ]);
     }
 
@@ -137,6 +142,7 @@ class BookshelfController extends Controller
         $books = Book::hasPermission('update')->whereNotIn('id', $shelfBookIds)->get();
 
         $this->setPageTitle(trans('entities.shelves_edit_named', ['name' => $shelf->getShortName()]));
+
         return view('shelves.edit', [
             'shelf' => $shelf,
             'books' => $books,
@@ -145,6 +151,7 @@ class BookshelfController extends Controller
 
     /**
      * Update the specified bookshelf in storage.
+     *
      * @throws ValidationException
      * @throws ImageUploadException
      * @throws NotFoundException
@@ -154,11 +161,10 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image' => 'nullable|' . $this->getImageValidationRules(),
+            'image'       => 'nullable|' . $this->getImageValidationRules(),
         ]);
-
 
         $bookIds = explode(',', $request->get('books', ''));
         $shelf = $this->bookshelfRepo->update($shelf, $request->all(), $bookIds);
@@ -169,7 +175,7 @@ class BookshelfController extends Controller
     }
 
     /**
-     * Shows the page to confirm deletion
+     * Shows the page to confirm deletion.
      */
     public function showDelete(string $slug)
     {
@@ -177,11 +183,13 @@ class BookshelfController extends Controller
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->setPageTitle(trans('entities.shelves_delete_named', ['name' => $shelf->getShortName()]));
+
         return view('shelves.delete', ['shelf' => $shelf]);
     }
 
     /**
      * Remove the specified bookshelf from storage.
+     *
      * @throws Exception
      */
     public function destroy(string $slug)
@@ -218,6 +226,7 @@ class BookshelfController extends Controller
         $permissionsUpdater->updateFromPermissionsForm($shelf, $request);
 
         $this->showSuccessNotification(trans('entities.shelves_permissions_updated'));
+
         return redirect($shelf->getUrl());
     }
 
@@ -231,6 +240,7 @@ class BookshelfController extends Controller
 
         $updateCount = $this->bookshelfRepo->copyDownPermissions($shelf);
         $this->showSuccessNotification(trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
+
         return redirect($shelf->getUrl());
     }
 }

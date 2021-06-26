@@ -25,11 +25,11 @@ class CleanupImages extends Command
      */
     protected $description = 'Cleanup images and drawings';
 
-
     protected $imageService;
 
     /**
      * Create a new command instance.
+     *
      * @param \BookStack\Uploads\ImageService $imageService
      */
     public function __construct(ImageService $imageService)
@@ -63,6 +63,7 @@ class CleanupImages extends Command
             $this->comment($deleteCount . ' images found that would have been deleted');
             $this->showDeletedImages($deleted);
             $this->comment('Run with -f or --force to perform deletions');
+
             return;
         }
 

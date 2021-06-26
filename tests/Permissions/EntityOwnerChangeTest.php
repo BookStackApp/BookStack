@@ -1,16 +1,16 @@
-<?php namespace Tests\Permissions;
+<?php
+
+namespace Tests\Permissions;
 
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class EntityOwnerChangeTest extends TestCase
 {
-
     public function test_changing_page_owner()
     {
         $page = Page::query()->first();
@@ -46,5 +46,4 @@ class EntityOwnerChangeTest extends TestCase
         $this->asAdmin()->put($shelf->getUrl('permissions'), ['owned_by' => $user->id]);
         $this->assertDatabaseHas('bookshelves', ['owned_by' => $user->id, 'id' => $shelf->id]);
     }
-
 }

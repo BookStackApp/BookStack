@@ -1,8 +1,9 @@
-<?php namespace BookStack\Exceptions;
+<?php
+
+namespace BookStack\Exceptions;
 
 class NotFoundException extends PrettyException
 {
-
     /**
      * NotFoundException constructor.
      */

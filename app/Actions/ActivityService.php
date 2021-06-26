@@ -1,4 +1,6 @@
-<?php namespace BookStack\Actions;
+<?php
+
+namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
@@ -33,6 +35,7 @@ class ActivityService
 
     /**
      * Add a generic activity event to the database.
+     *
      * @param string|Loggable $detail
      */
     public function add(string $type, $detail = '')
@@ -54,7 +57,7 @@ class ActivityService
     {
         return $this->activity->newInstance()->forceFill([
             'type'     => strtolower($type),
-            'user_id' => user()->id,
+            'user_id'  => user()->id,
         ]);
     }
 
@@ -67,8 +70,8 @@ class ActivityService
     {
         $entity->activity()->update([
             'detail'       => $entity->name,
-            'entity_id'   => null,
-            'entity_type' => null,
+            'entity_id'    => null,
+            'entity_type'  => null,
         ]);
     }
 
@@ -98,10 +101,10 @@ class ActivityService
         $queryIds = [$entity->getMorphClass() => [$entity->id]];
 
         if ($entity->isA('book')) {
-            $queryIds[(new Chapter)->getMorphClass()] = $entity->chapters()->visible()->pluck('id');
+            $queryIds[(new Chapter())->getMorphClass()] = $entity->chapters()->visible()->pluck('id');
         }
         if ($entity->isA('book') || $entity->isA('chapter')) {
-            $queryIds[(new Page)->getMorphClass()] = $entity->pages()->visible()->pluck('id');
+            $queryIds[(new Page())->getMorphClass()] = $entity->pages()->visible()->pluck('id');
         }
 
         $query = $this->activity->newQuery();
@@ -143,7 +146,9 @@ class ActivityService
 
     /**
      * Filters out similar activity.
+     *
      * @param Activity[] $activities
+     *
      * @return array
      */
     protected function filterSimilar(iterable $activities): array
@@ -185,7 +190,7 @@ class ActivityService
             return;
         }
 
-        $message = str_replace("%u", $username, $message);
+        $message = str_replace('%u', $username, $message);
         $channel = config('logging.failed_login.channel');
         Log::channel($channel)->warning($message);
     }

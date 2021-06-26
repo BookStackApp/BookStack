@@ -1,4 +1,6 @@
-<?php namespace BookStack\Http\Middleware;
+<?php
+
+namespace BookStack\Http\Middleware;
 
 use Carbon\Carbon;
 use Closure;
@@ -6,9 +8,8 @@ use Illuminate\Http\Request;
 
 class Localization
 {
-
     /**
-     * Array of right-to-left locales
+     * Array of right-to-left locales.
      */
     protected $rtlLocales = ['ar', 'he'];
 
@@ -16,45 +17,46 @@ class Localization
      * Map of BookStack locale names to best-estimate system locale names.
      */
     protected $localeMap = [
-        'ar' => 'ar',
-        'bg' => 'bg_BG',
-        'bs' => 'bs_BA',
-        'ca' => 'ca',
-        'da' => 'da_DK',
-        'de' => 'de_DE',
+        'ar'          => 'ar',
+        'bg'          => 'bg_BG',
+        'bs'          => 'bs_BA',
+        'ca'          => 'ca',
+        'da'          => 'da_DK',
+        'de'          => 'de_DE',
         'de_informal' => 'de_DE',
-        'en' => 'en_GB',
-        'es' => 'es_ES',
-        'es_AR' => 'es_AR',
-        'fr' => 'fr_FR',
-        'he' => 'he_IL',
-        'hr' => 'hr_HR',
-        'id' => 'id_ID',
-        'it' => 'it_IT',
-        'ja' => 'ja',
-        'ko' => 'ko_KR',
-        'lv' => 'lv_LV',
-        'nl' => 'nl_NL',
-        'nb' => 'nb_NO',
-        'pl' => 'pl_PL',
-        'pt' => 'pt_PT',
-        'pt_BR' => 'pt_BR',
-        'ru' => 'ru',
-        'sk' => 'sk_SK',
-        'sl' => 'sl_SI',
-        'sv' => 'sv_SE',
-        'uk' => 'uk_UA',
-        'vi' => 'vi_VN',
-        'zh_CN' => 'zh_CN',
-        'zh_TW' => 'zh_TW',
-        'tr' => 'tr_TR',
+        'en'          => 'en_GB',
+        'es'          => 'es_ES',
+        'es_AR'       => 'es_AR',
+        'fr'          => 'fr_FR',
+        'he'          => 'he_IL',
+        'hr'          => 'hr_HR',
+        'id'          => 'id_ID',
+        'it'          => 'it_IT',
+        'ja'          => 'ja',
+        'ko'          => 'ko_KR',
+        'lv'          => 'lv_LV',
+        'nl'          => 'nl_NL',
+        'nb'          => 'nb_NO',
+        'pl'          => 'pl_PL',
+        'pt'          => 'pt_PT',
+        'pt_BR'       => 'pt_BR',
+        'ru'          => 'ru',
+        'sk'          => 'sk_SK',
+        'sl'          => 'sl_SI',
+        'sv'          => 'sv_SE',
+        'uk'          => 'uk_UA',
+        'vi'          => 'vi_VN',
+        'zh_CN'       => 'zh_CN',
+        'zh_TW'       => 'zh_TW',
+        'tr'          => 'tr_TR',
     ];
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -73,6 +75,7 @@ class Localization
         app()->setLocale($locale);
         Carbon::setLocale($locale);
         $this->setSystemDateLocale($locale);
+
         return $next($request);
     }
 
@@ -106,11 +109,12 @@ class Localization
                 return $lang;
             }
         }
+
         return $default;
     }
 
     /**
-     * Get the ISO version of a BookStack language name
+     * Get the ISO version of a BookStack language name.
      */
     public function getLocaleIso(string $locale): string
     {

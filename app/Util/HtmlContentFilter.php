@@ -1,4 +1,6 @@
-<?php namespace BookStack\Util;
+<?php
+
+namespace BookStack\Util;
 
 use DOMDocument;
 use DOMNodeList;
@@ -44,7 +46,7 @@ class HtmlContentFilter
         // Remove 'on*' attributes
         $onAttributes = $xPath->query('//@*[starts-with(name(), \'on\')]');
         foreach ($onAttributes as $attr) {
-            /** @var \DOMAttr $attr*/
+            /** @var \DOMAttr $attr */
             $attrName = $attr->nodeName;
             $attr->parentNode->removeAttribute($attrName);
         }

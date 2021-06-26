@@ -1,29 +1,32 @@
-<?php namespace BookStack\Entities\Models;
+<?php
+
+namespace BookStack\Entities\Models;
 
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use Carbon\Carbon;
 
 /**
- * Class PageRevision
- * @property int $page_id
+ * Class PageRevision.
+ *
+ * @property int    $page_id
  * @property string $slug
  * @property string $book_slug
- * @property int $created_by
+ * @property int    $created_by
  * @property Carbon $created_at
  * @property string $type
  * @property string $summary
  * @property string $markdown
  * @property string $html
- * @property int $revision_number
+ * @property int    $revision_number
  */
 class PageRevision extends Model
 {
     protected $fillable = ['name', 'html', 'text', 'markdown', 'summary'];
 
     /**
-     * Get the user that created the page revision
+     * Get the user that created the page revision.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function createdBy()
@@ -33,6 +36,7 @@ class PageRevision extends Model
 
     /**
      * Get the page this revision originates from.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function page()
@@ -42,7 +46,9 @@ class PageRevision extends Model
 
     /**
      * Get the url for this revision.
+     *
      * @param null|string $path
+     *
      * @return string
      */
     public function getUrl($path = null)
@@ -51,11 +57,13 @@ class PageRevision extends Model
         if ($path) {
             return $url . '/' . trim($path, '/');
         }
+
         return $url;
     }
 
     /**
-     * Get the previous revision for the same page if existing
+     * Get the previous revision for the same page if existing.
+     *
      * @return \BookStack\Entities\PageRevision|null
      */
     public function getPrevious()
@@ -74,8 +82,10 @@ class PageRevision extends Model
     /**
      * Allows checking of the exact class, Used to check entity type.
      * Included here to align with entities in similar use cases.
-     * (Yup, Bit of an awkward hack)
+     * (Yup, Bit of an awkward hack).
+     *
      * @param $type
+     *
      * @return bool
      */
     public static function isA($type)

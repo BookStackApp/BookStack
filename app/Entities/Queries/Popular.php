@@ -1,5 +1,6 @@
-<?php namespace BookStack\Entities\Queries;
+<?php
 
+namespace BookStack\Entities\Queries;
 
 use BookStack\Actions\View;
 use Illuminate\Support\Facades\DB;
@@ -25,5 +26,4 @@ class Popular extends EntityQuery
             ->pluck('viewable')
             ->filter();
     }
-
 }

@@ -4,7 +4,6 @@ namespace BookStack\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Connection;
-use Illuminate\Support\Facades\DB;
 
 class UpdateUrl extends Command
 {
@@ -49,7 +48,8 @@ class UpdateUrl extends Command
 
         $urlPattern = '/https?:\/\/(.+)/';
         if (!preg_match($urlPattern, $oldUrl) || !preg_match($urlPattern, $newUrl)) {
-            $this->error("The given urls are expected to be full urls starting with http:// or https://");
+            $this->error('The given urls are expected to be full urls starting with http:// or https://');
+
             return 1;
         }
 
@@ -58,11 +58,11 @@ class UpdateUrl extends Command
         }
 
         $columnsToUpdateByTable = [
-            "attachments" => ["path"],
-            "pages" => ["html", "text", "markdown"],
-            "images" => ["url"],
-            "settings" => ["value"],
-            "comments" => ["html", "text"],
+            'attachments' => ['path'],
+            'pages'       => ['html', 'text', 'markdown'],
+            'images'      => ['url'],
+            'settings'    => ['value'],
+            'comments'    => ['html', 'text'],
         ];
 
         foreach ($columnsToUpdateByTable as $table => $columns) {
@@ -73,7 +73,7 @@ class UpdateUrl extends Command
         }
 
         $jsonColumnsToUpdateByTable = [
-            "settings" => ["value"],
+            'settings' => ['value'],
         ];
 
         foreach ($jsonColumnsToUpdateByTable as $table => $columns) {
@@ -85,10 +85,11 @@ class UpdateUrl extends Command
             }
         }
 
-        $this->info("URL update procedure complete.");
+        $this->info('URL update procedure complete.');
         $this->info('============================================================================');
         $this->info('Be sure to run "php artisan cache:clear" to clear any old URLs in the cache.');
         $this->info('============================================================================');
+
         return 0;
     }
 
@@ -100,8 +101,9 @@ class UpdateUrl extends Command
     {
         $oldQuoted = $this->db->getPdo()->quote($oldUrl);
         $newQuoted = $this->db->getPdo()->quote($newUrl);
+
         return $this->db->table($table)->update([
-            $column => $this->db->raw("REPLACE({$column}, {$oldQuoted}, {$newQuoted})")
+            $column => $this->db->raw("REPLACE({$column}, {$oldQuoted}, {$newQuoted})"),
         ]);
     }
 
@@ -112,8 +114,8 @@ class UpdateUrl extends Command
     protected function checkUserOkayToProceed(string $oldUrl, string $newUrl): bool
     {
         $dangerWarning = "This will search for \"{$oldUrl}\" in your database and replace it with  \"{$newUrl}\".\n";
-        $dangerWarning .= "Are you sure you want to proceed?";
-        $backupConfirmation = "This operation could cause issues if used incorrectly. Have you made a backup of your existing database?";
+        $dangerWarning .= 'Are you sure you want to proceed?';
+        $backupConfirmation = 'This operation could cause issues if used incorrectly. Have you made a backup of your existing database?';
 
         return $this->confirm($dangerWarning) && $this->confirm($backupConfirmation);
     }

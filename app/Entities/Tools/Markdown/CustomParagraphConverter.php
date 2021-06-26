@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Tools\Markdown;
+<?php
+
+namespace BookStack\Entities\Tools\Markdown;
 
 use League\HTMLToMarkdown\Converter\ParagraphConverter;
 use League\HTMLToMarkdown\ElementInterface;

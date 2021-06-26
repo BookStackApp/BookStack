@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Repos;
+<?php
+
+namespace BookStack\Entities\Repos;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Book;
@@ -9,11 +11,9 @@ use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
 use Exception;
-use Illuminate\Support\Collection;
 
 class ChapterRepo
 {
-
     protected $baseRepo;
 
     /**
@@ -26,6 +26,7 @@ class ChapterRepo
 
     /**
      * Get a chapter via the slug.
+     *
      * @throws NotFoundException
      */
     public function getBySlug(string $bookSlug, string $chapterSlug): Chapter
@@ -49,6 +50,7 @@ class ChapterRepo
         $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
         $this->baseRepo->create($chapter, $input);
         Activity::addForEntity($chapter, ActivityType::CHAPTER_CREATE);
+
         return $chapter;
     }
 
@@ -59,11 +61,13 @@ class ChapterRepo
     {
         $this->baseRepo->update($chapter, $input);
         Activity::addForEntity($chapter, ActivityType::CHAPTER_UPDATE);
+
         return $chapter;
     }
 
     /**
      * Remove a chapter from the system.
+     *
      * @throws Exception
      */
     public function destroy(Chapter $chapter)
@@ -77,7 +81,8 @@ class ChapterRepo
     /**
      * Move the given chapter into a new parent book.
      * The $parentIdentifier must be a string of the following format:
-     * 'book:<id>' (book:5)
+     * 'book:<id>' (book:5).
+     *
      * @throws MoveOperationException
      */
     public function move(Chapter $chapter, string $parentIdentifier): Book

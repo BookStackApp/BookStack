@@ -1,4 +1,6 @@
-<?php namespace BookStack\Actions;
+<?php
+
+namespace BookStack\Actions;
 
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -9,7 +11,7 @@ class Tag extends Model
     protected $hidden = ['id', 'entity_id', 'entity_type', 'created_at', 'updated_at'];
 
     /**
-     * Get the entity that this tag belongs to
+     * Get the entity that this tag belongs to.
      */
     public function entity(): MorphTo
     {
@@ -21,7 +23,7 @@ class Tag extends Model
      */
     public function nameUrl(): string
     {
-        return url('/search?term=%5B' . urlencode($this->name) .'%5D');
+        return url('/search?term=%5B' . urlencode($this->name) . '%5D');
     }
 
     /**
@@ -29,6 +31,6 @@ class Tag extends Model
      */
     public function valueUrl(): string
     {
-        return url('/search?term=%5B' . urlencode($this->name) .'%3D' . urlencode($this->value) . '%5D');
+        return url('/search?term=%5B' . urlencode($this->name) . '%3D' . urlencode($this->value) . '%5D');
     }
 }

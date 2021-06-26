@@ -1,10 +1,10 @@
-<?php namespace BookStack\Auth\Access;
+<?php
+
+namespace BookStack\Auth\Access;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class ExternalAuthService
 {
@@ -19,6 +19,7 @@ class ExternalAuthService
         }
 
         $roleName = str_replace(' ', '-', trim(strtolower($role->display_name)));
+
         return in_array($roleName, $groupNames);
     }
 
@@ -57,7 +58,7 @@ class ExternalAuthService
     }
 
     /**
-     * Sync the groups to the user roles for the current user
+     * Sync the groups to the user roles for the current user.
      */
     public function syncWithGroups(User $user, array $userGroups): void
     {

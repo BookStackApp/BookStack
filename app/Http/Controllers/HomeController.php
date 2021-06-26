@@ -1,18 +1,19 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use Activity;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\RecentlyViewed;
 use BookStack\Entities\Queries\TopFavourites;
-use BookStack\Entities\Tools\PageContent;
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
+use BookStack\Entities\Tools\PageContent;
 use Views;
 
 class HomeController extends Controller
 {
-
     /**
      * Display the homepage.
      */
@@ -33,9 +34,9 @@ class HomeController extends Controller
 
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
         $recents = $this->isSignedIn() ?
-            (new RecentlyViewed)->run(12*$recentFactor, 1)
+            (new RecentlyViewed())->run(12 * $recentFactor, 1)
             : Book::visible()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
-        $favourites = (new TopFavourites)->run(6);
+        $favourites = (new TopFavourites())->run(6);
         $recentlyUpdatedPages = Page::visible()->with('book')
             ->where('draft', false)
             ->orderBy('updated_at', 'desc')
@@ -49,11 +50,11 @@ class HomeController extends Controller
         }
 
         $commonData = [
-            'activity' => $activity,
-            'recents' => $recents,
+            'activity'             => $activity,
+            'recents'              => $recents,
             'recentlyUpdatedPages' => $recentlyUpdatedPages,
-            'draftPages' => $draftPages,
-            'favourites' => $favourites,
+            'draftPages'           => $draftPages,
+            'favourites'           => $favourites,
         ];
 
         // Add required list ordering & sorting for books & shelves views.
@@ -64,15 +65,15 @@ class HomeController extends Controller
             $order = setting()->getForCurrentUser($key . '_sort_order', 'asc');
 
             $sortOptions = [
-                'name' => trans('common.sort_name'),
+                'name'       => trans('common.sort_name'),
                 'created_at' => trans('common.sort_created_at'),
                 'updated_at' => trans('common.sort_updated_at'),
             ];
 
             $commonData = array_merge($commonData, [
-                'view' => $view,
-                'sort' => $sort,
-                'order' => $order,
+                'view'        => $view,
+                'sort'        => $sort,
+                'order'       => $order,
                 'sortOptions' => $sortOptions,
             ]);
         }
@@ -80,6 +81,7 @@ class HomeController extends Controller
         if ($homepageOption === 'bookshelves') {
             $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['sort'], $commonData['order']);
             $data = array_merge($commonData, ['shelves' => $shelves]);
+
             return view('common.home-shelves', $data);
         }
 
@@ -87,6 +89,7 @@ class HomeController extends Controller
             $bookRepo = app(BookRepo::class);
             $books = $bookRepo->getAllPaginated(18, $commonData['sort'], $commonData['order']);
             $data = array_merge($commonData, ['books' => $books]);
+
             return view('common.home-book', $data);
         }
 
@@ -96,6 +99,7 @@ class HomeController extends Controller
             $customHomepage = Page::query()->where('draft', '=', false)->findOrFail($id);
             $pageContent = new PageContent($customHomepage);
             $customHomepage->html = $pageContent->render(true);
+
             return view('common.home-custom', array_merge($commonData, ['customHomepage' => $customHomepage]));
         }
 
@@ -104,6 +108,7 @@ class HomeController extends Controller
 
     /**
      * Get custom head HTML, Used in ajax calls to show in editor.
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function customHeadContent()
@@ -112,7 +117,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the view for /robots.txt
+     * Show the view for /robots.txt.
      */
     public function getRobots()
     {

@@ -13,7 +13,7 @@ class AddActivityIndexes extends Migration
      */
     public function up()
     {
-        Schema::table('activities', function(Blueprint $table) {
+        Schema::table('activities', function (Blueprint $table) {
             $table->index('key');
             $table->index('created_at');
         });
@@ -26,7 +26,7 @@ class AddActivityIndexes extends Migration
      */
     public function down()
     {
-        Schema::table('activities', function(Blueprint $table) {
+        Schema::table('activities', function (Blueprint $table) {
             $table->dropIndex('activities_key_index');
             $table->dropIndex('activities_created_at_index');
         });
