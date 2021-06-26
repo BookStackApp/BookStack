@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Kosz',
     'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
     'recycle_bin_deleted_item' => 'Usunięta pozycja',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Usunięty przez',
     'recycle_bin_deleted_at' => 'Czas usunięcia',
     'recycle_bin_permanently_delete' => 'Usuń trwale',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Elementy do przywrócenia',
     'recycle_bin_restore_confirm' => 'This action will restore the deleted item, including any child elements, to their original location. If the original location has since been deleted, and is now in the recycle bin, the parent item will also need to be restored.',
     'recycle_bin_restore_deleted_parent' => 'The parent of this item has also been deleted. These will remain deleted until that parent is also restored.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Deleted :count total items from the recycle bin.',
     'recycle_bin_restore_notification' => 'Restored :count total items from the recycle bin.',
 
