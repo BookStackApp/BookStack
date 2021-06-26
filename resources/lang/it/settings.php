@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Cestino',
     'recycle_bin_desc' => 'Qui è possibile ripristinare gli elementi che sono stati eliminati o scegliere di rimuoverli definitivamente dal sistema. Questo elenco non è filtrato a differenza di elenchi di attività simili nel sistema in cui vengono applicati i filtri autorizzazioni.',
     'recycle_bin_deleted_item' => 'Elimina Elemento',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Cancellato da',
     'recycle_bin_deleted_at' => 'Orario Cancellazione',
     'recycle_bin_permanently_delete' => 'Elimina Definitivamente',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Elementi da Ripristinare',
     'recycle_bin_restore_confirm' => 'Questa azione ripristinerà l\'elemento eliminato, compresi gli elementi figli, nella loro posizione originale. Se la posizione originale è stata eliminata, ed è ora nel cestino, anche l\'elemento padre dovrà essere ripristinato.',
     'recycle_bin_restore_deleted_parent' => 'L\'elemento padre di questo elemento è stato eliminato. Questo elemento rimarrà eliminato fino a che l\'elemento padre non sarà ripristinato.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Eliminati :count elementi dal cestino.',
     'recycle_bin_restore_notification' => 'Ripristinati :count elementi dal cestino.',
 
