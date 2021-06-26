@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Tempat Sampah',
     'recycle_bin_desc' => 'Di sini Anda dapat memulihkan item yang telah dihapus atau memilih untuk menghapusnya secara permanen dari sistem. Daftar ini tidak difilter, tidak seperti daftar aktivitas serupa di sistem tempat filter izin diterapkan.',
     'recycle_bin_deleted_item' => 'Item yang Dihapus',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Dihapus Oleh',
     'recycle_bin_deleted_at' => 'Waktu Penghapusan',
     'recycle_bin_permanently_delete' => 'Hapus Permanen',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Item yang akan Dipulihkan',
     'recycle_bin_restore_confirm' => 'Tindakan ini akan memulihkan item yang dihapus, termasuk semua elemen anak, ke lokasi aslinya. Jika lokasi asli telah dihapus, dan sekarang berada di keranjang sampah, item induk juga perlu dipulihkan.',
     'recycle_bin_restore_deleted_parent' => 'Induk item ini juga telah dihapus. Ini akan tetap dihapus sampai induknya juga dipulihkan.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Total :count item dari tempat sampah.',
     'recycle_bin_restore_notification' => 'Total :count item yang dipulihkan dari tempat sampah.',
 
