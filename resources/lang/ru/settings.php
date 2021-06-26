@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Корзина',
     'recycle_bin_desc' => 'Здесь вы можете восстановить удаленные элементы или навсегда удалить их из системы. Этот список не отфильтрован в отличие от аналогичных списков действий в системе, где применяются фильтры.',
     'recycle_bin_deleted_item' => 'Удаленный элемент',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Удалён',
     'recycle_bin_deleted_at' => 'Время удаления',
     'recycle_bin_permanently_delete' => 'Удалить навсегда',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Элементы для восстановления',
     'recycle_bin_restore_confirm' => 'Это действие восстановит удаленный элемент, включая дочерние, в исходное место. Если исходное место было удалено и теперь находится в корзине, родительский элемент также необходимо будет восстановить.',
     'recycle_bin_restore_deleted_parent' => 'Родитель этого элемента также был удален. Элементы будут удалены до тех пор, пока этот родитель не будет восстановлен.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Удалено :count элементов из корзины.',
     'recycle_bin_restore_notification' => 'Восстановлено :count элементов из корзины',
 
