@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Prullenbak',
     'recycle_bin_desc' => 'Hier kunt u items herstellen die zijn verwijderd of kiezen om ze permanent te verwijderen uit het systeem. Deze lijst is niet gefilterd, in tegenstelling tot vergelijkbare activiteitenlijsten in het systeem waar rechtenfilters worden toegepast.',
     'recycle_bin_deleted_item' => 'Verwijderde Item',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Verwijderd door',
     'recycle_bin_deleted_at' => 'Verwijdert op',
     'recycle_bin_permanently_delete' => 'Permanent verwijderen',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Items te herstellen',
     'recycle_bin_restore_confirm' => 'Deze actie herstelt het verwijderde item, inclusief alle onderliggende elementen, op hun oorspronkelijke locatie. Als de oorspronkelijke locatie sindsdien is verwijderd en zich nu in de prullenbak bevindt, zal ook het bovenliggende item moeten worden hersteld.',
     'recycle_bin_restore_deleted_parent' => 'De bovenliggende map van dit item is ook verwijderd. Deze zal worden verwijderd totdat het bovenliggende item ook is hersteld.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Verwijderde totaal :count items uit de prullenbak.',
     'recycle_bin_restore_notification' => 'Herstelde totaal :count items uit de prullenbak.',
 
