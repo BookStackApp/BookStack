@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Corbeille',
     'recycle_bin_desc' => 'Ici, vous pouvez restaurer les éléments qui ont été supprimés ou choisir de les effacer définitivement du système. Cette liste n\'est pas filtrée contrairement aux listes d\'activités similaires dans le système pour lesquelles les filtres d\'autorisation sont appliqués.',
     'recycle_bin_deleted_item' => 'Élément supprimé',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Supprimé par',
     'recycle_bin_deleted_at' => 'Date de suppression',
     'recycle_bin_permanently_delete' => 'Supprimer définitivement',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Éléments à restaurer',
     'recycle_bin_restore_confirm' => 'Cette action restaurera l\'élément supprimé, y compris tous les éléments enfants, à leur emplacement d\'origine. Si l\'emplacement d\'origine a été supprimé depuis et est maintenant dans la corbeille, l\'élément parent devra également être restauré.',
     'recycle_bin_restore_deleted_parent' => 'Le parent de cet élément a également été supprimé. Ceux-ci resteront supprimés jusqu\'à ce que ce parent soit également restauré.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => ':count éléments totaux supprimés de la corbeille.',
     'recycle_bin_restore_notification' => ':count éléments totaux restaurés de la corbeille.',
 
