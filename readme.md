@@ -81,7 +81,8 @@ Once done you can run `php vendor/bin/phpunit` in the application root directory
 
 ### 📜 Code Standards
 
-PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code. Please don't auto-fix code unless it's related to changes you've made otherwise you'll likely cause git conflicts.
+PHP code style is enforced automatically [using StyleCI](https://github.styleci.io/repos/41589337). 
+If submitting a PR, any formatting changes to be made will be automatically fixed after merging.  
 
 ### 🐋 Development using Docker
 
@@ -188,3 +189,4 @@ These are the great open-source projects used to help build BookStack:
 * [OneLogin's SAML PHP Toolkit](https://github.com/onelogin/php-saml)
 * [League/CommonMark](https://commonmark.thephpleague.com/)
 * [League/Flysystem](https://flysystem.thephpleague.com)
+* [StyleCI](https://styleci.io/)
