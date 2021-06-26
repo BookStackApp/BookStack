@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'سلة المحذوفات',
     'recycle_bin_desc' => 'هنا يمكنك استعادة العناصر التي تم حذفها أو اختيار إزالتها نهائيا من النظام. هذه القائمة غير مصفاة خلافاً لقوائم الأنشطة المماثلة في النظام حيث يتم تطبيق عوامل تصفية الأذونات.',
     'recycle_bin_deleted_item' => 'عنصر محذوف',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'حُذف بواسطة',
     'recycle_bin_deleted_at' => 'وقت الحذف',
     'recycle_bin_permanently_delete' => 'حُذف نهائيًا',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'العناصر المراد استرجاعها',
     'recycle_bin_restore_confirm' => 'سيعيد هذا الإجراء العنصر المحذوف ، بما في ذلك أي عناصر فرعية ، إلى موقعه الأصلي. إذا تم حذف الموقع الأصلي منذ ذلك الحين ، وهو الآن في سلة المحذوفات ، فسيلزم أيضًا استعادة العنصر الأصلي.',
     'recycle_bin_restore_deleted_parent' => 'تم حذف أصل هذا العنصر أيضًا. سيبقى حذفه حتى يتم استعادة ذلك الأصل أيضًا.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'المحذوف: قُم بعد إجمالي العناصر من سلة المحذوفات.',
     'recycle_bin_restore_notification' => 'المرتجع: قُم بعد إجمالي العناصر من سلة المحذوفات.',
 
