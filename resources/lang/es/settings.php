@@ -92,7 +92,7 @@ return [
     'recycle_bin' => 'Papelera de Reciclaje',
     'recycle_bin_desc' => 'Aquí puede restaurar elementos que hayan sido eliminados o elegir eliminarlos permanentemente del sistema. Esta lista no está filtrada a diferencia de las listas de actividad similares en el sistema donde se aplican los filtros de permisos.',
     'recycle_bin_deleted_item' => 'Elemento Eliminado',
-    'recycle_bin_deleted_parent' => 'Parent',
+    'recycle_bin_deleted_parent' => 'Superior',
     'recycle_bin_deleted_by' => 'Eliminado por',
     'recycle_bin_deleted_at' => 'Fecha de eliminación',
     'recycle_bin_permanently_delete' => 'Eliminar permanentemente',
@@ -105,7 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Elementos a restaurar',
     'recycle_bin_restore_confirm' => 'Esta acción restaurará el elemento eliminado, incluyendo cualquier elemento secundario, a su ubicación original. Si la ubicación original ha sido eliminada, y ahora está en la papelera de reciclaje, el elemento padre también tendrá que ser restaurado.',
     'recycle_bin_restore_deleted_parent' => 'El padre de este elemento también ha sido eliminado. Estos permanecerán eliminados hasta que el padre también sea restaurado.',
-    'recycle_bin_restore_parent' => 'Restore Parent',
+    'recycle_bin_restore_parent' => 'Restaurar Superior',
     'recycle_bin_destroy_notification' => 'Eliminados :count artículos de la papelera de reciclaje.',
     'recycle_bin_restore_notification' => 'Restaurados :count artículos desde la papelera de reciclaje.',
 
