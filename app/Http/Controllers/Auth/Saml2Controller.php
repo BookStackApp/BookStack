@@ -7,7 +7,6 @@ use BookStack\Http\Controllers\Controller;
 
 class Saml2Controller extends Controller
 {
-
     protected $samlService;
 
     /**
@@ -50,8 +49,9 @@ class Saml2Controller extends Controller
     public function metadata()
     {
         $metaData = $this->samlService->metadata();
+
         return response()->make($metaData, 200, [
-            'Content-Type' => 'text/xml'
+            'Content-Type' => 'text/xml',
         ]);
     }
 
@@ -63,6 +63,7 @@ class Saml2Controller extends Controller
     {
         $requestId = session()->pull('saml2_logout_request_id', null);
         $redirect = $this->samlService->processSlsResponse($requestId) ?? '/';
+
         return redirect($redirect);
     }
 
@@ -77,6 +78,7 @@ class Saml2Controller extends Controller
         $user = $this->samlService->processAcsResponse($requestId);
         if ($user === null) {
             $this->showErrorNotification(trans('errors.saml_fail_authed', ['system' => config('saml2.name')]));
+
             return redirect('/login');
         }
 

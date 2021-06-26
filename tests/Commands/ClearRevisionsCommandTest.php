@@ -1,4 +1,6 @@
-<?php namespace Tests\Commands;
+<?php
+
+namespace Tests\Commands;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
@@ -17,11 +19,11 @@ class ClearRevisionsCommandTest extends TestCase
 
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $page->id,
-            'type' => 'version'
+            'type'    => 'version',
         ]);
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $page->id,
-            'type' => 'update_draft'
+            'type'    => 'update_draft',
         ]);
 
         $exitCode = Artisan::call('bookstack:clear-revisions');
@@ -29,11 +31,11 @@ class ClearRevisionsCommandTest extends TestCase
 
         $this->assertDatabaseMissing('page_revisions', [
             'page_id' => $page->id,
-            'type' => 'version'
+            'type'    => 'version',
         ]);
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $page->id,
-            'type' => 'update_draft'
+            'type'    => 'update_draft',
         ]);
 
         $exitCode = Artisan::call('bookstack:clear-revisions', ['--all' => true]);
@@ -41,7 +43,7 @@ class ClearRevisionsCommandTest extends TestCase
 
         $this->assertDatabaseMissing('page_revisions', [
             'page_id' => $page->id,
-            'type' => 'update_draft'
+            'type'    => 'update_draft',
         ]);
     }
 }

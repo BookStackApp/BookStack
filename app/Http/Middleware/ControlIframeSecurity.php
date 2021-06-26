@@ -3,7 +3,6 @@
 namespace BookStack\Http\Middleware;
 
 use Closure;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Sets CSP headers to restrict the hosts that BookStack can be
@@ -15,8 +14,9 @@ class ControlIframeSecurity
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -31,6 +31,7 @@ class ControlIframeSecurity
         $response = $next($request);
         $cspValue = 'frame-ancestors ' . $iframeHosts->join(' ');
         $response->headers->set('Content-Security-Policy', $cspValue);
+
         return $response;
     }
 }

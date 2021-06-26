@@ -1,9 +1,12 @@
-<?php namespace BookStack\Entities\Models;
+<?php
+
+namespace BookStack\Entities\Models;
 
 use Illuminate\Support\Collection;
 
 /**
- * Class Chapter
+ * Class Chapter.
+ *
  * @property Collection<Page> $pages
  * @property mixed description
  */
@@ -16,7 +19,9 @@ class Chapter extends BookChild
 
     /**
      * Get the pages that this chapter contains.
+     *
      * @param string $dir
+     *
      * @return mixed
      */
     public function pages($dir = 'ASC')

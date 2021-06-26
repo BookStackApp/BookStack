@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Models;
+<?php
+
+namespace BookStack\Entities\Models;
 
 use BookStack\Actions\Activity;
 use BookStack\Actions\Comment;
@@ -27,15 +29,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * The base class for book-like items such as pages, chapters & books.
  * This is not a database model in itself but extended.
  *
- * @property int $id
- * @property string $name
- * @property string $slug
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property int $created_by
- * @property int $updated_by
- * @property boolean $restricted
+ * @property int        $id
+ * @property string     $name
+ * @property string     $slug
+ * @property Carbon     $created_at
+ * @property Carbon     $updated_at
+ * @property int        $created_by
+ * @property int        $updated_by
+ * @property bool       $restricted
  * @property Collection $tags
+ *
  * @method static Entity|Builder visible()
  * @method static Entity|Builder hasPermission(string $permission)
  * @method static Builder withLastView()
@@ -154,11 +157,12 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * Get the comments for an entity
+     * Get the comments for an entity.
      */
     public function comments(bool $orderByCreated = true): MorphMany
     {
         $query = $this->morphMany(Comment::class, 'entity');
+
         return $orderByCreated ? $query->orderBy('created_at', 'asc') : $query;
     }
 
@@ -205,7 +209,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
 
     /**
      * Check if this instance or class is a certain type of entity.
-     * Examples of $type are 'page', 'book', 'chapter'
+     * Examples of $type are 'page', 'book', 'chapter'.
      */
     public static function isA(string $type): bool
     {
@@ -218,6 +222,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public static function getType(): string
     {
         $className = array_slice(explode('\\', static::class), -1, 1)[0];
+
         return strtolower($className);
     }
 
@@ -229,6 +234,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
         if (mb_strlen($this->name) <= $length) {
             return $this->name;
         }
+
         return mb_substr($this->name, 0, $length - 3) . '...';
     }
 
@@ -248,14 +254,14 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
         $text = $this->getText();
 
         if (mb_strlen($text) > $length) {
-            $text = mb_substr($text, 0, $length-3) . '...';
+            $text = mb_substr($text, 0, $length - 3) . '...';
         }
 
         return trim($text);
     }
 
     /**
-     * Get the url of this entity
+     * Get the url of this entity.
      */
     abstract public function getUrl(string $path = '/'): string;
 
@@ -272,6 +278,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
         if ($this instanceof Chapter) {
             return $this->book()->withTrashed()->first();
         }
+
         return null;
     }
 
@@ -285,7 +292,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * Index the current entity for search
+     * Index the current entity for search.
      */
     public function indexForSearch()
     {
@@ -298,6 +305,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public function refreshSlug(): string
     {
         $this->slug = app(SlugGenerator::class)->generate($this);
+
         return $this->slug;
     }
 

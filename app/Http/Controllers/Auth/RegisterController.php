@@ -64,20 +64,22 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|min:2|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name'     => 'required|min:2|max:255',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:8',
         ]);
     }
 
     /**
      * Show the application registration form.
+     *
      * @throws UserRegistrationException
      */
     public function getRegister()
     {
         $this->registrationService->ensureRegistrationAllowed();
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
+
         return view('auth.register', [
             'socialDrivers' => $socialDrivers,
         ]);
@@ -85,6 +87,7 @@ class RegisterController extends Controller
 
     /**
      * Handle a registration request for the application.
+     *
      * @throws UserRegistrationException
      */
     public function postRegister(Request $request)
@@ -102,23 +105,27 @@ class RegisterController extends Controller
             if ($exception->getMessage()) {
                 $this->showErrorNotification($exception->getMessage());
             }
+
             return redirect($exception->redirectLocation);
         }
 
         $this->showSuccessNotification(trans('auth.register_success'));
+
         return redirect($this->redirectPath());
     }
 
     /**
      * Create a new user instance after a valid registration.
-     * @param  array  $data
+     *
+     * @param array $data
+     *
      * @return User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
     }

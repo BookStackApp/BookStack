@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ApiTokenGuard implements Guard
 {
-
     use GuardHelpers;
 
     /**
@@ -20,9 +19,9 @@ class ApiTokenGuard implements Guard
      */
     protected $request;
 
-
     /**
      * The last auth exception thrown in this request.
+     *
      * @var ApiAuthException
      */
     protected $lastAuthException;
@@ -34,7 +33,7 @@ class ApiTokenGuard implements Guard
     {
         $this->request = $request;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -47,6 +46,7 @@ class ApiTokenGuard implements Guard
         }
 
         $user = null;
+
         try {
             $user = $this->getAuthorisedUserFromRequest();
         } catch (ApiAuthException $exception) {
@@ -54,19 +54,20 @@ class ApiTokenGuard implements Guard
         }
 
         $this->user = $user;
+
         return $user;
     }
 
     /**
      * Determine if current user is authenticated. If not, throw an exception.
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable
-     *
      * @throws ApiAuthException
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable
      */
     public function authenticate()
     {
-        if (! is_null($user = $this->user())) {
+        if (!is_null($user = $this->user())) {
             return $user;
         }
 
@@ -79,6 +80,7 @@ class ApiTokenGuard implements Guard
 
     /**
      * Check the API token in the request and fetch a valid authorised user.
+     *
      * @throws ApiAuthException
      */
     protected function getAuthorisedUserFromRequest(): Authenticatable
@@ -98,6 +100,7 @@ class ApiTokenGuard implements Guard
 
     /**
      * Validate the format of the token header value string.
+     *
      * @throws ApiAuthException
      */
     protected function validateTokenHeaderValue(string $authToken): void
@@ -114,6 +117,7 @@ class ApiTokenGuard implements Guard
     /**
      * Validate the given secret against the given token and ensure the token
      * currently has access to the instance API.
+     *
      * @throws ApiAuthException
      */
     protected function validateToken(?ApiToken $token, string $secret): void

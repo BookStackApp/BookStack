@@ -84,7 +84,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
         // If we've already retrieved the user for the current request we can just
         // return it back immediately. We do not want to fetch the user data on
         // every call to this method because that would be tremendously slow.
-        if (! is_null($this->user)) {
+        if (!is_null($this->user)) {
             return $this->user;
         }
 
@@ -92,7 +92,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
         // First we will try to load the user using the
         // identifier in the session if one exists.
-        if (! is_null($id)) {
+        if (!is_null($id)) {
             $this->user = $this->provider->retrieveById($id);
         }
 
@@ -118,7 +118,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Log a user into the application without sessions or cookies.
      *
-     * @param  array  $credentials
+     * @param array $credentials
+     *
      * @return bool
      */
     public function once(array $credentials = [])
@@ -135,12 +136,13 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Log the given user ID into the application without sessions or cookies.
      *
-     * @param  mixed  $id
+     * @param mixed $id
+     *
      * @return \Illuminate\Contracts\Auth\Authenticatable|false
      */
     public function onceUsingId($id)
     {
-        if (! is_null($user = $this->provider->retrieveById($id))) {
+        if (!is_null($user = $this->provider->retrieveById($id))) {
             $this->setUser($user);
 
             return $user;
@@ -152,7 +154,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Validate a user's credentials.
      *
-     * @param  array  $credentials
+     * @param array $credentials
+     *
      * @return bool
      */
     public function validate(array $credentials = [])
@@ -160,12 +163,12 @@ class ExternalBaseSessionGuard implements StatefulGuard
         return false;
     }
 
-
     /**
      * Attempt to authenticate a user using the given credentials.
      *
-     * @param  array  $credentials
-     * @param  bool  $remember
+     * @param array $credentials
+     * @param bool  $remember
+     *
      * @return bool
      */
     public function attempt(array $credentials = [], $remember = false)
@@ -176,13 +179,14 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Log the given user ID into the application.
      *
-     * @param  mixed  $id
-     * @param  bool  $remember
+     * @param mixed $id
+     * @param bool  $remember
+     *
      * @return \Illuminate\Contracts\Auth\Authenticatable|false
      */
     public function loginUsingId($id, $remember = false)
     {
-        if (! is_null($user = $this->provider->retrieveById($id))) {
+        if (!is_null($user = $this->provider->retrieveById($id))) {
             $this->login($user, $remember);
 
             return $user;
@@ -194,8 +198,9 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Log a user into the application.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  bool  $remember
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param bool                                       $remember
+     *
      * @return void
      */
     public function login(AuthenticatableContract $user, $remember = false)
@@ -208,7 +213,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Update the session with the given ID.
      *
-     * @param  string  $id
+     * @param string $id
+     *
      * @return void
      */
     protected function updateSession($id)
@@ -262,7 +268,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
      */
     public function getName()
     {
-        return 'login_'.$this->name.'_'.sha1(static::class);
+        return 'login_' . $this->name . '_' . sha1(static::class);
     }
 
     /**
@@ -288,7 +294,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Set the current user.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     *
      * @return $this
      */
     public function setUser(AuthenticatableContract $user)

@@ -1,4 +1,6 @@
-<?php namespace BookStack\Actions;
+<?php
+
+namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Entity;
@@ -7,7 +9,6 @@ use Illuminate\Support\Collection;
 
 class TagRepo
 {
-
     protected $tag;
     protected $permissionService;
 
@@ -37,6 +38,7 @@ class TagRepo
         }
 
         $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+
         return $query->get(['name'])->pluck('name');
     }
 
@@ -62,11 +64,12 @@ class TagRepo
         }
 
         $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+
         return $query->get(['value'])->pluck('value');
     }
 
     /**
-     * Save an array of tags to an entity
+     * Save an array of tags to an entity.
      */
     public function saveTagsToEntity(Entity $entity, array $tags = []): iterable
     {
@@ -89,6 +92,7 @@ class TagRepo
     {
         $name = trim($input['name']);
         $value = isset($input['value']) ? trim($input['value']) : '';
+
         return $this->tag->newInstance(['name' => $name, 'value' => $value]);
     }
 }

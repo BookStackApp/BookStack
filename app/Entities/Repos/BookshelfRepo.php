@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Repos;
+<?php
+
+namespace BookStack\Entities\Repos;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Book;
@@ -89,6 +91,7 @@ class BookshelfRepo
         $this->baseRepo->create($shelf, $input);
         $this->updateBooks($shelf, $bookIds);
         Activity::addForEntity($shelf, ActivityType::BOOKSHELF_CREATE);
+
         return $shelf;
     }
 
@@ -104,6 +107,7 @@ class BookshelfRepo
         }
 
         Activity::addForEntity($shelf, ActivityType::BOOKSHELF_UPDATE);
+
         return $shelf;
     }
 
@@ -129,6 +133,7 @@ class BookshelfRepo
 
     /**
      * Update the given shelf cover image, or clear it.
+     *
      * @throws ImageUploadException
      * @throws Exception
      */
@@ -164,6 +169,7 @@ class BookshelfRepo
 
     /**
      * Remove a bookshelf from the system.
+     *
      * @throws Exception
      */
     public function destroy(Bookshelf $shelf)
