@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Miskaste',
     'recycle_bin_desc' => 'Te jūs varat atjaunot dzēstās vienības vai arī izdzēst tās no sistēmas pilnībā. Šis saraksts nav filtrēts atšķirībā no līdzīgiem darbību sarakstiem sistēmā, kur ir piemēroti piekļuves tiesību filtri.',
     'recycle_bin_deleted_item' => 'Dzēsta vienība',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Izdzēsa',
     'recycle_bin_deleted_at' => 'Dzēšanas laiks',
     'recycle_bin_permanently_delete' => 'Neatgriezeniski izdzēst',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Atjaunojamās vienības',
     'recycle_bin_restore_confirm' => 'Šī darbība atjaunos dzēsto vienību, tai skaitā visus tai pakārtotos elementus, uz tās sākotnējo atrašanās vietu. Ja sākotnējā atrašanās vieta ir izdzēsta un atrodas miskastē, būs nepieciešams atjaunot arī to.',
     'recycle_bin_restore_deleted_parent' => 'Šo elementu saturošā vienība arī ir dzēsta. Tas paliks dzēsts līdz šī saturošā vienība arī ir atjaunota.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Dzēstas kopā :count vienības no miskastes.',
     'recycle_bin_restore_notification' => 'Atjaunotas kopā :count vienības no miskastes.',
 
