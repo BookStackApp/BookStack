@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Geri Dönüşüm Kutusu',
     'recycle_bin_desc' => 'Burada silinen öğeleri geri yükleyebilir veya bunları sistemden kalıcı olarak kaldırmayı seçebilirsiniz. Bu liste, izin filtrelerinin uygulandığı sistemdeki benzer etkinlik listelerinden farklı olarak filtrelenmez.',
     'recycle_bin_deleted_item' => 'Silinen öge',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Tarafından silindi',
     'recycle_bin_deleted_at' => 'Silinme Zamanı',
     'recycle_bin_permanently_delete' => 'Kalıcı Olarak Sil',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Geri Yüklenecek Öğeler',
     'recycle_bin_restore_confirm' => 'Bu eylem, tüm alt öğeler dahil olmak üzere silinen öğeyi orijinal konumlarına geri yükleyecektir. Orijinal konum o zamandan beri silinmişse ve şimdi geri dönüşüm kutusunda bulunuyorsa, üst öğenin de geri yüklenmesi gerekecektir.',
     'recycle_bin_restore_deleted_parent' => 'Bu öğenin üst öğesi de silindi. Bunlar, üst öğe de geri yüklenene kadar silinmiş olarak kalacaktır.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Deleted :count total items from the recycle bin.',
     'recycle_bin_restore_notification' => 'Restored :count total items from the recycle bin.',
 
