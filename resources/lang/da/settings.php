@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Papirkurv',
     'recycle_bin_desc' => 'Her kan du gendanne elementer, der er blevet slettet eller vælge at permanent fjerne dem fra systemet. Denne liste er ufiltreret, i modsætning til lignende aktivitetslister i systemet, hvor tilladelsesfiltre anvendes.',
     'recycle_bin_deleted_item' => 'Slettet element',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Slettet af',
     'recycle_bin_deleted_at' => 'Sletningstidspunkt',
     'recycle_bin_permanently_delete' => 'Slet permanent',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Elementer der skal gendannes',
     'recycle_bin_restore_confirm' => 'Denne handling vil gendanne det slettede element, herunder alle underelementer, til deres oprindelige placering. Hvis den oprindelige placering siden er blevet slettet, og nu er i papirkurven, vil det overordnede element også skulle gendannes.',
     'recycle_bin_restore_deleted_parent' => 'Det overordnede element til dette element er også blevet slettet. Disse vil forblive slettet indtil det overordnede også er gendannet.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Slettede :count elementer fra papirkurven.',
     'recycle_bin_restore_notification' => 'Gendannede :count elementer fra papirkurven.',
 
