@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use Tests\BrowserKitTest;
 
@@ -23,7 +25,7 @@ class MarkdownTest extends BrowserKitTest
         $this->asAdmin()->visit($this->page->getUrl() . '/edit')
             ->pageHasElement('#html-editor');
     }
-    
+
     public function test_markdown_setting_shows_markdown_editor()
     {
         $this->setMarkdownEditor();
@@ -48,5 +50,4 @@ class MarkdownTest extends BrowserKitTest
         $this->asAdmin()->visit($this->page->getUrl() . '/edit')
             ->seeInField('markdown', $this->page->html);
     }
-
 }

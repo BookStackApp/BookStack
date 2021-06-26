@@ -1,4 +1,6 @@
-<?php namespace Tests\Permissions;
+<?php
+
+namespace Tests\Permissions;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
@@ -7,7 +9,6 @@ use Tests\TestCase;
 
 class ExportPermissionsTest extends TestCase
 {
-
     public function test_page_content_without_view_access_hidden_on_chapter_export()
     {
         $chapter = Chapter::query()->first();
@@ -63,5 +64,4 @@ class ExportPermissionsTest extends TestCase
             $resp->assertDontSee($pageContent);
         }
     }
-
 }

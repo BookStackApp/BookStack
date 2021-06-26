@@ -1,4 +1,6 @@
-<?php namespace Tests\Api;
+<?php
+
+namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
@@ -19,12 +21,12 @@ class PagesApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
-                'id' => $firstPage->id,
-                'name' => $firstPage->name,
-                'slug' => $firstPage->slug,
-                'book_id' => $firstPage->book->id,
+                'id'       => $firstPage->id,
+                'name'     => $firstPage->name,
+                'slug'     => $firstPage->slug,
+                'book_id'  => $firstPage->book->id,
                 'priority' => $firstPage->priority,
-            ]
+            ],
         ]]);
     }
 
@@ -33,15 +35,15 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::query()->first();
         $details = [
-            'name' => 'My API page',
+            'name'    => 'My API page',
             'book_id' => $book->id,
-            'html' => '<p>My new page content</p>',
-            'tags' => [
+            'html'    => '<p>My new page content</p>',
+            'tags'    => [
                 [
-                    'name' => 'tagname',
+                    'name'  => 'tagname',
                     'value' => 'tagvalue',
-                ]
-            ]
+                ],
+            ],
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
@@ -50,10 +52,10 @@ class PagesApiTest extends TestCase
         $newItem = Page::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
         $resp->assertJson(array_merge($details, ['id' => $newItem->id, 'slug' => $newItem->slug]));
         $this->assertDatabaseHas('tags', [
-            'entity_id' => $newItem->id,
+            'entity_id'   => $newItem->id,
             'entity_type' => $newItem->getMorphClass(),
-            'name' => 'tagname',
-            'value' => 'tagvalue',
+            'name'        => 'tagname',
+            'value'       => 'tagvalue',
         ]);
         $resp->assertSeeText('My new page content');
         $resp->assertJsonMissing(['book' => []]);
@@ -66,13 +68,13 @@ class PagesApiTest extends TestCase
         $book = Book::query()->first();
         $details = [
             'book_id' => $book->id,
-            'html' => '<p>A page created via the API</p>',
+            'html'    => '<p>A page created via the API</p>',
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
         $resp->assertJson($this->validationResponse([
-            "name" => ["The name field is required."]
+            'name' => ['The name field is required.'],
         ]));
     }
 
@@ -87,8 +89,8 @@ class PagesApiTest extends TestCase
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
         $resp->assertJson($this->validationResponse([
-            "book_id" => ["The book id field is required when chapter id is not present."],
-            "chapter_id" => ["The chapter id field is required when book id is not present."]
+            'book_id'    => ['The book id field is required when chapter id is not present.'],
+            'chapter_id' => ['The chapter id field is required when book id is not present.'],
         ]));
 
         $chapter = Chapter::visible()->first();
@@ -105,8 +107,8 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::visible()->first();
         $details = [
-            'book_id' => $book->id,
-            'name' => 'My api page',
+            'book_id'  => $book->id,
+            'name'     => 'My api page',
             'markdown' => "# A new API page \n[link](https://example.com)",
         ];
 
@@ -127,17 +129,17 @@ class PagesApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . "/{$page->id}");
         $resp->assertStatus(200);
         $resp->assertJson([
-            'id' => $page->id,
-            'slug' => $page->slug,
+            'id'         => $page->id,
+            'slug'       => $page->slug,
             'created_by' => [
                 'name' => $page->createdBy->name,
             ],
-            'book_id' => $page->book_id,
+            'book_id'    => $page->book_id,
             'updated_by' => [
                 'name' => $page->createdBy->name,
             ],
             'owned_by' => [
-                'name' => $page->ownedBy->name
+                'name' => $page->ownedBy->name,
             ],
         ]);
     }
@@ -165,9 +167,9 @@ class PagesApiTest extends TestCase
             'html' => '<p>A page created via the API</p>',
             'tags' => [
                 [
-                    'name' => 'freshtag',
+                    'name'  => 'freshtag',
                     'value' => 'freshtagval',
-                ]
+                ],
             ],
         ];
 
@@ -177,7 +179,7 @@ class PagesApiTest extends TestCase
         $resp->assertStatus(200);
         unset($details['html']);
         $resp->assertJson(array_merge($details, [
-            'id' => $page->id, 'slug' => $page->slug, 'book_id' => $page->book_id
+            'id' => $page->id, 'slug' => $page->slug, 'book_id' => $page->book_id,
         ]));
         $this->assertActivityExists('page_update', $page);
     }
@@ -188,16 +190,16 @@ class PagesApiTest extends TestCase
         $page = Page::visible()->first();
         $chapter = Chapter::visible()->where('book_id', '!=', $page->book_id)->first();
         $details = [
-            'name' => 'My updated API page',
+            'name'       => 'My updated API page',
             'chapter_id' => $chapter->id,
-            'html' => '<p>A page created via the API</p>',
+            'html'       => '<p>A page created via the API</p>',
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
         $resp->assertStatus(200);
         $resp->assertJson([
             'chapter_id' => $chapter->id,
-            'book_id' => $chapter->book_id,
+            'book_id'    => $chapter->book_id,
         ]);
     }
 
@@ -208,9 +210,9 @@ class PagesApiTest extends TestCase
         $chapter = Chapter::visible()->where('book_id', '!=', $page->book_id)->first();
         $this->setEntityRestrictions($chapter, ['view'], [$this->getEditor()->roles()->first()]);
         $details = [
-            'name' => 'My updated API page',
+            'name'       => 'My updated API page',
             'chapter_id' => $chapter->id,
-            'html' => '<p>A page created via the API</p>',
+            'html'       => '<p>A page created via the API</p>',
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);

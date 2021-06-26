@@ -1,4 +1,6 @@
-<?php namespace BookStack\Uploads;
+<?php
+
+namespace BookStack\Uploads;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
@@ -21,6 +23,7 @@ class Attachment extends Model
 
     /**
      * Get the downloadable file name for this upload.
+     *
      * @return mixed|string
      */
     public function getFileName()
@@ -28,6 +31,7 @@ class Attachment extends Model
         if (strpos($this->name, '.') !== false) {
             return $this->name;
         }
+
         return $this->name . '.' . $this->extension;
     }
 
@@ -47,6 +51,7 @@ class Attachment extends Model
         if ($this->external && strpos($this->path, 'http') !== 0) {
             return $this->path;
         }
+
         return url('/attachments/' . $this->id . ($openInline ? '?open=true' : ''));
     }
 
@@ -55,7 +60,7 @@ class Attachment extends Model
      */
     public function htmlLink(): string
     {
-        return '<a target="_blank" href="'.e($this->getUrl()).'">'.e($this->name).'</a>';
+        return '<a target="_blank" href="' . e($this->getUrl()) . '">' . e($this->name) . '</a>';
     }
 
     /**
@@ -63,6 +68,6 @@ class Attachment extends Model
      */
     public function markdownLink(): string
     {
-        return '['. $this->name .']('. $this->getUrl() .')';
+        return '[' . $this->name . '](' . $this->getUrl() . ')';
     }
 }

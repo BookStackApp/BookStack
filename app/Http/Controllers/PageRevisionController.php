@@ -1,13 +1,14 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
 
-use BookStack\Entities\Tools\PageContent;
+namespace BookStack\Http\Controllers;
+
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
 use Ssddanbrown\HtmlDiff\Diff;
 
 class PageRevisionController extends Controller
 {
-
     protected $pageRepo;
 
     /**
@@ -20,20 +21,23 @@ class PageRevisionController extends Controller
 
     /**
      * Shows the last revisions for this page.
+     *
      * @throws NotFoundException
      */
     public function index(string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName'=>$page->getShortName()]));
+
         return view('pages.revisions', [
-            'page' => $page,
-            'current' => $page
+            'page'    => $page,
+            'current' => $page,
         ]);
     }
 
     /**
      * Shows a preview of a single revision.
+     *
      * @throws NotFoundException
      */
     public function show(string $bookSlug, string $pageSlug, int $revisionId)
@@ -50,16 +54,18 @@ class PageRevisionController extends Controller
         $page->html = (new PageContent($page))->render();
 
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
+
         return view('pages.revision', [
-            'page' => $page,
-            'book' => $page->book,
-            'diff' => null,
-            'revision' => $revision
+            'page'     => $page,
+            'book'     => $page->book,
+            'diff'     => null,
+            'revision' => $revision,
         ]);
     }
 
     /**
      * Shows the changes of a single revision.
+     *
      * @throws NotFoundException
      */
     public function changes(string $bookSlug, string $pageSlug, int $revisionId)
@@ -81,15 +87,16 @@ class PageRevisionController extends Controller
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName'=>$page->getShortName()]));
 
         return view('pages.revision', [
-            'page' => $page,
-            'book' => $page->book,
-            'diff' => $diff,
-            'revision' => $revision
+            'page'     => $page,
+            'book'     => $page->book,
+            'diff'     => $diff,
+            'revision' => $revision,
         ]);
     }
 
     /**
      * Restores a page using the content of the specified revision.
+     *
      * @throws NotFoundException
      */
     public function restore(string $bookSlug, string $pageSlug, int $revisionId)
@@ -104,6 +111,7 @@ class PageRevisionController extends Controller
 
     /**
      * Deletes a revision using the id of the specified revision.
+     *
      * @throws NotFoundException
      */
     public function destroy(string $bookSlug, string $pageSlug, int $revId)
@@ -122,11 +130,13 @@ class PageRevisionController extends Controller
         // Check if its the latest revision, cannot delete latest revision.
         if (intval($currentRevision->id) === intval($revId)) {
             $this->showErrorNotification(trans('entities.revision_cannot_delete_latest'));
+
             return redirect($page->getUrl('/revisions'));
         }
 
         $revision->delete();
         $this->showSuccessNotification(trans('entities.revision_delete_success'));
+
         return redirect($page->getUrl('/revisions'));
     }
 }

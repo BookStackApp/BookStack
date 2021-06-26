@@ -1,4 +1,6 @@
-<?php namespace BookStack\Auth\Access;
+<?php
+
+namespace BookStack\Auth\Access;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
@@ -37,20 +39,23 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Initiate a login flow.
+     *
      * @throws Error
      */
     public function login(): array
     {
         $toolKit = $this->getToolkit();
         $returnRoute = url('/saml2/acs');
+
         return [
             'url' => $toolKit->login($returnRoute, [], false, false, true),
-            'id' => $toolKit->getLastRequestID(),
+            'id'  => $toolKit->getLastRequestID(),
         ];
     }
 
     /**
      * Initiate a logout flow.
+     *
      * @throws Error
      */
     public function logout(): array
@@ -78,6 +83,7 @@ class Saml2Service extends ExternalAuthService
      * Process the ACS response from the idp and return the
      * matching, or new if registration active, user matched to the idp.
      * Returns null if not authenticated.
+     *
      * @throws Error
      * @throws SamlException
      * @throws ValidationError
@@ -92,7 +98,7 @@ class Saml2Service extends ExternalAuthService
 
         if (!empty($errors)) {
             throw new Error(
-                'Invalid ACS Response: '.implode(', ', $errors)
+                'Invalid ACS Response: ' . implode(', ', $errors)
             );
         }
 
@@ -108,6 +114,7 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Process a response for the single logout service.
+     *
      * @throws Error
      */
     public function processSlsResponse(?string $requestId): ?string
@@ -119,11 +126,12 @@ class Saml2Service extends ExternalAuthService
 
         if (!empty($errors)) {
             throw new Error(
-                'Invalid SLS Response: '.implode(', ', $errors)
+                'Invalid SLS Response: ' . implode(', ', $errors)
             );
         }
 
         $this->actionLogout();
+
         return $redirect;
     }
 
@@ -138,6 +146,7 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Get the metadata for this service provider.
+     *
      * @throws Error
      */
     public function metadata(): string
@@ -149,7 +158,7 @@ class Saml2Service extends ExternalAuthService
 
         if (!empty($errors)) {
             throw new Error(
-                'Invalid SP metadata: '.implode(', ', $errors),
+                'Invalid SP metadata: ' . implode(', ', $errors),
                 Error::METADATA_SP_INVALID
             );
         }
@@ -159,6 +168,7 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Load the underlying Onelogin SAML2 toolkit.
+     *
      * @throws Error
      * @throws Exception
      */
@@ -178,6 +188,7 @@ class Saml2Service extends ExternalAuthService
 
         $spSettings = $this->loadOneloginServiceProviderDetails();
         $settings = array_replace_recursive($settings, $spSettings, $metaDataSettings, $overrides);
+
         return new Auth($settings);
     }
 
@@ -187,18 +198,18 @@ class Saml2Service extends ExternalAuthService
     protected function loadOneloginServiceProviderDetails(): array
     {
         $spDetails = [
-            'entityId' => url('/saml2/metadata'),
+            'entityId'                 => url('/saml2/metadata'),
             'assertionConsumerService' => [
                 'url' => url('/saml2/acs'),
             ],
             'singleLogoutService' => [
-                'url' => url('/saml2/sls')
+                'url' => url('/saml2/sls'),
             ],
         ];
 
         return [
             'baseurl' => url('/saml2'),
-            'sp' => $spDetails
+            'sp'      => $spDetails,
         ];
     }
 
@@ -211,7 +222,7 @@ class Saml2Service extends ExternalAuthService
     }
 
     /**
-     * Calculate the display name
+     * Calculate the display name.
      */
     protected function getUserDisplayName(array $samlAttributes, string $defaultValue): string
     {
@@ -261,9 +272,9 @@ class Saml2Service extends ExternalAuthService
 
         return [
             'external_id' => $externalId,
-            'name' => $this->getUserDisplayName($samlAttributes, $externalId),
-            'email' => $email,
-            'saml_id' => $samlID,
+            'name'        => $this->getUserDisplayName($samlAttributes, $externalId),
+            'email'       => $email,
+            'saml_id'     => $samlID,
         ];
     }
 
@@ -297,6 +308,7 @@ class Saml2Service extends ExternalAuthService
                 $data = $data[0];
                 break;
         }
+
         return $data;
     }
 
@@ -315,6 +327,7 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Get the user from the database for the specified details.
+     *
      * @throws UserRegistrationException
      */
     protected function getOrRegisterUser(array $userDetails): ?User
@@ -325,9 +338,9 @@ class Saml2Service extends ExternalAuthService
 
         if (is_null($user)) {
             $userData = [
-                'name' => $userDetails['name'],
-                'email' => $userDetails['email'],
-                'password' => Str::random(32),
+                'name'             => $userDetails['name'],
+                'email'            => $userDetails['email'],
+                'password'         => Str::random(32),
                 'external_auth_id' => $userDetails['external_id'],
             ];
 
@@ -340,6 +353,7 @@ class Saml2Service extends ExternalAuthService
     /**
      * Process the SAML response for a user. Login the user when
      * they exist, optionally registering them automatically.
+     *
      * @throws SamlException
      * @throws JsonDebugException
      * @throws UserRegistrationException
@@ -351,8 +365,8 @@ class Saml2Service extends ExternalAuthService
 
         if ($this->config['dump_user_details']) {
             throw new JsonDebugException([
-                'id_from_idp' => $samlID,
-                'attrs_from_idp' => $samlAttributes,
+                'id_from_idp'         => $samlID,
+                'attrs_from_idp'      => $samlAttributes,
                 'attrs_after_parsing' => $userDetails,
             ]);
         }
@@ -378,6 +392,7 @@ class Saml2Service extends ExternalAuthService
         auth()->login($user);
         Activity::add(ActivityType::AUTH_LOGIN, "saml2; {$user->logDescriptor()}");
         Theme::dispatch(ThemeEvents::AUTH_LOGIN, 'saml2', $user);
+
         return $user;
     }
 }

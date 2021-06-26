@@ -1,11 +1,14 @@
-<?php namespace BookStack\Notifications;
+<?php
+
+namespace BookStack\Notifications;
 
 class TestEmail extends MailNotification
 {
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)

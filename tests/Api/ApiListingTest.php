@@ -1,4 +1,6 @@
-<?php namespace Tests\Api;
+<?php
+
+namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
 use Tests\TestCase;
@@ -27,7 +29,7 @@ class ApiListingTest extends TestCase
         $books = Book::visible()->orderBy('id')->take(3)->get();
 
         $resp = $this->get($this->endpoint . '?count=1');
-        $resp->assertJsonMissing(['name' => $books[1]->name ]);
+        $resp->assertJsonMissing(['name' => $books[1]->name]);
 
         $resp = $this->get($this->endpoint . '?count=1&offset=1000');
         $resp->assertJsonCount(0, 'data');
@@ -38,19 +40,19 @@ class ApiListingTest extends TestCase
         $this->actingAsApiEditor();
 
         $sortChecks = [
-            '-id' => Book::visible()->orderBy('id', 'desc')->first(),
+            '-id'   => Book::visible()->orderBy('id', 'desc')->first(),
             '+name' => Book::visible()->orderBy('name', 'asc')->first(),
-            'name' => Book::visible()->orderBy('name', 'asc')->first(),
-            '-name' => Book::visible()->orderBy('name', 'desc')->first()
+            'name'  => Book::visible()->orderBy('name', 'asc')->first(),
+            '-name' => Book::visible()->orderBy('name', 'desc')->first(),
         ];
 
         foreach ($sortChecks as $sortOption => $result) {
             $resp = $this->get($this->endpoint . '?count=1&sort=' . $sortOption);
             $resp->assertJson(['data' => [
                 [
-                    'id' => $result->id,
+                    'id'   => $result->id,
                     'name' => $result->name,
-                ]
+                ],
             ]]);
         }
     }
@@ -64,11 +66,11 @@ class ApiListingTest extends TestCase
 
         $filterChecks = [
             // Test different types of filter
-            "filter[id]={$book->id}" => 1,
-            "filter[id:ne]={$book->id}" => Book::visible()->where('id', '!=', $book->id)->count(),
-            "filter[id:gt]={$book->id}" => Book::visible()->where('id', '>', $book->id)->count(),
-            "filter[id:gte]={$book->id}" => Book::visible()->where('id', '>=', $book->id)->count(),
-            "filter[id:lt]={$book->id}" => Book::visible()->where('id', '<', $book->id)->count(),
+            "filter[id]={$book->id}"                  => 1,
+            "filter[id:ne]={$book->id}"               => Book::visible()->where('id', '!=', $book->id)->count(),
+            "filter[id:gt]={$book->id}"               => Book::visible()->where('id', '>', $book->id)->count(),
+            "filter[id:gte]={$book->id}"              => Book::visible()->where('id', '>=', $book->id)->count(),
+            "filter[id:lt]={$book->id}"               => Book::visible()->where('id', '<', $book->id)->count(),
             "filter[name:like]={$encodedNameSubstr}%" => Book::visible()->where('name', 'like', $nameSubstr . '%')->count(),
 
             // Test mulitple filters 'and' together
@@ -86,7 +88,7 @@ class ApiListingTest extends TestCase
         $this->actingAsApiEditor();
         $bookCount = Book::query()->count();
         $resp = $this->get($this->endpoint . '?count=1');
-        $resp->assertJson(['total' => $bookCount ]);
+        $resp->assertJson(['total' => $bookCount]);
     }
 
     public function test_total_on_results_shows_correctly_when_offset_provided()
@@ -94,7 +96,6 @@ class ApiListingTest extends TestCase
         $this->actingAsApiEditor();
         $bookCount = Book::query()->count();
         $resp = $this->get($this->endpoint . '?count=1&offset=1');
-        $resp->assertJson(['total' => $bookCount ]);
+        $resp->assertJson(['total' => $bookCount]);
     }
-
 }

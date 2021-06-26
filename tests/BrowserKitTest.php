@@ -1,10 +1,12 @@
-<?php namespace Tests;
+<?php
 
+namespace Tests;
+
+use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Page;
 use BookStack\Settings\SettingService;
 use DB;
@@ -16,17 +18,17 @@ use Symfony\Component\DomCrawler\Crawler;
 
 abstract class BrowserKitTest extends TestCase
 {
-
     use DatabaseTransactions;
     use SharedTestHelpers;
 
     /**
      * The base URL to use while testing the application.
+     *
      * @var string
      */
     protected $baseUrl = 'http://localhost';
 
-    public function tearDown() : void
+    public function tearDown(): void
     {
         DB::disconnect();
         parent::tearDown();
@@ -39,16 +41,16 @@ abstract class BrowserKitTest extends TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
         $app->make(Kernel::class)->bootstrap();
 
         return $app;
     }
 
-
     /**
      * Quickly sets an array of settings.
+     *
      * @param $settingsArray
      */
     protected function setSettings($settingsArray)
@@ -80,6 +82,7 @@ abstract class BrowserKitTest extends TestCase
 
     /**
      * Helper for updating entity permissions.
+     *
      * @param Entity $entity
      */
     protected function updateEntityPermissions(Entity $entity)
@@ -88,25 +91,28 @@ abstract class BrowserKitTest extends TestCase
         $restrictionService->buildJointPermissionsForEntity($entity);
     }
 
-
     /**
-     * Quick way to create a new user without any permissions
+     * Quick way to create a new user without any permissions.
+     *
      * @param array $attributes
+     *
      * @return mixed
      */
     protected function getNewBlankUser($attributes = [])
     {
         $user = factory(User::class)->create($attributes);
+
         return $user;
     }
 
     /**
      * Assert that a given string is seen inside an element.
      *
-     * @param  bool|string|null $element
-     * @param  integer          $position
-     * @param  string           $text
-     * @param  bool             $negate
+     * @param bool|string|null $element
+     * @param int              $position
+     * @param string           $text
+     * @param bool             $negate
+     *
      * @return $this
      */
     protected function seeInNthElement($element, $position, $text, $negate = false)
@@ -130,13 +136,16 @@ abstract class BrowserKitTest extends TestCase
     /**
      * Assert that the current page matches a given URI.
      *
-     * @param  string  $uri
+     * @param string $uri
+     *
      * @return $this
      */
     protected function seePageUrlIs($uri)
     {
         $this->assertEquals(
-            $uri, $this->currentUri, "Did not land on expected page [{$uri}].\n"
+            $uri,
+            $this->currentUri,
+            "Did not land on expected page [{$uri}].\n"
         );
 
         return $this;
@@ -144,10 +153,12 @@ abstract class BrowserKitTest extends TestCase
 
     /**
      * Do a forced visit that does not error out on exception.
+     *
      * @param string $uri
-     * @param array $parameters
-     * @param array $cookies
-     * @param array $files
+     * @param array  $parameters
+     * @param array  $cookies
+     * @param array  $files
+     *
      * @return $this
      */
     protected function forceVisit($uri, $parameters = [], $cookies = [], $files = [])
@@ -158,13 +169,16 @@ abstract class BrowserKitTest extends TestCase
         $this->clearInputs()->followRedirects();
         $this->currentUri = $this->app->make('request')->fullUrl();
         $this->crawler = new Crawler($this->response->getContent(), $uri);
+
         return $this;
     }
 
     /**
      * Click the text within the selected element.
+     *
      * @param $parentElement
      * @param $linkText
+     *
      * @return $this
      */
     protected function clickInElement($parentElement, $linkText)
@@ -172,28 +186,33 @@ abstract class BrowserKitTest extends TestCase
         $elem = $this->crawler->filter($parentElement);
         $link = $elem->selectLink($linkText);
         $this->visit($link->link()->getUri());
+
         return $this;
     }
 
     /**
      * Check if the page contains the given element.
-     * @param  string  $selector
+     *
+     * @param string $selector
      */
     protected function pageHasElement($selector)
     {
         $elements = $this->crawler->filter($selector);
-        $this->assertTrue(count($elements) > 0, "The page does not contain an element matching " . $selector);
+        $this->assertTrue(count($elements) > 0, 'The page does not contain an element matching ' . $selector);
+
         return $this;
     }
 
     /**
      * Check if the page contains the given element.
-     * @param  string  $selector
+     *
+     * @param string $selector
      */
     protected function pageNotHasElement($selector)
     {
         $elements = $this->crawler->filter($selector);
-        $this->assertFalse(count($elements) > 0, "The page contains " . count($elements) . " elements matching " . $selector);
+        $this->assertFalse(count($elements) > 0, 'The page contains ' . count($elements) . ' elements matching ' . $selector);
+
         return $this;
     }
 }

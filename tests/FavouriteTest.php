@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class FavouriteTest extends TestCase
 {
-
     public function test_page_add_favourite_flow()
     {
         $page = Page::query()->first();
@@ -21,15 +20,15 @@ class FavouriteTest extends TestCase
 
         $resp = $this->post('/favourites/add', [
             'type' => get_class($page),
-            'id' => $page->id,
+            'id'   => $page->id,
         ]);
         $resp->assertRedirect($page->getUrl());
         $resp->assertSessionHas('success', "\"{$page->name}\" has been added to your favourites");
 
         $this->assertDatabaseHas('favourites', [
-            'user_id' => $editor->id,
+            'user_id'           => $editor->id,
             'favouritable_type' => $page->getMorphClass(),
-            'favouritable_id' => $page->id,
+            'favouritable_id'   => $page->id,
         ]);
     }
 
@@ -38,8 +37,8 @@ class FavouriteTest extends TestCase
         $page = Page::query()->first();
         $editor = $this->getEditor();
         Favourite::query()->forceCreate([
-            'user_id' => $editor->id,
-            'favouritable_id' => $page->id,
+            'user_id'           => $editor->id,
+            'favouritable_id'   => $page->id,
             'favouritable_type' => $page->getMorphClass(),
         ]);
 
@@ -49,7 +48,7 @@ class FavouriteTest extends TestCase
 
         $resp = $this->post('/favourites/remove', [
             'type' => get_class($page),
-            'id' => $page->id,
+            'id'   => $page->id,
         ]);
         $resp->assertRedirect($page->getUrl());
         $resp->assertSessionHas('success', "\"{$page->name}\" has been removed from your favourites");
@@ -90,7 +89,7 @@ class FavouriteTest extends TestCase
 
         /** @var Page $page */
         $page = Page::query()->first();
-        $page->favourites()->save((new Favourite)->forceFill(['user_id' => $editor->id]));
+        $page->favourites()->save((new Favourite())->forceFill(['user_id' => $editor->id]));
 
         $resp = $this->get('/');
         $resp->assertElementExists('#top-favourites');
@@ -106,7 +105,7 @@ class FavouriteTest extends TestCase
         $resp = $this->actingAs($editor)->get('/favourites');
         $resp->assertDontSee($page->name);
 
-        $page->favourites()->save((new Favourite)->forceFill(['user_id' => $editor->id]));
+        $page->favourites()->save((new Favourite())->forceFill(['user_id' => $editor->id]));
 
         $resp = $this->get('/favourites');
         $resp->assertSee($page->name);
@@ -114,5 +113,4 @@ class FavouriteTest extends TestCase
         $resp = $this->get('/favourites?page=2');
         $resp->assertDontSee($page->name);
     }
-
 }

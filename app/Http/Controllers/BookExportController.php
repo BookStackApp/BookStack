@@ -2,13 +2,12 @@
 
 namespace BookStack\Http\Controllers;
 
-use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Entities\Repos\BookRepo;
+use BookStack\Entities\Tools\ExportFormatter;
 use Throwable;
 
 class BookExportController extends Controller
 {
-
     protected $bookRepo;
     protected $exportFormatter;
 
@@ -23,23 +22,27 @@ class BookExportController extends Controller
 
     /**
      * Export a book as a PDF file.
+     *
      * @throws Throwable
      */
     public function pdf(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $pdfContent = $this->exportFormatter->bookToPdf($book);
+
         return $this->downloadResponse($pdfContent, $bookSlug . '.pdf');
     }
 
     /**
      * Export a book as a contained HTML file.
+     *
      * @throws Throwable
      */
     public function html(string $bookSlug)
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $htmlContent = $this->exportFormatter->bookToContainedHtml($book);
+
         return $this->downloadResponse($htmlContent, $bookSlug . '.html');
     }
 
@@ -50,6 +53,7 @@ class BookExportController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $textContent = $this->exportFormatter->bookToPlainText($book);
+
         return $this->downloadResponse($textContent, $bookSlug . '.txt');
     }
 
@@ -60,6 +64,7 @@ class BookExportController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $textContent = $this->exportFormatter->bookToMarkdown($book);
+
         return $this->downloadResponse($textContent, $bookSlug . '.md');
     }
 }

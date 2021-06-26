@@ -1,4 +1,6 @@
-<?php namespace Tests;
+<?php
+
+namespace Tests;
 
 use Auth;
 use BookStack\Auth\Permissions\PermissionService;
@@ -12,7 +14,6 @@ use Illuminate\Support\Facades\View;
 
 class PublicActionTest extends TestCase
 {
-
     public function test_app_not_public()
     {
         $this->setSettings(['app-public' => 'false']);
@@ -27,7 +28,7 @@ class PublicActionTest extends TestCase
     public function test_login_link_visible()
     {
         $this->setSettings(['app-public' => 'true']);
-        $this->get('/')->assertElementExists('a[href="'.url('/login').'"]');
+        $this->get('/')->assertElementExists('a[href="' . url('/login') . '"]');
     }
 
     public function test_register_link_visible_when_enabled()
@@ -94,22 +95,22 @@ class PublicActionTest extends TestCase
         $chapter = Chapter::query()->first();
         $resp = $this->get($chapter->getUrl());
         $resp->assertSee('New Page');
-        $resp->assertElementExists('a[href="'.$chapter->getUrl('/create-page').'"]');
+        $resp->assertElementExists('a[href="' . $chapter->getUrl('/create-page') . '"]');
 
         $resp = $this->get($chapter->getUrl('/create-page'));
         $resp->assertSee('Continue');
         $resp->assertSee('Page Name');
-        $resp->assertElementExists('form[action="'.$chapter->getUrl('/create-guest-page').'"]');
+        $resp->assertElementExists('form[action="' . $chapter->getUrl('/create-guest-page') . '"]');
 
         $resp = $this->post($chapter->getUrl('/create-guest-page'), ['name' => 'My guest page']);
         $resp->assertRedirect($chapter->book->getUrl('/page/my-guest-page/edit'));
 
         $user = User::getDefault();
         $this->assertDatabaseHas('pages', [
-            'name' => 'My guest page',
+            'name'       => 'My guest page',
             'chapter_id' => $chapter->id,
             'created_by' => $user->id,
-            'updated_by' => $user->id
+            'updated_by' => $user->id,
         ]);
     }
 
@@ -137,7 +138,7 @@ class PublicActionTest extends TestCase
 
         $resp = $this->get('/robots.txt');
         $resp->assertSee("User-agent: *\nDisallow:");
-        $resp->assertDontSee("Disallow: /");
+        $resp->assertDontSee('Disallow: /');
     }
 
     public function test_robots_effected_by_setting()
@@ -148,7 +149,7 @@ class PublicActionTest extends TestCase
 
         $resp = $this->get('/robots.txt');
         $resp->assertSee("User-agent: *\nDisallow:");
-        $resp->assertDontSee("Disallow: /");
+        $resp->assertDontSee('Disallow: /');
 
         // Check config overrides app-public setting
         config()->set('app.allow_robots', false);

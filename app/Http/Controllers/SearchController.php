@@ -1,9 +1,11 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use BookStack\Entities\Queries\Popular;
+use BookStack\Entities\Tools\SearchOptions;
 use BookStack\Entities\Tools\SearchRunner;
 use BookStack\Entities\Tools\ShelfContext;
-use BookStack\Entities\Tools\SearchOptions;
 use BookStack\Entities\Tools\SiblingFetcher;
 use Illuminate\Http\Request;
 
@@ -30,17 +32,17 @@ class SearchController extends Controller
         $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
 
         $page = intval($request->get('page', '0')) ?: 1;
-        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page+1));
+        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page + 1));
 
         $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, 20);
 
         return view('search.all', [
-            'entities'   => $results['results'],
+            'entities'     => $results['results'],
             'totalResults' => $results['total'],
-            'searchTerm' => $fullSearchString,
-            'hasNextPage' => $results['has_more'],
+            'searchTerm'   => $fullSearchString,
+            'hasNextPage'  => $results['has_more'],
             'nextPageLink' => $nextPageLink,
-            'options' => $searchOpts,
+            'options'      => $searchOpts,
         ]);
     }
 
@@ -51,6 +53,7 @@ class SearchController extends Controller
     {
         $term = $request->get('term', '');
         $results = $this->searchRunner->searchBook($bookId, $term);
+
         return view('partials.entity-list', ['entities' => $results]);
     }
 
@@ -61,6 +64,7 @@ class SearchController extends Controller
     {
         $term = $request->get('term', '');
         $results = $this->searchRunner->searchChapter($chapterId, $term);
+
         return view('partials.entity-list', ['entities' => $results]);
     }
 
@@ -71,15 +75,15 @@ class SearchController extends Controller
     public function searchEntitiesAjax(Request $request)
     {
         $entityTypes = $request->filled('types') ? explode(',', $request->get('types')) : ['page', 'chapter', 'book'];
-        $searchTerm =  $request->get('term', false);
+        $searchTerm = $request->get('term', false);
         $permission = $request->get('permission', 'view');
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
-            $searchTerm .= ' {type:'. implode('|', $entityTypes) .'}';
+            $searchTerm .= ' {type:' . implode('|', $entityTypes) . '}';
             $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20, $permission)['results'];
         } else {
-            $entities = (new Popular)->run(20, 0, $entityTypes, $permission);
+            $entities = (new Popular())->run(20, 0, $entityTypes, $permission);
         }
 
         return view('search.entity-ajax-list', ['entities' => $entities]);
@@ -93,7 +97,8 @@ class SearchController extends Controller
         $type = $request->get('entity_type', null);
         $id = $request->get('entity_id', null);
 
-        $entities = (new SiblingFetcher)->fetch($type, $id);
+        $entities = (new SiblingFetcher())->fetch($type, $id);
+
         return view('partials.entity-list-basic', ['entities' => $entities, 'style' => 'compact']);
     }
 }

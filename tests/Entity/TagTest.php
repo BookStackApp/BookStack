@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use BookStack\Actions\Tag;
 use BookStack\Entities\Models\Entity;
@@ -7,7 +9,6 @@ use Tests\TestCase;
 
 class TagTest extends TestCase
 {
-
     protected $defaultTagCount = 20;
 
     /**
@@ -22,6 +23,7 @@ class TagTest extends TestCase
         }
 
         $entity->tags()->saveMany($tags);
+
         return $entity;
     }
 
@@ -89,12 +91,11 @@ class TagTest extends TestCase
         ];
 
         $page = $this->getEntityWithTags(Page::class, $tags);
-        $resp = $this->asEditor()->get("/search?term=[category]");
+        $resp = $this->asEditor()->get('/search?term=[category]');
         $resp->assertSee($page->name);
         $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'category');
         $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'buckets');
         $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'color');
         $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'red');
     }
-
 }
