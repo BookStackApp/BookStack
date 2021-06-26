@@ -2,6 +2,7 @@
 
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Deletion;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\TrashCan;
 
 class RecycleBinController extends Controller
@@ -44,8 +45,23 @@ class RecycleBinController extends Controller
         /** @var Deletion $deletion */
         $deletion = Deletion::query()->findOrFail($id);
 
+        // Walk the parent chain to find any cascading parent deletions
+        $currentDeletable = $deletion->deletable;
+        $searching = true;
+        while ($searching && $currentDeletable instanceof Entity) {
+            $parent = $currentDeletable->getParent();
+            if ($parent && $parent->trashed()) {
+                $currentDeletable = $parent;
+            } else {
+                $searching = false;
+            }
+        }
+        /** @var ?Deletion $parentDeletion */
+        $parentDeletion = ($currentDeletable === $deletion->deletable) ? null : $currentDeletable->deletions()->first();
+
         return view('settings.recycle-bin.restore', [
             'deletion' => $deletion,
+            'parentDeletion' => $parentDeletion,
         ]);
     }
 
