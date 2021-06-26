@@ -95,6 +95,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'recycle_bin' => 'Papierkorb',
     'recycle_bin_desc' => 'Hier können Sie gelöschte Einträge wiederherstellen oder sie dauerhaft aus dem System entfernen. Diese Liste ist nicht gefiltert, im Gegensatz zu ähnlichen Aktivitätslisten im System, wo Berechtigungsfilter angewendet werden.',
     'recycle_bin_deleted_item' => 'Gelöschter Eintrag',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Gelöscht von',
     'recycle_bin_deleted_at' => 'Löschzeitpunkt',
     'recycle_bin_permanently_delete' => 'Dauerhaft löschen',
@@ -107,6 +108,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'recycle_bin_restore_list' => 'Wiederherzustellende Einträge',
     'recycle_bin_restore_confirm' => 'Mit dieser Aktion wird der gelöschte Eintrag einschließlich aller untergeordneten Einträge an seinen ursprünglichen Ort wiederherstellen. Wenn der ursprüngliche Ort gelöscht wurde und sich nun im Papierkorb befindet, muss auch der übergeordnete Eintrag wiederhergestellt werden.',
     'recycle_bin_restore_deleted_parent' => 'Der übergeordnete Eintrag wurde ebenfalls gelöscht. Dieser Eintrag wird weiterhin als gelöscht zählen, bis auch der übergeordnete Eintrag wiederhergestellt wurde.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => ':count Einträge wurden aus dem Papierkorb gelöscht.',
     'recycle_bin_restore_notification' => ':count Einträge wurden aus dem Papierkorb wiederhergestellt.',
 
