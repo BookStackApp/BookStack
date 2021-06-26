@@ -11,8 +11,9 @@ class RunThemeActions
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -24,6 +25,7 @@ class RunThemeActions
 
         $response = $next($request);
         $response = Theme::dispatch(ThemeEvents::WEB_MIDDLEWARE_AFTER, $request, $response) ?? $response;
+
         return $response;
     }
 }

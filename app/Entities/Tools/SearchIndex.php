@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Tools;
+<?php
+
+namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
@@ -17,13 +19,11 @@ class SearchIndex
      */
     protected $entityProvider;
 
-
     public function __construct(SearchTerm $searchTerm, EntityProvider $entityProvider)
     {
         $this->searchTerm = $searchTerm;
         $this->entityProvider = $entityProvider;
     }
-
 
     /**
      * Index the given entity.
@@ -42,7 +42,8 @@ class SearchIndex
     }
 
     /**
-     * Index multiple Entities at once
+     * Index multiple Entities at once.
+     *
      * @param Entity[] $entities
      */
     protected function indexEntities(array $entities)
@@ -110,8 +111,8 @@ class SearchIndex
         $terms = [];
         foreach ($tokenMap as $token => $count) {
             $terms[] = [
-                'term' => $token,
-                'score' => $count * $scoreAdjustment
+                'term'  => $token,
+                'score' => $count * $scoreAdjustment,
             ];
         }
 

@@ -1,4 +1,6 @@
-<?php namespace BookStack\Notifications;
+<?php
+
+namespace BookStack\Notifications;
 
 class ConfirmEmail extends MailNotification
 {
@@ -6,6 +8,7 @@ class ConfirmEmail extends MailNotification
 
     /**
      * Create a new notification instance.
+     *
      * @param string $token
      */
     public function __construct($token)
@@ -16,12 +19,14 @@ class ConfirmEmail extends MailNotification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         $appName = ['appName' => setting('app-name')];
+
         return $this->newMailMessage()
                 ->subject(trans('auth.email_confirm_subject', $appName))
                 ->greeting(trans('auth.email_confirm_greeting', $appName))

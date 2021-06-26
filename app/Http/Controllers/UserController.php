@@ -1,4 +1,6 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\SocialAuthService;
@@ -15,7 +17,6 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-
     protected $user;
     protected $userRepo;
     protected $inviteService;
@@ -39,14 +40,15 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $listDetails = [
-            'order' => $request->get('order', 'asc'),
+            'order'  => $request->get('order', 'asc'),
             'search' => $request->get('search', ''),
-            'sort' => $request->get('sort', 'name'),
+            'sort'   => $request->get('sort', 'name'),
         ];
         $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
 
         $this->setPageTitle(trans('settings.users'));
         $users->appends($listDetails);
+
         return view('users.index', ['users' => $users, 'listDetails' => $listDetails]);
     }
 
@@ -58,11 +60,13 @@ class UserController extends Controller
         $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
         $roles = $this->userRepo->getAllRoles();
+
         return view('users.create', ['authMethod' => $authMethod, 'roles' => $roles]);
     }
 
     /**
      * Store a newly created user in storage.
+     *
      * @throws UserUpdateException
      * @throws ValidationException
      */
@@ -71,7 +75,7 @@ class UserController extends Controller
         $this->checkPermission('users-manage');
         $validationRules = [
             'name'  => 'required',
-            'email' => 'required|email|unique:users,email'
+            'email' => 'required|email|unique:users,email',
         ];
 
         $authMethod = config('auth.method');
@@ -108,6 +112,7 @@ class UserController extends Controller
         $this->userRepo->downloadAndAssignUserAvatar($user);
 
         $this->logActivity(ActivityType::USER_CREATE, $user);
+
         return redirect('/settings/users');
     }
 
@@ -125,16 +130,18 @@ class UserController extends Controller
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $this->setPageTitle(trans('settings.user_profile'));
         $roles = $this->userRepo->getAllRoles();
+
         return view('users.edit', [
-            'user' => $user,
+            'user'                => $user,
             'activeSocialDrivers' => $activeSocialDrivers,
-            'authMethod' => $authMethod,
-            'roles' => $roles
+            'authMethod'          => $authMethod,
+            'roles'               => $roles,
         ]);
     }
 
     /**
      * Update the specified user in storage.
+     *
      * @throws UserUpdateException
      * @throws ImageUploadException
      * @throws ValidationException
@@ -208,6 +215,7 @@ class UserController extends Controller
         $this->logActivity(ActivityType::USER_UPDATE, $user);
 
         $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/' . $user->id);
+
         return redirect($redirectUrl);
     }
 
@@ -220,11 +228,13 @@ class UserController extends Controller
 
         $user = $this->userRepo->getById($id);
         $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
+
         return view('users.delete', ['user' => $user]);
     }
 
     /**
      * Remove the specified user from storage.
+     *
      * @throws Exception
      */
     public function destroy(Request $request, int $id)
@@ -237,11 +247,13 @@ class UserController extends Controller
 
         if ($this->userRepo->isOnlyAdmin($user)) {
             $this->showErrorNotification(trans('errors.users_cannot_delete_only_admin'));
+
             return redirect($user->getEditUrl());
         }
 
         if ($user->system_name === 'public') {
             $this->showErrorNotification(trans('errors.users_cannot_delete_guest'));
+
             return redirect($user->getEditUrl());
         }
 
@@ -304,6 +316,7 @@ class UserController extends Controller
         if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }
+
         return $this->changeListSort($id, $request, $type);
     }
 
@@ -314,6 +327,7 @@ class UserController extends Controller
     {
         $enabled = setting()->getForCurrentUser('dark-mode-enabled', false);
         setting()->putUser(user(), 'dark-mode-enabled', $enabled ? 'false' : 'true');
+
         return redirect()->back();
     }
 
@@ -325,14 +339,15 @@ class UserController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $id);
         $keyWhitelist = ['home-details'];
         if (!in_array($key, $keyWhitelist)) {
-            return response("Invalid key", 500);
+            return response('Invalid key', 500);
         }
 
         $newState = $request->get('expand', 'false');
 
         $user = $this->user->findOrFail($id);
         setting()->putUser($user, 'section_expansion#' . $key, $newState);
-        return response("", 204);
+
+        return response('', 204);
     }
 
     /**

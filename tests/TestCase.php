@@ -1,4 +1,6 @@
-<?php namespace Tests;
+<?php
+
+namespace Tests;
 
 use BookStack\Entities\Models\Entity;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -12,25 +14,31 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * The base URL to use while testing the application.
+     *
      * @var string
      */
     protected $baseUrl = 'http://localhost';
 
     /**
      * Assert the session contains a specific entry.
+     *
      * @param string $key
+     *
      * @return $this
      */
     protected function assertSessionHas(string $key)
     {
         $this->assertTrue(session()->has($key), "Session does not contain a [{$key}] entry");
+
         return $this;
     }
 
     /**
      * Override of the get method so we can get visibility of custom TestResponse methods.
-     * @param  string  $uri
-     * @param  array  $headers
+     *
+     * @param string $uri
+     * @param array  $headers
+     *
      * @return TestResponse
      */
     public function get($uri, array $headers = [])
@@ -41,7 +49,8 @@ abstract class TestCase extends BaseTestCase
     /**
      * Create the test response instance from the given response.
      *
-     * @param  \Illuminate\Http\Response $response
+     * @param \Illuminate\Http\Response $response
+     *
      * @return TestResponse
      */
     protected function createTestResponse($response)

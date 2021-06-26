@@ -1,6 +1,6 @@
 <?php
 
-use \Illuminate\Support\Str;
+use Illuminate\Support\Str;
 
 /**
  * Session configuration options.

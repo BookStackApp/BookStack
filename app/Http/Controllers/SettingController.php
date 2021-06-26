@@ -1,4 +1,6 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
@@ -29,8 +31,8 @@ class SettingController extends Controller
         $version = trim(file_get_contents(base_path('version')));
 
         return view('settings.index', [
-            'version' => $version,
-            'guestUser' => User::getDefault()
+            'version'   => $version,
+            'guestUser' => User::getDefault(),
         ]);
     }
 
@@ -72,6 +74,7 @@ class SettingController extends Controller
         $this->logActivity(ActivityType::SETTINGS_UPDATE, $section);
         $this->showSuccessNotification(trans('settings.settings_save_success'));
         $redirectLocation = '/settings#' . $section;
+
         return redirect(rtrim($redirectLocation, '#'));
     }
 }

@@ -1,4 +1,6 @@
-<?php namespace BookStack\Traits;
+<?php
+
+namespace BookStack\Traits;
 
 use BookStack\Auth\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

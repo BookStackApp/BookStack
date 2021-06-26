@@ -31,7 +31,6 @@ class ConfirmEmailController extends Controller
         $this->userRepo = $userRepo;
     }
 
-
     /**
      * Show the page to tell the user to check their email
      * and confirm their address.
@@ -44,6 +43,7 @@ class ConfirmEmailController extends Controller
     /**
      * Shows a notice that a user's email address has not been confirmed,
      * Also has the option to re-send the confirmation email.
+     *
      * @return View
      */
     public function showAwaiting()
@@ -53,10 +53,13 @@ class ConfirmEmailController extends Controller
 
     /**
      * Confirms an email via a token and logs the user into the system.
+     *
      * @param $token
-     * @return RedirectResponse|Redirector
+     *
      * @throws ConfirmationEmailException
      * @throws Exception
+     *
+     * @return RedirectResponse|Redirector
      */
     public function confirm($token)
     {
@@ -65,6 +68,7 @@ class ConfirmEmailController extends Controller
         } catch (Exception $exception) {
             if ($exception instanceof UserTokenNotFoundException) {
                 $this->showErrorNotification(trans('errors.email_confirmation_invalid'));
+
                 return redirect('/register');
             }
 
@@ -72,6 +76,7 @@ class ConfirmEmailController extends Controller
                 $user = $this->userRepo->getById($exception->userId);
                 $this->emailConfirmationService->sendConfirmation($user);
                 $this->showErrorNotification(trans('errors.email_confirmation_expired'));
+
                 return redirect('/register/confirm');
             }
 
@@ -91,16 +96,17 @@ class ConfirmEmailController extends Controller
         return redirect('/');
     }
 
-
     /**
-     * Resend the confirmation email
+     * Resend the confirmation email.
+     *
      * @param Request $request
+     *
      * @return View
      */
     public function resend(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email|exists:users,email'
+            'email' => 'required|email|exists:users,email',
         ]);
         $user = $this->userRepo->getByEmail($request->get('email'));
 
@@ -108,10 +114,12 @@ class ConfirmEmailController extends Controller
             $this->emailConfirmationService->sendConfirmation($user);
         } catch (Exception $e) {
             $this->showErrorNotification(trans('auth.email_confirm_send_error'));
+
             return redirect('/register/confirm');
         }
 
         $this->showSuccessNotification(trans('auth.email_confirm_resent'));
+
         return redirect('/register/confirm');
     }
 }

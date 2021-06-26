@@ -1,4 +1,6 @@
-<?php namespace Tests;
+<?php
+
+namespace Tests;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -97,6 +99,4 @@ class OpenGraphTest extends TestCase
 
         return $tags;
     }
-
-
 }

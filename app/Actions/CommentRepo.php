@@ -1,20 +1,20 @@
-<?php namespace BookStack\Actions;
+<?php
+
+namespace BookStack\Actions;
 
 use BookStack\Entities\Models\Entity;
-use League\CommonMark\CommonMarkConverter;
 use BookStack\Facades\Activity as ActivityService;
+use League\CommonMark\CommonMarkConverter;
 
 /**
- * Class CommentRepo
+ * Class CommentRepo.
  */
 class CommentRepo
 {
-
     /**
-     * @var Comment $comment
+     * @var Comment
      */
     protected $comment;
-
 
     public function __construct(Comment $comment)
     {
@@ -46,6 +46,7 @@ class CommentRepo
 
         $entity->comments()->save($comment);
         ActivityService::addForEntity($entity, ActivityType::COMMENTED_ON);
+
         return $comment;
     }
 
@@ -58,6 +59,7 @@ class CommentRepo
         $comment->text = $text;
         $comment->html = $this->commentToHtml($text);
         $comment->save();
+
         return $comment;
     }
 
@@ -75,8 +77,8 @@ class CommentRepo
     public function commentToHtml(string $commentText): string
     {
         $converter = new CommonMarkConverter([
-            'html_input' => 'strip',
-            'max_nesting_level' => 10,
+            'html_input'         => 'strip',
+            'max_nesting_level'  => 10,
             'allow_unsafe_links' => false,
         ]);
 
@@ -89,6 +91,7 @@ class CommentRepo
     protected function getNextLocalId(Entity $entity): int
     {
         $comments = $entity->comments(false)->orderBy('local_id', 'desc')->first();
+
         return ($comments->local_id ?? 0) + 1;
     }
 }

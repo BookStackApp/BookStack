@@ -3,10 +3,10 @@
 namespace BookStack\Http\Controllers\Images;
 
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Http\Controllers\Controller;
 use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Http\Request;
-use BookStack\Http\Controllers\Controller;
 
 class DrawioImageController extends Controller
 {
@@ -29,21 +29,23 @@ class DrawioImageController extends Controller
         $parentTypeFilter = $request->get('filter_type', null);
 
         $imgData = $this->imageRepo->getEntityFiltered('drawio', $parentTypeFilter, $page, 24, $uploadedToFilter, $searchTerm);
+
         return view('components.image-manager-list', [
-            'images' => $imgData['images'],
+            'images'  => $imgData['images'],
             'hasMore' => $imgData['has_more'],
         ]);
     }
 
     /**
      * Store a new gallery image in the system.
+     *
      * @throws Exception
      */
     public function create(Request $request)
     {
         $this->validate($request, [
-            'image' => 'required|string',
-            'uploaded_to' => 'required|integer'
+            'image'       => 'required|string',
+            'uploaded_to' => 'required|integer',
         ]);
 
         $this->checkPermission('image-create-all');
@@ -67,16 +69,16 @@ class DrawioImageController extends Controller
         $image = $this->imageRepo->getById($id);
         $page = $image->getPage();
         if ($image === null || $image->type !== 'drawio' || !userCan('page-view', $page)) {
-            return $this->jsonError("Image data could not be found");
+            return $this->jsonError('Image data could not be found');
         }
 
         $imageData = $this->imageRepo->getImageData($image);
         if ($imageData === null) {
-            return $this->jsonError("Image data could not be found");
+            return $this->jsonError('Image data could not be found');
         }
 
         return response()->json([
-            'content' => base64_encode($imageData)
+            'content' => base64_encode($imageData),
         ]);
     }
 }

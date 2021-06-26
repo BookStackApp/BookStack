@@ -1,4 +1,6 @@
-<?php namespace BookStack\Auth\Permissions;
+<?php
+
+namespace BookStack\Auth\Permissions;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Role;
@@ -9,7 +11,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class PermissionsRepo
 {
-
     protected $permission;
     protected $role;
     protected $permissionService;
@@ -62,6 +63,7 @@ class PermissionsRepo
         $this->assignRolePermissions($role, $permissions);
         $this->permissionService->buildJointPermissionForRole($role);
         Activity::add(ActivityType::ROLE_CREATE, $role);
+
         return $role;
     }
 
@@ -116,6 +118,7 @@ class PermissionsRepo
      * Check it's not an admin role or set as default before deleting.
      * If an migration Role ID is specified the users assign to the current role
      * will be added to the role of the specified id.
+     *
      * @throws PermissionsException
      * @throws Exception
      */
@@ -127,7 +130,7 @@ class PermissionsRepo
         // Prevent deleting admin role or default registration role.
         if ($role->system_name && in_array($role->system_name, $this->systemRoles)) {
             throw new PermissionsException(trans('errors.role_system_cannot_be_deleted'));
-        } else if ($role->id === intval(setting('registration-role'))) {
+        } elseif ($role->id === intval(setting('registration-role'))) {
             throw new PermissionsException(trans('errors.role_registration_default_cannot_delete'));
         }
 

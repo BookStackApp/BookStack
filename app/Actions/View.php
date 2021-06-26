@@ -1,4 +1,6 @@
-<?php namespace BookStack\Actions;
+<?php
+
+namespace BookStack\Actions;
 
 use BookStack\Interfaces\Viewable;
 use BookStack\Model;
@@ -16,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class View extends Model
 {
-
     protected $fillable = ['user_id', 'views'];
 
     /**

@@ -8,19 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class AuditLogController extends Controller
 {
-
     public function index(Request $request)
     {
         $this->checkPermission('settings-manage');
         $this->checkPermission('users-manage');
 
         $listDetails = [
-            'order' => $request->get('order', 'desc'),
-            'event' => $request->get('event', ''),
-            'sort' => $request->get('sort', 'created_at'),
+            'order'     => $request->get('order', 'desc'),
+            'event'     => $request->get('event', ''),
+            'sort'      => $request->get('sort', 'created_at'),
             'date_from' => $request->get('date_from', ''),
-            'date_to' => $request->get('date_to', ''),
-            'user' => $request->get('user', ''),
+            'date_to'   => $request->get('date_to', ''),
+            'user'      => $request->get('user', ''),
         ];
 
         $query = Activity::query()
@@ -28,7 +27,7 @@ class AuditLogController extends Controller
                 'entity' => function ($query) {
                     $query->withTrashed();
                 },
-                'user'
+                'user',
             ])
             ->orderBy($listDetails['sort'], $listDetails['order']);
 
@@ -51,9 +50,10 @@ class AuditLogController extends Controller
 
         $types = DB::table('activities')->select('type')->distinct()->pluck('type');
         $this->setPageTitle(trans('settings.audit'));
+
         return view('settings.audit', [
-            'activities' => $activities,
-            'listDetails' => $listDetails,
+            'activities'    => $activities,
+            'listDetails'   => $listDetails,
             'activityTypes' => $types,
         ]);
     }

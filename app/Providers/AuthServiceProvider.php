@@ -9,7 +9,6 @@ use BookStack\Auth\Access\Guards\LdapSessionGuard;
 use BookStack\Auth\Access\Guards\Saml2SessionGuard;
 use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Access\RegistrationService;
-use BookStack\Auth\UserRepo;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -27,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Auth::extend('ldap-session', function ($app, $name, array $config) {
             $provider = Auth::createUserProvider($config['provider']);
+
             return new LdapSessionGuard(
                 $name,
                 $provider,
@@ -38,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Auth::extend('saml2-session', function ($app, $name, array $config) {
             $provider = Auth::createUserProvider($config['provider']);
+
             return new Saml2SessionGuard(
                 $name,
                 $provider,

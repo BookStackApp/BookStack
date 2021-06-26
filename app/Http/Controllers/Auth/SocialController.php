@@ -18,7 +18,6 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialController extends Controller
 {
-
     protected $socialAuthService;
     protected $registrationService;
 
@@ -34,16 +33,19 @@ class SocialController extends Controller
 
     /**
      * Redirect to the relevant social site.
+     *
      * @throws SocialDriverNotConfigured
      */
     public function login(string $socialDriver)
     {
         session()->put('social-callback', 'login');
+
         return $this->socialAuthService->startLogIn($socialDriver);
     }
 
     /**
      * Redirect to the social site for authentication intended to register.
+     *
      * @throws SocialDriverNotConfigured
      * @throws UserRegistrationException
      */
@@ -51,11 +53,13 @@ class SocialController extends Controller
     {
         $this->registrationService->ensureRegistrationAllowed();
         session()->put('social-callback', 'register');
+
         return $this->socialAuthService->startRegister($socialDriver);
     }
 
     /**
      * The callback for social login services.
+     *
      * @throws SocialSignInException
      * @throws SocialDriverNotConfigured
      * @throws UserRegistrationException
@@ -70,7 +74,7 @@ class SocialController extends Controller
         if ($request->has('error') && $request->has('error_description')) {
             throw new SocialSignInException(trans('errors.social_login_bad_response', [
                 'socialAccount' => $socialDriver,
-                'error' => $request->get('error_description'),
+                'error'         => $request->get('error_description'),
             ]), '/login');
         }
 
@@ -85,6 +89,7 @@ class SocialController extends Controller
                 if ($this->socialAuthService->driverAutoRegisterEnabled($socialDriver)) {
                     return $this->socialRegisterCallback($socialDriver, $socialUser);
                 }
+
                 throw $exception;
             }
         }
@@ -103,11 +108,13 @@ class SocialController extends Controller
     {
         $this->socialAuthService->detachSocialAccount($socialDriver);
         session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => Str::title($socialDriver)]));
+
         return redirect(user()->getEditUrl());
     }
 
     /**
      * Register a new user after a registration callback.
+     *
      * @throws UserRegistrationException
      */
     protected function socialRegisterCallback(string $socialDriver, SocialUser $socialUser)
@@ -118,9 +125,9 @@ class SocialController extends Controller
 
         // Create an array of the user data to create a new user instance
         $userData = [
-            'name' => $socialUser->getName(),
-            'email' => $socialUser->getEmail(),
-            'password' => Str::random(32)
+            'name'     => $socialUser->getName(),
+            'email'    => $socialUser->getEmail(),
+            'password' => Str::random(32),
         ];
 
         // Take name from email address if empty
@@ -134,6 +141,7 @@ class SocialController extends Controller
         $this->logActivity(ActivityType::AUTH_LOGIN, $user);
 
         $this->showSuccessNotification(trans('auth.register_success'));
+
         return redirect('/');
     }
 }

@@ -14,7 +14,7 @@ return [
         'binary'  => file_exists(base_path('wkhtmltopdf')) ? base_path('wkhtmltopdf') : env('WKHTMLTOPDF', false),
         'timeout' => false,
         'options' => [
-            'outline' => true
+            'outline' => true,
         ],
         'env'     => [],
     ],

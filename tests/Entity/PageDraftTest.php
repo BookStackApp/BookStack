@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
@@ -68,7 +70,7 @@ class PageDraftTest extends BrowserKitTest
         $this->actingAs($newUser)
             ->visit($this->page->getUrl('/edit'))
             ->see('Admin has started editing this page');
-            $this->flushSession();
+        $this->flushSession();
         $this->visit($nonEditedPage->getUrl() . '/edit')
             ->dontSeeInElement('.notification', 'Admin has started editing this page');
     }
@@ -112,5 +114,4 @@ class PageDraftTest extends BrowserKitTest
             'html' => $page->html,
         ]);
     }
-
 }

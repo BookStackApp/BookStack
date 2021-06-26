@@ -1,4 +1,6 @@
-<?php namespace BookStack\Actions;
+<?php
+
+namespace BookStack\Actions;
 
 class ActivityType
 {

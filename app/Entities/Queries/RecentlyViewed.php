@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Queries;
+<?php
+
+namespace BookStack\Entities\Queries;
 
 use BookStack\Actions\View;
 use Illuminate\Support\Collection;

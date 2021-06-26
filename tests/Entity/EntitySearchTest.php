@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use BookStack\Actions\Tag;
 use BookStack\Entities\Models\Book;
@@ -9,7 +11,6 @@ use Tests\TestCase;
 
 class EntitySearchTest extends TestCase
 {
-
     public function test_page_search()
     {
         $book = Book::all()->first();
@@ -80,13 +81,13 @@ class EntitySearchTest extends TestCase
     {
         $newTags = [
             new Tag([
-                'name' => 'animal',
-                'value' => 'cat'
+                'name'  => 'animal',
+                'value' => 'cat',
             ]),
             new Tag([
-                'name' => 'color',
-                'value' => 'red'
-            ])
+                'name'  => 'color',
+                'value' => 'red',
+            ]),
         ];
 
         $pageA = Page::first();
@@ -135,22 +136,22 @@ class EntitySearchTest extends TestCase
         $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertDontSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:'.$editorSlug.'}'))->assertDontSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:' . $editorSlug . '}'))->assertDontSee($page->name);
         $page->created_by = $editorId;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {created_by: '.$editorSlug.'}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_by: ' . $editorSlug . '}'))->assertSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertDontSee($page->name);
         $page->updated_by = $editorId;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:'.$editorSlug.'}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:' . $editorSlug . '}'))->assertSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertDontSee($page->name);
         $page->owned_by = $editorId;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:'.$editorSlug.'}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:' . $editorSlug . '}'))->assertSee($page->name);
 
         // Content filters
         $this->get('/search?term=' . urlencode('{in_name:danzorbhsing}'))->assertDontSee($page->name);

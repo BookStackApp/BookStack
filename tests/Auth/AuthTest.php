@@ -1,4 +1,6 @@
-<?php namespace Tests\Auth;
+<?php
+
+namespace Tests\Auth;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
@@ -14,7 +16,6 @@ use Tests\BrowserKitTest;
 
 class AuthTest extends BrowserKitTest
 {
-
     public function test_auth_working()
     {
         $this->visit('/')
@@ -135,10 +136,10 @@ class AuthTest extends BrowserKitTest
 
         // Get confirmation and confirm notification matches
         $emailConfirmation = DB::table('email_confirmations')->where('user_id', '=', $dbUser->id)->first();
-        Notification::assertSentTo($dbUser, ConfirmEmail::class, function($notification, $channels) use ($emailConfirmation) {
+        Notification::assertSentTo($dbUser, ConfirmEmail::class, function ($notification, $channels) use ($emailConfirmation) {
             return $notification->token === $emailConfirmation->token;
         });
-        
+
         // Check confirmation email confirmation activation.
         $this->visit('/register/confirm/' . $emailConfirmation->token)
             ->seePageIs('/')
@@ -278,8 +279,8 @@ class AuthTest extends BrowserKitTest
             ->press('Save')
             ->seePageIs('/settings/users');
 
-            $userPassword = User::find($user->id)->password;
-            $this->assertTrue(Hash::check('newpassword', $userPassword));
+        $userPassword = User::find($user->id)->password;
+        $this->assertTrue(Hash::check('newpassword', $userPassword));
     }
 
     public function test_user_deletion()
@@ -340,7 +341,7 @@ class AuthTest extends BrowserKitTest
             ->see('A password reset link will be sent to admin@admin.com if that email address is found in the system.');
 
         $this->seeInDatabase('password_resets', [
-            'email' => 'admin@admin.com'
+            'email' => 'admin@admin.com',
         ]);
 
         $user = User::where('email', '=', 'admin@admin.com')->first();
@@ -351,9 +352,9 @@ class AuthTest extends BrowserKitTest
         $this->visit('/password/reset/' . $n->first()->token)
             ->see('Reset Password')
             ->submitForm('Reset Password', [
-                'email' => 'admin@admin.com',
-                'password' => 'randompass',
-                'password_confirmation' => 'randompass'
+                'email'                 => 'admin@admin.com',
+                'password'              => 'randompass',
+                'password_confirmation' => 'randompass',
             ])->seePageIs('/')
             ->see('Your password has been successfully reset');
     }
@@ -367,13 +368,12 @@ class AuthTest extends BrowserKitTest
             ->see('A password reset link will be sent to barry@admin.com if that email address is found in the system.')
             ->dontSee('We can\'t find a user');
 
-
         $this->visit('/password/reset/arandometokenvalue')
             ->see('Reset Password')
             ->submitForm('Reset Password', [
-                'email' => 'barry@admin.com',
-                'password' => 'randompass',
-                'password_confirmation' => 'randompass'
+                'email'                 => 'barry@admin.com',
+                'password'              => 'randompass',
+                'password_confirmation' => 'randompass',
             ])->followRedirects()
             ->seePageIs('/password/reset/arandometokenvalue')
             ->dontSee('We can\'t find a user')
@@ -443,7 +443,7 @@ class AuthTest extends BrowserKitTest
     }
 
     /**
-     * Perform a login
+     * Perform a login.
      */
     protected function login(string $email, string $password): AuthTest
     {

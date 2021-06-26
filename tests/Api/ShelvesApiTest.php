@@ -1,4 +1,6 @@
-<?php namespace Tests\Api;
+<?php
+
+namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -18,10 +20,10 @@ class ShelvesApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
-                'id' => $firstBookshelf->id,
+                'id'   => $firstBookshelf->id,
                 'name' => $firstBookshelf->name,
                 'slug' => $firstBookshelf->slug,
-            ]
+            ],
         ]]);
     }
 
@@ -31,7 +33,7 @@ class ShelvesApiTest extends TestCase
         $books = Book::query()->take(2)->get();
 
         $details = [
-            'name' => 'My API shelf',
+            'name'        => 'My API shelf',
             'description' => 'A shelf created via the API',
         ];
 
@@ -43,8 +45,8 @@ class ShelvesApiTest extends TestCase
         foreach ($books as $index => $book) {
             $this->assertDatabaseHas('bookshelves_books', [
                 'bookshelf_id' => $newItem->id,
-                'book_id' => $book->id,
-                'order' => $index,
+                'book_id'      => $book->id,
+                'order'        => $index,
             ]);
         }
     }
@@ -59,12 +61,12 @@ class ShelvesApiTest extends TestCase
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
         $resp->assertJson([
-            "error" => [
-                "message" => "The given data was invalid.",
-                "validation" => [
-                    "name" => ["The name field is required."]
+            'error' => [
+                'message'    => 'The given data was invalid.',
+                'validation' => [
+                    'name' => ['The name field is required.'],
                 ],
-                "code" => 422,
+                'code' => 422,
             ],
         ]);
     }
@@ -78,8 +80,8 @@ class ShelvesApiTest extends TestCase
 
         $resp->assertStatus(200);
         $resp->assertJson([
-            'id' => $shelf->id,
-            'slug' => $shelf->slug,
+            'id'         => $shelf->id,
+            'slug'       => $shelf->slug,
             'created_by' => [
                 'name' => $shelf->createdBy->name,
             ],
@@ -87,7 +89,7 @@ class ShelvesApiTest extends TestCase
                 'name' => $shelf->createdBy->name,
             ],
             'owned_by' => [
-                'name' => $shelf->ownedBy->name
+                'name' => $shelf->ownedBy->name,
             ],
         ]);
     }
@@ -97,7 +99,7 @@ class ShelvesApiTest extends TestCase
         $this->actingAsApiEditor();
         $shelf = Bookshelf::visible()->first();
         $details = [
-            'name' => 'My updated API shelf',
+            'name'        => 'My updated API shelf',
             'description' => 'A shelf created via the API',
         ];
 

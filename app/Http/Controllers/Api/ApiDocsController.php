@@ -1,10 +1,11 @@
-<?php namespace BookStack\Http\Controllers\Api;
+<?php
+
+namespace BookStack\Http\Controllers\Api;
 
 use BookStack\Api\ApiDocsGenerator;
 
 class ApiDocsController extends ApiController
 {
-
     /**
      * Load the docs page for the API.
      */
@@ -12,6 +13,7 @@ class ApiDocsController extends ApiController
     {
         $docs = ApiDocsGenerator::generateConsideringCache();
         $this->setPageTitle(trans('settings.users_api_tokens_docs'));
+
         return view('api-docs.index', [
             'docs' => $docs,
         ]);
@@ -23,6 +25,7 @@ class ApiDocsController extends ApiController
     public function json()
     {
         $docs = ApiDocsGenerator::generateConsideringCache();
+
         return response()->json($docs);
     }
 }

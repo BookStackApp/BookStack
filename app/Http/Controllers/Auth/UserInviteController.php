@@ -34,6 +34,7 @@ class UserInviteController extends Controller
 
     /**
      * Show the page for the user to set the password for their account.
+     *
      * @throws Exception
      */
     public function showSetPassword(string $token)
@@ -51,12 +52,13 @@ class UserInviteController extends Controller
 
     /**
      * Sets the password for an invited user and then grants them access.
+     *
      * @throws Exception
      */
     public function setPassword(Request $request, string $token)
     {
         $this->validate($request, [
-            'password' => 'required|min:8'
+            'password' => 'required|min:8',
         ]);
 
         try {
@@ -81,8 +83,10 @@ class UserInviteController extends Controller
 
     /**
      * Check and validate the exception thrown when checking an invite token.
-     * @return RedirectResponse|Redirector
+     *
      * @throws Exception
+     *
+     * @return RedirectResponse|Redirector
      */
     protected function handleTokenException(Exception $exception)
     {
@@ -92,6 +96,7 @@ class UserInviteController extends Controller
 
         if ($exception instanceof UserTokenExpiredException) {
             $this->showErrorNotification(trans('errors.invite_token_expired'));
+
             return redirect('/password/email');
         }
 

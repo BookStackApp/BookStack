@@ -18,7 +18,7 @@ return [
     // This option controls the default authentication "guard" and password
     // reset options for your application.
     'defaults' => [
-        'guard' => env('AUTH_METHOD', 'standard'),
+        'guard'     => env('AUTH_METHOD', 'standard'),
         'passwords' => 'users',
     ],
 
@@ -29,15 +29,15 @@ return [
     // Supported drivers: "session", "api-token", "ldap-session"
     'guards' => [
         'standard' => [
-            'driver' => 'session',
+            'driver'   => 'session',
             'provider' => 'users',
         ],
         'ldap' => [
-            'driver' => 'ldap-session',
+            'driver'   => 'ldap-session',
             'provider' => 'external',
         ],
         'saml2' => [
-            'driver' => 'saml2-session',
+            'driver'   => 'saml2-session',
             'provider' => 'external',
         ],
         'api' => [
@@ -52,11 +52,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => \BookStack\Auth\User::class,
+            'model'  => \BookStack\Auth\User::class,
         ],
         'external' => [
             'driver' => 'external-users',
-            'model' => \BookStack\Auth\User::class,
+            'model'  => \BookStack\Auth\User::class,
         ],
     ],
 
@@ -67,9 +67,9 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'email' => 'emails.password',
-            'table' => 'password_resets',
-            'expire' => 60,
+            'email'    => 'emails.password',
+            'table'    => 'password_resets',
+            'expire'   => 60,
         ],
     ],
 

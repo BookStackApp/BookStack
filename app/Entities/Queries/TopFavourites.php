@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Queries;
+<?php
+
+namespace BookStack\Entities\Queries;
 
 use BookStack\Actions\Favourite;
 use Illuminate\Database\Query\JoinClause;

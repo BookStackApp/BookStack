@@ -1,4 +1,6 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -7,7 +9,6 @@ use Illuminate\Support\Str;
 
 class StatusController extends Controller
 {
-
     /**
      * Show the system status as a simple json page.
      */
@@ -20,16 +21,19 @@ class StatusController extends Controller
             'cache' => $this->trueWithoutError(function () {
                 $rand = Str::random();
                 Cache::set('status_test', $rand);
+
                 return Cache::get('status_test') === $rand;
             }),
             'session' => $this->trueWithoutError(function () {
                 $rand = Str::random();
                 Session::put('status_test', $rand);
+
                 return Session::get('status_test') === $rand;
             }),
         ];
 
         $hasError = in_array(false, $statuses);
+
         return response()->json($statuses, $hasError ? 500 : 200);
     }
 

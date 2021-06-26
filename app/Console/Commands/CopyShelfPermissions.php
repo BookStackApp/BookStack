@@ -54,13 +54,14 @@ class CopyShelfPermissions extends Command
 
         if (!$cascadeAll && !$shelfSlug) {
             $this->error('Either a --slug or --all option must be provided.');
+
             return;
         }
 
         if ($cascadeAll) {
             $continue = $this->confirm(
-                'Permission settings for all shelves will be cascaded. '.
-                        'Books assigned to multiple shelves will receive only the permissions of it\'s last processed shelf. '.
+                'Permission settings for all shelves will be cascaded. ' .
+                        'Books assigned to multiple shelves will receive only the permissions of it\'s last processed shelf. ' .
                         'Are you sure you want to proceed?'
             );
 

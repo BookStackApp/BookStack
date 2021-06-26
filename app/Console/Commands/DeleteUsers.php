@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 
 class DeleteUsers extends Command
 {
-
     /**
      * The name and signature of the console command.
      *
@@ -47,7 +46,7 @@ class DeleteUsers extends Command
                     continue;
                 }
                 $this->userRepo->destroy($user);
-                ++$numDeleted;
+                $numDeleted++;
             }
             $this->info("Deleted $numDeleted of $totalUsers total users.");
         } else {

@@ -1,18 +1,20 @@
-<?php namespace Tests;
+<?php
+
+namespace Tests;
 
 use BookStack\Actions\Activity;
 use BookStack\Actions\ActivityService;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Tools\TrashCan;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Tools\TrashCan;
 use Carbon\Carbon;
 
 class AuditLogTest extends TestCase
 {
-    /** @var ActivityService  */
+    /** @var ActivityService */
     protected $activityService;
 
     public function setUp(): void
@@ -56,7 +58,7 @@ class AuditLogTest extends TestCase
 
     public function test_shows_name_for_deleted_items()
     {
-        $this->actingAs( $this->getAdmin());
+        $this->actingAs($this->getAdmin());
         $page = Page::query()->first();
         $pageName = $page->name;
         $this->activityService->addForEntity($page, ActivityType::PAGE_CREATE);
@@ -137,7 +139,5 @@ class AuditLogTest extends TestCase
         $resp = $this->actingAs($admin)->get('settings/audit?user=' . $editor->id);
         $resp->assertSeeText($chapter->name);
         $resp->assertDontSeeText($page->name);
-
     }
-
 }

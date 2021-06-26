@@ -1,14 +1,16 @@
-<?php namespace BookStack\Exceptions;
+<?php
+
+namespace BookStack\Exceptions;
 
 class UserTokenExpiredException extends \Exception
 {
-
     public $userId;
 
     /**
      * UserTokenExpiredException constructor.
+     *
      * @param string $message
-     * @param int $userId
+     * @param int    $userId
      */
     public function __construct(string $message, int $userId)
     {

@@ -4,11 +4,11 @@ namespace BookStack;
 
 class Application extends \Illuminate\Foundation\Application
 {
-
     /**
      * Get the path to the application configuration files.
      *
-     * @param  string  $path Optionally, a path to append to the config path
+     * @param string $path Optionally, a path to append to the config path
+     *
      * @return string
      */
     public function configPath($path = '')
@@ -18,6 +18,6 @@ class Application extends \Illuminate\Foundation\Application
             . 'app'
             . DIRECTORY_SEPARATOR
             . 'Config'
-            . ($path ? DIRECTORY_SEPARATOR.$path : $path);
+            . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 }

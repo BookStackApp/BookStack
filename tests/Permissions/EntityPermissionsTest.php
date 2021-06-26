@@ -1,17 +1,18 @@
-<?php namespace Tests\Permissions;
+<?php
 
+namespace Tests\Permissions;
+
+use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Str;
 use Tests\BrowserKitTest;
 
 class EntityPermissionsTest extends BrowserKitTest
 {
-
     /**
      * @var User
      */
@@ -266,7 +267,6 @@ class EntityPermissionsTest extends BrowserKitTest
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'create']);
 
-
         $this->visit($chapterUrl . '/create-page')
             ->type('test page', 'name')
             ->type('test content', 'html')
@@ -396,10 +396,10 @@ class EntityPermissionsTest extends BrowserKitTest
             ->press('Save Permissions')
             ->seeInDatabase('bookshelves', ['id' => $shelf->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
-                'restrictable_id' => $shelf->id,
+                'restrictable_id'   => $shelf->id,
                 'restrictable_type' => Bookshelf::newModelInstance()->getMorphClass(),
-                'role_id' => '2',
-                'action' => 'view'
+                'role_id'           => '2',
+                'action'            => 'view',
             ]);
     }
 
@@ -413,10 +413,10 @@ class EntityPermissionsTest extends BrowserKitTest
             ->press('Save Permissions')
             ->seeInDatabase('books', ['id' => $book->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
-                'restrictable_id' => $book->id,
+                'restrictable_id'   => $book->id,
                 'restrictable_type' => Book::newModelInstance()->getMorphClass(),
-                'role_id' => '2',
-                'action' => 'view'
+                'role_id'           => '2',
+                'action'            => 'view',
             ]);
     }
 
@@ -430,10 +430,10 @@ class EntityPermissionsTest extends BrowserKitTest
             ->press('Save Permissions')
             ->seeInDatabase('chapters', ['id' => $chapter->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
-                'restrictable_id' => $chapter->id,
+                'restrictable_id'   => $chapter->id,
                 'restrictable_type' => Chapter::newModelInstance()->getMorphClass(),
-                'role_id' => '2',
-                'action' => 'update'
+                'role_id'           => '2',
+                'action'            => 'update',
             ]);
     }
 
@@ -447,10 +447,10 @@ class EntityPermissionsTest extends BrowserKitTest
             ->press('Save Permissions')
             ->seeInDatabase('pages', ['id' => $page->id, 'restricted' => true])
             ->seeInDatabase('entity_permissions', [
-                'restrictable_id' => $page->id,
+                'restrictable_id'   => $page->id,
                 'restrictable_type' => Page::newModelInstance()->getMorphClass(),
-                'role_id' => '2',
-                'action' => 'delete'
+                'role_id'           => '2',
+                'action'            => 'delete',
             ]);
     }
 
@@ -679,7 +679,8 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->actingAs($this->user)->visit($firstBook->getUrl() . '/sort');
     }
 
-    public function test_book_sort_permission() {
+    public function test_book_sort_permission()
+    {
         $firstBook = Book::first();
         $secondBook = Book::find(2);
 
@@ -692,12 +693,12 @@ class EntityPermissionsTest extends BrowserKitTest
         // Create request data
         $reqData = [
             [
-                'id' => $firstBookChapter->id,
-                'sort' => 0,
+                'id'            => $firstBookChapter->id,
+                'sort'          => 0,
                 'parentChapter' => false,
-                'type' => 'chapter',
-                'book' => $secondBook->id
-            ]
+                'type'          => 'chapter',
+                'book'          => $secondBook->id,
+            ],
         ];
 
         // Move chapter from first book to a second book
@@ -708,12 +709,12 @@ class EntityPermissionsTest extends BrowserKitTest
 
         $reqData = [
             [
-                'id' => $secondBookChapter->id,
-                'sort' => 0,
+                'id'            => $secondBookChapter->id,
+                'sort'          => 0,
                 'parentChapter' => false,
-                'type' => 'chapter',
-                'book' => $firstBook->id
-            ]
+                'type'          => 'chapter',
+                'book'          => $firstBook->id,
+            ],
         ];
 
         // Move chapter from second book to first book

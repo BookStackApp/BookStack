@@ -1,18 +1,20 @@
-<?php namespace BookStack\Uploads;
+<?php
+
+namespace BookStack\Uploads;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
 
 /**
- * @property int $id
+ * @property int    $id
  * @property string $name
  * @property string $url
  * @property string $path
  * @property string $type
- * @property int $uploaded_to
- * @property int $created_by
- * @property int $updated_by
+ * @property int    $uploaded_to
+ * @property int    $created_by
+ * @property int    $updated_by
  */
 class Image extends Model
 {
@@ -23,6 +25,7 @@ class Image extends Model
 
     /**
      * Get a thumbnail for this image.
+     *
      * @throws \Exception
      */
     public function getThumb(int $width, int $height, bool $keepRatio = false): string

@@ -1,4 +1,6 @@
-<?php namespace Tests;
+<?php
+
+namespace Tests;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -27,7 +29,7 @@ class RecycleBinTest extends TestCase
             "DELETE:/settings/recycle-bin/{$deletion->id}",
         ];
 
-        foreach($routes as $route) {
+        foreach ($routes as $route) {
             [$method, $url] = explode(':', $route);
             $resp = $this->call($method, $url);
             $this->assertPermissionError($resp);
@@ -35,7 +37,7 @@ class RecycleBinTest extends TestCase
 
         $this->giveUserPermissions($editor, ['restrictions-manage-all']);
 
-        foreach($routes as $route) {
+        foreach ($routes as $route) {
             [$method, $url] = explode(':', $route);
             $resp = $this->call($method, $url);
             $this->assertPermissionError($resp);
@@ -43,14 +45,13 @@ class RecycleBinTest extends TestCase
 
         $this->giveUserPermissions($editor, ['settings-manage']);
 
-        foreach($routes as $route) {
+        foreach ($routes as $route) {
             DB::beginTransaction();
             [$method, $url] = explode(':', $route);
             $resp = $this->call($method, $url);
             $this->assertNotPermissionError($resp);
             DB::rollBack();
         }
-
     }
 
     public function test_recycle_bin_view()
@@ -72,7 +73,7 @@ class RecycleBinTest extends TestCase
     public function test_recycle_bin_empty()
     {
         $page = Page::query()->first();
-        $book = Book::query()->where('id' , '!=', $page->book_id)->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $book = Book::query()->where('id', '!=', $page->book_id)->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
         $this->actingAs($editor)->delete($book->getUrl());
@@ -89,7 +90,7 @@ class RecycleBinTest extends TestCase
 
         $itemCount = 2 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
-        $redirectReq->assertNotificationContains('Deleted '.$itemCount.' total items from the recycle bin');
+        $redirectReq->assertNotificationContains('Deleted ' . $itemCount . ' total items from the recycle bin');
     }
 
     public function test_entity_restore()
@@ -110,7 +111,7 @@ class RecycleBinTest extends TestCase
 
         $itemCount = 1 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
-        $redirectReq->assertNotificationContains('Restored '.$itemCount.' total items from the recycle bin');
+        $redirectReq->assertNotificationContains('Restored ' . $itemCount . ' total items from the recycle bin');
     }
 
     public function test_permanent_delete()
@@ -129,13 +130,13 @@ class RecycleBinTest extends TestCase
 
         $itemCount = 1 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
-        $redirectReq->assertNotificationContains('Deleted '.$itemCount.' total items from the recycle bin');
+        $redirectReq->assertNotificationContains('Deleted ' . $itemCount . ' total items from the recycle bin');
     }
 
     public function test_permanent_delete_for_each_type()
     {
         /** @var Entity $entity */
-        foreach ([new Bookshelf, new Book, new Chapter, new Page] as $entity) {
+        foreach ([new Bookshelf(), new Book(), new Chapter(), new Page()] as $entity) {
             $entity = $entity->newQuery()->first();
             $this->asEditor()->delete($entity->getUrl());
             $deletion = Deletion::query()->orderBy('id', 'desc')->firstOrFail();
@@ -154,24 +155,24 @@ class RecycleBinTest extends TestCase
         $deletion = $page->deletions()->firstOrFail();
 
         $this->assertDatabaseHas('activities', [
-            'type' => 'page_delete',
-            'entity_id' => $page->id,
+            'type'        => 'page_delete',
+            'entity_id'   => $page->id,
             'entity_type' => $page->getMorphClass(),
         ]);
 
         $this->asAdmin()->delete("/settings/recycle-bin/{$deletion->id}");
 
         $this->assertDatabaseMissing('activities', [
-            'type' => 'page_delete',
-            'entity_id' => $page->id,
+            'type'        => 'page_delete',
+            'entity_id'   => $page->id,
             'entity_type' => $page->getMorphClass(),
         ]);
 
         $this->assertDatabaseHas('activities', [
-            'type' => 'page_delete',
-            'entity_id' => null,
+            'type'        => 'page_delete',
+            'entity_id'   => null,
             'entity_type' => null,
-            'detail' => $page->name,
+            'detail'      => $page->name,
         ]);
     }
 
@@ -233,8 +234,8 @@ class RecycleBinTest extends TestCase
         $chapterRestoreView->assertSeeText($chapter->name);
 
         $chapterRestore = $this->post("/settings/recycle-bin/{$chapterDeletion->id}/restore");
-        $chapterRestore->assertRedirect("/settings/recycle-bin");
-        $this->assertDatabaseMissing("deletions", ["id" => $chapterDeletion->id]);
+        $chapterRestore->assertRedirect('/settings/recycle-bin');
+        $this->assertDatabaseMissing('deletions', ['id' => $chapterDeletion->id]);
 
         $chapter->refresh();
         $this->assertNotNull($chapter->deleted_at);
@@ -263,6 +264,6 @@ class RecycleBinTest extends TestCase
 
         $pageRestoreView = $this->asAdmin()->get("/settings/recycle-bin/{$pageDeletion->id}/restore");
         $pageRestoreView->assertSee('The parent of this item has also been deleted.');
-        $pageRestoreView->assertElementContains('a[href$="/settings/recycle-bin/' . $bookDeletion->id. '/restore"]', 'Restore Parent');
+        $pageRestoreView->assertElementContains('a[href$="/settings/recycle-bin/' . $bookDeletion->id . '/restore"]', 'Restore Parent');
     }
 }

@@ -1,4 +1,6 @@
-<?php namespace Tests;
+<?php
+
+namespace Tests;
 
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
@@ -49,6 +51,7 @@ class ThemeTest extends TestCase
         $callback = function ($environment) use (&$callbackCalled) {
             $this->assertInstanceOf(ConfigurableEnvironmentInterface::class, $environment);
             $callbackCalled = true;
+
             return $environment;
         };
         Theme::listen(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $callback);
@@ -158,8 +161,8 @@ class ThemeTest extends TestCase
     public function test_add_social_driver()
     {
         Theme::addSocialDriver('catnet', [
-            'client_id' => 'abc123',
-            'client_secret' => 'def456'
+            'client_id'     => 'abc123',
+            'client_secret' => 'def456',
         ], 'SocialiteProviders\Discord\DiscordExtendSocialite@handleTesting');
 
         $this->assertEquals('catnet', config('services.catnet.name'));
@@ -173,9 +176,9 @@ class ThemeTest extends TestCase
     public function test_add_social_driver_uses_name_in_config_if_given()
     {
         Theme::addSocialDriver('catnet', [
-            'client_id' => 'abc123',
+            'client_id'     => 'abc123',
             'client_secret' => 'def456',
-            'name' => 'Super Cat Name',
+            'name'          => 'Super Cat Name',
         ], 'SocialiteProviders\Discord\DiscordExtendSocialite@handleTesting');
 
         $this->assertEquals('Super Cat Name', config('services.catnet.name'));
@@ -183,15 +186,14 @@ class ThemeTest extends TestCase
         $loginResp->assertSee('Super Cat Name');
     }
 
-
     public function test_add_social_driver_allows_a_configure_for_redirect_callback_to_be_passed()
     {
         Theme::addSocialDriver(
             'discord',
             [
-                'client_id' => 'abc123',
+                'client_id'     => 'abc123',
                 'client_secret' => 'def456',
-                'name' => 'Super Cat Name',
+                'name'          => 'Super Cat Name',
             ],
             'SocialiteProviders\Discord\DiscordExtendSocialite@handle',
             function ($driver) {
@@ -204,11 +206,10 @@ class ThemeTest extends TestCase
         $this->assertStringContainsString('donkey=donut', $redirect);
     }
 
-
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
-        $themeFolderName = 'testing_theme_' . rtrim(base64_encode(time()), "=");
+        $themeFolderName = 'testing_theme_' . rtrim(base64_encode(time()), '=');
         config()->set('view.theme', $themeFolderName);
         $themeFolderPath = theme_path('');
         File::makeDirectory($themeFolderPath);
@@ -218,5 +219,4 @@ class ThemeTest extends TestCase
         // Cleanup the custom theme folder we created
         File::deleteDirectory($themeFolderPath);
     }
-
 }

@@ -26,6 +26,7 @@ class UserSearchController extends Controller
         }
 
         $users = $query->get();
+
         return view('components.user-select-list', compact('users'));
     }
 }

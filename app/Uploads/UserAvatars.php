@@ -1,4 +1,6 @@
-<?php namespace BookStack\Uploads;
+<?php
+
+namespace BookStack\Uploads;
 
 use BookStack\Auth\User;
 use BookStack\Exceptions\HttpFetchException;
@@ -66,6 +68,7 @@ class UserAvatars
 
     /**
      * Save an avatar image from an external service.
+     *
      * @throws Exception
      */
     protected function saveAvatarImage(User $user, int $size = 500): Image
@@ -74,13 +77,14 @@ class UserAvatars
         $email = strtolower(trim($user->email));
 
         $replacements = [
-            '${hash}' => md5($email),
-            '${size}' => $size,
+            '${hash}'  => md5($email),
+            '${size}'  => $size,
             '${email}' => urlencode($email),
         ];
 
         $userAvatarUrl = strtr($avatarUrl, $replacements);
         $imageData = $this->getAvatarImageData($userAvatarUrl);
+
         return $this->createAvatarImageFromData($user, $imageData, 'png');
     }
 
@@ -101,6 +105,7 @@ class UserAvatars
 
     /**
      * Gets an image from url and returns it as a string of image data.
+     *
      * @throws Exception
      */
     protected function getAvatarImageData(string $url): string
@@ -110,6 +115,7 @@ class UserAvatars
         } catch (HttpFetchException $exception) {
             throw new Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
         }
+
         return $imageData;
     }
 
@@ -119,6 +125,7 @@ class UserAvatars
     protected function avatarFetchEnabled(): bool
     {
         $fetchUrl = $this->getAvatarUrl();
+
         return is_string($fetchUrl) && strpos($fetchUrl, 'http') === 0;
     }
 

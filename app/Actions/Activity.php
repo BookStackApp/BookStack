@@ -11,16 +11,15 @@ use Illuminate\Support\Str;
 
 /**
  * @property string $type
- * @property User $user
+ * @property User   $user
  * @property Entity $entity
  * @property string $detail
  * @property string $entity_type
- * @property int $entity_id
- * @property int $user_id
+ * @property int    $entity_id
+ * @property int    $user_id
  */
 class Activity extends Model
 {
-
     /**
      * Get the entity for this activity.
      */
@@ -29,6 +28,7 @@ class Activity extends Model
         if ($this->entity_type === '') {
             $this->entity_type = null;
         }
+
         return $this->morphTo('entity');
     }
 
@@ -54,7 +54,7 @@ class Activity extends Model
     public function isForEntity(): bool
     {
         return Str::startsWith($this->type, [
-            'page_', 'chapter_', 'book_', 'bookshelf_'
+            'page_', 'chapter_', 'book_', 'bookshelf_',
         ]);
     }
 

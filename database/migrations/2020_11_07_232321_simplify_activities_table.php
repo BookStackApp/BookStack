@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class SimplifyActivitiesTable extends Migration
 {
@@ -25,7 +25,7 @@ class SimplifyActivitiesTable extends Migration
         DB::table('activities')
             ->where('entity_id', '=', 0)
             ->update([
-                'entity_id' => null,
+                'entity_id'   => null,
                 'entity_type' => null,
             ]);
     }
@@ -40,7 +40,7 @@ class SimplifyActivitiesTable extends Migration
         DB::table('activities')
             ->whereNull('entity_id')
             ->update([
-                'entity_id' => 0,
+                'entity_id'   => 0,
                 'entity_type' => '',
             ]);
 

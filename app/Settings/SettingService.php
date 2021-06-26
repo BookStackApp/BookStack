@@ -1,4 +1,6 @@
-<?php namespace BookStack\Settings;
+<?php
+
+namespace BookStack\Settings;
 
 use BookStack\Auth\User;
 use Illuminate\Contracts\Cache\Repository as Cache;
@@ -42,6 +44,7 @@ class SettingService
         $value = $this->getValueFromStore($key) ?? $default;
         $formatted = $this->formatValue($value, $default);
         $this->localCache[$key] = $formatted;
+
         return $formatted;
     }
 
@@ -51,6 +54,7 @@ class SettingService
     protected function getFromSession(string $key, $default = false)
     {
         $value = session()->get($key, $default);
+
         return $this->formatValue($value, $default);
     }
 
@@ -66,6 +70,7 @@ class SettingService
         if ($user->isDefault()) {
             return $this->getFromSession($key, $default);
         }
+
         return $this->get($this->userKey($user->id, $key), $default);
     }
 
@@ -101,6 +106,7 @@ class SettingService
             }
 
             $this->cache->forever($cacheKey, $value);
+
             return $value;
         }
 
@@ -120,14 +126,14 @@ class SettingService
     }
 
     /**
-     * Format a settings value
+     * Format a settings value.
      */
     protected function formatValue($value, $default)
     {
         // Change string booleans to actual booleans
         if ($value === 'true') {
             $value = true;
-        } else if ($value === 'false') {
+        } elseif ($value === 'false') {
             $value = false;
         }
 
@@ -135,6 +141,7 @@ class SettingService
         if ($value === '') {
             $value = $default;
         }
+
         return $value;
     }
 
@@ -144,6 +151,7 @@ class SettingService
     public function has(string $key): bool
     {
         $setting = $this->getSettingObjectByKey($key);
+
         return $setting !== null;
     }
 
@@ -154,7 +162,7 @@ class SettingService
     public function put(string $key, $value): bool
     {
         $setting = $this->setting->newQuery()->firstOrNew([
-            'setting_key' => $key
+            'setting_key' => $key,
         ]);
         $setting->type = 'string';
 
@@ -166,6 +174,7 @@ class SettingService
         $setting->value = $value;
         $setting->save();
         $this->clearFromCache($key);
+
         return true;
     }
 
@@ -179,6 +188,7 @@ class SettingService
         $values = collect($value)->values()->filter(function (array $item) {
             return count(array_filter($item)) > 0;
         });
+
         return json_encode($values);
     }
 
@@ -189,6 +199,7 @@ class SettingService
     {
         if ($user->isDefault()) {
             session()->put($key, $value);
+
             return true;
         }
 

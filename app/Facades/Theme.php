@@ -1,4 +1,6 @@
-<?php namespace BookStack\Facades;
+<?php
+
+namespace BookStack\Facades;
 
 use BookStack\Theming\ThemeService;
 use Illuminate\Support\Facades\Facade;

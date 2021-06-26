@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities;
+<?php
+
+namespace BookStack\Entities;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\ShelfContext;
@@ -6,11 +8,11 @@ use Illuminate\View\View;
 
 class BreadcrumbsViewComposer
 {
-
     protected $entityContextManager;
 
     /**
      * BreadcrumbsViewComposer constructor.
+     *
      * @param ShelfContext $entityContextManager
      */
     public function __construct(ShelfContext $entityContextManager)
@@ -20,6 +22,7 @@ class BreadcrumbsViewComposer
 
     /**
      * Modify data when the view is composed.
+     *
      * @param View $view
      */
     public function compose(View $view)

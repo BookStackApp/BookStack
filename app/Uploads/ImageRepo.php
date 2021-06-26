@@ -1,4 +1,6 @@
-<?php namespace BookStack\Uploads;
+<?php
+
+namespace BookStack\Uploads;
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Page;
@@ -9,7 +11,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
 {
-
     protected $image;
     protected $imageService;
     protected $restrictionService;
@@ -29,7 +30,6 @@ class ImageRepo
         $this->restrictionService = $permissionService;
         $this->page = $page;
     }
-
 
     /**
      * Get an image with the given id.
@@ -54,8 +54,8 @@ class ImageRepo
         });
 
         return [
-            'images'  => $returnImages,
-            'has_more' => $hasMore
+            'images'   => $returnImages,
+            'has_more' => $hasMore,
         ];
     }
 
@@ -121,39 +121,45 @@ class ImageRepo
 
     /**
      * Save a new image into storage and return the new image.
+     *
      * @throws ImageUploadException
      */
     public function saveNew(UploadedFile $uploadFile, string $type, int $uploadedTo = 0, int $resizeWidth = null, int $resizeHeight = null, bool $keepRatio = true): Image
     {
         $image = $this->imageService->saveNewFromUpload($uploadFile, $type, $uploadedTo, $resizeWidth, $resizeHeight, $keepRatio);
         $this->loadThumbs($image);
+
         return $image;
     }
 
     /**
      * Save a new image from an existing image data string.
+     *
      * @throws ImageUploadException
      */
     public function saveNewFromData(string $imageName, string $imageData, string $type, int $uploadedTo = 0)
     {
         $image = $this->imageService->saveNew($imageName, $imageData, $type, $uploadedTo);
         $this->loadThumbs($image);
+
         return $image;
     }
 
     /**
      * Save a drawing the the database.
+     *
      * @throws ImageUploadException
      */
     public function saveDrawing(string $base64Uri, int $uploadedTo): Image
     {
         $name = 'Drawing-' . strval(user()->id) . '-' . strval(time()) . '.png';
+
         return $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawio', $uploadedTo);
     }
 
-
     /**
      * Update the details of an image via an array of properties.
+     *
      * @throws ImageUploadException
      * @throws Exception
      */
@@ -162,11 +168,13 @@ class ImageRepo
         $image->fill($updateDetails);
         $image->save();
         $this->loadThumbs($image);
+
         return $image;
     }
 
     /**
      * Destroys an Image object along with its revisions, files and thumbnails.
+     *
      * @throws Exception
      */
     public function destroyImage(Image $image = null): bool
@@ -174,11 +182,13 @@ class ImageRepo
         if ($image) {
             $this->imageService->destroy($image);
         }
+
         return true;
     }
 
     /**
      * Destroy all images of a certain type.
+     *
      * @throws Exception
      */
     public function destroyByType(string $imageType)
@@ -189,16 +199,16 @@ class ImageRepo
         }
     }
 
-
     /**
      * Load thumbnails onto an image object.
+     *
      * @throws Exception
      */
     public function loadThumbs(Image $image)
     {
         $image->thumbs = [
             'gallery' => $this->getThumbnail($image, 150, 150, false),
-            'display' => $this->getThumbnail($image, 1680, null, true)
+            'display' => $this->getThumbnail($image, 1680, null, true),
         ];
     }
 
@@ -206,6 +216,7 @@ class ImageRepo
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
+     *
      * @throws Exception
      */
     protected function getThumbnail(Image $image, ?int $width = 220, ?int $height = 220, bool $keepRatio = false): ?string
