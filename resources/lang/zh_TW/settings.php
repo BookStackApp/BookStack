@@ -92,6 +92,7 @@ return [
     'recycle_bin' => '資源回收桶',
     'recycle_bin_desc' => '在這裡，您可以還原已刪除的項目，或是選擇將其從系統中永久移除。與系統中套用了權限過濾條件類似的活動列表不同的是，此列表並未過濾。',
     'recycle_bin_deleted_item' => '已刪除項目',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => '刪除由',
     'recycle_bin_deleted_at' => '刪除時間',
     'recycle_bin_permanently_delete' => '永久刪除',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => '要被還原的項目',
     'recycle_bin_restore_confirm' => '此動作將會還原已被刪除的項目（包含任何下層元素）到其原始位置。如果原始位置已被刪除，且目前位於垃圾桶裡，那麼上層項目也需要被還原。',
     'recycle_bin_restore_deleted_parent' => '此項目的上層項目也已被刪除。因此將會保持被刪除的狀態，直到上層項目也被還原。',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => '已從回收桶刪除共 :count 個項目。',
     'recycle_bin_restore_notification' => '已從回收桶還原共 :count 個項目。',
 
