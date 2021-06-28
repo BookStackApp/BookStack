@@ -1,12 +1,14 @@
-<?php namespace Tests\Permissions;
+<?php
+
+namespace Tests\Permissions;
 
 use BookStack\Actions\Comment;
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use BookStack\Auth\Role;
 use BookStack\Uploads\Image;
 use Laravel\BrowserKitTesting\HttpException;
 use Tests\BrowserKitTest;
@@ -93,11 +95,11 @@ class RolesTest extends BrowserKitTest
 
         $editUrl = '/settings/users/' . $adminUser->id;
         $this->actingAs($adminUser)->put($editUrl, [
-            'name' => $adminUser->name,
+            'name'  => $adminUser->name,
             'email' => $adminUser->email,
             'roles' => [
                 'viewer' => strval($viewerRole->id),
-            ]
+            ],
         ])->followRedirects();
 
         $this->seePageIs($editUrl);
@@ -134,7 +136,7 @@ class RolesTest extends BrowserKitTest
 
     public function test_manage_users_permission_shows_link_in_header_if_does_not_have_settings_manage_permision()
     {
-        $usersLink = 'href="'.url('/settings/users') . '"';
+        $usersLink = 'href="' . url('/settings/users') . '"';
         $this->actingAs($this->user)->visit('/')->dontSee($usersLink);
         $this->giveUserPermissions($this->user, ['users-manage']);
         $this->actingAs($this->user)->visit('/')->see($usersLink);
@@ -152,13 +154,13 @@ class RolesTest extends BrowserKitTest
             ->assertResponseOk()
             ->seeElement('input[name=email][disabled]');
         $this->put($userProfileUrl, [
-            'name' => 'my_new_name',
+            'name'  => 'my_new_name',
             'email' => 'new_email@example.com',
         ]);
         $this->seeInDatabase('users', [
-            'id' => $this->user->id,
+            'id'    => $this->user->id,
             'email' => $originalEmail,
-            'name' => 'my_new_name',
+            'name'  => 'my_new_name',
         ]);
 
         $this->giveUserPermissions($this->user, ['users-manage']);
@@ -168,14 +170,14 @@ class RolesTest extends BrowserKitTest
             ->dontSeeElement('input[name=email][disabled]')
             ->seeElement('input[name=email]');
         $this->put($userProfileUrl, [
-            'name' => 'my_new_name_2',
+            'name'  => 'my_new_name_2',
             'email' => 'new_email@example.com',
         ]);
 
         $this->seeInDatabase('users', [
-            'id' => $this->user->id,
+            'id'    => $this->user->id,
             'email' => 'new_email@example.com',
-            'name' => 'my_new_name_2',
+            'name'  => 'my_new_name_2',
         ]);
     }
 
@@ -250,10 +252,11 @@ class RolesTest extends BrowserKitTest
     }
 
     /**
-     * Check a standard entity access permission
+     * Check a standard entity access permission.
+     *
      * @param string $permission
-     * @param array $accessUrls Urls that are only accessible after having the permission
-     * @param array $visibles Check this text, In the buttons toolbar, is only visible with the permission
+     * @param array  $accessUrls Urls that are only accessible after having the permission
+     * @param array  $visibles   Check this text, In the buttons toolbar, is only visible with the permission
      */
     private function checkAccessPermission($permission, $accessUrls = [], $visibles = [])
     {
@@ -263,7 +266,7 @@ class RolesTest extends BrowserKitTest
         }
         foreach ($visibles as $url => $text) {
             $this->actingAs($this->user)->visit($url)
-                ->dontSeeInElement('.action-buttons',$text);
+                ->dontSeeInElement('.action-buttons', $text);
         }
 
         $this->giveUserPermissions($this->user, [$permission]);
@@ -281,9 +284,9 @@ class RolesTest extends BrowserKitTest
     public function test_bookshelves_create_all_permissions()
     {
         $this->checkAccessPermission('bookshelf-create-all', [
-            '/create-shelf'
+            '/create-shelf',
         ], [
-            '/shelves' => 'New Shelf'
+            '/shelves' => 'New Shelf',
         ]);
 
         $this->visit('/create-shelf')
@@ -301,9 +304,9 @@ class RolesTest extends BrowserKitTest
         $this->regenEntityPermissions($ownShelf);
 
         $this->checkAccessPermission('bookshelf-update-own', [
-            $ownShelf->getUrl('/edit')
+            $ownShelf->getUrl('/edit'),
         ], [
-            $ownShelf->getUrl() => 'Edit'
+            $ownShelf->getUrl() => 'Edit',
         ]);
 
         $this->visit($otherShelf->getUrl())
@@ -316,9 +319,9 @@ class RolesTest extends BrowserKitTest
     {
         $otherShelf = Bookshelf::first();
         $this->checkAccessPermission('bookshelf-update-all', [
-            $otherShelf->getUrl('/edit')
+            $otherShelf->getUrl('/edit'),
         ], [
-            $otherShelf->getUrl() => 'Edit'
+            $otherShelf->getUrl() => 'Edit',
         ]);
     }
 
@@ -331,9 +334,9 @@ class RolesTest extends BrowserKitTest
         $this->regenEntityPermissions($ownShelf);
 
         $this->checkAccessPermission('bookshelf-delete-own', [
-            $ownShelf->getUrl('/delete')
+            $ownShelf->getUrl('/delete'),
         ], [
-            $ownShelf->getUrl() => 'Delete'
+            $ownShelf->getUrl() => 'Delete',
         ]);
 
         $this->visit($otherShelf->getUrl())
@@ -351,9 +354,9 @@ class RolesTest extends BrowserKitTest
         $this->giveUserPermissions($this->user, ['bookshelf-update-all']);
         $otherShelf = Bookshelf::first();
         $this->checkAccessPermission('bookshelf-delete-all', [
-            $otherShelf->getUrl('/delete')
+            $otherShelf->getUrl('/delete'),
         ], [
-            $otherShelf->getUrl() => 'Delete'
+            $otherShelf->getUrl() => 'Delete',
         ]);
 
         $this->visit($otherShelf->getUrl())->visit($otherShelf->getUrl('/delete'))
@@ -365,9 +368,9 @@ class RolesTest extends BrowserKitTest
     public function test_books_create_all_permissions()
     {
         $this->checkAccessPermission('book-create-all', [
-            '/create-book'
+            '/create-book',
         ], [
-            '/books' => 'Create New Book'
+            '/books' => 'Create New Book',
         ]);
 
         $this->visit('/create-book')
@@ -382,9 +385,9 @@ class RolesTest extends BrowserKitTest
         $otherBook = Book::take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('book-update-own', [
-            $ownBook->getUrl() . '/edit'
+            $ownBook->getUrl() . '/edit',
         ], [
-            $ownBook->getUrl() => 'Edit'
+            $ownBook->getUrl() => 'Edit',
         ]);
 
         $this->visit($otherBook->getUrl())
@@ -397,9 +400,9 @@ class RolesTest extends BrowserKitTest
     {
         $otherBook = Book::take(1)->get()->first();
         $this->checkAccessPermission('book-update-all', [
-            $otherBook->getUrl() . '/edit'
+            $otherBook->getUrl() . '/edit',
         ], [
-            $otherBook->getUrl() => 'Edit'
+            $otherBook->getUrl() => 'Edit',
         ]);
     }
 
@@ -409,9 +412,9 @@ class RolesTest extends BrowserKitTest
         $otherBook = Book::take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('book-delete-own', [
-            $ownBook->getUrl() . '/delete'
+            $ownBook->getUrl() . '/delete',
         ], [
-            $ownBook->getUrl() => 'Delete'
+            $ownBook->getUrl() => 'Delete',
         ]);
 
         $this->visit($otherBook->getUrl())
@@ -429,9 +432,9 @@ class RolesTest extends BrowserKitTest
         $this->giveUserPermissions($this->user, ['book-update-all']);
         $otherBook = Book::take(1)->get()->first();
         $this->checkAccessPermission('book-delete-all', [
-            $otherBook->getUrl() . '/delete'
+            $otherBook->getUrl() . '/delete',
         ], [
-            $otherBook->getUrl() => 'Delete'
+            $otherBook->getUrl() => 'Delete',
         ]);
 
         $this->visit($otherBook->getUrl())->visit($otherBook->getUrl() . '/delete')
@@ -445,9 +448,9 @@ class RolesTest extends BrowserKitTest
         $book = Book::take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('chapter-create-own', [
-            $ownBook->getUrl('/create-chapter')
+            $ownBook->getUrl('/create-chapter'),
         ], [
-            $ownBook->getUrl() => 'New Chapter'
+            $ownBook->getUrl() => 'New Chapter',
         ]);
 
         $this->visit($ownBook->getUrl('/create-chapter'))
@@ -466,9 +469,9 @@ class RolesTest extends BrowserKitTest
     {
         $book = Book::take(1)->get()->first();
         $this->checkAccessPermission('chapter-create-all', [
-            $book->getUrl('/create-chapter')
+            $book->getUrl('/create-chapter'),
         ], [
-            $book->getUrl() => 'New Chapter'
+            $book->getUrl() => 'New Chapter',
         ]);
 
         $this->visit($book->getUrl('/create-chapter'))
@@ -483,9 +486,9 @@ class RolesTest extends BrowserKitTest
         $otherChapter = Chapter::take(1)->get()->first();
         $ownChapter = $this->createEntityChainBelongingToUser($this->user)['chapter'];
         $this->checkAccessPermission('chapter-update-own', [
-            $ownChapter->getUrl() . '/edit'
+            $ownChapter->getUrl() . '/edit',
         ], [
-            $ownChapter->getUrl() => 'Edit'
+            $ownChapter->getUrl() => 'Edit',
         ]);
 
         $this->visit($otherChapter->getUrl())
@@ -498,9 +501,9 @@ class RolesTest extends BrowserKitTest
     {
         $otherChapter = Chapter::take(1)->get()->first();
         $this->checkAccessPermission('chapter-update-all', [
-            $otherChapter->getUrl() . '/edit'
+            $otherChapter->getUrl() . '/edit',
         ], [
-            $otherChapter->getUrl() => 'Edit'
+            $otherChapter->getUrl() => 'Edit',
         ]);
     }
 
@@ -510,9 +513,9 @@ class RolesTest extends BrowserKitTest
         $otherChapter = Chapter::take(1)->get()->first();
         $ownChapter = $this->createEntityChainBelongingToUser($this->user)['chapter'];
         $this->checkAccessPermission('chapter-delete-own', [
-            $ownChapter->getUrl() . '/delete'
+            $ownChapter->getUrl() . '/delete',
         ], [
-            $ownChapter->getUrl() => 'Delete'
+            $ownChapter->getUrl() => 'Delete',
         ]);
 
         $bookUrl = $ownChapter->book->getUrl();
@@ -531,9 +534,9 @@ class RolesTest extends BrowserKitTest
         $this->giveUserPermissions($this->user, ['chapter-update-all']);
         $otherChapter = Chapter::take(1)->get()->first();
         $this->checkAccessPermission('chapter-delete-all', [
-            $otherChapter->getUrl() . '/delete'
+            $otherChapter->getUrl() . '/delete',
         ], [
-            $otherChapter->getUrl() => 'Delete'
+            $otherChapter->getUrl() => 'Delete',
         ]);
 
         $bookUrl = $otherChapter->book->getUrl();
@@ -562,8 +565,8 @@ class RolesTest extends BrowserKitTest
         }
 
         $this->checkAccessPermission('page-create-own', [], [
-            $ownBook->getUrl() => 'New Page',
-            $ownChapter->getUrl() => 'New Page'
+            $ownBook->getUrl()    => 'New Page',
+            $ownChapter->getUrl() => 'New Page',
         ]);
 
         $this->giveUserPermissions($this->user, ['page-create-own']);
@@ -606,8 +609,8 @@ class RolesTest extends BrowserKitTest
         }
 
         $this->checkAccessPermission('page-create-all', [], [
-            $book->getUrl() => 'New Page',
-            $chapter->getUrl() => 'New Page'
+            $book->getUrl()    => 'New Page',
+            $chapter->getUrl() => 'New Page',
         ]);
 
         $this->giveUserPermissions($this->user, ['page-create-all']);
@@ -636,9 +639,9 @@ class RolesTest extends BrowserKitTest
         $otherPage = Page::take(1)->get()->first();
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->checkAccessPermission('page-update-own', [
-            $ownPage->getUrl() . '/edit'
+            $ownPage->getUrl() . '/edit',
         ], [
-            $ownPage->getUrl() => 'Edit'
+            $ownPage->getUrl() => 'Edit',
         ]);
 
         $this->visit($otherPage->getUrl())
@@ -651,9 +654,9 @@ class RolesTest extends BrowserKitTest
     {
         $otherPage = Page::take(1)->get()->first();
         $this->checkAccessPermission('page-update-all', [
-            $otherPage->getUrl() . '/edit'
+            $otherPage->getUrl() . '/edit',
         ], [
-            $otherPage->getUrl() => 'Edit'
+            $otherPage->getUrl() => 'Edit',
         ]);
     }
 
@@ -663,9 +666,9 @@ class RolesTest extends BrowserKitTest
         $otherPage = Page::take(1)->get()->first();
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->checkAccessPermission('page-delete-own', [
-            $ownPage->getUrl() . '/delete'
+            $ownPage->getUrl() . '/delete',
         ], [
-            $ownPage->getUrl() => 'Delete'
+            $ownPage->getUrl() => 'Delete',
         ]);
 
         $parent = $ownPage->chapter ?? $ownPage->book;
@@ -684,9 +687,9 @@ class RolesTest extends BrowserKitTest
         $this->giveUserPermissions($this->user, ['page-update-all']);
         $otherPage = Page::take(1)->get()->first();
         $this->checkAccessPermission('page-delete-all', [
-            $otherPage->getUrl() . '/delete'
+            $otherPage->getUrl() . '/delete',
         ], [
-            $otherPage->getUrl() => 'Delete'
+            $otherPage->getUrl() => 'Delete',
         ]);
 
         $parent = $otherPage->chapter ?? $otherPage->book;
@@ -702,8 +705,8 @@ class RolesTest extends BrowserKitTest
         $adminRole = Role::getSystemRole('admin');
         $publicRole = Role::getSystemRole('public');
         $this->asAdmin()->visit('/settings/users/' . $user->id)
-            ->seeElement('[name="roles['.$adminRole->id.']"]')
-            ->seeElement('[name="roles['.$publicRole->id.']"]');
+            ->seeElement('[name="roles[' . $adminRole->id . ']"]')
+            ->seeElement('[name="roles[' . $publicRole->id . ']"]');
     }
 
     public function test_public_role_visible_in_role_listing()
@@ -779,8 +782,8 @@ class RolesTest extends BrowserKitTest
 
         $this->asAdmin()->put('/settings/roles/' . $viewerRole->id, [
             'display_name' => $viewerRole->display_name,
-            'description' => $viewerRole->description,
-            'permission' => []
+            'description'  => $viewerRole->description,
+            'permission'   => [],
         ])->assertResponseStatus(302);
 
         $this->expectException(HttpException::class);
@@ -805,7 +808,8 @@ class RolesTest extends BrowserKitTest
             ->dontSee('Sort the current book');
     }
 
-    public function test_comment_create_permission () {
+    public function test_comment_create_permission()
+    {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
 
         $this->actingAs($this->user)->addComment($ownPage);
@@ -818,8 +822,8 @@ class RolesTest extends BrowserKitTest
         $this->assertResponseStatus(200);
     }
 
-
-    public function test_comment_update_own_permission () {
+    public function test_comment_update_own_permission()
+    {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->giveUserPermissions($this->user, ['comment-create-all']);
         $commentId = $this->actingAs($this->user)->addComment($ownPage);
@@ -835,7 +839,8 @@ class RolesTest extends BrowserKitTest
         $this->assertResponseStatus(200);
     }
 
-    public function test_comment_update_all_permission () {
+    public function test_comment_update_all_permission()
+    {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $commentId = $this->asAdmin()->addComment($ownPage);
 
@@ -850,7 +855,8 @@ class RolesTest extends BrowserKitTest
         $this->assertResponseStatus(200);
     }
 
-    public function test_comment_delete_own_permission () {
+    public function test_comment_delete_own_permission()
+    {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->giveUserPermissions($this->user, ['comment-create-all']);
         $commentId = $this->actingAs($this->user)->addComment($ownPage);
@@ -866,7 +872,8 @@ class RolesTest extends BrowserKitTest
         $this->assertResponseStatus(200);
     }
 
-    public function test_comment_delete_all_permission () {
+    public function test_comment_delete_all_permission()
+    {
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $commentId = $this->asAdmin()->addComment($ownPage);
 
@@ -881,33 +888,37 @@ class RolesTest extends BrowserKitTest
         $this->assertResponseStatus(200);
     }
 
-    private function addComment($page) {
+    private function addComment($page)
+    {
         $comment = factory(Comment::class)->make();
         $url = "/comment/$page->id";
         $request = [
             'text' => $comment->text,
-            'html' => $comment->html
+            'html' => $comment->html,
         ];
 
         $this->postJson($url, $request);
         $comment = $page->comments()->first();
+
         return $comment === null ? null : $comment->id;
     }
 
-    private function updateComment($commentId) {
+    private function updateComment($commentId)
+    {
         $comment = factory(Comment::class)->make();
         $url = "/comment/$commentId";
         $request = [
             'text' => $comment->text,
-            'html' => $comment->html
+            'html' => $comment->html,
         ];
 
         return $this->putJson($url, $request);
     }
 
-    private function deleteComment($commentId) {
-         $url = '/comment/' . $commentId;
-         return $this->json('DELETE', $url);
-    }
+    private function deleteComment($commentId)
+    {
+        $url = '/comment/' . $commentId;
 
+        return $this->json('DELETE', $url);
+    }
 }

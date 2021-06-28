@@ -1,4 +1,6 @@
-<?php namespace BookStack\Actions;
+<?php
+
+namespace BookStack\Actions;
 
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;

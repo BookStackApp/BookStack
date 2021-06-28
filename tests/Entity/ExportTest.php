@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
@@ -9,7 +11,6 @@ use Tests\TestCase;
 
 class ExportTest extends TestCase
 {
-
     public function test_page_text_export()
     {
         $page = Page::query()->first();
@@ -133,7 +134,7 @@ class ExportTest extends TestCase
     {
         $page = Page::query()->first();
 
-        $customHeadContent = "<style>p{color: red;}</style>";
+        $customHeadContent = '<style>p{color: red;}</style>';
         $this->setSettings(['app-custom-head' => $customHeadContent]);
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
@@ -144,7 +145,7 @@ class ExportTest extends TestCase
     {
         $page = Page::query()->first();
 
-        $customHeadContent = "<!-- A comment -->";
+        $customHeadContent = '<!-- A comment -->';
         $this->setSettings(['app-custom-head' => $customHeadContent]);
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
@@ -209,8 +210,8 @@ class ExportTest extends TestCase
     {
         $page = Page::query()->first();
         $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg"/>'
-            .'<img src="http://localhost/uploads/svg_test.svg"/>'
-            .'<img src="/uploads/svg_test.svg"/>';
+            . '<img src="http://localhost/uploads/svg_test.svg"/>'
+            . '<img src="/uploads/svg_test.svg"/>';
         $storageDisk = Storage::disk('local');
         $storageDisk->makeDirectory('uploads/images/gallery');
         $storageDisk->put('uploads/images/gallery/svg_test.svg', '<svg>good</svg>');
@@ -258,5 +259,4 @@ class ExportTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertDontSee('ExportWizardTheFifth');
     }
-
 }

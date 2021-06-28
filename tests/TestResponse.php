@@ -1,16 +1,17 @@
-<?php namespace Tests;
+<?php
 
-use \Illuminate\Foundation\Testing\TestResponse as BaseTestResponse;
-use Symfony\Component\DomCrawler\Crawler;
+namespace Tests;
+
+use Illuminate\Foundation\Testing\TestResponse as BaseTestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Class TestResponse
  * Custom extension of the default Laravel TestResponse class.
- * @package Tests
  */
-class TestResponse extends BaseTestResponse {
-
+class TestResponse extends BaseTestResponse
+{
     protected $crawlerInstance;
 
     /**
@@ -21,11 +22,13 @@ class TestResponse extends BaseTestResponse {
         if (!is_object($this->crawlerInstance)) {
             $this->crawlerInstance = new Crawler($this->getContent());
         }
+
         return $this->crawlerInstance;
     }
 
     /**
      * Assert the response contains the specified element.
+     *
      * @return $this
      */
     public function assertElementExists(string $selector)
@@ -33,16 +36,18 @@ class TestResponse extends BaseTestResponse {
         $elements = $this->crawler()->filter($selector);
         PHPUnit::assertTrue(
             $elements->count() > 0,
-            'Unable to find element matching the selector: '.PHP_EOL.PHP_EOL.
-            "[{$selector}]".PHP_EOL.PHP_EOL.
-            'within'.PHP_EOL.PHP_EOL.
+            'Unable to find element matching the selector: ' . PHP_EOL . PHP_EOL .
+            "[{$selector}]" . PHP_EOL . PHP_EOL .
+            'within' . PHP_EOL . PHP_EOL .
             "[{$this->getContent()}]."
         );
+
         return $this;
     }
 
     /**
      * Assert the response does not contain the specified element.
+     *
      * @return $this
      */
     public function assertElementNotExists(string $selector)
@@ -50,11 +55,12 @@ class TestResponse extends BaseTestResponse {
         $elements = $this->crawler()->filter($selector);
         PHPUnit::assertTrue(
             $elements->count() === 0,
-            'Found elements matching the selector: '.PHP_EOL.PHP_EOL.
-            "[{$selector}]".PHP_EOL.PHP_EOL.
-            'within'.PHP_EOL.PHP_EOL.
+            'Found elements matching the selector: ' . PHP_EOL . PHP_EOL .
+            "[{$selector}]" . PHP_EOL . PHP_EOL .
+            'within' . PHP_EOL . PHP_EOL .
             "[{$this->getContent()}]."
         );
+
         return $this;
     }
 
@@ -62,6 +68,7 @@ class TestResponse extends BaseTestResponse {
      * Assert the response includes a specific element containing the given text.
      * If an nth match is provided, only that will be checked otherwise all matching
      * elements will be checked for the given text.
+     *
      * @return $this
      */
     public function assertElementContains(string $selector, string $text, ?int $nthMatch = null)
@@ -84,12 +91,12 @@ class TestResponse extends BaseTestResponse {
 
         PHPUnit::assertTrue(
             $matched,
-            'Unable to find element of selector: '.PHP_EOL.PHP_EOL.
-            ($nthMatch ? ("at position {$nthMatch}".PHP_EOL.PHP_EOL) : '') .
-            "[{$selector}]".PHP_EOL.PHP_EOL.
-            'containing text'.PHP_EOL.PHP_EOL.
-            "[{$text}]".PHP_EOL.PHP_EOL.
-            'within'.PHP_EOL.PHP_EOL.
+            'Unable to find element of selector: ' . PHP_EOL . PHP_EOL .
+            ($nthMatch ? ("at position {$nthMatch}" . PHP_EOL . PHP_EOL) : '') .
+            "[{$selector}]" . PHP_EOL . PHP_EOL .
+            'containing text' . PHP_EOL . PHP_EOL .
+            "[{$text}]" . PHP_EOL . PHP_EOL .
+            'within' . PHP_EOL . PHP_EOL .
             "[{$this->getContent()}]."
         );
 
@@ -100,6 +107,7 @@ class TestResponse extends BaseTestResponse {
      * Assert the response does not include a specific element containing the given text.
      * If an nth match is provided, only that will be checked otherwise all matching
      * elements will be checked for the given text.
+     *
      * @return $this
      */
     public function assertElementNotContains(string $selector, string $text, ?int $nthMatch = null)
@@ -122,12 +130,12 @@ class TestResponse extends BaseTestResponse {
 
         PHPUnit::assertTrue(
             !$matched,
-            'Found element of selector: '.PHP_EOL.PHP_EOL.
-            ($nthMatch ? ("at position {$nthMatch}".PHP_EOL.PHP_EOL) : '') .
-            "[{$selector}]".PHP_EOL.PHP_EOL.
-            'containing text'.PHP_EOL.PHP_EOL.
-            "[{$text}]".PHP_EOL.PHP_EOL.
-            'within'.PHP_EOL.PHP_EOL.
+            'Found element of selector: ' . PHP_EOL . PHP_EOL .
+            ($nthMatch ? ("at position {$nthMatch}" . PHP_EOL . PHP_EOL) : '') .
+            "[{$selector}]" . PHP_EOL . PHP_EOL .
+            'containing text' . PHP_EOL . PHP_EOL .
+            "[{$text}]" . PHP_EOL . PHP_EOL .
+            'within' . PHP_EOL . PHP_EOL .
             "[{$this->getContent()}]."
         );
 
@@ -136,6 +144,7 @@ class TestResponse extends BaseTestResponse {
 
     /**
      * Assert there's a notification within the view containing the given text.
+     *
      * @return $this
      */
     public function assertNotificationContains(string $text)
@@ -145,14 +154,15 @@ class TestResponse extends BaseTestResponse {
 
     /**
      * Get the escaped text pattern for the constraint.
+     *
      * @return string
      */
     protected function getEscapedPattern(string $text)
     {
         $rawPattern = preg_quote($text, '/');
         $escapedPattern = preg_quote(e($text), '/');
+
         return $rawPattern == $escapedPattern
             ? $rawPattern : "({$rawPattern}|{$escapedPattern})";
     }
-
 }

@@ -1,4 +1,6 @@
-<?php namespace BookStack\Interfaces;
+<?php
+
+namespace BookStack\Interfaces;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 

@@ -38,8 +38,9 @@ class CreateAdmin extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      * @throws \BookStack\Exceptions\NotFoundException
+     *
+     * @return mixed
      */
     public function handle()
     {
@@ -70,7 +71,6 @@ class CreateAdmin extends Command
         if (mb_strlen($password) < 5) {
             return $this->error('Invalid password provided, Must be at least 5 characters');
         }
-
 
         $user = $this->userRepo->create(['email' => $email, 'name' => $name, 'password' => $password]);
         $this->userRepo->attachSystemRole($user, 'admin');

@@ -1,5 +1,6 @@
-<?php namespace Tests\Auth;
+<?php
 
+namespace Tests\Auth;
 
 use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\User;
@@ -12,7 +13,6 @@ use Tests\TestCase;
 
 class UserInviteTest extends TestCase
 {
-
     public function test_user_creation_creates_invite()
     {
         Notification::fake();
@@ -20,8 +20,8 @@ class UserInviteTest extends TestCase
 
         $email = Str::random(16) . '@example.com';
         $resp = $this->actingAs($admin)->post('/settings/users/create', [
-            'name' => 'Barry',
-            'email' => $email,
+            'name'        => 'Barry',
+            'email'       => $email,
             'send_invite' => 'true',
         ]);
         $resp->assertRedirect('/settings/users');
@@ -30,7 +30,7 @@ class UserInviteTest extends TestCase
 
         Notification::assertSentTo($newUser, UserInvite::class);
         $this->assertDatabaseHas('user_invites', [
-            'user_id' => $newUser->id
+            'user_id' => $newUser->id,
         ]);
     }
 
@@ -54,12 +54,12 @@ class UserInviteTest extends TestCase
         ]);
         $setPasswordResp->assertSee('Password set, you now have access to BookStack!');
         $newPasswordValid = auth()->validate([
-            'email' => $user->email,
-            'password' => 'my test password'
+            'email'    => $user->email,
+            'password' => 'my test password',
         ]);
         $this->assertTrue($newPasswordValid);
         $this->assertDatabaseMissing('user_invites', [
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
     }
 
@@ -85,7 +85,7 @@ class UserInviteTest extends TestCase
         $noPassword->assertSee('The password field is required.');
 
         $this->assertDatabaseHas('user_invites', [
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
     }
 
@@ -112,6 +112,4 @@ class UserInviteTest extends TestCase
         $setPasswordPageResp->assertRedirect('/password/email');
         $setPasswordPageResp->assertSessionHas('error', 'This invitation link has expired. You can instead try to reset your account password.');
     }
-
-
 }
