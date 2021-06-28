@@ -42,6 +42,7 @@ class ThemeEvents
      * Return values, if provided, will be used as a new response to use.
      *
      * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Response|Symfony\Component\HttpFoundation\BinaryFileResponse $response
      * @returns \Illuminate\Http\Response|null
      */
     const WEB_MIDDLEWARE_AFTER = 'web_middleware_after';
