@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
@@ -47,8 +49,7 @@ class PageRevisionTest extends TestCase
         $page = Page::first();
         $pageRepo->update($page, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
         $pageRepo->update($page, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
-        $page =  Page::find($page->id);
-
+        $page = Page::find($page->id);
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee('abc123');
@@ -56,7 +57,7 @@ class PageRevisionTest extends TestCase
 
         $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
         $restoreReq = $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
-        $page =  Page::find($page->id);
+        $page = Page::find($page->id);
 
         $restoreReq->assertStatus(302);
         $restoreReq->assertRedirect($page->getUrl());
@@ -89,7 +90,7 @@ class PageRevisionTest extends TestCase
 
         $pageView = $this->get($page->getUrl());
         $this->assertDatabaseHas('pages', [
-            'id' => $page->id,
+            'id'       => $page->id,
             'markdown' => '## New Content def456',
         ]);
         $pageView->assertSee('abc123');
@@ -112,8 +113,8 @@ class PageRevisionTest extends TestCase
 
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $page->id,
-            'text' => 'new contente def456',
-            'type' => 'version',
+            'text'    => 'new contente def456',
+            'type'    => 'version',
             'summary' => "Restored from #{$revToRestore->id}; My first update",
         ]);
     }
@@ -125,7 +126,7 @@ class PageRevisionTest extends TestCase
         $resp = $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
         $resp->assertStatus(302);
 
-        $this->assertTrue(Page::find($page->id)->revision_count === $startCount+1);
+        $this->assertTrue(Page::find($page->id)->revision_count === $startCount + 1);
     }
 
     public function test_revision_count_shown_in_page_meta()
@@ -141,7 +142,8 @@ class PageRevisionTest extends TestCase
         $pageView->assertSee('Revision #' . $page->revision_count);
     }
 
-    public function test_revision_deletion() {
+    public function test_revision_deletion()
+    {
         $page = Page::first();
         $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
 

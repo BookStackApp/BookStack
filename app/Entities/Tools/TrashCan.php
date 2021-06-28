@@ -1,11 +1,13 @@
-<?php namespace BookStack\Entities\Tools;
+<?php
 
+namespace BookStack\Entities\Tools;
+
+use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotifyException;
@@ -17,7 +19,6 @@ use Illuminate\Support\Carbon;
 
 class TrashCan
 {
-
     /**
      * Send a shelf to the recycle bin.
      */
@@ -29,6 +30,7 @@ class TrashCan
 
     /**
      * Send a book to the recycle bin.
+     *
      * @throws Exception
      */
     public function softDestroyBook(Book $book)
@@ -48,6 +50,7 @@ class TrashCan
 
     /**
      * Send a chapter to the recycle bin.
+     *
      * @throws Exception
      */
     public function softDestroyChapter(Chapter $chapter, bool $recordDelete = true)
@@ -67,6 +70,7 @@ class TrashCan
 
     /**
      * Send a page to the recycle bin.
+     *
      * @throws Exception
      */
     public function softDestroyPage(Page $page, bool $recordDelete = true)
@@ -89,18 +93,21 @@ class TrashCan
 
     /**
      * Remove a bookshelf from the system.
+     *
      * @throws Exception
      */
     protected function destroyShelf(Bookshelf $shelf): int
     {
         $this->destroyCommonRelations($shelf);
         $shelf->forceDelete();
+
         return 1;
     }
 
     /**
      * Remove a book from the system.
      * Destroys any child chapters and pages.
+     *
      * @throws Exception
      */
     protected function destroyBook(Book $book): int
@@ -120,12 +127,14 @@ class TrashCan
 
         $this->destroyCommonRelations($book);
         $book->forceDelete();
+
         return $count + 1;
     }
 
     /**
      * Remove a chapter from the system.
      * Destroys all pages within.
+     *
      * @throws Exception
      */
     protected function destroyChapter(Chapter $chapter): int
@@ -141,11 +150,13 @@ class TrashCan
 
         $this->destroyCommonRelations($chapter);
         $chapter->forceDelete();
+
         return $count + 1;
     }
 
     /**
      * Remove a page from the system.
+     *
      * @throws Exception
      */
     protected function destroyPage(Page $page): int
@@ -160,6 +171,7 @@ class TrashCan
         }
 
         $page->forceDelete();
+
         return 1;
     }
 
@@ -172,7 +184,7 @@ class TrashCan
         $counts = [];
 
         /** @var Entity $instance */
-        foreach ((new EntityProvider)->all() as $key => $instance) {
+        foreach ((new EntityProvider())->all() as $key => $instance) {
             $counts[$key] = $instance->newQuery()->onlyTrashed()->count();
         }
 
@@ -181,6 +193,7 @@ class TrashCan
 
     /**
      * Destroy all items that have pending deletions.
+     *
      * @throws Exception
      */
     public function empty(): int
@@ -190,11 +203,13 @@ class TrashCan
         foreach ($deletions as $deletion) {
             $deleteCount += $this->destroyFromDeletion($deletion);
         }
+
         return $deleteCount;
     }
 
     /**
      * Destroy an element from the given deletion model.
+     *
      * @throws Exception
      */
     public function destroyFromDeletion(Deletion $deletion): int
@@ -207,11 +222,13 @@ class TrashCan
             $count = $this->destroyEntity($deletion->deletable);
         }
         $deletion->delete();
+
         return $count;
     }
 
     /**
      * Restore the content within the given deletion.
+     *
      * @throws Exception
      */
     public function restoreFromDeletion(Deletion $deletion): int
@@ -229,6 +246,7 @@ class TrashCan
         }
 
         $deletion->delete();
+
         return $restoreCount;
     }
 
@@ -236,6 +254,7 @@ class TrashCan
      * Automatically clear old content from the recycle bin
      * depending on the configured lifetime.
      * Returns the total number of deleted elements.
+     *
      * @throws Exception
      */
     public function autoClearOld(): int
@@ -287,6 +306,7 @@ class TrashCan
 
     /**
      * Destroy the given entity.
+     *
      * @throws Exception
      */
     protected function destroyEntity(Entity $entity): int

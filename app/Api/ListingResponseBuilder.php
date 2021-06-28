@@ -1,4 +1,6 @@
-<?php namespace BookStack\Api;
+<?php
+
+namespace BookStack\Api;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -6,7 +8,6 @@ use Illuminate\Http\Request;
 
 class ListingResponseBuilder
 {
-
     protected $query;
     protected $request;
     protected $fields;
@@ -18,7 +19,7 @@ class ListingResponseBuilder
         'lt'   => '<',
         'gte'  => '>=',
         'lte'  => '<=',
-        'like' => 'like'
+        'like' => 'like',
     ];
 
     /**
@@ -42,7 +43,7 @@ class ListingResponseBuilder
         $data = $this->fetchData($filteredQuery);
 
         return response()->json([
-            'data' => $data,
+            'data'  => $data,
             'total' => $total,
         ]);
     }
@@ -54,6 +55,7 @@ class ListingResponseBuilder
     {
         $query = $this->countAndOffsetQuery($query);
         $query = $this->sortQuery($query);
+
         return $query->get($this->fields);
     }
 
@@ -95,6 +97,7 @@ class ListingResponseBuilder
         }
 
         $queryOperator = $this->filterOperators[$filterOperator];
+
         return [$field, $queryOperator, $value];
     }
 

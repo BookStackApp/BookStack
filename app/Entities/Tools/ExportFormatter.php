@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Tools;
+<?php
+
+namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
@@ -11,7 +13,6 @@ use Throwable;
 
 class ExportFormatter
 {
-
     protected $imageService;
 
     /**
@@ -25,20 +26,23 @@ class ExportFormatter
     /**
      * Convert a page to a self-contained HTML file.
      * Includes required CSS & image content. Images are base64 encoded into the HTML.
+     *
      * @throws Throwable
      */
     public function pageToContainedHtml(Page $page)
     {
         $page->html = (new PageContent($page))->render();
         $pageHtml = view('pages.export', [
-            'page' => $page,
+            'page'   => $page,
             'format' => 'html',
         ])->render();
+
         return $this->containHtml($pageHtml);
     }
 
     /**
      * Convert a chapter to a self-contained HTML file.
+     *
      * @throws Throwable
      */
     public function chapterToContainedHtml(Chapter $chapter)
@@ -49,43 +53,49 @@ class ExportFormatter
         });
         $html = view('chapters.export', [
             'chapter' => $chapter,
-            'pages' => $pages,
-            'format' => 'html',
+            'pages'   => $pages,
+            'format'  => 'html',
         ])->render();
+
         return $this->containHtml($html);
     }
 
     /**
      * Convert a book to a self-contained HTML file.
+     *
      * @throws Throwable
      */
     public function bookToContainedHtml(Book $book)
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('books.export', [
-            'book' => $book,
+            'book'         => $book,
             'bookChildren' => $bookTree,
-            'format' => 'html',
+            'format'       => 'html',
         ])->render();
+
         return $this->containHtml($html);
     }
 
     /**
      * Convert a page to a PDF file.
+     *
      * @throws Throwable
      */
     public function pageToPdf(Page $page)
     {
         $page->html = (new PageContent($page))->render();
         $html = view('pages.export', [
-            'page' => $page,
+            'page'   => $page,
             'format' => 'pdf',
         ])->render();
+
         return $this->htmlToPdf($html);
     }
 
     /**
      * Convert a chapter to a PDF file.
+     *
      * @throws Throwable
      */
     public function chapterToPdf(Chapter $chapter)
@@ -97,8 +107,8 @@ class ExportFormatter
 
         $html = view('chapters.export', [
             'chapter' => $chapter,
-            'pages' => $pages,
-            'format' => 'pdf',
+            'pages'   => $pages,
+            'format'  => 'pdf',
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -106,21 +116,24 @@ class ExportFormatter
 
     /**
      * Convert a book to a PDF file.
+     *
      * @throws Throwable
      */
     public function bookToPdf(Book $book)
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('books.export', [
-            'book' => $book,
+            'book'         => $book,
             'bookChildren' => $bookTree,
-            'format' => 'pdf',
+            'format'       => 'pdf',
         ])->render();
+
         return $this->htmlToPdf($html);
     }
 
     /**
      * Convert normal web-page HTML to a PDF.
+     *
      * @throws Exception
      */
     protected function htmlToPdf(string $html): string
@@ -133,11 +146,13 @@ class ExportFormatter
         } else {
             $pdf = DomPDF::loadHTML($containedHtml);
         }
+
         return $pdf->output();
     }
 
     /**
      * Bundle of the contents of a html file to be self-contained.
+     *
      * @throws Exception
      */
     protected function containHtml(string $htmlContent): string
@@ -194,6 +209,7 @@ class ExportFormatter
         $text = html_entity_decode($text);
         // Add title
         $text = $page->name . "\n\n" . $text;
+
         return $text;
     }
 
@@ -207,6 +223,7 @@ class ExportFormatter
         foreach ($chapter->getVisiblePages() as $page) {
             $text .= $this->pageToPlainText($page);
         }
+
         return $text;
     }
 
@@ -224,6 +241,7 @@ class ExportFormatter
                 $text .= $this->pageToPlainText($bookChild);
             }
         }
+
         return $text;
     }
 }

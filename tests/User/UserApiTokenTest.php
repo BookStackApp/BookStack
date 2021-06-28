@@ -1,4 +1,6 @@
-<?php namespace Tests\User;
+<?php
+
+namespace Tests\User;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Api\ApiToken;
@@ -7,9 +9,8 @@ use Tests\TestCase;
 
 class UserApiTokenTest extends TestCase
 {
-
     protected $testTokenData = [
-        'name' => 'My test API token',
+        'name'       => 'My test API token',
         'expires_at' => '2050-04-01',
     ];
 
@@ -51,8 +52,8 @@ class UserApiTokenTest extends TestCase
         $token = ApiToken::query()->latest()->first();
         $resp->assertRedirect($editor->getEditUrl('/api-tokens/' . $token->id));
         $this->assertDatabaseHas('api_tokens', [
-            'user_id' => $editor->id,
-            'name' => $this->testTokenData['name'],
+            'user_id'    => $editor->id,
+            'name'       => $this->testTokenData['name'],
             'expires_at' => $this->testTokenData['expires_at'],
         ]);
 
@@ -81,7 +82,7 @@ class UserApiTokenTest extends TestCase
         $under = Carbon::now()->addYears(99);
         $this->assertTrue(
             ($token->expires_at < $over && $token->expires_at > $under),
-            "Token expiry set at 100 years in future"
+            'Token expiry set at 100 years in future'
         );
     }
 
@@ -117,7 +118,7 @@ class UserApiTokenTest extends TestCase
         $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
         $updateData = [
-            'name' => 'My updated token',
+            'name'       => 'My updated token',
             'expires_at' => '2011-01-01',
         ];
 
@@ -136,7 +137,7 @@ class UserApiTokenTest extends TestCase
         $token = ApiToken::query()->latest()->first();
 
         $resp = $this->put($editor->getEditUrl('/api-tokens/' . $token->id), [
-            'name' => 'My updated token',
+            'name'       => 'My updated token',
             'expires_at' => '',
         ]);
         $token->refresh();
@@ -145,7 +146,7 @@ class UserApiTokenTest extends TestCase
         $under = Carbon::now()->addYears(99);
         $this->assertTrue(
             ($token->expires_at < $over && $token->expires_at > $under),
-            "Token expiry set at 100 years in future"
+            'Token expiry set at 100 years in future'
         );
     }
 
@@ -160,7 +161,7 @@ class UserApiTokenTest extends TestCase
         $resp = $this->get($tokenUrl . '/delete');
         $resp->assertSeeText('Delete Token');
         $resp->assertSeeText($token->name);
-        $resp->assertElementExists('form[action="'.$tokenUrl.'"]');
+        $resp->assertElementExists('form[action="' . $tokenUrl . '"]');
 
         $resp = $this->delete($tokenUrl);
         $resp->assertRedirect($editor->getEditUrl('#api_tokens'));
@@ -185,5 +186,4 @@ class UserApiTokenTest extends TestCase
         $resp->assertRedirect($viewer->getEditUrl('#api_tokens'));
         $this->assertDatabaseMissing('api_tokens', ['id' => $token->id]);
     }
-
 }

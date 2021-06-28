@@ -1,10 +1,12 @@
-<?php namespace BookStack\Providers;
+<?php
+
+namespace BookStack\Providers;
 
 use Blade;
 use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Entities\BreadcrumbsViewComposer;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\BreadcrumbsViewComposer;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Settings\Setting;
@@ -45,9 +47,9 @@ class AppServiceProvider extends ServiceProvider
         // Set morph-map due to namespace changes
         Relation::morphMap([
             'BookStack\\Bookshelf' => Bookshelf::class,
-            'BookStack\\Book' => Book::class,
-            'BookStack\\Chapter' => Chapter::class,
-            'BookStack\\Page' => Page::class,
+            'BookStack\\Book'      => Book::class,
+            'BookStack\\Chapter'   => Chapter::class,
+            'BookStack\\Page'      => Page::class,
         ]);
 
         // View Composers
@@ -65,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
             return new SettingService($app->make(Setting::class), $app->make(Repository::class));
         });
 
-        $this->app->singleton(SocialAuthService::class, function($app) {
+        $this->app->singleton(SocialAuthService::class, function ($app) {
             return new SocialAuthService($app->make(SocialiteFactory::class));
         });
     }

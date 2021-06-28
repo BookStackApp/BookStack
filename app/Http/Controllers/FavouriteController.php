@@ -17,13 +17,13 @@ class FavouriteController extends Controller
     {
         $viewCount = 20;
         $page = intval($request->get('page', 1));
-        $favourites = (new TopFavourites)->run($viewCount + 1, (($page - 1) * $viewCount));
+        $favourites = (new TopFavourites())->run($viewCount + 1, (($page - 1) * $viewCount));
 
-        $hasMoreLink = ($favourites->count() > $viewCount) ? url("/favourites?page=" . ($page+1)) : null;
+        $hasMoreLink = ($favourites->count() > $viewCount) ? url('/favourites?page=' . ($page + 1)) : null;
 
         return view('common.detailed-listing-with-more', [
-            'title' => trans('entities.my_favourites'),
-            'entities' => $favourites->slice(0, $viewCount),
+            'title'       => trans('entities.my_favourites'),
+            'entities'    => $favourites->slice(0, $viewCount),
             'hasMoreLink' => $hasMoreLink,
         ]);
     }
@@ -41,6 +41,7 @@ class FavouriteController extends Controller
         $this->showSuccessNotification(trans('activities.favourite_add_notification', [
             'name' => $favouritable->name,
         ]));
+
         return redirect()->back();
     }
 
@@ -57,6 +58,7 @@ class FavouriteController extends Controller
         $this->showSuccessNotification(trans('activities.favourite_remove_notification', [
             'name' => $favouritable->name,
         ]));
+
         return redirect()->back();
     }
 
@@ -68,7 +70,7 @@ class FavouriteController extends Controller
     {
         $modelInfo = $this->validate($request, [
             'type' => 'required|string',
-            'id' => 'required|integer',
+            'id'   => 'required|integer',
         ]);
 
         if (!class_exists($modelInfo['type'])) {
@@ -76,8 +78,8 @@ class FavouriteController extends Controller
         }
 
         /** @var Model $model */
-        $model = new $modelInfo['type'];
-        if (! $model instanceof Favouritable) {
+        $model = new $modelInfo['type']();
+        if (!$model instanceof Favouritable) {
             throw new \Exception('Model not favouritable');
         }
 

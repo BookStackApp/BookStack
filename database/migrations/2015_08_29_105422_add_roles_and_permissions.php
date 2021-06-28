@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 /**
  * Much of this code has been taken from entrust,
@@ -10,7 +10,6 @@ use Illuminate\Database\Migrations\Migration;
  * Full attribution of the database Schema shown below goes to the entrust project.
  *
  * @license MIT
- * @package Zizaco\Entrust
  * @url https://github.com/Zizaco/entrust
  */
 class AddRolesAndPermissions extends Migration
@@ -66,30 +65,28 @@ class AddRolesAndPermissions extends Migration
             $table->primary(['permission_id', 'role_id']);
         });
 
-
         // Create default roles
         $adminId = DB::table('roles')->insertGetId([
-            'name' => 'admin',
+            'name'         => 'admin',
             'display_name' => 'Admin',
-            'description' => 'Administrator of the whole application',
-            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+            'description'  => 'Administrator of the whole application',
+            'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
         ]);
         $editorId = DB::table('roles')->insertGetId([
-            'name' => 'editor',
+            'name'         => 'editor',
             'display_name' => 'Editor',
-            'description' => 'User can edit Books, Chapters & Pages',
-            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+            'description'  => 'User can edit Books, Chapters & Pages',
+            'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
         ]);
         $viewerId = DB::table('roles')->insertGetId([
-            'name' => 'viewer',
+            'name'         => 'viewer',
             'display_name' => 'Viewer',
-            'description' => 'User can view books & their content behind authentication',
-            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+            'description'  => 'User can view books & their content behind authentication',
+            'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
         ]);
-
 
         // Create default CRUD permissions and allocate to admins and editors
         $entities = ['Book', 'Page', 'Chapter', 'Image'];
@@ -97,14 +94,14 @@ class AddRolesAndPermissions extends Migration
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $newPermId = DB::table('permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower($op),
+                    'name'         => strtolower($entity) . '-' . strtolower($op),
                     'display_name' => $op . ' ' . $entity . 's',
-                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                    'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);
                 DB::table('permission_role')->insert([
                     ['permission_id' => $newPermId, 'role_id' => $adminId],
-                    ['permission_id' => $newPermId, 'role_id' => $editorId]
+                    ['permission_id' => $newPermId, 'role_id' => $editorId],
                 ]);
             }
         }
@@ -115,14 +112,14 @@ class AddRolesAndPermissions extends Migration
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $newPermId = DB::table('permissions')->insertGetId([
-                    'name' => strtolower($entity) . '-' . strtolower($op),
+                    'name'         => strtolower($entity) . '-' . strtolower($op),
                     'display_name' => $op . ' ' . $entity,
-                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                    'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);
                 DB::table('permission_role')->insert([
                     'permission_id' => $newPermId,
-                    'role_id' => $adminId
+                    'role_id'       => $adminId,
                 ]);
             }
         }
@@ -133,10 +130,9 @@ class AddRolesAndPermissions extends Migration
         foreach ($users as $user) {
             DB::table('role_user')->insert([
                 'role_id' => $adminId,
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ]);
         }
-
     }
 
     /**

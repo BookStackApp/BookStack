@@ -1,8 +1,9 @@
-<?php namespace Tests\Api;
+<?php
+
+namespace Tests\Api;
 
 trait TestsApi
 {
-
     protected $apiTokenId = 'apitoken';
     protected $apiTokenSecret = 'password';
 
@@ -12,6 +13,7 @@ trait TestsApi
     protected function actingAsApiEditor()
     {
         $this->actingAs($this->getEditor(), 'api');
+
         return $this;
     }
 
@@ -20,7 +22,7 @@ trait TestsApi
      */
     protected function errorResponse(string $message, int $code): array
     {
-        return ["error" => ["code" => $code, "message" => $message]];
+        return ['error' => ['code' => $code, 'message' => $message]];
     }
 
     /**
@@ -29,18 +31,19 @@ trait TestsApi
      */
     protected function validationResponse(array $messages): array
     {
-        $err = $this->errorResponse("The given data was invalid.", 422);
+        $err = $this->errorResponse('The given data was invalid.', 422);
         $err['error']['validation'] = $messages;
+
         return $err;
     }
+
     /**
      * Get an approved API auth header.
      */
     protected function apiAuthHeader(): array
     {
         return [
-            "Authorization" => "Token {$this->apiTokenId}:{$this->apiTokenSecret}"
+            'Authorization' => "Token {$this->apiTokenId}:{$this->apiTokenSecret}",
         ];
     }
-
 }

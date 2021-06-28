@@ -1,4 +1,6 @@
-<?php namespace BookStack\Auth\Access;
+<?php
+
+namespace BookStack\Auth\Access;
 
 use BookStack\Auth\User;
 use BookStack\Exceptions\ConfirmationEmailException;
@@ -12,7 +14,9 @@ class EmailConfirmationService extends UserTokenService
     /**
      * Create new confirmation for a user,
      * Also removes any existing old ones.
+     *
      * @param User $user
+     *
      * @throws ConfirmationEmailException
      */
     public function sendConfirmation(User $user)
@@ -29,9 +33,10 @@ class EmailConfirmationService extends UserTokenService
 
     /**
      * Check if confirmation is required in this instance.
+     *
      * @return bool
      */
-    public function confirmationRequired() : bool
+    public function confirmationRequired(): bool
     {
         return setting('registration-confirmation')
             || setting('registration-restrict');

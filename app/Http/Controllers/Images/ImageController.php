@@ -1,4 +1,6 @@
-<?php namespace BookStack\Http\Controllers\Images;
+<?php
+
+namespace BookStack\Http\Controllers\Images;
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
@@ -28,6 +30,7 @@ class ImageController extends Controller
 
     /**
      * Provide an image file from storage.
+     *
      * @throws NotFoundException
      */
     public function showImage(string $path)
@@ -42,16 +45,16 @@ class ImageController extends Controller
         return response()->file($path);
     }
 
-
     /**
-     * Update image details
+     * Update image details.
+     *
      * @throws ImageUploadException
      * @throws ValidationException
      */
     public function update(Request $request, string $id)
     {
         $this->validate($request, [
-            'name' => 'required|min:2|string'
+            'name' => 'required|min:2|string',
         ]);
 
         $image = $this->imageRepo->getById($id);
@@ -61,14 +64,16 @@ class ImageController extends Controller
         $image = $this->imageRepo->updateImageDetails($image, $request->all());
 
         $this->imageRepo->loadThumbs($image);
+
         return view('components.image-manager-form', [
-            'image' => $image,
+            'image'          => $image,
             'dependantPages' => null,
         ]);
     }
 
     /**
      * Get the form for editing the given image.
+     *
      * @throws Exception
      */
     public function edit(Request $request, string $id)
@@ -81,14 +86,16 @@ class ImageController extends Controller
         }
 
         $this->imageRepo->loadThumbs($image);
+
         return view('components.image-manager-form', [
-            'image' => $image,
+            'image'          => $image,
             'dependantPages' => $dependantPages ?? null,
         ]);
     }
 
     /**
-     * Deletes an image and all thumbnail/image files
+     * Deletes an image and all thumbnail/image files.
+     *
      * @throws Exception
      */
     public function destroy(string $id)
@@ -98,6 +105,7 @@ class ImageController extends Controller
         $this->checkImagePermission($image);
 
         $this->imageRepo->destroyImage($image);
+
         return response('');
     }
 

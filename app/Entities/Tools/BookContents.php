@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Tools;
+<?php
+
+namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
@@ -10,7 +12,6 @@ use Illuminate\Support\Collection;
 
 class BookContents
 {
-
     /**
      * @var Book
      */
@@ -35,6 +36,7 @@ class BookContents
             ->where('chapter_id', '=', 0)->max('priority');
         $maxChapter = Chapter::visible()->where('book_id', '=', $this->book->id)
             ->max('priority');
+
         return max($maxChapter, $maxPage, 1);
     }
 
@@ -83,6 +85,7 @@ class BookContents
             if (isset($entity['draft']) && $entity['draft']) {
                 return -100;
             }
+
             return $entity['priority'] ?? 0;
         };
     }
@@ -110,9 +113,10 @@ class BookContents
      *     +"parentChapter": false (ID of parent chapter, as string, or false)
      *     +"type": "page" (Entity type of item)
      *     +"book": "1" (Id of book to place item in)
-     *   }
+     *   }.
      *
      * Returns a list of books that were involved in the operation.
+     *
      * @throws SortOperationException
      */
     public function sortUsingMap(Collection $sortMap): Collection
@@ -190,6 +194,7 @@ class BookContents
     /**
      * Get the books involved in a sort.
      * The given sort map should have its models loaded first.
+     *
      * @throws SortOperationException
      */
     protected function getBooksInvolvedInSort(Collection $sortMap): Collection
@@ -202,7 +207,7 @@ class BookContents
         $books = Book::hasPermission('update')->whereIn('id', $bookIdsInvolved)->get();
 
         if (count($books) !== count($bookIdsInvolved)) {
-            throw new SortOperationException("Could not find all books requested in sort operation");
+            throw new SortOperationException('Could not find all books requested in sort operation');
         }
 
         return $books;

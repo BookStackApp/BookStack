@@ -29,6 +29,7 @@ class ApiAuthenticate
     /**
      * Ensure the current user can access authenticated API routes, either via existing session
      * authentication or via API Token authentication.
+     *
      * @throws UnauthorizedException
      */
     protected function ensureAuthorizedBySessionOrToken(): void
@@ -40,6 +41,7 @@ class ApiAuthenticate
             if (!user()->can('access-api')) {
                 throw new ApiAuthException(trans('errors.api_user_no_api_permission'), 403);
             }
+
             return;
         }
 
@@ -58,9 +60,9 @@ class ApiAuthenticate
     {
         return response()->json([
             'error' => [
-                'code' => $code,
+                'code'    => $code,
                 'message' => $message,
-            ]
+            ],
         ], $code);
     }
 }

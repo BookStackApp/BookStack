@@ -4,15 +4,14 @@ namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Repos\BookRepo;
+use BookStack\Entities\Tools\BookContents;
 use BookStack\Exceptions\SortOperationException;
 use BookStack\Facades\Activity;
 use Illuminate\Http\Request;
 
 class BookSortController extends Controller
 {
-
     protected $bookRepo;
 
     public function __construct(BookRepo $bookRepo)
@@ -31,6 +30,7 @@ class BookSortController extends Controller
         $bookChildren = (new BookContents($book))->getTree(false);
 
         $this->setPageTitle(trans('entities.books_sort_named', ['bookName'=>$book->getShortName()]));
+
         return view('books.sort', ['book' => $book, 'current' => $book, 'bookChildren' => $bookChildren]);
     }
 
@@ -42,6 +42,7 @@ class BookSortController extends Controller
     {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $bookChildren = (new BookContents($book))->getTree();
+
         return view('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
     }
 
