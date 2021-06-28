@@ -3,7 +3,6 @@
 namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class MfaController extends Controller
 {
