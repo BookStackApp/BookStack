@@ -223,6 +223,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/roles/{id}', 'RoleController@edit');
         Route::put('/roles/{id}', 'RoleController@update');
     });
+
+    Route::get('/mfa/setup', 'Auth\MfaController@setup');
 });
 
 // Social auth routes
