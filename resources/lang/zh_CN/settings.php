@@ -92,7 +92,7 @@ return [
     'recycle_bin' => '回收站',
     'recycle_bin_desc' => '在这里，您可以还原已删除的项目，或选择将其从系统中永久删除。与系统中过滤过的类似的活动记录不同，这个表会显示所有操作。',
     'recycle_bin_deleted_item' => '被删除的项目',
-    'recycle_bin_deleted_parent' => 'Parent',
+    'recycle_bin_deleted_parent' => '上一级',
     'recycle_bin_deleted_by' => '删除者',
     'recycle_bin_deleted_at' => '删除时间',
     'recycle_bin_permanently_delete' => '永久删除',
