@@ -32,6 +32,7 @@ class MfaController extends Controller
 
     /**
      * Show a view that generates and displays a TOTP QR code.
+     *
      * @throws IncompatibleWithGoogleAuthenticatorException
      * @throws InvalidCharactersException
      * @throws SecretKeyTooShortException
@@ -57,7 +58,7 @@ class MfaController extends Controller
         $svg = (new Writer(
             new ImageRenderer(
                 new RendererStyle(192, 0, null, null, $color),
-                new SvgImageBackEnd
+                new SvgImageBackEnd()
             )
         ))->writeString($qrCodeUrl);
 
@@ -65,19 +66,20 @@ class MfaController extends Controller
         // If correct response, Save key against user
         return view('mfa.totp-generate', [
             'secret' => $totpSecret,
-            'svg' => $svg,
+            'svg'    => $svg,
         ]);
     }
 
     /**
      * Confirm the setup of TOTP and save the auth method secret
      * against the current user.
+     *
      * @throws ValidationException
      */
     public function totpConfirm(Request $request)
     {
         $this->validate($request, [
-            'code' => 'required|max:12|min:4'
+            'code' => 'required|max:12|min:4',
         ]);
 
         // TODO - Confirm code
