@@ -29,6 +29,10 @@
   }
 }
 
+.input-fill-width {
+  width: 100% !important;
+}
+
 .fake-input {
   @extend .input-base;
   overflow: auto;
