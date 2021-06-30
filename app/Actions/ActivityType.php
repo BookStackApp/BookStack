@@ -50,4 +50,6 @@ class ActivityType
     const AUTH_PASSWORD_RESET_UPDATE = 'auth_password_reset_update';
     const AUTH_LOGIN = 'auth_login';
     const AUTH_REGISTER = 'auth_register';
+
+    const MFA_SETUP_METHOD = 'mfa_setup_method';
 }

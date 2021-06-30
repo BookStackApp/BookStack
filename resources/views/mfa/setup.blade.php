@@ -20,7 +20,15 @@
                         </p>
                     </div>
                     <div class="pt-m">
-                        <a href="{{ url('/mfa/totp-generate') }}" class="button outline">Setup</a>
+                        @if($userMethods->has('totp'))
+                            <div class="text-pos">
+                                @icon('check-circle')
+                                Already configured
+                            </div>
+                            <a href="{{ url('/mfa/totp-generate') }}" class="button outline small">Reconfigure</a>
+                        @else
+                            <a href="{{ url('/mfa/totp-generate') }}" class="button outline">Setup</a>
+                        @endif
                     </div>
                 </div>
 
