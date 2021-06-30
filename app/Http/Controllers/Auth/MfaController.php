@@ -2,19 +2,13 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BaconQrCode\Renderer\Color\Rgb;
-use BaconQrCode\Renderer\Image\SvgImageBackEnd;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\RendererStyle\Fill;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
+use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\Mfa\MfaValue;
+use BookStack\Auth\Access\Mfa\TotpService;
+use BookStack\Auth\Access\Mfa\TotpValidationRule;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use PragmaRX\Google2FA\Exceptions\IncompatibleWithGoogleAuthenticatorException;
-use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
-use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
-use PragmaRX\Google2FA\Google2FA;
 
 class MfaController extends Controller
 {
@@ -25,44 +19,29 @@ class MfaController extends Controller
      */
     public function setup()
     {
-        // TODO - Redirect back to profile/edit if already setup?
-        // Show MFA setup route
-        return view('mfa.setup');
+        $userMethods = user()->mfaValues()
+            ->get(['id', 'method'])
+            ->groupBy('method');
+        return view('mfa.setup', [
+            'userMethods' => $userMethods,
+        ]);
     }
 
     /**
      * Show a view that generates and displays a TOTP QR code.
-     * @throws IncompatibleWithGoogleAuthenticatorException
-     * @throws InvalidCharactersException
-     * @throws SecretKeyTooShortException
      */
-    public function totpGenerate()
+    public function totpGenerate(TotpService $totp)
     {
-        // TODO - Ensure a QR code doesn't already exist? Or overwrite?
-        $google2fa = new Google2FA();
         if (session()->has(static::TOTP_SETUP_SECRET_SESSION_KEY)) {
             $totpSecret = decrypt(session()->get(static::TOTP_SETUP_SECRET_SESSION_KEY));
         } else {
-            $totpSecret = $google2fa->generateSecretKey();
+            $totpSecret = $totp->generateSecret();
             session()->put(static::TOTP_SETUP_SECRET_SESSION_KEY, encrypt($totpSecret));
         }
 
-        $qrCodeUrl = $google2fa->getQRCodeUrl(
-            setting('app-name'),
-            user()->email,
-            $totpSecret
-        );
+        $qrCodeUrl = $totp->generateUrl($totpSecret);
+        $svg = $totp->generateQrCodeSvg($qrCodeUrl);
 
-        $color = Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(32, 110, 167));
-        $svg = (new Writer(
-            new ImageRenderer(
-                new RendererStyle(192, 0, null, null, $color),
-                new SvgImageBackEnd
-            )
-        ))->writeString($qrCodeUrl);
-
-        // Get user to verify setup via responding once.
-        // If correct response, Save key against user
         return view('mfa.totp-generate', [
             'secret' => $totpSecret,
             'svg' => $svg,
@@ -76,11 +55,18 @@ class MfaController extends Controller
      */
     public function totpConfirm(Request $request)
     {
+        $totpSecret = decrypt(session()->get(static::TOTP_SETUP_SECRET_SESSION_KEY));
         $this->validate($request, [
-            'code' => 'required|max:12|min:4'
+            'code' => [
+                'required',
+                'max:12', 'min:4',
+                new TotpValidationRule($totpSecret),
+            ]
         ]);
 
-        // TODO - Confirm code
-        dd($request->input('code'));
+        MfaValue::upsertWithValue(user(), MfaValue::METHOD_TOTP, $totpSecret);
+        $this->logActivity(ActivityType::MFA_SETUP_METHOD, 'totp');
+
+        return redirect('/mfa/setup');
     }
 }
