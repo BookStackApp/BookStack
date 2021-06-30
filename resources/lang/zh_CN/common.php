@@ -41,7 +41,7 @@ return [
     'add' => '添加',
     'fullscreen' => '全屏',
     'favourite' => '收藏',
-    'unfavourite' => '不喜欢',
+    'unfavourite' => '取消收藏',
     'next' => '下一页',
     'previous' => '上一页',
 
