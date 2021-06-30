@@ -22,6 +22,7 @@ class MfaController extends Controller
         $userMethods = user()->mfaValues()
             ->get(['id', 'method'])
             ->groupBy('method');
+
         return view('mfa.setup', [
             'userMethods' => $userMethods,
         ]);
@@ -44,13 +45,14 @@ class MfaController extends Controller
 
         return view('mfa.totp-generate', [
             'secret' => $totpSecret,
-            'svg' => $svg,
+            'svg'    => $svg,
         ]);
     }
 
     /**
      * Confirm the setup of TOTP and save the auth method secret
      * against the current user.
+     *
      * @throws ValidationException
      */
     public function totpConfirm(Request $request)
@@ -61,7 +63,7 @@ class MfaController extends Controller
                 'required',
                 'max:12', 'min:4',
                 new TotpValidationRule($totpSecret),
-            ]
+            ],
         ]);
 
         MfaValue::upsertWithValue(user(), MfaValue::METHOD_TOTP, $totpSecret);
