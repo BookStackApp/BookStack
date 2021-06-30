@@ -107,7 +107,7 @@ return [
     // Books
     'book' => '图书',
     'books' => '图书',
-    'x_books' => ':count本书',
+    'x_books' => ':count 本书',
     'books_empty' => '不存在已创建的书',
     'books_popular' => '热门图书',
     'books_recent' => '最近的书',
