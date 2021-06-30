@@ -6,8 +6,8 @@ use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\LdapException;
-use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
+use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Exceptions\UserRegistrationException;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Session\Session;
@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
 
 class LdapSessionGuard extends ExternalBaseSessionGuard
 {
-
     protected $ldapService;
 
     /**
@@ -36,8 +35,10 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
      * Validate a user's credentials.
      *
      * @param array $credentials
-     * @return bool
+     *
      * @throws LdapException
+     *
+     * @return bool
      */
     public function validate(array $credentials = [])
     {
@@ -45,7 +46,7 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
 
         if (isset($userDetails['uid'])) {
             $this->lastAttempted = $this->provider->retrieveByCredentials([
-                'external_auth_id' => $userDetails['uid']
+                'external_auth_id' => $userDetails['uid'],
             ]);
         }
 
@@ -56,10 +57,12 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
      * Attempt to authenticate a user using the given credentials.
      *
      * @param array $credentials
-     * @param bool $remember
-     * @return bool
+     * @param bool  $remember
+     *
      * @throws LoginAttemptException
      * @throws LdapException
+     *
+     * @return bool
      */
     public function attempt(array $credentials = [], $remember = false)
     {
@@ -69,7 +72,7 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
         $user = null;
         if (isset($userDetails['uid'])) {
             $this->lastAttempted = $user = $this->provider->retrieveByCredentials([
-                'external_auth_id' => $userDetails['uid']
+                'external_auth_id' => $userDetails['uid'],
             ]);
         }
 
@@ -96,11 +99,13 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
         }
 
         $this->login($user, $remember);
+
         return true;
     }
 
     /**
-     * Create a new user from the given ldap credentials and login credentials
+     * Create a new user from the given ldap credentials and login credentials.
+     *
      * @throws LoginAttemptEmailNeededException
      * @throws LoginAttemptException
      * @throws UserRegistrationException
@@ -114,14 +119,15 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
         }
 
         $details = [
-            'name' => $ldapUserDetails['name'],
-            'email' => $ldapUserDetails['email'] ?: $credentials['email'],
+            'name'             => $ldapUserDetails['name'],
+            'email'            => $ldapUserDetails['email'] ?: $credentials['email'],
             'external_auth_id' => $ldapUserDetails['uid'],
-            'password' => Str::random(32),
+            'password'         => Str::random(32),
         ];
 
         $user = $this->registrationService->registerUser($details, null, false);
         $this->ldapService->saveAndAttachAvatar($user, $ldapUserDetails);
+
         return $user;
     }
 }

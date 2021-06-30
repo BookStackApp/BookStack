@@ -1,4 +1,6 @@
-<?php namespace BookStack\Notifications;
+<?php
+
+namespace BookStack\Notifications;
 
 class ResetPassword extends MailNotification
 {
@@ -12,7 +14,7 @@ class ResetPassword extends MailNotification
     /**
      * Create a notification instance.
      *
-     * @param  string  $token
+     * @param string $token
      */
     public function __construct($token)
     {
@@ -26,7 +28,7 @@ class ResetPassword extends MailNotification
      */
     public function toMail()
     {
-            return $this->newMailMessage()
+        return $this->newMailMessage()
             ->subject(trans('auth.email_reset_subject', ['appName' => setting('app-name')]))
             ->line(trans('auth.email_reset_text'))
             ->action(trans('auth.reset_password'), url('password/reset/' . $this->token))

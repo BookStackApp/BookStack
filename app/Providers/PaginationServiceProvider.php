@@ -1,11 +1,12 @@
-<?php namespace BookStack\Providers;
+<?php
+
+namespace BookStack\Providers;
 
 use Illuminate\Pagination\PaginationServiceProvider as IlluminatePaginationServiceProvider;
 use Illuminate\Pagination\Paginator;
 
 class PaginationServiceProvider extends IlluminatePaginationServiceProvider
 {
-
     /**
      * Register the service provider.
      *

@@ -1,4 +1,6 @@
-<?php namespace Tests\Api;
+<?php
+
+namespace Tests\Api;
 
 use BookStack\Auth\User;
 use Tests\TestCase;
@@ -34,10 +36,10 @@ class ApiDocsTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertHeader('Content-Type', 'application/json');
         $resp->assertJson([
-            'docs' => [ [
+            'docs' => [[
                 'name' => 'docs-display',
-                'uri' => 'api/docs'
-            ] ]
+                'uri'  => 'api/docs',
+            ]],
         ]);
     }
 

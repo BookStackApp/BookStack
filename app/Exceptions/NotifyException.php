@@ -1,4 +1,6 @@
-<?php namespace BookStack\Exceptions;
+<?php
+
+namespace BookStack\Exceptions;
 
 use Exception;
 use Illuminate\Contracts\Support\Responsable;
@@ -11,7 +13,7 @@ class NotifyException extends Exception implements Responsable
     /**
      * NotifyException constructor.
      */
-    public function __construct(string $message, string $redirectLocation = "/")
+    public function __construct(string $message, string $redirectLocation = '/')
     {
         $this->message = $message;
         $this->redirectLocation = $redirectLocation;
@@ -20,6 +22,7 @@ class NotifyException extends Exception implements Responsable
 
     /**
      * Send the response for this type of exception.
+     *
      * @inheritdoc
      */
     public function toResponse($request)

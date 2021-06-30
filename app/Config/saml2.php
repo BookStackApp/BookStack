@@ -31,7 +31,6 @@ return [
     // Overrides, in JSON format, to the configuration passed to underlying onelogin library.
     'onelogin_overrides' => env('SAML2_ONELOGIN_OVERRIDES', null),
 
-
     'onelogin' => [
         // If 'strict' is True, then the PHP Toolkit will reject unsigned
         // or unencrypted messages if it expects them signed or encrypted
@@ -81,7 +80,7 @@ return [
             'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
             // Usually x509cert and privateKey of the SP are provided by files placed at
             // the certs folder. But we can also provide them with the following parameters
-            'x509cert' => '',
+            'x509cert'   => '',
             'privateKey' => '',
         ],
         // Identity Provider Data that we want connect with our SP

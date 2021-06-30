@@ -1,4 +1,6 @@
-<?php namespace BookStack\Auth\Permissions;
+<?php
+
+namespace BookStack\Auth\Permissions;
 
 use BookStack\Auth\Role;
 use BookStack\Entities\Models\Entity;

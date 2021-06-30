@@ -1,11 +1,13 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\UserRepo;
 
 class UserProfileController extends Controller
 {
     /**
-     * Show the user profile page
+     * Show the user profile page.
      */
     public function show(UserRepo $repo, string $slug)
     {
@@ -16,10 +18,10 @@ class UserProfileController extends Controller
         $assetCounts = $repo->getAssetCounts($user);
 
         return view('users.profile', [
-            'user' => $user,
-            'activity' => $userActivity,
+            'user'            => $user,
+            'activity'        => $userActivity,
             'recentlyCreated' => $recentlyCreated,
-            'assetCounts' => $assetCounts
+            'assetCounts'     => $assetCounts,
         ]);
     }
 }

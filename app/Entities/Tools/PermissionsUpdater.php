@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Tools;
+<?php
+
+namespace BookStack\Entities\Tools;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
@@ -9,7 +11,6 @@ use Illuminate\Support\Collection;
 
 class PermissionsUpdater
 {
-
     /**
      * Update an entities permissions from a permission form submit request.
      */
@@ -60,8 +61,8 @@ class PermissionsUpdater
             return collect($restrictions)->keys()->map(function ($action) use ($roleId) {
                 return [
                     'role_id' => $roleId,
-                    'action' => strtolower($action),
-                ] ;
+                    'action'  => strtolower($action),
+                ];
             });
         });
     }
