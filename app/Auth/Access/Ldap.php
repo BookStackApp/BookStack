@@ -1,4 +1,6 @@
-<?php namespace BookStack\Auth\Access;
+<?php
+
+namespace BookStack\Auth\Access;
 
 /**
  * Class Ldap
@@ -7,11 +9,12 @@
  */
 class Ldap
 {
-
     /**
      * Connect to a LDAP server.
+     *
      * @param string $hostName
      * @param int    $port
+     *
      * @return resource
      */
     public function connect($hostName, $port)
@@ -21,9 +24,11 @@ class Ldap
 
     /**
      * Set the value of a LDAP option for the given connection.
+     *
      * @param resource $ldapConnection
-     * @param int $option
-     * @param mixed $value
+     * @param int      $option
+     * @param mixed    $value
+     *
      * @return bool
      */
     public function setOption($ldapConnection, $option, $value)
@@ -41,8 +46,10 @@ class Ldap
 
     /**
      * Set the version number for the given ldap connection.
+     *
      * @param $ldapConnection
      * @param $version
+     *
      * @return bool
      */
     public function setVersion($ldapConnection, $version)
@@ -52,10 +59,12 @@ class Ldap
 
     /**
      * Search LDAP tree using the provided filter.
+     *
      * @param resource   $ldapConnection
      * @param string     $baseDn
      * @param string     $filter
      * @param array|null $attributes
+     *
      * @return resource
      */
     public function search($ldapConnection, $baseDn, $filter, array $attributes = null)
@@ -65,8 +74,10 @@ class Ldap
 
     /**
      * Get entries from an ldap search result.
+     *
      * @param resource $ldapConnection
      * @param resource $ldapSearchResult
+     *
      * @return array
      */
     public function getEntries($ldapConnection, $ldapSearchResult)
@@ -76,23 +87,28 @@ class Ldap
 
     /**
      * Search and get entries immediately.
+     *
      * @param resource   $ldapConnection
      * @param string     $baseDn
      * @param string     $filter
      * @param array|null $attributes
+     *
      * @return resource
      */
     public function searchAndGetEntries($ldapConnection, $baseDn, $filter, array $attributes = null)
     {
         $search = $this->search($ldapConnection, $baseDn, $filter, $attributes);
+
         return $this->getEntries($ldapConnection, $search);
     }
 
     /**
      * Bind to LDAP directory.
+     *
      * @param resource $ldapConnection
      * @param string   $bindRdn
      * @param string   $bindPassword
+     *
      * @return bool
      */
     public function bind($ldapConnection, $bindRdn = null, $bindPassword = null)
@@ -102,8 +118,10 @@ class Ldap
 
     /**
      * Explode a LDAP dn string into an array of components.
+     *
      * @param string $dn
-     * @param int $withAttrib
+     * @param int    $withAttrib
+     *
      * @return array
      */
     public function explodeDn(string $dn, int $withAttrib)
@@ -113,12 +131,14 @@ class Ldap
 
     /**
      * Escape a string for use in an LDAP filter.
+     *
      * @param string $value
      * @param string $ignore
-     * @param int $flags
+     * @param int    $flags
+     *
      * @return string
      */
-    public function escape(string $value, string $ignore = "", int $flags = 0)
+    public function escape(string $value, string $ignore = '', int $flags = 0)
     {
         return ldap_escape($value, $ignore, $flags);
     }

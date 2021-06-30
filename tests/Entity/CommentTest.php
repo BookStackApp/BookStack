@@ -1,12 +1,13 @@
-<?php namespace Tests\Entity;
+<?php
 
-use BookStack\Entities\Models\Page;
+namespace Tests\Entity;
+
 use BookStack\Actions\Comment;
+use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
 class CommentTest extends TestCase
 {
-
     public function test_add_comment()
     {
         $this->asAdmin();
@@ -22,11 +23,11 @@ class CommentTest extends TestCase
         $pageResp->assertSee($comment->text);
 
         $this->assertDatabaseHas('comments', [
-            'local_id' => 1,
-            'entity_id' => $page->id,
+            'local_id'    => 1,
+            'entity_id'   => $page->id,
             'entity_type' => Page::newModelInstance()->getMorphClass(),
-            'text' => $comment->text,
-            'parent_id' => 2
+            'text'        => $comment->text,
+            'parent_id'   => 2,
         ]);
     }
 
@@ -49,8 +50,8 @@ class CommentTest extends TestCase
         $resp->assertDontSee($comment->text);
 
         $this->assertDatabaseHas('comments', [
-            'text' => $newText,
-            'entity_id' => $page->id
+            'text'      => $newText,
+            'entity_id' => $page->id,
         ]);
     }
 
@@ -68,7 +69,7 @@ class CommentTest extends TestCase
         $resp->assertStatus(200);
 
         $this->assertDatabaseMissing('comments', [
-            'id' => $comment->id
+            'id' => $comment->id,
         ]);
     }
 
@@ -80,10 +81,10 @@ class CommentTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('comments', [
-            'entity_id' => $page->id,
+            'entity_id'   => $page->id,
             'entity_type' => $page->getMorphClass(),
-            'text' => '# My Title',
-            'html' => "<h1>My Title</h1>\n",
+            'text'        => '# My Title',
+            'html'        => "<h1>My Title</h1>\n",
         ]);
 
         $pageView = $this->get($page->getUrl());

@@ -1,17 +1,18 @@
-<?php namespace Tests\Entity;
+<?php
 
-use BookStack\Entities\Models\Bookshelf;
+namespace Tests\Entity;
+
+use BookStack\Auth\UserRepo;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use BookStack\Auth\UserRepo;
 use BookStack\Entities\Repos\PageRepo;
 use Carbon\Carbon;
 use Tests\BrowserKitTest;
 
 class EntityTest extends BrowserKitTest
 {
-
     public function test_entity_creation()
     {
         // Test Creation
@@ -42,7 +43,7 @@ class EntityTest extends BrowserKitTest
 
     public function test_book_sort_page_shows()
     {
-        $books =  Book::all();
+        $books = Book::all();
         $bookToSort = $books[0];
         $this->asAdmin()
             ->visit($bookToSort->getUrl())
@@ -54,7 +55,7 @@ class EntityTest extends BrowserKitTest
 
     public function test_book_sort_item_returns_book_content()
     {
-        $books =  Book::all();
+        $books = Book::all();
         $bookToSort = $books[0];
         $firstPage = $bookToSort->pages[0];
         $firstChapter = $bookToSort->chapters[0];
@@ -84,13 +85,12 @@ class EntityTest extends BrowserKitTest
             ->submitForm('Grid View')
             ->seePageIs('/books')
             ->pageHasElement('.featured-image-container');
-
     }
 
     public function pageCreation($chapter)
     {
         $page = factory(Page::class)->make([
-            'name' => 'My First Page'
+            'name' => 'My First Page',
         ]);
 
         $this->asAdmin()
@@ -110,13 +110,14 @@ class EntityTest extends BrowserKitTest
             ->see($page->name);
 
         $page = Page::where('slug', '=', 'my-first-page')->where('chapter_id', '=', $chapter->id)->first();
+
         return $page;
     }
 
     public function chapterCreation(Book $book)
     {
         $chapter = factory(Chapter::class)->make([
-            'name' => 'My First Chapter'
+            'name' => 'My First Chapter',
         ]);
 
         $this->asAdmin()
@@ -133,13 +134,14 @@ class EntityTest extends BrowserKitTest
             ->see($chapter->name)->see($chapter->description);
 
         $chapter = Chapter::where('slug', '=', 'my-first-chapter')->where('book_id', '=', $book->id)->first();
+
         return $chapter;
     }
 
     public function bookCreation()
     {
         $book = factory(Book::class)->make([
-            'name' => 'My First Book'
+            'name' => 'My First Book',
         ]);
         $this->asAdmin()
             ->visit('/books')
@@ -165,6 +167,7 @@ class EntityTest extends BrowserKitTest
         $this->assertMatchesRegularExpression($expectedPattern, $this->currentUri, "Did not land on expected page [$expectedPattern].\n");
 
         $book = Book::where('slug', '=', 'my-first-book')->first();
+
         return $book;
     }
 
@@ -245,7 +248,7 @@ class EntityTest extends BrowserKitTest
     {
         $page = Page::orderBy('updated_at', 'asc')->first();
         Page::where('id', '!=', $page->id)->update([
-            'updated_at' => Carbon::now()->subSecond(1)
+            'updated_at' => Carbon::now()->subSecond(1),
         ]);
         $this->asAdmin()->visit('/')
             ->dontSeeInElement('#recently-updated-pages', $page->name);
@@ -258,13 +261,13 @@ class EntityTest extends BrowserKitTest
     public function test_slug_multi_byte_url_safe()
     {
         $book = $this->newBook([
-            'name' => 'информация'
+            'name' => 'информация',
         ]);
 
         $this->assertEquals('informatsiya', $book->slug);
 
         $book = $this->newBook([
-            'name' => '¿Qué?'
+            'name' => '¿Qué?',
         ]);
 
         $this->assertEquals('que', $book->slug);
@@ -273,7 +276,7 @@ class EntityTest extends BrowserKitTest
     public function test_slug_format()
     {
         $book = $this->newBook([
-            'name' => 'PartA / PartB / PartC'
+            'name' => 'PartA / PartB / PartC',
         ]);
 
         $this->assertEquals('parta-partb-partc', $book->slug);
@@ -313,5 +316,4 @@ class EntityTest extends BrowserKitTest
             ->submitForm('Confirm')
             ->seePageIs($chapter->getUrl());
     }
-
 }

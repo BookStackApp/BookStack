@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class RemoveRoleNameField extends Migration
 {
@@ -31,7 +31,7 @@ class RemoveRoleNameField extends Migration
         });
 
         DB::table('roles')->update([
-            "name" => DB::raw("lower(replace(`display_name`, ' ', '-'))"),
+            'name' => DB::raw("lower(replace(`display_name`, ' ', '-'))"),
         ]);
     }
 }

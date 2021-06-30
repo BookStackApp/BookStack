@@ -1,4 +1,6 @@
-<?php namespace Tests\Api;
+<?php
+
+namespace Tests\Api;
 
 use Tests\TestCase;
 
@@ -51,5 +53,4 @@ class ApiConfigTest extends TestCase
         $resp = $this->actingAsApiEditor()->get($this->endpoint);
         $resp->assertHeader('x-ratelimit-limit', 10);
     }
-
 }

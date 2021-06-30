@@ -16,20 +16,20 @@ class PageApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'book_id' => 'required_without:chapter_id|integer',
+            'book_id'    => 'required_without:chapter_id|integer',
             'chapter_id' => 'required_without:book_id|integer',
-            'name' => 'required|string|max:255',
-            'html' => 'required_without:markdown|string',
-            'markdown' => 'required_without:html|string',
-            'tags' => 'array',
+            'name'       => 'required|string|max:255',
+            'html'       => 'required_without:markdown|string',
+            'markdown'   => 'required_without:html|string',
+            'tags'       => 'array',
         ],
         'update' => [
-            'book_id' => 'required|integer',
+            'book_id'    => 'required|integer',
             'chapter_id' => 'required|integer',
-            'name' => 'string|min:1|max:255',
-            'html' => 'string',
-            'markdown' => 'string',
-            'tags' => 'array',
+            'name'       => 'string|min:1|max:255',
+            'html'       => 'string',
+            'markdown'   => 'string',
+            'tags'       => 'array',
         ],
     ];
 
@@ -44,6 +44,7 @@ class PageApiController extends ApiController
     public function list()
     {
         $pages = Page::visible();
+
         return $this->apiListingResponse($pages, [
             'id', 'book_id', 'chapter_id', 'name', 'slug', 'priority',
             'draft', 'template',
@@ -89,6 +90,7 @@ class PageApiController extends ApiController
     public function read(string $id)
     {
         $page = $this->pageRepo->getById($id, []);
+
         return response()->json($page->forJsonDisplay());
     }
 
@@ -107,12 +109,13 @@ class PageApiController extends ApiController
         $parent = null;
         if ($request->has('chapter_id')) {
             $parent = Chapter::visible()->findOrFail($request->get('chapter_id'));
-        } else if ($request->has('book_id')) {
+        } elseif ($request->has('book_id')) {
             $parent = Book::visible()->findOrFail($request->get('book_id'));
         }
 
         if ($parent && !$parent->matches($page->getParent())) {
             $this->checkOwnablePermission('page-delete', $page);
+
             try {
                 $this->pageRepo->move($page, $parent->getType() . ':' . $parent->id);
             } catch (Exception $exception) {
@@ -125,6 +128,7 @@ class PageApiController extends ApiController
         }
 
         $updatedPage = $this->pageRepo->update($page, $request->all());
+
         return response()->json($updatedPage->forJsonDisplay());
     }
 
@@ -138,6 +142,7 @@ class PageApiController extends ApiController
         $this->checkOwnablePermission('page-delete', $page);
 
         $this->pageRepo->destroy($page);
+
         return response('', 204);
     }
 }

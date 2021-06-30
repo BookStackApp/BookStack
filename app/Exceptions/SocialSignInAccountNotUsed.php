@@ -1,6 +1,7 @@
-<?php namespace BookStack\Exceptions;
+<?php
+
+namespace BookStack\Exceptions;
 
 class SocialSignInAccountNotUsed extends SocialSignInException
 {
-
 }

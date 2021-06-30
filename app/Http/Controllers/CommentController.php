@@ -1,7 +1,7 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
 
-use Activity;
-use BookStack\Actions\ActivityType;
+namespace BookStack\Http\Controllers;
+
 use BookStack\Actions\CommentRepo;
 use BookStack\Entities\Models\Page;
 use Illuminate\Http\Request;
@@ -17,13 +17,14 @@ class CommentController extends Controller
     }
 
     /**
-     * Save a new comment for a Page
+     * Save a new comment for a Page.
+     *
      * @throws ValidationException
      */
     public function savePageComment(Request $request, int $pageId)
     {
         $this->validate($request, [
-            'text' => 'required|string',
+            'text'      => 'required|string',
             'parent_id' => 'nullable|integer',
         ]);
 
@@ -40,11 +41,13 @@ class CommentController extends Controller
         // Create a new comment.
         $this->checkPermission('comment-create-all');
         $comment = $this->commentRepo->create($page, $request->get('text'), $request->get('parent_id'));
+
         return view('comments.comment', ['comment' => $comment]);
     }
 
     /**
      * Update an existing comment.
+     *
      * @throws ValidationException
      */
     public function update(Request $request, int $commentId)
@@ -58,6 +61,7 @@ class CommentController extends Controller
         $this->checkOwnablePermission('comment-update', $comment);
 
         $comment = $this->commentRepo->update($comment, $request->get('text'));
+
         return view('comments.comment', ['comment' => $comment]);
     }
 
@@ -70,6 +74,7 @@ class CommentController extends Controller
         $this->checkOwnablePermission('comment-delete', $comment);
 
         $this->commentRepo->delete($comment);
+
         return response()->json(['message' => trans('entities.comment_deleted')]);
     }
 }

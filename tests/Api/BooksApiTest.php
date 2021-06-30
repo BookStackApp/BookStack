@@ -1,4 +1,6 @@
-<?php namespace Tests\Api;
+<?php
+
+namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
 use Tests\TestCase;
@@ -17,10 +19,10 @@ class BooksApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
-                'id' => $firstBook->id,
+                'id'   => $firstBook->id,
                 'name' => $firstBook->name,
                 'slug' => $firstBook->slug,
-            ]
+            ],
         ]]);
     }
 
@@ -28,7 +30,7 @@ class BooksApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $details = [
-            'name' => 'My API book',
+            'name'        => 'My API book',
             'description' => 'A book created via the API',
         ];
 
@@ -49,12 +51,12 @@ class BooksApiTest extends TestCase
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
         $resp->assertJson([
-            "error" => [
-                "message" => "The given data was invalid.",
-                "validation" => [
-                    "name" => ["The name field is required."]
+            'error' => [
+                'message'    => 'The given data was invalid.',
+                'validation' => [
+                    'name' => ['The name field is required.'],
                 ],
-                "code" => 422,
+                'code' => 422,
             ],
         ]);
     }
@@ -68,8 +70,8 @@ class BooksApiTest extends TestCase
 
         $resp->assertStatus(200);
         $resp->assertJson([
-            'id' => $book->id,
-            'slug' => $book->slug,
+            'id'         => $book->id,
+            'slug'       => $book->slug,
             'created_by' => [
                 'name' => $book->createdBy->name,
             ],
@@ -77,7 +79,7 @@ class BooksApiTest extends TestCase
                 'name' => $book->createdBy->name,
             ],
             'owned_by' => [
-                'name' => $book->ownedBy->name
+                'name' => $book->ownedBy->name,
             ],
         ]);
     }
@@ -87,7 +89,7 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::visible()->first();
         $details = [
-            'name' => 'My updated API book',
+            'name'        => 'My updated API book',
             'description' => 'A book created via the API',
         ];
 

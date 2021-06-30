@@ -1,13 +1,14 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
 
-use BookStack\Entities\Tools\ExportFormatter;
+namespace BookStack\Http\Controllers;
+
 use BookStack\Entities\Repos\ChapterRepo;
+use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Exceptions\NotFoundException;
 use Throwable;
 
 class ChapterExportController extends Controller
 {
-
     protected $chapterRepo;
     protected $exportFormatter;
 
@@ -22,6 +23,7 @@ class ChapterExportController extends Controller
 
     /**
      * Exports a chapter to pdf.
+     *
      * @throws NotFoundException
      * @throws Throwable
      */
@@ -29,11 +31,13 @@ class ChapterExportController extends Controller
     {
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $pdfContent = $this->exportFormatter->chapterToPdf($chapter);
+
         return $this->downloadResponse($pdfContent, $chapterSlug . '.pdf');
     }
 
     /**
      * Export a chapter to a self-contained HTML file.
+     *
      * @throws NotFoundException
      * @throws Throwable
      */
@@ -41,17 +45,20 @@ class ChapterExportController extends Controller
     {
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $containedHtml = $this->exportFormatter->chapterToContainedHtml($chapter);
+
         return $this->downloadResponse($containedHtml, $chapterSlug . '.html');
     }
 
     /**
      * Export a chapter to a simple plaintext .txt file.
+     *
      * @throws NotFoundException
      */
     public function plainText(string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $chapterText = $this->exportFormatter->chapterToPlainText($chapter);
+
         return $this->downloadResponse($chapterText, $chapterSlug . '.txt');
     }
 }

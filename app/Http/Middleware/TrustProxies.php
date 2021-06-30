@@ -24,8 +24,10 @@ class TrustProxies extends Middleware
 
     /**
      * Handle the request, Set the correct user-configured proxy information.
+     *
      * @param Request $request
      * @param Closure $next
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)

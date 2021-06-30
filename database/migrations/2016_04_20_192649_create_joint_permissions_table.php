@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateJointPermissionsTable extends Migration
 {
@@ -42,13 +42,13 @@ class CreateJointPermissionsTable extends Migration
 
         // Create the new public role
         $publicRoleData = [
-            'name' => 'public',
+            'name'         => 'public',
             'display_name' => 'Public',
-            'description' => 'The role given to public visitors if allowed',
-            'system_name' => 'public',
-            'hidden' => true,
-            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+            'description'  => 'The role given to public visitors if allowed',
+            'system_name'  => 'public',
+            'hidden'       => true,
+            'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
         ];
 
         // Ensure unique name
@@ -67,7 +67,7 @@ class CreateJointPermissionsTable extends Migration
                 // Assign view permission to public
                 DB::table('permission_role')->insert([
                     'permission_id' => $permission->id,
-                    'role_id' => $publicRoleId
+                    'role_id'       => $publicRoleId,
                 ]);
             }
         }

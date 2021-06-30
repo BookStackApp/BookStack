@@ -1,4 +1,6 @@
-<?php namespace BookStack\Api;
+<?php
+
+namespace BookStack\Api;
 
 use BookStack\Auth\User;
 use BookStack\Interfaces\Loggable;
@@ -7,19 +9,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * Class ApiToken
- * @property int $id
+ * Class ApiToken.
+ *
+ * @property int    $id
  * @property string $token_id
  * @property string $secret
  * @property string $name
  * @property Carbon $expires_at
- * @property User $user
+ * @property User   $user
  */
 class ApiToken extends Model implements Loggable
 {
     protected $fillable = ['name', 'expires_at'];
     protected $casts = [
-        'expires_at' => 'date:Y-m-d'
+        'expires_at' => 'date:Y-m-d',
     ];
 
     /**

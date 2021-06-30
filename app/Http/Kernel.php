@@ -1,4 +1,6 @@
-<?php namespace BookStack\Http;
+<?php
+
+namespace BookStack\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 

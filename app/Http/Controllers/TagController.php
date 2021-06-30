@@ -1,11 +1,12 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\TagRepo;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-
     protected $tagRepo;
 
     /**
@@ -23,6 +24,7 @@ class TagController extends Controller
     {
         $searchTerm = $request->get('search', null);
         $suggestions = $this->tagRepo->getNameSuggestions($searchTerm);
+
         return response()->json($suggestions);
     }
 
@@ -34,6 +36,7 @@ class TagController extends Controller
         $searchTerm = $request->get('search', null);
         $tagName = $request->get('name', null);
         $suggestions = $this->tagRepo->getValueSuggestions($searchTerm, $tagName);
+
         return response()->json($suggestions);
     }
 }
