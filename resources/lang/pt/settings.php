@@ -92,7 +92,7 @@ return [
     'recycle_bin' => 'Reciclagem',
     'recycle_bin_desc' => 'Aqui pode restaurar itens que foram eliminados ou eliminá-los permanentemente do sistema. Esta lista não é filtrada diferentemente de listas de atividades parecidas no sistema onde filtros de permissão são aplicados.',
     'recycle_bin_deleted_item' => 'Item eliminado',
-    'recycle_bin_deleted_parent' => 'Parent',
+    'recycle_bin_deleted_parent' => 'Parente',
     'recycle_bin_deleted_by' => 'Eliminado por',
     'recycle_bin_deleted_at' => 'Data de Eliminação',
     'recycle_bin_permanently_delete' => 'Eliminar permanentemente',
@@ -105,7 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Itens a serem Restaurados',
     'recycle_bin_restore_confirm' => 'Esta ação irá restaurar o item excluído, inclusive quaisquer elementos filhos, para o seu local original. Se a localização original tiver, entretanto, sido eliminada e estiver agora na reciclagem, o item pai também precisará de ser restaurado.',
     'recycle_bin_restore_deleted_parent' => 'O parente deste item foi também eliminado. Estes permanecerão eliminados até que o parente seja também restaurado.',
-    'recycle_bin_restore_parent' => 'Restore Parent',
+    'recycle_bin_restore_parent' => 'Restaurar Parente',
     'recycle_bin_destroy_notification' => 'Eliminados no total :count itens da lixeira.',
     'recycle_bin_restore_notification' => 'Restaurados no total :count itens da reciclagem.',
 
