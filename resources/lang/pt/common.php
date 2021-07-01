@@ -40,10 +40,10 @@ return [
     'remove' => 'Remover',
     'add' => 'Adicionar',
     'fullscreen' => 'Ecrã completo',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'favourite' => 'Favorito',
+    'unfavourite' => 'Retirar Favorito',
+    'next' => 'Próximo',
+    'previous' => 'Anterior',
 
     // Sort Options
     'sort_options' => 'Opções de Ordenação',
@@ -60,7 +60,7 @@ return [
     'no_activity' => 'Nenhuma atividade a mostrar',
     'no_items' => 'Nenhum item disponível',
     'back_to_top' => 'Voltar ao topo',
-    'skip_to_main_content' => 'Skip to main content',
+    'skip_to_main_content' => 'Avançar para o conteúdo principal',
     'toggle_details' => 'Alternar Detalhes',
     'toggle_thumbnails' => 'Alternar Miniaturas',
     'details' => 'Detalhes',
