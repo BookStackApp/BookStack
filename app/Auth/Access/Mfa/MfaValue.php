@@ -19,7 +19,7 @@ class MfaValue extends Model
     protected static $unguarded = true;
 
     const METHOD_TOTP = 'totp';
-    const METHOD_CODES = 'codes';
+    const METHOD_BACKUP_CODES = 'backup_codes';
 
     /**
      * Upsert a new MFA value for the given user and method

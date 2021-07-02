@@ -225,8 +225,10 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/mfa/setup', 'Auth\MfaController@setup');
-    Route::get('/mfa/totp-generate', 'Auth\MfaController@totpGenerate');
-    Route::post('/mfa/totp-confirm', 'Auth\MfaController@totpConfirm');
+    Route::get('/mfa/totp-generate', 'Auth\MfaTotpController@generate');
+    Route::post('/mfa/totp-confirm', 'Auth\MfaTotpController@confirm');
+    Route::get('/mfa/backup-codes-generate', 'Auth\MfaBackupCodesController@generate');
+    Route::post('/mfa/backup-codes-confirm', 'Auth\MfaBackupCodesController@confirm');
 });
 
 // Social auth routes
