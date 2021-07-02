@@ -27,6 +27,14 @@ class TestResponse extends BaseTestResponse
     }
 
     /**
+     * Get the HTML of the first element at the given selector.
+     */
+    public function getElementHtml(string $selector): string
+    {
+        return $this->crawler()->filter($selector)->first()->outerHtml();
+    }
+
+    /**
      * Assert the response contains the specified element.
      *
      * @return $this
