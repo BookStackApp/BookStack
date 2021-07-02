@@ -36,12 +36,20 @@
                     <div>
                         <div class="setting-list-label">Backup Codes</div>
                         <p class="small">
-                            Print out or securely store a set of one-time backup codes
+                            Securely store a set of one-time-use backup codes
                             which you can enter to verify your identity.
                         </p>
                     </div>
                     <div class="pt-m">
-                        <a href="{{ url('/mfa/codes/generate') }}" class="button outline">Setup</a>
+                        @if($userMethods->has('backup_codes'))
+                            <div class="text-pos">
+                                @icon('check-circle')
+                                Already configured
+                            </div>
+                            <a href="{{ url('/mfa/backup-codes-generate') }}" class="button outline small">Reconfigure</a>
+                        @else
+                            <a href="{{ url('/mfa/backup-codes-generate') }}" class="button outline">Setup</a>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -35,6 +35,7 @@
                     <div class="text-neg text-small px-xs">{{ $errors->first('code') }}</div>
                 @endif
                 <div class="mt-s text-right">
+                    <a href="{{ url('/mfa/setup') }}" class="button outline">{{ trans('common.cancel') }}</a>
                     <button class="button">Confirm and Enable</button>
                 </div>
             </form>
