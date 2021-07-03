@@ -94,13 +94,15 @@ function setting(string $key = null, $default = null)
 
 /**
  * Get a path to a theme resource.
+ * Returns null if a theme is not configured and
+ * therefore a full path is not available for use.
  */
-function theme_path(string $path = ''): string
+function theme_path(string $path = ''): ?string
 {
     $theme = config('view.theme');
 
     if (!$theme) {
-        return '';
+        return null;
     }
 
     return base_path('themes/' . $theme .($path ? DIRECTORY_SEPARATOR.$path : $path));

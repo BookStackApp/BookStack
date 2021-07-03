@@ -45,7 +45,7 @@ class ThemeService
     public function readThemeActions()
     {
         $themeActionsFile = theme_path('functions.php');
-        if (file_exists($themeActionsFile)) {
+        if ($themeActionsFile && file_exists($themeActionsFile)) {
             require $themeActionsFile;
         }
     }
