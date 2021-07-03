@@ -57,6 +57,7 @@ class PermissionsRepo
     public function saveNewRole(array $roleData): Role
     {
         $role = $this->role->newInstance($roleData);
+        $role->mfa_enforced = ($roleData['mfa_enforced'] ?? 'false') === 'true';
         $role->save();
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
@@ -90,6 +91,7 @@ class PermissionsRepo
         $this->assignRolePermissions($role, $permissions);
 
         $role->fill($roleData);
+        $role->mfa_enforced = ($roleData['mfa_enforced'] ?? 'false') === 'true';
         $role->save();
         $this->permissionService->buildJointPermissionForRole($role);
         Activity::add(ActivityType::ROLE_UPDATE, $role);

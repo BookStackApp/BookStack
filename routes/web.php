@@ -224,6 +224,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/roles/{id}', 'RoleController@update');
     });
 
+    // MFA Setup Routes
     Route::get('/mfa/setup', 'Auth\MfaController@setup');
     Route::get('/mfa/totp-generate', 'Auth\MfaTotpController@generate');
     Route::post('/mfa/totp-confirm', 'Auth\MfaTotpController@confirm');
