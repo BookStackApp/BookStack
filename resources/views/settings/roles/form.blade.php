@@ -11,12 +11,15 @@
             </div>
             <div>
                 <div class="form-group">
-                    <label for="name">{{ trans('settings.role_name') }}</label>
+                    <label for="display_name">{{ trans('settings.role_name') }}</label>
                     @include('form.text', ['name' => 'display_name'])
                 </div>
                 <div class="form-group">
-                    <label for="name">{{ trans('settings.role_desc') }}</label>
+                    <label for="description">{{ trans('settings.role_desc') }}</label>
                     @include('form.text', ['name' => 'description'])
+                </div>
+                <div class="form-group">
+                    @include('form.checkbox', ['name' => 'mfa_enforced', 'label' => trans('settings.role_mfa_enforced') ])
                 </div>
 
                 @if(config('auth.method') === 'ldap' || config('auth.method') === 'saml2')
