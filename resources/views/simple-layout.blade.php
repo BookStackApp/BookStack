@@ -4,7 +4,7 @@
 
     <div class="flex-fill flex">
         <div class="content flex">
-            <div class="scroll-body">
+            <div id="main-content" class="scroll-body">
                 @yield('body')
             </div>
         </div>

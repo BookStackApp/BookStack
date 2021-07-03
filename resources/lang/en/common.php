@@ -60,6 +60,7 @@ return [
     'no_activity' => 'No activity to show',
     'no_items' => 'No items available',
     'back_to_top' => 'Back to top',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Toggle Details',
     'toggle_thumbnails' => 'Toggle Thumbnails',
     'details' => 'Details',

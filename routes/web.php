@@ -14,7 +14,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Shelves
     Route::get('/create-shelf', 'BookshelfController@create');
-    Route::group(['prefix' => 'shelves'], function() {
+    Route::group(['prefix' => 'shelves'], function () {
         Route::get('/', 'BookshelfController@index');
         Route::post('/', 'BookshelfController@store');
         Route::get('/{slug}/edit', 'BookshelfController@edit');
@@ -226,7 +226,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/login/service/{socialDriver}', 'Auth\SocialController@login');
 Route::get('/login/service/{socialDriver}/callback', 'Auth\SocialController@callback');
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/login/service/{socialDriver}/detach', 'Auth\SocialController@detach');
+    Route::post('/login/service/{socialDriver}/detach', 'Auth\SocialController@detach');
 });
 Route::get('/register/service/{socialDriver}', 'Auth\SocialController@register');
 

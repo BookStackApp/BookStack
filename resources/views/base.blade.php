@@ -28,6 +28,7 @@
 </head>
 <body class="@yield('body-class')">
 
+    @include('common.parts.skip-to-content')
     @include('partials.notifications')
     @include('common.header')
 
