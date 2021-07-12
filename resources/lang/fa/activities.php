@@ -14,7 +14,7 @@ return [
     'page_delete_notification'    => 'Page Successfully Deleted',
     'page_restore'                => 'restored page',
     'page_restore_notification'   => 'Page Successfully Restored',
-    'page_move'                   => 'moved page',
+    'page_move'                   => 'جابه‌جایی صفحه',
 
     // Chapters
     'chapter_create'              => 'created chapter',
