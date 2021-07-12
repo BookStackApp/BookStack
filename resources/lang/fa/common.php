@@ -47,7 +47,7 @@ return [
 
     // Sort Options
     'sort_options' => 'گزینه‌های مرتب سازی',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_direction_toggle' => 'معکوس کردن جهت مرتب سازی',
     'sort_ascending' => 'مرتب‌سازی صعودی',
     'sort_descending' => 'مرتب‌سازی نزولی',
     'sort_name' => 'نام',
@@ -71,7 +71,7 @@ return [
 
     // Header
     'header_menu_expand' => 'گسترش منو',
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'منو پروفایل',
     'view_profile' => 'مشاهده پروفایل',
     'edit_profile' => 'ویرایش پروفایل',
     'dark_mode' => 'حالت تاریک',
@@ -79,12 +79,12 @@ return [
 
     // Layout tabs
     'tab_info' => 'اطلاعات',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'زبانه: نمایش اطلاعات ثانویه',
     'tab_content' => 'محتوا',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'زبانه: نمایش محتوای اصلی',
 
     // Email Content
-    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
+    'email_action_help' => 'اگر با دکمه بالا مشکلی دارید ، ادرس وبسایت *URLزیر را در مرورگر وب خود کپی و پیست کنید:',
     'email_rights' => 'تمام حقوق محفوظ است',
 
     // Footer Link Options
