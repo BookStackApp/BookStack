@@ -63,6 +63,30 @@
             </form>
         </section>
 
+        <section class="card content-wrap auto-height">
+            <h2 class="list-heading">Multi-Factor Authentication</h2>
+            <p>
+                Setup multi-factor authentication as an extra layer of security
+                for your user account.
+            </p>
+            <div class="grid half gap-xl v-center pb-s">
+                <div>
+                    @if ($mfaMethods->count() > 0)
+                        <span class="text-pos">@icon('check-circle')</span>
+                    @else
+                        <span class="text-neg">@icon('cancel')</span>
+                    @endif
+                    {{ $mfaMethods->count() }} {{ $mfaMethods->count() === 1 ? 'method' : 'methods' }} configured
+                </div>
+                <div class="text-m-right">
+                    @if($user->id === user()->id)
+                        <a href="{{ url('/mfa/setup')  }}" class="button outline">Configure Methods</a>
+                    @endif
+                </div>
+            </div>
+
+        </section>
+
         @if(user()->id === $user->id && count($activeSocialDrivers) > 0)
             <section class="card content-wrap auto-height">
                 <h2 class="list-heading">{{ trans('settings.users_social_accounts') }}</h2>

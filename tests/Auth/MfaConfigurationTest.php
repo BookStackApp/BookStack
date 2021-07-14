@@ -106,4 +106,29 @@ class MfaConfigurationTest extends TestCase
         $resp->assertStatus(500);
     }
 
+    public function test_mfa_method_count_is_visible_on_user_edit_page()
+    {
+        $admin = $this->getAdmin();
+        $resp = $this->actingAs($admin)->get($admin->getEditUrl());
+        $resp->assertSee('0 methods configured');
+
+        MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
+        $resp = $this->actingAs($admin)->get($admin->getEditUrl());
+        $resp->assertSee('1 method configured');
+
+        MfaValue::upsertWithValue($admin, MfaValue::METHOD_BACKUP_CODES, 'test');
+        $resp = $this->actingAs($admin)->get($admin->getEditUrl());
+        $resp->assertSee('2 methods configured');
+    }
+
+    public function test_mfa_setup_link_only_shown_when_viewing_own_user_edit_page()
+    {
+        $admin = $this->getAdmin();
+        $resp = $this->actingAs($admin)->get($admin->getEditUrl());
+        $resp->assertElementExists('a[href$="/mfa/setup"]');
+
+        $resp = $this->actingAs($admin)->get($this->getEditor()->getEditUrl());
+        $resp->assertElementNotExists('a[href$="/mfa/setup"]');
+    }
+
 }
