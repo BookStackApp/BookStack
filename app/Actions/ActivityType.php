@@ -52,4 +52,5 @@ class ActivityType
     const AUTH_REGISTER = 'auth_register';
 
     const MFA_SETUP_METHOD = 'mfa_setup_method';
+    const MFA_REMOVE_METHOD = 'mfa_remove_method';
 }

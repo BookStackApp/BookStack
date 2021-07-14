@@ -230,6 +230,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/mfa/totp-confirm', 'Auth\MfaTotpController@confirm');
     Route::get('/mfa/backup-codes-generate', 'Auth\MfaBackupCodesController@generate');
     Route::post('/mfa/backup-codes-confirm', 'Auth\MfaBackupCodesController@confirm');
+    Route::delete('/mfa/remove/{method}', 'Auth\MfaController@remove');
 });
 
 // Social auth routes

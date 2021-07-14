@@ -26,6 +26,17 @@
                                 Already configured
                             </div>
                             <a href="{{ url('/mfa/totp-generate') }}" class="button outline small">Reconfigure</a>
+                            <div component="dropdown" class="inline relative">
+                                <button type="button" refs="dropdown@toggle" class="button outline small">Remove</button>
+                                <div refs="dropdown@menu" class="dropdown-menu">
+                                    <p class="text-neg small px-m mb-xs">Are you sure you want to remove this multi-factor authentication method?</p>
+                                    <form action="{{ url('/mfa/remove/totp') }}" method="post">
+                                        {{ csrf_field() }}
+                                        {{ method_field('delete') }}
+                                        <button class="text-primary small delete">{{ trans('common.confirm') }}</button>
+                                    </form>
+                                </div>
+                            </div>
                         @else
                             <a href="{{ url('/mfa/totp-generate') }}" class="button outline">Setup</a>
                         @endif
@@ -47,6 +58,17 @@
                                 Already configured
                             </div>
                             <a href="{{ url('/mfa/backup-codes-generate') }}" class="button outline small">Reconfigure</a>
+                            <div component="dropdown" class="inline relative">
+                                <button type="button" refs="dropdown@toggle" class="button outline small">Remove</button>
+                                <div refs="dropdown@menu" class="dropdown-menu">
+                                    <p class="text-neg small px-m mb-xs">Are you sure you want to remove this multi-factor authentication method?</p>
+                                    <form action="{{ url('/mfa/remove/backup_codes') }}" method="post">
+                                        {{ csrf_field() }}
+                                        {{ method_field('delete') }}
+                                        <button class="text-primary small delete">{{ trans('common.confirm') }}</button>
+                                    </form>
+                                </div>
+                            </div>
                         @else
                             <a href="{{ url('/mfa/backup-codes-generate') }}" class="button outline">Setup</a>
                         @endif

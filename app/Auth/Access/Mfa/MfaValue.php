@@ -22,6 +22,14 @@ class MfaValue extends Model
     const METHOD_BACKUP_CODES = 'backup_codes';
 
     /**
+     * Get all the MFA methods available.
+     */
+    public static function allMethods(): array
+    {
+        return [self::METHOD_TOTP, self::METHOD_BACKUP_CODES];
+    }
+
+    /**
      * Upsert a new MFA value for the given user and method
      * using the provided value.
      */
