@@ -2,6 +2,7 @@
 
 namespace Tests\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\Mfa\MfaValue;
 use BookStack\Auth\User;
 use PragmaRX\Google2FA\Google2FA;
@@ -143,6 +144,24 @@ class MfaConfigurationTest extends TestCase
         MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
         $resp = $this->actingAs($admin)->get('/settings/users');
         $resp->assertElementExists('[title="MFA Configured"] svg');
+    }
+
+    public function test_remove_mfa_method()
+    {
+        $admin = $this->getAdmin();
+
+        MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
+        $this->assertEquals(1, $admin->mfaValues()->count());
+        $resp = $this->actingAs($admin)->get('/mfa/setup');
+        $resp->assertElementExists('form[action$="/mfa/remove/totp"]');
+
+        $resp = $this->delete("/mfa/remove/totp");
+        $resp->assertRedirect("/mfa/setup");
+        $resp = $this->followRedirects($resp);
+        $resp->assertSee('Multi-factor method successfully removed');
+
+        $this->assertActivityExists(ActivityType::MFA_REMOVE_METHOD);
+        $this->assertEquals(0, $admin->mfaValues()->count());
     }
 
 }
