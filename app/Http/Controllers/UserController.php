@@ -123,12 +123,13 @@ class UserController extends Controller
     {
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
-        $user = $this->user->newQuery()->with(['apiTokens'])->findOrFail($id);
+        /** @var User $user */
+        $user = $this->user->newQuery()->with(['apiTokens', 'mfaValues'])->findOrFail($id);
 
         $authMethod = ($user->system_name) ? 'system' : config('auth.method');
 
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
-        $mfaMethods = user()->mfaValues()->get(['id', 'method'])->groupBy('method');
+        $mfaMethods = $user->mfaValues->groupBy('method');
         $this->setPageTitle(trans('settings.user_profile'));
         $roles = $this->userRepo->getAllRoles();
 
