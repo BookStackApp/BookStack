@@ -39,6 +39,7 @@ use Illuminate\Support\Collection;
  * @property string     $external_auth_id
  * @property string     $system_name
  * @property Collection $roles
+ * @property Collection $mfaValues
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Loggable, Sluggable
 {

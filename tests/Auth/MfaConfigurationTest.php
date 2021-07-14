@@ -3,6 +3,7 @@
 namespace Tests\Auth;
 
 use BookStack\Auth\Access\Mfa\MfaValue;
+use BookStack\Auth\User;
 use PragmaRX\Google2FA\Google2FA;
 use Tests\TestCase;
 
@@ -108,16 +109,16 @@ class MfaConfigurationTest extends TestCase
 
     public function test_mfa_method_count_is_visible_on_user_edit_page()
     {
-        $admin = $this->getAdmin();
-        $resp = $this->actingAs($admin)->get($admin->getEditUrl());
+        $user = $this->getEditor();
+        $resp = $this->actingAs($this->getAdmin())->get($user->getEditUrl());
         $resp->assertSee('0 methods configured');
 
-        MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
-        $resp = $this->actingAs($admin)->get($admin->getEditUrl());
+        MfaValue::upsertWithValue($user, MfaValue::METHOD_TOTP, 'test');
+        $resp = $this->get($user->getEditUrl());
         $resp->assertSee('1 method configured');
 
-        MfaValue::upsertWithValue($admin, MfaValue::METHOD_BACKUP_CODES, 'test');
-        $resp = $this->actingAs($admin)->get($admin->getEditUrl());
+        MfaValue::upsertWithValue($user, MfaValue::METHOD_BACKUP_CODES, 'test');
+        $resp = $this->get($user->getEditUrl());
         $resp->assertSee('2 methods configured');
     }
 
@@ -129,6 +130,19 @@ class MfaConfigurationTest extends TestCase
 
         $resp = $this->actingAs($admin)->get($this->getEditor()->getEditUrl());
         $resp->assertElementNotExists('a[href$="/mfa/setup"]');
+    }
+
+    public function test_mfa_indicator_shows_in_user_list()
+    {
+        $admin = $this->getAdmin();
+        User::query()->where('id', '!=', $admin->id)->delete();
+
+        $resp = $this->actingAs($admin)->get('/settings/users');
+        $resp->assertElementNotExists('[title="MFA Configured"] svg');
+
+        MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
+        $resp = $this->actingAs($admin)->get('/settings/users');
+        $resp->assertElementExists('[title="MFA Configured"] svg');
     }
 
 }
