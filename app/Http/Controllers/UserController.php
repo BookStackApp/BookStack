@@ -128,12 +128,14 @@ class UserController extends Controller
         $authMethod = ($user->system_name) ? 'system' : config('auth.method');
 
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
+        $mfaMethods = user()->mfaValues()->get(['id', 'method'])->groupBy('method');
         $this->setPageTitle(trans('settings.user_profile'));
         $roles = $this->userRepo->getAllRoles();
 
         return view('users.edit', [
             'user'                => $user,
             'activeSocialDrivers' => $activeSocialDrivers,
+            'mfaMethods'          => $mfaMethods,
             'authMethod'          => $authMethod,
             'roles'               => $roles,
         ]);
