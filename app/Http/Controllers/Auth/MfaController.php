@@ -37,4 +37,18 @@ class MfaController extends Controller
 
         return redirect('/mfa/setup');
     }
+
+    /**
+     * Show the page to start an MFA verification.
+     */
+    public function verify()
+    {
+        $userMethods = user()->mfaValues()
+            ->get(['id', 'method'])
+            ->groupBy('method');
+
+        return view('mfa.verify', [
+            'userMethods' => $userMethods,
+        ]);
+    }
 }
