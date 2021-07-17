@@ -3,13 +3,11 @@
 namespace BookStack\Http\Controllers\Auth;
 
 use Activity;
-use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
-use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Theming\ThemeEvents;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -37,16 +35,19 @@ class LoginController extends Controller
     protected $redirectAfterLogout = '/login';
 
     protected $socialAuthService;
+    protected $loginService;
 
     /**
      * Create a new controller instance.
      */
-    public function __construct(SocialAuthService $socialAuthService)
+    public function __construct(SocialAuthService $socialAuthService, LoginService $loginService)
     {
         $this->middleware('guest', ['only' => ['getLogin', 'login']]);
         $this->middleware('guard:standard,ldap', ['only' => ['login', 'logout']]);
 
         $this->socialAuthService = $socialAuthService;
+        $this->loginService = $loginService;
+
         $this->redirectPath = url('/');
         $this->redirectAfterLogout = url('/login');
     }
@@ -141,6 +142,19 @@ class LoginController extends Controller
     }
 
     /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        return $this->loginService->attempt(
+            $this->credentials($request), auth()->getDefaultDriver(), $request->filled('remember')
+        );
+    }
+
+    /**
      * The user has been authenticated.
      *
      * @param \Illuminate\Http\Request $request
@@ -150,17 +164,6 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        // Authenticate on all session guards if a likely admin
-        if ($user->can('users-manage') && $user->can('user-roles-manage')) {
-            $guards = ['standard', 'ldap', 'saml2'];
-            foreach ($guards as $guard) {
-                auth($guard)->login($user);
-            }
-        }
-
-        Theme::dispatch(ThemeEvents::AUTH_LOGIN, auth()->getDefaultDriver(), $user);
-        $this->logActivity(ActivityType::AUTH_LOGIN, $user);
-
         return redirect()->intended($this->redirectPath());
     }
 

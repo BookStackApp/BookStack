@@ -4,6 +4,7 @@ namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\EmailConfirmationService;
+use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\UserTokenExpiredException;
@@ -20,14 +21,20 @@ use Illuminate\View\View;
 class ConfirmEmailController extends Controller
 {
     protected $emailConfirmationService;
+    protected $loginService;
     protected $userRepo;
 
     /**
      * Create a new controller instance.
      */
-    public function __construct(EmailConfirmationService $emailConfirmationService, UserRepo $userRepo)
+    public function __construct(
+        EmailConfirmationService $emailConfirmationService,
+        LoginService $loginService,
+        UserRepo $userRepo
+    )
     {
         $this->emailConfirmationService = $emailConfirmationService;
+        $this->loginService = $loginService;
         $this->userRepo = $userRepo;
     }
 
@@ -87,9 +94,7 @@ class ConfirmEmailController extends Controller
         $user->email_confirmed = true;
         $user->save();
 
-        auth()->login($user);
-        Theme::dispatch(ThemeEvents::AUTH_LOGIN, auth()->getDefaultDriver(), $user);
-        $this->logActivity(ActivityType::AUTH_LOGIN, $user);
+        $this->loginService->login($user, auth()->getDefaultDriver());
         $this->showSuccessNotification(trans('auth.email_confirm_success'));
         $this->emailConfirmationService->deleteByUser($user);
 

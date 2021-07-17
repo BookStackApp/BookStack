@@ -31,7 +31,7 @@ class EnforceMfaRequirements
             && !$request->is('mfa/verify*', 'uploads/images/user/*')
             && $this->mfaSession->requiredForCurrentUser()
         ) {
-            return redirect('/mfa/verify');
+//            return redirect('/mfa/verify');
         }
 
         // TODO - URI wildcard exceptions above allow access to the 404 page of this user
