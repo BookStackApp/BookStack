@@ -186,12 +186,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
      */
     public function loginUsingId($id, $remember = false)
     {
-        if (!is_null($user = $this->provider->retrieveById($id))) {
-            $this->login($user, $remember);
-
-            return $user;
-        }
-
+        // Always return false as to disable this method,
+        // Logins should route through LoginService.
         return false;
     }
 
