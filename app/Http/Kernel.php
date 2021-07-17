@@ -48,7 +48,6 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth'       => \BookStack\Http\Middleware\Authenticate::class,
-        'mfa'        => \BookStack\Http\Middleware\EnforceMfaRequirements::class,
         'can'        => \Illuminate\Auth\Middleware\Authorize::class,
         'guest'      => \BookStack\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
