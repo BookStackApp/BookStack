@@ -4,7 +4,7 @@ Route::get('/status', 'StatusController@show');
 Route::get('/robots.txt', 'HomeController@getRobots');
 
 // Authenticated routes...
-Route::group(['middleware' => ['auth', 'mfa']], function () {
+Route::group(['middleware' => 'auth'], function () {
 
     // Secure images routing
     Route::get('/uploads/images/{path}', 'Images\ImageController@showImage')

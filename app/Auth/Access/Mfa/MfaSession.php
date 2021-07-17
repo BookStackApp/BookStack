@@ -2,43 +2,51 @@
 
 namespace BookStack\Auth\Access\Mfa;
 
+use BookStack\Auth\User;
+
 class MfaSession
 {
-    private const MFA_VERIFIED_SESSION_KEY = 'mfa-verification-passed';
-
     /**
-     * Check if MFA is required for the current user.
+     * Check if MFA is required for the given user.
      */
-    public function requiredForCurrentUser(): bool
+    public function isRequiredForUser(User $user): bool
     {
         // TODO - Test both these cases
-        return user()->mfaValues()->exists() || $this->currentUserRoleEnforcesMfa();
+        return $user->mfaValues()->exists() || $this->userRoleEnforcesMfa($user);
     }
 
     /**
-     * Check if a role of the current user enforces MFA.
+     * Check if a role of the given user enforces MFA.
      */
-    protected function currentUserRoleEnforcesMfa(): bool
+    protected function userRoleEnforcesMfa(User $user): bool
     {
-        return user()->roles()
+        return $user->roles()
             ->where('mfa_enforced', '=', true)
             ->exists();
     }
 
     /**
-     * Check if the current MFA session has already been verified.
+     * Check if the current MFA session has already been verified for the given user.
      */
-    public function isVerified(): bool
+    public function isVerifiedForUser(User $user): bool
     {
-        return session()->get(self::MFA_VERIFIED_SESSION_KEY) === 'true';
+        return session()->get($this->getMfaVerifiedSessionKey($user)) === 'true';
     }
 
     /**
      * Mark the current session as MFA-verified.
      */
-    public function markVerified(): void
+    public function markVerifiedForUser(User $user): void
     {
-        session()->put(self::MFA_VERIFIED_SESSION_KEY, 'true');
+        session()->put($this->getMfaVerifiedSessionKey($user), 'true');
+    }
+
+    /**
+     * Get the session key in which the MFA verification status is stored.
+     */
+    protected function getMfaVerifiedSessionKey(User $user): string
+    {
+        return 'mfa-verification-passed:' . $user->id;
     }
 
 }

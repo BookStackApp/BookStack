@@ -2,16 +2,13 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\EmailConfirmationService;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\UserTokenExpiredException;
 use BookStack\Exceptions\UserTokenNotFoundException;
-use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Theming\ThemeEvents;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -94,9 +91,9 @@ class ConfirmEmailController extends Controller
         $user->email_confirmed = true;
         $user->save();
 
-        $this->loginService->login($user, auth()->getDefaultDriver());
-        $this->showSuccessNotification(trans('auth.email_confirm_success'));
         $this->emailConfirmationService->deleteByUser($user);
+        $this->showSuccessNotification(trans('auth.email_confirm_success'));
+        $this->loginService->login($user, auth()->getDefaultDriver());
 
         return redirect('/');
     }
