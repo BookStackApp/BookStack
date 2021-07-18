@@ -17,8 +17,8 @@
                 {!! csrf_field() !!}
                 <div class="form-group">
                     <label for="email">{{ trans('auth.email') }}</label>
-                    @if(auth()->check())
-                        @include('form.text', ['name' => 'email', 'model' => auth()->user()])
+                    @if($user)
+                        @include('form.text', ['name' => 'email', 'model' => $user])
                     @else
                         @include('form.text', ['name' => 'email'])
                     @endif

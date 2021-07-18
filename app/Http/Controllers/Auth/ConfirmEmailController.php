@@ -47,12 +47,11 @@ class ConfirmEmailController extends Controller
     /**
      * Shows a notice that a user's email address has not been confirmed,
      * Also has the option to re-send the confirmation email.
-     *
-     * @return View
      */
     public function showAwaiting()
     {
-        return view('auth.user-unconfirmed');
+        $user = $this->loginService->getLastLoginAttemptUser();
+        return view('auth.user-unconfirmed', ['user' => $user]);
     }
 
     /**

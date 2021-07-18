@@ -5,12 +5,16 @@ namespace BookStack\Auth\Access;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\Mfa\MfaSession;
 use BookStack\Auth\User;
+use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Facades\Activity;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
+use Exception;
 
 class LoginService
 {
+
+    protected const LAST_LOGIN_ATTEMPTED_SESSION_KEY = 'auth-login-last-attempted';
 
     protected $mfaSession;
 
@@ -19,24 +23,18 @@ class LoginService
         $this->mfaSession = $mfaSession;
     }
 
-
     /**
      * Log the given user into the system.
      * Will start a login of the given user but will prevent if there's
      * a reason to (MFA or Unconfirmed Email).
      * Returns a boolean to indicate the current login result.
+     * @throws StoppedAuthenticationException
      */
-    public function login(User $user, string $method): bool
+    public function login(User $user, string $method): void
     {
         if ($this->awaitingEmailConfirmation($user) || $this->needsMfaVerification($user)) {
-            // TODO - Remember who last attempted a login so we can use them after such
-            //  a email confirmation or mfa verification step.
-            //  Create a method to fetch that attempted user for use by the email confirmation
-            //  or MFA verification services.
-            //  Also will need a method to 'reattemptLastAttempted' login for once
-            //  the email confirmation of MFA verification steps have passed.
-            //  Must ensure this remembered last attempted login is cleared upon successful login.
-
+            $this->setLastLoginAttemptedForUser($user);
+            throw new StoppedAuthenticationException($user, $this);
             // TODO - Does 'remember' still work? Probably not right now.
 
             // Old MFA middleware todos:
@@ -44,15 +42,15 @@ class LoginService
             // TODO - Need to redirect to setup if not configured AND ONLY IF NO OPTIONS CONFIGURED
             //    Might need to change up such routes to start with /configure/ for such identification.
             //    (Can't allow access to those if already configured)
-            // TODO - Store mfa_pass into session for future requests?
+            //    Or, More likely, Need to add defence to those to prevent access unless
+            //    logged in or during partial auth.
 
             // TODO - Handle email confirmation handling
             //  Left BookStack\Http\Middleware\Authenticate@emailConfirmationErrorResponse in which needs
             //  be removed as an example of old behaviour.
-
-            return false;
         }
 
+        $this->clearLastLoginAttempted();
         auth()->login($user);
         Activity::add(ActivityType::AUTH_LOGIN, "{$method}; {$user->logDescriptor()}");
         Theme::dispatch(ThemeEvents::AUTH_LOGIN, $method, $user);
@@ -64,14 +62,58 @@ class LoginService
                 auth($guard)->login($user);
             }
         }
+    }
 
-        return true;
+    /**
+     * Reattempt a system login after a previous stopped attempt.
+     * @throws Exception
+     */
+    public function reattemptLoginFor(User $user, string $method)
+    {
+        if ($user->id !== $this->getLastLoginAttemptUser()) {
+            throw new Exception('Login reattempt user does align with current session state');
+        }
+
+        $this->login($user, $method);
+    }
+
+    /**
+     * Get the last user that was attempted to be logged in.
+     * Only exists if the last login attempt had correct credentials
+     * but had been prevented by a secondary factor.
+     */
+    public function getLastLoginAttemptUser(): ?User
+    {
+        $id = session()->get(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY);
+        if (!$id) {
+            return null;
+        }
+
+        return User::query()->where('id', '=', $id)->first();
+    }
+
+    /**
+     * Set the last login attempted user.
+     * Must be only used when credentials are correct and a login could be
+     * achieved but a secondary factor has stopped the login.
+     */
+    protected function setLastLoginAttemptedForUser(User $user)
+    {
+        session()->put(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY, $user->id);
+    }
+
+    /**
+     * Clear the last login attempted session value.
+     */
+    protected function clearLastLoginAttempted(): void
+    {
+        session()->remove(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY);
     }
 
     /**
      * Check if MFA verification is needed.
      */
-    protected function needsMfaVerification(User $user): bool
+    public function needsMfaVerification(User $user): bool
     {
         return !$this->mfaSession->isVerifiedForUser($user) && $this->mfaSession->isRequiredForUser($user);
     }
@@ -79,7 +121,7 @@ class LoginService
     /**
      * Check if the given user is awaiting email confirmation.
      */
-    protected function awaitingEmailConfirmation(User $user): bool
+    public function awaitingEmailConfirmation(User $user): bool
     {
         $requireConfirmation = (setting('registration-confirmation') || setting('registration-restrict'));
         return $requireConfirmation && !$user->email_confirmed;
@@ -89,6 +131,9 @@ class LoginService
      * Attempt the login of a user using the given credentials.
      * Meant to mirror Laravel's default guard 'attempt' method
      * but in a manner that always routes through our login system.
+     * May interrupt the flow if extra authentication requirements are imposed.
+     *
+     * @throws StoppedAuthenticationException
      */
     public function attempt(array $credentials, string $method, bool $remember = false): bool
     {
@@ -96,7 +141,7 @@ class LoginService
         if ($result) {
             $user = auth()->user();
             auth()->logout();
-            $result = $this->login($user, $method);
+            $this->login($user, $method);
         }
 
         return $result;
