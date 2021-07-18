@@ -5,15 +5,19 @@ namespace BookStack\Http\Controllers\Auth;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\Mfa\MfaValue;
 use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Request;
 
 class MfaController extends Controller
 {
+    use HandlesPartialLogins;
+
     /**
      * Show the view to setup MFA for the current user.
      */
     public function setup()
     {
-        $userMethods = user()->mfaValues()
+        $userMethods = $this->currentOrLastAttemptedUser()
+            ->mfaValues()
             ->get(['id', 'method'])
             ->groupBy('method');
         return view('mfa.setup', [
@@ -41,14 +45,26 @@ class MfaController extends Controller
     /**
      * Show the page to start an MFA verification.
      */
-    public function verify()
+    public function verify(Request $request)
     {
-        $userMethods = user()->mfaValues()
+        // TODO - Test this
+        $desiredMethod = $request->get('method');
+        $userMethods = $this->currentOrLastAttemptedUser()
+            ->mfaValues()
             ->get(['id', 'method'])
             ->groupBy('method');
 
+        // Basic search for the default option for a user.
+        // (Prioritises totp over backup codes)
+        $method = $userMethods->has($desiredMethod) ? $desiredMethod : $userMethods->keys()->sort()->reverse()->first();
+        $otherMethods = $userMethods->keys()->filter(function($userMethod) use ($method) {
+            return $method !== $userMethod;
+        })->all();
+
         return view('mfa.verify', [
             'userMethods' => $userMethods,
+            'method' => $method,
+            'otherMethods' => $otherMethods,
         ]);
     }
 }

@@ -6,12 +6,15 @@ use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\Mfa\MfaValue;
 use BookStack\Auth\Access\Mfa\TotpService;
 use BookStack\Auth\Access\Mfa\TotpValidationRule;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class MfaTotpController extends Controller
 {
+    use HandlesPartialLogins;
+
     protected const SETUP_SECRET_SESSION_KEY = 'mfa-setup-totp-secret';
 
     /**
@@ -39,6 +42,7 @@ class MfaTotpController extends Controller
      * Confirm the setup of TOTP and save the auth method secret
      * against the current user.
      * @throws ValidationException
+     * @throws NotFoundException
      */
     public function confirm(Request $request)
     {
@@ -51,7 +55,7 @@ class MfaTotpController extends Controller
             ]
         ]);
 
-        MfaValue::upsertWithValue(user(), MfaValue::METHOD_TOTP, $totpSecret);
+        MfaValue::upsertWithValue($this->currentOrLastAttemptedUser(), MfaValue::METHOD_TOTP, $totpSecret);
         session()->remove(static::SETUP_SECRET_SESSION_KEY);
         $this->logActivity(ActivityType::MFA_SETUP_METHOD, 'totp');
 

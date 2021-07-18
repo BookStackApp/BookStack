@@ -10,6 +10,8 @@ use Exception;
 
 class MfaBackupCodesController extends Controller
 {
+    use HandlesPartialLogins;
+
     protected const SETUP_SECRET_SESSION_KEY = 'mfa-setup-backup-codes';
 
     /**
@@ -39,7 +41,7 @@ class MfaBackupCodesController extends Controller
         }
 
         $codes = decrypt(session()->pull(self::SETUP_SECRET_SESSION_KEY));
-        MfaValue::upsertWithValue(user(), MfaValue::METHOD_BACKUP_CODES, json_encode($codes));
+        MfaValue::upsertWithValue($this->currentOrLastAttemptedUser(), MfaValue::METHOD_BACKUP_CODES, json_encode($codes));
 
         $this->logActivity(ActivityType::MFA_SETUP_METHOD, 'backup-codes');
         return redirect('/mfa/setup');

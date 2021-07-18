@@ -140,9 +140,9 @@ class SocialController extends Controller
         }
 
         $user = $this->registrationService->registerUser($userData, $socialAccount, $emailVerified);
+        $this->showSuccessNotification(trans('auth.register_success'));
         $this->loginService->login($user, $socialDriver);
 
-        $this->showSuccessNotification(trans('auth.register_success'));
         return redirect('/');
     }
 }

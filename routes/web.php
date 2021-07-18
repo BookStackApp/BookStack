@@ -224,15 +224,17 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/roles/{id}', 'RoleController@update');
     });
 
-    // MFA Routes
-    Route::get('/mfa/setup', 'Auth\MfaController@setup');
-    Route::get('/mfa/totp-generate', 'Auth\MfaTotpController@generate');
-    Route::post('/mfa/totp-confirm', 'Auth\MfaTotpController@confirm');
-    Route::get('/mfa/backup-codes-generate', 'Auth\MfaBackupCodesController@generate');
-    Route::post('/mfa/backup-codes-confirm', 'Auth\MfaBackupCodesController@confirm');
+    // MFA (Auth Mandatory)
     Route::delete('/mfa/remove/{method}', 'Auth\MfaController@remove');
-    Route::get('/mfa/verify', 'Auth\MfaController@verify');
 });
+
+// MFA (Auth Optional)
+Route::get('/mfa/setup', 'Auth\MfaController@setup');
+Route::get('/mfa/totp-generate', 'Auth\MfaTotpController@generate');
+Route::post('/mfa/totp-confirm', 'Auth\MfaTotpController@confirm');
+Route::get('/mfa/backup-codes-generate', 'Auth\MfaBackupCodesController@generate');
+Route::post('/mfa/backup-codes-confirm', 'Auth\MfaBackupCodesController@confirm');
+Route::get('/mfa/verify', 'Auth\MfaController@verify');
 
 // Social auth routes
 Route::get('/login/service/{socialDriver}', 'Auth\SocialController@login');
