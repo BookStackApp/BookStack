@@ -37,7 +37,7 @@ return [
     'app_homepage' => 'Applikasjonens hjemmeside',
     'app_homepage_desc' => 'Velg en visning som skal vises på hjemmesiden i stedet for standardvisningen. Sidetillatelser ignoreres for utvalgte sider.',
     'app_homepage_select' => 'Velg en side',
-    'app_footer_links' => 'Footer Links',
+    'app_footer_links' => 'Fotlenker',
     'app_footer_links_desc' => 'Add links to show within the site footer. These will be displayed at the bottom of most pages, including those that do not require login. You can use a label of "trans::<key>" to use system-defined translations. For example: Using "trans::common.privacy_policy" will provide the translated text "Privacy Policy" and "trans::common.terms_of_service" will provide the translated text "Terms of Service".',
     'app_footer_links_label' => 'Link Label',
     'app_footer_links_url' => 'Link URL',
