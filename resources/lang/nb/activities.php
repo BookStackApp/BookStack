@@ -45,8 +45,8 @@ return [
     'bookshelf_delete_notification'    => 'Bokhyllen ble slettet',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '«:name» ble lagt til i dine favoritter',
+    'favourite_remove_notification' => '«:name» ble fjernet fra dine favoritter',
 
     // Other
     'commented_on'                => 'kommenterte på',
