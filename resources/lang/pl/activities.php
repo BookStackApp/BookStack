@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Półka usunięta pomyślnie',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" został dodany do Twoich ulubionych',
+    'favourite_remove_notification' => '":name" został usunięty z ulubionych',
 
     // Other
     'commented_on'                => 'skomentował',
