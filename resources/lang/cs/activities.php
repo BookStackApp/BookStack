@@ -11,7 +11,7 @@ return [
     'page_update'                 => 'aktualizoval/a stránku',
     'page_update_notification'    => 'Stránka byla úspěšně aktualizována',
     'page_delete'                 => 'odstranil/a stránku',
-    'page_delete_notification'    => 'Stránka byla úspěšně smazána',
+    'page_delete_notification'    => 'Stránka byla úspěšně odstraněna',
     'page_restore'                => 'obnovil/a stránku',
     'page_restore_notification'   => 'Stránka byla úspěšně obnovena',
     'page_move'                   => 'přesunul/a stránku',
@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Knihovna byla úspěšně odstraněna',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" byla přidána do Vašich oblíbených',
+    'favourite_remove_notification' => '":name" byla odstraněna z Vašich oblíbených',
 
     // Other
     'commented_on'                => 'okomentoval/a',
