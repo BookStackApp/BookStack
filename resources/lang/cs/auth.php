@@ -20,7 +20,7 @@ return [
     'username' => 'Uživatelské jméno',
     'email' => 'E-mail',
     'password' => 'Heslo',
-    'password_confirm' => 'Potvrdit heslo',
+    'password_confirm' => 'Potvrzení hesla',
     'password_hint' => 'Musí mít více než 7 znaků',
     'forgot_password' => 'Zapomněli jste heslo?',
     'remember_me' => 'Zapamatovat si mě',
@@ -66,12 +66,12 @@ return [
     'email_not_confirmed_resend_button' => 'Znovu odeslat potvrzovací e-mail',
 
     // User Invite
-    'user_invite_email_subject' => 'Byli jste pozváni přidat se do :appName!',
+    'user_invite_email_subject' => 'Byli jste pozváni do :appName!',
     'user_invite_email_greeting' => 'Byl pro vás vytvořen účet na :appName.',
     'user_invite_email_text' => 'Klikněte na níže uvedené tlačítko pro nastavení hesla k účtu a získání přístupu:',
     'user_invite_email_action' => 'Nastavit heslo k účtu',
     'user_invite_page_welcome' => 'Vítejte v :appName!',
-    'user_invite_page_text' => 'Pro dokončení vašeho účtu a získání přístupu musíte nastavit heslo, které bude použito k přihlášení do :appName při budoucích návštěvách.',
+    'user_invite_page_text' => 'Pro dokončení vašeho účtu a získání přístupu musíte nastavit heslo, které bude použito k přihlášení do :appName při dalších návštěvách.',
     'user_invite_page_confirm_button' => 'Potvrdit heslo',
     'user_invite_success' => 'Heslo nastaveno, nyní máte přístup k :appName!'
 ];
