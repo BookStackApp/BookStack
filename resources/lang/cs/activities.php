@@ -21,8 +21,8 @@ return [
     'chapter_create_notification' => 'Kapitola byla úspěšně vytvořena',
     'chapter_update'              => 'aktualizoval/a kapitolu',
     'chapter_update_notification' => 'Kapitola byla úspěšně aktualizována',
-    'chapter_delete'              => 'smazal/a kapitolu',
-    'chapter_delete_notification' => 'Kapitola byla úspěšně smazána',
+    'chapter_delete'              => 'odstranila/a kapitolu',
+    'chapter_delete_notification' => 'Kapitola byla úspěšně odstraněna',
     'chapter_move'                => 'přesunul/a kapitolu',
 
     // Books
@@ -30,8 +30,8 @@ return [
     'book_create_notification'    => 'Kniha byla úspěšně vytvořena',
     'book_update'                 => 'aktualizoval/a knihu',
     'book_update_notification'    => 'Kniha byla úspěšně aktualizována',
-    'book_delete'                 => 'smazal/a knihu',
-    'book_delete_notification'    => 'Kniha byla úspěšně smazána',
+    'book_delete'                 => 'odstranil/a knihu',
+    'book_delete_notification'    => 'Kniha byla úspěšně odstraněna',
     'book_sort'                   => 'seřadil/a knihu',
     'book_sort_notification'      => 'Kniha byla úspěšně seřazena',
 
@@ -49,5 +49,5 @@ return [
 
     // Other
     'commented_on'                => 'okomentoval/a',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'oprávnění upravena',
 ];
