@@ -60,7 +60,7 @@ return [
         'array'   => ':attribute by měl obsahovat méně než :value položek.',
     ],
     'lte'                  => [
-        'numeric' => ':attribute musí být menší nebo rovno než :value.',
+        'numeric' => ':attribute musí být menší nebo rovno :value.',
         'file'    => 'Velikost souboru :attribute musí být menší než :value kB.',
         'string'  => ':attribute nesmí být delší než :value znaků.',
         'array'   => ':attribute by měl obsahovat maximálně :value položek.',
@@ -89,7 +89,7 @@ return [
     'required_without'     => ':attribute musí být vyplněno pokud :values není vyplněno.',
     'required_without_all' => ':attribute musí být vyplněno pokud není žádné z :values zvoleno.',
     'same'                 => ':attribute a :other se musí shodovat.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'Zadaný odkaz může být nebezpečný.',
     'size'                 => [
         'numeric' => ':attribute musí být přesně :size.',
         'file'    => ':attribute musí mít přesně :size Kilobytů.',
