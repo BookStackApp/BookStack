@@ -6,14 +6,14 @@
  */
 return [
 
-    'failed' => 'Tyto přihlašovací údaje neodpovídají našim záznamům.',
+    'failed' => 'Neplatné přihlašovací údaje.',
     'throttle' => 'Příliš mnoho pokusů o přihlášení. Zkuste to prosím znovu za :seconds sekund.',
 
     // Login & Register
     'sign_up' => 'Registrace',
     'log_in' => 'Přihlášení',
-    'log_in_with' => 'Přihlásit se pomocí :socialDriver',
-    'sign_up_with' => 'Registrovat se pomocí :socialDriver',
+    'log_in_with' => 'Přihlásit se přes :socialDriver',
+    'sign_up_with' => 'Registrovat se přes :socialDriver',
     'logout' => 'Odhlásit',
 
     'name' => 'Jméno',
@@ -21,21 +21,21 @@ return [
     'email' => 'E-mail',
     'password' => 'Heslo',
     'password_confirm' => 'Potvrzení hesla',
-    'password_hint' => 'Musí mít více než 7 znaků',
-    'forgot_password' => 'Zapomněli jste heslo?',
+    'password_hint' => 'Musí mít víc než 7 znaků',
+    'forgot_password' => 'Zapomenuté heslo?',
     'remember_me' => 'Zapamatovat si mě',
     'ldap_email_hint' => 'Zadejte email, který chcete přiřadit k tomuto účtu.',
     'create_account' => 'Vytvořit účet',
     'already_have_account' => 'Již máte účet?',
-    'dont_have_account' => 'Nemáte účet?',
-    'social_login' => 'Přihlášení pomocí sociálních sítí',
-    'social_registration' => 'Přihlášení pomocí sociálních sítí',
-    'social_registration_text' => 'Registrovat a přihlásit se pomocí jiné služby.',
+    'dont_have_account' => 'Nemáte učet?',
+    'social_login' => 'Přihlášení přes sociální sítě',
+    'social_registration' => 'Registrace přes sociální sítě',
+    'social_registration_text' => 'Registrovat a přihlásit se přes jinou službu',
 
     'register_thanks' => 'Děkujeme za registraci!',
     'register_confirm' => 'Zkontrolujte prosím svůj e-mail a klikněte na potvrzovací tlačítko pro přístup do :appName.',
-    'registrations_disabled' => 'Registrace jsou aktuálně zakázány',
-    'registration_email_domain_invalid' => 'Tato e-mailová doména nemá přístup k této aplikaci',
+    'registrations_disabled' => 'Registrace jsou momentálně pozastaveny',
+    'registration_email_domain_invalid' => 'Registrace z této e-mailové domény nejsou povoleny',
     'register_success' => 'Děkujeme za registraci! Nyní jste zaregistrováni a přihlášeni.',
 
 
