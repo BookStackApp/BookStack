@@ -92,7 +92,7 @@ class SettingController extends Controller
         if(app()->runningUnitTests()){
             return true;
         }
-        
+
         return cache()->remember('github_is_latest_release_version', 7200, function() use ($version){
             try {
                 $releaseInfo = $this->httpFetcher->fetch('https://api.github.com/repos/BookStackApp/BookStack/releases/latest');
