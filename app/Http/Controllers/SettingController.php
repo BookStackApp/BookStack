@@ -39,7 +39,7 @@ class SettingController extends Controller
         $isLatestVersion = $this->checkLatestVersion($version);
 
         return view('settings.index', [
-            'version'   => $version,
+            'version' => $version,
             'isLatestVersion' => $isLatestVersion,
             'guestUser' => User::getDefault(),
         ]);
@@ -89,25 +89,25 @@ class SettingController extends Controller
 
     private function checkLatestVersion($version)
     {
-        if(app()->runningUnitTests()){
+        if (app()->runningUnitTests()) {
             return true;
         }
 
-        return cache()->remember('github_is_latest_release_version', 7200, function() use ($version){
+        return cache()->remember('github_is_latest_release_version', 7200, function () use ($version) {
             try {
                 $releaseInfo = $this->httpFetcher->fetch('https://api.github.com/repos/BookStackApp/BookStack/releases/latest');
-                if(! $releaseInfo){
+                if (!$releaseInfo) {
                     return true;
                 }
 
                 $decoded = json_decode($releaseInfo);
 
-                if($decoded === null){
+                if ($decoded === null) {
                     return true;
                 }
                 $latestVersion = $decoded->tag_name;
 
-                if(! $latestVersion){
+                if (!$latestVersion) {
                     return true;
                 }
 
