@@ -44,7 +44,7 @@ return [
     'reset_password_send_instructions' => 'Níže zadejte svou e-mailovou adresu a bude vám zaslán e-mail s odkazem na obnovení hesla.',
     'reset_password_send_button' => 'Zaslat odkaz na obnovení hesla',
     'reset_password_sent' => 'Odkaz pro obnovení hesla bude odeslán na :email, pokud bude tato e-mailová adresa nalezena v systému.',
-    'reset_password_success' => 'Vaše heslo bylo úspěšně obnoveno.',
+    'reset_password_success' => 'Vaše heslo bylo obnoveno.',
     'email_reset_subject' => 'Obnovit heslo do :appName',
     'email_reset_text' => 'Tento e-mail jste obdrželi, protože jsme obdrželi žádost o obnovení hesla k vašemu účtu.',
     'email_reset_not_requested' => 'Pokud jste o obnovení hesla nežádali, není vyžadována žádná další akce.',
