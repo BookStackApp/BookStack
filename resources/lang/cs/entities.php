@@ -207,7 +207,7 @@ return [
     'pages_move_success' => 'Stránka přesunuta do ":parentName"',
     'pages_copy' => 'Kopírovat stránku',
     'pages_copy_desination' => 'Cíl kopírování',
-    'pages_copy_success' => 'Stránka byla úspěšně zkopírována',
+    'pages_copy_success' => 'Stránka byla zkopírována',
     'pages_permissions' => 'Oprávnění stránky',
     'pages_permissions_success' => 'Oprávnění stránky byla aktualizována',
     'pages_revision' => 'Revize',
