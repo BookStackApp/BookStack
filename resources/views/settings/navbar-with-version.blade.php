@@ -9,7 +9,7 @@ $version - Version of bookstack to display
     <div class="flex"></div>
     <div class="text-right p-m flex fit-content">
         <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
-            BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
+            BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }} <br> @if(! $isLatestVersion) <span class="text-neg">{{ trans('settings.new_version_available') }}</span> @endif
         </a>
     </div>
 </div>

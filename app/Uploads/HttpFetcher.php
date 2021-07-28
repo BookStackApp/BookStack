@@ -22,6 +22,7 @@ class HttpFetcher
             CURLOPT_URL            => $uri,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_USERAGENT => 'BookStack'
         ]);
 
         $data = curl_exec($ch);

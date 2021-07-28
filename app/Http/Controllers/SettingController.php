@@ -4,6 +4,8 @@ namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
+use BookStack\Exceptions\HttpFetchException;
+use BookStack\Uploads\HttpFetcher;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
 
@@ -11,12 +13,15 @@ class SettingController extends Controller
 {
     protected $imageRepo;
 
+    protected $httpFetcher;
+
     /**
      * SettingController constructor.
      */
-    public function __construct(ImageRepo $imageRepo)
+    public function __construct(ImageRepo $imageRepo, HttpFetcher $httpFetcher)
     {
         $this->imageRepo = $imageRepo;
+        $this->httpFetcher = $httpFetcher;
     }
 
     /**
@@ -30,8 +35,12 @@ class SettingController extends Controller
         // Get application version
         $version = trim(file_get_contents(base_path('version')));
 
+        // Get latest release version from Github
+        $isLatestVersion = $this->checkLatestVersion($version);
+
         return view('settings.index', [
             'version'   => $version,
+            'isLatestVersion' => $isLatestVersion,
             'guestUser' => User::getDefault(),
         ]);
     }
@@ -76,5 +85,40 @@ class SettingController extends Controller
         $redirectLocation = '/settings#' . $section;
 
         return redirect(rtrim($redirectLocation, '#'));
+    }
+
+    private function checkLatestVersion($version)
+    {
+        if(app()->runningUnitTests()){
+            return true;
+        }
+        
+        return cache()->remember('github_is_latest_release_version', 7200, function() use ($version){
+            try {
+                $releaseInfo = $this->httpFetcher->fetch('https://api.github.com/repos/BookStackApp/BookStack/releases/latest');
+                if(! $releaseInfo){
+                    return true;
+                }
+
+                $decoded = json_decode($releaseInfo);
+
+                if($decoded === null){
+                    return true;
+                }
+                $latestVersion = $decoded->tag_name;
+
+                if(! $latestVersion){
+                    return true;
+                }
+
+                return version_compare(
+                    str_replace('v', '', $version),
+                    str_replace('v', '', $latestVersion),
+                    '>');
+
+            } catch (HttpFetchException $e) {
+                return true;
+            }
+        });
     }
 }
