@@ -8,8 +8,8 @@ return [
     // Pages
     'page_create'                 => 'telah membuat halaman',
     'page_create_notification'    => 'Halaman Berhasil dibuat',
-    'page_update'                 => 'halaman diperbaharui',
-    'page_update_notification'    => 'Halaman Berhasil Diperbarui',
+    'page_update'                 => 'halaman telah diperbaharui',
+    'page_update_notification'    => 'Berhasil mengupdate halaman',
     'page_delete'                 => 'halaman dihapus',
     'page_delete_notification'    => 'Berhasil menghapus halaman',
     'page_restore'                => 'halaman telah dipulihkan',
