@@ -36,7 +36,7 @@ return [
     'export_html' => 'File Web Berisi',
     'export_pdf' => 'Dokumen PDF',
     'export_text' => 'Dokumen Teks Biasa',
-    'export_md' => 'Markdown File',
+    'export_md' => 'File Markdown',
 
     // Permissions and restrictions
     'permissions' => 'Izin',
