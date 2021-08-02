@@ -235,6 +235,7 @@ Route::post('/mfa/totp-confirm', 'Auth\MfaTotpController@confirm');
 Route::get('/mfa/backup-codes-generate', 'Auth\MfaBackupCodesController@generate');
 Route::post('/mfa/backup-codes-confirm', 'Auth\MfaBackupCodesController@confirm');
 Route::get('/mfa/verify', 'Auth\MfaController@verify');
+Route::post('/mfa/verify/totp', 'Auth\MfaTotpController@verify');
 
 // Social auth routes
 Route::get('/login/service/{socialDriver}', 'Auth\SocialController@login');

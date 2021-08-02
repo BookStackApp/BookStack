@@ -8,6 +8,9 @@ use BookStack\Exceptions\NotFoundException;
 
 trait HandlesPartialLogins
 {
+    /**
+     * @throws NotFoundException
+     */
     protected function currentOrLastAttemptedUser(): User
     {
         $loginService = app()->make(LoginService::class);

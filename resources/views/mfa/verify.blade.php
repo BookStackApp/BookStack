@@ -19,24 +19,15 @@
                     You'll need to set up at least one method before you gain access.
                 </p>
                 <div>
-                    <a href="{{ url('/mfa/verify/totp') }}" class="button outline">Configure</a>
+                    <a href="{{ url('/mfa/setup') }}" class="button outline">Configure</a>
                 </div>
             @endif
 
-            <div class="setting-list">
-                <div class="grid half gap-xl">
-                    <div>
-                        <div class="setting-list-label">METHOD A</div>
-                        <p class="small">
-                            ...
-                        </p>
-                    </div>
-                    <div class="pt-m">
-                            <a href="{{ url('/mfa/verify/totp') }}" class="button outline">BUTTON</a>
-                    </div>
-                </div>
 
-            </div>
+            @if($method)
+                <hr class="my-l">
+                @include('mfa.verify.' . $method)
+            @endif
 
             @if(count($otherMethods) > 0)
                 <hr class="my-l">
