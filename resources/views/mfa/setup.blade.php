@@ -25,7 +25,7 @@
                                 @icon('check-circle')
                                 Already configured
                             </div>
-                            <a href="{{ url('/mfa/totp-generate') }}" class="button outline small">Reconfigure</a>
+                            <a href="{{ url('/mfa/totp/generate') }}" class="button outline small">Reconfigure</a>
                             <div component="dropdown" class="inline relative">
                                 <button type="button" refs="dropdown@toggle" class="button outline small">Remove</button>
                                 <div refs="dropdown@menu" class="dropdown-menu">
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                         @else
-                            <a href="{{ url('/mfa/totp-generate') }}" class="button outline">Setup</a>
+                            <a href="{{ url('/mfa/totp/generate') }}" class="button outline">Setup</a>
                         @endif
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                                 @icon('check-circle')
                                 Already configured
                             </div>
-                            <a href="{{ url('/mfa/backup-codes-generate') }}" class="button outline small">Reconfigure</a>
+                            <a href="{{ url('/mfa/backup_codes/generate') }}" class="button outline small">Reconfigure</a>
                             <div component="dropdown" class="inline relative">
                                 <button type="button" refs="dropdown@toggle" class="button outline small">Remove</button>
                                 <div refs="dropdown@menu" class="dropdown-menu">
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                         @else
-                            <a href="{{ url('/mfa/backup-codes-generate') }}" class="button outline">Setup</a>
+                            <a href="{{ url('/mfa/backup_codes/generate') }}" class="button outline">Setup</a>
                         @endif
                     </div>
                 </div>

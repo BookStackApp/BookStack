@@ -10,6 +10,7 @@ use BookStack\Facades\Activity;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use Exception;
+use phpDocumentor\Reflection\DocBlock\Tags\Method;
 
 class LoginService
 {
@@ -33,19 +34,13 @@ class LoginService
     public function login(User $user, string $method): void
     {
         if ($this->awaitingEmailConfirmation($user) || $this->needsMfaVerification($user)) {
-            $this->setLastLoginAttemptedForUser($user);
+            $this->setLastLoginAttemptedForUser($user, $method);
             throw new StoppedAuthenticationException($user, $this);
             // TODO - Does 'remember' still work? Probably not right now.
 
             // TODO - Need to clear MFA sessions out upon logout
 
             // Old MFA middleware todos:
-
-            // TODO - Need to redirect to setup if not configured AND ONLY IF NO OPTIONS CONFIGURED
-            //    Might need to change up such routes to start with /configure/ for such identification.
-            //    (Can't allow access to those if already configured)
-            //    Or, More likely, Need to add defence to those to prevent access unless
-            //    logged in or during partial auth.
 
             // TODO - Handle email confirmation handling
             //  Left BookStack\Http\Middleware\Authenticate@emailConfirmationErrorResponse in which needs
@@ -70,13 +65,13 @@ class LoginService
      * Reattempt a system login after a previous stopped attempt.
      * @throws Exception
      */
-    public function reattemptLoginFor(User $user, string $method)
+    public function reattemptLoginFor(User $user)
     {
         if ($user->id !== ($this->getLastLoginAttemptUser()->id ?? null)) {
             throw new Exception('Login reattempt user does align with current session state');
         }
 
-        $this->login($user, $method);
+        $this->login($user, $this->getLastLoginAttemptMethod());
     }
 
     /**
@@ -86,12 +81,38 @@ class LoginService
      */
     public function getLastLoginAttemptUser(): ?User
     {
-        $id = session()->get(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY);
-        if (!$id) {
-            return null;
+        $id = $this->getLastLoginAttemptDetails()['user_id'];
+        return User::query()->where('id', '=', $id)->first();
+    }
+
+    /**
+     * Get the method for the last login attempt.
+     */
+    protected function getLastLoginAttemptMethod(): ?string
+    {
+        return $this->getLastLoginAttemptDetails()['method'];
+    }
+
+    /**
+     * Get the details of the last login attempt.
+     * Checks upon a ttl of about 1 hour since that last attempted login.
+     * @return array{user_id: ?string, method: ?string}
+     */
+    protected function getLastLoginAttemptDetails(): array
+    {
+        $value = session()->get(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY);
+        if (!$value) {
+            return ['user_id' => null, 'method' => null];
         }
 
-        return User::query()->where('id', '=', $id)->first();
+        [$id, $method, $time] = explode(':', $value);
+        $hourAgo = time() - (60*60);
+        if ($time < $hourAgo) {
+            $this->clearLastLoginAttempted();
+            return ['user_id' => null, 'method' => null];
+        }
+
+        return ['user_id' => $id, 'method' => $method];
     }
 
     /**
@@ -99,9 +120,12 @@ class LoginService
      * Must be only used when credentials are correct and a login could be
      * achieved but a secondary factor has stopped the login.
      */
-    protected function setLastLoginAttemptedForUser(User $user)
+    protected function setLastLoginAttemptedForUser(User $user, string $method)
     {
-        session()->put(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY, $user->id);
+        session()->put(
+            self::LAST_LOGIN_ATTEMPTED_SESSION_KEY,
+            implode(':', [$user->id, $method, time()])
+        );
     }
 
     /**

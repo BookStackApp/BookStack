@@ -16,6 +16,15 @@ class MfaSession
     }
 
     /**
+     * Check if the given user is pending MFA setup.
+     * (MFA required but not yet configured).
+     */
+    public function isPendingMfaSetup(User $user): bool
+    {
+        return $this->isRequiredForUser($user) && !$user->mfaValues()->exists();
+    }
+
+    /**
      * Check if a role of the given user enforces MFA.
      */
     protected function userRoleEnforcesMfa(User $user): bool

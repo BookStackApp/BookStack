@@ -4,7 +4,7 @@
     Enter one of your remaining backup codes below:
 </p>
 
-<form action="{{ url('/mfa/verify/backup_codes') }}" method="post">
+<form action="{{ url('/mfa/backup_codes/verify') }}" method="post">
     {{ csrf_field() }}
     <input type="text"
            name="code"

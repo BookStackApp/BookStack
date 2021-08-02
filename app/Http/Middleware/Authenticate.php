@@ -15,9 +15,8 @@ class Authenticate
         if (!hasAppAccess()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest(url('/login'));
             }
+            return redirect()->guest(url('/login'));
         }
 
         return $next($request);

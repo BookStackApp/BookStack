@@ -4,7 +4,7 @@
     Enter the code, generated using your mobile app, below:
 </p>
 
-<form action="{{ url('/mfa/verify/totp') }}" method="post">
+<form action="{{ url('/mfa/totp/verify') }}" method="post">
     {{ csrf_field() }}
     <input type="text"
            name="code"
