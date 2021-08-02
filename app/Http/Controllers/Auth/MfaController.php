@@ -5,7 +5,7 @@ namespace BookStack\Http\Controllers\Auth;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\Mfa\MfaValue;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Http\Request;
+use Illuminate\Http\Request;
 
 class MfaController extends Controller
 {
@@ -47,7 +47,6 @@ class MfaController extends Controller
      */
     public function verify(Request $request)
     {
-        // TODO - Test this
         $desiredMethod = $request->get('method');
         $userMethods = $this->currentOrLastAttemptedUser()
             ->mfaValues()

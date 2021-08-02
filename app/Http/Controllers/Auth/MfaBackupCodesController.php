@@ -3,10 +3,15 @@
 namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\Mfa\BackupCodeService;
+use BookStack\Auth\Access\Mfa\MfaSession;
 use BookStack\Auth\Access\Mfa\MfaValue;
+use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class MfaBackupCodesController extends Controller
 {
@@ -45,5 +50,40 @@ class MfaBackupCodesController extends Controller
 
         $this->logActivity(ActivityType::MFA_SETUP_METHOD, 'backup-codes');
         return redirect('/mfa/setup');
+    }
+
+    /**
+     * Verify the MFA method submission on check.
+     * @throws NotFoundException
+     * @throws ValidationException
+     */
+    public function verify(Request $request, BackupCodeService $codeService, MfaSession $mfaSession, LoginService $loginService)
+    {
+        $user = $this->currentOrLastAttemptedUser();
+        $codes = MfaValue::getValueForUser($user, MfaValue::METHOD_BACKUP_CODES) ?? '[]';
+
+        $this->validate($request, [
+            'code' => [
+                'required',
+                'max:12', 'min:8',
+                function ($attribute, $value, $fail) use ($codeService, $codes) {
+                    if (!$codeService->inputCodeExistsInSet($value, $codes)) {
+                        $fail(trans('validation.backup_codes'));
+                    }
+                }
+            ]
+        ]);
+
+        $updatedCodes = $codeService->removeInputCodeFromSet($request->get('code'), $codes);
+        MfaValue::upsertWithValue($user, MfaValue::METHOD_BACKUP_CODES, $updatedCodes);
+
+        $mfaSession->markVerifiedForUser($user);
+        $loginService->reattemptLoginFor($user, 'mfa-backup_codes');
+
+        if ($codeService->countCodesInSet($updatedCodes) < 5) {
+            $this->showWarningNotification('You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.');
+        }
+
+        return redirect()->intended();
     }
 }

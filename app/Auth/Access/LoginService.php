@@ -37,6 +37,8 @@ class LoginService
             throw new StoppedAuthenticationException($user, $this);
             // TODO - Does 'remember' still work? Probably not right now.
 
+            // TODO - Need to clear MFA sessions out upon logout
+
             // Old MFA middleware todos:
 
             // TODO - Need to redirect to setup if not configured AND ONLY IF NO OPTIONS CONFIGURED
