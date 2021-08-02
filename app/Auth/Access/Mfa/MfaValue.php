@@ -45,9 +45,23 @@ class MfaValue extends Model
     }
 
     /**
+     * Easily get the decrypted MFA value for the given user and method.
+     */
+    public static function getValueForUser(User $user, string $method): ?string
+    {
+        /** @var MfaValue $mfaVal */
+        $mfaVal = static::query()
+            ->where('user_id', '=', $user->id)
+            ->where('method', '=', $method)
+            ->first();
+
+        return $mfaVal ? $mfaVal->getValue() : null;
+    }
+
+    /**
      * Decrypt the value attribute upon access.
      */
-    public function getValue(): string
+    protected function getValue(): string
     {
         return decrypt($this->value);
     }
@@ -55,7 +69,7 @@ class MfaValue extends Model
     /**
      * Encrypt the value attribute upon access.
      */
-    public function setValue($value): void
+    protected function setValue($value): void
     {
         $this->value = encrypt($value);
     }

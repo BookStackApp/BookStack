@@ -3,6 +3,8 @@
 namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\LoginService;
+use BookStack\Auth\Access\Mfa\MfaSession;
 use BookStack\Auth\Access\Mfa\MfaValue;
 use BookStack\Auth\Access\Mfa\TotpService;
 use BookStack\Auth\Access\Mfa\TotpValidationRule;
@@ -60,5 +62,28 @@ class MfaTotpController extends Controller
         $this->logActivity(ActivityType::MFA_SETUP_METHOD, 'totp');
 
         return redirect('/mfa/setup');
+    }
+
+    /**
+     * Verify the MFA method submission on check.
+     * @throws NotFoundException
+     */
+    public function verify(Request $request, LoginService $loginService, MfaSession $mfaSession)
+    {
+        $user = $this->currentOrLastAttemptedUser();
+        $totpSecret = MfaValue::getValueForUser($user, MfaValue::METHOD_TOTP);
+
+        $this->validate($request, [
+            'code' => [
+                'required',
+                'max:12', 'min:4',
+                new TotpValidationRule($totpSecret),
+            ]
+        ]);
+
+        $mfaSession->markVerifiedForUser($user);
+        $loginService->reattemptLoginFor($user, 'mfa-totp');
+
+        return redirect()->intended();
     }
 }

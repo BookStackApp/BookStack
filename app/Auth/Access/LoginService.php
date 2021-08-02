@@ -70,7 +70,7 @@ class LoginService
      */
     public function reattemptLoginFor(User $user, string $method)
     {
-        if ($user->id !== $this->getLastLoginAttemptUser()) {
+        if ($user->id !== ($this->getLastLoginAttemptUser()->id ?? null)) {
             throw new Exception('Login reattempt user does align with current session state');
         }
 
