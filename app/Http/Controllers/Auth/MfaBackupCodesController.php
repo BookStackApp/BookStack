@@ -78,7 +78,7 @@ class MfaBackupCodesController extends Controller
         MfaValue::upsertWithValue($user, MfaValue::METHOD_BACKUP_CODES, $updatedCodes);
 
         $mfaSession->markVerifiedForUser($user);
-        $loginService->reattemptLoginFor($user, 'mfa-backup_codes');
+        $loginService->reattemptLoginFor($user);
 
         if ($codeService->countCodesInSet($updatedCodes) < 5) {
             $this->showWarningNotification('You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.');

@@ -82,7 +82,7 @@ class MfaTotpController extends Controller
         ]);
 
         $mfaSession->markVerifiedForUser($user);
-        $loginService->reattemptLoginFor($user, 'mfa-totp');
+        $loginService->reattemptLoginFor($user);
 
         return redirect()->intended();
     }

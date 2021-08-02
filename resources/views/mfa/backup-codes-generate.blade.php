@@ -27,7 +27,7 @@
                 Each code can only be used once
             </p>
 
-            <form action="{{ url('/mfa/backup-codes-confirm') }}" method="POST">
+            <form action="{{ url('/mfa/backup_codes/confirm') }}" method="POST">
                 {{ csrf_field() }}
                 <div class="mt-s text-right">
                     <a href="{{ url('/mfa/setup') }}" class="button outline">{{ trans('common.cancel') }}</a>

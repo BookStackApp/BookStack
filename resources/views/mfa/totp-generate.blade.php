@@ -24,7 +24,7 @@
                 Verify that all is working by entering a code, generated within your
                 authentication app, in the input box below:
             </p>
-            <form action="{{ url('/mfa/totp-confirm') }}" method="POST">
+            <form action="{{ url('/mfa/totp/confirm') }}" method="POST">
                 {{ csrf_field() }}
                 <input type="text"
                        name="code"

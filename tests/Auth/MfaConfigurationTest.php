@@ -18,21 +18,21 @@ class MfaConfigurationTest extends TestCase
 
         // Setup page state
         $resp = $this->actingAs($editor)->get('/mfa/setup');
-        $resp->assertElementContains('a[href$="/mfa/totp-generate"]', 'Setup');
+        $resp->assertElementContains('a[href$="/mfa/totp/generate"]', 'Setup');
 
         // Generate page access
-        $resp = $this->get('/mfa/totp-generate');
+        $resp = $this->get('/mfa/totp/generate');
         $resp->assertSee('Mobile App Setup');
         $resp->assertSee('Verify Setup');
-        $resp->assertElementExists('form[action$="/mfa/totp-confirm"] button');
+        $resp->assertElementExists('form[action$="/mfa/totp/confirm"] button');
         $this->assertSessionHas('mfa-setup-totp-secret');
         $svg = $resp->getElementHtml('#main-content .card svg');
 
         // Validation error, code should remain the same
-        $resp = $this->post('/mfa/totp-confirm', [
+        $resp = $this->post('/mfa/totp/confirm', [
             'code' => 'abc123',
         ]);
-        $resp->assertRedirect('/mfa/totp-generate');
+        $resp->assertRedirect('/mfa/totp/generate');
         $resp = $this->followRedirects($resp);
         $resp->assertSee('The provided code is not valid or has expired.');
         $revisitSvg = $resp->getElementHtml('#main-content .card svg');
@@ -42,7 +42,7 @@ class MfaConfigurationTest extends TestCase
         $google2fa = new Google2FA();
         $secret = decrypt(session()->get('mfa-setup-totp-secret'));
         $otp = $google2fa->getCurrentOtp($secret);
-        $resp = $this->post('/mfa/totp-confirm', [
+        $resp = $this->post('/mfa/totp/confirm', [
             'code' => $otp,
         ]);
         $resp->assertRedirect('/mfa/setup');
@@ -50,7 +50,7 @@ class MfaConfigurationTest extends TestCase
         // Confirmation of setup
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Multi-factor method successfully configured');
-        $resp->assertElementContains('a[href$="/mfa/totp-generate"]', 'Reconfigure');
+        $resp->assertElementContains('a[href$="/mfa/totp/generate"]', 'Reconfigure');
 
         $this->assertDatabaseHas('mfa_values', [
             'user_id' => $editor->id,
@@ -69,12 +69,12 @@ class MfaConfigurationTest extends TestCase
 
         // Setup page state
         $resp = $this->actingAs($editor)->get('/mfa/setup');
-        $resp->assertElementContains('a[href$="/mfa/backup-codes-generate"]', 'Setup');
+        $resp->assertElementContains('a[href$="/mfa/backup_codes/generate"]', 'Setup');
 
         // Generate page access
-        $resp = $this->get('/mfa/backup-codes-generate');
+        $resp = $this->get('/mfa/backup_codes/generate');
         $resp->assertSee('Backup Codes');
-        $resp->assertElementContains('form[action$="/mfa/backup-codes-confirm"]', 'Confirm and Enable');
+        $resp->assertElementContains('form[action$="/mfa/backup_codes/confirm"]', 'Confirm and Enable');
         $this->assertSessionHas('mfa-setup-backup-codes');
         $codes = decrypt(session()->get('mfa-setup-backup-codes'));
         // Check code format
@@ -84,13 +84,13 @@ class MfaConfigurationTest extends TestCase
         $resp->assertSee(base64_encode(implode("\n\n", $codes)));
 
         // Confirm submit
-        $resp = $this->post('/mfa/backup-codes-confirm');
+        $resp = $this->post('/mfa/backup_codes/confirm');
         $resp->assertRedirect('/mfa/setup');
 
         // Confirmation of setup
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Multi-factor method successfully configured');
-        $resp->assertElementContains('a[href$="/mfa/backup-codes-generate"]', 'Reconfigure');
+        $resp->assertElementContains('a[href$="/mfa/backup_codes/generate"]', 'Reconfigure');
 
         $this->assertDatabaseHas('mfa_values', [
             'user_id' => $editor->id,
@@ -104,7 +104,7 @@ class MfaConfigurationTest extends TestCase
 
     public function test_backup_codes_cannot_be_confirmed_if_not_previously_generated()
     {
-        $resp = $this->asEditor()->post('/mfa/backup-codes-confirm');
+        $resp = $this->asEditor()->post('/mfa/backup_codes/confirm');
         $resp->assertStatus(500);
     }
 
