@@ -32,7 +32,9 @@
             @if(count($otherMethods) > 0)
                 <hr class="my-l">
                 @foreach($otherMethods as $otherMethod)
-                    <a href="{{ url("/mfa/verify?method={$otherMethod}") }}">Use {{$otherMethod}}</a>
+                    <div class="text-center">
+                        <a href="{{ url("/mfa/verify?method={$otherMethod}") }}">{{ trans('auth.mfa_use_' . $otherMethod) }}</a>
+                    </div>
                 @endforeach
             @endif
 

@@ -73,5 +73,9 @@ return [
     'user_invite_page_welcome' => 'Welcome to :appName!',
     'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
     'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_success' => 'Password set, you now have access to :appName!',
+
+    // Multi-factor Authentication
+    'mfa_use_totp' => 'Verify using a mobile app',
+    'mfa_use_backup_codes' => 'Verify using a backup code',
 ];

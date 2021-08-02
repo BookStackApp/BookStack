@@ -1,14 +1,14 @@
-<div class="setting-list-label">Mobile App</div>
+<div class="setting-list-label">Backup Code</div>
 
 <p class="small mb-m">
-    Enter the code, generated using your mobile app, below:
+    Enter one of your remaining backup codes below:
 </p>
 
-<form action="{{ url('/mfa/verify/totp') }}" method="post">
+<form action="{{ url('/mfa/verify/backup_codes') }}" method="post">
     {{ csrf_field() }}
     <input type="text"
            name="code"
-           placeholder="Provide your app generated code here"
+           placeholder="Enter backup code here"
            class="input-fill-width {{ $errors->has('code') ? 'neg' : '' }}">
     @if($errors->has('code'))
         <div class="text-neg text-small px-xs">{{ $errors->first('code') }}</div>
