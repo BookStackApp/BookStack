@@ -2,15 +2,11 @@ name: test-migrations
 
 on:
   push:
-    branches:
-      - master
-      - release
-      - gh_actions_update
+    branches-ignore:
+      - l10n_master
   pull_request:
-    branches:
-      - '*'
-      - '*/*'
-      - '!l10n_master'
+    branches-ignore:
+      - l10n_master
 
 jobs:
   build:
