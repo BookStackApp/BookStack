@@ -3,7 +3,6 @@ import {onChildEvent} from "../services/dom";
 class UserSelect {
 
     setup() {
-
         this.input = this.$refs.input;
         this.userInfoContainer = this.$refs.userInfo;
 
