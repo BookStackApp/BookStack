@@ -41,7 +41,9 @@
                     </div>
                 @endforeach
 
-                <div class="form-group ml-auto" component="submit-on-change">
+                <div class="form-group ml-auto"
+                     component="submit-on-change"
+                     option:submit-on-change:filter='[name="user"]'>
                     <label for="owner">{{ trans('settings.audit_table_user') }}</label>
                     @include('components.user-select', ['user' => $listDetails['user'] ? \BookStack\Auth\User::query()->find($listDetails['user']) : null, 'name' => 'user', 'compact' =>  true])
                 </div>
