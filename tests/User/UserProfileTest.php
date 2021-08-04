@@ -83,6 +83,23 @@ class UserProfileTest extends BrowserKitTest
             ->see($newUser->name);
     }
 
+    public function test_profile_has_search_links_in_created_entity_lists()
+    {
+        $user = $this->getEditor();
+        $resp = $this->actingAs($this->getAdmin())->visit('/user/' . $user->slug);
+
+        $expectedLinks = [
+            '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Apage%7D',
+            '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Achapter%7D',
+            '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Abook%7D',
+            '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Abookshelf%7D',
+        ];
+
+        foreach ($expectedLinks as $link) {
+            $resp->seeInElement('[href$="' . $link . '"]', 'View All');
+        }
+    }
+
     public function test_guest_profile_shows_limited_form()
     {
         $this->asAdmin()

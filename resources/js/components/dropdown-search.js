@@ -27,6 +27,7 @@ class DropdownSearch {
             this.runLocalSearch(input);
         } else {
             this.toggleLoading(true);
+            this.listContainerElem.innerHTML = '';
             this.runAjaxSearch(input);
         }
     }
