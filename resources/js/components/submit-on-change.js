@@ -6,7 +6,14 @@
 class SubmitOnChange {
 
     setup() {
-        this.$el.addEventListener('change', () => {
+        this.filter = this.$opts.filter;
+
+        this.$el.addEventListener('change', (event) => {
+
+            if (this.filter && !event.target.matches(this.filter)) {
+                return;
+            }
+
             const form = this.$el.closest('form');
             if (form) {
                 form.submit();
