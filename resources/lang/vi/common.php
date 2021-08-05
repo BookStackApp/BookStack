@@ -40,10 +40,10 @@ return [
     'remove' => 'Xóa bỏ',
     'add' => 'Thêm',
     'fullscreen' => 'Toàn màn hình',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'favourite' => 'Yêu thích',
+    'unfavourite' => 'Bỏ yêu thích',
+    'next' => 'Tiếp theo',
+    'previous' => 'Trước đó',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',
@@ -51,7 +51,7 @@ return [
     'sort_ascending' => 'Sắp xếp tăng dần',
     'sort_descending' => 'Sắp xếp giảm dần',
     'sort_name' => 'Tên',
-    'sort_default' => 'Default',
+    'sort_default' => 'Mặc định',
     'sort_created_at' => 'Ngày Tạo',
     'sort_updated_at' => 'Ngày cập nhật',
 
@@ -60,7 +60,7 @@ return [
     'no_activity' => 'Không có hoạt động nào',
     'no_items' => 'Không có mục nào khả dụng',
     'back_to_top' => 'Lên đầu trang',
-    'skip_to_main_content' => 'Skip to main content',
+    'skip_to_main_content' => 'Nhảy đến nội dung chính',
     'toggle_details' => 'Bật/tắt chi tiết',
     'toggle_thumbnails' => 'Bật/tắt ảnh ảnh nhỏ',
     'details' => 'Chi tiết',
@@ -89,6 +89,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Chính Sách Quyền Riêng Tư',
+    'terms_of_service' => 'Điều khoản Dịch vụ',
 ];
