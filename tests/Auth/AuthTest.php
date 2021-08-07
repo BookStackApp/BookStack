@@ -2,6 +2,7 @@
 
 namespace Tests\Auth;
 
+use BookStack\Auth\Access\Mfa\MfaSession;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
@@ -324,6 +325,18 @@ class AuthTest extends BrowserKitTest
             ->visit('/logout')
             ->visit('/')
             ->seePageIs('/login');
+    }
+
+    public function test_mfa_session_cleared_on_logout()
+    {
+        $user = $this->getEditor();
+        $mfaSession = $this->app->make(MfaSession::class);
+
+        $mfaSession->markVerifiedForUser($user);;
+        $this->assertTrue($mfaSession->isVerifiedForUser($user));
+
+        $this->asAdmin()->visit('/logout');
+        $this->assertFalse($mfaSession->isVerifiedForUser($user));
     }
 
     public function test_reset_password_flow()
