@@ -131,7 +131,8 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm/awaiting')
             ->see('Resend')
             ->visit('/books')
-            ->seePageIs('/register/confirm/awaiting')
+            ->seePageIs('/login')
+            ->visit('/register/confirm/awaiting')
             ->press('Resend Confirmation Email');
 
         // Get confirmation and confirm notification matches
@@ -172,10 +173,7 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
-        $this->visit('/')
-            ->seePageIs('/register/confirm/awaiting');
-
-        auth()->logout();
+        $this->assertNull(auth()->user());
 
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
@@ -209,10 +207,8 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
-        $this->visit('/')
-            ->seePageIs('/register/confirm/awaiting');
+        $this->assertNull(auth()->user());
 
-        auth()->logout();
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
             ->type($user->password, '#password')

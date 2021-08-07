@@ -10,7 +10,6 @@ use BookStack\Facades\Activity;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use Exception;
-use phpDocumentor\Reflection\DocBlock\Tags\Method;
 
 class LoginService
 {
@@ -18,10 +17,12 @@ class LoginService
     protected const LAST_LOGIN_ATTEMPTED_SESSION_KEY = 'auth-login-last-attempted';
 
     protected $mfaSession;
+    protected $emailConfirmationService;
 
-    public function __construct(MfaSession $mfaSession)
+    public function __construct(MfaSession $mfaSession, EmailConfirmationService $emailConfirmationService)
     {
         $this->mfaSession = $mfaSession;
+        $this->emailConfirmationService = $emailConfirmationService;
     }
 
     /**
@@ -149,8 +150,7 @@ class LoginService
      */
     public function awaitingEmailConfirmation(User $user): bool
     {
-        $requireConfirmation = (setting('registration-confirmation') || setting('registration-restrict'));
-        return $requireConfirmation && !$user->email_confirmed;
+        return $this->emailConfirmationService->confirmationRequired() && !$user->email_confirmed;
     }
 
     /**

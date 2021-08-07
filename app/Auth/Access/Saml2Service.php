@@ -6,6 +6,7 @@ use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\SamlException;
+use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Facades\Activity;
 use BookStack\Facades\Theme;
@@ -357,6 +358,7 @@ class Saml2Service extends ExternalAuthService
      * @throws SamlException
      * @throws JsonDebugException
      * @throws UserRegistrationException
+     * @throws StoppedAuthenticationException
      */
     public function processLoginCallback(string $samlID, array $samlAttributes): User
     {

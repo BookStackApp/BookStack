@@ -6,6 +6,7 @@ use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\User;
+use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -93,6 +94,7 @@ class RegisterController extends Controller
      * Handle a registration request for the application.
      *
      * @throws UserRegistrationException
+     * @throws StoppedAuthenticationException
      */
     public function postRegister(Request $request)
     {
