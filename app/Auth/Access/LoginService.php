@@ -32,16 +32,15 @@ class LoginService
      * Returns a boolean to indicate the current login result.
      * @throws StoppedAuthenticationException
      */
-    public function login(User $user, string $method): void
+    public function login(User $user, string $method, bool $remember = false): void
     {
         if ($this->awaitingEmailConfirmation($user) || $this->needsMfaVerification($user)) {
-            $this->setLastLoginAttemptedForUser($user, $method);
+            $this->setLastLoginAttemptedForUser($user, $method, $remember);
             throw new StoppedAuthenticationException($user, $this);
-            // TODO - Does 'remember' still work? Probably not right now.
         }
 
         $this->clearLastLoginAttempted();
-        auth()->login($user);
+        auth()->login($user, $remember);
         Activity::add(ActivityType::AUTH_LOGIN, "{$method}; {$user->logDescriptor()}");
         Theme::dispatch(ThemeEvents::AUTH_LOGIN, $method, $user);
 
@@ -64,7 +63,8 @@ class LoginService
             throw new Exception('Login reattempt user does align with current session state');
         }
 
-        $this->login($user, $this->getLastLoginAttemptMethod());
+        $lastLoginDetails = $this->getLastLoginAttemptDetails();
+        $this->login($user, $lastLoginDetails['method'], $lastLoginDetails['remember'] ?? false);
     }
 
     /**
@@ -79,17 +79,9 @@ class LoginService
     }
 
     /**
-     * Get the method for the last login attempt.
-     */
-    protected function getLastLoginAttemptMethod(): ?string
-    {
-        return $this->getLastLoginAttemptDetails()['method'];
-    }
-
-    /**
      * Get the details of the last login attempt.
      * Checks upon a ttl of about 1 hour since that last attempted login.
-     * @return array{user_id: ?string, method: ?string}
+     * @return array{user_id: ?string, method: ?string, remember: bool}
      */
     protected function getLastLoginAttemptDetails(): array
     {
@@ -98,14 +90,14 @@ class LoginService
             return ['user_id' => null, 'method' => null];
         }
 
-        [$id, $method, $time] = explode(':', $value);
+        [$id, $method, $remember, $time] = explode(':', $value);
         $hourAgo = time() - (60*60);
         if ($time < $hourAgo) {
             $this->clearLastLoginAttempted();
             return ['user_id' => null, 'method' => null];
         }
 
-        return ['user_id' => $id, 'method' => $method];
+        return ['user_id' => $id, 'method' => $method, 'remember' => boolval($remember)];
     }
 
     /**
@@ -113,11 +105,11 @@ class LoginService
      * Must be only used when credentials are correct and a login could be
      * achieved but a secondary factor has stopped the login.
      */
-    protected function setLastLoginAttemptedForUser(User $user, string $method)
+    protected function setLastLoginAttemptedForUser(User $user, string $method, bool $remember)
     {
         session()->put(
             self::LAST_LOGIN_ATTEMPTED_SESSION_KEY,
-            implode(':', [$user->id, $method, time()])
+            implode(':', [$user->id, $method, $remember, time()])
         );
     }
 
@@ -159,7 +151,7 @@ class LoginService
         if ($result) {
             $user = auth()->user();
             auth()->logout();
-            $this->login($user, $method);
+            $this->login($user, $method, $remember);
         }
 
         return $result;
