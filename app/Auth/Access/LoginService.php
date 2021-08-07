@@ -38,14 +38,6 @@ class LoginService
             $this->setLastLoginAttemptedForUser($user, $method);
             throw new StoppedAuthenticationException($user, $this);
             // TODO - Does 'remember' still work? Probably not right now.
-
-            // TODO - Need to clear MFA sessions out upon logout
-
-            // Old MFA middleware todos:
-
-            // TODO - Handle email confirmation handling
-            //  Left BookStack\Http\Middleware\Authenticate@emailConfirmationErrorResponse in which needs
-            //  be removed as an example of old behaviour.
         }
 
         $this->clearLastLoginAttempted();
