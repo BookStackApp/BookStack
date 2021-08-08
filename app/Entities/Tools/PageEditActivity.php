@@ -1,4 +1,4 @@
-<?php
+a<?php
 
 namespace BookStack\Entities\Tools;
 
@@ -26,7 +26,6 @@ class PageEditActivity
      */
     public function hasActiveEditing(): bool
     {
-        $value = $this->activePageEditingQuery(60)->count();
         return $this->activePageEditingQuery(60)->count() > 0;
     }
 
