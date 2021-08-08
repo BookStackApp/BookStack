@@ -26,6 +26,7 @@ class PageEditActivity
      */
     public function hasActiveEditing(): bool
     {
+        $value = $this->activePageEditingQuery(60)->count();
         return $this->activePageEditingQuery(60)->count() > 0;
     }
 
@@ -41,6 +42,16 @@ class PageEditActivity
         $timeMessage = trans('entities.pages_draft_edit_active.time_b', ['minCount'=> 60]);
 
         return trans('entities.pages_draft_edit_active.message', ['start' => $userMessage, 'time' => $timeMessage]);
+    }
+
+    /**
+     * Check if the page has been updated since the draft has been saved.
+     *
+     * @return bool
+     */
+    public function hasPageBeenUpdatedSinceDraftSaved(PageRevision $draft): bool
+    {
+        return $draft->page->updated_at->timestamp >= $draft->updated_at->timestamp;
     }
 
     /**
