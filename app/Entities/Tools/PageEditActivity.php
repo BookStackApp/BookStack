@@ -1,4 +1,4 @@
-a<?php
+<?php
 
 namespace BookStack\Entities\Tools;
 
