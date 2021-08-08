@@ -239,7 +239,7 @@ Route::group(['middleware' => 'guest'], function() {
     Route::post('/mfa/totp/verify', 'Auth\MfaTotpController@verify');
     Route::post('/mfa/backup_codes/verify', 'Auth\MfaBackupCodesController@verify');
 });
-Route::delete('/mfa/remove/{method}', 'Auth\MfaController@remove')->middleware('auth');
+Route::delete('/mfa/{method}/remove', 'Auth\MfaController@remove')->middleware('auth');
 
 // Social auth routes
 Route::get('/login/service/{socialDriver}', 'Auth\SocialController@login');

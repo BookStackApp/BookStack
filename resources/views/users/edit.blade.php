@@ -64,11 +64,8 @@
         </section>
 
         <section class="card content-wrap auto-height">
-            <h2 class="list-heading">Multi-Factor Authentication</h2>
-            <p>
-                Setup multi-factor authentication as an extra layer of security
-                for your user account.
-            </p>
+            <h2 class="list-heading">{{ trans('settings.users_mfa') }}</h2>
+            <p>{{ trans('settings.users_mfa_desc') }}</p>
             <div class="grid half gap-xl v-center pb-s">
                 <div>
                     @if ($mfaMethods->count() > 0)
@@ -76,11 +73,12 @@
                     @else
                         <span class="text-neg">@icon('cancel')</span>
                     @endif
+                    {{ trans_choice('settings.users_mfa_x_methods', $mfaMethods->count()) }}
                     {{ $mfaMethods->count() }} {{ $mfaMethods->count() === 1 ? 'method' : 'methods' }} configured
                 </div>
                 <div class="text-m-right">
                     @if($user->id === user()->id)
-                        <a href="{{ url('/mfa/setup')  }}" class="button outline">Configure Methods</a>
+                        <a href="{{ url('/mfa/setup')  }}" class="button outline">{{ trans('settings.users_mfa_configure') }}</a>
                     @endif
                 </div>
             </div>
