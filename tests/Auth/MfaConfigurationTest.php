@@ -153,9 +153,9 @@ class MfaConfigurationTest extends TestCase
         MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
         $this->assertEquals(1, $admin->mfaValues()->count());
         $resp = $this->actingAs($admin)->get('/mfa/setup');
-        $resp->assertElementExists('form[action$="/mfa/remove/totp"]');
+        $resp->assertElementExists('form[action$="/mfa/totp/remove"]');
 
-        $resp = $this->delete("/mfa/remove/totp");
+        $resp = $this->delete("/mfa/totp/remove");
         $resp->assertRedirect("/mfa/setup");
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Multi-factor method successfully removed');

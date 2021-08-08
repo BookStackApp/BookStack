@@ -81,7 +81,7 @@ class MfaBackupCodesController extends Controller
         $loginService->reattemptLoginFor($user);
 
         if ($codeService->countCodesInSet($updatedCodes) < 5) {
-            $this->showWarningNotification('You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.');
+            $this->showWarningNotification(trans('auth.mfa_backup_codes_usage_limit_warning'));
         }
 
         return redirect()->intended();

@@ -4,25 +4,17 @@
     <div class="container very-small py-xl">
 
         <div class="card content-wrap auto-height">
-            <h1 class="list-heading">Verify Access</h1>
-            <p class="mb-none">
-                Your user account requires you to confirm your identity via an additional level
-                of verification before you're granted access.
-                Verify using one of your configured methods to continue.
-            </p>
+            <h1 class="list-heading">{{ trans('auth.mfa_verify_access') }}</h1>
+            <p class="mb-none">{{ trans('auth.mfa_verify_access_desc') }}</p>
 
             @if(!$method)
                 <hr class="my-l">
-                <h5>No Methods Configured</h5>
-                <p class="small">
-                    No multi-factor authentication methods could be found for your account.
-                    You'll need to set up at least one method before you gain access.
-                </p>
+                <h5>{{ trans('auth.mfa_verify_no_methods') }}</h5>
+                <p class="small">{{ trans('auth.mfa_verify_no_methods_desc') }}</p>
                 <div>
-                    <a href="{{ url('/mfa/setup') }}" class="button outline">Configure</a>
+                    <a href="{{ url('/mfa/setup') }}" class="button outline">{{ trans('common.configure') }}</a>
                 </div>
             @endif
-
 
             @if($method)
                 <hr class="my-l">
@@ -33,7 +25,7 @@
                 <hr class="my-l">
                 @foreach($otherMethods as $otherMethod)
                     <div class="text-center">
-                        <a href="{{ url("/mfa/verify?method={$otherMethod}") }}">{{ trans('auth.mfa_use_' . $otherMethod) }}</a>
+                        <a href="{{ url("/mfa/verify?method={$otherMethod}") }}">{{ trans('auth.mfa_verify_use_' . $otherMethod) }}</a>
                     </div>
                 @endforeach
             @endif
