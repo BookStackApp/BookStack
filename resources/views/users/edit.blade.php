@@ -74,7 +74,6 @@
                         <span class="text-neg">@icon('cancel')</span>
                     @endif
                     {{ trans_choice('settings.users_mfa_x_methods', $mfaMethods->count()) }}
-                    {{ $mfaMethods->count() }} {{ $mfaMethods->count() === 1 ? 'method' : 'methods' }} configured
                 </div>
                 <div class="text-m-right">
                     @if($user->id === user()->id)

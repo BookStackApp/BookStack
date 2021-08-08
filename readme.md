@@ -190,3 +190,5 @@ These are the great open-source projects used to help build BookStack:
 * [League/CommonMark](https://commonmark.thephpleague.com/)
 * [League/Flysystem](https://flysystem.thephpleague.com)
 * [StyleCI](https://styleci.io/)
+* [pragmarx/google2fa](https://github.com/antonioribeiro/google2fa)
+* [Bacon/BaconQrCode](https://github.com/Bacon/BaconQrCode)

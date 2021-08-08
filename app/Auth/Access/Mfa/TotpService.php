@@ -9,6 +9,7 @@ use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use PragmaRX\Google2FA\Google2FA;
+use PragmaRX\Google2FA\Support\Constants;
 
 class TotpService
 {
@@ -17,6 +18,10 @@ class TotpService
     public function __construct(Google2FA $google2fa)
     {
         $this->google2fa = $google2fa;
+        // Use SHA1 as a default, Personal testing of other options in 2021 found
+        // many apps lack support for other algorithms yet still will scan
+        // the code causing a confusing UX.
+        $this->google2fa->setAlgorithm(Constants::SHA1);
     }
 
     /**
