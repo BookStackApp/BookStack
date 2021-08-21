@@ -138,6 +138,7 @@ return [
     'role_details' => 'Podrobnosti vloge',
     'role_name' => 'Naziv vloge',
     'role_desc' => 'Kratki opis vloge',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Zunanje dokazilo ID',
     'role_system' => 'Sistemska dovoljenja',
     'role_manage_users' => 'Upravljanje uporabnikov',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Ustvari žeton',
     'users_api_tokens_expires' => 'Poteče',
     'users_api_tokens_docs' => 'API dokumentacija',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Ustvari žeton',
