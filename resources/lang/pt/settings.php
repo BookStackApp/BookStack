@@ -138,6 +138,7 @@ return [
     'role_details' => 'Detalhes do Cargo',
     'role_name' => 'Nome do Cargo',
     'role_desc' => 'Breve Descrição do Cargo',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'IDs de Autenticação Externa',
     'role_system' => 'Permissões do Sistema',
     'role_manage_users' => 'Gerir utilizadores',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Criar Token',
     'users_api_tokens_expires' => 'Expira',
     'users_api_tokens_docs' => 'Documentação da API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Criar Token de API',
