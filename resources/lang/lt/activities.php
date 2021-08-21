@@ -6,46 +6,52 @@
 return [
 
     // Pages
-    'page_create'                 => 'sukurtas puslapis',
-    'page_create_notification'    => 'Puslapis sukurtas sėkmingai',
-    'page_update'                 => 'atnaujintas puslapis',
-    'page_update_notification'    => 'Puslapis sėkmingai atnaujintas',
-    'page_delete'                 => 'ištrintas puslapis',
-    'page_delete_notification'    => 'Puslapis sėkmingai ištrintas',
-    'page_restore'                => 'atkurtas puslapis',
-    'page_restore_notification'   => 'Puslapis sėkmingai atkurtas',
-    'page_move'                   => 'perkeltas puslapis',
+    'page_create'                 => 'stvorena stranica',
+    'page_create_notification'    => 'Stranica je uspješno stvorena',
+    'page_update'                 => 'ažurirana stranica',
+    'page_update_notification'    => 'Stranica je uspješno ažurirana',
+    'page_delete'                 => 'izbrisana stranica',
+    'page_delete_notification'    => 'Stranica je uspješno izbrisana',
+    'page_restore'                => 'obnovljena stranica',
+    'page_restore_notification'   => 'Stranica je uspješno obnovljena',
+    'page_move'                   => 'premještena stranica',
 
     // Chapters
-    'chapter_create'              => 'sukurtas skyrius',
-    'chapter_create_notification' => 'Skyrius sėkmingai sukurtas',
-    'chapter_update'              => 'atnaujintas skyrius',
-    'chapter_update_notification' => 'Skyrius sekmingai atnaujintas',
-    'chapter_delete'              => 'ištrintas skyrius',
-    'chapter_delete_notification' => 'Skyrius sėkmingai ištrintas',
-    'chapter_move'                => 'perkeltas skyrius',
+    'chapter_create'              => 'stvoreno poglavlje',
+    'chapter_create_notification' => 'Poglavlje je uspješno stvoreno',
+    'chapter_update'              => 'ažurirano poglavlje',
+    'chapter_update_notification' => 'Poglavlje je uspješno ažurirano',
+    'chapter_delete'              => 'izbrisano poglavlje',
+    'chapter_delete_notification' => 'Poglavlje je uspješno izbrisano',
+    'chapter_move'                => 'premiješteno poglavlje',
 
     // Books
-    'book_create'                 => 'sukurta knyga',
-    'book_create_notification'    => 'Knyga sėkmingai sukurta',
-    'book_update'                 => 'atnaujinta knyga',
-    'book_update_notification'    => 'Knyga sėkmingai atnaujinta',
-    'book_delete'                 => 'ištrinta knyga',
-    'book_delete_notification'    => 'Knyga sėkmingai ištrinta',
-    'book_sort'                   => 'surūšiuota knyga',
-    'book_sort_notification'      => 'Knyga sėkmingai perrūšiuota',
+    'book_create'                 => 'stvorena knjiga',
+    'book_create_notification'    => 'Knjiga je uspješno stvorena',
+    'book_update'                 => 'ažurirana knjiga',
+    'book_update_notification'    => 'Knjiga je uspješno ažurirana',
+    'book_delete'                 => 'izbrisana knjiga',
+    'book_delete_notification'    => 'Knjiga je uspješno izbrisana',
+    'book_sort'                   => 'razvrstana knjiga',
+    'book_sort_notification'      => 'Knjiga je uspješno razvrstana',
 
     // Bookshelves
-    'bookshelf_create'            => 'sukurta knygų lentyna',
-    'bookshelf_create_notification'    => 'Knygų lentyna sėkmingai sukurta',
-    'bookshelf_update'                 => 'atnaujinta knygų lentyna',
-    'bookshelf_update_notification'    => 'Knygų lentyna sėkmingai atnaujinta',
-    'bookshelf_delete'                 => 'ištrinta knygų lentyna',
-    'bookshelf_delete_notification'    => 'Knygų lentyna sėkmingai ištrinta',
+    'bookshelf_create'            => 'stvorena polica za knjige',
+    'bookshelf_create_notification'    => 'Polica za knjige je uspješno stvorena',
+    'bookshelf_update'                 => 'ažurirana polica za knjige',
+    'bookshelf_update_notification'    => 'Polica za knjige je uspješno ažurirana',
+    'bookshelf_delete'                 => 'izbrisana polica za knjige',
+    'bookshelf_delete_notification'    => 'Polica za knjige je uspješno izbrisana',
 
     // Favourites
+    'favourite_add_notification' => '":name" has been added to your favourites',
+    'favourite_remove_notification' => '":name" has been removed from your favourites',
+
+    // MFA
+    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
+    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
 
     // Other
-    'commented_on'                => 'pakomentavo',
-    'permissions_update'          => 'atnaujinti leidimai',
+    'commented_on'                => 'komentirano',
+    'permissions_update'          => 'ažurirana dopuštenja',
 ];
