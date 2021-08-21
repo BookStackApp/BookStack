@@ -39,6 +39,7 @@ return [
     'reset' => '리셋',
     'remove' => '제거',
     'add' => '추가',
+    'configure' => 'Configure',
     'fullscreen' => '전체화면',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
