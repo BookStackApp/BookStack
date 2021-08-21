@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => 'O campo :attribute deve conter apenas letras, números, traços e underlines.',
     'alpha_num'            => 'O campo :attribute deve conter apenas letras e números.',
     'array'                => 'O campo :attribute deve ser uma array.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => 'O campo :attribute deve ser uma data anterior à data :date.',
     'between'              => [
         'numeric' => 'O campo :attribute deve estar entre :min e :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => 'O campo :attribute deve ser uma string.',
     'timezone'             => 'O campo :attribute deve conter uma timezone válida.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => 'Já existe um campo/dado de nome :attribute.',
     'url'                  => 'O formato da URL :attribute é inválido.',
     'uploaded'             => 'O arquivo não pôde ser carregado. O servidor pode não aceitar arquivos deste tamanho.',

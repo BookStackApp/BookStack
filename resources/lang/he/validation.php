@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => 'שדה :attribute יכול להכיל אותיות, מספרים ומקפים בלבד.',
     'alpha_num'            => 'שדה :attribute יכול להכיל אותיות ומספרים בלבד.',
     'array'                => 'שדה :attribute חייב להיות מערך.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => 'שדה :attribute חייב להיות תאריך לפני :date.',
     'between'              => [
         'numeric' => 'שדה :attribute חייב להיות בין :min ל-:max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => 'שדה :attribute חייב להיות מחרוזת.',
     'timezone'             => 'שדה :attribute חייב להיות איזור תקני.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => 'שדה :attribute כבר תפוס.',
     'url'                  => 'שדה :attribute בעל פורמט שאינו תקין.',
     'uploaded'             => 'שדה :attribute ארעה שגיאה בעת ההעלאה.',

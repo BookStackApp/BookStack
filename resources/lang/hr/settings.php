@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Recycle Bin',
     'recycle_bin_desc' => 'Ovdje možete vratiti izbrisane stavke ili ih trajno ukloniti iz sustava. Popis nije filtriran kao što su to popisi u kojima su omogućeni filteri.',
     'recycle_bin_deleted_item' => 'Izbrisane stavke',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Izbrisano od',
     'recycle_bin_deleted_at' => 'Vrijeme brisanja',
     'recycle_bin_permanently_delete' => 'Trajno izbrisano',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Stavke koje treba vratiti',
     'recycle_bin_restore_confirm' => 'Ova radnja vraća izbrisane stavke i njene podređene elemente na prvobitnu lokaciju. Ako je nadređena stavka izbrisana i nju treba vratiti.',
     'recycle_bin_restore_deleted_parent' => 'S obzirom da je nadređena stavka obrisana najprije treba vratiti nju.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Ukupno izbrisane :count stavke iz Recycle Bin',
     'recycle_bin_restore_notification' => 'Ukupno vraćene :count stavke iz Recycle Bin',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'Detalji uloge',
     'role_name' => 'Ime uloge',
     'role_desc' => 'Kratki opis uloge',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Autorizacija',
     'role_system' => 'Dopuštenja sustava',
     'role_manage_users' => 'Upravljanje korisnicima',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Stvori token',
     'users_api_tokens_expires' => 'Isteklo',
     'users_api_tokens_docs' => 'API dokumentacija',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Stvori API token',

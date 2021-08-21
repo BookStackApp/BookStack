@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute kann nur Buchstaben, Zahlen und Bindestriche enthalten.',
     'alpha_num'            => ':attribute kann nur Buchstaben und Zahlen enthalten.',
     'array'                => ':attribute muss ein Array sein.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute muss ein Datum vor :date sein.',
     'between'              => [
         'numeric' => ':attribute muss zwischen :min und :max liegen.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute muss eine Zeichenkette sein.',
     'timezone'             => ':attribute muss eine valide zeitzone sein.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute wird bereits verwendet.',
     'url'                  => ':attribute ist kein valides Format.',
     'uploaded'             => 'Die Datei konnte nicht hochgeladen werden. Der Server akzeptiert möglicherweise keine Dateien dieser Größe.',

@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Prullenbak',
     'recycle_bin_desc' => 'Hier kunt u items herstellen die zijn verwijderd of kiezen om ze permanent te verwijderen uit het systeem. Deze lijst is niet gefilterd, in tegenstelling tot vergelijkbare activiteitenlijsten in het systeem waar rechtenfilters worden toegepast.',
     'recycle_bin_deleted_item' => 'Verwijderde Item',
+    'recycle_bin_deleted_parent' => 'Bovenliggende',
     'recycle_bin_deleted_by' => 'Verwijderd door',
     'recycle_bin_deleted_at' => 'Verwijdert op',
     'recycle_bin_permanently_delete' => 'Permanent verwijderen',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Items te herstellen',
     'recycle_bin_restore_confirm' => 'Deze actie herstelt het verwijderde item, inclusief alle onderliggende elementen, op hun oorspronkelijke locatie. Als de oorspronkelijke locatie sindsdien is verwijderd en zich nu in de prullenbak bevindt, zal ook het bovenliggende item moeten worden hersteld.',
     'recycle_bin_restore_deleted_parent' => 'De bovenliggende map van dit item is ook verwijderd. Deze zal worden verwijderd totdat het bovenliggende item ook is hersteld.',
+    'recycle_bin_restore_parent' => 'Herstel bovenliggende',
     'recycle_bin_destroy_notification' => 'Verwijderde totaal :count items uit de prullenbak.',
     'recycle_bin_restore_notification' => 'Herstelde totaal :count items uit de prullenbak.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'Rol Details',
     'role_name' => 'Rolnaam',
     'role_desc' => 'Korte beschrijving van de rol',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Externe authenticatie ID\'s',
     'role_system' => 'Systeem Permissies',
     'role_manage_users' => 'Gebruikers beheren',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Token aanmaken',
     'users_api_tokens_expires' => 'Verloopt',
     'users_api_tokens_docs' => 'API Documentatie',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'API-token aanmaken',

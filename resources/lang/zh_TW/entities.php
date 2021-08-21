@@ -27,8 +27,8 @@ return [
     'images' => '圖片',
     'my_recent_drafts' => '我最近的草稿',
     'my_recently_viewed' => '我最近檢視',
-    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
-    'my_favourites' => 'My Favourites',
+    'my_most_viewed_favourites' => '我瀏覽最多次的最愛',
+    'my_favourites' => '我的最愛',
     'no_pages_viewed' => '您尚未看過任何頁面',
     'no_pages_recently_created' => '最近未建立任何頁面',
     'no_pages_recently_updated' => '最近沒有頁面被更新',
@@ -36,6 +36,7 @@ return [
     'export_html' => '網頁檔案',
     'export_pdf' => 'PDF 檔案',
     'export_text' => '純文字檔案',
+    'export_md' => 'Markdown 檔案',
 
     // Permissions and restrictions
     'permissions' => '權限',
@@ -62,7 +63,7 @@ return [
     'search_permissions_set' => '權限設定',
     'search_created_by_me' => '我建立的',
     'search_updated_by_me' => '我更新的',
-    'search_owned_by_me' => 'Owned by me',
+    'search_owned_by_me' => '我所擁有的',
     'search_date_options' => '日期選項',
     'search_updated_before' => '在此之前更新',
     'search_updated_after' => '在此之後更新',

@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'סל המיחזור',
     'recycle_bin_desc' => 'כאן תוכלו לאחזר פריטים שנמחקו או לבחור למחוק אותם מהמערכת לצמיתות. רשימה זו לא מסוננת, בשונה מרשימות פעילות דומות במערכת, בהן מוחלים מסנני הרשאות.',
     'recycle_bin_deleted_item' => 'פריט שנמחק',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'נמחק על ידי',
     'recycle_bin_deleted_at' => 'זמן המחיקה',
     'recycle_bin_permanently_delete' => 'מחק לצמיתות',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'פריטים שיאוחזרו',
     'recycle_bin_restore_confirm' => 'פעולה זו תאחזר את הפריט שנמחק, לרבות רכיבי-הבן שלו, למיקומו המקורי. אם המיקום המקורי נמחק מאז, וכעת נמצא בסל המיחזור, יש לאחזר גם את פריט-האב.',
     'recycle_bin_restore_deleted_parent' => 'פריט-האב של פריט זה נמחק. פריטים אלה יישארו מחוקים עד שפריט-אב זה יאוחזר.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'נמחקו בסה"כ :count פריטים מסל המיחזור.',
     'recycle_bin_restore_notification' => 'אוחזרו בסה"כ :count פריטים מסל המיחזור.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'פרטי תפקיד',
     'role_name' => 'שם התפקיד',
     'role_desc' => 'תיאור קצר של התפקיד',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'ID-י אותנטיקציה חיצוניים',
     'role_system' => 'הרשאות מערכת',
     'role_manage_users' => 'ניהול משתמשים',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'צור אסימון',
     'users_api_tokens_expires' => 'פג',
     'users_api_tokens_docs' => 'תיעוד API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'צור אסימון API',

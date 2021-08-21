@@ -39,11 +39,12 @@ return [
     'reset' => 'Nullstill',
     'remove' => 'Fjern',
     'add' => 'Legg til',
+    'configure' => 'Configure',
     'fullscreen' => 'Fullskjerm',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'favourite' => 'Favorisér',
+    'unfavourite' => 'Avfavorisér',
+    'next' => 'Neste',
+    'previous' => 'Forrige',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativer',
@@ -51,7 +52,7 @@ return [
     'sort_ascending' => 'Stigende sortering',
     'sort_descending' => 'Synkende sortering',
     'sort_name' => 'Navn',
-    'sort_default' => 'Default',
+    'sort_default' => 'Standard',
     'sort_created_at' => 'Dato opprettet',
     'sort_updated_at' => 'Dato oppdatert',
 
@@ -60,6 +61,7 @@ return [
     'no_activity' => 'Ingen aktivitet å vise',
     'no_items' => 'Ingen ting å vise',
     'back_to_top' => 'Hopp til toppen',
+    'skip_to_main_content' => 'Gå til hovedinnhold',
     'toggle_details' => 'Vis/skjul detaljer',
     'toggle_thumbnails' => 'Vis/skjul miniatyrbilder',
     'details' => 'Detaljer',
@@ -69,7 +71,7 @@ return [
     'breadcrumb' => 'Brødsmuler',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Utvid toppmeny',
     'profile_menu' => 'Profilmeny',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Endre Profile',
@@ -78,9 +80,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informasjon',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Fane: Vis tilleggsinfo',
     'tab_content' => 'Innhold',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Fane: Vis hovedinnhold',
 
     // Email Content
     'email_action_help' => 'Om du har problemer med å trykke på «:actionText»-knappen, bruk nettadressen under for å gå direkte dit:',
@@ -88,6 +90,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Personvernregler',
+    'terms_of_service' => 'Bruksvilkår',
 ];

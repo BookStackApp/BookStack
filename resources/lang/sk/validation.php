@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute môže obsahovať iba písmená, čísla a pomlčky.',
     'alpha_num'            => ':attribute môže obsahovať iba písmená a čísla.',
     'array'                => ':attribute musí byť pole.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute musí byť dátum pred :date.',
     'between'              => [
         'numeric' => ':attribute musí byť medzi :min a :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute musí byť reťazec.',
     'timezone'             => ':attribute musí byť plantá časová zóna.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute je už použité.',
     'url'                  => ':attribute formát je neplatný.',
     'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',

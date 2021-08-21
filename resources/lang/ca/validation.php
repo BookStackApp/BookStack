@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => 'El camp :attribute només pot contenir lletres, números, guions i guions baixos.',
     'alpha_num'            => 'El camp :attribute només pot contenir lletres i números.',
     'array'                => 'El camp :attribute ha de ser un vector.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => 'El camp :attribute ha de ser una data anterior a :date.',
     'between'              => [
         'numeric' => 'El camp :attribute ha d\'estar entre :min i :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => 'El camp :attribute ha de ser una cadena.',
     'timezone'             => 'El camp :attribute ha de ser una zona vàlida.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => 'El camp :attribute ja està ocupat.',
     'url'                  => 'El format del camp :attribute no és vàlid.',
     'uploaded'             => 'No s\'ha pogut pujar el fitxer. És possible que el servidor no accepti fitxers d\'aquesta mida.',

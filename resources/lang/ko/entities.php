@@ -36,6 +36,7 @@ return [
     'export_html' => 'Contained Web(.html) 파일',
     'export_pdf' => 'PDF 파일',
     'export_text' => 'Plain Text(.txt) 파일',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => '권한',

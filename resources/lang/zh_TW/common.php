@@ -39,11 +39,12 @@ return [
     'reset' => '重設',
     'remove' => '移除',
     'add' => '新增',
+    'configure' => 'Configure',
     'fullscreen' => '全螢幕',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'favourite' => '最愛',
+    'unfavourite' => '取消最愛',
+    'next' => '下一頁',
+    'previous' => '上一頁',
 
     // Sort Options
     'sort_options' => '排序選項',
@@ -51,7 +52,7 @@ return [
     'sort_ascending' => '遞增排序',
     'sort_descending' => '遞減排序',
     'sort_name' => '名稱',
-    'sort_default' => 'Default',
+    'sort_default' => '預設',
     'sort_created_at' => '建立日期',
     'sort_updated_at' => '更新日期',
 
@@ -60,6 +61,7 @@ return [
     'no_activity' => '無活動可顯示',
     'no_items' => '無可用項目',
     'back_to_top' => '回到頂端',
+    'skip_to_main_content' => '跳到主內容',
     'toggle_details' => '顯示／隱藏詳細資訊',
     'toggle_thumbnails' => '顯示／隱藏縮圖',
     'details' => '詳細資訊',
@@ -69,7 +71,7 @@ return [
     'breadcrumb' => '頁面路徑',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => '展開選單',
     'profile_menu' => '個人資料選單',
     'view_profile' => '檢視個人資料',
     'edit_profile' => '編輯個人資料',
@@ -78,9 +80,9 @@ return [
 
     // Layout tabs
     'tab_info' => '資訊',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => '顯示次要訊息',
     'tab_content' => '內容',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => '顯示主要內容',
 
     // Email Content
     'email_action_help' => '如果您無法點擊 ":actionText" 按鈕，請將下方的網址複製並貼上到您的網路瀏覽器中：',

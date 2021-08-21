@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute sadece harf, rakam ve tirelerden oluşabilir.',
     'alpha_num'            => ':attribute sadece harflerden ve rakamlardan oluşabilir.',
     'array'                => ':attribute bir dizi olmalıdır.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute tarihi, :date tarihinden önceki bir tarih olmalıdır.',
     'between'              => [
         'numeric' => ':attribute değeri, :min ve :max değerleri arasında olmalıdır.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute, string olmalıdır.',
     'timezone'             => ':attribute, geçerli bir bölge olmalıdır.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute zaten alınmış.',
     'url'                  => ':attribute formatı geçersiz.',
     'uploaded'             => 'Dosya yüklemesi başarısız oldu. Sunucu, bu boyuttaki dosyaları kabul etmiyor olabilir.',

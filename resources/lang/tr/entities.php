@@ -36,6 +36,7 @@ return [
     'export_html' => 'Web Dosyası',
     'export_pdf' => 'PDF Dosyası',
     'export_text' => 'Düz Metin Dosyası',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'İzinler',

@@ -27,8 +27,8 @@ return [
     'images' => 'Imagens',
     'my_recent_drafts' => 'Os Meus Rascunhos Recentes',
     'my_recently_viewed' => 'Visualizados Recentemente Por Mim',
-    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
-    'my_favourites' => 'My Favourites',
+    'my_most_viewed_favourites' => 'Os Meus Favoritos Mais Visualizados',
+    'my_favourites' => 'Os Meus Favoritos',
     'no_pages_viewed' => 'Você não viu nenhuma página',
     'no_pages_recently_created' => 'Nenhuma página foi recentemente criada',
     'no_pages_recently_updated' => 'Nenhuma página foi recentemente atualizada',
@@ -36,6 +36,7 @@ return [
     'export_html' => 'Arquivo Web contido',
     'export_pdf' => 'Arquivo PDF',
     'export_text' => 'Arquivo Texto',
+    'export_md' => 'Ficheiro Markdown',
 
     // Permissions and restrictions
     'permissions' => 'Permissões',

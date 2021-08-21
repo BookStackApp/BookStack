@@ -36,6 +36,7 @@ return [
     'export_html' => 'Ingesloten webbestand',
     'export_pdf' => 'PDF bestand',
     'export_text' => 'Normaal tekstbestand',
+    'export_md' => 'Markdown bestand',
 
     // Permissions and restrictions
     'permissions' => 'Permissies',

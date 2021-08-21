@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Reciclagem',
     'recycle_bin_desc' => 'Aqui pode restaurar itens que foram eliminados ou eliminá-los permanentemente do sistema. Esta lista não é filtrada diferentemente de listas de atividades parecidas no sistema onde filtros de permissão são aplicados.',
     'recycle_bin_deleted_item' => 'Item eliminado',
+    'recycle_bin_deleted_parent' => 'Parente',
     'recycle_bin_deleted_by' => 'Eliminado por',
     'recycle_bin_deleted_at' => 'Data de Eliminação',
     'recycle_bin_permanently_delete' => 'Eliminar permanentemente',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Itens a serem Restaurados',
     'recycle_bin_restore_confirm' => 'Esta ação irá restaurar o item excluído, inclusive quaisquer elementos filhos, para o seu local original. Se a localização original tiver, entretanto, sido eliminada e estiver agora na reciclagem, o item pai também precisará de ser restaurado.',
     'recycle_bin_restore_deleted_parent' => 'O parente deste item foi também eliminado. Estes permanecerão eliminados até que o parente seja também restaurado.',
+    'recycle_bin_restore_parent' => 'Restaurar Parente',
     'recycle_bin_destroy_notification' => 'Eliminados no total :count itens da lixeira.',
     'recycle_bin_restore_notification' => 'Restaurados no total :count itens da reciclagem.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'Detalhes do Cargo',
     'role_name' => 'Nome do Cargo',
     'role_desc' => 'Breve Descrição do Cargo',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'IDs de Autenticação Externa',
     'role_system' => 'Permissões do Sistema',
     'role_manage_users' => 'Gerir utilizadores',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Criar Token',
     'users_api_tokens_expires' => 'Expira',
     'users_api_tokens_docs' => 'Documentação da API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Criar Token de API',

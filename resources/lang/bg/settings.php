@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Кошче',
     'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
     'recycle_bin_deleted_item' => 'Изтрит предмет',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Изтрит от',
     'recycle_bin_deleted_at' => 'Час на изтриване',
     'recycle_bin_permanently_delete' => 'Permanently Delete',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Items to be Restored',
     'recycle_bin_restore_confirm' => 'This action will restore the deleted item, including any child elements, to their original location. If the original location has since been deleted, and is now in the recycle bin, the parent item will also need to be restored.',
     'recycle_bin_restore_deleted_parent' => 'The parent of this item has also been deleted. These will remain deleted until that parent is also restored.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Deleted :count total items from the recycle bin.',
     'recycle_bin_restore_notification' => 'Restored :count total items from the recycle bin.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'Детайли на роля',
     'role_name' => 'Име на ролята',
     'role_desc' => 'Кратко описание на ролята',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Външни ауторизиращи ID-a',
     'role_system' => 'Настойки за достъп на системата',
     'role_manage_users' => 'Управление на потребители',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Create Token',
     'users_api_tokens_expires' => 'Expires',
     'users_api_tokens_docs' => 'API Documentation',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Create API Token',

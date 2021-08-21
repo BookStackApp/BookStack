@@ -39,11 +39,12 @@ return [
     'reset' => 'Obnovit',
     'remove' => 'Odebrat',
     'add' => 'Přidat',
+    'configure' => 'Configure',
     'fullscreen' => 'Celá obrazovka',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'favourite' => 'Přidat do oblíbených',
+    'unfavourite' => 'Odebrat z oblíbených',
+    'next' => 'Další',
+    'previous' => 'Předchozí',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',
@@ -51,7 +52,7 @@ return [
     'sort_ascending' => 'Řadit vzestupně',
     'sort_descending' => 'Řadit sestupně',
     'sort_name' => 'Název',
-    'sort_default' => 'Default',
+    'sort_default' => 'Výchozí',
     'sort_created_at' => 'Datum vytvoření',
     'sort_updated_at' => 'Datum aktualizace',
 
@@ -60,6 +61,7 @@ return [
     'no_activity' => 'Žádná aktivita k zobrazení',
     'no_items' => 'Žádné položky k dispozici',
     'back_to_top' => 'Zpět na začátek',
+    'skip_to_main_content' => 'Přeskočit na hlavní obsah',
     'toggle_details' => 'Přepnout podrobnosti',
     'toggle_thumbnails' => 'Přepnout náhledy',
     'details' => 'Podrobnosti',
@@ -69,7 +71,7 @@ return [
     'breadcrumb' => 'Drobečková navigace',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Rozbalit menu v záhlaví',
     'profile_menu' => 'Nabídka profilu',
     'view_profile' => 'Zobrazit profil',
     'edit_profile' => 'Upravit profil',
@@ -78,9 +80,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informace',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tab: Zobrazit podružné informace',
     'tab_content' => 'Obsah',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tab: Zobrazit hlavní obsah',
 
     // Email Content
     'email_action_help' => 'Pokud se vám nedaří kliknout na tlačítko „:actionText“, zkopírujte a vložte níže uvedenou URL do vašeho webového prohlížeče:',
@@ -88,6 +90,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Zásady ochrany osobních údajů',
+    'terms_of_service' => 'Podmínky služby',
 ];

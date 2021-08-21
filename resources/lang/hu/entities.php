@@ -36,6 +36,7 @@ return [
     'export_html' => 'Webfájlt tartalmaz',
     'export_pdf' => 'PDF fájl',
     'export_text' => 'Egyszerű szövegfájl',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Jogosultságok',

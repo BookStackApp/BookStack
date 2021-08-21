@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute(을)를 문자, 숫자, -, _로만 구성하세요.',
     'alpha_num'            => ':attribute(을)를 문자, 숫자로만 구성하세요.',
     'array'                => ':attribute(을)를 배열로 구성하세요.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute(을)를 :date 전으로 설정하세요.',
     'between'              => [
         'numeric' => ':attribute(을)를 :min~:max(으)로 구성하세요.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute(을)를 문자로 구성하세요.',
     'timezone'             => ':attribute(을)를 유효한 시간대로 구성하세요.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute(은)는 이미 있습니다.',
     'url'                  => ':attribute(은)는 유효하지 않은 형식입니다.',
     'uploaded'             => '파일 크기가 서버에서 허용하는 수치를 넘습니다.',

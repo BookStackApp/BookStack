@@ -47,6 +47,10 @@ return [
     'favourite_add_notification' => '":name" 已添加到你的收藏',
     'favourite_remove_notification' => '":name" 已从你的收藏中删除',
 
+    // MFA
+    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
+    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+
     // Other
     'commented_on'                => '评论',
     'permissions_update'          => '权限已更新',

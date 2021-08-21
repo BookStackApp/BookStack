@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Papperskorgen',
     'recycle_bin_desc' => 'Här kan du återställa objekt som har tagits bort eller välja att permanent ta bort dem från systemet. Denna lista är ofiltrerad till skillnad från liknande aktivitetslistor i systemet där behörighetsfilter tillämpas.',
     'recycle_bin_deleted_item' => 'Raderat objekt',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Borttagen av',
     'recycle_bin_deleted_at' => 'Tid för borttagning',
     'recycle_bin_permanently_delete' => 'Radera permanent',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Objekt som ska återställas',
     'recycle_bin_restore_confirm' => 'Denna åtgärd kommer att återställa det raderade objektet, inklusive alla underordnade element, till deras ursprungliga plats. Om den ursprungliga platsen har tagits bort sedan dess, och är nu i papperskorgen, kommer det överordnade objektet också att behöva återställas.',
     'recycle_bin_restore_deleted_parent' => 'Föräldern till det här objektet har också tagits bort. Dessa kommer att förbli raderade tills den förälder är återställd.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Raderade :count totala objekt från papperskorgen.',
     'recycle_bin_restore_notification' => 'Återställt :count totala objekt från papperskorgen.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'Om rollen',
     'role_name' => 'Rollens namn',
     'role_desc' => 'Kort beskrivning av rollen',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Externa autentiserings-ID:n',
     'role_system' => 'Systemrättigheter',
     'role_manage_users' => 'Hanter användare',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Skapa token',
     'users_api_tokens_expires' => 'Förfaller',
     'users_api_tokens_docs' => 'API-dokumentation',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Skapa API-nyckel',

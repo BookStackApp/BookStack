@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute csak betűket, számokat és kötőjeleket tartalmazhat.',
     'alpha_num'            => ':attribute csak betűket és számokat tartalmazhat.',
     'array'                => ':attribute tömb kell legyen.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute dátumnak :date előttinek kell lennie.',
     'between'              => [
         'numeric' => ':attribute értékének :min és :max között kell lennie.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute karaktersorozatnak kell legyen.',
     'timezone'             => ':attribute érvényes zóna kell legyen.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute már elkészült.',
     'url'                  => ':attribute formátuma érvénytelen.',
     'uploaded'             => 'A fájlt nem lehet feltölteni. A kiszolgáló nem fogad el ilyen méretű fájlokat.',

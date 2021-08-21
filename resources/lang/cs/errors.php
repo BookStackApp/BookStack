@@ -5,14 +5,14 @@
 return [
 
     // Permissions
-    'permission' => 'Nemáte povolení přistupovat na dotazovanou stránku.',
+    'permission' => 'Nemáte povolení přistupovat na požadovanou stránku.',
     'permissionJson' => 'Nemáte povolení k provedení požadované akce.',
 
     // Auth
     'error_user_exists_different_creds' => 'Uživatel s emailem :email již existuje ale s jinými přihlašovacími údaji.',
     'email_already_confirmed' => 'Emailová adresa již byla potvrzena. Zkuste se přihlásit.',
     'email_confirmation_invalid' => 'Tento potvrzovací odkaz již neplatí nebo už byl použit. Zkuste prosím registraci znovu.',
-    'email_confirmation_expired' => 'Potvrzovací odkaz už neplatí, email s novým odkazem už byl poslán.',
+    'email_confirmation_expired' => 'Tento potvrzovací odkaz již neplatí, byl Vám odeslán nový potvrzovací e-mail.',
     'email_confirmation_awaiting' => 'E-mailová adresa pro používaný účet musí být potvrzena',
     'ldap_fail_anonymous' => 'Přístup k adresáři LDAP jako anonymní uživatel (anonymous bind) selhal',
     'ldap_fail_authed' => 'Přístup k adresáři LDAP pomocí zadaného jména (dn) a hesla selhal',
@@ -50,7 +50,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Nepovedlo se uložit koncept. Než stránku uložíte, ujistěte se, že jste připojeni k internetu.',
-    'page_custom_home_deletion' => 'Nelze smazat tuto stránku, protože je nastavena jako uvítací stránka.',
+    'page_custom_home_deletion' => 'Nelze odstranit tuto stránku, protože je nastavena jako uvítací stránka',
 
     // Entities
     'entity_not_found' => 'Prvek nenalezen',
@@ -60,39 +60,39 @@ return [
     'chapter_not_found' => 'Kapitola nenalezena',
     'selected_book_not_found' => 'Vybraná kniha nebyla nalezena',
     'selected_book_chapter_not_found' => 'Zvolená kniha nebo kapitola nebyla nalezena',
-    'guests_cannot_save_drafts' => 'Návštěvníci z řad veřejnosti nemohou ukládat koncepty.',
+    'guests_cannot_save_drafts' => 'Nepřihlášení návštěvníci nemohou ukládat koncepty',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Nemůžete smazat posledního administrátora',
-    'users_cannot_delete_guest' => 'Uživatele host není možno smazat',
+    'users_cannot_delete_only_admin' => 'Nemůžete odstranit posledního administrátora',
+    'users_cannot_delete_guest' => 'Uživatele Host není možno odstranit',
 
     // Roles
     'role_cannot_be_edited' => 'Tuto roli nelze editovat',
-    'role_system_cannot_be_deleted' => 'Toto je systémová role a nelze jí smazat.',
-    'role_registration_default_cannot_delete' => 'Tuto roli nelze smazat dokud je nastavená jako výchozí role pro registraci nových uživatelů.',
+    'role_system_cannot_be_deleted' => 'Toto je systémová role a nelze jí odstranit',
+    'role_registration_default_cannot_delete' => 'Tuto roli nelze odstranit dokud je nastavená jako výchozí role pro registraci nových uživatelů',
     'role_cannot_remove_only_admin' => 'Tento uživatel má roli administrátora. Přiřaďte roli administrátora někomu jinému než jí odeberete zde.',
 
     // Comments
-    'comment_list' => 'Při dotahování komentářů nastala chyba.',
+    'comment_list' => 'Při načítání komentářů nastala chyba.',
     'cannot_add_comment_to_draft' => 'Nemůžete přidávat komentáře ke konceptu.',
     'comment_add' => 'Při přidávání / aktualizaci komentáře nastala chyba.',
-    'comment_delete' => 'Při mazání komentáře nastala chyba.',
+    'comment_delete' => 'Při odstraňování komentáře nastala chyba.',
     'empty_comment' => 'Nemůžete přidat prázdný komentář.',
 
     // Error pages
     '404_page_not_found' => 'Stránka nenalezena',
-    'sorry_page_not_found' => 'Omlouváme se, ale stránka, kterou hledáte nebyla nalezena.',
+    'sorry_page_not_found' => 'Omlouváme se, ale stránka, kterou hledáte, nebyla nalezena.',
     'sorry_page_not_found_permission_warning' => 'Pokud očekáváte, že by stránka měla existovat, možná jen nemáte oprávnění pro její zobrazení.',
-    'image_not_found' => 'Image Not Found',
-    'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
-    'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
+    'image_not_found' => 'Obrázek nenalezen',
+    'image_not_found_subtitle' => 'Omlouváme se, ale obrázek, který hledáte, nebyl nalezen.',
+    'image_not_found_details' => 'Pokud očekáváte, že by obrázel měl existovat, tak byl zřejmě již odstraněn.',
     'return_home' => 'Návrat domů',
     'error_occurred' => 'Nastala chyba',
     'app_down' => ':appName je momentálně vypnutá',
-    'back_soon' => 'Brzy naběhne.',
+    'back_soon' => 'Brzy bude opět v provozu.',
 
     // API errors
-    'api_no_authorization_found' => 'V požadavku nebyla nalezen žádný autorizační token',
+    'api_no_authorization_found' => 'V požadavku nebyl nalezen žádný autorizační token',
     'api_bad_authorization_format' => 'V požadavku byl nalezen autorizační token, ale jeho formát se zdá být chybný',
     'api_user_token_not_found' => 'Pro zadaný autorizační token nebyl nalezen žádný odpovídající API token',
     'api_incorrect_token_secret' => 'Poskytnutý Token Secret neodpovídá použitému API tokenu',

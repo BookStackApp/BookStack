@@ -27,8 +27,8 @@ return [
     'images' => 'Bilder',
     'my_recent_drafts' => 'Mine nylige utkast',
     'my_recently_viewed' => 'Mine nylige visninger',
-    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
-    'my_favourites' => 'My Favourites',
+    'my_most_viewed_favourites' => 'Mine mest viste favoritter',
+    'my_favourites' => 'Mine favoritter',
     'no_pages_viewed' => 'Du har ikke sett på noen sider',
     'no_pages_recently_created' => 'Ingen sider har nylig blitt opprettet',
     'no_pages_recently_updated' => 'Ingen sider har nylig blitt oppdatert',
@@ -36,6 +36,7 @@ return [
     'export_html' => 'Nettside med alt',
     'export_pdf' => 'PDF Fil',
     'export_text' => 'Tekstfil',
+    'export_md' => 'Markdownfil',
 
     // Permissions and restrictions
     'permissions' => 'Tilganger',
@@ -62,7 +63,7 @@ return [
     'search_permissions_set' => 'Tilganger er angitt',
     'search_created_by_me' => 'Opprettet av meg',
     'search_updated_by_me' => 'Oppdatert av meg',
-    'search_owned_by_me' => 'Owned by me',
+    'search_owned_by_me' => 'Eid av meg',
     'search_date_options' => 'Datoalternativer',
     'search_updated_before' => 'Oppdatert før',
     'search_updated_after' => 'Oppdatert etter',

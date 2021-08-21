@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attributeは文字, 数値, ハイフンのみが含められます。',
     'alpha_num'            => ':attributeは文字と数値のみが含められます。',
     'array'                => ':attributeは配列である必要があります。',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attributeは:date以前である必要があります。',
     'between'              => [
         'numeric' => ':attributeは:min〜:maxである必要があります。',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attributeは文字列である必要があります。',
     'timezone'             => ':attributeは正しいタイムゾーンである必要があります。',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attributeは既に使用されています。',
     'url'                  => ':attributeのフォーマットは不正です。',
     'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',

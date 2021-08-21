@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute может содержать только буквы, цифры и тире.',
     'alpha_num'            => ':attribute должен содержать только буквы и цифры.',
     'array'                => ':attribute должен быть массивом.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute дата должна быть до :date.',
     'between'              => [
         'numeric' => ':attribute должен быть между :min и :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute должен быть строкой.',
     'timezone'             => ':attribute должен быть корректным часовым поясом.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute уже есть.',
     'url'                  => 'Формат :attribute некорректен.',
     'uploaded'             => 'Не удалось загрузить файл. Сервер не может принимать файлы такого размера.',

@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => 'يجب أن يقتصر :attribute على حروف أو أرقام أو شرطات فقط.',
     'alpha_num'            => 'يجب أن يقتصر :attribute على الحروف والأرقام فقط.',
     'array'                => 'يجب أن تكون السمة مصفوفة.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => 'يجب أن يكون التاريخ :attribute قبل :date.',
     'between'              => [
         'numeric' => 'يجب أن يكون :attribute بين :min و :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => 'يجب أن تكون السمة: سلسلة.',
     'timezone'             => 'يجب أن تكون :attribute منطقة صالحة.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => 'تم حجز :attribute من قبل.',
     'url'                  => 'صيغة :attribute غير صالحة.',
     'uploaded'             => 'تعذر تحميل الملف. قد لا يقبل الخادم ملفات بهذا الحجم.',
