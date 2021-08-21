@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute 只能包含字母、数字和短横线。',
     'alpha_num'            => ':attribute 只能包含字母和数字。',
     'array'                => ':attribute 必须是一个数组。',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute 必须是在 :date 前的日期。',
     'between'              => [
         'numeric' => ':attribute 必须在:min到:max之间。',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute 必须是字符串。',
     'timezone'             => ':attribute 必须是有效的区域。',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute 已经被使用。',
     'url'                  => ':attribute 格式无效。',
     'uploaded'             => '无法上传文件。 服务器可能不接受此大小的文件。',
