@@ -93,9 +93,11 @@ class BookContents
     /**
      * Get the visible pages within this book.
      */
-    protected function getPages(bool $showDrafts = false): Collection
+    protected function getPages(bool $showDrafts = false, bool $getPageContent = false): Collection
     {
-        $query = Page::visible()->where('book_id', '=', $this->book->id);
+        $query = Page::visible()
+            ->select($getPageContent ? Page::$contentAttributes : Page::$listAttributes)
+            ->where('book_id', '=', $this->book->id);
 
         if (!$showDrafts) {
             $query->where('draft', '=', false);

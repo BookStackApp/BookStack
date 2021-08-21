@@ -25,9 +25,10 @@ use Permissions;
  */
 class Page extends BookChild
 {
-    protected $fillable = ['name', 'priority', 'markdown'];
+    public static $listAttributes = ['name', 'id', 'slug', 'book_id', 'text', 'created_at', 'updated_at'];
+    public static $contentAttributes = ['name', 'id', 'slug', 'book_id', 'html', 'text', 'created_at', 'updated_at'];
 
-    protected $simpleAttributes = ['name', 'id', 'slug'];
+    protected $fillable = ['name', 'priority', 'markdown'];
 
     public $textField = 'text';
 
@@ -46,19 +47,6 @@ class Page extends BookChild
         $query = Permissions::enforceDraftVisibilityOnQuery($query);
 
         return parent::scopeVisible($query);
-    }
-
-    /**
-     * Converts this page into a simplified array.
-     *
-     * @return mixed
-     */
-    public function toSimpleArray()
-    {
-        $array = array_intersect_key($this->toArray(), array_flip($this->simpleAttributes));
-        $array['url'] = $this->getUrl();
-
-        return $array;
     }
 
     /**
@@ -119,7 +107,7 @@ class Page extends BookChild
     {
         $parts = [
             'books',
-            urlencode($this->getAttribute('bookSlug') ?? $this->book->slug),
+            urlencode($this->book_slug ?? $this->book->slug),
             $this->draft ? 'draft' : 'page',
             $this->draft ? $this->id : urlencode($this->slug),
             trim($path, '/'),
