@@ -39,6 +39,7 @@ return [
     'reset' => 'リセット',
     'remove' => '削除',
     'add' => '追加',
+    'configure' => 'Configure',
     'fullscreen' => 'Fullscreen',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
