@@ -49,6 +49,12 @@ class MfaBackupCodesController extends Controller
         MfaValue::upsertWithValue($this->currentOrLastAttemptedUser(), MfaValue::METHOD_BACKUP_CODES, json_encode($codes));
 
         $this->logActivity(ActivityType::MFA_SETUP_METHOD, 'backup-codes');
+
+        if (!auth()->check()) {
+            $this->showSuccessNotification(trans('auth.mfa_setup_login_notification'));
+            return redirect('/login');
+        }
+
         return redirect('/mfa/setup');
     }
 

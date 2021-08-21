@@ -187,10 +187,14 @@ class MfaVerificationTest extends TestCase
         $resp->assertElementContains('a[href$="/mfa/setup"]', 'Configure');
 
         $this->get('/mfa/backup_codes/generate');
-        $this->followingRedirects()->post('/mfa/backup_codes/confirm');
+        $resp = $this->post('/mfa/backup_codes/confirm');
+        $resp->assertRedirect('/login');
         $this->assertDatabaseHas('mfa_values', [
             'user_id' => $user->id,
         ]);
+
+        $resp = $this->get('/login');
+        $resp->assertSeeText('Multi-factor method configured, Please now login again using the configured method.');
 
         $resp = $this->followingRedirects()->post('/login', [
             'email' => $user->email,

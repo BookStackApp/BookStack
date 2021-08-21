@@ -36,6 +36,6 @@ class AuthenticatedOrPendingMfa
             return $next($request);
         }
 
-        return redirect()->guest(url('/login'));
+        return redirect()->to(url('/login'));
     }
 }
