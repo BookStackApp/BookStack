@@ -332,7 +332,7 @@ class AuthTest extends BrowserKitTest
         $user = $this->getEditor();
         $mfaSession = $this->app->make(MfaSession::class);
 
-        $mfaSession->markVerifiedForUser($user);;
+        $mfaSession->markVerifiedForUser($user);
         $this->assertTrue($mfaSession->isVerifiedForUser($user));
 
         $this->asAdmin()->visit('/logout');

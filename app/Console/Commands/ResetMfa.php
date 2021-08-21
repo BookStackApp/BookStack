@@ -45,6 +45,7 @@ class ResetMfa extends Command
         $email = $this->option('email');
         if (!$id && !$email) {
             $this->error('Either a --id=<number> or --email=<email> option must be provided.');
+
             return 1;
         }
 
@@ -57,6 +58,7 @@ class ResetMfa extends Command
 
         if (!$user) {
             $this->error("A user where {$field}={$value} could not be found.");
+
             return 1;
         }
 
@@ -66,6 +68,7 @@ class ResetMfa extends Command
         if ($confirm) {
             $user->mfaValues()->delete();
             $this->info('User MFA methods have been reset.');
+
             return 0;
         }
 

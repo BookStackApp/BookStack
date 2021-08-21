@@ -51,10 +51,11 @@ class TotpService
     public function generateQrCodeSvg(string $url): string
     {
         $color = Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(32, 110, 167));
+
         return (new Writer(
             new ImageRenderer(
                 new RendererStyle(192, 0, null, null, $color),
-                new SvgImageBackEnd
+                new SvgImageBackEnd()
             )
         ))->writeString($url);
     }

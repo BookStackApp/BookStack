@@ -13,7 +13,6 @@ use Exception;
 
 class LoginService
 {
-
     protected const LAST_LOGIN_ATTEMPTED_SESSION_KEY = 'auth-login-last-attempted';
 
     protected $mfaSession;
@@ -30,12 +29,14 @@ class LoginService
      * Will start a login of the given user but will prevent if there's
      * a reason to (MFA or Unconfirmed Email).
      * Returns a boolean to indicate the current login result.
+     *
      * @throws StoppedAuthenticationException
      */
     public function login(User $user, string $method, bool $remember = false): void
     {
         if ($this->awaitingEmailConfirmation($user) || $this->needsMfaVerification($user)) {
             $this->setLastLoginAttemptedForUser($user, $method, $remember);
+
             throw new StoppedAuthenticationException($user, $this);
         }
 
@@ -55,6 +56,7 @@ class LoginService
 
     /**
      * Reattempt a system login after a previous stopped attempt.
+     *
      * @throws Exception
      */
     public function reattemptLoginFor(User $user)
@@ -75,12 +77,14 @@ class LoginService
     public function getLastLoginAttemptUser(): ?User
     {
         $id = $this->getLastLoginAttemptDetails()['user_id'];
+
         return User::query()->where('id', '=', $id)->first();
     }
 
     /**
      * Get the details of the last login attempt.
      * Checks upon a ttl of about 1 hour since that last attempted login.
+     *
      * @return array{user_id: ?string, method: ?string, remember: bool}
      */
     protected function getLastLoginAttemptDetails(): array
@@ -91,9 +95,10 @@ class LoginService
         }
 
         [$id, $method, $remember, $time] = explode(':', $value);
-        $hourAgo = time() - (60*60);
+        $hourAgo = time() - (60 * 60);
         if ($time < $hourAgo) {
             $this->clearLastLoginAttempted();
+
             return ['user_id' => null, 'method' => null];
         }
 
@@ -156,5 +161,4 @@ class LoginService
 
         return $result;
     }
-
 }
