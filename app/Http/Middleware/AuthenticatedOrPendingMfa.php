@@ -8,7 +8,6 @@ use Closure;
 
 class AuthenticatedOrPendingMfa
 {
-
     protected $loginService;
     protected $mfaSession;
 
@@ -18,12 +17,12 @@ class AuthenticatedOrPendingMfa
         $this->mfaSession = $mfaSession;
     }
 
-
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)

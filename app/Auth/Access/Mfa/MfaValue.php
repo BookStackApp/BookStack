@@ -7,8 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $id
- * @property int $user_id
+ * @property int    $id
+ * @property int    $user_id
  * @property string $method
  * @property string $value
  * @property Carbon $created_at
@@ -38,7 +38,7 @@ class MfaValue extends Model
         /** @var MfaValue $mfaVal */
         $mfaVal = static::query()->firstOrNew([
             'user_id' => $user->id,
-            'method' => $method
+            'method'  => $method,
         ]);
         $mfaVal->setValue($value);
         $mfaVal->save();

@@ -57,5 +57,4 @@ class MfaSession
     {
         return 'mfa-verification-passed:' . $user->id;
     }
-
 }

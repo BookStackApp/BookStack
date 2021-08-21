@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ApiAuthenticate
 {
-
     /**
      * Handle an incoming request.
      */
