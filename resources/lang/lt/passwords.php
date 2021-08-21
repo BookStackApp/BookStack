@@ -6,9 +6,10 @@
  */
 return [
 
-    'password' => 'Slaptažodis privalo būti mažiausiai aštuonių simbolių ir atitikti patvirtinimą.',
-    'token' => 'Slaptažodžio nustatymo raktas yra neteisingas šiam elektroninio pašto adresui.',
-    'sent' => 'Elektroniu paštu jums atsiuntėme slaptažodžio atkūrimo nuorodą!',
-    'reset' => 'Jūsų slaptažodis buvo atkurtas!',
+    'password' => 'Lozinka mora imati najmanje 8 znakova i biti potvrđena.',
+    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'Ponovno postavljanje lozinke nemoguće putem ove adrese.',
+    'sent' => 'Na vašu email adresu poslana je poveznica za ponovno postavljanje!',
+    'reset' => 'Vaša je lozinka ponovno postavljena!',
 
 ];
