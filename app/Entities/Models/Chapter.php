@@ -36,7 +36,7 @@ class Chapter extends BookChild
     {
         $parts = [
             'books',
-            urlencode($this->getAttribute('bookSlug') ?? $this->book->slug),
+            urlencode($this->book_slug ?? $this->book->slug),
             'chapter',
             urlencode($this->slug),
             trim($path, '/'),

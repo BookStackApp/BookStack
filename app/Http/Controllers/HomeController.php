@@ -10,7 +10,6 @@ use BookStack\Entities\Queries\TopFavourites;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\PageContent;
-use Views;
 
 class HomeController extends Controller
 {
@@ -41,6 +40,7 @@ class HomeController extends Controller
             ->where('draft', false)
             ->orderBy('updated_at', 'desc')
             ->take($favourites->count() > 0 ? 6 : 12)
+            ->select(Page::$listAttributes)
             ->get();
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
