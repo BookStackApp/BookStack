@@ -39,6 +39,7 @@ return [
     'reset' => 'Resetten',
     'remove' => 'Verwijderen',
     'add' => 'Toevoegen',
+    'configure' => 'Configure',
     'fullscreen' => 'Volledig scherm',
     'favourite' => 'Favoriet',
     'unfavourite' => 'Verwijderen uit favoriet',
