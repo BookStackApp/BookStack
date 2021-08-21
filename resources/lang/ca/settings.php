@@ -138,6 +138,7 @@ return [
     'role_details' => 'Detalls del rol',
     'role_name' => 'Nom del rol',
     'role_desc' => 'Descripció curta del rol',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Identificadors d\'autenticació externa',
     'role_system' => 'Permisos del sistema',
     'role_manage_users' => 'Gestiona usuaris',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Crea un testimoni',
     'users_api_tokens_expires' => 'Caducitat',
     'users_api_tokens_docs' => 'Documentació de l\'API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Crea un testimoni d\'API',
