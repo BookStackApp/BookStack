@@ -39,6 +39,7 @@ return [
     'reset' => 'Скинути',
     'remove' => 'Видалити',
     'add' => 'Додати',
+    'configure' => 'Configure',
     'fullscreen' => 'На весь екран',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
