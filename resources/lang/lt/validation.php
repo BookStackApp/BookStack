@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute turi būti sudarytas tik iš raidžių, skaičių, brūkšnelių ir pabraukimų.',
     'alpha_num'            => ':attribute turi būti sudarytas tik iš raidžių ir skaičių.',
     'array'                => ':attribute turi būti masyvas.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute turi būti data anksčiau negu :date.',
     'between'              => [
         'numeric' => ':attribute turi būti tarp :min ir :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute turi būti eilutė.',
     'timezone'             => ':attribute turi būti tinkama zona.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute jau yra paimtas.',
     'url'                  => ':attribute formatas yra klaidingas.',
     'uploaded'             => 'Šis failas negali būti įkeltas. Serveris gali nepriimti tokio dydžio failų.',

@@ -39,7 +39,12 @@ return [
     'reset' => 'Atsatyti',
     'remove' => 'Pašalinti',
     'add' => 'Pridėti',
+    'configure' => 'Configure',
     'fullscreen' => 'Visas ekranas',
+    'favourite' => 'Favourite',
+    'unfavourite' => 'Unfavourite',
+    'next' => 'Next',
+    'previous' => 'Previous',
 
     // Sort Options
     'sort_options' => 'Rūšiuoti pasirinkimus',
@@ -56,6 +61,7 @@ return [
     'no_activity' => 'Nėra veiklų',
     'no_items' => 'Nėra elementų',
     'back_to_top' => 'Grįžti į pradžią',
+    'skip_to_main_content' => 'Skip to main content',
     'toggle_details' => 'Perjungti detales',
     'toggle_thumbnails' => 'Perjungti miniatūras',
     'details' => 'Detalės',
