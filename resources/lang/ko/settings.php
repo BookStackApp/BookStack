@@ -138,6 +138,7 @@ return [
     'role_details' => '권한 정보',
     'role_name' => '권한 이름',
     'role_desc' => '설명',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'LDAP 확인',
     'role_system' => '시스템 권한',
     'role_manage_users' => '사용자 관리',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => '토큰 만들기',
     'users_api_tokens_expires' => '만료',
     'users_api_tokens_docs' => 'API 설명서',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'API 토큰 만들기',
