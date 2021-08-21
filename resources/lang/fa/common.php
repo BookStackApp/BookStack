@@ -39,6 +39,7 @@ return [
     'reset' => 'بازنشانی',
     'remove' => 'حذف',
     'add' => 'ﺍﻓﺰﻭﺩﻥ',
+    'configure' => 'Configure',
     'fullscreen' => 'تمام صفحه',
     'favourite' => 'علاقه‌مندی',
     'unfavourite' => 'Unfavourite',
