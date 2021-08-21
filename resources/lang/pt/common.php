@@ -39,6 +39,7 @@ return [
     'reset' => 'Redefinir',
     'remove' => 'Remover',
     'add' => 'Adicionar',
+    'configure' => 'Configure',
     'fullscreen' => 'Ecrã completo',
     'favourite' => 'Favorito',
     'unfavourite' => 'Retirar Favorito',
