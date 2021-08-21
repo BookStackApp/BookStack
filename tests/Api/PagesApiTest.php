@@ -219,6 +219,27 @@ class PagesApiTest extends TestCase
         $resp->assertStatus(403);
     }
 
+    public function test_update_endpoint_does_not_wipe_content_if_no_html_or_md_provided()
+    {
+        $this->actingAsApiEditor();
+        $page = Page::visible()->first();
+        $originalContent = $page->html;
+        $details = [
+            'name' => 'My updated API page',
+            'tags' => [
+                [
+                    'name'  => 'freshtag',
+                    'value' => 'freshtagval',
+                ],
+            ],
+        ];
+
+        $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $page->refresh();
+
+        $this->assertEquals($originalContent, $page->html);
+    }
+
     public function test_delete_endpoint()
     {
         $this->actingAsApiEditor();
