@@ -64,15 +64,16 @@ class RolesTest extends BrowserKitTest
             ->type('Test Role', 'display_name')
             ->type('A little test description', 'description')
             ->press('Save Role')
-            ->seeInDatabase('roles', ['display_name' => $testRoleName, 'description' => $testRoleDesc])
+            ->seeInDatabase('roles', ['display_name' => $testRoleName, 'description' => $testRoleDesc, 'mfa_enforced' => false])
             ->seePageIs('/settings/roles');
         // Updating
         $this->asAdmin()->visit('/settings/roles')
             ->see($testRoleDesc)
             ->click($testRoleName)
             ->type($testRoleUpdateName, '#display_name')
+            ->check('#mfa_enforced')
             ->press('Save Role')
-            ->seeInDatabase('roles', ['display_name' => $testRoleUpdateName, 'description' => $testRoleDesc])
+            ->seeInDatabase('roles', ['display_name' => $testRoleUpdateName, 'description' => $testRoleDesc, 'mfa_enforced' => true])
             ->seePageIs('/settings/roles');
         // Deleting
         $this->asAdmin()->visit('/settings/roles')

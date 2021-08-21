@@ -2,6 +2,7 @@
 
 namespace Tests\Auth;
 
+use BookStack\Auth\Access\Mfa\MfaSession;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
@@ -131,7 +132,8 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm/awaiting')
             ->see('Resend')
             ->visit('/books')
-            ->seePageIs('/register/confirm/awaiting')
+            ->seePageIs('/login')
+            ->visit('/register/confirm/awaiting')
             ->press('Resend Confirmation Email');
 
         // Get confirmation and confirm notification matches
@@ -172,10 +174,7 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
-        $this->visit('/')
-            ->seePageIs('/register/confirm/awaiting');
-
-        auth()->logout();
+        $this->assertNull(auth()->user());
 
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
@@ -209,10 +208,8 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
-        $this->visit('/')
-            ->seePageIs('/register/confirm/awaiting');
+        $this->assertNull(auth()->user());
 
-        auth()->logout();
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
             ->type($user->password, '#password')
@@ -330,6 +327,18 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/login');
     }
 
+    public function test_mfa_session_cleared_on_logout()
+    {
+        $user = $this->getEditor();
+        $mfaSession = $this->app->make(MfaSession::class);
+
+        $mfaSession->markVerifiedForUser($user);;
+        $this->assertTrue($mfaSession->isVerifiedForUser($user));
+
+        $this->asAdmin()->visit('/logout');
+        $this->assertFalse($mfaSession->isVerifiedForUser($user));
+    }
+
     public function test_reset_password_flow()
     {
         Notification::fake();
@@ -408,6 +417,14 @@ class AuthTest extends BrowserKitTest
         $login = $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
 
         $login->assertRedirectedTo('http://localhost');
+    }
+
+    public function test_login_intended_redirect_does_not_factor_mfa_routes()
+    {
+        $this->get('/books')->assertRedirectedTo('/login');
+        $this->get('/mfa/setup')->assertRedirectedTo('/login');
+        $login = $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+        $login->assertRedirectedTo('/books');
     }
 
     public function test_login_authenticates_admins_on_all_guards()

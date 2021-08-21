@@ -88,7 +88,6 @@ class RegistrationService
                 session()->flash('sent-email-confirmation', true);
             } catch (Exception $e) {
                 $message = trans('auth.email_confirm_send_error');
-
                 throw new UserRegistrationException($message, '/register/confirm');
             }
         }

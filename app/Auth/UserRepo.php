@@ -71,6 +71,7 @@ class UserRepo
         $query = User::query()->select(['*'])
             ->withLastActivityAt()
             ->with(['roles', 'avatar'])
+            ->withCount('mfaValues')
             ->orderBy($sort, $sortData['order']);
 
         if ($sortData['search']) {
@@ -188,6 +189,7 @@ class UserRepo
         $user->socialAccounts()->delete();
         $user->apiTokens()->delete();
         $user->favourites()->delete();
+        $user->mfaValues()->delete();
         $user->delete();
 
         // Delete user profile images

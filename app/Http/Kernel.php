@@ -53,5 +53,6 @@ class Kernel extends HttpKernel
         'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'perm'       => \BookStack\Http\Middleware\PermissionMiddleware::class,
         'guard'      => \BookStack\Http\Middleware\CheckGuard::class,
+        'mfa-setup'  => \BookStack\Http\Middleware\AuthenticatedOrPendingMfa::class,
     ];
 }

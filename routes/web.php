@@ -223,14 +223,28 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/roles/{id}', 'RoleController@edit');
         Route::put('/roles/{id}', 'RoleController@update');
     });
+
 });
+
+// MFA routes
+Route::group(['middleware' => 'mfa-setup'], function() {
+    Route::get('/mfa/setup', 'Auth\MfaController@setup');
+    Route::get('/mfa/totp/generate', 'Auth\MfaTotpController@generate');
+    Route::post('/mfa/totp/confirm', 'Auth\MfaTotpController@confirm');
+    Route::get('/mfa/backup_codes/generate', 'Auth\MfaBackupCodesController@generate');
+    Route::post('/mfa/backup_codes/confirm', 'Auth\MfaBackupCodesController@confirm');
+});
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/mfa/verify', 'Auth\MfaController@verify');
+    Route::post('/mfa/totp/verify', 'Auth\MfaTotpController@verify');
+    Route::post('/mfa/backup_codes/verify', 'Auth\MfaBackupCodesController@verify');
+});
+Route::delete('/mfa/{method}/remove', 'Auth\MfaController@remove')->middleware('auth');
 
 // Social auth routes
 Route::get('/login/service/{socialDriver}', 'Auth\SocialController@login');
 Route::get('/login/service/{socialDriver}/callback', 'Auth\SocialController@callback');
-Route::group(['middleware' => 'auth'], function () {
-    Route::post('/login/service/{socialDriver}/detach', 'Auth\SocialController@detach');
-});
+Route::post('/login/service/{socialDriver}/detach', 'Auth\SocialController@detach')->middleware('auth');
 Route::get('/register/service/{socialDriver}', 'Auth\SocialController@register');
 
 // Login/Logout routes

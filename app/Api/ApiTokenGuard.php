@@ -2,6 +2,7 @@
 
 namespace BookStack\Api;
 
+use BookStack\Auth\Access\LoginService;
 use BookStack\Exceptions\ApiAuthException;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -20,6 +21,11 @@ class ApiTokenGuard implements Guard
     protected $request;
 
     /**
+     * @var LoginService
+     */
+    protected $loginService;
+
+    /**
      * The last auth exception thrown in this request.
      *
      * @var ApiAuthException
@@ -29,9 +35,10 @@ class ApiTokenGuard implements Guard
     /**
      * ApiTokenGuard constructor.
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, LoginService $loginService)
     {
         $this->request = $request;
+        $this->loginService = $loginService;
     }
 
     /**
@@ -94,6 +101,10 @@ class ApiTokenGuard implements Guard
             ->with(['user'])->first();
 
         $this->validateToken($token, $secret);
+
+        if ($this->loginService->awaitingEmailConfirmation($token->user)) {
+            throw new ApiAuthException(trans('errors.email_confirmation_awaiting'));
+        }
 
         return $token->user;
     }
