@@ -39,6 +39,7 @@ return [
     'reset' => 'Сбросить',
     'remove' => 'Удалить',
     'add' => 'Добавить',
+    'configure' => 'Configure',
     'fullscreen' => 'На весь экран',
     'favourite' => 'Избранное',
     'unfavourite' => 'Убрать из избранного',
