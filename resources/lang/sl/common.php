@@ -39,6 +39,7 @@ return [
     'reset' => 'Ponastavi',
     'remove' => 'Odstrani',
     'add' => 'Dodaj',
+    'configure' => 'Configure',
     'fullscreen' => 'Celozaslonski način',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
