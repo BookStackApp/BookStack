@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => 'El :attribute solo puede contener letras, números y guiones.',
     'alpha_num'            => 'El :attribute solo puede contener letras y números.',
     'array'                => 'El :attribute debe de ser un array.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => 'El :attribute debe ser una fecha anterior a  :date.',
     'between'              => [
         'numeric' => 'El :attribute debe estar entre :min y :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => 'El atributo :attribute debe ser una cadena de texto.',
     'timezone'             => 'El atributo :attribute debe ser una zona válida.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => 'El atributo :attribute ya ha sido tomado.',
     'url'                  => 'El atributo :attribute tiene un formato inválido.',
     'uploaded'             => 'El archivo no ha podido subirse. Es posible que el servidor no acepte archivos de este tamaño.',
