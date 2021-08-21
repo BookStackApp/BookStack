@@ -138,6 +138,7 @@ return [
     'role_details' => 'Rol Details',
     'role_name' => 'Rolnaam',
     'role_desc' => 'Korte beschrijving van de rol',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Externe authenticatie ID\'s',
     'role_system' => 'Systeem Permissies',
     'role_manage_users' => 'Gebruikers beheren',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Token aanmaken',
     'users_api_tokens_expires' => 'Verloopt',
     'users_api_tokens_docs' => 'API Documentatie',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'API-token aanmaken',
