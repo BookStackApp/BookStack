@@ -138,6 +138,7 @@ return [
     'role_details' => 'Rol Detayları',
     'role_name' => 'Rol Adı',
     'role_desc' => 'Rolün Kısa Tanımı',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Harici Doğrulama Kimlikleri',
     'role_system' => 'Sistem Yetkileri',
     'role_manage_users' => 'Kullanıcıları yönet',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Anahtar Oluştur',
     'users_api_tokens_expires' => 'Bitiş süresi',
     'users_api_tokens_docs' => 'API Dokümantasyonu',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'API Anahtarı Oluştur',
