@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Recycle Bin',
     'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
     'recycle_bin_deleted_item' => 'Deleted Item',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Deleted By',
     'recycle_bin_deleted_at' => 'Deletion Time',
     'recycle_bin_permanently_delete' => 'Permanently Delete',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Items to be Restored',
     'recycle_bin_restore_confirm' => 'This action will restore the deleted item, including any child elements, to their original location. If the original location has since been deleted, and is now in the recycle bin, the parent item will also need to be restored.',
     'recycle_bin_restore_deleted_parent' => 'The parent of this item has also been deleted. These will remain deleted until that parent is also restored.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Deleted :count total items from the recycle bin.',
     'recycle_bin_restore_notification' => 'Restored :count total items from the recycle bin.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => '권한 정보',
     'role_name' => '권한 이름',
     'role_desc' => '설명',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'LDAP 확인',
     'role_system' => '시스템 권한',
     'role_manage_users' => '사용자 관리',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => '토큰 만들기',
     'users_api_tokens_expires' => '만료',
     'users_api_tokens_docs' => 'API 설명서',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'API 토큰 만들기',

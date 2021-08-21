@@ -47,6 +47,10 @@ return [
     'favourite_add_notification' => '":name" favorilerinize eklendi',
     'favourite_remove_notification' => '":name" favorilerinizden çıkarıldı',
 
+    // MFA
+    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
+    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+
     // Other
     'commented_on'                => 'yorum yaptı',
     'permissions_update'          => 'güncellenmiş izinler',

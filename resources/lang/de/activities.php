@@ -47,6 +47,10 @@ return [
     'favourite_add_notification' => '":name" wurde zu deinen Favoriten hinzugefügt',
     'favourite_remove_notification' => '":name" wurde aus Ihren Favoriten entfernt',
 
+    // MFA
+    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
+    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+
     // Other
     'commented_on'                => 'hat einen Kommentar hinzugefügt',
     'permissions_update'          => 'hat die Berechtigungen aktualisiert',

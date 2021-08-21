@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute får bara innehålla bokstäver, siffror och bindestreck.',
     'alpha_num'            => ':attribute får bara innehålla bokstäver och siffror.',
     'array'                => ':attribute måste vara en array.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute måste vara före :date.',
     'between'              => [
         'numeric' => ':attribute måste vara mellan :min och :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute måste vara en sträng.',
     'timezone'             => ':attribute måste vara en giltig tidszon.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute är upptaget',
     'url'                  => 'Formatet på :attribute är ogiltigt.',
     'uploaded'             => 'Filen kunde inte laddas upp. Servern kanske inte tillåter filer med denna storlek.',

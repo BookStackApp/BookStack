@@ -36,6 +36,7 @@ return [
     'export_html' => 'صفحة ويب',
     'export_pdf' => 'ملف PDF',
     'export_text' => 'ملف نص عادي',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'الأذونات',

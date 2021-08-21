@@ -36,6 +36,7 @@ return [
     'export_html' => 'Vsebuje spletno datoteko',
     'export_pdf' => 'PDF datoteka (.pdf)',
     'export_text' => 'Navadna besedilna datoteka',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Dovoljenja',

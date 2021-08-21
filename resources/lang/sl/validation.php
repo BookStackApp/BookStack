@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute lahko vsebuje samo ?rke, ?tevilke in ?rtice.',
     'alpha_num'            => ':attribute lahko vsebuje samo črke in številke.',
     'array'                => ':attribute mora biti niz.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute mora biti datum pred :date.',
     'between'              => [
         'numeric' => ':attribute mora biti med :min in :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute mora biti niz.',
     'timezone'             => ':attribute mora biti veljavna cona.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute je že zaseden.',
     'url'                  => ':attribute oblika ni veljavna.',
     'uploaded'             => 'Datoteke ni bilo mogoče naložiti. Strežnik morda ne sprejema datotek te velikosti.',

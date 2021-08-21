@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Кошик',
     'recycle_bin_desc' => 'Тут ви можете відновити видалені елементи, або назавжди видалити їх із системи. Цей список нефільтрований, на відміну від подібних списків активності в системі, де застосовуються фільтри дозволів.',
     'recycle_bin_deleted_item' => 'Виадлений елемент',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Ким видалено',
     'recycle_bin_deleted_at' => 'Час видалення',
     'recycle_bin_permanently_delete' => 'Видалити остаточно',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Елементи для відновлення',
     'recycle_bin_restore_confirm' => 'Ця дія відновить видалений елемент у початкове місце, включаючи всі дочірні елементи. Якщо вихідне розташування відтоді було видалено, і знаходиться у кошику, батьківський елемент також потрібно буде відновити.',
     'recycle_bin_restore_deleted_parent' => 'Батьківський елемент цього об\'єкта також був видалений. Вони залишатимуться видаленими, доки батьківський елемент також не буде відновлений.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'Видалено :count елементів із кошика.',
     'recycle_bin_restore_notification' => 'Відновлено :count елементів із кошика.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'Деталі ролі',
     'role_name' => 'Назва ролі',
     'role_desc' => 'Короткий опис ролі',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Зовнішні ID автентифікації',
     'role_system' => 'Системні дозволи',
     'role_manage_users' => 'Керування користувачами',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Створити токен',
     'users_api_tokens_expires' => 'Закінчується',
     'users_api_tokens_docs' => 'Документація API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Створити токен API',

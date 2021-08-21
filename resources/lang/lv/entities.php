@@ -36,6 +36,7 @@ return [
     'export_html' => 'Pilna satura web fails',
     'export_pdf' => 'PDF fails',
     'export_text' => 'Vienkāršs teksta fails',
+    'export_md' => 'Markdown fails',
 
     // Permissions and restrictions
     'permissions' => 'Atļaujas',

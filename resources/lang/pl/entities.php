@@ -36,6 +36,7 @@ return [
     'export_html' => 'Plik HTML',
     'export_pdf' => 'Plik PDF',
     'export_text' => 'Plik tekstowy',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Uprawnienia',

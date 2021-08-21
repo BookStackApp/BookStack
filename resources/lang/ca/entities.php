@@ -36,6 +36,7 @@ return [
     'export_html' => 'Fitxer web independent',
     'export_pdf' => 'Fitxer PDF',
     'export_text' => 'Fitxer de text sense format',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Permisos',

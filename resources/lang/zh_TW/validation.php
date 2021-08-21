@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute 只能包含字母、數字、破折號與底線。',
     'alpha_num'            => ':attribute 只能包含字母和數字。',
     'array'                => ':attribute 必須是陣列。',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute 必須是在 :date 前的日期。',
     'between'              => [
         'numeric' => ':attribute 必須在 :min 到 :max 之間。',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute 必須是字元串。',
     'timezone'             => ':attribute 必須是有效的區域。',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute 已經被使用。',
     'url'                  => ':attribute 格式無效。',
     'uploaded'             => '無法上傳文件， 服務器可能不接受此大小的文件。',

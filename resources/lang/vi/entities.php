@@ -36,6 +36,7 @@ return [
     'export_html' => 'Đang chứa tệp tin Web',
     'export_pdf' => 'Tệp PDF',
     'export_text' => 'Tệp văn bản thuần túy',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Quyền',

@@ -95,6 +95,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'recycle_bin' => 'Papierkorb',
     'recycle_bin_desc' => 'Hier können Sie gelöschte Einträge wiederherstellen oder sie dauerhaft aus dem System entfernen. Diese Liste ist nicht gefiltert, im Gegensatz zu ähnlichen Aktivitätslisten im System, wo Berechtigungsfilter angewendet werden.',
     'recycle_bin_deleted_item' => 'Gelöschter Eintrag',
+    'recycle_bin_deleted_parent' => 'Übergeordnet',
     'recycle_bin_deleted_by' => 'Gelöscht von',
     'recycle_bin_deleted_at' => 'Löschzeitpunkt',
     'recycle_bin_permanently_delete' => 'Dauerhaft löschen',
@@ -107,6 +108,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'recycle_bin_restore_list' => 'Wiederherzustellende Einträge',
     'recycle_bin_restore_confirm' => 'Mit dieser Aktion wird der gelöschte Eintrag einschließlich aller untergeordneten Einträge an seinen ursprünglichen Ort wiederherstellen. Wenn der ursprüngliche Ort gelöscht wurde und sich nun im Papierkorb befindet, muss auch der übergeordnete Eintrag wiederhergestellt werden.',
     'recycle_bin_restore_deleted_parent' => 'Der übergeordnete Eintrag wurde ebenfalls gelöscht. Dieser Eintrag wird weiterhin als gelöscht zählen, bis auch der übergeordnete Eintrag wiederhergestellt wurde.',
+    'recycle_bin_restore_parent' => 'Elternteil wiederherstellen',
     'recycle_bin_destroy_notification' => ':count Einträge wurden aus dem Papierkorb gelöscht.',
     'recycle_bin_restore_notification' => ':count Einträge wurden aus dem Papierkorb wiederhergestellt.',
 
@@ -139,6 +141,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_details' => 'Rollendetails',
     'role_name' => 'Rollenname',
     'role_desc' => 'Kurzbeschreibung der Rolle',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Externe Authentifizierungs-IDs',
     'role_system' => 'System-Berechtigungen',
     'role_manage_users' => 'Benutzer verwalten',
@@ -205,6 +208,10 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_api_tokens_create' => 'Token erstellen',
     'users_api_tokens_expires' => 'Endet',
     'users_api_tokens_docs' => 'API Dokumentation',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Neuen API-Token erstellen',

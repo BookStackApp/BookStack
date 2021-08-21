@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'سلة المحذوفات',
     'recycle_bin_desc' => 'هنا يمكنك استعادة العناصر التي تم حذفها أو اختيار إزالتها نهائيا من النظام. هذه القائمة غير مصفاة خلافاً لقوائم الأنشطة المماثلة في النظام حيث يتم تطبيق عوامل تصفية الأذونات.',
     'recycle_bin_deleted_item' => 'عنصر محذوف',
+    'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'حُذف بواسطة',
     'recycle_bin_deleted_at' => 'وقت الحذف',
     'recycle_bin_permanently_delete' => 'حُذف نهائيًا',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'العناصر المراد استرجاعها',
     'recycle_bin_restore_confirm' => 'سيعيد هذا الإجراء العنصر المحذوف ، بما في ذلك أي عناصر فرعية ، إلى موقعه الأصلي. إذا تم حذف الموقع الأصلي منذ ذلك الحين ، وهو الآن في سلة المحذوفات ، فسيلزم أيضًا استعادة العنصر الأصلي.',
     'recycle_bin_restore_deleted_parent' => 'تم حذف أصل هذا العنصر أيضًا. سيبقى حذفه حتى يتم استعادة ذلك الأصل أيضًا.',
+    'recycle_bin_restore_parent' => 'Restore Parent',
     'recycle_bin_destroy_notification' => 'المحذوف: قُم بعد إجمالي العناصر من سلة المحذوفات.',
     'recycle_bin_restore_notification' => 'المرتجع: قُم بعد إجمالي العناصر من سلة المحذوفات.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'تفاصيل الدور',
     'role_name' => 'اسم الدور',
     'role_desc' => 'وصف مختصر للدور',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'ربط الحساب بمواقع التواصل',
     'role_system' => 'أذونات النظام',
     'role_manage_users' => 'إدارة المستخدمين',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'قم بإنشاء رمز مميز',
     'users_api_tokens_expires' => 'انتهاء مدة الصلاحية',
     'users_api_tokens_docs' => 'وثائق API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'قم بإنشاء رمز API',

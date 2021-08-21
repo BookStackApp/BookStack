@@ -92,6 +92,7 @@ return [
     'recycle_bin' => 'Tempat Sampah',
     'recycle_bin_desc' => 'Di sini Anda dapat memulihkan item yang telah dihapus atau memilih untuk menghapusnya secara permanen dari sistem. Daftar ini tidak difilter, tidak seperti daftar aktivitas serupa di sistem tempat filter izin diterapkan.',
     'recycle_bin_deleted_item' => 'Item yang Dihapus',
+    'recycle_bin_deleted_parent' => 'Induk',
     'recycle_bin_deleted_by' => 'Dihapus Oleh',
     'recycle_bin_deleted_at' => 'Waktu Penghapusan',
     'recycle_bin_permanently_delete' => 'Hapus Permanen',
@@ -104,6 +105,7 @@ return [
     'recycle_bin_restore_list' => 'Item yang akan Dipulihkan',
     'recycle_bin_restore_confirm' => 'Tindakan ini akan memulihkan item yang dihapus, termasuk semua elemen anak, ke lokasi aslinya. Jika lokasi asli telah dihapus, dan sekarang berada di keranjang sampah, item induk juga perlu dipulihkan.',
     'recycle_bin_restore_deleted_parent' => 'Induk item ini juga telah dihapus. Ini akan tetap dihapus sampai induknya juga dipulihkan.',
+    'recycle_bin_restore_parent' => 'Pulihkan Induk',
     'recycle_bin_destroy_notification' => 'Total :count item dari tempat sampah.',
     'recycle_bin_restore_notification' => 'Total :count item yang dipulihkan dari tempat sampah.',
 
@@ -136,6 +138,7 @@ return [
     'role_details' => 'Detail Peran',
     'role_name' => 'Nama peran',
     'role_desc' => 'Deskripsi Singkat Peran',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Otentikasi Eksternal IDs',
     'role_system' => 'Izin Sistem',
     'role_manage_users' => 'Kelola pengguna',
@@ -202,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Buat Token',
     'users_api_tokens_expires' => 'Kedaluwarsa',
     'users_api_tokens_docs' => 'Dokumentasi API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Buat Token API',

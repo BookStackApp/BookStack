@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute může obsahovat pouze písmena, číslice, pomlčky a podtržítka. České znaky (á, é, í, ó, ú, ů, ž, š, č, ř, ď, ť, ň) nejsou podporovány.',
     'alpha_num'            => ':attribute může obsahovat pouze písmena a číslice.',
     'array'                => ':attribute musí být pole.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute musí být datum před :date.',
     'between'              => [
         'numeric' => ':attribute musí být hodnota mezi :min a :max.',
@@ -60,7 +61,7 @@ return [
         'array'   => ':attribute by měl obsahovat méně než :value položek.',
     ],
     'lte'                  => [
-        'numeric' => ':attribute musí být menší nebo rovno než :value.',
+        'numeric' => ':attribute musí být menší nebo rovno :value.',
         'file'    => 'Velikost souboru :attribute musí být menší než :value kB.',
         'string'  => ':attribute nesmí být delší než :value znaků.',
         'array'   => ':attribute by měl obsahovat maximálně :value položek.',
@@ -89,7 +90,7 @@ return [
     'required_without'     => ':attribute musí být vyplněno pokud :values není vyplněno.',
     'required_without_all' => ':attribute musí být vyplněno pokud není žádné z :values zvoleno.',
     'same'                 => ':attribute a :other se musí shodovat.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => 'Zadaný odkaz může být nebezpečný.',
     'size'                 => [
         'numeric' => ':attribute musí být přesně :size.',
         'file'    => ':attribute musí mít přesně :size Kilobytů.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute musí být řetězec znaků.',
     'timezone'             => ':attribute musí být platná časová zóna.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute musí být unikátní.',
     'url'                  => 'Formát :attribute je neplatný.',
     'uploaded'             => 'Nahrávání :attribute se nezdařilo.',

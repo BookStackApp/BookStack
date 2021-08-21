@@ -36,6 +36,7 @@ return [
     'export_html' => 'Webb-fil',
     'export_pdf' => 'PDF-fil',
     'export_text' => 'Textfil',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Rättigheter',

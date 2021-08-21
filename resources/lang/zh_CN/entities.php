@@ -36,6 +36,7 @@ return [
     'export_html' => '网页文件',
     'export_pdf' => 'PDF文件',
     'export_text' => '纯文本文件',
+    'export_md' => 'Markdown 文件',
 
     // Permissions and restrictions
     'permissions' => '权限',
@@ -106,7 +107,7 @@ return [
     // Books
     'book' => '图书',
     'books' => '图书',
-    'x_books' => ':count本书',
+    'x_books' => ':count 本书',
     'books_empty' => '不存在已创建的书',
     'books_popular' => '热门图书',
     'books_recent' => '最近的书',

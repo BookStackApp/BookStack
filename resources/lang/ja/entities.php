@@ -36,6 +36,7 @@ return [
     'export_html' => 'Webページ',
     'export_pdf' => 'PDF',
     'export_text' => 'テキストファイル',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => '権限',
