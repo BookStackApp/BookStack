@@ -39,6 +39,7 @@ return [
     'reset' => 'Visszaállítás',
     'remove' => 'Eltávolítás',
     'add' => 'Hozzáadás',
+    'configure' => 'Configure',
     'fullscreen' => 'Teljes képernyő',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
