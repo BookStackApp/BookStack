@@ -138,6 +138,7 @@ return [
     'role_details' => 'تفاصيل الدور',
     'role_name' => 'اسم الدور',
     'role_desc' => 'وصف مختصر للدور',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'ربط الحساب بمواقع التواصل',
     'role_system' => 'أذونات النظام',
     'role_manage_users' => 'إدارة المستخدمين',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'قم بإنشاء رمز مميز',
     'users_api_tokens_expires' => 'انتهاء مدة الصلاحية',
     'users_api_tokens_docs' => 'وثائق API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'قم بإنشاء رمز API',
