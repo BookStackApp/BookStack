@@ -39,6 +39,7 @@ return [
     'reset' => 'Reinicialitza',
     'remove' => 'Elimina',
     'add' => 'Afegeix',
+    'configure' => 'Configure',
     'fullscreen' => 'Pantalla completa',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
