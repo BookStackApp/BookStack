@@ -34,6 +34,7 @@ class Localization
         'it'          => 'it_IT',
         'ja'          => 'ja',
         'ko'          => 'ko_KR',
+        'lt'          => 'lt_LT',
         'lv'          => 'lv_LV',
         'nl'          => 'nl_NL',
         'nb'          => 'nb_NO',
