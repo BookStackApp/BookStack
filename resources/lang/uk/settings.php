@@ -138,6 +138,7 @@ return [
     'role_details' => 'Деталі ролі',
     'role_name' => 'Назва ролі',
     'role_desc' => 'Короткий опис ролі',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Зовнішні ID автентифікації',
     'role_system' => 'Системні дозволи',
     'role_manage_users' => 'Керування користувачами',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Створити токен',
     'users_api_tokens_expires' => 'Закінчується',
     'users_api_tokens_docs' => 'Документація API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Створити токен API',
