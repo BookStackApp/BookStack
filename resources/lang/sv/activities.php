@@ -47,6 +47,10 @@ return [
     'favourite_add_notification' => '":name" har lagts till i dina favoriter',
     'favourite_remove_notification' => '":name" har tagits bort från dina favoriter',
 
+    // MFA
+    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
+    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+
     // Other
     'commented_on'                => 'kommenterade',
     'permissions_update'          => 'uppdaterade behörigheter',
