@@ -39,6 +39,7 @@ return [
     'reset' => 'Atiestatīt',
     'remove' => 'Noņemt',
     'add' => 'Pievienot',
+    'configure' => 'Configure',
     'fullscreen' => 'Pilnekrāns',
     'favourite' => 'Pievienot favorītiem',
     'unfavourite' => 'Noņemt no favorītiem',
