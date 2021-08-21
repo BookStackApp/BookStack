@@ -39,6 +39,7 @@ return [
     'reset' => '重設',
     'remove' => '移除',
     'add' => '新增',
+    'configure' => 'Configure',
     'fullscreen' => '全螢幕',
     'favourite' => '最愛',
     'unfavourite' => '取消最愛',
