@@ -138,6 +138,7 @@ return [
     'role_details' => 'Детали роли',
     'role_name' => 'Название роли',
     'role_desc' => 'Краткое описание роли',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Внешние ID авторизации',
     'role_system' => 'Системные разрешения',
     'role_manage_users' => 'Управление пользователями',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Создать токен',
     'users_api_tokens_expires' => 'Истекает',
     'users_api_tokens_docs' => 'Документация',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Создать токен',
