@@ -254,6 +254,7 @@ return [
         'it' => 'Italian',
         'ja' => '日本語',
         'ko' => '한국어',
+        'lt' => 'Lietuvių Kalba',
         'lv' => 'Latviešu Valoda',
         'nl' => 'Nederlands',
         'nb' => 'Norsk (Bokmål)',
