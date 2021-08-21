@@ -138,6 +138,7 @@ return [
     'role_details' => 'Informācija par grupu',
     'role_name' => 'Grupas nosaukums',
     'role_desc' => 'Īss grupas apaksts',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Ārējais autentifikācijas ID',
     'role_system' => 'Sistēmas atļaujas',
     'role_manage_users' => 'Pārvaldīt lietotājus',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Izveidot žetonu',
     'users_api_tokens_expires' => 'Derīguma termiņš',
     'users_api_tokens_docs' => 'API dokumentācija',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Izveidot API žetonu',
