@@ -39,6 +39,7 @@ return [
     'reset' => 'Resetuj',
     'remove' => 'Ukloni',
     'add' => 'Dodaj',
+    'configure' => 'Configure',
     'fullscreen' => 'Prikaz preko čitavog ekrana',
     'favourite' => 'Favorit',
     'unfavourite' => 'Ukloni favorit',
