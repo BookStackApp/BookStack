@@ -27,7 +27,12 @@
                 @foreach($roles as $role)
                     <tr>
                         <td><a href="{{ url("/settings/roles/{$role->id}") }}">{{ $role->display_name }}</a></td>
-                        <td>{{ $role->description }}</td>
+                        <td>
+                            @if($role->mfa_enforced)
+                                <span title="{{ trans('settings.role_mfa_enforced') }}">@icon('lock') </span>
+                            @endif
+                            {{ $role->description }}
+                        </td>
                         <td class="text-center">{{ $role->users->count() }}</td>
                     </tr>
                 @endforeach

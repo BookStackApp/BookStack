@@ -2,14 +2,13 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\User;
+use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Theming\ThemeEvents;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -32,6 +31,7 @@ class RegisterController extends Controller
 
     protected $socialAuthService;
     protected $registrationService;
+    protected $loginService;
 
     /**
      * Where to redirect users after login / registration.
@@ -44,13 +44,18 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      */
-    public function __construct(SocialAuthService $socialAuthService, RegistrationService $registrationService)
+    public function __construct(
+        SocialAuthService $socialAuthService,
+        RegistrationService $registrationService,
+        LoginService $loginService
+    )
     {
         $this->middleware('guest');
         $this->middleware('guard:standard');
 
         $this->socialAuthService = $socialAuthService;
         $this->registrationService = $registrationService;
+        $this->loginService = $loginService;
 
         $this->redirectTo = url('/');
         $this->redirectPath = url('/');
@@ -89,6 +94,7 @@ class RegisterController extends Controller
      * Handle a registration request for the application.
      *
      * @throws UserRegistrationException
+     * @throws StoppedAuthenticationException
      */
     public function postRegister(Request $request)
     {
@@ -98,9 +104,7 @@ class RegisterController extends Controller
 
         try {
             $user = $this->registrationService->registerUser($userData);
-            auth()->login($user);
-            Theme::dispatch(ThemeEvents::AUTH_LOGIN, auth()->getDefaultDriver(), $user);
-            $this->logActivity(ActivityType::AUTH_LOGIN, $user);
+            $this->loginService->login($user, auth()->getDefaultDriver());
         } catch (UserRegistrationException $exception) {
             if ($exception->getMessage()) {
                 $this->showErrorNotification($exception->getMessage());

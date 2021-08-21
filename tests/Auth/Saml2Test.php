@@ -289,16 +289,18 @@ class Saml2Test extends TestCase
 
             $this->assertEquals('http://localhost/register/confirm', url()->current());
             $acsPost->assertSee('Please check your email and click the confirmation button to access BookStack.');
+            /** @var User $user */
             $user = User::query()->where('external_auth_id', '=', 'user')->first();
 
             $userRoleIds = $user->roles()->pluck('id');
             $this->assertContains($memberRole->id, $userRoleIds, 'User was assigned to member role');
             $this->assertContains($adminRole->id, $userRoleIds, 'User was assigned to admin role');
-            $this->assertTrue($user->email_confirmed == false, 'User email remains unconfirmed');
+            $this->assertFalse(boolval($user->email_confirmed), 'User email remains unconfirmed');
         });
 
+        $this->assertNull(auth()->user());
         $homeGet = $this->get('/');
-        $homeGet->assertRedirect('/register/confirm/awaiting');
+        $homeGet->assertRedirect('/login');
     }
 
     public function test_login_where_existing_non_saml_user_shows_warning()

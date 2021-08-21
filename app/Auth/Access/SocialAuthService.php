@@ -2,15 +2,11 @@
 
 namespace BookStack\Auth\Access;
 
-use BookStack\Actions\ActivityType;
 use BookStack\Auth\SocialAccount;
 use BookStack\Auth\User;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Facades\Activity;
-use BookStack\Facades\Theme;
-use BookStack\Theming\ThemeEvents;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\Factory as Socialite;
@@ -27,6 +23,11 @@ class SocialAuthService
      * @var Socialite
      */
     protected $socialite;
+
+    /**
+     * @var LoginService
+     */
+    protected $loginService;
 
     /**
      * The default built-in social drivers we support.
@@ -59,9 +60,10 @@ class SocialAuthService
     /**
      * SocialAuthService constructor.
      */
-    public function __construct(Socialite $socialite)
+    public function __construct(Socialite $socialite, LoginService $loginService)
     {
         $this->socialite = $socialite;
+        $this->loginService = $loginService;
     }
 
     /**
@@ -139,10 +141,7 @@ class SocialAuthService
         // When a user is not logged in and a matching SocialAccount exists,
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
-            auth()->login($socialAccount->user);
-            Activity::add(ActivityType::AUTH_LOGIN, $socialAccount);
-            Theme::dispatch(ThemeEvents::AUTH_LOGIN, $socialDriver, $socialAccount->user);
-
+            $this->loginService->login($socialAccount->user, $socialAccount);
             return redirect()->intended('/');
         }
 

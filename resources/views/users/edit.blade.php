@@ -63,6 +63,27 @@
             </form>
         </section>
 
+        <section class="card content-wrap auto-height">
+            <h2 class="list-heading">{{ trans('settings.users_mfa') }}</h2>
+            <p>{{ trans('settings.users_mfa_desc') }}</p>
+            <div class="grid half gap-xl v-center pb-s">
+                <div>
+                    @if ($mfaMethods->count() > 0)
+                        <span class="text-pos">@icon('check-circle')</span>
+                    @else
+                        <span class="text-neg">@icon('cancel')</span>
+                    @endif
+                    {{ trans_choice('settings.users_mfa_x_methods', $mfaMethods->count()) }}
+                </div>
+                <div class="text-m-right">
+                    @if($user->id === user()->id)
+                        <a href="{{ url('/mfa/setup')  }}" class="button outline">{{ trans('settings.users_mfa_configure') }}</a>
+                    @endif
+                </div>
+            </div>
+
+        </section>
+
         @if(user()->id === $user->id && count($activeSocialDrivers) > 0)
             <section class="card content-wrap auto-height">
                 <h2 class="list-heading">{{ trans('settings.users_social_accounts') }}</h2>

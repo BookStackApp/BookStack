@@ -4,6 +4,7 @@ namespace BookStack\Auth;
 
 use BookStack\Actions\Favourite;
 use BookStack\Api\ApiToken;
+use BookStack\Auth\Access\Mfa\MfaValue;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Interfaces\Loggable;
 use BookStack\Interfaces\Sluggable;
@@ -38,6 +39,7 @@ use Illuminate\Support\Collection;
  * @property string     $external_auth_id
  * @property string     $system_name
  * @property Collection $roles
+ * @property Collection $mfaValues
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Loggable, Sluggable
 {
@@ -263,6 +265,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function favourites(): HasMany
     {
         return $this->hasMany(Favourite::class);
+    }
+
+    /**
+     * Get the MFA values belonging to this use.
+     */
+    public function mfaValues(): HasMany
+    {
+        return $this->hasMany(MfaValue::class);
     }
 
     /**
