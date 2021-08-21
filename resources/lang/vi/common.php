@@ -39,6 +39,7 @@ return [
     'reset' => 'Thiết lập lại',
     'remove' => 'Xóa bỏ',
     'add' => 'Thêm',
+    'configure' => 'Configure',
     'fullscreen' => 'Toàn màn hình',
     'favourite' => 'Yêu thích',
     'unfavourite' => 'Bỏ yêu thích',
