@@ -138,6 +138,7 @@ return [
     'role_details' => 'Rolledetaljer',
     'role_name' => 'Rollenavn',
     'role_desc' => 'Kort beskrivelse av rolle',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Ekstern godkjennings-ID',
     'role_system' => 'Systemtilganger',
     'role_manage_users' => 'Behandle kontoer',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Opprett nøkkel',
     'users_api_tokens_expires' => 'Utløper',
     'users_api_tokens_docs' => 'API-dokumentasjon',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Opprett API-nøkkel',
