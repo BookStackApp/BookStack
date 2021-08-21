@@ -39,6 +39,7 @@ return [
     'reset' => 'Nulstil',
     'remove' => 'Fjern',
     'add' => 'Tilføj',
+    'configure' => 'Configure',
     'fullscreen' => 'Fuld skærm',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
