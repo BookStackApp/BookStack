@@ -47,6 +47,10 @@ return [
     'favourite_add_notification' => '":name" добавлено в избранное',
     'favourite_remove_notification' => '":name" удалено из избранного',
 
+    // MFA
+    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
+    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+
     // Other
     'commented_on'                => 'прокомментировал',
     'permissions_update'          => 'обновил разрешения',
