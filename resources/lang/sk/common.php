@@ -39,6 +39,7 @@ return [
     'reset' => 'Resetovať',
     'remove' => 'Odstrániť',
     'add' => 'Pridať',
+    'configure' => 'Configure',
     'fullscreen' => 'Celá obrazovka',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
