@@ -138,6 +138,7 @@ return [
     'role_details' => '概要',
     'role_name' => '役割名',
     'role_desc' => '役割の説明',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'External Authentication IDs',
     'role_system' => 'システム権限',
     'role_manage_users' => 'ユーザ管理',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Create Token',
     'users_api_tokens_expires' => 'Expires',
     'users_api_tokens_docs' => 'API Documentation',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Create API Token',
