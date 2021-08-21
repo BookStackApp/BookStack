@@ -34,20 +34,14 @@ class BackupCodeService
 
     /**
      * Remove the given input code from the given available options.
-     * Will return null if no codes remain otherwise will be a JSON string to contain
-     * the codes.
+     * Will return a JSON string containing the codes.
      */
-    public function removeInputCodeFromSet(string $code, string $codeSet): ?string
+    public function removeInputCodeFromSet(string $code, string $codeSet): string
     {
         $cleanCode = $this->cleanInputCode($code);
         $codes = json_decode($codeSet);
         $pos = array_search($cleanCode, $codes, true);
         array_splice($codes, $pos, 1);
-
-        if (count($codes) === 0) {
-            return null;
-        }
-
         return json_encode($codes);
     }
 

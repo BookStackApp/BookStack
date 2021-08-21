@@ -59,17 +59,6 @@ class MfaValue extends Model
     }
 
     /**
-     * Delete any stored MFA values for the given user and method.
-     */
-    public static function deleteValuesForUser(User $user, string $method): void
-    {
-        static::query()
-            ->where('user_id', '=', $user->id)
-            ->where('method', '=', $method)
-            ->delete();
-    }
-
-    /**
      * Decrypt the value attribute upon access.
      */
     protected function getValue(): string
