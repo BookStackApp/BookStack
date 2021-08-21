@@ -138,7 +138,7 @@ return [
     'role_details' => 'Detalles de rol',
     'role_name' => 'Nombre de rol',
     'role_desc' => 'Descripción corta de rol',
-    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
+    'role_mfa_enforced' => 'Requiere Autenticación en Dos Pasos',
     'role_external_auth_id' => 'IDs de Autenticación Externa',
     'role_system' => 'Permisos de sistema',
     'role_manage_users' => 'Gestionar usuarios',
@@ -206,10 +206,10 @@ return [
     'users_api_tokens_create' => 'Crear token',
     'users_api_tokens_expires' => 'Expira',
     'users_api_tokens_docs' => 'Documentación API',
-    'users_mfa' => 'Multi-Factor Authentication',
-    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa' => 'Autenticación en Dos Pasos',
+    'users_mfa_desc' => 'La autenticación en dos pasos añade una capa de seguridad adicional a tu cuenta.',
+    'users_mfa_x_methods' => ':count método configurado|:count métodos configurados',
+    'users_mfa_configure' => 'Configurar Métodos',
 
     // API Tokens
     'user_api_token_create' => 'Crear token API',

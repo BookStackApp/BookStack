@@ -27,6 +27,8 @@ return [
     'images' => 'Nuotraukos',
     'my_recent_drafts' => 'Naujausi išsaugoti juodraščiai',
     'my_recently_viewed' => 'Neseniai peržiūrėti',
+    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
+    'my_favourites' => 'My Favourites',
     'no_pages_viewed' => 'Jūs neperžiūrėjote nei vieno puslapio',
     'no_pages_recently_created' => 'Nebuvos sukurta jokių puslapių',
     'no_pages_recently_updated' => 'Nebuvo atnaujinta jokių puslapių',
@@ -34,6 +36,7 @@ return [
     'export_html' => 'Sudėtinis žiniatinklio failas',
     'export_pdf' => 'PDF failas',
     'export_text' => 'Paprastas failo tekstas',
+    'export_md' => 'Markdown File',
 
     // Permissions and restrictions
     'permissions' => 'Leidimai',
@@ -91,6 +94,7 @@ return [
     'shelves_edit' => 'Redaguoti knygų lentyną',
     'shelves_delete' => 'Ištrinti knygų lentyną',
     'shelves_delete_named' => 'Ištrinti knygų lentyną :name',
+    'shelves_delete_explain' => "This will delete the bookshelf with the name ':name'. Contained books will not be deleted.",
     'shelves_delete_confirmation' => 'Ar jūs esate tikri, kad norite ištrinti šią knygų lentyną?',
     'shelves_permissions' => 'Knygų lentynos leidimai',
     'shelves_permissions_updated' => 'Knygų lentynos leidimai atnaujinti',
@@ -249,6 +253,7 @@ return [
     'tags' =>  'Tags',
     'tag_name' =>  'Tag Name',
     'tag_value' => 'Žymos vertė (neprivaloma)',
+    'tags_explain' => "Add some tags to better categorise your content. \n You can assign a value to a tag for more in-depth organisation.",
     'tags_add' => 'Pridėti kitą žymą',
     'tags_remove' => 'Pridėti kitą žymą',
     'attachments' => 'Priedai',
