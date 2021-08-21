@@ -138,6 +138,7 @@ return [
     'role_details' => 'Szczegóły roli',
     'role_name' => 'Nazwa roli',
     'role_desc' => 'Krótki opis roli',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => 'Zewnętrzne identyfikatory uwierzytelniania',
     'role_system' => 'Uprawnienia systemowe',
     'role_manage_users' => 'Zarządzanie użytkownikami',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => 'Utwórz token',
     'users_api_tokens_expires' => 'Wygasa',
     'users_api_tokens_docs' => 'Dokumentacja API',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => 'Utwórz klucz API',
