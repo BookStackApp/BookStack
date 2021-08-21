@@ -78,7 +78,7 @@ return [
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
     'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'mfa_setup_configured' => 'Already Configured',
+    'mfa_setup_configured' => 'Already configured',
     'mfa_setup_reconfigure' => 'Reconfigure',
     'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
     'mfa_setup_action' => 'Setup',
@@ -108,4 +108,5 @@ return [
     'mfa_verify_backup_code_desc' => 'Enter one of your remaining backup codes below:',
     'mfa_verify_backup_code_enter_here' => 'Enter backup code here',
     'mfa_verify_totp_desc' => 'Enter the code, generated using your mobile app, below:',
+    'mfa_setup_login_notification' => 'Multi-factor method configured, Please now login again using the configured method.',
 ];

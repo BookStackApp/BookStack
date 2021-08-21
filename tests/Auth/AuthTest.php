@@ -419,6 +419,14 @@ class AuthTest extends BrowserKitTest
         $login->assertRedirectedTo('http://localhost');
     }
 
+    public function test_login_intended_redirect_does_not_factor_mfa_routes()
+    {
+        $this->get('/books')->assertRedirectedTo('/login');
+        $this->get('/mfa/setup')->assertRedirectedTo('/login');
+        $login = $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+        $login->assertRedirectedTo('/books');
+    }
+
     public function test_login_authenticates_admins_on_all_guards()
     {
         $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
