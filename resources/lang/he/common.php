@@ -39,6 +39,7 @@ return [
     'reset' => 'איפוס',
     'remove' => 'הסר',
     'add' => 'הוסף',
+    'configure' => 'Configure',
     'fullscreen' => 'Fullscreen',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
