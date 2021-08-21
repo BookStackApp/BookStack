@@ -20,6 +20,7 @@ class MfaController extends Controller
             ->mfaValues()
             ->get(['id', 'method'])
             ->groupBy('method');
+
         return view('mfa.setup', [
             'userMethods' => $userMethods,
         ]);
@@ -27,6 +28,7 @@ class MfaController extends Controller
 
     /**
      * Remove an MFA method for the current user.
+     *
      * @throws \Exception
      */
     public function remove(string $method)
@@ -56,13 +58,13 @@ class MfaController extends Controller
         // Basic search for the default option for a user.
         // (Prioritises totp over backup codes)
         $method = $userMethods->has($desiredMethod) ? $desiredMethod : $userMethods->keys()->sort()->reverse()->first();
-        $otherMethods = $userMethods->keys()->filter(function($userMethod) use ($method) {
+        $otherMethods = $userMethods->keys()->filter(function ($userMethod) use ($method) {
             return $method !== $userMethod;
         })->all();
 
         return view('mfa.verify', [
-            'userMethods' => $userMethods,
-            'method' => $method,
+            'userMethods'  => $userMethods,
+            'method'       => $method,
             'otherMethods' => $otherMethods,
         ]);
     }

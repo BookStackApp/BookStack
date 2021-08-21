@@ -6,7 +6,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class TotpValidationRule implements Rule
 {
-
     protected $secret;
     protected $totpService;
 

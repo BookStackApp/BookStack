@@ -14,6 +14,7 @@ class EmailConfirmationService extends UserTokenService
     /**
      * Create new confirmation for a user,
      * Also removes any existing old ones.
+     *
      * @throws ConfirmationEmailException
      */
     public function sendConfirmation(User $user)

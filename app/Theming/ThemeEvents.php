@@ -41,7 +41,7 @@ class ThemeEvents
      * Provides both the original request and the currently resolved response.
      * Return values, if provided, will be used as a new response to use.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request                                                      $request
      * @param \Illuminate\Http\Response|Symfony\Component\HttpFoundation\BinaryFileResponse $response
      * @returns \Illuminate\Http\Response|null
      */

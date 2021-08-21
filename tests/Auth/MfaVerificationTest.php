@@ -149,7 +149,7 @@ class MfaVerificationTest extends TestCase
 
         /** @var TestResponse $mfaView */
         $mfaView = $this->followingRedirects()->post('/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'password',
         ]);
 
@@ -179,7 +179,7 @@ class MfaVerificationTest extends TestCase
 
         /** @var TestResponse $resp */
         $resp = $this->followingRedirects()->post('/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'password',
         ]);
 
@@ -197,7 +197,7 @@ class MfaVerificationTest extends TestCase
         $resp->assertSeeText('Multi-factor method configured, Please now login again using the configured method.');
 
         $resp = $this->followingRedirects()->post('/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'password',
         ]);
         $resp->assertSeeText('Enter one of your remaining backup codes below:');
@@ -227,6 +227,7 @@ class MfaVerificationTest extends TestCase
         $role = $user->roles->first();
         $role->mfa_enforced = true;
         $role->save();
+
         try {
             $loginService->login($user, 'testing');
         } catch (StoppedAuthenticationException $e) {
@@ -238,7 +239,6 @@ class MfaVerificationTest extends TestCase
             $resp = $this->call($method, $path);
             $resp->assertRedirect('/login');
         }
-
     }
 
     /**
@@ -252,7 +252,7 @@ class MfaVerificationTest extends TestCase
         $user->save();
         MfaValue::upsertWithValue($user, MfaValue::METHOD_TOTP, $secret);
         $loginResp = $this->post('/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'password',
         ]);
 
@@ -262,18 +262,17 @@ class MfaVerificationTest extends TestCase
     /**
      * @return Array<User, string, TestResponse>
      */
-    protected function startBackupCodeLogin($codes = ['kzzu6-1pgll','bzxnf-plygd','bwdsp-ysl51','1vo93-ioy7n','lf7nw-wdyka','xmtrd-oplac']): array
+    protected function startBackupCodeLogin($codes = ['kzzu6-1pgll', 'bzxnf-plygd', 'bwdsp-ysl51', '1vo93-ioy7n', 'lf7nw-wdyka', 'xmtrd-oplac']): array
     {
         $user = $this->getEditor();
         $user->password = Hash::make('password');
         $user->save();
         MfaValue::upsertWithValue($user, MfaValue::METHOD_BACKUP_CODES, json_encode($codes));
         $loginResp = $this->post('/login', [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'password',
         ]);
 
         return [$user, $codes, $loginResp];
     }
-
 }

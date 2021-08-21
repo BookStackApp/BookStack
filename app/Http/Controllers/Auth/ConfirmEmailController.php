@@ -28,8 +28,7 @@ class ConfirmEmailController extends Controller
         EmailConfirmationService $emailConfirmationService,
         LoginService $loginService,
         UserRepo $userRepo
-    )
-    {
+    ) {
         $this->emailConfirmationService = $emailConfirmationService;
         $this->loginService = $loginService;
         $this->userRepo = $userRepo;
@@ -51,6 +50,7 @@ class ConfirmEmailController extends Controller
     public function showAwaiting()
     {
         $user = $this->loginService->getLastLoginAttemptUser();
+
         return view('auth.user-unconfirmed', ['user' => $user]);
     }
 

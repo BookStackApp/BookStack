@@ -26,7 +26,8 @@ class FileLoader extends BaseLoader
         if (is_null($namespace) || $namespace === '*') {
             $themePath = theme_path('lang');
             $themeTranslations = $themePath ? $this->loadPath($themePath, $locale, $group) : [];
-            $originalTranslations =  $this->loadPath($this->path, $locale, $group);
+            $originalTranslations = $this->loadPath($this->path, $locale, $group);
+
             return array_merge($originalTranslations, $themeTranslations);
         }
 

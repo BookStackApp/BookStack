@@ -20,7 +20,7 @@ class MfaBackupCodesController extends Controller
     protected const SETUP_SECRET_SESSION_KEY = 'mfa-setup-backup-codes';
 
     /**
-     * Show a view that generates and displays backup codes
+     * Show a view that generates and displays backup codes.
      */
     public function generate(BackupCodeService $codeService)
     {
@@ -30,13 +30,14 @@ class MfaBackupCodesController extends Controller
         $downloadUrl = 'data:application/octet-stream;base64,' . base64_encode(implode("\n\n", $codes));
 
         return view('mfa.backup-codes-generate', [
-            'codes' => $codes,
+            'codes'       => $codes,
             'downloadUrl' => $downloadUrl,
         ]);
     }
 
     /**
      * Confirm the setup of backup codes, storing them against the user.
+     *
      * @throws Exception
      */
     public function confirm()
@@ -52,6 +53,7 @@ class MfaBackupCodesController extends Controller
 
         if (!auth()->check()) {
             $this->showSuccessNotification(trans('auth.mfa_setup_login_notification'));
+
             return redirect('/login');
         }
 
@@ -60,6 +62,7 @@ class MfaBackupCodesController extends Controller
 
     /**
      * Verify the MFA method submission on check.
+     *
      * @throws NotFoundException
      * @throws ValidationException
      */
@@ -76,8 +79,8 @@ class MfaBackupCodesController extends Controller
                     if (!$codeService->inputCodeExistsInSet($value, $codes)) {
                         $fail(trans('validation.backup_codes'));
                     }
-                }
-            ]
+                },
+            ],
         ]);
 
         $updatedCodes = $codeService->removeInputCodeFromSet($request->get('code'), $codes);
