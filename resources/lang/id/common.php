@@ -39,6 +39,7 @@ return [
     'reset' => 'Atur ulang',
     'remove' => 'Hapus',
     'add' => 'Tambah',
+    'configure' => 'Configure',
     'fullscreen' => 'Layar Penuh',
     'favourite' => 'Favorit',
     'unfavourite' => 'Batal favorit',
