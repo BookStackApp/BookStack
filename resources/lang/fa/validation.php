@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute باید فقط حروف الفبا، اعداد، خط تیره و زیرخط باشد.',
     'alpha_num'            => ':attribute باید فقط حروف الفبا و اعداد باشد.',
     'array'                => ':attribute باید آرایه باشد.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute باید تاریخی قبل از :date باشد.',
     'between'              => [
         'numeric' => ':attribute باید بین :min و :max باشد.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => 'فیلد :attribute باید متن باشد.',
     'timezone'             => 'فیلد :attribute باید یک منطقه زمانی معتبر باشد.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute قبلا انتخاب شده است.',
     'url'                  => ':attribute معتبر نمی‌باشد.',
     'uploaded'             => 'بارگذاری فایل :attribute موفقیت آمیز نبود.',
