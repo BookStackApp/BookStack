@@ -39,6 +39,7 @@ return [
     'reset' => 'إعادة تعيين',
     'remove' => 'إزالة',
     'add' => 'إضافة',
+    'configure' => 'Configure',
     'fullscreen' => 'شاشة كاملة',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
