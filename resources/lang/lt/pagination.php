@@ -6,7 +6,7 @@
  */
 return [
 
-    'previous' => '&laquo; Ankstesnis',
-    'next'     => 'Kitas &raquo;',
+    'previous' => '&laquo; Prethodno',
+    'next'     => 'Sljedeće &raquo;',
 
 ];
