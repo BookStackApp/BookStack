@@ -144,13 +144,16 @@ class LoginController extends Controller
     /**
      * Attempt to log the user into the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return bool
      */
     protected function attemptLogin(Request $request)
     {
         return $this->loginService->attempt(
-            $this->credentials($request), auth()->getDefaultDriver(), $request->filled('remember')
+            $this->credentials($request),
+            auth()->getDefaultDriver(),
+            $request->filled('remember')
         );
     }
 

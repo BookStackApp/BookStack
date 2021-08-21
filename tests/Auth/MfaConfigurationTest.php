@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class MfaConfigurationTest extends TestCase
 {
-
     public function test_totp_setup()
     {
         $editor = $this->getEditor();
@@ -54,7 +53,7 @@ class MfaConfigurationTest extends TestCase
 
         $this->assertDatabaseHas('mfa_values', [
             'user_id' => $editor->id,
-            'method' => 'totp',
+            'method'  => 'totp',
         ]);
         $this->assertFalse(session()->has('mfa-setup-totp-secret'));
         $value = MfaValue::query()->where('user_id', '=', $editor->id)
@@ -79,7 +78,7 @@ class MfaConfigurationTest extends TestCase
         $codes = decrypt(session()->get('mfa-setup-backup-codes'));
         // Check code format
         $this->assertCount(16, $codes);
-        $this->assertEquals(16*11, strlen(implode('', $codes)));
+        $this->assertEquals(16 * 11, strlen(implode('', $codes)));
         // Check download link
         $resp->assertSee(base64_encode(implode("\n\n", $codes)));
 
@@ -94,7 +93,7 @@ class MfaConfigurationTest extends TestCase
 
         $this->assertDatabaseHas('mfa_values', [
             'user_id' => $editor->id,
-            'method' => 'backup_codes',
+            'method'  => 'backup_codes',
         ]);
         $this->assertFalse(session()->has('mfa-setup-backup-codes'));
         $value = MfaValue::query()->where('user_id', '=', $editor->id)
@@ -155,13 +154,12 @@ class MfaConfigurationTest extends TestCase
         $resp = $this->actingAs($admin)->get('/mfa/setup');
         $resp->assertElementExists('form[action$="/mfa/totp/remove"]');
 
-        $resp = $this->delete("/mfa/totp/remove");
-        $resp->assertRedirect("/mfa/setup");
+        $resp = $this->delete('/mfa/totp/remove');
+        $resp->assertRedirect('/mfa/setup');
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Multi-factor method successfully removed');
 
         $this->assertActivityExists(ActivityType::MFA_REMOVE_METHOD);
         $this->assertEquals(0, $admin->mfaValues()->count());
     }
-
 }

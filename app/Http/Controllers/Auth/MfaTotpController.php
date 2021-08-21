@@ -36,13 +36,14 @@ class MfaTotpController extends Controller
 
         return view('mfa.totp-generate', [
             'secret' => $totpSecret,
-            'svg' => $svg,
+            'svg'    => $svg,
         ]);
     }
 
     /**
      * Confirm the setup of TOTP and save the auth method secret
      * against the current user.
+     *
      * @throws ValidationException
      * @throws NotFoundException
      */
@@ -54,7 +55,7 @@ class MfaTotpController extends Controller
                 'required',
                 'max:12', 'min:4',
                 new TotpValidationRule($totpSecret),
-            ]
+            ],
         ]);
 
         MfaValue::upsertWithValue($this->currentOrLastAttemptedUser(), MfaValue::METHOD_TOTP, $totpSecret);
@@ -63,6 +64,7 @@ class MfaTotpController extends Controller
 
         if (!auth()->check()) {
             $this->showSuccessNotification(trans('auth.mfa_setup_login_notification'));
+
             return redirect('/login');
         }
 
@@ -71,6 +73,7 @@ class MfaTotpController extends Controller
 
     /**
      * Verify the MFA method submission on check.
+     *
      * @throws NotFoundException
      */
     public function verify(Request $request, LoginService $loginService, MfaSession $mfaSession)
@@ -83,7 +86,7 @@ class MfaTotpController extends Controller
                 'required',
                 'max:12', 'min:4',
                 new TotpValidationRule($totpSecret),
-            ]
+            ],
         ]);
 
         $mfaSession->markVerifiedForUser($user);

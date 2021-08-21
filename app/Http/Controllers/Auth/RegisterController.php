@@ -48,8 +48,7 @@ class RegisterController extends Controller
         SocialAuthService $socialAuthService,
         RegistrationService $registrationService,
         LoginService $loginService
-    )
-    {
+    ) {
         $this->middleware('guest');
         $this->middleware('guard:standard');
 

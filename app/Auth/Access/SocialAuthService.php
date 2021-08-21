@@ -142,6 +142,7 @@ class SocialAuthService
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
             $this->loginService->login($socialAccount->user, $socialAccount);
+
             return redirect()->intended('/');
         }
 

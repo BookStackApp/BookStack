@@ -58,7 +58,7 @@ class ResetMfaCommandTest extends TestCase
 
     public function test_giving_non_existing_user_shows_error_message()
     {
-        $this->artisan("bookstack:reset-mfa --email=donkeys@example.com")
+        $this->artisan('bookstack:reset-mfa --email=donkeys@example.com')
             ->expectsOutput('A user where email=donkeys@example.com could not be found.')
             ->assertExitCode(1);
     }

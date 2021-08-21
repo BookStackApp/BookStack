@@ -29,6 +29,7 @@ class BackupCodeService
     {
         $cleanCode = $this->cleanInputCode($code);
         $codes = json_decode($codeSet);
+
         return in_array($cleanCode, $codes);
     }
 
@@ -42,6 +43,7 @@ class BackupCodeService
         $codes = json_decode($codeSet);
         $pos = array_search($cleanCode, $codes, true);
         array_splice($codes, $pos, 1);
+
         return json_encode($codes);
     }
 
