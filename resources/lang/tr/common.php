@@ -39,6 +39,7 @@ return [
     'reset' => 'Sıfırla',
     'remove' => 'Kaldır',
     'add' => 'Ekle',
+    'configure' => 'Configure',
     'fullscreen' => 'Tam Ekran',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
