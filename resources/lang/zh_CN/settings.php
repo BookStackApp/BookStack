@@ -138,6 +138,7 @@ return [
     'role_details' => '角色详细信息',
     'role_name' => '角色名',
     'role_desc' => '角色简述',
+    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
     'role_external_auth_id' => '外部身份认证ID',
     'role_system' => '系统权限',
     'role_manage_users' => '管理用户',
@@ -204,6 +205,10 @@ return [
     'users_api_tokens_create' => '创建令牌',
     'users_api_tokens_expires' => '过期',
     'users_api_tokens_docs' => 'API文档',
+    'users_mfa' => 'Multi-Factor Authentication',
+    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_x_methods' => ':count method configured|:count methods configured',
+    'users_mfa_configure' => 'Configure Methods',
 
     // API Tokens
     'user_api_token_create' => '创建 API 令牌',
