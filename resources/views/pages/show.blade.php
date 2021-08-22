@@ -1,4 +1,4 @@
-@extends('tri-layout')
+@extends('layouts.tri')
 
 @push('social-meta')
     <meta property="og:description" content="{{ Str::limit($page->text, 100, '...') }}">
@@ -7,7 +7,7 @@
 @section('body')
 
     <div class="mb-m print-hidden">
-        @include('partials.breadcrumbs', ['crumbs' => [
+        @include('entities.breadcrumbs', ['crumbs' => [
             $page->book,
             $page->hasChapter() ? $page->chapter : null,
             $page,
@@ -16,12 +16,12 @@
 
     <main class="content-wrap card">
         <div class="page-content clearfix" page-display="{{ $page->id }}">
-            @include('pages.pointer', ['page' => $page])
-            @include('pages.page-display')
+            @include('pages.parts.pointer', ['page' => $page])
+            @include('pages.parts.page-display')
         </div>
     </main>
 
-    @include('partials.entity-sibling-navigation', ['next' => $next, 'previous' => $previous])
+    @include('entities.sibling-navigation', ['next' => $next, 'previous' => $previous])
 
     @if ($commentsEnabled)
         @if(($previous || $next))
@@ -41,7 +41,7 @@
 
     @if($page->tags->count() > 0)
         <section>
-            @include('components.tag-list', ['entity' => $page])
+            @include('entities.tag-list', ['entity' => $page])
         </section>
     @endif
 
@@ -70,14 +70,14 @@
         </nav>
     @endif
 
-    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @include('entities.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
 @stop
 
 @section('right')
     <div id="page-details" class="entity-details mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="body text-small blended-links">
-            @include('partials.entity-meta', ['entity' => $page])
+            @include('entities.meta', ['entity' => $page])
 
             @if($book->restricted)
                 <div class="active-restriction">
@@ -163,9 +163,9 @@
             <hr class="primary-background"/>
 
             @if(signedInUser())
-                @include('partials.entity-favourite-action', ['entity' => $page])
+                @include('entities.favourite-action', ['entity' => $page])
             @endif
-            @include('partials.entity-export-menu', ['entity' => $page])
+            @include('entities.export-menu', ['entity' => $page])
         </div>
 
     </div>

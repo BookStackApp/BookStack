@@ -1,4 +1,4 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container small py-xl">
@@ -9,7 +9,7 @@
 
             <div class="setting-list">
                 @foreach(['totp', 'backup_codes'] as $method)
-                    @include('mfa.setup-method-row', ['method' => $method])
+                    @include('mfa.parts.setup-method-row', ['method' => $method])
                 @endforeach
             </div>
 

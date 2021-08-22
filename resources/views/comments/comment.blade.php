@@ -48,7 +48,7 @@
 
     <div comment-content class="content px-s pb-s">
         <div class="form-group loading" style="display: none;">
-            @include('partials.loading-icon', ['text' => trans('entities.comment_deleting')])
+            @include('common.loading-icon', ['text' => trans('entities.comment_deleting')])
         </div>
         {!! $comment->html  !!}
     </div>
@@ -64,7 +64,7 @@
                     <button type="submit" class="button">{{ trans('entities.comment_save') }}</button>
                 </div>
                 <div class="form-group loading" style="display: none;">
-                    @include('partials.loading-icon', ['text' => trans('entities.comment_saving')])
+                    @include('common.loading-icon', ['text' => trans('entities.comment_saving')])
                 </div>
             </form>
         </div>

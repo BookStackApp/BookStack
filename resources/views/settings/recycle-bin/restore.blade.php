@@ -1,10 +1,10 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container small">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'maintenance'])
+            @include('settings.parts.navbar', ['selected' => 'maintenance'])
         </div>
 
         <div class="card content-wrap auto-height">
@@ -30,7 +30,7 @@
                     @endif
                 </div>
 
-                @include('settings.recycle-bin.deletable-entity-list', ['entity' => $deletion->deletable])
+                @include('settings.recycle-bin.parts.deletable-entity-list', ['entity' => $deletion->deletable])
             @endif
 
         </div>

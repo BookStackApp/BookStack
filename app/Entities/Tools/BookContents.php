@@ -45,7 +45,7 @@ class BookContents
      */
     public function getTree(bool $showDrafts = false, bool $renderPages = false): Collection
     {
-        $pages = $this->getPages($showDrafts);
+        $pages = $this->getPages($showDrafts, $renderPages);
         $chapters = Chapter::visible()->where('book_id', '=', $this->book->id)->get();
         $all = collect()->concat($pages)->concat($chapters);
         $chapterMap = $chapters->keyBy('id');

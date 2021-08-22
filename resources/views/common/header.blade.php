@@ -79,7 +79,7 @@
                             </li>
                             <li><hr></li>
                             <li>
-                                @include('partials.dark-mode-toggle')
+                                @include('common.dark-mode-toggle')
                             </li>
                         </ul>
                     </div>

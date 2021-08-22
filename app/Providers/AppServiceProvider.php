@@ -54,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         // View Composers
-        View::composer('partials.breadcrumbs', BreadcrumbsViewComposer::class);
+        View::composer('entities.breadcrumbs', BreadcrumbsViewComposer::class);
     }
 
     /**

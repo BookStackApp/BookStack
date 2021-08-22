@@ -1,4 +1,4 @@
-@extends('export-layout')
+@extends('layouts.export')
 
 @section('title', $chapter->name)
 

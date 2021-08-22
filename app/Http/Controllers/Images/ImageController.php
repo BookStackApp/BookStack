@@ -65,7 +65,7 @@ class ImageController extends Controller
 
         $this->imageRepo->loadThumbs($image);
 
-        return view('components.image-manager-form', [
+        return view('pages.parts.image-manager-form', [
             'image'          => $image,
             'dependantPages' => null,
         ]);
@@ -87,7 +87,7 @@ class ImageController extends Controller
 
         $this->imageRepo->loadThumbs($image);
 
-        return view('components.image-manager-form', [
+        return view('pages.parts.image-manager-form', [
             'image'          => $image,
             'dependantPages' => $dependantPages ?? null,
         ]);

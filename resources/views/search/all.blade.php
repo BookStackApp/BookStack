@@ -1,4 +1,4 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container mt-xl" id="search-system">
@@ -19,47 +19,47 @@
                             $types = explode('|', $options->filters['type'] ?? '');
                             $hasTypes = $types[0] !== '';
                             ?>
-                            @include('search.form.type-filter', ['checked' => !$hasTypes || in_array('page', $types), 'entity' => 'page', 'transKey' => 'page'])
-                            @include('search.form.type-filter', ['checked' => !$hasTypes || in_array('chapter', $types), 'entity' => 'chapter', 'transKey' => 'chapter'])
+                            @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('page', $types), 'entity' => 'page', 'transKey' => 'page'])
+                            @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('chapter', $types), 'entity' => 'chapter', 'transKey' => 'chapter'])
                             <br>
-                                @include('search.form.type-filter', ['checked' => !$hasTypes || in_array('book', $types), 'entity' => 'book', 'transKey' => 'book'])
-                                @include('search.form.type-filter', ['checked' => !$hasTypes || in_array('bookshelf', $types), 'entity' => 'bookshelf', 'transKey' => 'shelf'])
+                                @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('book', $types), 'entity' => 'book', 'transKey' => 'book'])
+                                @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('bookshelf', $types), 'entity' => 'bookshelf', 'transKey' => 'shelf'])
                         </div>
 
                         <h6>{{ trans('entities.search_exact_matches') }}</h6>
-                        @include('search.form.term-list', ['type' => 'exact', 'currentList' => $options->exacts])
+                        @include('search.parts.term-list', ['type' => 'exact', 'currentList' => $options->exacts])
 
                         <h6>{{ trans('entities.search_tags') }}</h6>
-                        @include('search.form.term-list', ['type' => 'tags', 'currentList' => $options->tags])
+                        @include('search.parts.term-list', ['type' => 'tags', 'currentList' => $options->tags])
 
                         @if(signedInUser())
                             <h6>{{ trans('entities.search_options') }}</h6>
 
-                            @component('search.form.boolean-filter', ['filters' => $options->filters, 'name' => 'viewed_by_me', 'value' => null])
+                            @component('search.parts.boolean-filter', ['filters' => $options->filters, 'name' => 'viewed_by_me', 'value' => null])
                                 {{ trans('entities.search_viewed_by_me') }}
                             @endcomponent
-                            @component('search.form.boolean-filter', ['filters' => $options->filters, 'name' => 'not_viewed_by_me', 'value' => null])
+                            @component('search.parts.boolean-filter', ['filters' => $options->filters, 'name' => 'not_viewed_by_me', 'value' => null])
                                 {{ trans('entities.search_not_viewed_by_me') }}
                             @endcomponent
-                            @component('search.form.boolean-filter', ['filters' => $options->filters, 'name' => 'is_restricted', 'value' => null])
+                            @component('search.parts.boolean-filter', ['filters' => $options->filters, 'name' => 'is_restricted', 'value' => null])
                                 {{ trans('entities.search_permissions_set') }}
                             @endcomponent
-                            @component('search.form.boolean-filter', ['filters' => $options->filters, 'name' => 'created_by', 'value' => 'me'])
+                            @component('search.parts.boolean-filter', ['filters' => $options->filters, 'name' => 'created_by', 'value' => 'me'])
                                 {{ trans('entities.search_created_by_me') }}
                             @endcomponent
-                            @component('search.form.boolean-filter', ['filters' => $options->filters, 'name' => 'updated_by', 'value' => 'me'])
+                            @component('search.parts.boolean-filter', ['filters' => $options->filters, 'name' => 'updated_by', 'value' => 'me'])
                                 {{ trans('entities.search_updated_by_me') }}
                             @endcomponent
-                            @component('search.form.boolean-filter', ['filters' => $options->filters, 'name' => 'owned_by', 'value' => 'me'])
+                            @component('search.parts.boolean-filter', ['filters' => $options->filters, 'name' => 'owned_by', 'value' => 'me'])
                                 {{ trans('entities.search_owned_by_me') }}
                             @endcomponent
                         @endif
 
                         <h6>{{ trans('entities.search_date_options') }}</h6>
-                        @include('search.form.date-filter', ['name' => 'updated_after', 'filters' => $options->filters])
-                        @include('search.form.date-filter', ['name' => 'updated_before', 'filters' => $options->filters])
-                        @include('search.form.date-filter', ['name' => 'created_after', 'filters' => $options->filters])
-                        @include('search.form.date-filter', ['name' => 'created_before', 'filters' => $options->filters])
+                        @include('search.parts.date-filter', ['name' => 'updated_after', 'filters' => $options->filters])
+                        @include('search.parts.date-filter', ['name' => 'updated_before', 'filters' => $options->filters])
+                        @include('search.parts.date-filter', ['name' => 'created_after', 'filters' => $options->filters])
+                        @include('search.parts.date-filter', ['name' => 'created_before', 'filters' => $options->filters])
 
                         <button type="submit" class="button">{{ trans('entities.search_update') }}</button>
                     </form>
@@ -77,7 +77,7 @@
 
                     <h6 class="text-muted">{{ trans_choice('entities.search_total_results_found', $totalResults, ['count' => $totalResults]) }}</h6>
                     <div class="book-contents">
-                        @include('partials.entity-list', ['entities' => $entities, 'showPath' => true, 'showTags' => true])
+                        @include('entities.list', ['entities' => $entities, 'showPath' => true, 'showTags' => true])
                     </div>
 
                     @if($hasNextPage)

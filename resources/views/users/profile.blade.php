@@ -1,4 +1,4 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
 
@@ -9,7 +9,7 @@
             <div>
                 <section id="recent-user-activity" class="mb-xl">
                     <h5>{{ trans('entities.recent_activity') }}</h5>
-                    @include('partials.activity-list', ['activity' => $activity])
+                    @include('common.activity-list', ['activity' => $activity])
                 </section>
             </div>
 
@@ -64,7 +64,7 @@
                         @endif
                     </h2>
                     @if (count($recentlyCreated['pages']) > 0)
-                        @include('partials.entity-list', ['entities' => $recentlyCreated['pages'], 'showPath' => true])
+                        @include('entities.list', ['entities' => $recentlyCreated['pages'], 'showPath' => true])
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_pages', ['userName' => $user->name]) }}</p>
                     @endif
@@ -78,7 +78,7 @@
                         @endif
                     </h2>
                     @if (count($recentlyCreated['chapters']) > 0)
-                        @include('partials.entity-list', ['entities' => $recentlyCreated['chapters'], 'showPath' => true])
+                        @include('entities.list', ['entities' => $recentlyCreated['chapters'], 'showPath' => true])
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_chapters', ['userName' => $user->name]) }}</p>
                     @endif
@@ -92,7 +92,7 @@
                         @endif
                     </h2>
                     @if (count($recentlyCreated['books']) > 0)
-                        @include('partials.entity-list', ['entities' => $recentlyCreated['books'], 'showPath' => true])
+                        @include('entities.list', ['entities' => $recentlyCreated['books'], 'showPath' => true])
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_books', ['userName' => $user->name]) }}</p>
                     @endif
@@ -106,7 +106,7 @@
                         @endif
                     </h2>
                     @if (count($recentlyCreated['shelves']) > 0)
-                        @include('partials.entity-list', ['entities' => $recentlyCreated['shelves'], 'showPath' => true])
+                        @include('entities.list', ['entities' => $recentlyCreated['shelves'], 'showPath' => true])
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_shelves', ['userName' => $user->name]) }}</p>
                     @endif

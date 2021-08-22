@@ -22,7 +22,7 @@
             <button refs="tabs@toggleLink" type="button" class="tab-item {{ $attachment->external ? 'selected' : '' }}">{{ trans('entities.attachments_set_link') }}</button>
         </div>
         <div refs="tabs@contentFile" class="mb-m {{ $attachment->external ? 'hidden' : '' }}">
-            @include('components.dropzone', [
+            @include('form.dropzone', [
                 'placeholder' => trans('entities.attachments_edit_drop_upload'),
                 'url' =>  url('/attachments/upload/' . $attachment->id),
                 'successMessage' => trans('entities.attachments_file_updated'),

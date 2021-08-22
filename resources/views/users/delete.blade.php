@@ -1,10 +1,10 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container small">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'users'])
+            @include('settings.parts.navbar', ['selected' => 'users'])
         </div>
 
         <div class="card content-wrap auto-height">
@@ -20,7 +20,7 @@
                     <p class="small">{{ trans('settings.users_migrate_ownership_desc') }}</p>
                 </div>
                 <div>
-                    @include('components.user-select', ['name' => 'new_owner_id', 'user' => null, 'compact' => false])
+                    @include('form.user-select', ['name' => 'new_owner_id', 'user' => null, 'compact' => false])
                 </div>
             </div>
 

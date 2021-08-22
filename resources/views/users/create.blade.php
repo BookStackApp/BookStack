@@ -1,11 +1,11 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
 
     <div class="container small">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'users'])
+            @include('settings.parts.navbar', ['selected' => 'users'])
         </div>
 
         <main class="card content-wrap">
@@ -15,7 +15,7 @@
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
-                    @include('users.form')
+                    @include('users.parts.form')
                 </div>
 
                 <div class="form-group text-right">

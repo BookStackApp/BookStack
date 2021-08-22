@@ -2,7 +2,7 @@
 <div class="toggle-switch-list dual-column-content">
     @foreach($roles as $role)
         <div>
-            @include('components.custom-checkbox', [
+            @include('form.custom-checkbox', [
                 'name' => $name . '[' . strval($role->id) . ']',
                 'label' => $role->display_name,
                 'value' => $role->id,
