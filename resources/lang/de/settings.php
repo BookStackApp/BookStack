@@ -141,7 +141,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_details' => 'Rollendetails',
     'role_name' => 'Rollenname',
     'role_desc' => 'Kurzbeschreibung der Rolle',
-    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
+    'role_mfa_enforced' => 'Benötigt Mehrfach-Faktor-Authentifizierung',
     'role_external_auth_id' => 'Externe Authentifizierungs-IDs',
     'role_system' => 'System-Berechtigungen',
     'role_manage_users' => 'Benutzer verwalten',
@@ -208,10 +208,10 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_api_tokens_create' => 'Token erstellen',
     'users_api_tokens_expires' => 'Endet',
     'users_api_tokens_docs' => 'API Dokumentation',
-    'users_mfa' => 'Multi-Factor Authentication',
-    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa' => 'Multi-Faktor-Authentifizierung',
+    'users_mfa_desc' => 'Richten Sie Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für Ihr Benutzerkonto ein.',
+    'users_mfa_x_methods' => ':count Methode konfiguriert|:count Methoden konfiguriert',
+    'users_mfa_configure' => 'Methoden konfigurieren',
 
     // API Tokens
     'user_api_token_create' => 'Neuen API-Token erstellen',
