@@ -30,7 +30,7 @@ class DrawioImageController extends Controller
 
         $imgData = $this->imageRepo->getEntityFiltered('drawio', $parentTypeFilter, $page, 24, $uploadedToFilter, $searchTerm);
 
-        return view('components.image-manager-list', [
+        return view('pages.parts.image-manager-list', [
             'images'  => $imgData['images'],
             'hasMore' => $imgData['has_more'],
         ]);

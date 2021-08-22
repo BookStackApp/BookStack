@@ -43,7 +43,7 @@ class BookSortController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $bookChildren = (new BookContents($book))->getTree();
 
-        return view('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
+        return view('books.parts.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
     }
 
     /**

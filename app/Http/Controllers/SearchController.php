@@ -54,7 +54,7 @@ class SearchController extends Controller
         $term = $request->get('term', '');
         $results = $this->searchRunner->searchBook($bookId, $term);
 
-        return view('partials.entity-list', ['entities' => $results]);
+        return view('entities.list', ['entities' => $results]);
     }
 
     /**
@@ -65,7 +65,7 @@ class SearchController extends Controller
         $term = $request->get('term', '');
         $results = $this->searchRunner->searchChapter($chapterId, $term);
 
-        return view('partials.entity-list', ['entities' => $results]);
+        return view('entities.list', ['entities' => $results]);
     }
 
     /**
@@ -86,7 +86,7 @@ class SearchController extends Controller
             $entities = (new Popular())->run(20, 0, $entityTypes, $permission);
         }
 
-        return view('search.entity-ajax-list', ['entities' => $entities]);
+        return view('search.parts.entity-ajax-list', ['entities' => $entities]);
     }
 
     /**
@@ -99,6 +99,6 @@ class SearchController extends Controller
 
         $entities = (new SiblingFetcher())->fetch($type, $id);
 
-        return view('partials.entity-list-basic', ['entities' => $entities, 'style' => 'compact']);
+        return view('entities.list-basic', ['entities' => $entities, 'style' => 'compact']);
     }
 }

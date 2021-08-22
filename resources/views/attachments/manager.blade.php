@@ -18,7 +18,7 @@
                     @include('attachments.manager-list', ['attachments' => $page->attachments->all()])
                 </div>
                 <div refs="tabs@contentUpload" class="hidden">
-                    @include('components.dropzone', [
+                    @include('form.dropzone', [
                         'placeholder' => trans('entities.attachments_dropzone'),
                         'url' =>  url('/attachments/upload?uploaded_to=' . $page->id),
                         'successMessage' => trans('entities.attachments_file_uploaded'),

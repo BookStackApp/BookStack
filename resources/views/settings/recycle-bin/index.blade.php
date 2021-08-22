@@ -1,10 +1,10 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'maintenance'])
+            @include('settings.parts.navbar', ['selected' => 'maintenance'])
         </div>
 
         <div class="card content-wrap auto-height">
@@ -89,7 +89,7 @@
                         </div>
                         @endif
                     </td>
-                    <td>@include('partials.table-user', ['user' => $deletion->deleter, 'user_id' => $deletion->deleted_by])</td>
+                    <td>@include('settings.parts.table-user', ['user' => $deletion->deleter, 'user_id' => $deletion->deleted_by])</td>
                     <td width="200">{{ $deletion->created_at }}</td>
                     <td width="150" class="text-right">
                         <div component="dropdown" class="dropdown-container">

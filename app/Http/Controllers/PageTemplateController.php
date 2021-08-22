@@ -31,7 +31,7 @@ class PageTemplateController extends Controller
             $templates->appends(['search' => $search]);
         }
 
-        return view('pages.template-manager-list', [
+        return view('pages.parts.template-manager-list', [
             'templates' => $templates,
         ]);
     }

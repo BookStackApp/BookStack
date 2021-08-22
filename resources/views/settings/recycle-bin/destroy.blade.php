@@ -1,10 +1,10 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container small">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'maintenance'])
+            @include('settings.parts.navbar', ['selected' => 'maintenance'])
         </div>
 
         <div class="card content-wrap auto-height">
@@ -20,7 +20,7 @@
             @if($deletion->deletable instanceof \BookStack\Entities\Models\Entity)
                 <hr class="mt-m">
                 <h5>{{ trans('settings.recycle_bin_destroy_list') }}</h5>
-                @include('settings.recycle-bin.deletable-entity-list', ['entity' => $deletion->deletable])
+                @include('settings.recycle-bin.parts.deletable-entity-list', ['entity' => $deletion->deletable])
             @endif
 
         </div>

@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/status', 'StatusController@show');
-Route::get('/robots.txt', 'HomeController@getRobots');
+Route::get('/robots.txt', 'HomeController@robots');
 
 // Authenticated routes...
 Route::group(['middleware' => 'auth'], function () {
@@ -276,4 +276,4 @@ Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::fallback('HomeController@getNotFound')->name('fallback');
+Route::fallback('HomeController@notFound')->name('fallback');

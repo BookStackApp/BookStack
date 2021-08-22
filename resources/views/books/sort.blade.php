@@ -1,11 +1,11 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
 
     <div class="container">
 
         <div class="my-s">
-            @include('partials.breadcrumbs', ['crumbs' => [
+            @include('entities.breadcrumbs', ['crumbs' => [
                 $book,
                 $book->getUrl('/sort') => [
                     'text' => trans('entities.books_sort'),
@@ -19,7 +19,7 @@
                 <div book-sort class="card content-wrap">
                     <h1 class="list-heading mb-l">{{ trans('entities.books_sort') }}</h1>
                     <div book-sort-boxes>
-                        @include('books.sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
+                        @include('books.parts.sort-box', ['book' => $book, 'bookChildren' => $bookChildren])
                     </div>
 
                     <form action="{{ $book->getUrl('/sort') }}" method="POST">
@@ -38,7 +38,7 @@
                 <main class="card content-wrap">
                     <h2 class="list-heading mb-m">{{ trans('entities.books_sort_show_other') }}</h2>
 
-                    @include('components.entity-selector', ['name' => 'books_list', 'selectorSize' => 'compact', 'entityTypes' => 'book', 'entityPermission' => 'update', 'showAdd' => true])
+                    @include('entities.selector', ['name' => 'books_list', 'selectorSize' => 'compact', 'entityTypes' => 'book', 'entityPermission' => 'update', 'showAdd' => true])
 
                 </main>
             </div>

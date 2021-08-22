@@ -1,4 +1,4 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
 
@@ -36,7 +36,7 @@
                         </div>
                     @endif
 
-                    @include('users.api-tokens.form', ['model' => $token])
+                    @include('users.api-tokens.parts.form', ['model' => $token])
                 </div>
 
                 <div class="grid half gap-xl v-center">

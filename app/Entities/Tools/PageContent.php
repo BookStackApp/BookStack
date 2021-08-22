@@ -223,7 +223,7 @@ class PageContent
      */
     public function render(bool $blankIncludes = false): string
     {
-        $content = $this->page->html;
+        $content = $this->page->html ?? '';
 
         if (!config('app.allow_content_scripts')) {
             $content = HtmlContentFilter::removeScripts($content);

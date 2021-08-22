@@ -5,7 +5,7 @@ $role
 $action
 $model?
 --}}
-@include('components.custom-checkbox', [
+@include('form.custom-checkbox', [
     'name' => $name . '[' . $role->id . '][' . $action . ']',
     'label' => $label,
     'value' => 'true',

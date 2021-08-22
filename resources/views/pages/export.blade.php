@@ -1,13 +1,13 @@
-@extends('export-layout')
+@extends('layouts.export')
 
 @section('title', $page->name)
 
 @section('content')
-    @include('pages.page-display')
+    @include('pages.parts.page-display')
 
     <hr>
 
     <div class="text-muted text-small">
-        @include('partials.entity-export-meta', ['entity' => $page])
+        @include('entities.export-meta', ['entity' => $page])
     </div>
 @endsection

@@ -1,4 +1,4 @@
-@extends('tri-layout')
+@extends('layouts.tri')
 
 @push('social-meta')
     <meta property="og:description" content="{{ Str::limit($shelf->description, 100, '...') }}">
@@ -10,7 +10,7 @@
 @section('body')
 
     <div class="mb-s">
-        @include('partials.breadcrumbs', ['crumbs' => [
+        @include('entities.breadcrumbs', ['crumbs' => [
             $shelf,
         ]])
     </div>
@@ -21,7 +21,7 @@
             <h1 class="flex fit-content break-text">{{ $shelf->name }}</h1>
             <div class="flex"></div>
             <div class="flex fit-content text-m-right my-m ml-m">
-                @include('partials.sort', ['options' => [
+                @include('entities.sort', ['options' => [
                     'default' => trans('common.sort_default'),
                     'name' => trans('common.sort_name'),
                     'created_at' => trans('common.sort_created_at'),
@@ -36,13 +36,13 @@
                 @if($view === 'list')
                     <div class="entity-list">
                         @foreach($sortedVisibleShelfBooks as $book)
-                            @include('books.list-item', ['book' => $book])
+                            @include('books.parts.list-item', ['book' => $book])
                         @endforeach
                     </div>
                 @else
                     <div class="grid third">
                         @foreach($sortedVisibleShelfBooks as $book)
-                            @include('partials.entity-grid-item', ['entity' => $book])
+                            @include('entities.grid-item', ['entity' => $book])
                         @endforeach
                     </div>
                 @endif
@@ -75,14 +75,14 @@
 
     @if($shelf->tags->count() > 0)
         <div id="tags" class="mb-xl">
-            @include('components.tag-list', ['entity' => $shelf])
+            @include('entities.tag-list', ['entity' => $shelf])
         </div>
     @endif
 
     <div id="details" class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="text-small text-muted blended-links">
-            @include('partials.entity-meta', ['entity' => $shelf])
+            @include('entities.meta', ['entity' => $shelf])
             @if($shelf->restricted)
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $shelf))
@@ -98,7 +98,7 @@
     @if(count($activity) > 0)
         <div class="mb-xl">
             <h5>{{ trans('entities.recent_activity') }}</h5>
-            @include('partials.activity-list', ['activity' => $activity])
+            @include('common.activity-list', ['activity' => $activity])
         </div>
     @endif
 @stop
@@ -115,7 +115,7 @@
                 </a>
             @endif
 
-            @include('partials.view-toggle', ['view' => $view, 'type' => 'shelf'])
+            @include('entities.view-toggle', ['view' => $view, 'type' => 'shelf'])
 
             <hr class="primary-background">
 
@@ -142,7 +142,7 @@
 
             @if(signedInUser())
                 <hr class="primary-background">
-                @include('partials.entity-favourite-action', ['entity' => $shelf])
+                @include('entities.favourite-action', ['entity' => $shelf])
             @endif
 
         </div>

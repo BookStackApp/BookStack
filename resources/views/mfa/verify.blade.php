@@ -1,4 +1,4 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container very-small py-xl">
@@ -18,7 +18,7 @@
 
             @if($method)
                 <hr class="my-l">
-                @include('mfa.verify.' . $method)
+                @include('mfa.parts.verify-' . $method)
             @endif
 
             @if(count($otherMethods) > 0)

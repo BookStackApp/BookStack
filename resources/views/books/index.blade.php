@@ -1,21 +1,21 @@
-@extends('tri-layout')
+@extends('layouts.tri')
 
 @section('body')
-    @include('books.list', ['books' => $books, 'view' => $view])
+    @include('books.parts.list', ['books' => $books, 'view' => $view])
 @stop
 
 @section('left')
     @if($recents)
         <div id="recents" class="mb-xl">
             <h5>{{ trans('entities.recently_viewed') }}</h5>
-            @include('partials.entity-list', ['entities' => $recents, 'style' => 'compact'])
+            @include('entities.list', ['entities' => $recents, 'style' => 'compact'])
         </div>
     @endif
 
     <div id="popular" class="mb-xl">
         <h5>{{ trans('entities.books_popular') }}</h5>
         @if(count($popular) > 0)
-            @include('partials.entity-list', ['entities' => $popular, 'style' => 'compact'])
+            @include('entities.list', ['entities' => $popular, 'style' => 'compact'])
         @else
             <div class="body text-muted">{{ trans('entities.books_popular_empty') }}</div>
         @endif
@@ -24,7 +24,7 @@
     <div id="new" class="mb-xl">
         <h5>{{ trans('entities.books_new') }}</h5>
         @if(count($popular) > 0)
-            @include('partials.entity-list', ['entities' => $new, 'style' => 'compact'])
+            @include('entities.list', ['entities' => $new, 'style' => 'compact'])
         @else
             <div class="body text-muted">{{ trans('entities.books_new_empty') }}</div>
         @endif
@@ -43,7 +43,7 @@
                 </a>
             @endif
 
-            @include('partials.view-toggle', ['view' => $view, 'type' => 'books'])
+            @include('entities.view-toggle', ['view' => $view, 'type' => 'books'])
         </div>
     </div>
 
