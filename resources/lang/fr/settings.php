@@ -138,7 +138,7 @@ return [
     'role_details' => 'Détails du rôle',
     'role_name' => 'Nom du rôle',
     'role_desc' => 'Courte description du rôle',
-    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
+    'role_mfa_enforced' => 'Nécessite une authentification multi-facteurs',
     'role_external_auth_id' => 'Identifiants d\'authentification externes',
     'role_system' => 'Permissions système',
     'role_manage_users' => 'Gérer les utilisateurs',
@@ -205,10 +205,10 @@ return [
     'users_api_tokens_create' => 'Créer un jeton',
     'users_api_tokens_expires' => 'Expiré',
     'users_api_tokens_docs' => 'Documentation de l\'API',
-    'users_mfa' => 'Multi-Factor Authentication',
-    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa' => 'Authentification multi-facteurs',
+    'users_mfa_desc' => 'Configurez l\'authentification multi-facteurs ajoute une couche supplémentaire de sécurité à votre compte utilisateur.',
     'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa_configure' => 'Méthode de configuration',
 
     // API Tokens
     'user_api_token_create' => 'Créer un nouveau jeton API',
