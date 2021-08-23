@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute doit contenir uniquement des lettres, chiffres et traits d\'union.',
     'alpha_num'            => ':attribute doit contenir uniquement des chiffres et des lettres.',
     'array'                => ':attribute doit être un tableau.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'Le code fourni n\'est pas valide ou a déjà été utilisé.',
     'before'               => ':attribute doit être inférieur à :date.',
     'between'              => [
         'numeric' => ':attribute doit être compris entre :min et :max.',
@@ -99,7 +99,7 @@ return [
     ],
     'string'               => ':attribute doit être une chaîne de caractères.',
     'timezone'             => ':attribute doit être une zone valide.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'Le code fourni n\'est pas valide ou est expiré.',
     'unique'               => ':attribute est déjà utilisé.',
     'url'                  => ':attribute a un format invalide.',
     'uploaded'             => 'Le fichier n\'a pas pu être envoyé. Le serveur peut ne pas accepter des fichiers de cette taille.',
