@@ -280,13 +280,9 @@ ul, ol {
   }
 }
 ul {
-  padding-left: $-m * 1.3;
-  padding-right: $-m * 1.3;
   list-style: disc;
   ul {
     list-style: circle;
-    margin-top: 0;
-    margin-bottom: 0;
   }
   label {
     margin: 0;
@@ -295,23 +291,33 @@ ul {
 
 ol {
   list-style: decimal;
-  padding-left: $-m * 2;
-  padding-right: $-m * 2;
+}
+
+ol, ul {
+  padding-left: $-m * 2.0;
+  padding-right: $-m * 2.0;
+}
+
+li > ol, li > ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  padding-block-end: 0;
+  padding-block-start: 0;
+  padding-left: $-m * 1.2;
+  padding-right: $-m * 1.2;
 }
 
 li.checkbox-item, li.task-list-item {
   list-style: none;
-  margin-left: - ($-m * 1.3);
+  margin-left: -($-m * 1.2);
   input[type="checkbox"] {
     margin-right: $-xs;
   }
-}
-
-li > ol, li > ul {
-  margin-block-end: 0px;
-  margin-block-start: 0px;
-  padding-block-end: 0px;
-  padding-block-start: 0px;
+  li.checkbox-item, li.task-list-item {
+    margin-left: $-xs;
+  }
 }
 
 /*
