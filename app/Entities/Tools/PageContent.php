@@ -3,7 +3,9 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\Markdown\CustomListItemRenderer;
 use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
+use BookStack\Entities\Tools\Markdown\CustomTaskListMarkerRenderer;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
@@ -13,10 +15,14 @@ use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
 use Illuminate\Support\Str;
+use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
+use League\CommonMark\Extension\TaskList\TaskListItemMarker;
+use League\CommonMark\Extension\TaskList\TaskListItemMarkerParser;
+use League\CommonMark\Extension\TaskList\TaskListItemMarkerRenderer;
 
 class PageContent
 {
@@ -63,6 +69,8 @@ class PageContent
         $environment->addExtension(new CustomStrikeThroughExtension());
         $environment = Theme::dispatch(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $environment) ?? $environment;
         $converter = new CommonMarkConverter([], $environment);
+
+        $environment->addBlockRenderer(ListItem::class, new CustomListItemRenderer(), 10);
 
         return $converter->convertToHtml($markdown);
     }
