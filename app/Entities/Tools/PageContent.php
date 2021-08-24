@@ -5,7 +5,6 @@ namespace BookStack\Entities\Tools;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\CustomListItemRenderer;
 use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
-use BookStack\Entities\Tools\Markdown\CustomTaskListMarkerRenderer;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
@@ -20,9 +19,6 @@ use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
-use League\CommonMark\Extension\TaskList\TaskListItemMarker;
-use League\CommonMark\Extension\TaskList\TaskListItemMarkerParser;
-use League\CommonMark\Extension\TaskList\TaskListItemMarkerRenderer;
 
 class PageContent
 {
