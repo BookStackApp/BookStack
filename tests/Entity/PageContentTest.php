@@ -464,7 +464,8 @@ class PageContentTest extends TestCase
         $this->assertStringContainsString('type="checkbox"', $page->html);
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertElementExists('.page-content input[type=checkbox]');
+        $pageView->assertElementExists('.page-content li.task-list-item input[type=checkbox]');
+        $pageView->assertElementExists('.page-content li.task-list-item input[type=checkbox][checked=checked]');
     }
 
     public function test_page_markdown_strikethrough_rendering()
