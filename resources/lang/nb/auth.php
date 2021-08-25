@@ -76,11 +76,11 @@ return [
     'user_invite_success' => 'Passordet er angitt, du kan nå bruke :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
-    'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'mfa_setup_configured' => 'Already configured',
-    'mfa_setup_reconfigure' => 'Reconfigure',
-    'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
+    'mfa_setup' => 'Konfigurer flerfaktor-autentisering',
+    'mfa_setup_desc' => 'Konfigurer flerfaktor-autentisering som et ekstra lag med sikkerhet for brukerkontoen din.',
+    'mfa_setup_configured' => 'Allerede konfigurert',
+    'mfa_setup_reconfigure' => 'Omkonfigurer',
+    'mfa_setup_remove_confirmation' => 'Er du sikker på at du vil deaktivere denne flerfaktor-autentiseringsmetoden?',
     'mfa_setup_action' => 'Setup',
     'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
     'mfa_option_totp_title' => 'Mobile App',
