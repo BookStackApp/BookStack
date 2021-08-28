@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Permissions de l\'étagère',
     'shelves_permissions_updated' => 'Permissions de l\'étagère mises à jour',
     'shelves_permissions_active' => 'Permissions de l\'étagère activées',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Copier les permissions vers les livres',
     'shelves_copy_permissions' => 'Copier les permissions',
     'shelves_copy_permissions_explain' => 'Ceci va appliquer les permissions actuelles de cette étagère à tous les livres qu\'elle contient. Avant de  continuer, assurez-vous que toutes les permissions de cette étagère ont été sauvegardées.',
