@@ -18,6 +18,7 @@ class BookExportController extends Controller
     {
         $this->bookRepo = $bookRepo;
         $this->exportFormatter = $exportFormatter;
+        $this->middleware('can:content-export');
     }
 
     /**

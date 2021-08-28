@@ -16,6 +16,7 @@ class ChapterExportApiController extends ApiController
     public function __construct(ExportFormatter $exportFormatter)
     {
         $this->exportFormatter = $exportFormatter;
+        $this->middleware('can:content-export');
     }
 
     /**
