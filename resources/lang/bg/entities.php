@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Настройки за достъп до рафта с книги',
     'shelves_permissions_updated' => 'Настройките за достъп до рафта с книги е обновен',
     'shelves_permissions_active' => 'Настройките за достъп до рафта с книги е активен',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Копирай настойките за достъп към книгите',
     'shelves_copy_permissions' => 'Копирай настройките за достъп',
     'shelves_copy_permissions_explain' => 'Това ще приложи настоящите настройки за достъп на този рафт с книги за всички книги, съдържащи се в него. Преди да активирате, уверете се, че всички промени в настройките за достъп на този рафт са запазени.',
