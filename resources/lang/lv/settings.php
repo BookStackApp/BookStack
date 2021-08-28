@@ -148,6 +148,7 @@ return [
     'role_manage_page_templates' => 'Pārvaldīt lapas veidnes',
     'role_access_api' => 'Piekļūt sistēmas API',
     'role_manage_settings' => 'Pārvaldīt iestatījumus',
+    'role_export_content' => 'Export content',
     'role_asset' => 'Resursa piekļuves tiesības',
     'roles_system_warning' => 'Jebkuras no trīs augstāk redzamajām atļaujām dod iespēju lietotājam mainīt savas un citu lietotāju sistēmas atļaujas. Pievieno šīs grupu atļaujas tikai tiem lietotājiem, kuriem uzticies.',
     'role_asset_desc' => 'Šīs piekļuves tiesības kontrolē noklusēto piekļuvi sistēmas resursiem. Grāmatām, nodaļām un lapām norādītās tiesības būs pārākas par šīm.',
