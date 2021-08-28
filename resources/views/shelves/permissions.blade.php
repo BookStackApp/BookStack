@@ -14,7 +14,7 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ trans('entities.shelves_permissions') }}</h1>
             @include('form.entity-permissions', ['model' => $shelf])
         </div>
