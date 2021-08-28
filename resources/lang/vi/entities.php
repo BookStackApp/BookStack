@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Các quyền đối với kệ sách',
     'shelves_permissions_updated' => 'Các quyền với kệ sách đã được cập nhật',
     'shelves_permissions_active' => 'Đang bật các quyền hạn từ Kệ sách',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Sao chép các quyền cho sách',
     'shelves_copy_permissions' => 'Sao chép các quyền',
     'shelves_copy_permissions_explain' => 'Điều này sẽ áp dụng các cài đặt quyền của giá sách hiện tại với tất cả các cuốn sách bên trong. Trước khi kích hoạt, đảm bảo bất cứ thay đổi liên quan đến quyền của giá sách này đã được lưu.',
