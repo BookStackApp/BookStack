@@ -200,4 +200,17 @@ class ChaptersApiTest extends TestCase
         $resp->assertSee('# ' . $chapter->name);
         $resp->assertSee('# ' . $chapter->pages()->first()->name);
     }
+
+    public function test_cant_export_when_not_have_permission()
+    {
+        $types = ['html', 'plaintext', 'pdf', 'markdown'];
+        $this->actingAsApiEditor();
+        $this->removePermissionFromUser($this->getEditor(), 'content-export');
+
+        $chapter = Chapter::visible()->has('pages')->first();
+        foreach ($types as $type) {
+            $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/{$type}");
+            $this->assertPermissionError($resp);
+        }
+    }
 }

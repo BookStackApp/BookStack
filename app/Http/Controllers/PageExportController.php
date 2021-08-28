@@ -20,6 +20,7 @@ class PageExportController extends Controller
     {
         $this->pageRepo = $pageRepo;
         $this->exportFormatter = $exportFormatter;
+        $this->middleware('can:content-export');
     }
 
     /**

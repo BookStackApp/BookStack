@@ -292,4 +292,17 @@ class PagesApiTest extends TestCase
         $resp->assertSee('# ' . $page->name);
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.md"');
     }
+
+    public function test_cant_export_when_not_have_permission()
+    {
+        $types = ['html', 'plaintext', 'pdf', 'markdown'];
+        $this->actingAsApiEditor();
+        $this->removePermissionFromUser($this->getEditor(), 'content-export');
+
+        $page = Page::visible()->first();
+        foreach ($types as $type) {
+            $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/{$type}");
+            $this->assertPermissionError($resp);
+        }
+    }
 }
