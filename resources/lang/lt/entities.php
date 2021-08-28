@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Knygų lentynos leidimai',
     'shelves_permissions_updated' => 'Knygų lentynos leidimai atnaujinti',
     'shelves_permissions_active' => 'Knygų lentynos leidimai aktyvūs',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Kopijuoti leidimus knygoms',
     'shelves_copy_permissions' => 'Kopijuoti leidimus',
     'shelves_copy_permissions_explain' => 'Visoms knygoms, esančioms šioje knygų lentynoje, bus taikomi dabartiniai leidimų nustatymai. Prieš suaktyvindami įsitikinkite, kad visi šios knygų lentynos leidimų pakeitimai buvo išsaugoti.',
