@@ -41,6 +41,7 @@
                     <div>@include('settings.roles.parts.checkbox', ['permission' => 'restrictions-manage-own', 'label' => trans('settings.role_manage_own_entity_permissions')])</div>
                     <div>@include('settings.roles.parts.checkbox', ['permission' => 'templates-manage', 'label' => trans('settings.role_manage_page_templates')])</div>
                     <div>@include('settings.roles.parts.checkbox', ['permission' => 'access-api', 'label' => trans('settings.role_access_api')])</div>
+                    <div>@include('settings.roles.parts.checkbox', ['permission' => 'content-export', 'label' => trans('settings.role_export_content')])</div>
                 </div>
                 <div>
                     <div>@include('settings.roles.parts.checkbox', ['permission' => 'settings-manage', 'label' => trans('settings.role_manage_settings')])</div>
@@ -239,7 +240,7 @@
 
 <div class="card content-wrap auto-height">
     <h2 class="list-heading">{{ trans('settings.role_users') }}</h2>
-    @if(isset($role) && count($role->users) > 0)
+    @if(count($role->users ?? []) > 0)
         <div class="grid third">
             @foreach($role->users as $user)
                 <div class="user-list-item">

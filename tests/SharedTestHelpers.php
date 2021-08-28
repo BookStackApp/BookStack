@@ -4,6 +4,7 @@ namespace Tests;
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Permissions\PermissionsRepo;
+use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
@@ -18,6 +19,7 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
 use Illuminate\Foundation\Testing\Assert as PHPUnit;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Log;
 use Mockery;
@@ -185,6 +187,19 @@ trait SharedTestHelpers
     }
 
     /**
+     * Completely remove the given permission name from the given user.
+     */
+    protected function removePermissionFromUser(User $user, string $permission)
+    {
+        $permission = RolePermission::query()->where('name', '=', $permission)->first();
+        /** @var Role $role */
+        foreach ($user->roles as $role) {
+            $role->detachPermission($permission);
+        }
+        $user->clearPermissionCache();
+    }
+
+    /**
      * Create a new basic role for testing purposes.
      */
     protected function createNewRole(array $permissions = []): Role
@@ -274,8 +289,17 @@ trait SharedTestHelpers
     private function isPermissionError($response): bool
     {
         return $response->status() === 302
-            && $response->headers->get('Location') === url('/')
-            && strpos(session()->pull('error', ''), 'You do not have permission to access') === 0;
+            && (
+                (
+                    $response->headers->get('Location') === url('/')
+                    && strpos(session()->pull('error', ''), 'You do not have permission to access') === 0
+                )
+                ||
+                (
+                    $response instanceof JsonResponse &&
+                    $response->json(['error' => 'You do not have permission to perform the requested action.'])
+                )
+            );
     }
 
     /**

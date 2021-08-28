@@ -165,7 +165,9 @@
             @if(signedInUser())
                 @include('entities.favourite-action', ['entity' => $page])
             @endif
-            @include('entities.export-menu', ['entity' => $page])
+            @if(userCan('content-export'))
+                @include('entities.export-menu', ['entity' => $page])
+            @endif
         </div>
 
     </div>

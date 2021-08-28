@@ -19,6 +19,7 @@ class ChapterExportController extends Controller
     {
         $this->chapterRepo = $chapterRepo;
         $this->exportFormatter = $exportFormatter;
+        $this->middleware('can:content-export');
     }
 
     /**
