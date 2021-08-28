@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Permissões da Prateleira',
     'shelves_permissions_updated' => 'Permissões da Prateleira Atualizadas',
     'shelves_permissions_active' => 'Permissões da Prateleira Ativas',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Copiar Permissões para Livros',
     'shelves_copy_permissions' => 'Copiar Permissões',
     'shelves_copy_permissions_explain' => 'Isto aplicará as configurações de permissões atuais desta prateleira a todos os livros contidos nela. Antes de ativar, assegure-se de que quaisquer alterações nas permissões desta prateleira tenham sido salvas.',
