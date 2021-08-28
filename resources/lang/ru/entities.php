@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Доступы к книжной полке',
     'shelves_permissions_updated' => 'Доступы к книжной полке обновлены',
     'shelves_permissions_active' => 'Действующие разрешения книжной полки',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Наследовать доступы книгам',
     'shelves_copy_permissions' => 'Копировать доступы',
     'shelves_copy_permissions_explain' => 'Это применит текущие настройки доступов этой книжной полки ко всем книгам, содержащимся внутри. Перед активацией убедитесь, что все изменения в доступах этой книжной полки сохранены.',
