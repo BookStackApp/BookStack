@@ -308,6 +308,13 @@ class BookShelfTest extends TestCase
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'update', 'role_id' => $editorRole->id]);
     }
 
+    public function test_permission_page_has_a_warning_about_no_cascading()
+    {
+        $shelf = Bookshelf::first();
+        $resp = $this->asAdmin()->get($shelf->getUrl('/permissions'));
+        $resp->assertSeeText('Permissions on bookshelves do not automatically cascade to contained books.');
+    }
+
     public function test_bookshelves_show_in_breadcrumbs_if_in_context()
     {
         $shelf = Bookshelf::first();

@@ -20,6 +20,10 @@
         </div>
     </div>
 
+    @if($model instanceof \BookStack\Entities\Models\Bookshelf)
+        <p class="text-warn">{{ trans('entities.shelves_permissions_cascade_warning') }}</p>
+    @endif
+
     <hr>
 
     <table permissions-table class="table permissions-table toggle-switch-list" style="{{ !$model->restricted ? 'display: none' : '' }}">
