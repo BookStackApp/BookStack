@@ -15,15 +15,15 @@ class AddExportRolePermission extends Migration
         // Create new templates-manage permission and assign to admin role
         $roles = \Illuminate\Support\Facades\DB::table('roles')->get('id');
         $permissionId = DB::table('role_permissions')->insertGetId([
-            'name' => 'content-export',
+            'name'         => 'content-export',
             'display_name' => 'Export Content',
-            'created_at' => Carbon::now()->toDateTimeString(),
-            'updated_at' => Carbon::now()->toDateTimeString(),
+            'created_at'   => Carbon::now()->toDateTimeString(),
+            'updated_at'   => Carbon::now()->toDateTimeString(),
         ]);
 
         $permissionRoles = $roles->map(function ($role) use ($permissionId) {
             return [
-                'role_id' => $role->id,
+                'role_id'       => $role->id,
                 'permission_id' => $permissionId,
             ];
         })->values()->toArray();

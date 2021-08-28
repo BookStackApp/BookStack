@@ -25,7 +25,6 @@ class CheckUserHasPermission
         return $next($request);
     }
 
-
     protected function errorResponse(Request $request)
     {
         if ($request->wantsJson()) {
@@ -33,6 +32,7 @@ class CheckUserHasPermission
         }
 
         session()->flash('error', trans('errors.permission'));
+
         return redirect('/');
     }
 }

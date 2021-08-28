@@ -353,7 +353,7 @@ class ExportTest extends TestCase
 
         foreach ($entities as $entity) {
             $resp = $this->get($entity->getUrl());
-            $resp->assertSee("/export/pdf");
+            $resp->assertSee('/export/pdf');
         }
 
         /** @var Role $role */
@@ -361,8 +361,8 @@ class ExportTest extends TestCase
 
         foreach ($entities as $entity) {
             $resp = $this->get($entity->getUrl());
-            $resp->assertDontSee("/export/pdf");
-            $resp = $this->get($entity->getUrl("/export/pdf"));
+            $resp->assertDontSee('/export/pdf');
+            $resp = $this->get($entity->getUrl('/export/pdf'));
             $this->assertPermissionError($resp);
         }
     }
