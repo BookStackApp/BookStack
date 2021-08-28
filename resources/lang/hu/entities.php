@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Könyvespolc jogosultság',
     'shelves_permissions_updated' => 'Könyvespolc jogosultságok frissítve',
     'shelves_permissions_active' => 'Könyvespolc jogosultságok aktívak',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Jogosultság másolása könyvekre',
     'shelves_copy_permissions' => 'Jogosultság másolása',
     'shelves_copy_permissions_explain' => 'Ez alkalmazni fogja ennek a könyvespolcnak az aktuális jogosultság beállításait az összes benne található könyvön. Aktiválás előtt ellenőrizni kell, hogy a könyvespolc jogosultságain végzett összes módosítás el lett mentve.',
