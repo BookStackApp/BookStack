@@ -148,6 +148,7 @@ return [
     'role_manage_page_templates' => '管理页面模板',
     'role_access_api' => '访问系统 API',
     'role_manage_settings' => '管理App设置',
+    'role_export_content' => 'Export content',
     'role_asset' => '资源许可',
     'roles_system_warning' => '请注意，具有上述三个权限中的任何一个都可以允许用户更改自己的特权或系统中其他人的特权。 只将具有这些权限的角色分配给受信任的用户。',
     'role_asset_desc' => '对系统内资源的默认访问许可将由这些权限控制。单独设置在书籍，章节和页面上的权限将覆盖这里的权限设定。',
