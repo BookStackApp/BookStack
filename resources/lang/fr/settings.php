@@ -148,6 +148,7 @@ return [
     'role_manage_page_templates' => 'Gérer les modèles de page',
     'role_access_api' => 'Accès à l\'API du système',
     'role_manage_settings' => 'Gérer les préférences de l\'application',
+    'role_export_content' => 'Export content',
     'role_asset' => 'Permissions des ressources',
     'roles_system_warning' => 'Sachez que l\'accès à l\'une des trois permissions ci-dessus peut permettre à un utilisateur de modifier ses propres privilèges ou les privilèges des autres utilisateurs du système. Attribuer uniquement des rôles avec ces permissions à des utilisateurs de confiance.',
     'role_asset_desc' => 'Ces permissions contrôlent l\'accès par défaut des ressources dans le système. Les permissions dans les livres, les chapitres et les pages ignoreront ces permissions',
