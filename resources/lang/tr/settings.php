@@ -148,6 +148,7 @@ return [
     'role_manage_page_templates' => 'Sayfa şablonlarını yönet',
     'role_access_api' => 'Sistem programlama arayüzüne (API) eriş',
     'role_manage_settings' => 'Uygulama ayarlarını yönet',
+    'role_export_content' => 'Export content',
     'role_asset' => 'Varlık Yetkileri',
     'roles_system_warning' => 'Yukarıdaki üç izinden herhangi birine erişimin, kullanıcının kendi ayrıcalıklarını veya sistemdeki diğerlerinin ayrıcalıklarını değiştirmesine izin verebileceğini unutmayın. Yalnızca bu izinlere sahip rolleri güvenilir kullanıcılara atayın.',
     'role_asset_desc' => 'Bu izinler, sistem içindeki varlıklara varsayılan erişim izinlerini ayarlar. Kitaplar, bölümler ve sayfalar üzerindeki izinler, buradaki izinleri geçersiz kılar.',
