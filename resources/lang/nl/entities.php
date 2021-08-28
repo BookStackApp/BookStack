@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Boekenplank permissies',
     'shelves_permissions_updated' => 'Boekenplank permissies opgeslagen',
     'shelves_permissions_active' => 'Boekenplank permissies actief',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Kopieer permissies naar boeken',
     'shelves_copy_permissions' => 'Kopieer permissies',
     'shelves_copy_permissions_explain' => 'Met deze actie worden de permissies van deze boekenplank gekopieërd naar alle boeken op de plank. Voordat deze actie wordt uitgevoerd, zorg dat de wijzigingen in de permissies van deze boekenplank zijn opgeslagen.',
