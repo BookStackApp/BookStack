@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class AddExportRolePermission extends Migration
 {
@@ -13,7 +14,7 @@ class AddExportRolePermission extends Migration
     public function up()
     {
         // Create new templates-manage permission and assign to admin role
-        $roles = \Illuminate\Support\Facades\DB::table('roles')->get('id');
+        $roles = DB::table('roles')->get('id');
         $permissionId = DB::table('role_permissions')->insertGetId([
             'name'         => 'content-export',
             'display_name' => 'Export Content',
