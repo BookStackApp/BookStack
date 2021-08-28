@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Permisos del estante',
     'shelves_permissions_updated' => 'Permisos del estante actualizados',
     'shelves_permissions_active' => 'Permisos del estante activos',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Copiar permisos a los libros',
     'shelves_copy_permissions' => 'Copiar permisos',
     'shelves_copy_permissions_explain' => 'Esto aplicará los ajustes de permisos de este estante para todos sus libros. Antes de activarlo, asegúrese de que todos los cambios de permisos para este estante han sido guardados.',
