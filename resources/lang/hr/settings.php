@@ -148,6 +148,7 @@ return [
     'role_manage_page_templates' => 'Upravljanje predlošcima stranica',
     'role_access_api' => 'API pristup',
     'role_manage_settings' => 'Upravljanje postavkama aplikacija',
+    'role_export_content' => 'Export content',
     'role_asset' => 'Upravljanje vlasništvom',
     'roles_system_warning' => 'Uzmite u obzir da pristup bilo kojem od ovih dopuštenja dozvoljavate korisniku upravljanje dopuštenjima ostalih u sustavu. Ova dopuštenja dodijelite pouzdanim korisnicima.',
     'role_asset_desc' => 'Ova dopuštenja kontroliraju zadane pristupe. Dopuštenja za knjige, poglavlja i stranice ih poništavaju.',
