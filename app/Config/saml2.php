@@ -149,7 +149,7 @@ return [
             'requestedAuthnContext' => is_string($SAML2_IDP_AUTHNCONTEXT) ? explode(' ', $SAML2_IDP_AUTHNCONTEXT) : $SAML2_IDP_AUTHNCONTEXT,
             'logoutRequestSigned'   => env('SAML2_LOGOUT_REQUEST_SIGNED', false),
             'logoutResponseSigned'  => env('SAML2_LOGOUT_RESPONSE_SIGNED', false),
-            'lowercaseUrlencoding'  => env('SAML2_LOWERCASE_URLENCODING', false)
+            'lowercaseUrlencoding'  => env('SAML2_LOWERCASE_URLENCODING', false),
         ],
     ],
 
