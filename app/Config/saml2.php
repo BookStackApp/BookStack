@@ -147,9 +147,9 @@ return [
             // Multiple forced values can be passed via a space separated array, For example:
             // SAML2_IDP_AUTHNCONTEXT="urn:federation:authentication:windows urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
             'requestedAuthnContext' => is_string($SAML2_IDP_AUTHNCONTEXT) ? explode(' ', $SAML2_IDP_AUTHNCONTEXT) : $SAML2_IDP_AUTHNCONTEXT,
-            'logoutRequestSigned' => env('', false),
-            'logoutResponseSigned' => env('', false),
-            'lowercaseUrlencoding' => env('', false)
+            'logoutRequestSigned'   => env('SAML2_LOGOUT_REQUEST_SIGNED', false),
+            'logoutResponseSigned'  => env('SAML2_LOGOUT_RESPONSE_SIGNED', false),
+            'lowercaseUrlencoding'  => env('SAML2_LOWERCASE_URLENCODING', false)
         ],
     ],
 

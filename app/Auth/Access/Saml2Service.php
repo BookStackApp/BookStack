@@ -65,10 +65,8 @@ class Saml2Service extends ExternalAuthService
             $nameIdFormat = env('SAML2_SP_NAME_ID_Format', null);
             $nameIdSPNameQualifier = env('SAML2_SP_NAME_ID_SP_NAME_QUALIFIER', null);
 
-
             $url = $toolKit->logout($returnRoute, [], $email, null, true, $nameIdFormat, null, $nameIdSPNameQualifier);
             $id = $toolKit->getLastRequestID();
-
         } catch (Error $error) {
             if ($error->getCode() !== Error::SAML_SINGLE_LOGOUT_NOT_SUPPORTED) {
                 throw $error;
