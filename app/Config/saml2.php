@@ -80,8 +80,8 @@ return [
             'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
             // Usually x509cert and privateKey of the SP are provided by files placed at
             // the certs folder. But we can also provide them with the following parameters
-            'x509cert'   => '',
-            'privateKey' => '',
+            'x509cert'   => env('SAML2_SP_CERTIFICATE', ''),
+            'privateKey' => env('SAML2_SP_PRIVATEKEY', ''),
         ],
         // Identity Provider Data that we want connect with our SP
         'idp' => [
@@ -147,6 +147,9 @@ return [
             // Multiple forced values can be passed via a space separated array, For example:
             // SAML2_IDP_AUTHNCONTEXT="urn:federation:authentication:windows urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
             'requestedAuthnContext' => is_string($SAML2_IDP_AUTHNCONTEXT) ? explode(' ', $SAML2_IDP_AUTHNCONTEXT) : $SAML2_IDP_AUTHNCONTEXT,
+            'logoutRequestSigned' => env('', false),
+            'logoutResponseSigned' => env('', false),
+            'lowercaseUrlencoding' => env('', false)
         ],
     ],
 

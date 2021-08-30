@@ -61,8 +61,14 @@ class Saml2Service extends ExternalAuthService
         $returnRoute = url('/');
 
         try {
-            $url = $toolKit->logout($returnRoute, [], null, null, true);
+            $email = auth()->user()['email'];
+            $nameIdFormat = env('SAML2_SP_NAME_ID_Format', null);
+            $nameIdSPNameQualifier = env('SAML2_SP_NAME_ID_SP_NAME_QUALIFIER', null);
+
+
+            $url = $toolKit->logout($returnRoute, [], $email, null, true, $nameIdFormat, null, $nameIdSPNameQualifier);
             $id = $toolKit->getLastRequestID();
+
         } catch (Error $error) {
             if ($error->getCode() !== Error::SAML_SINGLE_LOGOUT_NOT_SUPPORTED) {
                 throw $error;
@@ -117,7 +123,9 @@ class Saml2Service extends ExternalAuthService
     public function processSlsResponse(?string $requestId): ?string
     {
         $toolkit = $this->getToolkit();
-        $redirect = $toolkit->processSLO(true, $requestId, false, null, true);
+        $retrieveParametersFromServer = env('SAML2_RETRIEVE_PARAMETERS_FROM_SERVER', false);
+
+        $redirect = $toolkit->processSLO(true, $requestId, $retrieveParametersFromServer, null, true);
 
         $errors = $toolkit->getErrors();
 
