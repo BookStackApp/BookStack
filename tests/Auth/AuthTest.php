@@ -470,7 +470,7 @@ class AuthTest extends BrowserKitTest
         $this->assertTrue(auth()->check());
 
         $this->get('/books');
-        $this->assertRedirectedTo("/");
+        $this->assertRedirectedTo('/');
 
         $this->assertFalse(auth()->check());
     }
