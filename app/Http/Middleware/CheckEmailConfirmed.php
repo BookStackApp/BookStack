@@ -26,12 +26,12 @@ class CheckEmailConfirmed
         $this->confirmationService = $confirmationService;
     }
 
-
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -40,6 +40,7 @@ class CheckEmailConfirmed
         $user = auth()->user();
         if (auth()->check() && !$user->email_confirmed && $this->confirmationService->confirmationRequired()) {
             auth()->logout();
+
             return redirect()->to('/');
         }
 
