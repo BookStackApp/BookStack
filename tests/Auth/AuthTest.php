@@ -459,6 +459,22 @@ class AuthTest extends BrowserKitTest
         $this->assertFalse($log->hasWarningThatContains('Failed login for admin@admin.com'));
     }
 
+    public function test_logged_in_user_with_unconfirmed_email_is_logged_out()
+    {
+        $this->setSettings(['registration-confirmation' => 'true']);
+        $user = $this->getEditor();
+        $user->email_confirmed = false;
+        $user->save();
+
+        auth()->login($user);
+        $this->assertTrue(auth()->check());
+
+        $this->get('/books');
+        $this->assertRedirectedTo("/");
+
+        $this->assertFalse(auth()->check());
+    }
+
     /**
      * Perform a login.
      */
