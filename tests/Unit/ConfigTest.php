@@ -76,6 +76,12 @@ class ConfigTest extends TestCase
         );
     }
 
+    public function test_dompdf_remote_fetching_controlled_by_allow_untrusted_server_fetching_false()
+    {
+        $this->checkEnvConfigResult('ALLOW_UNTRUSTED_SERVER_FETCHING', 'false', 'dompdf.defines.enable_remote', false);
+        $this->checkEnvConfigResult('ALLOW_UNTRUSTED_SERVER_FETCHING', 'true', 'dompdf.defines.enable_remote', true);
+    }
+
     /**
      * Set an environment variable of the given name and value
      * then check the given config key to see if it matches the given result.

@@ -366,4 +366,20 @@ class ExportTest extends TestCase
             $this->assertPermissionError($resp);
         }
     }
+
+    public function test_wkhtmltopdf_only_used_when_allow_untrusted_is_true()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        config()->set('snappy.pdf.binary', '/abc123');
+        config()->set('app.allow_untrusted_server_fetching', false);
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/pdf'));
+        $resp->assertStatus(200); // Sucessful response with invalid snappy binary indicates dompdf usage.
+
+        config()->set('app.allow_untrusted_server_fetching', true);
+        $resp = $this->get($page->getUrl('/export/pdf'));
+        $resp->assertStatus(500); // Bad response indicates wkhtml usage
+    }
 }

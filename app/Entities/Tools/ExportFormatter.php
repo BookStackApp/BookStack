@@ -140,7 +140,7 @@ class ExportFormatter
     protected function htmlToPdf(string $html): string
     {
         $containedHtml = $this->containHtml($html);
-        $useWKHTML = config('snappy.pdf.binary') !== false;
+        $useWKHTML = config('snappy.pdf.binary') !== false && config('app.allow_untrusted_server_fetching') === true;
         if ($useWKHTML) {
             $pdf = SnappyPDF::loadHTML($containedHtml);
             $pdf->setOption('print-media-type', true);

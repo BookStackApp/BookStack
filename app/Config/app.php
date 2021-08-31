@@ -36,6 +36,11 @@ return [
     // Even when overridden the WYSIWYG editor may still escape script content.
     'allow_content_scripts' => env('ALLOW_CONTENT_SCRIPTS', false),
 
+    # Allow server-side fetches to be performed to potentially unknown
+    # and user-provided locations. Primarily used in exports when loading
+    # in externally referenced assets.
+    'allow_untrusted_server_fetching' => env('ALLOW_UNTRUSTED_SERVER_FETCHING', false),
+
     // Override the default behaviour for allowing crawlers to crawl the instance.
     // May be ignored if view has be overridden or modified.
     // Defaults to null since, if not set, 'app-public' status used instead.
