@@ -1,4 +1,6 @@
-<?php namespace BookStack\Exceptions;
+<?php
+
+namespace BookStack\Exceptions;
 
 use Exception;
 use Illuminate\Contracts\Support\Responsable;
@@ -17,27 +19,31 @@ class PrettyException extends Exception implements Responsable
 
     /**
      * Render a response for when this exception occurs.
+     *
      * @inheritdoc
      */
     public function toResponse($request)
     {
         $code = ($this->getCode() === 0) ? 500 : $this->getCode();
+
         return response()->view('errors.' . $code, [
-            'message' => $this->getMessage(),
+            'message'  => $this->getMessage(),
             'subtitle' => $this->subtitle,
-            'details' => $this->details,
+            'details'  => $this->details,
         ], $code);
     }
 
     public function setSubtitle(string $subtitle): self
     {
         $this->subtitle = $subtitle;
+
         return $this;
     }
 
     public function setDetails(string $details): self
     {
         $this->details = $details;
+
         return $this;
     }
 }

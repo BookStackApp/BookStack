@@ -36,6 +36,7 @@ return [
     'export_html' => '网页文件',
     'export_pdf' => 'PDF文件',
     'export_text' => '纯文本文件',
+    'export_md' => 'Markdown 文件',
 
     // Permissions and restrictions
     'permissions' => '权限',
@@ -98,6 +99,7 @@ return [
     'shelves_permissions' => '书架权限',
     'shelves_permissions_updated' => '书架权限已更新',
     'shelves_permissions_active' => '书架权限激活',
+    'shelves_permissions_cascade_warning' => '书架上的权限不会自动应用到书架里的书。这是因为书可以在多个书架上存在。使用下面的选项可以将权限复制到书架里的书上。',
     'shelves_copy_permissions_to_books' => '将权限复制到图书',
     'shelves_copy_permissions' => '复制权限',
     'shelves_copy_permissions_explain' => '这会将此书架的当前权限设置应用于其中包含的所有图书。 在激活之前，请确保已保存对此书架权限的任何更改。',
@@ -106,7 +108,7 @@ return [
     // Books
     'book' => '图书',
     'books' => '图书',
-    'x_books' => ':count本书',
+    'x_books' => ':count 本书',
     'books_empty' => '不存在已创建的书',
     'books_popular' => '热门图书',
     'books_recent' => '最近的书',

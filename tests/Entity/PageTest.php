@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
@@ -6,7 +8,6 @@ use Tests\TestCase;
 
 class PageTest extends TestCase
 {
-
     public function test_page_view_when_creator_is_deleted_but_owner_exists()
     {
         $page = Page::query()->first();
@@ -33,22 +34,22 @@ class PageTest extends TestCase
 
         $details = [
             'markdown' => '# a title',
-            'html' => '<h1>a title</h1>',
-            'name' => 'my page',
+            'html'     => '<h1>a title</h1>',
+            'name'     => 'my page',
         ];
         $resp = $this->post($book->getUrl("/draft/{$draft->id}"), $details);
         $resp->assertRedirect();
 
         $this->assertDatabaseHas('pages', [
             'markdown' => $details['markdown'],
-            'name' => $details['name'],
-            'id' => $draft->id,
-            'draft' => false
+            'name'     => $details['name'],
+            'id'       => $draft->id,
+            'draft'    => false,
         ]);
 
         $draft->refresh();
-        $resp = $this->get($draft->getUrl("/edit"));
-        $resp->assertSee("# a title");
+        $resp = $this->get($draft->getUrl('/edit'));
+        $resp->assertSee('# a title');
     }
 
     public function test_page_delete()
@@ -112,7 +113,7 @@ class PageTest extends TestCase
 
         $movePageResp = $this->post($page->getUrl('/copy'), [
             'entity_selection' => 'book:' . $newBook->id,
-            'name' => 'My copied test page'
+            'name'             => 'My copied test page',
         ]);
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
 
@@ -131,7 +132,7 @@ class PageTest extends TestCase
 
         $this->asEditor()->post($page->getUrl('/copy'), [
             'entity_selection' => 'book:' . $newBook->id,
-            'name' => 'My copied test page'
+            'name'             => 'My copied test page',
         ]);
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
 
@@ -148,7 +149,7 @@ class PageTest extends TestCase
         $resp->assertSee('Copy Page');
 
         $movePageResp = $this->post($page->getUrl('/copy'), [
-            'name' => 'My copied test page'
+            'name' => 'My copied test page',
         ]);
 
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
@@ -178,14 +179,14 @@ class PageTest extends TestCase
 
         $movePageResp = $this->post($page->getUrl('/copy'), [
             'entity_selection' => 'book:' . $newBook->id,
-            'name' => 'My copied test page'
+            'name'             => 'My copied test page',
         ]);
         $movePageResp->assertRedirect();
 
         $this->assertDatabaseHas('pages', [
-            'name' => 'My copied test page',
+            'name'       => 'My copied test page',
             'created_by' => $viewer->id,
-            'book_id' => $newBook->id,
+            'book_id'    => $newBook->id,
         ]);
     }
 
@@ -199,7 +200,7 @@ class PageTest extends TestCase
             ->where('draft', '=', true)->first();
 
         $details = [
-            'name' => 'my page',
+            'name'     => 'my page',
             'markdown' => '',
         ];
         $resp = $this->post($book->getUrl("/draft/{$draft->id}"), $details);
@@ -207,8 +208,8 @@ class PageTest extends TestCase
 
         $this->assertDatabaseHas('pages', [
             'markdown' => $details['markdown'],
-            'id' => $draft->id,
-            'draft' => false
+            'id'       => $draft->id,
+            'draft'    => false,
         ]);
     }
 }

@@ -15,10 +15,14 @@
         <div>
             <div class="form-group">
                 <label for="owner">{{ trans('entities.permissions_owner') }}</label>
-                @include('components.user-select', ['user' => $model->ownedBy, 'name' => 'owned_by', 'compact' => false])
+                @include('form.user-select', ['user' => $model->ownedBy, 'name' => 'owned_by', 'compact' => false])
             </div>
         </div>
     </div>
+
+    @if($model instanceof \BookStack\Entities\Models\Bookshelf)
+        <p class="text-warn">{{ trans('entities.shelves_permissions_cascade_warning') }}</p>
+    @endif
 
     <hr>
 

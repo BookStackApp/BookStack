@@ -1,4 +1,6 @@
-<?php namespace Tests\User;
+<?php
+
+namespace Tests\User;
 
 use Activity;
 use BookStack\Actions\ActivityType;
@@ -158,5 +160,4 @@ class UserProfileTest extends BrowserKitTest
             ->pageNotHasElement('.content-wrap .entity-list-item')
             ->see('List View');
     }
-
 }

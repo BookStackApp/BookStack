@@ -39,11 +39,12 @@ return [
     'reset' => 'Resetuj',
     'remove' => 'Usuń',
     'add' => 'Dodaj',
+    'configure' => 'Configure',
     'fullscreen' => 'Pełny ekran',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'next' => 'Dalej',
+    'previous' => 'Wstecz',
 
     // Sort Options
     'sort_options' => 'Opcje sortowania',
@@ -51,7 +52,7 @@ return [
     'sort_ascending' => 'Sortuj rosnąco',
     'sort_descending' => 'Sortuj malejąco',
     'sort_name' => 'Nazwa',
-    'sort_default' => 'Default',
+    'sort_default' => 'Domyślne',
     'sort_created_at' => 'Data utworzenia',
     'sort_updated_at' => 'Data aktualizacji',
 
@@ -60,6 +61,7 @@ return [
     'no_activity' => 'Brak aktywności do wyświetlenia',
     'no_items' => 'Brak elementów do wyświetlenia',
     'back_to_top' => 'Powrót na górę',
+    'skip_to_main_content' => 'Przejdź do treści głównej',
     'toggle_details' => 'Włącz/wyłącz szczegóły',
     'toggle_thumbnails' => 'Włącz/wyłącz miniatury',
     'details' => 'Szczegóły',

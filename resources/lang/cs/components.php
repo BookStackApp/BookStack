@@ -16,13 +16,13 @@ return [
     'image_image_name' => 'Název obrázku',
     'image_delete_used' => 'Tento obrázek je použit na níže uvedených stránkách.',
     'image_delete_confirm_text' => 'Opravdu chcete odstranit tento obrázek?',
-    'image_select_image' => 'Vyberte obrázek',
+    'image_select_image' => 'Zvolte obrázek',
     'image_dropzone' => 'Přetáhněte obrázky nebo klikněte sem pro nahrání',
     'images_deleted' => 'Obrázky odstraněny',
     'image_preview' => 'Náhled obrázku',
-    'image_upload_success' => 'Obrázek byl úspěšně nahrán',
-    'image_update_success' => 'Podrobnosti o obrázku byly úspěšně aktualizovány',
-    'image_delete_success' => 'Obrázek byl úspěšně odstraněn',
+    'image_upload_success' => 'Obrázek byl nahrán',
+    'image_update_success' => 'Podrobnosti o obrázku byly aktualizovány',
+    'image_delete_success' => 'Obrázek byl odstraněn',
     'image_upload_remove' => 'Odebrat',
 
     // Code Editor

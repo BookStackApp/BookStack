@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute  može sadržavati samo slova, brojeve, crtice i donje crtice.',
     'alpha_num'            => ':attribute može sadržavati samo slova i brojeve.',
     'array'                => ':attribute mora biti niz.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute mora biti prije :date.',
     'between'              => [
         'numeric' => ':attribute mora biti između :min i :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute mora biti niz.',
     'timezone'             => ':attribute mora biti valjan.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute se već koristi.',
     'url'                  => 'Format :attribute nije valjan.',
     'uploaded'             => 'Datoteka se ne može prenijeti. Server možda ne prihvaća datoteke te veličine.',

@@ -1,4 +1,4 @@
-@extends('base')
+@extends('layouts.base')
 
 @section('head')
     <script src="{{ url('/libs/tinymce/tinymce.min.js?ver=4.9.4') }}"></script>
@@ -15,12 +15,12 @@
             @if(!isset($isDraft))
                 <input type="hidden" name="_method" value="PUT">
             @endif
-            @include('pages.form', ['model' => $page])
-            @include('pages.editor-toolbox')
+            @include('pages.parts.form', ['model' => $page])
+            @include('pages.parts.editor-toolbox')
         </form>
     </div>
     
-    @include('components.image-manager', ['uploaded_to' => $page->id])
-    @include('components.code-editor')
-    @include('components.entity-selector-popup')
+    @include('pages.parts.image-manager', ['uploaded_to' => $page->id])
+    @include('pages.parts.code-editor')
+    @include('entities.selector-popup')
 @stop

@@ -1,5 +1,11 @@
-<?php namespace Tests;
+<?php
 
+namespace Tests;
+
+use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionsRepo;
+use BookStack\Auth\Permissions\RolePermission;
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -9,22 +15,19 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Repos\ChapterRepo;
-use BookStack\Auth\Permissions\PermissionsRepo;
-use BookStack\Auth\Role;
-use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
+use Illuminate\Foundation\Testing\Assert as PHPUnit;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Log;
 use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
-use Illuminate\Foundation\Testing\Assert as PHPUnit;
 
 trait SharedTestHelpers
 {
-
     protected $admin;
     protected $editor;
 
@@ -57,7 +60,6 @@ trait SharedTestHelpers
         return $this->actingAs($this->getEditor());
     }
 
-
     /**
      * Get a editor user.
      */
@@ -67,6 +69,7 @@ trait SharedTestHelpers
             $editorRole = Role::getRole('editor');
             $this->editor = $editorRole->users->first();
         }
+
         return $this->editor;
     }
 
@@ -79,6 +82,7 @@ trait SharedTestHelpers
         if (!empty($attributes)) {
             $user->forceFill($attributes)->save();
         }
+
         return $user;
     }
 
@@ -116,7 +120,7 @@ trait SharedTestHelpers
     }
 
     /**
-     * Create and return a new test chapter
+     * Create and return a new test chapter.
      */
     public function newChapter(array $input = ['name' => 'test chapter', 'description' => 'My new test chapter'], Book $book): Chapter
     {
@@ -124,13 +128,14 @@ trait SharedTestHelpers
     }
 
     /**
-     * Create and return a new test page
+     * Create and return a new test page.
      */
     public function newPage(array $input = ['name' => 'test page', 'html' => 'My new test page']): Page
     {
         $book = Book::query()->first();
         $pageRepo = app(PageRepo::class);
         $draftPage = $pageRepo->getNewDraftPage($book);
+
         return $pageRepo->publishDraft($draftPage, $input);
     }
 
@@ -158,7 +163,7 @@ trait SharedTestHelpers
             foreach ($roles as $role) {
                 $permissions[] = [
                     'role_id' => $role->id,
-                    'action' => strtolower($action)
+                    'action'  => strtolower($action),
                 ];
             }
         }
@@ -182,6 +187,19 @@ trait SharedTestHelpers
     }
 
     /**
+     * Completely remove the given permission name from the given user.
+     */
+    protected function removePermissionFromUser(User $user, string $permission)
+    {
+        $permission = RolePermission::query()->where('name', '=', $permission)->first();
+        /** @var Role $role */
+        foreach ($user->roles as $role) {
+            $role->detachPermission($permission);
+        }
+        $user->clearPermissionCache();
+    }
+
+    /**
      * Create a new basic role for testing purposes.
      */
     protected function createNewRole(array $permissions = []): Role
@@ -189,6 +207,7 @@ trait SharedTestHelpers
         $permissionRepo = app(PermissionsRepo::class);
         $roleData = factory(Role::class)->make()->toArray();
         $roleData['permissions'] = array_flip($permissions);
+
         return $permissionRepo->saveNewRole($roleData);
     }
 
@@ -253,7 +272,7 @@ trait SharedTestHelpers
      */
     protected function assertPermissionError($response)
     {
-        PHPUnit::assertTrue($this->isPermissionError($response->baseResponse ?? $response->response), "Failed asserting the response contains a permission error.");
+        PHPUnit::assertTrue($this->isPermissionError($response->baseResponse ?? $response->response), 'Failed asserting the response contains a permission error.');
     }
 
     /**
@@ -261,7 +280,7 @@ trait SharedTestHelpers
      */
     protected function assertNotPermissionError($response)
     {
-        PHPUnit::assertFalse($this->isPermissionError($response->baseResponse ?? $response->response), "Failed asserting the response does not contain a permission error.");
+        PHPUnit::assertFalse($this->isPermissionError($response->baseResponse ?? $response->response), 'Failed asserting the response does not contain a permission error.');
     }
 
     /**
@@ -270,8 +289,17 @@ trait SharedTestHelpers
     private function isPermissionError($response): bool
     {
         return $response->status() === 302
-            && $response->headers->get('Location') === url('/')
-            && strpos(session()->pull('error', ''), 'You do not have permission to access') === 0;
+            && (
+                (
+                    $response->headers->get('Location') === url('/')
+                    && strpos(session()->pull('error', ''), 'You do not have permission to access') === 0
+                )
+                ||
+                (
+                    $response instanceof JsonResponse &&
+                    $response->json(['error' => 'You do not have permission to perform the requested action.'])
+                )
+            );
     }
 
     /**
@@ -291,5 +319,4 @@ trait SharedTestHelpers
 
         return $testHandler;
     }
-
 }

@@ -6,7 +6,7 @@
  */
 return [
 
-    'failed' => 'Die eingegebenen Anmeldedaten sind ungültig.',
+    'failed' => 'Diese Anmeldedaten stimmen nicht mit unseren Aufzeichnungen überein.',
     'throttle' => 'Zu viele Anmeldeversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.',
 
     // Login & Register
@@ -20,7 +20,7 @@ return [
     'username' => 'Benutzername',
     'email' => 'E-Mail',
     'password' => 'Passwort',
-    'password_confirm' => 'Passwort best&auml;tigen',
+    'password_confirm' => 'Passwort bestätigen',
     'password_hint' => 'Mindestlänge: 7 Zeichen',
     'forgot_password' => 'Passwort vergessen?',
     'remember_me' => 'Angemeldet bleiben',
@@ -73,5 +73,40 @@ return [
     'user_invite_page_welcome' => 'Willkommen bei :appName!',
     'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft zum Einloggen benötigt.',
     'user_invite_page_confirm_button' => 'Passwort wiederholen',
-    'user_invite_success' => 'Passwort gesetzt, Sie haben nun Zugriff auf :appName!'
+    'user_invite_success' => 'Passwort gesetzt, Sie haben nun Zugriff auf :appName!',
+
+    // Multi-factor Authentication
+    'mfa_setup' => 'Multi-Faktor-Authentifizierung einrichten',
+    'mfa_setup_desc' => 'Richten Sie Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für Ihr Benutzerkonto ein.',
+    'mfa_setup_configured' => 'Bereits konfiguriert',
+    'mfa_setup_reconfigure' => 'Umkonfigurieren',
+    'mfa_setup_remove_confirmation' => 'Sind Sie sicher, dass Sie diese Multi-Faktor-Authentifizierungsmethode entfernen möchten?',
+    'mfa_setup_action' => 'Einrichtung',
+    'mfa_backup_codes_usage_limit_warning' => 'Sie haben weniger als 5 Backup-Codes übrig, Bitte erstellen und speichern Sie ein neues Set bevor Sie keine Codes mehr haben, um zu verhindern, dass Sie von Ihrem Konto gesperrt werden.',
+    'mfa_option_totp_title' => 'Mobile App',
+    'mfa_option_totp_desc' => 'Um Mehrfach-Faktor-Authentifizierung nutzen zu können, benötigen Sie eine mobile Anwendung, die TOTP unterstützt, wie Google Authenticator, Authy oder Microsoft Authenticator.',
+    'mfa_option_backup_codes_title' => 'Backup Code',
+    'mfa_option_backup_codes_desc' => 'Speichern Sie sicher eine Reihe von einmaligen Backup-Codes, die Sie eingeben können, um Ihre Identität zu überprüfen.',
+    'mfa_gen_confirm_and_enable' => 'Bestätigen und aktivieren',
+    'mfa_gen_backup_codes_title' => 'Backup-Codes einrichten',
+    'mfa_gen_backup_codes_desc' => 'Speichern Sie die folgende Liste der Codes an einem sicheren Ort. Wenn Sie auf das System zugreifen, können Sie einen der Codes als zweiten Authentifizierungsmechanismus verwenden.',
+    'mfa_gen_backup_codes_download' => 'Download Codes',
+    'mfa_gen_backup_codes_usage_warning' => 'Jeder Code kann nur einmal verwendet werden',
+    'mfa_gen_totp_title' => 'Mobile App einrichten',
+    'mfa_gen_totp_desc' => 'Um Mehrfach-Faktor-Authentifizierung nutzen zu können, benötigen Sie eine mobile Anwendung, die TOTP unterstützt, wie Google Authenticator, Authy oder Microsoft Authenticator.',
+    'mfa_gen_totp_scan' => 'Scannen Sie den QR-Code unten mit Ihrer bevorzugten Authentifizierungs-App, um loszulegen.',
+    'mfa_gen_totp_verify_setup' => 'Setup überprüfen',
+    'mfa_gen_totp_verify_setup_desc' => 'Überprüfen Sie, dass alles funktioniert, indem Sie einen Code in Ihrer Authentifizierungs-App in das Eingabefeld unten eingeben:',
+    'mfa_gen_totp_provide_code_here' => 'Geben Sie hier Ihre App generierten Code ein',
+    'mfa_verify_access' => 'Zugriff überprüfen',
+    'mfa_verify_access_desc' => 'Ihr Benutzerkonto erfordert, dass Sie Ihre Identität über eine zusätzliche Verifikationsebene bestätigen, bevor Sie den Zugriff gewähren. Überprüfen Sie mit einer Ihrer konfigurierten Methoden, um fortzufahren.',
+    'mfa_verify_no_methods' => 'Keine Methoden konfiguriert',
+    'mfa_verify_no_methods_desc' => 'Es konnten keine Mehrfach-Faktor-Authentifizierungsmethoden für Ihr Konto gefunden werden. Sie müssen mindestens eine Methode einrichten, bevor Sie Zugriff erhalten.',
+    'mfa_verify_use_totp' => 'Mit einer mobilen App verifizieren',
+    'mfa_verify_use_backup_codes' => 'Mit einem Backup-Code überprüfen',
+    'mfa_verify_backup_code' => 'Backup-Code',
+    'mfa_verify_backup_code_desc' => 'Geben Sie einen Ihrer verbleibenden Backup-Codes unten ein:',
+    'mfa_verify_backup_code_enter_here' => 'Backup-Code hier eingeben',
+    'mfa_verify_totp_desc' => 'Geben Sie den Code ein, der mit Ihrer mobilen App generiert wurde:',
+    'mfa_setup_login_notification' => 'Multi-Faktor-Methode konfiguriert. Bitte melden Sie sich jetzt erneut mit der konfigurierten Methode an.',
 ];

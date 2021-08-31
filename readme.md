@@ -3,9 +3,10 @@
 [![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg)](https://github.com/BookStackApp/BookStack/releases/latest)
 [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
 [![Crowdin](https://badges.crowdin.net/bookstack/localized.svg)](https://crowdin.com/project/bookstack)
-[![Build Status](https://github.com/BookStackApp/BookStack/workflows/phpunit/badge.svg)](https://github.com/BookStackApp/BookStack/actions)
 [![Discord](https://img.shields.io/static/v1?label=chat&message=discord&color=738adb&logo=discord)](https://discord.gg/ztkBqR2)
 [![Repo Stats](https://img.shields.io/static/v1?label=GitHub+project&message=stats&color=f27e3f)](https://gh-stats.bookstackapp.com/)
+[![Build Status](https://github.com/BookStackApp/BookStack/workflows/phpunit/badge.svg)](https://github.com/BookStackApp/BookStack/actions)
+[![StyleCI](https://github.styleci.io/repos/41589337/shield?style=flat)](https://github.styleci.io/repos/41589337)
 
 A platform for storing and organising information and documentation. Details for BookStack can be found on the official website at https://www.bookstackapp.com/.
 
@@ -81,7 +82,8 @@ Once done you can run `php vendor/bin/phpunit` in the application root directory
 
 ### 📜 Code Standards
 
-PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code. Please don't auto-fix code unless it's related to changes you've made otherwise you'll likely cause git conflicts.
+PHP code style is enforced automatically [using StyleCI](https://github.styleci.io/repos/41589337). 
+If submitting a PR, any formatting changes to be made will be automatically fixed after merging.  
 
 ### 🐋 Development using Docker
 
@@ -188,3 +190,6 @@ These are the great open-source projects used to help build BookStack:
 * [OneLogin's SAML PHP Toolkit](https://github.com/onelogin/php-saml)
 * [League/CommonMark](https://commonmark.thephpleague.com/)
 * [League/Flysystem](https://flysystem.thephpleague.com)
+* [StyleCI](https://styleci.io/)
+* [pragmarx/google2fa](https://github.com/antonioribeiro/google2fa)
+* [Bacon/BaconQrCode](https://github.com/Bacon/BaconQrCode)

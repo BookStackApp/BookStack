@@ -1,14 +1,12 @@
-<?php namespace BookStack\Auth\Access;
+<?php
 
-use BookStack\Actions\ActivityType;
+namespace BookStack\Auth\Access;
+
 use BookStack\Auth\SocialAccount;
 use BookStack\Auth\User;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Facades\Activity;
-use BookStack\Facades\Theme;
-use BookStack\Theming\ThemeEvents;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\Factory as Socialite;
@@ -21,12 +19,19 @@ class SocialAuthService
 {
     /**
      * The core socialite library used.
+     *
      * @var Socialite
      */
     protected $socialite;
 
     /**
+     * @var LoginService
+     */
+    protected $loginService;
+
+    /**
      * The default built-in social drivers we support.
+     *
      * @var string[]
      */
     protected $validSocialDrivers = [
@@ -39,7 +44,7 @@ class SocialAuthService
         'okta',
         'gitlab',
         'twitch',
-        'discord'
+        'discord',
     ];
 
     /**
@@ -47,6 +52,7 @@ class SocialAuthService
      * for an initial redirect action.
      * Array is keyed by social driver name.
      * Callbacks are passed an instance of the driver.
+     *
      * @var array<string, callable>
      */
     protected $configureForRedirectCallbacks = [];
@@ -54,33 +60,39 @@ class SocialAuthService
     /**
      * SocialAuthService constructor.
      */
-    public function __construct(Socialite $socialite)
+    public function __construct(Socialite $socialite, LoginService $loginService)
     {
         $this->socialite = $socialite;
+        $this->loginService = $loginService;
     }
 
     /**
      * Start the social login path.
+     *
      * @throws SocialDriverNotConfigured
      */
     public function startLogIn(string $socialDriver): RedirectResponse
     {
         $driver = $this->validateDriver($socialDriver);
+
         return $this->getDriverForRedirect($driver)->redirect();
     }
 
     /**
-     * Start the social registration process
+     * Start the social registration process.
+     *
      * @throws SocialDriverNotConfigured
      */
     public function startRegister(string $socialDriver): RedirectResponse
     {
         $driver = $this->validateDriver($socialDriver);
+
         return $this->getDriverForRedirect($driver)->redirect();
     }
 
     /**
      * Handle the social registration process on callback.
+     *
      * @throws UserRegistrationException
      */
     public function handleRegistrationCallback(string $socialDriver, SocialUser $socialUser): SocialUser
@@ -92,6 +104,7 @@ class SocialAuthService
 
         if (User::query()->where('email', '=', $socialUser->getEmail())->exists()) {
             $email = $socialUser->getEmail();
+
             throw new UserRegistrationException(trans('errors.error_user_exists_different_creds', ['email' => $email]), '/login');
         }
 
@@ -100,16 +113,19 @@ class SocialAuthService
 
     /**
      * Get the social user details via the social driver.
+     *
      * @throws SocialDriverNotConfigured
      */
     public function getSocialUser(string $socialDriver): SocialUser
     {
         $driver = $this->validateDriver($socialDriver);
+
         return $this->socialite->driver($driver)->user();
     }
 
     /**
      * Handle the login process on a oAuth callback.
+     *
      * @throws SocialSignInAccountNotUsed
      */
     public function handleLoginCallback(string $socialDriver, SocialUser $socialUser)
@@ -125,9 +141,8 @@ class SocialAuthService
         // When a user is not logged in and a matching SocialAccount exists,
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
-            auth()->login($socialAccount->user);
-            Activity::add(ActivityType::AUTH_LOGIN, $socialAccount);
-            Theme::dispatch(ThemeEvents::AUTH_LOGIN, $socialDriver, $socialAccount->user);
+            $this->loginService->login($socialAccount->user, $socialAccount);
+
             return redirect()->intended('/');
         }
 
@@ -137,18 +152,21 @@ class SocialAuthService
             $account = $this->newSocialAccount($socialDriver, $socialUser);
             $currentUser->socialAccounts()->save($account);
             session()->flash('success', trans('settings.users_social_connected', ['socialAccount' => $titleCaseDriver]));
+
             return redirect($currentUser->getEditUrl());
         }
 
         // When a user is logged in and the social account exists and is already linked to the current user.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id === $currentUser->id) {
             session()->flash('error', trans('errors.social_account_existing', ['socialAccount' => $titleCaseDriver]));
+
             return redirect($currentUser->getEditUrl());
         }
 
         // When a user is logged in, A social account exists but the users do not match.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
             session()->flash('error', trans('errors.social_account_already_used_existing', ['socialAccount' => $titleCaseDriver]));
+
             return redirect($currentUser->getEditUrl());
         }
 
@@ -163,6 +181,7 @@ class SocialAuthService
 
     /**
      * Ensure the social driver is correct and supported.
+     *
      * @throws SocialDriverNotConfigured
      */
     protected function validateDriver(string $socialDriver): string
@@ -188,6 +207,7 @@ class SocialAuthService
         $lowerName = strtolower($driver);
         $configPrefix = 'services.' . $lowerName . '.';
         $config = [config($configPrefix . 'client_id'), config($configPrefix . 'client_secret'), config('services.callback_url')];
+
         return !in_array(false, $config) && !in_array(null, $config);
     }
 
@@ -237,9 +257,9 @@ class SocialAuthService
     public function newSocialAccount(string $socialDriver, SocialUser $socialUser): SocialAccount
     {
         return new SocialAccount([
-            'driver' => $socialDriver,
+            'driver'    => $socialDriver,
             'driver_id' => $socialUser->getId(),
-            'avatar' => $socialUser->getAvatar()
+            'avatar'    => $socialUser->getAvatar(),
         ]);
     }
 
@@ -252,7 +272,7 @@ class SocialAuthService
     }
 
     /**
-     * Provide redirect options per service for the Laravel Socialite driver
+     * Provide redirect options per service for the Laravel Socialite driver.
      */
     protected function getDriverForRedirect(string $driverName): Provider
     {

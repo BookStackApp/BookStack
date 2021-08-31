@@ -2,6 +2,7 @@
 
 namespace BookStack\Api;
 
+use BookStack\Auth\Access\LoginService;
 use BookStack\Exceptions\ApiAuthException;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ApiTokenGuard implements Guard
 {
-
     use GuardHelpers;
 
     /**
@@ -20,9 +20,14 @@ class ApiTokenGuard implements Guard
      */
     protected $request;
 
+    /**
+     * @var LoginService
+     */
+    protected $loginService;
 
     /**
      * The last auth exception thrown in this request.
+     *
      * @var ApiAuthException
      */
     protected $lastAuthException;
@@ -30,11 +35,12 @@ class ApiTokenGuard implements Guard
     /**
      * ApiTokenGuard constructor.
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, LoginService $loginService)
     {
         $this->request = $request;
+        $this->loginService = $loginService;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -47,6 +53,7 @@ class ApiTokenGuard implements Guard
         }
 
         $user = null;
+
         try {
             $user = $this->getAuthorisedUserFromRequest();
         } catch (ApiAuthException $exception) {
@@ -54,19 +61,20 @@ class ApiTokenGuard implements Guard
         }
 
         $this->user = $user;
+
         return $user;
     }
 
     /**
      * Determine if current user is authenticated. If not, throw an exception.
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable
-     *
      * @throws ApiAuthException
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable
      */
     public function authenticate()
     {
-        if (! is_null($user = $this->user())) {
+        if (!is_null($user = $this->user())) {
             return $user;
         }
 
@@ -79,6 +87,7 @@ class ApiTokenGuard implements Guard
 
     /**
      * Check the API token in the request and fetch a valid authorised user.
+     *
      * @throws ApiAuthException
      */
     protected function getAuthorisedUserFromRequest(): Authenticatable
@@ -93,11 +102,16 @@ class ApiTokenGuard implements Guard
 
         $this->validateToken($token, $secret);
 
+        if ($this->loginService->awaitingEmailConfirmation($token->user)) {
+            throw new ApiAuthException(trans('errors.email_confirmation_awaiting'));
+        }
+
         return $token->user;
     }
 
     /**
      * Validate the format of the token header value string.
+     *
      * @throws ApiAuthException
      */
     protected function validateTokenHeaderValue(string $authToken): void
@@ -114,6 +128,7 @@ class ApiTokenGuard implements Guard
     /**
      * Validate the given secret against the given token and ensure the token
      * currently has access to the instance API.
+     *
      * @throws ApiAuthException
      */
     protected function validateToken(?ApiToken $token, string $secret): void

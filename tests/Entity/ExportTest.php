@@ -1,5 +1,8 @@
-<?php namespace Tests\Entity;
+<?php
 
+namespace Tests\Entity;
+
+use BookStack\Auth\Role;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
@@ -9,7 +12,6 @@ use Tests\TestCase;
 
 class ExportTest extends TestCase
 {
-
     public function test_page_text_export()
     {
         $page = Page::query()->first();
@@ -133,7 +135,7 @@ class ExportTest extends TestCase
     {
         $page = Page::query()->first();
 
-        $customHeadContent = "<style>p{color: red;}</style>";
+        $customHeadContent = '<style>p{color: red;}</style>';
         $this->setSettings(['app-custom-head' => $customHeadContent]);
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
@@ -144,7 +146,7 @@ class ExportTest extends TestCase
     {
         $page = Page::query()->first();
 
-        $customHeadContent = "<!-- A comment -->";
+        $customHeadContent = '<!-- A comment -->';
         $this->setSettings(['app-custom-head' => $customHeadContent]);
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
@@ -209,8 +211,8 @@ class ExportTest extends TestCase
     {
         $page = Page::query()->first();
         $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg"/>'
-            .'<img src="http://localhost/uploads/svg_test.svg"/>'
-            .'<img src="/uploads/svg_test.svg"/>';
+            . '<img src="http://localhost/uploads/svg_test.svg"/>'
+            . '<img src="/uploads/svg_test.svg"/>';
         $storageDisk = Storage::disk('local');
         $storageDisk->makeDirectory('uploads/images/gallery');
         $storageDisk->put('uploads/images/gallery/svg_test.svg', '<svg>good</svg>');
@@ -259,4 +261,125 @@ class ExportTest extends TestCase
         $resp->assertDontSee('ExportWizardTheFifth');
     }
 
+    public function test_page_markdown_export()
+    {
+        $page = Page::query()->first();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertStatus(200);
+        $resp->assertSee($page->name);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.md"');
+    }
+
+    public function test_page_markdown_export_uses_existing_markdown_if_apparent()
+    {
+        $page = Page::query()->first()->forceFill([
+            'markdown' => '# A header',
+            'html'     => '<h1>Dogcat</h1>',
+        ]);
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertSee('A header');
+        $resp->assertDontSee('Dogcat');
+    }
+
+    public function test_page_markdown_export_converts_html_where_no_markdown()
+    {
+        $page = Page::query()->first()->forceFill([
+            'markdown' => '',
+            'html'     => '<h1>Dogcat</h1><p>Some <strong>bold</strong> text</p>',
+        ]);
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertSee("# Dogcat\n\nSome **bold** text");
+    }
+
+    public function test_page_markdown_export_does_not_convert_callouts()
+    {
+        $page = Page::query()->first()->forceFill([
+            'markdown' => '',
+            'html'     => '<h1>Dogcat</h1><p class="callout info">Some callout text</p><p>Another line</p>',
+        ]);
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertSee("# Dogcat\n\n<p class=\"callout info\">Some callout text</p>\n\nAnother line");
+    }
+
+    public function test_page_markdown_export_handles_bookstacks_wysiwyg_codeblock_format()
+    {
+        $page = Page::query()->first()->forceFill([
+            'markdown' => '',
+            'html'     => '<h1>Dogcat</h1>' . "\r\n" . '<pre id="bkmrk-var-a-%3D-%27cat%27%3B"><code class="language-JavaScript">var a = \'cat\';</code></pre><p>Another line</p>',
+        ]);
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
+        $resp->assertSee("# Dogcat\n\n```JavaScript\nvar a = 'cat';\n```\n\nAnother line");
+    }
+
+    public function test_chapter_markdown_export()
+    {
+        $chapter = Chapter::query()->first();
+        $page = $chapter->pages()->first();
+        $resp = $this->asEditor()->get($chapter->getUrl('/export/markdown'));
+
+        $resp->assertSee('# ' . $chapter->name);
+        $resp->assertSee('# ' . $page->name);
+    }
+
+    public function test_book_markdown_export()
+    {
+        $book = Book::query()->whereHas('pages')->whereHas('chapters')->first();
+        $chapter = $book->chapters()->first();
+        $page = $chapter->pages()->first();
+        $resp = $this->asEditor()->get($book->getUrl('/export/markdown'));
+
+        $resp->assertSee('# ' . $book->name);
+        $resp->assertSee('# ' . $chapter->name);
+        $resp->assertSee('# ' . $page->name);
+    }
+
+    public function test_export_option_only_visible_and_accessible_with_permission()
+    {
+        $book = Book::query()->whereHas('pages')->whereHas('chapters')->first();
+        $chapter = $book->chapters()->first();
+        $page = $chapter->pages()->first();
+        $entities = [$book, $chapter, $page];
+        $user = $this->getViewer();
+        $this->actingAs($user);
+
+        foreach ($entities as $entity) {
+            $resp = $this->get($entity->getUrl());
+            $resp->assertSee('/export/pdf');
+        }
+
+        /** @var Role $role */
+        $this->removePermissionFromUser($user, 'content-export');
+
+        foreach ($entities as $entity) {
+            $resp = $this->get($entity->getUrl());
+            $resp->assertDontSee('/export/pdf');
+            $resp = $this->get($entity->getUrl('/export/pdf'));
+            $this->assertPermissionError($resp);
+        }
+    }
+
+    public function test_wkhtmltopdf_only_used_when_allow_untrusted_is_true()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        config()->set('snappy.pdf.binary', '/abc123');
+        config()->set('app.allow_untrusted_server_fetching', false);
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/pdf'));
+        $resp->assertStatus(200); // Sucessful response with invalid snappy binary indicates dompdf usage.
+
+        config()->set('app.allow_untrusted_server_fetching', true);
+        $resp = $this->get($page->getUrl('/export/pdf'));
+        $resp->assertStatus(500); // Bad response indicates wkhtml usage
+    }
 }

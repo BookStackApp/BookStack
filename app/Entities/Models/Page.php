@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Models;
+<?php
+
+namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Uploads\Attachment;
@@ -9,29 +11,31 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Permissions;
 
 /**
- * Class Page
- * @property int $chapter_id
- * @property string $html
- * @property string $markdown
- * @property string $text
- * @property bool $template
- * @property bool $draft
- * @property int $revision_count
- * @property Chapter $chapter
+ * Class Page.
+ *
+ * @property int        $chapter_id
+ * @property string     $html
+ * @property string     $markdown
+ * @property string     $text
+ * @property bool       $template
+ * @property bool       $draft
+ * @property int        $revision_count
+ * @property Chapter    $chapter
  * @property Collection $attachments
  */
 class Page extends BookChild
 {
-    protected $fillable = ['name', 'priority', 'markdown'];
+    public static $listAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'text', 'created_at', 'updated_at'];
+    public static $contentAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'html', 'text', 'created_at', 'updated_at'];
 
-    protected $simpleAttributes = ['name', 'id', 'slug'];
+    protected $fillable = ['name', 'priority', 'markdown'];
 
     public $textField = 'text';
 
     protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot', 'deleted_at'];
 
     protected $casts = [
-        'draft' => 'boolean',
+        'draft'    => 'boolean',
         'template' => 'boolean',
     ];
 
@@ -41,22 +45,13 @@ class Page extends BookChild
     public function scopeVisible(Builder $query): Builder
     {
         $query = Permissions::enforceDraftVisibilityOnQuery($query);
+
         return parent::scopeVisible($query);
     }
 
     /**
-     * Converts this page into a simplified array.
-     * @return mixed
-     */
-    public function toSimpleArray()
-    {
-        $array = array_intersect_key($this->toArray(), array_flip($this->simpleAttributes));
-        $array['url'] = $this->getUrl();
-        return $array;
-    }
-
-    /**
      * Get the chapter that this page is in, If applicable.
+     *
      * @return BelongsTo
      */
     public function chapter()
@@ -66,6 +61,7 @@ class Page extends BookChild
 
     /**
      * Check if this page has a chapter.
+     *
      * @return bool
      */
     public function hasChapter()
@@ -96,6 +92,7 @@ class Page extends BookChild
 
     /**
      * Get the attachments assigned to this page.
+     *
      * @return HasMany
      */
     public function attachments()
@@ -110,7 +107,7 @@ class Page extends BookChild
     {
         $parts = [
             'books',
-            urlencode($this->getAttribute('bookSlug') ?? $this->book->slug),
+            urlencode($this->book_slug ?? $this->book->slug),
             $this->draft ? 'draft' : 'page',
             $this->draft ? $this->id : urlencode($this->slug),
             trim($path, '/'),
@@ -120,7 +117,8 @@ class Page extends BookChild
     }
 
     /**
-     * Get the current revision for the page if existing
+     * Get the current revision for the page if existing.
+     *
      * @return PageRevision|null
      */
     public function getCurrentRevision()
@@ -136,6 +134,7 @@ class Page extends BookChild
         $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
         $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
         $refreshed->html = (new PageContent($refreshed))->render();
+
         return $refreshed;
     }
 }

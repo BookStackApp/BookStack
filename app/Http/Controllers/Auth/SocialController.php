@@ -2,48 +2,53 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\SocialDriverNotConfigured;
 use BookStack\Exceptions\SocialSignInAccountNotUsed;
 use BookStack\Exceptions\SocialSignInException;
 use BookStack\Exceptions\UserRegistrationException;
-use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Theming\ThemeEvents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialController extends Controller
 {
-
     protected $socialAuthService;
     protected $registrationService;
+    protected $loginService;
 
     /**
      * SocialController constructor.
      */
-    public function __construct(SocialAuthService $socialAuthService, RegistrationService $registrationService)
-    {
+    public function __construct(
+        SocialAuthService $socialAuthService,
+        RegistrationService $registrationService,
+        LoginService $loginService
+    ) {
         $this->middleware('guest')->only(['getRegister', 'postRegister']);
         $this->socialAuthService = $socialAuthService;
         $this->registrationService = $registrationService;
+        $this->loginService = $loginService;
     }
 
     /**
      * Redirect to the relevant social site.
+     *
      * @throws SocialDriverNotConfigured
      */
     public function login(string $socialDriver)
     {
         session()->put('social-callback', 'login');
+
         return $this->socialAuthService->startLogIn($socialDriver);
     }
 
     /**
      * Redirect to the social site for authentication intended to register.
+     *
      * @throws SocialDriverNotConfigured
      * @throws UserRegistrationException
      */
@@ -51,11 +56,13 @@ class SocialController extends Controller
     {
         $this->registrationService->ensureRegistrationAllowed();
         session()->put('social-callback', 'register');
+
         return $this->socialAuthService->startRegister($socialDriver);
     }
 
     /**
      * The callback for social login services.
+     *
      * @throws SocialSignInException
      * @throws SocialDriverNotConfigured
      * @throws UserRegistrationException
@@ -70,7 +77,7 @@ class SocialController extends Controller
         if ($request->has('error') && $request->has('error_description')) {
             throw new SocialSignInException(trans('errors.social_login_bad_response', [
                 'socialAccount' => $socialDriver,
-                'error' => $request->get('error_description'),
+                'error'         => $request->get('error_description'),
             ]), '/login');
         }
 
@@ -85,6 +92,7 @@ class SocialController extends Controller
                 if ($this->socialAuthService->driverAutoRegisterEnabled($socialDriver)) {
                     return $this->socialRegisterCallback($socialDriver, $socialUser);
                 }
+
                 throw $exception;
             }
         }
@@ -103,11 +111,13 @@ class SocialController extends Controller
     {
         $this->socialAuthService->detachSocialAccount($socialDriver);
         session()->flash('success', trans('settings.users_social_disconnected', ['socialAccount' => Str::title($socialDriver)]));
+
         return redirect(user()->getEditUrl());
     }
 
     /**
      * Register a new user after a registration callback.
+     *
      * @throws UserRegistrationException
      */
     protected function socialRegisterCallback(string $socialDriver, SocialUser $socialUser)
@@ -118,9 +128,9 @@ class SocialController extends Controller
 
         // Create an array of the user data to create a new user instance
         $userData = [
-            'name' => $socialUser->getName(),
-            'email' => $socialUser->getEmail(),
-            'password' => Str::random(32)
+            'name'     => $socialUser->getName(),
+            'email'    => $socialUser->getEmail(),
+            'password' => Str::random(32),
         ];
 
         // Take name from email address if empty
@@ -129,11 +139,9 @@ class SocialController extends Controller
         }
 
         $user = $this->registrationService->registerUser($userData, $socialAccount, $emailVerified);
-        auth()->login($user);
-        Theme::dispatch(ThemeEvents::AUTH_LOGIN, $socialDriver, $user);
-        $this->logActivity(ActivityType::AUTH_LOGIN, $user);
-
         $this->showSuccessNotification(trans('auth.register_success'));
+        $this->loginService->login($user, $socialDriver);
+
         return redirect('/');
     }
 }

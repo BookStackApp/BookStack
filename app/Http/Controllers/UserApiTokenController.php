@@ -1,4 +1,6 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Api\ApiToken;
@@ -9,7 +11,6 @@ use Illuminate\Support\Str;
 
 class UserApiTokenController extends Controller
 {
-
     /**
      * Show the form to create a new API token.
      */
@@ -20,6 +21,7 @@ class UserApiTokenController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $user = User::query()->findOrFail($userId);
+
         return view('users.api-tokens.create', [
             'user' => $user,
         ]);
@@ -34,7 +36,7 @@ class UserApiTokenController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $this->validate($request, [
-            'name' => 'required|max:250',
+            'name'       => 'required|max:250',
             'expires_at' => 'date_format:Y-m-d',
         ]);
 
@@ -42,10 +44,10 @@ class UserApiTokenController extends Controller
         $secret = Str::random(32);
 
         $token = (new ApiToken())->forceFill([
-            'name' => $request->get('name'),
-            'token_id' => Str::random(32),
-            'secret' => Hash::make($secret),
-            'user_id' => $user->id,
+            'name'       => $request->get('name'),
+            'token_id'   => Str::random(32),
+            'secret'     => Hash::make($secret),
+            'user_id'    => $user->id,
             'expires_at' => $request->get('expires_at') ?: ApiToken::defaultExpiry(),
         ]);
 
@@ -71,9 +73,9 @@ class UserApiTokenController extends Controller
         $secret = session()->pull('api-token-secret:' . $token->id, null);
 
         return view('users.api-tokens.edit', [
-            'user' => $user,
-            'token' => $token,
-            'model' => $token,
+            'user'   => $user,
+            'token'  => $token,
+            'model'  => $token,
             'secret' => $secret,
         ]);
     }
@@ -84,18 +86,19 @@ class UserApiTokenController extends Controller
     public function update(Request $request, int $userId, int $tokenId)
     {
         $this->validate($request, [
-            'name' => 'required|max:250',
+            'name'       => 'required|max:250',
             'expires_at' => 'date_format:Y-m-d',
         ]);
 
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
         $token->fill([
-            'name' => $request->get('name'),
+            'name'       => $request->get('name'),
             'expires_at' => $request->get('expires_at') ?: ApiToken::defaultExpiry(),
         ])->save();
 
         $this->showSuccessNotification(trans('settings.user_api_token_update_success'));
         $this->logActivity(ActivityType::API_TOKEN_UPDATE, $token);
+
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
 
@@ -105,8 +108,9 @@ class UserApiTokenController extends Controller
     public function delete(int $userId, int $tokenId)
     {
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
+
         return view('users.api-tokens.delete', [
-            'user' => $user,
+            'user'  => $user,
             'token' => $token,
         ]);
     }
@@ -138,6 +142,7 @@ class UserApiTokenController extends Controller
 
         $user = User::query()->findOrFail($userId);
         $token = ApiToken::query()->where('user_id', '=', $user->id)->where('id', '=', $tokenId)->firstOrFail();
+
         return [$user, $token];
     }
 }

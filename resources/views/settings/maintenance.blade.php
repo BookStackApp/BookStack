@@ -1,9 +1,9 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
 <div class="container small">
 
-    @include('settings.navbar-with-version', ['selected' => 'maintenance'])
+    @include('settings.parts.navbar-with-version', ['selected' => 'maintenance'])
 
     <div class="card content-wrap auto-height pb-xl">
         <h2 class="list-heading">{{ trans('settings.recycle_bin') }}</h2>

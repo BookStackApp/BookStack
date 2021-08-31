@@ -1,4 +1,4 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container small pt-xl">
@@ -6,7 +6,7 @@
             <h1 class="list-heading">{{ $title }}</h1>
 
             <div class="book-contents">
-                @include('partials.entity-list', ['entities' => $entities, 'style' => 'detailed'])
+                @include('entities.list', ['entities' => $entities, 'style' => 'detailed'])
             </div>
 
             <div class="text-right">

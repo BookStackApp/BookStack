@@ -1,10 +1,10 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container small">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'roles'])
+            @include('settings.parts.navbar', ['selected' => 'roles'])
         </div>
 
         <div class="card content-wrap auto-height">

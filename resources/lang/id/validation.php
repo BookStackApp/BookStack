@@ -15,6 +15,7 @@ return [
     'alpha_dash'           => ':attribute hanya boleh berisi huruf, angka, tanda hubung, dan garis bawah.',
     'alpha_num'            => ':attribute hanya boleh berisi huruf dan angka.',
     'array'                => ':attribute harus berupa larik.',
+    'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => ':attribute harus tanggal sebelum :date.',
     'between'              => [
         'numeric' => ':attribute harus di antara :min dan :max.',
@@ -98,6 +99,7 @@ return [
     ],
     'string'               => ':attribute harus berupa string.',
     'timezone'             => ':attribute harus menjadi zona yang valid.',
+    'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => ':attribute sudah diambil.',
     'url'                  => ':attribute format tidak valid.',
     'uploaded'             => 'Berkas tidak dapat diunggah. Server mungkin tidak menerima berkas dengan ukuran ini.',

@@ -1,5 +1,8 @@
-<?php namespace Tests\Auth;
+<?php
 
+namespace Tests\Auth;
+
+use BookStack\Auth\Access\Mfa\MfaSession;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
@@ -14,7 +17,6 @@ use Tests\BrowserKitTest;
 
 class AuthTest extends BrowserKitTest
 {
-
     public function test_auth_working()
     {
         $this->visit('/')
@@ -130,15 +132,16 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm/awaiting')
             ->see('Resend')
             ->visit('/books')
-            ->seePageIs('/register/confirm/awaiting')
+            ->seePageIs('/login')
+            ->visit('/register/confirm/awaiting')
             ->press('Resend Confirmation Email');
 
         // Get confirmation and confirm notification matches
         $emailConfirmation = DB::table('email_confirmations')->where('user_id', '=', $dbUser->id)->first();
-        Notification::assertSentTo($dbUser, ConfirmEmail::class, function($notification, $channels) use ($emailConfirmation) {
+        Notification::assertSentTo($dbUser, ConfirmEmail::class, function ($notification, $channels) use ($emailConfirmation) {
             return $notification->token === $emailConfirmation->token;
         });
-        
+
         // Check confirmation email confirmation activation.
         $this->visit('/register/confirm/' . $emailConfirmation->token)
             ->seePageIs('/')
@@ -171,10 +174,7 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
-        $this->visit('/')
-            ->seePageIs('/register/confirm/awaiting');
-
-        auth()->logout();
+        $this->assertNull(auth()->user());
 
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
@@ -208,10 +208,8 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/register/confirm')
             ->seeInDatabase('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
-        $this->visit('/')
-            ->seePageIs('/register/confirm/awaiting');
+        $this->assertNull(auth()->user());
 
-        auth()->logout();
         $this->visit('/')->seePageIs('/login')
             ->type($user->email, '#email')
             ->type($user->password, '#password')
@@ -278,8 +276,8 @@ class AuthTest extends BrowserKitTest
             ->press('Save')
             ->seePageIs('/settings/users');
 
-            $userPassword = User::find($user->id)->password;
-            $this->assertTrue(Hash::check('newpassword', $userPassword));
+        $userPassword = User::find($user->id)->password;
+        $this->assertTrue(Hash::check('newpassword', $userPassword));
     }
 
     public function test_user_deletion()
@@ -329,6 +327,18 @@ class AuthTest extends BrowserKitTest
             ->seePageIs('/login');
     }
 
+    public function test_mfa_session_cleared_on_logout()
+    {
+        $user = $this->getEditor();
+        $mfaSession = $this->app->make(MfaSession::class);
+
+        $mfaSession->markVerifiedForUser($user);
+        $this->assertTrue($mfaSession->isVerifiedForUser($user));
+
+        $this->asAdmin()->visit('/logout');
+        $this->assertFalse($mfaSession->isVerifiedForUser($user));
+    }
+
     public function test_reset_password_flow()
     {
         Notification::fake();
@@ -340,7 +350,7 @@ class AuthTest extends BrowserKitTest
             ->see('A password reset link will be sent to admin@admin.com if that email address is found in the system.');
 
         $this->seeInDatabase('password_resets', [
-            'email' => 'admin@admin.com'
+            'email' => 'admin@admin.com',
         ]);
 
         $user = User::where('email', '=', 'admin@admin.com')->first();
@@ -351,9 +361,9 @@ class AuthTest extends BrowserKitTest
         $this->visit('/password/reset/' . $n->first()->token)
             ->see('Reset Password')
             ->submitForm('Reset Password', [
-                'email' => 'admin@admin.com',
-                'password' => 'randompass',
-                'password_confirmation' => 'randompass'
+                'email'                 => 'admin@admin.com',
+                'password'              => 'randompass',
+                'password_confirmation' => 'randompass',
             ])->seePageIs('/')
             ->see('Your password has been successfully reset');
     }
@@ -367,13 +377,12 @@ class AuthTest extends BrowserKitTest
             ->see('A password reset link will be sent to barry@admin.com if that email address is found in the system.')
             ->dontSee('We can\'t find a user');
 
-
         $this->visit('/password/reset/arandometokenvalue')
             ->see('Reset Password')
             ->submitForm('Reset Password', [
-                'email' => 'barry@admin.com',
-                'password' => 'randompass',
-                'password_confirmation' => 'randompass'
+                'email'                 => 'barry@admin.com',
+                'password'              => 'randompass',
+                'password_confirmation' => 'randompass',
             ])->followRedirects()
             ->seePageIs('/password/reset/arandometokenvalue')
             ->dontSee('We can\'t find a user')
@@ -410,6 +419,14 @@ class AuthTest extends BrowserKitTest
         $login->assertRedirectedTo('http://localhost');
     }
 
+    public function test_login_intended_redirect_does_not_factor_mfa_routes()
+    {
+        $this->get('/books')->assertRedirectedTo('/login');
+        $this->get('/mfa/setup')->assertRedirectedTo('/login');
+        $login = $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+        $login->assertRedirectedTo('/books');
+    }
+
     public function test_login_authenticates_admins_on_all_guards()
     {
         $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
@@ -442,8 +459,24 @@ class AuthTest extends BrowserKitTest
         $this->assertFalse($log->hasWarningThatContains('Failed login for admin@admin.com'));
     }
 
+    public function test_logged_in_user_with_unconfirmed_email_is_logged_out()
+    {
+        $this->setSettings(['registration-confirmation' => 'true']);
+        $user = $this->getEditor();
+        $user->email_confirmed = false;
+        $user->save();
+
+        auth()->login($user);
+        $this->assertTrue(auth()->check());
+
+        $this->get('/books');
+        $this->assertRedirectedTo('/');
+
+        $this->assertFalse(auth()->check());
+    }
+
     /**
-     * Perform a login
+     * Perform a login.
      */
     protected function login(string $email, string $password): AuthTest
     {

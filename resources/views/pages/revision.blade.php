@@ -1,10 +1,10 @@
-@extends('tri-layout')
+@extends('layouts.tri')
 
 @section('left')
     <div id="revision-details" class="entity-details mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="body text-small text-muted">
-            @include('partials.entity-meta', ['entity' => $revision])
+            @include('entities.meta', ['entity' => $revision])
         </div>
     </div>
 @stop
@@ -12,7 +12,7 @@
 @section('body')
 
     <div class="mb-m print-hidden">
-        @include('partials.breadcrumbs', ['crumbs' => [
+        @include('entities.breadcrumbs', ['crumbs' => [
             $page->$book,
             $page->chapter,
             $page,
@@ -27,7 +27,7 @@
 
     <main class="card content-wrap">
         <div class="page-content page-revision">
-            @include('pages.page-display')
+            @include('pages.parts.page-display')
         </div>
     </main>
 

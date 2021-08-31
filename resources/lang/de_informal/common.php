@@ -39,11 +39,12 @@ return [
     'reset' => 'Zurücksetzen',
     'remove' => 'Entfernen',
     'add' => 'Hinzufügen',
+    'configure' => 'Configure',
     'fullscreen' => 'Vollbild',
     'favourite' => 'Favorit',
     'unfavourite' => 'Kein Favorit',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'next' => 'Nächste',
+    'previous' => 'Vorheriges',
 
     // Sort Options
     'sort_options' => 'Sortieroptionen',
@@ -60,6 +61,7 @@ return [
     'no_activity' => 'Keine Aktivitäten zum Anzeigen',
     'no_items' => 'Keine Einträge gefunden.',
     'back_to_top' => 'nach oben',
+    'skip_to_main_content' => 'Direkt zum Hauptinhalt',
     'toggle_details' => 'Details zeigen/verstecken',
     'toggle_thumbnails' => 'Thumbnails zeigen/verstecken',
     'details' => 'Details',

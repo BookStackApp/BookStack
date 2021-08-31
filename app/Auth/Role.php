@@ -1,4 +1,6 @@
-<?php namespace BookStack\Auth;
+<?php
+
+namespace BookStack\Auth;
 
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\RolePermission;
@@ -9,16 +11,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Role
- * @property int $id
+ * Class Role.
+ *
+ * @property int    $id
  * @property string $display_name
  * @property string $description
  * @property string $external_auth_id
  * @property string $system_name
+ * @property bool   $mfa_enforced
  */
 class Role extends Model implements Loggable
 {
-
     protected $fillable = ['display_name', 'description', 'external_auth_id'];
 
     /**
@@ -56,6 +59,7 @@ class Role extends Model implements Loggable
                 return true;
             }
         }
+
         return false;
     }
 

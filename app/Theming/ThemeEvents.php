@@ -1,4 +1,6 @@
-<?php namespace BookStack\Theming;
+<?php
+
+namespace BookStack\Theming;
 
 /**
  * The ThemeEvents used within BookStack.
@@ -16,6 +18,7 @@ class ThemeEvents
     /**
      * Application boot-up.
      * After main services are registered.
+     *
      * @param \BookStack\Application $app
      */
     const APP_BOOT = 'app_boot';
@@ -26,6 +29,7 @@ class ThemeEvents
      * that depend on the current session user (Localization for example).
      * Provides the original request to use.
      * Return values, if provided, will be used as a new response to use.
+     *
      * @param \Illuminate\Http\Request $request
      * @returns \Illuminate\Http\Response|null
      */
@@ -36,7 +40,9 @@ class ThemeEvents
      * Runs after the request is handled but before the response is sent.
      * Provides both the original request and the currently resolved response.
      * Return values, if provided, will be used as a new response to use.
-     * @param \Illuminate\Http\Request $request
+     *
+     * @param \Illuminate\Http\Request                                                      $request
+     * @param \Illuminate\Http\Response|Symfony\Component\HttpFoundation\BinaryFileResponse $response
      * @returns \Illuminate\Http\Response|null
      */
     const WEB_MIDDLEWARE_AFTER = 'web_middleware_after';
@@ -46,7 +52,8 @@ class ThemeEvents
      * Runs right after a user is logged-in to the application by any authentication
      * system as a standard app user. This includes a user becoming logged in
      * after registration. This is not emitted upon API usage.
-     * @param string $authSystem
+     *
+     * @param string               $authSystem
      * @param \BookStack\Auth\User $user
      */
     const AUTH_LOGIN = 'auth_login';
@@ -56,7 +63,8 @@ class ThemeEvents
      * Runs right after a user is newly registered to the application by any authentication
      * system as a standard app user. This includes auto-registration systems used
      * by LDAP, SAML and social systems. It only includes self-registrations.
-     * @param string $authSystem
+     *
+     * @param string               $authSystem
      * @param \BookStack\Auth\User $user
      */
     const AUTH_REGISTER = 'auth_register';
@@ -66,6 +74,7 @@ class ThemeEvents
      * Provides the commonmark library environment for customization
      * before its used to render markdown content.
      * If the listener returns a non-null value, that will be used as an environment instead.
+     *
      * @param \League\CommonMark\ConfigurableEnvironmentInterface $environment
      * @returns \League\CommonMark\ConfigurableEnvironmentInterface|null
      */

@@ -1,16 +1,20 @@
-<?php namespace BookStack\Entities\Tools;
+<?php
+
+namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\Markdown\CustomListItemRenderer;
 use BookStack\Entities\Tools\Markdown\CustomStrikeThroughExtension;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
-use BookStack\Util\HtmlContentFilter;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Util\HtmlContentFilter;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
 use Illuminate\Support\Str;
+use League\CommonMark\Block\Element\ListItem;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Table\TableExtension;
@@ -18,7 +22,6 @@ use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 class PageContent
 {
-
     protected $page;
 
     /**
@@ -62,11 +65,14 @@ class PageContent
         $environment->addExtension(new CustomStrikeThroughExtension());
         $environment = Theme::dispatch(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $environment) ?? $environment;
         $converter = new CommonMarkConverter([], $environment);
+
+        $environment->addBlockRenderer(ListItem::class, new CustomListItemRenderer(), 10);
+
         return $converter->convertToHtml($markdown);
     }
 
     /**
-     * Convert all base64 image data to saved images
+     * Convert all base64 image data to saved images.
      */
     public function extractBase64Images(Page $page, string $htmlText): string
     {
@@ -97,6 +103,7 @@ class PageContent
 
             // Save image from data with a random name
             $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
+
             try {
                 $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $page->id);
                 $imageNode->setAttribute('src', $image->url);
@@ -171,7 +178,7 @@ class PageContent
     /**
      * Set a unique id on the given DOMElement.
      * A map for existing ID's should be passed in to check for current existence.
-     * Returns a pair of strings in the format [old_id, new_id]
+     * Returns a pair of strings in the format [old_id, new_id].
      */
     protected function setUniqueId(\DOMNode $element, array &$idMap): array
     {
@@ -183,6 +190,7 @@ class PageContent
         $existingId = $element->getAttribute('id');
         if (strpos($existingId, 'bkmrk') === 0 && !isset($idMap[$existingId])) {
             $idMap[$existingId] = true;
+
             return [$existingId, $existingId];
         }
 
@@ -200,6 +208,7 @@ class PageContent
 
         $element->setAttribute('id', $newId);
         $idMap[$newId] = true;
+
         return [$existingId, $newId];
     }
 
@@ -209,15 +218,16 @@ class PageContent
     protected function toPlainText(): string
     {
         $html = $this->render(true);
+
         return html_entity_decode(strip_tags($html));
     }
 
     /**
-     * Render the page for viewing
+     * Render the page for viewing.
      */
     public function render(bool $blankIncludes = false): string
     {
-        $content = $this->page->html;
+        $content = $this->page->html ?? '';
 
         if (!config('app.allow_content_scripts')) {
             $content = HtmlContentFilter::removeScripts($content);
@@ -233,7 +243,7 @@ class PageContent
     }
 
     /**
-     * Parse the headers on the page to get a navigation menu
+     * Parse the headers on the page to get a navigation menu.
      */
     public function getNavigation(string $htmlContent): array
     {
@@ -243,7 +253,7 @@ class PageContent
 
         $doc = $this->loadDocumentFromHtml($htmlContent);
         $xPath = new DOMXPath($doc);
-        $headers = $xPath->query("//h1|//h2|//h3|//h4|//h5|//h6");
+        $headers = $xPath->query('//h1|//h2|//h3|//h4|//h5|//h6');
 
         return $headers ? $this->headerNodesToLevelList($headers) : [];
     }
@@ -260,9 +270,9 @@ class PageContent
 
             return [
                 'nodeName' => strtolower($header->nodeName),
-                'level' => intval(str_replace('h', '', $header->nodeName)),
-                'link' => '#' . $header->getAttribute('id'),
-                'text' => $text,
+                'level'    => intval(str_replace('h', '', $header->nodeName)),
+                'link'     => '#' . $header->getAttribute('id'),
+                'text'     => $text,
             ];
         })->filter(function ($header) {
             return mb_strlen($header['text']) > 0;
@@ -272,6 +282,7 @@ class PageContent
         $levelChange = ($tree->pluck('level')->min() - 1);
         $tree = $tree->map(function ($header) use ($levelChange) {
             $header['level'] -= ($levelChange);
+
             return $header;
         });
 
@@ -325,7 +336,6 @@ class PageContent
         return $html;
     }
 
-
     /**
      * Fetch the content from a specific section of the given page.
      */
@@ -365,6 +375,7 @@ class PageContent
         $doc = new DOMDocument();
         $html = '<body>' . $html . '</body>';
         $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+
         return $doc;
     }
 }

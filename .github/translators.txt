@@ -167,3 +167,19 @@ whenwesober :: Indonesian
 Rem (remkovdhoef) :: Dutch
 syn7ax69 :: Bulgarian; Turkish
 Blaade :: French
+Behzad HosseinPoor (behzad.hp) :: Persian
+Ole Aldric (Swoy) :: Norwegian Bokmal
+fharis arabia (raednahdi) :: Arabic
+Alexander Predl (Harveyhase68) :: German
+Rem (Rem9000) :: Dutch
+Michał Stelmach (stelmach-web) :: Polish
+arniom :: French
+REMOVED_USER :: Turkish
+林祖年 (contagion) :: Chinese Traditional
+Siamak Guodarzi (siamakgoudarzi88) :: Persian
+Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
+Nathanaël (nathanaelhoun) :: French
+A Ibnu Hibban (abd.ibnuhibban) :: Indonesian
+Frost-ZX :: Chinese Simplified
+Kuzma Simonov (ovmach) :: Russian
+Vojtěch Krystek (acantophis) :: Czech

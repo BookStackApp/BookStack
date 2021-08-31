@@ -1,12 +1,14 @@
-<?php namespace BookStack\Http\Controllers;
+<?php
+
+namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Deletion;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\TrashCan;
 
 class RecycleBinController extends Controller
 {
-
     protected $recycleBinBaseUrl = '/settings/recycle-bin';
 
     /**
@@ -18,10 +20,10 @@ class RecycleBinController extends Controller
         $this->middleware(function ($request, $next) {
             $this->checkPermission('settings-manage');
             $this->checkPermission('restrictions-manage-all');
+
             return $next($request);
         });
     }
-
 
     /**
      * Show the top-level listing for the recycle bin.
@@ -31,6 +33,7 @@ class RecycleBinController extends Controller
         $deletions = Deletion::query()->with(['deletable', 'deleter'])->paginate(10);
 
         $this->setPageTitle(trans('settings.recycle_bin'));
+
         return view('settings.recycle-bin.index', [
             'deletions' => $deletions,
         ]);
@@ -44,13 +47,29 @@ class RecycleBinController extends Controller
         /** @var Deletion $deletion */
         $deletion = Deletion::query()->findOrFail($id);
 
+        // Walk the parent chain to find any cascading parent deletions
+        $currentDeletable = $deletion->deletable;
+        $searching = true;
+        while ($searching && $currentDeletable instanceof Entity) {
+            $parent = $currentDeletable->getParent();
+            if ($parent && $parent->trashed()) {
+                $currentDeletable = $parent;
+            } else {
+                $searching = false;
+            }
+        }
+        /** @var ?Deletion $parentDeletion */
+        $parentDeletion = ($currentDeletable === $deletion->deletable) ? null : $currentDeletable->deletions()->first();
+
         return view('settings.recycle-bin.restore', [
-            'deletion' => $deletion,
+            'deletion'       => $deletion,
+            'parentDeletion' => $parentDeletion,
         ]);
     }
 
     /**
      * Restore the element attached to the given deletion.
+     *
      * @throws \Exception
      */
     public function restore(string $id)
@@ -61,6 +80,7 @@ class RecycleBinController extends Controller
         $restoreCount = (new TrashCan())->restoreFromDeletion($deletion);
 
         $this->showSuccessNotification(trans('settings.recycle_bin_restore_notification', ['count' => $restoreCount]));
+
         return redirect($this->recycleBinBaseUrl);
     }
 
@@ -79,6 +99,7 @@ class RecycleBinController extends Controller
 
     /**
      * Permanently delete the content associated with the given deletion.
+     *
      * @throws \Exception
      */
     public function destroy(string $id)
@@ -89,11 +110,13 @@ class RecycleBinController extends Controller
         $deleteCount = (new TrashCan())->destroyFromDeletion($deletion);
 
         $this->showSuccessNotification(trans('settings.recycle_bin_destroy_notification', ['count' => $deleteCount]));
+
         return redirect($this->recycleBinBaseUrl);
     }
 
     /**
      * Empty out the recycle bin.
+     *
      * @throws \Exception
      */
     public function empty()
@@ -102,6 +125,7 @@ class RecycleBinController extends Controller
 
         $this->logActivity(ActivityType::RECYCLE_BIN_EMPTY);
         $this->showSuccessNotification(trans('settings.recycle_bin_destroy_notification', ['count' => $deleteCount]));
+
         return redirect($this->recycleBinBaseUrl);
     }
 }

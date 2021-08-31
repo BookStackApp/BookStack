@@ -1,10 +1,10 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container small">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'users'])
+            @include('settings.parts.navbar', ['selected' => 'users'])
         </div>
 
         <section class="card content-wrap">
@@ -14,7 +14,7 @@
                 <input type="hidden" name="_method" value="PUT">
 
                 <div class="setting-list">
-                    @include('users.form', ['model' => $user, 'authMethod' => $authMethod])
+                    @include('users.parts.form', ['model' => $user, 'authMethod' => $authMethod])
 
                     <div class="grid half gap-xl">
                         <div>
@@ -22,7 +22,7 @@
                             <p class="small">{{ trans('settings.users_avatar_desc') }}</p>
                         </div>
                         <div>
-                            @include('components.image-picker', [
+                            @include('form.image-picker', [
                                 'resizeHeight' => '512',
                                 'resizeWidth' => '512',
                                 'showRemove' => false,
@@ -63,6 +63,27 @@
             </form>
         </section>
 
+        <section class="card content-wrap auto-height">
+            <h2 class="list-heading">{{ trans('settings.users_mfa') }}</h2>
+            <p>{{ trans('settings.users_mfa_desc') }}</p>
+            <div class="grid half gap-xl v-center pb-s">
+                <div>
+                    @if ($mfaMethods->count() > 0)
+                        <span class="text-pos">@icon('check-circle')</span>
+                    @else
+                        <span class="text-neg">@icon('cancel')</span>
+                    @endif
+                    {{ trans_choice('settings.users_mfa_x_methods', $mfaMethods->count()) }}
+                </div>
+                <div class="text-m-right">
+                    @if($user->id === user()->id)
+                        <a href="{{ url('/mfa/setup')  }}" class="button outline">{{ trans('settings.users_mfa_configure') }}</a>
+                    @endif
+                </div>
+            </div>
+
+        </section>
+
         @if(user()->id === $user->id && count($activeSocialDrivers) > 0)
             <section class="card content-wrap auto-height">
                 <h2 class="list-heading">{{ trans('settings.users_social_accounts') }}</h2>
@@ -92,7 +113,7 @@
         @endif
 
         @if((user()->id === $user->id && userCan('access-api')) || userCan('users-manage'))
-            @include('users.api-tokens.list', ['user' => $user])
+            @include('users.api-tokens.parts.list', ['user' => $user])
         @endif
     </div>
 

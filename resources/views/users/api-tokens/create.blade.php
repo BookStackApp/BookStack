@@ -1,4 +1,4 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
 
@@ -11,7 +11,7 @@
                 {!! csrf_field() !!}
 
                 <div class="setting-list">
-                    @include('users.api-tokens.form')
+                    @include('users.api-tokens.parts.form')
 
                     <div>
                         <p class="text-warn italic">

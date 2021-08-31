@@ -1,4 +1,4 @@
-@extends('tri-layout')
+@extends('layouts.tri')
 
 @section('container-attrs')
     component="entity-search"
@@ -6,10 +6,14 @@
     option:entity-search:entity-type="chapter"
 @stop
 
+@push('social-meta')
+    <meta property="og:description" content="{{ Str::limit($chapter->description, 100, '...') }}">
+@endpush
+
 @section('body')
 
     <div class="mb-m print-hidden">
-        @include('partials.breadcrumbs', ['crumbs' => [
+        @include('entities.breadcrumbs', ['crumbs' => [
             $chapter->book,
             $chapter,
         ]])
@@ -22,7 +26,7 @@
             @if(count($pages) > 0)
                 <div class="entity-list book-contents">
                     @foreach($pages as $page)
-                        @include('pages.list-item', ['page' => $page])
+                        @include('pages.parts.list-item', ['page' => $page])
                     @endforeach
                 </div>
             @else
@@ -49,10 +53,10 @@
             @endif
         </div>
 
-        @include('partials.entity-search-results')
+        @include('entities.search-results')
     </main>
 
-    @include('partials.entity-sibling-navigation', ['next' => $next, 'previous' => $previous])
+    @include('entities.sibling-navigation', ['next' => $next, 'previous' => $previous])
 
 @stop
 
@@ -61,7 +65,7 @@
     <div class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links text-small text-muted">
-            @include('partials.entity-meta', ['entity' => $chapter])
+            @include('entities.meta', ['entity' => $chapter])
 
             @if($book->restricted)
                 <div class="active-restriction">
@@ -126,24 +130,26 @@
             <hr class="primary-background"/>
 
             @if(signedInUser())
-                @include('partials.entity-favourite-action', ['entity' => $chapter])
+                @include('entities.favourite-action', ['entity' => $chapter])
             @endif
-            @include('partials.entity-export-menu', ['entity' => $chapter])
+            @if(userCan('content-export'))
+                @include('entities.export-menu', ['entity' => $chapter])
+            @endif
         </div>
     </div>
 @stop
 
 @section('left')
 
-    @include('partials.entity-search-form', ['label' => trans('entities.chapters_search_this')])
+    @include('entities.search-form', ['label' => trans('entities.chapters_search_this')])
 
     @if($chapter->tags->count() > 0)
         <div class="mb-xl">
-            @include('components.tag-list', ['entity' => $chapter])
+            @include('entities.tag-list', ['entity' => $chapter])
         </div>
     @endif
 
-    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @include('entities.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
 @stop
 
 

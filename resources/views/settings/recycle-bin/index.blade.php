@@ -1,10 +1,10 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'maintenance'])
+            @include('settings.parts.navbar', ['selected' => 'maintenance'])
         </div>
 
         <div class="card content-wrap auto-height">
@@ -39,14 +39,15 @@
 
             <table class="table">
                 <tr>
-                    <th width="50%">{{ trans('settings.recycle_bin_deleted_item') }}</th>
+                    <th width="30%">{{ trans('settings.recycle_bin_deleted_item') }}</th>
+                    <th width="20%">{{ trans('settings.recycle_bin_deleted_parent') }}</th>
                     <th width="20%">{{ trans('settings.recycle_bin_deleted_by') }}</th>
                     <th width="15%">{{ trans('settings.recycle_bin_deleted_at') }}</th>
                     <th width="15%"></th>
                 </tr>
                 @if(count($deletions) === 0)
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <p class="text-muted"><em>{{ trans('settings.recycle_bin_contents_empty') }}</em></p>
                         </td>
                     </tr>
@@ -78,14 +79,24 @@
                         </div>
                         @endif
                     </td>
-                    <td>@include('partials.table-user', ['user' => $deletion->deleter, 'user_id' => $deletion->deleted_by])</td>
+                    <td>
+                        @if($deletion->deletable->getParent())
+                        <div class="table-entity-item">
+                            <span role="presentation" class="icon text-{{$deletion->deletable->getParent()->getType()}}">@icon($deletion->deletable->getParent()->getType())</span>
+                            <div class="text-{{ $deletion->deletable->getParent()->getType() }}">
+                                {{ $deletion->deletable->getParent()->name }}
+                            </div>
+                        </div>
+                        @endif
+                    </td>
+                    <td>@include('settings.parts.table-user', ['user' => $deletion->deleter, 'user_id' => $deletion->deleted_by])</td>
                     <td width="200">{{ $deletion->created_at }}</td>
                     <td width="150" class="text-right">
                         <div component="dropdown" class="dropdown-container">
                             <button type="button" refs="dropdown@toggle" class="button outline">{{ trans('common.actions') }}</button>
                             <ul refs="dropdown@menu" class="dropdown-menu">
-                                <li><a class="block" href="{{ url('/settings/recycle-bin/'.$deletion->id.'/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
-                                <li><a class="block" href="{{ url('/settings/recycle-bin/'.$deletion->id.'/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
+                                <li><a class="block" href="{{ $deletion->getUrl('/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
+                                <li><a class="block" href="{{ $deletion->getUrl('/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
                             </ul>
                         </div>
                     </td>

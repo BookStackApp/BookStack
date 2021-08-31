@@ -34,9 +34,9 @@ class DummyContentSeeder extends Seeder
         $byData = ['created_by' => $editorUser->id, 'updated_by' => $editorUser->id, 'owned_by' => $editorUser->id];
 
         factory(\BookStack\Entities\Models\Book::class, 5)->create($byData)
-            ->each(function($book) use ($editorUser, $byData) {
+            ->each(function ($book) use ($byData) {
                 $chapters = factory(Chapter::class, 3)->create($byData)
-                    ->each(function($chapter) use ($editorUser, $book, $byData){
+                    ->each(function ($chapter) use ($book, $byData) {
                         $pages = factory(Page::class, 3)->make(array_merge($byData, ['book_id' => $book->id]));
                         $chapter->pages()->saveMany($pages);
                     });
@@ -58,11 +58,11 @@ class DummyContentSeeder extends Seeder
         $apiPermission = RolePermission::getByName('access-api');
         $editorRole->attachPermission($apiPermission);
         $token = (new ApiToken())->forceFill([
-            'user_id' => $editorUser->id,
-            'name' => 'Testing API key',
+            'user_id'    => $editorUser->id,
+            'name'       => 'Testing API key',
             'expires_at' => ApiToken::defaultExpiry(),
-            'secret' => Hash::make('password'),
-            'token_id' => 'apitoken',
+            'secret'     => Hash::make('password'),
+            'token_id'   => 'apitoken',
         ]);
         $token->save();
 

@@ -1,20 +1,38 @@
-<?php namespace BookStack\Entities\Models;
+<?php
+
+namespace BookStack\Entities\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class BookChild
- * @property int $book_id
- * @property int $priority
- * @property Book $book
+ * Class BookChild.
+ *
+ * @property int    $book_id
+ * @property int    $priority
+ * @property string $book_slug
+ * @property Book   $book
+ *
  * @method Builder whereSlugs(string $bookSlug, string $childSlug)
  */
 abstract class BookChild extends Entity
 {
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Load book slugs onto these models by default during query-time
+        static::addGlobalScope('book_slug', function (Builder $builder) {
+            $builder->addSelect(['book_slug' => function ($builder) {
+                $builder->select('slug')
+                    ->from('books')
+                    ->whereColumn('books.id', '=', 'book_id');
+            }]);
+        });
+    }
 
     /**
-     * Scope a query to find items where the the child has the given childSlug
+     * Scope a query to find items where the child has the given childSlug
      * where its parent has the bookSlug.
      */
     public function scopeWhereSlugs(Builder $query, string $bookSlug, string $childSlug)

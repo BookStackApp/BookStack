@@ -7,6 +7,7 @@ use BookStack\Settings\SettingService;
 
 /**
  * Get the path to a versioned file.
+ *
  * @throws Exception
  */
 function versioned_asset(string $file = ''): string
@@ -24,6 +25,7 @@ function versioned_asset(string $file = ''): string
     }
 
     $path = $file . '?version=' . urlencode($version) . $additional;
+
     return url($path);
 }
 
@@ -64,6 +66,7 @@ function userCan(string $permission, Model $ownable = null): bool
 
     // Check permission on ownable item
     $permissionService = app(PermissionService::class);
+
     return $permissionService->checkOwnableUserAccess($ownable, $permission);
 }
 
@@ -74,11 +77,13 @@ function userCan(string $permission, Model $ownable = null): bool
 function userCanOnAny(string $permission, string $entityClass = null): bool
 {
     $permissionService = app(PermissionService::class);
+
     return $permissionService->checkUserHasPermissionOnAnything($permission, $entityClass);
 }
 
 /**
  * Helper to access system settings.
+ *
  * @return mixed|SettingService
  */
 function setting(string $key = null, $default = null)
@@ -105,7 +110,7 @@ function theme_path(string $path = ''): ?string
         return null;
     }
 
-    return base_path('themes/' . $theme .($path ? DIRECTORY_SEPARATOR.$path : $path));
+    return base_path('themes/' . $theme . ($path ? DIRECTORY_SEPARATOR . $path : $path));
 }
 
 /**
@@ -124,7 +129,7 @@ function icon(string $name, array $attrs = []): string
     ], $attrs);
     $attrString = ' ';
     foreach ($attrs as $attrName => $attr) {
-        $attrString .=  $attrName . '="' . $attr . '" ';
+        $attrString .= $attrName . '="' . $attr . '" ';
     }
 
     $iconPath = resource_path('icons/' . $name . '.svg');
@@ -132,11 +137,12 @@ function icon(string $name, array $attrs = []): string
 
     if ($themeIconPath && file_exists($themeIconPath)) {
         $iconPath = $themeIconPath;
-    } else if (!file_exists($iconPath)) {
+    } elseif (!file_exists($iconPath)) {
         return '';
     }
 
     $fileContents = file_get_contents($iconPath);
+
     return  str_replace('<svg', '<svg' . $attrString, $fileContents);
 }
 

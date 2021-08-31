@@ -1,4 +1,6 @@
-<?php namespace BookStack\Entities\Tools\Markdown;
+<?php
+
+namespace BookStack\Entities\Tools\Markdown;
 
 use League\CommonMark\ConfigurableEnvironmentInterface;
 use League\CommonMark\Extension\ExtensionInterface;
@@ -7,7 +9,6 @@ use League\CommonMark\Extension\Strikethrough\StrikethroughDelimiterProcessor;
 
 class CustomStrikeThroughExtension implements ExtensionInterface
 {
-
     public function register(ConfigurableEnvironmentInterface $environment)
     {
         $environment->addDelimiterProcessor(new StrikethroughDelimiterProcessor());

@@ -11,7 +11,7 @@ class PageTemplateController extends Controller
     protected $pageRepo;
 
     /**
-     * PageTemplateController constructor
+     * PageTemplateController constructor.
      */
     public function __construct(PageRepo $pageRepo)
     {
@@ -31,13 +31,14 @@ class PageTemplateController extends Controller
             $templates->appends(['search' => $search]);
         }
 
-        return view('pages.template-manager-list', [
-            'templates' => $templates
+        return view('pages.parts.template-manager-list', [
+            'templates' => $templates,
         ]);
     }
 
     /**
      * Get the content of a template.
+     *
      * @throws NotFoundException
      */
     public function get(int $templateId)
@@ -49,7 +50,7 @@ class PageTemplateController extends Controller
         }
 
         return response()->json([
-            'html' => $page->html,
+            'html'     => $page->html,
             'markdown' => $page->markdown,
         ]);
     }

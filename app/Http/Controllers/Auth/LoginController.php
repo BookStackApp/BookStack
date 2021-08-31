@@ -3,13 +3,11 @@
 namespace BookStack\Http\Controllers\Auth;
 
 use Activity;
-use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
-use BookStack\Facades\Theme;
 use BookStack\Http\Controllers\Controller;
-use BookStack\Theming\ThemeEvents;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -30,23 +28,26 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Redirection paths
+     * Redirection paths.
      */
     protected $redirectTo = '/';
     protected $redirectPath = '/';
     protected $redirectAfterLogout = '/login';
 
     protected $socialAuthService;
+    protected $loginService;
 
     /**
      * Create a new controller instance.
      */
-    public function __construct(SocialAuthService $socialAuthService)
+    public function __construct(SocialAuthService $socialAuthService, LoginService $loginService)
     {
         $this->middleware('guest', ['only' => ['getLogin', 'login']]);
         $this->middleware('guard:standard,ldap', ['only' => ['login', 'logout']]);
 
         $this->socialAuthService = $socialAuthService;
+        $this->loginService = $loginService;
+
         $this->redirectPath = url('/');
         $this->redirectAfterLogout = url('/login');
     }
@@ -74,33 +75,28 @@ class LoginController extends Controller
 
         if ($request->has('email')) {
             session()->flashInput([
-                'email' => $request->get('email'),
-                'password' => (config('app.env') === 'demo') ? $request->get('password', '') : ''
+                'email'    => $request->get('email'),
+                'password' => (config('app.env') === 'demo') ? $request->get('password', '') : '',
             ]);
         }
 
         // Store the previous location for redirect after login
-        $previous = url()->previous('');
-        if ($previous && $previous !== url('/login') && setting('app-public')) {
-            $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
-            if ($isPreviousFromInstance) {
-                redirect()->setIntendedUrl($previous);
-            }
-        }
+        $this->updateIntendedFromPrevious();
 
         return view('auth.login', [
-          'socialDrivers' => $socialDrivers,
-          'authMethod' => $authMethod,
+            'socialDrivers' => $socialDrivers,
+            'authMethod'    => $authMethod,
         ]);
     }
 
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @param \Illuminate\Http\Request $request
      *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     public function login(Request $request)
     {
@@ -115,6 +111,7 @@ class LoginController extends Controller
             $this->fireLockoutEvent($request);
 
             Activity::logFailedLogin($username);
+
             return $this->sendLockoutResponse($request);
         }
 
@@ -124,6 +121,7 @@ class LoginController extends Controller
             }
         } catch (LoginAttemptException $exception) {
             Activity::logFailedLogin($username);
+
             return $this->sendLoginAttemptExceptionResponse($exception, $request);
         }
 
@@ -133,38 +131,47 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         Activity::logFailedLogin($username);
+
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        return $this->loginService->attempt(
+            $this->credentials($request),
+            auth()->getDefaultDriver(),
+            $request->filled('remember')
+        );
     }
 
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $user
+     *
      * @return mixed
      */
     protected function authenticated(Request $request, $user)
     {
-        // Authenticate on all session guards if a likely admin
-        if ($user->can('users-manage') && $user->can('user-roles-manage')) {
-            $guards = ['standard', 'ldap', 'saml2'];
-            foreach ($guards as $guard) {
-                auth($guard)->login($user);
-            }
-        }
-
-        Theme::dispatch(ThemeEvents::AUTH_LOGIN, auth()->getDefaultDriver(), $user);
-        $this->logActivity(ActivityType::AUTH_LOGIN, $user);
         return redirect()->intended($this->redirectPath());
     }
 
     /**
      * Validate the user login request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
+     * @param \Illuminate\Http\Request $request
      *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return void
      */
     protected function validateLogin(Request $request)
     {
@@ -203,15 +210,44 @@ class LoginController extends Controller
     /**
      * Get the failed login response instance.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param \Illuminate\Http\Request $request
      *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
         ])->redirectTo('/login');
+    }
+
+    /**
+     * Update the intended URL location from their previous URL.
+     * Ignores if not from the current app instance or if from certain
+     * login or authentication routes.
+     */
+    protected function updateIntendedFromPrevious(): void
+    {
+        // Store the previous location for redirect after login
+        $previous = url()->previous('');
+        $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
+        if (!$previous || !setting('app-public') || !$isPreviousFromInstance) {
+            return;
+        }
+
+        $ignorePrefixList = [
+            '/login',
+            '/mfa',
+        ];
+
+        foreach ($ignorePrefixList as $ignorePrefix) {
+            if (strpos($previous, url($ignorePrefix)) === 0) {
+                return;
+            }
+        }
+
+        redirect()->setIntendedUrl($previous);
     }
 }

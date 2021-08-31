@@ -44,8 +44,12 @@ return [
     'bookshelf_delete_notification'    => 'Polica za knjige Uspješno Izbrisana',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" je dodan u tvoje favorite',
+    'favourite_remove_notification' => '":name" je uklonjen iz tvojih favorita',
+
+    // MFA
+    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
+    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
 
     // Other
     'commented_on'                => 'je komentarisao/la na',

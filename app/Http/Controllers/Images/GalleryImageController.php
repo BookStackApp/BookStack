@@ -3,9 +3,9 @@
 namespace BookStack\Http\Controllers\Images;
 
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Http\Controllers\Controller;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
-use BookStack\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
 
 class GalleryImageController extends Controller
@@ -32,21 +32,23 @@ class GalleryImageController extends Controller
         $parentTypeFilter = $request->get('filter_type', null);
 
         $imgData = $this->imageRepo->getEntityFiltered('gallery', $parentTypeFilter, $page, 24, $uploadedToFilter, $searchTerm);
-        return view('components.image-manager-list', [
-            'images' => $imgData['images'],
+
+        return view('pages.parts.image-manager-list', [
+            'images'  => $imgData['images'],
             'hasMore' => $imgData['has_more'],
         ]);
     }
 
     /**
      * Store a new gallery image in the system.
+     *
      * @throws ValidationException
      */
     public function create(Request $request)
     {
         $this->checkPermission('image-create-all');
         $this->validate($request, [
-            'file' => $this->getImageValidationRules()
+            'file' => $this->getImageValidationRules(),
         ]);
 
         try {

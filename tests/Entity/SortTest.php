@@ -1,4 +1,6 @@
-<?php namespace Tests\Entity;
+<?php
+
+namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
@@ -39,7 +41,7 @@ class SortTest extends TestCase
         $resp->assertSee('Move Page');
 
         $movePageResp = $this->put($page->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
         $page = Page::find($page->id);
 
@@ -59,7 +61,7 @@ class SortTest extends TestCase
         $newChapter = $newBook->chapters()->first();
 
         $movePageResp = $this->actingAs($this->getEditor())->put($page->getUrl('/move'), [
-            'entity_selection' => 'chapter:' . $newChapter->id
+            'entity_selection' => 'chapter:' . $newChapter->id,
         ]);
         $page = Page::find($page->id);
 
@@ -77,7 +79,7 @@ class SortTest extends TestCase
         $newBook = Book::where('id', '!=', $oldChapter->book_id)->first();
 
         $movePageResp = $this->actingAs($this->getEditor())->put($page->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
         $page->refresh();
 
@@ -99,13 +101,13 @@ class SortTest extends TestCase
         $this->setEntityRestrictions($newBook, ['view', 'update', 'delete'], $editor->roles->all());
 
         $movePageResp = $this->actingAs($editor)->put($page->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
         $this->assertPermissionError($movePageResp);
 
         $this->setEntityRestrictions($newBook, ['view', 'update', 'delete', 'create'], $editor->roles->all());
         $movePageResp = $this->put($page->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
 
         $page = Page::find($page->id);
@@ -125,7 +127,7 @@ class SortTest extends TestCase
         $this->setEntityRestrictions($page, ['view', 'update', 'create'], $editor->roles->all());
 
         $movePageResp = $this->actingAs($editor)->put($page->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
         $this->assertPermissionError($movePageResp);
         $pageView = $this->get($page->getUrl());
@@ -133,7 +135,7 @@ class SortTest extends TestCase
 
         $this->setEntityRestrictions($page, ['view', 'update', 'create', 'delete'], $editor->roles->all());
         $movePageResp = $this->put($page->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
 
         $page = Page::find($page->id);
@@ -152,7 +154,7 @@ class SortTest extends TestCase
         $chapterMoveResp->assertSee('Move Chapter');
 
         $moveChapterResp = $this->put($chapter->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
 
         $chapter = Chapter::find($chapter->id);
@@ -180,7 +182,7 @@ class SortTest extends TestCase
         $this->setEntityRestrictions($chapter, ['view', 'update', 'create'], $editor->roles->all());
 
         $moveChapterResp = $this->actingAs($editor)->put($chapter->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
         $this->assertPermissionError($moveChapterResp);
         $pageView = $this->get($chapter->getUrl());
@@ -188,7 +190,7 @@ class SortTest extends TestCase
 
         $this->setEntityRestrictions($chapter, ['view', 'update', 'create', 'delete'], $editor->roles->all());
         $moveChapterResp = $this->put($chapter->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
 
         $chapter = Chapter::find($chapter->id);
@@ -207,7 +209,7 @@ class SortTest extends TestCase
         $pageToCheck->delete();
 
         $this->asEditor()->put($chapter->getUrl('/move'), [
-            'entity_selection' => 'book:' . $newBook->id
+            'entity_selection' => 'book:' . $newBook->id,
         ]);
 
         $pageToCheck->refresh();
@@ -224,20 +226,20 @@ class SortTest extends TestCase
         // Create request data
         $reqData = [
             [
-                'id' => $chapterToMove->id,
-                'sort' => 0,
+                'id'            => $chapterToMove->id,
+                'sort'          => 0,
                 'parentChapter' => false,
-                'type' => 'chapter',
-                'book' => $newBook->id
-            ]
+                'type'          => 'chapter',
+                'book'          => $newBook->id,
+            ],
         ];
         foreach ($pagesToMove as $index => $page) {
             $reqData[] = [
-                'id' => $page->id,
-                'sort' => $index,
+                'id'            => $page->id,
+                'sort'          => $index,
                 'parentChapter' => $index === count($pagesToMove) - 1 ? $chapterToMove->id : false,
-                'type' => 'page',
-                'book' => $newBook->id
+                'type'          => 'page',
+                'book'          => $newBook->id,
             ];
         }
 
@@ -245,9 +247,9 @@ class SortTest extends TestCase
         $sortResp->assertRedirect($newBook->getUrl());
         $sortResp->assertStatus(302);
         $this->assertDatabaseHas('chapters', [
-            'id' => $chapterToMove->id,
-            'book_id' => $newBook->id,
-            'priority' => 0
+            'id'       => $chapterToMove->id,
+            'book_id'  => $newBook->id,
+            'priority' => 0,
         ]);
         $this->assertTrue($newBook->chapters()->count() === 1);
         $this->assertTrue($newBook->chapters()->first()->pages()->count() === 1);
@@ -256,5 +258,4 @@ class SortTest extends TestCase
         $checkResp = $this->get(Page::find($checkPage->id)->getUrl());
         $checkResp->assertSee($newBook->name);
     }
-
 }

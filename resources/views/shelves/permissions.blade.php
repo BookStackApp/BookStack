@@ -1,11 +1,11 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
 
     <div class="container small">
 
         <div class="my-s">
-            @include('partials.breadcrumbs', ['crumbs' => [
+            @include('entities.breadcrumbs', ['crumbs' => [
                 $shelf,
                 $shelf->getUrl('/permissions') => [
                     'text' => trans('entities.shelves_permissions'),
@@ -14,7 +14,7 @@
             ]])
         </div>
 
-        <div class="card content-wrap">
+        <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ trans('entities.shelves_permissions') }}</h1>
             @include('form.entity-permissions', ['model' => $shelf])
         </div>

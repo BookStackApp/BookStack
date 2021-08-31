@@ -1,4 +1,6 @@
-<?php namespace Tests\Commands;
+<?php
+
+namespace Tests\Commands;
 
 use BookStack\Actions\Comment;
 use Tests\TestCase;

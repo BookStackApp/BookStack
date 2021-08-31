@@ -1,10 +1,10 @@
-@extends('simple-layout')
+@extends('layouts.simple')
 
 @section('body')
     <div class="container small">
 
         <div class="py-m">
-            @include('settings.navbar', ['selected' => 'users'])
+            @include('settings.parts.navbar', ['selected' => 'users'])
         </div>
 
         <main class="card content-wrap">
@@ -43,7 +43,12 @@
                         <td class="text-center" style="line-height: 0;"><img class="avatar med" src="{{ $user->getAvatar(40)}}" alt="{{ $user->name }}"></td>
                         <td>
                             <a href="{{ url("/settings/users/{$user->id}") }}">
-                                {{ $user->name }} <br> <span class="text-muted">{{ $user->email }}</span>
+                                {{ $user->name }}
+                                <br>
+                                <span class="text-muted">{{ $user->email }}</span>
+                                @if($user->mfa_values_count > 0)
+                                    <span title="MFA Configured" class="text-pos">@icon('lock')</span>
+                                @endif
                             </a>
                         </td>
                         <td>
