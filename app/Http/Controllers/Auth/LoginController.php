@@ -81,13 +81,7 @@ class LoginController extends Controller
         }
 
         // Store the previous location for redirect after login
-        $previous = url()->previous('');
-        if ($previous && $previous !== url('/login') && setting('app-public')) {
-            $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
-            if ($isPreviousFromInstance) {
-                redirect()->setIntendedUrl($previous);
-            }
-        }
+        $this->updateIntendedFromPrevious();
 
         return view('auth.login', [
             'socialDrivers' => $socialDrivers,
@@ -227,5 +221,33 @@ class LoginController extends Controller
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
         ])->redirectTo('/login');
+    }
+
+    /**
+     * Update the intended URL location from their previous URL.
+     * Ignores if not from the current app instance or if from certain
+     * login or authentication routes.
+     */
+    protected function updateIntendedFromPrevious(): void
+    {
+        // Store the previous location for redirect after login
+        $previous = url()->previous('');
+        $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
+        if (!$previous || !setting('app-public') || !$isPreviousFromInstance) {
+            return;
+        }
+
+        $ignorePrefixList = [
+            '/login',
+            '/mfa',
+        ];
+
+        foreach ($ignorePrefixList as $ignorePrefix) {
+            if (strpos($previous, url($ignorePrefix)) === 0) {
+                return;
+            }
+        }
+
+        redirect()->setIntendedUrl($previous);
     }
 }
