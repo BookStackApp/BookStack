@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Oprávnění knihovny',
     'shelves_permissions_updated' => 'Oprávnění knihovny byla aktualizována',
     'shelves_permissions_active' => 'Oprávnění knihovny byla aktivována',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Kopírovat oprávnění na knihy',
     'shelves_copy_permissions' => 'Kopírovat oprávnění',
     'shelves_copy_permissions_explain' => 'Toto použije aktuální nastavení oprávnění knihovny na všechny knihy v ní obsažené. Před aktivací se ujistěte, že byly uloženy všechny změny oprávnění této knihovny.',

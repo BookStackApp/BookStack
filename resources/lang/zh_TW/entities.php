@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => '書架權限',
     'shelves_permissions_updated' => '書架權限已更新',
     'shelves_permissions_active' => '書架權限已啟用',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => '將權限複製到書本',
     'shelves_copy_permissions' => '複製權限',
     'shelves_copy_permissions_explain' => '這會將此書架目前的權限設定套用到所有包含的書本上。在啟用前，請確認您已儲存任何對此書架權限的變更。',

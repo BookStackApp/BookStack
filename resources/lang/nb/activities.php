@@ -49,8 +49,8 @@ return [
     'favourite_remove_notification' => '«:name» ble fjernet fra dine favoritter',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Flerfaktor-metoden ble konfigurert',
+    'mfa_remove_method_notification' => 'Flerfaktor-metoden ble fjernet',
 
     // Other
     'commented_on'                => 'kommenterte på',
