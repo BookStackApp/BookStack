@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Izin Rak Buku',
     'shelves_permissions_updated' => 'Izin Rak Buku Diperbarui',
     'shelves_permissions_active' => 'Izin Rak Buku Aktif',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Salin Izin ke Buku',
     'shelves_copy_permissions' => 'Salin Izin',
     'shelves_copy_permissions_explain' => 'Ini akan menerapkan setelan izin rak buku ini saat ini ke semua buku yang ada di dalamnya. Sebelum mengaktifkan, pastikan setiap perubahan pada izin rak buku ini telah disimpan.',

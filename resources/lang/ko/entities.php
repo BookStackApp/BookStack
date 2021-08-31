@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => '서가 권한',
     'shelves_permissions_updated' => '서가 권한 바꿈',
     'shelves_permissions_active' => '서가 권한 허용함',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => '권한 맞춤',
     'shelves_copy_permissions' => '실행',
     'shelves_copy_permissions_explain' => '서가의 모든 책자에 이 권한을 적용합니다. 서가의 권한을 저장했는지 확인하세요.',

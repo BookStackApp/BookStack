@@ -6,9 +6,9 @@
 return [
 
     // Shared
-    'recently_created' => 'Recientemente creado',
-    'recently_created_pages' => 'Páginas recientemente creadas',
-    'recently_updated_pages' => 'Páginas recientemente actualizadas',
+    'recently_created' => 'Creado Recientemente',
+    'recently_created_pages' => 'Páginas creadas recientemente',
+    'recently_updated_pages' => 'Páginas actualizadas recientemente',
     'recently_created_chapters' => 'Capítulos recientemente creados',
     'recently_created_books' => 'Libros recientemente creados',
     'recently_created_shelves' => 'Estantes recientemente creados',
@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Permisos del estante',
     'shelves_permissions_updated' => 'Permisos del estante actualizados',
     'shelves_permissions_active' => 'Permisos del estante activos',
+    'shelves_permissions_cascade_warning' => 'Los permisos en los estantes no se aplican automáticamente a los libros contenidos. Esto se debe a que un libro puede existir en múltiples estantes. Sin embargo, los permisos pueden ser aplicados a los libros del estante utilizando la opción a continuación.',
     'shelves_copy_permissions_to_books' => 'Copiar permisos a los libros',
     'shelves_copy_permissions' => 'Copiar permisos',
     'shelves_copy_permissions_explain' => 'Esto aplicará los ajustes de permisos de este estante para todos sus libros. Antes de activarlo, asegúrese de que todos los cambios de permisos para este estante han sido guardados.',

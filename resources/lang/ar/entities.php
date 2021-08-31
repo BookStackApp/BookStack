@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'أذونات رف الكتب',
     'shelves_permissions_updated' => 'تم تحديث أذونات رف الكتب',
     'shelves_permissions_active' => 'أذونات رف الكتب نشطة',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'نسخ أذونات الوصول إلى الكتب',
     'shelves_copy_permissions' => 'نسخ الأذونات',
     'shelves_copy_permissions_explain' => 'سيؤدي هذا إلى تطبيق إعدادات الأذونات الحالية لهذا الرف على جميع الكتب المتضمنة فيه. قبل التفعيل، تأكد من حفظ أي تغييرات في أذونات هذا الرف.',
