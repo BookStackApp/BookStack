@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" 已从你的收藏中删除',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => '多重身份认证设置成功',
+    'mfa_remove_method_notification' => '多重身份认证已成功移除',
 
     // Other
     'commented_on'                => '评论',

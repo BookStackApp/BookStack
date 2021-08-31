@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Permessi Libreria',
     'shelves_permissions_updated' => 'Permessi Libreria Aggiornati',
     'shelves_permissions_active' => 'Permessi Attivi Libreria',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Copia Permessi ai Libri',
     'shelves_copy_permissions' => 'Copia Permessi',
     'shelves_copy_permissions_explain' => 'Verranno applicati tutti i permessi della libreria ai libri contenuti. Prima di attivarlo, assicurati che ogni permesso di questa libreria sia salvato.',

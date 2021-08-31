@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute kan kunne inneholde bokstaver, tall, bindestreker eller understreker.',
     'alpha_num'            => ':attribute kan kun inneholde bokstaver og tall.',
     'array'                => ':attribute må være en liste.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'Den angitte koden er ikke gyldig, eller er allerede benyttet.',
     'before'               => ':attribute må være en dato før :date.',
     'between'              => [
         'numeric' => ':attribute må være mellom :min og :max.',
@@ -99,7 +99,7 @@ return [
     ],
     'string'               => ':attribute må være en tekststreng.',
     'timezone'             => ':attribute må være en tidssone.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'Den angitte koden er ikke gyldig eller har utløpt.',
     'unique'               => ':attribute har allerede blitt tatt.',
     'url'                  => ':attribute format er ugyldig.',
     'uploaded'             => 'kunne ikke lastes opp, tjeneren støtter ikke filer av denne størrelsen.',

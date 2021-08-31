@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Reoltilladelser',
     'shelves_permissions_updated' => 'Reoltilladelser opdateret',
     'shelves_permissions_active' => 'Aktive reoltilladelser',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Kopier tilladelser til bøger',
     'shelves_copy_permissions' => 'Kopier tilladelser',
     'shelves_copy_permissions_explain' => 'Dette vil anvende de aktuelle tilladelsesindstillinger på denne boghylde på alle bøger indeholdt i. Før aktivering skal du sikre dig, at ændringer i tilladelserne til denne boghylde er blevet gemt.',

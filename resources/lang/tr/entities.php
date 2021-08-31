@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Kitaplık İzinleri',
     'shelves_permissions_updated' => 'Kitaplık İzinleri Güncellendi',
     'shelves_permissions_active' => 'Kitaplık İzinleri Aktif',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'İzinleri Kitaplara Kopyala',
     'shelves_copy_permissions' => 'İzinleri Kopyala',
     'shelves_copy_permissions_explain' => 'Bu işlem sonucunda kitaplığınızın izinleri, içerdiği kitaplara da aynen uygulanır. Aktifleştirmeden önce bu kitaplığa ait izinleri kaydettiğinizden emin olun.',

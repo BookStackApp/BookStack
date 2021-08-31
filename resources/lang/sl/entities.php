@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Dovoljenja knjižnih polic',
     'shelves_permissions_updated' => 'Posodobljena dovoljenja knjižnih polic',
     'shelves_permissions_active' => 'Aktivna dovoljenja knjižnih polic',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Kopiraj dovoljenja na knjige',
     'shelves_copy_permissions' => 'Dovoljenja kopiranja',
     'shelves_copy_permissions_explain' => 'To bo uveljavilo trenutne nastavitve dovoljenj na knjižni polici za vse knjige, ki jih vsebuje ta polica. Pred aktiviranjem zagotovite, da so shranjene vse spremembe dovoljenj te knjižne police.',

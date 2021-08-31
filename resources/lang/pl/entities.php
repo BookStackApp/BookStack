@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Uprawnienia półki',
     'shelves_permissions_updated' => 'Uprawnienia półki zostały zaktualizowane',
     'shelves_permissions_active' => 'Uprawnienia półki są aktywne',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Skopiuj uprawnienia do książek',
     'shelves_copy_permissions' => 'Skopiuj uprawnienia',
     'shelves_copy_permissions_explain' => 'To spowoduje zastosowanie obecnych ustawień uprawnień dla tej półki do wszystkich książek w niej zawartych. Przed aktywacją upewnij się, że wszelkie zmiany w uprawnieniach do tej półki zostały zapisane.',
