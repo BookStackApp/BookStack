@@ -53,6 +53,7 @@ class MfaBackupCodesController extends Controller
 
         if (!auth()->check()) {
             $this->showSuccessNotification(trans('auth.mfa_setup_login_notification'));
+
             return redirect('/login');
         }
 
