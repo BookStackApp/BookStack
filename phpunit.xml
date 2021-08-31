@@ -37,6 +37,7 @@
     <server name="LOG_CHANNEL" value="single"/>
     <server name="AUTH_METHOD" value="standard"/>
     <server name="DISABLE_EXTERNAL_SERVICES" value="true"/>
+    <server name="ALLOW_UNTRUSTED_SERVER_FETCHING" value="false"/>
     <server name="AVATAR_URL" value=""/>
     <server name="LDAP_START_TLS" value="false"/>
     <server name="LDAP_VERSION" value="3"/>
