@@ -99,6 +99,7 @@ return [
     'shelves_permissions' => 'Permisos del prestatge',
     'shelves_permissions_updated' => 'S\'han actualitzat els permisos del prestatge',
     'shelves_permissions_active' => 'S\'han activat els permisos del prestatge',
+    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Copia els permisos als llibres',
     'shelves_copy_permissions' => 'Copia els permisos',
     'shelves_copy_permissions_explain' => 'Això aplicarà la configuració de permisos actual d\'aquest prestatge a tots els llibres que contingui. Abans d\'activar-ho, assegureu-vos que hàgiu desat qualsevol canvi als permisos d\'aquest prestatge.',

@@ -76,12 +76,12 @@ return [
     'user_invite_success' => 'کلمه عبور تنظیم شده است، شما اکنون به :appName دسترسی دارید!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
-    'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'mfa_setup_configured' => 'Already configured',
-    'mfa_setup_reconfigure' => 'Reconfigure',
-    'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
-    'mfa_setup_action' => 'Setup',
+    'mfa_setup' => 'تنظیم احراز هویت چند مرحله‌ای',
+    'mfa_setup_desc' => 'تنظیم احراز هویت چند مرحله ای یک لایه امنیتی دیگر به حساب شما اضافه میکند.',
+    'mfa_setup_configured' => 'هم اکنون تنظیم شده است.',
+    'mfa_setup_reconfigure' => 'تنظیم مجدد',
+    'mfa_setup_remove_confirmation' => 'از حذف احراز هویت چند مرحله ای اطمینان دارید؟',
+    'mfa_setup_action' => 'تنظیم',
     'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
     'mfa_option_totp_title' => 'Mobile App',
     'mfa_option_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
