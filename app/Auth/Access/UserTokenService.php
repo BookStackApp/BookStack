@@ -6,7 +6,7 @@ use BookStack\Auth\User;
 use BookStack\Exceptions\UserTokenExpiredException;
 use BookStack\Exceptions\UserTokenNotFoundException;
 use Carbon\Carbon;
-use Illuminate\Database\Connection as Database;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use stdClass;
 
@@ -26,18 +26,6 @@ class UserTokenService
      */
     protected $expiryTime = 24;
 
-    protected $db;
-
-    /**
-     * UserTokenService constructor.
-     *
-     * @param Database $db
-     */
-    public function __construct(Database $db)
-    {
-        $this->db = $db;
-    }
-
     /**
      * Delete all email confirmations that belong to a user.
      *
@@ -47,7 +35,7 @@ class UserTokenService
      */
     public function deleteByUser(User $user)
     {
-        return $this->db->table($this->tokenTable)
+        return DB::table($this->tokenTable)
             ->where('user_id', '=', $user->id)
             ->delete();
     }
@@ -102,7 +90,7 @@ class UserTokenService
     protected function createTokenForUser(User $user): string
     {
         $token = $this->generateToken();
-        $this->db->table($this->tokenTable)->insert([
+        DB::table($this->tokenTable)->insert([
             'user_id'    => $user->id,
             'token'      => $token,
             'created_at' => Carbon::now(),
@@ -121,7 +109,7 @@ class UserTokenService
      */
     protected function tokenExists(string $token): bool
     {
-        return $this->db->table($this->tokenTable)
+        return DB::table($this->tokenTable)
             ->where('token', '=', $token)->exists();
     }
 
@@ -134,7 +122,7 @@ class UserTokenService
      */
     protected function getEntryByToken(string $token)
     {
-        return $this->db->table($this->tokenTable)
+        return DB::table($this->tokenTable)
             ->where('token', '=', $token)
             ->first();
     }
