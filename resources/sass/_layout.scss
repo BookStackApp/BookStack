@@ -145,6 +145,7 @@ body.flexbox {
 .flex {
   min-height: 0;
   flex: 1;
+  max-width: 100%;
   &.fit-content {
     flex-basis: auto;
     flex-grow: 0;

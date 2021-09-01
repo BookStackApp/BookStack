@@ -35,8 +35,8 @@ class MfaTotpController extends Controller
         $svg = $totp->generateQrCodeSvg($qrCodeUrl);
 
         return view('mfa.totp-generate', [
-            'secret' => $totpSecret,
-            'svg'    => $svg,
+            'url' => $qrCodeUrl,
+            'svg' => $svg,
         ]);
     }
 

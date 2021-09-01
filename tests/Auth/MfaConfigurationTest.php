@@ -36,10 +36,12 @@ class MfaConfigurationTest extends TestCase
         $resp->assertSee('The provided code is not valid or has expired.');
         $revisitSvg = $resp->getElementHtml('#main-content .card svg');
         $this->assertTrue($svg === $revisitSvg);
+        $secret = decrypt(session()->get('mfa-setup-totp-secret'));
+
+        $resp->assertSee(htmlentities("?secret={$secret}&issuer=BookStack&algorithm=SHA1&digits=6&period=30"));
 
         // Successful confirmation
         $google2fa = new Google2FA();
-        $secret = decrypt(session()->get('mfa-setup-totp-secret'));
         $otp = $google2fa->getCurrentOtp($secret);
         $resp = $this->post('/mfa/totp/confirm', [
             'code' => $otp,
