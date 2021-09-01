@@ -258,4 +258,25 @@ class SortTest extends TestCase
         $checkResp = $this->get(Page::find($checkPage->id)->getUrl());
         $checkResp->assertSee($newBook->name);
     }
+
+    public function test_pages_in_book_show_sorted_by_priority()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('pages')->first();
+        $book->chapters()->forceDelete();
+        /** @var Page[] $pages */
+        $pages = $book->pages()->where('chapter_id', '=', 0)->take(2)->get();
+        $book->pages()->whereNotIn('id', $pages->pluck('id'))->delete();
+
+        $resp = $this->asEditor()->get($book->getUrl());
+        $resp->assertElementContains('.content-wrap a.page:nth-child(1)', $pages[0]->name);
+        $resp->assertElementContains('.content-wrap a.page:nth-child(2)', $pages[1]->name);
+
+        $pages[0]->forceFill(['priority' => 10])->save();
+        $pages[1]->forceFill(['priority' => 5])->save();
+
+        $resp = $this->asEditor()->get($book->getUrl());
+        $resp->assertElementContains('.content-wrap a.page:nth-child(1)', $pages[1]->name);
+        $resp->assertElementContains('.content-wrap a.page:nth-child(2)', $pages[0]->name);
+    }
 }
