@@ -12,6 +12,9 @@
                 <div class="block inline">
                     {!! $svg !!}
                 </div>
+                <div class="code-base small text-muted px-s py-xs my-xs" style="overflow-x: scroll; white-space: nowrap;">
+                    {{ $url }}
+                </div>
             </div>
 
             <h2 class="list-heading">{{ trans('auth.mfa_gen_totp_verify_setup') }}</h2>
