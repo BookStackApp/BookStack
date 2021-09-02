@@ -183,3 +183,4 @@ A Ibnu Hibban (abd.ibnuhibban) :: Indonesian
 Frost-ZX :: Chinese Simplified
 Kuzma Simonov (ovmach) :: Russian
 Vojtěch Krystek (acantophis) :: Czech
+Michał Lipok (mLipok) :: Polish
