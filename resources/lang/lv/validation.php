@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute var saturēt tikai burtus, ciparus, domuzīmes un apakš svītras.',
     'alpha_num'            => ':attribute var saturēt tikai burtus un ciparus.',
     'array'                => ':attribute ir jābūt masīvam.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'Ievadītais kods nav derīgs vai arī jau ir izmantots.',
     'before'               => ':attribute jābūt datumam pirms :date.',
     'between'              => [
         'numeric' => ':attribute jābūt starp :min un :max.',
@@ -99,7 +99,7 @@ return [
     ],
     'string'               => ':attribute jābūt teksta virknei.',
     'timezone'             => ':attribute jābūt derīgai zonai.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'Ievadītais kods nav derīgs.',
     'unique'               => ':attribute jau ir aizņemts.',
     'url'                  => ':attribute formāts nav derīgs.',
     'uploaded'             => 'Fails netika ielādēts. Serveris nevar pieņemt šāda izmēra failus.',
