@@ -28,19 +28,19 @@ class HtmlContentFilter
         static::removeNodes($scriptElems);
 
         // Remove clickable links to JavaScript URI
-        $badLinks = $xPath->query('//*[contains(@href, \'javascript:\')]');
+        $badLinks = $xPath->query('//*[' . static::xpathContains('@href', 'javascript:') . ']');
         static::removeNodes($badLinks);
 
         // Remove forms with calls to JavaScript URI
-        $badForms = $xPath->query('//*[contains(@action, \'javascript:\')] | //*[contains(@formaction, \'javascript:\')]');
+        $badForms = $xPath->query('//*[' . static::xpathContains('@action', 'javascript:') . '] | //*[' . static::xpathContains('@formaction', 'javascript:') . ']');
         static::removeNodes($badForms);
 
         // Remove meta tag to prevent external redirects
-        $metaTags = $xPath->query('//meta[contains(@content, \'url\')]');
+        $metaTags = $xPath->query('//meta[' . static::xpathContains('@content', 'url') . ']');
         static::removeNodes($metaTags);
 
         // Remove data or JavaScript iFrames
-        $badIframes = $xPath->query('//*[contains(@src, \'data:\')] | //*[contains(@src, \'javascript:\')] | //*[@srcdoc]');
+        $badIframes = $xPath->query('//*[' . static::xpathContains('@src', 'data:') . '] | //*[' . static::xpathContains('@src', 'javascript:') . '] | //*[@srcdoc]');
         static::removeNodes($badIframes);
 
         // Remove 'on*' attributes
@@ -58,6 +58,17 @@ class HtmlContentFilter
         }
 
         return $html;
+    }
+
+    /**
+     * Create a xpath contains statement with a translation automatically built within
+     * to affectively search in a cases-insensitive manner.
+     */
+    protected static function xpathContains(string $property, string $value): string
+    {
+        $value = strtolower($value);
+        $upperVal = strtoupper($value);
+        return 'contains(translate(' . $property . ', \'' . $upperVal . '\', \'' . $value . '\'), \'' . $value . '\')';
     }
 
     /**
