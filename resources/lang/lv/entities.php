@@ -99,7 +99,7 @@ return [
     'shelves_permissions' => 'Grāmatplaukta atļaujas',
     'shelves_permissions_updated' => 'Grāmatplaukta atļaujas atjauninātas',
     'shelves_permissions_active' => 'Grāmatplaukta atļaujas ir aktīvas',
-    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions_cascade_warning' => 'Grāmatu plauktu atļaujas netiek automātiski pārvietotas uz grāmatām. Tas ir tāpēc, ka grāmata var atrasties vairākos plauktos. Tomēr atļaujas var nokopēt uz plauktam pievienotajām grāmatām, izmantojot zemāk norādīto opciju.',
     'shelves_copy_permissions_to_books' => 'Kopēt grāmatplaukta atļaujas uz grāmatām',
     'shelves_copy_permissions' => 'Kopēt atļaujas',
     'shelves_copy_permissions_explain' => 'Šis piemēros pašreizējās grāmatplaukta piekļuves tiesības visām tajā esošajām grāmatām. Pirms ieslēgšanas pārliecinieties, ka ir saglabātas izmaiņas grāmatplaukta piekļuves tiesībām.',
