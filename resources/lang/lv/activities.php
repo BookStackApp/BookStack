@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" ir izņemts no jūsu favorītiem',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => '2FA funkcija aktivizēta',
+    'mfa_remove_method_notification' => '2FA funkcija noņemta',
 
     // Other
     'commented_on'                => 'komentēts',

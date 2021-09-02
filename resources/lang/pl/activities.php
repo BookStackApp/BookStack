@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" został usunięty z ulubionych',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Metoda wieloskładnikowa została pomyślnie skonfigurowana',
+    'mfa_remove_method_notification' => 'Metoda wieloskładnikowa pomyślnie usunięta',
 
     // Other
     'commented_on'                => 'skomentował',
