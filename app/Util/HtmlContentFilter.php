@@ -2,6 +2,7 @@
 
 namespace BookStack\Util;
 
+use DOMAttr;
 use DOMDocument;
 use DOMNodeList;
 use DOMXPath;
@@ -43,13 +44,14 @@ class HtmlContentFilter
         $badIframes = $xPath->query('//*[' . static::xpathContains('@src', 'data:') . '] | //*[' . static::xpathContains('@src', 'javascript:') . '] | //*[@srcdoc]');
         static::removeNodes($badIframes);
 
+        // Remove elements with a xlink:href attribute
+        // Used in SVG but deprecated anyway, so we'll be a bit more heavy-handed here.
+        $xlinkHrefAttributes = $xPath->query('//@*[contains(name(), \'xlink:href\')]');
+        static::removeAttributes($xlinkHrefAttributes);
+
         // Remove 'on*' attributes
         $onAttributes = $xPath->query('//@*[starts-with(name(), \'on\')]');
-        foreach ($onAttributes as $attr) {
-            /** @var \DOMAttr $attr */
-            $attrName = $attr->nodeName;
-            $attr->parentNode->removeAttribute($attrName);
-        }
+        static::removeAttributes($onAttributes);
 
         $html = '';
         $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
@@ -72,12 +74,24 @@ class HtmlContentFilter
     }
 
     /**
-     * Removed all of the given DOMNodes.
+     * Remove all the given DOMNodes.
      */
     protected static function removeNodes(DOMNodeList $nodes): void
     {
         foreach ($nodes as $node) {
             $node->parentNode->removeChild($node);
+        }
+    }
+
+    /**
+     * Remove all the given attribute nodes.
+     */
+    protected static function removeAttributes(DOMNodeList $attrs): void
+    {
+        /** @var DOMAttr $attr */
+        foreach ($attrs as $attr) {
+            $attrName = $attr->nodeName;
+            $attr->parentNode->removeAttribute($attrName);
         }
     }
 }
