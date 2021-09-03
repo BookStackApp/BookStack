@@ -10,7 +10,7 @@ use DOMXPath;
 class HtmlContentFilter
 {
     /**
-     * Remove all of the script elements from the given HTML.
+     * Remove all the script elements from the given HTML.
      */
     public static function removeScripts(string $html): string
     {
