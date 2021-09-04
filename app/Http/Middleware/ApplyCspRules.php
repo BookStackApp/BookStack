@@ -38,6 +38,8 @@ class ApplyCspRules
 
         $this->cspService->setFrameAncestors($response);
         $this->cspService->setScriptSrc($response);
+        $this->cspService->setObjectSrc($response);
+        $this->cspService->setBaseUri($response);
 
         return $response;
     }
