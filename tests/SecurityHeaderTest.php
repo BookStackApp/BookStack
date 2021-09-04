@@ -105,6 +105,20 @@ class SecurityHeaderTest extends TestCase
         $this->assertNotEmpty($scriptHeader);
     }
 
+    public function test_object_src_csp_header_set()
+    {
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'object-src');
+        $this->assertEquals('object-src \'self\'', $scriptHeader);
+    }
+
+    public function test_base_uri_csp_header_set()
+    {
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'base-uri');
+        $this->assertEquals('base-uri \'self\'', $scriptHeader);
+    }
+
     /**
      * Get the value of the first CSP header of the given type.
      */

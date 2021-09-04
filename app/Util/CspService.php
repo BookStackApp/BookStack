@@ -34,9 +34,12 @@ class CspService
         }
 
         $parts = [
+            'http:',
+            'https:',
             '\'nonce-' . $this->nonce . '\'',
             '\'strict-dynamic\'',
         ];
+
         $value = 'script-src ' . implode(' ', $parts);
         $response->headers->set('Content-Security-Policy', $value, false);
     }
@@ -62,6 +65,27 @@ class CspService
         return count($this->getAllowedIframeHosts()) > 0;
     }
 
+    /**
+     * Sets CSP 'object-src' headers to restrict the types of dynamic content
+     * that can be embedded on the page.
+     */
+    public function setObjectSrc(Response $response)
+    {
+        if (config('app.allow_content_scripts')) {
+            return;
+        }
+
+        $response->headers->set('Content-Security-Policy', 'object-src \'self\'', false);
+    }
+
+    /**
+     * Sets CSP 'base-uri' headers to restrict what base tags can be set on
+     * the page to prevent manipulation of relative links.
+     */
+    public function setBaseUri(Response $response)
+    {
+        $response->headers->set('Content-Security-Policy', 'base-uri \'self\'', false);
+    }
 
     protected function getAllowedIframeHosts(): array
     {
