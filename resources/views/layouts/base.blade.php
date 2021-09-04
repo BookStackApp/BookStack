@@ -15,7 +15,6 @@
     <meta property="og:title" content="{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     @stack('social-meta')
-    
 
     <!-- Styles and Fonts -->
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
@@ -51,7 +50,7 @@
     </div>
 
     @yield('bottom')
-    <script src="{{ versioned_asset('dist/app.js') }}"></script>
+    <script src="{{ versioned_asset('dist/app.js') }}" nonce="{{ $cspNonce }}"></script>
     @yield('scripts')
 
 </body>

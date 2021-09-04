@@ -10,6 +10,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/uploads/images/{path}', 'Images\ImageController@showImage')
         ->where('path', '.*$');
 
+    // API docs routes
+    Route::get('/api/docs', 'Api\ApiDocsController@display');
+
     Route::get('/pages/recently-updated', 'PageController@showRecentlyUpdated');
 
     // Shelves
