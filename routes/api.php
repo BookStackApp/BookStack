@@ -5,7 +5,6 @@
  * Routes have a uri prefix of /api/.
  * Controllers are all within app/Http/Controllers/Api.
  */
-Route::get('docs', 'ApiDocsController@display');
 Route::get('docs.json', 'ApiDocsController@json');
 
 Route::get('books', 'BookApiController@list');

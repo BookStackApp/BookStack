@@ -135,14 +135,26 @@ class PageContentTest extends TestCase
         }
     }
 
-    public function test_iframe_js_and_base64_urls_are_removed()
+    public function test_js_and_base64_src_urls_are_removed()
     {
         $checks = [
             '<iframe src="javascript:alert(document.cookie)"></iframe>',
+            '<iframe src="JavAScRipT:alert(document.cookie)"></iframe>',
+            '<iframe src="JavAScRipT:alert(document.cookie)"></iframe>',
             '<iframe SRC=" javascript: alert(document.cookie)"></iframe>',
             '<iframe src="data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg==" frameborder="0"></iframe>',
+            '<iframe src="DaTa:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg==" frameborder="0"></iframe>',
             '<iframe src=" data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg==" frameborder="0"></iframe>',
+            '<img src="javascript:alert(document.cookie)"/>',
+            '<img src="JavAScRipT:alert(document.cookie)"/>',
+            '<img src="JavAScRipT:alert(document.cookie)"/>',
+            '<img SRC=" javascript: alert(document.cookie)"/>',
+            '<img src="data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg=="/>',
+            '<img src="DaTa:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg=="/>',
+            '<img src=" data:text/html;base64,PHNjcmlwdD5hbGVydCgnaGVsbG8nKTwvc2NyaXB0Pg=="/>',
             '<iframe srcdoc="<script>window.alert(document.cookie)</script>"></iframe>',
+            '<iframe SRCdoc="<script>window.alert(document.cookie)</script>"></iframe>',
+            '<IMG SRC=`javascript:alert("RSnake says, \'XSS\'")`>',
         ];
 
         $this->asEditor();
@@ -155,6 +167,7 @@ class PageContentTest extends TestCase
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
             $pageView->assertElementNotContains('.page-content', '<iframe>');
+            $pageView->assertElementNotContains('.page-content', '<img');
             $pageView->assertElementNotContains('.page-content', '</iframe>');
             $pageView->assertElementNotContains('.page-content', 'src=');
             $pageView->assertElementNotContains('.page-content', 'javascript:');
@@ -168,6 +181,8 @@ class PageContentTest extends TestCase
         $checks = [
             '<a id="xss" href="javascript:alert(document.cookie)>Click me</a>',
             '<a id="xss" href="javascript: alert(document.cookie)>Click me</a>',
+            '<a id="xss" href="JaVaScRiPt: alert(document.cookie)>Click me</a>',
+            '<a id="xss" href=" JaVaScRiPt: alert(document.cookie)>Click me</a>',
         ];
 
         $this->asEditor();
@@ -179,7 +194,7 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $pageView->assertElementNotContains('.page-content', '<a id="xss">');
+            $pageView->assertElementNotContains('.page-content', '<a id="xss"');
             $pageView->assertElementNotContains('.page-content', 'href=javascript:');
         }
     }
@@ -188,8 +203,10 @@ class PageContentTest extends TestCase
     {
         $checks = [
             '<form><input id="xss" type=submit formaction=javascript:alert(document.domain) value=Submit><input></form>',
+            '<form ><button id="xss" formaction="JaVaScRiPt:alert(document.domain)">Click me</button></form>',
             '<form ><button id="xss" formaction=javascript:alert(document.domain)>Click me</button></form>',
             '<form id="xss" action=javascript:alert(document.domain)><input type=submit value=Submit></form>',
+            '<form id="xss" action="JaVaScRiPt:alert(document.domain)"><input type=submit value=Submit></form>',
         ];
 
         $this->asEditor();
@@ -213,6 +230,8 @@ class PageContentTest extends TestCase
     {
         $checks = [
             '<meta http-equiv="refresh" content="0; url=//external_url">',
+            '<meta http-equiv="refresh" ConTeNt="0; url=//external_url">',
+            '<meta http-equiv="refresh" content="0; UrL=//external_url">',
         ];
 
         $this->asEditor();
@@ -249,11 +268,13 @@ class PageContentTest extends TestCase
     {
         $checks = [
             '<p onclick="console.log(\'test\')">Hello</p>',
+            '<p OnCliCk="console.log(\'test\')">Hello</p>',
             '<div>Lorem ipsum dolor sit amet.</div><p onclick="console.log(\'test\')">Hello</p>',
             '<div>Lorem ipsum dolor sit amet.<p onclick="console.log(\'test\')">Hello</p></div>',
             '<div><div><div><div>Lorem ipsum dolor sit amet.<p onclick="console.log(\'test\')">Hello</p></div></div></div></div>',
             '<div onclick="console.log(\'test\')">Lorem ipsum dolor sit amet.</div><p onclick="console.log(\'test\')">Hello</p><div></div>',
             '<a a="<img src=1 onerror=\'alert(1)\'> ',
+            '\<a onclick="alert(document.cookie)"\>xss link\</a\>',
         ];
 
         $this->asEditor();
@@ -282,6 +303,28 @@ class PageContentTest extends TestCase
         $pageView = $this->get($page->getUrl());
         $pageView->assertSee($script);
         $pageView->assertDontSee('abc123abc123');
+    }
+
+    public function test_svg_xlink_hrefs_are_removed()
+    {
+        $checks = [
+            '<svg id="test" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100"><a xlink:href="javascript:alert(document.domain)"><rect x="0" y="0" width="100" height="100" /></a></svg>',
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="data:application/xml;base64 ,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KPGRlZnM+CjxjaXJjbGUgaWQ9InRlc3QiIHI9IjAiIGN4PSIwIiBjeT0iMCIgc3R5bGU9ImZpbGw6ICNGMDAiPgo8c2V0IGF0dHJpYnV0ZU5hbWU9ImZpbGwiIGF0dHJpYnV0ZVR5cGU9IkNTUyIgb25iZWdpbj0nYWxlcnQoZG9jdW1lbnQuZG9tYWluKScKb25lbmQ9J2FsZXJ0KCJvbmVuZCIpJyB0bz0iIzAwRiIgYmVnaW49IjBzIiBkdXI9Ijk5OXMiIC8+CjwvY2lyY2xlPgo8L2RlZnM+Cjx1c2UgeGxpbms6aHJlZj0iI3Rlc3QiLz4KPC9zdmc+#test"/></svg>'
+        ];
+
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        foreach ($checks as $check) {
+            $page->html = $check;
+            $page->save();
+
+            $pageView = $this->get($page->getUrl());
+            $pageView->assertStatus(200);
+            $pageView->assertElementNotContains('.page-content', 'alert');
+            $pageView->assertElementNotContains('.page-content', 'xlink:href');
+            $pageView->assertElementNotContains('.page-content', 'application/xml');
+        }
     }
 
     public function test_page_inline_on_attributes_show_if_configured()

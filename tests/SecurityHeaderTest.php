@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Illuminate\Support\Str;
+use BookStack\Util\CspService;
 
 class SecurityHeaderTest extends TestCase
 {
@@ -44,26 +44,89 @@ class SecurityHeaderTest extends TestCase
     public function test_iframe_csp_self_only_by_default()
     {
         $resp = $this->get('/');
-        $cspHeaders = collect($resp->headers->get('Content-Security-Policy'));
-        $frameHeaders = $cspHeaders->filter(function ($val) {
-            return Str::startsWith($val, 'frame-ancestors');
-        });
+        $frameHeader = $this->getCspHeader($resp, 'frame-ancestors');
 
-        $this->assertTrue($frameHeaders->count() === 1);
-        $this->assertEquals('frame-ancestors \'self\'', $frameHeaders->first());
+        $this->assertEquals('frame-ancestors \'self\'', $frameHeader);
     }
 
     public function test_iframe_csp_includes_extra_hosts_if_configured()
     {
         $this->runWithEnv('ALLOWED_IFRAME_HOSTS', 'https://a.example.com https://b.example.com', function () {
             $resp = $this->get('/');
-            $cspHeaders = collect($resp->headers->get('Content-Security-Policy'));
-            $frameHeaders = $cspHeaders->filter(function ($val) {
-                return Str::startsWith($val, 'frame-ancestors');
-            });
+            $frameHeader = $this->getCspHeader($resp, 'frame-ancestors');
 
-            $this->assertTrue($frameHeaders->count() === 1);
-            $this->assertEquals('frame-ancestors \'self\' https://a.example.com https://b.example.com', $frameHeaders->first());
+            $this->assertNotEmpty($frameHeader);
+            $this->assertEquals('frame-ancestors \'self\' https://a.example.com https://b.example.com', $frameHeader);
         });
+    }
+
+    public function test_script_csp_set_on_responses()
+    {
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'script-src');
+        $this->assertStringContainsString('\'strict-dynamic\'', $scriptHeader);
+        $this->assertStringContainsString('\'nonce-', $scriptHeader);
+    }
+
+    public function test_script_csp_nonce_matches_nonce_used_in_custom_head()
+    {
+        $this->setSettings(['app-custom-head' => '<script>console.log("cat");</script>']);
+        $resp = $this->get('/login');
+        $scriptHeader = $this->getCspHeader($resp, 'script-src');
+
+        $nonce = app()->make(CspService::class)->getNonce();
+        $this->assertStringContainsString('nonce-' . $nonce, $scriptHeader);
+        $resp->assertSee('<script nonce="' . $nonce . '">console.log("cat");</script>');
+    }
+
+    public function test_script_csp_nonce_changes_per_request()
+    {
+        $resp = $this->get('/');
+        $firstHeader = $this->getCspHeader($resp, 'script-src');
+
+        $this->refreshApplication();
+
+        $resp = $this->get('/');
+        $secondHeader = $this->getCspHeader($resp, 'script-src');
+
+        $this->assertNotEquals($firstHeader, $secondHeader);
+    }
+
+    public function test_allow_content_scripts_settings_controls_csp_script_headers()
+    {
+        config()->set('app.allow_content_scripts', true);
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'script-src');
+        $this->assertEmpty($scriptHeader);
+
+        config()->set('app.allow_content_scripts', false);
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'script-src');
+        $this->assertNotEmpty($scriptHeader);
+    }
+
+    public function test_object_src_csp_header_set()
+    {
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'object-src');
+        $this->assertEquals('object-src \'self\'', $scriptHeader);
+    }
+
+    public function test_base_uri_csp_header_set()
+    {
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'base-uri');
+        $this->assertEquals('base-uri \'self\'', $scriptHeader);
+    }
+
+    /**
+     * Get the value of the first CSP header of the given type.
+     */
+    protected function getCspHeader(TestResponse $resp, string $type): string
+    {
+        $cspHeaders = collect($resp->headers->all('Content-Security-Policy'));
+        return $cspHeaders->filter(function ($val) use ($type) {
+            return strpos($val, $type) === 0;
+        })->first() ?? '';
     }
 }
