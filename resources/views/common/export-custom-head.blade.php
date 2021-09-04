@@ -1,5 +1,7 @@
+@inject('headContent', 'BookStack\Theming\CustomHtmlHeadContentProvider')
+
 @if(setting('app-custom-head'))
 <!-- Custom user content -->
-{!! \BookStack\Util\HtmlContentFilter::removeScripts(setting('app-custom-head')) !!}
+{!! $headContent->forExport() !!}
 <!-- End custom user content -->
 @endif
