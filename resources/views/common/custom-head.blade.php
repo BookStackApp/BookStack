@@ -1,5 +1,7 @@
+@inject('headContent', 'BookStack\Theming\CustomHtmlHeadContentProvider')
+
 @if(setting('app-custom-head') && \Route::currentRouteName() !== 'settings')
 <!-- Custom user content -->
-{!! setting('app-custom-head') !!}
+{!! $headContent->forWeb() !!}
 <!-- End custom user content -->
 @endif
