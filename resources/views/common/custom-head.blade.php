@@ -1,5 +1,7 @@
+@inject('headContent', 'BookStack\Theming\CustomHtmlHeadContentProvider')
+
 @if(setting('app-custom-head') && \Route::currentRouteName() !== 'settings')
 <!-- Custom user content -->
-{!! \BookStack\Util\HtmlNonceApplicator::apply(setting('app-custom-head'), $cspNonce) !!}
+{!! $headContent->forWeb() !!}
 <!-- End custom user content -->
 @endif

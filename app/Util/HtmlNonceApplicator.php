@@ -9,10 +9,13 @@ use DOMXPath;
 
 class HtmlNonceApplicator
 {
+    protected static $placeholder = '[CSP_NONCE_VALUE]';
+
     /**
-     * Apply the given nonce to all scripts and styles in the given html.
+     * Prepare the given HTML content with nonce attributes including a placeholder
+     * value which we can target later.
      */
-    public static function apply(string $html, string $nonce): string
+    public static function prepare(string $html): string
     {
         if (empty($html)) {
             return $html;
@@ -26,11 +29,11 @@ class HtmlNonceApplicator
 
         // Apply to scripts
         $scriptElems = $xPath->query('//script');
-        static::addNonceAttributes($scriptElems, $nonce);
+        static::addNonceAttributes($scriptElems, static::$placeholder);
 
         // Apply to styles
         $styleElems = $xPath->query('//style');
-        static::addNonceAttributes($styleElems, $nonce);
+        static::addNonceAttributes($styleElems, static::$placeholder);
 
         $returnHtml = '';
         $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
@@ -41,11 +44,19 @@ class HtmlNonceApplicator
         return $returnHtml;
     }
 
-    protected static function addNonceAttributes(DOMNodeList $nodes, string $nonce): void
+    /**
+     * Apply the give nonce value to the given prepared HTML.
+     */
+    public static function apply(string $html, string $nonce): string
+    {
+        return str_replace(static::$placeholder, $nonce, $html);
+    }
+
+    protected static function addNonceAttributes(DOMNodeList $nodes, string $attrValue): void
     {
         /** @var DOMElement $node */
         foreach ($nodes as $node) {
-            $node->setAttribute('nonce', $nonce);
+            $node->setAttribute('nonce', $attrValue);
         }
     }
 
