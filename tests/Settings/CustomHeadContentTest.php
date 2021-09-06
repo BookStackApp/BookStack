@@ -6,7 +6,6 @@ use Tests\TestCase;
 
 class CustomHeadContentTest extends TestCase
 {
-
     public function test_configured_content_shows_on_pages()
     {
         $this->setSettings(['app-custom-head' => '<script>console.log("cat");</script>']);

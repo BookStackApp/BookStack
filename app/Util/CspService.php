@@ -90,7 +90,7 @@ class CspService
     protected function getAllowedIframeHosts(): array
     {
         $hosts = config('app.iframe_hosts', '');
+
         return array_filter(explode(' ', $hosts));
     }
-
 }

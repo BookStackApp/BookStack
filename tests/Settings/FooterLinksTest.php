@@ -1,4 +1,6 @@
-<?php namespace Tests\Settings;
+<?php
+
+namespace Tests\Settings;
 
 use Tests\TestCase;
 

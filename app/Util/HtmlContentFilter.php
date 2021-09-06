@@ -70,6 +70,7 @@ class HtmlContentFilter
     {
         $value = strtolower($value);
         $upperVal = strtoupper($value);
+
         return 'contains(translate(' . $property . ', \'' . $upperVal . '\', \'' . $value . '\'), \'' . $value . '\')';
     }
 
