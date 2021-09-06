@@ -33,9 +33,10 @@ class CustomHtmlHeadContentProvider
     {
         $content = $this->getSourceContent();
         $hash = md5($content);
-        $html = $this->cache->remember('custom-head-web:' . $hash, 86400, function() use ($content) {
+        $html = $this->cache->remember('custom-head-web:' . $hash, 86400, function () use ($content) {
             return HtmlNonceApplicator::prepare($content);
         });
+
         return HtmlNonceApplicator::apply($html, $this->cspService->getNonce());
     }
 
@@ -47,8 +48,9 @@ class CustomHtmlHeadContentProvider
     {
         $content = $this->getSourceContent();
         $hash = md5($content);
-        return $this->cache->remember('custom-head-export:' . $hash, 86400, function() use ($content) {
-             return HtmlContentFilter::removeScripts($content);
+
+        return $this->cache->remember('custom-head-export:' . $hash, 86400, function () use ($content) {
+            return HtmlContentFilter::removeScripts($content);
         });
     }
 
@@ -59,5 +61,4 @@ class CustomHtmlHeadContentProvider
     {
         return setting('app-custom-head', '');
     }
-
 }

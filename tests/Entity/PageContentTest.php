@@ -309,7 +309,7 @@ class PageContentTest extends TestCase
     {
         $checks = [
             '<svg id="test" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100"><a xlink:href="javascript:alert(document.domain)"><rect x="0" y="0" width="100" height="100" /></a></svg>',
-            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="data:application/xml;base64 ,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KPGRlZnM+CjxjaXJjbGUgaWQ9InRlc3QiIHI9IjAiIGN4PSIwIiBjeT0iMCIgc3R5bGU9ImZpbGw6ICNGMDAiPgo8c2V0IGF0dHJpYnV0ZU5hbWU9ImZpbGwiIGF0dHJpYnV0ZVR5cGU9IkNTUyIgb25iZWdpbj0nYWxlcnQoZG9jdW1lbnQuZG9tYWluKScKb25lbmQ9J2FsZXJ0KCJvbmVuZCIpJyB0bz0iIzAwRiIgYmVnaW49IjBzIiBkdXI9Ijk5OXMiIC8+CjwvY2lyY2xlPgo8L2RlZnM+Cjx1c2UgeGxpbms6aHJlZj0iI3Rlc3QiLz4KPC9zdmc+#test"/></svg>'
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="data:application/xml;base64 ,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KPGRlZnM+CjxjaXJjbGUgaWQ9InRlc3QiIHI9IjAiIGN4PSIwIiBjeT0iMCIgc3R5bGU9ImZpbGw6ICNGMDAiPgo8c2V0IGF0dHJpYnV0ZU5hbWU9ImZpbGwiIGF0dHJpYnV0ZVR5cGU9IkNTUyIgb25iZWdpbj0nYWxlcnQoZG9jdW1lbnQuZG9tYWluKScKb25lbmQ9J2FsZXJ0KCJvbmVuZCIpJyB0bz0iIzAwRiIgYmVnaW49IjBzIiBkdXI9Ijk5OXMiIC8+CjwvY2lyY2xlPgo8L2RlZnM+Cjx1c2UgeGxpbms6aHJlZj0iI3Rlc3QiLz4KPC9zdmc+#test"/></svg>',
         ];
 
         $this->asEditor();

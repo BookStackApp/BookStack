@@ -125,6 +125,7 @@ class SecurityHeaderTest extends TestCase
     protected function getCspHeader(TestResponse $resp, string $type): string
     {
         $cspHeaders = collect($resp->headers->all('Content-Security-Policy'));
+
         return $cspHeaders->filter(function ($val) use ($type) {
             return strpos($val, $type) === 0;
         })->first() ?? '';

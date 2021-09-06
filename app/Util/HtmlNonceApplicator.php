@@ -38,7 +38,7 @@ class HtmlNonceApplicator
         $returnHtml = '';
         $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
         foreach ($topElems as $child) {
-            $content =  $doc->saveHTML($child);
+            $content = $doc->saveHTML($child);
             $returnHtml .= $content;
         }
 
@@ -60,5 +60,4 @@ class HtmlNonceApplicator
             $node->setAttribute('nonce', $attrValue);
         }
     }
-
 }

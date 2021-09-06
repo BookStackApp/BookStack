@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class ApplyCspRules
 {
-
     /**
      * @var CspService
      */
@@ -43,5 +42,4 @@ class ApplyCspRules
 
         return $response;
     }
-
 }
