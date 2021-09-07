@@ -42,9 +42,9 @@ return [
     'configure' => 'Konfigurer',
     'fullscreen' => 'Fuld skærm',
     'favourite' => 'Foretrukken',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'unfavourite' => 'Fjern som foretrukken',
+    'next' => 'Næste',
+    'previous' => 'Forrige',
 
     // Sort Options
     'sort_options' => 'Sorteringsindstillinger',
@@ -61,7 +61,7 @@ return [
     'no_activity' => 'Ingen aktivitet at vise',
     'no_items' => 'Intet indhold tilgængeligt',
     'back_to_top' => 'Tilbage til toppen',
-    'skip_to_main_content' => 'Skip to main content',
+    'skip_to_main_content' => 'Spring til indhold',
     'toggle_details' => 'Vis/skjul detaljer',
     'toggle_thumbnails' => 'Vis/skjul miniaturer',
     'details' => 'Detaljer',
