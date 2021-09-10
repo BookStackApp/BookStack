@@ -82,7 +82,7 @@ return [
     'mfa_setup_reconfigure' => 'Reconfigurer',
     'mfa_setup_remove_confirmation' => 'Êtes-vous sûr de vouloir supprimer cette méthode d\'authentification multi-facteurs ?',
     'mfa_setup_action' => 'Configuration',
-    'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
+    'mfa_backup_codes_usage_limit_warning' => 'Il vous reste moins de 5 codes de secours, veuillez générer et stocker un nouveau jeu de codes afin d\'éviter tout verrouillage de votre compte.',
     'mfa_option_totp_title' => 'Application mobile',
     'mfa_option_totp_desc' => 'Pour utiliser l\'authentification multi-facteurs, vous aurez besoin d\'une application mobile qui supporte TOTP comme Google Authenticator, Authy ou Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Codes de secours',
