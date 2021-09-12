@@ -44,12 +44,12 @@ return [
     'bookshelf_delete_notification'    => 'Bogreolen blev opdateret',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" er blevet tilføjet til dine favoritter',
+    'favourite_remove_notification' => '":name" er blevet fjernet fra dine favoritter',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Multi-faktor metode konfigureret',
+    'mfa_remove_method_notification' => 'Multi-faktor metode fjernet',
 
     // Other
     'commented_on'                => 'kommenterede til',

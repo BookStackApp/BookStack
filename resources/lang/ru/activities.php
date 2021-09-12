@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" удалено из избранного',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Двухфакторный метод авторизации успешно настроен',
+    'mfa_remove_method_notification' => 'Двухфакторный метод авторизации успешно удален',
 
     // Other
     'commented_on'                => 'прокомментировал',
