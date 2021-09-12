@@ -184,3 +184,5 @@ Frost-ZX :: Chinese Simplified
 Kuzma Simonov (ovmach) :: Russian
 Vojtěch Krystek (acantophis) :: Czech
 Michał Lipok (mLipok) :: Polish
+Nicolas Pawlak (Mikolajek) :: French
+Thomas Hansen (thomasdk81) :: Danish
