@@ -12,7 +12,7 @@ class CspService
 
     public function __construct(string $nonce = '')
     {
-        $this->nonce = $nonce ?: Str::random(16);
+        $this->nonce = $nonce ?: Str::random(24);
     }
 
     /**
@@ -90,7 +90,7 @@ class CspService
     protected function getAllowedIframeHosts(): array
     {
         $hosts = config('app.iframe_hosts', '');
+
         return array_filter(explode(' ', $hosts));
     }
-
 }

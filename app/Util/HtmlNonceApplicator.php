@@ -21,10 +21,10 @@ class HtmlNonceApplicator
             return $html;
         }
 
-        $html = '<body>' . $html . '</body>';
+        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $doc->loadHTML($html, LIBXML_SCHEMA_CREATE);
         $xPath = new DOMXPath($doc);
 
         // Apply to scripts
@@ -38,7 +38,8 @@ class HtmlNonceApplicator
         $returnHtml = '';
         $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
         foreach ($topElems as $child) {
-            $returnHtml .= $doc->saveHTML($child);
+            $content = $doc->saveHTML($child);
+            $returnHtml .= $content;
         }
 
         return $returnHtml;
@@ -59,5 +60,4 @@ class HtmlNonceApplicator
             $node->setAttribute('nonce', $attrValue);
         }
     }
-
 }

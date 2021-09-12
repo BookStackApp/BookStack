@@ -73,7 +73,7 @@ class AppServiceProvider extends ServiceProvider
             return new SocialAuthService($app->make(SocialiteFactory::class), $app->make(LoginService::class));
         });
 
-        $this->app->singleton(CspService::class, function($app) {
+        $this->app->singleton(CspService::class, function ($app) {
             return new CspService();
         });
     }
