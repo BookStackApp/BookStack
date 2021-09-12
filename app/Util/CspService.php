@@ -12,7 +12,7 @@ class CspService
 
     public function __construct(string $nonce = '')
     {
-        $this->nonce = $nonce ?: Str::random(16);
+        $this->nonce = $nonce ?: Str::random(24);
     }
 
     /**
