@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Nettoyer les images',
-    'maint_image_cleanup_desc' => "Scan le contenu des pages et des révisions pour vérifier les images et les dessins en cours d'utilisation et lesquels sont redondant. Veuillez à faire une sauvegarde de la base de données et des images avant de lancer ceci.",
+    'maint_image_cleanup_desc' => "Scanne le contenu des pages et des révisions pour vérifier les images, les dessins en cours d'utilisation et les doublons. Assurez-vous d'avoir une sauvegarde de la base de données et des images avant de lancer ceci.",
     'maint_delete_images_only_in_revisions' => 'Supprimer également les images qui n\'existent que dans les anciennes révisions de page',
     'maint_image_cleanup_run' => 'Lancer le nettoyage',
     'maint_image_cleanup_warning' => ':count images potentiellement inutilisées trouvées. Etes-vous sûr de vouloir supprimer ces images ?',
