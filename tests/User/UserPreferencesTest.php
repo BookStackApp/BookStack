@@ -2,6 +2,7 @@
 
 namespace Tests\User;
 
+use BookStack\Entities\Models\Bookshelf;
 use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
@@ -105,5 +106,45 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals(true, setting()->getForCurrentUser('dark-mode-enabled'));
         $home = $this->get('/login');
         $home->assertElementExists('.dark-mode');
+    }
+
+    public function test_books_view_type_preferences_when_list()
+    {
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'books_view_type', 'list');
+
+        $this->actingAs($editor)->get('/books')
+            ->assertElementNotExists('.featured-image-container')
+            ->assertElementExists('.content-wrap .entity-list-item');
+    }
+
+    public function test_books_view_type_preferences_when_grid()
+    {
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'books_view_type', 'grid');
+
+        $this->actingAs($editor)->get('/books')
+            ->assertElementExists('.featured-image-container');
+    }
+
+    public function test_shelf_view_type_change()
+    {
+        $editor = $this->getEditor();
+        /** @var Bookshelf $shelf */
+        $shelf = Bookshelf::query()->first();
+        setting()->putUser($editor, 'bookshelf_view_type', 'list');
+
+        $this->actingAs($editor)->get($shelf->getUrl())
+            ->assertElementNotExists('.featured-image-container')
+            ->assertElementExists('.content-wrap .entity-list-item')
+            ->assertSee('Grid View');
+
+        $req = $this->patch("/settings/users/{$editor->id}/switch-shelf-view", ['view_type' => 'grid']);
+        $req->assertRedirect($shelf->getUrl());
+
+        $this->actingAs($editor)->get($shelf->getUrl())
+            ->assertElementExists('.featured-image-container')
+            ->assertElementNotExists('.content-wrap .entity-list-item')
+            ->assertSee('List View');
     }
 }

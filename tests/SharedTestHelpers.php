@@ -212,6 +212,25 @@ trait SharedTestHelpers
     }
 
     /**
+     * Create a group of entities that belong to a specific user.
+     */
+    protected function createEntityChainBelongingToUser(User $creatorUser, ?User $updaterUser = null): array
+    {
+        if (empty($updaterUser)) {
+            $updaterUser = $creatorUser;
+        }
+
+        $userAttrs = ['created_by' => $creatorUser->id, 'owned_by' => $creatorUser->id, 'updated_by' => $updaterUser->id];
+        $book = factory(Book::class)->create($userAttrs);
+        $chapter = factory(Chapter::class)->create(array_merge(['book_id' => $book->id], $userAttrs));
+        $page = factory(Page::class)->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
+        $restrictionService = $this->app[PermissionService::class];
+        $restrictionService->buildJointPermissionsForEntity($book);
+
+        return compact('book', 'chapter', 'page');
+    }
+
+    /**
      * Mock the HttpFetcher service and return the given data on fetch.
      */
     protected function mockHttpFetch($returnData, int $times = 1)

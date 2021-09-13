@@ -62,25 +62,6 @@ abstract class BrowserKitTest extends TestCase
     }
 
     /**
-     * Create a group of entities that belong to a specific user.
-     */
-    protected function createEntityChainBelongingToUser(User $creatorUser, ?User $updaterUser = null): array
-    {
-        if (empty($updaterUser)) {
-            $updaterUser = $creatorUser;
-        }
-
-        $userAttrs = ['created_by' => $creatorUser->id, 'owned_by' => $creatorUser->id, 'updated_by' => $updaterUser->id];
-        $book = factory(Book::class)->create($userAttrs);
-        $chapter = factory(Chapter::class)->create(array_merge(['book_id' => $book->id], $userAttrs));
-        $page = factory(Page::class)->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
-        $restrictionService = $this->app[PermissionService::class];
-        $restrictionService->buildJointPermissionsForEntity($book);
-
-        return compact('book', 'chapter', 'page');
-    }
-
-    /**
      * Helper for updating entity permissions.
      *
      * @param Entity $entity
@@ -89,20 +70,6 @@ abstract class BrowserKitTest extends TestCase
     {
         $restrictionService = $this->app[PermissionService::class];
         $restrictionService->buildJointPermissionsForEntity($entity);
-    }
-
-    /**
-     * Quick way to create a new user without any permissions.
-     *
-     * @param array $attributes
-     *
-     * @return mixed
-     */
-    protected function getNewBlankUser($attributes = [])
-    {
-        $user = factory(User::class)->create($attributes);
-
-        return $user;
     }
 
     /**

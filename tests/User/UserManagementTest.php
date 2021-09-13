@@ -42,4 +42,26 @@ class UserManagementTest extends TestCase
             'owned_by' => $newOwner->id,
         ]);
     }
+
+    public function test_guest_profile_shows_limited_form()
+    {
+        $guest = User::getDefault();
+        $resp = $this->asAdmin()->get('/settings/users/' . $guest->id);
+        $resp->assertSee('Guest');
+        $resp->assertElementNotExists('#password');
+    }
+
+    public function test_guest_profile_cannot_be_deleted()
+    {
+        $guestUser = User::getDefault();
+        $resp = $this->asAdmin()->get('/settings/users/' . $guestUser->id . '/delete');
+        $resp->assertSee('Delete User');
+        $resp->assertSee('Guest');
+        $resp->assertElementContains('form[action$="/settings/users/' . $guestUser->id . '"] button', 'Confirm');
+
+        $resp =  $this->delete('/settings/users/' . $guestUser->id);
+        $resp->assertRedirect('/settings/users/' . $guestUser->id);
+        $resp = $this->followRedirects($resp);
+        $resp->assertSee('cannot delete the guest user');
+    }
 }
