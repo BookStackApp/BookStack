@@ -90,7 +90,7 @@ return [
     'mfa_gen_confirm_and_enable' => 'Confirmer et activer',
     'mfa_gen_backup_codes_title' => 'Configuration des codes de secours',
     'mfa_gen_backup_codes_desc' => 'Stockez la liste des codes ci-dessous dans un endroit sûr. Lorsque vous accédez au système, vous pourrez utiliser l\'un des codes comme un deuxième mécanisme d\'authentification.',
-    'mfa_gen_backup_codes_download' => 'Télécharger le code',
+    'mfa_gen_backup_codes_download' => 'Télécharger les codes',
     'mfa_gen_backup_codes_usage_warning' => 'Chaque code ne peut être utilisé qu\'une seule fois',
     'mfa_gen_totp_title' => 'Configuration de l\'application mobile',
     'mfa_gen_totp_desc' => 'Pour utiliser l\'authentification multi-facteurs, vous aurez besoin d\'une application mobile qui supporte TOTP comme Google Authenticator, Authy ou Microsoft Authenticator.',
