@@ -67,26 +67,6 @@ class EntityTest extends BrowserKitTest
             ->see($firstChapter->name);
     }
 
-    public function test_toggle_book_view()
-    {
-        $editor = $this->getEditor();
-        setting()->putUser($editor, 'books_view_type', 'grid');
-
-        $this->actingAs($editor)
-            ->visit('/books')
-            ->pageHasElement('.featured-image-container')
-            ->submitForm('List View')
-            // Check redirection.
-            ->seePageIs('/books')
-            ->pageNotHasElement('.featured-image-container');
-
-        $this->actingAs($editor)
-            ->visit('/books')
-            ->submitForm('Grid View')
-            ->seePageIs('/books')
-            ->pageHasElement('.featured-image-container');
-    }
-
     public function pageCreation($chapter)
     {
         $page = factory(Page::class)->make([
@@ -280,31 +260,6 @@ class EntityTest extends BrowserKitTest
         ]);
 
         $this->assertEquals('parta-partb-partc', $book->slug);
-    }
-
-    public function test_shelf_cancel_creation_returns_to_correct_place()
-    {
-        $shelf = Bookshelf::first();
-
-        // Cancel button from shelf goes back to shelf
-        $this->asEditor()->visit($shelf->getUrl('/create-book'))
-            ->see('Cancel')
-            ->click('Cancel')
-            ->seePageIs($shelf->getUrl());
-
-        // Cancel button from books goes back to books
-        $this->asEditor()->visit('/create-book')
-            ->see('Cancel')
-            ->click('Cancel')
-            ->seePageIs('/books');
-
-        // Cancel button from book edit goes back to book
-        $book = Book::first();
-
-        $this->asEditor()->visit($book->getUrl('/edit'))
-            ->see('Cancel')
-            ->click('Cancel')
-            ->seePageIs($book->getUrl());
     }
 
     public function test_page_within_chapter_deletion_returns_to_chapter()
