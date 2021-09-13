@@ -34,7 +34,7 @@ return [
     'reply' => 'Répondre',
     'delete' => 'Supprimer',
     'delete_confirm' => 'Confirmer la suppression',
-    'search' => 'Chercher',
+    'search' => 'Rechercher',
     'search_clear' => 'Réinitialiser la recherche',
     'reset' => 'Réinitialiser',
     'remove' => 'Enlever',
