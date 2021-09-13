@@ -369,4 +369,12 @@ class BookShelfTest extends TestCase
         $resp = $this->asEditor()->get($newBook->getUrl());
         $resp->assertDontSee($shelfInfo['name']);
     }
+
+    public function test_cancel_on_child_book_creation_returns_to_original_shelf()
+    {
+        /** @var Bookshelf $shelf */
+        $shelf = Bookshelf::query()->first();
+        $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
+        $resp->assertElementContains('form a[href="' . $shelf->getUrl() . '"]', 'Cancel');
+    }
 }
