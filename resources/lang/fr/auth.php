@@ -76,8 +76,8 @@ return [
     'user_invite_success' => 'Mot de passe renseigné, vous avez maintenant accès à :appName !',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Configuration authentification multi-facteurs',
-    'mfa_setup_desc' => 'Configurez l\'authentification multi-facteurs ajoute une couche supplémentaire de sécurité à votre compte utilisateur.',
+    'mfa_setup' => 'Authentification multi-facteurs',
+    'mfa_setup_desc' => 'Configurer l\'authentification multi-facteurs ajoute une couche supplémentaire de sécurité à votre compte utilisateur.',
     'mfa_setup_configured' => 'Déjà configuré',
     'mfa_setup_reconfigure' => 'Reconfigurer',
     'mfa_setup_remove_confirmation' => 'Êtes-vous sûr de vouloir supprimer cette méthode d\'authentification multi-facteurs ?',
