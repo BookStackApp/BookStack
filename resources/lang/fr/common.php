@@ -27,7 +27,7 @@ return [
     'view_all' => 'Tout afficher',
     'create' => 'Créer',
     'update' => 'Modifier',
-    'edit' => 'Editer',
+    'edit' => 'Éditer',
     'sort' => 'Trier',
     'move' => 'Déplacer',
     'copy' => 'Copier',
