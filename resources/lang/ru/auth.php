@@ -76,7 +76,7 @@ return [
     'user_invite_success' => 'Пароль установлен, теперь у вас есть доступ к :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
+    'mfa_setup' => 'Двухфакторная аутентификация',
     'mfa_setup_desc' => 'Двухфакторная аутентификация повышает степень безопасности вашей учетной записи.',
     'mfa_setup_configured' => 'Настроено',
     'mfa_setup_reconfigure' => 'Перенастроить',
@@ -100,13 +100,13 @@ return [
     'mfa_gen_totp_provide_code_here' => 'Введите код, сгенерированный приложением',
     'mfa_verify_access' => 'Подтвердите доступ',
     'mfa_verify_access_desc' => 'Ваша учетная запись требует подтверждения личности на дополнительном уровне верификации, прежде чем вам будет предоставлен доступ. Для продолжения подтвердите вход, используя один из настроенных методов.',
-    'mfa_verify_no_methods' => 'No Methods Configured',
-    'mfa_verify_no_methods_desc' => 'No multi-factor authentication methods could be found for your account. You\'ll need to set up at least one method before you gain access.',
-    'mfa_verify_use_totp' => 'Verify using a mobile app',
-    'mfa_verify_use_backup_codes' => 'Verify using a backup code',
+    'mfa_verify_no_methods' => 'Методы не настроены',
+    'mfa_verify_no_methods_desc' => 'Для вашей учетной записи не найдены двухфакторные методы аутентификации. Вам нужно настроить хотя бы один метод, прежде чем получить доступ.',
+    'mfa_verify_use_totp' => 'Проверить используя мобильное приложение',
+    'mfa_verify_use_backup_codes' => 'Проверить используя резервный код',
     'mfa_verify_backup_code' => 'Резервный код',
     'mfa_verify_backup_code_desc' => 'Введите один из оставшихся резервных кодов ниже:',
     'mfa_verify_backup_code_enter_here' => 'Введите резервный код',
-    'mfa_verify_totp_desc' => 'Enter the code, generated using your mobile app, below:',
-    'mfa_setup_login_notification' => 'Multi-factor method configured, Please now login again using the configured method.',
+    'mfa_verify_totp_desc' => 'Введите код, сгенерированный с помощью мобильного приложения, ниже:',
+    'mfa_setup_login_notification' => 'Двухфакторный метод настроен, пожалуйста, войдите снова, используя сконфигурированный метод.',
 ];
