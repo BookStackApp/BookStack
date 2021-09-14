@@ -207,7 +207,7 @@ return [
     'users_api_tokens_expires' => 'Истекает',
     'users_api_tokens_docs' => 'Документация',
     'users_mfa' => 'Двухфакторная аутентификация',
-    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa_desc' => 'Двухфакторная аутентификация повышает степень безопасности вашей учетной записи.',
     'users_mfa_x_methods' => ':count method configured|:count methods configured',
     'users_mfa_configure' => 'Настройка методов',
 
