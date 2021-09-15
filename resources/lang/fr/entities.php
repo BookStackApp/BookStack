@@ -40,7 +40,7 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Autorisations',
-    'permissions_intro' => 'Une fois activées ces permissions prendront la priorité sur tous les sets de permissions préexistants.',
+    'permissions_intro' => 'Une fois activées, ces permissions prendront la priorité sur tous les jeux de permissions préexistants.',
     'permissions_enable' => 'Activer les permissions personnalisées',
     'permissions_save' => 'Enregistrer les permissions',
     'permissions_owner' => 'Propriétaire',
