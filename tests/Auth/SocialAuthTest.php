@@ -2,6 +2,7 @@
 
 namespace Tests\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\SocialAccount;
 use BookStack\Auth\User;
 use DB;
@@ -82,6 +83,7 @@ class SocialAuthTest extends TestCase
         ]);
         $resp = $this->followingRedirects()->get('/login/service/github/callback');
         $resp->assertDontSee('login-form');
+        $this->assertActivityExists(ActivityType::AUTH_LOGIN, null, 'github; (' . $this->getAdmin()->id . ') ' . $this->getAdmin()->name);
     }
 
     public function test_social_account_detach()
