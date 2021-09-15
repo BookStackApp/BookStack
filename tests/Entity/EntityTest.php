@@ -4,11 +4,9 @@ namespace Tests\Entity;
 
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
-use Carbon\Carbon;
 use Tests\BrowserKitTest;
 
 class EntityTest extends BrowserKitTest
@@ -39,32 +37,6 @@ class EntityTest extends BrowserKitTest
             ->see($newName);
 
         return Book::find($book->id);
-    }
-
-    public function test_book_sort_page_shows()
-    {
-        $books = Book::all();
-        $bookToSort = $books[0];
-        $this->asAdmin()
-            ->visit($bookToSort->getUrl())
-            ->click('Sort')
-            ->seePageIs($bookToSort->getUrl() . '/sort')
-            ->seeStatusCode(200)
-            ->see($bookToSort->name);
-    }
-
-    public function test_book_sort_item_returns_book_content()
-    {
-        $books = Book::all();
-        $bookToSort = $books[0];
-        $firstPage = $bookToSort->pages[0];
-        $firstChapter = $bookToSort->chapters[0];
-        $this->asAdmin()
-            ->visit($bookToSort->getUrl() . '/sort-item')
-            // Ensure book details are returned
-            ->see($bookToSort->name)
-            ->see($firstPage->name)
-            ->see($firstChapter->name);
     }
 
     public function pageCreation($chapter)
@@ -189,86 +161,4 @@ class EntityTest extends BrowserKitTest
             ->click('Revisions')->seeStatusCode(200);
     }
 
-    public function test_recently_updated_pages_view()
-    {
-        $user = $this->getEditor();
-        $content = $this->createEntityChainBelongingToUser($user);
-
-        $this->asAdmin()->visit('/pages/recently-updated')
-            ->seeInNthElement('.entity-list .page', 0, $content['page']->name);
-    }
-
-    public function test_old_page_slugs_redirect_to_new_pages()
-    {
-        $page = Page::first();
-        $pageUrl = $page->getUrl();
-        $newPageUrl = '/books/' . $page->book->slug . '/page/super-test-page';
-        // Need to save twice since revisions are not generated in seeder.
-        $this->asAdmin()->visit($pageUrl)
-            ->clickInElement('#content', 'Edit')
-            ->type('super test', '#name')
-            ->press('Save Page');
-
-        $page = Page::first();
-        $pageUrl = $page->getUrl();
-
-        // Second Save
-        $this->visit($pageUrl)
-            ->clickInElement('#content', 'Edit')
-            ->type('super test page', '#name')
-            ->press('Save Page')
-            // Check redirect
-            ->seePageIs($newPageUrl);
-
-        $this->visit($pageUrl)
-            ->seePageIs($newPageUrl);
-    }
-
-    public function test_recently_updated_pages_on_home()
-    {
-        $page = Page::orderBy('updated_at', 'asc')->first();
-        Page::where('id', '!=', $page->id)->update([
-            'updated_at' => Carbon::now()->subSecond(1),
-        ]);
-        $this->asAdmin()->visit('/')
-            ->dontSeeInElement('#recently-updated-pages', $page->name);
-        $this->visit($page->getUrl() . '/edit')
-            ->press('Save Page')
-            ->visit('/')
-            ->seeInElement('#recently-updated-pages', $page->name);
-    }
-
-    public function test_slug_multi_byte_url_safe()
-    {
-        $book = $this->newBook([
-            'name' => 'информация',
-        ]);
-
-        $this->assertEquals('informatsiya', $book->slug);
-
-        $book = $this->newBook([
-            'name' => '¿Qué?',
-        ]);
-
-        $this->assertEquals('que', $book->slug);
-    }
-
-    public function test_slug_format()
-    {
-        $book = $this->newBook([
-            'name' => 'PartA / PartB / PartC',
-        ]);
-
-        $this->assertEquals('parta-partb-partc', $book->slug);
-    }
-
-    public function test_page_within_chapter_deletion_returns_to_chapter()
-    {
-        $chapter = Chapter::query()->first();
-        $page = $chapter->pages()->first();
-
-        $this->asEditor()->visit($page->getUrl('/delete'))
-            ->submitForm('Confirm')
-            ->seePageIs($chapter->getUrl());
-    }
 }

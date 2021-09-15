@@ -2,6 +2,7 @@
 
 namespace Tests\Entity;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
@@ -48,5 +49,29 @@ class PageEditorTest extends TestCase
         $this->setSettings(['app-editor' => 'markdown']);
         $this->asAdmin()->get($this->page->getUrl() . '/edit')
             ->assertElementContains('[name="markdown"]', $this->page->html);
+    }
+
+    public function test_empty_markdown_still_saves_without_error()
+    {
+        $this->setSettings(['app-editor' => 'markdown']);
+        /** @var Book $book */
+        $book = Book::query()->first();
+
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        $draft = Page::query()->where('book_id', '=', $book->id)
+            ->where('draft', '=', true)->first();
+
+        $details = [
+            'name'     => 'my page',
+            'markdown' => '',
+        ];
+        $resp = $this->post($book->getUrl("/draft/{$draft->id}"), $details);
+        $resp->assertRedirect();
+
+        $this->assertDatabaseHas('pages', [
+            'markdown' => $details['markdown'],
+            'id'       => $draft->id,
+            'draft'    => false,
+        ]);
     }
 }

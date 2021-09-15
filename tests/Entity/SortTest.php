@@ -216,6 +216,19 @@ class SortTest extends TestCase
         $this->assertEquals($newBook->id, $pageToCheck->book_id);
     }
 
+    public function test_book_sort_page_shows()
+    {
+        /** @var Book $bookToSort */
+        $bookToSort = Book::query()->first();
+
+        $resp = $this->asAdmin()->get($bookToSort->getUrl());
+        $resp->assertElementExists('a[href="' . $bookToSort->getUrl('/sort') . '"]');
+
+        $resp = $this->get($bookToSort->getUrl('/sort'));
+        $resp->assertStatus(200);
+        $resp->assertSee($bookToSort->name);
+    }
+
     public function test_book_sort()
     {
         $oldBook = Book::query()->first();
@@ -257,6 +270,21 @@ class SortTest extends TestCase
         $checkPage = $pagesToMove[1];
         $checkResp = $this->get(Page::find($checkPage->id)->getUrl());
         $checkResp->assertSee($newBook->name);
+    }
+
+    public function test_book_sort_item_returns_book_content()
+    {
+        $books = Book::all();
+        $bookToSort = $books[0];
+        $firstPage = $bookToSort->pages[0];
+        $firstChapter = $bookToSort->chapters[0];
+
+        $resp = $this->asAdmin()->get($bookToSort->getUrl() . '/sort-item');
+
+        // Ensure book details are returned
+        $resp->assertSee($bookToSort->name);
+        $resp->assertSee($firstPage->name);
+        $resp->assertSee($firstChapter->name);
     }
 
     public function test_pages_in_book_show_sorted_by_priority()
