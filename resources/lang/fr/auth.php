@@ -57,7 +57,7 @@ return [
     'email_confirm_action' => 'Confirmez votre adresse e-mail',
     'email_confirm_send_error' => 'La confirmation par e-mail est requise mais le système n\'a pas pu envoyer l\'e-mail. Contactez l\'administrateur système.',
     'email_confirm_success' => 'Votre adresse e-mail a été confirmée !',
-    'email_confirm_resent' => 'L\'e-mail de confirmation a été ré-envoyé. Vérifiez votre boîte de récéption.',
+    'email_confirm_resent' => 'L\'e-mail de confirmation a été ré-envoyé. Vérifiez votre boîte de réception.',
 
     'email_not_confirmed' => 'Adresse e-mail non confirmée',
     'email_not_confirmed_text' => 'Votre adresse e-mail n\'a pas été confirmée.',
