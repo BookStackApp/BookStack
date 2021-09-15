@@ -3,7 +3,9 @@
 namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use Carbon\Carbon;
 use Tests\TestCase;
 
 class PageTest extends TestCase
@@ -190,26 +192,66 @@ class PageTest extends TestCase
         ]);
     }
 
-    public function test_empty_markdown_still_saves_without_error()
+    public function test_old_page_slugs_redirect_to_new_pages()
     {
-        $this->setSettings(['app-editor' => 'markdown']);
-        $book = Book::query()->first();
+        /** @var Page $page */
+        $page = Page::query()->first();
 
-        $this->asEditor()->get($book->getUrl('/create-page'));
-        $draft = Page::query()->where('book_id', '=', $book->id)
-            ->where('draft', '=', true)->first();
-
-        $details = [
-            'name'     => 'my page',
-            'markdown' => '',
-        ];
-        $resp = $this->post($book->getUrl("/draft/{$draft->id}"), $details);
-        $resp->assertRedirect();
-
-        $this->assertDatabaseHas('pages', [
-            'markdown' => $details['markdown'],
-            'id'       => $draft->id,
-            'draft'    => false,
+        // Need to save twice since revisions are not generated in seeder.
+        $this->asAdmin()->put($page->getUrl(), [
+            'name' => 'super test',
+            'html' => '<p></p>'
         ]);
+
+        $page->refresh();
+        $pageUrl = $page->getUrl();
+
+        $this->put($pageUrl, [
+            'name' => 'super test page',
+            'html' => '<p></p>'
+        ]);
+
+        $this->get($pageUrl)
+            ->assertRedirect("/books/{$page->book->slug}/page/super-test-page");
     }
+
+    public function test_page_within_chapter_deletion_returns_to_chapter()
+    {
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
+        $page = $chapter->pages()->first();
+
+        $this->asEditor()->delete($page->getUrl())
+            ->assertRedirect($chapter->getUrl());
+    }
+
+    public function test_recently_updated_pages_view()
+    {
+        $user = $this->getEditor();
+        $content = $this->createEntityChainBelongingToUser($user);
+
+        $this->asAdmin()->get('/pages/recently-updated')
+            ->assertElementContains('.entity-list .page:nth-child(1)', $content['page']->name);
+    }
+
+    public function test_recently_updated_pages_on_home()
+    {
+        /** @var Page $page */
+        $page = Page::query()->orderBy('updated_at', 'asc')->first();
+        Page::query()->where('id', '!=', $page->id)->update([
+            'updated_at' => Carbon::now()->subSecond(1),
+        ]);
+
+        $this->asAdmin()->get('/')
+            ->assertElementNotContains('#recently-updated-pages', $page->name);
+
+        $this->put($page->getUrl(), [
+            'name' => $page->name,
+            'html' => $page->html,
+        ]);
+
+        $this->get('/')
+            ->assertElementContains('#recently-updated-pages', $page->name);
+    }
+
 }
