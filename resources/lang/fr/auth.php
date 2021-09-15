@@ -63,7 +63,7 @@ return [
     'email_not_confirmed_text' => 'Votre adresse e-mail n\'a pas été confirmée.',
     'email_not_confirmed_click_link' => 'Merci de cliquer sur le lien dans l\'e-mail qui vous a été envoyé après l\'enregistrement.',
     'email_not_confirmed_resend' => 'Si vous ne retrouvez plus l\'e-mail, vous pouvez renvoyer un e-mail de confirmation en utilisant le formulaire ci-dessous.',
-    'email_not_confirmed_resend_button' => 'Renvoyez l\'e-mail de confirmation',
+    'email_not_confirmed_resend_button' => 'Renvoyer l\'e-mail de confirmation',
 
     // User Invite
     'user_invite_email_subject' => 'Vous avez été invité(e) à rejoindre :appName !',
@@ -97,7 +97,7 @@ return [
     'mfa_gen_totp_scan' => 'Scannez le QR code ci-dessous avec votre application d\'authentification préférée pour débuter.',
     'mfa_gen_totp_verify_setup' => 'Vérifier la configuration',
     'mfa_gen_totp_verify_setup_desc' => 'Vérifiez que tout fonctionne en utilisant un code généré par votre application d\'authentification, dans la zone ci-dessous :',
-    'mfa_gen_totp_provide_code_here' => 'Fournir le code généré par votre application ici',
+    'mfa_gen_totp_provide_code_here' => 'Fournissez le code généré par votre application ici',
     'mfa_verify_access' => 'Vérifier l\'accès',
     'mfa_verify_access_desc' => 'Votre compte d\'utilisateur vous demande de confirmer votre identité par un niveau supplémentaire de vérification avant que vous n\'ayez accès. Vérifiez-la en utilisant l\'une de vos méthodes configurées pour continuer.',
     'mfa_verify_no_methods' => 'Aucune méthode configurée',
