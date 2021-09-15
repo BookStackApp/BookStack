@@ -62,13 +62,17 @@ abstract class TestCase extends BaseTestCase
      * Assert that an activity entry exists of the given key.
      * Checks the activity belongs to the given entity if provided.
      */
-    protected function assertActivityExists(string $type, Entity $entity = null)
+    protected function assertActivityExists(string $type, ?Entity $entity, ?string $detail)
     {
         $detailsToCheck = ['type' => $type];
 
         if ($entity) {
             $detailsToCheck['entity_type'] = $entity->getMorphClass();
             $detailsToCheck['entity_id'] = $entity->id;
+        }
+
+        if ($detail) {
+            $detailsToCheck['detail'] = $detail;
         }
 
         $this->assertDatabaseHas('activities', $detailsToCheck);
