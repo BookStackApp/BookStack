@@ -195,7 +195,7 @@ return [
     'pages_edit_set_changelog' => 'Remplir le journal des changements',
     'pages_edit_enter_changelog_desc' => 'Entrez une brève description des changements effectués',
     'pages_edit_enter_changelog' => 'Ouvrir le journal des changements',
-    'pages_save' => 'Enregistrez la page',
+    'pages_save' => 'Enregistrer la page',
     'pages_title' => 'Titre de la page',
     'pages_name' => 'Nom de la page',
     'pages_md_editor' => 'Éditeur',
