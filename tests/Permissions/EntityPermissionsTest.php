@@ -9,9 +9,9 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Str;
-use Tests\BrowserKitTest;
+use Tests\TestCase;
 
-class EntityPermissionsTest extends BrowserKitTest
+class EntityPermissionsTest extends TestCase
 {
     /**
      * @var User
@@ -41,608 +41,600 @@ class EntityPermissionsTest extends BrowserKitTest
 
     public function test_bookshelf_view_restriction()
     {
-        $shelf = Bookshelf::first();
+        /** @var Bookshelf $shelf */
+        $shelf = Bookshelf::query()->first();
 
         $this->actingAs($this->user)
-            ->visit($shelf->getUrl())
-            ->seePageIs($shelf->getUrl());
+            ->get($shelf->getUrl())
+            ->assertStatus(200);
 
         $this->setRestrictionsForTestRoles($shelf, []);
 
-        $this->forceVisit($shelf->getUrl())
-            ->see('Bookshelf not found');
+        $this->followingRedirects()->get($shelf->getUrl())
+            ->assertSee('Bookshelf not found');
 
         $this->setRestrictionsForTestRoles($shelf, ['view']);
 
-        $this->visit($shelf->getUrl())
-            ->see($shelf->name);
+        $this->get($shelf->getUrl())
+            ->assertSee($shelf->name);
     }
 
     public function test_bookshelf_update_restriction()
     {
-        $shelf = Bookshelf::first();
+        /** @var Bookshelf $shelf */
+        $shelf = Bookshelf::query()->first();
 
         $this->actingAs($this->user)
-            ->visit($shelf->getUrl('/edit'))
-            ->see('Edit Book');
+            ->get($shelf->getUrl('/edit'))
+            ->assertSee('Edit Book');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
-        $this->forceVisit($shelf->getUrl('/edit'))
-            ->see('You do not have permission')->seePageIs('/');
+        $resp = $this->get($shelf->getUrl('/edit'))
+            ->assertRedirect('/');
+        $this->followRedirects($resp)->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
-        $this->visit($shelf->getUrl('/edit'))
-            ->seePageIs($shelf->getUrl('/edit'));
+        $this->get($shelf->getUrl('/edit'))
+            ->assertOk();
     }
 
     public function test_bookshelf_delete_restriction()
     {
-        $shelf = Book::first();
+        /** @var Bookshelf $shelf */
+        $shelf = Bookshelf::query()->first();
 
         $this->actingAs($this->user)
-            ->visit($shelf->getUrl('/delete'))
-            ->see('Delete Book');
+            ->get($shelf->getUrl('/delete'))
+            ->assertSee('Delete Book');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
-        $this->forceVisit($shelf->getUrl('/delete'))
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($shelf->getUrl('/delete'))->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
-        $this->visit($shelf->getUrl('/delete'))
-            ->seePageIs($shelf->getUrl('/delete'))->see('Delete Book');
+        $this->get($shelf->getUrl('/delete'))
+            ->assertOk()
+            ->assertSee('Delete Book');
     }
 
     public function test_book_view_restriction()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->user)
-            ->visit($bookUrl)
-            ->seePageIs($bookUrl);
+            ->get($bookUrl)
+            ->assertOk();
 
         $this->setRestrictionsForTestRoles($book, []);
 
-        $this->forceVisit($bookUrl)
-            ->see('Book not found');
-        $this->forceVisit($bookPage->getUrl())
-            ->see('Page not found');
-        $this->forceVisit($bookChapter->getUrl())
-            ->see('Chapter not found');
+        $this->followingRedirects()->get($bookUrl)
+            ->assertSee('Book not found');
+        $this->followingRedirects()->get($bookPage->getUrl())
+            ->assertSee('Page not found');
+        $this->followingRedirects()->get($bookChapter->getUrl())
+            ->assertSee('Chapter not found');
 
         $this->setRestrictionsForTestRoles($book, ['view']);
 
-        $this->visit($bookUrl)
-            ->see($book->name);
-        $this->visit($bookPage->getUrl())
-            ->see($bookPage->name);
-        $this->visit($bookChapter->getUrl())
-            ->see($bookChapter->name);
+        $this->get($bookUrl)
+            ->assertSee($book->name);
+        $this->get($bookPage->getUrl())
+            ->assertSee($bookPage->name);
+        $this->get($bookChapter->getUrl())
+            ->assertSee($bookChapter->name);
     }
 
     public function test_book_create_restriction()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->viewer)
-            ->visit($bookUrl)
-            ->dontSeeInElement('.actions', 'New Page')
-            ->dontSeeInElement('.actions', 'New Chapter');
+            ->get($bookUrl)
+            ->assertElementNotContains('.actions', 'New Page')
+            ->assertElementNotContains('.actions', 'New Chapter');
         $this->actingAs($this->user)
-            ->visit($bookUrl)
-            ->seeInElement('.actions', 'New Page')
-            ->seeInElement('.actions', 'New Chapter');
+            ->get($bookUrl)
+            ->assertElementContains('.actions', 'New Page')
+            ->assertElementContains('.actions', 'New Chapter');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete', 'update']);
 
-        $this->forceVisit($bookUrl . '/create-chapter')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookUrl . '/create-page')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->visit($bookUrl)->dontSeeInElement('.actions', 'New Page')
-            ->dontSeeInElement('.actions', 'New Chapter');
+        $this->get($bookUrl . '/create-chapter')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+
+        $this->get($bookUrl . '/create-page')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+
+        $this->get($bookUrl)
+            ->assertElementNotContains('.actions', 'New Page')
+            ->assertElementNotContains('.actions', 'New Chapter');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'create']);
 
-        $this->visit($bookUrl . '/create-chapter')
-            ->type('test chapter', 'name')
-            ->type('test description for chapter', 'description')
-            ->press('Save Chapter')
-            ->seePageIs($bookUrl . '/chapter/test-chapter');
-        $this->visit($bookUrl . '/create-page')
-            ->type('test page', 'name')
-            ->type('test content', 'html')
-            ->press('Save Page')
-            ->seePageIs($bookUrl . '/page/test-page');
-        $this->visit($bookUrl)->seeInElement('.actions', 'New Page')
-            ->seeInElement('.actions', 'New Chapter');
+        $resp = $this->post($book->getUrl('/create-chapter'), [
+            'name' => 'test chapter',
+            'description' => 'desc',
+        ]);
+        $resp->assertRedirect($book->getUrl('/chapter/test-chapter'));
+
+
+        $this->get($book->getUrl('/create-page'));
+        /** @var Page $page */
+        $page = Page::query()->where('draft', '=', true)->orderBy('id', 'desc')->first();
+        $resp = $this->post($page->getUrl(), [
+            'name' => 'test page',
+            'html' => 'test content',
+        ]);
+        $resp->assertRedirect($book->getUrl('/page/test-page'));
+
+        $this->get($bookUrl)
+            ->assertElementContains('.actions', 'New Page')
+            ->assertElementContains('.actions', 'New Chapter');
     }
 
     public function test_book_update_restriction()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->user)
-            ->visit($bookUrl . '/edit')
-            ->see('Edit Book');
+            ->get($bookUrl . '/edit')
+            ->assertSee('Edit Book');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
-        $this->forceVisit($bookUrl . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookPage->getUrl() . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookChapter->getUrl() . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($bookUrl . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookChapter->getUrl() . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
-        $this->visit($bookUrl . '/edit')
-            ->seePageIs($bookUrl . '/edit');
-        $this->visit($bookPage->getUrl() . '/edit')
-            ->seePageIs($bookPage->getUrl() . '/edit');
-        $this->visit($bookChapter->getUrl() . '/edit')
-            ->see('Edit Chapter');
+        $this->get($bookUrl . '/edit')->assertOk();
+        $this->get($bookPage->getUrl() . '/edit')->assertOk();
+        $this->get($bookChapter->getUrl() . '/edit')->assertSee('Edit Chapter');
     }
 
     public function test_book_delete_restriction()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
         $bookUrl = $book->getUrl();
-        $this->actingAs($this->user)
-            ->visit($bookUrl . '/delete')
-            ->see('Delete Book');
+        $this->actingAs($this->user)->get($bookUrl . '/delete')
+            ->assertSee('Delete Book');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
-        $this->forceVisit($bookUrl . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookPage->getUrl() . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookChapter->getUrl() . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($bookUrl . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookPage->getUrl() . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookChapter->getUrl() . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
-        $this->visit($bookUrl . '/delete')
-            ->seePageIs($bookUrl . '/delete')->see('Delete Book');
-        $this->visit($bookPage->getUrl() . '/delete')
-            ->seePageIs($bookPage->getUrl() . '/delete')->see('Delete Page');
-        $this->visit($bookChapter->getUrl() . '/delete')
-            ->see('Delete Chapter');
+        $this->get($bookUrl . '/delete')->assertOk()->assertSee('Delete Book');
+        $this->get($bookPage->getUrl('/delete'))->assertOk()->assertSee('Delete Page');
+        $this->get($bookChapter->getUrl('/delete'))->assertSee('Delete Chapter');
     }
 
     public function test_chapter_view_restriction()
     {
-        $chapter = Chapter::first();
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
-        $this->actingAs($this->user)
-            ->visit($chapterUrl)
-            ->seePageIs($chapterUrl);
+        $this->actingAs($this->user)->get($chapterUrl)->assertOk();
 
         $this->setRestrictionsForTestRoles($chapter, []);
 
-        $this->forceVisit($chapterUrl)
-            ->see('Chapter not found');
-        $this->forceVisit($chapterPage->getUrl())
-            ->see('Page not found');
+        $this->followingRedirects()->get($chapterUrl)->assertSee('Chapter not found');
+        $this->followingRedirects()->get($chapterPage->getUrl())->assertSee('Page not found');
 
         $this->setRestrictionsForTestRoles($chapter, ['view']);
 
-        $this->visit($chapterUrl)
-            ->see($chapter->name);
-        $this->visit($chapterPage->getUrl())
-            ->see($chapterPage->name);
+        $this->get($chapterUrl)->assertSee($chapter->name);
+        $this->get($chapterPage->getUrl())->assertSee($chapterPage->name);
     }
 
     public function test_chapter_create_restriction()
     {
-        $chapter = Chapter::first();
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
 
         $chapterUrl = $chapter->getUrl();
         $this->actingAs($this->user)
-            ->visit($chapterUrl)
-            ->seeInElement('.actions', 'New Page');
+            ->get($chapterUrl)
+            ->assertElementContains('.actions', 'New Page');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'delete', 'update']);
 
-        $this->forceVisit($chapterUrl . '/create-page')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->visit($chapterUrl)->dontSeeInElement('.actions', 'New Page');
+        $this->get($chapterUrl . '/create-page')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($chapterUrl)->assertElementNotContains('.actions', 'New Page');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'create']);
 
-        $this->visit($chapterUrl . '/create-page')
-            ->type('test page', 'name')
-            ->type('test content', 'html')
-            ->press('Save Page')
-            ->seePageIs($chapter->book->getUrl() . '/page/test-page');
+        $this->get($chapter->getUrl('/create-page'));
+        /** @var Page $page */
+        $page = Page::query()->where('draft', '=', true)->orderBy('id', 'desc')->first();
+        $resp = $this->post($page->getUrl(), [
+            'name' => 'test page',
+            'html' => 'test content',
+        ]);
+        $resp->assertRedirect($chapter->book->getUrl('/page/test-page'));
 
-        $this->visit($chapterUrl)->seeInElement('.actions', 'New Page');
+        $this->get($chapterUrl)->assertElementContains('.actions', 'New Page');
     }
 
     public function test_chapter_update_restriction()
     {
-        $chapter = Chapter::first();
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
-        $this->actingAs($this->user)
-            ->visit($chapterUrl . '/edit')
-            ->see('Edit Chapter');
+        $this->actingAs($this->user)->get($chapterUrl . '/edit')
+            ->assertSee('Edit Chapter');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'delete']);
 
-        $this->forceVisit($chapterUrl . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($chapterPage->getUrl() . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($chapterUrl . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($chapterPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'update']);
 
-        $this->visit($chapterUrl . '/edit')
-            ->seePageIs($chapterUrl . '/edit')->see('Edit Chapter');
-        $this->visit($chapterPage->getUrl() . '/edit')
-            ->seePageIs($chapterPage->getUrl() . '/edit');
+        $this->get($chapterUrl . '/edit')->assertOk()->assertSee('Edit Chapter');
+        $this->get($chapterPage->getUrl() . '/edit')->assertOk();
     }
 
     public function test_chapter_delete_restriction()
     {
-        $chapter = Chapter::first();
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
         $this->actingAs($this->user)
-            ->visit($chapterUrl . '/delete')
-            ->see('Delete Chapter');
+            ->get($chapterUrl . '/delete')
+            ->assertSee('Delete Chapter');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'update']);
 
-        $this->forceVisit($chapterUrl . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($chapterPage->getUrl() . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($chapterUrl . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($chapterPage->getUrl() . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'delete']);
 
-        $this->visit($chapterUrl . '/delete')
-            ->seePageIs($chapterUrl . '/delete')->see('Delete Chapter');
-        $this->visit($chapterPage->getUrl() . '/delete')
-            ->seePageIs($chapterPage->getUrl() . '/delete')->see('Delete Page');
+        $this->get($chapterUrl . '/delete')->assertOk()->assertSee('Delete Chapter');
+        $this->get($chapterPage->getUrl() . '/delete')->assertOk()->assertSee('Delete Page');
     }
 
     public function test_page_view_restriction()
     {
-        $page = Page::first();
+        /** @var Page $page */
+        $page = Page::query()->first();
 
         $pageUrl = $page->getUrl();
-        $this->actingAs($this->user)
-            ->visit($pageUrl)
-            ->seePageIs($pageUrl);
+        $this->actingAs($this->user)->get($pageUrl)->assertOk();
 
         $this->setRestrictionsForTestRoles($page, ['update', 'delete']);
 
-        $this->forceVisit($pageUrl)
-            ->see('Page not found');
+        $this->get($pageUrl)->assertSee('Page not found');
 
         $this->setRestrictionsForTestRoles($page, ['view']);
 
-        $this->visit($pageUrl)
-            ->see($page->name);
+        $this->get($pageUrl)->assertSee($page->name);
     }
 
     public function test_page_update_restriction()
     {
-        $page = Chapter::first();
+        /** @var Page $page */
+        $page = Page::query()->first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
-            ->visit($pageUrl . '/edit')
-            ->seeInField('name', $page->name);
+            ->get($pageUrl . '/edit')
+            ->assertElementExists('input[name="name"][value="' . $page->name . '"]');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'delete']);
 
-        $this->forceVisit($pageUrl . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($pageUrl . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'update']);
 
-        $this->visit($pageUrl . '/edit')
-            ->seePageIs($pageUrl . '/edit')->seeInField('name', $page->name);
+        $this->get($pageUrl . '/edit')
+            ->assertOk()
+            ->assertElementExists('input[name="name"][value="' . $page->name . '"]');
     }
 
     public function test_page_delete_restriction()
     {
-        $page = Page::first();
+        /** @var Page $page */
+        $page = Page::query()->first();
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
-            ->visit($pageUrl . '/delete')
-            ->see('Delete Page');
+            ->get($pageUrl . '/delete')
+            ->assertSee('Delete Page');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'update']);
 
-        $this->forceVisit($pageUrl . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($pageUrl . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'delete']);
 
-        $this->visit($pageUrl . '/delete')
-            ->seePageIs($pageUrl . '/delete')->see('Delete Page');
+        $this->get($pageUrl . '/delete')->assertOk()->assertSee('Delete Page');
+    }
+
+    protected function entityRestrictionFormTest(string $model, string $title, string $permission, string $roleId)
+    {
+        /** @var Entity $modelInstance */
+        $modelInstance = $model::query()->first();
+        $this->asAdmin()->get($modelInstance->getUrl('/permissions'))
+            ->assertSee($title);
+
+        $this->put($modelInstance->getUrl('/permissions'), [
+            'restricted' => 'true',
+            'restrictions' => [
+                $roleId => [
+                    $permission => 'true'
+                ]
+            ],
+        ]);
+
+        $this->assertDatabaseHas($modelInstance->getTable(), ['id' => $modelInstance->id, 'restricted' => true]);
+        $this->assertDatabaseHas('entity_permissions', [
+            'restrictable_id'   => $modelInstance->id,
+            'restrictable_type' => $modelInstance->getMorphClass(),
+            'role_id'           => $roleId,
+            'action'            => $permission,
+        ]);
     }
 
     public function test_bookshelf_restriction_form()
     {
-        $shelf = Bookshelf::first();
-        $this->asAdmin()->visit($shelf->getUrl('/permissions'))
-            ->see('Bookshelf Permissions')
-            ->check('restricted')
-            ->check('restrictions[2][view]')
-            ->press('Save Permissions')
-            ->seeInDatabase('bookshelves', ['id' => $shelf->id, 'restricted' => true])
-            ->seeInDatabase('entity_permissions', [
-                'restrictable_id'   => $shelf->id,
-                'restrictable_type' => Bookshelf::newModelInstance()->getMorphClass(),
-                'role_id'           => '2',
-                'action'            => 'view',
-            ]);
+        $this->entityRestrictionFormTest(Bookshelf::class, 'Bookshelf Permissions', 'view', '2');
     }
 
     public function test_book_restriction_form()
     {
-        $book = Book::first();
-        $this->asAdmin()->visit($book->getUrl() . '/permissions')
-            ->see('Book Permissions')
-            ->check('restricted')
-            ->check('restrictions[2][view]')
-            ->press('Save Permissions')
-            ->seeInDatabase('books', ['id' => $book->id, 'restricted' => true])
-            ->seeInDatabase('entity_permissions', [
-                'restrictable_id'   => $book->id,
-                'restrictable_type' => Book::newModelInstance()->getMorphClass(),
-                'role_id'           => '2',
-                'action'            => 'view',
-            ]);
+        $this->entityRestrictionFormTest(Book::class, 'Book Permissions', 'view', '2');
     }
 
     public function test_chapter_restriction_form()
     {
-        $chapter = Chapter::first();
-        $this->asAdmin()->visit($chapter->getUrl() . '/permissions')
-            ->see('Chapter Permissions')
-            ->check('restricted')
-            ->check('restrictions[2][update]')
-            ->press('Save Permissions')
-            ->seeInDatabase('chapters', ['id' => $chapter->id, 'restricted' => true])
-            ->seeInDatabase('entity_permissions', [
-                'restrictable_id'   => $chapter->id,
-                'restrictable_type' => Chapter::newModelInstance()->getMorphClass(),
-                'role_id'           => '2',
-                'action'            => 'update',
-            ]);
+        $this->entityRestrictionFormTest(Chapter::class, 'Chapter Permissions', 'update', '2');
     }
 
     public function test_page_restriction_form()
     {
-        $page = Page::first();
-        $this->asAdmin()->visit($page->getUrl() . '/permissions')
-            ->see('Page Permissions')
-            ->check('restricted')
-            ->check('restrictions[2][delete]')
-            ->press('Save Permissions')
-            ->seeInDatabase('pages', ['id' => $page->id, 'restricted' => true])
-            ->seeInDatabase('entity_permissions', [
-                'restrictable_id'   => $page->id,
-                'restrictable_type' => Page::newModelInstance()->getMorphClass(),
-                'role_id'           => '2',
-                'action'            => 'delete',
-            ]);
+        $this->entityRestrictionFormTest(Page::class, 'Page Permissions', 'delete', '2');
     }
 
     public function test_restricted_pages_not_visible_in_book_navigation_on_pages()
     {
-        $chapter = Chapter::first();
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
         $page = $chapter->pages->first();
         $page2 = $chapter->pages[2];
 
         $this->setRestrictionsForTestRoles($page, []);
 
         $this->actingAs($this->user)
-            ->visit($page2->getUrl())
-            ->dontSeeInElement('.sidebar-page-list', $page->name);
+            ->get($page2->getUrl())
+            ->assertElementNotContains('.sidebar-page-list', $page->name);
     }
 
     public function test_restricted_pages_not_visible_in_book_navigation_on_chapters()
     {
-        $chapter = Chapter::first();
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
         $page = $chapter->pages->first();
 
         $this->setRestrictionsForTestRoles($page, []);
 
         $this->actingAs($this->user)
-            ->visit($chapter->getUrl())
-            ->dontSeeInElement('.sidebar-page-list', $page->name);
+            ->get($chapter->getUrl())
+            ->assertElementNotContains('.sidebar-page-list', $page->name);
     }
 
     public function test_restricted_pages_not_visible_on_chapter_pages()
     {
-        $chapter = Chapter::first();
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
         $page = $chapter->pages->first();
 
         $this->setRestrictionsForTestRoles($page, []);
 
         $this->actingAs($this->user)
-            ->visit($chapter->getUrl())
-            ->dontSee($page->name);
+            ->get($chapter->getUrl())
+            ->assertDontSee($page->name);
     }
 
     public function test_restricted_chapter_pages_not_visible_on_book_page()
     {
+        /** @var Chapter $chapter */
         $chapter = Chapter::query()->first();
         $this->actingAs($this->user)
-            ->visit($chapter->book->getUrl())
-            ->see($chapter->pages->first()->name);
+            ->get($chapter->book->getUrl())
+            ->assertSee($chapter->pages->first()->name);
 
         foreach ($chapter->pages as $page) {
             $this->setRestrictionsForTestRoles($page, []);
         }
 
         $this->actingAs($this->user)
-            ->visit($chapter->book->getUrl())
-            ->dontSee($chapter->pages->first()->name);
+            ->get($chapter->book->getUrl())
+            ->assertDontSee($chapter->pages->first()->name);
     }
 
     public function test_bookshelf_update_restriction_override()
     {
-        $shelf = Bookshelf::first();
+        /** @var Bookshelf $shelf */
+        $shelf = Bookshelf::query()->first();
 
         $this->actingAs($this->viewer)
-            ->visit($shelf->getUrl('/edit'))
-            ->dontSee('Edit Book');
+            ->get($shelf->getUrl('/edit'))
+            ->assertDontSee('Edit Book');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
-        $this->forceVisit($shelf->getUrl('/edit'))
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($shelf->getUrl('/edit'))->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
-        $this->visit($shelf->getUrl('/edit'))
-            ->seePageIs($shelf->getUrl('/edit'));
+        $this->get($shelf->getUrl('/edit'))->assertOk();
     }
 
     public function test_bookshelf_delete_restriction_override()
     {
-        $shelf = Bookshelf::first();
+        /** @var Bookshelf $shelf */
+        $shelf = Bookshelf::query()->first();
 
         $this->actingAs($this->viewer)
-            ->visit($shelf->getUrl('/delete'))
-            ->dontSee('Delete Book');
+            ->get($shelf->getUrl('/delete'))
+            ->assertDontSee('Delete Book');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
-        $this->forceVisit($shelf->getUrl('/delete'))
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($shelf->getUrl('/delete'))->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
-        $this->visit($shelf->getUrl('/delete'))
-            ->seePageIs($shelf->getUrl('/delete'))->see('Delete Book');
+        $this->get($shelf->getUrl('/delete'))->assertOk()->assertSee('Delete Book');
     }
 
     public function test_book_create_restriction_override()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->viewer)
-            ->visit($bookUrl)
-            ->dontSeeInElement('.actions', 'New Page')
-            ->dontSeeInElement('.actions', 'New Chapter');
+            ->get($bookUrl)
+            ->assertElementNotContains('.actions', 'New Page')
+            ->assertElementNotContains('.actions', 'New Chapter');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete', 'update']);
 
-        $this->forceVisit($bookUrl . '/create-chapter')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookUrl . '/create-page')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->visit($bookUrl)->dontSeeInElement('.actions', 'New Page')
-            ->dontSeeInElement('.actions', 'New Chapter');
+        $this->get($bookUrl . '/create-chapter')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookUrl . '/create-page')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookUrl)->assertElementNotContains('.actions', 'New Page')
+            ->assertElementNotContains('.actions', 'New Chapter');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'create']);
 
-        $this->visit($bookUrl . '/create-chapter')
-            ->type('test chapter', 'name')
-            ->type('test description for chapter', 'description')
-            ->press('Save Chapter')
-            ->seePageIs($bookUrl . '/chapter/test-chapter');
-        $this->visit($bookUrl . '/create-page')
-            ->type('test page', 'name')
-            ->type('test content', 'html')
-            ->press('Save Page')
-            ->seePageIs($bookUrl . '/page/test-page');
-        $this->visit($bookUrl)->seeInElement('.actions', 'New Page')
-            ->seeInElement('.actions', 'New Chapter');
+        $resp = $this->post($book->getUrl('/create-chapter'), [
+            'name' => 'test chapter',
+            'description' => 'test desc',
+        ]);
+        $resp->assertRedirect($book->getUrl('/chapter/test-chapter'));
+
+
+        $this->get($book->getUrl('/create-page'));
+        /** @var Page $page */
+        $page = Page::query()->where('draft', '=', true)->orderByDesc('id')->first();
+        $resp = $this->post($page->getUrl(), [
+            'name' => 'test page',
+            'html' => 'test desc',
+        ]);
+        $resp->assertRedirect($book->getUrl('/page/test-page'));
+
+        $this->get($bookUrl)
+            ->assertElementContains('.actions', 'New Page')
+            ->assertElementContains('.actions', 'New Chapter');
     }
 
     public function test_book_update_restriction_override()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
         $bookUrl = $book->getUrl();
-        $this->actingAs($this->viewer)
-            ->visit($bookUrl . '/edit')
-            ->dontSee('Edit Book');
+        $this->actingAs($this->viewer)->get($bookUrl . '/edit')
+            ->assertDontSee('Edit Book');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
-        $this->forceVisit($bookUrl . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookPage->getUrl() . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookChapter->getUrl() . '/edit')
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($bookUrl . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookChapter->getUrl() . '/edit')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
-        $this->visit($bookUrl . '/edit')
-            ->seePageIs($bookUrl . '/edit');
-        $this->visit($bookPage->getUrl() . '/edit')
-            ->seePageIs($bookPage->getUrl() . '/edit');
-        $this->visit($bookChapter->getUrl() . '/edit')
-            ->see('Edit Chapter');
+        $this->get($bookUrl . '/edit')->assertOk();
+        $this->get($bookPage->getUrl() . '/edit')->assertOk();
+        $this->get($bookChapter->getUrl() . '/edit')->assertSee('Edit Chapter');
     }
 
     public function test_book_delete_restriction_override()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
         $bookPage = $book->pages->first();
         $bookChapter = $book->chapters->first();
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->viewer)
-            ->visit($bookUrl . '/delete')
-            ->dontSee('Delete Book');
+            ->get($bookUrl . '/delete')
+            ->assertDontSee('Delete Book');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
-        $this->forceVisit($bookUrl . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookPage->getUrl() . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
-        $this->forceVisit($bookChapter->getUrl() . '/delete')
-            ->see('You do not have permission')->seePageIs('/');
+        $this->get($bookUrl . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookPage->getUrl() . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
+        $this->get($bookChapter->getUrl() . '/delete')->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
-        $this->visit($bookUrl . '/delete')
-            ->seePageIs($bookUrl . '/delete')->see('Delete Book');
-        $this->visit($bookPage->getUrl() . '/delete')
-            ->seePageIs($bookPage->getUrl() . '/delete')->see('Delete Page');
-        $this->visit($bookChapter->getUrl() . '/delete')
-            ->see('Delete Chapter');
+        $this->get($bookUrl . '/delete')->assertOk()->assertSee('Delete Book');
+        $this->get($bookPage->getUrl() . '/delete')->assertOk()->assertSee('Delete Page');
+        $this->get($bookChapter->getUrl() . '/delete')->assertSee('Delete Chapter');
     }
 
     public function test_page_visible_if_has_permissions_when_book_not_visible()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
         $bookChapter = $book->chapters->first();
         $bookPage = $bookChapter->pages->first();
 
@@ -655,34 +647,37 @@ class EntityPermissionsTest extends BrowserKitTest
         $this->setRestrictionsForTestRoles($bookPage, ['view']);
 
         $this->actingAs($this->viewer);
-        $this->get($bookPage->getUrl());
-        $this->assertResponseOk();
-        $this->see($bookPage->name);
-        $this->dontSee(substr($book->name, 0, 15));
-        $this->dontSee(substr($bookChapter->name, 0, 15));
+        $resp = $this->get($bookPage->getUrl());
+        $resp->assertOk();
+        $resp->assertSee($bookPage->name);
+        $resp->assertDontSee(substr($book->name, 0, 15));
+        $resp->assertDontSee(substr($bookChapter->name, 0, 15));
     }
 
     public function test_book_sort_view_permission()
     {
-        $firstBook = Book::first();
-        $secondBook = Book::find(2);
+        /** @var Book $firstBook */
+        $firstBook = Book::query()->first();
+        /** @var Book $secondBook */
+        $secondBook = Book::query()->find(2);
 
         $this->setRestrictionsForTestRoles($firstBook, ['view', 'update']);
         $this->setRestrictionsForTestRoles($secondBook, ['view']);
 
         // Test sort page visibility
-        $this->actingAs($this->user)->visit($secondBook->getUrl() . '/sort')
-                ->see('You do not have permission')
-                ->seePageIs('/');
+        $this->actingAs($this->user)->get($secondBook->getUrl('/sort'))->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         // Check sort page on first book
-        $this->actingAs($this->user)->visit($firstBook->getUrl() . '/sort');
+        $this->actingAs($this->user)->get($firstBook->getUrl('/sort'));
     }
 
     public function test_book_sort_permission()
     {
-        $firstBook = Book::first();
-        $secondBook = Book::find(2);
+        /** @var Book $firstBook */
+        $firstBook = Book::query()->first();
+        /** @var Book $secondBook */
+        $secondBook = Book::query()->find(2);
 
         $this->setRestrictionsForTestRoles($firstBook, ['view', 'update']);
         $this->setRestrictionsForTestRoles($secondBook, ['view']);
@@ -703,9 +698,8 @@ class EntityPermissionsTest extends BrowserKitTest
 
         // Move chapter from first book to a second book
         $this->actingAs($this->user)->put($firstBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)])
-                ->followRedirects()
-                ->see('You do not have permission')
-                ->seePageIs('/');
+            ->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
 
         $reqData = [
             [
@@ -719,30 +713,31 @@ class EntityPermissionsTest extends BrowserKitTest
 
         // Move chapter from second book to first book
         $this->actingAs($this->user)->put($firstBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)])
-                ->followRedirects()
-                ->see('You do not have permission')
-                ->seePageIs('/');
+                ->assertRedirect('/');
+        $this->get('/')->assertSee('You do not have permission');
     }
 
     public function test_can_create_page_if_chapter_has_permissions_when_book_not_visible()
     {
-        $book = Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
         $this->setRestrictionsForTestRoles($book, []);
         $bookChapter = $book->chapters->first();
         $this->setRestrictionsForTestRoles($bookChapter, ['view']);
 
-        $this->actingAs($this->user)->visit($bookChapter->getUrl())
-            ->dontSee('New Page');
+        $this->actingAs($this->user)->get($bookChapter->getUrl())
+            ->assertDontSee('New Page');
 
         $this->setRestrictionsForTestRoles($bookChapter, ['view', 'create']);
 
-        $this->actingAs($this->user)->visit($bookChapter->getUrl())
-            ->click('New Page')
-            ->seeStatusCode(200)
-            ->type('test page', 'name')
-            ->type('test content', 'html')
-            ->press('Save Page')
-            ->seePageIs($book->getUrl('/page/test-page'))
-            ->seeStatusCode(200);
+
+        $this->get($bookChapter->getUrl('/create-page'));
+        /** @var Page $page */
+        $page = Page::query()->where('draft', '=', true)->orderByDesc('id')->first();
+        $resp = $this->post($page->getUrl(), [
+            'name' => 'test page',
+            'html' => 'test content',
+        ]);
+        $resp->assertRedirect($book->getUrl('/page/test-page'));
     }
 }
