@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $external_auth_id
  * @property string $system_name
  * @property bool   $mfa_enforced
+ * @property Collection $users
  */
 class Role extends Model implements Loggable
 {
