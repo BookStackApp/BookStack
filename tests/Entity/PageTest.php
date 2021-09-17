@@ -10,6 +10,33 @@ use Tests\TestCase;
 
 class PageTest extends TestCase
 {
+    public function test_create()
+    {
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
+        $page = factory(Page::class)->make([
+            'name' => 'My First Page',
+        ]);
+
+        $resp = $this->asEditor()->get($chapter->getUrl());
+        $resp->assertElementContains('a[href="' . $chapter->getUrl('/create-page') . '"]', 'New Page');
+
+        $resp = $this->get($chapter->getUrl('/create-page'));
+        /** @var Page $draftPage */
+        $draftPage = Page::query()
+            ->where('draft', '=', true)
+            ->orderBy('created_at', 'desc')
+            ->first();
+        $resp->assertRedirect($draftPage->getUrl());
+
+        $resp = $this->get($draftPage->getUrl());
+        $resp->assertElementContains('form[action="' . $draftPage->getUrl() . '"][method="POST"]', 'Save Page');
+
+        $resp = $this->post($draftPage->getUrl(), $draftPage->only('name', 'html'));
+        $draftPage->refresh();
+        $resp->assertRedirect($draftPage->getUrl());
+    }
+
     public function test_page_view_when_creator_is_deleted_but_owner_exists()
     {
         $page = Page::query()->first();
