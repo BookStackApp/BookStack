@@ -89,7 +89,7 @@ trait SharedTestHelpers
     /**
      * Get a user that's not a system user such as the guest user.
      */
-    public function getNormalUser()
+    public function getNormalUser(): User
     {
         return User::query()->where('system_name', '=', null)->get()->last();
     }

@@ -3,12 +3,114 @@
 namespace Tests\User;
 
 use BookStack\Actions\ActivityType;
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class UserManagementTest extends TestCase
 {
+
+    public function test_user_creation()
+    {
+        /** @var User $user */
+        $user = factory(User::class)->make();
+        $adminRole = Role::getRole('admin');
+
+        $resp = $this->asAdmin()->get('/settings/users');
+        $resp->assertElementContains('a[href="' . url('/settings/users/create') . '"]', 'Add New User');
+
+        $this->get('/settings/users/create')
+            ->assertElementContains('form[action="' . url('/settings/users/create') . '"]', 'Save');
+
+        $resp = $this->post('/settings/users/create', [
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $user->password,
+            'password-confirm' => $user->password,
+            'roles[' . $adminRole->id . ']' => 'true',
+        ]);
+        $resp->assertRedirect('/settings/users');
+
+        $resp = $this->get('/settings/users');
+        $resp->assertSee($user->name);
+
+        $this->assertDatabaseHas('users', $user->only('name', 'email'));
+
+        $user->refresh();
+        $this->assertStringStartsWith(Str::slug($user->name), $user->slug);
+    }
+
+    public function test_user_updating()
+    {
+        $user = $this->getNormalUser();
+        $password = $user->password;
+
+
+        $resp = $this->asAdmin()->get('/settings/users/' . $user->id);
+        $resp->assertSee($user->email);
+
+        $this->put($user->getEditUrl(), [
+            'name' => 'Barry Scott'
+        ])->assertRedirect('/settings/users');
+
+        $this->assertDatabaseHas('users', ['id' => $user->id, 'name' => 'Barry Scott', 'password' => $password]);
+        $this->assertDatabaseMissing('users', ['name' => $user->name]);
+
+        $user->refresh();
+        $this->assertStringStartsWith(Str::slug($user->name), $user->slug);
+    }
+
+    public function test_user_password_update()
+    {
+        $user = $this->getNormalUser();
+        $userProfilePage = '/settings/users/' . $user->id;
+
+        $this->asAdmin()->get($userProfilePage);
+        $this->put($userProfilePage, [
+            'password' => 'newpassword'
+        ])->assertRedirect($userProfilePage);
+
+        $this->get($userProfilePage)->assertSee('Password confirmation required');
+
+        $this->put($userProfilePage, [
+            'password' => 'newpassword',
+            'password-confirm' => 'newpassword',
+        ])->assertRedirect('/settings/users');
+
+        $userPassword = User::query()->find($user->id)->password;
+        $this->assertTrue(Hash::check('newpassword', $userPassword));
+    }
+
+    public function test_user_cannot_be_deleted_if_last_admin()
+    {
+        $adminRole = Role::getRole('admin');
+
+        // Delete all but one admin user if there are more than one
+        $adminUsers = $adminRole->users;
+        if (count($adminUsers) > 1) {
+            /** @var User $user */
+            foreach ($adminUsers->splice(1) as $user) {
+                $user->delete();
+            }
+        }
+
+        // Ensure we currently only have 1 admin user
+        $this->assertEquals(1, $adminRole->users()->count());
+        /** @var User $user */
+        $user = $adminRole->users->first();
+
+        $resp = $this->asAdmin()->delete('/settings/users/' . $user->id);
+        $resp->assertRedirect('/settings/users/' . $user->id);
+
+        $resp = $this->get('/settings/users/' . $user->id);
+        $resp->assertSee('You cannot delete the only admin');
+
+        $this->assertDatabaseHas('users', ['id' => $user->id]);
+    }
+
     public function test_delete()
     {
         $editor = $this->getEditor();
