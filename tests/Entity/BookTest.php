@@ -3,12 +3,73 @@
 namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
 use Tests\TestCase;
 
 class BookTest extends TestCase
 {
-    public function test_book_delete()
+    public function test_create()
+    {
+        $book = factory(Book::class)->make([
+            'name' => 'My First Book',
+        ]);
+
+        $resp = $this->asEditor()->get('/books');
+        $resp->assertElementContains('a[href="' . url('/create-book') . '"]', 'Create New Book');
+
+        $resp = $this->get('/create-book');
+        $resp->assertElementContains('form[action="' . url('/books') . '"][method="POST"]', 'Save Book');
+
+        $resp = $this->post('/books', $book->only('name', 'description'));
+        $resp->assertRedirect('/books/my-first-book');
+
+        $resp = $this->get('/books/my-first-book');
+        $resp->assertSee($book->name);
+        $resp->assertSee($book->description);
+    }
+
+    public function test_create_uses_different_slugs_when_name_reused()
+    {
+        $book = factory(Book::class)->make([
+            'name' => 'My First Book',
+        ]);
+
+        $this->asEditor()->post('/books', $book->only('name', 'description'));
+        $this->asEditor()->post('/books', $book->only('name', 'description'));
+
+        $books = Book::query()->where('name', '=', $book->name)
+            ->orderBy('id', 'desc')
+            ->take(2)
+            ->get();
+
+        $this->assertMatchesRegularExpression('/my-first-book-[0-9a-zA-Z]{3}/', $books[0]->slug);
+        $this->assertEquals('my-first-book', $books[1]->slug);
+    }
+
+    public function test_update()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        // Cheeky initial update to refresh slug
+        $this->asEditor()->put($book->getUrl(), ['name' => $book->name . '5', 'description' => $book->description]);
+        $book->refresh();
+
+        $newName = $book->name . ' Updated';
+        $newDesc = $book->description . ' with more content';
+
+        $resp = $this->get($book->getUrl('/edit'));
+        $resp->assertSee($book->name);
+        $resp->assertSee($book->description);
+        $resp->assertElementContains('form[action="' . $book->getUrl() . '"]', 'Save Book');
+
+        $resp = $this->put($book->getUrl(), ['name' => $newName, 'description' => $newDesc]);
+        $resp->assertRedirect($book->getUrl() . '-updated');
+
+        $resp = $this->get($book->getUrl() . '-updated');
+        $resp->assertSee($newName);
+        $resp->assertSee($newDesc);
+    }
+
+    public function test_delete()
     {
         $book = Book::query()->whereHas('pages')->whereHas('chapters')->first();
         $this->assertNull($book->deleted_at);
