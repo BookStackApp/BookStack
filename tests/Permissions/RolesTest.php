@@ -69,7 +69,7 @@ class RolesTest extends TestCase
 
         $resp = $this->post('/settings/roles/new', [
             'display_name' => $testRoleName,
-            'description' => $testRoleDesc,
+            'description'  => $testRoleDesc,
         ]);
         $resp->assertRedirect('/settings/roles');
 
@@ -78,7 +78,7 @@ class RolesTest extends TestCase
         $resp->assertSee($testRoleDesc);
         $this->assertDatabaseHas('roles', [
             'display_name' => $testRoleName,
-            'description' => $testRoleDesc,
+            'description'  => $testRoleDesc,
             'mfa_enforced' => false,
         ]);
 
@@ -93,13 +93,13 @@ class RolesTest extends TestCase
 
         $resp = $this->put('/settings/roles/' . $role->id, [
             'display_name' => $testRoleUpdateName,
-            'description' => $testRoleDesc,
+            'description'  => $testRoleDesc,
             'mfa_enforced' => 'true',
         ]);
         $resp->assertRedirect('/settings/roles');
         $this->assertDatabaseHas('roles', [
             'display_name' => $testRoleUpdateName,
-            'description' => $testRoleDesc,
+            'description'  => $testRoleDesc,
             'mfa_enforced' => true,
         ]);
 
@@ -321,7 +321,7 @@ class RolesTest extends TestCase
         ]);
 
         $this->post('/shelves', [
-            'name' => 'test shelf',
+            'name'        => 'test shelf',
             'description' => 'shelf desc',
         ])->assertRedirect('/shelves/test-shelf');
     }
@@ -402,7 +402,7 @@ class RolesTest extends TestCase
         ]);
 
         $this->post('/books', [
-            'name' => 'test book',
+            'name'        => 'test book',
             'description' => 'book desc',
         ])->assertRedirect('/books/test-book');
     }
@@ -480,7 +480,7 @@ class RolesTest extends TestCase
         ]);
 
         $this->post($ownBook->getUrl('/create-chapter'), [
-            'name' => 'test chapter',
+            'name'        => 'test chapter',
             'description' => 'chapter desc',
         ])->assertRedirect($ownBook->getUrl('/chapter/test-chapter'));
 
@@ -499,7 +499,7 @@ class RolesTest extends TestCase
         ]);
 
         $this->post($book->getUrl('/create-chapter'), [
-            'name' => 'test chapter',
+            'name'        => 'test chapter',
             'description' => 'chapter desc',
         ])->assertRedirect($book->getUrl('/chapter/test-chapter'));
     }
@@ -771,8 +771,8 @@ class RolesTest extends TestCase
         $page = Page::query()->first();
         $image = factory(Image::class)->create([
             'uploaded_to' => $page->id,
-            'created_by' => $this->user->id,
-            'updated_by' => $this->user->id,
+            'created_by'  => $this->user->id,
+            'updated_by'  => $this->user->id,
         ]);
 
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertStatus(403);
@@ -927,12 +927,14 @@ class RolesTest extends TestCase
     private function addComment(Page $page): TestResponse
     {
         $comment = factory(Comment::class)->make();
+
         return $this->postJson("/comment/$page->id", $comment->only('text', 'html'));
     }
 
     private function updateComment(Comment $comment): TestResponse
     {
         $commentData = factory(Comment::class)->make();
+
         return $this->putJson("/comment/{$comment->id}", $commentData->only('text', 'html'));
     }
 

@@ -227,7 +227,7 @@ class PageTest extends TestCase
         // Need to save twice since revisions are not generated in seeder.
         $this->asAdmin()->put($page->getUrl(), [
             'name' => 'super test',
-            'html' => '<p></p>'
+            'html' => '<p></p>',
         ]);
 
         $page->refresh();
@@ -235,7 +235,7 @@ class PageTest extends TestCase
 
         $this->put($pageUrl, [
             'name' => 'super test page',
-            'html' => '<p></p>'
+            'html' => '<p></p>',
         ]);
 
         $this->get($pageUrl)
@@ -280,5 +280,4 @@ class PageTest extends TestCase
         $this->get('/')
             ->assertElementContains('#recently-updated-pages', $page->name);
     }
-
 }

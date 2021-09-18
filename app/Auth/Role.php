@@ -13,12 +13,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * Class Role.
  *
- * @property int    $id
- * @property string $display_name
- * @property string $description
- * @property string $external_auth_id
- * @property string $system_name
- * @property bool   $mfa_enforced
+ * @property int        $id
+ * @property string     $display_name
+ * @property string     $description
+ * @property string     $external_auth_id
+ * @property string     $system_name
+ * @property bool       $mfa_enforced
  * @property Collection $users
  */
 class Role extends Model implements Loggable

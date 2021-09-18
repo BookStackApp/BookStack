@@ -213,6 +213,7 @@ trait SharedTestHelpers
 
     /**
      * Create a group of entities that belong to a specific user.
+     *
      * @return array{book: Book, chapter: Chapter, page: Page}
      */
     protected function createEntityChainBelongingToUser(User $creatorUser, ?User $updaterUser = null): array

@@ -162,11 +162,10 @@ class EntityPermissionsTest extends TestCase
         $this->setRestrictionsForTestRoles($book, ['view', 'create']);
 
         $resp = $this->post($book->getUrl('/create-chapter'), [
-            'name' => 'test chapter',
+            'name'        => 'test chapter',
             'description' => 'desc',
         ]);
         $resp->assertRedirect($book->getUrl('/chapter/test-chapter'));
-
 
         $this->get($book->getUrl('/create-page'));
         /** @var Page $page */
@@ -401,11 +400,11 @@ class EntityPermissionsTest extends TestCase
             ->assertSee($title);
 
         $this->put($modelInstance->getUrl('/permissions'), [
-            'restricted' => 'true',
+            'restricted'   => 'true',
             'restrictions' => [
                 $roleId => [
-                    $permission => 'true'
-                ]
+                    $permission => 'true',
+                ],
             ],
         ]);
 
@@ -556,11 +555,10 @@ class EntityPermissionsTest extends TestCase
         $this->setRestrictionsForTestRoles($book, ['view', 'create']);
 
         $resp = $this->post($book->getUrl('/create-chapter'), [
-            'name' => 'test chapter',
+            'name'        => 'test chapter',
             'description' => 'test desc',
         ]);
         $resp->assertRedirect($book->getUrl('/chapter/test-chapter'));
-
 
         $this->get($book->getUrl('/create-page'));
         /** @var Page $page */
@@ -729,7 +727,6 @@ class EntityPermissionsTest extends TestCase
             ->assertDontSee('New Page');
 
         $this->setRestrictionsForTestRoles($bookChapter, ['view', 'create']);
-
 
         $this->get($bookChapter->getUrl('/create-page'));
         /** @var Page $page */
