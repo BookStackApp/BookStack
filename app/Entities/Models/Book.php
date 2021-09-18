@@ -12,9 +12,12 @@ use Illuminate\Support\Collection;
 /**
  * Class Book.
  *
- * @property string     $description
- * @property int        $image_id
- * @property Image|null $cover
+ * @property string                                   $description
+ * @property int                                      $image_id
+ * @property Image|null                               $cover
+ * @property \Illuminate\Database\Eloquent\Collection $chapters
+ * @property \Illuminate\Database\Eloquent\Collection $pages
+ * @property \Illuminate\Database\Eloquent\Collection $directPages
  */
 class Book extends Entity implements HasCoverImage
 {

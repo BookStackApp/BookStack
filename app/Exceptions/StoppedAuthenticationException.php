@@ -55,7 +55,7 @@ class StoppedAuthenticationException extends \Exception implements Responsable
             ], 401);
         }
 
-        if (session()->get('sent-email-confirmation') === true) {
+        if (session()->pull('sent-email-confirmation') === true) {
             return redirect('/register/confirm');
         }
 

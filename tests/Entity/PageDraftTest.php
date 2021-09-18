@@ -2,12 +2,16 @@
 
 namespace Tests\Entity;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
-use Tests\BrowserKitTest;
+use Tests\TestCase;
 
-class PageDraftTest extends BrowserKitTest
+class PageDraftTest extends TestCase
 {
+    /**
+     * @var Page
+     */
     protected $page;
 
     /**
@@ -18,99 +22,101 @@ class PageDraftTest extends BrowserKitTest
     public function setUp(): void
     {
         parent::setUp();
-        $this->page = \BookStack\Entities\Models\Page::first();
-        $this->pageRepo = app(PageRepo::class);
+        $this->page = Page::query()->first();
+        $this->pageRepo = app()->make(PageRepo::class);
     }
 
     public function test_draft_content_shows_if_available()
     {
         $addedContent = '<p>test message content</p>';
-        $this->asAdmin()->visit($this->page->getUrl('/edit'))
-            ->dontSeeInField('html', $addedContent);
+
+        $this->asAdmin()->get($this->page->getUrl('/edit'))
+            ->assertElementNotContains('[name="html"]', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
-        $this->asAdmin()->visit($this->page->getUrl('/edit'))
-            ->seeInField('html', $newContent);
+        $this->asAdmin()->get($this->page->getUrl('/edit'))
+            ->assertElementContains('[name="html"]', $newContent);
     }
 
     public function test_draft_not_visible_by_others()
     {
         $addedContent = '<p>test message content</p>';
-        $this->asAdmin()->visit($this->page->getUrl('/edit'))
-            ->dontSeeInField('html', $addedContent);
+        $this->asAdmin()->get($this->page->getUrl('/edit'))
+            ->assertElementNotContains('[name="html"]', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
         $newUser = $this->getEditor();
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
 
-        $this->actingAs($newUser)->visit($this->page->getUrl('/edit'))
-            ->dontSeeInField('html', $newContent);
+        $this->actingAs($newUser)->get($this->page->getUrl('/edit'))
+            ->assertElementNotContains('[name="html"]', $newContent);
     }
 
     public function test_alert_message_shows_if_editing_draft()
     {
         $this->asAdmin();
         $this->pageRepo->updatePageDraft($this->page, ['html' => 'test content']);
-        $this->asAdmin()->visit($this->page->getUrl('/edit'))
-            ->see('You are currently editing a draft');
+        $this->asAdmin()->get($this->page->getUrl('/edit'))
+            ->assertSee('You are currently editing a draft');
     }
 
     public function test_alert_message_shows_if_someone_else_editing()
     {
-        $nonEditedPage = \BookStack\Entities\Models\Page::take(10)->get()->last();
+        $nonEditedPage = Page::query()->take(10)->get()->last();
         $addedContent = '<p>test message content</p>';
-        $this->asAdmin()->visit($this->page->getUrl('/edit'))
-            ->dontSeeInField('html', $addedContent);
+        $this->asAdmin()->get($this->page->getUrl('/edit'))
+            ->assertElementNotContains('[name="html"]', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
         $newUser = $this->getEditor();
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
 
         $this->actingAs($newUser)
-            ->visit($this->page->getUrl('/edit'))
-            ->see('Admin has started editing this page');
+            ->get($this->page->getUrl('/edit'))
+            ->assertSee('Admin has started editing this page');
         $this->flushSession();
-        $this->visit($nonEditedPage->getUrl() . '/edit')
-            ->dontSeeInElement('.notification', 'Admin has started editing this page');
+        $this->get($nonEditedPage->getUrl() . '/edit')
+            ->assertElementNotContains('.notification', 'Admin has started editing this page');
     }
 
     public function test_draft_pages_show_on_homepage()
     {
-        $book = \BookStack\Entities\Models\Book::first();
-        $this->asAdmin()->visit('/')
-            ->dontSeeInElement('#recent-drafts', 'New Page')
-            ->visit($book->getUrl() . '/create-page')
-            ->visit('/')
-            ->seeInElement('#recent-drafts', 'New Page');
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $this->asAdmin()->get('/')
+            ->assertElementNotContains('#recent-drafts', 'New Page');
+
+        $this->get($book->getUrl() . '/create-page');
+
+        $this->get('/')->assertElementContains('#recent-drafts', 'New Page');
     }
 
     public function test_draft_pages_not_visible_by_others()
     {
-        $book = \BookStack\Entities\Models\Book::first();
+        /** @var Book $book */
+        $book = Book::query()->first();
         $chapter = $book->chapters->first();
         $newUser = $this->getEditor();
 
-        $this->actingAs($newUser)->visit('/')
-            ->visit($book->getUrl('/create-page'))
-            ->visit($chapter->getUrl('/create-page'))
-            ->visit($book->getUrl())
-            ->seeInElement('.book-contents', 'New Page');
+        $this->actingAs($newUser)->get($book->getUrl('/create-page'));
+        $this->get($chapter->getUrl('/create-page'));
+        $this->get($book->getUrl())
+            ->assertElementContains('.book-contents', 'New Page');
 
-        $this->asAdmin()
-            ->visit($book->getUrl())
-            ->dontSeeInElement('.book-contents', 'New Page')
-            ->visit($chapter->getUrl())
-            ->dontSeeInElement('.book-contents', 'New Page');
+        $this->asAdmin()->get($book->getUrl())
+            ->assertElementNotContains('.book-contents', 'New Page');
+        $this->get($chapter->getUrl())
+            ->assertElementNotContains('.book-contents', 'New Page');
     }
 
     public function test_page_html_in_ajax_fetch_response()
     {
         $this->asAdmin();
+        /** @var Page $page */
         $page = Page::query()->first();
 
-        $this->getJson('/ajax/page/' . $page->id);
-        $this->seeJson([
+        $this->getJson('/ajax/page/' . $page->id)->assertJson([
             'html' => $page->html,
         ]);
     }
