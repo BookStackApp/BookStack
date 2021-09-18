@@ -77,8 +77,8 @@ class AuthTest extends TestCase
 
         $this->get('/register');
         $resp = $this->followingRedirects()->post('/register', [
-            'name' => '1',
-            'email' => '1',
+            'name'     => '1',
+            'email'    => '1',
             'password' => '1',
         ]);
         $resp->assertSee('The name must be at least 2 characters.');
@@ -241,10 +241,10 @@ class AuthTest extends TestCase
             ->assertSee('Reset Password');
 
         $resp = $this->post('/password/reset', [
-            'email' => 'admin@admin.com',
-            'password' => 'randompass',
+            'email'                 => 'admin@admin.com',
+            'password'              => 'randompass',
             'password_confirmation' => 'randompass',
-            'token' => $n->first()->token
+            'token'                 => $n->first()->token,
         ]);
         $resp->assertRedirect('/');
 
@@ -260,13 +260,12 @@ class AuthTest extends TestCase
         $resp->assertSee('A password reset link will be sent to barry@admin.com if that email address is found in the system.');
         $resp->assertDontSee('We can\'t find a user');
 
-
         $this->get('/password/reset/arandometokenvalue')->assertSee('Reset Password');
         $resp = $this->post('/password/reset', [
-            'email' => 'barry@admin.com',
-            'password' => 'randompass',
+            'email'                 => 'barry@admin.com',
+            'password'              => 'randompass',
             'password_confirmation' => 'randompass',
-            'token' => 'arandometokenvalue'
+            'token'                 => 'arandometokenvalue',
         ]);
         $resp->assertRedirect('/password/reset/arandometokenvalue');
 

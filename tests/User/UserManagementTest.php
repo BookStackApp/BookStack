@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class UserManagementTest extends TestCase
 {
-
     public function test_user_creation()
     {
         /** @var User $user */
@@ -26,10 +25,10 @@ class UserManagementTest extends TestCase
             ->assertElementContains('form[action="' . url('/settings/users/create') . '"]', 'Save');
 
         $resp = $this->post('/settings/users/create', [
-            'name' => $user->name,
-            'email' => $user->email,
-            'password' => $user->password,
-            'password-confirm' => $user->password,
+            'name'                          => $user->name,
+            'email'                         => $user->email,
+            'password'                      => $user->password,
+            'password-confirm'              => $user->password,
             'roles[' . $adminRole->id . ']' => 'true',
         ]);
         $resp->assertRedirect('/settings/users');
@@ -48,12 +47,11 @@ class UserManagementTest extends TestCase
         $user = $this->getNormalUser();
         $password = $user->password;
 
-
         $resp = $this->asAdmin()->get('/settings/users/' . $user->id);
         $resp->assertSee($user->email);
 
         $this->put($user->getEditUrl(), [
-            'name' => 'Barry Scott'
+            'name' => 'Barry Scott',
         ])->assertRedirect('/settings/users');
 
         $this->assertDatabaseHas('users', ['id' => $user->id, 'name' => 'Barry Scott', 'password' => $password]);
@@ -70,13 +68,13 @@ class UserManagementTest extends TestCase
 
         $this->asAdmin()->get($userProfilePage);
         $this->put($userProfilePage, [
-            'password' => 'newpassword'
+            'password' => 'newpassword',
         ])->assertRedirect($userProfilePage);
 
         $this->get($userProfilePage)->assertSee('Password confirmation required');
 
         $this->put($userProfilePage, [
-            'password' => 'newpassword',
+            'password'         => 'newpassword',
             'password-confirm' => 'newpassword',
         ])->assertRedirect('/settings/users');
 
@@ -161,7 +159,7 @@ class UserManagementTest extends TestCase
         $resp->assertSee('Guest');
         $resp->assertElementContains('form[action$="/settings/users/' . $guestUser->id . '"] button', 'Confirm');
 
-        $resp =  $this->delete('/settings/users/' . $guestUser->id);
+        $resp = $this->delete('/settings/users/' . $guestUser->id);
         $resp->assertRedirect('/settings/users/' . $guestUser->id);
         $resp = $this->followRedirects($resp);
         $resp->assertSee('cannot delete the guest user');

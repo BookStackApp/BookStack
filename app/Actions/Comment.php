@@ -7,11 +7,11 @@ use BookStack\Traits\HasCreatorAndUpdater;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * @property int $id
- * @property string $text
- * @property string $html
+ * @property int      $id
+ * @property string   $text
+ * @property string   $html
  * @property int|null $parent_id
- * @property int $local_id
+ * @property int      $local_id
  */
 class Comment extends Model
 {

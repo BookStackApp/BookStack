@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class PageEditorTest extends TestCase
 {
-    /** @var Page  */
+    /** @var Page */
     protected $page;
 
     public function setUp(): void
