@@ -108,7 +108,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'recycle_bin_restore_list' => 'Wiederherzustellende Einträge',
     'recycle_bin_restore_confirm' => 'Mit dieser Aktion wird der gelöschte Eintrag einschließlich aller untergeordneten Einträge an seinen ursprünglichen Ort wiederherstellen. Wenn der ursprüngliche Ort gelöscht wurde und sich nun im Papierkorb befindet, muss auch der übergeordnete Eintrag wiederhergestellt werden.',
     'recycle_bin_restore_deleted_parent' => 'Der übergeordnete Eintrag wurde ebenfalls gelöscht. Dieser Eintrag wird weiterhin als gelöscht zählen, bis auch der übergeordnete Eintrag wiederhergestellt wurde.',
-    'recycle_bin_restore_parent' => 'Elternteil wiederherstellen',
+    'recycle_bin_restore_parent' => 'Übergeordneter Eintrag wiederherstellen',
     'recycle_bin_destroy_notification' => ':count Einträge wurden aus dem Papierkorb gelöscht.',
     'recycle_bin_restore_notification' => ':count Einträge wurden aus dem Papierkorb wiederhergestellt.',
 
