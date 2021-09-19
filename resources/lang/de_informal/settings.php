@@ -151,7 +151,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_manage_page_templates' => 'Seitenvorlagen verwalten',
     'role_access_api' => 'Systemzugriffs-API',
     'role_manage_settings' => 'Globaleinstellungen verwalten',
-    'role_export_content' => 'Export content',
+    'role_export_content' => 'Inhalt exportieren',
     'role_asset' => 'Berechtigungen',
     'roles_system_warning' => 'Beachten Sie, dass der Zugriff auf eine der oben genannten drei Berechtigungen einem Benutzer erlauben kann, seine eigenen Berechtigungen oder die Rechte anderer im System zu ändern. Weisen Sie nur Rollen, mit diesen Berechtigungen, vertrauenswürdigen Benutzern zu.',
     'role_asset_desc' => 'Diese Berechtigungen gelten für den Standard-Zugriff innerhalb des Systems. Berechtigungen für Bücher, Kapitel und Seiten überschreiben diese Berechtigungenen.',
@@ -210,7 +210,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_api_tokens_expires' => 'Endet',
     'users_api_tokens_docs' => 'API Dokumentation',
     'users_mfa' => 'Multi-Faktor-Authentifizierung',
-    'users_mfa_desc' => 'Richten Sie Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für Ihr Benutzerkonto ein.',
+    'users_mfa_desc' => 'Richte die Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für dein Benutzerkonto ein.',
     'users_mfa_x_methods' => ':count Methode konfiguriert|:count Methoden konfiguriert',
     'users_mfa_configure' => 'Methoden konfigurieren',
 
