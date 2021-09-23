@@ -59,7 +59,7 @@ class ActivityService
         return $this->activity->newInstance()->forceFill([
             'type'     => strtolower($type),
             'user_id'  => user()->id,
-            'ip' => Request::ip(),
+            'ip'       => Request::ip(),
         ]);
     }
 
