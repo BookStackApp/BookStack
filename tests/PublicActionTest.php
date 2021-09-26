@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;

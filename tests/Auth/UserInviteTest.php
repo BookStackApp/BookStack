@@ -6,9 +6,9 @@ use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\User;
 use BookStack\Notifications\UserInvite;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Notification;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class UserInviteTest extends TestCase

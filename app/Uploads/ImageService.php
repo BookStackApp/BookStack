@@ -3,7 +3,7 @@
 namespace BookStack\Uploads;
 
 use BookStack\Exceptions\ImageUploadException;
-use DB;
+use Illuminate\Support\Facades\DB;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;

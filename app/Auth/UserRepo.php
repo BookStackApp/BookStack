@@ -15,7 +15,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Log;
+use Illuminate\Support\Facades\Log;
 
 class UserRepo
 {
