@@ -2,7 +2,7 @@
 
 namespace BookStack\Providers;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use BookStack\Api\ApiTokenGuard;
 use BookStack\Auth\Access\ExternalBaseUserProvider;
 use BookStack\Auth\Access\Guards\LdapSessionGuard;

@@ -8,7 +8,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
 class RecycleBinTest extends TestCase

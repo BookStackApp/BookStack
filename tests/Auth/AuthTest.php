@@ -7,7 +7,7 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
 use BookStack\Notifications\ConfirmEmail;
 use BookStack\Notifications\ResetPassword;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tests\TestResponse;

@@ -4,7 +4,7 @@ namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Entity;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
 class TagRepo
