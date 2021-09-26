@@ -56,10 +56,11 @@ class ActivityService
      */
     protected function newActivityForUser(string $type): Activity
     {
+        $ip = request()->ip() ?? '';
         return $this->activity->newInstance()->forceFill([
             'type'     => strtolower($type),
             'user_id'  => user()->id,
-            'ip'       => Request::ip(),
+            'ip'       => config('app.env') === 'demo' ? '127.0.0.1' : $ip,
         ]);
     }
 
