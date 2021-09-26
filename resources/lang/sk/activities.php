@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Knižnica úspešne odstránená',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" bol pridaný medzi obľúbené',
+    'favourite_remove_notification' => '":name" bol odstránený z obľúbených',
 
     // MFA
     'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
