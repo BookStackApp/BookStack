@@ -2,7 +2,6 @@
 
 namespace BookStack\Providers;
 
-use Illuminate\Support\Facades\Blade;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Entities\BreadcrumbsViewComposer;
@@ -15,11 +14,12 @@ use BookStack\Settings\SettingService;
 use BookStack\Util\CspService;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {

@@ -3,7 +3,6 @@
 namespace BookStack\Uploads;
 
 use BookStack\Exceptions\ImageUploadException;
-use Illuminate\Support\Facades\DB;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
@@ -11,6 +10,7 @@ use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Contracts\Filesystem\Filesystem as Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;

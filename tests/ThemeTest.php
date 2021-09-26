@@ -7,9 +7,9 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
-use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use League\CommonMark\ConfigurableEnvironmentInterface;
 
 class ThemeTest extends TestCase

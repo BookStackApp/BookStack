@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Illuminate\Support\Facades\Auth;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
@@ -10,6 +9,7 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 class PublicActionTest extends TestCase

@@ -7,8 +7,8 @@ use Exception;
 use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentService
