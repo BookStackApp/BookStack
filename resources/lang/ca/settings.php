@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Usuari',
     'audit_table_event' => 'Esdeveniment',
     'audit_table_related' => 'Element relacionat o detall',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Data de l\'activitat',
     'audit_date_from' => 'Rang de dates a partir de',
     'audit_date_to' => 'Rang de rates fins a',
