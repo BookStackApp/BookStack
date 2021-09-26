@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -53,7 +54,7 @@ class CreateJointPermissionsTable extends Migration
 
         // Ensure unique name
         while (DB::table('roles')->where('name', '=', $publicRoleData['display_name'])->count() > 0) {
-            $publicRoleData['display_name'] = $publicRoleData['display_name'] . str_random(2);
+            $publicRoleData['display_name'] = $publicRoleData['display_name'] . Str::random(2);
         }
         $publicRoleId = DB::table('roles')->insertGetId($publicRoleData);
 
