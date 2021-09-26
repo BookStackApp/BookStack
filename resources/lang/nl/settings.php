@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Gebruiker',
     'audit_table_event' => 'Gebeurtenis',
     'audit_table_related' => 'Gerelateerd Item of Detail',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Activiteit datum',
     'audit_date_from' => 'Datum bereik vanaf',
     'audit_date_to' => 'Datum bereik tot',
