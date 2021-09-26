@@ -62,6 +62,7 @@
                     <a href="{{ sortUrl('/settings/audit', $listDetails, ['sort' => 'key']) }}">{{ trans('settings.audit_table_event') }}</a>
                 </th>
                 <th>{{ trans('settings.audit_table_related') }}</th>
+                <th>{{ trans('settings.audit_table_user_ip') }}</th>
                 <th>
                     <a href="{{ sortUrl('/settings/audit', $listDetails, ['sort' => 'created_at']) }}">{{ trans('settings.audit_table_date') }}</a></th>
             </tr>
@@ -88,6 +89,7 @@
                             <div class="px-m">{{ $activity->detail }}</div>
                         @endif
                     </td>
+                    <td>{{ $activity->ip }}</td>
                     <td>{{ $activity->created_at }}</td>
                 </tr>
             @endforeach
