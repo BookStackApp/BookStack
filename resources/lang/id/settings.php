@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Pengguna',
     'audit_table_event' => 'Peristiwa',
     'audit_table_related' => 'Item atau Detail Terkait',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Tanggal Kegiatan',
     'audit_date_from' => 'Rentang Tanggal Dari',
     'audit_date_to' => 'Rentang Tanggal Sampai',
