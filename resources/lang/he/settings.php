@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'משתמש',
     'audit_table_event' => 'אירוע',
     'audit_table_related' => 'פריט או פרט קשור',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'זמן הפעילות',
     'audit_date_from' => 'טווח תאריכים החל מ...',
     'audit_date_to' => 'טווח תאריכים עד ל...',
