@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Użytkownik',
     'audit_table_event' => 'Wydarzenie',
     'audit_table_related' => 'Powiązany element lub szczegóły',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Data Aktywności',
     'audit_date_from' => 'Zakres dat od',
     'audit_date_to' => 'Zakres dat do',
