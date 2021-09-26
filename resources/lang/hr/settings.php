@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Korisnik',
     'audit_table_event' => 'Događaj',
     'audit_table_related' => 'Povezana stavka ili detalj',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Datum aktivnosti',
     'audit_date_from' => 'Rangiraj datum od',
     'audit_date_to' => 'Rangiraj datum do',
