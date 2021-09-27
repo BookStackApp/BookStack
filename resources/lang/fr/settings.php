@@ -119,7 +119,7 @@ return [
     'audit_table_user' => 'Utilisateur',
     'audit_table_event' => 'Événement',
     'audit_table_related' => 'Élément concerné ou action réalisée',
-    'audit_table_ip' => 'IP Address',
+    'audit_table_ip' => 'Adresse IP',
     'audit_table_date' => 'Horodatage',
     'audit_date_from' => 'À partir du',
     'audit_date_to' => 'Jusqu\'au',
