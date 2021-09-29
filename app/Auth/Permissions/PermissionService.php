@@ -642,7 +642,7 @@ class PermissionService
                 $query->whereExists(function ($permissionQuery) use (&$tableDetails, $morphClass) {
                     /** @var Builder $permissionQuery */
                     $permissionQuery->select('id')->from('joint_permissions')
-                        ->whereColumn('joint_permissions.entity_id', '=',  $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                        ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where('entity_type', '=', $morphClass)
                         ->where('action', '=', 'view')
                         ->whereIn('role_id', $this->getCurrentUserRoles())

@@ -11,7 +11,6 @@ use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request;
 
 class ActivityService
 {
@@ -57,6 +56,7 @@ class ActivityService
     protected function newActivityForUser(string $type): Activity
     {
         $ip = request()->ip() ?? '';
+
         return $this->activity->newInstance()->forceFill([
             'type'     => strtolower($type),
             'user_id'  => user()->id,
