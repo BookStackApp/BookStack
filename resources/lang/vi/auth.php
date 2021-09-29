@@ -76,8 +76,8 @@ return [
     'user_invite_success' => 'Mật khẩu đã được thiết lập, bạn có quyền truy cập đến :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
-    'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'mfa_setup' => 'Cài đặt xác thực nhiều bước',
+    'mfa_setup_desc' => 'Cài đặt xác thực nhiều bước như một lớp bảo mật khác cho tài khoản của bạn.',
     'mfa_setup_configured' => 'Already configured',
     'mfa_setup_reconfigure' => 'Reconfigure',
     'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
