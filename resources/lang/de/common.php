@@ -33,7 +33,7 @@ return [
     'copy' => 'Kopieren',
     'reply' => 'Antworten',
     'delete' => 'Löschen',
-    'delete_confirm' => 'Löschen Bestätigen',
+    'delete_confirm' => 'Löschen bestätigen',
     'search' => 'Suchen',
     'search_clear' => 'Suche löschen',
     'reset' => 'Zurücksetzen',
@@ -57,9 +57,9 @@ return [
     'sort_updated_at' => 'Aktualisierungsdatum',
 
     // Misc
-    'deleted_user' => 'Gelöschte Benutzer',
+    'deleted_user' => 'Gelöschter Benutzer',
     'no_activity' => 'Keine Aktivitäten zum Anzeigen',
-    'no_items' => 'Keine Einträge gefunden.',
+    'no_items' => 'Keine Einträge gefunden',
     'back_to_top' => 'nach oben',
     'skip_to_main_content' => 'Direkt zum Hauptinhalt',
     'toggle_details' => 'Details zeigen/verstecken',
