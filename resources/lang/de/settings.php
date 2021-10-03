@@ -18,7 +18,7 @@ return [
     'app_name_desc' => 'Dieser Name wird im Header und in E-Mails angezeigt.',
     'app_name_header' => 'Anwendungsname im Header anzeigen?',
     'app_public_access' => 'Öffentlicher Zugriff',
-    'app_public_access_desc' => 'Wenn Sie diese Option aktivieren, können Besucher, die nicht angemeldet sind, auf Inhalte in Ihrer BookStack-Instanz zugreifen.',
+    'app_public_access_desc' => 'Wenn Sie diese Option aktivieren können Besucher, die nicht angemeldet sind, auf Inhalte in Ihrer BookStack-Instanz zugreifen.',
     'app_public_access_desc_guest' => 'Der Zugang für öffentliche Besucher kann über den Benutzer "Guest" gesteuert werden.',
     'app_public_access_toggle' => 'Öffentlichen Zugriff erlauben',
     'app_public_viewing' => 'Öffentliche Ansicht erlauben?',
@@ -40,7 +40,7 @@ Wenn Sie nicht eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt
     'app_homepage_desc' => 'Wählen Sie eine Seite als Startseite aus, die statt der Standardansicht angezeigt werden soll. Seitenberechtigungen werden für die ausgewählten Seiten ignoriert.',
     'app_homepage_select' => 'Wählen Sie eine Seite aus',
     'app_footer_links' => 'Fußzeilen-Links',
-    'app_footer_links_desc' => 'Fügen Sie Links hinzu, die innerhalb der Seitenfußzeile angezeigt werden. Diese werden am unteren Ende der meisten Seiten angezeigt, einschließlich derjenigen, die keinen Login benötigen. Sie können die Bezeichnung "trans::<key>" verwenden, um systemdefinierte Übersetzungen zu verwenden. Beispiel: Mit "trans::common.privacy_policy" wird der übersetzte Text "Privacy Policy" bereitgestellt, und "trans::common.terms_of_service" liefert den übersetzten Text "Terms of Service".',
+    'app_footer_links_desc' => 'Fügen Sie Links hinzu, die innerhalb der Seitenfußzeile angezeigt werden. Diese werden am unteren Ende der meisten Seiten angezeigt, einschließlich derjenigen, die keinen Login benötigen. Sie können die Bezeichnung "trans::<key>" verwenden, um systemdefinierte Übersetzungen zu verwenden. Beispiel: Mit "trans::common.privacy_policy" wird der übersetzte Text "Privacy Policy" bereitgestellt und "trans::common.terms_of_service" liefert den übersetzten Text "Terms of Service".',
     'app_footer_links_label' => 'Link-Label',
     'app_footer_links_url' => 'Link-URL',
     'app_footer_links_add' => 'Fußzeilen-Link hinzufügen',
@@ -59,7 +59,7 @@ Wenn Sie nicht eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt
 
     // Registration Settings
     'reg_settings' => 'Registrierungseinstellungen',
-    'reg_enable' => 'Registrierung erlauben?',
+    'reg_enable' => 'Registrierung erlauben',
     'reg_enable_toggle' => 'Registrierung erlauben',
     'reg_enable_desc' => 'Wenn die Registrierung erlaubt ist, kann sich der Benutzer als Anwendungsbenutzer anmelden. Bei der Registrierung erhält er eine einzige, voreingestellte Benutzerrolle.',
     'reg_default_role' => 'Standard-Benutzerrolle nach Registrierung',
