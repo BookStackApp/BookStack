@@ -41,7 +41,7 @@ return [
     'add' => 'Hinzufügen',
     'configure' => 'Konfigurieren',
     'fullscreen' => 'Vollbild',
-    'favourite' => 'Favorit',
+    'favourite' => 'Favoriten',
     'unfavourite' => 'Kein Favorit',
     'next' => 'Nächste',
     'previous' => 'Vorheriges',
