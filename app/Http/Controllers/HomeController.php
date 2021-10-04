@@ -96,9 +96,10 @@ class HomeController extends Controller
         if ($homepageOption === 'page') {
             $homepageSetting = setting('app-homepage', '0:');
             $id = intval(explode(':', $homepageSetting)[0]);
+            /** @var Page $customHomepage */
             $customHomepage = Page::query()->where('draft', '=', false)->findOrFail($id);
             $pageContent = new PageContent($customHomepage);
-            $customHomepage->html = $pageContent->render(true);
+            $customHomepage->html = $pageContent->render(false);
 
             return view('home.specific-page', array_merge($commonData, ['customHomepage' => $customHomepage]));
         }
