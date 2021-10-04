@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'New Page',
     'pages_editing_draft_notification' => 'You are currently editing a draft that was last saved :timeDiff.',
     'pages_draft_edited_notification' => 'This page has been updated by since that time. It is recommended that you discard this draft.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count users have started editing this page',
         'start_b' => ':userName has started editing this page',
