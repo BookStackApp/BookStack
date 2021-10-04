@@ -44,12 +44,12 @@ return [
     'bookshelf_delete_notification'    => 'Giá sách đã được xóa thành công',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" đã được thêm vào danh sách yêu thích của bạn',
+    'favourite_remove_notification' => '":name" đã được gỡ khỏi danh sách yêu thích của bạn',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Cấu hình xác thực nhiều bước thành công',
+    'mfa_remove_method_notification' => 'Đã gỡ xác thực nhiều bước',
 
     // Other
     'commented_on'                => 'đã bình luận về',

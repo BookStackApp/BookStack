@@ -26,7 +26,7 @@ return [
     'image_upload_remove' => 'Supprimer',
 
     // Code Editor
-    'code_editor' => 'Editer le code',
+    'code_editor' => 'Éditer le code',
     'code_language' => 'Langage du code',
     'code_content' => 'Contenu du code',
     'code_session_history' => 'Historique de session',

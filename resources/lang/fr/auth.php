@@ -57,13 +57,13 @@ return [
     'email_confirm_action' => 'Confirmez votre adresse e-mail',
     'email_confirm_send_error' => 'La confirmation par e-mail est requise mais le système n\'a pas pu envoyer l\'e-mail. Contactez l\'administrateur système.',
     'email_confirm_success' => 'Votre adresse e-mail a été confirmée !',
-    'email_confirm_resent' => 'L\'e-mail de confirmation a été ré-envoyé. Vérifiez votre boîte de récéption.',
+    'email_confirm_resent' => 'L\'e-mail de confirmation a été ré-envoyé. Vérifiez votre boîte de réception.',
 
     'email_not_confirmed' => 'Adresse e-mail non confirmée',
     'email_not_confirmed_text' => 'Votre adresse e-mail n\'a pas été confirmée.',
     'email_not_confirmed_click_link' => 'Merci de cliquer sur le lien dans l\'e-mail qui vous a été envoyé après l\'enregistrement.',
     'email_not_confirmed_resend' => 'Si vous ne retrouvez plus l\'e-mail, vous pouvez renvoyer un e-mail de confirmation en utilisant le formulaire ci-dessous.',
-    'email_not_confirmed_resend_button' => 'Renvoyez l\'e-mail de confirmation',
+    'email_not_confirmed_resend_button' => 'Renvoyer l\'e-mail de confirmation',
 
     // User Invite
     'user_invite_email_subject' => 'Vous avez été invité(e) à rejoindre :appName !',
@@ -76,8 +76,8 @@ return [
     'user_invite_success' => 'Mot de passe renseigné, vous avez maintenant accès à :appName !',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Configuration authentification multi-facteurs',
-    'mfa_setup_desc' => 'Configurez l\'authentification multi-facteurs ajoute une couche supplémentaire de sécurité à votre compte utilisateur.',
+    'mfa_setup' => 'Authentification multi-facteurs',
+    'mfa_setup_desc' => 'Configurer l\'authentification multi-facteurs ajoute une couche supplémentaire de sécurité à votre compte utilisateur.',
     'mfa_setup_configured' => 'Déjà configuré',
     'mfa_setup_reconfigure' => 'Reconfigurer',
     'mfa_setup_remove_confirmation' => 'Êtes-vous sûr de vouloir supprimer cette méthode d\'authentification multi-facteurs ?',
@@ -90,14 +90,14 @@ return [
     'mfa_gen_confirm_and_enable' => 'Confirmer et activer',
     'mfa_gen_backup_codes_title' => 'Configuration des codes de secours',
     'mfa_gen_backup_codes_desc' => 'Stockez la liste des codes ci-dessous dans un endroit sûr. Lorsque vous accédez au système, vous pourrez utiliser l\'un des codes comme un deuxième mécanisme d\'authentification.',
-    'mfa_gen_backup_codes_download' => 'Télécharger le code',
+    'mfa_gen_backup_codes_download' => 'Télécharger les codes',
     'mfa_gen_backup_codes_usage_warning' => 'Chaque code ne peut être utilisé qu\'une seule fois',
     'mfa_gen_totp_title' => 'Configuration de l\'application mobile',
     'mfa_gen_totp_desc' => 'Pour utiliser l\'authentification multi-facteurs, vous aurez besoin d\'une application mobile qui supporte TOTP comme Google Authenticator, Authy ou Microsoft Authenticator.',
     'mfa_gen_totp_scan' => 'Scannez le QR code ci-dessous avec votre application d\'authentification préférée pour débuter.',
     'mfa_gen_totp_verify_setup' => 'Vérifier la configuration',
     'mfa_gen_totp_verify_setup_desc' => 'Vérifiez que tout fonctionne en utilisant un code généré par votre application d\'authentification, dans la zone ci-dessous :',
-    'mfa_gen_totp_provide_code_here' => 'Fournir le code généré par votre application ici',
+    'mfa_gen_totp_provide_code_here' => 'Fournissez le code généré par votre application ici',
     'mfa_verify_access' => 'Vérifier l\'accès',
     'mfa_verify_access_desc' => 'Votre compte d\'utilisateur vous demande de confirmer votre identité par un niveau supplémentaire de vérification avant que vous n\'ayez accès. Vérifiez-la en utilisant l\'une de vos méthodes configurées pour continuer.',
     'mfa_verify_no_methods' => 'Aucune méthode configurée',

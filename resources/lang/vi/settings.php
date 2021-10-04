@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Người dùng',
     'audit_table_event' => 'Sự kiện',
     'audit_table_related' => 'Related Item or Detail',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Ngày hoạt động',
     'audit_date_from' => 'Ngày từ khoảng',
     'audit_date_to' => 'Ngày đến khoảng',

@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Kullanıcı',
     'audit_table_event' => 'Etkinlik',
     'audit_table_related' => 'İlgili Öğe veya Detay',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Aktivite Tarihi',
     'audit_date_from' => 'Tarih Aralığından',
     'audit_date_to' => 'Tarih Aralığına',
