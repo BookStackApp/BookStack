@@ -5,6 +5,7 @@ namespace BookStack\Entities\Models;
 use BookStack\Auth\User;
 use BookStack\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class PageRevision.
@@ -14,11 +15,13 @@ use Carbon\Carbon;
  * @property string $book_slug
  * @property int    $created_by
  * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @property string $type
  * @property string $summary
  * @property string $markdown
  * @property string $html
  * @property int    $revision_number
+ * @property Page   $page
  */
 class PageRevision extends Model
 {
@@ -26,20 +29,16 @@ class PageRevision extends Model
 
     /**
      * Get the user that created the page revision.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function createdBy()
+    public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
      * Get the page this revision originates from.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function page()
+    public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
     }

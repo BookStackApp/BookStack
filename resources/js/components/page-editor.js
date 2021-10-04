@@ -40,6 +40,7 @@ class PageEditor {
             frequency: 30000,
             last: 0,
         };
+        this.shownWarningsCache = new Set();
 
         if (this.pageId !== 0 && this.draftsEnabled) {
             window.setTimeout(() => {
@@ -119,8 +120,9 @@ class PageEditor {
             }
             this.draftNotifyChange(`${resp.data.message} ${Dates.utcTimeStampToLocalTime(resp.data.timestamp)}`);
             this.autoSave.last = Date.now();
-            if (resp.data.warning.length > 0) {
+            if (resp.data.warning && !this.shownWarningsCache.has(resp.data.warning)) {
                 window.$events.emit('warning', resp.data.warning);
+                this.shownWarningsCache.add(resp.data.warning);
             }
         } catch (err) {
             // Save the editor content in LocalStorage as a last resort, just in case.

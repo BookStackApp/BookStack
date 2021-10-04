@@ -21,8 +21,6 @@ class PageEditActivity
 
     /**
      * Check if there's active editing being performed on this page.
-     *
-     * @return bool
      */
     public function hasActiveEditing(): bool
     {
@@ -44,21 +42,35 @@ class PageEditActivity
     }
 
     /**
-     * Check if the page has been updated since the draft has been saved.
-     *
-     * @return bool
+     * Get any editor clash warning messages to show for the given draft revision.
+     * @param PageRevision|Page $draft
+     * @return string[]
      */
-    public function hasPageBeenUpdatedSinceDraftSaved(PageRevision $draft): bool
+    public function getWarningMessagesForDraft($draft): array
     {
-        return $draft->page->updated_at->timestamp >= $draft->updated_at->timestamp;
+        $warnings = [];
+
+        if ($this->hasActiveEditing()) {
+            $warnings[] = $this->activeEditingMessage();
+        }
+
+        if ($draft instanceof PageRevision && $this->hasPageBeenUpdatedSinceDraftCreated($draft)) {
+            $warnings[] = trans('entities.pages_draft_page_changed_since_creation');
+        }
+
+        return $warnings;
+    }
+
+    /**
+     * Check if the page has been updated since the draft has been saved.
+     */
+    protected function hasPageBeenUpdatedSinceDraftCreated(PageRevision $draft): bool
+    {
+        return $draft->page->updated_at->timestamp > $draft->created_at->timestamp;
     }
 
     /**
      * Get the message to show when the user will be editing one of their drafts.
-     *
-     * @param PageRevision $draft
-     *
-     * @return string
      */
     public function getEditingActiveDraftMessage(PageRevision $draft): string
     {
