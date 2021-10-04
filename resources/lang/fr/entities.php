@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nouvelle page',
     'pages_editing_draft_notification' => 'Vous éditez actuellement un brouillon qui a été enregistré :timeDiff.',
     'pages_draft_edited_notification' => 'La page a été mise à jour depuis votre dernière visite. Vous devriez jeter ce brouillon.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count utilisateurs ont commencé à éditer cette page',
         'start_b' => ':userName a commencé à éditer cette page',
