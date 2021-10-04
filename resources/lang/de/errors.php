@@ -5,7 +5,7 @@
 return [
 
     // Permissions
-    'permission' => 'Sie haben keine Berechtigung, auf diese Seite zuzugreifen.',
+    'permission' => 'Sie haben keine Zugriffsberechtigung auf die angeforderte Seite.',
     'permissionJson' => 'Sie haben keine Berechtigung, die angeforderte Aktion auszuführen.',
 
     // Auth
@@ -14,7 +14,7 @@ return [
     'email_confirmation_invalid' => 'Der Bestätigungslink ist nicht gültig oder wurde bereits verwendet. Bitte registrieren Sie sich erneut.',
     'email_confirmation_expired' => 'Der Bestätigungslink ist abgelaufen. Es wurde eine neue Bestätigungs-E-Mail gesendet.',
     'email_confirmation_awaiting' => 'Die E-Mail-Adresse für das verwendete Konto muss bestätigt werden',
-    'ldap_fail_anonymous' => 'Anonymer LDAP-Zugriff ist fehlgeschlafgen',
+    'ldap_fail_anonymous' => 'Anonymer LDAP-Zugriff ist fehlgeschlagen',
     'ldap_fail_authed' => 'LDAP-Zugriff mit DN und Passwort ist fehlgeschlagen',
     'ldap_extension_not_installed' => 'LDAP-PHP-Erweiterung ist nicht installiert.',
     'ldap_cannot_connect' => 'Die Verbindung zum LDAP-Server ist fehlgeschlagen. Beim initialen Verbindungsaufbau trat ein Fehler auf.',
@@ -43,14 +43,14 @@ return [
     'uploaded'  => 'Der Server verbietet das Hochladen von Dateien mit dieser Dateigröße. Bitte versuchen Sie es mit einer kleineren Datei.',
     'image_upload_error' => 'Beim Hochladen des Bildes trat ein Fehler auf.',
     'image_upload_type_error' => 'Der Bildtyp der hochgeladenen Datei ist ungültig.',
-    'file_upload_timeout' => 'Der Upload der Datei ist abgelaufen.',
+    'file_upload_timeout' => 'Der Datei-Upload hat das Zeitlimit überschritten.',
 
     // Attachments
     'attachment_not_found' => 'Anhang konnte nicht gefunden werden.',
 
     // Pages
     'page_draft_autosave_fail' => 'Fehler beim Speichern des Entwurfs. Stellen Sie sicher, dass Sie mit dem Internet verbunden sind, bevor Sie den Entwurf dieser Seite speichern.',
-    'page_custom_home_deletion' => 'Eine als Startseite gesetzte Seite kann nicht gelöscht werden.',
+    'page_custom_home_deletion' => 'Eine als Startseite gesetzte Seite kann nicht gelöscht werden',
 
     // Entities
     'entity_not_found' => 'Eintrag nicht gefunden',
@@ -58,48 +58,48 @@ return [
     'book_not_found' => 'Buch nicht gefunden',
     'page_not_found' => 'Seite nicht gefunden',
     'chapter_not_found' => 'Kapitel nicht gefunden',
-    'selected_book_not_found' => 'Das gewählte Buch wurde nicht gefunden.',
+    'selected_book_not_found' => 'Das gewählte Buch wurde nicht gefunden',
     'selected_book_chapter_not_found' => 'Das gewählte Buch oder Kapitel wurde nicht gefunden.',
     'guests_cannot_save_drafts' => 'Gäste können keine Entwürfe speichern',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Sie können den einzigen Administrator nicht löschen.',
+    'users_cannot_delete_only_admin' => 'Sie können den einzigen Administrator nicht löschen',
     'users_cannot_delete_guest' => 'Sie können den Gast-Benutzer nicht löschen',
 
     // Roles
-    'role_cannot_be_edited' => 'Diese Rolle kann nicht bearbeitet werden.',
+    'role_cannot_be_edited' => 'Diese Rolle kann nicht bearbeitet werden',
     'role_system_cannot_be_deleted' => 'Dies ist eine Systemrolle und kann nicht gelöscht werden',
     'role_registration_default_cannot_delete' => 'Diese Rolle kann nicht gelöscht werden, solange sie als Standardrolle für neue Registrierungen gesetzt ist',
-    'role_cannot_remove_only_admin' => 'Dieser Benutzer ist der einzige Benutzer, welchem die Administratorrolle zugeordnet ist. Ordnen Sie die Administratorrolle einem anderen Benutzer zu, bevor Sie versuchen, sie hier zu entfernen.',
+    'role_cannot_remove_only_admin' => 'Dieser Benutzer ist der einzige Benutzer, welchem die Administratorrolle zugeordnet ist. Ordnen Sie die Administratorrolle einem anderen Benutzer zu bevor Sie versuchen sie hier zu entfernen.',
 
     // Comments
     'comment_list' => 'Beim Abrufen der Kommentare ist ein Fehler aufgetreten.',
     'cannot_add_comment_to_draft' => 'Du kannst keine Kommentare zu einem Entwurf hinzufügen.',
     'comment_add' => 'Beim Hinzufügen des Kommentars ist ein Fehler aufgetreten.',
     'comment_delete' => 'Beim Löschen des Kommentars ist ein Fehler aufgetreten.',
-    'empty_comment' => 'Kann keinen leeren Kommentar hinzufügen',
+    'empty_comment' => 'Kann keinen leeren Kommentar hinzufügen.',
 
     // Error pages
     '404_page_not_found' => 'Seite nicht gefunden',
-    'sorry_page_not_found' => 'Entschuldigung. Die Seite, die Sie angefordert haben, wurde nicht gefunden.',
+    'sorry_page_not_found' => 'Entschuldigung. Die angeforderte Seite wurde nicht gefunden.',
     'sorry_page_not_found_permission_warning' => 'Wenn Sie erwartet haben, dass diese Seite existiert, haben Sie möglicherweise nicht die Berechtigung, sie anzuzeigen.',
     'image_not_found' => 'Bild nicht gefunden',
-    'image_not_found_subtitle' => 'Entschuldigung. Das Bild, die Sie angefordert haben, wurde nicht gefunden.',
+    'image_not_found_subtitle' => 'Entschuldigung. Das angeforderte Bild wurde nicht gefunden.',
     'image_not_found_details' => 'Wenn Sie erwartet haben, dass dieses Bild existiert, könnte es gelöscht worden sein.',
     'return_home' => 'Zurück zur Startseite',
     'error_occurred' => 'Es ist ein Fehler aufgetreten',
-    'app_down' => ':appName befindet sich aktuell im Wartungsmodus.',
+    'app_down' => ':appName befindet sich aktuell im Wartungsmodus',
     'back_soon' => 'Wir werden so schnell wie möglich wieder online sein.',
 
     // API errors
-    'api_no_authorization_found' => 'Kein Autorisierungs-Token für die Anfrage gefunden',
-    'api_bad_authorization_format' => 'Ein Autorisierungs-Token wurde auf die Anfrage gefunden, aber das Format schien falsch zu sein',
-    'api_user_token_not_found' => 'Es wurde kein passender API-Token für den angegebenen Autorisierungs-Token gefunden',
-    'api_incorrect_token_secret' => 'Das für den angegebenen API-Token angegebene Kennwort ist falsch',
-    'api_user_no_api_permission' => 'Der Besitzer des verwendeten API-Token hat keine Berechtigung für API-Aufrufe',
-    'api_user_token_expired' => 'Das verwendete Autorisierungs-Token ist abgelaufen',
+    'api_no_authorization_found' => 'Kein Autorisierungstoken für die Anfrage gefunden',
+    'api_bad_authorization_format' => 'Ein Autorisierungstoken wurde auf die Anfrage gefunden, aber das Format schien falsch zu sein',
+    'api_user_token_not_found' => 'Es wurde kein passender API-Token für den angegebenen Autorisierungstoken gefunden',
+    'api_incorrect_token_secret' => 'Das Kennwort für das angegebene API-Token ist falsch',
+    'api_user_no_api_permission' => 'Der Besitzer des verwendeten API-Tokens hat keine Berechtigung für API-Aufrufe',
+    'api_user_token_expired' => 'Das verwendete Autorisierungstoken ist abgelaufen',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Fehler beim Senden einer Test E-Mail:',
+    'maintenance_test_email_failure' => 'Fehler beim Versenden einer Test E-Mail:',
 
 ];

@@ -3,8 +3,8 @@
 namespace BookStack\Console\Commands;
 
 use BookStack\Entities\Tools\SearchIndex;
-use DB;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class RegenerateSearch extends Command
 {

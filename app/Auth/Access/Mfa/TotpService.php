@@ -54,7 +54,7 @@ class TotpService
 
         return (new Writer(
             new ImageRenderer(
-                new RendererStyle(192, 0, null, null, $color),
+                new RendererStyle(192, 4, null, null, $color),
                 new SvgImageBackEnd()
             )
         ))->writeString($url);

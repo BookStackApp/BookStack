@@ -26,11 +26,11 @@ return [
     'chapter_move'                => 'a déplacé le chapitre',
 
     // Books
-    'book_create'                 => 'a créé le livre',
+    'book_create'                 => 'a créé un livre',
     'book_create_notification'    => 'Livre créé avec succès',
     'book_update'                 => 'a modifié le livre',
     'book_update_notification'    => 'Livre modifié avec succès',
-    'book_delete'                 => 'a supprimé le livre',
+    'book_delete'                 => 'a supprimé un livre',
     'book_delete_notification'    => 'Livre supprimé avec succès',
     'book_sort'                   => 'a réordonné le livre',
     'book_sort_notification'      => 'Livre réordonné avec succès',
@@ -53,5 +53,5 @@ return [
 
     // Other
     'commented_on'                => 'a commenté',
-    'permissions_update'          => 'mettre à jour les autorisations',
+    'permissions_update'          => 'a mis à jour les autorisations sur',
 ];

@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Потребител',
     'audit_table_event' => 'Събитие',
     'audit_table_related' => 'Related Item or Detail',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Дата на активност',
     'audit_date_from' => 'Време от',
     'audit_date_to' => 'Време до',
