@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => '제목 없음',
     'pages_editing_draft_notification' => ':timeDiff에 초안 문서입니다.',
     'pages_draft_edited_notification' => '최근에 수정한 문서이기 때문에 초안 문서를 폐기하는 편이 좋습니다.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count명이 이 문서를 수정하고 있습니다.',
         'start_b' => ':userName이 이 문서를 수정하고 있습니다.',
