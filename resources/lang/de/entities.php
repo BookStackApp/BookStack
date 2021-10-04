@@ -99,7 +99,7 @@ return [
     'shelves_permissions' => 'Regal-Berechtigungen',
     'shelves_permissions_updated' => 'Regal-Berechtigungen aktualisiert',
     'shelves_permissions_active' => 'Regal-Berechtigungen aktiv',
-    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions_cascade_warning' => 'Die Berechtigungen in Bücherregalen werden nicht automatisch auf enthaltene Bücher kaskadiert, weil ein Buch in mehreren Regalen existieren kann. Berechtigungen können jedoch mit der unten stehenden Option in untergeordnete Bücher kopiert werden.',
     'shelves_copy_permissions_to_books' => 'Kopiere die Berechtigungen zum Buch',
     'shelves_copy_permissions' => 'Berechtigungen kopieren',
     'shelves_copy_permissions_explain' => 'Hiermit werden die Berechtigungen des aktuellen Regals auf alle enthaltenen Bücher übertragen. Überprüfen Sie vor der Aktivierung, ob alle Berechtigungsänderungen am aktuellen Regal gespeichert wurden.',

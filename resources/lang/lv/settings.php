@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Lietotājs',
     'audit_table_event' => 'Notikums',
     'audit_table_related' => 'Saistīta vienība vai detaļa',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Notikuma datums',
     'audit_date_from' => 'Datums no',
     'audit_date_to' => 'Datums līdz',

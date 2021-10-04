@@ -119,6 +119,7 @@ return [
     'audit_table_user' => '使用者',
     'audit_table_event' => '活動',
     'audit_table_related' => '相關的項目或詳細資訊',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => '活動日期',
     'audit_date_from' => '日期範圍，從',
     'audit_date_to' => '日期範圍，到',

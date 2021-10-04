@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Naudotojas',
     'audit_table_event' => 'Įvykis',
     'audit_table_related' => 'Susijęs elementas arba detalė',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Veiklos data',
     'audit_date_from' => 'Datos seka nuo',
     'audit_date_to' => 'Datos seka iki',

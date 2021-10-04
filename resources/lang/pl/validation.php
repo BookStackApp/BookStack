@@ -52,7 +52,7 @@ return [
     'integer'              => ':attribute musi być liczbą całkowitą.',
     'ip'                   => ':attribute musi być prawidłowym adresem IP.',
     'ipv4'                 => ':attribute musi być prawidłowym adresem IPv4.',
-    'ipv6'                 => ':attribute musi być prawidłowym adresem  IPv6.',
+    'ipv6'                 => ':attribute musi być prawidłowym adresem IPv6.',
     'json'                 => ':attribute musi być prawidłowym ciągiem JSON.',
     'lt'                   => [
         'numeric' => ':attribute musi być mniejszy niż :value.',

@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Uporabnik',
     'audit_table_event' => 'Dogodek',
     'audit_table_related' => 'Povezani predmet ali podrobnost',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Datum zadnje dejavnosti',
     'audit_date_from' => 'Časovno obdobje od',
     'audit_date_to' => 'Časovno obdobje do',

@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Användare',
     'audit_table_event' => 'Händelse',
     'audit_table_related' => 'Relaterat objekt eller detalj',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Datum för senaste aktiviteten',
     'audit_date_from' => 'Datumintervall från',
     'audit_date_to' => 'Datumintervall till',

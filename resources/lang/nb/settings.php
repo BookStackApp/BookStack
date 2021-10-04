@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Kontoholder',
     'audit_table_event' => 'Hendelse',
     'audit_table_related' => 'Relaterte elementer eller detaljer',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Aktivitetsdato',
     'audit_date_from' => 'Datoperiode fra',
     'audit_date_to' => 'Datoperiode til',

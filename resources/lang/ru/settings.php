@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Пользователь',
     'audit_table_event' => 'Событие',
     'audit_table_related' => 'Связанный элемент',
+    'audit_table_ip' => 'IP-адрес',
     'audit_table_date' => 'Дата действия',
     'audit_date_from' => 'Диапазон даты от',
     'audit_date_to' => 'Диапазон даты до',
@@ -206,10 +207,10 @@ return [
     'users_api_tokens_create' => 'Создать токен',
     'users_api_tokens_expires' => 'Истекает',
     'users_api_tokens_docs' => 'Документация',
-    'users_mfa' => 'Multi-Factor Authentication',
-    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa' => 'Двухфакторная аутентификация',
+    'users_mfa_desc' => 'Двухфакторная аутентификация повышает степень безопасности вашей учетной записи.',
     'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa_configure' => 'Настройка методов',
 
     // API Tokens
     'user_api_token_create' => 'Создать токен',

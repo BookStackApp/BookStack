@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'المستخدم',
     'audit_table_event' => 'الحدث',
     'audit_table_related' => 'العنصر أو التفاصيل ذات الصلة',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'تاريخ النشاط',
     'audit_date_from' => 'نطاق التاريخ من',
     'audit_date_to' => 'نطاق التاريخ إلى',

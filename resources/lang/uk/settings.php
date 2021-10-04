@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Користувач',
     'audit_table_event' => 'Подія',
     'audit_table_related' => 'Пов’язаний елемент',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Дата активності',
     'audit_date_from' => 'Діапазон дат від',
     'audit_date_to' => 'Діапазон дат до',

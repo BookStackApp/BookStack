@@ -119,6 +119,7 @@ return [
     'audit_table_user' => '사용자',
     'audit_table_event' => '이벤트',
     'audit_table_related' => 'Related Item or Detail',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => '활동 날짜',
     'audit_date_from' => '날짜 범위 시작',
     'audit_date_to' => '날짜 범위 끝',

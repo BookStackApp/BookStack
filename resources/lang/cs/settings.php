@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Uživatel',
     'audit_table_event' => 'Událost',
     'audit_table_related' => 'Související položka nebo detail',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Datum aktivity',
     'audit_date_from' => 'Časový rozsah od',
     'audit_date_to' => 'Časový rozsah do',
