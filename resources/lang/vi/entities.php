@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Trang mới',
     'pages_editing_draft_notification' => 'Bạn hiện đang chỉnh sửa một bản nháp được lưu cách đây :timeDiff.',
     'pages_draft_edited_notification' => 'Trang này đã được cập nhật từ lúc đó. Bạn nên loại bỏ bản nháp này.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count người dùng đang bắt đầu chỉnh sửa trang này',
         'start_b' => ':userName đang bắt đầu chỉnh sửa trang này',
