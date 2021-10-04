@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nová stránka',
     'pages_editing_draft_notification' => 'Právě upravujete koncept, který byl uložen před :timeDiff.',
     'pages_draft_edited_notification' => 'Tato stránka se od té doby změnila. Je doporučeno aktuální koncept zahodit.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => 'Uživatelé začali upravovat tuto stránku (celkem :count)',
         'start_b' => ':userName začal/a upravovat tuto stránku',
