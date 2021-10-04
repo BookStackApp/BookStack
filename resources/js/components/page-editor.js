@@ -119,6 +119,9 @@ class PageEditor {
             }
             this.draftNotifyChange(`${resp.data.message} ${Dates.utcTimeStampToLocalTime(resp.data.timestamp)}`);
             this.autoSave.last = Date.now();
+            if (resp.data.warning.length > 0) {
+                window.$events.emit('warning', resp.data.warning);
+            }
         } catch (err) {
             // Save the editor content in LocalStorage as a last resort, just in case.
             try {

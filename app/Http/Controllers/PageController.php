@@ -258,6 +258,23 @@ class PageController extends Controller
             return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);
         }
 
+        // Check for active editing or time conflict
+        $warnings = [];
+        $jsonResponseWarning = '';
+        $editActivity = new PageEditActivity($page);
+        if ($editActivity->hasActiveEditing()) {
+            $warnings[] = $editActivity->activeEditingMessage();
+        }
+        $userDraft = $this->pageRepo->getUserDraft($page);
+        if ($userDraft !== null) {
+            if ($editActivity->hasPageBeenUpdatedSinceDraftSaved($userDraft)) {
+                $warnings[] = $editActivity->getEditingActiveDraftMessage($userDraft);
+            }
+        }
+        if (count($warnings) > 0) {
+            $jsonResponseWarning = implode("\n", $warnings);
+        }
+
         $draft = $this->pageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
 
         $updateTime = $draft->updated_at->timestamp;
@@ -265,6 +282,7 @@ class PageController extends Controller
         return response()->json([
             'status'    => 'success',
             'message'   => trans('entities.pages_edit_draft_save_at'),
+            'warning'   => $jsonResponseWarning,
             'timestamp' => $updateTime,
         ]);
     }

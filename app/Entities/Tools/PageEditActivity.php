@@ -44,6 +44,16 @@ class PageEditActivity
     }
 
     /**
+     * Check if the page has been updated since the draft has been saved.
+     *
+     * @return bool
+     */
+    public function hasPageBeenUpdatedSinceDraftSaved(PageRevision $draft): bool
+    {
+        return $draft->page->updated_at->timestamp >= $draft->updated_at->timestamp;
+    }
+
+    /**
      * Get the message to show when the user will be editing one of their drafts.
      *
      * @param PageRevision $draft
