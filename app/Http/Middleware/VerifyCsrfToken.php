@@ -20,6 +20,5 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'saml2/*',
-        'openid/*',
     ];
 }

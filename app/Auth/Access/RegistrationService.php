@@ -11,6 +11,7 @@ use BookStack\Facades\Activity;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use Exception;
+use Illuminate\Support\Str;
 
 class RegistrationService
 {
@@ -48,6 +49,31 @@ class RegistrationService
         $authMethodsWithRegistration = ['standard'];
 
         return in_array($authMethod, $authMethodsWithRegistration) && setting('registration-enabled');
+    }
+
+    /**
+     * Attempt to find a user in the system otherwise register them as a new
+     * user. For use with external auth systems since password is auto-generated.
+     * @throws UserRegistrationException
+     */
+    public function findOrRegister(string $name, string $email, string $externalId): User
+    {
+        $user = User::query()
+            ->where('external_auth_id', '=', $externalId)
+            ->first();
+
+        if (is_null($user)) {
+            $userData = [
+                'name'             => $name,
+                'email'            => $email,
+                'password'         => Str::random(32),
+                'external_auth_id' => $externalId,
+            ];
+
+            $user = $this->registerUser($userData, null, false);
+        }
+
+        return $user;
     }
 
     /**

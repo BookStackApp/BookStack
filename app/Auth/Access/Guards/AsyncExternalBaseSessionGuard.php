@@ -10,7 +10,7 @@ namespace BookStack\Auth\Access\Guards;
  * via the Saml2 controller & Saml2Service. This class provides a safer, thin
  * version of SessionGuard.
  */
-class Saml2SessionGuard extends ExternalBaseSessionGuard
+class AsyncExternalBaseSessionGuard extends ExternalBaseSessionGuard
 {
     /**
      * Validate a user's credentials.

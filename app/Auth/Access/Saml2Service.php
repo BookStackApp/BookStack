@@ -17,22 +17,26 @@ use OneLogin\Saml2\ValidationError;
  * Class Saml2Service
  * Handles any app-specific SAML tasks.
  */
-class Saml2Service extends ExternalAuthService
+class Saml2Service
 {
     protected $config;
     protected $registrationService;
     protected $loginService;
+    protected $groupSyncService;
 
     /**
      * Saml2Service constructor.
      */
-    public function __construct(RegistrationService $registrationService, LoginService $loginService, User $user)
+    public function __construct(
+        RegistrationService $registrationService,
+        LoginService        $loginService,
+        GroupSyncService    $groupSyncService
+    )
     {
-        parent::__construct($registrationService, $user);
-        
         $this->config = config('saml2');
         $this->registrationService = $registrationService;
         $this->loginService = $loginService;
+        $this->groupSyncService = $groupSyncService;
     }
 
     /**
@@ -47,7 +51,7 @@ class Saml2Service extends ExternalAuthService
 
         return [
             'url' => $toolKit->login($returnRoute, [], false, false, true),
-            'id'  => $toolKit->getLastRequestID(),
+            'id' => $toolKit->getLastRequestID(),
         ];
     }
 
@@ -196,7 +200,7 @@ class Saml2Service extends ExternalAuthService
     protected function loadOneloginServiceProviderDetails(): array
     {
         $spDetails = [
-            'entityId'                 => url('/saml2/metadata'),
+            'entityId' => url('/saml2/metadata'),
             'assertionConsumerService' => [
                 'url' => url('/saml2/acs'),
             ],
@@ -207,7 +211,7 @@ class Saml2Service extends ExternalAuthService
 
         return [
             'baseurl' => url('/saml2'),
-            'sp'      => $spDetails,
+            'sp' => $spDetails,
         ];
     }
 
@@ -259,6 +263,7 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Extract the details of a user from a SAML response.
+     * @return array{external_id: string, name: string, email: string, saml_id: string}
      */
     protected function getUserDetails(string $samlID, $samlAttributes): array
     {
@@ -270,9 +275,9 @@ class Saml2Service extends ExternalAuthService
 
         return [
             'external_id' => $externalId,
-            'name'        => $this->getUserDisplayName($samlAttributes, $externalId),
-            'email'       => $email,
-            'saml_id'     => $samlID,
+            'name' => $this->getUserDisplayName($samlAttributes, $externalId),
+            'email' => $email,
+            'saml_id' => $samlID,
         ];
     }
 
@@ -339,8 +344,8 @@ class Saml2Service extends ExternalAuthService
 
         if ($this->config['dump_user_details']) {
             throw new JsonDebugException([
-                'id_from_idp'         => $samlID,
-                'attrs_from_idp'      => $samlAttributes,
+                'id_from_idp' => $samlID,
+                'attrs_from_idp' => $samlAttributes,
                 'attrs_after_parsing' => $userDetails,
             ]);
         }
@@ -353,14 +358,17 @@ class Saml2Service extends ExternalAuthService
             throw new SamlException(trans('errors.saml_already_logged_in'), '/login');
         }
 
-        $user = $this->getOrRegisterUser($userDetails);
+        $user = $this->registrationService->findOrRegister(
+            $userDetails['name'], $userDetails['email'], $userDetails['external_id']
+        );
+
         if ($user === null) {
             throw new SamlException(trans('errors.saml_user_not_registered', ['name' => $userDetails['external_id']]), '/login');
         }
 
         if ($this->shouldSyncGroups()) {
             $groups = $this->getUserGroups($samlAttributes);
-            $this->syncWithGroups($user, $groups);
+            $this->groupSyncService->syncUserWithFoundGroups($user, $groups, $this->config['remove_from_groups']);
         }
 
         $this->loginService->login($user, 'saml2');

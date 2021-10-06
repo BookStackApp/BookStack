@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Log;
  * Class LdapService
  * Handles any app-specific LDAP tasks.
  */
-class LdapService extends ExternalAuthService
+class LdapService
 {
     protected $ldap;
+    protected $groupSyncService;
     protected $ldapConnection;
     protected $userAvatars;
     protected $config;
@@ -24,20 +25,19 @@ class LdapService extends ExternalAuthService
     /**
      * LdapService constructor.
      */
-    public function __construct(Ldap $ldap, UserAvatars $userAvatars)
+    public function __construct(Ldap $ldap, UserAvatars $userAvatars, GroupSyncService $groupSyncService)
     {
         $this->ldap = $ldap;
         $this->userAvatars = $userAvatars;
+        $this->groupSyncService = $groupSyncService;
         $this->config = config('services.ldap');
         $this->enabled = config('auth.method') === 'ldap';
     }
 
     /**
      * Check if groups should be synced.
-     *
-     * @return bool
      */
-    public function shouldSyncGroups()
+    public function shouldSyncGroups(): bool
     {
         return $this->enabled && $this->config['user_to_groups'] !== false;
     }
@@ -285,9 +285,7 @@ class LdapService extends ExternalAuthService
         }
 
         $userGroups = $this->groupFilter($user);
-        $userGroups = $this->getGroupsRecursive($userGroups, []);
-
-        return $userGroups;
+        return $this->getGroupsRecursive($userGroups, []);
     }
 
     /**
@@ -374,7 +372,7 @@ class LdapService extends ExternalAuthService
     public function syncGroups(User $user, string $username)
     {
         $userLdapGroups = $this->getUserGroups($username);
-        $this->syncWithGroups($user, $userLdapGroups);
+        $this->groupSyncService->syncUserWithFoundGroups($user, $userLdapGroups, $this->config['remove_from_groups']);
     }
 
     /**
