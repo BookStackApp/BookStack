@@ -11,7 +11,7 @@
 return [
 
     // Method of authentication to use
-    // Options: standard, ldap, saml2
+    // Options: standard, ldap, saml2, oidc
     'method' => env('AUTH_METHOD', 'standard'),
 
     // Authentication Defaults
@@ -26,7 +26,7 @@ return [
     // All authentication drivers have a user provider. This defines how the
     // users are actually retrieved out of your database or other storage
     // mechanisms used by this application to persist your user's data.
-    // Supported drivers: "session", "api-token", "ldap-session"
+    // Supported drivers: "session", "api-token", "ldap-session", "async-external-session"
     'guards' => [
         'standard' => [
             'driver'   => 'session',
@@ -37,11 +37,11 @@ return [
             'provider' => 'external',
         ],
         'saml2' => [
-            'driver'   => 'saml2-session',
+            'driver'   => 'async-external-session',
             'provider' => 'external',
         ],
-        'openid' => [
-            'driver' => 'openid-session',
+        'oidc' => [
+            'driver' => 'async-external-session',
             'provider' => 'external',
         ],
         'api' => [
