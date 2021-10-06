@@ -5,9 +5,11 @@ use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\OpenIdException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
+use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use OpenIDConnectClient\AccessToken;
+use OpenIDConnectClient\Exception\InvalidTokenException;
 use OpenIDConnectClient\OpenIDConnectProvider;
 
 /**
@@ -25,12 +27,12 @@ class OpenIdService extends ExternalAuthService
     {
         parent::__construct($registrationService, $user);
         
-        $this->config = config('openid');
+        $this->config = config('oidc');
     }
 
     /**
-     * Initiate a authorization flow.
-     * @throws Error
+     * Initiate an authorization flow.
+     * @throws Exception
      */
     public function login(): array
     {
@@ -43,7 +45,6 @@ class OpenIdService extends ExternalAuthService
 
     /**
      * Initiate a logout flow.
-     * @throws Error
      */
     public function logout(): array
     {
@@ -56,7 +57,7 @@ class OpenIdService extends ExternalAuthService
 
     /**
      * Refresh the currently logged in user.
-     * @throws Error
+     * @throws Exception
      */
     public function refresh(): bool
     {
@@ -79,7 +80,7 @@ class OpenIdService extends ExternalAuthService
         // Try to obtain refreshed access token
         try {
             $newAccessToken = $this->refreshAccessToken($accessToken);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log out if an unknown problem arises
             $this->actionLogout();
             throw $e;
@@ -110,7 +111,7 @@ class OpenIdService extends ExternalAuthService
 
     /**
      * Generate an updated access token, through the associated refresh token.
-     * @throws Error
+     * @throws Exception
      */
     protected function refreshAccessToken(AccessToken $accessToken): ?AccessToken
     {
@@ -135,11 +136,8 @@ class OpenIdService extends ExternalAuthService
      * return the matching, or new if registration active, user matched to
      * the authorization server.
      * Returns null if not authenticated.
-     * @throws Error
-     * @throws OpenIdException
-     * @throws ValidationError
-     * @throws JsonDebugException
-     * @throws UserRegistrationException
+     * @throws Exception
+     * @throws InvalidTokenException
      */
     public function processAuthorizeResponse(?string $authorizationCode): ?User
     {
@@ -164,49 +162,28 @@ class OpenIdService extends ExternalAuthService
 
     /**
      * Load the underlying OpenID Connect Provider.
-     * @throws Error
-     * @throws Exception
      */
     protected function getProvider(): OpenIDConnectProvider
     {
         // Setup settings
-        $settings = $this->config['openid'];
-        $overrides = $this->config['openid_overrides'] ?? [];
-
-        if ($overrides && is_string($overrides)) {
-            $overrides = json_decode($overrides, true);
-        }
-
-        $openIdSettings = $this->loadOpenIdDetails();
-        $settings = array_replace_recursive($settings, $openIdSettings, $overrides);
+        $settings = [
+            'clientId' => $this->config['client_id'],
+            'clientSecret' => $this->config['client_secret'],
+            'idTokenIssuer' => $this->config['issuer'],
+            'redirectUri' => url('/openid/redirect'),
+            'urlAuthorize' => $this->config['authorization_endpoint'],
+            'urlAccessToken' => $this->config['token_endpoint'],
+            'urlResourceOwnerDetails' => null,
+            'publicKey' => $this->config['jwt_public_key'],
+            'scopes' => 'profile email',
+        ];
 
         // Setup services
-        $services = $this->loadOpenIdServices();
-        $overrides = $this->config['openid_services'] ?? [];
-
-        $services = array_replace_recursive($services, $overrides);
+        $services = [
+            'signer' => new Sha256(),
+        ];
 
         return new OpenIDConnectProvider($settings, $services);
-    }
-
-    /**
-     * Load services utilized by the OpenID Connect provider.
-     */
-    protected function loadOpenIdServices(): array
-    {
-        return [
-            'signer' => new \Lcobucci\JWT\Signer\Rsa\Sha256(),
-        ];
-    }
-
-    /**
-     * Load dynamic service provider options required by the OpenID Connect provider.
-     */
-    protected function loadOpenIdDetails(): array
-    {
-        return [
-            'redirectUri' => url('/openid/redirect'),
-        ];
     }
 
     /**
@@ -214,37 +191,21 @@ class OpenIdService extends ExternalAuthService
      */
     protected function getUserDisplayName(Token $token, string $defaultValue): string
     {
-        $displayNameAttr = $this->config['display_name_attributes'];
+        $displayNameAttr = $this->config['display_name_claims'];
 
         $displayName = [];
         foreach ($displayNameAttr as $dnAttr) {
-            $dnComponent = $token->getClaim($dnAttr, '');
+            $dnComponent = $token->claims()->get($dnAttr, '');
             if ($dnComponent !== '') {
                 $displayName[] = $dnComponent;
             }
         }
 
         if (count($displayName) == 0) {
-            $displayName = $defaultValue;
-        } else {
-            $displayName = implode(' ', $displayName);
+            $displayName[] = $defaultValue;
         }
 
-        return $displayName;
-    }
-
-    /**
-     * Get the value to use as the external id saved in BookStack
-     * used to link the user to an existing BookStack DB user.
-     */
-    protected function getExternalId(Token $token, string $defaultValue)
-    {
-        $userNameAttr = $this->config['external_id_attribute'];
-        if ($userNameAttr === null) {
-            return $defaultValue;
-        }
-
-        return $token->getClaim($userNameAttr, $defaultValue);
+        return implode(' ', $displayName);;
     }
 
     /**
@@ -252,16 +213,11 @@ class OpenIdService extends ExternalAuthService
      */
     protected function getUserDetails(Token $token): array
     {
-        $email = null;
-        $emailAttr = $this->config['email_attribute'];
-        if ($token->hasClaim($emailAttr)) {
-            $email = $token->getClaim($emailAttr);
-        }
-
+        $id = $token->claims()->get('sub');
         return [
-            'external_id' => $token->getClaim('sub'),
-            'email' => $email,
-            'name' => $this->getUserDisplayName($token, $email),
+            'external_id' => $id,
+            'email' => $token->claims()->get('email'),
+            'name' => $this->getUserDisplayName($token, $id),
         ];
     }
 
