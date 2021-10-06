@@ -25,7 +25,7 @@
     </div>
 </div>
 
-@if(($authMethod === 'ldap' || $authMethod === 'saml2') && userCan('users-manage'))
+@if(in_array($authMethod, ['ldap', 'saml2', 'openid']) && userCan('users-manage'))
     <div class="grid half gap-xl v-center">
         <div>
             <label class="setting-list-label">{{ trans('settings.users_external_auth_id') }}</label>

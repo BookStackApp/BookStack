@@ -221,7 +221,7 @@
                                 'label' => trans('settings.reg_enable_toggle')
                             ])
 
-                            @if(in_array(config('auth.method'), ['ldap', 'saml2']))
+                            @if(in_array(config('auth.method'), ['ldap', 'saml2', 'openid']))
                                 <div class="text-warn text-small mb-l">{{ trans('settings.reg_enable_external_warning') }}</div>
                             @endif
 

@@ -267,6 +267,11 @@ Route::get('/saml2/metadata', 'Auth\Saml2Controller@metadata');
 Route::get('/saml2/sls', 'Auth\Saml2Controller@sls');
 Route::post('/saml2/acs', 'Auth\Saml2Controller@acs');
 
+// OpenId routes
+Route::post('/openid/login', 'Auth\OpenIdController@login');
+Route::get('/openid/logout', 'Auth\OpenIdController@logout');
+Route::get('/openid/redirect', 'Auth\OpenIdController@redirect');
+
 // User invitation routes
 Route::get('/register/invite/{token}', 'Auth\UserInviteController@showSetPassword');
 Route::post('/register/invite/{token}', 'Auth\UserInviteController@setPassword');
