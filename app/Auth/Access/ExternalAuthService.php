@@ -4,8 +4,8 @@ namespace BookStack\Auth\Access;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use BookStack\Exceptions\UserRegistrationException;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class ExternalAuthService

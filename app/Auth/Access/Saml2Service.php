@@ -26,7 +26,7 @@ class Saml2Service extends ExternalAuthService
     /**
      * Saml2Service constructor.
      */
-    public function __construct(RegistrationService $registrationService, LoginService $loginService, User $user),
+    public function __construct(RegistrationService $registrationService, LoginService $loginService, User $user)
     {
         parent::__construct($registrationService, $user);
         
