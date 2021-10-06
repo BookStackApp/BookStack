@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":ім\'я" було видалено з ваших улюблених',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Багатофакторний метод успішно налаштований',
+    'mfa_remove_method_notification' => 'Багатофакторний метод успішно видалений',
 
     // Other
     'commented_on'                => 'прокоментував',
