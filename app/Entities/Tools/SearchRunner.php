@@ -156,7 +156,9 @@ class SearchRunner
             })->groupBy('entity_type', 'entity_id');
             $entitySelect->join($this->db->raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
                 $join->on('id', '=', 'entity_id');
-            })->selectRaw($entity->getTable() . '.*, s.score')->orderBy('score', 'desc');
+            })->addSelect($entity->getTable() . '.*')
+                ->selectRaw('s.score')
+                ->orderBy('score', 'desc');
             $entitySelect->mergeBindings($subQuery);
         }
 

@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'صفحة جديدة',
     'pages_editing_draft_notification' => 'جارٍ تعديل مسودة لم يتم حفظها من :timeDiff.',
     'pages_draft_edited_notification' => 'تم تحديث هذه الصفحة منذ ذلك الوقت. من الأفضل التخلص من هذه المسودة.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count من المستخدمين بدأوا بتعديل هذه الصفحة',
         'start_b' => ':userName بدأ بتعديل هذه الصفحة',

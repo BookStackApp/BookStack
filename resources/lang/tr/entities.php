@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Yeni Sayfa',
     'pages_editing_draft_notification' => 'Şu anda en son :timeDiff tarihinde kaydedilmiş olan taslağı düzenliyorsunuz.',
     'pages_draft_edited_notification' => 'Bu sayfa o zamandan bu zamana güncellenmiş, bu nedenle bu taslağı yok saymanız önerilir.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count kullanıcı, bu sayfayı düzenlemeye başladı',
         'start_b' => ':userName, bu sayfayı düzenlemeye başladı',

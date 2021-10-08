@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Ny sida',
     'pages_editing_draft_notification' => 'Du redigerar just nu ett utkast som senast sparades :timeDiff.',
     'pages_draft_edited_notification' => 'Denna sida har uppdaterats sen dess. Vi rekommenderar att du förkastar dina ändringar.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count har börjat redigera den här sidan',
         'start_b' => ':userName har börjat redigera den här sidan',
