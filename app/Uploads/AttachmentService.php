@@ -9,6 +9,7 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use League\Flysystem\Util;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentService
@@ -28,14 +29,38 @@ class AttachmentService
      */
     protected function getStorage(): FileSystemInstance
     {
+        return $this->fileSystem->disk($this->getStorageDiskName());
+    }
+
+    /**
+     * Get the name of the storage disk to use.
+     */
+    protected function getStorageDiskName(): string
+    {
         $storageType = config('filesystems.attachments');
 
-        // Override default location if set to local public to ensure not visible.
-        if ($storageType === 'local') {
-            $storageType = 'local_secure';
+        // Change to our secure-attachment disk if any of the local options
+        // are used to prevent escaping that location.
+        if ($storageType === 'local' || $storageType === 'local_secure') {
+            $storageType = 'local_secure_attachments';
         }
 
-        return $this->fileSystem->disk($storageType);
+        return $storageType;
+    }
+
+    /**
+     * Change the originally provided path to fit any disk-specific requirements.
+     * This also ensures the path is kept to the expected root folders.
+     */
+    protected function adjustPathForStorageDisk(string $path): string
+    {
+        $path = Util::normalizePath(str_replace('uploads/files/', '', $path));
+
+        if ($this->getStorageDiskName() === 'local_secure_attachments') {
+            return $path;
+        }
+
+        return 'uploads/files/' . $path;
     }
 
     /**
@@ -45,26 +70,21 @@ class AttachmentService
      */
     public function getAttachmentFromStorage(Attachment $attachment): string
     {
-        return $this->getStorage()->get($attachment->path);
+        return $this->getStorage()->get($this->adjustPathForStorageDisk($attachment->path));
     }
 
     /**
      * Store a new attachment upon user upload.
-     *
-     * @param UploadedFile $uploadedFile
-     * @param int          $page_id
-     *
      * @throws FileUploadException
-     *
-     * @return Attachment
      */
-    public function saveNewUpload(UploadedFile $uploadedFile, $page_id)
+    public function saveNewUpload(UploadedFile $uploadedFile, int $page_id): Attachment
     {
         $attachmentName = $uploadedFile->getClientOriginalName();
         $attachmentPath = $this->putFileInStorage($uploadedFile);
-        $largestExistingOrder = Attachment::where('uploaded_to', '=', $page_id)->max('order');
+        $largestExistingOrder = Attachment::query()->where('uploaded_to', '=', $page_id)->max('order');
 
-        $attachment = Attachment::forceCreate([
+        /** @var Attachment $attachment */
+        $attachment = Attachment::query()->forceCreate([
             'name'        => $attachmentName,
             'path'        => $attachmentPath,
             'extension'   => $uploadedFile->getClientOriginalExtension(),
@@ -78,17 +98,12 @@ class AttachmentService
     }
 
     /**
-     * Store a upload, saving to a file and deleting any existing uploads
+     * Store an upload, saving to a file and deleting any existing uploads
      * attached to that file.
      *
-     * @param UploadedFile $uploadedFile
-     * @param Attachment   $attachment
-     *
      * @throws FileUploadException
-     *
-     * @return Attachment
      */
-    public function saveUpdatedUpload(UploadedFile $uploadedFile, Attachment $attachment)
+    public function saveUpdatedUpload(UploadedFile $uploadedFile, Attachment $attachment): Attachment
     {
         if (!$attachment->external) {
             $this->deleteFileInStorage($attachment);
@@ -159,9 +174,6 @@ class AttachmentService
 
     /**
      * Delete a File from the database and storage.
-     *
-     * @param Attachment $attachment
-     *
      * @throws Exception
      */
     public function deleteFile(Attachment $attachment)
@@ -179,15 +191,13 @@ class AttachmentService
     /**
      * Delete a file from the filesystem it sits on.
      * Cleans any empty leftover folders.
-     *
-     * @param Attachment $attachment
      */
     protected function deleteFileInStorage(Attachment $attachment)
     {
         $storage = $this->getStorage();
-        $dirPath = dirname($attachment->path);
+        $dirPath = $this->adjustPathForStorageDisk(dirname($attachment->path));
 
-        $storage->delete($attachment->path);
+        $storage->delete($this->adjustPathForStorageDisk($attachment->path));
         if (count($storage->allFiles($dirPath)) === 0) {
             $storage->deleteDirectory($dirPath);
         }
@@ -195,14 +205,9 @@ class AttachmentService
 
     /**
      * Store a file in storage with the given filename.
-     *
-     * @param UploadedFile $uploadedFile
-     *
      * @throws FileUploadException
-     *
-     * @return string
      */
-    protected function putFileInStorage(UploadedFile $uploadedFile)
+    protected function putFileInStorage(UploadedFile $uploadedFile): string
     {
         $attachmentData = file_get_contents($uploadedFile->getRealPath());
 
@@ -210,14 +215,14 @@ class AttachmentService
         $basePath = 'uploads/files/' . date('Y-m-M') . '/';
 
         $uploadFileName = Str::random(16) . '.' . $uploadedFile->getClientOriginalExtension();
-        while ($storage->exists($basePath . $uploadFileName)) {
+        while ($storage->exists($this->adjustPathForStorageDisk($basePath . $uploadFileName))) {
             $uploadFileName = Str::random(3) . $uploadFileName;
         }
 
         $attachmentPath = $basePath . $uploadFileName;
 
         try {
-            $storage->put($attachmentPath, $attachmentData);
+            $storage->put($this->adjustPathForStorageDisk($attachmentPath), $attachmentData);
         } catch (Exception $e) {
             Log::error('Error when attempting file upload:' . $e->getMessage());
 

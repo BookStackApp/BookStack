@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
+use League\Flysystem\Util;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageService
@@ -38,16 +39,43 @@ class ImageService
     /**
      * Get the storage that will be used for storing images.
      */
-    protected function getStorage(string $type = ''): FileSystemInstance
+    protected function getStorage(string $imageType = ''): FileSystemInstance
+    {
+        return $this->fileSystem->disk($this->getStorageDiskName($imageType));
+    }
+
+    /**
+     * Change the originally provided path to fit any disk-specific requirements.
+     * This also ensures the path is kept to the expected root folders.
+     */
+    protected function adjustPathForStorageDisk(string $path, string $imageType = ''): string
+    {
+        $path = Util::normalizePath(str_replace('uploads/images/', '', $path));
+
+        if ($this->getStorageDiskName($imageType) === 'local_secure_images') {
+            return $path;
+        }
+
+        return 'uploads/images/' . $path;
+    }
+
+    /**
+     * Get the name of the storage disk to use.
+     */
+    protected function getStorageDiskName(string $imageType): string
     {
         $storageType = config('filesystems.images');
 
         // Ensure system images (App logo) are uploaded to a public space
-        if ($type === 'system' && $storageType === 'local_secure') {
+        if ($imageType === 'system' && $storageType === 'local_secure') {
             $storageType = 'local';
         }
 
-        return $this->fileSystem->disk($storageType);
+        if ($storageType === 'local_secure') {
+            $storageType = 'local_secure_images';
+        }
+
+        return $storageType;
     }
 
     /**
@@ -104,7 +132,7 @@ class ImageService
 
         $imagePath = '/uploads/images/' . $type . '/' . date('Y-m') . '/';
 
-        while ($storage->exists($imagePath . $fileName)) {
+        while ($storage->exists($this->adjustPathForStorageDisk($imagePath . $fileName, $type))) {
             $fileName = Str::random(3) . $fileName;
         }
 
@@ -114,7 +142,7 @@ class ImageService
         }
 
         try {
-            $this->saveImageDataInPublicSpace($storage, $fullPath, $imageData);
+            $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($fullPath, $type), $imageData);
         } catch (Exception $e) {
             \Log::error('Error when attempting image upload:' . $e->getMessage());
 
@@ -216,13 +244,13 @@ class ImageService
         }
 
         $storage = $this->getStorage($image->type);
-        if ($storage->exists($thumbFilePath)) {
+        if ($storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
             return $this->getPublicUrl($thumbFilePath);
         }
 
-        $thumbData = $this->resizeImage($storage->get($imagePath), $width, $height, $keepRatio);
+        $thumbData = $this->resizeImage($storage->get($this->adjustPathForStorageDisk($imagePath, $image->type)), $width, $height, $keepRatio);
 
-        $this->saveImageDataInPublicSpace($storage, $thumbFilePath, $thumbData);
+        $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($thumbFilePath, $image->type), $thumbData);
         $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 60 * 72);
 
         return $this->getPublicUrl($thumbFilePath);
@@ -279,10 +307,8 @@ class ImageService
      */
     public function getImageData(Image $image): string
     {
-        $imagePath = $image->path;
         $storage = $this->getStorage();
-
-        return $storage->get($imagePath);
+        return $storage->get($this->adjustPathForStorageDisk($image->path, $image->type));
     }
 
     /**
@@ -292,7 +318,7 @@ class ImageService
      */
     public function destroy(Image $image)
     {
-        $this->destroyImagesFromPath($image->path);
+        $this->destroyImagesFromPath($image->path, $image->type);
         $image->delete();
     }
 
@@ -300,9 +326,10 @@ class ImageService
      * Destroys an image at the given path.
      * Searches for image thumbnails in addition to main provided path.
      */
-    protected function destroyImagesFromPath(string $path): bool
+    protected function destroyImagesFromPath(string $path, string $imageType): bool
     {
-        $storage = $this->getStorage();
+        $path = $this->adjustPathForStorageDisk($path, $imageType);
+        $storage = $this->getStorage($imageType);
 
         $imageFolder = dirname($path);
         $imageFileName = basename($path);
@@ -326,7 +353,7 @@ class ImageService
     }
 
     /**
-     * Check whether or not a folder is empty.
+     * Check whether a folder is empty.
      */
     protected function isFolderEmpty(FileSystemInstance $storage, string $path): bool
     {
@@ -374,7 +401,7 @@ class ImageService
     }
 
     /**
-     * Convert a image URI to a Base64 encoded string.
+     * Convert an image URI to a Base64 encoded string.
      * Attempts to convert the URL to a system storage url then
      * fetch the data from the disk or storage location.
      * Returns null if the image data cannot be fetched from storage.
@@ -388,6 +415,7 @@ class ImageService
             return null;
         }
 
+        $storagePath = $this->adjustPathForStorageDisk($storagePath);
         $storage = $this->getStorage();
         $imageData = null;
         if ($storage->exists($storagePath)) {

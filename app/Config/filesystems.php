@@ -37,9 +37,14 @@ return [
             'root'   => public_path(),
         ],
 
-        'local_secure' => [
+        'local_secure_attachments' => [
             'driver' => 'local',
-            'root'   => storage_path(),
+            'root'   => storage_path('uploads/files/'),
+        ],
+
+        'local_secure_images' => [
+            'driver' => 'local',
+            'root'   => storage_path('uploads/images/'),
         ],
 
         's3' => [
