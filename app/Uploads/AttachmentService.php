@@ -75,6 +75,7 @@ class AttachmentService
 
     /**
      * Store a new attachment upon user upload.
+     *
      * @throws FileUploadException
      */
     public function saveNewUpload(UploadedFile $uploadedFile, int $page_id): Attachment
@@ -174,6 +175,7 @@ class AttachmentService
 
     /**
      * Delete a File from the database and storage.
+     *
      * @throws Exception
      */
     public function deleteFile(Attachment $attachment)
@@ -205,6 +207,7 @@ class AttachmentService
 
     /**
      * Store a file in storage with the given filename.
+     *
      * @throws FileUploadException
      */
     protected function putFileInStorage(UploadedFile $uploadedFile): string

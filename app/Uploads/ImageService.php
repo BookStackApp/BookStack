@@ -308,6 +308,7 @@ class ImageService
     public function getImageData(Image $image): string
     {
         $storage = $this->getStorage();
+
         return $storage->get($this->adjustPathForStorageDisk($image->path, $image->type));
     }
 

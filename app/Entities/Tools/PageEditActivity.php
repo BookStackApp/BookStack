@@ -43,7 +43,9 @@ class PageEditActivity
 
     /**
      * Get any editor clash warning messages to show for the given draft revision.
+     *
      * @param PageRevision|Page $draft
+     *
      * @return string[]
      */
     public function getWarningMessagesForDraft($draft): array
