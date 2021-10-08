@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => '新規ページ',
     'pages_editing_draft_notification' => ':timeDiffに保存された下書きを編集しています。',
     'pages_draft_edited_notification' => 'このページは更新されています。下書きを破棄することを推奨します。',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count人のユーザがページの編集を開始しました',
         'start_b' => ':userNameがページの編集を開始しました',

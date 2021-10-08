@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" byla odstraněna z Vašich oblíbených',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Vícefaktorová metoda byla úspěšně nakonfigurována',
+    'mfa_remove_method_notification' => 'Vícefaktorová metoda byla úspěšně odstraněna',
 
     // Other
     'commented_on'                => 'okomentoval/a',

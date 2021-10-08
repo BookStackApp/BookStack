@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => '新頁面',
     'pages_editing_draft_notification' => '您正在編輯最後儲存為 :timeDiff 的草稿。',
     'pages_draft_edited_notification' => '此頁面已經被更新過。建議您放棄此草稿。',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count 位使用者已經開始編輯此頁面',
         'start_b' => '使用者 :userName 已經開始編輯此頁面',

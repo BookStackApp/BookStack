@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'página criada',
+    'page_create'                 => 'criou a página',
     'page_create_notification'    => 'Página criada com sucesso',
     'page_update'                 => 'página atualizada',
     'page_update_notification'    => 'Página atualizada com sucesso',
@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" foi removido dos seus favoritos',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Método de múltiplos-fatores configurado com sucesso',
+    'mfa_remove_method_notification' => 'Método de múltiplos-fatores removido com sucesso',
 
     // Other
     'commented_on'                => 'comentado a',

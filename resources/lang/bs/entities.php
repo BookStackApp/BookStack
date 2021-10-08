@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nova stranica',
     'pages_editing_draft_notification' => 'Trenutno uređujete skicu koja je posljednji put snimljena :timeDiff.',
     'pages_draft_edited_notification' => 'Ova stranica je ažurirana nakon tog vremena. Preporučujemo da odbacite ovu skicu.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count korisnika je počelo sa uređivanjem ove stranice',
         'start_b' => ':userName je počeo/la sa uređivanjem ove stranice',

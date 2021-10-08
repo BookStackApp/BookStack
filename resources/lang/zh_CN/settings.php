@@ -209,8 +209,8 @@ return [
     'users_api_tokens_docs' => 'API文档',
     'users_mfa' => '多重身份认证',
     'users_mfa_desc' => '设置多重身份认证能增加您账户的安全性。',
-    'users_mfa_x_methods' => ':count 方法已配置|:count 方法已配置',
-    'users_mfa_configure' => '配置方法',
+    'users_mfa_x_methods' => ':count 个措施已配置|:count 个措施已配置',
+    'users_mfa_configure' => '配置安全措施',
 
     // API Tokens
     'user_api_token_create' => '创建 API 令牌',
