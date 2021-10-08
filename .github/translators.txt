@@ -190,3 +190,5 @@ Hl2run :: Slovak
 Ngo Tri Hoai (trihoai) :: Vietnamese
 Atalonica :: Catalan
 慕容潭谈 (591442386) :: Chinese Simplified
+Radim Pesek (ramess18) :: Czech
+anastasiia.motylko :: Ukrainian
