@@ -282,6 +282,22 @@ class AuthTest extends TestCase
             ->assertElementContains('a', 'Sign up');
     }
 
+    public function test_reset_password_request_is_throttled()
+    {
+        $editor = $this->getEditor();
+        Notification::fake();
+        $this->get('/password/email');
+        $this->followingRedirects()->post('/password/email', [
+            'email' => $editor->email,
+        ]);
+
+        $resp = $this->followingRedirects()->post('/password/email', [
+            'email' => $editor->email,
+        ]);
+        Notification::assertTimesSent(1, ResetPassword::class);
+        $resp->assertSee('A password reset link will be sent to ' . $editor->email . ' if that email address is found in the system.');
+    }
+
     public function test_login_redirects_to_initially_requested_url_correctly()
     {
         config()->set('app.url', 'http://localhost');

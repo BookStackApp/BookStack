@@ -56,7 +56,7 @@ class ForgotPasswordController extends Controller
             $this->logActivity(ActivityType::AUTH_PASSWORD_RESET, $request->get('email'));
         }
 
-        if ($response === Password::RESET_LINK_SENT || $response === Password::INVALID_USER) {
+        if (in_array($response, [Password::RESET_LINK_SENT, Password::INVALID_USER, Password::RESET_THROTTLED])) {
             $message = trans('auth.reset_password_sent', ['email' => $request->get('email')]);
             $this->showSuccessNotification($message);
 
