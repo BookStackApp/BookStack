@@ -99,7 +99,7 @@ return [
     'shelves_permissions' => 'Permissões da Estante',
     'shelves_permissions_updated' => 'Permissões da Estante de Livros Atualizada',
     'shelves_permissions_active' => 'Permissões da Estante de Livros Ativas',
-    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions_cascade_warning' => 'As permissões nas estantes não são passadas automaticamente em efeito dominó para os livros contidos. Isto acontece porque um livro pode existir em várias prateleiras. As permissões podem, no entanto, ser copiadas para livros filhos usando a opção encontrada abaixo.',
     'shelves_copy_permissions_to_books' => 'Copiar Permissões para Livros',
     'shelves_copy_permissions' => 'Copiar Permissões',
     'shelves_copy_permissions_explain' => 'Isto aplicará as configurações de permissões atuais desta estante a todos os livros nela contidos. Antes de ativar, assegure-se de que quaisquer alterações nas permissões desta estante foram guardadas.',
@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nova Página',
     'pages_editing_draft_notification' => 'Você está atualmente a editar um rascunho que foi guardado pela última vez a :timeDiff.',
     'pages_draft_edited_notification' => 'Esta página entretanto já foi atualizada. É recomendado que você descarte este rascunho.',
+    'pages_draft_page_changed_since_creation' => 'Esta página foi atualizada desde que este rascunho foi criado. É recomendável que descarte este rascunho ou tenha cuidado para não sobrescrever nenhuma alteração de página.',
     'pages_draft_edit_active' => [
         'start_a' => ':count usuários iniciaram a edição dessa página',
         'start_b' => ':userName iniciou a edição desta página',

@@ -99,7 +99,7 @@ return [
     'shelves_permissions' => 'Oprávnění knihovny',
     'shelves_permissions_updated' => 'Oprávnění knihovny byla aktualizována',
     'shelves_permissions_active' => 'Oprávnění knihovny byla aktivována',
-    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions_cascade_warning' => 'Oprávnění v Knihovnách nejsou automaticky kaskádována do obsažených knih. To proto, že kniha může existovat ve více Knihovnách. Oprávnění však lze zkopírovat do podřízených knih pomocí níže uvedené možnosti.',
     'shelves_copy_permissions_to_books' => 'Kopírovat oprávnění na knihy',
     'shelves_copy_permissions' => 'Kopírovat oprávnění',
     'shelves_copy_permissions_explain' => 'Toto použije aktuální nastavení oprávnění knihovny na všechny knihy v ní obsažené. Před aktivací se ujistěte, že byly uloženy všechny změny oprávnění této knihovny.',
@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nová stránka',
     'pages_editing_draft_notification' => 'Právě upravujete koncept, který byl uložen před :timeDiff.',
     'pages_draft_edited_notification' => 'Tato stránka se od té doby změnila. Je doporučeno aktuální koncept zahodit.',
+    'pages_draft_page_changed_since_creation' => 'Tato stránka byla aktualizována od vytvoření tohoto konceptu. Doporučuje se zrušit tento koncept nebo se postarat o to, abyste si nepřepsali žádné již zadané změny.',
     'pages_draft_edit_active' => [
         'start_a' => 'Uživatelé začali upravovat tuto stránku (celkem :count)',
         'start_b' => ':userName začal/a upravovat tuto stránku',

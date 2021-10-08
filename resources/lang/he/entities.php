@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'דף חדש',
     'pages_editing_draft_notification' => 'הינך עורך טיוטה אשר נשמרה לאחרונה ב :timeDiff',
     'pages_draft_edited_notification' => 'דף זה עודכן מאז, מומלץ להתעלם מהטיוטה הזו.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count משתמשים החלו לערוך דף זה',
         'start_b' => ':userName החל לערוך דף זה',

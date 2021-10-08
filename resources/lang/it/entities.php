@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nuova Pagina',
     'pages_editing_draft_notification' => 'Stai modificando una bozza che è stata salvata il :timeDiff.',
     'pages_draft_edited_notification' => 'Questa pagina è stata aggiornata. È consigliabile scartare questa bozza.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count hanno iniziato a modificare questa pagina',
         'start_b' => ':userName ha iniziato a modificare questa pagina',

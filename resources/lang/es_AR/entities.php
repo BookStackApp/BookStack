@@ -99,7 +99,7 @@ return [
     'shelves_permissions' => 'Permisos del Estante',
     'shelves_permissions_updated' => 'Permisos del Estante actualizados',
     'shelves_permissions_active' => 'Permisos Activos del Estante',
-    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions_cascade_warning' => 'Los permisos en los estantes no se aplican automáticamente a los libros contenidos. Esto se debe a que un libro puede existir en múltiples estantes. Sin embargo, los permisos pueden ser aplicados a los libros del estante utilizando la opción a continuación.',
     'shelves_copy_permissions_to_books' => 'Copiar Permisos a los Libros',
     'shelves_copy_permissions' => 'Copiar Permisos',
     'shelves_copy_permissions_explain' => 'Esta acción aplicará los permisos de este estante a todos los libros contenidos en él. Antes de activarlos, asegúrese que los cambios a los permisos de este estante estén guardados.',
@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Página nueva',
     'pages_editing_draft_notification' => 'Usted está actualmente editando un borrador que fue guardado por última vez el :timeDiff.',
     'pages_draft_edited_notification' => 'Esta página ha sido actualizada desde aquel momento. Se recomienda que cancele este borrador.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count usuarios han comenzado a editar esta página',
         'start_b' => ':userName ha comenzado a editar esta página',

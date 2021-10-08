@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Pàgina nova',
     'pages_editing_draft_notification' => 'Esteu editant un esborrany que es va desar per darrer cop :timeDiff.',
     'pages_draft_edited_notification' => 'Aquesta pàgina s\'ha actualitzat d\'ençà d\'aleshores. Us recomanem que descarteu aquest esborrany.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count usuaris han començat a editar aquesta pàgina',
         'start_b' => ':userName ha començat a editar aquesta pàgina',

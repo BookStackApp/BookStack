@@ -44,12 +44,12 @@ return [
     'bookshelf_delete_notification'    => 'Книжкову полицю успішно видалено',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":ім\'я" було додане до ваших улюлених',
+    'favourite_remove_notification' => '":ім\'я" було видалено з ваших улюблених',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Багатофакторний метод успішно налаштований',
+    'mfa_remove_method_notification' => 'Багатофакторний метод успішно видалений',
 
     // Other
     'commented_on'                => 'прокоментував',

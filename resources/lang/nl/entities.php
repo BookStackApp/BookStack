@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nieuwe pagina',
     'pages_editing_draft_notification' => 'U bewerkt momenteel een concept dat voor het laatst is opgeslagen op :timeDiff.',
     'pages_draft_edited_notification' => 'Deze pagina is sindsdien bijgewerkt. Het wordt aanbevolen dat u dit concept verwijderd.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count gebruikers zijn begonnen deze pagina te bewerken',
         'start_b' => ':userName is begonnen met het bewerken van deze pagina',
