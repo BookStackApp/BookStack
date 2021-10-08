@@ -4,7 +4,6 @@ namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\NextPreviousContentLocator;

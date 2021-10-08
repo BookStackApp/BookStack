@@ -138,8 +138,6 @@ class PageDraftTest extends TestCase
         ]);
     }
 
-
-
     public function test_draft_pages_show_on_homepage()
     {
         /** @var Book $book */

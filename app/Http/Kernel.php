@@ -2,7 +2,6 @@
 
 namespace BookStack\Http;
 
-use BookStack\Http\Middleware\PreventAuthenticatedResponseCaching;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
