@@ -119,6 +119,15 @@ class SecurityHeaderTest extends TestCase
         $this->assertEquals('base-uri \'self\'', $scriptHeader);
     }
 
+    public function test_cache_control_headers_are_strict_on_responses_when_logged_in()
+    {
+        $this->asEditor();
+        $resp = $this->get('/');
+        $resp->assertHeader('Cache-Control', 'max-age=0, no-store, private');
+        $resp->assertHeader('Pragma', 'no-cache');
+        $resp->assertHeader('Expires', 'Sun, 12 Jul 2015 19:01:00 GMT');
+    }
+
     /**
      * Get the value of the first CSP header of the given type.
      */
