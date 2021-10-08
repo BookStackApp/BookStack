@@ -229,6 +229,34 @@ class ExportTest extends TestCase
         $resp->assertSee('src="/uploads/svg_test.svg"');
     }
 
+    public function test_page_export_contained_html_does_not_allow_upward_traversal_with_local()
+    {
+        $contents = file_get_contents(public_path('.htaccess'));
+        config()->set('filesystems.images', 'local');
+
+        $page = Page::query()->first();
+        $page->html = '<img src="http://localhost/uploads/images/../../.htaccess"/>';
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertDontSee(base64_encode($contents));
+    }
+
+    public function test_page_export_contained_html_does_not_allow_upward_traversal_with_local_secure()
+    {
+        $testFilePath = storage_path('logs/test.txt');
+        config()->set('filesystems.images', 'local_secure');
+        file_put_contents($testFilePath, 'I am a cat');
+
+        $page = Page::query()->first();
+        $page->html = '<img src="http://localhost/uploads/images/../../logs/test.txt"/>';
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertDontSee(base64_encode('I am a cat'));
+        unlink($testFilePath);
+    }
+
     public function test_exports_removes_scripts_from_custom_head()
     {
         $entities = [
