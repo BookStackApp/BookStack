@@ -6,10 +6,8 @@ use BookStack\Exceptions\OpenIdConnectException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
-use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
-use OpenIDConnectClient\AccessToken;
-use OpenIDConnectClient\OpenIDConnectProvider;
+use League\OAuth2\Client\Token\AccessToken;
 
 /**
  * Class OpenIdConnectService
@@ -66,27 +64,18 @@ class OpenIdConnectService
     /**
      * Load the underlying OpenID Connect Provider.
      */
-    protected function getProvider(): OpenIDConnectProvider
+    protected function getProvider(): OpenIdConnectOAuthProvider
     {
         // Setup settings
         $settings = [
             'clientId' => $this->config['client_id'],
             'clientSecret' => $this->config['client_secret'],
-            'idTokenIssuer' => $this->config['issuer'],
             'redirectUri' => url('/oidc/redirect'),
-            'urlAuthorize' => $this->config['authorization_endpoint'],
-            'urlAccessToken' => $this->config['token_endpoint'],
-            'urlResourceOwnerDetails' => null,
-            'publicKey' => $this->config['jwt_public_key'],
-            'scopes' => 'profile email',
+            'authorizationEndpoint' => $this->config['authorization_endpoint'],
+            'tokenEndpoint' => $this->config['token_endpoint'],
         ];
 
-        // Setup services
-        $services = [
-            'signer' => new Sha256(),
-        ];
-
-        return new OpenIDConnectProvider($settings, $services);
+        return new OpenIdConnectOAuthProvider($settings);
     }
 
     /**
@@ -135,6 +124,16 @@ class OpenIdConnectService
      */
     protected function processAccessTokenCallback(AccessToken $accessToken): User
     {
+        dd($accessToken->getValues());
+        // TODO - Create a class to manage token parsing and validation on this
+        // Using the config params:
+        // $this->config['jwt_public_key']
+        // $this->config['issuer']
+        //
+        // Ensure ID token validation is done:
+        // https://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation
+        // To full affect and tested
+
         $userDetails = $this->getUserDetails($accessToken->getIdToken());
         $isLoggedIn = auth()->check();
 
