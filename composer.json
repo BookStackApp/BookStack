@@ -27,6 +27,7 @@
         "league/html-to-markdown": "^5.0.0",
         "nunomaduro/collision": "^3.1",
         "onelogin/php-saml": "^4.0",
+        "phpseclib/phpseclib": "~3.0",
         "pragmarx/google2fa": "^8.0",
         "predis/predis": "^1.1.6",
         "socialiteproviders/discord": "^4.1",
