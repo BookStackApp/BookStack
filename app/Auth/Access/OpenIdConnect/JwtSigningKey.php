@@ -60,15 +60,19 @@ class JwtSigningKey
             throw new InvalidKeyException("Only RS256 keys are currently supported. Found key using {$jwk['alg']}");
         }
 
-        if ($jwk['use'] !== 'sig') {
-            throw new InvalidKeyException("Only signature keys are currently supported. Found key for use {$jwk['sig']}");
+        if (empty($jwk['use'])) {
+            throw new InvalidKeyException('A "use" parameter on the provided key is expected');
         }
 
-        if (empty($jwk['e'] ?? '')) {
+        if ($jwk['use'] !== 'sig') {
+            throw new InvalidKeyException("Only signature keys are currently supported. Found key for use {$jwk['use']}");
+        }
+
+        if (empty($jwk['e'])) {
             throw new InvalidKeyException('An "e" parameter on the provided key is expected');
         }
 
-        if (empty($jwk['n'] ?? '')) {
+        if (empty($jwk['n'])) {
             throw new InvalidKeyException('A "n" parameter on the provided key is expected');
         }
 

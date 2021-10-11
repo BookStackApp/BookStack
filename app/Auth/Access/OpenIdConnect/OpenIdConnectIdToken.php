@@ -76,11 +76,12 @@ class OpenIdConnectIdToken
      * Validate all possible parts of the id token.
      * @throws InvalidTokenException
      */
-    public function validate(string $clientId)
+    public function validate(string $clientId): bool
     {
         $this->validateTokenStructure();
         $this->validateTokenSignature();
         $this->validateTokenClaims($clientId);
+        return true;
     }
 
     /**
