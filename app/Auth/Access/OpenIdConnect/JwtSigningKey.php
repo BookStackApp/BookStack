@@ -26,6 +26,28 @@ class JwtSigningKey
     {
         if (is_array($jwkOrKeyPath)) {
             $this->loadFromJwkArray($jwkOrKeyPath);
+        } else if (is_string($jwkOrKeyPath) && strpos($jwkOrKeyPath, 'file://') === 0) {
+            $this->loadFromPath($jwkOrKeyPath);
+        } else {
+            throw new InvalidKeyException('Unexpected type of key value provided');
+        }
+    }
+
+    /**
+     * @throws InvalidKeyException
+     */
+    protected function loadFromPath(string $path)
+    {
+        try {
+            $this->key = PublicKeyLoader::load(
+                file_get_contents($path)
+            )->withPadding(RSA::SIGNATURE_PKCS1);
+        } catch (\Exception $exception) {
+            throw new InvalidKeyException("Failed to load key from file path with error: {$exception->getMessage()}");
+        }
+
+        if (!($this->key instanceof RSA)) {
+            throw new InvalidKeyException("Key loaded from file path is not an RSA key as expected");
         }
     }
 
@@ -54,12 +76,10 @@ class JwtSigningKey
 
         try {
             /** @var RSA $key */
-            $key = PublicKeyLoader::load([
+            $this->key = PublicKeyLoader::load([
                 'e' => new BigInteger(base64_decode($jwk['e']), 256),
                 'n' => new BigInteger(base64_decode($n), 256),
             ])->withPadding(RSA::SIGNATURE_PKCS1);
-
-            $this->key = $key;
         } catch (\Exception $exception) {
             throw new InvalidKeyException("Failed to load key from JWK parameters with error: {$exception->getMessage()}");
         }
@@ -71,6 +91,14 @@ class JwtSigningKey
     public function verify(string $content, string $signature): bool
     {
         return $this->key->verify($content, $signature);
+    }
+
+    /**
+     * Convert the key to a PEM encoded key string.
+     */
+    public function toPem(): string
+    {
+        return $this->key->toString('PKCS8');
     }
 
 }

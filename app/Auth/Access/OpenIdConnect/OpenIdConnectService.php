@@ -1,7 +1,6 @@
 <?php namespace BookStack\Auth\Access\OpenIdConnect;
 
 use BookStack\Auth\Access\LoginService;
-use BookStack\Auth\Access\OpenIdConnect\OpenIdConnectOAuthProvider;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
@@ -9,11 +8,8 @@ use BookStack\Exceptions\OpenIdConnectException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
-use Lcobucci\JWT\Token;
-use League\OAuth2\Client\Token\AccessToken;
 use function auth;
 use function config;
-use function dd;
 use function trans;
 use function url;
 
@@ -89,13 +85,13 @@ class OpenIdConnectService
     /**
      * Calculate the display name
      */
-    protected function getUserDisplayName(Token $token, string $defaultValue): string
+    protected function getUserDisplayName(OpenIdConnectIdToken $token, string $defaultValue): string
     {
         $displayNameAttr = $this->config['display_name_claims'];
 
         $displayName = [];
         foreach ($displayNameAttr as $dnAttr) {
-            $dnComponent = $token->claims()->get($dnAttr, '');
+            $dnComponent = $token->getClaim($dnAttr) ?? '';
             if ($dnComponent !== '') {
                 $displayName[] = $dnComponent;
             }
@@ -112,12 +108,12 @@ class OpenIdConnectService
      * Extract the details of a user from an ID token.
      * @return array{name: string, email: string, external_id: string}
      */
-    protected function getUserDetails(Token $token): array
+    protected function getUserDetails(OpenIdConnectIdToken $token): array
     {
-        $id = $token->claims()->get('sub');
+        $id = $token->getClaim('sub');
         return [
             'external_id' => $id,
-            'email' => $token->claims()->get('email'),
+            'email' => $token->getClaim('email'),
             'name' => $this->getUserDisplayName($token, $id),
         ];
     }
@@ -139,19 +135,18 @@ class OpenIdConnectService
             [$this->config['jwt_public_key']]
         );
 
-        // TODO - Create a class to manage token parsing and validation on this
-        // Ensure ID token validation is done:
-        // https://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation
-        // To full affect and tested
-        // JWT signature algorthims:
-        // https://datatracker.ietf.org/doc/html/rfc7518#section-3
-
-        $userDetails = $this->getUserDetails($accessToken->getIdToken());
-        $isLoggedIn = auth()->check();
-
         if ($this->config['dump_user_details']) {
-            throw new JsonDebugException($accessToken->jsonSerialize());
+            throw new JsonDebugException($idToken->claims());
         }
+
+        try {
+            $idToken->validate($this->config['client_id']);
+        } catch (InvalidTokenException $exception) {
+            throw new OpenIdConnectException("ID token validate failed with error: {$exception->getMessage()}");
+        }
+
+        $userDetails = $this->getUserDetails($idToken);
+        $isLoggedIn = auth()->check();
 
         if ($userDetails['email'] === null) {
             throw new OpenIdConnectException(trans('errors.oidc_no_email_address'));
