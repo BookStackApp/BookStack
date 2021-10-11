@@ -1,7 +1,8 @@
 <?php
 
-namespace BookStack\Auth\Access;
+namespace BookStack\Auth\Access\OpenIdConnect;
 
+use League\OAuth2\Client\Grant\AbstractGrant;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericResourceOwner;
@@ -106,4 +107,21 @@ class OpenIdConnectOAuthProvider extends AbstractProvider
     {
         return new GenericResourceOwner($response, '');
     }
+
+    /**
+     * Creates an access token from a response.
+     *
+     * The grant that was used to fetch the response can be used to provide
+     * additional context.
+     *
+     * @param array $response
+     * @param AbstractGrant $grant
+     * @return OpenIdConnectAccessToken
+     */
+    protected function createAccessToken(array $response, AbstractGrant $grant)
+    {
+        return new OpenIdConnectAccessToken($response);
+    }
+
+
 }

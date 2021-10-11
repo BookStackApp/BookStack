@@ -1,5 +1,8 @@
-<?php namespace BookStack\Auth\Access;
+<?php namespace BookStack\Auth\Access\OpenIdConnect;
 
+use BookStack\Auth\Access\LoginService;
+use BookStack\Auth\Access\OpenIdConnect\OpenIdConnectOAuthProvider;
+use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\OpenIdConnectException;
@@ -8,6 +11,11 @@ use BookStack\Exceptions\UserRegistrationException;
 use Exception;
 use Lcobucci\JWT\Token;
 use League\OAuth2\Client\Token\AccessToken;
+use function auth;
+use function config;
+use function dd;
+use function trans;
+use function url;
 
 /**
  * Class OpenIdConnectService
@@ -122,17 +130,21 @@ class OpenIdConnectService
      * @throws UserRegistrationException
      * @throws StoppedAuthenticationException
      */
-    protected function processAccessTokenCallback(AccessToken $accessToken): User
+    protected function processAccessTokenCallback(OpenIdConnectAccessToken $accessToken): User
     {
-        dd($accessToken->getValues());
+        $idTokenText = $accessToken->getIdToken();
+        $idToken = new OpenIdConnectIdToken(
+            $idTokenText,
+            $this->config['issuer'],
+            [$this->config['jwt_public_key']]
+        );
+
         // TODO - Create a class to manage token parsing and validation on this
-        // Using the config params:
-        // $this->config['jwt_public_key']
-        // $this->config['issuer']
-        //
         // Ensure ID token validation is done:
         // https://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation
         // To full affect and tested
+        // JWT signature algorthims:
+        // https://datatracker.ietf.org/doc/html/rfc7518#section-3
 
         $userDetails = $this->getUserDetails($accessToken->getIdToken());
         $isLoggedIn = auth()->check();

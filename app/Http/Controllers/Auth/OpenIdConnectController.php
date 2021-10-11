@@ -2,7 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Auth\Access\OpenIdConnectService;
+use BookStack\Auth\Access\OpenIdConnect\OpenIdConnectService;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
