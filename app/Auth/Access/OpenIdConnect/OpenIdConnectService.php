@@ -136,7 +136,7 @@ class OpenIdConnectService
         );
 
         if ($this->config['dump_user_details']) {
-            throw new JsonDebugException($idToken->claims());
+            throw new JsonDebugException($idToken->getAllClaims());
         }
 
         try {

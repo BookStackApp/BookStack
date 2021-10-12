@@ -97,7 +97,7 @@ class OpenIdConnectIdToken
     /**
      * Get all returned claims within the token.
      */
-    public function claims(): array
+    public function getAllClaims(): array
     {
         return $this->payload;
     }
@@ -174,7 +174,7 @@ class OpenIdConnectIdToken
 
         $aud = is_string($this->payload['aud']) ? [$this->payload['aud']] : $this->payload['aud'];
         if (count($aud) !== 1) {
-            throw new InvalidTokenException('Token audience value has ' . count($aud) . ' values. Expected 1.');
+            throw new InvalidTokenException('Token audience value has ' . count($aud) . ' values, Expected 1');
         }
 
         if ($aud[0] !== $clientId) {
