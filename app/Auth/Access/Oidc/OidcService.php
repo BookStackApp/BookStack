@@ -1,4 +1,4 @@
-<?php namespace BookStack\Auth\Access\OpenIdConnect;
+<?php namespace BookStack\Auth\Access\Oidc;
 
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
@@ -20,7 +20,7 @@ use function url;
  * Class OpenIdConnectService
  * Handles any app-specific OIDC tasks.
  */
-class OpenIdConnectService
+class OidcService
 {
     protected $registrationService;
     protected $loginService;
@@ -72,12 +72,12 @@ class OpenIdConnectService
     }
 
     /**
-     * @throws IssuerDiscoveryException
+     * @throws OidcIssuerDiscoveryException
      * @throws ClientExceptionInterface
      */
-    protected function getProviderSettings(): OpenIdConnectProviderSettings
+    protected function getProviderSettings(): OidcProviderSettings
     {
-        $settings = new OpenIdConnectProviderSettings([
+        $settings = new OidcProviderSettings([
             'issuer' => $this->config['issuer'],
             'clientId' => $this->config['client_id'],
             'clientSecret' => $this->config['client_secret'],
@@ -104,15 +104,15 @@ class OpenIdConnectService
     /**
      * Load the underlying OpenID Connect Provider.
      */
-    protected function getProvider(OpenIdConnectProviderSettings $settings): OpenIdConnectOAuthProvider
+    protected function getProvider(OidcProviderSettings $settings): OidcOAuthProvider
     {
-        return new OpenIdConnectOAuthProvider($settings->arrayForProvider());
+        return new OidcOAuthProvider($settings->arrayForProvider());
     }
 
     /**
      * Calculate the display name
      */
-    protected function getUserDisplayName(OpenIdConnectIdToken $token, string $defaultValue): string
+    protected function getUserDisplayName(OidcIdToken $token, string $defaultValue): string
     {
         $displayNameAttr = $this->config['display_name_claims'];
 
@@ -135,7 +135,7 @@ class OpenIdConnectService
      * Extract the details of a user from an ID token.
      * @return array{name: string, email: string, external_id: string}
      */
-    protected function getUserDetails(OpenIdConnectIdToken $token): array
+    protected function getUserDetails(OidcIdToken $token): array
     {
         $id = $token->getClaim('sub');
         return [
@@ -153,10 +153,10 @@ class OpenIdConnectService
      * @throws UserRegistrationException
      * @throws StoppedAuthenticationException
      */
-    protected function processAccessTokenCallback(OpenIdConnectAccessToken $accessToken, OpenIdConnectProviderSettings $settings): User
+    protected function processAccessTokenCallback(OidcAccessToken $accessToken, OidcProviderSettings $settings): User
     {
         $idTokenText = $accessToken->getIdToken();
-        $idToken = new OpenIdConnectIdToken(
+        $idToken = new OidcIdToken(
             $idTokenText,
             $settings->issuer,
             $settings->keys,
@@ -168,7 +168,7 @@ class OpenIdConnectService
 
         try {
             $idToken->validate($settings->clientId);
-        } catch (InvalidTokenException $exception) {
+        } catch (OidcInvalidTokenException $exception) {
             throw new OpenIdConnectException("ID token validate failed with error: {$exception->getMessage()}");
         }
 

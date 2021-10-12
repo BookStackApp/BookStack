@@ -2,7 +2,7 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Auth\Access\OpenIdConnect\OpenIdConnectService;
+use BookStack\Auth\Access\Oidc\OidcService;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class OpenIdConnectController extends Controller
     /**
      * OpenIdController constructor.
      */
-    public function __construct(OpenIdConnectService $oidcService)
+    public function __construct(OidcService $oidcService)
     {
         $this->oidcService = $oidcService;
         $this->middleware('guard:oidc');

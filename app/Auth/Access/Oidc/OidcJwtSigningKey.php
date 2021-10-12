@@ -1,13 +1,13 @@
 <?php
 
-namespace BookStack\Auth\Access\OpenIdConnect;
+namespace BookStack\Auth\Access\Oidc;
 
 use phpseclib3\Crypt\Common\PublicKey;
 use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Crypt\RSA;
 use phpseclib3\Math\BigInteger;
 
-class JwtSigningKey
+class OidcJwtSigningKey
 {
     /**
      * @var PublicKey
@@ -20,7 +20,7 @@ class JwtSigningKey
      * 'file:///var/www/cert.pem'
      * ['kty' => 'RSA', 'alg' => 'RS256', 'n' => 'abc123...']
      * @param array|string $jwkOrKeyPath
-     * @throws InvalidKeyException
+     * @throws OidcInvalidKeyException
      */
     public function __construct($jwkOrKeyPath)
     {
@@ -29,12 +29,12 @@ class JwtSigningKey
         } else if (is_string($jwkOrKeyPath) && strpos($jwkOrKeyPath, 'file://') === 0) {
             $this->loadFromPath($jwkOrKeyPath);
         } else {
-            throw new InvalidKeyException('Unexpected type of key value provided');
+            throw new OidcInvalidKeyException('Unexpected type of key value provided');
         }
     }
 
     /**
-     * @throws InvalidKeyException
+     * @throws OidcInvalidKeyException
      */
     protected function loadFromPath(string $path)
     {
@@ -43,37 +43,37 @@ class JwtSigningKey
                 file_get_contents($path)
             )->withPadding(RSA::SIGNATURE_PKCS1);
         } catch (\Exception $exception) {
-            throw new InvalidKeyException("Failed to load key from file path with error: {$exception->getMessage()}");
+            throw new OidcInvalidKeyException("Failed to load key from file path with error: {$exception->getMessage()}");
         }
 
         if (!($this->key instanceof RSA)) {
-            throw new InvalidKeyException("Key loaded from file path is not an RSA key as expected");
+            throw new OidcInvalidKeyException("Key loaded from file path is not an RSA key as expected");
         }
     }
 
     /**
-     * @throws InvalidKeyException
+     * @throws OidcInvalidKeyException
      */
     protected function loadFromJwkArray(array $jwk)
     {
         if ($jwk['alg'] !== 'RS256') {
-            throw new InvalidKeyException("Only RS256 keys are currently supported. Found key using {$jwk['alg']}");
+            throw new OidcInvalidKeyException("Only RS256 keys are currently supported. Found key using {$jwk['alg']}");
         }
 
         if (empty($jwk['use'])) {
-            throw new InvalidKeyException('A "use" parameter on the provided key is expected');
+            throw new OidcInvalidKeyException('A "use" parameter on the provided key is expected');
         }
 
         if ($jwk['use'] !== 'sig') {
-            throw new InvalidKeyException("Only signature keys are currently supported. Found key for use {$jwk['use']}");
+            throw new OidcInvalidKeyException("Only signature keys are currently supported. Found key for use {$jwk['use']}");
         }
 
         if (empty($jwk['e'])) {
-            throw new InvalidKeyException('An "e" parameter on the provided key is expected');
+            throw new OidcInvalidKeyException('An "e" parameter on the provided key is expected');
         }
 
         if (empty($jwk['n'])) {
-            throw new InvalidKeyException('A "n" parameter on the provided key is expected');
+            throw new OidcInvalidKeyException('A "n" parameter on the provided key is expected');
         }
 
         $n = strtr($jwk['n'] ?? '', '-_', '+/');
@@ -85,7 +85,7 @@ class JwtSigningKey
                 'n' => new BigInteger(base64_decode($n), 256),
             ])->withPadding(RSA::SIGNATURE_PKCS1);
         } catch (\Exception $exception) {
-            throw new InvalidKeyException("Failed to load key from JWK parameters with error: {$exception->getMessage()}");
+            throw new OidcInvalidKeyException("Failed to load key from JWK parameters with error: {$exception->getMessage()}");
         }
     }
 

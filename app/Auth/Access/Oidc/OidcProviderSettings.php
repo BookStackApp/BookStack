@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Auth\Access\OpenIdConnect;
+namespace BookStack\Auth\Access\Oidc;
 
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Contracts\Cache\Repository;
@@ -13,7 +13,7 @@ use Psr\Http\Client\ClientInterface;
  * Acts as a DTO for settings used within the oidc request and token handling.
  * Performs auto-discovery upon request.
  */
-class OpenIdConnectProviderSettings
+class OidcProviderSettings
 {
     /**
      * @var string
@@ -103,7 +103,7 @@ class OpenIdConnectProviderSettings
 
     /**
      * Discover and autoload settings from the configured issuer.
-     * @throws IssuerDiscoveryException
+     * @throws OidcIssuerDiscoveryException
      */
     public function discoverFromIssuer(ClientInterface $httpClient, Repository $cache, int $cacheMinutes)
     {
@@ -114,12 +114,12 @@ class OpenIdConnectProviderSettings
             });
             $this->applySettingsFromArray($discoveredSettings);
         } catch (ClientExceptionInterface $exception) {
-            throw new IssuerDiscoveryException("HTTP request failed during discovery with error: {$exception->getMessage()}");
+            throw new OidcIssuerDiscoveryException("HTTP request failed during discovery with error: {$exception->getMessage()}");
         }
     }
 
     /**
-     * @throws IssuerDiscoveryException
+     * @throws OidcIssuerDiscoveryException
      * @throws ClientExceptionInterface
      */
     protected function loadSettingsFromIssuerDiscovery(ClientInterface $httpClient): array
@@ -130,11 +130,11 @@ class OpenIdConnectProviderSettings
         $result = json_decode($response->getBody()->getContents(), true);
 
         if (empty($result) || !is_array($result)) {
-            throw new IssuerDiscoveryException("Error discovering provider settings from issuer at URL {$issuerUrl}");
+            throw new OidcIssuerDiscoveryException("Error discovering provider settings from issuer at URL {$issuerUrl}");
         }
 
         if ($result['issuer'] !== $this->issuer) {
-            throw new IssuerDiscoveryException("Unexpected issuer value found on discovery response");
+            throw new OidcIssuerDiscoveryException("Unexpected issuer value found on discovery response");
         }
 
         $discoveredSettings = [];
@@ -168,7 +168,7 @@ class OpenIdConnectProviderSettings
     /**
      * Return an array of jwks as PHP key=>value arrays.
      * @throws ClientExceptionInterface
-     * @throws IssuerDiscoveryException
+     * @throws OidcIssuerDiscoveryException
      */
     protected function loadKeysFromUri(string $uri, ClientInterface $httpClient): array
     {
@@ -177,7 +177,7 @@ class OpenIdConnectProviderSettings
         $result = json_decode($response->getBody()->getContents(), true);
 
         if (empty($result) || !is_array($result) || !isset($result['keys'])) {
-            throw new IssuerDiscoveryException("Error reading keys from issuer jwks_uri");
+            throw new OidcIssuerDiscoveryException("Error reading keys from issuer jwks_uri");
         }
 
         return $result['keys'];
