@@ -1,11 +1,11 @@
 <?php
 
-namespace BookStack\Auth\Access\OpenIdConnect;
+namespace BookStack\Auth\Access\Oidc;
 
 use InvalidArgumentException;
 use League\OAuth2\Client\Token\AccessToken;
 
-class OpenIdConnectAccessToken extends AccessToken
+class OidcAccessToken extends AccessToken
 {
     /**
      * Constructs an access token.

@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Auth\Access\OpenIdConnect;
+namespace BookStack\Auth\Access\Oidc;
 
 use League\OAuth2\Client\Grant\AbstractGrant;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
  * Credit to the https://github.com/steverhoades/oauth2-openid-connect-client
  * project for the idea of extending a League\OAuth2 client for this use-case.
  */
-class OpenIdConnectOAuthProvider extends AbstractProvider
+class OidcOAuthProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
@@ -116,11 +116,11 @@ class OpenIdConnectOAuthProvider extends AbstractProvider
      *
      * @param array $response
      * @param AbstractGrant $grant
-     * @return OpenIdConnectAccessToken
+     * @return OidcAccessToken
      */
     protected function createAccessToken(array $response, AbstractGrant $grant)
     {
-        return new OpenIdConnectAccessToken($response);
+        return new OidcAccessToken($response);
     }
 
 

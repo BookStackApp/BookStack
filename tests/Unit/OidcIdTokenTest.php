@@ -2,16 +2,16 @@
 
 namespace Tests\Unit;
 
-use BookStack\Auth\Access\OpenIdConnect\InvalidTokenException;
-use BookStack\Auth\Access\OpenIdConnect\OpenIdConnectIdToken;
+use BookStack\Auth\Access\Oidc\OidcInvalidTokenException;
+use BookStack\Auth\Access\Oidc\OidcIdToken;
 use phpseclib3\Crypt\RSA;
 use Tests\TestCase;
 
-class OpenIdConnectIdTokenTest extends TestCase
+class OidcIdTokenTest extends TestCase
 {
     public function test_valid_token_passes_validation()
     {
-        $token = new OpenIdConnectIdToken($this->idToken(), 'https://auth.example.com', [
+        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', [
             $this->jwkKeyArray()
         ]);
 
@@ -20,20 +20,20 @@ class OpenIdConnectIdTokenTest extends TestCase
 
     public function test_get_claim_returns_value_if_existing()
     {
-        $token = new OpenIdConnectIdToken($this->idToken(), 'https://auth.example.com', []);
+        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', []);
         $this->assertEquals('bscott@example.com', $token->getClaim('email'));
     }
 
     public function test_get_claim_returns_null_if_not_existing()
     {
-        $token = new OpenIdConnectIdToken($this->idToken(), 'https://auth.example.com', []);
+        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', []);
         $this->assertEquals(null, $token->getClaim('emails'));
     }
 
     public function test_get_all_claims_returns_all_payload_claims()
     {
         $defaultPayload = $this->getDefaultPayload();
-        $token = new OpenIdConnectIdToken($this->idToken($defaultPayload), 'https://auth.example.com', []);
+        $token = new OidcIdToken($this->idToken($defaultPayload), 'https://auth.example.com', []);
         $this->assertEquals($defaultPayload, $token->getAllClaims());
     }
 
@@ -52,7 +52,7 @@ class OpenIdConnectIdTokenTest extends TestCase
         ];
 
         foreach ($messagesAndTokenValues as [$message, $tokenValue]) {
-            $token = new OpenIdConnectIdToken($tokenValue, 'https://auth.example.com', []);
+            $token = new OidcIdToken($tokenValue, 'https://auth.example.com', []);
             $err = null;
             try {
                 $token->validate('abc');
@@ -60,43 +60,43 @@ class OpenIdConnectIdTokenTest extends TestCase
                 $err = $exception;
             }
 
-            $this->assertInstanceOf(InvalidTokenException::class, $err, $message);
+            $this->assertInstanceOf(OidcInvalidTokenException::class, $err, $message);
             $this->assertEquals($message, $err->getMessage());
         }
     }
 
     public function test_error_thrown_if_token_signature_not_validated_from_no_keys()
     {
-        $token = new OpenIdConnectIdToken($this->idToken(), 'https://auth.example.com', []);
-        $this->expectException(InvalidTokenException::class);
+        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', []);
+        $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage('Token signature could not be validated using the provided keys');
         $token->validate('abc');
     }
 
     public function test_error_thrown_if_token_signature_not_validated_from_non_matching_key()
     {
-        $token = new OpenIdConnectIdToken($this->idToken(), 'https://auth.example.com', [
+        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', [
             array_merge($this->jwkKeyArray(), [
                 'n' => 'iqK-1QkICMf_cusNLpeNnN-bhT0-9WLBvzgwKLALRbrevhdi5ttrLHIQshaSL0DklzfyG2HWRmAnJ9Q7sweEjuRiiqRcSUZbYu8cIv2hLWYu7K_NH67D2WUjl0EnoHEuiVLsZhQe1CmdyLdx087j5nWkd64K49kXRSdxFQUlj8W3NeK3CjMEUdRQ3H4RZzJ4b7uuMiFA29S2ZhMNG20NPbkUVsFL-jiwTd10KSsPT8yBYipI9O7mWsUWt_8KZs1y_vpM_k3SyYihnWpssdzDm1uOZ8U3mzFr1xsLAO718GNUSXk6npSDzLl59HEqa6zs4O9awO2qnSHvcmyELNk31w'
             ])
         ]);
-        $this->expectException(InvalidTokenException::class);
+        $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage('Token signature could not be validated using the provided keys');
         $token->validate('abc');
     }
 
     public function test_error_thrown_if_token_signature_not_validated_from_invalid_key()
     {
-        $token = new OpenIdConnectIdToken($this->idToken(), 'https://auth.example.com', ['url://example.com']);
-        $this->expectException(InvalidTokenException::class);
+        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', ['url://example.com']);
+        $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage('Token signature could not be validated using the provided keys');
         $token->validate('abc');
     }
 
     public function test_error_thrown_if_token_algorithm_is_not_rs256()
     {
-        $token = new OpenIdConnectIdToken($this->idToken([], ['alg' => 'HS256']), 'https://auth.example.com', []);
-        $this->expectException(InvalidTokenException::class);
+        $token = new OidcIdToken($this->idToken([], ['alg' => 'HS256']), 'https://auth.example.com', []);
+        $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage("Only RS256 signature validation is supported. Token reports using HS256");
         $token->validate('abc');
     }
@@ -133,7 +133,7 @@ class OpenIdConnectIdTokenTest extends TestCase
         ];
 
         foreach ($claimOverridesByErrorMessage as [$message, $overrides]) {
-            $token = new OpenIdConnectIdToken($this->idToken($overrides), 'https://auth.example.com', [
+            $token = new OidcIdToken($this->idToken($overrides), 'https://auth.example.com', [
                 $this->jwkKeyArray()
             ]);
 
@@ -144,7 +144,7 @@ class OpenIdConnectIdTokenTest extends TestCase
                 $err = $exception;
             }
 
-            $this->assertInstanceOf(InvalidTokenException::class, $err, $message);
+            $this->assertInstanceOf(OidcInvalidTokenException::class, $err, $message);
             $this->assertEquals($message, $err->getMessage());
         }
     }
@@ -154,7 +154,7 @@ class OpenIdConnectIdTokenTest extends TestCase
         $file = tmpfile();
         $testFilePath = 'file://' . stream_get_meta_data($file)['uri'];
         file_put_contents($testFilePath, $this->pemKey());
-        $token = new OpenIdConnectIdToken($this->idToken(), 'https://auth.example.com', [
+        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', [
             $testFilePath
         ]);
 
