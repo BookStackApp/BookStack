@@ -8,6 +8,9 @@ use BookStack\Exceptions\OpenIdConnectException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
+use Psr\Http\Client\ClientExceptionInterface;
 use function auth;
 use function config;
 use function trans;
@@ -39,7 +42,8 @@ class OpenIdConnectService
      */
     public function login(): array
     {
-        $provider = $this->getProvider();
+        $settings = $this->getProviderSettings();
+        $provider = $this->getProvider($settings);
         return [
             'url' => $provider->getAuthorizationUrl(),
             'state' => $provider->getState(),
@@ -52,34 +56,57 @@ class OpenIdConnectService
      * the authorization server.
      * Returns null if not authenticated.
      * @throws Exception
+     * @throws ClientExceptionInterface
      */
     public function processAuthorizeResponse(?string $authorizationCode): ?User
     {
-        $provider = $this->getProvider();
+        $settings = $this->getProviderSettings();
+        $provider = $this->getProvider($settings);
 
         // Try to exchange authorization code for access token
         $accessToken = $provider->getAccessToken('authorization_code', [
             'code' => $authorizationCode,
         ]);
 
-        return $this->processAccessTokenCallback($accessToken);
+        return $this->processAccessTokenCallback($accessToken, $settings);
     }
 
     /**
-     * Load the underlying OpenID Connect Provider.
+     * @throws IssuerDiscoveryException
+     * @throws ClientExceptionInterface
      */
-    protected function getProvider(): OpenIdConnectOAuthProvider
+    protected function getProviderSettings(): OpenIdConnectProviderSettings
     {
-        // Setup settings
-        $settings = [
+        $settings = new OpenIdConnectProviderSettings([
+            'issuer' => $this->config['issuer'],
             'clientId' => $this->config['client_id'],
             'clientSecret' => $this->config['client_secret'],
             'redirectUri' => url('/oidc/redirect'),
             'authorizationEndpoint' => $this->config['authorization_endpoint'],
             'tokenEndpoint' => $this->config['token_endpoint'],
-        ];
+        ]);
 
-        return new OpenIdConnectOAuthProvider($settings);
+        // Use keys if configured
+        if (!empty($this->config['jwt_public_key'])) {
+            $settings->keys = [$this->config['jwt_public_key']];
+        }
+
+        // Run discovery
+        if ($this->config['discover'] ?? false) {
+            $settings->discoverFromIssuer(new Client(['timeout' => 3]), Cache::store(null), 15);
+        }
+
+        $settings->validate();
+
+        return $settings;
+    }
+
+    /**
+     * Load the underlying OpenID Connect Provider.
+     */
+    protected function getProvider(OpenIdConnectProviderSettings $settings): OpenIdConnectOAuthProvider
+    {
+        return new OpenIdConnectOAuthProvider($settings->arrayForProvider());
     }
 
     /**
@@ -126,13 +153,13 @@ class OpenIdConnectService
      * @throws UserRegistrationException
      * @throws StoppedAuthenticationException
      */
-    protected function processAccessTokenCallback(OpenIdConnectAccessToken $accessToken): User
+    protected function processAccessTokenCallback(OpenIdConnectAccessToken $accessToken, OpenIdConnectProviderSettings $settings): User
     {
         $idTokenText = $accessToken->getIdToken();
         $idToken = new OpenIdConnectIdToken(
             $idTokenText,
-            $this->config['issuer'],
-            [$this->config['jwt_public_key']]
+            $settings->issuer,
+            $settings->keys,
         );
 
         if ($this->config['dump_user_details']) {
@@ -140,7 +167,7 @@ class OpenIdConnectService
         }
 
         try {
-            $idToken->validate($this->config['client_id']);
+            $idToken->validate($settings->clientId);
         } catch (InvalidTokenException $exception) {
             throw new OpenIdConnectException("ID token validate failed with error: {$exception->getMessage()}");
         }

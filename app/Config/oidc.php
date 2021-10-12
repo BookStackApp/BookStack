@@ -17,8 +17,13 @@ return [
     // OAuth2/OpenId client secret, as configured in your Authorization server.
     'client_secret' => env('OIDC_CLIENT_SECRET', null),
 
-    // The issuer of the identity token (id_token) this will be compared with what is returned in the token.
+    // The issuer of the identity token (id_token) this will be compared with
+    // what is returned in the token.
     'issuer' => env('OIDC_ISSUER', null),
+
+    // Auto-discover the relevant endpoints and keys from the issuer.
+    // Fetched details are cached for 15 minutes.
+    'discover' => env('OIDC_ISSUER_DISCOVER', false),
 
     // Public key that's used to verify the JWT token with.
     // Can be the key value itself or a local 'file://public.key' reference.
