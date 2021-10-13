@@ -134,7 +134,7 @@ class OidcIdToken
             try {
                 return new OidcJwtSigningKey($key);
             } catch (OidcInvalidKeyException $e) {
-                return null;
+                throw new OidcInvalidTokenException('Failed to read signing key with error: ' . $e->getMessage());
             }
         }, $this->keys);
 

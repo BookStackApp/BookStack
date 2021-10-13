@@ -18,6 +18,10 @@ use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use Illuminate\Foundation\Testing\Assert as PHPUnit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Env;
@@ -25,6 +29,7 @@ use Illuminate\Support\Facades\Log;
 use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use Psr\Http\Client\ClientInterface;
 
 trait SharedTestHelpers
 {
@@ -245,6 +250,22 @@ trait SharedTestHelpers
     }
 
     /**
+     * Mock the http client used in BookStack.
+     * Returns a reference to the container which holds all history of http transactions.
+     * @link https://docs.guzzlephp.org/en/stable/testing.html#history-middleware
+     */
+    protected function &mockHttpClient(array $responses = []): array
+    {
+        $container = [];
+        $history = Middleware::history($container);
+        $mock = new MockHandler($responses);
+        $handlerStack = new HandlerStack($mock);
+        $handlerStack->push($history);
+        $this->app[ClientInterface::class] = new Client(['handler' => $handlerStack]);
+        return $container;
+    }
+
+    /**
      * Run a set test with the given env variable.
      * Remembers the original and resets the value after test.
      */
@@ -321,6 +342,15 @@ trait SharedTestHelpers
                     $response->json(['error' => 'You do not have permission to perform the requested action.'])
                 )
             );
+    }
+
+    /**
+     * Assert that the session has a particular error notification message set.
+     */
+    protected function assertSessionError(string $message)
+    {
+        $error = session()->get('error');
+        PHPUnit::assertTrue($error === $message, "Failed asserting the session contains an error. \nFound: {$error}\nExpecting: {$message}");
     }
 
     /**

@@ -268,8 +268,8 @@ Route::get('/saml2/sls', 'Auth\Saml2Controller@sls');
 Route::post('/saml2/acs', 'Auth\Saml2Controller@acs');
 
 // OIDC routes
-Route::post('/oidc/login', 'Auth\OpenIdConnectController@login');
-Route::get('/oidc/redirect', 'Auth\OpenIdConnectController@redirect');
+Route::post('/oidc/login', 'Auth\OidcController@login');
+Route::get('/oidc/callback', 'Auth\OidcController@callback');
 
 // User invitation routes
 Route::get('/register/invite/{token}', 'Auth\UserInviteController@showSetPassword');
