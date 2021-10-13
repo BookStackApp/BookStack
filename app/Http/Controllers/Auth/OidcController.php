@@ -6,7 +6,7 @@ use BookStack\Auth\Access\Oidc\OidcService;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class OpenIdConnectController extends Controller
+class OidcController extends Controller
 {
 
     protected $oidcService;
@@ -32,10 +32,10 @@ class OpenIdConnectController extends Controller
     }
 
     /**
-     * Authorization flow redirect.
+     * Authorization flow redirect callback.
      * Processes authorization response from the OIDC Authorization Server.
      */
-    public function redirect(Request $request)
+    public function callback(Request $request)
     {
         $storedState = session()->pull('oidc_state');
         $responseState = $request->query('state');
@@ -45,12 +45,7 @@ class OpenIdConnectController extends Controller
             return redirect('/login');
         }
 
-        $user = $this->oidcService->processAuthorizeResponse($request->query('code'));
-        if ($user === null) {
-            $this->showErrorNotification(trans('errors.oidc_fail_authed', ['system' => config('oidc.name')]));
-            return redirect('/login');
-        }
-
+        $this->oidcService->processAuthorizeResponse($request->query('code'));
         return redirect()->intended();
     }
 }

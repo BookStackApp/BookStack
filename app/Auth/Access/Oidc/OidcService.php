@@ -8,9 +8,10 @@ use BookStack\Exceptions\OpenIdConnectException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
+use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface as HttpClient;
 use function auth;
 use function config;
 use function trans;
@@ -24,16 +25,16 @@ class OidcService
 {
     protected $registrationService;
     protected $loginService;
-    protected $config;
+    protected $httpClient;
 
     /**
      * OpenIdService constructor.
      */
-    public function __construct(RegistrationService $registrationService, LoginService $loginService)
+    public function __construct(RegistrationService $registrationService, LoginService $loginService, HttpClient $httpClient)
     {
-        $this->config = config('oidc');
         $this->registrationService = $registrationService;
         $this->loginService = $loginService;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -77,23 +78,24 @@ class OidcService
      */
     protected function getProviderSettings(): OidcProviderSettings
     {
+        $config = $this->config();
         $settings = new OidcProviderSettings([
-            'issuer' => $this->config['issuer'],
-            'clientId' => $this->config['client_id'],
-            'clientSecret' => $this->config['client_secret'],
-            'redirectUri' => url('/oidc/redirect'),
-            'authorizationEndpoint' => $this->config['authorization_endpoint'],
-            'tokenEndpoint' => $this->config['token_endpoint'],
+            'issuer' => $config['issuer'],
+            'clientId' => $config['client_id'],
+            'clientSecret' => $config['client_secret'],
+            'redirectUri' => url('/oidc/callback'),
+            'authorizationEndpoint' => $config['authorization_endpoint'],
+            'tokenEndpoint' => $config['token_endpoint'],
         ]);
 
         // Use keys if configured
-        if (!empty($this->config['jwt_public_key'])) {
-            $settings->keys = [$this->config['jwt_public_key']];
+        if (!empty($config['jwt_public_key'])) {
+            $settings->keys = [$config['jwt_public_key']];
         }
 
         // Run discovery
-        if ($this->config['discover'] ?? false) {
-            $settings->discoverFromIssuer(new Client(['timeout' => 3]), Cache::store(null), 15);
+        if ($config['discover'] ?? false) {
+            $settings->discoverFromIssuer($this->httpClient, Cache::store(null), 15);
         }
 
         $settings->validate();
@@ -106,7 +108,10 @@ class OidcService
      */
     protected function getProvider(OidcProviderSettings $settings): OidcOAuthProvider
     {
-        return new OidcOAuthProvider($settings->arrayForProvider());
+        return new OidcOAuthProvider($settings->arrayForProvider(), [
+            'httpClient' => $this->httpClient,
+            'optionProvider' => new HttpBasicAuthOptionProvider(),
+        ]);
     }
 
     /**
@@ -114,7 +119,7 @@ class OidcService
      */
     protected function getUserDisplayName(OidcIdToken $token, string $defaultValue): string
     {
-        $displayNameAttr = $this->config['display_name_claims'];
+        $displayNameAttr = $this->config()['display_name_claims'];
 
         $displayName = [];
         foreach ($displayNameAttr as $dnAttr) {
@@ -162,7 +167,7 @@ class OidcService
             $settings->keys,
         );
 
-        if ($this->config['dump_user_details']) {
+        if ($this->config()['dump_user_details']) {
             throw new JsonDebugException($idToken->getAllClaims());
         }
 
@@ -175,7 +180,7 @@ class OidcService
         $userDetails = $this->getUserDetails($idToken);
         $isLoggedIn = auth()->check();
 
-        if ($userDetails['email'] === null) {
+        if (empty($userDetails['email'])) {
             throw new OpenIdConnectException(trans('errors.oidc_no_email_address'));
         }
 
@@ -193,5 +198,13 @@ class OidcService
 
         $this->loginService->login($user, 'oidc');
         return $user;
+    }
+
+    /**
+     * Get the OIDC config from the application.
+     */
+    protected function config(): array
+    {
+        return config('oidc');
     }
 }

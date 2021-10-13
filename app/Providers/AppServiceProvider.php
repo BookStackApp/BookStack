@@ -12,6 +12,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
 use BookStack\Util\CspService;
+use GuzzleHttp\Client;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Blade;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -75,6 +77,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(CspService::class, function ($app) {
             return new CspService();
+        });
+
+        $this->app->bind(HttpClientInterface::class, function($app) {
+            return new Client(['timeout' => 3]);
         });
     }
 }

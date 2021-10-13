@@ -4,15 +4,15 @@ namespace Tests\Unit;
 
 use BookStack\Auth\Access\Oidc\OidcInvalidTokenException;
 use BookStack\Auth\Access\Oidc\OidcIdToken;
-use phpseclib3\Crypt\RSA;
+use Tests\Helpers\OidcJwtHelper;
 use Tests\TestCase;
 
 class OidcIdTokenTest extends TestCase
 {
     public function test_valid_token_passes_validation()
     {
-        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', [
-            $this->jwkKeyArray()
+        $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), [
+            OidcJwtHelper::publicJwkKeyArray()
         ]);
 
         $this->assertTrue($token->validate('xxyyzz.aaa.bbccdd.123'));
@@ -20,26 +20,26 @@ class OidcIdTokenTest extends TestCase
 
     public function test_get_claim_returns_value_if_existing()
     {
-        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', []);
+        $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), []);
         $this->assertEquals('bscott@example.com', $token->getClaim('email'));
     }
 
     public function test_get_claim_returns_null_if_not_existing()
     {
-        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', []);
+        $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), []);
         $this->assertEquals(null, $token->getClaim('emails'));
     }
 
     public function test_get_all_claims_returns_all_payload_claims()
     {
-        $defaultPayload = $this->getDefaultPayload();
-        $token = new OidcIdToken($this->idToken($defaultPayload), 'https://auth.example.com', []);
+        $defaultPayload = OidcJwtHelper::defaultPayload();
+        $token = new OidcIdToken(OidcJwtHelper::idToken($defaultPayload), OidcJwtHelper::defaultIssuer(), []);
         $this->assertEquals($defaultPayload, $token->getAllClaims());
     }
 
     public function test_token_structure_error_cases()
     {
-        $idToken = $this->idToken();
+        $idToken = OidcJwtHelper::idToken();
         $idTokenExploded = explode('.', $idToken);
 
         $messagesAndTokenValues = [
@@ -52,7 +52,7 @@ class OidcIdTokenTest extends TestCase
         ];
 
         foreach ($messagesAndTokenValues as [$message, $tokenValue]) {
-            $token = new OidcIdToken($tokenValue, 'https://auth.example.com', []);
+            $token = new OidcIdToken($tokenValue, OidcJwtHelper::defaultIssuer(), []);
             $err = null;
             try {
                 $token->validate('abc');
@@ -67,7 +67,7 @@ class OidcIdTokenTest extends TestCase
 
     public function test_error_thrown_if_token_signature_not_validated_from_no_keys()
     {
-        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', []);
+        $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), []);
         $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage('Token signature could not be validated using the provided keys');
         $token->validate('abc');
@@ -75,8 +75,8 @@ class OidcIdTokenTest extends TestCase
 
     public function test_error_thrown_if_token_signature_not_validated_from_non_matching_key()
     {
-        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', [
-            array_merge($this->jwkKeyArray(), [
+        $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), [
+            array_merge(OidcJwtHelper::publicJwkKeyArray(), [
                 'n' => 'iqK-1QkICMf_cusNLpeNnN-bhT0-9WLBvzgwKLALRbrevhdi5ttrLHIQshaSL0DklzfyG2HWRmAnJ9Q7sweEjuRiiqRcSUZbYu8cIv2hLWYu7K_NH67D2WUjl0EnoHEuiVLsZhQe1CmdyLdx087j5nWkd64K49kXRSdxFQUlj8W3NeK3CjMEUdRQ3H4RZzJ4b7uuMiFA29S2ZhMNG20NPbkUVsFL-jiwTd10KSsPT8yBYipI9O7mWsUWt_8KZs1y_vpM_k3SyYihnWpssdzDm1uOZ8U3mzFr1xsLAO718GNUSXk6npSDzLl59HEqa6zs4O9awO2qnSHvcmyELNk31w'
             ])
         ]);
@@ -85,17 +85,17 @@ class OidcIdTokenTest extends TestCase
         $token->validate('abc');
     }
 
-    public function test_error_thrown_if_token_signature_not_validated_from_invalid_key()
+    public function test_error_thrown_if_invalid_key_provided()
     {
-        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', ['url://example.com']);
+        $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), ['url://example.com']);
         $this->expectException(OidcInvalidTokenException::class);
-        $this->expectExceptionMessage('Token signature could not be validated using the provided keys');
+        $this->expectExceptionMessage('Unexpected type of key value provided');
         $token->validate('abc');
     }
 
     public function test_error_thrown_if_token_algorithm_is_not_rs256()
     {
-        $token = new OidcIdToken($this->idToken([], ['alg' => 'HS256']), 'https://auth.example.com', []);
+        $token = new OidcIdToken(OidcJwtHelper::idToken([], ['alg' => 'HS256']), OidcJwtHelper::defaultIssuer(), []);
         $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage("Only RS256 signature validation is supported. Token reports using HS256");
         $token->validate('abc');
@@ -133,8 +133,8 @@ class OidcIdTokenTest extends TestCase
         ];
 
         foreach ($claimOverridesByErrorMessage as [$message, $overrides]) {
-            $token = new OidcIdToken($this->idToken($overrides), 'https://auth.example.com', [
-                $this->jwkKeyArray()
+            $token = new OidcIdToken(OidcJwtHelper::idToken($overrides), OidcJwtHelper::defaultIssuer(), [
+                OidcJwtHelper::publicJwkKeyArray()
             ]);
 
             $err = null;
@@ -153,122 +153,12 @@ class OidcIdTokenTest extends TestCase
     {
         $file = tmpfile();
         $testFilePath = 'file://' . stream_get_meta_data($file)['uri'];
-        file_put_contents($testFilePath, $this->pemKey());
-        $token = new OidcIdToken($this->idToken(), 'https://auth.example.com', [
+        file_put_contents($testFilePath, OidcJwtHelper::publicPemKey());
+        $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), [
             $testFilePath
         ]);
 
         $this->assertTrue($token->validate('xxyyzz.aaa.bbccdd.123'));
         unlink($testFilePath);
-    }
-
-    protected function getDefaultPayload(): array
-    {
-        return [
-            "sub" => "abc1234def",
-            "name" => "Barry Scott",
-            "email" => "bscott@example.com",
-            "ver" => 1,
-            "iss" => "https://auth.example.com",
-            "aud" => "xxyyzz.aaa.bbccdd.123",
-            "iat" => time(),
-            "exp" => time() + 720,
-            "jti" => "ID.AaaBBBbbCCCcccDDddddddEEEeeeeee",
-            "amr" => ["pwd"],
-            "idp" => "fghfghgfh546456dfgdfg",
-            "preferred_username" => "xXBazzaXx",
-            "auth_time" => time(),
-            "at_hash" => "sT4jbsdSGy9w12pq3iNYDA",
-        ];
-    }
-
-    protected function idToken($payloadOverrides = [], $headerOverrides = []): string
-    {
-        $payload = array_merge($this->getDefaultPayload(), $payloadOverrides);
-        $header = array_merge([
-            'kid' => 'xyz456',
-            'alg' => 'RS256',
-        ], $headerOverrides);
-
-        $top = implode('.', [
-            $this->base64UrlEncode(json_encode($header)),
-            $this->base64UrlEncode(json_encode($payload)),
-        ]);
-
-        $privateKey = $this->getPrivateKey();
-        $signature = $privateKey->sign($top);
-        return $top . '.' . $this->base64UrlEncode($signature);
-    }
-
-    protected function getPrivateKey()
-    {
-        static $key;
-        if (is_null($key)) {
-            $key = RSA::loadPrivateKey($this->privatePemKey())->withPadding(RSA::SIGNATURE_PKCS1);
-        }
-
-        return $key;
-    }
-
-    protected function base64UrlEncode(string $decoded): string
-    {
-        return strtr(base64_encode($decoded), '+/', '-_');
-    }
-
-    protected function pemKey(): string
-    {
-        return "-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqo1OmfNKec5S2zQC4SP9
-DrHuUR0VgCi6oqcGERz7zqO36hqk3A3R3aCgJkEjfnbnMuszRRKs45NbXoOp9pvm
-zXL16c93Obn7G8x8A3ao6yN5qKO5S5+CETqOZfKN/g75Xlz7VsC3igOhgsXnPx6i
-iM6sbYbk0U/XpFaT84LXKI8VTIPUo7gTeZN1pTET//i9FlzAOzX+xfWBKdOqlEzl
-+zihMHCZUUvQu99P+o0MDR0lMUT+vPJ6SJeRfnoHexwt6bZFiNnsZIEL03bX4QNk
-WvsLta1+jNUee+8IPVhzCO8bvM86NzLaKUJ4k6NZ5IVrmdCFpFsjCWByOrDG8wdw
-3wIDAQAB
------END PUBLIC KEY-----";
-    }
-
-    protected function privatePemKey(): string
-    {
-        return "-----BEGIN PRIVATE KEY-----
-MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCqjU6Z80p5zlLb
-NALhI/0Ose5RHRWAKLqipwYRHPvOo7fqGqTcDdHdoKAmQSN+ducy6zNFEqzjk1te
-g6n2m+bNcvXpz3c5ufsbzHwDdqjrI3moo7lLn4IROo5l8o3+DvleXPtWwLeKA6GC
-xec/HqKIzqxthuTRT9ekVpPzgtcojxVMg9SjuBN5k3WlMRP/+L0WXMA7Nf7F9YEp
-06qUTOX7OKEwcJlRS9C730/6jQwNHSUxRP688npIl5F+egd7HC3ptkWI2exkgQvT
-dtfhA2Ra+wu1rX6M1R577wg9WHMI7xu8zzo3MtopQniTo1nkhWuZ0IWkWyMJYHI6
-sMbzB3DfAgMBAAECggEADm7K2ghWoxwsstQh8j+DaLzx9/dIHIJV2PHdd5FGVeRQ
-6gS7MswQmHrBUrtsb4VMZ2iz/AJqkw+jScpGldH3pCc4XELsSfxNHbseO4TNIqjr
-4LOKOLYU4bRc3I+8KGXIAI5JzrucTJemEVUCDrte8cjbmqExt+zTyNpyxsapworF
-v+vnSdv40d62f+cS1xvwB+ymLK/B/wZ/DemDCi8jsi7ou/M7l5xNCzjH4iMSLtOW
-fgEhejIBG9miMJWPiVpTXE3tMdNuN3OsWc4XXm2t4VRovlZdu30Fax1xWB+Locsv
-HlHKLOFc8g+jZh0TL2KCNjPffMcC7kHhW3afshpIsQKBgQDhyWUnkqd6FzbwIX70
-SnaMgKoUv5W/K5T+Sv/PA2CyN8Gu8ih/OsoNZSnI0uqe3XQIvvgN/Fq3wO1ttLzf
-z5B6ZC7REfTgcR0190gihk6f5rtcj7d6Fy/oG2CE8sDSXgPnpEaBjvJVgN5v/U2s
-HpVaidmHTyGLCfEszoeoy8jyrQKBgQDBX8caGylmzQLc6XNntZChlt3e18Nj8MPA
-DxWLcoqgdDoofLDQAmLl+vPKyDmhQjos5eas1jgmVVEM4ge+MysaVezvuLBsSnOh
-ihc0i63USU6i7YDE83DrCewCthpFHi/wW1S5FoCAzpVy8y99vwcqO4kOXcmf4O6Y
-uW6sMsjvOwKBgQDbFtqB+MtsLCSSBF61W6AHHD5tna4H75lG2623yXZF2NanFLF5
-K6muL9DI3ujtOMQETJJUt9+rWJjLEEsJ/dYa/SV0l7D/LKOEnyuu3JZkkLaTzZzi
-6qcA2bfhqdCzEKlHV99WjkfV8hNlpex9rLuOPB8JLh7FVONicBGxF/UojQKBgDXs
-IlYaSuI6utilVKQP0kPtEPOKERc2VS+iRSy8hQGXR3xwwNFQSQm+f+sFCGT6VcSd
-W0TI+6Fc2xwPj38vP465dTentbKM1E+wdSYW6SMwSfhO6ECDbfJsst5Sr2Kkt1N7
-9FUkfDLu6GfEfnK/KR1SurZB2u51R7NYyg7EnplvAoGAT0aTtOcck0oYN30g5mdf
-efqXPwg2wAPYeiec49EbfnteQQKAkqNfJ9K69yE2naf6bw3/5mCBsq/cXeuaBMII
-ylysUIRBqt2J0kWm2yCpFWR7H+Ilhdx9A7ZLCqYVt8e+vjO/BOI3cQDe2VPOLPSl
-q/1PY4iJviGKddtmfClH3v4=
------END PRIVATE KEY-----";
-    }
-
-    protected function jwkKeyArray(): array
-    {
-        return [
-            'kty' => 'RSA',
-            'alg' => 'RS256',
-            'kid' => '066e52af-8884-4926-801d-032a276f9f2a',
-            'use' => 'sig',
-            'e' => 'AQAB',
-            'n' => 'qo1OmfNKec5S2zQC4SP9DrHuUR0VgCi6oqcGERz7zqO36hqk3A3R3aCgJkEjfnbnMuszRRKs45NbXoOp9pvmzXL16c93Obn7G8x8A3ao6yN5qKO5S5-CETqOZfKN_g75Xlz7VsC3igOhgsXnPx6iiM6sbYbk0U_XpFaT84LXKI8VTIPUo7gTeZN1pTET__i9FlzAOzX-xfWBKdOqlEzl-zihMHCZUUvQu99P-o0MDR0lMUT-vPJ6SJeRfnoHexwt6bZFiNnsZIEL03bX4QNkWvsLta1-jNUee-8IPVhzCO8bvM86NzLaKUJ4k6NZ5IVrmdCFpFsjCWByOrDG8wdw3w',
-        ];
     }
 }
