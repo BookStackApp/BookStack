@@ -4,6 +4,7 @@ namespace Tests\Auth;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\Mfa\MfaValue;
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use PragmaRX\Google2FA\Google2FA;
 use Tests\TestCase;
@@ -163,5 +164,23 @@ class MfaConfigurationTest extends TestCase
 
         $this->assertActivityExists(ActivityType::MFA_REMOVE_METHOD);
         $this->assertEquals(0, $admin->mfaValues()->count());
+    }
+
+    public function test_totp_setup_url_shows_correct_user_when_setup_forced_upon_login()
+    {
+        $admin = $this->getAdmin();
+        /** @var Role $role */
+        $role = $admin->roles()->first();
+        $role->mfa_enforced = true;
+        $role->save();
+
+        $resp = $this->post('/login', ['email' => $admin->email, 'password' => 'password']);
+        $this->assertFalse(auth()->check());
+        $resp->assertRedirect('/mfa/verify');
+
+        $resp = $this->get('/mfa/totp/generate');
+        $resp->assertSeeText('Mobile App Setup');
+        $resp->assertDontSee("otpauth://totp/BookStack:guest%40example.com");
+        $resp->assertSee("otpauth://totp/BookStack:admin%40admin.com");
     }
 }
