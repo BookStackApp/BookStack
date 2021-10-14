@@ -149,7 +149,7 @@ class OidcProviderSettings
 
         if (!empty($result['jwks_uri'])) {
             $keys = $this->loadKeysFromUri($result['jwks_uri'], $httpClient);
-            $discoveredSettings['keys'] = array_filter($keys);
+            $discoveredSettings['keys'] = $this->filterKeys($keys);
         }
 
         return $discoveredSettings;
@@ -161,7 +161,7 @@ class OidcProviderSettings
     protected function filterKeys(array $keys): array
     {
         return array_filter($keys, function(array $key) {
-            return $key['key'] === 'RSA' && $key['use'] === 'sig' && $key['alg'] === 'RS256';
+            return $key['kty'] === 'RSA' && $key['use'] === 'sig' && $key['alg'] === 'RS256';
         });
     }
 
