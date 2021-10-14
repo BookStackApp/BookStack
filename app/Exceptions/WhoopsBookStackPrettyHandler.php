@@ -12,18 +12,15 @@ class WhoopsBookStackPrettyHandler extends Handler
      */
     public function handle()
     {
-        // TODO - Assistance View
-        // Docs links
-        // Discord Links
-        // Github Issue Links (With pre-filled search?)
-
         $exception = $this->getException();
+
         echo view('errors.debug', [
             'error' => $exception->getMessage(),
             'errorClass' => get_class($exception),
             'trace' => $exception->getTraceAsString(),
             'environment' => $this->getEnvironment(),
         ])->render();
+
         return Handler::QUIT;
     }
 
