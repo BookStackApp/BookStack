@@ -9,6 +9,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Exceptions\WhoopsBookStackPrettyHandler;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
 use BookStack\Util\CspService;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
+use Whoops\Handler\HandlerInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -65,6 +67,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(HandlerInterface::class, function($app) {
+            return $app->make(WhoopsBookStackPrettyHandler::class);
+        });
+
         $this->app->singleton(SettingService::class, function ($app) {
             return new SettingService($app->make(Setting::class), $app->make(Repository::class));
         });
