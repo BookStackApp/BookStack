@@ -39,10 +39,10 @@ return [
     'reset' => 'Resetuj',
     'remove' => 'Usuń',
     'add' => 'Dodaj',
-    'configure' => 'Configure',
+    'configure' => 'Konfiguruj',
     'fullscreen' => 'Pełny ekran',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
+    'favourite' => 'Ulubione',
+    'unfavourite' => 'Cofnij dodanie do ulubionych',
     'next' => 'Dalej',
     'previous' => 'Wstecz',
 
