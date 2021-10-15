@@ -180,7 +180,7 @@ class MfaConfigurationTest extends TestCase
 
         $resp = $this->get('/mfa/totp/generate');
         $resp->assertSeeText('Mobile App Setup');
-        $resp->assertDontSee("otpauth://totp/BookStack:guest%40example.com");
-        $resp->assertSee("otpauth://totp/BookStack:admin%40admin.com");
+        $resp->assertDontSee('otpauth://totp/BookStack:guest%40example.com');
+        $resp->assertSee('otpauth://totp/BookStack:admin%40admin.com');
     }
 }
