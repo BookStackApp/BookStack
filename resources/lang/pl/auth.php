@@ -76,7 +76,7 @@ return [
     'user_invite_success' => 'Hasło zostało ustawione, teraz masz dostęp do :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Skonfiguruj uwierzytelnianie wieloetapowe',
+    'mfa_setup' => 'Skonfiguruj uwierzytelnianie wieloskładnikowe',
     'mfa_setup_desc' => 'Skonfiguruj uwierzytelnianie wieloskładnikowe jako dodatkową warstwę bezpieczeństwa dla swojego konta użytkownika.',
     'mfa_setup_configured' => 'Już skonfigurowane',
     'mfa_setup_reconfigure' => 'Ponownie konfiguruj',
