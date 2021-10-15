@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '".name" se eliminó de sus favoritos',
 
     // MFA
-    'mfa_setup_method_notification' => 'Método de Autenticación en Dos Pasos configurado correctamente',
-    'mfa_remove_method_notification' => 'Método de Autenticación en Dos Pasos eliminado correctamente',
+    'mfa_setup_method_notification' => 'Método de autenticación de múltiples factores configurado satisfactoriamente',
+    'mfa_remove_method_notification' => 'Método de autenticación de múltiples factores eliminado satisfactoriamente',
 
     // Other
     'commented_on'                => 'comentado',
