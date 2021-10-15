@@ -234,7 +234,7 @@ return [
     'pages_initial_name' => 'Página nueva',
     'pages_editing_draft_notification' => 'Usted está actualmente editando un borrador que fue guardado por última vez el :timeDiff.',
     'pages_draft_edited_notification' => 'Esta página ha sido actualizada desde aquel momento. Se recomienda que cancele este borrador.',
-    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
+    'pages_draft_page_changed_since_creation' => 'Esta página fue actualizada desde que se creó este borrador. Se recomienda descartar este borrador o tener cuidado de no sobrescribir ningún cambio en la página.',
     'pages_draft_edit_active' => [
         'start_a' => ':count usuarios han comenzado a editar esta página',
         'start_b' => ':userName ha comenzado a editar esta página',
