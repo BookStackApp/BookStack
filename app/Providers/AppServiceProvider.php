@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(HandlerInterface::class, function($app) {
+        $this->app->bind(HandlerInterface::class, function ($app) {
             return $app->make(WhoopsBookStackPrettyHandler::class);
         });
 

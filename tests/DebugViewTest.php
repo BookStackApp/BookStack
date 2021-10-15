@@ -42,13 +42,12 @@ class DebugViewTest extends TestCase
         $resp->assertSeeText('An unknown error occurred');
     }
 
-
     protected function getDebugViewForException(\Exception $exception): TestResponse
     {
         // Fake an error via social auth service used on login page
         $mockService = $this->mock(SocialAuthService::class);
         $mockService->shouldReceive('getActiveDrivers')->andThrow($exception);
+
         return $this->get('/login');
     }
-
 }
