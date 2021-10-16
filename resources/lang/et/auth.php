@@ -51,7 +51,7 @@ return [
 
 
     // Email Confirmation
-    'email_confirm_subject' => 'Confirm your email on :appName',
+    'email_confirm_subject' => 'Kinnita oma :appName konto e-posti aadress',
     'email_confirm_greeting' => 'Thanks for joining :appName!',
     'email_confirm_text' => 'Palun kinnita oma e-posti aadress, klõpsates alloleval nupul:',
     'email_confirm_action' => 'Kinnita e-posti aadress',
@@ -107,6 +107,6 @@ return [
     'mfa_verify_backup_code' => 'Varukood',
     'mfa_verify_backup_code_desc' => 'Sisesta allpool üks oma järelejäänud varukoodidest:',
     'mfa_verify_backup_code_enter_here' => 'Sisesta varukood siia',
-    'mfa_verify_totp_desc' => 'Enter the code, generated using your mobile app, below:',
-    'mfa_setup_login_notification' => 'Multi-factor method configured, Please now login again using the configured method.',
+    'mfa_verify_totp_desc' => 'Sisesta oma mobiilirakenduse poolt genereeritud kood allpool:',
+    'mfa_setup_login_notification' => 'Mitmeastmeline autentimine seadistatud. Logi nüüd uuesti sisse, kasutades seadistatud meetodit.',
 ];
