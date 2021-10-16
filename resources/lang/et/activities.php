@@ -38,20 +38,20 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'lisas riiuli',
     'bookshelf_create_notification'    => 'Riiul on lisatud',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf Successfully Updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf Successfully Deleted',
+    'bookshelf_update'                 => 'muutis riiulit',
+    'bookshelf_update_notification'    => 'Riiul on muudetud',
+    'bookshelf_delete'                 => 'kustutas riiuli',
+    'bookshelf_delete_notification'    => 'Riiul on kustutatud',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" lisati su lemmikute hulka',
+    'favourite_remove_notification' => '":name" eemaldati su lemmikute hulgast',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Mitmeastmeline autentimine seadistatud',
+    'mfa_remove_method_notification' => 'Mitmeastmeline autentimine eemaldatud',
 
     // Other
-    'commented_on'                => 'commented on',
-    'permissions_update'          => 'updated permissions',
+    'commented_on'                => 'kommenteeris lehte',
+    'permissions_update'          => 'muutis õiguseid',
 ];
