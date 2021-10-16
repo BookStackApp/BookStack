@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class OidcController extends Controller
 {
-
     protected $oidcService;
 
     /**
@@ -42,10 +41,12 @@ class OidcController extends Controller
 
         if ($storedState !== $responseState) {
             $this->showErrorNotification(trans('errors.oidc_fail_authed', ['system' => config('oidc.name')]));
+
             return redirect('/login');
         }
 
         $this->oidcService->processAuthorizeResponse($request->query('code'));
+
         return redirect()->intended();
     }
 }

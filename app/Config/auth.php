@@ -41,7 +41,7 @@ return [
             'provider' => 'external',
         ],
         'oidc' => [
-            'driver' => 'async-external-session',
+            'driver'   => 'async-external-session',
             'provider' => 'external',
         ],
         'api' => [

@@ -31,5 +31,5 @@ return [
 
     // OAuth2 endpoints.
     'authorization_endpoint' => env('OIDC_AUTH_ENDPOINT', null),
-    'token_endpoint' => env('OIDC_TOKEN_ENDPOINT', null),
+    'token_endpoint'         => env('OIDC_TOKEN_ENDPOINT', null),
 ];

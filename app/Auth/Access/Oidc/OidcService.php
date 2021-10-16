@@ -1,5 +1,8 @@
-<?php namespace BookStack\Auth\Access\Oidc;
+<?php
 
+namespace BookStack\Auth\Access\Oidc;
+
+use function auth;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
@@ -7,13 +10,12 @@ use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\OpenIdConnectException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
+use function config;
 use Exception;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClient;
-use function auth;
-use function config;
 use function trans;
 use function url;
 
@@ -39,14 +41,16 @@ class OidcService
 
     /**
      * Initiate an authorization flow.
+     *
      * @return array{url: string, state: string}
      */
     public function login(): array
     {
         $settings = $this->getProviderSettings();
         $provider = $this->getProvider($settings);
+
         return [
-            'url' => $provider->getAuthorizationUrl(),
+            'url'   => $provider->getAuthorizationUrl(),
             'state' => $provider->getState(),
         ];
     }
@@ -56,6 +60,7 @@ class OidcService
      * return the matching, or new if registration active, user matched to
      * the authorization server.
      * Returns null if not authenticated.
+     *
      * @throws Exception
      * @throws ClientExceptionInterface
      */
@@ -80,12 +85,12 @@ class OidcService
     {
         $config = $this->config();
         $settings = new OidcProviderSettings([
-            'issuer' => $config['issuer'],
-            'clientId' => $config['client_id'],
-            'clientSecret' => $config['client_secret'],
-            'redirectUri' => url('/oidc/callback'),
+            'issuer'                => $config['issuer'],
+            'clientId'              => $config['client_id'],
+            'clientSecret'          => $config['client_secret'],
+            'redirectUri'           => url('/oidc/callback'),
             'authorizationEndpoint' => $config['authorization_endpoint'],
-            'tokenEndpoint' => $config['token_endpoint'],
+            'tokenEndpoint'         => $config['token_endpoint'],
         ]);
 
         // Use keys if configured
@@ -109,13 +114,13 @@ class OidcService
     protected function getProvider(OidcProviderSettings $settings): OidcOAuthProvider
     {
         return new OidcOAuthProvider($settings->arrayForProvider(), [
-            'httpClient' => $this->httpClient,
+            'httpClient'     => $this->httpClient,
             'optionProvider' => new HttpBasicAuthOptionProvider(),
         ]);
     }
 
     /**
-     * Calculate the display name
+     * Calculate the display name.
      */
     protected function getUserDisplayName(OidcIdToken $token, string $defaultValue): string
     {
@@ -138,21 +143,24 @@ class OidcService
 
     /**
      * Extract the details of a user from an ID token.
+     *
      * @return array{name: string, email: string, external_id: string}
      */
     protected function getUserDetails(OidcIdToken $token): array
     {
         $id = $token->getClaim('sub');
+
         return [
             'external_id' => $id,
-            'email' => $token->getClaim('email'),
-            'name' => $this->getUserDisplayName($token, $id),
+            'email'       => $token->getClaim('email'),
+            'name'        => $this->getUserDisplayName($token, $id),
         ];
     }
 
     /**
      * Processes a received access token for a user. Login the user when
      * they exist, optionally registering them automatically.
+     *
      * @throws OpenIdConnectException
      * @throws JsonDebugException
      * @throws UserRegistrationException
@@ -189,7 +197,9 @@ class OidcService
         }
 
         $user = $this->registrationService->findOrRegister(
-            $userDetails['name'], $userDetails['email'], $userDetails['external_id']
+            $userDetails['name'],
+            $userDetails['email'],
+            $userDetails['external_id']
         );
 
         if ($user === null) {
@@ -197,6 +207,7 @@ class OidcService
         }
 
         $this->loginService->login($user, 'oidc');
+
         return $user;
     }
 

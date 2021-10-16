@@ -1,7 +1,8 @@
-<?php namespace Tests\Auth;
+<?php
+
+namespace Tests\Auth;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Auth\Access\Oidc\OidcService;
 use BookStack\Auth\User;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -25,18 +26,18 @@ class OidcTest extends TestCase
         file_put_contents($this->keyFilePath, OidcJwtHelper::publicPemKey());
 
         config()->set([
-            'auth.method' => 'oidc',
-            'auth.defaults.guard' => 'oidc',
-            'oidc.name' => 'SingleSignOn-Testing',
-            'oidc.display_name_claims' => ['name'],
-            'oidc.client_id' => OidcJwtHelper::defaultClientId(),
-            'oidc.client_secret' => 'testpass',
-            'oidc.jwt_public_key' => $this->keyFilePath,
-            'oidc.issuer' => OidcJwtHelper::defaultIssuer(),
+            'auth.method'                 => 'oidc',
+            'auth.defaults.guard'         => 'oidc',
+            'oidc.name'                   => 'SingleSignOn-Testing',
+            'oidc.display_name_claims'    => ['name'],
+            'oidc.client_id'              => OidcJwtHelper::defaultClientId(),
+            'oidc.client_secret'          => 'testpass',
+            'oidc.jwt_public_key'         => $this->keyFilePath,
+            'oidc.issuer'                 => OidcJwtHelper::defaultIssuer(),
             'oidc.authorization_endpoint' => 'https://oidc.local/auth',
-            'oidc.token_endpoint' => 'https://oidc.local/token',
-            'oidc.discover' => false,
-            'oidc.dump_user_details' => false,
+            'oidc.token_endpoint'         => 'https://oidc.local/token',
+            'oidc.discover'               => false,
+            'oidc.dump_user_details'      => false,
         ]);
     }
 
@@ -131,7 +132,7 @@ class OidcTest extends TestCase
 
         $transactions = &$this->mockHttpClient([$this->getMockAuthorizationResponse([
             'email' => 'benny@example.com',
-            'sub' => 'benny1010101'
+            'sub'   => 'benny1010101',
         ])]);
 
         // Callback from auth provider
@@ -148,12 +149,11 @@ class OidcTest extends TestCase
         $this->assertStringContainsString('code=SplxlOBeZQQYbYS6WxSbIA', $tokenRequest->getBody());
         $this->assertStringContainsString('redirect_uri=' . urlencode(url('/oidc/callback')), $tokenRequest->getBody());
 
-
         $this->assertTrue(auth()->check());
         $this->assertDatabaseHas('users', [
-            'email' => 'benny@example.com',
+            'email'            => 'benny@example.com',
             'external_auth_id' => 'benny1010101',
-            'email_confirmed' => false,
+            'email_confirmed'  => false,
         ]);
 
         $user = User::query()->where('email', '=', 'benny@example.com')->first();
@@ -176,15 +176,15 @@ class OidcTest extends TestCase
 
         $resp = $this->runLogin([
             'email' => 'benny@example.com',
-            'sub' => 'benny505'
+            'sub'   => 'benny505',
         ]);
 
         $resp->assertStatus(200);
         $resp->assertJson([
             'email' => 'benny@example.com',
-            'sub' => 'benny505',
-            "iss" => OidcJwtHelper::defaultIssuer(),
-            "aud" => OidcJwtHelper::defaultClientId(),
+            'sub'   => 'benny505',
+            'iss'   => OidcJwtHelper::defaultIssuer(),
+            'aud'   => OidcJwtHelper::defaultClientId(),
         ]);
         $this->assertFalse(auth()->check());
     }
@@ -193,7 +193,7 @@ class OidcTest extends TestCase
     {
         $this->runLogin([
             'email' => '',
-            'sub' => 'benny505'
+            'sub'   => 'benny505',
         ]);
 
         $this->assertSessionError('Could not find an email address, for this user, in the data provided by the external authentication system');
@@ -205,7 +205,7 @@ class OidcTest extends TestCase
 
         $this->runLogin([
             'email' => 'benny@example.com',
-            'sub' => 'benny505'
+            'sub'   => 'benny505',
         ]);
 
         $this->assertSessionError('Already logged in');
@@ -221,7 +221,7 @@ class OidcTest extends TestCase
 
         $this->runLogin([
             'email' => 'benny@example.com',
-            'sub' => 'benny505'
+            'sub'   => 'benny505',
         ]);
 
         $this->assertTrue(auth()->check());
@@ -238,7 +238,7 @@ class OidcTest extends TestCase
 
         $this->runLogin([
             'email' => $editor->email,
-            'sub' => 'benny505'
+            'sub'   => 'benny505',
         ]);
 
         $this->assertSessionError('A user with the email ' . $editor->email . ' already exists but with different credentials.');
@@ -300,7 +300,7 @@ class OidcTest extends TestCase
             $this->getAutoDiscoveryResponse(),
             $this->getJwksResponse(),
             $this->getAutoDiscoveryResponse([
-                'issuer' => 'https://auto.example.com'
+                'issuer' => 'https://auto.example.com',
             ]),
             $this->getJwksResponse(),
         ]);
@@ -321,11 +321,11 @@ class OidcTest extends TestCase
     protected function withAutodiscovery()
     {
         config()->set([
-            'oidc.issuer' => OidcJwtHelper::defaultIssuer(),
-            'oidc.discover' => true,
+            'oidc.issuer'                 => OidcJwtHelper::defaultIssuer(),
+            'oidc.discover'               => true,
             'oidc.authorization_endpoint' => null,
-            'oidc.token_endpoint' => null,
-            'oidc.jwt_public_key' => null,
+            'oidc.token_endpoint'         => null,
+            'oidc.jwt_public_key'         => null,
         ]);
     }
 
@@ -341,41 +341,41 @@ class OidcTest extends TestCase
     protected function getAutoDiscoveryResponse($responseOverrides = []): Response
     {
         return new Response(200, [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
             'Cache-Control' => 'no-cache, no-store',
-            'Pragma' => 'no-cache'
+            'Pragma'        => 'no-cache',
         ], json_encode(array_merge([
-            'token_endpoint' => OidcJwtHelper::defaultIssuer() . '/oidc/token',
+            'token_endpoint'         => OidcJwtHelper::defaultIssuer() . '/oidc/token',
             'authorization_endpoint' => OidcJwtHelper::defaultIssuer() . '/oidc/authorize',
-            'jwks_uri' => OidcJwtHelper::defaultIssuer() . '/oidc/keys',
-            'issuer' => OidcJwtHelper::defaultIssuer()
+            'jwks_uri'               => OidcJwtHelper::defaultIssuer() . '/oidc/keys',
+            'issuer'                 => OidcJwtHelper::defaultIssuer(),
         ], $responseOverrides)));
     }
 
     protected function getJwksResponse(): Response
     {
         return new Response(200, [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
             'Cache-Control' => 'no-cache, no-store',
-            'Pragma' => 'no-cache'
+            'Pragma'        => 'no-cache',
         ], json_encode([
             'keys' => [
-                OidcJwtHelper::publicJwkKeyArray()
-            ]
+                OidcJwtHelper::publicJwkKeyArray(),
+            ],
         ]));
     }
 
     protected function getMockAuthorizationResponse($claimOverrides = []): Response
     {
         return new Response(200, [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
             'Cache-Control' => 'no-cache, no-store',
-            'Pragma' => 'no-cache'
+            'Pragma'        => 'no-cache',
         ], json_encode([
             'access_token' => 'abc123',
-            'token_type' => 'Bearer',
-            'expires_in' => 3600,
-            'id_token' => OidcJwtHelper::idToken($claimOverrides)
+            'token_type'   => 'Bearer',
+            'expires_in'   => 3600,
+            'id_token'     => OidcJwtHelper::idToken($claimOverrides),
         ]));
     }
 }

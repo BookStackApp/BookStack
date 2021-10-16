@@ -29,10 +29,9 @@ class Saml2Service
      */
     public function __construct(
         RegistrationService $registrationService,
-        LoginService        $loginService,
-        GroupSyncService    $groupSyncService
-    )
-    {
+        LoginService $loginService,
+        GroupSyncService $groupSyncService
+    ) {
         $this->config = config('saml2');
         $this->registrationService = $registrationService;
         $this->loginService = $loginService;
@@ -51,7 +50,7 @@ class Saml2Service
 
         return [
             'url' => $toolKit->login($returnRoute, [], false, false, true),
-            'id' => $toolKit->getLastRequestID(),
+            'id'  => $toolKit->getLastRequestID(),
         ];
     }
 
@@ -200,7 +199,7 @@ class Saml2Service
     protected function loadOneloginServiceProviderDetails(): array
     {
         $spDetails = [
-            'entityId' => url('/saml2/metadata'),
+            'entityId'                 => url('/saml2/metadata'),
             'assertionConsumerService' => [
                 'url' => url('/saml2/acs'),
             ],
@@ -211,7 +210,7 @@ class Saml2Service
 
         return [
             'baseurl' => url('/saml2'),
-            'sp' => $spDetails,
+            'sp'      => $spDetails,
         ];
     }
 
@@ -263,6 +262,7 @@ class Saml2Service
 
     /**
      * Extract the details of a user from a SAML response.
+     *
      * @return array{external_id: string, name: string, email: string, saml_id: string}
      */
     protected function getUserDetails(string $samlID, $samlAttributes): array
@@ -275,9 +275,9 @@ class Saml2Service
 
         return [
             'external_id' => $externalId,
-            'name' => $this->getUserDisplayName($samlAttributes, $externalId),
-            'email' => $email,
-            'saml_id' => $samlID,
+            'name'        => $this->getUserDisplayName($samlAttributes, $externalId),
+            'email'       => $email,
+            'saml_id'     => $samlID,
         ];
     }
 
@@ -344,8 +344,8 @@ class Saml2Service
 
         if ($this->config['dump_user_details']) {
             throw new JsonDebugException([
-                'id_from_idp' => $samlID,
-                'attrs_from_idp' => $samlAttributes,
+                'id_from_idp'         => $samlID,
+                'attrs_from_idp'      => $samlAttributes,
                 'attrs_after_parsing' => $userDetails,
             ]);
         }
@@ -359,7 +359,9 @@ class Saml2Service
         }
 
         $user = $this->registrationService->findOrRegister(
-            $userDetails['name'], $userDetails['email'], $userDetails['external_id']
+            $userDetails['name'],
+            $userDetails['email'],
+            $userDetails['external_id']
         );
 
         if ($user === null) {

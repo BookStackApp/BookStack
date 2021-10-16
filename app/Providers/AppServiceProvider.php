@@ -22,8 +22,8 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
-use Whoops\Handler\HandlerInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
+use Whoops\Handler\HandlerInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -85,7 +85,7 @@ class AppServiceProvider extends ServiceProvider
             return new CspService();
         });
 
-        $this->app->bind(HttpClientInterface::class, function($app) {
+        $this->app->bind(HttpClientInterface::class, function ($app) {
             return new Client([
                 'timeout' => 3,
             ]);

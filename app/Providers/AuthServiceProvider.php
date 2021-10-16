@@ -4,8 +4,8 @@ namespace BookStack\Providers;
 
 use BookStack\Api\ApiTokenGuard;
 use BookStack\Auth\Access\ExternalBaseUserProvider;
-use BookStack\Auth\Access\Guards\LdapSessionGuard;
 use BookStack\Auth\Access\Guards\AsyncExternalBaseSessionGuard;
+use BookStack\Auth\Access\Guards\LdapSessionGuard;
 use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;

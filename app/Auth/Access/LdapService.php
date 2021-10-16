@@ -285,6 +285,7 @@ class LdapService
         }
 
         $userGroups = $this->groupFilter($user);
+
         return $this->getGroupsRecursive($userGroups, []);
     }
 

@@ -18,15 +18,17 @@ class OidcJwtSigningKey
      * Can be created either from a JWK parameter array or local file path to load a certificate from.
      * Examples:
      * 'file:///var/www/cert.pem'
-     * ['kty' => 'RSA', 'alg' => 'RS256', 'n' => 'abc123...']
+     * ['kty' => 'RSA', 'alg' => 'RS256', 'n' => 'abc123...'].
+     *
      * @param array|string $jwkOrKeyPath
+     *
      * @throws OidcInvalidKeyException
      */
     public function __construct($jwkOrKeyPath)
     {
         if (is_array($jwkOrKeyPath)) {
             $this->loadFromJwkArray($jwkOrKeyPath);
-        } else if (is_string($jwkOrKeyPath) && strpos($jwkOrKeyPath, 'file://') === 0) {
+        } elseif (is_string($jwkOrKeyPath) && strpos($jwkOrKeyPath, 'file://') === 0) {
             $this->loadFromPath($jwkOrKeyPath);
         } else {
             throw new OidcInvalidKeyException('Unexpected type of key value provided');
@@ -47,7 +49,7 @@ class OidcJwtSigningKey
         }
 
         if (!($this->key instanceof RSA)) {
-            throw new OidcInvalidKeyException("Key loaded from file path is not an RSA key as expected");
+            throw new OidcInvalidKeyException('Key loaded from file path is not an RSA key as expected');
         }
     }
 
@@ -104,5 +106,4 @@ class OidcJwtSigningKey
     {
         return $this->key->toString('PKCS8');
     }
-
 }

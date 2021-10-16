@@ -54,6 +54,7 @@ class RegistrationService
     /**
      * Attempt to find a user in the system otherwise register them as a new
      * user. For use with external auth systems since password is auto-generated.
+     *
      * @throws UserRegistrationException
      */
     public function findOrRegister(string $name, string $email, string $externalId): User

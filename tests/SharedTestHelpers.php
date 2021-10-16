@@ -252,6 +252,7 @@ trait SharedTestHelpers
     /**
      * Mock the http client used in BookStack.
      * Returns a reference to the container which holds all history of http transactions.
+     *
      * @link https://docs.guzzlephp.org/en/stable/testing.html#history-middleware
      */
     protected function &mockHttpClient(array $responses = []): array
@@ -262,6 +263,7 @@ trait SharedTestHelpers
         $handlerStack = new HandlerStack($mock);
         $handlerStack->push($history);
         $this->app[ClientInterface::class] = new Client(['handler' => $handlerStack]);
+
         return $container;
     }
 

@@ -12,31 +12,31 @@ class OidcJwtHelper
 {
     public static function defaultIssuer(): string
     {
-        return "https://auth.example.com";
+        return 'https://auth.example.com';
     }
 
     public static function defaultClientId(): string
     {
-        return "xxyyzz.aaa.bbccdd.123";
+        return 'xxyyzz.aaa.bbccdd.123';
     }
 
     public static function defaultPayload(): array
     {
         return [
-            "sub" => "abc1234def",
-            "name" => "Barry Scott",
-            "email" => "bscott@example.com",
-            "ver" => 1,
-            "iss" => static::defaultIssuer(),
-            "aud" => static::defaultClientId(),
-            "iat" => time(),
-            "exp" => time() + 720,
-            "jti" => "ID.AaaBBBbbCCCcccDDddddddEEEeeeeee",
-            "amr" => ["pwd"],
-            "idp" => "fghfghgfh546456dfgdfg",
-            "preferred_username" => "xXBazzaXx",
-            "auth_time" => time(),
-            "at_hash" => "sT4jbsdSGy9w12pq3iNYDA",
+            'sub'                => 'abc1234def',
+            'name'               => 'Barry Scott',
+            'email'              => 'bscott@example.com',
+            'ver'                => 1,
+            'iss'                => static::defaultIssuer(),
+            'aud'                => static::defaultClientId(),
+            'iat'                => time(),
+            'exp'                => time() + 720,
+            'jti'                => 'ID.AaaBBBbbCCCcccDDddddddEEEeeeeee',
+            'amr'                => ['pwd'],
+            'idp'                => 'fghfghgfh546456dfgdfg',
+            'preferred_username' => 'xXBazzaXx',
+            'auth_time'          => time(),
+            'at_hash'            => 'sT4jbsdSGy9w12pq3iNYDA',
         ];
     }
 
@@ -55,6 +55,7 @@ class OidcJwtHelper
 
         $privateKey = static::privateKeyInstance();
         $signature = $privateKey->sign($top);
+
         return $top . '.' . static::base64UrlEncode($signature);
     }
 
@@ -75,7 +76,7 @@ class OidcJwtHelper
 
     public static function publicPemKey(): string
     {
-        return "-----BEGIN PUBLIC KEY-----
+        return '-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqo1OmfNKec5S2zQC4SP9
 DrHuUR0VgCi6oqcGERz7zqO36hqk3A3R3aCgJkEjfnbnMuszRRKs45NbXoOp9pvm
 zXL16c93Obn7G8x8A3ao6yN5qKO5S5+CETqOZfKN/g75Xlz7VsC3igOhgsXnPx6i
@@ -83,12 +84,12 @@ iM6sbYbk0U/XpFaT84LXKI8VTIPUo7gTeZN1pTET//i9FlzAOzX+xfWBKdOqlEzl
 +zihMHCZUUvQu99P+o0MDR0lMUT+vPJ6SJeRfnoHexwt6bZFiNnsZIEL03bX4QNk
 WvsLta1+jNUee+8IPVhzCO8bvM86NzLaKUJ4k6NZ5IVrmdCFpFsjCWByOrDG8wdw
 3wIDAQAB
------END PUBLIC KEY-----";
+-----END PUBLIC KEY-----';
     }
 
     public static function privatePemKey(): string
     {
-        return "-----BEGIN PRIVATE KEY-----
+        return '-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCqjU6Z80p5zlLb
 NALhI/0Ose5RHRWAKLqipwYRHPvOo7fqGqTcDdHdoKAmQSN+ducy6zNFEqzjk1te
 g6n2m+bNcvXpz3c5ufsbzHwDdqjrI3moo7lLn4IROo5l8o3+DvleXPtWwLeKA6GC
@@ -115,7 +116,7 @@ W0TI+6Fc2xwPj38vP465dTentbKM1E+wdSYW6SMwSfhO6ECDbfJsst5Sr2Kkt1N7
 efqXPwg2wAPYeiec49EbfnteQQKAkqNfJ9K69yE2naf6bw3/5mCBsq/cXeuaBMII
 ylysUIRBqt2J0kWm2yCpFWR7H+Ilhdx9A7ZLCqYVt8e+vjO/BOI3cQDe2VPOLPSl
 q/1PY4iJviGKddtmfClH3v4=
------END PRIVATE KEY-----";
+-----END PRIVATE KEY-----';
     }
 
     public static function publicJwkKeyArray(): array
@@ -125,8 +126,8 @@ q/1PY4iJviGKddtmfClH3v4=
             'alg' => 'RS256',
             'kid' => '066e52af-8884-4926-801d-032a276f9f2a',
             'use' => 'sig',
-            'e' => 'AQAB',
-            'n' => 'qo1OmfNKec5S2zQC4SP9DrHuUR0VgCi6oqcGERz7zqO36hqk3A3R3aCgJkEjfnbnMuszRRKs45NbXoOp9pvmzXL16c93Obn7G8x8A3ao6yN5qKO5S5-CETqOZfKN_g75Xlz7VsC3igOhgsXnPx6iiM6sbYbk0U_XpFaT84LXKI8VTIPUo7gTeZN1pTET__i9FlzAOzX-xfWBKdOqlEzl-zihMHCZUUvQu99P-o0MDR0lMUT-vPJ6SJeRfnoHexwt6bZFiNnsZIEL03bX4QNkWvsLta1-jNUee-8IPVhzCO8bvM86NzLaKUJ4k6NZ5IVrmdCFpFsjCWByOrDG8wdw3w',
+            'e'   => 'AQAB',
+            'n'   => 'qo1OmfNKec5S2zQC4SP9DrHuUR0VgCi6oqcGERz7zqO36hqk3A3R3aCgJkEjfnbnMuszRRKs45NbXoOp9pvmzXL16c93Obn7G8x8A3ao6yN5qKO5S5-CETqOZfKN_g75Xlz7VsC3igOhgsXnPx6iiM6sbYbk0U_XpFaT84LXKI8VTIPUo7gTeZN1pTET__i9FlzAOzX-xfWBKdOqlEzl-zihMHCZUUvQu99P-o0MDR0lMUT-vPJ6SJeRfnoHexwt6bZFiNnsZIEL03bX4QNkWvsLta1-jNUee-8IPVhzCO8bvM86NzLaKUJ4k6NZ5IVrmdCFpFsjCWByOrDG8wdw3w',
         ];
     }
 }
