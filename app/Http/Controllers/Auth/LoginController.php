@@ -43,7 +43,8 @@ class LoginController extends Controller
     public function __construct(SocialAuthService $socialAuthService, LoginService $loginService)
     {
         $this->middleware('guest', ['only' => ['getLogin', 'login']]);
-        $this->middleware('guard:standard,ldap', ['only' => ['login', 'logout']]);
+        $this->middleware('guard:standard,ldap', ['only' => ['login']]);
+        $this->middleware('guard:standard,ldap,oidc', ['only' => ['logout']]);
 
         $this->socialAuthService = $socialAuthService;
         $this->loginService = $loginService;
