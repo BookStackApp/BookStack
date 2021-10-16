@@ -237,7 +237,7 @@ return [
     'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count users have started editing this page',
-        'start_b' => ':userName has started editing this page',
+        'start_b' => ':userName alustas selle lehe muutmist',
         'time_a' => 'since the page was last updated',
         'time_b' => 'in the last :minCount minutes',
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
