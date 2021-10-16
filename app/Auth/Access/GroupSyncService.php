@@ -6,7 +6,7 @@ use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use Illuminate\Support\Collection;
 
-class ExternalAuthService
+class GroupSyncService
 {
     /**
      * Check a role against an array of group names to see if it matches.
@@ -60,13 +60,13 @@ class ExternalAuthService
     /**
      * Sync the groups to the user roles for the current user.
      */
-    public function syncWithGroups(User $user, array $userGroups): void
+    public function syncUserWithFoundGroups(User $user, array $userGroups, bool $detachExisting): void
     {
         // Get the ids for the roles from the names
         $groupsAsRoles = $this->matchGroupsToSystemsRoles($userGroups);
 
         // Sync groups
-        if ($this->config['remove_from_groups']) {
+        if ($detachExisting) {
             $user->roles()->sync($groupsAsRoles);
             $user->attachDefaultRole();
         } else {

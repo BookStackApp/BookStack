@@ -5,7 +5,7 @@ namespace BookStack\Providers;
 use BookStack\Api\ApiTokenGuard;
 use BookStack\Auth\Access\ExternalBaseUserProvider;
 use BookStack\Auth\Access\Guards\LdapSessionGuard;
-use BookStack\Auth\Access\Guards\Saml2SessionGuard;
+use BookStack\Auth\Access\Guards\AsyncExternalBaseSessionGuard;
 use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
@@ -37,10 +37,10 @@ class AuthServiceProvider extends ServiceProvider
             );
         });
 
-        Auth::extend('saml2-session', function ($app, $name, array $config) {
+        Auth::extend('async-external-session', function ($app, $name, array $config) {
             $provider = Auth::createUserProvider($config['provider']);
 
-            return new Saml2SessionGuard(
+            return new AsyncExternalBaseSessionGuard(
                 $name,
                 $provider,
                 $app['session.store'],
