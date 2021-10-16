@@ -19,7 +19,7 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
     'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
     'saml_already_logged_in' => 'Already logged in',
-    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
+    'saml_user_not_registered' => 'Kasutaja :name ei ole registreeritud ning automaatne registreerimine on keelatud',
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
@@ -41,54 +41,54 @@ return [
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'image_upload_error' => 'An error occurred uploading the image',
-    'image_upload_type_error' => 'The image type being uploaded is invalid',
+    'image_upload_error' => 'Pildi üleslaadimisel tekkis viga',
+    'image_upload_type_error' => 'Pildifaili tüüp ei ole korrektne',
     'file_upload_timeout' => 'The file upload has timed out.',
 
     // Attachments
-    'attachment_not_found' => 'Attachment not found',
+    'attachment_not_found' => 'Manust ei leitud',
 
     // Pages
-    'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
-    'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
+    'page_draft_autosave_fail' => 'Mustandi salvestamine ebaõnnestus. Kontrolli oma internetiühendust',
+    'page_custom_home_deletion' => 'Ei saa kustutada lehte, mis on määratud avaleheks',
 
     // Entities
     'entity_not_found' => 'Entity not found',
-    'bookshelf_not_found' => 'Bookshelf not found',
-    'book_not_found' => 'Book not found',
-    'page_not_found' => 'Page not found',
-    'chapter_not_found' => 'Chapter not found',
-    'selected_book_not_found' => 'The selected book was not found',
-    'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
-    'guests_cannot_save_drafts' => 'Guests cannot save drafts',
+    'bookshelf_not_found' => 'Riiulit ei leitud',
+    'book_not_found' => 'Raamatut ei leitud',
+    'page_not_found' => 'Lehte ei leitud',
+    'chapter_not_found' => 'Peatükki ei leitud',
+    'selected_book_not_found' => 'Valitud raamatut ei leitud',
+    'selected_book_chapter_not_found' => 'Valitud raamatut või peatükki ei leitud',
+    'guests_cannot_save_drafts' => 'Külalised ei saa mustandeid salvestada',
 
     // Users
-    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
-    'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    'users_cannot_delete_only_admin' => 'Ainsat administraatorit ei saa kustutada',
+    'users_cannot_delete_guest' => 'Külaliskasutajat ei saa kustutada',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
-    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
-    'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_be_edited' => 'Seda rolli ei saa muuta',
+    'role_system_cannot_be_deleted' => 'See roll on süsteemne ja seda ei saa kustutada',
+    'role_registration_default_cannot_delete' => 'Seda rolli ei saa kustutada, kuna see on seatud uute kasutajate vaikimisi rolliks',
+    'role_cannot_remove_only_admin' => 'See kasutaja on ainus, kellel on administraatori roll. Enne kustutamist lisa administraatori roll mõnele teisele kasutajale.',
 
     // Comments
-    'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
-    'comment_add' => 'An error occurred while adding / updating the comment.',
-    'comment_delete' => 'An error occurred while deleting the comment.',
-    'empty_comment' => 'Cannot add an empty comment.',
+    'comment_list' => 'Kommentaaride pärimisel tekkis viga.',
+    'cannot_add_comment_to_draft' => 'Mustandile ei saa kommentaare lisada.',
+    'comment_add' => 'Kommentaari lisamisel / muutmisel tekkis viga.',
+    'comment_delete' => 'Kommentaari kustutamisel tekkis viga.',
+    'empty_comment' => 'Tühja kommentaari ei saa lisada.',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
-    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
-    'image_not_found' => 'Image Not Found',
-    'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
-    'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
-    'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
+    '404_page_not_found' => 'Lehekülge ei leitud',
+    'sorry_page_not_found' => 'Vabandust, soovitud lehekülge ei leitud.',
+    'sorry_page_not_found_permission_warning' => 'Kui see lehekülg peaks kindlalt olemas olema, ei pruugi sul olla õigust selle vaatamiseks.',
+    'image_not_found' => 'Pildifaili ei leitud',
+    'image_not_found_subtitle' => 'Vabandust, soovitud pildifaili ei leitud.',
+    'image_not_found_details' => 'Kui sa eeldasid, et see pildifail on olemas, võib see olla kustutatud.',
+    'return_home' => 'Tagasi avalehele',
+    'error_occurred' => 'Tekkis viga',
+    'app_down' => ':appName on hetkel maas',
     'back_soon' => 'It will be back up soon.',
 
     // API errors
@@ -100,6 +100,6 @@ return [
     'api_user_token_expired' => 'The authorization token used has expired',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Test e-kirja saatmisel tekkis viga:',
 
 ];
