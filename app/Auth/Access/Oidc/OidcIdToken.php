@@ -60,6 +60,7 @@ class OidcIdToken
     {
         $json = $this->base64UrlDecode($part) ?: '{}';
         $decoded = json_decode($json, true);
+
         return is_array($decoded) ? $decoded : [];
     }
 
@@ -74,6 +75,7 @@ class OidcIdToken
 
     /**
      * Validate all possible parts of the id token.
+     *
      * @throws OidcInvalidTokenException
      */
     public function validate(string $clientId): bool
@@ -81,12 +83,14 @@ class OidcIdToken
         $this->validateTokenStructure();
         $this->validateTokenSignature();
         $this->validateTokenClaims($clientId);
+
         return true;
     }
 
     /**
      * Fetch a specific claim from this token.
      * Returns null if it is null or does not exist.
+     *
      * @return mixed|null
      */
     public function getClaim(string $claim)
@@ -104,7 +108,8 @@ class OidcIdToken
 
     /**
      * Validate the structure of the given token and ensure we have the required pieces.
-     * As per https://datatracker.ietf.org/doc/html/rfc7519#section-7.2
+     * As per https://datatracker.ietf.org/doc/html/rfc7519#section-7.2.
+     *
      * @throws OidcInvalidTokenException
      */
     protected function validateTokenStructure(): void
@@ -116,12 +121,13 @@ class OidcIdToken
         }
 
         if (empty($this->signature) || !is_string($this->signature)) {
-            throw new OidcInvalidTokenException("Could not parse out a valid signature within the provided token");
+            throw new OidcInvalidTokenException('Could not parse out a valid signature within the provided token');
         }
     }
 
     /**
      * Validate the signature of the given token and ensure it validates against the provided key.
+     *
      * @throws OidcInvalidTokenException
      */
     protected function validateTokenSignature(): void
@@ -130,7 +136,7 @@ class OidcIdToken
             throw new OidcInvalidTokenException("Only RS256 signature validation is supported. Token reports using {$this->header['alg']}");
         }
 
-        $parsedKeys = array_map(function($key) {
+        $parsedKeys = array_map(function ($key) {
             try {
                 return new OidcJwtSigningKey($key);
             } catch (OidcInvalidKeyException $e) {
@@ -153,7 +159,8 @@ class OidcIdToken
 
     /**
      * Validate the claims of the token.
-     * As per https://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation
+     * As per https://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation.
+     *
      * @throws OidcInvalidTokenException
      */
     protected function validateTokenClaims(string $clientId): void
@@ -228,5 +235,4 @@ class OidcIdToken
             throw new OidcInvalidTokenException('Missing token subject value');
         }
     }
-
 }

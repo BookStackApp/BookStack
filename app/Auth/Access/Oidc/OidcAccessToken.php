@@ -11,7 +11,8 @@ class OidcAccessToken extends AccessToken
      * Constructs an access token.
      *
      * @param array $options An array of options returned by the service provider
-     *     in the access token request. The `access_token` option is required.
+     *                       in the access token request. The `access_token` option is required.
+     *
      * @throws InvalidArgumentException if `access_token` is not provided in `$options`.
      */
     public function __construct(array $options = [])
@@ -19,7 +20,6 @@ class OidcAccessToken extends AccessToken
         parent::__construct($options);
         $this->validate($options);
     }
-
 
     /**
      * Validate this access token response for OIDC.
@@ -50,5 +50,4 @@ class OidcAccessToken extends AccessToken
     {
         return $this->getValues()['id_token'];
     }
-
 }

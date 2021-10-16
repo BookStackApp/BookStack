@@ -30,7 +30,6 @@ class OidcOAuthProvider extends AbstractProvider
      */
     protected $tokenEndpoint;
 
-
     /**
      * Returns the base URL for authorizing a client.
      */
@@ -66,7 +65,6 @@ class OidcOAuthProvider extends AbstractProvider
         return ['openid', 'profile', 'email'];
     }
 
-
     /**
      * Returns the string that should be used to separate scopes when building
      * the URL for requesting an access token.
@@ -80,9 +78,11 @@ class OidcOAuthProvider extends AbstractProvider
      * Checks a provider response for errors.
      *
      * @param ResponseInterface $response
-     * @param array|string $data Parsed response data
-     * @return void
+     * @param array|string      $data     Parsed response data
+     *
      * @throws IdentityProviderException
+     *
+     * @return void
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
@@ -99,8 +99,9 @@ class OidcOAuthProvider extends AbstractProvider
      * Generates a resource owner object from a successful resource owner
      * details request.
      *
-     * @param array $response
+     * @param array       $response
      * @param AccessToken $token
+     *
      * @return ResourceOwnerInterface
      */
     protected function createResourceOwner(array $response, AccessToken $token)
@@ -114,14 +115,13 @@ class OidcOAuthProvider extends AbstractProvider
      * The grant that was used to fetch the response can be used to provide
      * additional context.
      *
-     * @param array $response
+     * @param array         $response
      * @param AbstractGrant $grant
+     *
      * @return OidcAccessToken
      */
     protected function createAccessToken(array $response, AbstractGrant $grant)
     {
         return new OidcAccessToken($response);
     }
-
-
 }

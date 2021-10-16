@@ -70,6 +70,7 @@ class OidcProviderSettings
 
     /**
      * Validate any core, required properties have been set.
+     *
      * @throws InvalidArgumentException
      */
     protected function validateInitial()
@@ -82,12 +83,13 @@ class OidcProviderSettings
         }
 
         if (strpos($this->issuer, 'https://') !== 0) {
-            throw new InvalidArgumentException("Issuer value must start with https://");
+            throw new InvalidArgumentException('Issuer value must start with https://');
         }
     }
 
     /**
      * Perform a full validation on these settings.
+     *
      * @throws InvalidArgumentException
      */
     public function validate(): void
@@ -103,13 +105,14 @@ class OidcProviderSettings
 
     /**
      * Discover and autoload settings from the configured issuer.
+     *
      * @throws OidcIssuerDiscoveryException
      */
     public function discoverFromIssuer(ClientInterface $httpClient, Repository $cache, int $cacheMinutes)
     {
         try {
             $cacheKey = 'oidc-discovery::' . $this->issuer;
-            $discoveredSettings = $cache->remember($cacheKey, $cacheMinutes * 60, function() use ($httpClient) {
+            $discoveredSettings = $cache->remember($cacheKey, $cacheMinutes * 60, function () use ($httpClient) {
                 return $this->loadSettingsFromIssuerDiscovery($httpClient);
             });
             $this->applySettingsFromArray($discoveredSettings);
@@ -134,7 +137,7 @@ class OidcProviderSettings
         }
 
         if ($result['issuer'] !== $this->issuer) {
-            throw new OidcIssuerDiscoveryException("Unexpected issuer value found on discovery response");
+            throw new OidcIssuerDiscoveryException('Unexpected issuer value found on discovery response');
         }
 
         $discoveredSettings = [];
@@ -160,13 +163,14 @@ class OidcProviderSettings
      */
     protected function filterKeys(array $keys): array
     {
-        return array_filter($keys, function(array $key) {
+        return array_filter($keys, function (array $key) {
             return $key['kty'] === 'RSA' && $key['use'] === 'sig' && $key['alg'] === 'RS256';
         });
     }
 
     /**
      * Return an array of jwks as PHP key=>value arrays.
+     *
      * @throws ClientExceptionInterface
      * @throws OidcIssuerDiscoveryException
      */
@@ -177,7 +181,7 @@ class OidcProviderSettings
         $result = json_decode($response->getBody()->getContents(), true);
 
         if (empty($result) || !is_array($result) || !isset($result['keys'])) {
-            throw new OidcIssuerDiscoveryException("Error reading keys from issuer jwks_uri");
+            throw new OidcIssuerDiscoveryException('Error reading keys from issuer jwks_uri');
         }
 
         return $result['keys'];
@@ -193,6 +197,7 @@ class OidcProviderSettings
         foreach ($settingKeys as $setting) {
             $settings[$setting] = $this->$setting;
         }
+
         return $settings;
     }
 }

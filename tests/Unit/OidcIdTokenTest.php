@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use BookStack\Auth\Access\Oidc\OidcInvalidTokenException;
 use BookStack\Auth\Access\Oidc\OidcIdToken;
+use BookStack\Auth\Access\Oidc\OidcInvalidTokenException;
 use Tests\Helpers\OidcJwtHelper;
 use Tests\TestCase;
 
@@ -12,7 +12,7 @@ class OidcIdTokenTest extends TestCase
     public function test_valid_token_passes_validation()
     {
         $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), [
-            OidcJwtHelper::publicJwkKeyArray()
+            OidcJwtHelper::publicJwkKeyArray(),
         ]);
 
         $this->assertTrue($token->validate('xxyyzz.aaa.bbccdd.123'));
@@ -54,6 +54,7 @@ class OidcIdTokenTest extends TestCase
         foreach ($messagesAndTokenValues as [$message, $tokenValue]) {
             $token = new OidcIdToken($tokenValue, OidcJwtHelper::defaultIssuer(), []);
             $err = null;
+
             try {
                 $token->validate('abc');
             } catch (\Exception $exception) {
@@ -77,8 +78,8 @@ class OidcIdTokenTest extends TestCase
     {
         $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), [
             array_merge(OidcJwtHelper::publicJwkKeyArray(), [
-                'n' => 'iqK-1QkICMf_cusNLpeNnN-bhT0-9WLBvzgwKLALRbrevhdi5ttrLHIQshaSL0DklzfyG2HWRmAnJ9Q7sweEjuRiiqRcSUZbYu8cIv2hLWYu7K_NH67D2WUjl0EnoHEuiVLsZhQe1CmdyLdx087j5nWkd64K49kXRSdxFQUlj8W3NeK3CjMEUdRQ3H4RZzJ4b7uuMiFA29S2ZhMNG20NPbkUVsFL-jiwTd10KSsPT8yBYipI9O7mWsUWt_8KZs1y_vpM_k3SyYihnWpssdzDm1uOZ8U3mzFr1xsLAO718GNUSXk6npSDzLl59HEqa6zs4O9awO2qnSHvcmyELNk31w'
-            ])
+                'n' => 'iqK-1QkICMf_cusNLpeNnN-bhT0-9WLBvzgwKLALRbrevhdi5ttrLHIQshaSL0DklzfyG2HWRmAnJ9Q7sweEjuRiiqRcSUZbYu8cIv2hLWYu7K_NH67D2WUjl0EnoHEuiVLsZhQe1CmdyLdx087j5nWkd64K49kXRSdxFQUlj8W3NeK3CjMEUdRQ3H4RZzJ4b7uuMiFA29S2ZhMNG20NPbkUVsFL-jiwTd10KSsPT8yBYipI9O7mWsUWt_8KZs1y_vpM_k3SyYihnWpssdzDm1uOZ8U3mzFr1xsLAO718GNUSXk6npSDzLl59HEqa6zs4O9awO2qnSHvcmyELNk31w',
+            ]),
         ]);
         $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage('Token signature could not be validated using the provided keys');
@@ -97,7 +98,7 @@ class OidcIdTokenTest extends TestCase
     {
         $token = new OidcIdToken(OidcJwtHelper::idToken([], ['alg' => 'HS256']), OidcJwtHelper::defaultIssuer(), []);
         $this->expectException(OidcInvalidTokenException::class);
-        $this->expectExceptionMessage("Only RS256 signature validation is supported. Token reports using HS256");
+        $this->expectExceptionMessage('Only RS256 signature validation is supported. Token reports using HS256');
         $token->validate('abc');
     }
 
@@ -134,10 +135,11 @@ class OidcIdTokenTest extends TestCase
 
         foreach ($claimOverridesByErrorMessage as [$message, $overrides]) {
             $token = new OidcIdToken(OidcJwtHelper::idToken($overrides), OidcJwtHelper::defaultIssuer(), [
-                OidcJwtHelper::publicJwkKeyArray()
+                OidcJwtHelper::publicJwkKeyArray(),
             ]);
 
             $err = null;
+
             try {
                 $token->validate('xxyyzz.aaa.bbccdd.123');
             } catch (\Exception $exception) {
@@ -155,7 +157,7 @@ class OidcIdTokenTest extends TestCase
         $testFilePath = 'file://' . stream_get_meta_data($file)['uri'];
         file_put_contents($testFilePath, OidcJwtHelper::publicPemKey());
         $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), [
-            $testFilePath
+            $testFilePath,
         ]);
 
         $this->assertTrue($token->validate('xxyyzz.aaa.bbccdd.123'));
