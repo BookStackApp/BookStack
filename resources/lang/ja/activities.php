@@ -44,12 +44,12 @@ return [
     'bookshelf_delete_notification'    => '本棚を削除しました',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name"がお気に入りに追加されました',
+    'favourite_remove_notification' => '":name"がお気に入りから削除されました',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => '多要素認証が正常に設定されました',
+    'mfa_remove_method_notification' => '多要素認証が正常に解除されました',
 
     // Other
     'commented_on'                => 'コメントする',
