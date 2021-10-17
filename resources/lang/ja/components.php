@@ -15,7 +15,7 @@ return [
     'image_load_more' => 'さらに読み込む',
     'image_image_name' => '画像名',
     'image_delete_used' => 'この画像は以下のページで利用されています。',
-    'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
+    'image_delete_confirm_text' => 'この画像を削除してもよろしいですか？',
     'image_select_image' => '画像を選択',
     'image_dropzone' => '画像をドロップするか、クリックしてアップロード',
     'images_deleted' => '画像を削除しました',
