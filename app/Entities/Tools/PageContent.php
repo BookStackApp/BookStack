@@ -37,7 +37,7 @@ class PageContent
      */
     public function setNewHTML(string $html)
     {
-        $html = $this->extractBase64Images($this->page, $html);
+        $html = $this->extractBase64ImagesFromHtml($html);
         $this->page->html = $this->formatHtml($html);
         $this->page->text = $this->toPlainText();
         $this->page->markdown = '';
@@ -48,6 +48,7 @@ class PageContent
      */
     public function setNewMarkdown(string $markdown)
     {
+        $markdown = $this->extractBase64ImagesFromMarkdown($markdown);
         $this->page->markdown = $markdown;
         $html = $this->markdownToHtml($markdown);
         $this->page->html = $this->formatHtml($html);
@@ -74,7 +75,7 @@ class PageContent
     /**
      * Convert all base64 image data to saved images.
      */
-    public function extractBase64Images(Page $page, string $htmlText): string
+    protected function extractBase64ImagesFromHtml(string $htmlText): string
     {
         if (empty($htmlText) || strpos($htmlText, 'data:image') === false) {
             return $htmlText;
@@ -86,7 +87,6 @@ class PageContent
         $childNodes = $body->childNodes;
         $xPath = new DOMXPath($doc);
         $imageRepo = app()->make(ImageRepo::class);
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
         // Get all img elements with image data blobs
         $imageNodes = $xPath->query('//img[contains(@src, \'data:image\')]');
@@ -96,7 +96,7 @@ class PageContent
             $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? 'png');
 
             // Validate extension
-            if (!in_array($extension, $allowedExtensions)) {
+            if (!$imageRepo->imageExtensionSupported($extension)) {
                 $imageNode->setAttribute('src', '');
                 continue;
             }
@@ -105,7 +105,7 @@ class PageContent
             $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
 
             try {
-                $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $page->id);
+                $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $this->page->id);
                 $imageNode->setAttribute('src', $image->url);
             } catch (ImageUploadException $exception) {
                 $imageNode->setAttribute('src', '');
@@ -119,6 +119,39 @@ class PageContent
         }
 
         return $html;
+    }
+
+    /**
+     * Convert all inline base64 content to uploaded image files.
+     */
+    protected function extractBase64ImagesFromMarkdown(string $markdown)
+    {
+        $imageRepo = app()->make(ImageRepo::class);
+        $matches = [];
+        preg_match_all('/!\[.*?]\(.*?(data:image\/.*?)[)"\s]/', $markdown, $matches);
+
+        foreach ($matches[1] as $base64Match) {
+            [$dataDefinition, $base64ImageData] = explode(',', $base64Match, 2);
+            $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? 'png');
+
+            // Validate extension
+            if (!$imageRepo->imageExtensionSupported($extension)) {
+                $markdown = str_replace($base64Match, '', $markdown);
+                continue;
+            }
+
+            // Save image from data with a random name
+            $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
+
+            try {
+                $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $this->page->id);
+                $markdown = str_replace($base64Match, $image->url, $markdown);
+            } catch (ImageUploadException $exception) {
+                $markdown = str_replace($base64Match, '', $markdown);
+            }
+        }
+
+        return $markdown;
     }
 
     /**

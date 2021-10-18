@@ -594,7 +594,7 @@ class PageContentTest extends TestCase
         $this->deleteImage($imagePath);
     }
 
-    public function test_base64_images_blanked_if_not_supported_extension_for_extract()
+    public function test_base64_images_within_html_blanked_if_not_supported_extension_for_extract()
     {
         $this->asEditor();
         $page = Page::query()->first();
@@ -602,6 +602,42 @@ class PageContentTest extends TestCase
         $this->put($page->getUrl(), [
             'name' => $page->name, 'summary' => '',
             'html' => '<p>test<img src="data:image/jiff;base64,' . $this->base64Jpeg . '"/></p>',
+        ]);
+
+        $page->refresh();
+        $this->assertStringContainsString('<img src=""', $page->html);
+    }
+
+    public function test_base64_images_get_extracted_from_markdown_page_content()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $this->put($page->getUrl(), [
+            'name' => $page->name, 'summary' => '',
+            'markdown' => 'test ![test](data:image/jpeg;base64,' . $this->base64Jpeg . ')',
+        ]);
+
+        $page->refresh();
+        $this->assertStringMatchesFormat('%A<p%A>test <img src="http://localhost/uploads/images/gallery/%A.jpeg" alt="test">%A</p>%A', $page->html);
+
+        $matches = [];
+        preg_match('/src="http:\/\/localhost(.*?)"/', $page->html, $matches);
+        $imagePath = $matches[1];
+        $imageFile = public_path($imagePath);
+        $this->assertEquals(base64_decode($this->base64Jpeg), file_get_contents($imageFile));
+
+        $this->deleteImage($imagePath);
+    }
+
+    public function test_base64_images_within_markdown_blanked_if_not_supported_extension_for_extract()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $this->put($page->getUrl(), [
+            'name' => $page->name, 'summary' => '',
+            'markdown' => 'test ![test](data:image/jiff;base64,' . $this->base64Jpeg . ')',
         ]);
 
         $page->refresh();
