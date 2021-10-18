@@ -24,7 +24,7 @@ return [
     // Actions
     'actions' => '実行',
     'view' => '表示',
-    'view_all' => 'View All',
+    'view_all' => 'すべて表示',
     'create' => '作成',
     'update' => '更新',
     'edit' => '編集',
@@ -33,7 +33,7 @@ return [
     'copy' => 'Copy',
     'reply' => '返信',
     'delete' => '削除',
-    'delete_confirm' => 'Confirm Deletion',
+    'delete_confirm' => '確認して削除',
     'search' => '検索',
     'search_clear' => '検索をクリア',
     'reset' => 'リセット',
