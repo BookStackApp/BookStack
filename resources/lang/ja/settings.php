@@ -100,13 +100,13 @@ return [
     'recycle_bin_contents_empty' => 'ごみ箱は現在空です',
     'recycle_bin_empty' => 'ごみ箱を空にする',
     'recycle_bin_empty_confirm' => 'ごみ箱のすべてのアイテムが、各アイテムに含まれるコンテンツも含めて完全に削除されます。本当にごみ箱を空にしますか？',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item, along with any child elements listed below, from the system and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
-    'recycle_bin_destroy_list' => 'Items to be Destroyed',
+    'recycle_bin_destroy_confirm' => 'この操作により、このアイテムと以下にリストされている子要素がシステムから完全に削除され、このコンテンツを復元できなくなります。このアイテムを完全に削除してもよろしいですか？',
+    'recycle_bin_destroy_list' => '削除されるアイテム',
     'recycle_bin_restore_list' => '復元されるアイテム',
     'recycle_bin_restore_confirm' => 'この操作により、すべての子要素を含む削除されたアイテムが元の場所に復元されます。元の場所が削除されてごみ箱に入っている場合は、親アイテムも復元する必要があります。',
     'recycle_bin_restore_deleted_parent' => 'The parent of this item has also been deleted. These will remain deleted until that parent is also restored.',
     'recycle_bin_restore_parent' => 'Restore Parent',
-    'recycle_bin_destroy_notification' => 'Deleted :count total items from the recycle bin.',
+    'recycle_bin_destroy_notification' => 'ごみ箱から合計:count個のアイテムを削除しました。',
     'recycle_bin_restore_notification' => 'ごみ箱から合計:count個のアイテムを復元しました。',
 
     // Audit Log
