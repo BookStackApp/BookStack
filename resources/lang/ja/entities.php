@@ -73,8 +73,8 @@ return [
     'search_update' => 'フィルタを更新',
 
     // Shelves
-    'shelf' => 'Shelf',
-    'shelves' => 'Shelves',
+    'shelf' => '本棚',
+    'shelves' => '本棚',
     'x_shelves' => ':count Shelf|:count Shelves',
     'shelves_long' => 'Bookshelves',
     'shelves_empty' => 'No shelves have been created',
@@ -243,7 +243,7 @@ return [
         'message' => ':start :time. 他のユーザによる更新を上書きしないよう注意してください。',
     ],
     'pages_draft_discarded' => '下書きが破棄されました。エディタは現在の内容へ復元されています。',
-    'pages_specific' => 'Specific Page',
+    'pages_specific' => '特定のページ',
     'pages_is_template' => 'Page Template',
 
     // Editor Sidebar
