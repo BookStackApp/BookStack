@@ -200,3 +200,4 @@ These are the great open-source projects used to help build BookStack:
 * [StyleCI](https://styleci.io/)
 * [pragmarx/google2fa](https://github.com/antonioribeiro/google2fa)
 * [Bacon/BaconQrCode](https://github.com/Bacon/BaconQrCode)
+* [phpseclib](https://github.com/phpseclib/phpseclib)
