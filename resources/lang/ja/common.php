@@ -52,7 +52,7 @@ return [
     'sort_ascending' => 'Sort Ascending',
     'sort_descending' => 'Sort Descending',
     'sort_name' => 'Name',
-    'sort_default' => 'Default',
+    'sort_default' => 'デフォルト',
     'sort_created_at' => 'Created Date',
     'sort_updated_at' => 'Updated Date',
 
@@ -67,7 +67,7 @@ return [
     'details' => '詳細',
     'grid_view' => 'グリッド形式',
     'list_view' => 'リスト形式',
-    'default' => 'Default',
+    'default' => 'デフォルト',
     'breadcrumb' => 'Breadcrumb',
 
     // Header
