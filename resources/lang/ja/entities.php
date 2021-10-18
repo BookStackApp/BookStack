@@ -76,7 +76,7 @@ return [
     'shelf' => '本棚',
     'shelves' => '本棚',
     'x_shelves' => ':count Shelf|:count Shelves',
-    'shelves_long' => 'Bookshelves',
+    'shelves_long' => '本棚',
     'shelves_empty' => 'No shelves have been created',
     'shelves_create' => 'Create New Shelf',
     'shelves_popular' => 'Popular Shelves',
