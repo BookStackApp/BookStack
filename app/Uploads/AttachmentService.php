@@ -78,18 +78,18 @@ class AttachmentService
      *
      * @throws FileUploadException
      */
-    public function saveNewUpload(UploadedFile $uploadedFile, int $page_id): Attachment
+    public function saveNewUpload(UploadedFile $uploadedFile, int $pageId): Attachment
     {
         $attachmentName = $uploadedFile->getClientOriginalName();
         $attachmentPath = $this->putFileInStorage($uploadedFile);
-        $largestExistingOrder = Attachment::query()->where('uploaded_to', '=', $page_id)->max('order');
+        $largestExistingOrder = Attachment::query()->where('uploaded_to', '=', $pageId)->max('order');
 
         /** @var Attachment $attachment */
         $attachment = Attachment::query()->forceCreate([
             'name'        => $attachmentName,
             'path'        => $attachmentPath,
             'extension'   => $uploadedFile->getClientOriginalExtension(),
-            'uploaded_to' => $page_id,
+            'uploaded_to' => $pageId,
             'created_by'  => user()->id,
             'updated_by'  => user()->id,
             'order'       => $largestExistingOrder + 1,
@@ -159,8 +159,9 @@ class AttachmentService
     public function updateFile(Attachment $attachment, array $requestData): Attachment
     {
         $attachment->name = $requestData['name'];
+        $link = trim($requestData['link'] ?? '');
 
-        if (isset($requestData['link']) && trim($requestData['link']) !== '') {
+        if (!empty($link)) {
             $attachment->path = $requestData['link'];
             if (!$attachment->external) {
                 $this->deleteFileInStorage($attachment);
@@ -180,13 +181,10 @@ class AttachmentService
      */
     public function deleteFile(Attachment $attachment)
     {
-        if ($attachment->external) {
-            $attachment->delete();
-
-            return;
+        if (!$attachment->external) {
+            $this->deleteFileInStorage($attachment);
         }
 
-        $this->deleteFileInStorage($attachment);
         $attachment->delete();
     }
 
