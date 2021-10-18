@@ -34,7 +34,7 @@ return [
     'app_logo_desc' => '高さ43pxで表示されます。これを上回る場合、自動で縮小されます。',
     'app_primary_color' => 'プライマリカラー',
     'app_primary_color_desc' => '16進数カラーコードで入力します。空にした場合、デフォルトの色にリセットされます。',
-    'app_homepage' => 'Application Homepage',
+    'app_homepage' => 'アプリケーションのホームページ',
     'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
     'app_homepage_select' => 'ページを選択',
     'app_footer_links' => 'フッタのリンク',
