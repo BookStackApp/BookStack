@@ -44,7 +44,7 @@ body:
       placeholder: (eg. v21.08.5)
     validations:
       required: true
-- type: input
+  - type: input
     id: phpversion
     attributes:
       label: PHP Version
@@ -52,7 +52,7 @@ body:
       placeholder: (eg. 7.4)
     validations:
       required: false
-- type: textarea
+  - type: textarea
     id: hosting
     attributes:
       label: Hosting Environment
