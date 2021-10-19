@@ -3,6 +3,7 @@
 namespace BookStack\Uploads;
 
 use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
@@ -18,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property ?Page $page
  * @property bool $external
  * @property int $uploaded_to
+ * @property User $updatedBy
+ * @property User $createdBy
  *
  * @method static Entity|Builder visible()
  */
@@ -26,6 +29,10 @@ class Attachment extends Model
     use HasCreatorAndUpdater;
 
     protected $fillable = ['name', 'order'];
+    protected $hidden = ['path'];
+    protected $casts = [
+        'external' => 'bool',
+    ];
 
     /**
      * Get the downloadable file name for this upload.
@@ -80,7 +87,7 @@ class Attachment extends Model
     /**
      * Scope the query to those attachments that are visible based upon related page permissions.
      */
-    public function scopeVisible(): string
+    public function scopeVisible(): Builder
     {
         $permissionService = app()->make(PermissionService::class);
         return $permissionService->filterRelatedEntity(
