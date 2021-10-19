@@ -25,8 +25,8 @@ class AttachmentApiController extends ApiController
         'update' => [
             'name' => 'min:1|max:255|string',
             'uploaded_to' => 'integer|exists:pages,id',
-            'file' => 'link|file',
-            'link' => 'file|min:1|max:255|safe_url'
+            'file' => 'file',
+            'link' => 'min:1|max:255|safe_url'
         ],
     ];
 
@@ -87,7 +87,9 @@ class AttachmentApiController extends ApiController
     public function read(string $id)
     {
         /** @var Attachment $attachment */
-        $attachment = Attachment::visible()->findOrFail($id);
+        $attachment = Attachment::visible()
+            ->with(['createdBy', 'updatedBy'])
+            ->findOrFail($id);
 
         $attachment->setAttribute('links', [
             'html'     => $attachment->htmlLink(),
@@ -129,7 +131,7 @@ class AttachmentApiController extends ApiController
 
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
-            $attachment = $this->attachmentService->saveUpdatedUpload($uploadedFile, $page->id);
+            $attachment = $this->attachmentService->saveUpdatedUpload($uploadedFile, $attachment);
         }
 
         $this->attachmentService->updateFile($attachment, $requestData);

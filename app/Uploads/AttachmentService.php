@@ -162,16 +162,16 @@ class AttachmentService
         $link = trim($requestData['link'] ?? '');
 
         if (!empty($link)) {
-            $attachment->path = $requestData['link'];
             if (!$attachment->external) {
                 $this->deleteFileInStorage($attachment);
                 $attachment->external = true;
+                $attachment->extension = '';
             }
+            $attachment->path = $requestData['link'];
         }
 
         $attachment->save();
-
-        return $attachment;
+        return $attachment->refresh();
     }
 
     /**
