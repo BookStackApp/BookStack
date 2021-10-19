@@ -1,5 +1,5 @@
 name: Support Request
-description: Request support for a specific problem you have not been able to solve
+description: Request support for a specific problem you have not been able to solve yourself
 title: "[Support Request]: "
 labels: [":dog2: Support"]
 body:
@@ -46,18 +46,18 @@ body:
     validations:
       required: false
   - type: input
-      id: phpversion
-      attributes:
-        label: PHP Version
-        description: Keep in mind your command-line PHP version may differ to that of your webserver. Provide that relevant to the issue.
-        placeholder: (eg. 7.4)
-      validations:
-        required: false
+    id: phpversion
+    attributes:
+      label: PHP Version
+      description: Keep in mind your command-line PHP version may differ to that of your webserver. Provide that most relevant to the issue.
+      placeholder: (eg. 7.4)
+    validations:
+      required: false
   - type: textarea
-      id: hosting
-      attributes:
-        label: Hosting Environment
-        description: Describe your hosting environment as much as possible including any proxies used (If applicable).
-        placeholder: (eg. Ubuntu 20.04 VPS, installed using official installation script)
-      validations:
-        required: true
+    id: hosting
+    attributes:
+      label: Hosting Environment
+      description: Describe your hosting environment as much as possible including any proxies used (If applicable).
+      placeholder: (eg. Ubuntu 20.04 VPS, installed using official installation script)
+    validations:
+      required: true
