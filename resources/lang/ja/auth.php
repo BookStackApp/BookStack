@@ -72,7 +72,7 @@ return [
     'user_invite_email_action' => 'アカウントのパスワード設定',
     'user_invite_page_welcome' => ':appNameへようこそ！',
     'user_invite_page_text' => 'アカウントの設定を完了してアクセスするには、今後の訪問時に:appNameにログインするためのパスワードを設定する必要があります。',
-    'user_invite_page_confirm_button' => 'パスワードの確認',
+    'user_invite_page_confirm_button' => 'パスワードを確定',
     'user_invite_success' => 'パスワードが設定されました。:appNameにアクセスできるようになりました！',
 
     // Multi-factor Authentication
