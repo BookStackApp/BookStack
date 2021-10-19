@@ -1,0 +1,32 @@
+name: Language Request
+description: Request a new language to be added to CrowdIn for you to translate
+title: "[Language Request]: "
+labels: [":earth_africa: Translations"]
+assignees:
+  - ssddanbrown
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for offering to help start a new translation for BookStack!
+  - type: input
+    id: language
+    attributes:
+      label: Language to Add
+      description: What language (and region if applicable) are you offering to help add to BookStack?
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation of Intent
+      description: |
+        This issue template is to request a new language be added to our [Crowdin translation management project](https://crowdin.com/project/bookstack).
+        Please don't use this template to request a new language that you are not prepared to provide translations for.
+      options:
+        - label: I confirm I'm offering to help translate for this new language via CrowdIn.
+          required: true
+  - type: markdown
+    attributes:
+      value: |
+        Note: New languages are added at specific points of the development process so it may be a small while before the requested language is added for translation.
