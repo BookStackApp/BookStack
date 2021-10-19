@@ -1,0 +1,26 @@
+name: New API Endpoint or API Ability
+description: Request a new endpoint or API feature be added
+title: "[API Request]: "
+labels: [":nut_and_bolt: API Request"]
+body:
+  - type: textarea
+    id: feature
+    attributes:
+      label: API Endpoint or Feature
+      description: Clearly describe what you'd like to have added to the API.
+    validations:
+      required: true
+  - type: textarea
+    id: usecase
+    attributes:
+      label: Use-Case
+      description: Explain the use-case that you're working-on that requires the above request.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context about the feature request here.
+    validations:
+      required: false

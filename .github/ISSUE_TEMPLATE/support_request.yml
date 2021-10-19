@@ -1,0 +1,63 @@
+name: Support Request
+description: Request support for a specific problem you have not been able to solve
+title: "[Support Request]: "
+labels: [":dog2: Support"]
+body:
+  - type: checkboxes
+    id: useddocs
+    attributes:
+      label: Attempted Debugging
+      description: |
+        I have read the [BookStack debugging](https://www.bookstackapp.com/docs/admin/debugging/) page and seeked resolution or more
+        detail for the issue.
+      options:
+        - label: I have read the debugging page
+          required: true
+  - type: checkboxes
+    id: searchissue
+    attributes:
+      label: Searched GitHub Issues
+      description: |
+        I have searched for the issue and potential resolutions within the [project's GitHub issue list](https://github.com/BookStackApp/BookStack/issues)
+      options:
+        - label: I have searched GitHub for the issue.
+          required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Describe the Scenario
+      description: Detail the problem that you're having or what you need support with.
+    validations:
+      required: true
+  - type: input
+    id: bsversion
+    attributes:
+      label: Exact BookStack Version
+      description: This can be found in the settings view of BookStack. Please provide an exact version.
+      placeholder: (eg. v21.08.5)
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log Content
+      description: If the issue has produced an error, provide any [BookStack or server log](https://www.bookstackapp.com/docs/admin/debugging/) content below.
+      placeholder: Be sure to remove any confidential details in your logs
+    validations:
+      required: false
+  - type: input
+      id: phpversion
+      attributes:
+        label: PHP Version
+        description: Keep in mind your command-line PHP version may differ to that of your webserver. Provide that relevant to the issue.
+        placeholder: (eg. 7.4)
+      validations:
+        required: false
+  - type: textarea
+      id: hosting
+      attributes:
+        label: Hosting Environment
+        description: Describe your hosting environment as much as possible including any proxies used (If applicable).
+        placeholder: (eg. Ubuntu 20.04 VPS, installed using official installation script)
+      validations:
+        required: true

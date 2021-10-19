@@ -1,0 +1,26 @@
+name: Feature Request
+description: Request a new language to be added to CrowdIn for you to translate
+title: "[Feature Request]: "
+labels: [":hammer: Feature Request"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the feature you'd like
+      description: Provide a clear description of the feature you'd like implemented in BookStack
+    validations:
+      required: true
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Describe the benefits this feature would bring to BookStack users
+      description: Explain the measurable benefits this feature would achieve for existing BookStack users
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+    validations:
+      required: false
