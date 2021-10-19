@@ -11,15 +11,15 @@ return [
     'save' => '保存',
     'continue' => '続ける',
     'select' => '選択',
-    'toggle_all' => 'Toggle All',
+    'toggle_all' => '一括切替',
     'more' => 'その他',
 
     // Form Labels
     'name' => '名称',
     'description' => '概要',
     'role' => '権限',
-    'cover_image' => 'Cover image',
-    'cover_image_description' => 'この画像は約 300x170px をする必要があります。',
+    'cover_image' => 'カバー画像',
+    'cover_image_description' => 'この画像はおよそ440x250pxの大きさが必要です。',
     
     // Actions
     'actions' => '実行',
@@ -41,10 +41,10 @@ return [
     'add' => '追加',
     'configure' => 'Configure',
     'fullscreen' => 'Fullscreen',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'favourite' => 'お気に入り',
+    'unfavourite' => 'お気に入りから削除',
+    'next' => '次へ',
+    'previous' => '前へ',
 
     // Sort Options
     'sort_options' => '並べ替えオプション',
@@ -68,7 +68,7 @@ return [
     'grid_view' => 'グリッド形式',
     'list_view' => 'リスト形式',
     'default' => 'デフォルト',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'パンくずリスト',
 
     // Header
     'header_menu_expand' => 'Expand Header Menu',
