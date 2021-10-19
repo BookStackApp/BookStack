@@ -29,4 +29,4 @@ body:
   - type: markdown
     attributes:
       value: |
-        Note: New languages are added at specific points of the development process so it may be a small while before the requested language is added for translation.
+        *__Note: New languages are added at specific points of the development process so it may be a small while before the requested language is added for translation.__*
