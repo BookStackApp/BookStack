@@ -47,14 +47,14 @@ return [
     'previous' => 'Previous',
 
     // Sort Options
-    'sort_options' => 'Sort Options',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
-    'sort_ascending' => 'Sort Ascending',
-    'sort_descending' => 'Sort Descending',
-    'sort_name' => 'Name',
+    'sort_options' => '並べ替えオプション',
+    'sort_direction_toggle' => '並べ替え方向の切り替え',
+    'sort_ascending' => '昇順に並べ替え',
+    'sort_descending' => '降順に並べ替え',
+    'sort_name' => '名前',
     'sort_default' => 'デフォルト',
-    'sort_created_at' => 'Created Date',
-    'sort_updated_at' => 'Updated Date',
+    'sort_created_at' => '作成日',
+    'sort_updated_at' => '更新日',
 
     // Misc
     'deleted_user' => '削除済みユーザ',
@@ -75,8 +75,8 @@ return [
     'profile_menu' => 'Profile Menu',
     'view_profile' => 'プロフィール表示',
     'edit_profile' => 'プロフィール編集',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
+    'dark_mode' => 'ダークモード',
+    'light_mode' => 'ライトモード',
 
     // Layout tabs
     'tab_info' => 'Info',
@@ -90,6 +90,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'プライバシーポリシー',
+    'terms_of_service' => '利用規約',
 ];
