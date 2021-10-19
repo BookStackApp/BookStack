@@ -37,7 +37,7 @@ return [
     'social_account_register_instructions' => 'Kui sul pole veel kasutajakontot, saad selle registreerida :socialAccount kaudu.',
     'social_driver_not_found' => 'Sotsiaalmeedia kontode draiverit ei leitud',
     'social_driver_not_configured' => 'Sinu :socialAccount konto seaded ei ole korrektsed.',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'Link on aegunud. Võid selle asemel proovida oma konto parooli lähtestada.',
 
     // System
     'path_not_writable' => 'Faili asukohaga :filePath ei õnnestunud üles laadida. Veendu, et serveril on kirjutusõigused.',
@@ -47,7 +47,7 @@ return [
     'uploaded'  => 'Server ei luba nii suurte failide üleslaadimist. Proovi väiksema failiga.',
     'image_upload_error' => 'Pildi üleslaadimisel tekkis viga',
     'image_upload_type_error' => 'Pildifaili tüüp ei ole korrektne',
-    'file_upload_timeout' => 'The file upload has timed out.',
+    'file_upload_timeout' => 'Faili üleslaadimine aegus.',
 
     // Attachments
     'attachment_not_found' => 'Manust ei leitud',
@@ -57,7 +57,7 @@ return [
     'page_custom_home_deletion' => 'Ei saa kustutada lehte, mis on määratud avaleheks',
 
     // Entities
-    'entity_not_found' => 'Entity not found',
+    'entity_not_found' => 'Objekti ei leitud',
     'bookshelf_not_found' => 'Riiulit ei leitud',
     'book_not_found' => 'Raamatut ei leitud',
     'page_not_found' => 'Lehte ei leitud',
@@ -93,7 +93,7 @@ return [
     'return_home' => 'Tagasi avalehele',
     'error_occurred' => 'Tekkis viga',
     'app_down' => ':appName on hetkel maas',
-    'back_soon' => 'It will be back up soon.',
+    'back_soon' => 'See on varsti tagasi.',
 
     // API errors
     'api_no_authorization_found' => 'Päringust ei leitud volitustunnust',
