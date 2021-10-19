@@ -5,7 +5,7 @@
 return [
 
     // Image Manager
-    'image_select' => 'Image Select',
+    'image_select' => 'Pildifaili valik',
     'image_all' => 'Kõik',
     'image_all_title' => 'Vaata kõiki pildifaile',
     'image_book_title' => 'Vaata sellesse raamatusse laaditud pildifaile',
@@ -27,8 +27,8 @@ return [
 
     // Code Editor
     'code_editor' => 'Muuda koodi',
-    'code_language' => 'Code Language',
-    'code_content' => 'Code Content',
-    'code_session_history' => 'Session History',
-    'code_save' => 'Save Code',
+    'code_language' => 'Koodi keel',
+    'code_content' => 'Koodi sisu',
+    'code_session_history' => 'Sessiooni ajalugu',
+    'code_save' => 'Salvesta kood',
 ];
