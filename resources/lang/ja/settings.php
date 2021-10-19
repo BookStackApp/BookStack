@@ -139,7 +139,7 @@ return [
     'role_details' => '概要',
     'role_name' => '役割名',
     'role_desc' => '役割の説明',
-    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
+    'role_mfa_enforced' => '多要素認証を要求する',
     'role_external_auth_id' => 'External Authentication IDs',
     'role_system' => 'システム権限',
     'role_manage_users' => 'ユーザ管理',
