@@ -171,6 +171,7 @@ class AttachmentService
         }
 
         $attachment->save();
+
         return $attachment->refresh();
     }
 
