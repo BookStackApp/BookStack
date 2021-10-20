@@ -47,7 +47,7 @@ return [
 
     // Search
     'search_results' => 'Otsingutulemused',
-    'search_total_results_found' => ':count result found|:count total results found',
+    'search_total_results_found' => 'leitud :count vaste|leitud :count vastet',
     'search_clear' => 'Tühjenda otsing',
     'search_no_pages' => 'Otsing ei leidnud ühtegi lehte',
     'search_for_term' => 'Search for :term',
@@ -203,7 +203,7 @@ return [
     'pages_md_insert_image' => 'Lisa pilt',
     'pages_md_insert_link' => 'Lisa viide',
     'pages_md_insert_drawing' => 'Lisa joonis',
-    'pages_not_in_chapter' => 'Page is not in a chapter',
+    'pages_not_in_chapter' => 'Leht ei kuulu peatüki alla',
     'pages_move' => 'Liiguta leht',
     'pages_move_success' => 'Leht liigutatud ":parentName" alla',
     'pages_copy' => 'Kopeeri leht',
@@ -234,12 +234,12 @@ return [
     'pages_initial_name' => 'Uus leht',
     'pages_editing_draft_notification' => 'Sa muudad mustandit, mis salvestati viimati :timeDiff.',
     'pages_draft_edited_notification' => 'This page has been updated by since that time. It is recommended that you discard this draft.',
-    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
+    'pages_draft_page_changed_since_creation' => 'Seda lehte on pärast mustandi loomist muudetud. Soovitame mustandi ära visata või olla hoolikas, et mitte lehe muudatusi üle kirjutada.',
     'pages_draft_edit_active' => [
-        'start_a' => ':count users have started editing this page',
+        'start_a' => ':count kasutajat on selle lehe muutmist alustanud',
         'start_b' => ':userName alustas selle lehe muutmist',
-        'time_a' => 'since the page was last updated',
-        'time_b' => 'in the last :minCount minutes',
+        'time_a' => 'lehe viimasest muutmisest alates',
+        'time_b' => 'viimase :minCount minuti jooksul',
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
     'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
@@ -293,7 +293,7 @@ return [
 
     // Profile View
     'profile_user_for_x' => 'User for :time',
-    'profile_created_content' => 'Created Content',
+    'profile_created_content' => 'Lisatud sisu',
     'profile_not_created_pages' => ':userName ei ole ühtegi lehte lisanud',
     'profile_not_created_chapters' => ':userName ei ole ühtegi peatükki lisanud',
     'profile_not_created_books' => ':userName ei ole ühtegi raamatut lisanud',
@@ -309,13 +309,13 @@ return [
     'comment_saving' => 'Kommentaari salvestamine...',
     'comment_deleting' => 'Kommentaari kustutamine...',
     'comment_new' => 'Uus kommentaar',
-    'comment_created' => 'commented :createDiff',
-    'comment_updated' => 'Updated :updateDiff by :username',
+    'comment_created' => 'kommenteeris :createDiff',
+    'comment_updated' => 'Muudetud :updateDiff :username poolt',
     'comment_deleted_success' => 'Kommentaar kustutatud',
     'comment_created_success' => 'Kommentaar lisatud',
     'comment_updated_success' => 'Kommentaar muudetud',
     'comment_delete_confirm' => 'Kas oled kindel, et soovid selle kommentaari kustutada?',
-    'comment_in_reply_to' => 'In reply to :commentId',
+    'comment_in_reply_to' => 'Vastus kommentaarile :commentId',
 
     // Revision
     'revision_delete_confirm' => 'Kas oled kindel, et soovid selle redaktsiooni kustutada?',
