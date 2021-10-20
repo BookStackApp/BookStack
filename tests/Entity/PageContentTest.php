@@ -614,7 +614,7 @@ class PageContentTest extends TestCase
         $page = Page::query()->first();
 
         $this->put($page->getUrl(), [
-            'name' => $page->name, 'summary' => '',
+            'name'     => $page->name, 'summary' => '',
             'markdown' => 'test ![test](data:image/jpeg;base64,' . $this->base64Jpeg . ')',
         ]);
 
@@ -636,7 +636,7 @@ class PageContentTest extends TestCase
         $page = Page::query()->first();
 
         $this->put($page->getUrl(), [
-            'name' => $page->name, 'summary' => '',
+            'name'     => $page->name, 'summary' => '',
             'markdown' => 'test ![test](data:image/jiff;base64,' . $this->base64Jpeg . ')',
         ]);
 

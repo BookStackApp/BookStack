@@ -17,16 +17,16 @@ class AttachmentApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'name' => 'required|min:1|max:255|string',
+            'name'        => 'required|min:1|max:255|string',
             'uploaded_to' => 'required|integer|exists:pages,id',
-            'file' => 'required_without:link|file',
-            'link' => 'required_without:file|min:1|max:255|safe_url'
+            'file'        => 'required_without:link|file',
+            'link'        => 'required_without:file|min:1|max:255|safe_url',
         ],
         'update' => [
-            'name' => 'min:1|max:255|string',
+            'name'        => 'min:1|max:255|string',
             'uploaded_to' => 'integer|exists:pages,id',
-            'file' => 'file',
-            'link' => 'min:1|max:255|safe_url'
+            'file'        => 'file',
+            'link'        => 'min:1|max:255|safe_url',
         ],
     ];
 
@@ -72,11 +72,14 @@ class AttachmentApiController extends ApiController
             $attachment = $this->attachmentService->saveNewUpload($uploadedFile, $page->id);
         } else {
             $attachment = $this->attachmentService->saveNewFromLink(
-                $requestData['name'], $requestData['link'], $page->id
+                $requestData['name'],
+                $requestData['link'],
+                $page->id
             );
         }
 
         $this->attachmentService->updateFile($attachment, $requestData);
+
         return response()->json($attachment);
     }
 
@@ -140,6 +143,7 @@ class AttachmentApiController extends ApiController
         }
 
         $this->attachmentService->updateFile($attachment, $requestData);
+
         return response()->json($attachment);
     }
 
@@ -158,5 +162,4 @@ class AttachmentApiController extends ApiController
 
         return response('', 204);
     }
-
 }

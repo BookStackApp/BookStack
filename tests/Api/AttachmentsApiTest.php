@@ -18,17 +18,17 @@ class AttachmentsApiTest extends TestCase
         $this->actingAsApiEditor();
         $page = Page::query()->first();
         $attachment = $this->createAttachmentForPage($page, [
-            'name' => 'My test attachment',
+            'name'     => 'My test attachment',
             'external' => true,
         ]);
 
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
-                'id' => $attachment->id,
-                'name' => 'My test attachment',
+                'id'          => $attachment->id,
+                'name'        => 'My test attachment',
                 'uploaded_to' => $page->id,
-                'external' => true,
+                'external'    => true,
             ],
         ]]);
     }
@@ -39,7 +39,7 @@ class AttachmentsApiTest extends TestCase
         /** @var Page $page */
         $page = Page::query()->first();
         $attachment = $this->createAttachmentForPage($page, [
-            'name' => 'My test attachment',
+            'name'     => 'My test attachment',
             'external' => true,
         ]);
 
@@ -69,9 +69,9 @@ class AttachmentsApiTest extends TestCase
         $page = Page::query()->first();
 
         $details = [
-            'name' => 'My attachment',
+            'name'        => 'My attachment',
             'uploaded_to' => $page->id,
-            'link' => 'https://cats.example.com',
+            'link'        => 'https://cats.example.com',
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
@@ -89,7 +89,7 @@ class AttachmentsApiTest extends TestCase
         $file = $this->getTestFile('textfile.txt');
 
         $details = [
-            'name' => 'My attachment',
+            'name'        => 'My attachment',
             'uploaded_to' => $page->id,
         ];
 
@@ -110,14 +110,14 @@ class AttachmentsApiTest extends TestCase
 
         $details = [
             'uploaded_to' => $page->id,
-            'link' => 'https://example.com',
+            'link'        => 'https://example.com',
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
         $resp->assertJson([
             'error' => [
-                'message' => 'The given data was invalid.',
+                'message'    => 'The given data was invalid.',
                 'validation' => [
                     'name' => ['The name field is required.'],
                 ],
@@ -133,7 +133,7 @@ class AttachmentsApiTest extends TestCase
         $page = Page::query()->first();
 
         $details = [
-            'name' => 'my attachment',
+            'name'        => 'my attachment',
             'uploaded_to' => $page->id,
         ];
 
@@ -141,10 +141,10 @@ class AttachmentsApiTest extends TestCase
         $resp->assertStatus(422);
         $resp->assertJson([
             'error' => [
-                'message' => 'The given data was invalid.',
+                'message'    => 'The given data was invalid.',
                 'validation' => [
-                    "file" => ["The file field is required when link is not present."],
-                    "link" => ["The link field is required when file is not present."],
+                    'file' => ['The file field is required when link is not present.'],
+                    'link' => ['The link field is required when file is not present.'],
                 ],
                 'code' => 422,
             ],
@@ -158,8 +158,8 @@ class AttachmentsApiTest extends TestCase
         $page = Page::query()->first();
 
         $attachment = $this->createAttachmentForPage($page, [
-            'name' => 'my attachment',
-            'path' => 'https://example.com',
+            'name'  => 'my attachment',
+            'path'  => 'https://example.com',
             'order' => 1,
         ]);
 
@@ -167,20 +167,20 @@ class AttachmentsApiTest extends TestCase
 
         $resp->assertStatus(200);
         $resp->assertJson([
-            'id' => $attachment->id,
-            'content' => 'https://example.com',
-            'external' => true,
+            'id'          => $attachment->id,
+            'content'     => 'https://example.com',
+            'external'    => true,
             'uploaded_to' => $page->id,
-            'order' => 1,
-            'created_by' => [
+            'order'       => 1,
+            'created_by'  => [
                 'name' => $attachment->createdBy->name,
             ],
             'updated_by' => [
                 'name' => $attachment->createdBy->name,
             ],
             'links' => [
-                "html" => "<a target=\"_blank\" href=\"http://localhost/attachments/{$attachment->id}\">my attachment</a>",
-                "markdown" => "[my attachment](http://localhost/attachments/{$attachment->id})"
+                'html'     => "<a target=\"_blank\" href=\"http://localhost/attachments/{$attachment->id}\">my attachment</a>",
+                'markdown' => "[my attachment](http://localhost/attachments/{$attachment->id})",
             ],
         ]);
     }
@@ -193,7 +193,7 @@ class AttachmentsApiTest extends TestCase
         $file = $this->getTestFile('textfile.txt');
 
         $details = [
-            'name' => 'My file attachment',
+            'name'        => 'My file attachment',
             'uploaded_to' => $page->id,
         ];
         $this->call('POST', $this->baseEndpoint, $details, [], ['file' => $file]);
@@ -204,20 +204,20 @@ class AttachmentsApiTest extends TestCase
 
         $resp->assertStatus(200);
         $resp->assertJson([
-            'id' => $attachment->id,
-            'content' => base64_encode(file_get_contents(storage_path($attachment->path))),
-            'external' => false,
+            'id'          => $attachment->id,
+            'content'     => base64_encode(file_get_contents(storage_path($attachment->path))),
+            'external'    => false,
             'uploaded_to' => $page->id,
-            'order' => 1,
-            'created_by' => [
+            'order'       => 1,
+            'created_by'  => [
                 'name' => $attachment->createdBy->name,
             ],
             'updated_by' => [
                 'name' => $attachment->updatedBy->name,
             ],
             'links' => [
-                "html" => "<a target=\"_blank\" href=\"http://localhost/attachments/{$attachment->id}\">My file attachment</a>",
-                "markdown" => "[My file attachment](http://localhost/attachments/{$attachment->id})"
+                'html'     => "<a target=\"_blank\" href=\"http://localhost/attachments/{$attachment->id}\">My file attachment</a>",
+                'markdown' => "[My file attachment](http://localhost/attachments/{$attachment->id})",
             ],
         ]);
 
@@ -250,7 +250,6 @@ class AttachmentsApiTest extends TestCase
         $attachment = $this->createAttachmentForPage($page);
         $file = $this->getTestFile('textfile.txt');
 
-
         $resp = $this->call('PUT', "{$this->baseEndpoint}/{$attachment->id}", ['name' => 'My updated file'], [], ['file' => $file]);
         $resp->assertStatus(200);
 
@@ -278,7 +277,7 @@ class AttachmentsApiTest extends TestCase
 
         $details = [
             'name' => 'My updated API attachment',
-            'link' => 'https://cats.example.com'
+            'link' => 'https://cats.example.com',
         ];
 
         $resp = $this->putJson("{$this->baseEndpoint}/{$attachment->id}", $details);
@@ -310,13 +309,14 @@ class AttachmentsApiTest extends TestCase
         /** @var Attachment $attachment */
         $attachment = $page->attachments()->forceCreate(array_merge([
             'uploaded_to' => $page->id,
-            'name' => 'test attachment',
-            'external' => true,
-            'order' => 1,
-            'created_by' => $admin->id,
-            'updated_by' => $admin->id,
-            'path' => 'https://attachment.example.com'
+            'name'        => 'test attachment',
+            'external'    => true,
+            'order'       => 1,
+            'created_by'  => $admin->id,
+            'updated_by'  => $admin->id,
+            'path'        => 'https://attachment.example.com',
         ], $attributes));
+
         return $attachment;
     }
 

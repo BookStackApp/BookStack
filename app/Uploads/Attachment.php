@@ -12,15 +12,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int $id
+ * @property int    $id
  * @property string $name
  * @property string $path
  * @property string $extension
- * @property ?Page $page
- * @property bool $external
- * @property int $uploaded_to
- * @property User $updatedBy
- * @property User $createdBy
+ * @property ?Page  $page
+ * @property bool   $external
+ * @property int    $uploaded_to
+ * @property User   $updatedBy
+ * @property User   $createdBy
  *
  * @method static Entity|Builder visible()
  */
@@ -90,6 +90,7 @@ class Attachment extends Model
     public function scopeVisible(): Builder
     {
         $permissionService = app()->make(PermissionService::class);
+
         return $permissionService->filterRelatedEntity(
             Page::class,
             Attachment::query(),
