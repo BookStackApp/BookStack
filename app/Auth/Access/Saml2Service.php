@@ -91,8 +91,11 @@ class Saml2Service
      * @throws JsonDebugException
      * @throws UserRegistrationException
      */
-    public function processAcsResponse(?string $requestId): ?User
+    public function processAcsResponse(string $requestId, string $samlResponse): ?User
     {
+        // The SAML2 toolkit expects the response to be within the $_POST superglobal
+        // so we need to manually put it back there at this point.
+        $_POST['SAMLResponse'] = $samlResponse;
         $toolkit = $this->getToolkit();
         $toolkit->processResponse($requestId);
         $errors = $toolkit->getErrors();
