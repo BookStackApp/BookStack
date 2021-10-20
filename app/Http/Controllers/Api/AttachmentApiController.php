@@ -52,6 +52,9 @@ class AttachmentApiController extends ApiController
      * An uploaded_to value must be provided containing an ID of the page
      * that this upload will be related to.
      *
+     * If you're uploading a file the POST data should be provided via
+     * a multipart/form-data type request instead of JSON.
+     *
      * @throws ValidationException
      * @throws FileUploadException
      */
@@ -108,6 +111,8 @@ class AttachmentApiController extends ApiController
 
     /**
      * Update the details of a single attachment.
+     * As per the create endpoint, if a file is being provided as the attachment content
+     * the request should be formatted as a multipart/form-data request instead of JSON.
      *
      * @throws ValidationException
      * @throws FileUploadException
