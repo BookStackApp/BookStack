@@ -29,7 +29,7 @@ class Attachment extends Model
     use HasCreatorAndUpdater;
 
     protected $fillable = ['name', 'order'];
-    protected $hidden = ['path'];
+    protected $hidden = ['path', 'page'];
     protected $casts = [
         'external' => 'bool',
     ];
