@@ -88,6 +88,7 @@ class Saml2Controller extends Controller
 
         if (empty($samlResponse)) {
             $this->showErrorNotification(trans('errors.saml_fail_authed', ['system' => config('saml2.name')]));
+
             return redirect('/login');
         }
 
@@ -108,19 +109,23 @@ class Saml2Controller extends Controller
         $acsId = $request->get('id', null);
         $cacheKey = 'saml2_acs:' . $acsId;
         $samlResponse = null;
+
         try {
             $samlResponse = decrypt(cache()->pull($cacheKey));
-        } catch (\Exception $exception) {}
+        } catch (\Exception $exception) {
+        }
         $requestId = session()->pull('saml2_request_id', 'unset');
 
         if (empty($acsId) || empty($samlResponse)) {
             $this->showErrorNotification(trans('errors.saml_fail_authed', ['system' => config('saml2.name')]));
+
             return redirect('/login');
         }
 
         $user = $this->samlService->processAcsResponse($requestId, $samlResponse);
         if (is_null($user)) {
             $this->showErrorNotification(trans('errors.saml_fail_authed', ['system' => config('saml2.name')]));
+
             return redirect('/login');
         }
 
