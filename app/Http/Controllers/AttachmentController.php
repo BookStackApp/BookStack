@@ -121,9 +121,9 @@ class AttachmentController extends Controller
             ]), 422);
         }
 
-        $this->checkOwnablePermission('view', $attachment->page);
+        $this->checkOwnablePermission('page-view', $attachment->page);
         $this->checkOwnablePermission('page-update', $attachment->page);
-        $this->checkOwnablePermission('attachment-create', $attachment);
+        $this->checkOwnablePermission('attachment-update', $attachment);
 
         $attachment = $this->attachmentService->updateFile($attachment, [
             'name' => $request->get('attachment_edit_name'),

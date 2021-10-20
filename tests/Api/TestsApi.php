@@ -18,6 +18,16 @@ trait TestsApi
     }
 
     /**
+     * Set the API admin role as the current user via the API driver.
+     */
+    protected function actingAsApiAdmin()
+    {
+        $this->actingAs($this->getAdmin(), 'api');
+
+        return $this;
+    }
+
+    /**
      * Format the given items into a standardised error format.
      */
     protected function errorResponse(string $message, int $code): array
