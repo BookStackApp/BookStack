@@ -265,7 +265,8 @@ Route::post('/saml2/login', 'Auth\Saml2Controller@login');
 Route::get('/saml2/logout', 'Auth\Saml2Controller@logout');
 Route::get('/saml2/metadata', 'Auth\Saml2Controller@metadata');
 Route::get('/saml2/sls', 'Auth\Saml2Controller@sls');
-Route::post('/saml2/acs', 'Auth\Saml2Controller@acs');
+Route::post('/saml2/acs', 'Auth\Saml2Controller@startAcs');
+Route::get('/saml2/acs', 'Auth\Saml2Controller@processAcs');
 
 // OIDC routes
 Route::post('/oidc/login', 'Auth\OidcController@login');

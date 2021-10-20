@@ -68,17 +68,47 @@ class Saml2Test extends TestCase
         config()->set(['saml2.onelogin.strict' => false]);
         $this->assertFalse($this->isAuthenticated());
 
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
-            $acsPost = $this->post('/saml2/acs');
-            $acsPost->assertRedirect('/');
-            $this->assertTrue($this->isAuthenticated());
-            $this->assertDatabaseHas('users', [
-                'email'            => 'user@example.com',
-                'external_auth_id' => 'user',
-                'email_confirmed'  => false,
-                'name'             => 'Barry Scott',
-            ]);
-        });
+        $acsPost = $this->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $redirect = $acsPost->headers->get('Location');
+        $acsId = explode('?id=', $redirect)[1];
+        $this->assertTrue(strlen($acsId) > 12);
+
+        $this->assertStringContainsString('/saml2/acs?id=', $redirect);
+        $this->assertTrue(cache()->has('saml2_acs:' . $acsId));
+
+        $acsGet = $this->get($redirect);
+        $acsGet->assertRedirect('/');
+        $this->assertFalse(cache()->has('saml2_acs:' . $acsId));
+
+        $this->assertTrue($this->isAuthenticated());
+        $this->assertDatabaseHas('users', [
+            'email'            => 'user@example.com',
+            'external_auth_id' => 'user',
+            'email_confirmed'  => false,
+            'name'             => 'Barry Scott',
+        ]);
+    }
+
+    public function test_acs_process_id_randomly_generated()
+    {
+        $acsPost = $this->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $redirectA = $acsPost->headers->get('Location');
+
+        $acsPost = $this->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $redirectB = $acsPost->headers->get('Location');
+
+        $this->assertFalse($redirectA === $redirectB);
+    }
+
+    public function test_process_acs_endpoint_cant_be_called_with_invalid_id()
+    {
+        $resp = $this->get('/saml2/acs');
+        $resp->assertRedirect('/login');
+        $this->followRedirects($resp)->assertSeeText('Login using SingleSignOn-Testing failed, system did not provide successful authorization');
+
+        $resp = $this->get('/saml2/acs?id=abc123');
+        $resp->assertRedirect('/login');
+        $this->followRedirects($resp)->assertSeeText('Login using SingleSignOn-Testing failed, system did not provide successful authorization');
     }
 
     public function test_group_role_sync_on_login()
@@ -92,14 +122,12 @@ class Saml2Test extends TestCase
         $memberRole = factory(Role::class)->create(['external_auth_id' => 'member']);
         $adminRole = Role::getSystemRole('admin');
 
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () use ($memberRole, $adminRole) {
-            $acsPost = $this->post('/saml2/acs');
-            $user = User::query()->where('external_auth_id', '=', 'user')->first();
+        $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $user = User::query()->where('external_auth_id', '=', 'user')->first();
 
-            $userRoleIds = $user->roles()->pluck('id');
-            $this->assertContains($memberRole->id, $userRoleIds, 'User was assigned to member role');
-            $this->assertContains($adminRole->id, $userRoleIds, 'User was assigned to admin role');
-        });
+        $userRoleIds = $user->roles()->pluck('id');
+        $this->assertContains($memberRole->id, $userRoleIds, 'User was assigned to member role');
+        $this->assertContains($adminRole->id, $userRoleIds, 'User was assigned to admin role');
     }
 
     public function test_group_role_sync_removal_option_works_as_expected()
@@ -110,18 +138,16 @@ class Saml2Test extends TestCase
             'saml2.remove_from_groups' => true,
         ]);
 
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
-            $acsPost = $this->post('/saml2/acs');
-            $user = User::query()->where('external_auth_id', '=', 'user')->first();
+        $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $user = User::query()->where('external_auth_id', '=', 'user')->first();
 
-            $randomRole = factory(Role::class)->create(['external_auth_id' => 'random']);
-            $user->attachRole($randomRole);
-            $this->assertContains($randomRole->id, $user->roles()->pluck('id'));
+        $randomRole = factory(Role::class)->create(['external_auth_id' => 'random']);
+        $user->attachRole($randomRole);
+        $this->assertContains($randomRole->id, $user->roles()->pluck('id'));
 
-            auth()->logout();
-            $acsPost = $this->post('/saml2/acs');
-            $this->assertNotContains($randomRole->id, $user->roles()->pluck('id'));
-        });
+        auth()->logout();
+        $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $this->assertNotContains($randomRole->id, $user->roles()->pluck('id'));
     }
 
     public function test_logout_link_directs_to_saml_path()
@@ -149,16 +175,12 @@ class Saml2Test extends TestCase
             $this->assertFalse($this->isAuthenticated());
         };
 
-        $loginAndStartLogout = function () use ($handleLogoutResponse) {
-            $this->post('/saml2/acs');
+        $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
 
-            $req = $this->get('/saml2/logout');
-            $redirect = $req->headers->get('location');
-            $this->assertStringStartsWith('http://saml.local/saml2/idp/SingleLogoutService.php', $redirect);
-            $this->withGet(['SAMLResponse' => $this->sloResponseData], $handleLogoutResponse);
-        };
-
-        $this->withPost(['SAMLResponse' => $this->acsPostData], $loginAndStartLogout);
+        $req = $this->get('/saml2/logout');
+        $redirect = $req->headers->get('location');
+        $this->assertStringStartsWith('http://saml.local/saml2/idp/SingleLogoutService.php', $redirect);
+        $this->withGet(['SAMLResponse' => $this->sloResponseData], $handleLogoutResponse);
     }
 
     public function test_logout_sls_flow_when_sls_not_configured()
@@ -168,15 +190,12 @@ class Saml2Test extends TestCase
             'saml2.onelogin.idp.singleLogoutService.url' => null,
         ]);
 
-        $loginAndStartLogout = function () {
-            $this->post('/saml2/acs');
+        $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $this->assertTrue($this->isAuthenticated());
 
-            $req = $this->get('/saml2/logout');
-            $req->assertRedirect('/');
-            $this->assertFalse($this->isAuthenticated());
-        };
-
-        $this->withPost(['SAMLResponse' => $this->acsPostData], $loginAndStartLogout);
+        $req = $this->get('/saml2/logout');
+        $req->assertRedirect('/');
+        $this->assertFalse($this->isAuthenticated());
     }
 
     public function test_dump_user_details_option_works()
@@ -186,14 +205,12 @@ class Saml2Test extends TestCase
             'saml2.dump_user_details' => true,
         ]);
 
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
-            $acsPost = $this->post('/saml2/acs');
-            $acsPost->assertJsonStructure([
-                'id_from_idp',
-                'attrs_from_idp'      => [],
-                'attrs_after_parsing' => [],
-            ]);
-        });
+        $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $acsPost->assertJsonStructure([
+            'id_from_idp',
+            'attrs_from_idp'      => [],
+            'attrs_after_parsing' => [],
+        ]);
     }
 
     public function test_saml_routes_are_only_active_if_saml_enabled()
@@ -263,13 +280,10 @@ class Saml2Test extends TestCase
             'saml2.onelogin.strict' => false,
         ]);
 
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
-            $acsPost = $this->post('/saml2/acs');
-            $acsPost->assertRedirect('/login');
-            $errorMessage = session()->get('error');
-            $this->assertStringContainsString('That email domain does not have access to this application', $errorMessage);
-            $this->assertDatabaseMissing('users', ['email' => 'user@example.com']);
-        });
+        $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $acsPost->assertSeeText('That email domain does not have access to this application');
+        $this->assertFalse(auth()->check());
+        $this->assertDatabaseMissing('users', ['email' => 'user@example.com']);
     }
 
     public function test_group_sync_functions_when_email_confirmation_required()
@@ -284,19 +298,17 @@ class Saml2Test extends TestCase
         $memberRole = factory(Role::class)->create(['external_auth_id' => 'member']);
         $adminRole = Role::getSystemRole('admin');
 
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () use ($memberRole, $adminRole) {
-            $acsPost = $this->followingRedirects()->post('/saml2/acs');
+        $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
 
-            $this->assertEquals('http://localhost/register/confirm', url()->current());
-            $acsPost->assertSee('Please check your email and click the confirmation button to access BookStack.');
-            /** @var User $user */
-            $user = User::query()->where('external_auth_id', '=', 'user')->first();
+        $this->assertEquals('http://localhost/register/confirm', url()->current());
+        $acsPost->assertSee('Please check your email and click the confirmation button to access BookStack.');
+        /** @var User $user */
+        $user = User::query()->where('external_auth_id', '=', 'user')->first();
 
-            $userRoleIds = $user->roles()->pluck('id');
-            $this->assertContains($memberRole->id, $userRoleIds, 'User was assigned to member role');
-            $this->assertContains($adminRole->id, $userRoleIds, 'User was assigned to admin role');
-            $this->assertFalse(boolval($user->email_confirmed), 'User email remains unconfirmed');
-        });
+        $userRoleIds = $user->roles()->pluck('id');
+        $this->assertContains($memberRole->id, $userRoleIds, 'User was assigned to member role');
+        $this->assertContains($adminRole->id, $userRoleIds, 'User was assigned to admin role');
+        $this->assertFalse(boolval($user->email_confirmed), 'User email remains unconfirmed');
 
         $this->assertNull(auth()->user());
         $homeGet = $this->get('/');
@@ -316,18 +328,14 @@ class Saml2Test extends TestCase
             'name'             => 'Barry Scott',
         ]);
 
-        $this->withPost(['SAMLResponse' => $this->acsPostData], function () {
-            $acsPost = $this->post('/saml2/acs');
-            $acsPost->assertRedirect('/login');
-            $this->assertFalse($this->isAuthenticated());
-            $this->assertDatabaseHas('users', [
-                'email'            => 'user@example.com',
-                'external_auth_id' => 'old_system_user_id',
-            ]);
+        $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $this->assertFalse($this->isAuthenticated());
+        $this->assertDatabaseHas('users', [
+            'email'            => 'user@example.com',
+            'external_auth_id' => 'old_system_user_id',
+        ]);
 
-            $loginGet = $this->get('/login');
-            $loginGet->assertSee('A user with the email user@example.com already exists but with different credentials');
-        });
+        $acsPost->assertSee('A user with the email user@example.com already exists but with different credentials');
     }
 
     public function test_login_request_contains_expected_default_authncontext()
@@ -368,11 +376,6 @@ class Saml2Test extends TestCase
     protected function withGet(array $options, callable $callback)
     {
         return $this->withGlobal($_GET, $options, $callback);
-    }
-
-    protected function withPost(array $options, callable $callback)
-    {
-        return $this->withGlobal($_POST, $options, $callback);
     }
 
     protected function withGlobal(array &$global, array $options, callable $callback)
