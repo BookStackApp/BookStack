@@ -7,6 +7,12 @@
  */
 Route::get('docs.json', 'ApiDocsController@json');
 
+Route::get('attachments', 'AttachmentApiController@list');
+Route::post('attachments', 'AttachmentApiController@create');
+Route::get('attachments/{id}', 'AttachmentApiController@read');
+Route::put('attachments/{id}', 'AttachmentApiController@update');
+Route::delete('attachments/{id}', 'AttachmentApiController@delete');
+
 Route::get('books', 'BookApiController@list');
 Route::post('books', 'BookApiController@create');
 Route::get('books/{id}', 'BookApiController@read');

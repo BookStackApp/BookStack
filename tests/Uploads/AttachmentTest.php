@@ -76,9 +76,9 @@ class AttachmentTest extends TestCase
         $upload->assertStatus(200);
 
         $attachment = Attachment::query()->orderBy('id', 'desc')->first();
-        $expectedResp['path'] = $attachment->path;
-
         $upload->assertJson($expectedResp);
+
+        $expectedResp['path'] = $attachment->path;
         $this->assertDatabaseHas('attachments', $expectedResp);
 
         $this->deleteUploads();
