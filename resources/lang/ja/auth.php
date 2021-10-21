@@ -104,7 +104,7 @@ return [
     'mfa_verify_no_methods_desc' => 'No multi-factor authentication methods could be found for your account. You\'ll need to set up at least one method before you gain access.',
     'mfa_verify_use_totp' => 'Verify using a mobile app',
     'mfa_verify_use_backup_codes' => 'Verify using a backup code',
-    'mfa_verify_backup_code' => 'Backup Code',
+    'mfa_verify_backup_code' => 'バックアップコード',
     'mfa_verify_backup_code_desc' => 'Enter one of your remaining backup codes below:',
     'mfa_verify_backup_code_enter_here' => 'Enter backup code here',
     'mfa_verify_totp_desc' => 'Enter the code, generated using your mobile app, below:',
