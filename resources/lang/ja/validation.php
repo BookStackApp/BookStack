@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attributeは文字, 数値, ハイフンのみが含められます。',
     'alpha_num'            => ':attributeは文字と数値のみが含められます。',
     'array'                => ':attributeは配列である必要があります。',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => '提供されたコードは無効か、またはすでに使用されています。',
     'before'               => ':attributeは:date以前である必要があります。',
     'between'              => [
         'numeric' => ':attributeは:min〜:maxである必要があります。',
@@ -31,10 +31,10 @@ return [
     'digits'               => ':attributeは:digitsデジットである必要があります',
     'digits_between'       => ':attributeは:min〜:maxである必要があります。',
     'email'                => ':attributeは正しいEメールアドレスである必要があります。',
-    'ends_with' => 'The :attribute must end with one of the following: :values',
+    'ends_with' => ':attributeは、:valuesのいずれかで終わる必要があります。',
     'filled'               => ':attributeは必須です。',
     'gt'                   => [
-        'numeric' => 'The :attribute must be greater than :value.',
+        'numeric' => ':attributeは、:valueより大きな値である必要があります。',
         'file'    => 'The :attribute must be greater than :value kilobytes.',
         'string'  => 'The :attribute must be greater than :value characters.',
         'array'   => 'The :attribute must have more than :value items.',
