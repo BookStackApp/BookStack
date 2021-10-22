@@ -8,7 +8,7 @@
         <a href="#" data-sort="created" class="button outline small">{{ trans('entities.chapters_sort_created') }}</a>
         <a href="#" data-sort="updated" class="button outline small">{{ trans('entities.chapters_sort_updated') }}</a>
         <a href="#" data-sort="pagesFirst" class="button outline small">{{ trans('entities.chapters_sort_pages_first') }}</a>
-        <a href="#" data-sort="pagessLast" class="button outline small">{{ trans('entities.chapters_sort_pages_last') }}</a>
+        <a href="#" data-sort="pagesLast" class="button outline small">{{ trans('entities.chapters_sort_pages_last') }}</a>
     </div>
     <ul class="sortable-page-list sort-list">
         @foreach($chapter->getVisiblePages() as $page)

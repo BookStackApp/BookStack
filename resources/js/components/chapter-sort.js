@@ -20,18 +20,11 @@ const sortOperations = {
     pagesFirst: function(a, b) {
         const aType = a.getAttribute('data-type');
         const bType = b.getAttribute('data-type');
-        console.log('worked');
-        if (aType === bType) {
-            return 0;
-        }
         return (aType === 'page' ? -1 : 1);
     },
     pagesLast: function(a, b) {
         const aType = a.getAttribute('data-type');
         const bType = b.getAttribute('data-type');
-        if (aType === bType) {
-            return 0;
-        }
         return (aType === 'page' ? 1 : -1);
     },
 };
@@ -181,24 +174,14 @@ class ChapterSort {
         const parentChapter = false;
         const childId = childElem.getAttribute('data-id');
 
-        // entityMap.push({
-        //     id: childId,
-        //     sort: index,
-        //     parentChapter: parentChapter,
-        //     type: type,
-        //     chapter: chapterId
-        // });
+        entityMap.push({
+            id: childId,
+            sort: index,
+            parentChapter: parentChapter,
+            type: type,
+            chapter: chapterId
+        });
 
-        const subPages = childElem.querySelectorAll('[data-type="page"]');
-        for (let i = 0; i < subPages.length; i++) {
-            entityMap.push({
-                id: subPages[i].getAttribute('data-id'),
-                sort: i,
-                parentChapter: childId,
-                type: 'page',
-                chapter: chapterId
-            });
-        }
     }
 
 }

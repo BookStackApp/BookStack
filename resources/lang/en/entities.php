@@ -172,7 +172,7 @@ return [
     'chapters_sort_created' => 'Sort by Created Date',
     'chapters_sort_updated' => 'Sort by Updated Date',
     'chapters_sort_pages_first' => 'Pages First',
-    'chapters_sort_pages_last' => 'Pagess Last',
+    'chapters_sort_pages_last' => 'Pages Last',
     'chapters_sort_show_other' => 'Show Other Chapters',
     'chapters_sort_save' => 'Save New Order',
 
