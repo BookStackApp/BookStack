@@ -37,7 +37,7 @@ class Saml2Controller extends Controller
      */
     public function logout()
     {
-        $logoutDetails = $this->samlService->logout();
+        $logoutDetails = $this->samlService->logout(auth()->user());
 
         if ($logoutDetails['id']) {
             session()->flash('saml2_logout_request_id', $logoutDetails['id']);
