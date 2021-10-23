@@ -9,6 +9,7 @@ use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
 use OneLogin\Saml2\Auth;
+use OneLogin\Saml2\Constants;
 use OneLogin\Saml2\Error;
 use OneLogin\Saml2\IdPMetadataParser;
 use OneLogin\Saml2\ValidationError;
@@ -59,17 +60,20 @@ class Saml2Service
      *
      * @throws Error
      */
-    public function logout(): array
+    public function logout(User $user): array
     {
         $toolKit = $this->getToolkit();
         $returnRoute = url('/');
 
         try {
-            $email = auth()->user()['email'];
-            $nameIdFormat = env('SAML2_SP_NAME_ID_Format', null);
-            $nameIdSPNameQualifier = env('SAML2_SP_NAME_ID_SP_NAME_QUALIFIER', null);
-
-            $url = $toolKit->logout($returnRoute, [], $email, null, true, $nameIdFormat, null, $nameIdSPNameQualifier);
+            $url = $toolKit->logout(
+                $returnRoute,
+                [],
+                $user->email,
+                null,
+                true,
+                Constants::NAMEID_EMAIL_ADDRESS
+            );
             $id = $toolKit->getLastRequestID();
         } catch (Error $error) {
             if ($error->getCode() !== Error::SAML_SINGLE_LOGOUT_NOT_SUPPORTED) {
@@ -128,10 +132,13 @@ class Saml2Service
     public function processSlsResponse(?string $requestId): ?string
     {
         $toolkit = $this->getToolkit();
-        $retrieveParametersFromServer = env('SAML2_RETRIEVE_PARAMETERS_FROM_SERVER', false);
 
-        $redirect = $toolkit->processSLO(true, $requestId, $retrieveParametersFromServer, null, true);
-
+        // The $retrieveParametersFromServer in the call below will mean the library will take the query
+        // parameters, used for the response signing, from the raw $_SERVER['QUERY_STRING']
+        // value so that the exact encoding format is matched when checking the signature.
+        // This is primarily due to ADFS encoding query params with lowercase percent encoding while
+        // PHP (And most other sensible providers) standardise on uppercase.
+        $redirect = $toolkit->processSLO(true, $requestId, true, null, true);
         $errors = $toolkit->getErrors();
 
         if (!empty($errors)) {
