@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" telah dihapus dari favorit Anda',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Metode multi-faktor sukses dikonfigurasi',
+    'mfa_remove_method_notification' => 'Metode multi-faktor sukses dihapus',
 
     // Other
     'commented_on'                => 'berkomentar pada',
