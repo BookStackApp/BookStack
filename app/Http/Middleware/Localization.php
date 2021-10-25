@@ -15,6 +15,7 @@ class Localization
 
     /**
      * Map of BookStack locale names to best-estimate system locale names.
+     * Locales can often be found by running `locale -a` on a linux system.
      */
     protected $localeMap = [
         'ar'          => 'ar',
@@ -27,6 +28,7 @@ class Localization
         'en'          => 'en_GB',
         'es'          => 'es_ES',
         'es_AR'       => 'es_AR',
+        'et'          => 'et_EE',
         'fr'          => 'fr_FR',
         'he'          => 'he_IL',
         'hr'          => 'hr_HR',
