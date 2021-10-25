@@ -8,7 +8,7 @@ return [
 
     'password' => 'パスワードは6文字以上である必要があります。',
     'user' => "このEメールアドレスに一致するユーザが見つかりませんでした。",
-    'token' => 'The password reset token is invalid for this email address.',
+    'token' => 'このメールアドレスのパスワードリセットトークンは無効です。',
     'sent' => 'パスワードリセットリンクを送信しました。',
     'reset' => 'パスワードはリセットされました。',
 

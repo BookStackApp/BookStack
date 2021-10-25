@@ -80,7 +80,7 @@ return [
     'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
     'mfa_setup_configured' => 'Already configured',
     'mfa_setup_reconfigure' => 'Reconfigure',
-    'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
+    'mfa_setup_remove_confirmation' => 'Apakah Anda yakin ingin menghapus metode autentikasi multi-faktor ini?',
     'mfa_setup_action' => 'Setup',
     'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
     'mfa_option_totp_title' => 'Mobile App',
