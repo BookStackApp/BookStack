@@ -248,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti Keel',
         'fr' => 'Français',
         'he' => '히브리어',
         'hr' => 'Hrvatski',

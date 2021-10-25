@@ -16,6 +16,8 @@ class ImageRepo
     protected $restrictionService;
     protected $page;
 
+    protected static $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
     /**
      * ImageRepo constructor.
      */
@@ -29,6 +31,14 @@ class ImageRepo
         $this->imageService = $imageService;
         $this->restrictionService = $permissionService;
         $this->page = $page;
+    }
+
+    /**
+     * Check if the given image extension is supported by BookStack.
+     */
+    public function imageExtensionSupported(string $extension): bool
+    {
+        return in_array(trim($extension, '. \t\n\r\0\x0B'), static::$supportedExtensions);
     }
 
     /**

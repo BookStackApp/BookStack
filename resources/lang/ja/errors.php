@@ -13,7 +13,7 @@ return [
     'email_already_confirmed' => 'Eメールは既に確認済みです。ログインしてください。',
     'email_confirmation_invalid' => 'この確認トークンは無効か、または既に使用済みです。登録を再試行してください。',
     'email_confirmation_expired' => '確認トークンは有効期限切れです。確認メールを再送しました。',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'email_confirmation_awaiting' => '使用中のアカウントのメールアドレスを確認する必要があります',
     'ldap_fail_anonymous' => '匿名バインドを用いたLDAPアクセスに失敗しました',
     'ldap_fail_authed' => '識別名, パスワードを用いたLDAPアクセスに失敗しました',
     'ldap_extension_not_installed' => 'LDAP PHP extensionがインストールされていません',
@@ -23,6 +23,10 @@ return [
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'oidc_already_logged_in' => '既にログインしています',
+    'oidc_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
+    'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
+    'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'アクションが定義されていません',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
     'social_account_in_use' => ':socialAccountアカウントは既に使用されています。:socialAccountのオプションからログインを試行してください。',
@@ -33,7 +37,7 @@ return [
     'social_account_register_instructions' => 'まだアカウントをお持ちでない場合、:socialAccountオプションから登録できます。',
     'social_driver_not_found' => 'Social driverが見つかりません。',
     'social_driver_not_configured' => 'あなたの:socialAccount設定は正しく構成されていません。',
-    'invite_token_expired' => 'This invitation link has expired. You can instead try to reset your account password.',
+    'invite_token_expired' => 'この招待リンクの有効期限が切れています。 代わりにアカウントのパスワードをリセットしてみてください。',
 
     // System
     'path_not_writable' => 'ファイルパス :filePath へアップロードできませんでした。サーバ上での書き込みが許可されているか確認してください。',
@@ -42,7 +46,7 @@ return [
     'server_upload_limit' => 'このサイズの画像をアップロードすることは許可されていません。ファイルサイズを小さくし、再試行してください。',
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'image_upload_error' => '画像アップロード時にエラーが発生しました。',
-    'image_upload_type_error' => 'The image type being uploaded is invalid',
+    'image_upload_type_error' => 'アップロード中の画像の種類が無効です',
     'file_upload_timeout' => 'ファイルのアップロードがタイムアウトしました。',
 
     // Attachments
@@ -50,11 +54,11 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => '下書きの保存に失敗しました。インターネットへ接続してください。',
-    'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
+    'page_custom_home_deletion' => 'ホームページに設定されているページは削除できません',
 
     // Entities
     'entity_not_found' => 'エンティティが見つかりません',
-    'bookshelf_not_found' => 'Bookshelf not found',
+    'bookshelf_not_found' => '本棚が見つかりません',
     'book_not_found' => 'ブックが見つかりません',
     'page_not_found' => 'ページが見つかりません',
     'chapter_not_found' => 'チャプターが見つかりません',
@@ -82,10 +86,10 @@ return [
     // Error pages
     '404_page_not_found' => 'ページが見つかりません',
     'sorry_page_not_found' => 'ページを見つけることができませんでした。',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
-    'image_not_found' => 'Image Not Found',
-    'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
-    'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
+    'sorry_page_not_found_permission_warning' => 'このページが存在すると思われる場合は、閲覧の権限がない可能性があります。',
+    'image_not_found' => '画像が見つかりません',
+    'image_not_found_subtitle' => '画像を見つけることができませんでした。',
+    'image_not_found_details' => 'この画像が存在することを予期していた場合は、削除された可能性があります。',
     'return_home' => 'ホームに戻る',
     'error_occurred' => 'エラーが発生しました',
     'app_down' => ':appNameは現在停止しています',

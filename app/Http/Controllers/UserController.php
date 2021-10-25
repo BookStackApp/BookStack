@@ -84,7 +84,7 @@ class UserController extends Controller
         if ($authMethod === 'standard' && !$sendInvite) {
             $validationRules['password'] = 'required|min:6';
             $validationRules['password-confirm'] = 'required|same:password';
-        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2') {
+        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'openid') {
             $validationRules['external_auth_id'] = 'required';
         }
         $this->validate($request, $validationRules);
@@ -93,7 +93,7 @@ class UserController extends Controller
 
         if ($authMethod === 'standard') {
             $user->password = bcrypt($request->get('password', Str::random(32)));
-        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2') {
+        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'openid') {
             $user->external_auth_id = $request->get('external_auth_id');
         }
 
