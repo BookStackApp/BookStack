@@ -126,7 +126,7 @@ return [
 
     // Role Settings
     'roles' => 'Rollid',
-    'role_user_roles' => 'Kasutajate rollid',
+    'role_user_roles' => 'Kasutaja rollid',
     'role_create' => 'Lisa uus roll',
     'role_create_success' => 'Roll on lisatud',
     'role_delete' => 'Kustuta roll',
@@ -209,8 +209,8 @@ return [
     'users_api_tokens_docs' => 'API dokumentatsioon',
     'users_mfa' => 'Mitmeastmeline autentimine',
     'users_mfa_desc' => 'Seadista mitmeastmeline autentimine, et oma kasutajakonto turvalisust tõsta.',
-    'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa_x_methods' => ':count meetod seadistatud|:count meetodit seadistatud',
+    'users_mfa_configure' => 'Seadista meetodid',
 
     // API Tokens
     'user_api_token_create' => 'Lisa API tunnus',
