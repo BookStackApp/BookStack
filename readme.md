@@ -157,7 +157,7 @@ Security information for administering a BookStack instance can be found on the 
 
 If you'd like to be notified of new potential security concerns you can [sign-up to the BookStack security mailing list](https://updates.bookstackapp.com/signup/bookstack-security-updates).
 
-If you would like to report a security concern in a more confidential manner than via a GitHub issue, You can directly email the lead maintainer [ssddanbrown](https://github.com/ssddanbrown). You will need to login to be able to see the email address on the [GitHub profile page](https://github.com/ssddanbrown). Alternatively you can send a DM via twitter to [@ssddanbrown](https://twitter.com/ssddanbrown).
+If you would like to report a security concern, details of doing so can [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/SECURITY.md).
 
 ## ♿ Accessibility
 
