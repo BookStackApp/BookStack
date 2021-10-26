@@ -38,7 +38,7 @@ class ImageRepo
      */
     public function imageExtensionSupported(string $extension): bool
     {
-        return in_array(trim($extension, '. \t\n\r\0\x0B'), static::$supportedExtensions);
+        return in_array(trim($extension, ". \t\n\r\0\x0B"), static::$supportedExtensions);
     }
 
     /**
