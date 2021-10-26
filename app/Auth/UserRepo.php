@@ -75,7 +75,7 @@ class UserRepo
             ->orderBy($sort, $sortData['order']);
 
         if ($sortData['search']) {
-            $term = '%'.$sortData['search'].'%';
+            $term = '%' . $sortData['search'] . '%';
             $query->where(function ($query) use ($term) {
                 $query->where('name', 'like', $term)
                     ->orWhere('email', 'like', $term);
@@ -116,7 +116,7 @@ class UserRepo
      */
     public function isOnlyAdmin(User $user): bool
     {
-        if (! $user->hasSystemRole('admin')) {
+        if (!$user->hasSystemRole('admin')) {
             return false;
         }
 
@@ -150,7 +150,7 @@ class UserRepo
     {
         if ($this->isOnlyAdmin($user)) {
             $adminRole = Role::getSystemRole('admin');
-            if (! in_array(strval($adminRole->id), $newRoles)) {
+            if (!in_array(strval($adminRole->id), $newRoles)) {
                 return true;
             }
         }
@@ -195,9 +195,9 @@ class UserRepo
         // Delete user profile images
         $this->userAvatar->destroyAllForUser($user);
 
-        if (! empty($newOwnerId)) {
+        if (!empty($newOwnerId)) {
             $newOwner = User::query()->find($newOwnerId);
-            if (! is_null($newOwner)) {
+            if (!is_null($newOwner)) {
                 $this->migrateOwnership($user, $newOwner);
             }
         }

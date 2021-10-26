@@ -84,7 +84,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
         // If we've already retrieved the user for the current request we can just
         // return it back immediately. We do not want to fetch the user data on
         // every call to this method because that would be tremendously slow.
-        if (! is_null($this->user)) {
+        if (!is_null($this->user)) {
             return $this->user;
         }
 
@@ -92,7 +92,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
         // First we will try to load the user using the
         // identifier in the session if one exists.
-        if (! is_null($id)) {
+        if (!is_null($id)) {
             $this->user = $this->provider->retrieveById($id);
         }
 
@@ -142,7 +142,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
      */
     public function onceUsingId($id)
     {
-        if (! is_null($user = $this->provider->retrieveById($id))) {
+        if (!is_null($user = $this->provider->retrieveById($id))) {
             $this->setUser($user);
 
             return $user;
@@ -264,7 +264,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
      */
     public function getName()
     {
-        return 'login_'.$this->name.'_'.sha1(static::class);
+        return 'login_' . $this->name . '_' . sha1(static::class);
     }
 
     /**

@@ -68,7 +68,7 @@ class DrawioImageController extends Controller
     {
         $image = $this->imageRepo->getById($id);
         $page = $image->getPage();
-        if ($image === null || $image->type !== 'drawio' || ! userCan('page-view', $page)) {
+        if ($image === null || $image->type !== 'drawio' || !userCan('page-view', $page)) {
             return $this->jsonError('Image data could not be found');
         }
 

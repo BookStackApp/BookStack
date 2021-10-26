@@ -23,7 +23,7 @@ class UserProfileTest extends TestCase
     public function test_profile_page_shows_name()
     {
         $this->asAdmin()
-            ->get('/user/'.$this->user->slug)
+            ->get('/user/' . $this->user->slug)
             ->assertSee($this->user->name);
     }
 
@@ -31,7 +31,7 @@ class UserProfileTest extends TestCase
     {
         $content = $this->createEntityChainBelongingToUser($this->user, $this->user);
 
-        $resp = $this->asAdmin()->get('/user/'.$this->user->slug);
+        $resp = $this->asAdmin()->get('/user/' . $this->user->slug);
         // Check the recently created page is shown
         $resp->assertSee($content['page']->name);
         // Check the recently created chapter is shown
@@ -44,7 +44,7 @@ class UserProfileTest extends TestCase
     {
         $newUser = factory(User::class)->create();
 
-        $this->asAdmin()->get('/user/'.$newUser->slug)
+        $this->asAdmin()->get('/user/' . $newUser->slug)
             ->assertSee($newUser->name)
             ->assertElementContains('#content-counts', '0 Books')
             ->assertElementContains('#content-counts', '0 Chapters')
@@ -52,7 +52,7 @@ class UserProfileTest extends TestCase
 
         $this->createEntityChainBelongingToUser($newUser, $newUser);
 
-        $this->asAdmin()->get('/user/'.$newUser->slug)
+        $this->asAdmin()->get('/user/' . $newUser->slug)
             ->assertSee($newUser->name)
             ->assertElementContains('#content-counts', '1 Book')
             ->assertElementContains('#content-counts', '1 Chapter')
@@ -67,7 +67,7 @@ class UserProfileTest extends TestCase
         Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
         Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
 
-        $this->asAdmin()->get('/user/'.$newUser->slug)
+        $this->asAdmin()->get('/user/' . $newUser->slug)
             ->assertElementContains('#recent-user-activity', 'updated book')
             ->assertElementContains('#recent-user-activity', 'created page')
             ->assertElementContains('#recent-user-activity', $entities['page']->name);
@@ -81,7 +81,7 @@ class UserProfileTest extends TestCase
         Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
         Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
 
-        $linkSelector = '#recent-activity a[href$="/user/'.$newUser->slug.'"]';
+        $linkSelector = '#recent-activity a[href$="/user/' . $newUser->slug . '"]';
         $this->asAdmin()->get('/')
             ->assertElementContains($linkSelector, $newUser->name);
     }
@@ -89,17 +89,17 @@ class UserProfileTest extends TestCase
     public function test_profile_has_search_links_in_created_entity_lists()
     {
         $user = $this->getEditor();
-        $resp = $this->actingAs($this->getAdmin())->get('/user/'.$user->slug);
+        $resp = $this->actingAs($this->getAdmin())->get('/user/' . $user->slug);
 
         $expectedLinks = [
-            '/search?term=%7Bcreated_by%3A'.$user->slug.'%7D+%7Btype%3Apage%7D',
-            '/search?term=%7Bcreated_by%3A'.$user->slug.'%7D+%7Btype%3Achapter%7D',
-            '/search?term=%7Bcreated_by%3A'.$user->slug.'%7D+%7Btype%3Abook%7D',
-            '/search?term=%7Bcreated_by%3A'.$user->slug.'%7D+%7Btype%3Abookshelf%7D',
+            '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Apage%7D',
+            '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Achapter%7D',
+            '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Abook%7D',
+            '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Abookshelf%7D',
         ];
 
         foreach ($expectedLinks as $link) {
-            $resp->assertElementContains('[href$="'.$link.'"]', 'View All');
+            $resp->assertElementContains('[href$="' . $link . '"]', 'View All');
         }
     }
 }

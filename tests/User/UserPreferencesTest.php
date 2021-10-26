@@ -12,18 +12,18 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $updateRequest = $this->patch('/settings/users/'.$editor->id.'/change-sort/books', [
+        $updateRequest = $this->patch('/settings/users/' . $editor->id . '/change-sort/books', [
             'sort'  => 'created_at',
             'order' => 'desc',
         ]);
         $updateRequest->assertStatus(302);
 
         $this->assertDatabaseHas('settings', [
-            'setting_key' => 'user:'.$editor->id.':books_sort',
+            'setting_key' => 'user:' . $editor->id . ':books_sort',
             'value'       => 'created_at',
         ]);
         $this->assertDatabaseHas('settings', [
-            'setting_key' => 'user:'.$editor->id.':books_sort_order',
+            'setting_key' => 'user:' . $editor->id . ':books_sort_order',
             'value'       => 'desc',
         ]);
         $this->assertEquals('created_at', setting()->getForCurrentUser('books_sort'));
@@ -35,7 +35,7 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $updateRequest = $this->patch('/settings/users/'.$editor->id.'/change-sort/bookshelves', [
+        $updateRequest = $this->patch('/settings/users/' . $editor->id . '/change-sort/bookshelves', [
             'sort'  => 'cat',
             'order' => 'dog',
         ]);
@@ -50,7 +50,7 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $updateRequest = $this->patch('/settings/users/'.$editor->id.'/change-sort/dogs', [
+        $updateRequest = $this->patch('/settings/users/' . $editor->id . '/change-sort/dogs', [
             'sort'  => 'name',
             'order' => 'asc',
         ]);
@@ -65,16 +65,16 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $updateRequest = $this->patch('/settings/users/'.$editor->id.'/update-expansion-preference/home-details', ['expand' => 'true']);
+        $updateRequest = $this->patch('/settings/users/' . $editor->id . '/update-expansion-preference/home-details', ['expand' => 'true']);
         $updateRequest->assertStatus(204);
 
         $this->assertDatabaseHas('settings', [
-            'setting_key' => 'user:'.$editor->id.':section_expansion#home-details',
+            'setting_key' => 'user:' . $editor->id . ':section_expansion#home-details',
             'value'       => 'true',
         ]);
         $this->assertEquals(true, setting()->getForCurrentUser('section_expansion#home-details'));
 
-        $invalidKeyRequest = $this->patch('/settings/users/'.$editor->id.'/update-expansion-preference/my-home-details', ['expand' => 'true']);
+        $invalidKeyRequest = $this->patch('/settings/users/' . $editor->id . '/update-expansion-preference/my-home-details', ['expand' => 'true']);
         $invalidKeyRequest->assertStatus(500);
     }
 

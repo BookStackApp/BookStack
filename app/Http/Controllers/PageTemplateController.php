@@ -45,7 +45,7 @@ class PageTemplateController extends Controller
     {
         $page = $this->pageRepo->getById($templateId);
 
-        if (! $page->template) {
+        if (!$page->template) {
             throw new NotFoundException();
         }
 

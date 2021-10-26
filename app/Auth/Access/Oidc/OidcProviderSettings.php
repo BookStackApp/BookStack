@@ -111,7 +111,7 @@ class OidcProviderSettings
     public function discoverFromIssuer(ClientInterface $httpClient, Repository $cache, int $cacheMinutes)
     {
         try {
-            $cacheKey = 'oidc-discovery::'.$this->issuer;
+            $cacheKey = 'oidc-discovery::' . $this->issuer;
             $discoveredSettings = $cache->remember($cacheKey, $cacheMinutes * 60, function () use ($httpClient) {
                 return $this->loadSettingsFromIssuerDiscovery($httpClient);
             });
@@ -127,12 +127,12 @@ class OidcProviderSettings
      */
     protected function loadSettingsFromIssuerDiscovery(ClientInterface $httpClient): array
     {
-        $issuerUrl = rtrim($this->issuer, '/').'/.well-known/openid-configuration';
+        $issuerUrl = rtrim($this->issuer, '/') . '/.well-known/openid-configuration';
         $request = new Request('GET', $issuerUrl);
         $response = $httpClient->sendRequest($request);
         $result = json_decode($response->getBody()->getContents(), true);
 
-        if (empty($result) || ! is_array($result)) {
+        if (empty($result) || !is_array($result)) {
             throw new OidcIssuerDiscoveryException("Error discovering provider settings from issuer at URL {$issuerUrl}");
         }
 
@@ -142,15 +142,15 @@ class OidcProviderSettings
 
         $discoveredSettings = [];
 
-        if (! empty($result['authorization_endpoint'])) {
+        if (!empty($result['authorization_endpoint'])) {
             $discoveredSettings['authorizationEndpoint'] = $result['authorization_endpoint'];
         }
 
-        if (! empty($result['token_endpoint'])) {
+        if (!empty($result['token_endpoint'])) {
             $discoveredSettings['tokenEndpoint'] = $result['token_endpoint'];
         }
 
-        if (! empty($result['jwks_uri'])) {
+        if (!empty($result['jwks_uri'])) {
             $keys = $this->loadKeysFromUri($result['jwks_uri'], $httpClient);
             $discoveredSettings['keys'] = $this->filterKeys($keys);
         }
@@ -180,7 +180,7 @@ class OidcProviderSettings
         $response = $httpClient->sendRequest($request);
         $result = json_decode($response->getBody()->getContents(), true);
 
-        if (empty($result) || ! is_array($result) || ! isset($result['keys'])) {
+        if (empty($result) || !is_array($result) || !isset($result['keys'])) {
             throw new OidcIssuerDiscoveryException('Error reading keys from issuer jwks_uri');
         }
 

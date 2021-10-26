@@ -90,7 +90,7 @@ class LoginService
     protected function getLastLoginAttemptDetails(): array
     {
         $value = session()->get(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY);
-        if (! $value) {
+        if (!$value) {
             return ['user_id' => null, 'method' => null];
         }
 
@@ -131,7 +131,7 @@ class LoginService
      */
     public function needsMfaVerification(User $user): bool
     {
-        return ! $this->mfaSession->isVerifiedForUser($user) && $this->mfaSession->isRequiredForUser($user);
+        return !$this->mfaSession->isVerifiedForUser($user) && $this->mfaSession->isRequiredForUser($user);
     }
 
     /**
@@ -139,7 +139,7 @@ class LoginService
      */
     public function awaitingEmailConfirmation(User $user): bool
     {
-        return $this->emailConfirmationService->confirmationRequired() && ! $user->email_confirmed;
+        return $this->emailConfirmationService->confirmationRequired() && !$user->email_confirmed;
     }
 
     /**

@@ -88,7 +88,7 @@ class ImageRepo
         }
 
         if ($search !== null) {
-            $imageQuery = $imageQuery->where('name', 'LIKE', '%'.$search.'%');
+            $imageQuery = $imageQuery->where('name', 'LIKE', '%' . $search . '%');
         }
 
         // Filter by page access
@@ -162,7 +162,7 @@ class ImageRepo
      */
     public function saveDrawing(string $base64Uri, int $uploadedTo): Image
     {
-        $name = 'Drawing-'.strval(user()->id).'-'.strval(time()).'.png';
+        $name = 'Drawing-' . strval(user()->id) . '-' . strval(time()) . '.png';
 
         return $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawio', $uploadedTo);
     }
@@ -256,7 +256,7 @@ class ImageRepo
     public function getPagesUsingImage(Image $image): array
     {
         $pages = Page::visible()
-            ->where('html', 'like', '%'.$image->url.'%')
+            ->where('html', 'like', '%' . $image->url . '%')
             ->get(['id', 'name', 'slug', 'book_id']);
 
         foreach ($pages as $page) {

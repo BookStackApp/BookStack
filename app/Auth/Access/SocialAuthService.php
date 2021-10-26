@@ -140,7 +140,7 @@ class SocialAuthService
 
         // When a user is not logged in and a matching SocialAccount exists,
         // Simply log the user into the application.
-        if (! $isLoggedIn && $socialAccount !== null) {
+        if (!$isLoggedIn && $socialAccount !== null) {
             $this->loginService->login($socialAccount->user, $socialDriver);
 
             return redirect()->intended('/');
@@ -188,11 +188,11 @@ class SocialAuthService
     {
         $driver = trim(strtolower($socialDriver));
 
-        if (! in_array($driver, $this->validSocialDrivers)) {
+        if (!in_array($driver, $this->validSocialDrivers)) {
             abort(404, trans('errors.social_driver_not_found'));
         }
 
-        if (! $this->checkDriverConfigured($driver)) {
+        if (!$this->checkDriverConfigured($driver)) {
             throw new SocialDriverNotConfigured(trans('errors.social_driver_not_configured', ['socialAccount' => Str::title($socialDriver)]));
         }
 
@@ -205,10 +205,10 @@ class SocialAuthService
     protected function checkDriverConfigured(string $driver): bool
     {
         $lowerName = strtolower($driver);
-        $configPrefix = 'services.'.$lowerName.'.';
-        $config = [config($configPrefix.'client_id'), config($configPrefix.'client_secret'), config('services.callback_url')];
+        $configPrefix = 'services.' . $lowerName . '.';
+        $config = [config($configPrefix . 'client_id'), config($configPrefix . 'client_secret'), config('services.callback_url')];
 
-        return ! in_array(false, $config) && ! in_array(null, $config);
+        return !in_array(false, $config) && !in_array(null, $config);
     }
 
     /**
@@ -232,7 +232,7 @@ class SocialAuthService
      */
     public function getDriverName(string $driver): string
     {
-        return config('services.'.strtolower($driver).'.name');
+        return config('services.' . strtolower($driver) . '.name');
     }
 
     /**
@@ -240,7 +240,7 @@ class SocialAuthService
      */
     public function driverAutoRegisterEnabled(string $driver): bool
     {
-        return config('services.'.strtolower($driver).'.auto_register') === true;
+        return config('services.' . strtolower($driver) . '.auto_register') === true;
     }
 
     /**
@@ -248,7 +248,7 @@ class SocialAuthService
      */
     public function driverAutoConfirmEmailEnabled(string $driver): bool
     {
-        return config('services.'.strtolower($driver).'.auto_confirm') === true;
+        return config('services.' . strtolower($driver) . '.auto_confirm') === true;
     }
 
     /**
@@ -306,11 +306,11 @@ class SocialAuthService
         callable $configureForRedirect = null
     ) {
         $this->validSocialDrivers[] = $driverName;
-        config()->set('services.'.$driverName, $config);
-        config()->set('services.'.$driverName.'.redirect', url('/login/service/'.$driverName.'/callback'));
-        config()->set('services.'.$driverName.'.name', $config['name'] ?? $driverName);
+        config()->set('services.' . $driverName, $config);
+        config()->set('services.' . $driverName . '.redirect', url('/login/service/' . $driverName . '/callback'));
+        config()->set('services.' . $driverName . '.name', $config['name'] ?? $driverName);
         Event::listen(SocialiteWasCalled::class, $socialiteHandler);
-        if (! is_null($configureForRedirect)) {
+        if (!is_null($configureForRedirect)) {
             $this->configureForRedirectCallbacks[$driverName] = $configureForRedirect;
         }
     }

@@ -18,10 +18,10 @@ class ChapterTest extends TestCase
         ]);
 
         $resp = $this->asEditor()->get($book->getUrl());
-        $resp->assertElementContains('a[href="'.$book->getUrl('/create-chapter').'"]', 'New Chapter');
+        $resp->assertElementContains('a[href="' . $book->getUrl('/create-chapter') . '"]', 'New Chapter');
 
         $resp = $this->get($book->getUrl('/create-chapter'));
-        $resp->assertElementContains('form[action="'.$book->getUrl('/create-chapter').'"][method="POST"]', 'Save Chapter');
+        $resp->assertElementContains('form[action="' . $book->getUrl('/create-chapter') . '"][method="POST"]', 'Save Chapter');
 
         $resp = $this->post($book->getUrl('/create-chapter'), $chapter->only('name', 'description'));
         $resp->assertRedirect($book->getUrl('/chapter/my-first-chapter'));

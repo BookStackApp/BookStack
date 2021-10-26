@@ -16,7 +16,7 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $firstBook = Book::query()->orderBy('id', 'asc')->first();
 
-        $resp = $this->getJson($this->baseEndpoint.'?count=1&sort=+id');
+        $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
                 'id'   => $firstBook->id,
@@ -66,7 +66,7 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::visible()->first();
 
-        $resp = $this->getJson($this->baseEndpoint."/{$book->id}");
+        $resp = $this->getJson($this->baseEndpoint . "/{$book->id}");
 
         $resp->assertStatus(200);
         $resp->assertJson([
@@ -93,7 +93,7 @@ class BooksApiTest extends TestCase
             'description' => 'A book created via the API',
         ];
 
-        $resp = $this->putJson($this->baseEndpoint."/{$book->id}", $details);
+        $resp = $this->putJson($this->baseEndpoint . "/{$book->id}", $details);
         $book->refresh();
 
         $resp->assertStatus(200);
@@ -105,7 +105,7 @@ class BooksApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $book = Book::visible()->first();
-        $resp = $this->deleteJson($this->baseEndpoint."/{$book->id}");
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$book->id}");
 
         $resp->assertStatus(204);
         $this->assertActivityExists('book_delete');
@@ -116,10 +116,10 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint."/{$book->id}/export/html");
+        $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/html");
         $resp->assertStatus(200);
         $resp->assertSee($book->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$book->slug.'.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.html"');
     }
 
     public function test_export_plain_text_endpoint()
@@ -127,10 +127,10 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint."/{$book->id}/export/plaintext");
+        $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/plaintext");
         $resp->assertStatus(200);
         $resp->assertSee($book->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$book->slug.'.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.txt"');
     }
 
     public function test_export_pdf_endpoint()
@@ -138,9 +138,9 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint."/{$book->id}/export/pdf");
+        $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/pdf");
         $resp->assertStatus(200);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$book->slug.'.pdf"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.pdf"');
     }
 
     public function test_export_markdown_endpoint()
@@ -148,12 +148,12 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $book = Book::visible()->has('pages')->has('chapters')->first();
 
-        $resp = $this->get($this->baseEndpoint."/{$book->id}/export/markdown");
+        $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/markdown");
         $resp->assertStatus(200);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$book->slug.'.md"');
-        $resp->assertSee('# '.$book->name);
-        $resp->assertSee('# '.$book->pages()->first()->name);
-        $resp->assertSee('# '.$book->chapters()->first()->name);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.md"');
+        $resp->assertSee('# ' . $book->name);
+        $resp->assertSee('# ' . $book->pages()->first()->name);
+        $resp->assertSee('# ' . $book->chapters()->first()->name);
     }
 
     public function test_cant_export_when_not_have_permission()
@@ -164,7 +164,7 @@ class BooksApiTest extends TestCase
 
         $book = Book::visible()->first();
         foreach ($types as $type) {
-            $resp = $this->get($this->baseEndpoint."/{$book->id}/export/{$type}");
+            $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/{$type}");
             $this->assertPermissionError($resp);
         }
     }

@@ -22,10 +22,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use Illuminate\Testing\Assert as PHPUnit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Testing\Assert as PHPUnit;
 use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
@@ -84,7 +84,7 @@ trait SharedTestHelpers
     protected function getViewer(array $attributes = []): User
     {
         $user = Role::getRole('viewer')->users()->first();
-        if (! empty($attributes)) {
+        if (!empty($attributes)) {
             $user->forceFill($attributes)->save();
         }
 
@@ -301,7 +301,7 @@ trait SharedTestHelpers
         $passed = true;
 
         foreach ($mapToInclude as $key => $value) {
-            if (! isset($mapToCheck[$key]) || $mapToCheck[$key] !== $mapToInclude[$key]) {
+            if (!isset($mapToCheck[$key]) || $mapToCheck[$key] !== $mapToInclude[$key]) {
                 $passed = false;
             }
         }

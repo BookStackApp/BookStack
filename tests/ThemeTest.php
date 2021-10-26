@@ -26,7 +26,7 @@ class ThemeTest extends TestCase
             $customTranslations = '<?php
             return [\'books\' => \'Sandwiches\'];
         ';
-            file_put_contents($translationPath.'/entities.php', $customTranslations);
+            file_put_contents($translationPath . '/entities.php', $customTranslations);
 
             $homeRequest = $this->actingAs($this->getViewer())->get('/');
             $homeRequest->assertElementContains('header nav', 'Sandwiches');
@@ -209,7 +209,7 @@ class ThemeTest extends TestCase
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
-        $themeFolderName = 'testing_theme_'.rtrim(base64_encode(time()), '=');
+        $themeFolderName = 'testing_theme_' . rtrim(base64_encode(time()), '=');
         config()->set('view.theme', $themeFolderName);
         $themeFolderPath = theme_path('');
         File::makeDirectory($themeFolderPath);

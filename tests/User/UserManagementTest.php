@@ -19,17 +19,17 @@ class UserManagementTest extends TestCase
         $adminRole = Role::getRole('admin');
 
         $resp = $this->asAdmin()->get('/settings/users');
-        $resp->assertElementContains('a[href="'.url('/settings/users/create').'"]', 'Add New User');
+        $resp->assertElementContains('a[href="' . url('/settings/users/create') . '"]', 'Add New User');
 
         $this->get('/settings/users/create')
-            ->assertElementContains('form[action="'.url('/settings/users/create').'"]', 'Save');
+            ->assertElementContains('form[action="' . url('/settings/users/create') . '"]', 'Save');
 
         $resp = $this->post('/settings/users/create', [
             'name'                          => $user->name,
             'email'                         => $user->email,
             'password'                      => $user->password,
             'password-confirm'              => $user->password,
-            'roles['.$adminRole->id.']' => 'true',
+            'roles[' . $adminRole->id . ']' => 'true',
         ]);
         $resp->assertRedirect('/settings/users');
 
@@ -47,7 +47,7 @@ class UserManagementTest extends TestCase
         $user = $this->getNormalUser();
         $password = $user->password;
 
-        $resp = $this->asAdmin()->get('/settings/users/'.$user->id);
+        $resp = $this->asAdmin()->get('/settings/users/' . $user->id);
         $resp->assertSee($user->email);
 
         $this->put($user->getEditUrl(), [
@@ -64,7 +64,7 @@ class UserManagementTest extends TestCase
     public function test_user_password_update()
     {
         $user = $this->getNormalUser();
-        $userProfilePage = '/settings/users/'.$user->id;
+        $userProfilePage = '/settings/users/' . $user->id;
 
         $this->asAdmin()->get($userProfilePage);
         $this->put($userProfilePage, [
@@ -100,10 +100,10 @@ class UserManagementTest extends TestCase
         /** @var User $user */
         $user = $adminRole->users->first();
 
-        $resp = $this->asAdmin()->delete('/settings/users/'.$user->id);
-        $resp->assertRedirect('/settings/users/'.$user->id);
+        $resp = $this->asAdmin()->delete('/settings/users/' . $user->id);
+        $resp->assertRedirect('/settings/users/' . $user->id);
 
-        $resp = $this->get('/settings/users/'.$user->id);
+        $resp = $this->get('/settings/users/' . $user->id);
         $resp->assertSee('You cannot delete the only admin');
 
         $this->assertDatabaseHas('users', ['id' => $user->id]);
@@ -146,7 +146,7 @@ class UserManagementTest extends TestCase
     public function test_guest_profile_shows_limited_form()
     {
         $guest = User::getDefault();
-        $resp = $this->asAdmin()->get('/settings/users/'.$guest->id);
+        $resp = $this->asAdmin()->get('/settings/users/' . $guest->id);
         $resp->assertSee('Guest');
         $resp->assertElementNotExists('#password');
     }
@@ -154,13 +154,13 @@ class UserManagementTest extends TestCase
     public function test_guest_profile_cannot_be_deleted()
     {
         $guestUser = User::getDefault();
-        $resp = $this->asAdmin()->get('/settings/users/'.$guestUser->id.'/delete');
+        $resp = $this->asAdmin()->get('/settings/users/' . $guestUser->id . '/delete');
         $resp->assertSee('Delete User');
         $resp->assertSee('Guest');
-        $resp->assertElementContains('form[action$="/settings/users/'.$guestUser->id.'"] button', 'Confirm');
+        $resp->assertElementContains('form[action$="/settings/users/' . $guestUser->id . '"] button', 'Confirm');
 
-        $resp = $this->delete('/settings/users/'.$guestUser->id);
-        $resp->assertRedirect('/settings/users/'.$guestUser->id);
+        $resp = $this->delete('/settings/users/' . $guestUser->id);
+        $resp->assertRedirect('/settings/users/' . $guestUser->id);
         $resp = $this->followRedirects($resp);
         $resp->assertSee('cannot delete the guest user');
     }

@@ -19,7 +19,7 @@ class FavouriteController extends Controller
         $page = intval($request->get('page', 1));
         $favourites = (new TopFavourites())->run($viewCount + 1, (($page - 1) * $viewCount));
 
-        $hasMoreLink = ($favourites->count() > $viewCount) ? url('/favourites?page='.($page + 1)) : null;
+        $hasMoreLink = ($favourites->count() > $viewCount) ? url('/favourites?page=' . ($page + 1)) : null;
 
         return view('common.detailed-listing-with-more', [
             'title'       => trans('entities.my_favourites'),
@@ -73,13 +73,13 @@ class FavouriteController extends Controller
             'id'   => 'required|integer',
         ]);
 
-        if (! class_exists($modelInfo['type'])) {
+        if (!class_exists($modelInfo['type'])) {
             throw new \Exception('Model not found');
         }
 
         /** @var Model $model */
         $model = new $modelInfo['type']();
-        if (! $model instanceof Favouritable) {
+        if (!$model instanceof Favouritable) {
             throw new \Exception('Model not favouritable');
         }
 
@@ -87,7 +87,7 @@ class FavouriteController extends Controller
             ->where('id', '=', $modelInfo['id'])
             ->first(['id', 'name']);
 
-        $inaccessibleEntity = ($modelInstance instanceof Entity && ! userCan('view', $modelInstance));
+        $inaccessibleEntity = ($modelInstance instanceof Entity && !userCan('view', $modelInstance));
         if (is_null($modelInstance) || $inaccessibleEntity) {
             throw new \Exception('Model instance not found');
         }

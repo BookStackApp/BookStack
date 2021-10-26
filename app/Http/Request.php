@@ -19,7 +19,7 @@ class Request extends LaravelRequest
         if ($base) {
             $base = trim($base, '/');
         } else {
-            $base = $this->getScheme().'://'.$this->getHttpHost();
+            $base = $this->getScheme() . '://' . $this->getHttpHost();
         }
 
         return $base;

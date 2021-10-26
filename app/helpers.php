@@ -24,7 +24,7 @@ function versioned_asset(string $file = ''): string
         $additional = sha1_file(public_path($file));
     }
 
-    $path = $file.'?version='.urlencode($version).$additional;
+    $path = $file . '?version=' . urlencode($version) . $additional;
 
     return url($path);
 }
@@ -43,7 +43,7 @@ function user(): User
  */
 function signedInUser(): bool
 {
-    return auth()->user() && ! auth()->user()->isDefault();
+    return auth()->user() && !auth()->user()->isDefault();
 }
 
 /**
@@ -51,7 +51,7 @@ function signedInUser(): bool
  */
 function hasAppAccess(): bool
 {
-    return ! auth()->guest() || setting('app-public');
+    return !auth()->guest() || setting('app-public');
 }
 
 /**
@@ -106,11 +106,11 @@ function theme_path(string $path = ''): ?string
 {
     $theme = config('view.theme');
 
-    if (! $theme) {
+    if (!$theme) {
         return null;
     }
 
-    return base_path('themes/'.$theme.($path ? DIRECTORY_SEPARATOR.$path : $path));
+    return base_path('themes/' . $theme . ($path ? DIRECTORY_SEPARATOR . $path : $path));
 }
 
 /**
@@ -129,21 +129,21 @@ function icon(string $name, array $attrs = []): string
     ], $attrs);
     $attrString = ' ';
     foreach ($attrs as $attrName => $attr) {
-        $attrString .= $attrName.'="'.$attr.'" ';
+        $attrString .= $attrName . '="' . $attr . '" ';
     }
 
-    $iconPath = resource_path('icons/'.$name.'.svg');
-    $themeIconPath = theme_path('icons/'.$name.'.svg');
+    $iconPath = resource_path('icons/' . $name . '.svg');
+    $themeIconPath = theme_path('icons/' . $name . '.svg');
 
     if ($themeIconPath && file_exists($themeIconPath)) {
         $iconPath = $themeIconPath;
-    } elseif (! file_exists($iconPath)) {
+    } elseif (!file_exists($iconPath)) {
         return '';
     }
 
     $fileContents = file_get_contents($iconPath);
 
-    return  str_replace('<svg', '<svg'.$attrString, $fileContents);
+    return  str_replace('<svg', '<svg' . $attrString, $fileContents);
 }
 
 /**
@@ -168,12 +168,12 @@ function sortUrl(string $path, array $data, array $overrideData = []): string
         if ($trimmedVal === '') {
             continue;
         }
-        $queryStringSections[] = urlencode($name).'='.urlencode($trimmedVal);
+        $queryStringSections[] = urlencode($name) . '=' . urlencode($trimmedVal);
     }
 
     if (count($queryStringSections) === 0) {
         return $path;
     }
 
-    return url($path.'?'.implode('&', $queryStringSections));
+    return url($path . '?' . implode('&', $queryStringSections));
 }

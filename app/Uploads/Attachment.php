@@ -45,7 +45,7 @@ class Attachment extends Model
             return $this->name;
         }
 
-        return $this->name.'.'.$this->extension;
+        return $this->name . '.' . $this->extension;
     }
 
     /**
@@ -65,7 +65,7 @@ class Attachment extends Model
             return $this->path;
         }
 
-        return url('/attachments/'.$this->id.($openInline ? '?open=true' : ''));
+        return url('/attachments/' . $this->id . ($openInline ? '?open=true' : ''));
     }
 
     /**
@@ -73,7 +73,7 @@ class Attachment extends Model
      */
     public function htmlLink(): string
     {
-        return '<a target="_blank" href="'.e($this->getUrl()).'">'.e($this->name).'</a>';
+        return '<a target="_blank" href="' . e($this->getUrl()) . '">' . e($this->name) . '</a>';
     }
 
     /**
@@ -81,7 +81,7 @@ class Attachment extends Model
      */
     public function markdownLink(): string
     {
-        return '['.$this->name.']('.$this->getUrl().')';
+        return '[' . $this->name . '](' . $this->getUrl() . ')';
     }
 
     /**

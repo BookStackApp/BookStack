@@ -33,7 +33,7 @@ class RolesTest extends TestCase
     public function test_cannot_delete_admin_role()
     {
         $adminRole = Role::getRole('admin');
-        $deletePageUrl = '/settings/roles/delete/'.$adminRole->id;
+        $deletePageUrl = '/settings/roles/delete/' . $adminRole->id;
 
         $this->asAdmin()->get($deletePageUrl);
         $this->delete($deletePageUrl)->assertRedirect($deletePageUrl);
@@ -45,7 +45,7 @@ class RolesTest extends TestCase
         $newRole = $this->createNewRole();
         $this->setSettings(['registration-role' => $newRole->id]);
 
-        $deletePageUrl = '/settings/roles/delete/'.$newRole->id;
+        $deletePageUrl = '/settings/roles/delete/' . $newRole->id;
         $this->asAdmin()->get($deletePageUrl);
         $this->delete($deletePageUrl)->assertRedirect($deletePageUrl);
         $this->get($deletePageUrl)->assertSee('cannot be deleted');
@@ -59,13 +59,13 @@ class RolesTest extends TestCase
 
         // Creation
         $resp = $this->asAdmin()->get('/settings');
-        $resp->assertElementContains('a[href="'.url('/settings/roles').'"]', 'Roles');
+        $resp->assertElementContains('a[href="' . url('/settings/roles') . '"]', 'Roles');
 
         $resp = $this->get('/settings/roles');
-        $resp->assertElementContains('a[href="'.url('/settings/roles/new').'"]', 'Create New Role');
+        $resp->assertElementContains('a[href="' . url('/settings/roles/new') . '"]', 'Create New Role');
 
         $resp = $this->get('/settings/roles/new');
-        $resp->assertElementContains('form[action="'.url('/settings/roles/new').'"]', 'Save Role');
+        $resp->assertElementContains('form[action="' . url('/settings/roles/new') . '"]', 'Save Role');
 
         $resp = $this->post('/settings/roles/new', [
             'display_name' => $testRoleName,
@@ -86,12 +86,12 @@ class RolesTest extends TestCase
         $role = Role::query()->where('display_name', '=', $testRoleName)->first();
 
         // Updating
-        $resp = $this->get('/settings/roles/'.$role->id);
+        $resp = $this->get('/settings/roles/' . $role->id);
         $resp->assertSee($testRoleName);
         $resp->assertSee($testRoleDesc);
-        $resp->assertElementContains('form[action="'.url('/settings/roles/'.$role->id).'"]', 'Save Role');
+        $resp->assertElementContains('form[action="' . url('/settings/roles/' . $role->id) . '"]', 'Save Role');
 
-        $resp = $this->put('/settings/roles/'.$role->id, [
+        $resp = $this->put('/settings/roles/' . $role->id, [
             'display_name' => $testRoleUpdateName,
             'description'  => $testRoleDesc,
             'mfa_enforced' => 'true',
@@ -104,12 +104,12 @@ class RolesTest extends TestCase
         ]);
 
         // Deleting
-        $resp = $this->get('/settings/roles/'.$role->id);
-        $resp->assertElementContains('a[href="'.url("/settings/roles/delete/$role->id").'"]', 'Delete Role');
+        $resp = $this->get('/settings/roles/' . $role->id);
+        $resp->assertElementContains('a[href="' . url("/settings/roles/delete/$role->id") . '"]', 'Delete Role');
 
         $resp = $this->get("/settings/roles/delete/$role->id");
         $resp->assertSee($testRoleUpdateName);
-        $resp->assertElementContains('form[action="'.url("/settings/roles/delete/$role->id").'"]', 'Confirm');
+        $resp->assertElementContains('form[action="' . url("/settings/roles/delete/$role->id") . '"]', 'Confirm');
 
         $resp = $this->delete("/settings/roles/delete/$role->id");
         $resp->assertRedirect('/settings/roles');
@@ -127,7 +127,7 @@ class RolesTest extends TestCase
 
         $viewerRole = $this->getViewer()->roles()->first();
 
-        $editUrl = '/settings/users/'.$adminUser->id;
+        $editUrl = '/settings/users/' . $adminUser->id;
         $resp = $this->actingAs($adminUser)->put($editUrl, [
             'name'  => $adminUser->name,
             'email' => $adminUser->email,
@@ -172,7 +172,7 @@ class RolesTest extends TestCase
 
     public function test_manage_users_permission_shows_link_in_header_if_does_not_have_settings_manage_permision()
     {
-        $usersLink = 'href="'.url('/settings/users').'"';
+        $usersLink = 'href="' . url('/settings/users') . '"';
         $this->actingAs($this->user)->get('/')->assertDontSee($usersLink);
         $this->giveUserPermissions($this->user, ['users-manage']);
         $this->actingAs($this->user)->get('/')->assertSee($usersLink);
@@ -182,7 +182,7 @@ class RolesTest extends TestCase
 
     public function test_user_cannot_change_email_unless_they_have_manage_users_permission()
     {
-        $userProfileUrl = '/settings/users/'.$this->user->id;
+        $userProfileUrl = '/settings/users/' . $this->user->id;
         $originalEmail = $this->user->email;
         $this->actingAs($this->user);
 
@@ -413,7 +413,7 @@ class RolesTest extends TestCase
         $otherBook = Book::query()->take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('book-update-own', [
-            $ownBook->getUrl().'/edit',
+            $ownBook->getUrl() . '/edit',
         ], [
             $ownBook->getUrl() => 'Edit',
         ]);
@@ -427,7 +427,7 @@ class RolesTest extends TestCase
         /** @var Book $otherBook */
         $otherBook = Book::query()->take(1)->get()->first();
         $this->checkAccessPermission('book-update-all', [
-            $otherBook->getUrl().'/edit',
+            $otherBook->getUrl() . '/edit',
         ], [
             $otherBook->getUrl() => 'Edit',
         ]);
@@ -440,7 +440,7 @@ class RolesTest extends TestCase
         $otherBook = Book::query()->take(1)->get()->first();
         $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('book-delete-own', [
-            $ownBook->getUrl().'/delete',
+            $ownBook->getUrl() . '/delete',
         ], [
             $ownBook->getUrl() => 'Delete',
         ]);
@@ -458,7 +458,7 @@ class RolesTest extends TestCase
         /** @var Book $otherBook */
         $otherBook = Book::query()->take(1)->get()->first();
         $this->checkAccessPermission('book-delete-all', [
-            $otherBook->getUrl().'/delete',
+            $otherBook->getUrl() . '/delete',
         ], [
             $otherBook->getUrl() => 'Delete',
         ]);
@@ -510,7 +510,7 @@ class RolesTest extends TestCase
         $otherChapter = Chapter::query()->first();
         $ownChapter = $this->createEntityChainBelongingToUser($this->user)['chapter'];
         $this->checkAccessPermission('chapter-update-own', [
-            $ownChapter->getUrl().'/edit',
+            $ownChapter->getUrl() . '/edit',
         ], [
             $ownChapter->getUrl() => 'Edit',
         ]);
@@ -524,7 +524,7 @@ class RolesTest extends TestCase
         /** @var Chapter $otherChapter */
         $otherChapter = Chapter::query()->take(1)->get()->first();
         $this->checkAccessPermission('chapter-update-all', [
-            $otherChapter->getUrl().'/edit',
+            $otherChapter->getUrl() . '/edit',
         ], [
             $otherChapter->getUrl() => 'Edit',
         ]);
@@ -537,7 +537,7 @@ class RolesTest extends TestCase
         $otherChapter = Chapter::query()->first();
         $ownChapter = $this->createEntityChainBelongingToUser($this->user)['chapter'];
         $this->checkAccessPermission('chapter-delete-own', [
-            $ownChapter->getUrl().'/delete',
+            $ownChapter->getUrl() . '/delete',
         ], [
             $ownChapter->getUrl() => 'Delete',
         ]);
@@ -556,7 +556,7 @@ class RolesTest extends TestCase
         /** @var Chapter $otherChapter */
         $otherChapter = Chapter::query()->first();
         $this->checkAccessPermission('chapter-delete-all', [
-            $otherChapter->getUrl().'/delete',
+            $otherChapter->getUrl() . '/delete',
         ], [
             $otherChapter->getUrl() => 'Delete',
         ]);
@@ -665,13 +665,13 @@ class RolesTest extends TestCase
         $otherPage = Page::query()->first();
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->checkAccessPermission('page-update-own', [
-            $ownPage->getUrl().'/edit',
+            $ownPage->getUrl() . '/edit',
         ], [
             $ownPage->getUrl() => 'Edit',
         ]);
 
         $this->get($otherPage->getUrl())->assertElementNotContains('.action-buttons', 'Edit');
-        $this->get($otherPage->getUrl().'/edit')->assertRedirect('/');
+        $this->get($otherPage->getUrl() . '/edit')->assertRedirect('/');
     }
 
     public function test_page_edit_all_permission()
@@ -692,7 +692,7 @@ class RolesTest extends TestCase
         $otherPage = Page::query()->first();
         $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
         $this->checkAccessPermission('page-delete-own', [
-            $ownPage->getUrl().'/delete',
+            $ownPage->getUrl() . '/delete',
         ], [
             $ownPage->getUrl() => 'Delete',
         ]);
@@ -712,7 +712,7 @@ class RolesTest extends TestCase
         $otherPage = Page::query()->first();
 
         $this->checkAccessPermission('page-delete-all', [
-            $otherPage->getUrl().'/delete',
+            $otherPage->getUrl() . '/delete',
         ], [
             $otherPage->getUrl() => 'Delete',
         ]);
@@ -731,9 +731,9 @@ class RolesTest extends TestCase
         $user = User::query()->first();
         $adminRole = Role::getSystemRole('admin');
         $publicRole = Role::getSystemRole('public');
-        $this->asAdmin()->get('/settings/users/'.$user->id)
-            ->assertElementExists('[name="roles['.$adminRole->id.']"]')
-            ->assertElementExists('[name="roles['.$publicRole->id.']"]');
+        $this->asAdmin()->get('/settings/users/' . $user->id)
+            ->assertElementExists('[name="roles[' . $adminRole->id . ']"]')
+            ->assertElementExists('[name="roles[' . $publicRole->id . ']"]');
     }
 
     public function test_public_role_visible_in_role_listing()
@@ -754,13 +754,13 @@ class RolesTest extends TestCase
     {
         /** @var Role $publicRole */
         $publicRole = Role::getSystemRole('public');
-        $resp = $this->asAdmin()->delete('/settings/roles/delete/'.$publicRole->id);
+        $resp = $this->asAdmin()->delete('/settings/roles/delete/' . $publicRole->id);
         $resp->assertRedirect('/');
 
-        $this->get('/settings/roles/delete/'.$publicRole->id);
-        $resp = $this->delete('/settings/roles/delete/'.$publicRole->id);
-        $resp->assertRedirect('/settings/roles/delete/'.$publicRole->id);
-        $resp = $this->get('/settings/roles/delete/'.$publicRole->id);
+        $this->get('/settings/roles/delete/' . $publicRole->id);
+        $resp = $this->delete('/settings/roles/delete/' . $publicRole->id);
+        $resp->assertRedirect('/settings/roles/delete/' . $publicRole->id);
+        $resp = $this->get('/settings/roles/delete/' . $publicRole->id);
         $resp->assertSee('This role is a system role and cannot be deleted');
     }
 
@@ -775,11 +775,11 @@ class RolesTest extends TestCase
             'updated_by'  => $this->user->id,
         ]);
 
-        $this->actingAs($this->user)->json('delete', '/images/'.$image->id)->assertStatus(403);
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertStatus(403);
 
         $this->giveUserPermissions($this->user, ['image-delete-own']);
 
-        $this->actingAs($this->user)->json('delete', '/images/'.$image->id)->assertOk();
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertOk();
         $this->assertDatabaseMissing('images', ['id' => $image->id]);
     }
 
@@ -791,15 +791,15 @@ class RolesTest extends TestCase
         $page = Page::query()->first();
         $image = factory(Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);
 
-        $this->actingAs($this->user)->json('delete', '/images/'.$image->id)->assertStatus(403);
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertStatus(403);
 
         $this->giveUserPermissions($this->user, ['image-delete-own']);
 
-        $this->actingAs($this->user)->json('delete', '/images/'.$image->id)->assertStatus(403);
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertStatus(403);
 
         $this->giveUserPermissions($this->user, ['image-delete-all']);
 
-        $this->actingAs($this->user)->json('delete', '/images/'.$image->id)->assertOk();
+        $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertOk();
         $this->assertDatabaseMissing('images', ['id' => $image->id]);
     }
 
@@ -812,7 +812,7 @@ class RolesTest extends TestCase
         $viewer = $this->getViewer();
         $this->actingAs($viewer)->get($page->getUrl())->assertOk();
 
-        $this->asAdmin()->put('/settings/roles/'.$viewerRole->id, [
+        $this->asAdmin()->put('/settings/roles/' . $viewerRole->id, [
             'display_name' => $viewerRole->display_name,
             'description'  => $viewerRole->description,
             'permission'   => [],
@@ -940,6 +940,6 @@ class RolesTest extends TestCase
 
     private function deleteComment(Comment $comment): TestResponse
     {
-        return $this->json('DELETE', '/comment/'.$comment->id);
+        return $this->json('DELETE', '/comment/' . $comment->id);
     }
 }

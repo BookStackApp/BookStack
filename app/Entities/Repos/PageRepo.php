@@ -40,7 +40,7 @@ class PageRepo
     {
         $page = Page::visible()->with($relations)->find($id);
 
-        if (! $page) {
+        if (!$page) {
             throw new NotFoundException(trans('errors.page_not_found'));
         }
 
@@ -56,7 +56,7 @@ class PageRepo
     {
         $page = Page::visible()->whereSlugs($bookSlug, $pageSlug)->first();
 
-        if (! $page) {
+        if (!$page) {
             throw new NotFoundException(trans('errors.page_not_found'));
         }
 
@@ -95,7 +95,7 @@ class PageRepo
             ->take($count);
 
         if ($search) {
-            $query->where('name', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%');
         }
 
         $paginator = $query->paginate($count, ['*'], 'page', $page);
@@ -216,7 +216,7 @@ class PageRepo
         }
 
         $pageContent = new PageContent($page);
-        if (! empty($input['markdown'] ?? '')) {
+        if (!empty($input['markdown'] ?? '')) {
             $pageContent->setNewMarkdown($input['markdown']);
         } elseif (isset($input['html'])) {
             $pageContent->setNewHTML($input['html']);
@@ -297,7 +297,7 @@ class PageRepo
         $page->fill($revision->toArray());
         $content = new PageContent($page);
 
-        if (! empty($revision->markdown)) {
+        if (!empty($revision->markdown)) {
             $content->setNewMarkdown($revision->markdown);
         } else {
             $content->setNewHTML($revision->html);
@@ -331,7 +331,7 @@ class PageRepo
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
 
-        if (! userCan('page-create', $parent)) {
+        if (!userCan('page-create', $parent)) {
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 
@@ -358,7 +358,7 @@ class PageRepo
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
 
-        if (! userCan('page-create', $parent)) {
+        if (!userCan('page-create', $parent)) {
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 
@@ -366,7 +366,7 @@ class PageRepo
         $pageData = $page->getAttributes();
 
         // Update name
-        if (! empty($newName)) {
+        if (!empty($newName)) {
             $pageData['name'] = $newName;
         }
 

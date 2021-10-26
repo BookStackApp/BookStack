@@ -16,7 +16,7 @@ trait HandlesPartialLogins
         $loginService = app()->make(LoginService::class);
         $user = auth()->user() ?? $loginService->getLastLoginAttemptUser();
 
-        if (! $user) {
+        if (!$user) {
             throw new NotFoundException('A user for this action could not be found');
         }
 

@@ -46,9 +46,9 @@ class OidcIdTokenTest extends TestCase
             ['Could not parse out a valid header within the provided token', ''],
             ['Could not parse out a valid header within the provided token', 'cat'],
             ['Could not parse out a valid payload within the provided token', $idTokenExploded[0]],
-            ['Could not parse out a valid payload within the provided token', $idTokenExploded[0].'.'.'dog'],
-            ['Could not parse out a valid signature within the provided token', $idTokenExploded[0].'.'.$idTokenExploded[1]],
-            ['Could not parse out a valid signature within the provided token', $idTokenExploded[0].'.'.$idTokenExploded[1].'.'.'@$%'],
+            ['Could not parse out a valid payload within the provided token', $idTokenExploded[0] . '.' . 'dog'],
+            ['Could not parse out a valid signature within the provided token', $idTokenExploded[0] . '.' . $idTokenExploded[1]],
+            ['Could not parse out a valid signature within the provided token', $idTokenExploded[0] . '.' . $idTokenExploded[1] . '.' . '@$%'],
         ];
 
         foreach ($messagesAndTokenValues as [$message, $tokenValue]) {
@@ -154,7 +154,7 @@ class OidcIdTokenTest extends TestCase
     public function test_keys_can_be_a_local_file_reference_to_pem_key()
     {
         $file = tmpfile();
-        $testFilePath = 'file://'.stream_get_meta_data($file)['uri'];
+        $testFilePath = 'file://' . stream_get_meta_data($file)['uri'];
         file_put_contents($testFilePath, OidcJwtHelper::publicPemKey());
         $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), [
             $testFilePath,

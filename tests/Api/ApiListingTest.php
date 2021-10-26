@@ -19,7 +19,7 @@ class ApiListingTest extends TestCase
         $resp = $this->get($this->endpoint);
         $resp->assertJsonCount($bookCount, 'data');
 
-        $resp = $this->get($this->endpoint.'?count=1');
+        $resp = $this->get($this->endpoint . '?count=1');
         $resp->assertJsonCount(1, 'data');
     }
 
@@ -28,10 +28,10 @@ class ApiListingTest extends TestCase
         $this->actingAsApiEditor();
         $books = Book::visible()->orderBy('id')->take(3)->get();
 
-        $resp = $this->get($this->endpoint.'?count=1');
+        $resp = $this->get($this->endpoint . '?count=1');
         $resp->assertJsonMissing(['name' => $books[1]->name]);
 
-        $resp = $this->get($this->endpoint.'?count=1&offset=1000');
+        $resp = $this->get($this->endpoint . '?count=1&offset=1000');
         $resp->assertJsonCount(0, 'data');
     }
 
@@ -47,7 +47,7 @@ class ApiListingTest extends TestCase
         ];
 
         foreach ($sortChecks as $sortOption => $result) {
-            $resp = $this->get($this->endpoint.'?count=1&sort='.$sortOption);
+            $resp = $this->get($this->endpoint . '?count=1&sort=' . $sortOption);
             $resp->assertJson(['data' => [
                 [
                     'id'   => $result->id,
@@ -71,14 +71,14 @@ class ApiListingTest extends TestCase
             "filter[id:gt]={$book->id}"               => Book::visible()->where('id', '>', $book->id)->count(),
             "filter[id:gte]={$book->id}"              => Book::visible()->where('id', '>=', $book->id)->count(),
             "filter[id:lt]={$book->id}"               => Book::visible()->where('id', '<', $book->id)->count(),
-            "filter[name:like]={$encodedNameSubstr}%" => Book::visible()->where('name', 'like', $nameSubstr.'%')->count(),
+            "filter[name:like]={$encodedNameSubstr}%" => Book::visible()->where('name', 'like', $nameSubstr . '%')->count(),
 
             // Test mulitple filters 'and' together
             "filter[id]={$book->id}&filter[name]=random_non_existing_string" => 0,
         ];
 
         foreach ($filterChecks as $filterOption => $resultCount) {
-            $resp = $this->get($this->endpoint.'?count=1&'.$filterOption);
+            $resp = $this->get($this->endpoint . '?count=1&' . $filterOption);
             $resp->assertJson(['total' => $resultCount]);
         }
     }
@@ -87,7 +87,7 @@ class ApiListingTest extends TestCase
     {
         $this->actingAsApiEditor();
         $bookCount = Book::query()->count();
-        $resp = $this->get($this->endpoint.'?count=1');
+        $resp = $this->get($this->endpoint . '?count=1');
         $resp->assertJson(['total' => $bookCount]);
     }
 
@@ -95,7 +95,7 @@ class ApiListingTest extends TestCase
     {
         $this->actingAsApiEditor();
         $bookCount = Book::query()->count();
-        $resp = $this->get($this->endpoint.'?count=1&offset=1');
+        $resp = $this->get($this->endpoint . '?count=1&offset=1');
         $resp->assertJson(['total' => $bookCount]);
     }
 }

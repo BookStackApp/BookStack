@@ -13,7 +13,7 @@ class TestEmailTest extends TestCase
         $pageView = $this->asAdmin()->get('/settings/maintenance');
         $formCssSelector = 'form[action$="/settings/maintenance/send-test-email"]';
         $pageView->assertElementExists($formCssSelector);
-        $pageView->assertElementContains($formCssSelector.' button', 'Send Test Email');
+        $pageView->assertElementContains($formCssSelector . ' button', 'Send Test Email');
     }
 
     public function test_send_test_email_endpoint_sends_email_and_redirects_user_and_shows_notification()
@@ -23,7 +23,7 @@ class TestEmailTest extends TestCase
 
         $sendReq = $this->actingAs($admin)->post('/settings/maintenance/send-test-email');
         $sendReq->assertRedirect('/settings/maintenance#image-cleanup');
-        $this->assertSessionHas('success', 'Email sent to '.$admin->email);
+        $this->assertSessionHas('success', 'Email sent to ' . $admin->email);
 
         Notification::assertSentTo($admin, TestEmail::class);
     }

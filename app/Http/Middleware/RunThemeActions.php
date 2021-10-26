@@ -19,7 +19,7 @@ class RunThemeActions
     public function handle($request, Closure $next)
     {
         $earlyResponse = Theme::dispatch(ThemeEvents::WEB_MIDDLEWARE_BEFORE, $request);
-        if (! is_null($earlyResponse)) {
+        if (!is_null($earlyResponse)) {
             return $earlyResponse;
         }
 

@@ -44,7 +44,7 @@ class SettingController extends Controller
         $this->preventAccessInDemoMode();
         $this->checkPermission('settings-manage');
         $this->validate($request, [
-            'app_logo' => 'nullable|'.$this->getImageValidationRules(),
+            'app_logo' => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         // Cycles through posted settings and update them
@@ -73,7 +73,7 @@ class SettingController extends Controller
         $section = $request->get('section', '');
         $this->logActivity(ActivityType::SETTINGS_UPDATE, $section);
         $this->showSuccessNotification(trans('settings.settings_save_success'));
-        $redirectLocation = '/settings#'.$section;
+        $redirectLocation = '/settings#' . $section;
 
         return redirect(rtrim($redirectLocation, '#'));
     }

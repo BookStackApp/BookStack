@@ -56,7 +56,7 @@ class ImageService
             return $path;
         }
 
-        return 'uploads/images/'.$path;
+        return 'uploads/images/' . $path;
     }
 
     /**
@@ -130,21 +130,21 @@ class ImageService
         $secureUploads = setting('app-secure-images');
         $fileName = $this->cleanImageFileName($imageName);
 
-        $imagePath = '/uploads/images/'.$type.'/'.date('Y-m').'/';
+        $imagePath = '/uploads/images/' . $type . '/' . date('Y-m') . '/';
 
-        while ($storage->exists($this->adjustPathForStorageDisk($imagePath.$fileName, $type))) {
-            $fileName = Str::random(3).$fileName;
+        while ($storage->exists($this->adjustPathForStorageDisk($imagePath . $fileName, $type))) {
+            $fileName = Str::random(3) . $fileName;
         }
 
-        $fullPath = $imagePath.$fileName;
+        $fullPath = $imagePath . $fileName;
         if ($secureUploads) {
-            $fullPath = $imagePath.Str::random(16).'-'.$fileName;
+            $fullPath = $imagePath . Str::random(16) . '-' . $fileName;
         }
 
         try {
             $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($fullPath, $type), $imageData);
         } catch (Exception $e) {
-            \Log::error('Error when attempting image upload:'.$e->getMessage());
+            \Log::error('Error when attempting image upload:' . $e->getMessage());
 
             throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $fullPath]));
         }
@@ -182,8 +182,8 @@ class ImageService
         // Attempting to set ACL during above put request requires different permissions
         // hence would technically be a breaking change for actual s3 usage.
         $usingS3 = strtolower(config('filesystems.images')) === 's3';
-        $usingS3Like = $usingS3 && ! is_null(config('filesystems.disks.s3.endpoint'));
-        if (! $usingS3Like) {
+        $usingS3Like = $usingS3 && !is_null(config('filesystems.disks.s3.endpoint'));
+        if (!$usingS3Like) {
             $storage->setVisibility($path, 'public');
         }
     }
@@ -203,7 +203,7 @@ class ImageService
             $name = Str::random(10);
         }
 
-        return $name.'.'.$extension;
+        return $name . '.' . $extension;
     }
 
     /**
@@ -235,11 +235,11 @@ class ImageService
             return $this->getPublicUrl($image->path);
         }
 
-        $thumbDirName = '/'.($keepRatio ? 'scaled-' : 'thumbs-').$width.'-'.$height.'/';
+        $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
         $imagePath = $image->path;
-        $thumbFilePath = dirname($imagePath).$thumbDirName.basename($imagePath);
+        $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
 
-        if ($this->cache->has('images-'.$image->id.'-'.$thumbFilePath) && $this->cache->get('images-'.$thumbFilePath)) {
+        if ($this->cache->has('images-' . $image->id . '-' . $thumbFilePath) && $this->cache->get('images-' . $thumbFilePath)) {
             return $this->getPublicUrl($thumbFilePath);
         }
 
@@ -251,7 +251,7 @@ class ImageService
         $thumbData = $this->resizeImage($storage->get($this->adjustPathForStorageDisk($imagePath, $image->type)), $width, $height, $keepRatio);
 
         $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($thumbFilePath, $image->type), $thumbData);
-        $this->cache->put('images-'.$image->id.'-'.$thumbFilePath, $thumbFilePath, 60 * 60 * 72);
+        $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 60 * 72);
 
         return $this->getPublicUrl($thumbFilePath);
     }
@@ -379,7 +379,7 @@ class ImageService
         $this->image->newQuery()->whereIn('type', $types)
             ->chunk(1000, function ($images) use ($checkRevisions, &$deletedPaths, $dryRun) {
                 foreach ($images as $image) {
-                    $searchQuery = '%'.basename($image->path).'%';
+                    $searchQuery = '%' . basename($image->path) . '%';
                     $inPage = DB::table('pages')
                             ->where('html', 'like', $searchQuery)->count() > 0;
 
@@ -389,9 +389,9 @@ class ImageService
                                 ->where('html', 'like', $searchQuery)->count() > 0;
                     }
 
-                    if (! $inPage && ! $inRevision) {
+                    if (!$inPage && !$inRevision) {
                         $deletedPaths[] = $image->path;
-                        if (! $dryRun) {
+                        if (!$dryRun) {
                             $this->destroy($image);
                         }
                     }
@@ -432,7 +432,7 @@ class ImageService
             $extension = 'svg+xml';
         }
 
-        return 'data:image/'.$extension.';base64,'.base64_encode($imageData);
+        return 'data:image/' . $extension . ';base64,' . base64_encode($imageData);
     }
 
     /**
@@ -463,7 +463,7 @@ class ImageService
         foreach ($potentialHostPaths as $potentialBasePath) {
             $potentialBasePath = strtolower($potentialBasePath);
             if (strpos(strtolower($url), $potentialBasePath) === 0) {
-                return 'uploads/images/'.trim(substr($url, strlen($potentialBasePath)), '/');
+                return 'uploads/images/' . trim(substr($url, strlen($potentialBasePath)), '/');
             }
         }
 
@@ -485,9 +485,9 @@ class ImageService
             if ($storageUrl == false && config('filesystems.images') === 's3') {
                 $storageDetails = config('filesystems.disks.s3');
                 if (strpos($storageDetails['bucket'], '.') === false) {
-                    $storageUrl = 'https://'.$storageDetails['bucket'].'.s3.amazonaws.com';
+                    $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
                 } else {
-                    $storageUrl = 'https://s3-'.$storageDetails['region'].'.amazonaws.com/'.$storageDetails['bucket'];
+                    $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
                 }
             }
             $this->storageUrl = $storageUrl;
@@ -495,6 +495,6 @@ class ImageService
 
         $basePath = ($this->storageUrl == false) ? url('/') : $this->storageUrl;
 
-        return rtrim($basePath, '/').$filePath;
+        return rtrim($basePath, '/') . $filePath;
     }
 }

@@ -81,7 +81,7 @@ class UserController extends Controller
         $authMethod = config('auth.method');
         $sendInvite = ($request->get('send_invite', 'false') === 'true');
 
-        if ($authMethod === 'standard' && ! $sendInvite) {
+        if ($authMethod === 'standard' && !$sendInvite) {
             $validationRules['password'] = 'required|min:6';
             $validationRules['password-confirm'] = 'required|same:password';
         } elseif ($authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'openid') {
@@ -156,11 +156,11 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name'             => 'min:2',
-            'email'            => 'min:2|email|unique:users,email,'.$id,
+            'email'            => 'min:2|email|unique:users,email,' . $id,
             'password'         => 'min:6|required_with:password_confirm',
             'password-confirm' => 'same:password|required_with:password',
             'setting'          => 'array',
-            'profile_image'    => 'nullable|'.$this->getImageValidationRules(),
+            'profile_image'    => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         $user = $this->userRepo->getById($id);
@@ -217,7 +217,7 @@ class UserController extends Controller
         $this->showSuccessNotification(trans('settings.users_edit_success'));
         $this->logActivity(ActivityType::USER_UPDATE, $user);
 
-        $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/'.$user->id);
+        $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/' . $user->id);
 
         return redirect($redirectUrl);
     }
@@ -299,12 +299,12 @@ class UserController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $viewType = $request->get('view_type');
-        if (! in_array($viewType, ['grid', 'list'])) {
+        if (!in_array($viewType, ['grid', 'list'])) {
             $viewType = 'list';
         }
 
         $user = $this->userRepo->getById($userId);
-        $key = $listName.'_view_type';
+        $key = $listName . '_view_type';
         setting()->putUser($user, $key, $viewType);
 
         return redirect()->back(302, [], "/settings/users/$userId");
@@ -316,7 +316,7 @@ class UserController extends Controller
     public function changeSort(Request $request, string $id, string $type)
     {
         $validSortTypes = ['books', 'bookshelves', 'shelf_books'];
-        if (! in_array($type, $validSortTypes)) {
+        if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }
 
@@ -341,14 +341,14 @@ class UserController extends Controller
     {
         $this->checkPermissionOrCurrentUser('users-manage', $id);
         $keyWhitelist = ['home-details'];
-        if (! in_array($key, $keyWhitelist)) {
+        if (!in_array($key, $keyWhitelist)) {
             return response('Invalid key', 500);
         }
 
         $newState = $request->get('expand', 'false');
 
         $user = $this->user->findOrFail($id);
-        setting()->putUser($user, 'section_expansion#'.$key, $newState);
+        setting()->putUser($user, 'section_expansion#' . $key, $newState);
 
         return response('', 204);
     }
@@ -361,18 +361,18 @@ class UserController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $sort = $request->get('sort');
-        if (! in_array($sort, ['name', 'created_at', 'updated_at', 'default'])) {
+        if (!in_array($sort, ['name', 'created_at', 'updated_at', 'default'])) {
             $sort = 'name';
         }
 
         $order = $request->get('order');
-        if (! in_array($order, ['asc', 'desc'])) {
+        if (!in_array($order, ['asc', 'desc'])) {
             $order = 'asc';
         }
 
         $user = $this->user->findOrFail($userId);
-        $sortKey = $listName.'_sort';
-        $orderKey = $listName.'_sort_order';
+        $sortKey = $listName . '_sort';
+        $orderKey = $listName . '_sort_order';
         setting()->putUser($user, $sortKey, $sort);
         setting()->putUser($user, $orderKey, $order);
 

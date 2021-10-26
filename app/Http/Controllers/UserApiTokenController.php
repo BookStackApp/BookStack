@@ -57,11 +57,11 @@ class UserApiTokenController extends Controller
 
         $token->save();
 
-        session()->flash('api-token-secret:'.$token->id, $secret);
+        session()->flash('api-token-secret:' . $token->id, $secret);
         $this->showSuccessNotification(trans('settings.user_api_token_create_success'));
         $this->logActivity(ActivityType::API_TOKEN_CREATE, $token);
 
-        return redirect($user->getEditUrl('/api-tokens/'.$token->id));
+        return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
 
     /**
@@ -70,7 +70,7 @@ class UserApiTokenController extends Controller
     public function edit(int $userId, int $tokenId)
     {
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
-        $secret = session()->pull('api-token-secret:'.$token->id, null);
+        $secret = session()->pull('api-token-secret:' . $token->id, null);
 
         return view('users.api-tokens.edit', [
             'user'   => $user,
@@ -99,7 +99,7 @@ class UserApiTokenController extends Controller
         $this->showSuccessNotification(trans('settings.user_api_token_update_success'));
         $this->logActivity(ActivityType::API_TOKEN_UPDATE, $token);
 
-        return redirect($user->getEditUrl('/api-tokens/'.$token->id));
+        return redirect($user->getEditUrl('/api-tokens/' . $token->id));
     }
 
     /**

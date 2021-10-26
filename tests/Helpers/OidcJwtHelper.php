@@ -56,7 +56,7 @@ class OidcJwtHelper
         $privateKey = static::privateKeyInstance();
         $signature = $privateKey->sign($top);
 
-        return $top.'.'.static::base64UrlEncode($signature);
+        return $top . '.' . static::base64UrlEncode($signature);
     }
 
     public static function privateKeyInstance()
