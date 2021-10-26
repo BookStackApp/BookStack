@@ -66,7 +66,7 @@ return [
     'reg_email_confirmation_toggle' => 'Nõua e-posti aadressi kinnitamist',
     'reg_confirm_email_desc' => 'Kui domeeni piirang on kasutusel, siis on e-posti aadressi kinnitamine nõutud ja seda seadet ignoreeritakse.',
     'reg_confirm_restrict_domain' => 'Domeeni piirang',
-    'reg_confirm_restrict_domain_desc' => 'Sisesta komaga eraldatud nimekiri e-posti domeenidest, millega soovitud registreerumist piirata. Kasutajale saadetakse aadressi kinnitamiseks e-kiri, enne kui neil lubatakse rakendust kasutada.<br>Pane tähele, et kasutajad saavad pärast edukat registreerumist oma e-posti aadressi muuta.',
+    'reg_confirm_restrict_domain_desc' => 'Sisesta komaga eraldatud nimekiri e-posti domeenidest, millega soovid registreerumist piirata. Kasutajale saadetakse aadressi kinnitamiseks e-kiri, enne kui neil lubatakse rakendust kasutada.<br>Pane tähele, et kasutajad saavad pärast edukat registreerumist oma e-posti aadressi muuta.',
     'reg_confirm_restrict_domain_placeholder' => 'Piirangut ei ole',
 
     // Maintenance settings
