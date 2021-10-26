@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Tem a certeza de que deseja eliminar esta revisão?',
     'revision_restore_confirm' => 'Tem a certeza que deseja restaurar esta revisão? O conteúdo atual da página será substituído.',
     'revision_delete_success' => 'Revisão excluída',
-    'revision_cannot_delete_latest' => 'Não é possível eliminar a revisão mais recente.'
+    'revision_cannot_delete_latest' => 'Não é possível eliminar a revisão mais recente.',
 ];

@@ -75,7 +75,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     // Maintenance settings
     'maint' => 'Wartung',
     'maint_image_cleanup' => 'Bilder bereinigen',
-    'maint_image_cleanup_desc' => "Überprüft Seiten- und Versionsinhalte auf ungenutzte und mehrfach vorhandene Bilder. Erstelle vor dem Start ein Backup Deiner Datenbank und Bilder.",
+    'maint_image_cleanup_desc' => 'Überprüft Seiten- und Versionsinhalte auf ungenutzte und mehrfach vorhandene Bilder. Erstelle vor dem Start ein Backup Deiner Datenbank und Bilder.',
     'maint_delete_images_only_in_revisions' => 'Lösche auch Bilder, die nur in alten Seitenüberarbeitungen vorhanden sind',
     'maint_image_cleanup_run' => 'Reinigung starten',
     'maint_image_cleanup_warning' => ':count eventuell unbenutze Bilder wurden gefunden. Möchtest Du diese Bilder löschen?',
@@ -135,7 +135,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_delete' => 'Rolle löschen',
     'role_delete_confirm' => 'Du möchtest die Rolle ":roleName" löschen.',
     'role_delete_users_assigned' => 'Diese Rolle ist :userCount Benutzern zugeordnet. Du kannst unten eine neue Rolle auswählen, die Du diesen Benutzern zuordnen möchtest.',
-    'role_delete_no_migration' => "Den Benutzern keine andere Rolle zuordnen",
+    'role_delete_no_migration' => 'Den Benutzern keine andere Rolle zuordnen',
     'role_delete_sure' => 'Bist Du sicher, dass Du diese Rolle löschen möchtest?',
     'role_delete_success' => 'Rolle erfolgreich gelöscht',
     'role_edit' => 'Rolle bearbeiten',
@@ -276,6 +276,6 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

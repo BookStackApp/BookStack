@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Du kan ikke bruke det domenet for å registrere en konto.',
     'register_success' => 'Takk for registreringen! Du kan nå logge inn på tjenesten.',
 
-
     // Password Reset
     'reset_password' => 'Nullstille passord',
     'reset_password_send_instructions' => 'Oppgi e-posten som er koblet til kontoen din, så sender vi en epost hvor du kan nullstille passordet.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Nullstill ditt :appName passord',
     'email_reset_text' => 'Du mottar denne eposten fordi det er blitt bedt om en nullstilling av passord på denne kontoen.',
     'email_reset_not_requested' => 'Om det ikke var deg, så trenger du ikke foreta deg noe.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Bekreft epost-adressen for :appName',

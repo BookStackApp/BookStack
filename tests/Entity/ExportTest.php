@@ -139,7 +139,7 @@ class ExportTest extends TestCase
         $this->setSettings(['app-custom-head' => $customHeadContent]);
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
-        $resp->assertSee($customHeadContent);
+        $resp->assertSee($customHeadContent, false);
     }
 
     public function test_page_html_export_does_not_break_with_only_comments_in_custom_head()
@@ -151,7 +151,7 @@ class ExportTest extends TestCase
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
         $resp->assertStatus(200);
-        $resp->assertSee($customHeadContent);
+        $resp->assertSee($customHeadContent, false);
     }
 
     public function test_page_html_export_use_absolute_dates()
@@ -188,7 +188,7 @@ class ExportTest extends TestCase
         Storage::disk('local')->delete('uploads/images/gallery/svg_test.svg');
 
         $resp->assertStatus(200);
-        $resp->assertSee('<img src="data:image/svg+xml;base64');
+        $resp->assertSee('<img src="data:image/svg+xml;base64', false);
     }
 
     public function test_page_image_containment_works_on_multiple_images_within_a_single_line()
@@ -224,9 +224,9 @@ class ExportTest extends TestCase
         $storageDisk->delete('uploads/images/gallery/svg_test.svg');
         $storageDisk->delete('uploads/svg_test.svg');
 
-        $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg');
+        $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg', false);
         $resp->assertSee('http://localhost/uploads/svg_test.svg');
-        $resp->assertSee('src="/uploads/svg_test.svg"');
+        $resp->assertSee('src="/uploads/svg_test.svg"', false);
     }
 
     public function test_page_export_contained_html_does_not_allow_upward_traversal_with_local()
@@ -333,7 +333,7 @@ class ExportTest extends TestCase
         $page->save();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
-        $resp->assertSee("# Dogcat\n\n<p class=\"callout info\">Some callout text</p>\n\nAnother line");
+        $resp->assertSee("# Dogcat\n\n<p class=\"callout info\">Some callout text</p>\n\nAnother line", false);
     }
 
     public function test_page_markdown_export_handles_bookstacks_wysiwyg_codeblock_format()
@@ -345,7 +345,7 @@ class ExportTest extends TestCase
         $page->save();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
-        $resp->assertSee("# Dogcat\n\n```JavaScript\nvar a = 'cat';\n```\n\nAnother line");
+        $resp->assertSee("# Dogcat\n\n```JavaScript\nvar a = 'cat';\n```\n\nAnother line", false);
     }
 
     public function test_chapter_markdown_export()

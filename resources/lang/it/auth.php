@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Questo dominio della mail non ha accesso a questa applicazione',
     'register_success' => 'Grazie per la registrazione! Sei registrato e loggato.',
 
-
     // Password Reset
     'reset_password' => 'Reimposta Password',
     'reset_password_send_instructions' => 'Inserisci il tuo indirizzo sotto e ti verrà inviata una mail contenente un link per resettare la tua password.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Reimposta la password di :appName',
     'email_reset_text' => 'Stai ricevendo questa mail perché abbiamo ricevuto una richiesta di reset della password per il tuo account.',
     'email_reset_not_requested' => 'Se non hai richiesto un reset della password, ignora questa mail.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Conferma email per :appName',

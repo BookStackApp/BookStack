@@ -49,7 +49,7 @@ class Saml2Test extends TestCase
         $req = $this->get('/saml2/metadata');
         $req->assertSee('https://example.com/super-cats');
         $req->assertSee('md:ContactPerson');
-        $req->assertSee('<md:GivenName>Barry Scott</md:GivenName>');
+        $req->assertSee('<md:GivenName>Barry Scott</md:GivenName>', false);
     }
 
     public function test_login_option_shows_on_login_page()

@@ -20,7 +20,7 @@ return [
     'role' => '角色',
     'cover_image' => '封面图片',
     'cover_image_description' => '该图像大小需要为440x250px。',
-    
+
     // Actions
     'actions' => '操作',
     'view' => '浏览',

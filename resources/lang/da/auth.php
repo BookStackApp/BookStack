@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'E-Mail domænet har ikke adgang til denne applikation',
     'register_success' => 'Tak for din registrering. Du er nu registeret og logget ind.',
 
-
     // Password Reset
     'reset_password' => 'Nulstil adgangskode',
     'reset_password_send_instructions' => 'Indtast din E-Mail herunder og du vil blive sendt en E-Mail med et link til at nulstille din adgangskode.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Nulstil din :appName adgangskode',
     'email_reset_text' => 'Du modtager denne E-Mail fordi vi har modtaget en anmodning om at nulstille din adgangskode.',
     'email_reset_not_requested' => 'Hvis du ikke har anmodet om at få din adgangskode nulstillet, behøver du ikke at foretage dig noget.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Bekræft din E-Mail på :appName',

@@ -93,7 +93,7 @@ class Attachment extends Model
 
         return $permissionService->filterRelatedEntity(
             Page::class,
-            Attachment::query(),
+            self::query(),
             'attachments',
             'uploaded_to'
         );

@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Elektroninio pašto domenas neturi prieigos prie šios programos',
     'register_success' => 'Ačiū už prisijungimą! Dabar jūs užsiregistravote ir prisijungėte.',
 
-
     // Password Reset
     'reset_password' => 'Pakeisti slaptažodį',
     'reset_password_send_instructions' => 'Įveskite savo elektroninį paštą žemiau ir jums bus išsiųstas elektroninis laiškas su slaptažodžio nustatymo nuoroda.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Atnaujinti jūsų :appName slaptažodį',
     'email_reset_text' => 'Šį laišką gaunate, nes mes gavome slaptažodžio atnaujinimo užklausą iš jūsų paskyros.',
     'email_reset_not_requested' => 'Jeigu jums nereikia slaptažodžio atnaujinimo, tolimesnių veiksmų atlikti nereikia.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Patvirtinkite savo elektroninį paštą :appName',

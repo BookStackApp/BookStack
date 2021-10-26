@@ -20,7 +20,7 @@ return [
     'role' => 'Peran',
     'cover_image' => 'Sampul gambar',
     'cover_image_description' => 'Gambar ini harus berukuran kira-kira 440x250 piksel.',
-    
+
     // Actions
     'actions' => 'Tindakan',
     'view' => 'Lihat',

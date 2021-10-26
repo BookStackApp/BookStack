@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Kas oled kindel, et soovid selle redaktsiooni kustutada?',
     'revision_restore_confirm' => 'Kas oled kindel, et soovid selle redaktsiooni taastada? Lehe praegune sisu asendatakse.',
     'revision_delete_success' => 'Redaktsioon kustutatud',
-    'revision_cannot_delete_latest' => 'Kõige viimast redaktsiooni ei saa kustutada.'
+    'revision_cannot_delete_latest' => 'Kõige viimast redaktsiooni ei saa kustutada.',
 ];

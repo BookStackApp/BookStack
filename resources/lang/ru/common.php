@@ -20,7 +20,7 @@ return [
     'role' => 'Роль',
     'cover_image' => 'Обложка',
     'cover_image_description' => 'Изображение должно быть размером около 440x250px.',
-    
+
     // Actions
     'actions' => 'Действия',
     'view' => 'Просмотр',

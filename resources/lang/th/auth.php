@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'That email domain does not have access to this application',
     'register_success' => 'Thanks for signing up! You are now registered and signed in.',
 
-
     // Password Reset
     'reset_password' => 'Reset Password',
     'reset_password_send_instructions' => 'Enter your email below and you will be sent an email with a password reset link.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Reset your :appName password',
     'email_reset_text' => 'You are receiving this email because we received a password reset request for your account.',
     'email_reset_not_requested' => 'If you did not request a password reset, no further action is required.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Confirm your email on :appName',
@@ -73,5 +71,5 @@ return [
     'user_invite_page_welcome' => 'Welcome to :appName!',
     'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
     'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!'
+    'user_invite_success' => 'Password set, you now have access to :appName!',
 ];

@@ -83,7 +83,7 @@ class Role extends Model implements Loggable
     /**
      * Get the role of the specified display name.
      */
-    public static function getRole(string $displayName): ?Role
+    public static function getRole(string $displayName): ?self
     {
         return static::query()->where('display_name', '=', $displayName)->first();
     }
@@ -91,7 +91,7 @@ class Role extends Model implements Loggable
     /**
      * Get the role object for the specified system role.
      */
-    public static function getSystemRole(string $systemName): ?Role
+    public static function getSystemRole(string $systemName): ?self
     {
         return static::query()->where('system_name', '=', $systemName)->first();
     }
@@ -116,7 +116,7 @@ class Role extends Model implements Loggable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function logDescriptor(): string
     {

@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Er du sikker på at du vil slette denne revision?',
     'revision_restore_confirm' => 'Er du sikker på at du ønsker at gendanne denne revision? Nuværende sideindhold vil blive erstattet.',
     'revision_delete_success' => 'Revision slettet',
-    'revision_cannot_delete_latest' => 'Kan ikke slette seneste revision.'
+    'revision_cannot_delete_latest' => 'Kan ikke slette seneste revision.',
 ];

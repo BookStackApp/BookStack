@@ -1,7 +1,10 @@
 {
     "name": "bookstackapp/bookstack",
     "description": "BookStack documentation platform",
-    "keywords": ["BookStack", "Documentation"],
+    "keywords": [
+        "BookStack",
+        "Documentation"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -16,17 +19,16 @@
         "bacon/bacon-qr-code": "^2.0",
         "barryvdh/laravel-dompdf": "^0.9.0",
         "barryvdh/laravel-snappy": "^0.4.8",
-        "doctrine/dbal": "^2.12.1",
+        "doctrine/dbal": "^3.1",
         "fideloper/proxy": "^4.4.1",
         "filp/whoops": "^2.14",
-        "intervention/image": "^2.5.1",
-        "laravel/framework": "^6.20.33",
-        "laravel/socialite": "^5.1",
+        "intervention/image": "^2.7",
+        "laravel/framework": "^7.29",
+        "laravel/socialite": "^5.2",
         "league/commonmark": "^1.5",
         "league/flysystem-aws-s3-v3": "^1.0.29",
         "league/html-to-markdown": "^5.0.0",
         "league/oauth2-client": "^2.6",
-        "nunomaduro/collision": "^3.1",
         "onelogin/php-saml": "^4.0",
         "phpseclib/phpseclib": "~3.0",
         "pragmarx/google2fa": "^8.0",
@@ -37,15 +39,18 @@
         "socialiteproviders/okta": "^4.1",
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
-        "ssddanbrown/htmldiff": "^v1.0.1"
+        "ssddanbrown/htmldiff": "^1.0.1",
+        "laravel/ui": "^2.5",
+        "guzzlehttp/guzzle": "^7.4.0",
+        "laravel/tinker": "^2.5"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5.1",
-        "barryvdh/laravel-ide-helper": "^2.8.2",
+        "barryvdh/laravel-debugbar": "^3.6",
         "fakerphp/faker": "^1.13.0",
         "mockery/mockery": "^1.3.3",
         "phpunit/phpunit": "^9.5.3",
-        "symfony/dom-crawler": "^5.3"
+        "symfony/dom-crawler": "^5.3",
+        "nunomaduro/collision": "^4.3"
     },
     "autoload": {
         "classmap": [
@@ -55,9 +60,9 @@
         "psr-4": {
             "BookStack\\": "app/"
         },
-		"files": [
-			"app/helpers.php"
-		]
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

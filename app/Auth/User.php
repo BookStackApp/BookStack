@@ -90,7 +90,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Returns the default public user.
      */
-    public static function getDefault(): User
+    public static function getDefault(): self
     {
         if (!is_null(static::$defaultUser)) {
             return static::$defaultUser;
@@ -336,7 +336,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function logDescriptor(): string
     {
@@ -344,7 +344,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function refreshSlug(): string
     {

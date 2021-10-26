@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'לא ניתן להרשם באמצעות המייל שסופק',
     'register_success' => 'תודה על הרשמתך! ניתן כעת להתחבר',
 
-
     // Password Reset
     'reset_password' => 'איפוס סיסמא',
     'reset_password_send_instructions' => 'יש להזין את כתובת המייל למטה ואנו נשלח אלייך הוראות לאיפוס הסיסמא',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'איפוס סיסמא ב :appName',
     'email_reset_text' => 'קישור זה נשלח עקב בקשה לאיפוס סיסמא בחשבון שלך',
     'email_reset_not_requested' => 'אם לא ביקשת לאפס את סיסמתך, אפשר להתעלם ממייל זה',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'אמת אי-מייל ב :appName',

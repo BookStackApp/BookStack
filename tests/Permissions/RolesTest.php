@@ -173,11 +173,11 @@ class RolesTest extends TestCase
     public function test_manage_users_permission_shows_link_in_header_if_does_not_have_settings_manage_permision()
     {
         $usersLink = 'href="' . url('/settings/users') . '"';
-        $this->actingAs($this->user)->get('/')->assertDontSee($usersLink);
+        $this->actingAs($this->user)->get('/')->assertDontSee($usersLink, false);
         $this->giveUserPermissions($this->user, ['users-manage']);
-        $this->actingAs($this->user)->get('/')->assertSee($usersLink);
+        $this->actingAs($this->user)->get('/')->assertSee($usersLink, false);
         $this->giveUserPermissions($this->user, ['settings-manage', 'users-manage']);
-        $this->actingAs($this->user)->get('/')->assertDontSee($usersLink);
+        $this->actingAs($this->user)->get('/')->assertDontSee($usersLink, false);
     }
 
     public function test_user_cannot_change_email_unless_they_have_manage_users_permission()

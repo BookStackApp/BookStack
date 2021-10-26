@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Mantenimiento',
     'maint_image_cleanup' => 'Limpiar imágenes',
-    'maint_image_cleanup_desc' => "Analiza las páginas y sus revisiones para comprobar qué imágenes y dibujos están siendo utilizadas y cuales no son necesarias. Asegúrate de crear una copia completa de la base de datos y de las imágenes antes de lanzar esta opción.",
+    'maint_image_cleanup_desc' => 'Analiza las páginas y sus revisiones para comprobar qué imágenes y dibujos están siendo utilizadas y cuales no son necesarias. Asegúrate de crear una copia completa de la base de datos y de las imágenes antes de lanzar esta opción.',
     'maint_delete_images_only_in_revisions' => 'Elimina también imágenes que sólo existen en antiguas revisiones de páginas',
     'maint_image_cleanup_run' => 'Lanzar limpieza',
     'maint_image_cleanup_warning' => 'Se han encontrado :count imágenes posiblemente no utilizadas . ¿Estás seguro de querer borrar estas imágenes?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Borrar rol',
     'role_delete_confirm' => 'Se borrará el rol con nombre  \':roleName\'.',
     'role_delete_users_assigned' => 'Este rol tiene :userCount usuarios asignados. Si quisiera migrar los usuarios de este rol, seleccione un nuevo rol a continuación.',
-    'role_delete_no_migration' => "No migrar usuarios",
+    'role_delete_no_migration' => 'No migrar usuarios',
     'role_delete_sure' => 'Está seguro que desea borrar este rol?',
     'role_delete_success' => 'Rol borrado satisfactoriamente',
     'role_edit' => 'Editar rol',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

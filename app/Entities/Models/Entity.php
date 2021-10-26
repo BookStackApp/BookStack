@@ -106,7 +106,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      * Compares this entity to another given entity.
      * Matches by comparing class and id.
      */
-    public function matches(Entity $entity): bool
+    public function matches(self $entity): bool
     {
         return [get_class($this), $this->id] === [get_class($entity), $entity->id];
     }
@@ -114,7 +114,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * Checks if the current entity matches or contains the given.
      */
-    public function matchesOrContains(Entity $entity): bool
+    public function matchesOrContains(self $entity): bool
     {
         if ($this->matches($entity)) {
             return true;
@@ -270,7 +270,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      * This is the "static" parent and does not include dynamic
      * relations such as shelves to books.
      */
-    public function getParent(): ?Entity
+    public function getParent(): ?self
     {
         if ($this instanceof Page) {
             return $this->chapter_id ? $this->chapter()->withTrashed()->first() : $this->book()->withTrashed()->first();
@@ -300,7 +300,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function refreshSlug(): string
     {
@@ -310,7 +310,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function favourites(): MorphMany
     {

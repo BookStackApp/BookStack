@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Наистина ли искате да изтриете тази версия?',
     'revision_restore_confirm' => 'Сигурни ли сте, че искате да изтриете тази версия? Настоящата страница ще бъде заместена.',
     'revision_delete_success' => 'Версията беше изтрита',
-    'revision_cannot_delete_latest' => 'Не може да изтриете последната версия.'
+    'revision_cannot_delete_latest' => 'Не може да изтриете последната версия.',
 ];

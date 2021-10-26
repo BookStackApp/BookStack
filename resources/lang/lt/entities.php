@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Esate tikri, kad norite ištrinti šią peržiūrą?',
     'revision_restore_confirm' => 'Esate tikri, kad norite atkurti šią peržiūrą? Dabartinis puslapio turinys bus pakeistas.',
     'revision_delete_success' => 'Peržiūra ištrinta',
-    'revision_cannot_delete_latest' => 'Negalima išrinti vėliausios peržiūros'
+    'revision_cannot_delete_latest' => 'Negalima išrinti vėliausios peržiūros',
 ];

@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Segur que voleu suprimir aquesta revisió?',
     'revision_restore_confirm' => 'Segur que voleu restaurar aquesta revisió? Se substituirà el contingut de la pàgina actual.',
     'revision_delete_success' => 'S\'ha suprimit la revisió',
-    'revision_cannot_delete_latest' => 'No es pot suprimir la darrera revisió.'
+    'revision_cannot_delete_latest' => 'No es pot suprimir la darrera revisió.',
 ];

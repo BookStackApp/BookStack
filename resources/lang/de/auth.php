@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Sie können sich mit dieser E-Mail nicht registrieren.',
     'register_success' => 'Vielen Dank für Ihre Registrierung! Die Daten sind gespeichert und Sie sind angemeldet.',
 
-
     // Password Reset
     'reset_password' => 'Passwort vergessen',
     'reset_password_send_instructions' => 'Bitte geben Sie Ihre E-Mail-Adresse ein. Danach erhalten Sie eine E-Mail mit einem Link zum Zurücksetzen Ihres Passwortes.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Passwort zurücksetzen für :appName',
     'email_reset_text' => 'Sie erhalten diese E-Mail, weil jemand versucht hat, Ihr Passwort zurückzusetzen.',
     'email_reset_not_requested' => 'Wenn Sie das nicht waren, brauchen Sie nichts weiter zu tun.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Bestätigen Sie Ihre E-Mail-Adresse für :appName',
