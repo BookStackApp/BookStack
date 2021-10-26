@@ -23,7 +23,7 @@ class AttachmentTest extends TestCase
     /**
      * Uploads a file with the given name.
      */
-    protected function uploadFile(string $name, int $uploadedTo = 0): \Illuminate\Foundation\Testing\TestResponse
+    protected function uploadFile(string $name, int $uploadedTo = 0): \Illuminate\Testing\TestResponse
     {
         $file = $this->getTestFile($name);
 
