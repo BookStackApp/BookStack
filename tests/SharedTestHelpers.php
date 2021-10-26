@@ -22,10 +22,10 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use Illuminate\Foundation\Testing\Assert as PHPUnit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Testing\Assert as PHPUnit;
 use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
@@ -127,7 +127,7 @@ trait SharedTestHelpers
     /**
      * Create and return a new test chapter.
      */
-    public function newChapter(array $input = ['name' => 'test chapter', 'description' => 'My new test chapter'], Book $book): Chapter
+    public function newChapter(array $input, Book $book): Chapter
     {
         return app(ChapterRepo::class)->create($input, $book);
     }

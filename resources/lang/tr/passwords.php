@@ -7,7 +7,7 @@
 return [
 
     'password' => 'Şifreniz en az 6 karakterden oluşmalı ve her iki şifre de birbiri ile eşleşmelidir.',
-    'user' => "Bu e-posta adresine sahip bir kullanıcı bulamadık.",
+    'user' => 'Bu e-posta adresine sahip bir kullanıcı bulamadık.',
     'token' => 'Şifre sıfırlama anahtarı, bu e-posta adresi için geçersizdir.',
     'sent' => 'Şifre sıfırlama bağlantısını e-posta adresinize gönderdik!',
     'reset' => 'Şifreniz sıfırlandı!',

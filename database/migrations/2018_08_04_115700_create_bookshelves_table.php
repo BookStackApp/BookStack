@@ -120,11 +120,11 @@ class CreateBookshelvesTable extends Migration
         Schema::dropIfExists('bookshelves');
 
         // Drop related polymorphic items
-        DB::table('activities')->where('entity_type', '=', 'BookStack\Entities\Models\Bookshelf')->delete();
-        DB::table('views')->where('viewable_type', '=', 'BookStack\Entities\Models\Bookshelf')->delete();
-        DB::table('entity_permissions')->where('restrictable_type', '=', 'BookStack\Entities\Models\Bookshelf')->delete();
-        DB::table('tags')->where('entity_type', '=', 'BookStack\Entities\Models\Bookshelf')->delete();
-        DB::table('search_terms')->where('entity_type', '=', 'BookStack\Entities\Models\Bookshelf')->delete();
-        DB::table('comments')->where('entity_type', '=', 'BookStack\Entities\Models\Bookshelf')->delete();
+        DB::table('activities')->where('entity_type', '=', \BookStack\Entities\Models\Bookshelf::class)->delete();
+        DB::table('views')->where('viewable_type', '=', \BookStack\Entities\Models\Bookshelf::class)->delete();
+        DB::table('entity_permissions')->where('restrictable_type', '=', \BookStack\Entities\Models\Bookshelf::class)->delete();
+        DB::table('tags')->where('entity_type', '=', \BookStack\Entities\Models\Bookshelf::class)->delete();
+        DB::table('search_terms')->where('entity_type', '=', \BookStack\Entities\Models\Bookshelf::class)->delete();
+        DB::table('comments')->where('entity_type', '=', \BookStack\Entities\Models\Bookshelf::class)->delete();
     }
 }

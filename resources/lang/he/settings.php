@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'תחזוקה',
     'maint_image_cleanup' => 'ניקוי תמונות',
-    'maint_image_cleanup_desc' => "סורק את הדפים והגרסאות על מנת למצוא אילו תמונות לא בשימוש. יש לוודא גיבוי מלא של מסד הנתונים והתמונות לפני הרצה",
+    'maint_image_cleanup_desc' => 'סורק את הדפים והגרסאות על מנת למצוא אילו תמונות לא בשימוש. יש לוודא גיבוי מלא של מסד הנתונים והתמונות לפני הרצה',
     'maint_delete_images_only_in_revisions' => 'מחק בנוסף תמונות שקיימות בגרסאות ישנות של הדף בלבד',
     'maint_image_cleanup_run' => 'הפעל ניקוי תמונות',
     'maint_image_cleanup_warning' => 'נמצאו כ :count תמונות אשר לא בשימוש האם ברצונך להמשיך?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'מחק תפקיד',
     'role_delete_confirm' => 'פעולה זו תמחק את התפקיד: :roleName',
     'role_delete_users_assigned' => 'לתפקיד :userCount יש משתמשים אשר משויכים אליו. אם ברצונך להעבירם לתפקיד אחר אנא בחר תפקיד מלמטה',
-    'role_delete_no_migration' => "אל תעביר משתמשים לתפקיד",
+    'role_delete_no_migration' => 'אל תעביר משתמשים לתפקיד',
     'role_delete_sure' => 'האם אתה בטוח שברצונך למחוק את התפקיד?',
     'role_delete_success' => 'התפקיד נמחק בהצלחה',
     'role_edit' => 'ערוך תפקיד',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

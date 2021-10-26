@@ -94,7 +94,7 @@ return [
     'shelves_edit' => '編輯書架',
     'shelves_delete' => '刪除書架',
     'shelves_delete_named' => '刪除書架 :name',
-    'shelves_delete_explain' => "這將刪除名為「:name」的書架。但其中的書本不會被刪除。",
+    'shelves_delete_explain' => '這將刪除名為「:name」的書架。但其中的書本不會被刪除。',
     'shelves_delete_confirmation' => '您確定要刪除此書架嗎？',
     'shelves_permissions' => '書架權限',
     'shelves_permissions_updated' => '書架權限已更新',
@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => '您確定要刪除此修訂版本嗎？',
     'revision_restore_confirm' => '您確定要還原此修訂版本嗎？ 目前頁面內容將被替換。',
     'revision_delete_success' => '修訂版本已刪除',
-    'revision_cannot_delete_latest' => '無法刪除最新修訂版本。'
+    'revision_cannot_delete_latest' => '無法刪除最新修訂版本。',
 ];

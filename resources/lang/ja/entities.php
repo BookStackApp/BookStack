@@ -94,7 +94,7 @@ return [
     'shelves_edit' => '本棚を編集',
     'shelves_delete' => '本棚を削除',
     'shelves_delete_named' => '本棚「:name」を削除',
-    'shelves_delete_explain' => "これにより、この本棚「:name」が削除されます。含まれているブックは削除されません。",
+    'shelves_delete_explain' => 'これにより、この本棚「:name」が削除されます。含まれているブックは削除されません。',
     'shelves_delete_confirmation' => '本当にこの本棚を削除してよろしいですか？',
     'shelves_permissions' => 'Bookshelf Permissions',
     'shelves_permissions_updated' => 'Bookshelf Permissions Updated',
@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'このリビジョンを削除しますか？',
     'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => 'リビジョンを削除しました',
-    'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。'
+    'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。',
 ];

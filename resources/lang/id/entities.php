@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Anda yakin ingin menghapus revisi ini?',
     'revision_restore_confirm' => 'Apakah Anda yakin ingin memulihkan revisi ini? Konten halaman saat ini akan diganti.',
     'revision_delete_success' => 'Revisi dihapus',
-    'revision_cannot_delete_latest' => 'Tidak dapat menghapus revisi terakhir.'
+    'revision_cannot_delete_latest' => 'Tidak dapat menghapus revisi terakhir.',
 ];

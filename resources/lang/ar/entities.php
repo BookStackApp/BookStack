@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف هذه المراجعة؟',
     'revision_restore_confirm' => 'هل أنت متأكد من أنك تريد استعادة هذه المراجعة؟ سيتم استبدال محتوى الصفحة الحالية.',
     'revision_delete_success' => 'تم حذف المراجعة',
-    'revision_cannot_delete_latest' => 'لايمكن حذف آخر مراجعة.'
+    'revision_cannot_delete_latest' => 'لايمكن حذف آخر مراجعة.',
 ];

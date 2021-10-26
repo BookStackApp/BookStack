@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Registrace z této e-mailové domény nejsou povoleny',
     'register_success' => 'Děkujeme za registraci! Nyní jste zaregistrováni a přihlášeni.',
 
-
     // Password Reset
     'reset_password' => 'Obnovit heslo',
     'reset_password_send_instructions' => 'Níže zadejte svou e-mailovou adresu a bude vám zaslán e-mail s odkazem na obnovení hesla.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Obnovit heslo do :appName',
     'email_reset_text' => 'Tento e-mail jste obdrželi, protože jsme obdrželi žádost o obnovení hesla k vašemu účtu.',
     'email_reset_not_requested' => 'Pokud jste o obnovení hesla nežádali, není vyžadována žádná další akce.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Potvrďte svůj e-mail pro :appName',

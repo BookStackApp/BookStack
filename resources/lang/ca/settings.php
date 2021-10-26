@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Suprimeix el rol',
     'role_delete_confirm' => 'Se suprimirà el rol amb el nom \':roleName\'.',
     'role_delete_users_assigned' => 'Aquest rol té :userCount usuaris assignats. Si voleu migrar els usuaris d\'aquest rol, seleccioneu un rol nou a continuació.',
-    'role_delete_no_migration' => "No migris els usuaris",
+    'role_delete_no_migration' => 'No migris els usuaris',
     'role_delete_sure' => 'Segur que voleu suprimir aquest rol?',
     'role_delete_success' => 'Rol suprimit correctament',
     'role_edit' => 'Edita el rol',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'الصيانة',
     'maint_image_cleanup' => 'تنظيف الصور',
-    'maint_image_cleanup_desc' => "مسح الصفحة ومراجعة المحتوى للتحقق من أي الصور والرسوم المستخدمة حاليًا وأي الصور زائدة عن الحاجة. تأكد من إنشاء قاعدة بيانات كاملة و نسخة احتياطية للصور قبل تشغيل هذا.",
+    'maint_image_cleanup_desc' => 'مسح الصفحة ومراجعة المحتوى للتحقق من أي الصور والرسوم المستخدمة حاليًا وأي الصور زائدة عن الحاجة. تأكد من إنشاء قاعدة بيانات كاملة و نسخة احتياطية للصور قبل تشغيل هذا.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'بدء التنظيف',
     'maint_image_cleanup_warning' => 'يوجد عدد :count من الصور المحتمل عدم استخدامها. تأكيد حذف الصور؟',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'حذف الدور',
     'role_delete_confirm' => 'سيتم حذف الدور المسمى \':roleName\'.',
     'role_delete_users_assigned' => 'هذا الدور له: عدد المستخدمين المعينين له. إذا كنت ترغب في ترحيل المستخدمين من هذا الدور ، فحدد دورًا جديدًا أدناه.',
-    'role_delete_no_migration' => "لا تقم بترجيل المستخدمين",
+    'role_delete_no_migration' => 'لا تقم بترجيل المستخدمين',
     'role_delete_sure' => 'تأكيد حذف الدور؟',
     'role_delete_success' => 'تم حذف الدور بنجاح',
     'role_edit' => 'تعديل الدور',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

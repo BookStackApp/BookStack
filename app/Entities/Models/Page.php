@@ -129,7 +129,7 @@ class Page extends BookChild
     /**
      * Get this page for JSON display.
      */
-    public function forJsonDisplay(): Page
+    public function forJsonDisplay(): self
     {
         $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
         $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));

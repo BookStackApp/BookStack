@@ -290,7 +290,7 @@ class BookShelfTest extends TestCase
         $shelf = Bookshelf::first();
         $resp = $this->asAdmin()->get($shelf->getUrl('/permissions'));
         $resp->assertSeeText('Copy Permissions');
-        $resp->assertSee("action=\"{$shelf->getUrl('/copy-permissions')}\"");
+        $resp->assertSee("action=\"{$shelf->getUrl('/copy-permissions')}\"", false);
 
         $child = $shelf->books()->first();
         $editorRole = $this->getEditor()->roles()->first();

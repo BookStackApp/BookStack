@@ -39,7 +39,7 @@ class MfaConfigurationTest extends TestCase
         $this->assertTrue($svg === $revisitSvg);
         $secret = decrypt(session()->get('mfa-setup-totp-secret'));
 
-        $resp->assertSee(htmlentities("?secret={$secret}&issuer=BookStack&algorithm=SHA1&digits=6&period=30"));
+        $resp->assertSee("?secret={$secret}&issuer=BookStack&algorithm=SHA1&digits=6&period=30");
 
         // Successful confirmation
         $google2fa = new Google2FA();
@@ -180,7 +180,7 @@ class MfaConfigurationTest extends TestCase
 
         $resp = $this->get('/mfa/totp/generate');
         $resp->assertSeeText('Mobile App Setup');
-        $resp->assertDontSee('otpauth://totp/BookStack:guest%40example.com');
-        $resp->assertSee('otpauth://totp/BookStack:admin%40admin.com');
+        $resp->assertDontSee('otpauth://totp/BookStack:guest%40example.com', false);
+        $resp->assertSee('otpauth://totp/BookStack:admin%40admin.com', false);
     }
 }

@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Sellel e-posti domeenil ei ole rakendusele ligipääsu',
     'register_success' => 'Aitäh, et registreerusid! Oled nüüd sisse logitud.',
 
-
     // Password Reset
     'reset_password' => 'Lähtesta parool',
     'reset_password_send_instructions' => 'Siseta oma e-posti aadress ning sulle saadetakse link parooli lähtestamiseks.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Lähtesta oma :appName parool',
     'email_reset_text' => 'Said selle e-kirja, sest meile laekus soov sinu konto parooli lähtestamiseks.',
     'email_reset_not_requested' => 'Kui sa ei soovinud parooli lähtestada, ei pea sa rohkem midagi tegema.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Kinnita oma :appName konto e-posti aadress',

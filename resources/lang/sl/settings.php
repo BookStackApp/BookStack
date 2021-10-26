@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Vzdrževanje',
     'maint_image_cleanup' => 'Odstrani /počisti slike',
-    'maint_image_cleanup_desc' => "Pregleda vsebino strani in revizij ter ugotovi, katere slike in risbe so v uporabi in katere so odvečne. Preden to poženeš, naredi popolno varnostno kopijo podatkovne zbirke in slik.",
+    'maint_image_cleanup_desc' => 'Pregleda vsebino strani in revizij ter ugotovi, katere slike in risbe so v uporabi in katere so odvečne. Preden to poženeš, naredi popolno varnostno kopijo podatkovne zbirke in slik.',
     'maint_delete_images_only_in_revisions' => 'Izbriši tudi slike, ki obstajajo le v starih različicah strani',
     'maint_image_cleanup_run' => 'Zaženi čiščenje',
     'maint_image_cleanup_warning' => 'Najdenih je bilo :count verjetno neuporabljenih slik. Ali si prepričan, da želiš odstraniti izbrane slike?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Brisanje vloge',
     'role_delete_confirm' => 'Izbrisana bo vloga z imenom \':roleName\'.',
     'role_delete_users_assigned' => 'Ta vloga ima dodeljenih :userCount uporabnikov. V kolikor želite uporabnike preseliti iz te vloge, spodaj izberite novo vlogo.',
-    'role_delete_no_migration' => "Ne prenašaj uporabnikov",
+    'role_delete_no_migration' => 'Ne prenašaj uporabnikov',
     'role_delete_sure' => 'Ali ste prepričani, da želite izbrisati to vlogo?',
     'role_delete_success' => 'Vloga uspešno izbrisana',
     'role_edit' => 'Uredi vlogo',
@@ -274,6 +274,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

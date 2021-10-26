@@ -94,7 +94,7 @@ return [
     'shelves_edit' => 'Upravit knihovnu',
     'shelves_delete' => 'Odstranit knihovnu',
     'shelves_delete_named' => 'Odstranit knihovnu :name',
-    'shelves_delete_explain' => "Toto odstraní knihovnu ‚:name‘. Vložené knihy nebudou odstraněny.",
+    'shelves_delete_explain' => 'Toto odstraní knihovnu ‚:name‘. Vložené knihy nebudou odstraněny.',
     'shelves_delete_confirmation' => 'Opravdu chcete odstranit tuto knihovnu?',
     'shelves_permissions' => 'Oprávnění knihovny',
     'shelves_permissions_updated' => 'Oprávnění knihovny byla aktualizována',
@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Opravdu chcete odstranit tuto revizi?',
     'revision_restore_confirm' => 'Jste si jisti, že chcete obnovit tuto revizi? Aktuální obsah stránky bude nahrazen.',
     'revision_delete_success' => 'Revize odstraněna',
-    'revision_cannot_delete_latest' => 'Nelze odstranit poslední revizi.'
+    'revision_cannot_delete_latest' => 'Nelze odstranit poslední revizi.',
 ];

@@ -17,13 +17,13 @@ class AttachmentTest extends TestCase
      */
     protected function getTestFile(string $fileName): UploadedFile
     {
-        return new UploadedFile(base_path('tests/test-data/test-file.txt'), $fileName, 'text/plain', 55, null, true);
+        return new UploadedFile(base_path('tests/test-data/test-file.txt'), $fileName, 'text/plain', null, true);
     }
 
     /**
      * Uploads a file with the given name.
      */
-    protected function uploadFile(string $name, int $uploadedTo = 0): \Illuminate\Foundation\Testing\TestResponse
+    protected function uploadFile(string $name, int $uploadedTo = 0): \Illuminate\Testing\TestResponse
     {
         $file = $this->getTestFile($name);
 
