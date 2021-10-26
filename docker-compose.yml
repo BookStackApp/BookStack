@@ -31,7 +31,7 @@ services:
       DB_USERNAME: bookstack-test
       DB_PASSWORD: bookstack-test
       TEST_DATABASE_URL: mysql://bookstack-test:bookstack-test@db/bookstack-test
-      MAIL_DRIVER: smtp
+      MAIL_MAILER: smtp
       MAIL_HOST: mailhog
       MAIL_PORT: 1025
     ports:
