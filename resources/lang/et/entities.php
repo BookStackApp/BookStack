@@ -292,7 +292,7 @@ return [
     'templates_prepend_content' => 'Lisa lehe sisu ette',
 
     // Profile View
-    'profile_user_for_x' => 'User for :time',
+    'profile_user_for_x' => 'Kasutaja olnud :time',
     'profile_created_content' => 'Lisatud sisu',
     'profile_not_created_pages' => ':userName ei ole ühtegi lehte lisanud',
     'profile_not_created_chapters' => ':userName ei ole ühtegi peatükki lisanud',
