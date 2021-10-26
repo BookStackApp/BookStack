@@ -17,7 +17,7 @@ class AttachmentTest extends TestCase
      */
     protected function getTestFile(string $fileName): UploadedFile
     {
-        return new UploadedFile(base_path('tests/test-data/test-file.txt'), $fileName, 'text/plain', 55, null, true);
+        return new UploadedFile(base_path('tests/test-data/test-file.txt'), $fileName, 'text/plain', null, true);
     }
 
     /**

@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
-         backupGlobals="false"
-         backupStaticAttributes="false"
          bootstrap="vendor/autoload.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false">
+         colors="true">
   <coverage>
     <include>
       <directory suffix=".php">app/</directory>
@@ -33,7 +26,7 @@
     <server name="QUEUE_CONNECTION" value="sync"/>
     <server name="DB_CONNECTION" value="mysql_testing"/>
     <server name="BCRYPT_ROUNDS" value="4"/>
-    <server name="MAIL_MAILER" value="array"/>
+    <server name="MAIL_DRIVER" value="array"/>
     <server name="LOG_CHANNEL" value="single"/>
     <server name="AUTH_METHOD" value="standard"/>
     <server name="DISABLE_EXTERNAL_SERVICES" value="true"/>

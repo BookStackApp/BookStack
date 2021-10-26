@@ -29,7 +29,6 @@
         "league/flysystem-aws-s3-v3": "^1.0.29",
         "league/html-to-markdown": "^5.0.0",
         "league/oauth2-client": "^2.6",
-        "nunomaduro/collision": "^3.1",
         "onelogin/php-saml": "^4.0",
         "phpseclib/phpseclib": "~3.0",
         "pragmarx/google2fa": "^8.0",
@@ -40,20 +39,17 @@
         "socialiteproviders/okta": "^4.1",
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
-        "ssddanbrown/htmldiff": "^v1.0.1",
+        "ssddanbrown/htmldiff": "^1.0.1",
         "laravel/ui": "^2.5",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
+        "guzzlehttp/guzzle": "^7.4.0",
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
-        "barryvdh/laravel-ide-helper": "^2.8.2",
         "fakerphp/faker": "^1.13.0",
         "mockery/mockery": "^1.3.3",
         "phpunit/phpunit": "^9.5.3",
         "symfony/dom-crawler": "^5.3",
-        "facade/ignition": "^2.0",
         "nunomaduro/collision": "^4.3"
     },
     "autoload": {

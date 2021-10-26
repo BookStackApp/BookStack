@@ -11,8 +11,10 @@
 return [
 
     // Mail driver to use.
+    // From Laravel 7+ this is MAIL_MAILER in laravel.
+    // Kept as MAIL_DRIVER in BookStack to prevent breaking change.
     // Options: smtp, sendmail, log, array
-    'driver' => env('MAIL_MAILER', 'smtp'),
+    'driver' => env('MAIL_DRIVER', 'smtp'),
 
     // SMTP host address
     'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
