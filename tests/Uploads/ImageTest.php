@@ -22,12 +22,12 @@ class ImageTest extends TestCase
         $imgDetails = $this->uploadGalleryImage($page);
         $relPath = $imgDetails['path'];
 
-        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image found at path: ' . public_path($relPath));
+        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image found at path: '.public_path($relPath));
 
         $this->deleteImage($relPath);
 
         $this->assertDatabaseHas('images', [
-            'url'         => $this->baseUrl . $relPath,
+            'url'         => $this->baseUrl.$relPath,
             'type'        => 'gallery',
             'uploaded_to' => $page->id,
             'path'        => $relPath,
@@ -48,7 +48,7 @@ class ImageTest extends TestCase
         $imgDetails = $this->uploadGalleryImage($page, 'compressed.png');
         $relPath = $imgDetails['path'];
 
-        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image found at path: ' . public_path($relPath));
+        $this->assertTrue(file_exists(public_path($relPath)), 'Uploaded image found at path: '.public_path($relPath));
         $displayImage = $imgDetails['response']->thumbs->display;
 
         $displayImageRelPath = implode('/', array_slice(explode('/', $displayImage), 3));
@@ -70,7 +70,7 @@ class ImageTest extends TestCase
         $image = Image::query()->first();
 
         $newName = Str::random();
-        $update = $this->put('/images/' . $image->id, ['name' => $newName]);
+        $update = $this->put('/images/'.$image->id, ['name' => $newName]);
         $update->assertSuccessful();
         $update->assertSee($newName);
 
@@ -116,10 +116,10 @@ class ImageTest extends TestCase
         $imgDetails = $this->uploadGalleryImage($page);
 
         $image = Image::query()->first();
-        $page->html = '<img src="' . $image->url . '">';
+        $page->html = '<img src="'.$image->url.'">';
         $page->save();
 
-        $usage = $this->get('/images/edit/' . $image->id . '?delete=true');
+        $usage = $this->get('/images/edit/'.$image->id.'?delete=true');
         $usage->assertSuccessful();
         $usage->assertSeeText($page->name);
         $usage->assertSee($page->getUrl());
@@ -174,7 +174,7 @@ class ImageTest extends TestCase
 
         $fileName = 'bad.phtml.png';
         $relPath = $this->getTestImagePath('gallery', $fileName);
-        $expectedRelPath = dirname($relPath) . '/bad-phtml.png';
+        $expectedRelPath = dirname($relPath).'/bad-phtml.png';
         $this->deleteImage($expectedRelPath);
 
         $file = $this->newTestImageFromBase64('bad-phtml-png.base64', $fileName);
@@ -229,12 +229,12 @@ class ImageTest extends TestCase
         $this->asEditor();
         $galleryFile = $this->getTestImage('my-secure-test-upload.png');
         $page = Page::query()->first();
-        $expectedPath = storage_path('uploads/images/gallery/' . date('Y-m') . '/my-secure-test-upload.png');
+        $expectedPath = storage_path('uploads/images/gallery/'.date('Y-m').'/my-secure-test-upload.png');
 
         $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
         $upload->assertStatus(200);
 
-        $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: ' . $expectedPath);
+        $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: '.$expectedPath);
 
         if (file_exists($expectedPath)) {
             unlink($expectedPath);
@@ -247,7 +247,7 @@ class ImageTest extends TestCase
         $this->asEditor();
         $galleryFile = $this->getTestImage('my-secure-test-upload.png');
         $page = Page::query()->first();
-        $expectedPath = storage_path('uploads/images/gallery/' . date('Y-m') . '/my-secure-test-upload.png');
+        $expectedPath = storage_path('uploads/images/gallery/'.date('Y-m').'/my-secure-test-upload.png');
 
         $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
         $imageUrl = json_decode($upload->getContent(), true)['url'];
@@ -269,12 +269,12 @@ class ImageTest extends TestCase
         config()->set('filesystems.images', 'local_secure');
         $this->asAdmin();
         $galleryFile = $this->getTestImage('my-system-test-upload.png');
-        $expectedPath = public_path('uploads/images/system/' . date('Y-m') . '/my-system-test-upload.png');
+        $expectedPath = public_path('uploads/images/system/'.date('Y-m').'/my-system-test-upload.png');
 
         $upload = $this->call('POST', '/settings', [], [], ['app_logo' => $galleryFile], []);
         $upload->assertRedirect('/settings');
 
-        $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: ' . $expectedPath);
+        $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: '.$expectedPath);
 
         if (file_exists($expectedPath)) {
             unlink($expectedPath);
@@ -292,11 +292,11 @@ class ImageTest extends TestCase
         $this->uploadImage($imageName, $page->id);
         $image = Image::first();
 
-        $delete = $this->delete('/images/' . $image->id);
+        $delete = $this->delete('/images/'.$image->id);
         $delete->assertStatus(200);
 
         $this->assertDatabaseMissing('images', [
-            'url'  => $this->baseUrl . $relPath,
+            'url'  => $this->baseUrl.$relPath,
             'type' => 'gallery',
         ]);
 
@@ -318,12 +318,12 @@ class ImageTest extends TestCase
 
         $image = Image::first();
         $folder = public_path(dirname($relPath));
-        $imageCount = count(glob($folder . '/*'));
+        $imageCount = count(glob($folder.'/*'));
 
-        $delete = $this->delete('/images/' . $image->id);
+        $delete = $this->delete('/images/'.$image->id);
         $delete->assertStatus(200);
 
-        $newCount = count(glob($folder . '/*'));
+        $newCount = count(glob($folder.'/*'));
         $this->assertEquals($imageCount - 1, $newCount, 'More files than expected have been deleted');
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image has not been deleted as expected');
     }
@@ -344,7 +344,7 @@ class ImageTest extends TestCase
         $this->actingAs($admin);
 
         $file = $this->getTestProfileImage();
-        $this->call('PUT', '/settings/users/' . $editor->id, [], [], ['profile_image' => $file], []);
+        $this->call('PUT', '/settings/users/'.$editor->id, [], [], ['profile_image' => $file], []);
 
         $this->assertDatabaseHas('images', [
             'type'        => 'user',
@@ -359,7 +359,7 @@ class ImageTest extends TestCase
         $this->actingAs($editor);
 
         $file = $this->getTestProfileImage();
-        $this->call('PUT', '/settings/users/' . $editor->id, [], [], ['profile_image' => $file], []);
+        $this->call('PUT', '/settings/users/'.$editor->id, [], [], ['profile_image' => $file], []);
 
         $profileImages = Image::where('type', '=', 'user')->where('created_by', '=', $editor->id)->get();
         $this->assertTrue($profileImages->count() === 1, 'Found profile images does not match upload count');
@@ -399,7 +399,7 @@ class ImageTest extends TestCase
         $pageRepo = app(PageRepo::class);
         $pageRepo->update($page, [
             'name'    => $page->name,
-            'html'    => $page->html . "<img src=\"{$image->url}\">",
+            'html'    => $page->html."<img src=\"{$image->url}\">",
             'summary' => '',
         ]);
 

@@ -18,7 +18,7 @@ class CheckGuard
     public function handle($request, Closure $next, ...$allowedGuards)
     {
         $activeGuard = config('auth.method');
-        if (!in_array($activeGuard, $allowedGuards)) {
+        if (! in_array($activeGuard, $allowedGuards)) {
             session()->flash('error', trans('errors.permission'));
 
             return redirect('/');

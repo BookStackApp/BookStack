@@ -28,7 +28,7 @@ return [
     'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'Действие не определено',
-    'social_login_bad_response' => "При попытке входа с :socialAccount произошла ошибка: \\n:error",
+    'social_login_bad_response' => 'При попытке входа с :socialAccount произошла ошибка: \\n:error',
     'social_account_in_use' => 'Этот :socialAccount аккаунт уже используется, попробуйте войти с параметрами :socialAccount.',
     'social_account_email_in_use' => 'Электронный ящик :email уже используется. Если у вас уже есть учетная запись, вы можете подключить свою учетную запись :socialAccount из настроек своего профиля.',
     'social_account_existing' => 'Этот :socialAccount уже привязан к вашему профилю.',

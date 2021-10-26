@@ -7,7 +7,7 @@
 return [
 
     'password' => 'Lozinke moraju sadržavati najmanje osam karaktera i podudarati se sa potvrdom lozinke.',
-    'user' => "Ne možemo naći korisnika sa tom e-mail adresom.",
+    'user' => 'Ne možemo naći korisnika sa tom e-mail adresom.',
     'token' => 'Token za poništavanje lozinke nije validan za ovu e-mail adresu.',
     'sent' => 'Poslali smo link za poništavanje vaše lozinke na e-mail!',
     'reset' => 'Vaša lozinka je resetovana!',

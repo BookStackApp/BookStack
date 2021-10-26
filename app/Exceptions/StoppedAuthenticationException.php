@@ -23,7 +23,7 @@ class StoppedAuthenticationException extends \Exception implements Responsable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function toResponse($request)
     {

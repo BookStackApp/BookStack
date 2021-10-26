@@ -20,7 +20,7 @@ return [
     'role' => 'Roll',
     'cover_image' => 'Omslagsbild',
     'cover_image_description' => 'Bilden bör vara cirka 440x250px stor.',
-    
+
     // Actions
     'actions' => 'Åtgärder',
     'view' => 'Visa',

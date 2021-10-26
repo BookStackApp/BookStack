@@ -21,7 +21,7 @@ class ApiDocsTest extends TestCase
 
     public function test_docs_json_endpoint_returns_json()
     {
-        $resp = $this->actingAsApiEditor()->get($this->endpoint . '.json');
+        $resp = $this->actingAsApiEditor()->get($this->endpoint.'.json');
         $resp->assertStatus(200);
         $resp->assertHeader('Content-Type', 'application/json');
         $resp->assertJson([

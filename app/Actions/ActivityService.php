@@ -160,7 +160,7 @@ class ActivityService
         $previousItem = null;
 
         foreach ($activities as $activityItem) {
-            if (!$previousItem || !$activityItem->isSimilarTo($previousItem)) {
+            if (! $previousItem || ! $activityItem->isSimilarTo($previousItem)) {
                 $newActivity[] = $activityItem;
             }
 
@@ -175,7 +175,7 @@ class ActivityService
      */
     protected function setNotification(string $type)
     {
-        $notificationTextKey = 'activities.' . $type . '_notification';
+        $notificationTextKey = 'activities.'.$type.'_notification';
         if (trans()->has($notificationTextKey)) {
             $message = trans($notificationTextKey);
             session()->flash('success', $message);
@@ -189,7 +189,7 @@ class ActivityService
     public function logFailedLogin(string $username)
     {
         $message = config('logging.failed_login.message');
-        if (!$message) {
+        if (! $message) {
             return;
         }
 

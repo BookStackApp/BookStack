@@ -45,7 +45,7 @@ class Activity extends Model
      */
     public function getText(): string
     {
-        return trans('activities.' . $this->type);
+        return trans('activities.'.$this->type);
     }
 
     /**
@@ -61,7 +61,7 @@ class Activity extends Model
     /**
      * Checks if another Activity matches the general information of another.
      */
-    public function isSimilarTo(Activity $activityB): bool
+    public function isSimilarTo(self $activityB): bool
     {
         return [$this->type, $this->entity_type, $this->entity_id] === [$activityB->type, $activityB->entity_type, $activityB->entity_id];
     }

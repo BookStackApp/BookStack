@@ -42,13 +42,13 @@ class ApiTokenGuard implements Guard
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function user()
     {
         // Return the user if we've already retrieved them.
         // Effectively a request-instance cache for this method.
-        if (!is_null($this->user)) {
+        if (! is_null($this->user)) {
             return $this->user;
         }
 
@@ -74,7 +74,7 @@ class ApiTokenGuard implements Guard
      */
     public function authenticate()
     {
-        if (!is_null($user = $this->user())) {
+        if (! is_null($user = $this->user())) {
             return $user;
         }
 
@@ -137,7 +137,7 @@ class ApiTokenGuard implements Guard
             throw new ApiAuthException(trans('errors.api_user_token_not_found'));
         }
 
-        if (!Hash::check($secret, $token->secret)) {
+        if (! Hash::check($secret, $token->secret)) {
             throw new ApiAuthException(trans('errors.api_incorrect_token_secret'));
         }
 
@@ -146,13 +146,13 @@ class ApiTokenGuard implements Guard
             throw new ApiAuthException(trans('errors.api_user_token_expired'), 403);
         }
 
-        if (!$token->user->can('access-api')) {
+        if (! $token->user->can('access-api')) {
             throw new ApiAuthException(trans('errors.api_user_no_api_permission'), 403);
         }
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function validate(array $credentials = [])
     {

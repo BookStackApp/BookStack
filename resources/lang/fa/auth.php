@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'دامنه پست الکترونیک به این برنامه دسترسی ندارد',
     'register_success' => 'از ثبت نام شما سپاسگزاریم! شما اکنون ثبت نام کرده و وارد سیستم شده اید.',
 
-
     // Password Reset
     'reset_password' => 'بازنشانی کلمه عبور',
     'reset_password_send_instructions' => 'پست الکترونیک خود را در کادر زیر وارد نموده تا یک پیام حاوی لینک بازنشانی کلمه عبور دریافت نمایید.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'بازنشانی کلمه عبور :appName',
     'email_reset_text' => 'شما این پیام را به علت درخواست بازنشانی کلمه عبور دریافت می نمایید.',
     'email_reset_not_requested' => 'در صورتی که درخواست بازنشانی کلمه عبور از سمت شما نمی باشد، نیاز به انجام هیچ فعالیتی ندارید.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'پست الکترونیک خود را در:appName تایید نمایید',

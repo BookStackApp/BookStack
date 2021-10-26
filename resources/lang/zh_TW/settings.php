@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => '維護',
     'maint_image_cleanup' => '清理圖片',
-    'maint_image_cleanup_desc' => "掃描頁面與修訂版本內容來檢查目前使用了哪些圖片，而哪些圖片又是多餘的。請確保您在執行這個動作前建立了完整的資料庫與映像檔備份。",
+    'maint_image_cleanup_desc' => '掃描頁面與修訂版本內容來檢查目前使用了哪些圖片，而哪些圖片又是多餘的。請確保您在執行這個動作前建立了完整的資料庫與映像檔備份。',
     'maint_delete_images_only_in_revisions' => '也刪除僅存在於舊的頁面修訂版本中存在的圖片',
     'maint_image_cleanup_run' => '執行清理',
     'maint_image_cleanup_warning' => '發現了 :count 張可能未使用的圖片。您確定要刪除這些圖片嗎？',
@@ -132,7 +132,7 @@ return [
     'role_delete' => '刪除角色',
     'role_delete_confirm' => '這將會刪除名為「:roleName」的角色.',
     'role_delete_users_assigned' => '有 :userCount 位使用者屬於此角色。如果您想將此角色中的使用者遷移，請在下面選擇一個新角色。',
-    'role_delete_no_migration' => "不要遷移使用者",
+    'role_delete_no_migration' => '不要遷移使用者',
     'role_delete_sure' => '您確定要刪除此角色？',
     'role_delete_success' => '角色刪除成功',
     'role_edit' => '編輯角色',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Vedlikehold',
     'maint_image_cleanup' => 'Bildeopprydding',
-    'maint_image_cleanup_desc' => "Skanner side og revisjonsinnhold for å sjekke hvilke bilder og tegninger som for øyeblikket er i bruk, og hvilke bilder som er overflødige. Forsikre deg om at du lager en full database og sikkerhetskopiering av bilder før du kjører denne.",
+    'maint_image_cleanup_desc' => 'Skanner side og revisjonsinnhold for å sjekke hvilke bilder og tegninger som for øyeblikket er i bruk, og hvilke bilder som er overflødige. Forsikre deg om at du lager en full database og sikkerhetskopiering av bilder før du kjører denne.',
     'maint_delete_images_only_in_revisions' => 'Slett også bilder som bare finnes i game siderevisjoner',
     'maint_image_cleanup_run' => 'Kjør opprydding',
     'maint_image_cleanup_warning' => ':count potensielt ubrukte bilder ble funnet. Er du sikker på at du vil slette disse bildene?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Rolle slettet',
     'role_delete_confirm' => 'Dette vil slette rollen «:roleName».',
     'role_delete_users_assigned' => 'Denne rollen har :userCount kontoer koblet opp mot seg. Velg hvilke rolle du vil flytte disse til.',
-    'role_delete_no_migration' => "Ikke flytt kontoer",
+    'role_delete_no_migration' => 'Ikke flytt kontoer',
     'role_delete_sure' => 'Er du sikker på at du vil slette rollen?',
     'role_delete_success' => 'Rollen ble slettet',
     'role_edit' => 'Endre rolle',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

@@ -93,10 +93,10 @@ class Saml2Controller extends Controller
         }
 
         $acsId = Str::random(16);
-        $cacheKey = 'saml2_acs:' . $acsId;
+        $cacheKey = 'saml2_acs:'.$acsId;
         cache()->set($cacheKey, encrypt($samlResponse), 10);
 
-        return redirect()->guest('/saml2/acs?id=' . $acsId);
+        return redirect()->guest('/saml2/acs?id='.$acsId);
     }
 
     /**
@@ -107,7 +107,7 @@ class Saml2Controller extends Controller
     public function processAcs(Request $request)
     {
         $acsId = $request->get('id', null);
-        $cacheKey = 'saml2_acs:' . $acsId;
+        $cacheKey = 'saml2_acs:'.$acsId;
         $samlResponse = null;
 
         try {

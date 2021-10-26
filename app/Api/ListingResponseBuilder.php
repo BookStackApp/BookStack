@@ -66,14 +66,14 @@ class ListingResponseBuilder
     {
         $query = clone $query;
         $requestFilters = $this->request->get('filter', []);
-        if (!is_array($requestFilters)) {
+        if (! is_array($requestFilters)) {
             return $query;
         }
 
         $queryFilters = collect($requestFilters)->map(function ($value, $key) {
             return $this->requestFilterToQueryFilter($key, $value);
         })->filter(function ($value) {
-            return !is_null($value);
+            return ! is_null($value);
         })->values()->toArray();
 
         return $query->where($queryFilters);
@@ -88,11 +88,11 @@ class ListingResponseBuilder
         $field = $splitKey[0];
         $filterOperator = $splitKey[1] ?? 'eq';
 
-        if (!in_array($field, $this->fields)) {
+        if (! in_array($field, $this->fields)) {
             return null;
         }
 
-        if (!in_array($filterOperator, array_keys($this->filterOperators))) {
+        if (! in_array($filterOperator, array_keys($this->filterOperators))) {
             $filterOperator = 'eq';
         }
 
@@ -117,7 +117,7 @@ class ListingResponseBuilder
         }
 
         $sortName = ltrim($sort, '+- ');
-        if (!in_array($sortName, $this->fields)) {
+        if (! in_array($sortName, $this->fields)) {
             $sortName = $defaultSortName;
         }
 

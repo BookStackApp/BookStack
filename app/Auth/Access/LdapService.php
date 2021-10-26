@@ -181,7 +181,7 @@ class LdapService
             $ldapBind = $this->ldap->bind($connection, $ldapDn, $ldapPass);
         }
 
-        if (!$ldapBind) {
+        if (! $ldapBind) {
             throw new LdapException(($isAnonymous ? trans('errors.ldap_fail_anonymous') : trans('errors.ldap_fail_authed')));
         }
     }
@@ -201,7 +201,7 @@ class LdapService
         }
 
         // Check LDAP extension in installed
-        if (!function_exists('ldap_connect') && config('app.env') !== 'testing') {
+        if (! function_exists('ldap_connect') && config('app.env') !== 'testing') {
             throw new LdapException(trans('errors.ldap_extension_not_installed'));
         }
 
@@ -226,7 +226,7 @@ class LdapService
         // Start and verify TLS if it's enabled
         if ($this->config['start_tls']) {
             $started = $this->ldap->startTls($ldapConnection);
-            if (!$started) {
+            if (! $started) {
                 throw new LdapException('Could not start TLS connection');
             }
         }
@@ -263,7 +263,7 @@ class LdapService
     {
         $newAttrs = [];
         foreach ($attrs as $key => $attrText) {
-            $newKey = '${' . $key . '}';
+            $newKey = '${'.$key.'}';
             $newAttrs[$newKey] = $this->ldap->escape($attrText);
         }
 
@@ -332,7 +332,7 @@ class LdapService
         $baseDn = $this->config['base_dn'];
         $groupsAttr = strtolower($this->config['group_attribute']);
 
-        $groupFilter = 'CN=' . $this->ldap->escape($groupName);
+        $groupFilter = 'CN='.$this->ldap->escape($groupName);
         $groups = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $groupFilter, [$groupsAttr]);
         if ($groups['count'] === 0) {
             return [];
@@ -357,7 +357,7 @@ class LdapService
 
         for ($i = 0; $i < $count; $i++) {
             $dnComponents = $this->ldap->explodeDn($userGroupSearchResponse[$groupsAttr][$i], 1);
-            if (!in_array($dnComponents[0], $ldapGroups)) {
+            if (! in_array($dnComponents[0], $ldapGroups)) {
                 $ldapGroups[] = $dnComponents[0];
             }
         }

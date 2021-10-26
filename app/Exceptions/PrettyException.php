@@ -20,13 +20,13 @@ class PrettyException extends Exception implements Responsable
     /**
      * Render a response for when this exception occurs.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function toResponse($request)
     {
         $code = ($this->getCode() === 0) ? 500 : $this->getCode();
 
-        return response()->view('errors.' . $code, [
+        return response()->view('errors.'.$code, [
             'message'  => $this->getMessage(),
             'subtitle' => $this->subtitle,
             'details'  => $this->details,

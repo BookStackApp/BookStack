@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Cette adresse e-mail ne peut pas accéder à l\'application',
     'register_success' => 'Merci pour votre inscription. Vous êtes maintenant inscrit(e) et connecté(e)',
 
-
     // Password Reset
     'reset_password' => 'Réinitialiser le mot de passe',
     'reset_password_send_instructions' => 'Entrez votre adresse e-mail ci-dessous et un e-mail avec un lien de réinitialisation de mot de passe vous sera envoyé.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Réinitialisez votre mot de passe pour :appName',
     'email_reset_text' => 'Vous recevez cet e-mail parce que nous avons reçu une demande de réinitialisation pour votre compte.',
     'email_reset_not_requested' => 'Si vous n\'avez pas effectué cette demande, vous pouvez ignorer cet e-mail.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Confirmez votre adresse e-mail pour :appName',

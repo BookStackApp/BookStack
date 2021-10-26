@@ -31,6 +31,6 @@ class UserInvite extends MailNotification
                 ->subject(trans('auth.user_invite_email_subject', $appName))
                 ->greeting(trans('auth.user_invite_email_greeting', $appName))
                 ->line(trans('auth.user_invite_email_text'))
-                ->action(trans('auth.user_invite_email_action'), url('/register/invite/' . $this->token));
+                ->action(trans('auth.user_invite_email_action'), url('/register/invite/'.$this->token));
     }
 }

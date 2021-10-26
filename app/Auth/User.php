@@ -90,9 +90,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Returns the default public user.
      */
-    public static function getDefault(): User
+    public static function getDefault(): self
     {
-        if (!is_null(static::$defaultUser)) {
+        if (! is_null(static::$defaultUser)) {
             return static::$defaultUser;
         }
 
@@ -293,7 +293,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getEditUrl(string $path = ''): string
     {
-        $uri = '/settings/users/' . $this->id . '/' . trim($path, '/');
+        $uri = '/settings/users/'.$this->id.'/'.trim($path, '/');
 
         return url(rtrim($uri, '/'));
     }
@@ -303,7 +303,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getProfileUrl(): string
     {
-        return url('/user/' . $this->slug);
+        return url('/user/'.$this->slug);
     }
 
     /**
@@ -336,7 +336,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function logDescriptor(): string
     {
@@ -344,7 +344,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function refreshSlug(): string
     {

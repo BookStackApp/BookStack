@@ -84,7 +84,7 @@ trait SharedTestHelpers
     protected function getViewer(array $attributes = []): User
     {
         $user = Role::getRole('viewer')->users()->first();
-        if (!empty($attributes)) {
+        if (! empty($attributes)) {
             $user->forceFill($attributes)->save();
         }
 
@@ -127,7 +127,7 @@ trait SharedTestHelpers
     /**
      * Create and return a new test chapter.
      */
-    public function newChapter(array $input = ['name' => 'test chapter', 'description' => 'My new test chapter'], Book $book): Chapter
+    public function newChapter(array $input, Book $book): Chapter
     {
         return app(ChapterRepo::class)->create($input, $book);
     }
@@ -301,7 +301,7 @@ trait SharedTestHelpers
         $passed = true;
 
         foreach ($mapToInclude as $key => $value) {
-            if (!isset($mapToCheck[$key]) || $mapToCheck[$key] !== $mapToInclude[$key]) {
+            if (! isset($mapToCheck[$key]) || $mapToCheck[$key] !== $mapToInclude[$key]) {
                 $passed = false;
             }
         }

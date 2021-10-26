@@ -89,7 +89,7 @@ class HomepageTest extends TestCase
         $included->save();
 
         $name = 'My custom homepage';
-        $customPage = $this->newPage(['name' => $name, 'html' => '{{@' . $included->id . '}}']);
+        $customPage = $this->newPage(['name' => $name, 'html' => '{{@'.$included->id.'}}']);
         $this->setSettings(['app-homepage' => $customPage->id]);
         $this->setSettings(['app-homepage-type' => 'page']);
 

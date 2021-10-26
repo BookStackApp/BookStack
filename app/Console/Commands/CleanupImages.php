@@ -48,9 +48,9 @@ class CleanupImages extends Command
         $checkRevisions = $this->option('all') ? false : true;
         $dryRun = $this->option('force') ? false : true;
 
-        if (!$dryRun) {
+        if (! $dryRun) {
             $proceed = $this->confirm("This operation is destructive and is not guaranteed to be fully accurate.\nEnsure you have a backup of your images.\nAre you sure you want to proceed?");
-            if (!$proceed) {
+            if (! $proceed) {
                 return;
             }
         }
@@ -60,7 +60,7 @@ class CleanupImages extends Command
 
         if ($dryRun) {
             $this->comment('Dry run, No images have been deleted');
-            $this->comment($deleteCount . ' images found that would have been deleted');
+            $this->comment($deleteCount.' images found that would have been deleted');
             $this->showDeletedImages($deleted);
             $this->comment('Run with -f or --force to perform deletions');
 
@@ -68,7 +68,7 @@ class CleanupImages extends Command
         }
 
         $this->showDeletedImages($deleted);
-        $this->comment($deleteCount . ' images deleted');
+        $this->comment($deleteCount.' images deleted');
     }
 
     protected function showDeletedImages($paths)

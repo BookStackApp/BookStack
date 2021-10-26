@@ -52,7 +52,7 @@ class CopyShelfPermissions extends Command
         $cascadeAll = $this->option('all');
         $shelves = null;
 
-        if (!$cascadeAll && !$shelfSlug) {
+        if (! $cascadeAll && ! $shelfSlug) {
             $this->error('Either a --slug or --all option must be provided.');
 
             return;
@@ -60,12 +60,12 @@ class CopyShelfPermissions extends Command
 
         if ($cascadeAll) {
             $continue = $this->confirm(
-                'Permission settings for all shelves will be cascaded. ' .
-                        'Books assigned to multiple shelves will receive only the permissions of it\'s last processed shelf. ' .
+                'Permission settings for all shelves will be cascaded. '.
+                        'Books assigned to multiple shelves will receive only the permissions of it\'s last processed shelf. '.
                         'Are you sure you want to proceed?'
             );
 
-            if (!$continue && !$this->hasOption('no-interaction')) {
+            if (! $continue && ! $this->hasOption('no-interaction')) {
                 return;
             }
 
@@ -81,9 +81,9 @@ class CopyShelfPermissions extends Command
 
         foreach ($shelves as $shelf) {
             $this->bookshelfRepo->copyDownPermissions($shelf, false);
-            $this->info('Copied permissions for shelf [' . $shelf->id . ']');
+            $this->info('Copied permissions for shelf ['.$shelf->id.']');
         }
 
-        $this->info('Permissions copied for ' . $shelves->count() . ' shelves.');
+        $this->info('Permissions copied for '.$shelves->count().' shelves.');
     }
 }

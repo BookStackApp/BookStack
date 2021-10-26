@@ -60,7 +60,7 @@ class AttachmentService
             return $path;
         }
 
-        return 'uploads/files/' . $path;
+        return 'uploads/files/'.$path;
     }
 
     /**
@@ -106,7 +106,7 @@ class AttachmentService
      */
     public function saveUpdatedUpload(UploadedFile $uploadedFile, Attachment $attachment): Attachment
     {
-        if (!$attachment->external) {
+        if (! $attachment->external) {
             $this->deleteFileInStorage($attachment);
         }
 
@@ -161,8 +161,8 @@ class AttachmentService
         $attachment->name = $requestData['name'];
         $link = trim($requestData['link'] ?? '');
 
-        if (!empty($link)) {
-            if (!$attachment->external) {
+        if (! empty($link)) {
+            if (! $attachment->external) {
                 $this->deleteFileInStorage($attachment);
                 $attachment->external = true;
                 $attachment->extension = '';
@@ -182,7 +182,7 @@ class AttachmentService
      */
     public function deleteFile(Attachment $attachment)
     {
-        if (!$attachment->external) {
+        if (! $attachment->external) {
             $this->deleteFileInStorage($attachment);
         }
 
@@ -214,19 +214,19 @@ class AttachmentService
         $attachmentData = file_get_contents($uploadedFile->getRealPath());
 
         $storage = $this->getStorage();
-        $basePath = 'uploads/files/' . date('Y-m-M') . '/';
+        $basePath = 'uploads/files/'.date('Y-m-M').'/';
 
-        $uploadFileName = Str::random(16) . '.' . $uploadedFile->getClientOriginalExtension();
-        while ($storage->exists($this->adjustPathForStorageDisk($basePath . $uploadFileName))) {
-            $uploadFileName = Str::random(3) . $uploadFileName;
+        $uploadFileName = Str::random(16).'.'.$uploadedFile->getClientOriginalExtension();
+        while ($storage->exists($this->adjustPathForStorageDisk($basePath.$uploadFileName))) {
+            $uploadFileName = Str::random(3).$uploadFileName;
         }
 
-        $attachmentPath = $basePath . $uploadFileName;
+        $attachmentPath = $basePath.$uploadFileName;
 
         try {
             $storage->put($this->adjustPathForStorageDisk($attachmentPath), $attachmentData);
         } catch (Exception $e) {
-            Log::error('Error when attempting file upload:' . $e->getMessage());
+            Log::error('Error when attempting file upload:'.$e->getMessage());
 
             throw new FileUploadException(trans('errors.path_not_writable', ['filePath' => $attachmentPath]));
         }

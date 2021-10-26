@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Bist Du sicher, dass Du diese Revision löschen möchtest?',
     'revision_restore_confirm' => 'Sind Sie sicher, dass Sie diese Revision wiederherstellen wollen? Der aktuelle Seiteninhalt wird ersetzt.',
     'revision_delete_success' => 'Revision gelöscht',
-    'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.'
+    'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.',
 ];

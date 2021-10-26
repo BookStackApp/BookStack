@@ -17,7 +17,7 @@ $factory->define(\BookStack\Auth\User::class, function ($faker) {
     return [
         'name'            => $name,
         'email'           => $faker->email,
-        'slug'            => \Illuminate\Support\Str::slug($name . '-' . \Illuminate\Support\Str::random(5)),
+        'slug'            => \Illuminate\Support\Str::slug($name.'-'.\Illuminate\Support\Str::random(5)),
         'password'        => Str::random(10),
         'remember_token'  => Str::random(10),
         'email_confirmed' => 1,
@@ -49,7 +49,7 @@ $factory->define(\BookStack\Entities\Models\Chapter::class, function ($faker) {
 });
 
 $factory->define(\BookStack\Entities\Models\Page::class, function ($faker) {
-    $html = '<p>' . implode('</p>', $faker->paragraphs(5)) . '</p>';
+    $html = '<p>'.implode('</p>', $faker->paragraphs(5)).'</p>';
 
     return [
         'name'           => $faker->sentence,
@@ -76,7 +76,7 @@ $factory->define(\BookStack\Actions\Tag::class, function ($faker) {
 
 $factory->define(\BookStack\Uploads\Image::class, function ($faker) {
     return [
-        'name'        => $faker->slug . '.jpg',
+        'name'        => $faker->slug.'.jpg',
         'url'         => $faker->url,
         'path'        => $faker->url,
         'type'        => 'gallery',
@@ -86,7 +86,7 @@ $factory->define(\BookStack\Uploads\Image::class, function ($faker) {
 
 $factory->define(\BookStack\Actions\Comment::class, function ($faker) {
     $text = $faker->paragraph(1);
-    $html = '<p>' . $text . '</p>';
+    $html = '<p>'.$text.'</p>';
 
     return [
         'html'      => $html,

@@ -32,7 +32,7 @@ class TagRepo
             ->groupBy('name');
 
         if ($searchTerm) {
-            $query = $query->where('name', 'LIKE', $searchTerm . '%')->orderBy('name', 'desc');
+            $query = $query->where('name', 'LIKE', $searchTerm.'%')->orderBy('name', 'desc');
         } else {
             $query = $query->orderBy('count', 'desc')->take(50);
         }
@@ -54,7 +54,7 @@ class TagRepo
             ->groupBy('value');
 
         if ($searchTerm) {
-            $query = $query->where('value', 'LIKE', $searchTerm . '%')->orderBy('value', 'desc');
+            $query = $query->where('value', 'LIKE', $searchTerm.'%')->orderBy('value', 'desc');
         } else {
             $query = $query->orderBy('count', 'desc')->take(50);
         }

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Manutenzione',
     'maint_image_cleanup' => 'Pulizia Immagini',
-    'maint_image_cleanup_desc' => "Esegue la scansione del contenuto delle pagine e delle revisioni per verificare quali immagini e disegni sono attualmente in uso e quali immagini sono ridondanti. Assicurati di creare backup completo del database e delle immagini prima di eseguire la pulizia.",
+    'maint_image_cleanup_desc' => 'Esegue la scansione del contenuto delle pagine e delle revisioni per verificare quali immagini e disegni sono attualmente in uso e quali immagini sono ridondanti. Assicurati di creare backup completo del database e delle immagini prima di eseguire la pulizia.',
     'maint_delete_images_only_in_revisions' => 'Elimina anche le immagini che esistono solo nelle vecchie revisioni della pagina',
     'maint_image_cleanup_run' => 'Esegui Pulizia',
     'maint_image_cleanup_warning' => ':count immagini potenzialmente inutilizzate sono state trovate. Sei sicuro di voler eliminare queste immagini?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Elimina Ruolo',
     'role_delete_confirm' => 'Questo eliminerà il ruolo con il nome \':roleName\'.',
     'role_delete_users_assigned' => 'Questo ruolo ha :userCount utenti assegnati. Se vuoi migrare gli utenti da questo ruolo selezionane uno nuovo sotto.',
-    'role_delete_no_migration' => "Non migrare gli utenti",
+    'role_delete_no_migration' => 'Non migrare gli utenti',
     'role_delete_sure' => 'Sei sicuro di voler eliminare questo ruolo?',
     'role_delete_success' => 'Ruolo eliminato correttamente',
     'role_edit' => 'Modifica Ruolo',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

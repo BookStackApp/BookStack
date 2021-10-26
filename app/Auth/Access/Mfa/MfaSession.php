@@ -21,7 +21,7 @@ class MfaSession
      */
     public function isPendingMfaSetup(User $user): bool
     {
-        return $this->isRequiredForUser($user) && !$user->mfaValues()->exists();
+        return $this->isRequiredForUser($user) && ! $user->mfaValues()->exists();
     }
 
     /**
@@ -55,6 +55,6 @@ class MfaSession
      */
     protected function getMfaVerifiedSessionKey(User $user): string
     {
-        return 'mfa-verification-passed:' . $user->id;
+        return 'mfa-verification-passed:'.$user->id;
     }
 }

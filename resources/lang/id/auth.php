@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Domain email tersebut tidak memiliki akses ke aplikasi ini',
     'register_success' => 'Terima kasih telah mendaftar! Anda sekarang terdaftar dan masuk.',
 
-
     // Password Reset
     'reset_password' => 'Atur ulang kata sandi',
     'reset_password_send_instructions' => 'Masukkan email Anda di bawah ini dan Anda akan dikirimi email dengan tautan pengaturan ulang kata sandi.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Atur ulang kata sandi :appName anda',
     'email_reset_text' => 'Anda menerima email ini karena kami menerima permintaan pengaturan ulang kata sandi untuk akun Anda.',
     'email_reset_not_requested' => 'Jika Anda tidak meminta pengaturan ulang kata sandi, tidak ada tindakan lebih lanjut yang diperlukan.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Konfirmasikan email Anda di :appName',

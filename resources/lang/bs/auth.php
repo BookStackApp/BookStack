@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Ta e-mail domena nema pristup ovoj aplikaciji',
     'register_success' => 'Hvala na registraciji! Sada ste registrovani i prijavljeni.',
 
-
     // Password Reset
     'reset_password' => 'Resetuj Lozinku',
     'reset_password_send_instructions' => 'Unesite vašu e-mail adresu ispod i na nju ćemo vam poslati e-mail sa linkom za promjenu lozinke.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Resetujte vašu lozinku od :appName',
     'email_reset_text' => 'Primate ovaj e-mail jer smo dobili zahtjev za promjenu lozinke za vaš račun.',
     'email_reset_not_requested' => 'Ako niste zahtijevali promjenu lozinke ne trebate ništa više uraditi.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Potvrdite vaš e-mail na :appName',

@@ -20,7 +20,7 @@ return [
     'role' => 'Vaidmuo',
     'cover_image' => 'Viršelio nuotrauka',
     'cover_image_description' => 'Ši nuotrauka turi būti maždaug 440x250px.',
-    
+
     // Actions
     'actions' => 'Veiksmai',
     'view' => 'Rodyti',

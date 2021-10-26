@@ -16,7 +16,7 @@ trait UsesImages
             $fileName = 'test-image.png';
         }
 
-        return base_path('tests/test-data/' . $fileName);
+        return base_path('tests/test-data/'.$fileName);
     }
 
     /**
@@ -58,7 +58,7 @@ trait UsesImages
      */
     protected function getTestImagePath(string $type, string $fileName): string
     {
-        return '/uploads/images/' . $type . '/' . date('Y-m') . '/' . $fileName;
+        return '/uploads/images/'.$type.'/'.date('Y-m').'/'.$fileName;
     }
 
     /**

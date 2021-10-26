@@ -255,7 +255,7 @@ return [
     'tags' =>  'Etiketler',
     'tag_name' =>  'Etiket İsmi',
     'tag_value' => 'Etiket Değeri (Opsiyonel)',
-    'tags_explain' => "İçeriğinizi daha iyi kategorize etmek için etiket ekleyin. Etiketlere değer atayarak daha derinlemesine bir düzen elde edebilirsiniz.",
+    'tags_explain' => 'İçeriğinizi daha iyi kategorize etmek için etiket ekleyin. Etiketlere değer atayarak daha derinlemesine bir düzen elde edebilirsiniz.',
     'tags_add' => 'Başka etiket ekle',
     'tags_remove' => 'Bu etiketi sil',
     'attachments' => 'Ekler',
@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Bu revizyonu silmek istediğinize emin misiniz?',
     'revision_restore_confirm' => 'Bu revizyonu yeniden yüklemek istediğinize emin misiniz? Sayfanın şu anki içeriği değiştirilecektir.',
     'revision_delete_success' => 'Revizyon silindi',
-    'revision_cannot_delete_latest' => 'Son revizyonu silemezsiniz.'
+    'revision_cannot_delete_latest' => 'Son revizyonu silemezsiniz.',
 ];

@@ -18,10 +18,10 @@ class UserSearchController extends Controller
         $query = User::query()->orderBy('name', 'desc')
             ->take(20);
 
-        if (!empty($search)) {
+        if (! empty($search)) {
             $query->where(function (Builder $query) use ($search) {
-                $query->where('email', 'like', '%' . $search . '%')
-                    ->orWhere('name', 'like', '%' . $search . '%');
+                $query->where('email', 'like', '%'.$search.'%')
+                    ->orWhere('name', 'like', '%'.$search.'%');
             });
         }
 

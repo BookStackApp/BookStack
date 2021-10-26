@@ -20,7 +20,7 @@ return [
     'role' => 'Rolle',
     'cover_image' => 'Bokomslag',
     'cover_image_description' => 'Bildet bør være ca. 440x250px.',
-    
+
     // Actions
     'actions' => 'Handlinger',
     'view' => 'Vis',

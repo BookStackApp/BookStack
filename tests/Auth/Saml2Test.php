@@ -74,11 +74,11 @@ class Saml2Test extends TestCase
         $this->assertTrue(strlen($acsId) > 12);
 
         $this->assertStringContainsString('/saml2/acs?id=', $redirect);
-        $this->assertTrue(cache()->has('saml2_acs:' . $acsId));
+        $this->assertTrue(cache()->has('saml2_acs:'.$acsId));
 
         $acsGet = $this->get($redirect);
         $acsGet->assertRedirect('/');
-        $this->assertFalse(cache()->has('saml2_acs:' . $acsId));
+        $this->assertFalse(cache()->has('saml2_acs:'.$acsId));
 
         $this->assertTrue($this->isAuthenticated());
         $this->assertDatabaseHas('users', [
@@ -218,13 +218,13 @@ class Saml2Test extends TestCase
         config()->set(['auth.method' => 'standard']);
         $getRoutes = ['/logout', '/metadata', '/sls'];
         foreach ($getRoutes as $route) {
-            $req = $this->get('/saml2' . $route);
+            $req = $this->get('/saml2'.$route);
             $this->assertPermissionError($req);
         }
 
         $postRoutes = ['/login', '/acs'];
         foreach ($postRoutes as $route) {
-            $req = $this->post('/saml2' . $route);
+            $req = $this->post('/saml2'.$route);
             $this->assertPermissionError($req);
         }
     }

@@ -23,13 +23,13 @@ class NotifyException extends Exception implements Responsable
     /**
      * Send the response for this type of exception.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function toResponse($request)
     {
         $message = $this->getMessage();
 
-        if (!empty($message)) {
+        if (! empty($message)) {
             session()->flash('error', $message);
         }
 

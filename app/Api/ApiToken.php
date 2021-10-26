@@ -43,7 +43,7 @@ class ApiToken extends Model implements Loggable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function logDescriptor(): string
     {

@@ -20,7 +20,7 @@ return [
     'role' => 'תפקיד',
     'cover_image' => 'תמונת נושא',
     'cover_image_description' => 'התמונה צריכה להיות בסביבות 440x250px',
-    
+
     // Actions
     'actions' => 'פעולות',
     'view' => 'הצג',

@@ -107,7 +107,7 @@ class CommentTest extends TestCase
 
         $comment = $page->comments()->first();
         $this->putJson("/comment/$comment->id", [
-            'text' => $script . 'updated',
+            'text' => $script.'updated',
         ]);
 
         $pageView = $this->get($page->getUrl());

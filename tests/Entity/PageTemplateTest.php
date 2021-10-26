@@ -56,14 +56,14 @@ class PageTemplateTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $templateFetch = $this->get('/templates/' . $page->id);
+        $templateFetch = $this->get('/templates/'.$page->id);
         $templateFetch->assertStatus(404);
 
         $page->html = $content;
         $page->template = true;
         $page->save();
 
-        $templateFetch = $this->get('/templates/' . $page->id);
+        $templateFetch = $this->get('/templates/'.$page->id);
         $templateFetch->assertStatus(200);
         $templateFetch->assertJson([
             'html'     => $content,

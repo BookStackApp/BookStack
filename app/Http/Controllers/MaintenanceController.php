@@ -38,8 +38,8 @@ class MaintenanceController extends Controller
         $this->checkPermission('settings-manage');
         $this->logActivity(ActivityType::MAINTENANCE_ACTION_RUN, 'cleanup-images');
 
-        $checkRevisions = !($request->get('ignore_revisions', 'false') === 'true');
-        $dryRun = !($request->has('confirm'));
+        $checkRevisions = ! ($request->get('ignore_revisions', 'false') === 'true');
+        $dryRun = ! ($request->has('confirm'));
 
         $imagesToDelete = $imageService->deleteUnusedImages($checkRevisions, $dryRun);
         $deleteCount = count($imagesToDelete);
@@ -70,7 +70,7 @@ class MaintenanceController extends Controller
             user()->notify(new TestEmail());
             $this->showSuccessNotification(trans('settings.maint_send_test_email_success', ['address' => user()->email]));
         } catch (\Exception $exception) {
-            $errorMessage = trans('errors.maintenance_test_email_failure') . "\n" . $exception->getMessage();
+            $errorMessage = trans('errors.maintenance_test_email_failure')."\n".$exception->getMessage();
             $this->showErrorNotification($errorMessage);
         }
 

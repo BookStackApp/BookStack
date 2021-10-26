@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Ви впевнені, що хочете видалити цю версію?',
     'revision_restore_confirm' => 'Дійсно відновити цю версію? Вміст поточної сторінки буде замінено.',
     'revision_delete_success' => 'Версія видалена',
-    'revision_cannot_delete_latest' => 'Неможливо видалити останню версію.'
+    'revision_cannot_delete_latest' => 'Неможливо видалити останню версію.',
 ];

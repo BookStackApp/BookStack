@@ -20,7 +20,7 @@ return [
     'role' => 'Role',
     'cover_image' => 'Obrázek obálky',
     'cover_image_description' => 'Obrázek by měl být přibližně 440×250px.',
-    
+
     // Actions
     'actions' => 'Akce',
     'view' => 'Zobrazit',

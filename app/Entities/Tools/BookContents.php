@@ -99,7 +99,7 @@ class BookContents
             ->select($getPageContent ? Page::$contentAttributes : Page::$listAttributes)
             ->where('book_id', '=', $this->book->id);
 
-        if (!$showDrafts) {
+        if (! $showDrafts) {
             $query->where('draft', '=', false);
         }
 
@@ -174,7 +174,7 @@ class BookContents
     protected function loadModelsIntoSortMap(Collection $sortMap): void
     {
         $keyMap = $sortMap->keyBy(function (\stdClass $sortMapItem) {
-            return  $sortMapItem->type . ':' . $sortMapItem->id;
+            return  $sortMapItem->type.':'.$sortMapItem->id;
         });
         $pageIds = $sortMap->where('type', '=', 'page')->pluck('id');
         $chapterIds = $sortMap->where('type', '=', 'chapter')->pluck('id');
@@ -183,12 +183,12 @@ class BookContents
         $chapters = Chapter::visible()->whereIn('id', $chapterIds)->get();
 
         foreach ($pages as $page) {
-            $sortItem = $keyMap->get('page:' . $page->id);
+            $sortItem = $keyMap->get('page:'.$page->id);
             $sortItem->model = $page;
         }
 
         foreach ($chapters as $chapter) {
-            $sortItem = $keyMap->get('chapter:' . $chapter->id);
+            $sortItem = $keyMap->get('chapter:'.$chapter->id);
             $sortItem->model = $chapter;
         }
     }

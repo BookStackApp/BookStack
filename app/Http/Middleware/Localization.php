@@ -133,7 +133,7 @@ class Localization
         $systemLocale = $this->getLocaleIso($locale);
         $set = setlocale(LC_TIME, $systemLocale);
         if ($set === false) {
-            setlocale(LC_TIME, $systemLocale . '.utf8');
+            setlocale(LC_TIME, $systemLocale.'.utf8');
         }
     }
 }

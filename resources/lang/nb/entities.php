@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Vil du slette revisjonen?',
     'revision_restore_confirm' => 'Vil du gjenopprette revisjonen? Innholdet på siden vil bli overskrevet med denne revisjonen.',
     'revision_delete_success' => 'Revisjonen ble slettet',
-    'revision_cannot_delete_latest' => 'CKan ikke slette siste revisjon.'
+    'revision_cannot_delete_latest' => 'CKan ikke slette siste revisjon.',
 ];

@@ -13,8 +13,8 @@ class BackupCodeService
     {
         $codes = [];
         while (count($codes) < 16) {
-            $code = Str::random(5) . '-' . Str::random(5);
-            if (!in_array($code, $codes)) {
+            $code = Str::random(5).'-'.Str::random(5);
+            if (! in_array($code, $codes)) {
                 $codes[] = strtolower($code);
             }
         }

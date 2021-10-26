@@ -11,7 +11,7 @@
 // Join up possible view locations
 $viewPaths = [realpath(base_path('resources/views'))];
 if ($theme = env('APP_THEME', false)) {
-    array_unshift($viewPaths, base_path('themes/' . $theme));
+    array_unshift($viewPaths, base_path('themes/'.$theme));
 }
 
 return [

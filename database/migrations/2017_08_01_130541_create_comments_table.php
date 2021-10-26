@@ -35,8 +35,8 @@ class CreateCommentsTable extends Migration
             $entity = 'Comment';
             foreach ($ops as $op) {
                 $permissionId = DB::table('role_permissions')->insertGetId([
-                    'name'         => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
-                    'display_name' => $op . ' ' . $entity . 's',
+                    'name'         => strtolower($entity).'-'.strtolower(str_replace(' ', '-', $op)),
+                    'display_name' => $op.' '.$entity.'s',
                     'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);
@@ -60,7 +60,7 @@ class CreateCommentsTable extends Migration
         $ops = ['Create All', 'Create Own', 'Update All', 'Update Own', 'Delete All', 'Delete Own'];
         $entity = 'Comment';
         foreach ($ops as $op) {
-            $permName = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
+            $permName = strtolower($entity).'-'.strtolower(str_replace(' ', '-', $op));
             DB::table('role_permissions')->where('name', '=', $permName)->delete();
         }
     }

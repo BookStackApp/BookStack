@@ -149,10 +149,10 @@ class EntityPermissionsTest extends TestCase
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete', 'update']);
 
-        $this->get($bookUrl . '/create-chapter')->assertRedirect('/');
+        $this->get($bookUrl.'/create-chapter')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
-        $this->get($bookUrl . '/create-page')->assertRedirect('/');
+        $this->get($bookUrl.'/create-page')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->get($bookUrl)
@@ -190,23 +190,23 @@ class EntityPermissionsTest extends TestCase
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->user)
-            ->get($bookUrl . '/edit')
+            ->get($bookUrl.'/edit')
             ->assertSee('Edit Book');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
-        $this->get($bookUrl . '/edit')->assertRedirect('/');
+        $this->get($bookUrl.'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get($bookPage->getUrl().'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookChapter->getUrl() . '/edit')->assertRedirect('/');
+        $this->get($bookChapter->getUrl().'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
-        $this->get($bookUrl . '/edit')->assertOk();
-        $this->get($bookPage->getUrl() . '/edit')->assertOk();
-        $this->get($bookChapter->getUrl() . '/edit')->assertSee('Edit Chapter');
+        $this->get($bookUrl.'/edit')->assertOk();
+        $this->get($bookPage->getUrl().'/edit')->assertOk();
+        $this->get($bookChapter->getUrl().'/edit')->assertSee('Edit Chapter');
     }
 
     public function test_book_delete_restriction()
@@ -217,21 +217,21 @@ class EntityPermissionsTest extends TestCase
         $bookChapter = $book->chapters->first();
 
         $bookUrl = $book->getUrl();
-        $this->actingAs($this->user)->get($bookUrl . '/delete')
+        $this->actingAs($this->user)->get($bookUrl.'/delete')
             ->assertSee('Delete Book');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
-        $this->get($bookUrl . '/delete')->assertRedirect('/');
+        $this->get($bookUrl.'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookPage->getUrl() . '/delete')->assertRedirect('/');
+        $this->get($bookPage->getUrl().'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookChapter->getUrl() . '/delete')->assertRedirect('/');
+        $this->get($bookChapter->getUrl().'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
-        $this->get($bookUrl . '/delete')->assertOk()->assertSee('Delete Book');
+        $this->get($bookUrl.'/delete')->assertOk()->assertSee('Delete Book');
         $this->get($bookPage->getUrl('/delete'))->assertOk()->assertSee('Delete Page');
         $this->get($bookChapter->getUrl('/delete'))->assertSee('Delete Chapter');
     }
@@ -268,7 +268,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'delete', 'update']);
 
-        $this->get($chapterUrl . '/create-page')->assertRedirect('/');
+        $this->get($chapterUrl.'/create-page')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
         $this->get($chapterUrl)->assertElementNotContains('.actions', 'New Page');
 
@@ -293,20 +293,20 @@ class EntityPermissionsTest extends TestCase
         $chapterPage = $chapter->pages->first();
 
         $chapterUrl = $chapter->getUrl();
-        $this->actingAs($this->user)->get($chapterUrl . '/edit')
+        $this->actingAs($this->user)->get($chapterUrl.'/edit')
             ->assertSee('Edit Chapter');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'delete']);
 
-        $this->get($chapterUrl . '/edit')->assertRedirect('/');
+        $this->get($chapterUrl.'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($chapterPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get($chapterPage->getUrl().'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'update']);
 
-        $this->get($chapterUrl . '/edit')->assertOk()->assertSee('Edit Chapter');
-        $this->get($chapterPage->getUrl() . '/edit')->assertOk();
+        $this->get($chapterUrl.'/edit')->assertOk()->assertSee('Edit Chapter');
+        $this->get($chapterPage->getUrl().'/edit')->assertOk();
     }
 
     public function test_chapter_delete_restriction()
@@ -317,20 +317,20 @@ class EntityPermissionsTest extends TestCase
 
         $chapterUrl = $chapter->getUrl();
         $this->actingAs($this->user)
-            ->get($chapterUrl . '/delete')
+            ->get($chapterUrl.'/delete')
             ->assertSee('Delete Chapter');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'update']);
 
-        $this->get($chapterUrl . '/delete')->assertRedirect('/');
+        $this->get($chapterUrl.'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($chapterPage->getUrl() . '/delete')->assertRedirect('/');
+        $this->get($chapterPage->getUrl().'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'delete']);
 
-        $this->get($chapterUrl . '/delete')->assertOk()->assertSee('Delete Chapter');
-        $this->get($chapterPage->getUrl() . '/delete')->assertOk()->assertSee('Delete Page');
+        $this->get($chapterUrl.'/delete')->assertOk()->assertSee('Delete Chapter');
+        $this->get($chapterPage->getUrl().'/delete')->assertOk()->assertSee('Delete Page');
     }
 
     public function test_page_view_restriction()
@@ -357,19 +357,19 @@ class EntityPermissionsTest extends TestCase
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
-            ->get($pageUrl . '/edit')
-            ->assertElementExists('input[name="name"][value="' . $page->name . '"]');
+            ->get($pageUrl.'/edit')
+            ->assertElementExists('input[name="name"][value="'.$page->name.'"]');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'delete']);
 
-        $this->get($pageUrl . '/edit')->assertRedirect('/');
+        $this->get($pageUrl.'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'update']);
 
-        $this->get($pageUrl . '/edit')
+        $this->get($pageUrl.'/edit')
             ->assertOk()
-            ->assertElementExists('input[name="name"][value="' . $page->name . '"]');
+            ->assertElementExists('input[name="name"][value="'.$page->name.'"]');
     }
 
     public function test_page_delete_restriction()
@@ -379,17 +379,17 @@ class EntityPermissionsTest extends TestCase
 
         $pageUrl = $page->getUrl();
         $this->actingAs($this->user)
-            ->get($pageUrl . '/delete')
+            ->get($pageUrl.'/delete')
             ->assertSee('Delete Page');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'update']);
 
-        $this->get($pageUrl . '/delete')->assertRedirect('/');
+        $this->get($pageUrl.'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'delete']);
 
-        $this->get($pageUrl . '/delete')->assertOk()->assertSee('Delete Page');
+        $this->get($pageUrl.'/delete')->assertOk()->assertSee('Delete Page');
     }
 
     protected function entityRestrictionFormTest(string $model, string $title, string $permission, string $roleId)
@@ -545,9 +545,9 @@ class EntityPermissionsTest extends TestCase
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete', 'update']);
 
-        $this->get($bookUrl . '/create-chapter')->assertRedirect('/');
+        $this->get($bookUrl.'/create-chapter')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookUrl . '/create-page')->assertRedirect('/');
+        $this->get($bookUrl.'/create-page')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
         $this->get($bookUrl)->assertElementNotContains('.actions', 'New Page')
             ->assertElementNotContains('.actions', 'New Chapter');
@@ -582,23 +582,23 @@ class EntityPermissionsTest extends TestCase
         $bookChapter = $book->chapters->first();
 
         $bookUrl = $book->getUrl();
-        $this->actingAs($this->viewer)->get($bookUrl . '/edit')
+        $this->actingAs($this->viewer)->get($bookUrl.'/edit')
             ->assertDontSee('Edit Book');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
-        $this->get($bookUrl . '/edit')->assertRedirect('/');
+        $this->get($bookUrl.'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get($bookPage->getUrl().'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookChapter->getUrl() . '/edit')->assertRedirect('/');
+        $this->get($bookChapter->getUrl().'/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
-        $this->get($bookUrl . '/edit')->assertOk();
-        $this->get($bookPage->getUrl() . '/edit')->assertOk();
-        $this->get($bookChapter->getUrl() . '/edit')->assertSee('Edit Chapter');
+        $this->get($bookUrl.'/edit')->assertOk();
+        $this->get($bookPage->getUrl().'/edit')->assertOk();
+        $this->get($bookChapter->getUrl().'/edit')->assertSee('Edit Chapter');
     }
 
     public function test_book_delete_restriction_override()
@@ -610,23 +610,23 @@ class EntityPermissionsTest extends TestCase
 
         $bookUrl = $book->getUrl();
         $this->actingAs($this->viewer)
-            ->get($bookUrl . '/delete')
+            ->get($bookUrl.'/delete')
             ->assertDontSee('Delete Book');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'update']);
 
-        $this->get($bookUrl . '/delete')->assertRedirect('/');
+        $this->get($bookUrl.'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookPage->getUrl() . '/delete')->assertRedirect('/');
+        $this->get($bookPage->getUrl().'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookChapter->getUrl() . '/delete')->assertRedirect('/');
+        $this->get($bookChapter->getUrl().'/delete')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($book, ['view', 'delete']);
 
-        $this->get($bookUrl . '/delete')->assertOk()->assertSee('Delete Book');
-        $this->get($bookPage->getUrl() . '/delete')->assertOk()->assertSee('Delete Page');
-        $this->get($bookChapter->getUrl() . '/delete')->assertSee('Delete Chapter');
+        $this->get($bookUrl.'/delete')->assertOk()->assertSee('Delete Book');
+        $this->get($bookPage->getUrl().'/delete')->assertOk()->assertSee('Delete Page');
+        $this->get($bookChapter->getUrl().'/delete')->assertSee('Delete Chapter');
     }
 
     public function test_page_visible_if_has_permissions_when_book_not_visible()
@@ -695,7 +695,7 @@ class EntityPermissionsTest extends TestCase
         ];
 
         // Move chapter from first book to a second book
-        $this->actingAs($this->user)->put($firstBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)])
+        $this->actingAs($this->user)->put($firstBook->getUrl().'/sort', ['sort-tree' => json_encode($reqData)])
             ->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
 
@@ -710,7 +710,7 @@ class EntityPermissionsTest extends TestCase
         ];
 
         // Move chapter from second book to first book
-        $this->actingAs($this->user)->put($firstBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)])
+        $this->actingAs($this->user)->put($firstBook->getUrl().'/sort', ['sort-tree' => json_encode($reqData)])
                 ->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
     }

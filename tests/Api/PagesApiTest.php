@@ -18,7 +18,7 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $firstPage = Page::query()->orderBy('id', 'asc')->first();
 
-        $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
+        $resp = $this->getJson($this->baseEndpoint.'?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
                 'id'       => $firstPage->id,
@@ -126,7 +126,7 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $page = Page::visible()->first();
 
-        $resp = $this->getJson($this->baseEndpoint . "/{$page->id}");
+        $resp = $this->getJson($this->baseEndpoint."/{$page->id}");
         $resp->assertStatus(200);
         $resp->assertJson([
             'id'         => $page->id,
@@ -151,7 +151,7 @@ class PagesApiTest extends TestCase
         $page->html = "<p>testing</p><script>alert('danger')</script><h1>Hello</h1>";
         $page->save();
 
-        $resp = $this->getJson($this->baseEndpoint . "/{$page->id}");
+        $resp = $this->getJson($this->baseEndpoint."/{$page->id}");
         $html = $resp->json('html');
         $this->assertStringNotContainsString('script', $html);
         $this->assertStringContainsString('Hello', $html);
@@ -173,7 +173,7 @@ class PagesApiTest extends TestCase
             ],
         ];
 
-        $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $resp = $this->putJson($this->baseEndpoint."/{$page->id}", $details);
         $page->refresh();
 
         $resp->assertStatus(200);
@@ -195,7 +195,7 @@ class PagesApiTest extends TestCase
             'html'       => '<p>A page created via the API</p>',
         ];
 
-        $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $resp = $this->putJson($this->baseEndpoint."/{$page->id}", $details);
         $resp->assertStatus(200);
         $resp->assertJson([
             'chapter_id' => $chapter->id,
@@ -215,7 +215,7 @@ class PagesApiTest extends TestCase
             'html'       => '<p>A page created via the API</p>',
         ];
 
-        $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $resp = $this->putJson($this->baseEndpoint."/{$page->id}", $details);
         $resp->assertStatus(403);
     }
 
@@ -234,7 +234,7 @@ class PagesApiTest extends TestCase
             ],
         ];
 
-        $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $this->putJson($this->baseEndpoint."/{$page->id}", $details);
         $page->refresh();
 
         $this->assertEquals($originalContent, $page->html);
@@ -244,7 +244,7 @@ class PagesApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $page = Page::visible()->first();
-        $resp = $this->deleteJson($this->baseEndpoint . "/{$page->id}");
+        $resp = $this->deleteJson($this->baseEndpoint."/{$page->id}");
 
         $resp->assertStatus(204);
         $this->assertActivityExists('page_delete', $page);
@@ -255,10 +255,10 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $page = Page::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/html");
+        $resp = $this->get($this->baseEndpoint."/{$page->id}/export/html");
         $resp->assertStatus(200);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$page->slug.'.html"');
     }
 
     public function test_export_plain_text_endpoint()
@@ -266,10 +266,10 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $page = Page::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/plaintext");
+        $resp = $this->get($this->baseEndpoint."/{$page->id}/export/plaintext");
         $resp->assertStatus(200);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$page->slug.'.txt"');
     }
 
     public function test_export_pdf_endpoint()
@@ -277,9 +277,9 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $page = Page::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/pdf");
+        $resp = $this->get($this->baseEndpoint."/{$page->id}/export/pdf");
         $resp->assertStatus(200);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.pdf"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$page->slug.'.pdf"');
     }
 
     public function test_export_markdown_endpoint()
@@ -287,10 +287,10 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $page = Page::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/markdown");
+        $resp = $this->get($this->baseEndpoint."/{$page->id}/export/markdown");
         $resp->assertStatus(200);
-        $resp->assertSee('# ' . $page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.md"');
+        $resp->assertSee('# '.$page->name);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$page->slug.'.md"');
     }
 
     public function test_cant_export_when_not_have_permission()
@@ -301,7 +301,7 @@ class PagesApiTest extends TestCase
 
         $page = Page::visible()->first();
         foreach ($types as $type) {
-            $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/{$type}");
+            $resp = $this->get($this->baseEndpoint."/{$page->id}/export/{$type}");
             $this->assertPermissionError($resp);
         }
     }

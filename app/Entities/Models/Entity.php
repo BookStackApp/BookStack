@@ -82,7 +82,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public function scopeWithLastView(Builder $query)
     {
         $viewedAtQuery = View::query()->select('updated_at')
-            ->whereColumn('viewable_id', '=', $this->getTable() . '.id')
+            ->whereColumn('viewable_id', '=', $this->getTable().'.id')
             ->where('viewable_type', '=', $this->getMorphClass())
             ->where('user_id', '=', user()->id)
             ->take(1);
@@ -96,7 +96,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public function scopeWithViewCount(Builder $query)
     {
         $viewCountQuery = View::query()->selectRaw('SUM(views) as view_count')
-            ->whereColumn('viewable_id', '=', $this->getTable() . '.id')
+            ->whereColumn('viewable_id', '=', $this->getTable().'.id')
             ->where('viewable_type', '=', $this->getMorphClass())->take(1);
 
         $query->addSelect(['view_count' => $viewCountQuery]);
@@ -106,7 +106,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      * Compares this entity to another given entity.
      * Matches by comparing class and id.
      */
-    public function matches(Entity $entity): bool
+    public function matches(self $entity): bool
     {
         return [get_class($this), $this->id] === [get_class($entity), $entity->id];
     }
@@ -114,7 +114,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * Checks if the current entity matches or contains the given.
      */
-    public function matchesOrContains(Entity $entity): bool
+    public function matchesOrContains(self $entity): bool
     {
         if ($this->matches($entity)) {
             return true;
@@ -235,7 +235,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
             return $this->name;
         }
 
-        return mb_substr($this->name, 0, $length - 3) . '...';
+        return mb_substr($this->name, 0, $length - 3).'...';
     }
 
     /**
@@ -254,7 +254,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
         $text = $this->getText();
 
         if (mb_strlen($text) > $length) {
-            $text = mb_substr($text, 0, $length - 3) . '...';
+            $text = mb_substr($text, 0, $length - 3).'...';
         }
 
         return trim($text);
@@ -270,7 +270,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      * This is the "static" parent and does not include dynamic
      * relations such as shelves to books.
      */
-    public function getParent(): ?Entity
+    public function getParent(): ?self
     {
         if ($this instanceof Page) {
             return $this->chapter_id ? $this->chapter()->withTrashed()->first() : $this->book()->withTrashed()->first();
@@ -300,7 +300,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function refreshSlug(): string
     {
@@ -310,7 +310,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function favourites(): MorphMany
     {

@@ -76,7 +76,7 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
             ]);
         }
 
-        if (!$this->ldapService->validateUserCredentials($userDetails, $credentials['password'])) {
+        if (! $this->ldapService->validateUserCredentials($userDetails, $credentials['password'])) {
             return false;
         }
 
