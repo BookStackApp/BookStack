@@ -234,7 +234,7 @@ return [
     'pages_initial_name' => 'Jauna lapa',
     'pages_editing_draft_notification' => 'Jūs pašlaik veicat izmaiņas melnrakstā, kurš pēdējo reizi ir saglabāts :timeDiff.',
     'pages_draft_edited_notification' => 'Šī lapa ir tikusi atjaunināta. Šo melnrakstu ieteicams atmest.',
-    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
+    'pages_draft_page_changed_since_creation' => 'Šī lapa ir izmainīta kopš šī uzmetuma izveidošanas. Ieteicams šo uzmetumu dzēst, lai netiktu pazaudētas veiktās izmaiņas.',
     'pages_draft_edit_active' => [
         'start_a' => ':count lietotāji pašlaik veic izmaiņas šajā lapā',
         'start_b' => ':userName veic izmaiņas šajā lapā',
