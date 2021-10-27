@@ -66,7 +66,7 @@ return [
     'reg_email_confirmation_toggle' => 'Nõua e-posti aadressi kinnitamist',
     'reg_confirm_email_desc' => 'Kui domeeni piirang on kasutusel, siis on e-posti aadressi kinnitamine nõutud ja seda seadet ignoreeritakse.',
     'reg_confirm_restrict_domain' => 'Domeeni piirang',
-    'reg_confirm_restrict_domain_desc' => 'Sisesta komaga eraldatud nimekiri e-posti domeenidest, millega soovitud registreerumist piirata. Kasutajale saadetakse aadressi kinnitamiseks e-kiri, enne kui neil lubatakse rakendust kasutada.<br>Pane tähele, et kasutajad saavad pärast edukat registreerumist oma e-posti aadressi muuta.',
+    'reg_confirm_restrict_domain_desc' => 'Sisesta komaga eraldatud nimekiri e-posti domeenidest, millega soovid registreerumist piirata. Kasutajale saadetakse aadressi kinnitamiseks e-kiri, enne kui neil lubatakse rakendust kasutada.<br>Pane tähele, et kasutajad saavad pärast edukat registreerumist oma e-posti aadressi muuta.',
     'reg_confirm_restrict_domain_placeholder' => 'Piirangut ei ole',
 
     // Maintenance settings
@@ -126,7 +126,7 @@ return [
 
     // Role Settings
     'roles' => 'Rollid',
-    'role_user_roles' => 'Kasutajate rollid',
+    'role_user_roles' => 'Kasutaja rollid',
     'role_create' => 'Lisa uus roll',
     'role_create_success' => 'Roll on lisatud',
     'role_delete' => 'Kustuta roll',
@@ -209,8 +209,8 @@ return [
     'users_api_tokens_docs' => 'API dokumentatsioon',
     'users_mfa' => 'Mitmeastmeline autentimine',
     'users_mfa_desc' => 'Seadista mitmeastmeline autentimine, et oma kasutajakonto turvalisust tõsta.',
-    'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa_x_methods' => ':count meetod seadistatud|:count meetodit seadistatud',
+    'users_mfa_configure' => 'Seadista meetodid',
 
     // API Tokens
     'user_api_token_create' => 'Lisa API tunnus',
@@ -248,7 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
-        'et' => 'Eesti Keel',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
