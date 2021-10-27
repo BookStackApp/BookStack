@@ -248,7 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
-        'et' => 'Eesti keel',
+        'et' => 'Estonien',
         'fr' => 'Français',
         'he' => 'Hébreu',
         'hr' => 'Hrvatski',
