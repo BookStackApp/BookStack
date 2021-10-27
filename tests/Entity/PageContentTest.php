@@ -608,6 +608,21 @@ class PageContentTest extends TestCase
         $this->assertStringContainsString('<img src=""', $page->html);
     }
 
+    // Relevant to https://github.com/BookStackApp/BookStack/issues/3010
+    public function test_base64_images_within_html_blanked_if_extension_incorrect_but_prefix_matches_correct_extension()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $this->put($page->getUrl(), [
+            'name' => $page->name, 'summary' => '',
+            'html' => '<p>test<img src="data:image/pngr;base64,' . $this->base64Jpeg . '"/></p>',
+        ]);
+
+        $page->refresh();
+        $this->assertStringContainsString('<img src=""', $page->html);
+    }
+
     public function test_base64_images_get_extracted_from_markdown_page_content()
     {
         $this->asEditor();
