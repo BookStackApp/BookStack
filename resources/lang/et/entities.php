@@ -240,9 +240,9 @@ return [
         'start_b' => ':userName alustas selle lehe muutmist',
         'time_a' => 'lehe viimasest muutmisest alates',
         'time_b' => 'viimase :minCount minuti jooksul',
-        'message' => ':start :time. Take care not to overwrite each other\'s updates!',
+        'message' => ':start :time. Ärge teineteise muudatusi üle kirjutage!',
     ],
-    'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
+    'pages_draft_discarded' => 'Mustand ära visatud, redaktorisse laeti lehe värske sisu',
     'pages_specific' => 'Specific Page',
     'pages_is_template' => 'Page Template',
 
@@ -292,7 +292,7 @@ return [
     'templates_prepend_content' => 'Lisa lehe sisu ette',
 
     // Profile View
-    'profile_user_for_x' => 'User for :time',
+    'profile_user_for_x' => 'Kasutaja olnud :time',
     'profile_created_content' => 'Lisatud sisu',
     'profile_not_created_pages' => ':userName ei ole ühtegi lehte lisanud',
     'profile_not_created_chapters' => ':userName ei ole ühtegi peatükki lisanud',

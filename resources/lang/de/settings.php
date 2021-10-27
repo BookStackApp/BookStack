@@ -251,7 +251,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
-        'et' => 'Eesti Keel',
+        'et' => 'Estnisch',
         'fr' => 'Français',
         'he' => 'Hebräisch',
         'hr' => 'Hrvatski',
