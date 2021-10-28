@@ -20,10 +20,9 @@
         "barryvdh/laravel-dompdf": "^0.9.0",
         "barryvdh/laravel-snappy": "^0.4.8",
         "doctrine/dbal": "^3.1",
-        "fideloper/proxy": "^4.4.1",
         "filp/whoops": "^2.14",
         "intervention/image": "^2.7",
-        "laravel/framework": "^7.29",
+        "laravel/framework": "^8.68",
         "laravel/socialite": "^5.2",
         "league/commonmark": "^1.5",
         "league/flysystem-aws-s3-v3": "^1.0.29",
@@ -40,17 +39,19 @@
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
         "ssddanbrown/htmldiff": "^1.0.1",
-        "laravel/ui": "^2.5",
+        "laravel/ui": "^3.3",
         "guzzlehttp/guzzle": "^7.4.0",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "fruitcake/laravel-cors": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
         "fakerphp/faker": "^1.13.0",
-        "mockery/mockery": "^1.3.3",
+        "mockery/mockery": "^1.4.2",
         "phpunit/phpunit": "^9.5.3",
         "symfony/dom-crawler": "^5.3",
-        "nunomaduro/collision": "^4.3"
+        "nunomaduro/collision": "^5.0",
+        "facade/ignition": "^2.5"
     },
     "autoload": {
         "psr-4": {
@@ -88,6 +89,9 @@
         "refresh-test-database": [
             "@php artisan migrate:refresh --database=mysql_testing",
             "@php artisan db:seed --class=DummyContentSeeder --database=mysql_testing"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi"
         ]
     },
     "config": {
