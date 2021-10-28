@@ -4,7 +4,7 @@ Route::get('/status', 'StatusController@show');
 Route::get('/robots.txt', 'HomeController@robots');
 
 // Authenticated routes...
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware('auth')->group(function () {
 
     // Secure images routing
     Route::get('/uploads/images/{path}', 'Images\ImageController@showImage')
@@ -17,7 +17,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Shelves
     Route::get('/create-shelf', 'BookshelfController@create');
-    Route::group(['prefix' => 'shelves'], function () {
+    Route::prefix('shelves')->group(function () {
         Route::get('/', 'BookshelfController@index');
         Route::post('/', 'BookshelfController@store');
         Route::get('/{slug}/edit', 'BookshelfController@edit');
@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/create-book', 'BookController@create');
-    Route::group(['prefix' => 'books'], function () {
+    Route::prefix('books')->group(function () {
 
         // Books
         Route::get('/', 'BookController@index');
@@ -135,7 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/ajax/page/{id}', 'PageController@ajaxDestroy');
 
     // Tag routes (AJAX)
-    Route::group(['prefix' => 'ajax/tags'], function () {
+    Route::prefix('ajax/tags')->group(function () {
         Route::get('/suggest/names', 'TagController@getNameSuggestions');
         Route::get('/suggest/values', 'TagController@getValueSuggestions');
     });
@@ -174,7 +174,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/custom-head-content', 'HomeController@customHeadContent');
 
     // Settings
-    Route::group(['prefix' => 'settings'], function () {
+    Route::prefix('settings')->group(function () {
         Route::get('/', 'SettingController@index')->name('settings');
         Route::post('/', 'SettingController@update');
 
@@ -229,14 +229,14 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // MFA routes
-Route::group(['middleware' => 'mfa-setup'], function () {
+Route::middleware('mfa-setup')->group(function () {
     Route::get('/mfa/setup', 'Auth\MfaController@setup');
     Route::get('/mfa/totp/generate', 'Auth\MfaTotpController@generate');
     Route::post('/mfa/totp/confirm', 'Auth\MfaTotpController@confirm');
     Route::get('/mfa/backup_codes/generate', 'Auth\MfaBackupCodesController@generate');
     Route::post('/mfa/backup_codes/confirm', 'Auth\MfaBackupCodesController@confirm');
 });
-Route::group(['middleware' => 'guest'], function () {
+Route::middleware('guest')->group(function () {
     Route::get('/mfa/verify', 'Auth\MfaController@verify');
     Route::post('/mfa/totp/verify', 'Auth\MfaTotpController@verify');
     Route::post('/mfa/backup_codes/verify', 'Auth\MfaBackupCodesController@verify');
