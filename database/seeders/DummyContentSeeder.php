@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use BookStack\Api\ApiToken;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Permissions\RolePermission;

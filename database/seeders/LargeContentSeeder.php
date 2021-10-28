@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
