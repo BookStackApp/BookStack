@@ -40,8 +40,8 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Õigused',
-    'permissions_intro' => 'Once enabled, These permissions will take priority over any set role permissions.',
-    'permissions_enable' => 'Enable Custom Permissions',
+    'permissions_intro' => 'Kui kohandatud õigused on lubatud, rakendatakse neid eelisjärjekorras, enne rolli õiguseid.',
+    'permissions_enable' => 'Luba kohandatud õigused',
     'permissions_save' => 'Salvesta õigused',
     'permissions_owner' => 'Omanik',
 
@@ -243,8 +243,8 @@ return [
         'message' => ':start :time. Ärge teineteise muudatusi üle kirjutage!',
     ],
     'pages_draft_discarded' => 'Mustand ära visatud, redaktorisse laeti lehe värske sisu',
-    'pages_specific' => 'Specific Page',
-    'pages_is_template' => 'Page Template',
+    'pages_specific' => 'Spetsiifiline leht',
+    'pages_is_template' => 'Lehe mall',
 
     // Editor Sidebar
     'page_tags' => 'Lehe sildid',
@@ -264,7 +264,7 @@ return [
     'attachments_items' => 'Lisatud objektid',
     'attachments_upload' => 'Laadi fail üles',
     'attachments_link' => 'Lisa link',
-    'attachments_set_link' => 'Set Link',
+    'attachments_set_link' => 'Määra link',
     'attachments_delete' => 'Kas oled kindel, et soovid selle manuse kustutada?',
     'attachments_dropzone' => 'Manuse lisamiseks lohista failid või klõpsa siin',
     'attachments_no_files' => 'Üleslaaditud faile ei ole',
@@ -274,10 +274,10 @@ return [
     'attachments_link_url' => 'Link failile',
     'attachments_link_url_hint' => 'Lehekülje või faili URL',
     'attach' => 'Lisa',
-    'attachments_insert_link' => 'Add Attachment Link to Page',
+    'attachments_insert_link' => 'Lisa manuse link lehele',
     'attachments_edit_file' => 'Muuda faili',
     'attachments_edit_file_name' => 'Faili nimi',
-    'attachments_edit_drop_upload' => 'Drop files or click here to upload and overwrite',
+    'attachments_edit_drop_upload' => 'Manuse üle kirjutamiseks lohista failid või klõpsa siin',
     'attachments_order_updated' => 'Manuste järjekord muudetud',
     'attachments_updated_success' => 'Manuse andmed muudetud',
     'attachments_deleted' => 'Manus kustutatud',
