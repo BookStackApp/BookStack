@@ -40,8 +40,8 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Õigused',
-    'permissions_intro' => 'Once enabled, These permissions will take priority over any set role permissions.',
-    'permissions_enable' => 'Enable Custom Permissions',
+    'permissions_intro' => 'Kui kohandatud õigused on lubatud, rakendatakse neid eelisjärjekorras, enne rolli õiguseid.',
+    'permissions_enable' => 'Luba kohandatud õigused',
     'permissions_save' => 'Salvesta õigused',
     'permissions_owner' => 'Omanik',
 
