@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use BookStack\Uploads\Image;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,8 @@ use Illuminate\Support\Collection;
  */
 class Book extends Entity implements HasCoverImage
 {
+    use HasFactory;
+
     public $searchFactor = 2;
 
     protected $fillable = ['name', 'description'];

@@ -2,6 +2,7 @@
 
 namespace BookStack\Auth;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use BookStack\Actions\Favourite;
 use BookStack\Api\ApiToken;
 use BookStack\Auth\Access\Mfa\MfaValue;
@@ -43,6 +44,8 @@ use Illuminate\Support\Collection;
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Loggable, Sluggable
 {
+    use HasFactory;
+
     use Authenticatable;
     use CanResetPassword;
     use Notifiable;

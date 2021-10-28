@@ -2,6 +2,7 @@
 
 namespace BookStack\Actions;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Comment extends Model
 {
+    use HasFactory;
+
     use HasCreatorAndUpdater;
 
     protected $fillable = ['text', 'parent_id'];

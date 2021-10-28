@@ -2,6 +2,7 @@
 
 namespace BookStack\Auth;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Interfaces\Loggable;
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Role extends Model implements Loggable
 {
+    use HasFactory;
+
     protected $fillable = ['display_name', 'description', 'external_auth_id'];
 
     /**

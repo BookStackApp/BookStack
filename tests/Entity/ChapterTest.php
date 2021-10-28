@@ -13,7 +13,7 @@ class ChapterTest extends TestCase
         /** @var Book $book */
         $book = Book::query()->first();
 
-        $chapter = factory(Chapter::class)->make([
+        $chapter = Chapter::factory()->make([
             'name' => 'My First Chapter',
         ]);
 
