@@ -37,7 +37,7 @@ class AuthTest extends TestCase
         // Ensure registration form is showing
         $this->setSettings(['registration-enabled' => 'true']);
         $this->get('/login')
-            ->assertElementContains('a[href="' . url('/register') . '"]', 'Sign up');
+            ->assertElementContains('a[href="'.url('/register').'"]', 'Sign up');
     }
 
     public function test_normal_registration()
@@ -49,7 +49,7 @@ class AuthTest extends TestCase
         // Test form and ensure user is created
         $this->get('/register')
             ->assertSee('Sign Up')
-            ->assertElementContains('form[action="' . url('/register') . '"]', 'Create Account');
+            ->assertElementContains('form[action="'.url('/register').'"]', 'Create Account');
 
         $resp = $this->post('/register', $user->only('password', 'name', 'email'));
         $resp->assertRedirect('/');
@@ -119,7 +119,7 @@ class AuthTest extends TestCase
         $resp->assertRedirect('/register/confirm/awaiting');
 
         $resp = $this->get('/register/confirm/awaiting');
-        $resp->assertElementContains('form[action="' . url('/register/confirm/resend') . '"]', 'Resend');
+        $resp->assertElementContains('form[action="'.url('/register/confirm/resend').'"]', 'Resend');
 
         $this->get('/books')->assertRedirect('/login');
         $this->post('/register/confirm/resend', $user->only('email'));
@@ -131,7 +131,7 @@ class AuthTest extends TestCase
         });
 
         // Check confirmation email confirmation activation.
-        $this->get('/register/confirm/' . $emailConfirmation->token)->assertRedirect('/');
+        $this->get('/register/confirm/'.$emailConfirmation->token)->assertRedirect('/');
         $this->get('/')->assertSee($user->name);
         $this->assertDatabaseMissing('email_confirmations', ['token' => $emailConfirmation->token]);
         $this->assertDatabaseHas('users', ['name' => $dbUser->name, 'email' => $dbUser->email, 'email_confirmed' => true]);
@@ -213,10 +213,10 @@ class AuthTest extends TestCase
         Notification::fake();
 
         $this->get('/login')
-            ->assertElementContains('a[href="' . url('/password/email') . '"]', 'Forgot Password?');
+            ->assertElementContains('a[href="'.url('/password/email').'"]', 'Forgot Password?');
 
         $this->get('/password/email')
-            ->assertElementContains('form[action="' . url('/password/email') . '"]', 'Send Reset Link');
+            ->assertElementContains('form[action="'.url('/password/email').'"]', 'Send Reset Link');
 
         $resp = $this->post('/password/email', [
             'email' => 'admin@admin.com',
@@ -236,7 +236,7 @@ class AuthTest extends TestCase
         Notification::assertSentTo($user, ResetPassword::class);
         $n = Notification::sent($user, ResetPassword::class);
 
-        $this->get('/password/reset/' . $n->first()->token)
+        $this->get('/password/reset/'.$n->first()->token)
             ->assertOk()
             ->assertSee('Reset Password');
 
@@ -295,7 +295,7 @@ class AuthTest extends TestCase
             'email' => $editor->email,
         ]);
         Notification::assertTimesSent(1, ResetPassword::class);
-        $resp->assertSee('A password reset link will be sent to ' . $editor->email . ' if that email address is found in the system.');
+        $resp->assertSee('A password reset link will be sent to '.$editor->email.' if that email address is found in the system.');
     }
 
     public function test_login_redirects_to_initially_requested_url_correctly()

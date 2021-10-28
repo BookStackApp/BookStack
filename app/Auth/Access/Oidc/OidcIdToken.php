@@ -115,12 +115,12 @@ class OidcIdToken
     protected function validateTokenStructure(): void
     {
         foreach (['header', 'payload'] as $prop) {
-            if (empty($this->$prop) || !is_array($this->$prop)) {
+            if (empty($this->$prop) || ! is_array($this->$prop)) {
                 throw new OidcInvalidTokenException("Could not parse out a valid {$prop} within the provided token");
             }
         }
 
-        if (empty($this->signature) || !is_string($this->signature)) {
+        if (empty($this->signature) || ! is_string($this->signature)) {
             throw new OidcInvalidTokenException('Could not parse out a valid signature within the provided token');
         }
     }
@@ -140,13 +140,13 @@ class OidcIdToken
             try {
                 return new OidcJwtSigningKey($key);
             } catch (OidcInvalidKeyException $e) {
-                throw new OidcInvalidTokenException('Failed to read signing key with error: ' . $e->getMessage());
+                throw new OidcInvalidTokenException('Failed to read signing key with error: '.$e->getMessage());
             }
         }, $this->keys);
 
         $parsedKeys = array_filter($parsedKeys);
 
-        $contentToSign = $this->tokenParts[0] . '.' . $this->tokenParts[1];
+        $contentToSign = $this->tokenParts[0].'.'.$this->tokenParts[1];
         /** @var OidcJwtSigningKey $parsedKey */
         foreach ($parsedKeys as $parsedKey) {
             if ($parsedKey->verify($contentToSign, $this->signature)) {
@@ -181,7 +181,7 @@ class OidcIdToken
 
         $aud = is_string($this->payload['aud']) ? [$this->payload['aud']] : $this->payload['aud'];
         if (count($aud) !== 1) {
-            throw new OidcInvalidTokenException('Token audience value has ' . count($aud) . ' values, Expected 1');
+            throw new OidcInvalidTokenException('Token audience value has '.count($aud).' values, Expected 1');
         }
 
         if ($aud[0] !== $clientId) {

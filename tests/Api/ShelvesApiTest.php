@@ -17,7 +17,7 @@ class ShelvesApiTest extends TestCase
         $this->actingAsApiEditor();
         $firstBookshelf = Bookshelf::query()->orderBy('id', 'asc')->first();
 
-        $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
+        $resp = $this->getJson($this->baseEndpoint.'?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
                 'id'   => $firstBookshelf->id,
@@ -76,7 +76,7 @@ class ShelvesApiTest extends TestCase
         $this->actingAsApiEditor();
         $shelf = Bookshelf::visible()->first();
 
-        $resp = $this->getJson($this->baseEndpoint . "/{$shelf->id}");
+        $resp = $this->getJson($this->baseEndpoint."/{$shelf->id}");
 
         $resp->assertStatus(200);
         $resp->assertJson([
@@ -103,7 +103,7 @@ class ShelvesApiTest extends TestCase
             'description' => 'A shelf created via the API',
         ];
 
-        $resp = $this->putJson($this->baseEndpoint . "/{$shelf->id}", $details);
+        $resp = $this->putJson($this->baseEndpoint."/{$shelf->id}", $details);
         $shelf->refresh();
 
         $resp->assertStatus(200);
@@ -120,11 +120,11 @@ class ShelvesApiTest extends TestCase
             'name' => 'My updated API shelf',
         ];
 
-        $resp = $this->putJson($this->baseEndpoint . "/{$shelf->id}", $details);
+        $resp = $this->putJson($this->baseEndpoint."/{$shelf->id}", $details);
         $resp->assertStatus(200);
         $this->assertTrue($shelf->books()->count() > 0);
 
-        $resp = $this->putJson($this->baseEndpoint . "/{$shelf->id}", ['books' => []]);
+        $resp = $this->putJson($this->baseEndpoint."/{$shelf->id}", ['books' => []]);
         $resp->assertStatus(200);
         $this->assertTrue($shelf->books()->count() === 0);
     }
@@ -133,7 +133,7 @@ class ShelvesApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $shelf = Bookshelf::visible()->first();
-        $resp = $this->deleteJson($this->baseEndpoint . "/{$shelf->id}");
+        $resp = $this->deleteJson($this->baseEndpoint."/{$shelf->id}");
 
         $resp->assertStatus(204);
         $this->assertActivityExists('bookshelf_delete');

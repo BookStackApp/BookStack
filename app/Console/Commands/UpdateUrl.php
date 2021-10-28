@@ -47,13 +47,13 @@ class UpdateUrl extends Command
         $newUrl = str_replace("'", '', $this->argument('newUrl'));
 
         $urlPattern = '/https?:\/\/(.+)/';
-        if (!preg_match($urlPattern, $oldUrl) || !preg_match($urlPattern, $newUrl)) {
+        if (! preg_match($urlPattern, $oldUrl) || ! preg_match($urlPattern, $newUrl)) {
             $this->error('The given urls are expected to be full urls starting with http:// or https://');
 
             return 1;
         }
 
-        if (!$this->checkUserOkayToProceed($oldUrl, $newUrl)) {
+        if (! $this->checkUserOkayToProceed($oldUrl, $newUrl)) {
             return 1;
         }
 

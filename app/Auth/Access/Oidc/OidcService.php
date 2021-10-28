@@ -94,7 +94,7 @@ class OidcService
         ]);
 
         // Use keys if configured
-        if (!empty($config['jwt_public_key'])) {
+        if (! empty($config['jwt_public_key'])) {
             $settings->keys = [$config['jwt_public_key']];
         }
 

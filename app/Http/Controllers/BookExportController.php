@@ -31,7 +31,7 @@ class BookExportController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $pdfContent = $this->exportFormatter->bookToPdf($book);
 
-        return $this->downloadResponse($pdfContent, $bookSlug . '.pdf');
+        return $this->downloadResponse($pdfContent, $bookSlug.'.pdf');
     }
 
     /**
@@ -44,7 +44,7 @@ class BookExportController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $htmlContent = $this->exportFormatter->bookToContainedHtml($book);
 
-        return $this->downloadResponse($htmlContent, $bookSlug . '.html');
+        return $this->downloadResponse($htmlContent, $bookSlug.'.html');
     }
 
     /**
@@ -55,7 +55,7 @@ class BookExportController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $textContent = $this->exportFormatter->bookToPlainText($book);
 
-        return $this->downloadResponse($textContent, $bookSlug . '.txt');
+        return $this->downloadResponse($textContent, $bookSlug.'.txt');
     }
 
     /**
@@ -66,6 +66,6 @@ class BookExportController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $textContent = $this->exportFormatter->bookToMarkdown($book);
 
-        return $this->downloadResponse($textContent, $bookSlug . '.md');
+        return $this->downloadResponse($textContent, $bookSlug.'.md');
     }
 }

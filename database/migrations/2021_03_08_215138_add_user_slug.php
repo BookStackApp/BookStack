@@ -22,7 +22,7 @@ class AddUserSlug extends Migration
         DB::table('users')->cursor()->each(function ($user) use (&$slugMap) {
             $userSlug = Str::slug($user->name);
             while (isset($slugMap[$userSlug])) {
-                $userSlug = Str::slug($user->name . Str::random(4));
+                $userSlug = Str::slug($user->name.Str::random(4));
             }
             $slugMap[$userSlug] = true;
 

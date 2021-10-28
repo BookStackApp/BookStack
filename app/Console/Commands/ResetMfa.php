@@ -43,7 +43,7 @@ class ResetMfa extends Command
     {
         $id = $this->option('id');
         $email = $this->option('email');
-        if (!$id && !$email) {
+        if (! $id && ! $email) {
             $this->error('Either a --id=<number> or --email=<email> option must be provided.');
 
             return 1;
@@ -56,7 +56,7 @@ class ResetMfa extends Command
             ->where($field, '=', $value)
             ->first();
 
-        if (!$user) {
+        if (! $user) {
             $this->error("A user where {$field}={$value} could not be found.");
 
             return 1;

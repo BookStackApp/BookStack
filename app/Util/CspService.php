@@ -36,11 +36,11 @@ class CspService
         $parts = [
             'http:',
             'https:',
-            '\'nonce-' . $this->nonce . '\'',
+            '\'nonce-'.$this->nonce.'\'',
             '\'strict-dynamic\'',
         ];
 
-        $value = 'script-src ' . implode(' ', $parts);
+        $value = 'script-src '.implode(' ', $parts);
         $response->headers->set('Content-Security-Policy', $value, false);
     }
 
@@ -53,7 +53,7 @@ class CspService
     {
         $iframeHosts = $this->getAllowedIframeHosts();
         array_unshift($iframeHosts, "'self'");
-        $cspValue = 'frame-ancestors ' . implode(' ', $iframeHosts);
+        $cspValue = 'frame-ancestors '.implode(' ', $iframeHosts);
         $response->headers->set('Content-Security-Policy', $cspValue, false);
     }
 

@@ -23,7 +23,7 @@ class SiblingFetcher
         }
 
         // Page in book or chapter
-        if (($entity->isA('page') && !$entity->chapter) || $entity->isA('chapter')) {
+        if (($entity->isA('page') && ! $entity->chapter) || $entity->isA('chapter')) {
             $entities = $entity->book->getDirectChildren();
         }
 

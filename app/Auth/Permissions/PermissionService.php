@@ -68,7 +68,7 @@ class PermissionService
 
         foreach ($entities as $entity) {
             $class = get_class($entity);
-            if (!isset($this->entityCache[$class])) {
+            if (! isset($this->entityCache[$class])) {
                 $this->entityCache[$class] = collect();
             }
             $this->entityCache[$class]->put($entity->id, $entity);
@@ -106,7 +106,7 @@ class PermissionService
      */
     protected function getCurrentUserRoles(): array
     {
-        if (!is_null($this->userRoles)) {
+        if (! is_null($this->userRoles)) {
             return $this->userRoles;
         }
 
@@ -338,7 +338,7 @@ class PermissionService
         $entityRestrictedMap = [];
         $permissionFetch = EntityPermission::query();
         foreach ($entities as $entity) {
-            $entityRestrictedMap[$entity->getMorphClass() . ':' . $entity->id] = boolval($entity->getRawAttribute('restricted'));
+            $entityRestrictedMap[$entity->getMorphClass().':'.$entity->id] = boolval($entity->getRawAttribute('restricted'));
             $permissionFetch->orWhere(function ($query) use ($entity) {
                 $query->where('restrictable_id', '=', $entity->id)->where('restrictable_type', '=', $entity->getMorphClass());
             });
@@ -348,8 +348,8 @@ class PermissionService
         // Create a mapping of explicit entity permissions
         $permissionMap = [];
         foreach ($permissions as $permission) {
-            $key = $permission->restrictable_type . ':' . $permission->restrictable_id . ':' . $permission->role_id . ':' . $permission->action;
-            $isRestricted = $entityRestrictedMap[$permission->restrictable_type . ':' . $permission->restrictable_id];
+            $key = $permission->restrictable_type.':'.$permission->restrictable_id.':'.$permission->role_id.':'.$permission->action;
+            $isRestricted = $entityRestrictedMap[$permission->restrictable_type.':'.$permission->restrictable_id];
             $permissionMap[$key] = $isRestricted;
         }
 
@@ -357,7 +357,7 @@ class PermissionService
         $rolePermissionMap = [];
         foreach ($roles as $role) {
             foreach ($role->permissions as $permission) {
-                $rolePermissionMap[$role->getRawAttribute('id') . ':' . $permission->getRawAttribute('name')] = true;
+                $rolePermissionMap[$role->getRawAttribute('id').':'.$permission->getRawAttribute('name')] = true;
             }
         }
 
@@ -399,9 +399,9 @@ class PermissionService
      */
     protected function createJointPermissionData(Entity $entity, Role $role, string $action, array $permissionMap, array $rolePermissionMap): array
     {
-        $permissionPrefix = (strpos($action, '-') === false ? ($entity->getType() . '-') : '') . $action;
-        $roleHasPermission = isset($rolePermissionMap[$role->getRawAttribute('id') . ':' . $permissionPrefix . '-all']);
-        $roleHasPermissionOwn = isset($rolePermissionMap[$role->getRawAttribute('id') . ':' . $permissionPrefix . '-own']);
+        $permissionPrefix = (strpos($action, '-') === false ? ($entity->getType().'-') : '').$action;
+        $roleHasPermission = isset($rolePermissionMap[$role->getRawAttribute('id').':'.$permissionPrefix.'-all']);
+        $roleHasPermissionOwn = isset($rolePermissionMap[$role->getRawAttribute('id').':'.$permissionPrefix.'-own']);
         $explodedAction = explode('-', $action);
         $restrictionAction = end($explodedAction);
 
@@ -422,12 +422,12 @@ class PermissionService
         // For chapters and pages, Check if explicit permissions are set on the Book.
         $book = $this->getBook($entity->book_id);
         $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $book, $role, $restrictionAction);
-        $hasPermissiveAccessToParents = !$book->restricted;
+        $hasPermissiveAccessToParents = ! $book->restricted;
 
         // For pages with a chapter, Check if explicit permissions are set on the Chapter
         if ($entity instanceof Page && intval($entity->chapter_id) !== 0) {
             $chapter = $this->getChapter($entity->chapter_id);
-            $hasPermissiveAccessToParents = $hasPermissiveAccessToParents && !$chapter->restricted;
+            $hasPermissiveAccessToParents = $hasPermissiveAccessToParents && ! $chapter->restricted;
             if ($chapter->restricted) {
                 $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $chapter, $role, $restrictionAction);
             }
@@ -447,7 +447,7 @@ class PermissionService
      */
     protected function mapHasActiveRestriction(array $entityMap, Entity $entity, Role $role, string $action): bool
     {
-        $key = $entity->getMorphClass() . ':' . $entity->getRawAttribute('id') . ':' . $role->getRawAttribute('id') . ':' . $action;
+        $key = $entity->getMorphClass().':'.$entity->getRawAttribute('id').':'.$role->getRawAttribute('id').':'.$action;
 
         return $entityMap[$key] ?? false;
     }
@@ -486,8 +486,8 @@ class PermissionService
 
         // Handle non entity specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {
-            $allPermission = $user && $user->can($permission . '-all');
-            $ownPermission = $user && $user->can($permission . '-own');
+            $allPermission = $user && $user->can($permission.'-all');
+            $ownPermission = $user && $user->can($permission.'-own');
             $ownerField = ($ownable instanceof Entity) ? 'owned_by' : 'created_by';
             $isOwner = $user && $user->id === $ownable->$ownerField;
 
@@ -521,7 +521,7 @@ class PermissionService
                 $this->addJointHasPermissionCheck($query, $userId);
             });
 
-        if (!is_null($entityClass)) {
+        if (! is_null($entityClass)) {
             $entityInstance = app($entityClass);
             $permissionQuery = $permissionQuery->where('entity_type', '=', $entityInstance->getMorphClass());
         }
@@ -613,8 +613,8 @@ class PermissionService
             $query->whereExists(function ($permissionQuery) use (&$tableDetails, $action) {
                 /** @var Builder $permissionQuery */
                 $permissionQuery->select(['role_id'])->from('joint_permissions')
-                    ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                    ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
+                    ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'].'.'.$tableDetails['entityIdColumn'])
+                    ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'].'.'.$tableDetails['entityTypeColumn'])
                     ->where('action', '=', $action)
                     ->whereIn('role_id', $this->getCurrentUserRoles())
                     ->where(function (QueryBuilder $query) {
@@ -642,7 +642,7 @@ class PermissionService
                 $query->whereExists(function ($permissionQuery) use (&$tableDetails, $morphClass) {
                     /** @var Builder $permissionQuery */
                     $permissionQuery->select('id')->from('joint_permissions')
-                        ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                        ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'].'.'.$tableDetails['entityIdColumn'])
                         ->where('entity_type', '=', $morphClass)
                         ->where('action', '=', 'view')
                         ->whereIn('role_id', $this->getCurrentUserRoles())

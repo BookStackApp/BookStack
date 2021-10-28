@@ -24,7 +24,7 @@ class ApiDocsGenerator
     public static function generateConsideringCache(): Collection
     {
         $appVersion = trim(file_get_contents(base_path('version')));
-        $cacheKey = 'api-docs::' . $appVersion;
+        $cacheKey = 'api-docs::'.$appVersion;
         if (Cache::has($cacheKey) && config('app.env') === 'production') {
             $docs = Cache::get($cacheKey);
         } else {
@@ -139,7 +139,7 @@ class ApiDocsGenerator
         })->map(function ($route) {
             [$controller, $controllerMethod] = explode('@', $route->action['uses']);
             $baseModelName = explode('.', explode('/', $route->uri)[1])[0];
-            $shortName = $baseModelName . '-' . $controllerMethod;
+            $shortName = $baseModelName.'-'.$controllerMethod;
 
             return [
                 'name'                    => $shortName,

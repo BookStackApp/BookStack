@@ -113,11 +113,11 @@ class PageApiController extends ApiController
             $parent = Book::visible()->findOrFail($request->get('book_id'));
         }
 
-        if ($parent && !$parent->matches($page->getParent())) {
+        if ($parent && ! $parent->matches($page->getParent())) {
             $this->checkOwnablePermission('page-delete', $page);
 
             try {
-                $this->pageRepo->move($page, $parent->getType() . ':' . $parent->id);
+                $this->pageRepo->move($page, $parent->getType().':'.$parent->id);
             } catch (Exception $exception) {
                 if ($exception instanceof  PermissionsException) {
                     $this->showPermissionError();

@@ -69,7 +69,7 @@ class SocialController extends Controller
      */
     public function callback(Request $request, string $socialDriver)
     {
-        if (!session()->has('social-callback')) {
+        if (! session()->has('social-callback')) {
             throw new SocialSignInException(trans('errors.social_no_action_defined'), '/login');
         }
 
@@ -134,7 +134,7 @@ class SocialController extends Controller
         ];
 
         // Take name from email address if empty
-        if (!$userData['name']) {
+        if (! $userData['name']) {
             $userData['name'] = explode('@', $userData['email'])[0];
         }
 

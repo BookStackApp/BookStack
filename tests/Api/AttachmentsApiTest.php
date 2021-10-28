@@ -22,7 +22,7 @@ class AttachmentsApiTest extends TestCase
             'external' => true,
         ]);
 
-        $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
+        $resp = $this->getJson($this->baseEndpoint.'?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
                 'id'          => $attachment->id,
@@ -43,7 +43,7 @@ class AttachmentsApiTest extends TestCase
             'external' => true,
         ]);
 
-        $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
+        $resp = $this->getJson($this->baseEndpoint.'?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
                 'id' => $attachment->id,
@@ -54,7 +54,7 @@ class AttachmentsApiTest extends TestCase
         $page->save();
         $this->regenEntityPermissions($page);
 
-        $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
+        $resp = $this->getJson($this->baseEndpoint.'?count=1&sort=+id');
         $resp->assertJsonMissing(['data' => [
             [
                 'id' => $attachment->id,

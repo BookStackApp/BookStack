@@ -43,7 +43,7 @@ class AvatarTest extends TestCase
             'services.disable_services' => false,
         ]);
         $user = factory(User::class)->make();
-        $this->assertImageFetchFrom('https://www.gravatar.com/avatar/' . md5(strtolower($user->email)) . '?s=500&d=identicon');
+        $this->assertImageFetchFrom('https://www.gravatar.com/avatar/'.md5(strtolower($user->email)).'?s=500&d=identicon');
 
         $user = $this->createUserRequest($user);
         $this->assertDatabaseHas('images', [
@@ -61,7 +61,7 @@ class AvatarTest extends TestCase
         ]);
 
         $user = factory(User::class)->make();
-        $url = 'https://example.com/' . urlencode(strtolower($user->email)) . '/' . md5(strtolower($user->email)) . '/500';
+        $url = 'https://example.com/'.urlencode(strtolower($user->email)).'/'.md5(strtolower($user->email)).'/500';
         $this->assertImageFetchFrom($url);
 
         $user = $this->createUserRequest($user);

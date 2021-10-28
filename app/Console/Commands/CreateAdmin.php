@@ -48,7 +48,7 @@ class CreateAdmin extends Command
         if (empty($email)) {
             $email = $this->ask('Please specify an email address for the new admin user');
         }
-        if (mb_strlen($email) < 5 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (mb_strlen($email) < 5 || ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return $this->error('Invalid email address provided');
         }
 

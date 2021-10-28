@@ -47,7 +47,7 @@ class DrawioTest extends TestCase
         ]);
 
         $image = Image::where('type', '=', 'drawio')->first();
-        $this->assertTrue(file_exists(public_path($image->path)), 'Uploaded image not found at path: ' . public_path($image->path));
+        $this->assertTrue(file_exists(public_path($image->path)), 'Uploaded image not found at path: '.public_path($image->path));
 
         $testImageData = file_get_contents($this->getTestImageFilePath());
         $uploadedImageData = file_get_contents(public_path($image->path));

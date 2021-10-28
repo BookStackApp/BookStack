@@ -68,7 +68,7 @@ class AuditLogTest extends TestCase
 
         $resp = $this->get('settings/audit');
         $resp->assertSeeText('Deleted Item');
-        $resp->assertSeeText('Name: ' . $pageName);
+        $resp->assertSeeText('Name: '.$pageName);
     }
 
     public function test_shows_activity_for_deleted_users()
@@ -107,16 +107,16 @@ class AuditLogTest extends TestCase
         $yesterday = (Carbon::now()->subDay()->format('Y-m-d'));
         $tomorrow = (Carbon::now()->addDay()->format('Y-m-d'));
 
-        $resp = $this->get('settings/audit?date_from=' . $yesterday);
+        $resp = $this->get('settings/audit?date_from='.$yesterday);
         $resp->assertSeeText($page->name);
 
-        $resp = $this->get('settings/audit?date_from=' . $tomorrow);
+        $resp = $this->get('settings/audit?date_from='.$tomorrow);
         $resp->assertDontSeeText($page->name);
 
-        $resp = $this->get('settings/audit?date_to=' . $tomorrow);
+        $resp = $this->get('settings/audit?date_to='.$tomorrow);
         $resp->assertSeeText($page->name);
 
-        $resp = $this->get('settings/audit?date_to=' . $yesterday);
+        $resp = $this->get('settings/audit?date_to='.$yesterday);
         $resp->assertDontSeeText($page->name);
     }
 
@@ -132,11 +132,11 @@ class AuditLogTest extends TestCase
         $chapter = Chapter::query()->first();
         $this->activityService->addForEntity($chapter, ActivityType::CHAPTER_UPDATE);
 
-        $resp = $this->actingAs($admin)->get('settings/audit?user=' . $admin->id);
+        $resp = $this->actingAs($admin)->get('settings/audit?user='.$admin->id);
         $resp->assertSeeText($page->name);
         $resp->assertDontSeeText($chapter->name);
 
-        $resp = $this->actingAs($admin)->get('settings/audit?user=' . $editor->id);
+        $resp = $this->actingAs($admin)->get('settings/audit?user='.$editor->id);
         $resp->assertSeeText($chapter->name);
         $resp->assertDontSeeText($page->name);
     }

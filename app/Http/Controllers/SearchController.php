@@ -32,7 +32,7 @@ class SearchController extends Controller
         $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
 
         $page = intval($request->get('page', '0')) ?: 1;
-        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page + 1));
+        $nextPageLink = url('/search?term='.urlencode($fullSearchString).'&page='.($page + 1));
 
         $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, 20);
 
@@ -80,7 +80,7 @@ class SearchController extends Controller
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
-            $searchTerm .= ' {type:' . implode('|', $entityTypes) . '}';
+            $searchTerm .= ' {type:'.implode('|', $entityTypes).'}';
             $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20, $permission)['results'];
         } else {
             $entities = (new Popular())->run(20, 0, $entityTypes, $permission);

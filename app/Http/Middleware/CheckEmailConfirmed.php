@@ -38,7 +38,7 @@ class CheckEmailConfirmed
     {
         /** @var User $user */
         $user = auth()->user();
-        if (auth()->check() && !$user->email_confirmed && $this->confirmationService->confirmationRequired()) {
+        if (auth()->check() && ! $user->email_confirmed && $this->confirmationService->confirmationRequired()) {
             auth()->logout();
 
             return redirect()->to('/');

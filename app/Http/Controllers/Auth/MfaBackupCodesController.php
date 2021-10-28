@@ -27,7 +27,7 @@ class MfaBackupCodesController extends Controller
         $codes = $codeService->generateNewSet();
         session()->put(self::SETUP_SECRET_SESSION_KEY, encrypt($codes));
 
-        $downloadUrl = 'data:application/octet-stream;base64,' . base64_encode(implode("\n\n", $codes));
+        $downloadUrl = 'data:application/octet-stream;base64,'.base64_encode(implode("\n\n", $codes));
 
         return view('mfa.backup-codes-generate', [
             'codes'       => $codes,
@@ -42,7 +42,7 @@ class MfaBackupCodesController extends Controller
      */
     public function confirm()
     {
-        if (!session()->has(self::SETUP_SECRET_SESSION_KEY)) {
+        if (! session()->has(self::SETUP_SECRET_SESSION_KEY)) {
             return response('No generated codes found in the session', 500);
         }
 
@@ -51,7 +51,7 @@ class MfaBackupCodesController extends Controller
 
         $this->logActivity(ActivityType::MFA_SETUP_METHOD, 'backup-codes');
 
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             $this->showSuccessNotification(trans('auth.mfa_setup_login_notification'));
 
             return redirect('/login');
@@ -76,7 +76,7 @@ class MfaBackupCodesController extends Controller
                 'required',
                 'max:12', 'min:8',
                 function ($attribute, $value, $fail) use ($codeService, $codes) {
-                    if (!$codeService->inputCodeExistsInSet($value, $codes)) {
+                    if (! $codeService->inputCodeExistsInSet($value, $codes)) {
                         $fail(trans('validation.backup_codes'));
                     }
                 },

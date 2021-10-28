@@ -66,7 +66,7 @@ abstract class Controller extends BaseController
      */
     protected function checkPermission(string $permission): void
     {
-        if (!user() || !user()->can($permission)) {
+        if (! user() || ! user()->can($permission)) {
             $this->showPermissionError();
         }
     }
@@ -76,7 +76,7 @@ abstract class Controller extends BaseController
      */
     protected function checkOwnablePermission(string $permission, Model $ownable): void
     {
-        if (!userCan($permission, $ownable)) {
+        if (! userCan($permission, $ownable)) {
             $this->showPermissionError();
         }
     }
@@ -118,7 +118,7 @@ abstract class Controller extends BaseController
     {
         return response()->make($content, 200, [
             'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Content-Disposition' => 'attachment; filename="'.$fileName.'"',
         ]);
     }
 
@@ -133,7 +133,7 @@ abstract class Controller extends BaseController
 
         return response()->make($content, 200, [
             'Content-Type'        => $mime,
-            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            'Content-Disposition' => 'inline; filename="'.$fileName.'"',
         ]);
     }
 

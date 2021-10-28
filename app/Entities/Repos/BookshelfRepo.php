@@ -102,7 +102,7 @@ class BookshelfRepo
     {
         $this->baseRepo->update($shelf, $input);
 
-        if (!is_null($bookIds)) {
+        if (! is_null($bookIds)) {
             $this->updateBooks($shelf, $bookIds);
         }
 
@@ -153,7 +153,7 @@ class BookshelfRepo
 
         /** @var Book $book */
         foreach ($shelfBooks as $book) {
-            if ($checkUserPermissions && !userCan('restrictions-manage', $book)) {
+            if ($checkUserPermissions && ! userCan('restrictions-manage', $book)) {
                 continue;
             }
             $book->permissions()->delete();

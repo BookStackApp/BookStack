@@ -29,7 +29,7 @@ class NotifyException extends Exception implements Responsable
     {
         $message = $this->getMessage();
 
-        if (!empty($message)) {
+        if (! empty($message)) {
             session()->flash('error', $message);
         }
 

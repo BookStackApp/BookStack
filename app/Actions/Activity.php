@@ -45,7 +45,7 @@ class Activity extends Model
      */
     public function getText(): string
     {
-        return trans('activities.' . $this->type);
+        return trans('activities.'.$this->type);
     }
 
     /**

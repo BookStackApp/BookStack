@@ -80,8 +80,8 @@ class BookShelfTest extends TestCase
     {
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
-            'name'        => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10),
+            'name'        => 'My test book'.Str::random(4),
+            'description' => 'Test book description '.Str::random(10),
         ];
         $resp = $this->asEditor()->post('/shelves', array_merge($shelfInfo, [
             'books' => $booksToInclude->implode('id', ','),
@@ -110,8 +110,8 @@ class BookShelfTest extends TestCase
     public function test_shelves_create_sets_cover_image()
     {
         $shelfInfo = [
-            'name'        => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10),
+            'name'        => 'My test book'.Str::random(4),
+            'description' => 'Test book description '.Str::random(10),
         ];
 
         $imageFile = $this->getTestImage('shelf-test.png');
@@ -206,8 +206,8 @@ class BookShelfTest extends TestCase
 
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
-            'name'        => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10),
+            'name'        => 'My test book'.Str::random(4),
+            'description' => 'Test book description '.Str::random(10),
         ];
 
         $resp = $this->asEditor()->put($shelf->getUrl(), array_merge($shelfInfo, [
@@ -345,8 +345,8 @@ class BookShelfTest extends TestCase
     {
         // Create shelf
         $shelfInfo = [
-            'name'        => 'My test shelf' . Str::random(4),
-            'description' => 'Test shelf description ' . Str::random(10),
+            'name'        => 'My test shelf'.Str::random(4),
+            'description' => 'Test shelf description '.Str::random(10),
         ];
 
         $this->asEditor()->post('/shelves', $shelfInfo);
@@ -375,6 +375,6 @@ class BookShelfTest extends TestCase
         /** @var Bookshelf $shelf */
         $shelf = Bookshelf::query()->first();
         $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
-        $resp->assertElementContains('form a[href="' . $shelf->getUrl() . '"]', 'Cancel');
+        $resp->assertElementContains('form a[href="'.$shelf->getUrl().'"]', 'Cancel');
     }
 }

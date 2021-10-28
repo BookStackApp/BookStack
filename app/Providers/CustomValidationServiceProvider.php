@@ -23,7 +23,7 @@ class CustomValidationServiceProvider extends ServiceProvider
             $isJs = strpos($cleanLinkName, 'javascript:') === 0;
             $isData = strpos($cleanLinkName, 'data:') === 0;
 
-            return !$isJs && !$isData;
+            return ! $isJs && ! $isData;
         });
     }
 }

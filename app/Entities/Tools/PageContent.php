@@ -96,13 +96,13 @@ class PageContent
             $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? 'png');
 
             // Validate extension
-            if (!$imageRepo->imageExtensionSupported($extension)) {
+            if (! $imageRepo->imageExtensionSupported($extension)) {
                 $imageNode->setAttribute('src', '');
                 continue;
             }
 
             // Save image from data with a random name
-            $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
+            $imageName = 'embedded-image-'.Str::random(8).'.'.$extension;
 
             try {
                 $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $this->page->id);
@@ -135,13 +135,13 @@ class PageContent
             $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? 'png');
 
             // Validate extension
-            if (!$imageRepo->imageExtensionSupported($extension)) {
+            if (! $imageRepo->imageExtensionSupported($extension)) {
                 $markdown = str_replace($base64Match, '', $markdown);
                 continue;
             }
 
             // Save image from data with a random name
-            $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
+            $imageName = 'embedded-image-'.Str::random(8).'.'.$extension;
 
             try {
                 $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $this->page->id);
@@ -174,7 +174,7 @@ class PageContent
         foreach ($childNodes as $index => $childNode) {
             [$oldId, $newId] = $this->setUniqueId($childNode, $idMap);
             if ($newId && $newId !== $oldId) {
-                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
+                $this->updateLinks($xPath, '#'.$oldId, '#'.$newId);
             }
         }
 
@@ -183,7 +183,7 @@ class PageContent
         foreach ($idElems as $domElem) {
             [$oldId, $newId] = $this->setUniqueId($domElem, $idMap);
             if ($newId && $newId !== $oldId) {
-                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
+                $this->updateLinks($xPath, '#'.$oldId, '#'.$newId);
             }
         }
 
@@ -202,7 +202,7 @@ class PageContent
     protected function updateLinks(DOMXPath $xpath, string $old, string $new)
     {
         $old = str_replace('"', '', $old);
-        $matchingLinks = $xpath->query('//body//*//*[@href="' . $old . '"]');
+        $matchingLinks = $xpath->query('//body//*//*[@href="'.$old.'"]');
         foreach ($matchingLinks as $domElem) {
             $domElem->setAttribute('href', $new);
         }
@@ -221,7 +221,7 @@ class PageContent
 
         // Stop if there's an existing valid id that has not already been used.
         $existingId = $element->getAttribute('id');
-        if (strpos($existingId, 'bkmrk') === 0 && !isset($idMap[$existingId])) {
+        if (strpos($existingId, 'bkmrk') === 0 && ! isset($idMap[$existingId])) {
             $idMap[$existingId] = true;
 
             return [$existingId, $existingId];
@@ -230,12 +230,12 @@ class PageContent
         // Create an unique id for the element
         // Uses the content as a basis to ensure output is the same every time
         // the same content is passed through.
-        $contentId = 'bkmrk-' . mb_substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
+        $contentId = 'bkmrk-'.mb_substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
         $newId = urlencode($contentId);
         $loopIndex = 0;
 
         while (isset($idMap[$newId])) {
-            $newId = urlencode($contentId . '-' . $loopIndex);
+            $newId = urlencode($contentId.'-'.$loopIndex);
             $loopIndex++;
         }
 
@@ -262,7 +262,7 @@ class PageContent
     {
         $content = $this->page->html ?? '';
 
-        if (!config('app.allow_content_scripts')) {
+        if (! config('app.allow_content_scripts')) {
             $content = HtmlContentFilter::removeScripts($content);
         }
 
@@ -304,7 +304,7 @@ class PageContent
             return [
                 'nodeName' => strtolower($header->nodeName),
                 'level'    => intval(str_replace('h', '', $header->nodeName)),
-                'link'     => '#' . $header->getAttribute('id'),
+                'link'     => '#'.$header->getAttribute('id'),
                 'text'     => $text,
             ];
         })->filter(function ($header) {
@@ -407,7 +407,7 @@ class PageContent
     {
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
-        $html = '<body>' . $html . '</body>';
+        $html = '<body>'.$html.'</body>';
         $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
 
         return $doc;

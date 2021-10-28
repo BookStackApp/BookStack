@@ -34,7 +34,7 @@ class RegistrationService
      */
     public function ensureRegistrationAllowed()
     {
-        if (!$this->registrationAllowed()) {
+        if (! $this->registrationAllowed()) {
             throw new UserRegistrationException(trans('auth.registrations_disabled'), '/login');
         }
     }
@@ -90,7 +90,7 @@ class RegistrationService
         $this->ensureEmailDomainAllowed($userEmail);
 
         // Ensure user does not already exist
-        $alreadyUser = !is_null($this->userRepo->getByEmail($userEmail));
+        $alreadyUser = ! is_null($this->userRepo->getByEmail($userEmail));
         if ($alreadyUser) {
             throw new UserRegistrationException(trans('errors.error_user_exists_different_creds', ['email' => $userEmail]), '/login');
         }
@@ -107,7 +107,7 @@ class RegistrationService
         Theme::dispatch(ThemeEvents::AUTH_REGISTER, $socialAccount ? $socialAccount->driver : auth()->getDefaultDriver(), $newUser);
 
         // Start email confirmation flow if required
-        if ($this->emailConfirmationService->confirmationRequired() && !$emailConfirmed) {
+        if ($this->emailConfirmationService->confirmationRequired() && ! $emailConfirmed) {
             $newUser->save();
 
             try {
@@ -133,13 +133,13 @@ class RegistrationService
     {
         $registrationRestrict = setting('registration-restrict');
 
-        if (!$registrationRestrict) {
+        if (! $registrationRestrict) {
             return;
         }
 
         $restrictedEmailDomains = explode(',', str_replace(' ', '', $registrationRestrict));
         $userEmailDomain = $domain = mb_substr(mb_strrchr($userEmail, '@'), 1);
-        if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
+        if (! in_array($userEmailDomain, $restrictedEmailDomains)) {
             $redirect = $this->registrationAllowed() ? '/register' : '/login';
 
             throw new UserRegistrationException(trans('auth.registration_email_domain_invalid'), $redirect);

@@ -17,11 +17,11 @@ class PageRevisionTest extends TestCase
         $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
         $pageRevision = $page->revisions->last();
 
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $revisionView = $this->get($page->getUrl().'/revisions/'.$pageRevision->id);
         $revisionView->assertStatus(200);
         $revisionView->assertSee('new content');
 
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id . '/changes');
+        $revisionView = $this->get($page->getUrl().'/revisions/'.$pageRevision->id.'/changes');
         $revisionView->assertStatus(200);
         $revisionView->assertSee('new content');
     }
@@ -36,7 +36,7 @@ class PageRevisionTest extends TestCase
         $pageRevision = $page->revisions->last();
         $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>Updated content</p>', 'summary' => 'page revision testing 2']);
 
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $revisionView = $this->get($page->getUrl().'/revisions/'.$pageRevision->id);
         $revisionView->assertStatus(200);
         $revisionView->assertSee('new revision content');
     }
@@ -56,7 +56,7 @@ class PageRevisionTest extends TestCase
         $pageView->assertDontSee('def456');
 
         $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
-        $restoreReq = $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
+        $restoreReq = $this->put($page->getUrl().'/revisions/'.$revToRestore->id.'/restore');
         $page = Page::find($page->id);
 
         $restoreReq->assertStatus(302);
@@ -82,7 +82,7 @@ class PageRevisionTest extends TestCase
         $pageView->assertDontSee('def456');
 
         $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
-        $restoreReq = $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
+        $restoreReq = $this->put($page->getUrl().'/revisions/'.$revToRestore->id.'/restore');
         $page = Page::find($page->id);
 
         $restoreReq->assertStatus(302);
@@ -108,7 +108,7 @@ class PageRevisionTest extends TestCase
         $page->refresh();
 
         $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
-        $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
+        $this->put($page->getUrl().'/revisions/'.$revToRestore->id.'/restore');
         $page->refresh();
 
         $this->assertDatabaseHas('page_revisions', [
@@ -139,7 +139,7 @@ class PageRevisionTest extends TestCase
 
         $page = Page::find($page->id);
         $pageView = $this->get($page->getUrl());
-        $pageView->assertSee('Revision #' . $page->revision_count);
+        $pageView->assertSee('Revision #'.$page->revision_count);
     }
 
     public function test_revision_deletion()

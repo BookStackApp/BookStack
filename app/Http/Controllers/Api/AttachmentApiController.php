@@ -102,7 +102,7 @@ class AttachmentApiController extends ApiController
             'markdown' => $attachment->markdownLink(),
         ]);
 
-        if (!$attachment->external) {
+        if (! $attachment->external) {
             $attachmentContents = $this->attachmentService->getAttachmentFromStorage($attachment);
             $attachment->setAttribute('content', base64_encode($attachmentContents));
         } else {

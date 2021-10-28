@@ -93,9 +93,9 @@ class TagTest extends TestCase
         $page = $this->getEntityWithTags(Page::class, $tags);
         $resp = $this->asEditor()->get('/search?term=[category]');
         $resp->assertSee($page->name);
-        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'category');
-        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'buckets');
-        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'color');
-        $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'red');
+        $resp->assertElementContains('[href="'.$page->getUrl().'"]', 'category');
+        $resp->assertElementContains('[href="'.$page->getUrl().'"]', 'buckets');
+        $resp->assertElementContains('[href="'.$page->getUrl().'"]', 'color');
+        $resp->assertElementContains('[href="'.$page->getUrl().'"]', 'red');
     }
 }

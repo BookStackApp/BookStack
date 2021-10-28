@@ -34,7 +34,7 @@ class PageDraftTest extends TestCase
         $this->asAdmin()->get($this->page->getUrl('/edit'))
             ->assertElementNotContains('[name="html"]', $addedContent);
 
-        $newContent = $this->page->html . $addedContent;
+        $newContent = $this->page->html.$addedContent;
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
         $this->asAdmin()->get($this->page->getUrl('/edit'))
             ->assertElementContains('[name="html"]', $newContent);
@@ -46,7 +46,7 @@ class PageDraftTest extends TestCase
         $this->asAdmin()->get($this->page->getUrl('/edit'))
             ->assertElementNotContains('[name="html"]', $addedContent);
 
-        $newContent = $this->page->html . $addedContent;
+        $newContent = $this->page->html.$addedContent;
         $newUser = $this->getEditor();
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
 
@@ -69,7 +69,7 @@ class PageDraftTest extends TestCase
         $this->asAdmin()->get($this->page->getUrl('/edit'))
             ->assertElementNotContains('[name="html"]', $addedContent);
 
-        $newContent = $this->page->html . $addedContent;
+        $newContent = $this->page->html.$addedContent;
         $newUser = $this->getEditor();
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
 
@@ -77,7 +77,7 @@ class PageDraftTest extends TestCase
             ->get($this->page->getUrl('/edit'))
             ->assertSee('Admin has started editing this page');
         $this->flushSession();
-        $this->get($nonEditedPage->getUrl() . '/edit')
+        $this->get($nonEditedPage->getUrl().'/edit')
             ->assertElementNotContains('.notification', 'Admin has started editing this page');
     }
 
@@ -88,7 +88,7 @@ class PageDraftTest extends TestCase
         /** @var Page $page */
         $page = Page::query()->first();
 
-        $this->actingAs($editor)->put('/ajax/page/' . $page->id . '/save-draft', [
+        $this->actingAs($editor)->put('/ajax/page/'.$page->id.'/save-draft', [
             'name' => $page->name,
             'html' => '<p>updated draft</p>',
         ]);
@@ -106,7 +106,7 @@ class PageDraftTest extends TestCase
             'html' => '<p>admin update</p>',
         ]);
 
-        $resp = $this->actingAs($editor)->put('/ajax/page/' . $page->id . '/save-draft', [
+        $resp = $this->actingAs($editor)->put('/ajax/page/'.$page->id.'/save-draft', [
             'name' => $page->name,
             'html' => '<p>updated draft again</p>',
         ]);
@@ -123,12 +123,12 @@ class PageDraftTest extends TestCase
         /** @var Page $page */
         $page = Page::query()->first();
 
-        $this->actingAs($admin)->put('/ajax/page/' . $page->id . '/save-draft', [
+        $this->actingAs($admin)->put('/ajax/page/'.$page->id.'/save-draft', [
             'name' => $page->name,
             'html' => '<p>updated draft</p>',
         ]);
 
-        $resp = $this->actingAs($editor)->put('/ajax/page/' . $page->id . '/save-draft', [
+        $resp = $this->actingAs($editor)->put('/ajax/page/'.$page->id.'/save-draft', [
             'name' => $page->name,
             'html' => '<p>updated draft again</p>',
         ]);
@@ -145,7 +145,7 @@ class PageDraftTest extends TestCase
         $this->asAdmin()->get('/')
             ->assertElementNotContains('#recent-drafts', 'New Page');
 
-        $this->get($book->getUrl() . '/create-page');
+        $this->get($book->getUrl().'/create-page');
 
         $this->get('/')->assertElementContains('#recent-drafts', 'New Page');
     }
@@ -174,7 +174,7 @@ class PageDraftTest extends TestCase
         /** @var Page $page */
         $page = Page::query()->first();
 
-        $this->getJson('/ajax/page/' . $page->id)->assertJson([
+        $this->getJson('/ajax/page/'.$page->id)->assertJson([
             'html' => $page->html,
         ]);
     }

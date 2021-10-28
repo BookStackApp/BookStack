@@ -23,7 +23,7 @@ class UserAvatars
      */
     public function fetchAndAssignToUser(User $user): void
     {
-        if (!$this->avatarFetchEnabled()) {
+        if (! $this->avatarFetchEnabled()) {
             return;
         }
 
@@ -93,7 +93,7 @@ class UserAvatars
      */
     protected function createAvatarImageFromData(User $user, string $imageData, string $extension): Image
     {
-        $imageName = str_replace(' ', '-', $user->id . '-avatar.' . $extension);
+        $imageName = str_replace(' ', '-', $user->id.'-avatar.'.$extension);
 
         $image = $this->imageService->saveNew($imageName, $imageData, 'user', $user->id);
         $image->created_by = $user->id;
@@ -136,7 +136,7 @@ class UserAvatars
     {
         $url = trim(config('services.avatar_url'));
 
-        if (empty($url) && !config('services.disable_services')) {
+        if (empty($url) && ! config('services.disable_services')) {
             $url = 'https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon';
         }
 

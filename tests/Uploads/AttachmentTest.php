@@ -160,7 +160,7 @@ class AttachmentTest extends TestCase
         $this->asAdmin();
 
         $attachment = $this->createAttachment($page);
-        $update = $this->call('PUT', 'attachments/' . $attachment->id, [
+        $update = $this->call('PUT', 'attachments/'.$attachment->id, [
             'attachment_edit_name' => 'My new attachment name',
             'attachment_edit_url'  => 'https://test.example.com',
         ]);
@@ -187,7 +187,7 @@ class AttachmentTest extends TestCase
 
         $attachment = Attachment::query()->orderBy('id', 'desc')->first();
         $filePath = storage_path($attachment->path);
-        $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
+        $this->assertTrue(file_exists($filePath), 'File at path '.$filePath.' does not exist');
 
         $attachment = Attachment::first();
         $this->delete($attachment->getUrl());
@@ -195,7 +195,7 @@ class AttachmentTest extends TestCase
         $this->assertDatabaseMissing('attachments', [
             'name' => $fileName,
         ]);
-        $this->assertFalse(file_exists($filePath), 'File at path ' . $filePath . ' was not deleted as expected');
+        $this->assertFalse(file_exists($filePath), 'File at path '.$filePath.' was not deleted as expected');
 
         $this->deleteUploads();
     }
@@ -210,7 +210,7 @@ class AttachmentTest extends TestCase
         $attachment = Attachment::query()->orderBy('id', 'desc')->first();
         $filePath = storage_path($attachment->path);
 
-        $this->assertTrue(file_exists($filePath), 'File at path ' . $filePath . ' does not exist');
+        $this->assertTrue(file_exists($filePath), 'File at path '.$filePath.' does not exist');
         $this->assertDatabaseHas('attachments', [
             'name' => $fileName,
         ]);
@@ -221,7 +221,7 @@ class AttachmentTest extends TestCase
         $this->assertDatabaseMissing('attachments', [
             'name' => $fileName,
         ]);
-        $this->assertFalse(file_exists($filePath), 'File at path ' . $filePath . ' was not deleted as expected');
+        $this->assertFalse(file_exists($filePath), 'File at path '.$filePath.' was not deleted as expected');
 
         $this->deleteUploads();
     }
@@ -280,7 +280,7 @@ class AttachmentTest extends TestCase
         $attachment = $this->createAttachment($page);
 
         foreach ($badLinks as $badLink) {
-            $linkReq = $this->put('attachments/' . $attachment->id, [
+            $linkReq = $this->put('attachments/'.$attachment->id, [
                 'attachment_edit_url'  => $badLink,
                 'attachment_edit_name' => 'Example Attachment Link',
             ]);

@@ -23,12 +23,12 @@ class PermissionsUpdater
         $entity->restricted = $restricted;
         $entity->permissions()->delete();
 
-        if (!is_null($permissions)) {
+        if (! is_null($permissions)) {
             $entityPermissionData = $this->formatPermissionsFromRequestToEntityPermissions($permissions);
             $entity->permissions()->createMany($entityPermissionData);
         }
 
-        if (!is_null($ownerId)) {
+        if (! is_null($ownerId)) {
             $this->updateOwnerFromId($entity, intval($ownerId));
         }
 
@@ -46,7 +46,7 @@ class PermissionsUpdater
     protected function updateOwnerFromId(Entity $entity, int $newOwnerId)
     {
         $newOwner = User::query()->find($newOwnerId);
-        if (!is_null($newOwner)) {
+        if (! is_null($newOwner)) {
             $entity->owned_by = $newOwner->id;
         }
     }

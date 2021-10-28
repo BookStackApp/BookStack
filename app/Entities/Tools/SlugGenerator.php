@@ -16,7 +16,7 @@ class SlugGenerator
     {
         $slug = $this->formatNameAsSlug($model->name);
         while ($this->slugInUse($slug, $model)) {
-            $slug .= '-' . Str::random(3);
+            $slug .= '-'.Str::random(3);
         }
 
         return $slug;

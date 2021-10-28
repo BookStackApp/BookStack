@@ -20,7 +20,7 @@ class ExportTest extends TestCase
         $resp = $this->get($page->getUrl('/export/plaintext'));
         $resp->assertStatus(200);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$page->slug.'.txt"');
     }
 
     public function test_page_pdf_export()
@@ -30,7 +30,7 @@ class ExportTest extends TestCase
 
         $resp = $this->get($page->getUrl('/export/pdf'));
         $resp->assertStatus(200);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.pdf"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$page->slug.'.pdf"');
     }
 
     public function test_page_html_export()
@@ -41,7 +41,7 @@ class ExportTest extends TestCase
         $resp = $this->get($page->getUrl('/export/html'));
         $resp->assertStatus(200);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$page->slug.'.html"');
     }
 
     public function test_book_text_export()
@@ -54,7 +54,7 @@ class ExportTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertSee($book->name);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$book->slug.'.txt"');
     }
 
     public function test_book_pdf_export()
@@ -65,7 +65,7 @@ class ExportTest extends TestCase
 
         $resp = $this->get($book->getUrl('/export/pdf'));
         $resp->assertStatus(200);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.pdf"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$book->slug.'.pdf"');
     }
 
     public function test_book_html_export()
@@ -78,12 +78,12 @@ class ExportTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertSee($book->name);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$book->slug.'.html"');
     }
 
     public function test_book_html_export_shows_chapter_descriptions()
     {
-        $chapterDesc = 'My custom test chapter description ' . Str::random(12);
+        $chapterDesc = 'My custom test chapter description '.Str::random(12);
         $chapter = Chapter::query()->first();
         $chapter->description = $chapterDesc;
         $chapter->save();
@@ -105,7 +105,7 @@ class ExportTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertSee($chapter->name);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$chapter->slug.'.txt"');
     }
 
     public function test_chapter_pdf_export()
@@ -115,7 +115,7 @@ class ExportTest extends TestCase
 
         $resp = $this->get($chapter->getUrl('/export/pdf'));
         $resp->assertStatus(200);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.pdf"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$chapter->slug.'.pdf"');
     }
 
     public function test_chapter_html_export()
@@ -128,7 +128,7 @@ class ExportTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertSee($chapter->name);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$chapter->slug.'.html"');
     }
 
     public function test_page_html_export_contains_custom_head_if_set()
@@ -211,8 +211,8 @@ class ExportTest extends TestCase
     {
         $page = Page::query()->first();
         $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg"/>'
-            . '<img src="http://localhost/uploads/svg_test.svg"/>'
-            . '<img src="/uploads/svg_test.svg"/>';
+            .'<img src="http://localhost/uploads/svg_test.svg"/>'
+            .'<img src="/uploads/svg_test.svg"/>';
         $storageDisk = Storage::disk('local');
         $storageDisk->makeDirectory('uploads/images/gallery');
         $storageDisk->put('uploads/images/gallery/svg_test.svg', '<svg>good</svg>');
@@ -296,7 +296,7 @@ class ExportTest extends TestCase
         $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
         $resp->assertStatus(200);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.md"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$page->slug.'.md"');
     }
 
     public function test_page_markdown_export_uses_existing_markdown_if_apparent()
@@ -340,7 +340,7 @@ class ExportTest extends TestCase
     {
         $page = Page::query()->first()->forceFill([
             'markdown' => '',
-            'html'     => '<h1>Dogcat</h1>' . "\r\n" . '<pre id="bkmrk-var-a-%3D-%27cat%27%3B"><code class="language-JavaScript">var a = \'cat\';</code></pre><p>Another line</p>',
+            'html'     => '<h1>Dogcat</h1>'."\r\n".'<pre id="bkmrk-var-a-%3D-%27cat%27%3B"><code class="language-JavaScript">var a = \'cat\';</code></pre><p>Another line</p>',
         ]);
         $page->save();
 
@@ -354,8 +354,8 @@ class ExportTest extends TestCase
         $page = $chapter->pages()->first();
         $resp = $this->asEditor()->get($chapter->getUrl('/export/markdown'));
 
-        $resp->assertSee('# ' . $chapter->name);
-        $resp->assertSee('# ' . $page->name);
+        $resp->assertSee('# '.$chapter->name);
+        $resp->assertSee('# '.$page->name);
     }
 
     public function test_book_markdown_export()
@@ -365,9 +365,9 @@ class ExportTest extends TestCase
         $page = $chapter->pages()->first();
         $resp = $this->asEditor()->get($book->getUrl('/export/markdown'));
 
-        $resp->assertSee('# ' . $book->name);
-        $resp->assertSee('# ' . $chapter->name);
-        $resp->assertSee('# ' . $page->name);
+        $resp->assertSee('# '.$book->name);
+        $resp->assertSee('# '.$chapter->name);
+        $resp->assertSee('# '.$page->name);
     }
 
     public function test_export_option_only_visible_and_accessible_with_permission()

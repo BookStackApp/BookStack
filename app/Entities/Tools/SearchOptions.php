@@ -47,7 +47,7 @@ class SearchOptions
      */
     public static function fromRequest(Request $request): self
     {
-        if (!$request->has('search') && !$request->has('term')) {
+        if (! $request->has('search') && ! $request->has('term')) {
             return static::fromString('');
         }
 
@@ -127,7 +127,7 @@ class SearchOptions
         $string = implode(' ', $this->searches ?? []);
 
         foreach ($this->exacts as $term) {
-            $string .= ' "' . $term . '"';
+            $string .= ' "'.$term.'"';
         }
 
         foreach ($this->tags as $term) {
@@ -135,7 +135,7 @@ class SearchOptions
         }
 
         foreach ($this->filters as $filterName => $filterVal) {
-            $string .= ' {' . $filterName . ($filterVal ? ':' . $filterVal : '') . '}';
+            $string .= ' {'.$filterName.($filterVal ? ':'.$filterVal : '').'}';
         }
 
         return $string;

@@ -50,7 +50,7 @@ class UserApiTokenTest extends TestCase
 
         $resp = $this->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
-        $resp->assertRedirect($editor->getEditUrl('/api-tokens/' . $token->id));
+        $resp->assertRedirect($editor->getEditUrl('/api-tokens/'.$token->id));
         $this->assertDatabaseHas('api_tokens', [
             'user_id'    => $editor->id,
             'name'       => $this->testTokenData['name'],
@@ -58,8 +58,8 @@ class UserApiTokenTest extends TestCase
         ]);
 
         // Check secret token
-        $this->assertSessionHas('api-token-secret:' . $token->id);
-        $secret = session('api-token-secret:' . $token->id);
+        $this->assertSessionHas('api-token-secret:'.$token->id);
+        $secret = session('api-token-secret:'.$token->id);
         $this->assertDatabaseMissing('api_tokens', [
             'secret' => $secret,
         ]);
@@ -106,9 +106,9 @@ class UserApiTokenTest extends TestCase
         $resp->assertSeeText('Token Secret');
 
         $token = ApiToken::query()->latest()->first();
-        $this->assertNull(session('api-token-secret:' . $token->id));
+        $this->assertNull(session('api-token-secret:'.$token->id));
 
-        $resp = $this->get($editor->getEditUrl('/api-tokens/' . $token->id));
+        $resp = $this->get($editor->getEditUrl('/api-tokens/'.$token->id));
         $resp->assertDontSeeText('Client Secret');
     }
 
@@ -122,8 +122,8 @@ class UserApiTokenTest extends TestCase
             'expires_at' => '2011-01-01',
         ];
 
-        $resp = $this->put($editor->getEditUrl('/api-tokens/' . $token->id), $updateData);
-        $resp->assertRedirect($editor->getEditUrl('/api-tokens/' . $token->id));
+        $resp = $this->put($editor->getEditUrl('/api-tokens/'.$token->id), $updateData);
+        $resp->assertRedirect($editor->getEditUrl('/api-tokens/'.$token->id));
 
         $this->assertDatabaseHas('api_tokens', array_merge($updateData, ['id' => $token->id]));
         $this->assertSessionHas('success');
@@ -136,7 +136,7 @@ class UserApiTokenTest extends TestCase
         $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
 
-        $resp = $this->put($editor->getEditUrl('/api-tokens/' . $token->id), [
+        $resp = $this->put($editor->getEditUrl('/api-tokens/'.$token->id), [
             'name'       => 'My updated token',
             'expires_at' => '',
         ]);
@@ -156,12 +156,12 @@ class UserApiTokenTest extends TestCase
         $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
 
-        $tokenUrl = $editor->getEditUrl('/api-tokens/' . $token->id);
+        $tokenUrl = $editor->getEditUrl('/api-tokens/'.$token->id);
 
-        $resp = $this->get($tokenUrl . '/delete');
+        $resp = $this->get($tokenUrl.'/delete');
         $resp->assertSeeText('Delete Token');
         $resp->assertSeeText($token->name);
-        $resp->assertElementExists('form[action="' . $tokenUrl . '"]');
+        $resp->assertElementExists('form[action="'.$tokenUrl.'"]');
 
         $resp = $this->delete($tokenUrl);
         $resp->assertRedirect($editor->getEditUrl('#api_tokens'));
@@ -178,11 +178,11 @@ class UserApiTokenTest extends TestCase
         $this->asAdmin()->post($viewer->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
 
-        $resp = $this->actingAs($editor)->get($viewer->getEditUrl('/api-tokens/' . $token->id));
+        $resp = $this->actingAs($editor)->get($viewer->getEditUrl('/api-tokens/'.$token->id));
         $resp->assertStatus(200);
         $resp->assertSeeText('Delete Token');
 
-        $resp = $this->actingAs($editor)->delete($viewer->getEditUrl('/api-tokens/' . $token->id));
+        $resp = $this->actingAs($editor)->delete($viewer->getEditUrl('/api-tokens/'.$token->id));
         $resp->assertRedirect($viewer->getEditUrl('#api_tokens'));
         $this->assertDatabaseMissing('api_tokens', ['id' => $token->id]);
     }

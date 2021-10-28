@@ -19,7 +19,7 @@ class TestResponse extends BaseTestResponse
      */
     protected function crawler(): Crawler
     {
-        if (!is_object($this->crawlerInstance)) {
+        if (! is_object($this->crawlerInstance)) {
             $this->crawlerInstance = new Crawler($this->getContent());
         }
 
@@ -44,9 +44,9 @@ class TestResponse extends BaseTestResponse
         $elements = $this->crawler()->filter($selector);
         PHPUnit::assertTrue(
             $elements->count() > 0,
-            'Unable to find element matching the selector: ' . PHP_EOL . PHP_EOL .
-            "[{$selector}]" . PHP_EOL . PHP_EOL .
-            'within' . PHP_EOL . PHP_EOL .
+            'Unable to find element matching the selector: '.PHP_EOL.PHP_EOL.
+            "[{$selector}]".PHP_EOL.PHP_EOL.
+            'within'.PHP_EOL.PHP_EOL.
             "[{$this->getContent()}]."
         );
 
@@ -63,9 +63,9 @@ class TestResponse extends BaseTestResponse
         $elements = $this->crawler()->filter($selector);
         PHPUnit::assertTrue(
             $elements->count() === 0,
-            'Found elements matching the selector: ' . PHP_EOL . PHP_EOL .
-            "[{$selector}]" . PHP_EOL . PHP_EOL .
-            'within' . PHP_EOL . PHP_EOL .
+            'Found elements matching the selector: '.PHP_EOL.PHP_EOL.
+            "[{$selector}]".PHP_EOL.PHP_EOL.
+            'within'.PHP_EOL.PHP_EOL.
             "[{$this->getContent()}]."
         );
 
@@ -85,7 +85,7 @@ class TestResponse extends BaseTestResponse
         $matched = false;
         $pattern = $this->getEscapedPattern($text);
 
-        if (!is_null($nthMatch)) {
+        if (! is_null($nthMatch)) {
             $elements = $elements->eq($nthMatch - 1);
         }
 
@@ -99,12 +99,12 @@ class TestResponse extends BaseTestResponse
 
         PHPUnit::assertTrue(
             $matched,
-            'Unable to find element of selector: ' . PHP_EOL . PHP_EOL .
-            ($nthMatch ? ("at position {$nthMatch}" . PHP_EOL . PHP_EOL) : '') .
-            "[{$selector}]" . PHP_EOL . PHP_EOL .
-            'containing text' . PHP_EOL . PHP_EOL .
-            "[{$text}]" . PHP_EOL . PHP_EOL .
-            'within' . PHP_EOL . PHP_EOL .
+            'Unable to find element of selector: '.PHP_EOL.PHP_EOL.
+            ($nthMatch ? ("at position {$nthMatch}".PHP_EOL.PHP_EOL) : '').
+            "[{$selector}]".PHP_EOL.PHP_EOL.
+            'containing text'.PHP_EOL.PHP_EOL.
+            "[{$text}]".PHP_EOL.PHP_EOL.
+            'within'.PHP_EOL.PHP_EOL.
             "[{$this->getContent()}]."
         );
 
@@ -124,7 +124,7 @@ class TestResponse extends BaseTestResponse
         $matched = false;
         $pattern = $this->getEscapedPattern($text);
 
-        if (!is_null($nthMatch)) {
+        if (! is_null($nthMatch)) {
             $elements = $elements->eq($nthMatch - 1);
         }
 
@@ -137,13 +137,13 @@ class TestResponse extends BaseTestResponse
         }
 
         PHPUnit::assertTrue(
-            !$matched,
-            'Found element of selector: ' . PHP_EOL . PHP_EOL .
-            ($nthMatch ? ("at position {$nthMatch}" . PHP_EOL . PHP_EOL) : '') .
-            "[{$selector}]" . PHP_EOL . PHP_EOL .
-            'containing text' . PHP_EOL . PHP_EOL .
-            "[{$text}]" . PHP_EOL . PHP_EOL .
-            'within' . PHP_EOL . PHP_EOL .
+            ! $matched,
+            'Found element of selector: '.PHP_EOL.PHP_EOL.
+            ($nthMatch ? ("at position {$nthMatch}".PHP_EOL.PHP_EOL) : '').
+            "[{$selector}]".PHP_EOL.PHP_EOL.
+            'containing text'.PHP_EOL.PHP_EOL.
+            "[{$text}]".PHP_EOL.PHP_EOL.
+            'within'.PHP_EOL.PHP_EOL.
             "[{$this->getContent()}]."
         );
 

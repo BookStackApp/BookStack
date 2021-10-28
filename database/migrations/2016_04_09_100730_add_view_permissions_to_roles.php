@@ -19,8 +19,8 @@ class AddViewPermissionsToRoles extends Migration
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permId = DB::table('permissions')->insertGetId([
-                    'name'         => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
-                    'display_name' => $op . ' ' . $entity . 's',
+                    'name'         => strtolower($entity).'-'.strtolower(str_replace(' ', '-', $op)),
+                    'display_name' => $op.' '.$entity.'s',
                     'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);
@@ -47,7 +47,7 @@ class AddViewPermissionsToRoles extends Migration
         $ops = ['View All', 'View Own'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $permissionName = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
+                $permissionName = strtolower($entity).'-'.strtolower(str_replace(' ', '-', $op));
                 $permission = DB::table('permissions')->where('name', '=', $permissionName)->first();
                 DB::table('permission_role')->where('permission_id', '=', $permission->id)->delete();
                 DB::table('permissions')->where('name', '=', $permissionName)->delete();

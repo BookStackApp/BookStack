@@ -45,7 +45,7 @@ class HomeController extends Controller
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
         $homepageOption = setting('app-homepage-type', 'default');
-        if (!in_array($homepageOption, $homepageOptions)) {
+        if (! in_array($homepageOption, $homepageOptions)) {
             $homepageOption = 'default';
         }
 
@@ -60,9 +60,9 @@ class HomeController extends Controller
         // Add required list ordering & sorting for books & shelves views.
         if ($homepageOption === 'bookshelves' || $homepageOption === 'books') {
             $key = $homepageOption;
-            $view = setting()->getForCurrentUser($key . '_view_type');
-            $sort = setting()->getForCurrentUser($key . '_sort', 'name');
-            $order = setting()->getForCurrentUser($key . '_sort_order', 'asc');
+            $view = setting()->getForCurrentUser($key.'_view_type');
+            $sort = setting()->getForCurrentUser($key.'_sort', 'name');
+            $order = setting()->getForCurrentUser($key.'_sort_order', 'asc');
 
             $sortOptions = [
                 'name'       => trans('common.sort_name'),

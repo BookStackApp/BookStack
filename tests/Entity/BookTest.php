@@ -14,10 +14,10 @@ class BookTest extends TestCase
         ]);
 
         $resp = $this->asEditor()->get('/books');
-        $resp->assertElementContains('a[href="' . url('/create-book') . '"]', 'Create New Book');
+        $resp->assertElementContains('a[href="'.url('/create-book').'"]', 'Create New Book');
 
         $resp = $this->get('/create-book');
-        $resp->assertElementContains('form[action="' . url('/books') . '"][method="POST"]', 'Save Book');
+        $resp->assertElementContains('form[action="'.url('/books').'"][method="POST"]', 'Save Book');
 
         $resp = $this->post('/books', $book->only('name', 'description'));
         $resp->assertRedirect('/books/my-first-book');
@@ -50,21 +50,21 @@ class BookTest extends TestCase
         /** @var Book $book */
         $book = Book::query()->first();
         // Cheeky initial update to refresh slug
-        $this->asEditor()->put($book->getUrl(), ['name' => $book->name . '5', 'description' => $book->description]);
+        $this->asEditor()->put($book->getUrl(), ['name' => $book->name.'5', 'description' => $book->description]);
         $book->refresh();
 
-        $newName = $book->name . ' Updated';
-        $newDesc = $book->description . ' with more content';
+        $newName = $book->name.' Updated';
+        $newDesc = $book->description.' with more content';
 
         $resp = $this->get($book->getUrl('/edit'));
         $resp->assertSee($book->name);
         $resp->assertSee($book->description);
-        $resp->assertElementContains('form[action="' . $book->getUrl() . '"]', 'Save Book');
+        $resp->assertElementContains('form[action="'.$book->getUrl().'"]', 'Save Book');
 
         $resp = $this->put($book->getUrl(), ['name' => $newName, 'description' => $newDesc]);
-        $resp->assertRedirect($book->getUrl() . '-updated');
+        $resp->assertRedirect($book->getUrl().'-updated');
 
-        $resp = $this->get($book->getUrl() . '-updated');
+        $resp = $this->get($book->getUrl().'-updated');
         $resp->assertSee($newName);
         $resp->assertSee($newDesc);
     }
@@ -99,7 +99,7 @@ class BookTest extends TestCase
     public function test_cancel_on_create_page_leads_back_to_books_listing()
     {
         $resp = $this->asEditor()->get('/create-book');
-        $resp->assertElementContains('form a[href="' . url('/books') . '"]', 'Cancel');
+        $resp->assertElementContains('form a[href="'.url('/books').'"]', 'Cancel');
     }
 
     public function test_cancel_on_edit_book_page_leads_back_to_book()
@@ -107,7 +107,7 @@ class BookTest extends TestCase
         /** @var Book $book */
         $book = Book::query()->first();
         $resp = $this->asEditor()->get($book->getUrl('/edit'));
-        $resp->assertElementContains('form a[href="' . $book->getUrl() . '"]', 'Cancel');
+        $resp->assertElementContains('form a[href="'.$book->getUrl().'"]', 'Cancel');
     }
 
     public function test_next_previous_navigation_controls_show_within_book_content()
@@ -165,7 +165,7 @@ class BookTest extends TestCase
         setting()->putUser($editor, 'books_view_type', 'list');
 
         $resp = $this->actingAs($editor)->get('/books');
-        $resp->assertElementContains('form[action$="/settings/users/' . $editor->id . '/switch-books-view"]', 'Grid View');
+        $resp->assertElementContains('form[action$="/settings/users/'.$editor->id.'/switch-books-view"]', 'Grid View');
         $resp->assertElementExists('input[name="view_type"][value="grid"]');
 
         $resp = $this->patch("/settings/users/{$editor->id}/switch-books-view", ['view_type' => 'grid']);
@@ -173,7 +173,7 @@ class BookTest extends TestCase
         $this->assertEquals('grid', setting()->getUser($editor, 'books_view_type'));
 
         $resp = $this->actingAs($editor)->get('/books');
-        $resp->assertElementContains('form[action$="/settings/users/' . $editor->id . '/switch-books-view"]', 'List View');
+        $resp->assertElementContains('form[action$="/settings/users/'.$editor->id.'/switch-books-view"]', 'List View');
         $resp->assertElementExists('input[name="view_type"][value="list"]');
 
         $resp = $this->patch("/settings/users/{$editor->id}/switch-books-view", ['view_type' => 'list']);

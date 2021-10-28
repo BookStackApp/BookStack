@@ -19,7 +19,7 @@ class PageTest extends TestCase
         ]);
 
         $resp = $this->asEditor()->get($chapter->getUrl());
-        $resp->assertElementContains('a[href="' . $chapter->getUrl('/create-page') . '"]', 'New Page');
+        $resp->assertElementContains('a[href="'.$chapter->getUrl('/create-page').'"]', 'New Page');
 
         $resp = $this->get($chapter->getUrl('/create-page'));
         /** @var Page $draftPage */
@@ -30,7 +30,7 @@ class PageTest extends TestCase
         $resp->assertRedirect($draftPage->getUrl());
 
         $resp = $this->get($draftPage->getUrl());
-        $resp->assertElementContains('form[action="' . $draftPage->getUrl() . '"][method="POST"]', 'Save Page');
+        $resp->assertElementContains('form[action="'.$draftPage->getUrl().'"][method="POST"]', 'Save Page');
 
         $resp = $this->post($draftPage->getUrl(), $draftPage->only('name', 'html'));
         $draftPage->refresh();
@@ -49,7 +49,7 @@ class PageTest extends TestCase
 
         $resp = $this->asAdmin()->get($page->getUrl());
         $resp->assertStatus(200);
-        $resp->assertSeeText('Owned by ' . $owner->name);
+        $resp->assertSeeText('Owned by '.$owner->name);
     }
 
     public function test_page_creation_with_markdown_content()
@@ -141,7 +141,7 @@ class PageTest extends TestCase
         $resp->assertSee('Copy Page');
 
         $movePageResp = $this->post($page->getUrl('/copy'), [
-            'entity_selection' => 'book:' . $newBook->id,
+            'entity_selection' => 'book:'.$newBook->id,
             'name'             => 'My copied test page',
         ]);
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
@@ -160,7 +160,7 @@ class PageTest extends TestCase
         $newBook = Book::where('id', '!=', $page->book->id)->first();
 
         $this->asEditor()->post($page->getUrl('/copy'), [
-            'entity_selection' => 'book:' . $newBook->id,
+            'entity_selection' => 'book:'.$newBook->id,
             'name'             => 'My copied test page',
         ]);
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
@@ -207,7 +207,7 @@ class PageTest extends TestCase
         $resp->assertSee($page->getUrl('/copy'));
 
         $movePageResp = $this->post($page->getUrl('/copy'), [
-            'entity_selection' => 'book:' . $newBook->id,
+            'entity_selection' => 'book:'.$newBook->id,
             'name'             => 'My copied test page',
         ]);
         $movePageResp->assertRedirect();

@@ -101,7 +101,7 @@ class SearchIndex
         $token = strtok($text, $splitChars);
 
         while ($token !== false) {
-            if (!isset($tokenMap[$token])) {
+            if (! isset($tokenMap[$token])) {
                 $tokenMap[$token] = 0;
             }
             $tokenMap[$token]++;

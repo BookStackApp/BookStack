@@ -14,7 +14,7 @@ class ThemeService
      */
     public function listen(string $event, callable $action)
     {
-        if (!isset($this->listeners[$event])) {
+        if (! isset($this->listeners[$event])) {
             $this->listeners[$event] = [];
         }
 
@@ -35,7 +35,7 @@ class ThemeService
     {
         foreach ($this->listeners[$event] ?? [] as $action) {
             $result = call_user_func_array($action, $args);
-            if (!is_null($result)) {
+            if (! is_null($result)) {
                 return $result;
             }
         }
