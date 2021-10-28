@@ -596,31 +596,25 @@ class PageContentTest extends TestCase
 
     public function test_base64_images_within_html_blanked_if_not_supported_extension_for_extract()
     {
-        $this->asEditor();
-        $page = Page::query()->first();
+        // Relevant to https://github.com/BookStackApp/BookStack/issues/3010 and other cases
+        $extensions = [
+            'jiff', 'pngr', 'png ', ' png', '.png', 'png.', 'p.ng', ',png',
+            'data:image/png', ',data:image/png',
+        ];
 
-        $this->put($page->getUrl(), [
-            'name' => $page->name, 'summary' => '',
-            'html' => '<p>test<img src="data:image/jiff;base64,' . $this->base64Jpeg . '"/></p>',
-        ]);
+        foreach ($extensions as $extension) {
+            $this->asEditor();
+            $page = Page::query()->first();
 
-        $page->refresh();
-        $this->assertStringContainsString('<img src=""', $page->html);
-    }
+            $this->put($page->getUrl(), [
+                'name' => $page->name, 'summary' => '',
+                'html' => '<p>test<img src="data:image/' . $extension . ';base64,' . $this->base64Jpeg . '"/></p>',
+            ]);
 
-    // Relevant to https://github.com/BookStackApp/BookStack/issues/3010
-    public function test_base64_images_within_html_blanked_if_extension_incorrect_but_prefix_matches_correct_extension()
-    {
-        $this->asEditor();
-        $page = Page::query()->first();
+            $page->refresh();
+            $this->assertStringContainsString('<img src=""', $page->html);
+        }
 
-        $this->put($page->getUrl(), [
-            'name' => $page->name, 'summary' => '',
-            'html' => '<p>test<img src="data:image/pngr;base64,' . $this->base64Jpeg . '"/></p>',
-        ]);
-
-        $page->refresh();
-        $this->assertStringContainsString('<img src=""', $page->html);
     }
 
     public function test_base64_images_get_extracted_from_markdown_page_content()

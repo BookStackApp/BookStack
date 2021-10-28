@@ -35,10 +35,12 @@ class ImageRepo
 
     /**
      * Check if the given image extension is supported by BookStack.
+     * The extension must not be altered in this function. This check should provide a guarantee
+     * that the provided extension is safe to use for the image to be saved.
      */
     public function imageExtensionSupported(string $extension): bool
     {
-        return in_array(trim($extension, ". \t\n\r\0\x0B"), static::$supportedExtensions);
+        return in_array($extension, static::$supportedExtensions);
     }
 
     /**

@@ -86,30 +86,13 @@ class PageContent
         $body = $container->childNodes->item(0);
         $childNodes = $body->childNodes;
         $xPath = new DOMXPath($doc);
-        $imageRepo = app()->make(ImageRepo::class);
 
         // Get all img elements with image data blobs
         $imageNodes = $xPath->query('//img[contains(@src, \'data:image\')]');
         foreach ($imageNodes as $imageNode) {
             $imageSrc = $imageNode->getAttribute('src');
-            [$dataDefinition, $base64ImageData] = explode(',', $imageSrc, 2);
-            $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? 'png');
-
-            // Validate extension
-            if (!$imageRepo->imageExtensionSupported($extension)) {
-                $imageNode->setAttribute('src', '');
-                continue;
-            }
-
-            // Save image from data with a random name
-            $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
-
-            try {
-                $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $this->page->id);
-                $imageNode->setAttribute('src', $image->url);
-            } catch (ImageUploadException $exception) {
-                $imageNode->setAttribute('src', '');
-            }
+            $newUrl = $this->base64ImageUriToUploadedImageUrl($imageSrc);
+            $imageNode->setAttribute('src', $newUrl);
         }
 
         // Generate inner html as a string
@@ -126,32 +109,55 @@ class PageContent
      */
     protected function extractBase64ImagesFromMarkdown(string $markdown)
     {
-        $imageRepo = app()->make(ImageRepo::class);
         $matches = [];
         preg_match_all('/!\[.*?]\(.*?(data:image\/.*?)[)"\s]/', $markdown, $matches);
 
         foreach ($matches[1] as $base64Match) {
-            [$dataDefinition, $base64ImageData] = explode(',', $base64Match, 2);
-            $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? 'png');
-
-            // Validate extension
-            if (!$imageRepo->imageExtensionSupported($extension)) {
-                $markdown = str_replace($base64Match, '', $markdown);
-                continue;
-            }
-
-            // Save image from data with a random name
-            $imageName = 'embedded-image-' . Str::random(8) . '.' . $extension;
-
-            try {
-                $image = $imageRepo->saveNewFromData($imageName, base64_decode($base64ImageData), 'gallery', $this->page->id);
-                $markdown = str_replace($base64Match, $image->url, $markdown);
-            } catch (ImageUploadException $exception) {
-                $markdown = str_replace($base64Match, '', $markdown);
-            }
+            $newUrl = $this->base64ImageUriToUploadedImageUrl($base64Match);
+            $markdown = str_replace($base64Match, $newUrl, $markdown);
         }
 
         return $markdown;
+    }
+
+    /**
+     * Parse the given base64 image URI and return the URL to the created image instance.
+     * Returns an empty string if the parsed URI is invalid or causes an error upon upload.
+     */
+    protected function base64ImageUriToUploadedImageUrl(string $uri): string
+    {
+        $imageRepo = app()->make(ImageRepo::class);
+        $imageInfo = $this->parseBase64ImageUri($uri);
+
+        // Validate extension and content
+        if (empty($imageInfo['data']) || !$imageRepo->imageExtensionSupported($imageInfo['extension'])) {
+            return '';
+        }
+
+        // Save image from data with a random name
+        $imageName = 'embedded-image-' . Str::random(8) . '.' . $imageInfo['extension'];
+
+        try {
+            $image = $imageRepo->saveNewFromData($imageName, $imageInfo['data'], 'gallery', $this->page->id);
+        } catch (ImageUploadException $exception) {
+            return '';
+        }
+
+        return $image->url;
+    }
+
+    /**
+     * Parse a base64 image URI into the data and extension.
+     * @return array{extension: array, data: string}
+     */
+    protected function parseBase64ImageUri(string $uri): array
+    {
+        [$dataDefinition, $base64ImageData] = explode(',', $uri, 2);
+        $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? '');
+        return [
+            'extension' => $extension,
+            'data' => base64_decode($base64ImageData) ?: '',
+        ];
     }
 
     /**
