@@ -143,6 +143,8 @@ return [
 
     // Class aliases, Registered on application start
     'aliases' => [
+        'RateLimiter' => Illuminate\Support\Facades\RateLimiter::class,
+        'Date' => Illuminate\Support\Facades\Date::class,
 
         // Laravel
         'App'          => Illuminate\Support\Facades\App::class,
