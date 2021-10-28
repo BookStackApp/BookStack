@@ -20,7 +20,7 @@ class LdapTest extends TestCase
     protected $mockUser;
     protected $resourceId = 'resource-test';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         if (! defined('LDAP_OPT_REFERRALS')) {

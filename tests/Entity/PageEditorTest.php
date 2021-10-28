@@ -11,7 +11,7 @@ class PageEditorTest extends TestCase
     /** @var Page */
     protected $page;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->page = Page::query()->first();

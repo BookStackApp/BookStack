@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class Saml2Test extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         // Set default config for SAML2
