@@ -17,7 +17,6 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'BookStack\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
