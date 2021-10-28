@@ -2,11 +2,11 @@
 
 namespace BookStack\Entities\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Permissions;

@@ -2,10 +2,10 @@
 
 namespace BookStack\Uploads;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int    $id
@@ -20,7 +20,6 @@ use BookStack\Traits\HasCreatorAndUpdater;
 class Image extends Model
 {
     use HasFactory;
-
     use HasCreatorAndUpdater;
 
     protected $fillable = ['name'];

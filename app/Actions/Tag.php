@@ -2,8 +2,8 @@
 
 namespace BookStack\Actions;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use BookStack\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Tag extends Model

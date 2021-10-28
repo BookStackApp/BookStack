@@ -1,7 +1,8 @@
 <?php
-namespace Database\Factories\Uploads;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
+namespace Database\Factories\Uploads;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /*
 |--------------------------------------------------------------------------

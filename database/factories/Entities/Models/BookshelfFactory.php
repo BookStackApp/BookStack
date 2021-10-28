@@ -1,7 +1,9 @@
 <?php
-namespace Database\Factories\Entities\Models;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
+namespace Database\Factories\Entities\Models;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
