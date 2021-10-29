@@ -88,7 +88,7 @@ return [
     'mfa_option_backup_codes_title' => 'Back-up Codes',
     'mfa_option_backup_codes_desc' => 'Bewaar veilig een set eenmalige back-upcodes die u kunt invoeren om uw identiteit te verifiëren.',
     'mfa_gen_confirm_and_enable' => 'Bevestigen en inschakelen',
-    'mfa_gen_backup_codes_title' => 'Backup Codes Setup',
+    'mfa_gen_backup_codes_title' => 'Reservekopiecodes instellen',
     'mfa_gen_backup_codes_desc' => 'De onderstaande lijst met codes opslaan op een veilige plaats. Bij de toegang tot het systeem kun je een van de codes gebruiken als tweede verificatiemechanisme.',
     'mfa_gen_backup_codes_download' => 'Download Codes',
     'mfa_gen_backup_codes_usage_warning' => 'Elke code kan slechts eenmaal gebruikt worden',
