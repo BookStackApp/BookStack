@@ -84,7 +84,7 @@ return [
     'mfa_setup_action' => 'Instellen',
     'mfa_backup_codes_usage_limit_warning' => 'U heeft minder dan 5 back-upcodes resterend. Genereer en sla een nieuwe set op voordat je geen codes meer hebt om te voorkomen dat je buiten je account wordt gesloten.',
     'mfa_option_totp_title' => 'Mobiele app',
-    'mfa_option_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
+    'mfa_option_totp_desc' => 'Om multi-factor authenticatie te gebruiken heeft u een mobiele applicatie nodig die TOTP ondersteunt, zoals Google Authenticator, Authy of Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Backup Codes',
     'mfa_option_backup_codes_desc' => 'Securely store a set of one-time-use backup codes which you can enter to verify your identity.',
     'mfa_gen_confirm_and_enable' => 'Confirm and Enable',
