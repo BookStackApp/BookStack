@@ -27,6 +27,25 @@ BookStack is not designed as an extensible platform to be used for purposes that
 
 In regard to development philosophy, BookStack has a relaxed, open & positive approach. At the end of the day this is free software developed and maintained by people donating their own free time.
 
+## 🌟 Project Sponsors
+
+Shown below are our bronze, silver and gold project sponsors.
+Big thanks to these companies for supporting the project.
+Note: Listed services are not tested, vetted nor supported by the official BookStack project in any manner.
+[View all sponsors](https://github.com/sponsors/ssddanbrown).
+
+#### Bronze Sponsors
+
+<table><tbody><tr>
+<td><a href="https://www.diagrams.net/" target="_blank">
+    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/master/static/images/sponsors/diagramsnet.png" alt="Diagrams.net logo">
+</a></td>
+
+<td><a href="https://www.stellarhosted.com/" target="_blank">
+    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/master/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted Logo">
+</a></td>
+</tr></tbody></table>
+
 ## 🛣️ Road Map
 
 Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in the "Release Process" section below.
