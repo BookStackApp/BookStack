@@ -20,7 +20,7 @@ class PageDraftTest extends TestCase
      */
     protected $pageRepo;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->page = Page::query()->first();

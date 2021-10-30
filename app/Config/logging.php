@@ -49,16 +49,9 @@ return [
             'days'   => 7,
         ],
 
-        'slack' => [
-            'driver'   => 'slack',
-            'url'      => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
-            'emoji'    => ':boom:',
-            'level'    => 'critical',
-        ],
-
         'stderr' => [
             'driver'  => 'monolog',
+            'level'   => 'debug',
             'handler' => StreamHandler::class,
             'with'    => [
                 'stream' => 'php://stderr',
@@ -98,6 +91,10 @@ return [
         // so that logs can be checked against.
         'testing' => [
             'driver' => 'testing',
+        ],
+
+        'emergency' => [
+            'path' => storage_path('logs/laravel.log'),
         ],
     ],
 

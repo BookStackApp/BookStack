@@ -2,43 +2,29 @@
 
 namespace BookStack\Http\Middleware;
 
+use BookStack\Providers\RouteServiceProvider;
 use Closure;
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
     /**
-     * The Guard implementation.
-     *
-     * @var Guard
-     */
-    protected $auth;
-
-    /**
-     * Create a new filter instance.
-     *
-     * @param Guard $auth
-     *
-     * @return void
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
-    }
-
-    /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string|null  ...$guards
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next, ...$guards)
     {
-        $requireConfirmation = setting('registration-confirmation');
-        if ($this->auth->check() && (!$requireConfirmation || ($requireConfirmation && $this->auth->user()->email_confirmed))) {
-            return redirect('/');
+        $guards = empty($guards) ? [null] : $guards;
+
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return redirect(RouteServiceProvider::HOME);
+            }
         }
 
         return $next($request);
