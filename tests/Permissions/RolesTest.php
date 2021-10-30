@@ -19,7 +19,7 @@ class RolesTest extends TestCase
 {
     protected $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->user = $this->getViewer();
@@ -769,7 +769,7 @@ class RolesTest extends TestCase
         $this->giveUserPermissions($this->user, ['image-update-all']);
         /** @var Page $page */
         $page = Page::query()->first();
-        $image = factory(Image::class)->create([
+        $image = Image::factory()->create([
             'uploaded_to' => $page->id,
             'created_by'  => $this->user->id,
             'updated_by'  => $this->user->id,
@@ -789,7 +789,7 @@ class RolesTest extends TestCase
         $admin = $this->getAdmin();
         /** @var Page $page */
         $page = Page::query()->first();
-        $image = factory(Image::class)->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);
+        $image = Image::factory()->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);
 
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertStatus(403);
 
@@ -825,14 +825,14 @@ class RolesTest extends TestCase
     {
         $admin = $this->getAdmin();
         // Book links
-        $book = factory(Book::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id]);
+        $book = Book::factory()->create(['created_by' => $admin->id, 'updated_by' => $admin->id]);
         $this->regenEntityPermissions($book);
         $this->actingAs($this->getViewer())->get($book->getUrl())
             ->assertDontSee('Create a new page')
             ->assertDontSee('Add a chapter');
 
         // Chapter links
-        $chapter = factory(Chapter::class)->create(['created_by' => $admin->id, 'updated_by' => $admin->id, 'book_id' => $book->id]);
+        $chapter = Chapter::factory()->create(['created_by' => $admin->id, 'updated_by' => $admin->id, 'book_id' => $book->id]);
         $this->regenEntityPermissions($chapter);
         $this->actingAs($this->getViewer())->get($chapter->getUrl())
             ->assertDontSee('Create a new page')
@@ -926,14 +926,14 @@ class RolesTest extends TestCase
 
     private function addComment(Page $page): TestResponse
     {
-        $comment = factory(Comment::class)->make();
+        $comment = Comment::factory()->make();
 
         return $this->postJson("/comment/$page->id", $comment->only('text', 'html'));
     }
 
     private function updateComment(Comment $comment): TestResponse
     {
-        $commentData = factory(Comment::class)->make();
+        $commentData = Comment::factory()->make();
 
         return $this->putJson("/comment/{$comment->id}", $commentData->only('text', 'html'));
     }

@@ -210,7 +210,7 @@ trait SharedTestHelpers
     protected function createNewRole(array $permissions = []): Role
     {
         $permissionRepo = app(PermissionsRepo::class);
-        $roleData = factory(Role::class)->make()->toArray();
+        $roleData = Role::factory()->make()->toArray();
         $roleData['permissions'] = array_flip($permissions);
 
         return $permissionRepo->saveNewRole($roleData);
@@ -228,9 +228,9 @@ trait SharedTestHelpers
         }
 
         $userAttrs = ['created_by' => $creatorUser->id, 'owned_by' => $creatorUser->id, 'updated_by' => $updaterUser->id];
-        $book = factory(Book::class)->create($userAttrs);
-        $chapter = factory(Chapter::class)->create(array_merge(['book_id' => $book->id], $userAttrs));
-        $page = factory(Page::class)->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
+        $book = Book::factory()->create($userAttrs);
+        $chapter = Chapter::factory()->create(array_merge(['book_id' => $book->id], $userAttrs));
+        $page = Page::factory()->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
         $restrictionService = $this->app[PermissionService::class];
         $restrictionService->buildJointPermissionsForEntity($book);
 

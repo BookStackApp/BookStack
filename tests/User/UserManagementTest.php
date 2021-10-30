@@ -15,7 +15,7 @@ class UserManagementTest extends TestCase
     public function test_user_creation()
     {
         /** @var User $user */
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $adminRole = Role::getRole('admin');
 
         $resp = $this->asAdmin()->get('/settings/users');

@@ -10,7 +10,6 @@
 
 return [
 
-    // Method of authentication to use
     // Options: standard, ldap, saml2, oidc
     'method' => env('AUTH_METHOD', 'standard'),
 
@@ -45,7 +44,7 @@ return [
             'provider' => 'external',
         ],
         'api' => [
-            'driver' => 'api-token',
+            'driver'   => 'api-token',
         ],
     ],
 
@@ -58,10 +57,16 @@ return [
             'driver' => 'eloquent',
             'model'  => \BookStack\Auth\User::class,
         ],
+
         'external' => [
             'driver' => 'external-users',
             'model'  => \BookStack\Auth\User::class,
         ],
+
+        // 'users' => [
+        //     'driver' => 'database',
+        //     'table' => 'users',
+        // ],
     ],
 
     // Resetting Passwords
@@ -77,5 +82,11 @@ return [
             'throttle' => 60,
         ],
     ],
+
+    // Password Confirmation Timeout
+    // Here you may define the amount of seconds before a password confirmation
+    // times out and the user is prompted to re-enter their password via the
+    // confirmation screen. By default, the timeout lasts for three hours.
+    'password_timeout' => 10800,
 
 ];

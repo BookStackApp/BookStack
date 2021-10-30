@@ -20,11 +20,13 @@
         "barryvdh/laravel-dompdf": "^0.9.0",
         "barryvdh/laravel-snappy": "^0.4.8",
         "doctrine/dbal": "^3.1",
-        "fideloper/proxy": "^4.4.1",
         "filp/whoops": "^2.14",
+        "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^2.7",
-        "laravel/framework": "^7.29",
+        "laravel/framework": "^8.68",
         "laravel/socialite": "^5.2",
+        "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.3",
         "league/commonmark": "^1.5",
         "league/flysystem-aws-s3-v3": "^1.0.29",
         "league/html-to-markdown": "^5.0.0",
@@ -32,33 +34,28 @@
         "onelogin/php-saml": "^4.0",
         "phpseclib/phpseclib": "~3.0",
         "pragmarx/google2fa": "^8.0",
-        "predis/predis": "^1.1.6",
+        "predis/predis": "^1.1",
         "socialiteproviders/discord": "^4.1",
         "socialiteproviders/gitlab": "^4.1",
         "socialiteproviders/microsoft-azure": "^4.1",
         "socialiteproviders/okta": "^4.1",
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
-        "ssddanbrown/htmldiff": "^1.0.1",
-        "laravel/ui": "^2.5",
-        "guzzlehttp/guzzle": "^7.4.0",
-        "laravel/tinker": "^2.5"
+        "ssddanbrown/htmldiff": "^1.0.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
         "fakerphp/faker": "^1.13.0",
-        "mockery/mockery": "^1.3.3",
+        "mockery/mockery": "^1.4.2",
         "phpunit/phpunit": "^9.5.3",
         "symfony/dom-crawler": "^5.3",
-        "nunomaduro/collision": "^4.3"
+        "nunomaduro/collision": "^5.0"
     },
     "autoload": {
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
         "psr-4": {
-            "BookStack\\": "app/"
+            "BookStack\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
             "app/helpers.php"
@@ -70,6 +67,10 @@
         }
     },
     "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
@@ -82,10 +83,6 @@
         "post-install-cmd": [
             "@php artisan cache:clear",
             "@php artisan view:clear"
-        ],
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
         ],
         "refresh-test-database": [
             "@php artisan migrate:refresh --database=mysql_testing",

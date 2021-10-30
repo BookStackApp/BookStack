@@ -16,7 +16,7 @@ class OidcTest extends TestCase
     protected $keyFilePath;
     protected $keyFile;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         // Set default config for OpenID Connect
@@ -41,7 +41,7 @@ class OidcTest extends TestCase
         ]);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         if (file_exists($this->keyFilePath)) {

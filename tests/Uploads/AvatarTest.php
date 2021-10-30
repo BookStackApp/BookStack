@@ -42,7 +42,7 @@ class AvatarTest extends TestCase
         config()->set([
             'services.disable_services' => false,
         ]);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $this->assertImageFetchFrom('https://www.gravatar.com/avatar/' . md5(strtolower($user->email)) . '?s=500&d=identicon');
 
         $user = $this->createUserRequest($user);
@@ -60,7 +60,7 @@ class AvatarTest extends TestCase
             'services.avatar_url'       => 'https://example.com/${email}/${hash}/${size}',
         ]);
 
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $url = 'https://example.com/' . urlencode(strtolower($user->email)) . '/' . md5(strtolower($user->email)) . '/500';
         $this->assertImageFetchFrom($url);
 
@@ -74,7 +74,7 @@ class AvatarTest extends TestCase
             'services.disable_services' => true,
         ]);
 
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         $http = $this->mock(HttpFetcher::class);
         $http->shouldNotReceive('fetch');
@@ -93,7 +93,7 @@ class AvatarTest extends TestCase
 
         $logger = $this->withTestLogger();
 
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $this->createUserRequest($user);
         $this->assertTrue($logger->hasError('Failed to save user avatar image'));
     }

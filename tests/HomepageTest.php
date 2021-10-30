@@ -167,7 +167,7 @@ class HomepageTest extends TestCase
 
     public function test_new_users_dont_have_any_recently_viewed()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $viewRole = Role::getRole('Viewer');
         $user->attachRole($viewRole);
 

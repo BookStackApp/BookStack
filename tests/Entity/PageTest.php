@@ -14,7 +14,7 @@ class PageTest extends TestCase
     {
         /** @var Chapter $chapter */
         $chapter = Chapter::query()->first();
-        $page = factory(Page::class)->make([
+        $page = Page::factory()->make([
             'name' => 'My First Page',
         ]);
 

@@ -37,7 +37,7 @@ class BookShelfTest extends TestCase
 
     public function test_shelves_shows_in_header_if_have_any_shelve_view_permission()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->giveUserPermissions($user, ['image-create-all']);
         $shelf = Bookshelf::first();
         $userRole = $user->roles()->first();

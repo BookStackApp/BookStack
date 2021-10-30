@@ -9,7 +9,7 @@ class LanguageTest extends TestCase
     /**
      * LanguageTest constructor.
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->langs = array_diff(scandir(resource_path('lang')), ['..', '.']);

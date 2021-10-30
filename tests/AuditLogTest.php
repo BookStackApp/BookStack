@@ -17,7 +17,7 @@ class AuditLogTest extends TestCase
     /** @var ActivityService */
     protected $activityService;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->activityService = app(ActivityService::class);

@@ -7,6 +7,7 @@ use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Role extends Model implements Loggable
 {
+    use HasFactory;
+
     protected $fillable = ['display_name', 'description', 'external_auth_id'];
 
     /**
