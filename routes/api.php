@@ -1,14 +1,14 @@
 <?php
 
-use BookStack\Http\Controllers\ApiDocsController;
-use BookStack\Http\Controllers\AttachmentApiController;
-use BookStack\Http\Controllers\BookApiController;
-use BookStack\Http\Controllers\BookExportApiController;
-use BookStack\Http\Controllers\BookshelfApiController;
-use BookStack\Http\Controllers\ChapterApiController;
-use BookStack\Http\Controllers\ChapterExportApiController;
-use BookStack\Http\Controllers\PageApiController;
-use BookStack\Http\Controllers\PageExportApiController;
+use BookStack\Http\Controllers\Api\ApiDocsController;
+use BookStack\Http\Controllers\Api\AttachmentApiController;
+use BookStack\Http\Controllers\Api\BookApiController;
+use BookStack\Http\Controllers\Api\BookExportApiController;
+use BookStack\Http\Controllers\Api\BookshelfApiController;
+use BookStack\Http\Controllers\Api\ChapterApiController;
+use BookStack\Http\Controllers\Api\ChapterExportApiController;
+use BookStack\Http\Controllers\Api\PageApiController;
+use BookStack\Http\Controllers\Api\PageExportApiController;
 use Illuminate\Support\Facades\Route;
 
 /**
