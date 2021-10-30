@@ -41,7 +41,7 @@ Note: Listed services are not tested, vetted nor supported by the official BookS
     <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/master/static/images/sponsors/diagramsnet.png" alt="Diagrams.net logo">
 </a></td>
 
-<td><a href="https://www.stellarhosted.com/" target="_blank">
+<td><a href="https://www.stellarhosted.com/bookstack/" target="_blank">
     <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/master/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted Logo">
 </a></td>
 </tr></tbody></table>
