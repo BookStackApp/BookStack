@@ -108,13 +108,13 @@ class Saml2Service
         $toolkit->processResponse($requestId);
         $errors = $toolkit->getErrors();
 
-        if (! empty($errors)) {
+        if (!empty($errors)) {
             throw new Error(
-                'Invalid ACS Response: '.implode(', ', $errors)
+                'Invalid ACS Response: ' . implode(', ', $errors)
             );
         }
 
-        if (! $toolkit->isAuthenticated()) {
+        if (!$toolkit->isAuthenticated()) {
             return null;
         }
 
@@ -141,9 +141,9 @@ class Saml2Service
         $redirect = $toolkit->processSLO(true, $requestId, true, null, true);
         $errors = $toolkit->getErrors();
 
-        if (! empty($errors)) {
+        if (!empty($errors)) {
             throw new Error(
-                'Invalid SLS Response: '.implode(', ', $errors)
+                'Invalid SLS Response: ' . implode(', ', $errors)
             );
         }
 
@@ -173,9 +173,9 @@ class Saml2Service
         $metadata = $settings->getSPMetadata();
         $errors = $settings->validateMetadata($metadata);
 
-        if (! empty($errors)) {
+        if (!empty($errors)) {
             throw new Error(
-                'Invalid SP metadata: '.implode(', ', $errors),
+                'Invalid SP metadata: ' . implode(', ', $errors),
                 Error::METADATA_SP_INVALID
             );
         }
@@ -305,7 +305,7 @@ class Saml2Service
         $groupsAttr = $this->config['group_attribute'];
         $userGroups = $samlAttributes[$groupsAttr] ?? null;
 
-        if (! is_array($userGroups)) {
+        if (!is_array($userGroups)) {
             $userGroups = [];
         }
 

@@ -87,7 +87,7 @@ class BookController extends Controller
         $this->validate($request, [
             'name'        => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image'       => 'nullable|'.$this->getImageValidationRules(),
+            'image'       => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         $bookshelf = null;
@@ -158,7 +158,7 @@ class BookController extends Controller
         $this->validate($request, [
             'name'        => 'required|string|max:255',
             'description' => 'string|max:1000',
-            'image'       => 'nullable|'.$this->getImageValidationRules(),
+            'image'       => 'nullable|' . $this->getImageValidationRules(),
         ]);
 
         $book = $this->bookRepo->update($book, $request->all());

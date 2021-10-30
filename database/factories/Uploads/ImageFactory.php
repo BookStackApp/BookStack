@@ -32,7 +32,7 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
-            'name'        => $this->faker->slug.'.jpg',
+            'name'        => $this->faker->slug . '.jpg',
             'url'         => $this->faker->url,
             'path'        => $this->faker->url,
             'type'        => 'gallery',

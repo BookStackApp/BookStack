@@ -33,7 +33,7 @@ class CustomHtmlHeadContentProvider
     {
         $content = $this->getSourceContent();
         $hash = md5($content);
-        $html = $this->cache->remember('custom-head-web:'.$hash, 86400, function () use ($content) {
+        $html = $this->cache->remember('custom-head-web:' . $hash, 86400, function () use ($content) {
             return HtmlNonceApplicator::prepare($content);
         });
 
@@ -49,7 +49,7 @@ class CustomHtmlHeadContentProvider
         $content = $this->getSourceContent();
         $hash = md5($content);
 
-        return $this->cache->remember('custom-head-export:'.$hash, 86400, function () use ($content) {
+        return $this->cache->remember('custom-head-export:' . $hash, 86400, function () use ($content) {
             return HtmlContentFilter::removeScripts($content);
         });
     }

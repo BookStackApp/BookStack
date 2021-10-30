@@ -45,7 +45,7 @@ class Bookshelf extends Entity implements HasCoverImage
      */
     public function getUrl(string $path = ''): string
     {
-        return url('/shelves/'.implode('/', [urlencode($this->slug), trim($path, '/')]));
+        return url('/shelves/' . implode('/', [urlencode($this->slug), trim($path, '/')]));
     }
 
     /**
@@ -60,7 +60,7 @@ class Bookshelf extends Entity implements HasCoverImage
     {
         // TODO - Make generic, focused on books right now, Perhaps set-up a better image
         $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (! $this->image_id) {
+        if (!$this->image_id) {
             return $default;
         }
 

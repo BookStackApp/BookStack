@@ -37,7 +37,7 @@ class UserFactory extends Factory
         return [
             'name'            => $name,
             'email'           => $this->faker->email,
-            'slug'            => \Illuminate\Support\Str::slug($name.'-'.\Illuminate\Support\Str::random(5)),
+            'slug'            => \Illuminate\Support\Str::slug($name . '-' . \Illuminate\Support\Str::random(5)),
             'password'        => Str::random(10),
             'remember_token'  => Str::random(10),
             'email_confirmed' => 1,

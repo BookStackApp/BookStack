@@ -116,7 +116,7 @@ class Page extends BookChild
             trim($path, '/'),
         ];
 
-        return url('/'.implode('/', $parts));
+        return url('/' . implode('/', $parts));
     }
 
     /**

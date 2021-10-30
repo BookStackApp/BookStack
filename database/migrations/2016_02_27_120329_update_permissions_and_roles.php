@@ -45,8 +45,8 @@ class UpdatePermissionsAndRoles extends Migration
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permissionId = DB::table('permissions')->insertGetId([
-                    'name'         => strtolower($entity).'-'.strtolower(str_replace(' ', '-', $op)),
-                    'display_name' => $op.' '.$entity.'s',
+                    'name'         => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
+                    'display_name' => $op . ' ' . $entity . 's',
                     'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);
@@ -83,8 +83,8 @@ class UpdatePermissionsAndRoles extends Migration
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permissionId = DB::table('permissions')->insertGetId([
-                    'name'         => strtolower($entity).'-'.strtolower($op),
-                    'display_name' => $op.' '.$entity.'s',
+                    'name'         => strtolower($entity) . '-' . strtolower($op),
+                    'display_name' => $op . ' ' . $entity . 's',
                     'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);
@@ -101,8 +101,8 @@ class UpdatePermissionsAndRoles extends Migration
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
                 $permissionId = DB::table('permissions')->insertGetId([
-                    'name'         => strtolower($entity).'-'.strtolower($op),
-                    'display_name' => $op.' '.$entity,
+                    'name'         => strtolower($entity) . '-' . strtolower($op),
+                    'display_name' => $op . ' ' . $entity,
                     'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                 ]);

@@ -14,7 +14,7 @@ class ExportPermissionsTest extends TestCase
         $chapter = Chapter::query()->first();
         $page = $chapter->pages()->firstOrFail();
         $pageContent = Str::random(48);
-        $page->html = '<p>'.$pageContent.'</p>';
+        $page->html = '<p>' . $pageContent . '</p>';
         $page->save();
         $viewer = $this->getViewer();
         $this->actingAs($viewer);
@@ -42,7 +42,7 @@ class ExportPermissionsTest extends TestCase
         $book = Book::query()->first();
         $page = $book->pages()->firstOrFail();
         $pageContent = Str::random(48);
-        $page->html = '<p>'.$pageContent.'</p>';
+        $page->html = '<p>' . $pageContent . '</p>';
         $page->save();
         $viewer = $this->getViewer();
         $this->actingAs($viewer);

@@ -16,7 +16,7 @@ class ShelfContext
     {
         $contextBookshelfId = session()->get($this->KEY_SHELF_CONTEXT_ID, null);
 
-        if (! is_int($contextBookshelfId)) {
+        if (!is_int($contextBookshelfId)) {
             return null;
         }
 

@@ -34,7 +34,7 @@ class Book extends Entity implements HasCoverImage
      */
     public function getUrl(string $path = ''): string
     {
-        return url('/books/'.implode('/', [urlencode($this->slug), trim($path, '/')]));
+        return url('/books/' . implode('/', [urlencode($this->slug), trim($path, '/')]));
     }
 
     /**
@@ -48,7 +48,7 @@ class Book extends Entity implements HasCoverImage
     public function getBookCover($width = 440, $height = 250)
     {
         $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (! $this->image_id) {
+        if (!$this->image_id) {
             return $default;
         }
 

@@ -17,7 +17,7 @@ class ChaptersApiTest extends TestCase
         $this->actingAsApiEditor();
         $firstChapter = Chapter::query()->orderBy('id', 'asc')->first();
 
-        $resp = $this->getJson($this->baseEndpoint.'?count=1&sort=+id');
+        $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
                 'id'       => $firstChapter->id,
@@ -96,7 +96,7 @@ class ChaptersApiTest extends TestCase
         $chapter = Chapter::visible()->first();
         $page = $chapter->pages()->first();
 
-        $resp = $this->getJson($this->baseEndpoint."/{$chapter->id}");
+        $resp = $this->getJson($this->baseEndpoint . "/{$chapter->id}");
         $resp->assertStatus(200);
         $resp->assertJson([
             'id'         => $chapter->id,
@@ -137,7 +137,7 @@ class ChaptersApiTest extends TestCase
             ],
         ];
 
-        $resp = $this->putJson($this->baseEndpoint."/{$chapter->id}", $details);
+        $resp = $this->putJson($this->baseEndpoint . "/{$chapter->id}", $details);
         $chapter->refresh();
 
         $resp->assertStatus(200);
@@ -151,7 +151,7 @@ class ChaptersApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $chapter = Chapter::visible()->first();
-        $resp = $this->deleteJson($this->baseEndpoint."/{$chapter->id}");
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$chapter->id}");
 
         $resp->assertStatus(204);
         $this->assertActivityExists('chapter_delete');
@@ -162,10 +162,10 @@ class ChaptersApiTest extends TestCase
         $this->actingAsApiEditor();
         $chapter = Chapter::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint."/{$chapter->id}/export/html");
+        $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/html");
         $resp->assertStatus(200);
         $resp->assertSee($chapter->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$chapter->slug.'.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.html"');
     }
 
     public function test_export_plain_text_endpoint()
@@ -173,10 +173,10 @@ class ChaptersApiTest extends TestCase
         $this->actingAsApiEditor();
         $chapter = Chapter::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint."/{$chapter->id}/export/plaintext");
+        $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/plaintext");
         $resp->assertStatus(200);
         $resp->assertSee($chapter->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$chapter->slug.'.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.txt"');
     }
 
     public function test_export_pdf_endpoint()
@@ -184,9 +184,9 @@ class ChaptersApiTest extends TestCase
         $this->actingAsApiEditor();
         $chapter = Chapter::visible()->first();
 
-        $resp = $this->get($this->baseEndpoint."/{$chapter->id}/export/pdf");
+        $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/pdf");
         $resp->assertStatus(200);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$chapter->slug.'.pdf"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.pdf"');
     }
 
     public function test_export_markdown_endpoint()
@@ -194,11 +194,11 @@ class ChaptersApiTest extends TestCase
         $this->actingAsApiEditor();
         $chapter = Chapter::visible()->has('pages')->first();
 
-        $resp = $this->get($this->baseEndpoint."/{$chapter->id}/export/markdown");
+        $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/markdown");
         $resp->assertStatus(200);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="'.$chapter->slug.'.md"');
-        $resp->assertSee('# '.$chapter->name);
-        $resp->assertSee('# '.$chapter->pages()->first()->name);
+        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.md"');
+        $resp->assertSee('# ' . $chapter->name);
+        $resp->assertSee('# ' . $chapter->pages()->first()->name);
     }
 
     public function test_cant_export_when_not_have_permission()
@@ -209,7 +209,7 @@ class ChaptersApiTest extends TestCase
 
         $chapter = Chapter::visible()->has('pages')->first();
         foreach ($types as $type) {
-            $resp = $this->get($this->baseEndpoint."/{$chapter->id}/export/{$type}");
+            $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/{$type}");
             $this->assertPermissionError($resp);
         }
     }

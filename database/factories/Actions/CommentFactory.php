@@ -32,7 +32,7 @@ class CommentFactory extends Factory
     public function definition()
     {
         $text = $this->faker->paragraph(1);
-        $html = '<p>'.$text.'</p>';
+        $html = '<p>' . $text . '</p>';
 
         return [
             'html'      => $html,

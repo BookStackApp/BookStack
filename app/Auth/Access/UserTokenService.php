@@ -55,7 +55,7 @@ class UserTokenService
         $entry = $this->getEntryByToken($token);
 
         if (is_null($entry)) {
-            throw new UserTokenNotFoundException('Token "'.$token.'" not found');
+            throw new UserTokenNotFoundException('Token "' . $token . '" not found');
         }
 
         if ($this->entryExpired($entry)) {

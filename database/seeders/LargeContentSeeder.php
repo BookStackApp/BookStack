@@ -25,7 +25,7 @@ class LargeContentSeeder extends Seeder
         $editorRole = Role::getRole('editor');
         $editorUser->attachRole($editorRole);
 
-        $largeBook = \BookStack\Entities\Models\Book::factory()->create(['name' => 'Large book'.Str::random(10), 'created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
+        $largeBook = \BookStack\Entities\Models\Book::factory()->create(['name' => 'Large book' . Str::random(10), 'created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $pages = Page::factory()->count(200)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $chapters = Chapter::factory()->count(50)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $largeBook->pages()->saveMany($pages);

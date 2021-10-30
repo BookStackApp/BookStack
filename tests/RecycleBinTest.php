@@ -66,8 +66,8 @@ class RecycleBinTest extends TestCase
         $viewReq->assertElementContains('table.table', $page->name);
         $viewReq->assertElementContains('table.table', $editor->name);
         $viewReq->assertElementContains('table.table', $book->name);
-        $viewReq->assertElementContains('table.table', $book->pages_count.' Pages');
-        $viewReq->assertElementContains('table.table', $book->chapters_count.' Chapters');
+        $viewReq->assertElementContains('table.table', $book->pages_count . ' Pages');
+        $viewReq->assertElementContains('table.table', $book->chapters_count . ' Chapters');
     }
 
     public function test_recycle_bin_empty()
@@ -90,7 +90,7 @@ class RecycleBinTest extends TestCase
 
         $itemCount = 2 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
-        $redirectReq->assertNotificationContains('Deleted '.$itemCount.' total items from the recycle bin');
+        $redirectReq->assertNotificationContains('Deleted ' . $itemCount . ' total items from the recycle bin');
     }
 
     public function test_entity_restore()
@@ -111,7 +111,7 @@ class RecycleBinTest extends TestCase
 
         $itemCount = 1 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
-        $redirectReq->assertNotificationContains('Restored '.$itemCount.' total items from the recycle bin');
+        $redirectReq->assertNotificationContains('Restored ' . $itemCount . ' total items from the recycle bin');
     }
 
     public function test_permanent_delete()
@@ -130,7 +130,7 @@ class RecycleBinTest extends TestCase
 
         $itemCount = 1 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
-        $redirectReq->assertNotificationContains('Deleted '.$itemCount.' total items from the recycle bin');
+        $redirectReq->assertNotificationContains('Deleted ' . $itemCount . ' total items from the recycle bin');
     }
 
     public function test_permanent_delete_for_each_type()
@@ -264,6 +264,6 @@ class RecycleBinTest extends TestCase
 
         $pageRestoreView = $this->asAdmin()->get("/settings/recycle-bin/{$pageDeletion->id}/restore");
         $pageRestoreView->assertSee('The parent of this item has also been deleted.');
-        $pageRestoreView->assertElementContains('a[href$="/settings/recycle-bin/'.$bookDeletion->id.'/restore"]', 'Restore Parent');
+        $pageRestoreView->assertElementContains('a[href$="/settings/recycle-bin/' . $bookDeletion->id . '/restore"]', 'Restore Parent');
     }
 }

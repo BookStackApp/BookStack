@@ -209,7 +209,7 @@ class ExportFormatter
         $text = preg_replace('/(\x0A|\xA0|\x0A|\r|\n){2,}/su', "\n\n", $text);
         $text = html_entity_decode($text);
         // Add title
-        $text = $page->name."\n\n".$text;
+        $text = $page->name . "\n\n" . $text;
 
         return $text;
     }
@@ -219,8 +219,8 @@ class ExportFormatter
      */
     public function chapterToPlainText(Chapter $chapter): string
     {
-        $text = $chapter->name."\n\n";
-        $text .= $chapter->description."\n\n";
+        $text = $chapter->name . "\n\n";
+        $text .= $chapter->description . "\n\n";
         foreach ($chapter->getVisiblePages() as $page) {
             $text .= $this->pageToPlainText($page);
         }
@@ -234,7 +234,7 @@ class ExportFormatter
     public function bookToPlainText(Book $book): string
     {
         $bookTree = (new BookContents($book))->getTree(false, false);
-        $text = $book->name."\n\n";
+        $text = $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild->isA('chapter')) {
                 $text .= $this->chapterToPlainText($bookChild);
@@ -252,10 +252,10 @@ class ExportFormatter
     public function pageToMarkdown(Page $page): string
     {
         if ($page->markdown) {
-            return '# '.$page->name."\n\n".$page->markdown;
+            return '# ' . $page->name . "\n\n" . $page->markdown;
         }
 
-        return '# '.$page->name."\n\n".(new HtmlToMarkdown($page->html))->convert();
+        return '# ' . $page->name . "\n\n" . (new HtmlToMarkdown($page->html))->convert();
     }
 
     /**
@@ -263,10 +263,10 @@ class ExportFormatter
      */
     public function chapterToMarkdown(Chapter $chapter): string
     {
-        $text = '# '.$chapter->name."\n\n";
-        $text .= $chapter->description."\n\n";
+        $text = '# ' . $chapter->name . "\n\n";
+        $text .= $chapter->description . "\n\n";
         foreach ($chapter->pages as $page) {
-            $text .= $this->pageToMarkdown($page)."\n\n";
+            $text .= $this->pageToMarkdown($page) . "\n\n";
         }
 
         return $text;
@@ -278,7 +278,7 @@ class ExportFormatter
     public function bookToMarkdown(Book $book): string
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
-        $text = '# '.$book->name."\n\n";
+        $text = '# ' . $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild instanceof Chapter) {
                 $text .= $this->chapterToMarkdown($bookChild);

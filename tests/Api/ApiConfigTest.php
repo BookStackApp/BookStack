@@ -27,7 +27,7 @@ class ApiConfigTest extends TestCase
     {
         $this->actingAsApiEditor();
         config()->set(['api.default_item_count' => 1]);
-        $resp = $this->get($this->endpoint.'?count=5');
+        $resp = $this->get($this->endpoint . '?count=5');
         $resp->assertJsonCount(5, 'data');
     }
 
@@ -39,7 +39,7 @@ class ApiConfigTest extends TestCase
         $resp = $this->get($this->endpoint);
         $resp->assertJsonCount(2, 'data');
 
-        $resp = $this->get($this->endpoint.'?count=5');
+        $resp = $this->get($this->endpoint . '?count=5');
         $resp->assertJsonCount(2, 'data');
     }
 

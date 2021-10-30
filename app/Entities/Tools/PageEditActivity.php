@@ -81,7 +81,7 @@ class PageEditActivity
             return $message;
         }
 
-        return $message."\n".trans('entities.pages_draft_edited_notification');
+        return $message . "\n" . trans('entities.pages_draft_edited_notification');
     }
 
     /**

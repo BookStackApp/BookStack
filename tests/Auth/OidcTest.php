@@ -22,7 +22,7 @@ class OidcTest extends TestCase
         // Set default config for OpenID Connect
 
         $this->keyFile = tmpfile();
-        $this->keyFilePath = 'file://'.stream_get_meta_data($this->keyFile)['uri'];
+        $this->keyFilePath = 'file://' . stream_get_meta_data($this->keyFile)['uri'];
         file_put_contents($this->keyFilePath, OidcJwtHelper::publicPemKey());
 
         config()->set([
@@ -61,7 +61,7 @@ class OidcTest extends TestCase
         config()->set(['auth.method' => 'standard']);
         $routes = ['/login' => 'post', '/callback' => 'get'];
         foreach ($routes as $uri => $method) {
-            $req = $this->call($method, '/oidc'.$uri);
+            $req = $this->call($method, '/oidc' . $uri);
             $this->assertPermissionError($req);
         }
     }
@@ -120,8 +120,8 @@ class OidcTest extends TestCase
         $this->assertStringStartsWith('https://oidc.local/auth', $redirect, 'Login redirects to SSO location');
         $this->assertFalse($this->isAuthenticated());
         $this->assertStringContainsString('scope=openid%20profile%20email', $redirect);
-        $this->assertStringContainsString('client_id='.OidcJwtHelper::defaultClientId(), $redirect);
-        $this->assertStringContainsString('redirect_uri='.urlencode(url('/oidc/callback')), $redirect);
+        $this->assertStringContainsString('client_id=' . OidcJwtHelper::defaultClientId(), $redirect);
+        $this->assertStringContainsString('redirect_uri=' . urlencode(url('/oidc/callback')), $redirect);
     }
 
     public function test_login_success_flow()
@@ -137,17 +137,17 @@ class OidcTest extends TestCase
 
         // Callback from auth provider
         // App calls token endpoint to get id token
-        $resp = $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state='.$state);
+        $resp = $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
         $resp->assertRedirect('/');
         $this->assertCount(1, $transactions);
         /** @var Request $tokenRequest */
         $tokenRequest = $transactions[0]['request'];
         $this->assertEquals('https://oidc.local/token', (string) $tokenRequest->getUri());
         $this->assertEquals('POST', $tokenRequest->getMethod());
-        $this->assertEquals('Basic '.base64_encode(OidcJwtHelper::defaultClientId().':testpass'), $tokenRequest->getHeader('Authorization')[0]);
+        $this->assertEquals('Basic ' . base64_encode(OidcJwtHelper::defaultClientId() . ':testpass'), $tokenRequest->getHeader('Authorization')[0]);
         $this->assertStringContainsString('grant_type=authorization_code', $tokenRequest->getBody());
         $this->assertStringContainsString('code=SplxlOBeZQQYbYS6WxSbIA', $tokenRequest->getBody());
-        $this->assertStringContainsString('redirect_uri='.urlencode(url('/oidc/callback')), $tokenRequest->getBody());
+        $this->assertStringContainsString('redirect_uri=' . urlencode(url('/oidc/callback')), $tokenRequest->getBody());
 
         $this->assertTrue(auth()->check());
         $this->assertDatabaseHas('users', [
@@ -241,7 +241,7 @@ class OidcTest extends TestCase
             'sub'   => 'benny505',
         ]);
 
-        $this->assertSessionError('A user with the email '.$editor->email.' already exists but with different credentials.');
+        $this->assertSessionError('A user with the email ' . $editor->email . ' already exists but with different credentials.');
         $this->assertFalse(auth()->check());
     }
 
@@ -276,8 +276,8 @@ class OidcTest extends TestCase
 
         $this->assertEquals('GET', $keysRequest->getMethod());
         $this->assertEquals('GET', $discoverRequest->getMethod());
-        $this->assertEquals(OidcJwtHelper::defaultIssuer().'/.well-known/openid-configuration', $discoverRequest->getUri());
-        $this->assertEquals(OidcJwtHelper::defaultIssuer().'/oidc/keys', $keysRequest->getUri());
+        $this->assertEquals(OidcJwtHelper::defaultIssuer() . '/.well-known/openid-configuration', $discoverRequest->getUri());
+        $this->assertEquals(OidcJwtHelper::defaultIssuer() . '/oidc/keys', $keysRequest->getUri());
     }
 
     public function test_auth_fails_if_autodiscovery_fails()
@@ -335,7 +335,7 @@ class OidcTest extends TestCase
         $state = session()->get('oidc_state');
         $this->mockHttpClient([$this->getMockAuthorizationResponse($claimOverrides)]);
 
-        return $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state='.$state);
+        return $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
     }
 
     protected function getAutoDiscoveryResponse($responseOverrides = []): Response
@@ -345,9 +345,9 @@ class OidcTest extends TestCase
             'Cache-Control' => 'no-cache, no-store',
             'Pragma'        => 'no-cache',
         ], json_encode(array_merge([
-            'token_endpoint'         => OidcJwtHelper::defaultIssuer().'/oidc/token',
-            'authorization_endpoint' => OidcJwtHelper::defaultIssuer().'/oidc/authorize',
-            'jwks_uri'               => OidcJwtHelper::defaultIssuer().'/oidc/keys',
+            'token_endpoint'         => OidcJwtHelper::defaultIssuer() . '/oidc/token',
+            'authorization_endpoint' => OidcJwtHelper::defaultIssuer() . '/oidc/authorize',
+            'jwks_uri'               => OidcJwtHelper::defaultIssuer() . '/oidc/keys',
             'issuer'                 => OidcJwtHelper::defaultIssuer(),
         ], $responseOverrides)));
     }

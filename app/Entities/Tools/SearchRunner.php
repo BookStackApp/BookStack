@@ -65,7 +65,7 @@ class SearchRunner
         $hasMore = false;
 
         foreach ($entityTypesToSearch as $entityType) {
-            if (! in_array($entityType, $entityTypes)) {
+            if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
             $search = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action);
@@ -96,7 +96,7 @@ class SearchRunner
 
         $results = collect();
         foreach ($entityTypesToSearch as $entityType) {
-            if (! in_array($entityType, $entityTypes)) {
+            if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
             $search = $this->buildEntitySearchQuery($opts, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
@@ -151,12 +151,12 @@ class SearchRunner
             $subQuery->where('entity_type', '=', $entity->getMorphClass());
             $subQuery->where(function (Builder $query) use ($searchOpts) {
                 foreach ($searchOpts->searches as $inputTerm) {
-                    $query->orWhere('term', 'like', $inputTerm.'%');
+                    $query->orWhere('term', 'like', $inputTerm . '%');
                 }
             })->groupBy('entity_type', 'entity_id');
-            $entitySelect->join($this->db->raw('('.$subQuery->toSql().') as s'), function (JoinClause $join) {
+            $entitySelect->join($this->db->raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
                 $join->on('id', '=', 'entity_id');
-            })->addSelect($entity->getTable().'.*')
+            })->addSelect($entity->getTable() . '.*')
                 ->selectRaw('s.score')
                 ->orderBy('score', 'desc');
             $entitySelect->mergeBindings($subQuery);
@@ -165,8 +165,8 @@ class SearchRunner
         // Handle exact term matching
         foreach ($searchOpts->exacts as $inputTerm) {
             $entitySelect->where(function (EloquentBuilder $query) use ($inputTerm, $entity) {
-                $query->where('name', 'like', '%'.$inputTerm.'%')
-                    ->orWhere($entity->textField, 'like', '%'.$inputTerm.'%');
+                $query->where('name', 'like', '%' . $inputTerm . '%')
+                    ->orWhere($entity->textField, 'like', '%' . $inputTerm . '%');
             });
         }
 
@@ -177,7 +177,7 @@ class SearchRunner
 
         // Handle filters
         foreach ($searchOpts->filters as $filterTerm => $filterValue) {
-            $functionName = Str::camel('filter_'.$filterTerm);
+            $functionName = Str::camel('filter_' . $filterTerm);
             if (method_exists($this, $functionName)) {
                 $this->$functionName($entitySelect, $entity, $filterValue);
             }
@@ -204,14 +204,14 @@ class SearchRunner
      */
     protected function applyTagSearch(EloquentBuilder $query, string $tagTerm): EloquentBuilder
     {
-        preg_match('/^(.*?)(('.$this->getRegexEscapedOperators().')(.*?))?$/', $tagTerm, $tagSplit);
+        preg_match('/^(.*?)((' . $this->getRegexEscapedOperators() . ')(.*?))?$/', $tagTerm, $tagSplit);
         $query->whereHas('tags', function (EloquentBuilder $query) use ($tagSplit) {
             $tagName = $tagSplit[1];
             $tagOperator = count($tagSplit) > 2 ? $tagSplit[3] : '';
             $tagValue = count($tagSplit) > 3 ? $tagSplit[4] : '';
             $validOperator = in_array($tagOperator, $this->queryOperators);
-            if (! empty($tagOperator) && ! empty($tagValue) && $validOperator) {
-                if (! empty($tagName)) {
+            if (!empty($tagOperator) && !empty($tagValue) && $validOperator) {
+                if (!empty($tagName)) {
                     $query->where('name', '=', $tagName);
                 }
                 if (is_numeric($tagValue) && $tagOperator !== 'like') {
@@ -303,7 +303,7 @@ class SearchRunner
 
     protected function filterInName(EloquentBuilder $query, Entity $model, $input)
     {
-        $query->where('name', 'like', '%'.$input.'%');
+        $query->where('name', 'like', '%' . $input . '%');
     }
 
     protected function filterInTitle(EloquentBuilder $query, Entity $model, $input)
@@ -313,7 +313,7 @@ class SearchRunner
 
     protected function filterInBody(EloquentBuilder $query, Entity $model, $input)
     {
-        $query->where($model->textField, 'like', '%'.$input.'%');
+        $query->where($model->textField, 'like', '%' . $input . '%');
     }
 
     protected function filterIsRestricted(EloquentBuilder $query, Entity $model, $input)
@@ -337,7 +337,7 @@ class SearchRunner
 
     protected function filterSortBy(EloquentBuilder $query, Entity $model, $input)
     {
-        $functionName = Str::camel('sort_by_'.$input);
+        $functionName = Str::camel('sort_by_' . $input);
         if (method_exists($this, $functionName)) {
             $this->$functionName($query, $model);
         }
@@ -348,10 +348,10 @@ class SearchRunner
      */
     protected function sortByLastCommented(EloquentBuilder $query, Entity $model)
     {
-        $commentsTable = $this->db->getTablePrefix().'comments';
+        $commentsTable = $this->db->getTablePrefix() . 'comments';
         $morphClass = str_replace('\\', '\\\\', $model->getMorphClass());
-        $commentQuery = $this->db->raw('(SELECT c1.entity_id, c1.entity_type, c1.created_at as last_commented FROM '.$commentsTable.' c1 LEFT JOIN '.$commentsTable.' c2 ON (c1.entity_id = c2.entity_id AND c1.entity_type = c2.entity_type AND c1.created_at < c2.created_at) WHERE c1.entity_type = \''.$morphClass.'\' AND c2.created_at IS NULL) as comments');
+        $commentQuery = $this->db->raw('(SELECT c1.entity_id, c1.entity_type, c1.created_at as last_commented FROM ' . $commentsTable . ' c1 LEFT JOIN ' . $commentsTable . ' c2 ON (c1.entity_id = c2.entity_id AND c1.entity_type = c2.entity_type AND c1.created_at < c2.created_at) WHERE c1.entity_type = \'' . $morphClass . '\' AND c2.created_at IS NULL) as comments');
 
-        $query->join($commentQuery, $model->getTable().'.id', '=', 'comments.entity_id')->orderBy('last_commented', 'desc');
+        $query->join($commentQuery, $model->getTable() . '.id', '=', 'comments.entity_id')->orderBy('last_commented', 'desc');
     }
 }

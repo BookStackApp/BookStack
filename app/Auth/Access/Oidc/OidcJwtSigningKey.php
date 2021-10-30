@@ -48,7 +48,7 @@ class OidcJwtSigningKey
             throw new OidcInvalidKeyException("Failed to load key from file path with error: {$exception->getMessage()}");
         }
 
-        if (! ($this->key instanceof RSA)) {
+        if (!($this->key instanceof RSA)) {
             throw new OidcInvalidKeyException('Key loaded from file path is not an RSA key as expected');
         }
     }

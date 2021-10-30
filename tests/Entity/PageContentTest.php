@@ -34,7 +34,7 @@ class PageContentTest extends TestCase
         $pageContent->assertSee('Hello, This is a test');
         $pageContent->assertSee('This is a second block of content');
 
-        $page->html = $originalHtml." Well {{@{$secondPage->id}#section2}}";
+        $page->html = $originalHtml . " Well {{@{$secondPage->id}#section2}}";
         $page->save();
 
         $pageContent = $this->get($page->getUrl());
@@ -48,8 +48,8 @@ class PageContentTest extends TestCase
         $secondPage = Page::query()->where('id', '!=', $page->id)->first();
 
         $this->asEditor();
-        $includeTag = '{{@'.$secondPage->id.'}}';
-        $page->html = '<p>'.$includeTag.'</p>';
+        $includeTag = '{{@' . $secondPage->id . '}}';
+        $page->html = '<p>' . $includeTag . '</p>';
 
         $resp = $this->put($page->getUrl(), ['name' => $page->name, 'html' => $page->html, 'summary' => '']);
 
@@ -352,7 +352,7 @@ class PageContentTest extends TestCase
         $pageA->html = $content;
         $pageA->save();
 
-        $pageB->html = '<ul id="bkmrk-xxx-%28"></ul> <p>{{@'.$pageA->id.'#test}}</p>';
+        $pageB->html = '<ul id="bkmrk-xxx-%28"></ul> <p>{{@' . $pageA->id . '#test}}</p>';
         $pageB->save();
 
         $pageView = $this->get($pageB->getUrl());
@@ -555,7 +555,7 @@ class PageContentTest extends TestCase
 
         $this->put($page->getUrl(), [
             'name' => $page->name, 'summary' => '',
-            'html' => '<p>test<img src="data:image/jpeg;base64,'.$this->base64Jpeg.'"/></p>',
+            'html' => '<p>test<img src="data:image/jpeg;base64,' . $this->base64Jpeg . '"/></p>',
         ]);
 
         $page->refresh();
@@ -579,7 +579,7 @@ class PageContentTest extends TestCase
         $base64PngWithoutWhitespace = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQAB';
         $this->put($page->getUrl(), [
             'name' => $page->name, 'summary' => '',
-            'html' => '<p>test<img src="data:image/png;base64,'.$base64PngWithWhitespace.'"/></p>',
+            'html' => '<p>test<img src="data:image/png;base64,' . $base64PngWithWhitespace . '"/></p>',
         ]);
 
         $page->refresh();
@@ -601,7 +601,7 @@ class PageContentTest extends TestCase
 
         $this->put($page->getUrl(), [
             'name' => $page->name, 'summary' => '',
-            'html' => '<p>test<img src="data:image/jiff;base64,'.$this->base64Jpeg.'"/></p>',
+            'html' => '<p>test<img src="data:image/jiff;base64,' . $this->base64Jpeg . '"/></p>',
         ]);
 
         $page->refresh();
@@ -615,7 +615,7 @@ class PageContentTest extends TestCase
 
         $this->put($page->getUrl(), [
             'name'     => $page->name, 'summary' => '',
-            'markdown' => 'test ![test](data:image/jpeg;base64,'.$this->base64Jpeg.')',
+            'markdown' => 'test ![test](data:image/jpeg;base64,' . $this->base64Jpeg . ')',
         ]);
 
         $page->refresh();
@@ -637,7 +637,7 @@ class PageContentTest extends TestCase
 
         $this->put($page->getUrl(), [
             'name'     => $page->name, 'summary' => '',
-            'markdown' => 'test ![test](data:image/jiff;base64,'.$this->base64Jpeg.')',
+            'markdown' => 'test ![test](data:image/jiff;base64,' . $this->base64Jpeg . ')',
         ]);
 
         $page->refresh();

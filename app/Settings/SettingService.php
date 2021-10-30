@@ -34,7 +34,7 @@ class SettingService
     public function get(string $key, $default = null)
     {
         if (is_null($default)) {
-            $default = config('setting-defaults.'.$key, false);
+            $default = config('setting-defaults.' . $key, false);
         }
 
         if (isset($this->localCache[$key])) {
@@ -64,7 +64,7 @@ class SettingService
     public function getUser(User $user, string $key, $default = null)
     {
         if (is_null($default)) {
-            $default = config('setting-defaults.user.'.$key, false);
+            $default = config('setting-defaults.user.' . $key, false);
         }
 
         if ($user->isDefault()) {
@@ -90,7 +90,7 @@ class SettingService
     protected function getValueFromStore(string $key)
     {
         // Check the cache
-        $cacheKey = $this->cachePrefix.$key;
+        $cacheKey = $this->cachePrefix . $key;
         $cacheVal = $this->cache->get($cacheKey, null);
         if ($cacheVal !== null) {
             return $cacheVal;
@@ -118,7 +118,7 @@ class SettingService
      */
     protected function clearFromCache(string $key)
     {
-        $cacheKey = $this->cachePrefix.$key;
+        $cacheKey = $this->cachePrefix . $key;
         $this->cache->forget($cacheKey);
         if (isset($this->localCache[$key])) {
             unset($this->localCache[$key]);
@@ -211,7 +211,7 @@ class SettingService
      */
     protected function userKey(string $userId, string $key = ''): string
     {
-        return 'user:'.$userId.':'.$key;
+        return 'user:' . $userId . ':' . $key;
     }
 
     /**
@@ -232,7 +232,7 @@ class SettingService
     public function deleteUserSettings(string $userId)
     {
         return $this->setting->newQuery()
-            ->where('setting_key', 'like', $this->userKey($userId).'%')
+            ->where('setting_key', 'like', $this->userKey($userId) . '%')
             ->delete();
     }
 

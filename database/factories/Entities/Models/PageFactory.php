@@ -32,7 +32,7 @@ class PageFactory extends Factory
      */
     public function definition()
     {
-        $html = '<p>'.implode('</p>', $this->faker->paragraphs(5)).'</p>';
+        $html = '<p>' . implode('</p>', $this->faker->paragraphs(5)) . '</p>';
 
         return [
             'name'           => $this->faker->sentence,

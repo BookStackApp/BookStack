@@ -52,9 +52,9 @@ class PageRevision extends Model
      */
     public function getUrl($path = null)
     {
-        $url = $this->page->getUrl().'/revisions/'.$this->id;
+        $url = $this->page->getUrl() . '/revisions/' . $this->id;
         if ($path) {
-            return $url.'/'.trim($path, '/');
+            return $url . '/' . trim($path, '/');
         }
 
         return $url;

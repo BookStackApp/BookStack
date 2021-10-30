@@ -21,7 +21,7 @@ class HtmlNonceApplicator
             return $html;
         }
 
-        $html = '<?xml encoding="utf-8" ?><body>'.$html.'</body>';
+        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML($html, LIBXML_SCHEMA_CREATE);

@@ -18,7 +18,7 @@ class CheckUserHasPermission
      */
     public function handle($request, Closure $next, $permission)
     {
-        if (! user()->can($permission)) {
+        if (!user()->can($permission)) {
             return $this->errorResponse($request);
         }
 

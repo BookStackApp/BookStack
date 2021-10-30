@@ -62,7 +62,7 @@ class MfaTotpController extends Controller
         session()->remove(static::SETUP_SECRET_SESSION_KEY);
         $this->logActivity(ActivityType::MFA_SETUP_METHOD, 'totp');
 
-        if (! auth()->check()) {
+        if (!auth()->check()) {
             $this->showSuccessNotification(trans('auth.mfa_setup_login_notification'));
 
             return redirect('/login');

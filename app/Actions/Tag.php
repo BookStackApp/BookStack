@@ -26,7 +26,7 @@ class Tag extends Model
      */
     public function nameUrl(): string
     {
-        return url('/search?term=%5B'.urlencode($this->name).'%5D');
+        return url('/search?term=%5B' . urlencode($this->name) . '%5D');
     }
 
     /**
@@ -34,6 +34,6 @@ class Tag extends Model
      */
     public function valueUrl(): string
     {
-        return url('/search?term=%5B'.urlencode($this->name).'%3D'.urlencode($this->value).'%5D');
+        return url('/search?term=%5B' . urlencode($this->name) . '%3D' . urlencode($this->value) . '%5D');
     }
 }

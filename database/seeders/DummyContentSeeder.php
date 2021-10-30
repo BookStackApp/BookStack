@@ -48,7 +48,7 @@ class DummyContentSeeder extends Seeder
                 $book->pages()->saveMany($pages);
             });
 
-        $largeBook = \BookStack\Entities\Models\Book::factory()->create(array_merge($byData, ['name' => 'Large book'.Str::random(10)]));
+        $largeBook = \BookStack\Entities\Models\Book::factory()->create(array_merge($byData, ['name' => 'Large book' . Str::random(10)]));
         $pages = Page::factory()->count(200)->make($byData);
         $chapters = Chapter::factory()->count(50)->make($byData);
         $largeBook->pages()->saveMany($pages);

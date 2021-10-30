@@ -18,7 +18,7 @@ class HtmlContentFilter
             return $html;
         }
 
-        $html = '<body>'.$html.'</body>';
+        $html = '<body>' . $html . '</body>';
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
@@ -29,19 +29,19 @@ class HtmlContentFilter
         static::removeNodes($scriptElems);
 
         // Remove clickable links to JavaScript URI
-        $badLinks = $xPath->query('//*['.static::xpathContains('@href', 'javascript:').']');
+        $badLinks = $xPath->query('//*[' . static::xpathContains('@href', 'javascript:') . ']');
         static::removeNodes($badLinks);
 
         // Remove forms with calls to JavaScript URI
-        $badForms = $xPath->query('//*['.static::xpathContains('@action', 'javascript:').'] | //*['.static::xpathContains('@formaction', 'javascript:').']');
+        $badForms = $xPath->query('//*[' . static::xpathContains('@action', 'javascript:') . '] | //*[' . static::xpathContains('@formaction', 'javascript:') . ']');
         static::removeNodes($badForms);
 
         // Remove meta tag to prevent external redirects
-        $metaTags = $xPath->query('//meta['.static::xpathContains('@content', 'url').']');
+        $metaTags = $xPath->query('//meta[' . static::xpathContains('@content', 'url') . ']');
         static::removeNodes($metaTags);
 
         // Remove data or JavaScript iFrames
-        $badIframes = $xPath->query('//*['.static::xpathContains('@src', 'data:').'] | //*['.static::xpathContains('@src', 'javascript:').'] | //*[@srcdoc]');
+        $badIframes = $xPath->query('//*[' . static::xpathContains('@src', 'data:') . '] | //*[' . static::xpathContains('@src', 'javascript:') . '] | //*[@srcdoc]');
         static::removeNodes($badIframes);
 
         // Remove elements with a xlink:href attribute
@@ -71,7 +71,7 @@ class HtmlContentFilter
         $value = strtolower($value);
         $upperVal = strtoupper($value);
 
-        return 'contains(translate('.$property.', \''.$upperVal.'\', \''.$value.'\'), \''.$value.'\')';
+        return 'contains(translate(' . $property . ', \'' . $upperVal . '\', \'' . $value . '\'), \'' . $value . '\')';
     }
 
     /**

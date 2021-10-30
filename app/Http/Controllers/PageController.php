@@ -145,7 +145,7 @@ class PageController extends Controller
         $pageNav = $pageContent->getNavigation($page->html);
 
         // Check if page comments are enabled
-        $commentsEnabled = ! setting('app-disable-comments');
+        $commentsEnabled = !setting('app-disable-comments');
         if ($commentsEnabled) {
             $page->load(['comments.createdBy']);
         }
@@ -254,7 +254,7 @@ class PageController extends Controller
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
-        if (! $this->isSignedIn()) {
+        if (!$this->isSignedIn()) {
             return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);
         }
 

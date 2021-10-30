@@ -59,7 +59,7 @@ return [
         ],
 
         'web' => [
-            'driver' => 'session',
+            'driver'   => 'session',
             'provider' => 'users',
         ],
     ],
@@ -117,8 +117,8 @@ return [
         'users' => [
             'provider' => 'users',
             'email'    => 'emails.password',
-            'table' => 'password_resets',
-            'expire' => 60,
+            'table'    => 'password_resets',
+            'expire'   => 60,
             'throttle' => 60,
         ],
     ],

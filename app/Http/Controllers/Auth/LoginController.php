@@ -234,7 +234,7 @@ class LoginController extends Controller
         // Store the previous location for redirect after login
         $previous = url()->previous('');
         $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
-        if (! $previous || ! setting('app-public') || ! $isPreviousFromInstance) {
+        if (!$previous || !setting('app-public') || !$isPreviousFromInstance) {
             return;
         }
 

@@ -54,7 +54,7 @@ class CreateJointPermissionsTable extends Migration
 
         // Ensure unique name
         while (DB::table('roles')->where('name', '=', $publicRoleData['display_name'])->count() > 0) {
-            $publicRoleData['display_name'] = $publicRoleData['display_name'].Str::random(2);
+            $publicRoleData['display_name'] = $publicRoleData['display_name'] . Str::random(2);
         }
         $publicRoleId = DB::table('roles')->insertGetId($publicRoleData);
 
@@ -63,7 +63,7 @@ class CreateJointPermissionsTable extends Migration
         $ops = ['View All', 'View Own'];
         foreach ($entities as $entity) {
             foreach ($ops as $op) {
-                $name = strtolower($entity).'-'.strtolower(str_replace(' ', '-', $op));
+                $name = strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op));
                 $permission = DB::table('role_permissions')->where('name', '=', $name)->first();
                 // Assign view permission to public
                 DB::table('permission_role')->insert([
