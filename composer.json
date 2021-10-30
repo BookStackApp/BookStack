@@ -44,8 +44,8 @@
         "ssddanbrown/htmldiff": "^1.0.1"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.6",
         "fakerphp/faker": "^1.13.0",
+        "itsgoingd/clockwork": "^5.1",
         "mockery/mockery": "^1.4.2",
         "phpunit/phpunit": "^9.5.3",
         "symfony/dom-crawler": "^5.3",
