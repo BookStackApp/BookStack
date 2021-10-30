@@ -13,7 +13,7 @@ class CommentTest extends TestCase
         $this->asAdmin();
         $page = Page::first();
 
-        $comment = factory(Comment::class)->make(['parent_id' => 2]);
+        $comment = Comment::factory()->make(['parent_id' => 2]);
         $resp = $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $resp->assertStatus(200);
@@ -36,7 +36,7 @@ class CommentTest extends TestCase
         $this->asAdmin();
         $page = Page::first();
 
-        $comment = factory(Comment::class)->make();
+        $comment = Comment::factory()->make();
         $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $comment = $page->comments()->first();
@@ -60,7 +60,7 @@ class CommentTest extends TestCase
         $this->asAdmin();
         $page = Page::first();
 
-        $comment = factory(Comment::class)->make();
+        $comment = Comment::factory()->make();
         $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $comment = $page->comments()->first();

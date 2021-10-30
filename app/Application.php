@@ -13,12 +13,11 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function configPath($path = '')
     {
-        return parent::configPath($path);
-//        return $this->basePath
-//            . DIRECTORY_SEPARATOR
-//            . 'app'
-//            . DIRECTORY_SEPARATOR
-//            . 'Config'
-//            . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+        return $this->basePath
+            . DIRECTORY_SEPARATOR
+            . 'app'
+            . DIRECTORY_SEPARATOR
+            . 'Config'
+            . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 }

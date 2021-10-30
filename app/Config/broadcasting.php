@@ -38,13 +38,15 @@ return [
         ],
 
         'array' => [
-            'driver' => 'array',
+            'driver'    => 'array',
+            'serialize' => false,
         ],
 
         'database' => [
-            'driver'     => 'database',
-            'table'      => 'cache',
-            'connection' => null,
+            'driver'          => 'database',
+            'table'           => 'cache',
+            'connection'      => null,
+            'lock_connection' => null,
         ],
 
         'file' => [
@@ -55,11 +57,17 @@ return [
         'memcached' => [
             'driver'  => 'memcached',
             'servers' => env('CACHE_DRIVER') === 'memcached' ? $memcachedServers : [],
+            'options' => [],
         ],
 
         'redis' => [
-            'driver'     => 'redis',
-            'connection' => 'default',
+            'driver'          => 'redis',
+            'connection'      => 'default',
+            'lock_connection' => 'default',
+        ],
+
+        'octane' => [
+            'driver' => 'octane',
         ],
 
     ],
