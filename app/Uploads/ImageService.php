@@ -16,6 +16,7 @@ use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
 use League\Flysystem\Util;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ImageService
 {
@@ -39,9 +40,18 @@ class ImageService
     /**
      * Get the storage that will be used for storing images.
      */
-    protected function getStorage(string $imageType = ''): FileSystemInstance
+    protected function getStorageDisk(string $imageType = ''): FileSystemInstance
     {
         return $this->fileSystem->disk($this->getStorageDiskName($imageType));
+    }
+
+    /**
+     * Check if local secure image storage (Fetched behind authentication)
+     * is currently active in the instance.
+     */
+    protected function usingSecureImages(): bool
+    {
+        return $this->getStorageDiskName('gallery') === 'local_secure_images';
     }
 
     /**
@@ -126,7 +136,7 @@ class ImageService
      */
     public function saveNew(string $imageName, string $imageData, string $type, int $uploadedTo = 0): Image
     {
-        $storage = $this->getStorage($type);
+        $storage = $this->getStorageDisk($type);
         $secureUploads = setting('app-secure-images');
         $fileName = $this->cleanImageFileName($imageName);
 
@@ -243,7 +253,7 @@ class ImageService
             return $this->getPublicUrl($thumbFilePath);
         }
 
-        $storage = $this->getStorage($image->type);
+        $storage = $this->getStorageDisk($image->type);
         if ($storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
             return $this->getPublicUrl($thumbFilePath);
         }
@@ -307,7 +317,7 @@ class ImageService
      */
     public function getImageData(Image $image): string
     {
-        $storage = $this->getStorage();
+        $storage = $this->getStorageDisk();
 
         return $storage->get($this->adjustPathForStorageDisk($image->path, $image->type));
     }
@@ -330,7 +340,7 @@ class ImageService
     protected function destroyImagesFromPath(string $path, string $imageType): bool
     {
         $path = $this->adjustPathForStorageDisk($path, $imageType);
-        $storage = $this->getStorage($imageType);
+        $storage = $this->getStorageDisk($imageType);
 
         $imageFolder = dirname($path);
         $imageFileName = basename($path);
@@ -417,7 +427,7 @@ class ImageService
         }
 
         $storagePath = $this->adjustPathForStorageDisk($storagePath);
-        $storage = $this->getStorage();
+        $storage = $this->getStorageDisk();
         $imageData = null;
         if ($storage->exists($storagePath)) {
             $imageData = $storage->get($storagePath);
@@ -433,6 +443,31 @@ class ImageService
         }
 
         return 'data:image/' . $extension . ';base64,' . base64_encode($imageData);
+    }
+
+    /**
+     * Check if the given path exists in the local secure image system.
+     * Returns false if local_secure is not in use.
+     */
+    public function pathExistsInLocalSecure(string $imagePath): bool
+    {
+        $disk = $this->getStorageDisk('gallery');
+
+        // Check local_secure is active
+        return $this->usingSecureImages()
+            // Check the image file exists
+            && $disk->exists($imagePath)
+            // Check the file is likely an image file
+            && strpos($disk->getMimetype($imagePath), 'image/') === 0;
+    }
+
+    /**
+     * For the given path, if existing, provide a response that will stream the image contents.
+     */
+    public function streamImageFromStorageResponse(string $imageType, string $path): StreamedResponse
+    {
+        $disk = $this->getStorageDisk($imageType);
+        return $disk->response($path);
     }
 
     /**
