@@ -281,9 +281,6 @@ class SocialAuthService
         if ($driverName === 'google' && config('services.google.select_account')) {
             $driver->with(['prompt' => 'select_account']);
         }
-        if ($driverName === 'azure') {
-            $driver->with(['resource' => 'https://graph.windows.net']);
-        }
 
         if (isset($this->configureForRedirectCallbacks[$driverName])) {
             $this->configureForRedirectCallbacks[$driverName]($driver);
