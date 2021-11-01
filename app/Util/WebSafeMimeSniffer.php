@@ -10,7 +10,6 @@ use finfo;
  */
 class WebSafeMimeSniffer
 {
-
     /**
      * @var string[]
      */
@@ -61,5 +60,4 @@ class WebSafeMimeSniffer
 
         return 'application/octet-stream';
     }
-
 }

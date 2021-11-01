@@ -17,7 +17,8 @@ class ImageRepo
     /**
      * ImageRepo constructor.
      */
-    public function __construct(ImageService $imageService, PermissionService $permissionService) {
+    public function __construct(ImageService $imageService, PermissionService $permissionService)
+    {
         $this->imageService = $imageService;
         $this->restrictionService = $permissionService;
     }

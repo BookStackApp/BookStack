@@ -614,7 +614,6 @@ class PageContentTest extends TestCase
             $page->refresh();
             $this->assertStringContainsString('<img src=""', $page->html);
         }
-
     }
 
     public function test_base64_images_get_extracted_from_markdown_page_content()
