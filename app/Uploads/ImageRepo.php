@@ -11,36 +11,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
 {
-    protected $image;
     protected $imageService;
     protected $restrictionService;
-    protected $page;
-
-    protected static $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     /**
      * ImageRepo constructor.
      */
     public function __construct(
-        Image $image,
         ImageService $imageService,
-        PermissionService $permissionService,
-        Page $page
+        PermissionService $permissionService
     ) {
-        $this->image = $image;
         $this->imageService = $imageService;
         $this->restrictionService = $permissionService;
-        $this->page = $page;
-    }
-
-    /**
-     * Check if the given image extension is supported by BookStack.
-     * The extension must not be altered in this function. This check should provide a guarantee
-     * that the provided extension is safe to use for the image to be saved.
-     */
-    public function imageExtensionSupported(string $extension): bool
-    {
-        return in_array($extension, static::$supportedExtensions);
     }
 
     /**
@@ -48,7 +30,7 @@ class ImageRepo
      */
     public function getById($id): Image
     {
-        return $this->image->findOrFail($id);
+        return Image::query()->findOrFail($id);
     }
 
     /**
@@ -83,7 +65,7 @@ class ImageRepo
         string $search = null,
         callable $whereClause = null
     ): array {
-        $imageQuery = $this->image->newQuery()->where('type', '=', strtolower($type));
+        $imageQuery = Image::query()->where('type', '=', strtolower($type));
 
         if ($uploadedTo !== null) {
             $imageQuery = $imageQuery->where('uploaded_to', '=', $uploadedTo);
@@ -114,7 +96,7 @@ class ImageRepo
         int $uploadedTo = null,
         string $search = null
     ): array {
-        $contextPage = $this->page->findOrFail($uploadedTo);
+        $contextPage = Page::visible()->findOrFail($uploadedTo);
         $parentFilter = null;
 
         if ($filterType === 'book' || $filterType === 'page') {
@@ -205,7 +187,7 @@ class ImageRepo
      */
     public function destroyByType(string $imageType)
     {
-        $images = $this->image->where('type', '=', $imageType)->get();
+        $images = Image::query()->where('type', '=', $imageType)->get();
         foreach ($images as $image) {
             $this->destroyImage($image);
         }
@@ -218,10 +200,10 @@ class ImageRepo
      */
     public function loadThumbs(Image $image)
     {
-        $image->thumbs = [
+        $image->setAttribute('thumbs', [
             'gallery' => $this->getThumbnail($image, 150, 150, false),
             'display' => $this->getThumbnail($image, 1680, null, true),
-        ];
+        ]);
     }
 
     /**

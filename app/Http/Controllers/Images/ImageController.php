@@ -9,27 +9,19 @@ use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use Exception;
-use Illuminate\Filesystem\Filesystem as File;
-use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
-use League\Flysystem\Util;
 
 class ImageController extends Controller
 {
-    protected $image;
-    protected $file;
     protected $imageRepo;
     protected $imageService;
 
     /**
      * ImageController constructor.
      */
-    public function __construct(Image $image, File $file, ImageRepo $imageRepo, ImageService $imageService)
+    public function __construct(ImageRepo $imageRepo, ImageService $imageService)
     {
-        $this->image = $image;
-        $this->file = $file;
         $this->imageRepo = $imageRepo;
         $this->imageService = $imageService;
     }
