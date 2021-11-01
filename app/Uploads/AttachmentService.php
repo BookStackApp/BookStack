@@ -27,7 +27,7 @@ class AttachmentService
     /**
      * Get the storage that will be used for storing files.
      */
-    protected function getStorage(): FileSystemInstance
+    protected function getStorageDisk(): FileSystemInstance
     {
         return $this->fileSystem->disk($this->getStorageDiskName());
     }
@@ -70,7 +70,7 @@ class AttachmentService
      */
     public function getAttachmentFromStorage(Attachment $attachment): string
     {
-        return $this->getStorage()->get($this->adjustPathForStorageDisk($attachment->path));
+        return $this->getStorageDisk()->get($this->adjustPathForStorageDisk($attachment->path));
     }
 
     /**
@@ -195,7 +195,7 @@ class AttachmentService
      */
     protected function deleteFileInStorage(Attachment $attachment)
     {
-        $storage = $this->getStorage();
+        $storage = $this->getStorageDisk();
         $dirPath = $this->adjustPathForStorageDisk(dirname($attachment->path));
 
         $storage->delete($this->adjustPathForStorageDisk($attachment->path));
@@ -213,10 +213,10 @@ class AttachmentService
     {
         $attachmentData = file_get_contents($uploadedFile->getRealPath());
 
-        $storage = $this->getStorage();
+        $storage = $this->getStorageDisk();
         $basePath = 'uploads/files/' . date('Y-m-M') . '/';
 
-        $uploadFileName = Str::random(16) . '.' . $uploadedFile->getClientOriginalExtension();
+        $uploadFileName = Str::random(16) . '-' . $uploadedFile->getClientOriginalExtension();
         while ($storage->exists($this->adjustPathForStorageDisk($basePath . $uploadFileName))) {
             $uploadFileName = Str::random(3) . $uploadFileName;
         }

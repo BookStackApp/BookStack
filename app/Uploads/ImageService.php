@@ -11,11 +11,14 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Contracts\Filesystem\Filesystem as Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
 use League\Flysystem\Util;
+use Psr\SimpleCache\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ImageService
 {
@@ -24,6 +27,8 @@ class ImageService
     protected $storageUrl;
     protected $image;
     protected $fileSystem;
+
+    protected static $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     /**
      * ImageService constructor.
@@ -39,9 +44,18 @@ class ImageService
     /**
      * Get the storage that will be used for storing images.
      */
-    protected function getStorage(string $imageType = ''): FileSystemInstance
+    protected function getStorageDisk(string $imageType = ''): FileSystemInstance
     {
         return $this->fileSystem->disk($this->getStorageDiskName($imageType));
+    }
+
+    /**
+     * Check if local secure image storage (Fetched behind authentication)
+     * is currently active in the instance.
+     */
+    protected function usingSecureImages(): bool
+    {
+        return $this->getStorageDiskName('gallery') === 'local_secure_images';
     }
 
     /**
@@ -126,7 +140,7 @@ class ImageService
      */
     public function saveNew(string $imageName, string $imageData, string $type, int $uploadedTo = 0): Image
     {
-        $storage = $this->getStorage($type);
+        $storage = $this->getStorageDisk($type);
         $secureUploads = setting('app-secure-images');
         $fileName = $this->cleanImageFileName($imageName);
 
@@ -144,7 +158,7 @@ class ImageService
         try {
             $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($fullPath, $type), $imageData);
         } catch (Exception $e) {
-            \Log::error('Error when attempting image upload:' . $e->getMessage());
+            Log::error('Error when attempting image upload:' . $e->getMessage());
 
             throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $fullPath]));
         }
@@ -218,18 +232,10 @@ class ImageService
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
-     *
-     * @param Image $image
-     * @param int   $width
-     * @param int   $height
-     * @param bool  $keepRatio
-     *
      * @throws Exception
-     * @throws ImageUploadException
-     *
-     * @return string
+     * @throws InvalidArgumentException
      */
-    public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
+    public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false): string
     {
         if ($keepRatio && $this->isGif($image)) {
             return $this->getPublicUrl($image->path);
@@ -243,7 +249,7 @@ class ImageService
             return $this->getPublicUrl($thumbFilePath);
         }
 
-        $storage = $this->getStorage($image->type);
+        $storage = $this->getStorageDisk($image->type);
         if ($storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
             return $this->getPublicUrl($thumbFilePath);
         }
@@ -257,27 +263,16 @@ class ImageService
     }
 
     /**
-     * Resize image data.
-     *
-     * @param string $imageData
-     * @param int    $width
-     * @param int    $height
-     * @param bool   $keepRatio
+     * Resize the image of given data to the specified size, and return the new image data.
      *
      * @throws ImageUploadException
-     *
-     * @return string
      */
-    protected function resizeImage(string $imageData, $width = 220, $height = null, bool $keepRatio = true)
+    protected function resizeImage(string $imageData, ?int $width, ?int $height, bool $keepRatio): string
     {
         try {
             $thumb = $this->imageTool->make($imageData);
-        } catch (Exception $e) {
-            if ($e instanceof ErrorException || $e instanceof NotSupportedException) {
-                throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
-            }
-
-            throw $e;
+        } catch (ErrorException | NotSupportedException $e) {
+            throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
         }
 
         if ($keepRatio) {
@@ -307,7 +302,7 @@ class ImageService
      */
     public function getImageData(Image $image): string
     {
-        $storage = $this->getStorage();
+        $storage = $this->getStorageDisk();
 
         return $storage->get($this->adjustPathForStorageDisk($image->path, $image->type));
     }
@@ -330,7 +325,7 @@ class ImageService
     protected function destroyImagesFromPath(string $path, string $imageType): bool
     {
         $path = $this->adjustPathForStorageDisk($path, $imageType);
-        $storage = $this->getStorage($imageType);
+        $storage = $this->getStorageDisk($imageType);
 
         $imageFolder = dirname($path);
         $imageFileName = basename($path);
@@ -417,7 +412,7 @@ class ImageService
         }
 
         $storagePath = $this->adjustPathForStorageDisk($storagePath);
-        $storage = $this->getStorage();
+        $storage = $this->getStorageDisk();
         $imageData = null;
         if ($storage->exists($storagePath)) {
             $imageData = $storage->get($storagePath);
@@ -433,6 +428,41 @@ class ImageService
         }
 
         return 'data:image/' . $extension . ';base64,' . base64_encode($imageData);
+    }
+
+    /**
+     * Check if the given path exists in the local secure image system.
+     * Returns false if local_secure is not in use.
+     */
+    public function pathExistsInLocalSecure(string $imagePath): bool
+    {
+        $disk = $this->getStorageDisk('gallery');
+
+        // Check local_secure is active
+        return $this->usingSecureImages()
+            // Check the image file exists
+            && $disk->exists($imagePath)
+            // Check the file is likely an image file
+            && strpos($disk->getMimetype($imagePath), 'image/') === 0;
+    }
+
+    /**
+     * For the given path, if existing, provide a response that will stream the image contents.
+     */
+    public function streamImageFromStorageResponse(string $imageType, string $path): StreamedResponse
+    {
+        $disk = $this->getStorageDisk($imageType);
+        return $disk->response($path);
+    }
+
+    /**
+     * Check if the given image extension is supported by BookStack.
+     * The extension must not be altered in this function. This check should provide a guarantee
+     * that the provided extension is safe to use for the image to be saved.
+     */
+    public static function isExtensionSupported(string $extension): bool
+    {
+        return in_array($extension, static::$supportedExtensions);
     }
 
     /**
@@ -476,7 +506,7 @@ class ImageService
      */
     private function getPublicUrl(string $filePath): string
     {
-        if ($this->storageUrl === null) {
+        if (is_null($this->storageUrl)) {
             $storageUrl = config('filesystems.url');
 
             // Get the standard public s3 url if s3 is set as storage type
@@ -490,6 +520,7 @@ class ImageService
                     $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
                 }
             }
+
             $this->storageUrl = $storageUrl;
         }
 

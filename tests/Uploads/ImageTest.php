@@ -241,6 +241,36 @@ class ImageTest extends TestCase
         }
     }
 
+    public function test_secure_image_paths_traversal_causes_500()
+    {
+        config()->set('filesystems.images', 'local_secure');
+        $this->asEditor();
+
+        $resp = $this->get('/uploads/images/../../logs/laravel.log');
+        $resp->assertStatus(500);
+    }
+
+    public function test_secure_image_paths_traversal_on_non_secure_images_causes_404()
+    {
+        config()->set('filesystems.images', 'local');
+        $this->asEditor();
+
+        $resp = $this->get('/uploads/images/../../logs/laravel.log');
+        $resp->assertStatus(404);
+    }
+
+    public function test_secure_image_paths_dont_serve_non_images()
+    {
+        config()->set('filesystems.images', 'local_secure');
+        $this->asEditor();
+
+        $testFilePath = storage_path('/uploads/images/testing.txt');
+        file_put_contents($testFilePath, 'hello from test_secure_image_paths_dont_serve_non_images');
+
+        $resp = $this->get('/uploads/images/testing.txt');
+        $resp->assertStatus(404);
+    }
+
     public function test_secure_images_included_in_exports()
     {
         config()->set('filesystems.images', 'local_secure');
