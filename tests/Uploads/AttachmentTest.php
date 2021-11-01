@@ -109,7 +109,8 @@ class AttachmentTest extends TestCase
 
         $attachment = Attachment::query()->orderBy('id', 'desc')->first();
         $this->assertStringNotContainsString($fileName, $attachment->path);
-        $this->assertStringEndsWith('.txt', $attachment->path);
+        $this->assertStringEndsWith('-txt', $attachment->path);
+        $this->deleteUploads();
     }
 
     public function test_file_display_and_access()
