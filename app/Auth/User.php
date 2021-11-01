@@ -27,7 +27,7 @@ use Illuminate\Support\Collection;
 /**
  * Class User.
  *
- * @property string     $id
+ * @property int        $id
  * @property string     $name
  * @property string     $slug
  * @property string     $email

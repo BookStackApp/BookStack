@@ -216,7 +216,7 @@ class AttachmentService
         $storage = $this->getStorageDisk();
         $basePath = 'uploads/files/' . date('Y-m-M') . '/';
 
-        $uploadFileName = Str::random(16) . '.' . $uploadedFile->getClientOriginalExtension();
+        $uploadFileName = Str::random(16) . '-' . $uploadedFile->getClientOriginalExtension();
         while ($storage->exists($this->adjustPathForStorageDisk($basePath . $uploadFileName))) {
             $uploadFileName = Str::random(3) . $uploadFileName;
         }
