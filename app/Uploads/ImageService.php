@@ -26,6 +26,8 @@ class ImageService
     protected $image;
     protected $fileSystem;
 
+    protected static $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
     /**
      * ImageService constructor.
      */
@@ -468,6 +470,16 @@ class ImageService
     {
         $disk = $this->getStorageDisk($imageType);
         return $disk->response($path);
+    }
+
+    /**
+     * Check if the given image extension is supported by BookStack.
+     * The extension must not be altered in this function. This check should provide a guarantee
+     * that the provided extension is safe to use for the image to be saved.
+     */
+    public static function isExtensionSupported(string $extension): bool
+    {
+        return in_array($extension, static::$supportedExtensions);
     }
 
     /**
