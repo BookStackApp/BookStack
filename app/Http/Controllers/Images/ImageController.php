@@ -7,25 +7,23 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\Controllers\Controller;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Uploads\ImageService;
 use Exception;
-use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class ImageController extends Controller
 {
-    protected $image;
-    protected $file;
     protected $imageRepo;
+    protected $imageService;
 
     /**
      * ImageController constructor.
      */
-    public function __construct(Image $image, File $file, ImageRepo $imageRepo)
+    public function __construct(ImageRepo $imageRepo, ImageService $imageService)
     {
-        $this->image = $image;
-        $this->file = $file;
         $this->imageRepo = $imageRepo;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -35,14 +33,13 @@ class ImageController extends Controller
      */
     public function showImage(string $path)
     {
-        $path = storage_path('uploads/images/' . $path);
-        if (!file_exists($path)) {
+        if (!$this->imageService->pathExistsInLocalSecure($path)) {
             throw (new NotFoundException(trans('errors.image_not_found')))
                 ->setSubtitle(trans('errors.image_not_found_subtitle'))
                 ->setDetails(trans('errors.image_not_found_details'));
         }
 
-        return response()->file($path);
+        return $this->imageService->streamImageFromStorageResponse('gallery', $path);
     }
 
     /**

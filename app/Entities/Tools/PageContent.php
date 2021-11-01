@@ -9,6 +9,7 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Uploads\ImageService;
 use BookStack\Util\HtmlContentFilter;
 use DOMDocument;
 use DOMNodeList;
@@ -130,7 +131,7 @@ class PageContent
         $imageInfo = $this->parseBase64ImageUri($uri);
 
         // Validate extension and content
-        if (empty($imageInfo['data']) || !$imageRepo->imageExtensionSupported($imageInfo['extension'])) {
+        if (empty($imageInfo['data']) || !ImageService::isExtensionSupported($imageInfo['extension'])) {
             return '';
         }
 
@@ -148,15 +149,17 @@ class PageContent
 
     /**
      * Parse a base64 image URI into the data and extension.
+     *
      * @return array{extension: array, data: string}
      */
     protected function parseBase64ImageUri(string $uri): array
     {
         [$dataDefinition, $base64ImageData] = explode(',', $uri, 2);
         $extension = strtolower(preg_split('/[\/;]/', $dataDefinition)[1] ?? '');
+
         return [
             'extension' => $extension,
-            'data' => base64_decode($base64ImageData) ?: '',
+            'data'      => base64_decode($base64ImageData) ?: '',
         ];
     }
 

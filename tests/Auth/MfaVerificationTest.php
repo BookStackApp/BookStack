@@ -242,7 +242,7 @@ class MfaVerificationTest extends TestCase
     }
 
     /**
-     * @return Array<User, string, TestResponse>
+     * @return array<User, string, TestResponse>
      */
     protected function startTotpLogin(): array
     {
@@ -260,7 +260,7 @@ class MfaVerificationTest extends TestCase
     }
 
     /**
-     * @return Array<User, string, TestResponse>
+     * @return array<User, string, TestResponse>
      */
     protected function startBackupCodeLogin($codes = ['kzzu6-1pgll', 'bzxnf-plygd', 'bwdsp-ysl51', '1vo93-ioy7n', 'lf7nw-wdyka', 'xmtrd-oplac']): array
     {
