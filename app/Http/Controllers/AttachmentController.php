@@ -68,6 +68,7 @@ class AttachmentController extends Controller
             'file' => 'required|file',
         ]);
 
+        /** @var Attachment $attachment */
         $attachment = Attachment::query()->findOrFail($attachmentId);
         $this->checkOwnablePermission('view', $attachment->page);
         $this->checkOwnablePermission('page-update', $attachment->page);
@@ -86,11 +87,10 @@ class AttachmentController extends Controller
 
     /**
      * Get the update form for an attachment.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getUpdateForm(string $attachmentId)
     {
+        /** @var Attachment $attachment */
         $attachment = Attachment::query()->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $attachment->page);
@@ -173,6 +173,7 @@ class AttachmentController extends Controller
 
     /**
      * Get the attachments for a specific page.
+     * @throws NotFoundException
      */
     public function listForPage(int $pageId)
     {

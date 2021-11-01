@@ -66,13 +66,13 @@ class CommentRepo
     /**
      * Delete a comment from the system.
      */
-    public function delete(Comment $comment)
+    public function delete(Comment $comment): void
     {
         $comment->delete();
     }
 
     /**
-     * Convert the given comment markdown text to HTML.
+     * Convert the given comment Markdown to HTML.
      */
     public function commentToHtml(string $commentText): string
     {
