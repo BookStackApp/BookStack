@@ -173,6 +173,7 @@ class AttachmentController extends Controller
 
     /**
      * Get the attachments for a specific page.
+     *
      * @throws NotFoundException
      */
     public function listForPage(int $pageId)

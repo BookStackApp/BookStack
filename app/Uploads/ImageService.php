@@ -232,6 +232,7 @@ class ImageService
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
+     *
      * @throws Exception
      * @throws InvalidArgumentException
      */
@@ -271,7 +272,7 @@ class ImageService
     {
         try {
             $thumb = $this->imageTool->make($imageData);
-        } catch (ErrorException | NotSupportedException $e) {
+        } catch (ErrorException|NotSupportedException $e) {
             throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
         }
 
@@ -452,6 +453,7 @@ class ImageService
     public function streamImageFromStorageResponse(string $imageType, string $path): StreamedResponse
     {
         $disk = $this->getStorageDisk($imageType);
+
         return $disk->response($path);
     }
 

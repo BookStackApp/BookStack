@@ -15,6 +15,7 @@ class CustomValidationServiceProvider extends ServiceProvider
     {
         Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
             $extension = strtolower($value->getClientOriginalExtension());
+
             return ImageService::isExtensionSupported($extension);
         });
 

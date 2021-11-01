@@ -9,7 +9,6 @@ use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
-use Tests\TestResponse;
 
 class AttachmentTest extends TestCase
 {
@@ -56,6 +55,7 @@ class AttachmentTest extends TestCase
         $upload = new UploadedFile($filePath, $filename, $mimeType, null, true);
 
         $this->call('POST', '/attachments/upload', ['uploaded_to' => $page->id], [], ['file' => $upload], []);
+
         return $page->attachments()->latest()->firstOrFail();
     }
 
@@ -340,5 +340,4 @@ class AttachmentTest extends TestCase
 
         $this->deleteUploads();
     }
-
 }

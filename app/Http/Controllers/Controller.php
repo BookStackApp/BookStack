@@ -6,7 +6,6 @@ use BookStack\Facades\Activity;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use BookStack\Util\WebSafeMimeSniffer;
-use finfo;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -130,8 +129,7 @@ abstract class Controller extends BaseController
      */
     protected function inlineDownloadResponse(string $content, string $fileName): Response
     {
-
-        $mime = (new WebSafeMimeSniffer)->sniff($content);
+        $mime = (new WebSafeMimeSniffer())->sniff($content);
 
         return response()->make($content, 200, [
             'Content-Type'           => $mime,
