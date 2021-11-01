@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" is verwijderd uit je favorieten',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Multi-factor methode succesvol geconfigureerd',
+    'mfa_remove_method_notification' => 'Multi-factor methode succesvol verwijderd',
 
     // Other
     'commented_on'                => 'reageerde op',
