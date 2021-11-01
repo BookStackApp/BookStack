@@ -99,7 +99,7 @@ return [
     'shelves_permissions' => 'Boekenplank permissies',
     'shelves_permissions_updated' => 'Boekenplank permissies opgeslagen',
     'shelves_permissions_active' => 'Boekenplank permissies actief',
-    'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions_cascade_warning' => 'Machtigingen op boekenplanken zijn niet automatisch een cascade om boeken te bevatten. Dit komt omdat een boek in meerdere schappen kan bestaan. Machtigingen kunnen echter worden gekopieerd naar subboeken door gebruik te maken van onderstaande optie.',
     'shelves_copy_permissions_to_books' => 'Kopieer permissies naar boeken',
     'shelves_copy_permissions' => 'Kopieer permissies',
     'shelves_copy_permissions_explain' => 'Met deze actie worden de permissies van deze boekenplank gekopieërd naar alle boeken op de plank. Voordat deze actie wordt uitgevoerd, zorg dat de wijzigingen in de permissies van deze boekenplank zijn opgeslagen.',
@@ -234,7 +234,7 @@ return [
     'pages_initial_name' => 'Nieuwe pagina',
     'pages_editing_draft_notification' => 'U bewerkt momenteel een concept dat voor het laatst is opgeslagen op :timeDiff.',
     'pages_draft_edited_notification' => 'Deze pagina is sindsdien bijgewerkt. Het wordt aanbevolen dat u dit concept verwijderd.',
-    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
+    'pages_draft_page_changed_since_creation' => 'Deze pagina is bijgewerkt sinds het aanmaken van dit concept. Het wordt aanbevolen dat u dit ontwerp verwijdert of ervoor zorgt dat u wijzigingen op de pagina niet overschrijft.',
     'pages_draft_edit_active' => [
         'start_a' => ':count gebruikers zijn begonnen deze pagina te bewerken',
         'start_b' => ':userName is begonnen met het bewerken van deze pagina',
