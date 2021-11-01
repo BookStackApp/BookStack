@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers;
 use BookStack\Facades\Activity;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
+use BookStack\Util\WebSafeMimeSniffer;
 use finfo;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -117,8 +118,9 @@ abstract class Controller extends BaseController
     protected function downloadResponse(string $content, string $fileName): Response
     {
         return response()->make($content, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Content-Type'           => 'application/octet-stream',
+            'Content-Disposition'    => 'attachment; filename="' . $fileName . '"',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 
@@ -128,12 +130,13 @@ abstract class Controller extends BaseController
      */
     protected function inlineDownloadResponse(string $content, string $fileName): Response
     {
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $mime = $finfo->buffer($content) ?: 'application/octet-stream';
+
+        $mime = (new WebSafeMimeSniffer)->sniff($content);
 
         return response()->make($content, 200, [
-            'Content-Type'        => $mime,
-            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            'Content-Type'           => $mime,
+            'Content-Disposition'    => 'inline; filename="' . $fileName . '"',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 
