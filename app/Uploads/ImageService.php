@@ -15,6 +15,8 @@ use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\ImageManager;
 use League\Flysystem\Util;
+use Log;
+use Psr\SimpleCache\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -156,7 +158,7 @@ class ImageService
         try {
             $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($fullPath, $type), $imageData);
         } catch (Exception $e) {
-            \Log::error('Error when attempting image upload:' . $e->getMessage());
+            Log::error('Error when attempting image upload:' . $e->getMessage());
 
             throw new ImageUploadException(trans('errors.path_not_writable', ['filePath' => $fullPath]));
         }
@@ -230,18 +232,10 @@ class ImageService
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
-     *
-     * @param Image $image
-     * @param int   $width
-     * @param int   $height
-     * @param bool  $keepRatio
-     *
      * @throws Exception
-     * @throws ImageUploadException
-     *
-     * @return string
+     * @throws InvalidArgumentException
      */
-    public function getThumbnail(Image $image, $width = 220, $height = 220, $keepRatio = false)
+    public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false): string
     {
         if ($keepRatio && $this->isGif($image)) {
             return $this->getPublicUrl($image->path);
@@ -269,27 +263,16 @@ class ImageService
     }
 
     /**
-     * Resize image data.
-     *
-     * @param string $imageData
-     * @param int    $width
-     * @param int    $height
-     * @param bool   $keepRatio
+     * Resize the image of given data to the specified size, and return the new image data.
      *
      * @throws ImageUploadException
-     *
-     * @return string
      */
-    protected function resizeImage(string $imageData, $width = 220, $height = null, bool $keepRatio = true)
+    protected function resizeImage(string $imageData, ?int $width, ?int $height, bool $keepRatio): string
     {
         try {
             $thumb = $this->imageTool->make($imageData);
-        } catch (Exception $e) {
-            if ($e instanceof ErrorException || $e instanceof NotSupportedException) {
-                throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
-            }
-
-            throw $e;
+        } catch (ErrorException | NotSupportedException $e) {
+            throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
         }
 
         if ($keepRatio) {
@@ -523,7 +506,7 @@ class ImageService
      */
     private function getPublicUrl(string $filePath): string
     {
-        if ($this->storageUrl === null) {
+        if (is_null($this->storageUrl)) {
             $storageUrl = config('filesystems.url');
 
             // Get the standard public s3 url if s3 is set as storage type
@@ -537,6 +520,7 @@ class ImageService
                     $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
                 }
             }
+
             $this->storageUrl = $storageUrl;
         }
 
