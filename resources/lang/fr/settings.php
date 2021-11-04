@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Nettoyer les images',
-    'maint_image_cleanup_desc' => "Scanne le contenu des pages et des révisions pour vérifier les images, les dessins en cours d'utilisation et les doublons. Assurez-vous d'avoir une sauvegarde de la base de données et des images avant de lancer ceci.",
+    'maint_image_cleanup_desc' => 'Scanne le contenu des pages et des révisions pour vérifier les images, les dessins en cours d\'utilisation et les doublons. Assurez-vous d\'avoir une sauvegarde de la base de données et des images avant de lancer ceci.',
     'maint_delete_images_only_in_revisions' => 'Supprimer également les images qui n\'existent que dans les anciennes révisions de page',
     'maint_image_cleanup_run' => 'Lancer le nettoyage',
     'maint_image_cleanup_warning' => ':count images potentiellement inutilisées trouvées. Êtes-vous sûr de vouloir supprimer ces images ?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Supprimer le rôle',
     'role_delete_confirm' => 'Ceci va supprimer le rôle \':roleName\'.',
     'role_delete_users_assigned' => 'Ce rôle a :userCount utilisateurs assignés. Vous pouvez choisir un rôle de remplacement pour ces utilisateurs.',
-    'role_delete_no_migration' => 'Ne pas assigner de nouveau rôle',
+    'role_delete_no_migration' => "Ne pas assigner de nouveau rôle",
     'role_delete_sure' => 'Êtes-vous sûr de vouloir supprimer ce rôle ?',
     'role_delete_success' => 'Le rôle a été supprimé avec succès',
     'role_edit' => 'Modifier le rôle',
