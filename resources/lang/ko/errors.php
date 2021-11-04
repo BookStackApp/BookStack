@@ -28,7 +28,7 @@ return [
     'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => '무슨 활동인지 알 수 없습니다.',
-    'social_login_bad_response' => ':socialAccount에 로그인할 수 없습니다. : \\n:error',
+    'social_login_bad_response' => ":socialAccount에 로그인할 수 없습니다. : \\n:error",
     'social_account_in_use' => ':socialAccount(을)를 가진 사용자가 있습니다. :socialAccount로 로그인하세요.',
     'social_account_email_in_use' => ':email(을)를 가진 사용자가 있습니다. 쓰고 있는 계정을 :socialAccount에 연결하세요.',
     'social_account_existing' => ':socialAccount(와)과 연결 상태입니다.',
