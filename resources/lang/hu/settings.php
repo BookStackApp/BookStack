@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Szerepkör törlése',
     'role_delete_confirm' => 'Ez törölni fogja \':roleName\' szerepkört.',
     'role_delete_users_assigned' => 'Ehhez a szerepkörhöz :userCount felhasználó van hozzárendelve. Ha a felhasználókat át kell helyezni ebből a szerepkörből, akkor ki kell választani egy új szerepkört.',
-    'role_delete_no_migration' => 'Nincs felhasználó áthelyezés',
+    'role_delete_no_migration' => "Nincs felhasználó áthelyezés",
     'role_delete_sure' => 'Biztosan törölhető ez a szerepkör?',
     'role_delete_success' => 'Szerepkör sikeresen törölve',
     'role_edit' => 'Szerepkör szerkesztése',
