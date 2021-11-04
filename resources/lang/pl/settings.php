@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Usuń rolę',
     'role_delete_confirm' => 'To spowoduje usunięcie roli \':roleName\'.',
     'role_delete_users_assigned' => 'Tę rolę ma przypisanych :userCount użytkowników. Jeśli chcesz zmigrować użytkowników z tej roli, wybierz nową poniżej.',
-    'role_delete_no_migration' => 'Nie migruj użytkowników',
+    'role_delete_no_migration' => "Nie migruj użytkowników",
     'role_delete_sure' => 'Czy na pewno chcesz usunąć tę rolę?',
     'role_delete_success' => 'Rola usunięta pomyślnie',
     'role_edit' => 'Edytuj rolę',
