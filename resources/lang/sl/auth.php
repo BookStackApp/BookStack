@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Ta e-poštna domena nima dostopa do te aplikacije',
     'register_success' => 'Hvala za registracijo! Sedaj ste registrirani in prijavljeni.',
 
-
     // Password Reset
     'reset_password' => 'Ponastavi geslo',
     'reset_password_send_instructions' => 'Spodaj vpišite vaš e-poštni naslov in prejeli boste e-pošto s povezavo za ponastavitev gesla.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Ponastavi svoje :appName geslo',
     'email_reset_text' => 'To e-poštno sporočilo ste prejeli, ker smo prejeli zahtevo za ponastavitev gesla za vaš račun.',
     'email_reset_not_requested' => 'Če niste zahtevali ponastavitve gesla, vam ni potrebno ničesar storiti.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Potrdi svojo e-pošto za :appName',

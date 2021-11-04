@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'المجال الخاص بالبريد الإلكتروني لا يملك حق الوصول لهذا التطبيق',
     'register_success' => 'شكراً لإنشاء حسابكم! تم تسجيلكم ودخولكم للحساب الخاص بكم.',
 
-
     // Password Reset
     'reset_password' => 'استعادة كلمة المرور',
     'reset_password_send_instructions' => 'أدخل بريدك الإلكتروني بالأسفل وسيتم إرسال رسالة برابط لاستعادة كلمة المرور.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'استعد كلمة المرور الخاصة بتطبيق :appName',
     'email_reset_text' => 'تم إرسال هذه الرسالة بسبب تلقينا لطلب استعادة كلمة المرور الخاصة بحسابكم.',
     'email_reset_not_requested' => 'إذا لم يتم طلب استعادة كلمة المرور من قبلكم، فلا حاجة لاتخاذ أية خطوات.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'تأكيد بريدكم الإلكتروني لتطبيق :appName',

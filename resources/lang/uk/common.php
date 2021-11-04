@@ -20,7 +20,7 @@ return [
     'role' => 'Роль',
     'cover_image' => 'Обкладинка',
     'cover_image_description' => 'Це зображення має бути приблизно 440x250px.',
-    
+
     // Actions
     'actions' => 'Дії',
     'view' => 'Подивитись',

@@ -20,7 +20,7 @@ return [
     'role' => 'نقش',
     'cover_image' => 'تصویر روی جلد',
     'cover_image_description' => 'سایز تصویر باید 440x250 باشد.',
-    
+
     // Actions
     'actions' => 'عملیات',
     'view' => 'نمایش',

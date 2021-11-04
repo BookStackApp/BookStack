@@ -20,7 +20,7 @@ return [
     'role' => 'Rol',
     'cover_image' => 'Omslagfoto',
     'cover_image_description' => 'Deze afbeelding moet ongeveer 440x250px zijn.',
-    
+
     // Actions
     'actions' => 'Acties',
     'view' => 'Bekijk',

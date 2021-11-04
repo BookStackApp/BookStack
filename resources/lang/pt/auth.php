@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'O domínio de e-mail usado não tem acesso permitido a esta aplicação',
     'register_success' => 'Obrigado por se registar! Você está agora registado e com a sessão iniciada.',
 
-
     // Password Reset
     'reset_password' => 'Redefinir Senha',
     'reset_password_send_instructions' => 'Insira o seu endereço de e-mail abaixo, e uma mensagem com o link de redefinição de palavra-passe será lhe enviada.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Redefina a sua palavra-passe de :appName',
     'email_reset_text' => 'Você recebeu este e-mail pois recebemos uma solicitação de redefinição de senha para a sua conta.',
     'email_reset_not_requested' => 'Caso não tenha sido você a solicitar a redefinição de senha, ignore este e-mail.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Confirme o seu endereço de e-mail para :appName',

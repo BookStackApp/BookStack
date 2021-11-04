@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Údržba',
     'maint_image_cleanup' => 'Prečistenie obrázkov',
-    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_desc' => 'Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Spustiť prečistenie',
     'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Zmazať rolu',
     'role_delete_confirm' => 'Toto zmaže rolu menom \':roleName\'.',
     'role_delete_users_assigned' => 'Túto rolu má priradenú :userCount používateľov. Ak chcete premigrovať používateľov z tejto roly, vyberte novú rolu nižšie.',
-    'role_delete_no_migration' => "Nemigrovať používateľov",
+    'role_delete_no_migration' => 'Nemigrovať používateľov',
     'role_delete_sure' => 'Ste si istý, že chcete zmazať túto rolu?',
     'role_delete_success' => 'Rola úspešne zmazaná',
     'role_edit' => 'Upraviť rolu',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

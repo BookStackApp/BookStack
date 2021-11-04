@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Biztosan törölhető ez a változat?',
     'revision_restore_confirm' => 'Biztosan visszaállítható ez a változat? A oldal jelenlegi tartalma le lesz cserélve.',
     'revision_delete_success' => 'Változat törölve',
-    'revision_cannot_delete_latest' => 'A legutolsó változat nem törölhető.'
+    'revision_cannot_delete_latest' => 'A legutolsó változat nem törölhető.',
 ];

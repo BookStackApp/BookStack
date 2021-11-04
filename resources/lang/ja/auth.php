@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'このEmailドメインでの登録は許可されていません。',
     'register_success' => '登録が完了し、ログインできるようになりました！',
 
-
     // Password Reset
     'reset_password' => 'パスワードリセット',
     'reset_password_send_instructions' => '以下にEメールアドレスを入力すると、パスワードリセットリンクが記載されたメールが送信されます。',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => ':appNameのパスワードをリセット',
     'email_reset_text' => 'このメールは、パスワードリセットがリクエストされたため送信されています。',
     'email_reset_not_requested' => 'もしパスワードリセットを希望しない場合、操作は不要です。',
-
 
     // Email Confirmation
     'email_confirm_subject' => ':appNameのメールアドレス確認',

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'メンテナンス',
     'maint_image_cleanup' => '画像のクリーンアップ',
-    'maint_image_cleanup_desc' => "ページや履歴の内容をスキャンして、どの画像や図面が現在使用されているか、どの画像が余っているかをチェックします。この機能を実行する前に、データベースと画像の完全なバックアップを作成してください。",
+    'maint_image_cleanup_desc' => 'ページや履歴の内容をスキャンして、どの画像や図面が現在使用されているか、どの画像が余っているかをチェックします。この機能を実行する前に、データベースと画像の完全なバックアップを作成してください。',
     'maint_delete_images_only_in_revisions' => 'また、古いページのリビジョンにしか存在しない画像も削除します。',
     'maint_image_cleanup_run' => 'クリーンアップを実行',
     'maint_image_cleanup_warning' => ':count 個、使用されていない可能性のある画像が見つかりました。これらの画像を削除してもよろしいですか？',
@@ -132,7 +132,7 @@ return [
     'role_delete' => '役割を削除',
     'role_delete_confirm' => '役割「:roleName」を削除します。',
     'role_delete_users_assigned' => 'この役割は:userCount人のユーザに付与されています。該当するユーザを他の役割へ移行できます。',
-    'role_delete_no_migration' => "ユーザを移行しない",
+    'role_delete_no_migration' => 'ユーザを移行しない',
     'role_delete_sure' => '本当に役割を削除してよろしいですか？',
     'role_delete_success' => '役割を削除しました',
     'role_edit' => '役割を編集',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Manutenção',
     'maint_image_cleanup' => 'Limpeza de Imagens',
-    'maint_image_cleanup_desc' => "Examina páginas e reviste os seus conteúdos para verificar quais imagens e desenhos estão atualmente em uso e quais são redundantes. Certifique-se de criar uma cópia de segurança completa da base de dados e imagens antes de executar esta ação.",
+    'maint_image_cleanup_desc' => 'Examina páginas e reviste os seus conteúdos para verificar quais imagens e desenhos estão atualmente em uso e quais são redundantes. Certifique-se de criar uma cópia de segurança completa da base de dados e imagens antes de executar esta ação.',
     'maint_delete_images_only_in_revisions' => 'Eliminar também imagens que existam apenas em revisões de página antigas',
     'maint_image_cleanup_run' => 'Executar Limpeza',
     'maint_image_cleanup_warning' => ':count imagens potencialmente não utilizadas foram encontradas. Tem certeza de que deseja eliminar estas imagens?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Excluir Cargo',
     'role_delete_confirm' => 'A ação vai eliminar o cargo de nome \':roleName\'.',
     'role_delete_users_assigned' => 'Esse cargo tem :userCount utilizadores vinculados nele. Se quiser migrar utilizadores deste cargo para outro, selecione um novo cargo.',
-    'role_delete_no_migration' => "Não migrar utilizadores",
+    'role_delete_no_migration' => 'Não migrar utilizadores',
     'role_delete_sure' => 'Tem certeza que deseja excluir este cargo?',
     'role_delete_success' => 'Cargo excluído com sucesso',
     'role_edit' => 'Editar Cargo',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

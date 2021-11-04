@@ -3,11 +3,14 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Uploads\Image;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Bookshelf extends Entity implements HasCoverImage
 {
+    use HasFactory;
+
     protected $table = 'bookshelves';
 
     public $searchFactor = 3;

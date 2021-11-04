@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Bảo trì',
     'maint_image_cleanup' => 'Dọn dẹp ảnh',
-    'maint_image_cleanup_desc' => "Quét nội dung trang và phiên bản để kiểm tra xem các ảnh và hình vẽ nào đang được sử dụng và ảnh nào dư thừa. Đảm bảo rằng bạn đã tạo bản sao lưu toàn dữ liệu và ảnh trước khi chạy chức năng này.",
+    'maint_image_cleanup_desc' => 'Quét nội dung trang và phiên bản để kiểm tra xem các ảnh và hình vẽ nào đang được sử dụng và ảnh nào dư thừa. Đảm bảo rằng bạn đã tạo bản sao lưu toàn dữ liệu và ảnh trước khi chạy chức năng này.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Chạy Dọn dẹp',
     'maint_image_cleanup_warning' => 'Đã tìm thấy :count ảnh có thể không được sử dụng. Bạn muốn chắc rằng muốn xóa các ảnh này?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Xóa quyền',
     'role_delete_confirm' => 'Chức năng này sẽ xóa quyền với tên \':roleName\'.',
     'role_delete_users_assigned' => 'Quyền này có :userCount người dùng được gán. Nếu bạn muốn di dời các người dùng từ quyền này hãy chọn một quyền mới bên dưới.',
-    'role_delete_no_migration' => "Không di dời các người dùng",
+    'role_delete_no_migration' => 'Không di dời các người dùng',
     'role_delete_sure' => 'Bạn có chắc rằng muốn xóa quyền này?',
     'role_delete_success' => 'Quyền đã được xóa thành công',
     'role_edit' => 'Sửa quyền',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

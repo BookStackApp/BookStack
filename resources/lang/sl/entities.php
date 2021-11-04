@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Ali ste prepričani, da želite izbrisati to revizijo?',
     'revision_restore_confirm' => 'Ali ste prepričani da želite obnoviti to revizijo? Vsebina trenutne strani bo zamenjana.',
     'revision_delete_success' => 'Revizija izbrisana',
-    'revision_cannot_delete_latest' => 'Ne morem izbrisati zadnje revizije.'
+    'revision_cannot_delete_latest' => 'Ne morem izbrisati zadnje revizije.',
 ];

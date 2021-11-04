@@ -18,6 +18,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -43,6 +44,7 @@ use Illuminate\Support\Collection;
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Loggable, Sluggable
 {
+    use HasFactory;
     use Authenticatable;
     use CanResetPassword;
     use Notifiable;
@@ -90,7 +92,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Returns the default public user.
      */
-    public static function getDefault(): User
+    public static function getDefault(): self
     {
         if (!is_null(static::$defaultUser)) {
             return static::$defaultUser;
@@ -336,7 +338,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function logDescriptor(): string
     {
@@ -344,7 +346,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function refreshSlug(): string
     {

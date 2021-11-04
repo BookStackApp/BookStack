@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => '這個電子郵件網域沒有權限使用',
     'register_success' => '感謝您註冊！您已註冊完成並可登入。',
 
-
     // Password Reset
     'reset_password' => '重設密碼',
     'reset_password_send_instructions' => '在下方輸入您的電子郵件，您將收到一封帶有密碼重設連結的郵件。',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => '重設您的 :appName 密碼',
     'email_reset_text' => '您收到此電子郵件是因為我們收到了您的帳號的密碼重設請求。',
     'email_reset_not_requested' => '如果您沒有要求重設密碼，則不需要採取進一步的操作。',
-
 
     // Email Confirmation
     'email_confirm_subject' => '確認您在 :appName 的電子郵件',

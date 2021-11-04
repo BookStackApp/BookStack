@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => '维护',
     'maint_image_cleanup' => '清理图像',
-    'maint_image_cleanup_desc' => "扫描页面和修订内容以检查哪些图片是正在使用的以及哪些图片是多余的。确保在运行前完整备份数据库和图片。",
+    'maint_image_cleanup_desc' => '扫描页面和修订内容以检查哪些图片是正在使用的以及哪些图片是多余的。确保在运行前完整备份数据库和图片。',
     'maint_delete_images_only_in_revisions' => '同时删除只存在于旧的页面修订中的图片',
     'maint_image_cleanup_run' => '运行清理',
     'maint_image_cleanup_warning' => '发现了 :count 张可能未使用的图像。您确定要删除这些图像吗？',
@@ -132,7 +132,7 @@ return [
     'role_delete' => '删除角色',
     'role_delete_confirm' => '这将会删除名为 \':roleName\' 的角色.',
     'role_delete_users_assigned' => '有:userCount位用户属于此角色。如果您想将此角色中的用户迁移，请在下面选择一个新角色。',
-    'role_delete_no_migration' => "不要迁移用户",
+    'role_delete_no_migration' => '不要迁移用户',
     'role_delete_sure' => '您确定要删除这个角色？',
     'role_delete_success' => '角色删除成功',
     'role_edit' => '编辑角色',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

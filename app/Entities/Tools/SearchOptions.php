@@ -29,7 +29,7 @@ class SearchOptions
     /**
      * Create a new instance from a search string.
      */
-    public static function fromString(string $search): SearchOptions
+    public static function fromString(string $search): self
     {
         $decoded = static::decode($search);
         $instance = new static();
@@ -45,7 +45,7 @@ class SearchOptions
      * Will look for a classic string term and use that
      * Otherwise we'll use the details from an advanced search form.
      */
-    public static function fromRequest(Request $request): SearchOptions
+    public static function fromRequest(Request $request): self
     {
         if (!$request->has('search') && !$request->has('term')) {
             return static::fromString('');

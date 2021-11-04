@@ -7,7 +7,7 @@
 return [
 
     'password' => 'Paroolides peab olema vähemalt kaheksa tähemärki ja nad peavad omavahel ühtima.',
-    'user' => "Sellise e-posti aadressiga kasutajat ei leitud.",
+    'user' => 'Sellise e-posti aadressiga kasutajat ei leitud.',
     'token' => 'Parooli lähtestamise link ei kehti selle e-posti aadressiga.',
     'sent' => 'Parooli lähtestamise link saadeti e-postiga!',
     'reset' => 'Parool on lähtestatud!',

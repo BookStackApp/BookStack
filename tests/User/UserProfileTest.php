@@ -14,7 +14,7 @@ class UserProfileTest extends TestCase
      */
     protected $user;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->user = User::all()->last();
@@ -42,7 +42,7 @@ class UserProfileTest extends TestCase
 
     public function test_profile_page_shows_created_content_counts()
     {
-        $newUser = factory(User::class)->create();
+        $newUser = User::factory()->create();
 
         $this->asAdmin()->get('/user/' . $newUser->slug)
             ->assertSee($newUser->name)
@@ -61,7 +61,7 @@ class UserProfileTest extends TestCase
 
     public function test_profile_page_shows_recent_activity()
     {
-        $newUser = factory(User::class)->create();
+        $newUser = User::factory()->create();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
         Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
@@ -75,7 +75,7 @@ class UserProfileTest extends TestCase
 
     public function test_user_activity_has_link_leading_to_profile()
     {
-        $newUser = factory(User::class)->create();
+        $newUser = User::factory()->create();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
         Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);

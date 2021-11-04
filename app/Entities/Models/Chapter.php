@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Collection;
 
 /**
@@ -12,6 +13,8 @@ use Illuminate\Support\Collection;
  */
 class Chapter extends BookChild
 {
+    use HasFactory;
+
     public $searchFactor = 1.3;
 
     protected $fillable = ['name', 'description', 'priority', 'book_id'];

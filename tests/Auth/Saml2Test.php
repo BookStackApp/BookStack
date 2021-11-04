@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class Saml2Test extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         // Set default config for SAML2
@@ -49,7 +49,7 @@ class Saml2Test extends TestCase
         $req = $this->get('/saml2/metadata');
         $req->assertSee('https://example.com/super-cats');
         $req->assertSee('md:ContactPerson');
-        $req->assertSee('<md:GivenName>Barry Scott</md:GivenName>');
+        $req->assertSee('<md:GivenName>Barry Scott</md:GivenName>', false);
     }
 
     public function test_login_option_shows_on_login_page()
@@ -119,7 +119,7 @@ class Saml2Test extends TestCase
             'saml2.remove_from_groups' => false,
         ]);
 
-        $memberRole = factory(Role::class)->create(['external_auth_id' => 'member']);
+        $memberRole = Role::factory()->create(['external_auth_id' => 'member']);
         $adminRole = Role::getSystemRole('admin');
 
         $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
@@ -141,7 +141,7 @@ class Saml2Test extends TestCase
         $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
         $user = User::query()->where('external_auth_id', '=', 'user')->first();
 
-        $randomRole = factory(Role::class)->create(['external_auth_id' => 'random']);
+        $randomRole = Role::factory()->create(['external_auth_id' => 'random']);
         $user->attachRole($randomRole);
         $this->assertContains($randomRole->id, $user->roles()->pluck('id'));
 
@@ -295,7 +295,7 @@ class Saml2Test extends TestCase
             'saml2.remove_from_groups' => false,
         ]);
 
-        $memberRole = factory(Role::class)->create(['external_auth_id' => 'member']);
+        $memberRole = Role::factory()->create(['external_auth_id' => 'member']);
         $adminRole = Role::getSystemRole('admin');
 
         $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);

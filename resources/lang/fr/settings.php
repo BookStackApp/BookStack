@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Supprimer le rôle',
     'role_delete_confirm' => 'Ceci va supprimer le rôle \':roleName\'.',
     'role_delete_users_assigned' => 'Ce rôle a :userCount utilisateurs assignés. Vous pouvez choisir un rôle de remplacement pour ces utilisateurs.',
-    'role_delete_no_migration' => "Ne pas assigner de nouveau rôle",
+    'role_delete_no_migration' => 'Ne pas assigner de nouveau rôle',
     'role_delete_sure' => 'Êtes-vous sûr de vouloir supprimer ce rôle ?',
     'role_delete_success' => 'Le rôle a été supprimé avec succès',
     'role_edit' => 'Modifier le rôle',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Weet u zeker dat u deze revisie wilt verwijderen?',
     'revision_restore_confirm' => 'Weet u zeker dat u deze revisie wilt herstellen? De huidige pagina-inhoud wordt vervangen.',
     'revision_delete_success' => 'Revisie verwijderd',
-    'revision_cannot_delete_latest' => 'Kan de laatste revisie niet verwijderen.'
+    'revision_cannot_delete_latest' => 'Kan de laatste revisie niet verwijderen.',
 ];

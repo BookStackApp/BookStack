@@ -94,7 +94,7 @@ return [
     'shelves_edit' => '서가 바꾸기',
     'shelves_delete' => '서가 삭제하기',
     'shelves_delete_named' => ':name 삭제하기',
-    'shelves_delete_explain' => ":name을 지웁니다. 책자는 지우지 않습니다.",
+    'shelves_delete_explain' => ':name을 지웁니다. 책자는 지우지 않습니다.',
     'shelves_delete_confirmation' => '이 서가를 지울 건가요?',
     'shelves_permissions' => '서가 권한',
     'shelves_permissions_updated' => '서가 권한 바꿈',
@@ -255,7 +255,7 @@ return [
     'tags' =>  '꼬리표',
     'tag_name' =>  '꼬리표 이름',
     'tag_value' => '리스트 값 (선택 사항)',
-    'tags_explain' => "태그로 문서를 분류하세요.",
+    'tags_explain' => '태그로 문서를 분류하세요.',
     'tags_add' => '태그 추가',
     'tags_remove' => '태그 삭제',
     'attachments' => '첨부 파일',
@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => '이 수정본을 지울 건가요?',
     'revision_restore_confirm' => '이 수정본을 되돌릴 건가요? 현재 판본을 바꿉니다.',
     'revision_delete_success' => '수정본 지움',
-    'revision_cannot_delete_latest' => '현재 판본은 지울 수 없습니다.'
+    'revision_cannot_delete_latest' => '현재 판본은 지울 수 없습니다.',
 ];

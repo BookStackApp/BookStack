@@ -20,7 +20,7 @@ return [
     'role' => '権限',
     'cover_image' => 'カバー画像',
     'cover_image_description' => 'この画像はおよそ440x250pxの大きさが必要です。',
-    
+
     // Actions
     'actions' => '実行',
     'view' => '表示',

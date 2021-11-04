@@ -20,7 +20,7 @@ return [
     'role' => 'Rol',
     'cover_image' => 'Kapak resmi',
     'cover_image_description' => 'Bu görsel yaklaşık 440x250px boyutlarında olmalıdır.',
-    
+
     // Actions
     'actions' => 'İşlemler',
     'view' => 'Görüntüle',

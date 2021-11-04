@@ -6,6 +6,7 @@ use BookStack\Entities\Tools\PageContent;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Permissions;
@@ -25,6 +26,8 @@ use Permissions;
  */
 class Page extends BookChild
 {
+    use HasFactory;
+
     public static $listAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'text', 'created_at', 'updated_at', 'priority'];
     public static $contentAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'html', 'text', 'created_at', 'updated_at', 'priority'];
 
@@ -129,7 +132,7 @@ class Page extends BookChild
     /**
      * Get this page for JSON display.
      */
-    public function forJsonDisplay(): Page
+    public function forJsonDisplay(): self
     {
         $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
         $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
