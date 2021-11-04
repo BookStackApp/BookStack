@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Удалить роль',
     'role_delete_confirm' => 'Это удалит роль с именем \':roleName\'.',
     'role_delete_users_assigned' => 'Эта роль назначена :userCount пользователям. Если вы хотите перенести их, выберите новую роль ниже.',
-    'role_delete_no_migration' => 'Не переносить пользователей',
+    'role_delete_no_migration' => "Не переносить пользователей",
     'role_delete_sure' => 'Вы уверены что хотите удалить данную роль?',
     'role_delete_success' => 'Роль успешно удалена',
     'role_edit' => 'Редактировать роль',

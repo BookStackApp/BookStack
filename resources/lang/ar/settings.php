@@ -132,7 +132,7 @@ return [
     'role_delete' => 'حذف الدور',
     'role_delete_confirm' => 'سيتم حذف الدور المسمى \':roleName\'.',
     'role_delete_users_assigned' => 'هذا الدور له: عدد المستخدمين المعينين له. إذا كنت ترغب في ترحيل المستخدمين من هذا الدور ، فحدد دورًا جديدًا أدناه.',
-    'role_delete_no_migration' => 'لا تقم بترجيل المستخدمين',
+    'role_delete_no_migration' => "لا تقم بترجيل المستخدمين",
     'role_delete_sure' => 'تأكيد حذف الدور؟',
     'role_delete_success' => 'تم حذف الدور بنجاح',
     'role_edit' => 'تعديل الدور',

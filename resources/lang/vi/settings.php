@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Xóa quyền',
     'role_delete_confirm' => 'Chức năng này sẽ xóa quyền với tên \':roleName\'.',
     'role_delete_users_assigned' => 'Quyền này có :userCount người dùng được gán. Nếu bạn muốn di dời các người dùng từ quyền này hãy chọn một quyền mới bên dưới.',
-    'role_delete_no_migration' => 'Không di dời các người dùng',
+    'role_delete_no_migration' => "Không di dời các người dùng",
     'role_delete_sure' => 'Bạn có chắc rằng muốn xóa quyền này?',
     'role_delete_success' => 'Quyền đã được xóa thành công',
     'role_edit' => 'Sửa quyền',
