@@ -30,8 +30,8 @@ return [
     'disks' => [
 
         'local' => [
-            'driver' => 'local',
-            'root'   => public_path(),
+            'driver'     => 'local',
+            'root'       => public_path(),
             'visibility' => 'public',
         ],
 
@@ -41,8 +41,8 @@ return [
         ],
 
         'local_secure_images' => [
-            'driver' => 'local',
-            'root'   => storage_path('uploads/images/'),
+            'driver'     => 'local',
+            'root'       => storage_path('uploads/images/'),
             'visibility' => 'public',
         ],
 
