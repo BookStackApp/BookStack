@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Jeste li sigurni da želite izbrisati ovaj ispravak?',
     'revision_restore_confirm' => 'Jeste li sigurni da želite vratiti ovaj ispravak? Trenutni sadržaj će biti zamijenjen.',
     'revision_delete_success' => 'Izbrisani ispravak',
-    'revision_cannot_delete_latest' => 'Posljednji ispravak se ne može izbrisati.'
+    'revision_cannot_delete_latest' => 'Posljednji ispravak se ne može izbrisati.',
 ];

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Apkope',
     'maint_image_cleanup' => 'Tīrīt neizmantotās bildes',
-    'maint_image_cleanup_desc' => "Pārbauda lapu un lapu versiju saturu, lai noteiktu, kuri attēli pašlaik tiek izmantoti, un kuri nav nepieciešami. Pārliecinieties, ka ir veikta pilna datubāzes un attēlu rezerves kopija pirms šīs darbības.",
+    'maint_image_cleanup_desc' => 'Pārbauda lapu un lapu versiju saturu, lai noteiktu, kuri attēli pašlaik tiek izmantoti, un kuri nav nepieciešami. Pārliecinieties, ka ir veikta pilna datubāzes un attēlu rezerves kopija pirms šīs darbības.',
     'maint_delete_images_only_in_revisions' => 'Dzēst arī attēlus, kas izmantoti tikai vecās lapu satura versijās',
     'maint_image_cleanup_run' => 'Veikt tīrīšanu',
     'maint_image_cleanup_warning' => ':count iespējami neizmantoti attēli atrasti. Vai tiešām vēlaties izdzēst šos attēlus?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Dzēst grupu',
     'role_delete_confirm' => 'Loma \':roleName\' tiks dzēsta.',
     'role_delete_users_assigned' => 'Šajā grupā ir pievienoti :userCount lietotāji. Ja vēlaties pārvietot lietotājus no šīs grupas, tad izvēlaties kādu no zemāk redzamajām grupām.',
-    'role_delete_no_migration' => "Nepārvietot lietotājus",
+    'role_delete_no_migration' => 'Nepārvietot lietotājus',
     'role_delete_sure' => 'Vai tiešām vēlaties dzēst grupu?',
     'role_delete_success' => 'Grupa veiksmīgi dzēsta',
     'role_edit' => 'Rediģēt grupu',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

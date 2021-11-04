@@ -94,7 +94,7 @@ return [
     'shelves_edit' => 'ערוך מדף',
     'shelves_delete' => 'מחק מדף',
     'shelves_delete_named' => 'מחיקת דף :name',
-    'shelves_delete_explain' => "פעולה זו תמחק את המדף :name - הספרים שמופיעים בו ימחקו גם כן!",
+    'shelves_delete_explain' => 'פעולה זו תמחק את המדף :name - הספרים שמופיעים בו ימחקו גם כן!',
     'shelves_delete_confirmation' => 'האם ברצונך למחוק את המדף?',
     'shelves_permissions' => 'הרשאות מדף',
     'shelves_permissions_updated' => 'הרשאות מדף עודכנו',
@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'האם ברצונך למחוק נוסח זה?',
     'revision_restore_confirm' => 'האם ברצונך לשחזר נוסח זה? תוכן הדף הנוכחי יעודכן לנוסח זה.',
     'revision_delete_success' => 'נוסח נמחק',
-    'revision_cannot_delete_latest' => 'לא ניתן למחוק את הנוסח האחרון'
+    'revision_cannot_delete_latest' => 'לא ניתן למחוק את הנוסח האחרון',
 ];

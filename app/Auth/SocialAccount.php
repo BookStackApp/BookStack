@@ -21,7 +21,7 @@ class SocialAccount extends Model implements Loggable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function logDescriptor(): string
     {

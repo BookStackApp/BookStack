@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => '이 메일 주소로는 이 사이트에 접근할 수 없습니다.',
     'register_success' => '가입했습니다! 이제 로그인할 수 있습니다.',
 
-
     // Password Reset
     'reset_password' => '비밀번호 바꾸기',
     'reset_password_send_instructions' => '메일 주소를 입력하세요. 이 주소로 해당 과정을 위한 링크를 보낼 것입니다.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => ':appName 비밀번호 바꾸기',
     'email_reset_text' => '비밀번호를 바꿉니다.',
     'email_reset_not_requested' => '원하지 않는다면 이 과정은 필요 없습니다.',
-
 
     // Email Confirmation
     'email_confirm_subject' => ':appName 메일 인증',

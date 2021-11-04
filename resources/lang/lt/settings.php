@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Priežiūra',
     'maint_image_cleanup' => 'Išvalykite vaizdus',
-    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_desc' => 'Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.',
     'maint_delete_images_only_in_revisions' => 'Taip pat ištrinkite vaizdus, kurie yra tik senuose puslapių pataisymuose',
     'maint_image_cleanup_run' => 'Paleisti valymą',
     'maint_image_cleanup_warning' => ':count potencialiai nepanaudoti vaizdai rasti. Ar esate tikri, kad norite ištrinti šiuos vaizdus?',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

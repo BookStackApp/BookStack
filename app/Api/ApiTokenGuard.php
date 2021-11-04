@@ -42,7 +42,7 @@ class ApiTokenGuard implements Guard
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function user()
     {
@@ -152,7 +152,7 @@ class ApiTokenGuard implements Guard
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function validate(array $credentials = [])
     {

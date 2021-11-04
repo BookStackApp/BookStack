@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Pemeliharaan',
     'maint_image_cleanup' => 'Gambar Bersihkan',
-    'maint_image_cleanup_desc' => "Pindai halaman & konten revisi untuk memeriksa gambar dan gambar mana yang saat ini digunakan dan gambar mana yang berlebihan. Pastikan Anda membuat database lengkap dan cadangan gambar sebelum menjalankan ini.",
+    'maint_image_cleanup_desc' => 'Pindai halaman & konten revisi untuk memeriksa gambar dan gambar mana yang saat ini digunakan dan gambar mana yang berlebihan. Pastikan Anda membuat database lengkap dan cadangan gambar sebelum menjalankan ini.',
     'maint_delete_images_only_in_revisions' => 'Hapus juga gambar yang hanya ada di revisi halaman lama',
     'maint_image_cleanup_run' => 'Jalankan Pembersihan',
     'maint_image_cleanup_warning' => ':count ditemukan gambar yang berpotensi tidak digunakan. Anda yakin ingin menghapus gambar-gambar ini?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Hapus Peran',
     'role_delete_confirm' => 'Ini akan menghapus peran dengan nama \':roleName\'.',
     'role_delete_users_assigned' => 'Peran ini memiliki :userCount pengguna yang ditugaskan padanya. Jika Anda ingin memindahkan pengguna dari peran ini pilih peran baru di bawah.',
-    'role_delete_no_migration' => "Jangan migrasikan pengguna",
+    'role_delete_no_migration' => 'Jangan migrasikan pengguna',
     'role_delete_sure' => 'Anda yakin ingin menghapus peran ini?',
     'role_delete_success' => 'Peran berhasil dihapus',
     'role_edit' => 'Edit Peran',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

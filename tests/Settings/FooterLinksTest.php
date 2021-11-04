@@ -31,10 +31,10 @@ class FooterLinksTest extends TestCase
         ]]);
 
         $resp = $this->asAdmin()->get('/settings');
-        $resp->assertSee('value="My custom link"');
-        $resp->assertSee('value="Another Link"');
-        $resp->assertSee('value="https://example.com/link-a"');
-        $resp->assertSee('value="https://example.com/link-b"');
+        $resp->assertSee('value="My custom link"', false);
+        $resp->assertSee('value="Another Link"', false);
+        $resp->assertSee('value="https://example.com/link-a"', false);
+        $resp->assertSee('value="https://example.com/link-b"', false);
     }
 
     public function test_footer_links_show_on_pages()

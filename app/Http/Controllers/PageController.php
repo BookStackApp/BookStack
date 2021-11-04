@@ -176,7 +176,7 @@ class PageController extends Controller
     {
         $page = $this->pageRepo->getById($pageId);
         $page->setHidden(array_diff($page->getHidden(), ['html', 'markdown']));
-        $page->addHidden(['book']);
+        $page->makeHidden(['book']);
 
         return response()->json($page);
     }

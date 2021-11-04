@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Aquest domini de correu electrònic no té accés a aquesta aplicació',
     'register_success' => 'Gràcies per registrar-vos! Ja us hi heu registrat i heu iniciat la sessió.',
 
-
     // Password Reset
     'reset_password' => 'Restableix la contrasenya',
     'reset_password_send_instructions' => 'Introduïu la vostra adreça electrònica a continuació i us enviarem un correu electrònic amb un enllaç per a restablir la contrasenya.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Restabliu la contrasenya a :appName',
     'email_reset_text' => 'Rebeu aquest correu electrònic perquè heu rebut una petició de restabliment de contrasenya per al vostre compte.',
     'email_reset_not_requested' => 'Si no heu demanat restablir la contrasenya, no cal que prengueu cap acció.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Confirmeu la vostra adreça electrònica a :appName',

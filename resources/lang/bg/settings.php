@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Cleanup Images',
-    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_desc' => 'Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Run Cleanup',
     'maint_image_cleanup_warning' => ':count potentially unused images were found. Are you sure you want to delete these images?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Изтрий роля',
     'role_delete_confirm' => 'Това ще изтрие ролята \':roleName\'.',
     'role_delete_users_assigned' => 'В тази роля се намират :userCount потребители. Ако искате да преместите тези потребители в друга роля, моля изберете нова роля отдолу.',
-    'role_delete_no_migration' => "Не премествай потребителите в нова роля",
+    'role_delete_no_migration' => 'Не премествай потребителите в нова роля',
     'role_delete_sure' => 'Сигурни ли сте, че искате да изтриете тази роля?',
     'role_delete_success' => 'Ролята беше успешно изтрита',
     'role_edit' => 'Редактиране на роля',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

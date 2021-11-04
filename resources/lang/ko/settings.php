@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => '데이터',
     'maint_image_cleanup' => '이미지 정리',
-    'maint_image_cleanup_desc' => "중복한 이미지를 찾습니다. 실행하기 전에 이미지를 백업하세요.",
+    'maint_image_cleanup_desc' => '중복한 이미지를 찾습니다. 실행하기 전에 이미지를 백업하세요.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => '실행',
     'maint_image_cleanup_warning' => '이미지 :count개를 지울 건가요?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => '권한 제거',
     'role_delete_confirm' => ':roleName(을)를 지웁니다.',
     'role_delete_users_assigned' => '이 권한을 가진 사용자 :userCount명에 할당할 권한을 고르세요.',
-    'role_delete_no_migration' => "할당하지 않음",
+    'role_delete_no_migration' => '할당하지 않음',
     'role_delete_sure' => '이 권한을 지울 건가요?',
     'role_delete_success' => '권한 지움',
     'role_edit' => '권한 수정',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

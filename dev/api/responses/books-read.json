@@ -3,8 +3,8 @@
   "name": "My own book",
   "slug": "my-own-book",
   "description": "This is my own little book",
-  "created_at": "2020-01-12 14:09:59",
-  "updated_at": "2020-01-12 14:11:51",
+  "created_at": "2020-01-12T14:09:59.000000Z",
+  "updated_at": "2020-01-12T14:11:51.000000Z",
   "created_by": {
     "id": 1,
     "name": "Admin"
@@ -29,8 +29,8 @@
     "id": 452,
     "name": "sjovall_m117hUWMu40.jpg",
     "url": "http:\/\/bookstack.local\/uploads\/images\/cover_book\/2020-01\/sjovall_m117hUWMu40.jpg",
-    "created_at": "2020-01-12 14:11:51",
-    "updated_at": "2020-01-12 14:11:51",
+    "created_at": "2020-01-12T14:11:51.000000Z",
+    "updated_at": "2020-01-12T14:11:51.000000Z",
     "created_by": 1,
     "updated_by": 1,
     "path": "\/uploads\/images\/cover_book\/2020-01\/sjovall_m117hUWMu40.jpg",

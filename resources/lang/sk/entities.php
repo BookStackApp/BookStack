@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Naozaj chcete túto revíziu odstrániť?',
     'revision_restore_confirm' => 'Naozaj chcete obnoviť túto revíziu? Aktuálny obsah stránky sa nahradí.',
     'revision_delete_success' => 'Revízia bola vymazaná',
-    'revision_cannot_delete_latest' => 'Nie je možné vymazať poslednú revíziu.'
+    'revision_cannot_delete_latest' => 'Nie je možné vymazať poslednú revíziu.',
 ];

@@ -11,7 +11,7 @@ class Kernel extends HttpKernel
      * These middleware are run during every request to your application.
      */
     protected $middleware = [
-        \BookStack\Http\Middleware\CheckForMaintenanceMode::class,
+        \BookStack\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \BookStack\Http\Middleware\TrimStrings::class,
         \BookStack\Http\Middleware\TrustProxies::class,

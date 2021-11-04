@@ -20,7 +20,7 @@ class PrettyException extends Exception implements Responsable
     /**
      * Render a response for when this exception occurs.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function toResponse($request)
     {

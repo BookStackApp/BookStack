@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'E-pasta domēnam nav piekļuves pie šīs aplikācijas',
     'register_success' => 'Paldies par reģistrēšanos! Tagad varat pieslēgties.',
 
-
     // Password Reset
     'reset_password' => 'Atiestatīt paroli',
     'reset_password_send_instructions' => 'Ievadiet savu e-pastu zemāk un nosūtīsim e-pastu ar paroles atiestatīšanas saiti.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Atiestatīt :appName paroli',
     'email_reset_text' => 'Jūs saņemat šo e-pastu, jo mēs saņēmām Jūsu profila paroles atiestatīšanas pieprasījumu.',
     'email_reset_not_requested' => 'Ja Jūs nepieprasījāt paroles atiestatīšanu, tad tālākas darbības nav nepieciešamas.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Apstiprinat savu :appName e-pastu',

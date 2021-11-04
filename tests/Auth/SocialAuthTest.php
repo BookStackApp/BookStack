@@ -15,7 +15,7 @@ class SocialAuthTest extends TestCase
 {
     public function test_social_registration()
     {
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         $this->setSettings(['registration-enabled' => 'true']);
         config(['GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
@@ -118,7 +118,7 @@ class SocialAuthTest extends TestCase
             'APP_URL'                   => 'http://localhost',
         ]);
 
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);
         $mockSocialUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
@@ -156,7 +156,7 @@ class SocialAuthTest extends TestCase
             'APP_URL'                   => 'http://localhost', 'services.google.auto_register' => true, 'services.google.auto_confirm' => true,
         ]);
 
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);
         $mockSocialUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
@@ -188,7 +188,7 @@ class SocialAuthTest extends TestCase
 
     public function test_social_registration_with_no_name_uses_email_as_name()
     {
-        $user = factory(User::class)->make(['email' => 'nonameuser@example.com']);
+        $user = User::factory()->make(['email' => 'nonameuser@example.com']);
 
         $this->setSettings(['registration-enabled' => 'true']);
         config(['GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);

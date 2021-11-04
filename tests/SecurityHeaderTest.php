@@ -76,7 +76,7 @@ class SecurityHeaderTest extends TestCase
 
         $nonce = app()->make(CspService::class)->getNonce();
         $this->assertStringContainsString('nonce-' . $nonce, $scriptHeader);
-        $resp->assertSee('<script nonce="' . $nonce . '">console.log("cat");</script>');
+        $resp->assertSee('<script nonce="' . $nonce . '">console.log("cat");</script>', false);
     }
 
     public function test_script_csp_nonce_changes_per_request()

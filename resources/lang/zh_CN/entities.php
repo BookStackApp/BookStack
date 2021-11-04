@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => '您确定要删除此修订版吗？',
     'revision_restore_confirm' => '您确定要恢复到此修订版吗？恢复后原有内容将会被替换。',
     'revision_delete_success' => '修订删除',
-    'revision_cannot_delete_latest' => '无法删除最新版本。'
+    'revision_cannot_delete_latest' => '无法删除最新版本。',
 ];

@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Tên miền của email không có quyền truy cập tới ứng dụng này',
     'register_success' => 'Cảm ơn bạn đã đăng kí! Bạn đã được xác nhận và đăng nhập.',
 
-
     // Password Reset
     'reset_password' => 'Đặt lại mật khẩu',
     'reset_password_send_instructions' => 'Nhập email vào ô dưới đây và bạn sẽ nhận được một email với liên kết để đặt lại mật khẩu.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Đặt lại mật khẩu của :appName',
     'email_reset_text' => 'Bạn nhận được email này bởi vì chúng tôi nhận được một yêu cầu đặt lại mật khẩu cho tài khoản của bạn.',
     'email_reset_not_requested' => 'Nếu bạn không yêu cầu đặt lại mật khẩu, không cần có bất cứ hành động nào khác.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Xác nhận email trên :appName',

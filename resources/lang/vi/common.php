@@ -20,7 +20,7 @@ return [
     'role' => 'Quyền',
     'cover_image' => 'Ảnh bìa',
     'cover_image_description' => 'Ảnh nên có kích thước 440x250px.',
-    
+
     // Actions
     'actions' => 'Hành động',
     'view' => 'Xem',

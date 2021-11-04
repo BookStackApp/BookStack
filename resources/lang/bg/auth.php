@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Този емейл домейн към момента няма достъп до приложението',
     'register_success' => 'Благодарим Ви за регистрацията! В момента сте регистриран и сте вписани в приложението.',
 
-
     // Password Reset
     'reset_password' => 'Нулиране на паролата',
     'reset_password_send_instructions' => 'Въведете емейла си и ще ви бъде изпратен емейл с линк за нулиране на паролата.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Възстановете паролата си за :appName',
     'email_reset_text' => 'Вие получихте този емейл, защото поискахте вашата парола да бъде занулена.',
     'email_reset_not_requested' => 'Ако Вие не сте поискали зануляването на паролата, няма нужда от други действия.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Потвърди емейла си за :appName',

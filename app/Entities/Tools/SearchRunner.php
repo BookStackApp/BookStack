@@ -196,7 +196,7 @@ class SearchRunner
             $escapedOperators[] = preg_quote($operator);
         }
 
-        return join('|', $escapedOperators);
+        return implode('|', $escapedOperators);
     }
 
     /**

@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Ebből az email tartományról nem lehet hozzáférni ehhez az alkalmazáshoz',
     'register_success' => 'Köszönjük a regisztrációt! A regisztráció és a bejelentkezés megtörtént.',
 
-
     // Password Reset
     'reset_password' => 'Jelszó visszaállítása',
     'reset_password_send_instructions' => 'Meg kell adni az email címet amire egy jelszó visszaállító hivatkozás lesz elküldve.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => ':appName jelszó visszaállítása',
     'email_reset_text' => 'Ezt az emailt azért küldtük mert egy jelszó visszaállításra vonatkozó kérést kaptunk ebből a fiókból.',
     'email_reset_not_requested' => 'Ha nem történt jelszó visszaállításra vonatkozó kérés, akkor nincs szükség további intézkedésre.',
-
 
     // Email Confirmation
     'email_confirm_subject' => ':appName alkalmazásban beállított email címet meg kell erősíteni',

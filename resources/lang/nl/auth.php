@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Dit e-maildomein is niet toegestaan',
     'register_success' => 'Bedankt voor het aanmelden! Je bent nu geregistreerd en aangemeld.',
 
-
     // Password Reset
     'reset_password' => 'Wachtwoord herstellen',
     'reset_password_send_instructions' => 'Geef je e-mail en we sturen je een link om je wachtwoord te herstellen',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => 'Herstel je wachtwoord van :appName',
     'email_reset_text' => 'Je ontvangt deze e-mail omdat je een wachtwoord herstel verzoek had verzonden.',
     'email_reset_not_requested' => 'Als je geen wachtwoord herstel hebt aangevraagd, hoef je niets te doen.',
-
 
     // Email Confirmation
     'email_confirm_subject' => 'Bevestig je e-mailadres op :appName',

@@ -20,7 +20,7 @@ return [
     'role' => 'Rola',
     'cover_image' => 'Zdjęcie z okładki',
     'cover_image_description' => 'Ten obraz powinien posiadać wymiary około 440x250px.',
-    
+
     // Actions
     'actions' => 'Akcje',
     'view' => 'Widok',

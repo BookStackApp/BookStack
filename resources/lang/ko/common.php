@@ -20,7 +20,7 @@ return [
     'role' => '권한',
     'cover_image' => '대표 이미지',
     'cover_image_description' => '이미지 규격은 440x250px 내외입니다.',
-    
+
     // Actions
     'actions' => '활동',
     'view' => '보기',

@@ -16,6 +16,7 @@ use BookStack\Util\CspService;
 use GuzzleHttp\Client;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
@@ -60,6 +61,9 @@ class AppServiceProvider extends ServiceProvider
 
         // View Composers
         View::composer('entities.breadcrumbs', BreadcrumbsViewComposer::class);
+
+        // Set paginator to use bootstrap-style pagination
+        Paginator::useBootstrap();
     }
 
     /**

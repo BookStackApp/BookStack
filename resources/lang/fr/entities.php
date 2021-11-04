@@ -255,7 +255,7 @@ return [
     'tags' =>  'Mots-clés',
     'tag_name' =>  'Nom du tag',
     'tag_value' => 'Valeur du mot-clé (optionnel)',
-    'tags_explain' => "Ajouter des mots-clés pour catégoriser votre contenu.",
+    'tags_explain' => 'Ajouter des mots-clés pour catégoriser votre contenu.',
     'tags_add' => 'Ajouter un autre mot-clé',
     'tags_remove' => 'Supprimer le mot-clé',
     'attachments' => 'Fichiers joints',
@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Êtes-vous sûr de vouloir supprimer cette révision ?',
     'revision_restore_confirm' => 'Êtes-vous sûr de vouloir restaurer cette révision ? Le contenu courant de la page va être remplacé.',
     'revision_delete_success' => 'Révision supprimée',
-    'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.'
+    'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.',
 ];

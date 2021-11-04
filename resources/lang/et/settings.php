@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Hooldus',
     'maint_image_cleanup' => 'Pildifailide koristus',
-    'maint_image_cleanup_desc' => "Kontrollib lehtede ja redaktsioonide sisu, et leida pilte ja jooniseid, mis enam kasutusel ei ole. Enne selle käivitamist tee andmebaasist ja pildifailidest täielik varukoopia.",
+    'maint_image_cleanup_desc' => 'Kontrollib lehtede ja redaktsioonide sisu, et leida pilte ja jooniseid, mis enam kasutusel ei ole. Enne selle käivitamist tee andmebaasist ja pildifailidest täielik varukoopia.',
     'maint_delete_images_only_in_revisions' => 'Kustuta ka pildifailid, mis on kasutusel ainult vanades redaktsioonides',
     'maint_image_cleanup_run' => 'Käivita koristus',
     'maint_image_cleanup_warning' => 'Leiti :count potentsiaalselt kasutamata pildifaili. Kas oled kindel, et soovid need kustutada?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Kustuta roll',
     'role_delete_confirm' => 'See kustutab rolli nimega \':roleName\'.',
     'role_delete_users_assigned' => 'Selle rolliga on seotud :userCount kasutajat. Kui soovid neile selle asemel uue rolli määrata, siis vali see allpool.',
-    'role_delete_no_migration' => "Ära määra uut rolli",
+    'role_delete_no_migration' => 'Ära määra uut rolli',
     'role_delete_sure' => 'Kas oled kindel, et soovid selle rolli kustutada?',
     'role_delete_success' => 'Roll on kustutatud',
     'role_edit' => 'Muuda rolli',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

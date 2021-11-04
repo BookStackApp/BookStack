@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => '该Email域名无权访问此应用程序',
     'register_success' => '感谢您注册:appName，您现在已经登录。',
 
-
     // Password Reset
     'reset_password' => '重置密码',
     'reset_password_send_instructions' => '在下面输入您的Email地址，您将收到一封带有密码重置链接的邮件。',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => '重置您的:appName密码',
     'email_reset_text' => '您收到此电子邮件是因为我们收到了您的帐户的密码重置请求。',
     'email_reset_not_requested' => '如果您没有要求重置密码，则不需要采取进一步的操作。',
-
 
     // Email Confirmation
     'email_confirm_subject' => '确认您在:appName的Email地址',

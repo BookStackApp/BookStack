@@ -7,16 +7,16 @@
   "updated_by": 1,
   "owned_by": 1,
   "slug": "my-fantastic-new-chapter",
-  "updated_at": "2020-05-22 22:59:55",
-  "created_at": "2020-05-22 22:59:55",
+  "updated_at": "2020-05-22T22:59:55.000000Z",
+  "created_at": "2020-05-22T22:59:55.000000Z",
   "id": 74,
   "book": {
     "id": 1,
     "name": "BookStack User Guide",
     "slug": "bookstack-user-guide",
     "description": "This is a general guide on using BookStack on a day-to-day basis.",
-    "created_at": "2019-05-05 21:48:46",
-    "updated_at": "2019-12-11 20:57:31",
+    "created_at": "2019-05-05T21:48:46.000000Z",
+    "updated_at": "2019-12-11T20:57:31.000000Z",
     "created_by": 1,
     "updated_by": 1
   },
@@ -25,15 +25,15 @@
       "name": "Category",
       "value": "Top Content",
       "order": 0,
-      "created_at": "2020-05-22 22:59:55",
-      "updated_at": "2020-05-22 22:59:55"
+      "created_at": "2020-05-22T22:59:55.000000Z",
+      "updated_at": "2020-05-22T22:59:55.000000Z"
     },
     {
       "name": "Rating",
       "value": "Highest",
       "order": 0,
-      "created_at": "2020-05-22 22:59:55",
-      "updated_at": "2020-05-22 22:59:55"
+      "created_at": "2020-05-22T22:59:55.000000Z",
+      "updated_at": "2020-05-22T22:59:55.000000Z"
     }
   ]
 }

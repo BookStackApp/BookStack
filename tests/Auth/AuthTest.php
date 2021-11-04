@@ -44,7 +44,7 @@ class AuthTest extends TestCase
     {
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true']);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // Test form and ensure user is created
         $this->get('/register')
@@ -102,7 +102,7 @@ class AuthTest extends TestCase
 
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // Go through registration process
         $resp = $this->post('/register', $user->only('name', 'email', 'password'));
@@ -140,7 +140,7 @@ class AuthTest extends TestCase
     public function test_restricted_registration()
     {
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true', 'registration-restrict' => 'example.com']);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // Go through registration process
         $this->post('/register', $user->only('name', 'email', 'password'))
@@ -166,7 +166,7 @@ class AuthTest extends TestCase
     public function test_restricted_registration_with_confirmation_disabled()
     {
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'false', 'registration-restrict' => 'example.com']);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // Go through registration process
         $this->post('/register', $user->only('name', 'email', 'password'))

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Konserwacja',
     'maint_image_cleanup' => 'Czyszczenie obrazków',
-    'maint_image_cleanup_desc' => "Skanuje zawartość strony i poprzednie wersje, aby sprawdzić, które obrazy i rysunki są aktualnie używane, a które obrazy są zbędne. Przed uruchomieniem tej opcji należy utworzyć pełną kopię zapasową bazy danych i obrazków.",
+    'maint_image_cleanup_desc' => 'Skanuje zawartość strony i poprzednie wersje, aby sprawdzić, które obrazy i rysunki są aktualnie używane, a które obrazy są zbędne. Przed uruchomieniem tej opcji należy utworzyć pełną kopię zapasową bazy danych i obrazków.',
     'maint_delete_images_only_in_revisions' => 'Usuń również obrazy, które istnieją tylko w starych rewizjach strony',
     'maint_image_cleanup_run' => 'Uruchom czyszczenie',
     'maint_image_cleanup_warning' => 'Znaleziono :count potencjalnie niepotrzebnych obrazków. Czy na pewno chcesz je usunąć?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Usuń rolę',
     'role_delete_confirm' => 'To spowoduje usunięcie roli \':roleName\'.',
     'role_delete_users_assigned' => 'Tę rolę ma przypisanych :userCount użytkowników. Jeśli chcesz zmigrować użytkowników z tej roli, wybierz nową poniżej.',
-    'role_delete_no_migration' => "Nie migruj użytkowników",
+    'role_delete_no_migration' => 'Nie migruj użytkowników',
     'role_delete_sure' => 'Czy na pewno chcesz usunąć tę rolę?',
     'role_delete_success' => 'Rola usunięta pomyślnie',
     'role_edit' => 'Edytuj rolę',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Bu e-posta sağlayıcısının uygulamaya erişim izni bulunmuyor',
     'register_success' => 'Kaydolduğunuz için teşekkürler! Artık kayıtlı bir kullanıcı olarak giriş yaptınız.',
 
-
     // Password Reset
     'reset_password' => 'Şifreyi Sıfırla',
     'reset_password_send_instructions' => 'Aşağıya gireceğiniz e-posta adresine şifre sıfırlama bağlantısı gönderilecektir.',
@@ -48,7 +47,6 @@ return [
     'email_reset_subject' => ':appName şifrenizi sıfırlayın',
     'email_reset_text' => 'Hesap şifrenizi sıfırlama isteğinde bulunduğunuz için bu e-postayı aldınız.',
     'email_reset_not_requested' => 'Şifre sıfırlama isteğinde bulunmadıysanız herhangi bir işlem yapmanıza gerek yoktur.',
-
 
     // Email Confirmation
     'email_confirm_subject' => ':appName için girdiğiniz e-posta adresini doğrulayın',

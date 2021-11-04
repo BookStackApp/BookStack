@@ -94,7 +94,7 @@ return [
     'shelves_edit' => 'Labot grāmatplauktu',
     'shelves_delete' => 'Dzēst grāmatplauktu',
     'shelves_delete_named' => 'Dzēst grāmatplauktu :name',
-    'shelves_delete_explain' => "Tiks dzēsts grāmatplaukts ar nosaukumu \":name\". Tajā ievietotās grāmatas netiks dzēstas.",
+    'shelves_delete_explain' => 'Tiks dzēsts grāmatplaukts ar nosaukumu ":name". Tajā ievietotās grāmatas netiks dzēstas.',
     'shelves_delete_confirmation' => 'Vai esat pārliecināts, ka vēlaties dzēst šo grāmatplauktu?',
     'shelves_permissions' => 'Grāmatplaukta atļaujas',
     'shelves_permissions_updated' => 'Grāmatplaukta atļaujas atjauninātas',
@@ -321,5 +321,5 @@ return [
     'revision_delete_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo revīziju?',
     'revision_restore_confirm' => 'Vai tiešām vēlaties atjaunot šo revīziju? Pašreizējais lapas saturs tiks aizvietots.',
     'revision_delete_success' => 'Revīzija dzēsta',
-    'revision_cannot_delete_latest' => 'Nevar dzēst pašreizējo revīziju.'
+    'revision_cannot_delete_latest' => 'Nevar dzēst pašreizējo revīziju.',
 ];
