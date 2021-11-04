@@ -135,7 +135,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_delete' => 'Rolle löschen',
     'role_delete_confirm' => 'Du möchtest die Rolle ":roleName" löschen.',
     'role_delete_users_assigned' => 'Diese Rolle ist :userCount Benutzern zugeordnet. Du kannst unten eine neue Rolle auswählen, die Du diesen Benutzern zuordnen möchtest.',
-    'role_delete_no_migration' => 'Den Benutzern keine andere Rolle zuordnen',
+    'role_delete_no_migration' => "Den Benutzern keine andere Rolle zuordnen",
     'role_delete_sure' => 'Bist Du sicher, dass Du diese Rolle löschen möchtest?',
     'role_delete_success' => 'Rolle erfolgreich gelöscht',
     'role_edit' => 'Rolle bearbeiten',

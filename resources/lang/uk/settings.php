@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Видалити роль',
     'role_delete_confirm' => 'Це призведе до видалення ролі з назвою \':roleName\'.',
     'role_delete_users_assigned' => 'Цій ролі належать :userCount користувачі(в). Якщо ви хочете перенести користувачів із цієї ролі, виберіть нову роль нижче.',
-    'role_delete_no_migration' => 'Не мігрувати користувачів',
+    'role_delete_no_migration' => "Не мігрувати користувачів",
     'role_delete_sure' => 'Ви впевнені, що хочете видалити цю роль?',
     'role_delete_success' => 'Роль успішно видалена',
     'role_edit' => 'Редагувати роль',

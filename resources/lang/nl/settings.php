@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Rol Verwijderen',
     'role_delete_confirm' => 'Dit verwijdert de rol \':roleName\'.',
     'role_delete_users_assigned' => 'Er zijn :userCount gebruikers met deze rol. Selecteer hieronder een nieuwe rol als je deze gebruikers een andere rol wilt geven.',
-    'role_delete_no_migration' => 'Geen gebruikers migreren',
+    'role_delete_no_migration' => "Geen gebruikers migreren",
     'role_delete_sure' => 'Weet je zeker dat je deze rol wilt verwijderen?',
     'role_delete_success' => 'Rol succesvol verwijderd',
     'role_edit' => 'Rol Bewerken',

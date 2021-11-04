@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Borrar rol',
     'role_delete_confirm' => 'Se borrará el rol con nombre  \':roleName\'.',
     'role_delete_users_assigned' => 'Este rol tiene :userCount usuarios asignados. Si quisiera migrar los usuarios de este rol, seleccione un nuevo rol a continuación.',
-    'role_delete_no_migration' => 'No migrar usuarios',
+    'role_delete_no_migration' => "No migrar usuarios",
     'role_delete_sure' => 'Está seguro que desea borrar este rol?',
     'role_delete_success' => 'Rol borrado satisfactoriamente',
     'role_edit' => 'Editar rol',

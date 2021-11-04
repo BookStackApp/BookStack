@@ -94,7 +94,7 @@ return [
     'shelves_edit' => '編輯書架',
     'shelves_delete' => '刪除書架',
     'shelves_delete_named' => '刪除書架 :name',
-    'shelves_delete_explain' => '這將刪除名為「:name」的書架。但其中的書本不會被刪除。',
+    'shelves_delete_explain' => "這將刪除名為「:name」的書架。但其中的書本不會被刪除。",
     'shelves_delete_confirmation' => '您確定要刪除此書架嗎？',
     'shelves_permissions' => '書架權限',
     'shelves_permissions_updated' => '書架權限已更新',

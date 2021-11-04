@@ -132,7 +132,7 @@ return [
     'role_delete' => '권한 제거',
     'role_delete_confirm' => ':roleName(을)를 지웁니다.',
     'role_delete_users_assigned' => '이 권한을 가진 사용자 :userCount명에 할당할 권한을 고르세요.',
-    'role_delete_no_migration' => '할당하지 않음',
+    'role_delete_no_migration' => "할당하지 않음",
     'role_delete_sure' => '이 권한을 지울 건가요?',
     'role_delete_success' => '권한 지움',
     'role_edit' => '권한 수정',

@@ -94,7 +94,7 @@ return [
     'shelves_edit' => 'ערוך מדף',
     'shelves_delete' => 'מחק מדף',
     'shelves_delete_named' => 'מחיקת דף :name',
-    'shelves_delete_explain' => 'פעולה זו תמחק את המדף :name - הספרים שמופיעים בו ימחקו גם כן!',
+    'shelves_delete_explain' => "פעולה זו תמחק את המדף :name - הספרים שמופיעים בו ימחקו גם כן!",
     'shelves_delete_confirmation' => 'האם ברצונך למחוק את המדף?',
     'shelves_permissions' => 'הרשאות מדף',
     'shelves_permissions_updated' => 'הרשאות מדף עודכנו',

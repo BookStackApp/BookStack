@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Rolle slettet',
     'role_delete_confirm' => 'Dette vil slette rollen «:roleName».',
     'role_delete_users_assigned' => 'Denne rollen har :userCount kontoer koblet opp mot seg. Velg hvilke rolle du vil flytte disse til.',
-    'role_delete_no_migration' => 'Ikke flytt kontoer',
+    'role_delete_no_migration' => "Ikke flytt kontoer",
     'role_delete_sure' => 'Er du sikker på at du vil slette rollen?',
     'role_delete_success' => 'Rollen ble slettet',
     'role_edit' => 'Endre rolle',

@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Kustuta roll',
     'role_delete_confirm' => 'See kustutab rolli nimega \':roleName\'.',
     'role_delete_users_assigned' => 'Selle rolliga on seotud :userCount kasutajat. Kui soovid neile selle asemel uue rolli määrata, siis vali see allpool.',
-    'role_delete_no_migration' => 'Ära määra uut rolli',
+    'role_delete_no_migration' => "Ära määra uut rolli",
     'role_delete_sure' => 'Kas oled kindel, et soovid selle rolli kustutada?',
     'role_delete_success' => 'Roll on kustutatud',
     'role_edit' => 'Muuda rolli',

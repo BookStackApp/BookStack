@@ -132,7 +132,7 @@ return [
     'role_delete' => '役割を削除',
     'role_delete_confirm' => '役割「:roleName」を削除します。',
     'role_delete_users_assigned' => 'この役割は:userCount人のユーザに付与されています。該当するユーザを他の役割へ移行できます。',
-    'role_delete_no_migration' => 'ユーザを移行しない',
+    'role_delete_no_migration' => "ユーザを移行しない",
     'role_delete_sure' => '本当に役割を削除してよろしいですか？',
     'role_delete_success' => '役割を削除しました',
     'role_edit' => '役割を編集',

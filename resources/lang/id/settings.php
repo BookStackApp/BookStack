@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Hapus Peran',
     'role_delete_confirm' => 'Ini akan menghapus peran dengan nama \':roleName\'.',
     'role_delete_users_assigned' => 'Peran ini memiliki :userCount pengguna yang ditugaskan padanya. Jika Anda ingin memindahkan pengguna dari peran ini pilih peran baru di bawah.',
-    'role_delete_no_migration' => 'Jangan migrasikan pengguna',
+    'role_delete_no_migration' => "Jangan migrasikan pengguna",
     'role_delete_sure' => 'Anda yakin ingin menghapus peran ini?',
     'role_delete_success' => 'Peran berhasil dihapus',
     'role_edit' => 'Edit Peran',

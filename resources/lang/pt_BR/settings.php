@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Excluir Cargo',
     'role_delete_confirm' => 'A ação vai excluír o cargo de nome \':roleName\'.',
     'role_delete_users_assigned' => 'Esse cargo tem :userCount usuários vinculados a ele. Se quiser migrar usuários desse cargo para outro, selecione um novo cargo.',
-    'role_delete_no_migration' => 'Não migre os usuários',
+    'role_delete_no_migration' => "Não migre os usuários",
     'role_delete_sure' => 'Tem certeza que deseja excluir esse cargo?',
     'role_delete_success' => 'Cargo excluído com sucesso',
     'role_edit' => 'Editar Cargo',

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Manteniment',
     'maint_image_cleanup' => 'Neteja les imatges',
-    'maint_image_cleanup_desc' => "Escaneja el contingut de les pàgines i les revisions per a comprovar quines imatges i diagrames estan en ús actualment i quines imatges són redundants. Assegureu-vos de crear una còpia de seguretat completa de la base de dades i de les imatges abans d'executar això.",
+    'maint_image_cleanup_desc' => 'Escaneja el contingut de les pàgines i les revisions per a comprovar quines imatges i diagrames estan en ús actualment i quines imatges són redundants. Assegureu-vos de crear una còpia de seguretat completa de la base de dades i de les imatges abans d\'executar això.',
     'maint_delete_images_only_in_revisions' => 'Suprimeix també les imatges que només existeixin en revisions antigues de pàgines',
     'maint_image_cleanup_run' => 'Executa la neteja',
     'maint_image_cleanup_warning' => 'S\'han trobat :count imatges potencialment no utilitzades. Segur que voleu suprimir aquestes imatges?',
@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Suprimeix el rol',
     'role_delete_confirm' => 'Se suprimirà el rol amb el nom \':roleName\'.',
     'role_delete_users_assigned' => 'Aquest rol té :userCount usuaris assignats. Si voleu migrar els usuaris d\'aquest rol, seleccioneu un rol nou a continuació.',
-    'role_delete_no_migration' => 'No migris els usuaris',
+    'role_delete_no_migration' => "No migris els usuaris",
     'role_delete_sure' => 'Segur que voleu suprimir aquest rol?',
     'role_delete_success' => 'Rol suprimit correctament',
     'role_edit' => 'Edita el rol',
