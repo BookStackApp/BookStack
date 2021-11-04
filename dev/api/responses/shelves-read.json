@@ -15,8 +15,8 @@
     "id": 1,
     "name": "Admin"
   },
-  "created_at": "2020-04-10 13:24:09",
-  "updated_at": "2020-04-10 13:31:04",
+  "created_at": "2020-04-10T13:24:09.000000Z",
+  "updated_at": "2020-04-10T13:31:04.000000Z",
   "tags": [
     {
       "id": 16,
@@ -29,8 +29,8 @@
     "id": 501,
     "name": "anafrancisconi_Sp04AfFCPNM.jpg",
     "url": "http://bookstack.local/uploads/images/cover_book/2020-04/anafrancisconi_Sp04AfFCPNM.jpg",
-    "created_at": "2020-04-10 13:31:04",
-    "updated_at": "2020-04-10 13:31:04",
+    "created_at": "2020-04-10T13:31:04.000000Z",
+    "updated_at": "2020-04-10T13:31:04.000000Z",
     "created_by": 1,
     "updated_by": 1,
     "path": "/uploads/images/cover_book/2020-04/anafrancisconi_Sp04AfFCPNM.jpg",

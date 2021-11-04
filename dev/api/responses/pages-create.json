@@ -6,8 +6,8 @@
 	"slug": "my-api-page",
 	"html": "<p id=\"bkmrk-my-new-api-page\">my new API page</p>",
 	"priority": 14,
-	"created_at": "2020-11-28 15:01:39",
-	"updated_at": "2020-11-28 15:01:39",
+	"created_at": "2020-11-28T15:01:39.000000Z",
+	"updated_at": "2020-11-28T15:01:39.000000Z",
 	"created_by": {
 		"id": 1,
 		"name": "Admin"
