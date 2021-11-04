@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Zmazať rolu',
     'role_delete_confirm' => 'Toto zmaže rolu menom \':roleName\'.',
     'role_delete_users_assigned' => 'Túto rolu má priradenú :userCount používateľov. Ak chcete premigrovať používateľov z tejto roly, vyberte novú rolu nižšie.',
-    'role_delete_no_migration' => 'Nemigrovať používateľov',
+    'role_delete_no_migration' => "Nemigrovať používateľov",
     'role_delete_sure' => 'Ste si istý, že chcete zmazať túto rolu?',
     'role_delete_success' => 'Rola úspešne zmazaná',
     'role_edit' => 'Upraviť rolu',

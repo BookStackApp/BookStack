@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Rolü Sil',
     'role_delete_confirm' => 'Bu işlem, \':roleName\' adlı rolü silecektir.',
     'role_delete_users_assigned' => 'Bu role atanmış :userCount adet kullanıcı var. Eğer bu kullanıcıların rollerini değiştirmek istiyorsanız, aşağıdan yeni bir rol seçin.',
-    'role_delete_no_migration' => 'Kullanıcıları taşıma',
+    'role_delete_no_migration' => "Kullanıcıları taşıma",
     'role_delete_sure' => 'Bu rolü silmek istediğinize emin misiniz?',
     'role_delete_success' => 'Rol başarıyla silindi',
     'role_edit' => 'Rolü Düzenle',

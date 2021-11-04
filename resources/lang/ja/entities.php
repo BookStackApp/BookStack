@@ -94,7 +94,7 @@ return [
     'shelves_edit' => '本棚を編集',
     'shelves_delete' => '本棚を削除',
     'shelves_delete_named' => '本棚「:name」を削除',
-    'shelves_delete_explain' => 'これにより、この本棚「:name」が削除されます。含まれているブックは削除されません。',
+    'shelves_delete_explain' => "これにより、この本棚「:name」が削除されます。含まれているブックは削除されません。",
     'shelves_delete_confirmation' => '本当にこの本棚を削除してよろしいですか？',
     'shelves_permissions' => 'Bookshelf Permissions',
     'shelves_permissions_updated' => 'Bookshelf Permissions Updated',

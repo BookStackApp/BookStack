@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Ta bort roll',
     'role_delete_confirm' => 'Rollen med namn \':roleName\' kommer att tas bort.',
     'role_delete_users_assigned' => 'Det finns :userCount användare som tillhör den här rollen. Om du vill migrera användarna från den här rollen, välj en ny roll nedan.',
-    'role_delete_no_migration' => 'Migrera inte användare',
+    'role_delete_no_migration' => "Migrera inte användare",
     'role_delete_sure' => 'Är du säker på att du vill ta bort den här rollen?',
     'role_delete_success' => 'Rollen har tagits bort',
     'role_edit' => 'Redigera roll',

@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Brisanje vloge',
     'role_delete_confirm' => 'Izbrisana bo vloga z imenom \':roleName\'.',
     'role_delete_users_assigned' => 'Ta vloga ima dodeljenih :userCount uporabnikov. V kolikor želite uporabnike preseliti iz te vloge, spodaj izberite novo vlogo.',
-    'role_delete_no_migration' => 'Ne prenašaj uporabnikov',
+    'role_delete_no_migration' => "Ne prenašaj uporabnikov",
     'role_delete_sure' => 'Ali ste prepričani, da želite izbrisati to vlogo?',
     'role_delete_success' => 'Vloga uspešno izbrisana',
     'role_edit' => 'Uredi vlogo',

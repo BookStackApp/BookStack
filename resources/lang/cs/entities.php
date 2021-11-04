@@ -94,7 +94,7 @@ return [
     'shelves_edit' => 'Upravit knihovnu',
     'shelves_delete' => 'Odstranit knihovnu',
     'shelves_delete_named' => 'Odstranit knihovnu :name',
-    'shelves_delete_explain' => 'Toto odstraní knihovnu ‚:name‘. Vložené knihy nebudou odstraněny.',
+    'shelves_delete_explain' => "Toto odstraní knihovnu ‚:name‘. Vložené knihy nebudou odstraněny.",
     'shelves_delete_confirmation' => 'Opravdu chcete odstranit tuto knihovnu?',
     'shelves_permissions' => 'Oprávnění knihovny',
     'shelves_permissions_updated' => 'Oprávnění knihovny byla aktualizována',
