@@ -132,7 +132,7 @@ return [
     'role_delete' => '刪除角色',
     'role_delete_confirm' => '這將會刪除名為「:roleName」的角色.',
     'role_delete_users_assigned' => '有 :userCount 位使用者屬於此角色。如果您想將此角色中的使用者遷移，請在下面選擇一個新角色。',
-    'role_delete_no_migration' => '不要遷移使用者',
+    'role_delete_no_migration' => "不要遷移使用者",
     'role_delete_sure' => '您確定要刪除此角色？',
     'role_delete_success' => '角色刪除成功',
     'role_edit' => '編輯角色',

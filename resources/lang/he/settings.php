@@ -132,7 +132,7 @@ return [
     'role_delete' => 'מחק תפקיד',
     'role_delete_confirm' => 'פעולה זו תמחק את התפקיד: :roleName',
     'role_delete_users_assigned' => 'לתפקיד :userCount יש משתמשים אשר משויכים אליו. אם ברצונך להעבירם לתפקיד אחר אנא בחר תפקיד מלמטה',
-    'role_delete_no_migration' => 'אל תעביר משתמשים לתפקיד',
+    'role_delete_no_migration' => "אל תעביר משתמשים לתפקיד",
     'role_delete_sure' => 'האם אתה בטוח שברצונך למחוק את התפקיד?',
     'role_delete_success' => 'התפקיד נמחק בהצלחה',
     'role_edit' => 'ערוך תפקיד',

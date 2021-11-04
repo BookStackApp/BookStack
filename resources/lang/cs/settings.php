@@ -132,7 +132,7 @@ return [
     'role_delete' => 'Odstranit roli',
     'role_delete_confirm' => 'Role \':roleName\' bude odstraněna.',
     'role_delete_users_assigned' => 'Role je přiřazena :userCount uživatelům. Pokud jim chcete náhradou přidělit jinou roli, zvolte jednu z následujících.',
-    'role_delete_no_migration' => 'Nepřiřazovat uživatelům náhradní roli',
+    'role_delete_no_migration' => "Nepřiřazovat uživatelům náhradní roli",
     'role_delete_sure' => 'Opravdu chcete tuto roli odstranit?',
     'role_delete_success' => 'Role byla odstraněna',
     'role_edit' => 'Upravit roli',
