@@ -25,9 +25,9 @@
         "intervention/image": "^2.7",
         "laravel/framework": "^8.68",
         "laravel/socialite": "^5.2",
-        "laravel/tinker": "^2.5",
+        "laravel/tinker": "^2.6",
         "laravel/ui": "^3.3",
-        "league/commonmark": "^1.5",
+        "league/commonmark": "^1.6",
         "league/flysystem-aws-s3-v3": "^1.0.29",
         "league/html-to-markdown": "^5.0.0",
         "league/oauth2-client": "^2.6",
@@ -44,12 +44,12 @@
         "ssddanbrown/htmldiff": "^1.0.1"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.13.0",
+        "fakerphp/faker": "^1.16",
         "itsgoingd/clockwork": "^5.1",
-        "mockery/mockery": "^1.4.2",
-        "phpunit/phpunit": "^9.5.3",
+        "mockery/mockery": "^1.4",
+        "phpunit/phpunit": "^9.5",
         "symfony/dom-crawler": "^5.3",
-        "nunomaduro/collision": "^5.0"
+        "nunomaduro/collision": "^5.10"
     },
     "autoload": {
         "psr-4": {
