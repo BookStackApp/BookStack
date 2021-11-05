@@ -178,7 +178,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->leftJoin('permission_role', 'ru.role_id', '=', 'permission_role.role_id')
             ->leftJoin('role_permissions', 'permission_role.permission_id', '=', 'role_permissions.id')
             ->where('ru.user_id', '=', $this->id)
-            ->get()
             ->pluck('name');
 
         return $this->permissions;

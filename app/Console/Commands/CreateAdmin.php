@@ -4,6 +4,7 @@ namespace BookStack\Console\Commands;
 
 use BookStack\Auth\UserRepo;
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
 class CreateAdmin extends Command
 {
@@ -49,11 +50,13 @@ class CreateAdmin extends Command
             $email = $this->ask('Please specify an email address for the new admin user');
         }
         if (mb_strlen($email) < 5 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return $this->error('Invalid email address provided');
+            $this->error('Invalid email address provided');
+            return SymfonyCommand::FAILURE;
         }
 
         if ($this->userRepo->getByEmail($email) !== null) {
-            return $this->error('A user with the provided email already exists!');
+            $this->error('A user with the provided email already exists!');
+            return SymfonyCommand::FAILURE;
         }
 
         $name = trim($this->option('name'));
@@ -61,7 +64,8 @@ class CreateAdmin extends Command
             $name = $this->ask('Please specify an name for the new admin user');
         }
         if (mb_strlen($name) < 2) {
-            return $this->error('Invalid name provided');
+            $this->error('Invalid name provided');
+            return SymfonyCommand::FAILURE;
         }
 
         $password = trim($this->option('password'));
@@ -69,7 +73,8 @@ class CreateAdmin extends Command
             $password = $this->secret('Please specify a password for the new admin user');
         }
         if (mb_strlen($password) < 5) {
-            return $this->error('Invalid password provided, Must be at least 5 characters');
+            $this->error('Invalid password provided, Must be at least 5 characters');
+            return SymfonyCommand::FAILURE;
         }
 
         $user = $this->userRepo->create(['email' => $email, 'name' => $name, 'password' => $password]);
@@ -79,5 +84,6 @@ class CreateAdmin extends Command
         $user->save();
 
         $this->info("Admin account with email \"{$user->email}\" successfully created!");
+        return SymfonyCommand::SUCCESS;
     }
 }

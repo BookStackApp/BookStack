@@ -47,9 +47,10 @@
         "fakerphp/faker": "^1.16",
         "itsgoingd/clockwork": "^5.1",
         "mockery/mockery": "^1.4",
+        "nunomaduro/collision": "^5.10",
+        "nunomaduro/larastan": "^1.0",
         "phpunit/phpunit": "^9.5",
-        "symfony/dom-crawler": "^5.3",
-        "nunomaduro/collision": "^5.10"
+        "symfony/dom-crawler": "^5.3"
     },
     "autoload": {
         "psr-4": {

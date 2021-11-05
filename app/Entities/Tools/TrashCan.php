@@ -323,6 +323,8 @@ class TrashCan
         if ($entity instanceof Bookshelf) {
             return $this->destroyShelf($entity);
         }
+
+        return 0;
     }
 
     /**
