@@ -34,7 +34,7 @@ jobs:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ matrix.php }}
 
-    - name: Install composer dependencies & Test
+    - name: Install composer dependencies
       run: composer install --prefer-dist --no-interaction --ansi
 
     - name: Run PHPStan

@@ -28,7 +28,7 @@ class ApiDocsGenerator
         if (Cache::has($cacheKey) && config('app.env') === 'production') {
             $docs = Cache::get($cacheKey);
         } else {
-            $docs = (new ApiDocsGenerator)->generate();
+            $docs = (new ApiDocsGenerator())->generate();
             Cache::put($cacheKey, $docs, 60 * 24);
         }
 

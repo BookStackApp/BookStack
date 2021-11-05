@@ -58,10 +58,10 @@ return [
 
         'memcached' => [
             'driver'        => 'memcached',
-            'options' => [
+            'options'       => [
                 // Memcached::OPT_CONNECT_TIMEOUT => 2000,
             ],
-            'servers' =>  $memcachedServers ?? [],
+            'servers' => $memcachedServers ?? [],
         ],
 
         'redis' => [
