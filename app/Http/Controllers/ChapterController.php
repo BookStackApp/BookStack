@@ -47,7 +47,7 @@ class ChapterController extends Controller
     public function store(Request $request, string $bookSlug)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
         ]);
 
         $book = Book::visible()->where('slug', '=', $bookSlug)->firstOrFail();

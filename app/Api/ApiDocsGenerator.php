@@ -95,17 +95,13 @@ class ApiDocsGenerator
         }
 
         $rules = $class->getValdationRules()[$methodName] ?? [];
-        foreach ($rules as $param => $ruleString) {
-            $rules[$param] = explode('|', $ruleString);
-        }
-
-        return count($rules) > 0 ? $rules : null;
+        return empty($rules) ? null : $rules;
     }
 
     /**
      * Parse out the description text from a class method comment.
      */
-    protected function parseDescriptionFromMethodComment(string $comment)
+    protected function parseDescriptionFromMethodComment(string $comment): string
     {
         $matches = [];
         preg_match_all('/^\s*?\*\s((?![@\s]).*?)$/m', $comment, $matches);

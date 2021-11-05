@@ -107,7 +107,7 @@ class ConfirmEmailController extends Controller
     public function resend(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email|exists:users,email',
+            'email' => ['required', 'email', 'exists:users,email'],
         ]);
         $user = $this->userRepo->getByEmail($request->get('email'));
 
