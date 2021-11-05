@@ -58,7 +58,7 @@ class UserInviteController extends Controller
     public function setPassword(Request $request, string $token)
     {
         $this->validate($request, [
-            'password' => 'required|min:8',
+            'password' => ['required', 'min:8'],
         ]);
 
         try {

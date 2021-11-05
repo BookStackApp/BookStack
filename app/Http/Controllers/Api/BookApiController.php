@@ -13,14 +13,14 @@ class BookApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'name'        => 'required|string|max:255',
-            'description' => 'string|max:1000',
-            'tags'        => 'array',
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'tags'        => ['array'],
         ],
         'update' => [
-            'name'        => 'string|min:1|max:255',
-            'description' => 'string|max:1000',
-            'tags'        => 'array',
+            'name'        => ['string', 'min:1', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'tags'        => ['array'],
         ],
     ];
 

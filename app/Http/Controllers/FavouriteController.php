@@ -69,8 +69,8 @@ class FavouriteController extends Controller
     protected function getValidatedModelFromRequest(Request $request): Favouritable
     {
         $modelInfo = $this->validate($request, [
-            'type' => 'required|string',
-            'id'   => 'required|integer',
+            'type' => ['required', 'string'],
+            'id'   => ['required', 'integer'],
         ]);
 
         if (!class_exists($modelInfo['type'])) {

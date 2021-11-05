@@ -60,7 +60,7 @@ class PageController extends Controller
     public function createAsGuest(Request $request, string $bookSlug, string $chapterSlug = null)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
         ]);
 
         $parent = $this->pageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
@@ -107,7 +107,7 @@ class PageController extends Controller
     public function store(Request $request, string $bookSlug, int $pageId)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
         ]);
         $draftPage = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-create', $draftPage->getParent());
@@ -234,7 +234,7 @@ class PageController extends Controller
     public function update(Request $request, string $bookSlug, string $pageSlug)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
         ]);
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);

@@ -85,9 +85,9 @@ class BookController extends Controller
     {
         $this->checkPermission('book-create-all');
         $this->validate($request, [
-            'name'        => 'required|string|max:255',
-            'description' => 'string|max:1000',
-            'image'       => 'nullable|' . $this->getImageValidationRules(),
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
         $bookshelf = null;
@@ -156,9 +156,9 @@ class BookController extends Controller
         $book = $this->bookRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->validate($request, [
-            'name'        => 'required|string|max:255',
-            'description' => 'string|max:1000',
-            'image'       => 'nullable|' . $this->getImageValidationRules(),
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
         $book = $this->bookRepo->update($book, $request->all());

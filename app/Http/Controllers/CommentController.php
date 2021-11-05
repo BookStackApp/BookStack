@@ -24,8 +24,8 @@ class CommentController extends Controller
     public function savePageComment(Request $request, int $pageId)
     {
         $this->validate($request, [
-            'text'      => 'required|string',
-            'parent_id' => 'nullable|integer',
+            'text'      => ['required', 'string'],
+            'parent_id' => ['nullable', 'integer'],
         ]);
 
         $page = Page::visible()->find($pageId);
@@ -53,7 +53,7 @@ class CommentController extends Controller
     public function update(Request $request, int $commentId)
     {
         $this->validate($request, [
-            'text' => 'required|string',
+            'text' => ['required', 'string'],
         ]);
 
         $comment = $this->commentRepo->getById($commentId);

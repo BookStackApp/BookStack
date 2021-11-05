@@ -14,16 +14,16 @@ class ChapterApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'book_id'     => 'required|integer',
-            'name'        => 'required|string|max:255',
-            'description' => 'string|max:1000',
-            'tags'        => 'array',
+            'book_id'     => ['required', 'integer'],
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'tags'        => ['array'],
         ],
         'update' => [
-            'book_id'     => 'integer',
-            'name'        => 'string|min:1|max:255',
-            'description' => 'string|max:1000',
-            'tags'        => 'array',
+            'book_id'     => ['integer'],
+            'name'        => ['string', 'min:1', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'tags'        => ['array'],
         ],
     ];
 

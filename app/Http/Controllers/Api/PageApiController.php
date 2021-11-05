@@ -16,20 +16,20 @@ class PageApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'book_id'    => 'required_without:chapter_id|integer',
-            'chapter_id' => 'required_without:book_id|integer',
-            'name'       => 'required|string|max:255',
-            'html'       => 'required_without:markdown|string',
-            'markdown'   => 'required_without:html|string',
-            'tags'       => 'array',
+            'book_id'    => ['required_without:chapter_id', 'integer'],
+            'chapter_id' => ['required_without:book_id', 'integer'],
+            'name'       => ['required', 'string', 'max:255'],
+            'html'       => ['required_without:markdown', 'string'],
+            'markdown'   => ['required_without:html', 'string'],
+            'tags'       => ['array'],
         ],
         'update' => [
-            'book_id'    => 'required|integer',
-            'chapter_id' => 'required|integer',
-            'name'       => 'string|min:1|max:255',
-            'html'       => 'string',
-            'markdown'   => 'string',
-            'tags'       => 'array',
+            'book_id'    => ['required', 'integer'],
+            'chapter_id' => ['required', 'integer'],
+            'name'       => ['string', 'min:1', 'max:255'],
+            'html'       => ['string'],
+            'markdown'   => ['string'],
+            'tags'       => ['array'],
         ],
     ];
 

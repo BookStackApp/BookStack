@@ -73,8 +73,7 @@ class MfaBackupCodesController extends Controller
 
         $this->validate($request, [
             'code' => [
-                'required',
-                'max:12', 'min:8',
+                'required', 'max:12', 'min:8',
                 function ($attribute, $value, $fail) use ($codeService, $codes) {
                     if (!$codeService->inputCodeExistsInSet($value, $codes)) {
                         $fail(trans('validation.backup_codes'));

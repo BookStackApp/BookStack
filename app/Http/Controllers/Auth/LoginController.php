@@ -176,16 +176,16 @@ class LoginController extends Controller
      */
     protected function validateLogin(Request $request)
     {
-        $rules = ['password' => 'required|string'];
+        $rules = ['password' => ['required', 'string']];
         $authMethod = config('auth.method');
 
         if ($authMethod === 'standard') {
-            $rules['email'] = 'required|email';
+            $rules['email'] = ['required', 'email'];
         }
 
         if ($authMethod === 'ldap') {
-            $rules['username'] = 'required|string';
-            $rules['email'] = 'email';
+            $rules['username'] = ['required', 'string'];
+            $rules['email'] = ['email'];
         }
 
         $request->validate($rules);
