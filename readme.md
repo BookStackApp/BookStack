@@ -218,3 +218,4 @@ These are the great open-source projects used to help build BookStack:
 * [Bacon/BaconQrCode](https://github.com/Bacon/BaconQrCode)
 * [phpseclib](https://github.com/phpseclib/phpseclib)
 * [Clockwork](https://github.com/itsgoingd/clockwork)
+* [PHPStan](https://phpstan.org/) & [Larastan](https://github.com/nunomaduro/larastan)

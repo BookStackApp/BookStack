@@ -32,7 +32,7 @@ class SearchOptions
     public static function fromString(string $search): self
     {
         $decoded = static::decode($search);
-        $instance = new SearchOptions;
+        $instance = new SearchOptions();
         foreach ($decoded as $type => $value) {
             $instance->$type = $value;
         }
@@ -55,7 +55,7 @@ class SearchOptions
             return static::fromString($request->get('term'));
         }
 
-        $instance = new SearchOptions;
+        $instance = new SearchOptions();
         $inputs = $request->only(['search', 'types', 'filters', 'exact', 'tags']);
         $instance->searches = explode(' ', $inputs['search'] ?? []);
         $instance->exacts = array_filter($inputs['exact'] ?? []);
