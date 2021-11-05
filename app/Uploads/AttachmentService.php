@@ -4,9 +4,9 @@ namespace BookStack\Uploads;
 
 use BookStack\Exceptions\FileUploadException;
 use Exception;
-use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
+use Illuminate\Contracts\Filesystem\Filesystem as Storage;
+use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use League\Flysystem\Util;
@@ -19,7 +19,7 @@ class AttachmentService
     /**
      * AttachmentService constructor.
      */
-    public function __construct(FileSystem $fileSystem)
+    public function __construct(FilesystemManager $fileSystem)
     {
         $this->fileSystem = $fileSystem;
     }
@@ -27,7 +27,7 @@ class AttachmentService
     /**
      * Get the storage that will be used for storing files.
      */
-    protected function getStorageDisk(): FileSystemInstance
+    protected function getStorageDisk(): Storage
     {
         return $this->fileSystem->disk($this->getStorageDiskName());
     }

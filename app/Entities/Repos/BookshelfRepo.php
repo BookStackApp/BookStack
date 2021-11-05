@@ -124,7 +124,8 @@ class BookshelfRepo
 
         $syncData = Book::visible()
             ->whereIn('id', $bookIds)
-            ->get(['id'])->pluck('id')->mapWithKeys(function ($bookId) use ($numericIDs) {
+            ->pluck('id')
+            ->mapWithKeys(function ($bookId) use ($numericIDs) {
                 return [$bookId => ['order' => $numericIDs->search($bookId)]];
             });
 

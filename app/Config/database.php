@@ -105,6 +105,6 @@ return [
     'migrations' => 'migrations',
 
     // Redis configuration to use if set
-    'redis' => env('REDIS_SERVERS', false) ? $redisConfig : [],
+    'redis' => $redisConfig ?? [],
 
 ];

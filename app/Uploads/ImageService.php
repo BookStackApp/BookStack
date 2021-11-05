@@ -6,10 +6,9 @@ use BookStack\Exceptions\ImageUploadException;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Contracts\Filesystem\Factory as FileSystem;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Contracts\Filesystem\Filesystem as FileSystemInstance;
 use Illuminate\Contracts\Filesystem\Filesystem as Storage;
+use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -33,7 +32,7 @@ class ImageService
     /**
      * ImageService constructor.
      */
-    public function __construct(Image $image, ImageManager $imageTool, FileSystem $fileSystem, Cache $cache)
+    public function __construct(Image $image, ImageManager $imageTool, FilesystemManager $fileSystem, Cache $cache)
     {
         $this->image = $image;
         $this->imageTool = $imageTool;
@@ -44,7 +43,7 @@ class ImageService
     /**
      * Get the storage that will be used for storing images.
      */
-    protected function getStorageDisk(string $imageType = ''): FileSystemInstance
+    protected function getStorageDisk(string $imageType = ''): Storage
     {
         return $this->fileSystem->disk($this->getStorageDiskName($imageType));
     }
@@ -352,7 +351,7 @@ class ImageService
     /**
      * Check whether a folder is empty.
      */
-    protected function isFolderEmpty(FileSystemInstance $storage, string $path): bool
+    protected function isFolderEmpty(Storage $storage, string $path): bool
     {
         $files = $storage->files($path);
         $folders = $storage->directories($path);

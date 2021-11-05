@@ -1,0 +1,23 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app
+
+    # The level 8 is the highest level
+    level: 1
+
+    phpVersion: 70300
+
+    bootstrapFiles:
+      - bootstrap/phpstan.php
+
+    ignoreErrors:
+#        - '#Unsafe usage of new static#'
+
+    excludePaths:
+        - ./Config/**/*.php
+
+    checkMissingIterableValueType: false

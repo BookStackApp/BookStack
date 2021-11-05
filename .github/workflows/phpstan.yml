@@ -1,0 +1,41 @@
+name: phpstan
+
+on:
+  push:
+    branches-ignore:
+      - l10n_master
+  pull_request:
+    branches-ignore:
+      - l10n_master
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        php: ['7.3']
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: gd, mbstring, json, curl, xml, mysql, ldap
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Cache composer packages
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ matrix.php }}
+
+    - name: Install composer dependencies & Test
+      run: composer install --prefer-dist --no-interaction --ansi
+
+    - name: Run PHPStan
+      run: php${{ matrix.php }} ./vendor/bin/phpstan analyse --memory-limit=2G

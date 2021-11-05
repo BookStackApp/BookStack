@@ -20,9 +20,9 @@ class StatusController extends Controller
             }),
             'cache' => $this->trueWithoutError(function () {
                 $rand = Str::random();
-                Cache::set('status_test', $rand);
+                Cache::add('status_test', $rand);
 
-                return Cache::get('status_test') === $rand;
+                return Cache::pull('status_test') === $rand;
             }),
             'session' => $this->trueWithoutError(function () {
                 $rand = Str::random();
