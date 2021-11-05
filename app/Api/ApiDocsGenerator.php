@@ -95,6 +95,7 @@ class ApiDocsGenerator
         }
 
         $rules = $class->getValdationRules()[$methodName] ?? [];
+
         return empty($rules) ? null : $rules;
     }
 
