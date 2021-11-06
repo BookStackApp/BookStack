@@ -26,7 +26,11 @@ class TagController extends Controller
         $nameFilter = $request->get('name', '');
         $tags = $this->tagRepo
             ->queryWithTotals($search, $nameFilter)
-            ->paginate(20);
+            ->paginate(50)
+            ->appends(array_filter([
+                'search' => $search,
+                'name' => $nameFilter
+            ]));
 
         return view('tags.index', [
             'tags'   => $tags,

@@ -3,6 +3,7 @@
 namespace Tests\Entity;
 
 use BookStack\Actions\Tag;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
@@ -97,5 +98,96 @@ class TagTest extends TestCase
         $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'buckets');
         $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'color');
         $resp->assertElementContains('[href="' . $page->getUrl() . '"]', 'red');
+    }
+
+    public function test_tags_index_shows_tag_name_as_expected_with_right_counts()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
+        $page->tags()->create(['name' => 'Category', 'value' => 'OtherTestContent']);
+
+        $resp = $this->asEditor()->get('/tags');
+        $resp->assertSee('Category');
+        $resp->assertElementCount('.tag-item', 1);
+        $resp->assertDontSee('GreatTestContent');
+        $resp->assertDontSee('OtherTestContent');
+        $resp->assertElementContains('a[title="Total tag usages"]', '2');
+        $resp->assertElementContains('a[title="Assigned to Pages"]', '2');
+        $resp->assertElementContains('a[title="Assigned to Books"]', '0');
+        $resp->assertElementContains('a[title="Assigned to Chapters"]', '0');
+        $resp->assertElementContains('a[title="Assigned to Shelves"]', '0');
+        $resp->assertElementContains('a[href$="/tags?name=Category"]', '2 unique values');
+
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $book->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
+        $resp = $this->asEditor()->get('/tags');
+        $resp->assertElementContains('a[title="Total tag usages"]', '3');
+        $resp->assertElementContains('a[title="Assigned to Books"]', '1');
+        $resp->assertElementContains('a[href$="/tags?name=Category"]', '2 unique values');
+    }
+
+    public function test_tag_index_can_be_searched()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
+
+        $resp = $this->asEditor()->get('/tags?search=cat');
+        $resp->assertElementContains('.tag-item .tag-name', 'Category');
+
+        $resp = $this->asEditor()->get('/tags?search=content');
+        $resp->assertElementContains('.tag-item .tag-name', 'Category');
+        $resp->assertElementContains('.tag-item .tag-value', 'GreatTestContent');
+
+        $resp = $this->asEditor()->get('/tags?search=other');
+        $resp->assertElementNotExists('.tag-item .tag-name');
+    }
+
+    public function test_tag_index_can_be_scoped_to_specific_tag_name()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
+        $page->tags()->create(['name' => 'Category', 'value' => 'OtherTestContent']);
+        $page->tags()->create(['name' => 'OtherTagName', 'value' => 'OtherValue']);
+
+        $resp = $this->asEditor()->get('/tags?name=Category');
+        $resp->assertSee('Category');
+        $resp->assertSee('GreatTestContent');
+        $resp->assertSee('OtherTestContent');
+        $resp->assertDontSee('OtherTagName');
+        $resp->assertElementCount('table .tag-item', 2);
+        $resp->assertSee('Active Filter:');
+        $resp->assertElementContains('form[action$="/tags"]', 'Clear Filter');
+    }
+
+    public function test_tags_index_adheres_to_page_permissions()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->tags()->create(['name' => 'SuperCategory', 'value' => 'GreatTestContent']);
+
+        $resp = $this->asEditor()->get('/tags');
+        $resp->assertSee('SuperCategory');
+        $resp = $this->get('/tags?name=SuperCategory');
+        $resp->assertSee('GreatTestContent');
+
+        $page->restricted = true;
+        $this->regenEntityPermissions($page);
+
+        $resp = $this->asEditor()->get('/tags');
+        $resp->assertDontSee('SuperCategory');
+        $resp = $this->get('/tags?name=SuperCategory');
+        $resp->assertDontSee('GreatTestContent');
+    }
+
+    public function test_tag_index_shows_message_on_no_results()
+    {
+        /** @var Page $page */
+        $resp = $this->asEditor()->get('/tags?search=testingval');
+        $resp->assertSee('No items available');
+        $resp->assertSee('Tags can be assigned via the page editor sidebar');
     }
 }
