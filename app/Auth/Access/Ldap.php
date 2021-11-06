@@ -11,6 +11,7 @@ class Ldap
 {
     /**
      * Connect to an LDAP server.
+     *
      * @return resource
      */
     public function connect(string $hostName, int $port)

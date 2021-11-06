@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $html
  * @property int    $revision_number
  * @property Page   $page
- *
  * @property-read ?User $createdBy
  */
 class PageRevision extends Model

@@ -39,6 +39,7 @@ class SlugGenerator
     /**
      * Check if a slug is already in-use for this
      * type of model within the same parent.
+     *
      * @param Sluggable&Model $model
      */
     protected function slugInUse(string $slug, Sluggable $model): bool

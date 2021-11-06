@@ -42,7 +42,7 @@ class TagRepo
         }
 
         if ($searchTerm) {
-            $query->where(function(Builder $query) use ($searchTerm) {
+            $query->where(function (Builder $query) use ($searchTerm) {
                 $query->where('name', 'like', '%' . $searchTerm . '%')
                     ->orWhere('value', 'like', '%' . $searchTerm . '%');
             });
