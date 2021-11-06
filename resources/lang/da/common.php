@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Fjern som foretrukken',
     'next' => 'Næste',
     'previous' => 'Forrige',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Sorteringsindstillinger',
