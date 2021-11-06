@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * @property Model deletable
+ * @property Model $deletable
  */
 class Deletion extends Model implements Loggable
 {
@@ -22,7 +22,7 @@ class Deletion extends Model implements Loggable
     }
 
     /**
-     * The the user that performed the deletion.
+     * Get the user that performed the deletion.
      */
     public function deleter(): BelongsTo
     {
@@ -48,7 +48,11 @@ class Deletion extends Model implements Loggable
     {
         $deletable = $this->deletable()->first();
 
-        return "Deletion ({$this->id}) for {$deletable->getType()} ({$deletable->id}) {$deletable->name}";
+        if ($deletable instanceof Entity) {
+            return "Deletion ({$this->id}) for {$deletable->getType()} ({$deletable->id}) {$deletable->name}";
+        }
+
+        return "Deletion ({$this->id})";
     }
 
     /**

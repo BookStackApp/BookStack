@@ -94,7 +94,7 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
         }
 
         // Attach avatar if non-existent
-        if (is_null($user->avatar)) {
+        if (!$user->avatar()->exists()) {
             $this->ldapService->saveAndAttachAvatar($user, $userDetails);
         }
 

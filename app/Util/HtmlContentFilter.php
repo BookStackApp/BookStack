@@ -4,6 +4,7 @@ namespace BookStack\Util;
 
 use DOMAttr;
 use DOMDocument;
+use DOMElement;
 use DOMNodeList;
 use DOMXPath;
 
@@ -92,7 +93,9 @@ class HtmlContentFilter
         /** @var DOMAttr $attr */
         foreach ($attrs as $attr) {
             $attrName = $attr->nodeName;
-            $attr->parentNode->removeAttribute($attrName);
+            /** @var DOMElement $parentNode */
+            $parentNode = $attr->parentNode;
+            $parentNode->removeAttribute($attrName);
         }
     }
 }

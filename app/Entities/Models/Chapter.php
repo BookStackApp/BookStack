@@ -3,13 +3,14 @@
 namespace BookStack\Entities\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 /**
  * Class Chapter.
  *
  * @property Collection<Page> $pages
- * @property mixed description
+ * @property string $description
  */
 class Chapter extends BookChild
 {
@@ -22,12 +23,8 @@ class Chapter extends BookChild
 
     /**
      * Get the pages that this chapter contains.
-     *
-     * @param string $dir
-     *
-     * @return mixed
      */
-    public function pages($dir = 'ASC')
+    public function pages(string $dir = 'ASC'): HasMany
     {
         return $this->hasMany(Page::class)->orderBy('priority', $dir);
     }
@@ -35,7 +32,7 @@ class Chapter extends BookChild
     /**
      * Get the url of this chapter.
      */
-    public function getUrl($path = ''): string
+    public function getUrl(string $path = ''): string
     {
         $parts = [
             'books',

@@ -49,9 +49,10 @@ class ResetMfa extends Command
             return 1;
         }
 
-        /** @var User $user */
         $field = $id ? 'id' : 'email';
         $value = $id ?: $email;
+
+        /** @var User $user */
         $user = User::query()
             ->where($field, '=', $value)
             ->first();

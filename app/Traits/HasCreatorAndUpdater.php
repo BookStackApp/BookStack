@@ -6,8 +6,8 @@ use BookStack\Auth\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int created_by
- * @property int updated_by
+ * @property int $created_by
+ * @property int $updated_by
  */
 trait HasCreatorAndUpdater
 {
