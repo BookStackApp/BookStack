@@ -4,6 +4,7 @@ namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Entity;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -12,13 +13,42 @@ class TagRepo
     protected $tag;
     protected $permissionService;
 
-    /**
-     * TagRepo constructor.
-     */
-    public function __construct(Tag $tag, PermissionService $ps)
+    public function __construct(PermissionService $ps)
     {
-        $this->tag = $tag;
         $this->permissionService = $ps;
+    }
+
+    /**
+     * Start a query against all tags in the system.
+     */
+    public function queryWithTotals(string $searchTerm, string $nameFilter): Builder
+    {
+        $groupingAttribute = $nameFilter ? 'value' : 'name';
+        $query = Tag::query()
+            ->select([
+                'name',
+                ($searchTerm || $nameFilter) ? 'value' : DB::raw('COUNT(distinct value) as `values`'),
+                DB::raw('COUNT(id) as usages'),
+                DB::raw('SUM(IF(entity_type = \'BookStack\\\\Page\', 1, 0)) as page_count'),
+                DB::raw('SUM(IF(entity_type = \'BookStack\\\\Chapter\', 1, 0)) as chapter_count'),
+                DB::raw('SUM(IF(entity_type = \'BookStack\\\\Book\', 1, 0)) as book_count'),
+                DB::raw('SUM(IF(entity_type = \'BookStack\\\\BookShelf\', 1, 0)) as shelf_count'),
+            ])
+            ->groupBy($groupingAttribute)
+            ->orderBy($groupingAttribute);
+
+        if ($nameFilter) {
+            $query->where('name', '=', $nameFilter);
+        }
+
+        if ($searchTerm) {
+            $query->where(function(Builder $query) use ($searchTerm) {
+                $query->where('name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('value', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        return $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
     }
 
     /**
@@ -27,7 +57,7 @@ class TagRepo
      */
     public function getNameSuggestions(?string $searchTerm): Collection
     {
-        $query = $this->tag->newQuery()
+        $query = Tag::query()
             ->select('*', DB::raw('count(*) as count'))
             ->groupBy('name');
 
@@ -49,7 +79,7 @@ class TagRepo
      */
     public function getValueSuggestions(?string $searchTerm, ?string $tagName): Collection
     {
-        $query = $this->tag->newQuery()
+        $query = Tag::query()
             ->select('*', DB::raw('count(*) as count'))
             ->groupBy('value');
 
@@ -90,9 +120,9 @@ class TagRepo
      */
     protected function newInstanceFromInput(array $input): Tag
     {
-        $name = trim($input['name']);
-        $value = isset($input['value']) ? trim($input['value']) : '';
-
-        return $this->tag->newInstance(['name' => $name, 'value' => $value]);
+        return new Tag([
+            'name'  => trim($input['name']),
+            'value' => trim($input['value'] ?? ''),
+        ]);
     }
 }

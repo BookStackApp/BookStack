@@ -18,6 +18,28 @@ class TagController extends Controller
     }
 
     /**
+     * Show a listing of existing tags in the system.
+     */
+    public function index(Request $request)
+    {
+        $search = $request->get('search', '');
+        $nameFilter = $request->get('name', '');
+        $tags = $this->tagRepo
+            ->queryWithTotals($search, $nameFilter)
+            ->paginate(50)
+            ->appends(array_filter([
+                'search' => $search,
+                'name' => $nameFilter
+            ]));
+
+        return view('tags.index', [
+            'tags'   => $tags,
+            'search' => $search,
+            'nameFilter' => $nameFilter,
+        ]);
+    }
+
+    /**
      * Get tag name suggestions from a given search term.
      */
     public function getNameSuggestions(Request $request)

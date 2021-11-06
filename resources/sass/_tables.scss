@@ -35,7 +35,7 @@ table.table {
     font-weight: bold;
   }
   tr:hover {
-    @include lightDark(background-color, #eee, #333);
+    @include lightDark(background-color, #F2F2F2, #333);
   }
   .text-right {
     text-align: end;
@@ -48,6 +48,12 @@ table.table {
   }
   a {
     display: inline-block;
+  }
+  &.expand-to-padding {
+    margin-left: -$-s;
+    margin-right: -$-s;
+    width: calc(100% + (2*#{$-s}));
+    max-width: calc(100% + (2*#{$-s}));
   }
 }
 
