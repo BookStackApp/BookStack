@@ -165,11 +165,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/page/{id}', [PageController::class, 'getPageAjax']);
     Route::delete('/ajax/page/{id}', [PageController::class, 'ajaxDestroy']);
 
-    // Tag routes (AJAX)
-    Route::prefix('ajax/tags')->group(function () {
-        Route::get('/suggest/names', [TagController::class, 'getNameSuggestions']);
-        Route::get('/suggest/values', [TagController::class, 'getValueSuggestions']);
-    });
+    // Tag routes
+    Route::get('/tags', [TagController::class, 'index']);
+    Route::get('/ajax/tags/suggest/names', [TagController::class, 'getNameSuggestions']);
+    Route::get('/ajax/tags/suggest/values', [TagController::class, 'getValueSuggestions']);
 
     Route::get('/ajax/search/entities', [SearchController::class, 'searchEntitiesAjax']);
 
