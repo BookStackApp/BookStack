@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Eemalda lemmik',
     'next' => 'Järgmine',
     'previous' => 'Eelmine',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Sorteerimise valikud',
