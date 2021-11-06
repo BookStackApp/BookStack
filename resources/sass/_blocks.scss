@@ -245,7 +245,7 @@
   @include lightDark(border-color, #CCC, #666);
   a, span, a:hover, a:active {
     padding: 4px 8px;
-    @include lightDark(color, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.8));
+    @include lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.8));
     transition: background-color ease-in-out 80ms;
     text-decoration: none;
   }
@@ -264,6 +264,35 @@
 
 .tag-list div:last-child .tag-item {
   margin-bottom: 0;
+}
+
+td .tag-item {
+  margin-bottom: 0;
+}
+
+/**
+ * Pill boxes
+ */
+
+.pill {
+  display: inline-block;
+  border: 1px solid currentColor;
+  padding: .2em .8em;
+  font-size: 0.8em;
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+  line-height: 1.4;
+  &:before {
+    content: '';
+    background-color: currentColor;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+  }
 }
 
 /**
