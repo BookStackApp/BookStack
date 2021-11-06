@@ -96,7 +96,7 @@ return [
     'mfa_gen_totp_verify_setup' => '設定を検証',
     'mfa_gen_totp_verify_setup_desc' => '認証アプリで生成されたコードを下の入力ボックスに入力し、すべてが機能していることを確認してください。',
     'mfa_gen_totp_provide_code_here' => 'アプリが生成したコードを入力',
-    'mfa_verify_access' => 'Verify Access',
+    'mfa_verify_access' => 'アクセスを確認',
     'mfa_verify_access_desc' => 'Your user account requires you to confirm your identity via an additional level of verification before you\'re granted access. Verify using one of your configured methods to continue.',
     'mfa_verify_no_methods' => 'No Methods Configured',
     'mfa_verify_no_methods_desc' => 'No multi-factor authentication methods could be found for your account. You\'ll need to set up at least one method before you gain access.',
