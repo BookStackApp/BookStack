@@ -45,6 +45,8 @@ return [
     'unfavourite' => '取消最愛',
     'next' => '下一頁',
     'previous' => '上一頁',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => '排序選項',
