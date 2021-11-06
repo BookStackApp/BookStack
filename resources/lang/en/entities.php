@@ -267,6 +267,7 @@ return [
     'tags_all_values' => 'All values',
     'tags_view_tags' => 'View Tags',
     'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Attachments',
     'attachments_explain' => 'Upload some files or attach some links to display on your page. These are visible in the page sidebar.',
     'attachments_explain_instant_save' => 'Changes here are saved instantly.',
