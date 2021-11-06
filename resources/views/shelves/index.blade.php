@@ -15,7 +15,13 @@
                     <span>{{ trans('entities.shelves_new_action') }}</span>
                 </a>
             @endif
+
             @include('entities.view-toggle', ['view' => $view, 'type' => 'shelves'])
+
+            <a href="{{ url('/tags') }}" class="icon-list-item">
+                <span>@icon('tag')</span>
+                <span>{{ trans('entities.tags_view_tags') }}</span>
+            </a>
         </div>
     </div>
 
