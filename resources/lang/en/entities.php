@@ -265,6 +265,8 @@ return [
     'tags_assigned_shelves' => 'Assigned to Shelves',
     'tags_x_unique_values' => ':count unique values',
     'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
     'attachments' => 'Attachments',
     'attachments_explain' => 'Upload some files or attach some links to display on your page. These are visible in the page sidebar.',
     'attachments_explain_instant_save' => 'Changes here are saved instantly.',
