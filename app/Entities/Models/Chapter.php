@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
  * Class Chapter.
  *
  * @property Collection<Page> $pages
- * @property string $description
+ * @property string           $description
  */
 class Chapter extends BookChild
 {

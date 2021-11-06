@@ -29,12 +29,12 @@ class TagController extends Controller
             ->paginate(50)
             ->appends(array_filter([
                 'search' => $search,
-                'name' => $nameFilter
+                'name'   => $nameFilter,
             ]));
 
         return view('tags.index', [
-            'tags'   => $tags,
-            'search' => $search,
+            'tags'       => $tags,
+            'search'     => $search,
             'nameFilter' => $nameFilter,
         ]);
     }
