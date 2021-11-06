@@ -4,13 +4,14 @@ namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\BookChild;
 use BookStack\Interfaces\Sluggable;
+use BookStack\Model;
 use Illuminate\Support\Str;
 
 class SlugGenerator
 {
     /**
      * Generate a fresh slug for the given entity.
-     * The slug will generated so it does not conflict within the same parent item.
+     * The slug will be generated so that it doesn't conflict within the same parent item.
      */
     public function generate(Sluggable $model): string
     {
@@ -38,6 +39,7 @@ class SlugGenerator
     /**
      * Check if a slug is already in-use for this
      * type of model within the same parent.
+     * @param Sluggable&Model $model
      */
     protected function slugInUse(string $slug, Sluggable $model): bool
     {

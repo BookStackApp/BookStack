@@ -47,7 +47,7 @@ class SearchRunner
     /**
      * Search all entities in the system.
      * The provided count is for each entity to search,
-     * Total returned could can be larger and not guaranteed.
+     * Total returned could be larger and not guaranteed.
      */
     public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20, string $action = 'view'): array
     {
@@ -68,11 +68,15 @@ class SearchRunner
             if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
+
             $search = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action);
+            /** @var int $entityTotal */
             $entityTotal = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action, true);
-            if ($entityTotal > $page * $count) {
+
+            if ($entityTotal > ($page * $count)) {
                 $hasMore = true;
             }
+
             $total += $entityTotal;
             $results = $results->merge($search);
         }

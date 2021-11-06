@@ -236,7 +236,7 @@ class ImageRepo
             ->get(['id', 'name', 'slug', 'book_id']);
 
         foreach ($pages as $page) {
-            $page->url = $page->getUrl();
+            $page->setAttribute('url', $page->getUrl());
         }
 
         return $pages->all();

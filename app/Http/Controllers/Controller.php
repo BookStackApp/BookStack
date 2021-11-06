@@ -165,7 +165,7 @@ abstract class Controller extends BaseController
     /**
      * Log an activity in the system.
      *
-     * @param string|Loggable
+     * @param $detail string|Loggable
      */
     protected function logActivity(string $type, $detail = ''): void
     {

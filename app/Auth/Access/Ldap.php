@@ -10,14 +10,10 @@ namespace BookStack\Auth\Access;
 class Ldap
 {
     /**
-     * Connect to a LDAP server.
-     *
-     * @param string $hostName
-     * @param int    $port
-     *
+     * Connect to an LDAP server.
      * @return resource
      */
-    public function connect($hostName, $port)
+    public function connect(string $hostName, int $port)
     {
         return ldap_connect($hostName, $port);
     }
@@ -26,12 +22,9 @@ class Ldap
      * Set the value of a LDAP option for the given connection.
      *
      * @param resource $ldapConnection
-     * @param int      $option
      * @param mixed    $value
-     *
-     * @return bool
      */
-    public function setOption($ldapConnection, $option, $value)
+    public function setOption($ldapConnection, int $option, $value): bool
     {
         return ldap_set_option($ldapConnection, $option, $value);
     }
@@ -47,12 +40,9 @@ class Ldap
     /**
      * Set the version number for the given ldap connection.
      *
-     * @param $ldapConnection
-     * @param $version
-     *
-     * @return bool
+     * @param resource $ldapConnection
      */
-    public function setVersion($ldapConnection, $version)
+    public function setVersion($ldapConnection, int $version): bool
     {
         return $this->setOption($ldapConnection, LDAP_OPT_PROTOCOL_VERSION, $version);
     }

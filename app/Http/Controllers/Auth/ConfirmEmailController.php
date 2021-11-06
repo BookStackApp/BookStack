@@ -10,10 +10,7 @@ use BookStack\Exceptions\UserTokenExpiredException;
 use BookStack\Exceptions\UserTokenNotFoundException;
 use BookStack\Http\Controllers\Controller;
 use Exception;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
-use Illuminate\View\View;
 
 class ConfirmEmailController extends Controller
 {
@@ -57,33 +54,23 @@ class ConfirmEmailController extends Controller
     /**
      * Confirms an email via a token and logs the user into the system.
      *
-     * @param $token
-     *
      * @throws ConfirmationEmailException
      * @throws Exception
-     *
-     * @return RedirectResponse|Redirector
      */
-    public function confirm($token)
+    public function confirm(string $token)
     {
         try {
             $userId = $this->emailConfirmationService->checkTokenAndGetUserId($token);
-        } catch (Exception $exception) {
-            if ($exception instanceof UserTokenNotFoundException) {
-                $this->showErrorNotification(trans('errors.email_confirmation_invalid'));
+        } catch (UserTokenNotFoundException $exception) {
+            $this->showErrorNotification(trans('errors.email_confirmation_invalid'));
 
-                return redirect('/register');
-            }
+            return redirect('/register');
+        } catch (UserTokenExpiredException $exception) {
+            $user = $this->userRepo->getById($exception->userId);
+            $this->emailConfirmationService->sendConfirmation($user);
+            $this->showErrorNotification(trans('errors.email_confirmation_expired'));
 
-            if ($exception instanceof UserTokenExpiredException) {
-                $user = $this->userRepo->getById($exception->userId);
-                $this->emailConfirmationService->sendConfirmation($user);
-                $this->showErrorNotification(trans('errors.email_confirmation_expired'));
-
-                return redirect('/register/confirm');
-            }
-
-            throw $exception;
+            return redirect('/register/confirm');
         }
 
         $user = $this->userRepo->getById($userId);
@@ -99,10 +86,6 @@ class ConfirmEmailController extends Controller
 
     /**
      * Resend the confirmation email.
-     *
-     * @param Request $request
-     *
-     * @return View
      */
     public function resend(Request $request)
     {

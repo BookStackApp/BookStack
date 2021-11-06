@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem as Storage;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -436,10 +437,12 @@ class ImageService
      */
     public function pathExistsInLocalSecure(string $imagePath): bool
     {
+        /** @var FilesystemAdapter $disk */
         $disk = $this->getStorageDisk('gallery');
 
         // Check local_secure is active
         return $this->usingSecureImages()
+            && $disk instanceof FilesystemAdapter
             // Check the image file exists
             && $disk->exists($imagePath)
             // Check the file is likely an image file

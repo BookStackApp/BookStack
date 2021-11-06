@@ -66,7 +66,7 @@ class FavouriteController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Exception
      */
-    protected function getValidatedModelFromRequest(Request $request): Favouritable
+    protected function getValidatedModelFromRequest(Request $request): Entity
     {
         $modelInfo = $this->validate($request, [
             'type' => ['required', 'string'],

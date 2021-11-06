@@ -106,7 +106,7 @@ class Page extends BookChild
     /**
      * Get the url of this page.
      */
-    public function getUrl($path = ''): string
+    public function getUrl(string $path = ''): string
     {
         $parts = [
             'books',

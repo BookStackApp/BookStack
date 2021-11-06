@@ -15,7 +15,7 @@ parameters:
       - bootstrap/phpstan.php
 
     ignoreErrors:
-#        - '#Unsafe usage of new static#'
+    #  - '#PHPDoc tag @throws with type .*?Psr\\SimpleCache\\InvalidArgumentException.*? is not subtype of Throwable#'
 
     excludePaths:
         - ./Config/**/*.php
