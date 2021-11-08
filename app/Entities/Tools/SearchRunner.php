@@ -7,13 +7,14 @@ use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\SearchTerm;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use SplObjectStorage;
 
 class SearchRunner
 {
@@ -34,10 +35,19 @@ class SearchRunner
      */
     protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
+    /**
+     * Retain a cache of score adjusted terms for specific search options.
+     * From PHP>=8 this can be made into a WeakMap instead.
+     *
+     * @var SplObjectStorage
+     */
+    protected $termAdjustmentCache;
+
     public function __construct(EntityProvider $entityProvider, PermissionService $permissionService)
     {
         $this->entityProvider = $entityProvider;
         $this->permissionService = $permissionService;
+        $this->termAdjustmentCache = new SplObjectStorage();
     }
 
     /**
@@ -138,10 +148,12 @@ class SearchRunner
 
         if ($entity instanceof Page) {
             $entityQuery->select($entity::$listAttributes);
+        } else {
+            $entityQuery->select(['*']);
         }
 
         // Handle normal search terms
-        $this->applyTermSearch($entityQuery, $searchOpts->searches, $entity);
+        $this->applyTermSearch($entityQuery, $searchOpts, $entity);
 
         // Handle exact term matching
         foreach ($searchOpts->exacts as $inputTerm) {
@@ -170,33 +182,107 @@ class SearchRunner
     /**
      * For the given search query, apply the queries for handling the regular search terms.
      */
-    protected function applyTermSearch(EloquentBuilder $entityQuery, array $terms, Entity $entity): void
+    protected function applyTermSearch(EloquentBuilder $entityQuery, SearchOptions $options, Entity $entity): void
     {
+        $terms = $options->searches;
         if (count($terms) === 0) {
             return;
         }
 
+        $scoredTerms = $this->getTermAdjustments($options);
+        $scoreSelect = $this->selectForScoredTerms($scoredTerms);
+
         $subQuery = DB::table('search_terms')->select([
             'entity_id',
             'entity_type',
-            DB::raw('SUM(score) as score'),
+            DB::raw($scoreSelect['statement']),
         ]);
 
-        $subQuery->where('entity_type', '=', $entity->getMorphClass());
+        $subQuery->addBinding($scoreSelect['bindings'], 'select');
 
+        $subQuery->where('entity_type', '=', $entity->getMorphClass());
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
                 $query->orWhere('term', 'like', $inputTerm . '%');
             }
-        })->groupBy('entity_type', 'entity_id');
+        });
+        $subQuery->groupBy('entity_type', 'entity_id');
 
-        $entityQuery->join(DB::raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
-                $join->on('id', '=', 'entity_id');
-            })
-            ->addSelect(DB::raw('s.score'))
-            ->orderBy('score', 'desc');
+        $entityQuery->joinSub($subQuery, 's', 'id', '=', 'entity_id');
+        $entityQuery->addSelect('s.score');
+        $entityQuery->orderBy('score', 'desc');
+    }
 
-        $entityQuery->mergeBindings($subQuery);
+    /**
+     * Create a select statement, with prepared bindings, for the given
+     * set of scored search terms.
+     * @return array{statement: string, bindings: string[]}
+     */
+    protected function selectForScoredTerms(array $scoredTerms): array
+    {
+        // Within this we walk backwards to create the chain of 'if' statements
+        // so that each previous statement is used in the 'else' condition of
+        // the next (earlier) to be built. We start at '0' to have no score
+        // on no match (Should never actually get to this case).
+        $ifChain = '0';
+        $bindings = [];
+        foreach ($scoredTerms as $term => $score) {
+            $ifChain = 'IF(term like ?, score * ' . (float)$score . ', ' . $ifChain . ')';
+            $bindings[] = $term . '%';
+        }
+
+        return [
+            'statement' => 'SUM(' . $ifChain . ') as score',
+            'bindings' => array_reverse($bindings),
+        ];
+    }
+
+    protected function getTermAdjustments(SearchOptions $options): array
+    {
+        if (isset($this->termAdjustmentCache[$options])) {
+            return $this->termAdjustmentCache[$options];
+        }
+
+        $termQuery = SearchTerm::query()->toBase();
+        $whenStatements = [];
+        $whenBindings = [];
+
+        foreach ($options->searches as $term) {
+            $whenStatements[] = 'WHEN term LIKE ? THEN ?';
+            $whenBindings[] = $term . '%';
+            $whenBindings[] = $term;
+
+            $termQuery->orWhere('term', 'like', $term . '%');
+        }
+
+        $case = 'CASE ' . implode(' ', $whenStatements) . ' END';
+        $termQuery->selectRaw( $case . ' as term', $whenBindings);
+        $termQuery->selectRaw('COUNT(*) as count');
+        $termQuery->groupByRaw($case, $whenBindings);
+
+        $termCounts = $termQuery->get()->pluck('count', 'term')->toArray();
+        $adjusted = $this->rawTermCountsToAdjustments($termCounts);
+
+        $this->termAdjustmentCache[$options] = $adjusted;
+        return $this->termAdjustmentCache[$options];
+    }
+
+    /**
+     * Convert counts of terms into a relative-count normalised multiplier.
+     * @param array<string, int> $termCounts
+     * @return array<string, int>
+     */
+    protected function rawTermCountsToAdjustments(array $termCounts): array
+    {
+        $multipliers = [];
+        $max = max(array_values($termCounts));
+
+        foreach ($termCounts as $term => $count) {
+            $percent = round($count / $max, 5);
+            $multipliers[$term] = 1.3 - $percent;
+        }
+
+        return $multipliers;
     }
 
     /**
