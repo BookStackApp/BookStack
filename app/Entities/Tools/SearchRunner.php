@@ -5,11 +5,13 @@ namespace BookStack\Entities\Tools;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\SearchTerm;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -75,9 +77,10 @@ class SearchRunner
                 continue;
             }
 
-            $searchQuery = $this->buildQuery($searchOpts, $entityType, $action);
+            $entityModelInstance = $this->entityProvider->get($entityType);
+            $searchQuery = $this->buildQuery($searchOpts, $entityModelInstance, $action);
             $entityTotal = $searchQuery->count();
-            $searchResults = $this->getPageOfDataFromQuery($searchQuery, $page, $count);
+            $searchResults = $this->getPageOfDataFromQuery($searchQuery, $entityModelInstance, $page, $count);
 
             if ($entityTotal > ($page * $count)) {
                 $hasMore = true;
@@ -109,7 +112,9 @@ class SearchRunner
             if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
-            $search = $this->buildQuery($opts, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
+
+            $entityModelInstance = $this->entityProvider->get($entityType);
+            $search = $this->buildQuery($opts, $entityModelInstance)->where('book_id', '=', $bookId)->take(20)->get();
             $results = $results->merge($search);
         }
 
@@ -122,7 +127,8 @@ class SearchRunner
     public function searchChapter(int $chapterId, string $searchString): Collection
     {
         $opts = SearchOptions::fromString($searchString);
-        $pages = $this->buildQuery($opts, 'page')->where('chapter_id', '=', $chapterId)->take(20)->get();
+        $entityModelInstance = $this->entityProvider->get('page');
+        $pages = $this->buildQuery($opts, $entityModelInstance)->where('chapter_id', '=', $chapterId)->take(20)->get();
 
         return $pages->sortByDesc('score');
     }
@@ -130,9 +136,24 @@ class SearchRunner
     /**
      * Get a page of result data from the given query based on the provided page parameters.
      */
-    protected function getPageOfDataFromQuery(EloquentBuilder $query, int $page = 1, int $count = 20): EloquentCollection
+    protected function getPageOfDataFromQuery(EloquentBuilder $query, Entity $entityModelInstance, int $page = 1, int $count = 20): EloquentCollection
     {
+        $relations = ['tags'];
+
+        if ($entityModelInstance instanceof BookChild) {
+            $relations['book'] = function(BelongsTo $query) {
+                $query->visible();
+            };
+        }
+
+        if ($entityModelInstance instanceof Page) {
+            $relations['chapter'] = function(BelongsTo $query) {
+                $query->visible();
+            };
+        }
+
         return $query->clone()
+            ->with(array_filter($relations))
             ->skip(($page - 1) * $count)
             ->take($count)
             ->get();
@@ -141,25 +162,24 @@ class SearchRunner
     /**
      * Create a search query for an entity.
      */
-    protected function buildQuery(SearchOptions $searchOpts, string $entityType = 'page', string $action = 'view'): EloquentBuilder
+    protected function buildQuery(SearchOptions $searchOpts, Entity $entityModelInstance, string $action = 'view'): EloquentBuilder
     {
-        $entity = $this->entityProvider->get($entityType);
-        $entityQuery = $entity->newQuery();
+        $entityQuery = $entityModelInstance->newQuery();
 
-        if ($entity instanceof Page) {
-            $entityQuery->select($entity::$listAttributes);
+        if ($entityModelInstance instanceof Page) {
+            $entityQuery->select($entityModelInstance::$listAttributes);
         } else {
             $entityQuery->select(['*']);
         }
 
         // Handle normal search terms
-        $this->applyTermSearch($entityQuery, $searchOpts, $entity);
+        $this->applyTermSearch($entityQuery, $searchOpts, $entityModelInstance);
 
         // Handle exact term matching
         foreach ($searchOpts->exacts as $inputTerm) {
-            $entityQuery->where(function (EloquentBuilder $query) use ($inputTerm, $entity) {
+            $entityQuery->where(function (EloquentBuilder $query) use ($inputTerm, $entityModelInstance) {
                 $query->where('name', 'like', '%' . $inputTerm . '%')
-                    ->orWhere($entity->textField, 'like', '%' . $inputTerm . '%');
+                    ->orWhere($entityModelInstance->textField, 'like', '%' . $inputTerm . '%');
             });
         }
 
@@ -172,11 +192,11 @@ class SearchRunner
         foreach ($searchOpts->filters as $filterTerm => $filterValue) {
             $functionName = Str::camel('filter_' . $filterTerm);
             if (method_exists($this, $functionName)) {
-                $this->$functionName($entityQuery, $entity, $filterValue);
+                $this->$functionName($entityQuery, $entityModelInstance, $filterValue);
             }
         }
 
-        return $this->permissionService->enforceEntityRestrictions($entity, $entityQuery, $action);
+        return $this->permissionService->enforceEntityRestrictions($entityModelInstance, $entityQuery, $action);
     }
 
     /**
