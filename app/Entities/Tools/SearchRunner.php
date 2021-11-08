@@ -6,11 +6,12 @@ use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
-use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class SearchRunner
@@ -19,11 +20,6 @@ class SearchRunner
      * @var EntityProvider
      */
     protected $entityProvider;
-
-    /**
-     * @var Connection
-     */
-    protected $db;
 
     /**
      * @var PermissionService
@@ -37,10 +33,9 @@ class SearchRunner
      */
     protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
-    public function __construct(EntityProvider $entityProvider, Connection $db, PermissionService $permissionService)
+    public function __construct(EntityProvider $entityProvider, PermissionService $permissionService)
     {
         $this->entityProvider = $entityProvider;
-        $this->db = $db;
         $this->permissionService = $permissionService;
     }
 
@@ -69,16 +64,16 @@ class SearchRunner
                 continue;
             }
 
-            $search = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action);
-            /** @var int $entityTotal */
-            $entityTotal = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action, true);
+            $searchQuery = $this->buildQuery($searchOpts, $entityType, $action);
+            $entityTotal = $searchQuery->count();
+            $searchResults = $this->getPageOfDataFromQuery($searchQuery, $page, $count);
 
             if ($entityTotal > ($page * $count)) {
                 $hasMore = true;
             }
 
             $total += $entityTotal;
-            $results = $results->merge($search);
+            $results = $results->merge($searchResults);
         }
 
         return [
@@ -103,7 +98,7 @@ class SearchRunner
             if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
-            $search = $this->buildEntitySearchQuery($opts, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
+            $search = $this->buildQuery($opts, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
             $results = $results->merge($search);
         }
 
@@ -116,49 +111,41 @@ class SearchRunner
     public function searchChapter(int $chapterId, string $searchString): Collection
     {
         $opts = SearchOptions::fromString($searchString);
-        $pages = $this->buildEntitySearchQuery($opts, 'page')->where('chapter_id', '=', $chapterId)->take(20)->get();
+        $pages = $this->buildQuery($opts, 'page')->where('chapter_id', '=', $chapterId)->take(20)->get();
 
         return $pages->sortByDesc('score');
     }
 
     /**
-     * Search across a particular entity type.
-     * Setting getCount = true will return the total
-     * matching instead of the items themselves.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|int|static[]
+     * Get a page of result data from the given query based on the provided page parameters.
      */
-    protected function searchEntityTable(SearchOptions $searchOpts, string $entityType = 'page', int $page = 1, int $count = 20, string $action = 'view', bool $getCount = false)
+    protected function getPageOfDataFromQuery(EloquentBuilder $query, int $page = 1, int $count = 20): EloquentCollection
     {
-        $query = $this->buildEntitySearchQuery($searchOpts, $entityType, $action);
-        if ($getCount) {
-            return $query->count();
-        }
-
-        $query = $query->skip(($page - 1) * $count)->take($count);
-
-        return $query->get();
+        return $query->clone()
+            ->skip(($page - 1) * $count)
+            ->take($count)
+            ->get();
     }
 
     /**
      * Create a search query for an entity.
      */
-    protected function buildEntitySearchQuery(SearchOptions $searchOpts, string $entityType = 'page', string $action = 'view'): EloquentBuilder
+    protected function buildQuery(SearchOptions $searchOpts, string $entityType = 'page', string $action = 'view'): EloquentBuilder
     {
         $entity = $this->entityProvider->get($entityType);
         $entitySelect = $entity->newQuery();
 
         // Handle normal search terms
         if (count($searchOpts->searches) > 0) {
-            $rawScoreSum = $this->db->raw('SUM(score) as score');
-            $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', $rawScoreSum);
+            $rawScoreSum = DB::raw('SUM(score) as score');
+            $subQuery = DB::table('search_terms')->select('entity_id', 'entity_type', $rawScoreSum);
             $subQuery->where('entity_type', '=', $entity->getMorphClass());
             $subQuery->where(function (Builder $query) use ($searchOpts) {
                 foreach ($searchOpts->searches as $inputTerm) {
                     $query->orWhere('term', 'like', $inputTerm . '%');
                 }
             })->groupBy('entity_type', 'entity_id');
-            $entitySelect->join($this->db->raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
+            $entitySelect->join(DB::raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
                 $join->on('id', '=', 'entity_id');
             })->addSelect($entity->getTable() . '.*')
                 ->selectRaw('s.score')
@@ -238,44 +225,36 @@ class SearchRunner
     /**
      * Custom entity search filters.
      */
-    protected function filterUpdatedAfter(EloquentBuilder $query, Entity $model, $input)
+    protected function filterUpdatedAfter(EloquentBuilder $query, Entity $model, $input): void
     {
         try {
             $date = date_create($input);
-        } catch (\Exception $e) {
-            return;
-        }
-        $query->where('updated_at', '>=', $date);
+            $query->where('updated_at', '>=', $date);
+        } catch (\Exception $e) {}
     }
 
-    protected function filterUpdatedBefore(EloquentBuilder $query, Entity $model, $input)
+    protected function filterUpdatedBefore(EloquentBuilder $query, Entity $model, $input): void
     {
         try {
             $date = date_create($input);
-        } catch (\Exception $e) {
-            return;
-        }
-        $query->where('updated_at', '<', $date);
+            $query->where('updated_at', '<', $date);
+        } catch (\Exception $e) {}
     }
 
-    protected function filterCreatedAfter(EloquentBuilder $query, Entity $model, $input)
+    protected function filterCreatedAfter(EloquentBuilder $query, Entity $model, $input): void
     {
         try {
             $date = date_create($input);
-        } catch (\Exception $e) {
-            return;
-        }
-        $query->where('created_at', '>=', $date);
+            $query->where('created_at', '>=', $date);
+        } catch (\Exception $e) {}
     }
 
     protected function filterCreatedBefore(EloquentBuilder $query, Entity $model, $input)
     {
         try {
             $date = date_create($input);
-        } catch (\Exception $e) {
-            return;
-        }
-        $query->where('created_at', '<', $date);
+            $query->where('created_at', '<', $date);
+        } catch (\Exception $e) {}
     }
 
     protected function filterCreatedBy(EloquentBuilder $query, Entity $model, $input)
@@ -352,9 +331,9 @@ class SearchRunner
      */
     protected function sortByLastCommented(EloquentBuilder $query, Entity $model)
     {
-        $commentsTable = $this->db->getTablePrefix() . 'comments';
+        $commentsTable = DB::getTablePrefix() . 'comments';
         $morphClass = str_replace('\\', '\\\\', $model->getMorphClass());
-        $commentQuery = $this->db->raw('(SELECT c1.entity_id, c1.entity_type, c1.created_at as last_commented FROM ' . $commentsTable . ' c1 LEFT JOIN ' . $commentsTable . ' c2 ON (c1.entity_id = c2.entity_id AND c1.entity_type = c2.entity_type AND c1.created_at < c2.created_at) WHERE c1.entity_type = \'' . $morphClass . '\' AND c2.created_at IS NULL) as comments');
+        $commentQuery = DB::raw('(SELECT c1.entity_id, c1.entity_type, c1.created_at as last_commented FROM ' . $commentsTable . ' c1 LEFT JOIN ' . $commentsTable . ' c2 ON (c1.entity_id = c2.entity_id AND c1.entity_type = c2.entity_type AND c1.created_at < c2.created_at) WHERE c1.entity_type = \'' . $morphClass . '\' AND c2.created_at IS NULL) as comments');
 
         $query->join($commentQuery, $model->getTable() . '.id', '=', 'comments.entity_id')->orderBy('last_commented', 'desc');
     }
