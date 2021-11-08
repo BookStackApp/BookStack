@@ -216,6 +216,7 @@ class SearchRunner
     /**
      * Create a select statement, with prepared bindings, for the given
      * set of scored search terms.
+     *
      * @return array{statement: string, bindings: string[]}
      */
     protected function selectForScoredTerms(array $scoredTerms): array
@@ -227,13 +228,13 @@ class SearchRunner
         $ifChain = '0';
         $bindings = [];
         foreach ($scoredTerms as $term => $score) {
-            $ifChain = 'IF(term like ?, score * ' . (float)$score . ', ' . $ifChain . ')';
+            $ifChain = 'IF(term like ?, score * ' . (float) $score . ', ' . $ifChain . ')';
             $bindings[] = $term . '%';
         }
 
         return [
             'statement' => 'SUM(' . $ifChain . ') as score',
-            'bindings' => array_reverse($bindings),
+            'bindings'  => array_reverse($bindings),
         ];
     }
 
@@ -256,24 +257,31 @@ class SearchRunner
         }
 
         $case = 'CASE ' . implode(' ', $whenStatements) . ' END';
-        $termQuery->selectRaw( $case . ' as term', $whenBindings);
+        $termQuery->selectRaw($case . ' as term', $whenBindings);
         $termQuery->selectRaw('COUNT(*) as count');
         $termQuery->groupByRaw($case, $whenBindings);
 
-        $termCounts = $termQuery->get()->pluck('count', 'term')->toArray();
+        $termCounts = $termQuery->pluck('count', 'term')->toArray();
         $adjusted = $this->rawTermCountsToAdjustments($termCounts);
 
         $this->termAdjustmentCache[$options] = $adjusted;
+
         return $this->termAdjustmentCache[$options];
     }
 
     /**
      * Convert counts of terms into a relative-count normalised multiplier.
+     *
      * @param array<string, int> $termCounts
+     *
      * @return array<string, int>
      */
     protected function rawTermCountsToAdjustments(array $termCounts): array
     {
+        if (empty($termCounts)) {
+            return [];
+        }
+        
         $multipliers = [];
         $max = max(array_values($termCounts));
 
@@ -338,7 +346,8 @@ class SearchRunner
         try {
             $date = date_create($input);
             $query->where('updated_at', '>=', $date);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 
     protected function filterUpdatedBefore(EloquentBuilder $query, Entity $model, $input): void
@@ -346,7 +355,8 @@ class SearchRunner
         try {
             $date = date_create($input);
             $query->where('updated_at', '<', $date);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 
     protected function filterCreatedAfter(EloquentBuilder $query, Entity $model, $input): void
@@ -354,7 +364,8 @@ class SearchRunner
         try {
             $date = date_create($input);
             $query->where('created_at', '>=', $date);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 
     protected function filterCreatedBefore(EloquentBuilder $query, Entity $model, $input)
@@ -362,7 +373,8 @@ class SearchRunner
         try {
             $date = date_create($input);
             $query->where('created_at', '<', $date);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
     }
 
     protected function filterCreatedBy(EloquentBuilder $query, Entity $model, $input)
