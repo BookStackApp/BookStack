@@ -46,7 +46,7 @@ class SearchIndex
      *
      * @param Entity[] $entities
      */
-    protected function indexEntities(array $entities)
+    public function indexEntities(array $entities)
     {
         $terms = [];
         foreach ($entities as $entity) {

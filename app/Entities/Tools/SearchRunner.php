@@ -133,29 +133,14 @@ class SearchRunner
     protected function buildQuery(SearchOptions $searchOpts, string $entityType = 'page', string $action = 'view'): EloquentBuilder
     {
         $entity = $this->entityProvider->get($entityType);
-        $entitySelect = $entity->newQuery();
+        $entityQuery = $entity->newQuery();
 
         // Handle normal search terms
-        if (count($searchOpts->searches) > 0) {
-            $rawScoreSum = DB::raw('SUM(score) as score');
-            $subQuery = DB::table('search_terms')->select('entity_id', 'entity_type', $rawScoreSum);
-            $subQuery->where('entity_type', '=', $entity->getMorphClass());
-            $subQuery->where(function (Builder $query) use ($searchOpts) {
-                foreach ($searchOpts->searches as $inputTerm) {
-                    $query->orWhere('term', 'like', $inputTerm . '%');
-                }
-            })->groupBy('entity_type', 'entity_id');
-            $entitySelect->join(DB::raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
-                $join->on('id', '=', 'entity_id');
-            })->addSelect($entity->getTable() . '.*')
-                ->selectRaw('s.score')
-                ->orderBy('score', 'desc');
-            $entitySelect->mergeBindings($subQuery);
-        }
+        $this->applyTermSearch($entityQuery, $searchOpts->searches, $entity);
 
         // Handle exact term matching
         foreach ($searchOpts->exacts as $inputTerm) {
-            $entitySelect->where(function (EloquentBuilder $query) use ($inputTerm, $entity) {
+            $entityQuery->where(function (EloquentBuilder $query) use ($inputTerm, $entity) {
                 $query->where('name', 'like', '%' . $inputTerm . '%')
                     ->orWhere($entity->textField, 'like', '%' . $inputTerm . '%');
             });
@@ -163,18 +148,47 @@ class SearchRunner
 
         // Handle tag searches
         foreach ($searchOpts->tags as $inputTerm) {
-            $this->applyTagSearch($entitySelect, $inputTerm);
+            $this->applyTagSearch($entityQuery, $inputTerm);
         }
 
         // Handle filters
         foreach ($searchOpts->filters as $filterTerm => $filterValue) {
             $functionName = Str::camel('filter_' . $filterTerm);
             if (method_exists($this, $functionName)) {
-                $this->$functionName($entitySelect, $entity, $filterValue);
+                $this->$functionName($entityQuery, $entity, $filterValue);
             }
         }
 
-        return $this->permissionService->enforceEntityRestrictions($entity, $entitySelect, $action);
+        return $this->permissionService->enforceEntityRestrictions($entity, $entityQuery, $action);
+    }
+
+    /**
+     * For the given search query, apply the queries for handling the regular search terms.
+     */
+    protected function applyTermSearch(EloquentBuilder $entityQuery, array $terms, Entity $entity): void
+    {
+        if (count($terms) === 0) {
+            return;
+        }
+
+        $subQuery = DB::table('search_terms')->select([
+            'entity_id',
+            'entity_type',
+            DB::raw('SUM(score) as score'),
+        ]);
+
+        $subQuery->where('entity_type', '=', $entity->getMorphClass());
+        $subQuery->where(function (Builder $query) use ($terms) {
+            foreach ($terms as $inputTerm) {
+                $query->orWhere('term', 'like', $inputTerm . '%');
+            }
+        })->groupBy('entity_type', 'entity_id');
+        $entityQuery->join(DB::raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
+            $join->on('id', '=', 'entity_id');
+        })->addSelect($entity->getTable() . '.*')
+            ->selectRaw('s.score')
+            ->orderBy('score', 'desc');
+        $entityQuery->mergeBindings($subQuery);
     }
 
     /**
