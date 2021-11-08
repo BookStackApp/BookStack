@@ -6,6 +6,7 @@ use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\Builder;
@@ -135,6 +136,10 @@ class SearchRunner
         $entity = $this->entityProvider->get($entityType);
         $entityQuery = $entity->newQuery();
 
+        if ($entity instanceof Page) {
+            $entityQuery->select($entity::$listAttributes);
+        }
+
         // Handle normal search terms
         $this->applyTermSearch($entityQuery, $searchOpts->searches, $entity);
 
@@ -178,16 +183,19 @@ class SearchRunner
         ]);
 
         $subQuery->where('entity_type', '=', $entity->getMorphClass());
+
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
                 $query->orWhere('term', 'like', $inputTerm . '%');
             }
         })->groupBy('entity_type', 'entity_id');
+
         $entityQuery->join(DB::raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
-            $join->on('id', '=', 'entity_id');
-        })->addSelect($entity->getTable() . '.*')
-            ->selectRaw('s.score')
+                $join->on('id', '=', 'entity_id');
+            })
+            ->addSelect(DB::raw('s.score'))
             ->orderBy('score', 'desc');
+
         $entityQuery->mergeBindings($subQuery);
     }
 
