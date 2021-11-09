@@ -47,6 +47,13 @@
                     <label for="owner">{{ trans('settings.audit_table_user') }}</label>
                     @include('form.user-select', ['user' => $listDetails['user'] ? \BookStack\Auth\User::query()->find($listDetails['user']) : null, 'name' => 'user', 'compact' =>  true])
                 </div>
+
+
+                <div class="form-group ml-m"
+                     option:submit-on-change:filter='[name="ip"]'>
+                    <label for="owner">IP address</label>
+                    @include('form.text', ['name' => 'ip'])
+                </div>
             </form>
         </div>
 
