@@ -302,4 +302,22 @@ class EntitySearchTest extends TestCase
         $search->assertSeeText($page->name);
         $search->assertSee($page->getUrl());
     }
+
+    public function test_search_ranks_common_words_lower()
+    {
+        $this->newPage(['name' => 'Test page A', 'html' => '<p>dog biscuit dog dog</p>']);
+        $this->newPage(['name' => 'Test page B', 'html' => '<p>cat biscuit</p>']);
+
+        $search = $this->asEditor()->get('/search?term=cat+dog+biscuit');
+        $search->assertElementContains('.entity-list > .page', 'Test page A', 1);
+        $search->assertElementContains('.entity-list > .page', 'Test page B', 2);
+
+        for ($i = 0; $i < 2; $i++) {
+            $this->newPage(['name' => 'Test page ' . $i, 'html' => '<p>dog</p>']);
+        }
+
+        $search = $this->asEditor()->get('/search?term=cat+dog+biscuit');
+        $search->assertElementContains('.entity-list > .page', 'Test page B', 1);
+        $search->assertElementContains('.entity-list > .page', 'Test page A', 2);
+    }
 }
