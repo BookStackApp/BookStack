@@ -237,6 +237,8 @@ class SearchRunner
      * Create a select statement, with prepared bindings, for the given
      * set of scored search terms.
      *
+     * @param array<string, float> $scoredTerms
+     *
      * @return array{statement: string, bindings: string[]}
      */
     protected function selectForScoredTerms(array $scoredTerms): array
@@ -258,6 +260,13 @@ class SearchRunner
         ];
     }
 
+    /**
+     * For the terms in the given search options, query their popularity across all
+     * search terms then provide that back as score adjustment multiplier applicable
+     * for their rarity. Returns an array of float multipliers, keyed by term.
+     *
+     * @return array<string, float>
+     */
     protected function getTermAdjustments(SearchOptions $options): array
     {
         if (isset($this->termAdjustmentCache[$options])) {
