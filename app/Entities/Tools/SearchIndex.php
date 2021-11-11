@@ -51,19 +51,36 @@ class SearchIndex
 
     /**
      * Delete and re-index the terms for all entities in the system.
+     * Can take a callback which is used for reporting progress.
+     * Callback receives three arguments:
+     * - An instance of the model being processed
+     * - The number that have been processed so far.
+     * - The total number of that model to be processed.
+     *
+     * @param callable(Entity, int, int)|null $progressCallback
      */
-    public function indexAllEntities()
+    public function indexAllEntities(?callable $progressCallback = null)
     {
         SearchTerm::query()->truncate();
 
         foreach ($this->entityProvider->all() as $entityModel) {
             $selectFields = ['id', 'name', $entityModel->textField];
+            $total = $entityModel->newQuery()->withTrashed()->count();
+            $chunkSize = 250;
+            $processed = 0;
+
+            $chunkCallback = function (Collection $entities) use ($progressCallback, &$processed, $total, $chunkSize, $entityModel) {
+                $this->indexEntities($entities->all());
+                $processed = min($processed + $chunkSize, $total);
+
+                if (is_callable($progressCallback)) {
+                    $progressCallback($entityModel, $processed, $total);
+                }
+            };
+
             $entityModel->newQuery()
-                ->withTrashed()
                 ->select($selectFields)
-                ->chunk(1000, function (Collection $entities) {
-                    $this->indexEntities($entities->all());
-                });
+                ->chunk($chunkSize, $chunkCallback);
         }
     }
 
