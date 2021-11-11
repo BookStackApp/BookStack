@@ -9,19 +9,14 @@ use Illuminate\Support\Collection;
 
 class SearchIndex
 {
-    /**
-     * @var SearchTerm
-     */
-    protected $searchTerm;
 
     /**
      * @var EntityProvider
      */
     protected $entityProvider;
 
-    public function __construct(SearchTerm $searchTerm, EntityProvider $entityProvider)
+    public function __construct(EntityProvider $entityProvider)
     {
-        $this->searchTerm = $searchTerm;
         $this->entityProvider = $entityProvider;
     }
 
@@ -31,14 +26,8 @@ class SearchIndex
     public function indexEntity(Entity $entity)
     {
         $this->deleteEntityTerms($entity);
-        $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
-        $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
-        $terms = array_merge($nameTerms, $bodyTerms);
-        foreach ($terms as $index => $term) {
-            $terms[$index]['entity_type'] = $entity->getMorphClass();
-            $terms[$index]['entity_id'] = $entity->id;
-        }
-        $this->searchTerm->newQuery()->insert($terms);
+        $terms = $this->entityToTermDataArray($entity);
+        SearchTerm::query()->insert($terms);
     }
 
     /**
@@ -50,18 +39,13 @@ class SearchIndex
     {
         $terms = [];
         foreach ($entities as $entity) {
-            $nameTerms = $this->generateTermArrayFromText($entity->name, 5 * $entity->searchFactor);
-            $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
-            foreach (array_merge($nameTerms, $bodyTerms) as $term) {
-                $term['entity_id'] = $entity->id;
-                $term['entity_type'] = $entity->getMorphClass();
-                $terms[] = $term;
-            }
+            $entityTerms = $this->entityToTermDataArray($entity);
+            array_push($terms, ...$entityTerms);
         }
 
         $chunkedTerms = array_chunk($terms, 500);
         foreach ($chunkedTerms as $termChunk) {
-            $this->searchTerm->newQuery()->insert($termChunk);
+            SearchTerm::query()->insert($termChunk);
         }
     }
 
@@ -70,7 +54,7 @@ class SearchIndex
      */
     public function indexAllEntities()
     {
-        $this->searchTerm->newQuery()->truncate();
+        SearchTerm::query()->truncate();
 
         foreach ($this->entityProvider->all() as $entityModel) {
             $selectFields = ['id', 'name', $entityModel->textField];
@@ -93,6 +77,8 @@ class SearchIndex
 
     /**
      * Create a scored term array from the given text.
+     *
+     * @returns array{term: string, score: float}
      */
     protected function generateTermArrayFromText(string $text, int $scoreAdjustment = 1): array
     {
@@ -117,5 +103,25 @@ class SearchIndex
         }
 
         return $terms;
+    }
+
+    /**
+     * For the given entity, Generate an array of term data details.
+     * Is the raw term data, not instances of SearchTerm models.
+     *
+     * @returns array{term: string, score: float}[]
+     */
+    protected function entityToTermDataArray(Entity $entity): array
+    {
+        $nameTerms = $this->generateTermArrayFromText($entity->name, 40 * $entity->searchFactor);
+        $bodyTerms = $this->generateTermArrayFromText($entity->getText(), 1 * $entity->searchFactor);
+        $termData = array_merge($nameTerms, $bodyTerms);
+
+        foreach ($termData as $index => $term) {
+            $termData[$index]['entity_type'] = $entity->getMorphClass();
+            $termData[$index]['entity_id'] = $entity->id;
+        }
+
+        return $termData;
     }
 }
