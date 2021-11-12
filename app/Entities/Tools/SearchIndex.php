@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\Actions\Tag;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
@@ -84,6 +85,7 @@ class SearchIndex
 
             $entityModel->newQuery()
                 ->select($selectFields)
+                ->with(['tags:id,name,value,entity_id,entity_type'])
                 ->chunk($chunkSize, $chunkCallback);
         }
     }
@@ -155,6 +157,30 @@ class SearchIndex
     }
 
     /**
+     * Create a scored term map from the given set of entity tags.
+     *
+     * @param Tag[] $tags
+     *
+     * @returns array<string, int>
+     */
+    protected function generateTermScoreMapFromTags(array $tags): array
+    {
+        $scoreMap = [];
+        $names = [];
+        $values = [];
+
+        foreach($tags as $tag) {
+            $names[] = $tag->name;
+            $values[] = $tag->value;
+        }
+
+        $nameMap = $this->generateTermScoreMapFromText(implode(' ', $names), 3);
+        $valueMap = $this->generateTermScoreMapFromText(implode(' ', $values), 5);
+
+        return $this->mergeTermScoreMaps($nameMap, $valueMap);
+    }
+
+    /**
      * For the given text, return an array where the keys are the unique term words
      * and the values are the frequency of that term.
      *
@@ -186,6 +212,7 @@ class SearchIndex
     protected function entityToTermDataArray(Entity $entity): array
     {
         $nameTermsMap = $this->generateTermScoreMapFromText($entity->name, 40 * $entity->searchFactor);
+        $tagTermsMap = $this->generateTermScoreMapFromTags($entity->tags->all());
 
         if ($entity instanceof Page) {
             $bodyTermsMap = $this->generateTermScoreMapFromHtml($entity->html);
@@ -193,7 +220,7 @@ class SearchIndex
             $bodyTermsMap = $this->generateTermScoreMapFromText($entity->description, $entity->searchFactor);
         }
 
-        $mergedScoreMap = $this->mergeTermScoreMaps($nameTermsMap, $bodyTermsMap);
+        $mergedScoreMap = $this->mergeTermScoreMaps($nameTermsMap, $bodyTermsMap, $tagTermsMap);
 
         $dataArray = [];
         $entityId = $entity->id;

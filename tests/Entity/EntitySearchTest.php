@@ -334,8 +334,7 @@ class EntitySearchTest extends TestCase
             <h6>TermG</h6>
         ']);
 
-        $entityRelationCols = ['entity_id' => $page->id, 'entity_type' => 'BookStack\\Page'];
-        $scoreByTerm = SearchTerm::query()->where($entityRelationCols)->pluck('score', 'term');
+        $scoreByTerm = $page->searchTerms()->pluck('score', 'term');
 
         $this->assertEquals(1, $scoreByTerm->get('TermA'));
         $this->assertEquals(10, $scoreByTerm->get('TermB'));
@@ -354,10 +353,22 @@ class EntitySearchTest extends TestCase
             <p>TermA</p>
         ']);
 
-        $entityRelationCols = ['entity_id' => $page->id, 'entity_type' => 'BookStack\\Page'];
-        $scoreByTerm = SearchTerm::query()->where($entityRelationCols)->pluck('score', 'term');
+        $scoreByTerm = $page->searchTerms()->pluck('score', 'term');
 
         // Scores 40 for being in the name then 1 for being in the content
         $this->assertEquals(41, $scoreByTerm->get('TermA'));
+    }
+
+    public function test_tag_names_and_values_are_indexed_for_search()
+    {
+        $page = $this->newPage(['name' => 'PageA', 'html' => '<p>content</p>', 'tags' => [
+            ['name' => 'Animal', 'value' => 'MeowieCat'],
+            ['name' => 'SuperImportant'],
+        ]]);
+
+        $scoreByTerm = $page->searchTerms()->pluck('score', 'term');
+        $this->assertEquals(5, $scoreByTerm->get('MeowieCat'));
+        $this->assertEquals(3, $scoreByTerm->get('Animal'));
+        $this->assertEquals(3, $scoreByTerm->get('SuperImportant'));
     }
 }
