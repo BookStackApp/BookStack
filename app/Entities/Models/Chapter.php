@@ -16,7 +16,7 @@ class Chapter extends BookChild
 {
     use HasFactory;
 
-    public $searchFactor = 1.3;
+    public $searchFactor = 1.5;
 
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
     protected $hidden = ['restricted', 'pivot', 'deleted_at'];

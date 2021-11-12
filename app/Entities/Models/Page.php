@@ -3,13 +3,13 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\PageContent;
+use BookStack\Facades\Permissions;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Permissions;
 
 /**
  * Class Page.
@@ -64,10 +64,8 @@ class Page extends BookChild
 
     /**
      * Check if this page has a chapter.
-     *
-     * @return bool
      */
-    public function hasChapter()
+    public function hasChapter(): bool
     {
         return $this->chapter()->count() > 0;
     }

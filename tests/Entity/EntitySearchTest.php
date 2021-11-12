@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\SearchTerm;
 use Tests\TestCase;
 
 class EntitySearchTest extends TestCase
@@ -319,5 +320,44 @@ class EntitySearchTest extends TestCase
         $search = $this->asEditor()->get('/search?term=cat+dog+biscuit');
         $search->assertElementContains('.entity-list > .page', 'Test page B', 1);
         $search->assertElementContains('.entity-list > .page', 'Test page A', 2);
+    }
+
+    public function test_terms_in_headers_have_an_adjusted_index_score()
+    {
+        $page = $this->newPage(['name' => 'Test page A', 'html' => '
+            <p>TermA</p>
+            <h1>TermB <strong>TermNested</strong></h1>
+            <h2>TermC</h2>
+            <h3>TermD</h3>
+            <h4>TermE</h4>
+            <h5>TermF</h5>
+            <h6>TermG</h6>
+        ']);
+
+        $entityRelationCols = ['entity_id' => $page->id, 'entity_type' => 'BookStack\\Page'];
+        $scoreByTerm = SearchTerm::query()->where($entityRelationCols)->pluck('score', 'term');
+
+        $this->assertEquals(1, $scoreByTerm->get('TermA'));
+        $this->assertEquals(10, $scoreByTerm->get('TermB'));
+        $this->assertEquals(10, $scoreByTerm->get('TermNested'));
+        $this->assertEquals(5, $scoreByTerm->get('TermC'));
+        $this->assertEquals(4, $scoreByTerm->get('TermD'));
+        $this->assertEquals(3, $scoreByTerm->get('TermE'));
+        $this->assertEquals(2, $scoreByTerm->get('TermF'));
+        // Is 1.5 but stored as integer, rounding up
+        $this->assertEquals(2, $scoreByTerm->get('TermG'));
+    }
+
+    public function test_name_and_content_terms_are_merged_to_single_score()
+    {
+        $page = $this->newPage(['name' => 'TermA', 'html' => '
+            <p>TermA</p>
+        ']);
+
+        $entityRelationCols = ['entity_id' => $page->id, 'entity_type' => 'BookStack\\Page'];
+        $scoreByTerm = SearchTerm::query()->where($entityRelationCols)->pluck('score', 'term');
+
+        // Scores 40 for being in the name then 1 for being in the content
+        $this->assertEquals(41, $scoreByTerm->get('TermA'));
     }
 }
