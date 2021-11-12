@@ -4,8 +4,8 @@ namespace BookStack\Http\Controllers;
 
 use BookStack\Entities\Queries\Popular;
 use BookStack\Entities\Tools\SearchOptions;
+use BookStack\Entities\Tools\SearchResultsFormatter;
 use BookStack\Entities\Tools\SearchRunner;
-use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Entities\Tools\SiblingFetcher;
 use Illuminate\Http\Request;
 
@@ -14,18 +14,14 @@ class SearchController extends Controller
     protected $searchRunner;
     protected $entityContextManager;
 
-    public function __construct(
-        SearchRunner $searchRunner,
-        ShelfContext $entityContextManager
-    ) {
+    public function __construct(SearchRunner $searchRunner) {
         $this->searchRunner = $searchRunner;
-        $this->entityContextManager = $entityContextManager;
     }
 
     /**
      * Searches all entities.
      */
-    public function search(Request $request)
+    public function search(Request $request, SearchResultsFormatter $formatter)
     {
         $searchOpts = SearchOptions::fromRequest($request);
         $fullSearchString = $searchOpts->toString();
@@ -35,6 +31,7 @@ class SearchController extends Controller
         $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page + 1));
 
         $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, 20);
+        $formatter->format($results['results']->all(), $searchOpts);
 
         return view('search.all', [
             'entities'     => $results['results'],
