@@ -13,6 +13,12 @@ use Illuminate\Support\Collection;
 
 class SearchIndex
 {
+    /**
+     * A list of delimiter characters used to break-up parsed content into terms for indexing.
+     *
+     * @var string
+     */
+    public static $delimiters = " \n\t.,!?:;()[]{}<>`'\"";
 
     /**
      * @var EntityProvider
@@ -189,7 +195,7 @@ class SearchIndex
     protected function textToTermCountMap(string $text): array
     {
         $tokenMap = []; // {TextToken => OccurrenceCount}
-        $splitChars = " \n\t.,!?:;()[]{}<>`'\"";
+        $splitChars = static::$delimiters;
         $token = strtok($text, $splitChars);
 
         while ($token !== false) {

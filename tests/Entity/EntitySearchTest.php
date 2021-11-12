@@ -119,6 +119,18 @@ class EntitySearchTest extends TestCase
         $exactSearchB->assertStatus(200)->assertDontSee($page->name);
     }
 
+    public function test_search_terms_with_delimiters_are_converted_to_exact_matches()
+    {
+        $this->asEditor();
+        $page = $this->newPage(['name' => 'Delimiter test', 'html' => '<p>1.1 2,2 3?3 4:4 5;5 (8) &lt;9&gt; "10" \'11\' `12`</p>']);
+        $terms = explode(' ', '1.1 2,2 3?3 4:4 5;5 (8) <9> "10" \'11\' `12`');
+
+        foreach ($terms as $term) {
+            $search = $this->get('/search?term=' . urlencode($term));
+            $search->assertSee($page->name);
+        }
+    }
+
     public function test_search_filters()
     {
         $page = $this->newPage(['name' => 'My new test quaffleachits', 'html' => 'this is about an orange donkey danzorbhsing']);
