@@ -262,6 +262,10 @@
   }
 }
 
+.tag-name.highlight, .tag-value.highlight {
+  font-weight: bold;
+}
+
 .tag-list div:last-child .tag-item {
   margin-bottom: 0;
 }

@@ -239,19 +239,11 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * Get the body text of this entity.
-     */
-    public function getText(): string
-    {
-        return $this->{$this->textField} ?? '';
-    }
-
-    /**
      * Get an excerpt of this entity's descriptive content to the specified length.
      */
     public function getExcerpt(int $length = 100): string
     {
-        $text = $this->getText();
+        $text = $this->{$this->textField} ?? '';
 
         if (mb_strlen($text) > $length) {
             $text = mb_substr($text, 0, $length - 3) . '...';

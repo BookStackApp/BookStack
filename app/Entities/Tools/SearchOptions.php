@@ -57,15 +57,22 @@ class SearchOptions
 
         $instance = new SearchOptions();
         $inputs = $request->only(['search', 'types', 'filters', 'exact', 'tags']);
-        $instance->searches = explode(' ', $inputs['search'] ?? []);
-        $instance->exacts = array_filter($inputs['exact'] ?? []);
+
+        $parsedStandardTerms = static::parseStandardTermString($inputs['search'] ?? '');
+        $instance->searches = $parsedStandardTerms['terms'];
+        $instance->exacts = $parsedStandardTerms['exacts'];
+
+        array_push($instance->exacts, ...array_filter($inputs['exact'] ?? []));
+
         $instance->tags = array_filter($inputs['tags'] ?? []);
+
         foreach (($inputs['filters'] ?? []) as $filterKey => $filterVal) {
             if (empty($filterVal)) {
                 continue;
             }
             $instance->filters[$filterKey] = $filterVal === 'true' ? '' : $filterVal;
         }
+
         if (isset($inputs['types']) && count($inputs['types']) < 4) {
             $instance->filters['type'] = implode('|', $inputs['types']);
         }
@@ -102,11 +109,9 @@ class SearchOptions
         }
 
         // Parse standard terms
-        foreach (explode(' ', trim($searchString)) as $searchTerm) {
-            if ($searchTerm !== '') {
-                $terms['searches'][] = $searchTerm;
-            }
-        }
+        $parsedStandardTerms = static::parseStandardTermString($searchString);
+        array_push($terms['searches'], ...$parsedStandardTerms['terms']);
+        array_push($terms['exacts'], ...$parsedStandardTerms['exacts']);
 
         // Split filter values out
         $splitFilters = [];
@@ -117,6 +122,33 @@ class SearchOptions
         $terms['filters'] = $splitFilters;
 
         return $terms;
+    }
+
+    /**
+     * Parse a standard search term string into individual search terms and
+     * extract any exact terms searches to be made.
+     *
+     * @return array{terms: array<string>, exacts: array<string>}
+     */
+    protected static function parseStandardTermString(string $termString): array
+    {
+        $terms = explode(' ', $termString);
+        $indexDelimiters = SearchIndex::$delimiters;
+        $parsed = [
+            'terms'  => [],
+            'exacts' => [],
+        ];
+
+        foreach ($terms as $searchTerm) {
+            if ($searchTerm === '') {
+                continue;
+            }
+
+            $parsedList = (strpbrk($searchTerm, $indexDelimiters) === false) ? 'terms' : 'exacts';
+            $parsed[$parsedList][] = $searchTerm;
+        }
+
+        return $parsed;
     }
 
     /**

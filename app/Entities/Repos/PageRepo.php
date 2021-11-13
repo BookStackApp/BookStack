@@ -157,8 +157,8 @@ class PageRepo
      */
     public function publishDraft(Page $draft, array $input): Page
     {
-        $this->baseRepo->update($draft, $input);
         $this->updateTemplateStatusAndContentFromInput($draft, $input);
+        $this->baseRepo->update($draft, $input);
 
         $draft->draft = false;
         $draft->revision_count = 1;
