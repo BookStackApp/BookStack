@@ -7,7 +7,6 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Models\SearchTerm;
 use Tests\TestCase;
 
 class EntitySearchTest extends TestCase
@@ -410,5 +409,4 @@ class EntitySearchTest extends TestCase
         $search->assertSee('My &lt;cool&gt; <strong>TestPageContent</strong>', false);
         $search->assertSee('My supercool &lt;great&gt; <strong>TestPageContent</strong> page', false);
     }
-
 }

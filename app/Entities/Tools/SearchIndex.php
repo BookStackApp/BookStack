@@ -175,7 +175,7 @@ class SearchIndex
         $names = [];
         $values = [];
 
-        foreach($tags as $tag) {
+        foreach ($tags as $tag) {
             $names[] = $tag->name;
             $values[] = $tag->value;
         }
@@ -233,16 +233,15 @@ class SearchIndex
         $entityType = $entity->getMorphClass();
         foreach ($mergedScoreMap as $term => $score) {
             $dataArray[] = [
-                'term' => $term,
-                'score' => $score,
+                'term'        => $term,
+                'score'       => $score,
                 'entity_type' => $entityType,
-                'entity_id' => $entityId,
+                'entity_id'   => $entityId,
             ];
         }
 
         return $dataArray;
     }
-
 
     /**
      * For the given term data arrays, Merge their contents by term

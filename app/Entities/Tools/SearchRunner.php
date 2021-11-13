@@ -141,13 +141,13 @@ class SearchRunner
         $relations = ['tags'];
 
         if ($entityModelInstance instanceof BookChild) {
-            $relations['book'] = function(BelongsTo $query) {
+            $relations['book'] = function (BelongsTo $query) {
                 $query->visible();
             };
         }
 
         if ($entityModelInstance instanceof Page) {
-            $relations['chapter'] = function(BelongsTo $query) {
+            $relations['chapter'] = function (BelongsTo $query) {
                 $query->visible();
             };
         }
@@ -310,7 +310,7 @@ class SearchRunner
         if (empty($termCounts)) {
             return [];
         }
-        
+
         $multipliers = [];
         $max = max(array_values($termCounts));
 
