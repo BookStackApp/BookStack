@@ -30,11 +30,17 @@ class SearchResultsFormatter
         $textContent = $entity->$textProperty;
         $terms = array_merge($options->exacts, $options->searches);
 
-        $matchRefs = $this->getMatchPositions($textContent, $terms);
-        $mergedRefs = $this->sortAndMergeMatchPositions($matchRefs);
-        $content = $this->formatTextUsingMatchPositions($mergedRefs, $textContent);
+        $originalContentByNewAttribute = [
+            'preview_name' => $entity->name,
+            'preview_content' => $textContent,
+        ];
 
-        $entity->setAttribute('preview_content', new HtmlString($content));
+        foreach ($originalContentByNewAttribute as $attributeName => $content) {
+            $matchRefs = $this->getMatchPositions($content, $terms);
+            $mergedRefs = $this->sortAndMergeMatchPositions($matchRefs);
+            $formatted = $this->formatTextUsingMatchPositions($mergedRefs, $content);
+            $entity->setAttribute($attributeName, new HtmlString($formatted));
+        }
     }
 
     /**
