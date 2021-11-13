@@ -383,4 +383,32 @@ class EntitySearchTest extends TestCase
         $this->assertEquals(3, $scoreByTerm->get('Animal'));
         $this->assertEquals(3, $scoreByTerm->get('SuperImportant'));
     }
+
+    public function test_matching_terms_in_search_results_are_highlighted()
+    {
+        $this->newPage(['name' => 'My Meowie Cat', 'html' => '<p>A superimportant page about meowieable animals</p>', 'tags' => [
+            ['name' => 'Animal', 'value' => 'MeowieCat'],
+            ['name' => 'SuperImportant'],
+        ]]);
+
+        $search = $this->asEditor()->get('/search?term=SuperImportant+Meowie');
+        // Title
+        $search->assertSee('My <strong>Meowie</strong> Cat', false);
+        // Content
+        $search->assertSee('A <strong>superimportant</strong> page about <strong>meowie</strong>able animals', false);
+        // Tag name
+        $search->assertElementContains('.tag-name.highlight', 'SuperImportant');
+        // Tag value
+        $search->assertElementContains('.tag-value.highlight', 'MeowieCat');
+    }
+
+    public function test_html_entities_in_item_details_remains_escaped_in_search_results()
+    {
+        $this->newPage(['name' => 'My <cool> TestPageContent', 'html' => '<p>My supercool &lt;great&gt; TestPageContent page</p>']);
+
+        $search = $this->asEditor()->get('/search?term=TestPageContent');
+        $search->assertSee('My &lt;cool&gt; <strong>TestPageContent</strong>', false);
+        $search->assertSee('My supercool &lt;great&gt; <strong>TestPageContent</strong> page', false);
+    }
+
 }
