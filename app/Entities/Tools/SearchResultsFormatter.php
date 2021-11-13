@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\Actions\Tag;
 use BookStack\Entities\Models\Entity;
 use Illuminate\Support\HtmlString;
 
@@ -40,6 +41,34 @@ class SearchResultsFormatter
             $mergedRefs = $this->sortAndMergeMatchPositions($matchRefs);
             $formatted = $this->formatTextUsingMatchPositions($mergedRefs, $content);
             $entity->setAttribute($attributeName, new HtmlString($formatted));
+        }
+
+        $tags = $entity->relationLoaded('tags') ? $entity->tags->all() : [];
+        $this->highlightTagsContainingTerms($tags, $terms);
+    }
+
+    /**
+     * Highlight tags which match the given terms.
+     * @param Tag[] $tags
+     * @param string[] $terms
+     */
+    protected function highlightTagsContainingTerms(array $tags, array $terms): void
+    {
+        foreach ($tags as $tag) {
+            $tagName = strtolower($tag->name);
+            $tagValue = strtolower($tag->value);
+
+            foreach ($terms as $term) {
+                $termLower = strtolower($term);
+
+                if (strpos($tagName, $termLower) !== false) {
+                    $tag->setAttribute('highlight_name', true);
+                }
+
+                if (strpos($tagValue, $termLower) !== false) {
+                    $tag->setAttribute('highlight_value', true);
+                }
+            }
         }
     }
 
