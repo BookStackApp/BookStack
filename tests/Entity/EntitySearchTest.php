@@ -18,20 +18,17 @@ class EntitySearchTest extends TestCase
 
         $search = $this->asEditor()->get('/search?term=' . urlencode($page->name));
         $search->assertSee('Search Results');
-
-        $title = strip_tags($search->getElementHtml('.entity-list-item-name'));
-        $this->assertEquals($page->name, $title);
+        $search->assertSeeText($page->name, true);
     }
 
     public function test_bookshelf_search()
     {
         /** @var Bookshelf $shelf */
         $shelf = Bookshelf::query()->first();
-        $search = $this->asEditor()->get('/search?term=' . urlencode(mb_substr($shelf->name, 0, 3)) . '  {type:bookshelf}');
-        $search->assertStatus(200);
 
-        $title = strip_tags($search->getElementHtml('.entity-list-item-name'));
-        $this->assertEquals($shelf->name, $title);
+        $search = $this->asEditor()->get('/search?term=' . urlencode($shelf->name) . '  {type:bookshelf}');
+        $search->assertSee('Search Results');
+        $search->assertSeeText($shelf->name, true);
     }
 
     public function test_invalid_page_search()
