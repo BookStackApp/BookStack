@@ -141,11 +141,12 @@ class SearchResultsFormatter
      */
     protected function formatTextUsingMatchPositions(array $matchPositions, string $originalText, int $targetLength): string
     {
-        $contextRange = 32;
         $maxEnd = strlen($originalText);
-        $lastEnd = 0;
-        $firstStart = null;
         $fetchAll = ($targetLength === 0);
+        $contextLength = ($fetchAll ? 0 : 32);
+
+        $firstStart = null;
+        $lastEnd = 0;
         $content = '';
         $contentTextLength = 0;
 
@@ -155,8 +156,8 @@ class SearchResultsFormatter
 
         foreach ($matchPositions as $start => $end) {
             // Get our outer text ranges for the added context we want to show upon the result.
-            $contextStart = max($start - $contextRange, 0, $lastEnd);
-            $contextEnd = min($end + $contextRange, $maxEnd);
+            $contextStart = max($start - $contextLength, 0, $lastEnd);
+            $contextEnd = min($end + $contextLength, $maxEnd);
 
             // Adjust the start if we're going to be touching the previous match.
             $startDiff = $start - $lastEnd;
