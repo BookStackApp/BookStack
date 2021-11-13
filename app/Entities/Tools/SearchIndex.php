@@ -223,7 +223,7 @@ class SearchIndex
         if ($entity instanceof Page) {
             $bodyTermsMap = $this->generateTermScoreMapFromHtml($entity->html);
         } else {
-            $bodyTermsMap = $this->generateTermScoreMapFromText($entity->description, $entity->searchFactor);
+            $bodyTermsMap = $this->generateTermScoreMapFromText($entity->description ?? '', $entity->searchFactor);
         }
 
         $mergedScoreMap = $this->mergeTermScoreMaps($nameTermsMap, $bodyTermsMap, $tagTermsMap);
