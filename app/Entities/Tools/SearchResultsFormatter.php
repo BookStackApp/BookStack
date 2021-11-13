@@ -37,9 +37,10 @@ class SearchResultsFormatter
         ];
 
         foreach ($originalContentByNewAttribute as $attributeName => $content) {
+            $targetLength = ($attributeName === 'preview_name') ? 0 : 260;
             $matchRefs = $this->getMatchPositions($content, $terms);
             $mergedRefs = $this->sortAndMergeMatchPositions($matchRefs);
-            $formatted = $this->formatTextUsingMatchPositions($mergedRefs, $content);
+            $formatted = $this->formatTextUsingMatchPositions($mergedRefs, $content, $targetLength);
             $entity->setAttribute($attributeName, new HtmlString($formatted));
         }
 
@@ -132,15 +133,25 @@ class SearchResultsFormatter
     /**
      * Format the given original text, returning a version where terms are highlighted within.
      * Returned content is in HTML text format.
+     * A given $targetLength of 0 asserts no target length limit.
+     *
+     * This is a complex function but written to be relatively efficient, going through the term matches in order
+     * so that we're only doing a one-time loop through of the matches. There is no further searching
+     * done within here.
      */
-    protected function formatTextUsingMatchPositions(array $matchPositions, string $originalText): string
+    protected function formatTextUsingMatchPositions(array $matchPositions, string $originalText, int $targetLength): string
     {
         $contextRange = 32;
-        $targetLength = 260;
         $maxEnd = strlen($originalText);
         $lastEnd = 0;
         $firstStart = null;
+        $fetchAll = ($targetLength === 0);
         $content = '';
+        $contentTextLength = 0;
+
+        if ($fetchAll) {
+            $targetLength = $maxEnd * 2;
+        }
 
         foreach ($matchPositions as $start => $end) {
             // Get our outer text ranges for the added context we want to show upon the result.
@@ -151,18 +162,30 @@ class SearchResultsFormatter
             $startDiff = $start - $lastEnd;
             if ($startDiff < 0) {
                 $contextStart = $start;
+                // Trims off '$startDiff' number of characters to bring it back to the start
+                // if this current match zone.
                 $content = substr($content, 0, strlen($content) + $startDiff);
+                $contentTextLength += $startDiff;
             }
 
             // Add ellipsis between results
-            if ($contextStart !== 0 && $contextStart !== $start) {
+            if (!$fetchAll && $contextStart !== 0 && $contextStart !== $start) {
                 $content .= ' ...';
+                $contentTextLength += 4;
+            } else if ($fetchAll) {
+                // Or fill in gap since the previous match
+                $fillLength = $contextStart - $lastEnd;
+                $content .= e(substr($originalText, $lastEnd, $fillLength));
+                $contentTextLength += $fillLength;
             }
 
             // Add our content including the bolded matching text
             $content .= e(substr($originalText, $contextStart, $start - $contextStart));
+            $contentTextLength += $start - $contextStart;
             $content .= '<strong>' . e(substr($originalText, $start, $end - $start)) . '</strong>';
+            $contentTextLength += $end - $start;
             $content .= e(substr($originalText, $end, $contextEnd - $end));
+            $contentTextLength += $contextEnd - $end;
 
             // Update our last end position
             $lastEnd = $contextEnd;
@@ -173,7 +196,7 @@ class SearchResultsFormatter
             }
 
             // Stop if we're near our target
-            if (strlen($content) >= $targetLength - 10) {
+            if ($contentTextLength >= $targetLength - 10) {
                 break;
             }
         }
@@ -181,20 +204,23 @@ class SearchResultsFormatter
         // Just copy out the content if we haven't moved along anywhere.
         if ($lastEnd === 0) {
             $content = e(substr($originalText, 0, $targetLength));
+            $contentTextLength = $targetLength;
             $lastEnd = $targetLength;
         }
 
         // Pad out the end if we're low
-        $remainder = $targetLength - strlen($content);
+        $remainder = $targetLength - $contentTextLength;
         if ($remainder > 10) {
-            $content .= e(substr($originalText, $lastEnd, $remainder));
-            $lastEnd += $remainder;
+            $padEndLength = min($maxEnd - $lastEnd, $remainder);
+            $content .= e(substr($originalText, $lastEnd, $padEndLength));
+            $lastEnd += $padEndLength;
+            $contentTextLength += $padEndLength;
         }
 
         // Pad out the start if we're still low
-        $remainder = $targetLength - strlen($content);
+        $remainder = $targetLength - $contentTextLength;
         $firstStart = $firstStart ?: 0;
-        if ($remainder > 10 && $firstStart !== 0) {
+        if (!$fetchAll && $remainder > 10 && $firstStart !== 0) {
             $padStart = max(0, $firstStart - $remainder);
             $content = ($padStart === 0 ? '' : '...') . e(substr($originalText, $padStart, $firstStart - $padStart)) . substr($content, 4);
         }
