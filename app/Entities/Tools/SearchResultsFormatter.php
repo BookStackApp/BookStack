@@ -8,10 +8,10 @@ use Illuminate\Support\HtmlString;
 
 class SearchResultsFormatter
 {
-
     /**
      * For the given array of entities, Prepare the models to be shown in search result
      * output. This sets a series of additional attributes.
+     *
      * @param Entity[] $results
      */
     public function format(array $results, SearchOptions $options): void
@@ -32,7 +32,7 @@ class SearchResultsFormatter
         $terms = array_merge($options->exacts, $options->searches);
 
         $originalContentByNewAttribute = [
-            'preview_name' => $entity->name,
+            'preview_name'    => $entity->name,
             'preview_content' => $textContent,
         ];
 
@@ -49,7 +49,8 @@ class SearchResultsFormatter
 
     /**
      * Highlight tags which match the given terms.
-     * @param Tag[] $tags
+     *
+     * @param Tag[]    $tags
      * @param string[] $terms
      */
     protected function highlightTagsContainingTerms(array $tags, array $terms): void
@@ -104,6 +105,7 @@ class SearchResultsFormatter
      * adjacent or where they overlap.
      *
      * @param array<int, int> $matchPositions
+     *
      * @return array<int, int>
      */
     protected function sortAndMergeMatchPositions(array $matchPositions): array
@@ -118,7 +120,7 @@ class SearchResultsFormatter
                 $mergedRefs[$start] = $end;
                 $lastStart = $start;
                 $lastEnd = $end;
-            } else if ($end > $lastEnd) {
+            } elseif ($end > $lastEnd) {
                 $mergedRefs[$lastStart] = $end;
                 $lastEnd = $end;
             }
@@ -194,7 +196,7 @@ class SearchResultsFormatter
         $firstStart = $firstStart ?: 0;
         if ($remainder > 10 && $firstStart !== 0) {
             $padStart = max(0, $firstStart - $remainder);
-            $content = ($padStart === 0 ? '' : '...') . e(substr($originalText, $padStart,  $firstStart - $padStart)) . substr($content, 4);
+            $content = ($padStart === 0 ? '' : '...') . e(substr($originalText, $padStart, $firstStart - $padStart)) . substr($content, 4);
         }
 
         // Add ellipsis if we're not at the end
@@ -204,5 +206,4 @@ class SearchResultsFormatter
 
         return $content;
     }
-
 }

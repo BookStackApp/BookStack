@@ -124,7 +124,6 @@ class SearchOptions
         return $terms;
     }
 
-
     /**
      * Parse a standard search term string into individual search terms and
      * extract any exact terms searches to be made.
@@ -136,7 +135,7 @@ class SearchOptions
         $terms = explode(' ', $termString);
         $indexDelimiters = SearchIndex::$delimiters;
         $parsed = [
-            'terms' => [],
+            'terms'  => [],
             'exacts' => [],
         ];
 

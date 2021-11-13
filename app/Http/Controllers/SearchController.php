@@ -14,7 +14,8 @@ class SearchController extends Controller
     protected $searchRunner;
     protected $entityContextManager;
 
-    public function __construct(SearchRunner $searchRunner) {
+    public function __construct(SearchRunner $searchRunner)
+    {
         $this->searchRunner = $searchRunner;
     }
 
