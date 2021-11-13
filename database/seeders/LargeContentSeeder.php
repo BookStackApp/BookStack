@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\SearchIndex;
@@ -25,12 +26,16 @@ class LargeContentSeeder extends Seeder
         $editorRole = Role::getRole('editor');
         $editorUser->attachRole($editorRole);
 
-        $largeBook = \BookStack\Entities\Models\Book::factory()->create(['name' => 'Large book' . Str::random(10), 'created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
+        /** @var Book $largeBook */
+        $largeBook = Book::factory()->create(['name' => 'Large book' . Str::random(10), 'created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $pages = Page::factory()->count(200)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $chapters = Chapter::factory()->count(50)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
+
         $largeBook->pages()->saveMany($pages);
         $largeBook->chapters()->saveMany($chapters);
-        app(PermissionService::class)->buildJointPermissions();
-        app(SearchIndex::class)->indexAllEntities();
+        $all = array_merge([$largeBook], array_values($pages->all()), array_values($chapters->all()));
+
+        app()->make(PermissionService::class)->buildJointPermissionsForEntity($largeBook);
+        app()->make(SearchIndex::class)->indexEntities($all);
     }
 }

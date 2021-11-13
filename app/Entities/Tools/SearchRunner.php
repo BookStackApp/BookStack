@@ -5,13 +5,18 @@ namespace BookStack\Entities\Tools;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
-use Illuminate\Database\Connection;
+use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\SearchTerm;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use SplObjectStorage;
 
 class SearchRunner
 {
@@ -19,11 +24,6 @@ class SearchRunner
      * @var EntityProvider
      */
     protected $entityProvider;
-
-    /**
-     * @var Connection
-     */
-    protected $db;
 
     /**
      * @var PermissionService
@@ -37,11 +37,19 @@ class SearchRunner
      */
     protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
-    public function __construct(EntityProvider $entityProvider, Connection $db, PermissionService $permissionService)
+    /**
+     * Retain a cache of score adjusted terms for specific search options.
+     * From PHP>=8 this can be made into a WeakMap instead.
+     *
+     * @var SplObjectStorage
+     */
+    protected $termAdjustmentCache;
+
+    public function __construct(EntityProvider $entityProvider, PermissionService $permissionService)
     {
         $this->entityProvider = $entityProvider;
-        $this->db = $db;
         $this->permissionService = $permissionService;
+        $this->termAdjustmentCache = new SplObjectStorage();
     }
 
     /**
@@ -69,16 +77,17 @@ class SearchRunner
                 continue;
             }
 
-            $search = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action);
-            /** @var int $entityTotal */
-            $entityTotal = $this->searchEntityTable($searchOpts, $entityType, $page, $count, $action, true);
+            $entityModelInstance = $this->entityProvider->get($entityType);
+            $searchQuery = $this->buildQuery($searchOpts, $entityModelInstance, $action);
+            $entityTotal = $searchQuery->count();
+            $searchResults = $this->getPageOfDataFromQuery($searchQuery, $entityModelInstance, $page, $count);
 
             if ($entityTotal > ($page * $count)) {
                 $hasMore = true;
             }
 
             $total += $entityTotal;
-            $results = $results->merge($search);
+            $results = $results->merge($searchResults);
         }
 
         return [
@@ -103,7 +112,9 @@ class SearchRunner
             if (!in_array($entityType, $entityTypes)) {
                 continue;
             }
-            $search = $this->buildEntitySearchQuery($opts, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
+
+            $entityModelInstance = $this->entityProvider->get($entityType);
+            $search = $this->buildQuery($opts, $entityModelInstance)->where('book_id', '=', $bookId)->take(20)->get();
             $results = $results->merge($search);
         }
 
@@ -116,78 +127,199 @@ class SearchRunner
     public function searchChapter(int $chapterId, string $searchString): Collection
     {
         $opts = SearchOptions::fromString($searchString);
-        $pages = $this->buildEntitySearchQuery($opts, 'page')->where('chapter_id', '=', $chapterId)->take(20)->get();
+        $entityModelInstance = $this->entityProvider->get('page');
+        $pages = $this->buildQuery($opts, $entityModelInstance)->where('chapter_id', '=', $chapterId)->take(20)->get();
 
         return $pages->sortByDesc('score');
     }
 
     /**
-     * Search across a particular entity type.
-     * Setting getCount = true will return the total
-     * matching instead of the items themselves.
-     *
-     * @return \Illuminate\Database\Eloquent\Collection|int|static[]
+     * Get a page of result data from the given query based on the provided page parameters.
      */
-    protected function searchEntityTable(SearchOptions $searchOpts, string $entityType = 'page', int $page = 1, int $count = 20, string $action = 'view', bool $getCount = false)
+    protected function getPageOfDataFromQuery(EloquentBuilder $query, Entity $entityModelInstance, int $page = 1, int $count = 20): EloquentCollection
     {
-        $query = $this->buildEntitySearchQuery($searchOpts, $entityType, $action);
-        if ($getCount) {
-            return $query->count();
+        $relations = ['tags'];
+
+        if ($entityModelInstance instanceof BookChild) {
+            $relations['book'] = function (BelongsTo $query) {
+                $query->visible();
+            };
         }
 
-        $query = $query->skip(($page - 1) * $count)->take($count);
+        if ($entityModelInstance instanceof Page) {
+            $relations['chapter'] = function (BelongsTo $query) {
+                $query->visible();
+            };
+        }
 
-        return $query->get();
+        return $query->clone()
+            ->with(array_filter($relations))
+            ->skip(($page - 1) * $count)
+            ->take($count)
+            ->get();
     }
 
     /**
      * Create a search query for an entity.
      */
-    protected function buildEntitySearchQuery(SearchOptions $searchOpts, string $entityType = 'page', string $action = 'view'): EloquentBuilder
+    protected function buildQuery(SearchOptions $searchOpts, Entity $entityModelInstance, string $action = 'view'): EloquentBuilder
     {
-        $entity = $this->entityProvider->get($entityType);
-        $entitySelect = $entity->newQuery();
+        $entityQuery = $entityModelInstance->newQuery();
+
+        if ($entityModelInstance instanceof Page) {
+            $entityQuery->select($entityModelInstance::$listAttributes);
+        } else {
+            $entityQuery->select(['*']);
+        }
 
         // Handle normal search terms
-        if (count($searchOpts->searches) > 0) {
-            $rawScoreSum = $this->db->raw('SUM(score) as score');
-            $subQuery = $this->db->table('search_terms')->select('entity_id', 'entity_type', $rawScoreSum);
-            $subQuery->where('entity_type', '=', $entity->getMorphClass());
-            $subQuery->where(function (Builder $query) use ($searchOpts) {
-                foreach ($searchOpts->searches as $inputTerm) {
-                    $query->orWhere('term', 'like', $inputTerm . '%');
-                }
-            })->groupBy('entity_type', 'entity_id');
-            $entitySelect->join($this->db->raw('(' . $subQuery->toSql() . ') as s'), function (JoinClause $join) {
-                $join->on('id', '=', 'entity_id');
-            })->addSelect($entity->getTable() . '.*')
-                ->selectRaw('s.score')
-                ->orderBy('score', 'desc');
-            $entitySelect->mergeBindings($subQuery);
-        }
+        $this->applyTermSearch($entityQuery, $searchOpts, $entityModelInstance);
 
         // Handle exact term matching
         foreach ($searchOpts->exacts as $inputTerm) {
-            $entitySelect->where(function (EloquentBuilder $query) use ($inputTerm, $entity) {
+            $entityQuery->where(function (EloquentBuilder $query) use ($inputTerm, $entityModelInstance) {
                 $query->where('name', 'like', '%' . $inputTerm . '%')
-                    ->orWhere($entity->textField, 'like', '%' . $inputTerm . '%');
+                    ->orWhere($entityModelInstance->textField, 'like', '%' . $inputTerm . '%');
             });
         }
 
         // Handle tag searches
         foreach ($searchOpts->tags as $inputTerm) {
-            $this->applyTagSearch($entitySelect, $inputTerm);
+            $this->applyTagSearch($entityQuery, $inputTerm);
         }
 
         // Handle filters
         foreach ($searchOpts->filters as $filterTerm => $filterValue) {
             $functionName = Str::camel('filter_' . $filterTerm);
             if (method_exists($this, $functionName)) {
-                $this->$functionName($entitySelect, $entity, $filterValue);
+                $this->$functionName($entityQuery, $entityModelInstance, $filterValue);
             }
         }
 
-        return $this->permissionService->enforceEntityRestrictions($entity, $entitySelect, $action);
+        return $this->permissionService->enforceEntityRestrictions($entityModelInstance, $entityQuery, $action);
+    }
+
+    /**
+     * For the given search query, apply the queries for handling the regular search terms.
+     */
+    protected function applyTermSearch(EloquentBuilder $entityQuery, SearchOptions $options, Entity $entity): void
+    {
+        $terms = $options->searches;
+        if (count($terms) === 0) {
+            return;
+        }
+
+        $scoredTerms = $this->getTermAdjustments($options);
+        $scoreSelect = $this->selectForScoredTerms($scoredTerms);
+
+        $subQuery = DB::table('search_terms')->select([
+            'entity_id',
+            'entity_type',
+            DB::raw($scoreSelect['statement']),
+        ]);
+
+        $subQuery->addBinding($scoreSelect['bindings'], 'select');
+
+        $subQuery->where('entity_type', '=', $entity->getMorphClass());
+        $subQuery->where(function (Builder $query) use ($terms) {
+            foreach ($terms as $inputTerm) {
+                $query->orWhere('term', 'like', $inputTerm . '%');
+            }
+        });
+        $subQuery->groupBy('entity_type', 'entity_id');
+
+        $entityQuery->joinSub($subQuery, 's', 'id', '=', 'entity_id');
+        $entityQuery->addSelect('s.score');
+        $entityQuery->orderBy('score', 'desc');
+    }
+
+    /**
+     * Create a select statement, with prepared bindings, for the given
+     * set of scored search terms.
+     *
+     * @param array<string, float> $scoredTerms
+     *
+     * @return array{statement: string, bindings: string[]}
+     */
+    protected function selectForScoredTerms(array $scoredTerms): array
+    {
+        // Within this we walk backwards to create the chain of 'if' statements
+        // so that each previous statement is used in the 'else' condition of
+        // the next (earlier) to be built. We start at '0' to have no score
+        // on no match (Should never actually get to this case).
+        $ifChain = '0';
+        $bindings = [];
+        foreach ($scoredTerms as $term => $score) {
+            $ifChain = 'IF(term like ?, score * ' . (float) $score . ', ' . $ifChain . ')';
+            $bindings[] = $term . '%';
+        }
+
+        return [
+            'statement' => 'SUM(' . $ifChain . ') as score',
+            'bindings'  => array_reverse($bindings),
+        ];
+    }
+
+    /**
+     * For the terms in the given search options, query their popularity across all
+     * search terms then provide that back as score adjustment multiplier applicable
+     * for their rarity. Returns an array of float multipliers, keyed by term.
+     *
+     * @return array<string, float>
+     */
+    protected function getTermAdjustments(SearchOptions $options): array
+    {
+        if (isset($this->termAdjustmentCache[$options])) {
+            return $this->termAdjustmentCache[$options];
+        }
+
+        $termQuery = SearchTerm::query()->toBase();
+        $whenStatements = [];
+        $whenBindings = [];
+
+        foreach ($options->searches as $term) {
+            $whenStatements[] = 'WHEN term LIKE ? THEN ?';
+            $whenBindings[] = $term . '%';
+            $whenBindings[] = $term;
+
+            $termQuery->orWhere('term', 'like', $term . '%');
+        }
+
+        $case = 'CASE ' . implode(' ', $whenStatements) . ' END';
+        $termQuery->selectRaw($case . ' as term', $whenBindings);
+        $termQuery->selectRaw('COUNT(*) as count');
+        $termQuery->groupByRaw($case, $whenBindings);
+
+        $termCounts = $termQuery->pluck('count', 'term')->toArray();
+        $adjusted = $this->rawTermCountsToAdjustments($termCounts);
+
+        $this->termAdjustmentCache[$options] = $adjusted;
+
+        return $this->termAdjustmentCache[$options];
+    }
+
+    /**
+     * Convert counts of terms into a relative-count normalised multiplier.
+     *
+     * @param array<string, int> $termCounts
+     *
+     * @return array<string, int>
+     */
+    protected function rawTermCountsToAdjustments(array $termCounts): array
+    {
+        if (empty($termCounts)) {
+            return [];
+        }
+
+        $multipliers = [];
+        $max = max(array_values($termCounts));
+
+        foreach ($termCounts as $term => $count) {
+            $percent = round($count / $max, 5);
+            $multipliers[$term] = 1.3 - $percent;
+        }
+
+        return $multipliers;
     }
 
     /**
@@ -238,44 +370,40 @@ class SearchRunner
     /**
      * Custom entity search filters.
      */
-    protected function filterUpdatedAfter(EloquentBuilder $query, Entity $model, $input)
+    protected function filterUpdatedAfter(EloquentBuilder $query, Entity $model, $input): void
     {
         try {
             $date = date_create($input);
+            $query->where('updated_at', '>=', $date);
         } catch (\Exception $e) {
-            return;
         }
-        $query->where('updated_at', '>=', $date);
     }
 
-    protected function filterUpdatedBefore(EloquentBuilder $query, Entity $model, $input)
+    protected function filterUpdatedBefore(EloquentBuilder $query, Entity $model, $input): void
     {
         try {
             $date = date_create($input);
+            $query->where('updated_at', '<', $date);
         } catch (\Exception $e) {
-            return;
         }
-        $query->where('updated_at', '<', $date);
     }
 
-    protected function filterCreatedAfter(EloquentBuilder $query, Entity $model, $input)
+    protected function filterCreatedAfter(EloquentBuilder $query, Entity $model, $input): void
     {
         try {
             $date = date_create($input);
+            $query->where('created_at', '>=', $date);
         } catch (\Exception $e) {
-            return;
         }
-        $query->where('created_at', '>=', $date);
     }
 
     protected function filterCreatedBefore(EloquentBuilder $query, Entity $model, $input)
     {
         try {
             $date = date_create($input);
+            $query->where('created_at', '<', $date);
         } catch (\Exception $e) {
-            return;
         }
-        $query->where('created_at', '<', $date);
     }
 
     protected function filterCreatedBy(EloquentBuilder $query, Entity $model, $input)
@@ -352,9 +480,9 @@ class SearchRunner
      */
     protected function sortByLastCommented(EloquentBuilder $query, Entity $model)
     {
-        $commentsTable = $this->db->getTablePrefix() . 'comments';
+        $commentsTable = DB::getTablePrefix() . 'comments';
         $morphClass = str_replace('\\', '\\\\', $model->getMorphClass());
-        $commentQuery = $this->db->raw('(SELECT c1.entity_id, c1.entity_type, c1.created_at as last_commented FROM ' . $commentsTable . ' c1 LEFT JOIN ' . $commentsTable . ' c2 ON (c1.entity_id = c2.entity_id AND c1.entity_type = c2.entity_type AND c1.created_at < c2.created_at) WHERE c1.entity_type = \'' . $morphClass . '\' AND c2.created_at IS NULL) as comments');
+        $commentQuery = DB::raw('(SELECT c1.entity_id, c1.entity_type, c1.created_at as last_commented FROM ' . $commentsTable . ' c1 LEFT JOIN ' . $commentsTable . ' c2 ON (c1.entity_id = c2.entity_id AND c1.entity_type = c2.entity_type AND c1.created_at < c2.created_at) WHERE c1.entity_type = \'' . $morphClass . '\' AND c2.created_at IS NULL) as comments');
 
         $query->join($commentQuery, $model->getTable() . '.id', '=', 'comments.entity_id')->orderBy('last_commented', 'desc');
     }
