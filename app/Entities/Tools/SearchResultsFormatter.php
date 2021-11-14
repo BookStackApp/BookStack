@@ -173,7 +173,7 @@ class SearchResultsFormatter
             if (!$fetchAll && $contextStart !== 0 && $contextStart !== $start) {
                 $content .= ' ...';
                 $contentTextLength += 4;
-            } else if ($fetchAll) {
+            } elseif ($fetchAll) {
                 // Or fill in gap since the previous match
                 $fillLength = $contextStart - $lastEnd;
                 $content .= e(substr($originalText, $lastEnd, $fillLength));
