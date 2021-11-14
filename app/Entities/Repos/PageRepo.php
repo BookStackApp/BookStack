@@ -252,9 +252,7 @@ class PageRepo
     {
         // If the page itself is a draft simply update that
         if ($page->draft) {
-            if (isset($input['html'])) {
-                (new PageContent($page))->setNewHTML($input['html']);
-            }
+            $this->updateTemplateStatusAndContentFromInput($page, $input);
             $page->fill($input);
             $page->save();
 

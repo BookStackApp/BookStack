@@ -178,4 +178,30 @@ class PageDraftTest extends TestCase
             'html' => $page->html,
         ]);
     }
+
+    public function test_updating_page_draft_with_markdown_retains_markdown_content()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        /** @var Page $draft */
+        $draft = Page::query()->where('draft', '=', true)->where('book_id', '=', $book->id)->firstOrFail();
+
+        $resp = $this->put('/ajax/page/' . $draft->id . '/save-draft', [
+            'name' => 'My updated draft',
+            'markdown' => "# My markdown page\n\n[A link](https://example.com)",
+            'html' => '<p>checking markdown takes priority over this</p>'
+        ]);
+        $resp->assertOk();
+
+        $this->assertDatabaseHas('pages', [
+            'id' => $draft->id,
+            'draft' => true,
+            'name' => 'My updated draft',
+            'markdown' => "# My markdown page\n\n[A link](https://example.com)",
+        ]);
+
+        $draft->refresh();
+        $this->assertStringContainsString('href="https://example.com"', $draft->html);
+    }
 }
