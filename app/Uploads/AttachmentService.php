@@ -233,4 +233,12 @@ class AttachmentService
 
         return $attachmentPath;
     }
+
+    /**
+     * Get the file validation rules for attachments.
+     */
+    public function getFileValidationRules(): array
+    {
+        return ['file', 'max:' . (config('app.upload_limit') * 1000)];
+    }
 }

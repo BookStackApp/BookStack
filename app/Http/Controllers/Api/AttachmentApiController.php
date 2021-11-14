@@ -15,21 +15,6 @@ class AttachmentApiController extends ApiController
 {
     protected $attachmentService;
 
-    protected $rules = [
-        'create' => [
-            'name'        => ['required', 'min:1', 'max:255', 'string'],
-            'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
-            'file'        => ['required_without:link', 'file'],
-            'link'        => ['required_without:file', 'min:1', 'max:255', 'safe_url'],
-        ],
-        'update' => [
-            'name'        => ['min:1', 'max:255', 'string'],
-            'uploaded_to' => ['integer', 'exists:pages,id'],
-            'file'        => ['file'],
-            'link'        => ['min:1', 'max:255', 'safe_url'],
-        ],
-    ];
-
     public function __construct(AttachmentService $attachmentService)
     {
         $this->attachmentService = $attachmentService;
@@ -61,7 +46,7 @@ class AttachmentApiController extends ApiController
     public function create(Request $request)
     {
         $this->checkPermission('attachment-create-all');
-        $requestData = $this->validate($request, $this->rules['create']);
+        $requestData = $this->validate($request, $this->rules()['create']);
 
         $pageId = $request->get('uploaded_to');
         $page = Page::visible()->findOrFail($pageId);
@@ -122,7 +107,7 @@ class AttachmentApiController extends ApiController
      */
     public function update(Request $request, string $id)
     {
-        $requestData = $this->validate($request, $this->rules['update']);
+        $requestData = $this->validate($request, $this->rules()['update']);
         /** @var Attachment $attachment */
         $attachment = Attachment::visible()->findOrFail($id);
 
@@ -161,5 +146,23 @@ class AttachmentApiController extends ApiController
         $this->attachmentService->deleteFile($attachment);
 
         return response('', 204);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'create' => [
+                'name'        => ['required', 'min:1', 'max:255', 'string'],
+                'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
+                'file'        => array_merge(['required_without:link'], $this->attachmentService->getFileValidationRules()),
+                'link'        => ['required_without:file', 'min:1', 'max:255', 'safe_url'],
+            ],
+            'update' => [
+                'name'        => ['min:1', 'max:255', 'string'],
+                'uploaded_to' => ['integer', 'exists:pages,id'],
+                'file'        => $this->attachmentService->getFileValidationRules(),
+                'link'        => ['min:1', 'max:255', 'safe_url'],
+            ],
+        ];
     }
 }

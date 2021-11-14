@@ -9,6 +9,7 @@ use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
@@ -37,7 +38,7 @@ class AttachmentController extends Controller
     {
         $this->validate($request, [
             'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
-            'file'        => ['required', 'file'],
+            'file'        => array_merge(['required'], $this->attachmentService->getFileValidationRules()),
         ]);
 
         $pageId = $request->get('uploaded_to');
@@ -65,7 +66,7 @@ class AttachmentController extends Controller
     public function uploadUpdate(Request $request, $attachmentId)
     {
         $this->validate($request, [
-            'file' => ['required', 'file'],
+            'file' => array_merge(['required'], $this->attachmentService->getFileValidationRules()),
         ]);
 
         /** @var Attachment $attachment */
