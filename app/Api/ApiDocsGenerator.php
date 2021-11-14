@@ -55,10 +55,16 @@ class ApiDocsGenerator
     {
         return $routes->map(function (array $route) {
             $exampleTypes = ['request', 'response'];
+            $fileTypes = ['json', 'http'];
             foreach ($exampleTypes as $exampleType) {
-                $exampleFile = base_path("dev/api/{$exampleType}s/{$route['name']}.json");
-                $exampleContent = file_exists($exampleFile) ? file_get_contents($exampleFile) : null;
-                $route["example_{$exampleType}"] = $exampleContent;
+                foreach ($fileTypes as $fileType) {
+                    $exampleFile = base_path("dev/api/{$exampleType}s/{$route['name']}." . $fileType);
+                    if (file_exists($exampleFile)) {
+                        $route["example_{$exampleType}"] = file_get_contents($exampleFile);
+                        continue 2;
+                    }
+                }
+                $route["example_{$exampleType}"] = null;
             }
 
             return $route;
