@@ -277,7 +277,7 @@ Route::get('/register/service/{socialDriver}', [Auth\SocialController::class, 'r
 // Login/Logout routes
 Route::get('/login', [Auth\LoginController::class, 'getLogin']);
 Route::post('/login', [Auth\LoginController::class, 'login']);
-Route::get('/logout', [Auth\LoginController::class, 'logout']);
+Route::post('/logout', [Auth\LoginController::class, 'logout']);
 Route::get('/register', [Auth\RegisterController::class, 'getRegister']);
 Route::get('/register/confirm', [Auth\ConfirmEmailController::class, 'show']);
 Route::get('/register/confirm/awaiting', [Auth\ConfirmEmailController::class, 'showAwaiting']);
@@ -287,10 +287,14 @@ Route::post('/register', [Auth\RegisterController::class, 'postRegister']);
 
 // SAML routes
 Route::post('/saml2/login', [Auth\Saml2Controller::class, 'login']);
-Route::get('/saml2/logout', [Auth\Saml2Controller::class, 'logout']);
+Route::post('/saml2/logout', [Auth\Saml2Controller::class, 'logout']);
 Route::get('/saml2/metadata', [Auth\Saml2Controller::class, 'metadata']);
 Route::get('/saml2/sls', [Auth\Saml2Controller::class, 'sls']);
-Route::post('/saml2/acs', [Auth\Saml2Controller::class, 'startAcs']);
+Route::post('/saml2/acs', [Auth\Saml2Controller::class, 'startAcs'])->withoutMiddleware([
+    \Illuminate\Session\Middleware\StartSession::class,
+    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    \BookStack\Http\Middleware\VerifyCsrfToken::class,
+]);
 Route::get('/saml2/acs', [Auth\Saml2Controller::class, 'processAcs']);
 
 // OIDC routes

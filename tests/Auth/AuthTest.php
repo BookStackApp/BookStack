@@ -192,7 +192,7 @@ class AuthTest extends TestCase
     public function test_logout()
     {
         $this->asAdmin()->get('/')->assertOk();
-        $this->get('/logout')->assertRedirect('/');
+        $this->post('/logout')->assertRedirect('/');
         $this->get('/')->assertRedirect('/login');
     }
 
@@ -204,7 +204,7 @@ class AuthTest extends TestCase
         $mfaSession->markVerifiedForUser($user);
         $this->assertTrue($mfaSession->isVerifiedForUser($user));
 
-        $this->asAdmin()->get('/logout');
+        $this->asAdmin()->post('/logout');
         $this->assertFalse($mfaSession->isVerifiedForUser($user));
     }
 
