@@ -188,16 +188,16 @@ class PageDraftTest extends TestCase
         $draft = Page::query()->where('draft', '=', true)->where('book_id', '=', $book->id)->firstOrFail();
 
         $resp = $this->put('/ajax/page/' . $draft->id . '/save-draft', [
-            'name' => 'My updated draft',
+            'name'     => 'My updated draft',
             'markdown' => "# My markdown page\n\n[A link](https://example.com)",
-            'html' => '<p>checking markdown takes priority over this</p>'
+            'html'     => '<p>checking markdown takes priority over this</p>',
         ]);
         $resp->assertOk();
 
         $this->assertDatabaseHas('pages', [
-            'id' => $draft->id,
-            'draft' => true,
-            'name' => 'My updated draft',
+            'id'       => $draft->id,
+            'draft'    => true,
+            'name'     => 'My updated draft',
             'markdown' => "# My markdown page\n\n[A link](https://example.com)",
         ]);
 

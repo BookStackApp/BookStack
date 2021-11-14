@@ -48,93 +48,89 @@ Route::middleware('auth')->group(function () {
 
     // Shelves
     Route::get('/create-shelf', [BookshelfController::class, 'create']);
-    Route::prefix('shelves')->group(function () {
-        Route::get('/', [BookshelfController::class, 'index']);
-        Route::post('/', [BookshelfController::class, 'store']);
-        Route::get('/{slug}/edit', [BookshelfController::class, 'edit']);
-        Route::get('/{slug}/delete', [BookshelfController::class, 'showDelete']);
-        Route::get('/{slug}', [BookshelfController::class, 'show']);
-        Route::put('/{slug}', [BookshelfController::class, 'update']);
-        Route::delete('/{slug}', [BookshelfController::class, 'destroy']);
-        Route::get('/{slug}/permissions', [BookshelfController::class, 'showPermissions']);
-        Route::put('/{slug}/permissions', [BookshelfController::class, 'permissions']);
-        Route::post('/{slug}/copy-permissions', [BookshelfController::class, 'copyPermissions']);
+    Route::get('/shelves/', [BookshelfController::class, 'index']);
+    Route::post('/shelves/', [BookshelfController::class, 'store']);
+    Route::get('/shelves/{slug}/edit', [BookshelfController::class, 'edit']);
+    Route::get('/shelves/{slug}/delete', [BookshelfController::class, 'showDelete']);
+    Route::get('/shelves/{slug}', [BookshelfController::class, 'show']);
+    Route::put('/shelves/{slug}', [BookshelfController::class, 'update']);
+    Route::delete('/shelves/{slug}', [BookshelfController::class, 'destroy']);
+    Route::get('/shelves/{slug}/permissions', [BookshelfController::class, 'showPermissions']);
+    Route::put('/shelves/{slug}/permissions', [BookshelfController::class, 'permissions']);
+    Route::post('/shelves/{slug}/copy-permissions', [BookshelfController::class, 'copyPermissions']);
 
-        Route::get('/{shelfSlug}/create-book', [BookController::class, 'create']);
-        Route::post('/{shelfSlug}/create-book', [BookController::class, 'store']);
-    });
-
+    // Book Creation
+    Route::get('/shelves/{shelfSlug}/create-book', [BookController::class, 'create']);
+    Route::post('/shelves/{shelfSlug}/create-book', [BookController::class, 'store']);
     Route::get('/create-book', [BookController::class, 'create']);
-    Route::prefix('books')->group(function () {
 
-        // Books
-        Route::get('/', [BookController::class, 'index']);
-        Route::post('/', [BookController::class, 'store']);
-        Route::get('/{slug}/edit', [BookController::class, 'edit']);
-        Route::put('/{slug}', [BookController::class, 'update']);
-        Route::delete('/{id}', [BookController::class, 'destroy']);
-        Route::get('/{slug}/sort-item', [BookSortController::class, 'showItem']);
-        Route::get('/{slug}', [BookController::class, 'show']);
-        Route::get('/{bookSlug}/permissions', [BookController::class, 'showPermissions']);
-        Route::put('/{bookSlug}/permissions', [BookController::class, 'permissions']);
-        Route::get('/{slug}/delete', [BookController::class, 'showDelete']);
-        Route::get('/{bookSlug}/sort', [BookSortController::class, 'show']);
-        Route::put('/{bookSlug}/sort', [BookSortController::class, 'update']);
-        Route::get('/{bookSlug}/export/html', [BookExportController::class, 'html']);
-        Route::get('/{bookSlug}/export/pdf', [BookExportController::class, 'pdf']);
-        Route::get('/{bookSlug}/export/markdown', [BookExportController::class, 'markdown']);
-        Route::get('/{bookSlug}/export/zip', [BookExportController::class, 'zip']);
-        Route::get('/{bookSlug}/export/plaintext', [BookExportController::class, 'plainText']);
+    // Books
+    Route::get('/books/', [BookController::class, 'index']);
+    Route::post('/books/', [BookController::class, 'store']);
+    Route::get('/books/{slug}/edit', [BookController::class, 'edit']);
+    Route::put('/books/{slug}', [BookController::class, 'update']);
+    Route::delete('/books/{id}', [BookController::class, 'destroy']);
+    Route::get('/books/{slug}/sort-item', [BookSortController::class, 'showItem']);
+    Route::get('/books/{slug}', [BookController::class, 'show']);
+    Route::get('/books/{bookSlug}/permissions', [BookController::class, 'showPermissions']);
+    Route::put('/books/{bookSlug}/permissions', [BookController::class, 'permissions']);
+    Route::get('/books/{slug}/delete', [BookController::class, 'showDelete']);
+    Route::get('/books/{bookSlug}/sort', [BookSortController::class, 'show']);
+    Route::put('/books/{bookSlug}/sort', [BookSortController::class, 'update']);
+    Route::get('/books/{bookSlug}/export/html', [BookExportController::class, 'html']);
+    Route::get('/books/{bookSlug}/export/pdf', [BookExportController::class, 'pdf']);
+    Route::get('/books/{bookSlug}/export/markdown', [BookExportController::class, 'markdown']);
+    Route::get('/books/{bookSlug}/export/zip', [BookExportController::class, 'zip']);
+    Route::get('/books/{bookSlug}/export/plaintext', [BookExportController::class, 'plainText']);
 
-        // Pages
-        Route::get('/{bookSlug}/create-page', [PageController::class, 'create']);
-        Route::post('/{bookSlug}/create-guest-page', [PageController::class, 'createAsGuest']);
-        Route::get('/{bookSlug}/draft/{pageId}', [PageController::class, 'editDraft']);
-        Route::post('/{bookSlug}/draft/{pageId}', [PageController::class, 'store']);
-        Route::get('/{bookSlug}/page/{pageSlug}', [PageController::class, 'show']);
-        Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', [PageExportController::class, 'pdf']);
-        Route::get('/{bookSlug}/page/{pageSlug}/export/html', [PageExportController::class, 'html']);
-        Route::get('/{bookSlug}/page/{pageSlug}/export/markdown', [PageExportController::class, 'markdown']);
-        Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', [PageExportController::class, 'plainText']);
-        Route::get('/{bookSlug}/page/{pageSlug}/edit', [PageController::class, 'edit']);
-        Route::get('/{bookSlug}/page/{pageSlug}/move', [PageController::class, 'showMove']);
-        Route::put('/{bookSlug}/page/{pageSlug}/move', [PageController::class, 'move']);
-        Route::get('/{bookSlug}/page/{pageSlug}/copy', [PageController::class, 'showCopy']);
-        Route::post('/{bookSlug}/page/{pageSlug}/copy', [PageController::class, 'copy']);
-        Route::get('/{bookSlug}/page/{pageSlug}/delete', [PageController::class, 'showDelete']);
-        Route::get('/{bookSlug}/draft/{pageId}/delete', [PageController::class, 'showDeleteDraft']);
-        Route::get('/{bookSlug}/page/{pageSlug}/permissions', [PageController::class, 'showPermissions']);
-        Route::put('/{bookSlug}/page/{pageSlug}/permissions', [PageController::class, 'permissions']);
-        Route::put('/{bookSlug}/page/{pageSlug}', [PageController::class, 'update']);
-        Route::delete('/{bookSlug}/page/{pageSlug}', [PageController::class, 'destroy']);
-        Route::delete('/{bookSlug}/draft/{pageId}', [PageController::class, 'destroyDraft']);
+    // Pages
+    Route::get('/books/{bookSlug}/create-page', [PageController::class, 'create']);
+    Route::post('/books/{bookSlug}/create-guest-page', [PageController::class, 'createAsGuest']);
+    Route::get('/books/{bookSlug}/draft/{pageId}', [PageController::class, 'editDraft']);
+    Route::post('/books/{bookSlug}/draft/{pageId}', [PageController::class, 'store']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}', [PageController::class, 'show']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/export/pdf', [PageExportController::class, 'pdf']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/export/html', [PageExportController::class, 'html']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/export/markdown', [PageExportController::class, 'markdown']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/export/plaintext', [PageExportController::class, 'plainText']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/edit', [PageController::class, 'edit']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/move', [PageController::class, 'showMove']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}/move', [PageController::class, 'move']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/copy', [PageController::class, 'showCopy']);
+    Route::post('/books/{bookSlug}/page/{pageSlug}/copy', [PageController::class, 'copy']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/delete', [PageController::class, 'showDelete']);
+    Route::get('/books/{bookSlug}/draft/{pageId}/delete', [PageController::class, 'showDeleteDraft']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/permissions', [PageController::class, 'showPermissions']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}/permissions', [PageController::class, 'permissions']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}', [PageController::class, 'update']);
+    Route::delete('/books/{bookSlug}/page/{pageSlug}', [PageController::class, 'destroy']);
+    Route::delete('/books/{bookSlug}/draft/{pageId}', [PageController::class, 'destroyDraft']);
 
-        // Revisions
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions', [PageRevisionController::class, 'index']);
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', [PageRevisionController::class, 'show']);
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', [PageRevisionController::class, 'changes']);
-        Route::put('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', [PageRevisionController::class, 'restore']);
-        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', [PageRevisionController::class, 'destroy']);
+    // Revisions
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions', [PageRevisionController::class, 'index']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}', [PageRevisionController::class, 'show']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', [PageRevisionController::class, 'changes']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', [PageRevisionController::class, 'restore']);
+    Route::delete('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', [PageRevisionController::class, 'destroy']);
 
-        // Chapters
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', [PageController::class, 'create']);
-        Route::post('/{bookSlug}/chapter/{chapterSlug}/create-guest-page', [PageController::class, 'createAsGuest']);
-        Route::get('/{bookSlug}/create-chapter', [ChapterController::class, 'create']);
-        Route::post('/{bookSlug}/create-chapter', [ChapterController::class, 'store']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'show']);
-        Route::put('/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'update']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/move', [ChapterController::class, 'showMove']);
-        Route::put('/{bookSlug}/chapter/{chapterSlug}/move', [ChapterController::class, 'move']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/edit', [ChapterController::class, 'edit']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'showPermissions']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/pdf', [ChapterExportController::class, 'pdf']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/html', [ChapterExportController::class, 'html']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/markdown', [ChapterExportController::class, 'markdown']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/plaintext', [ChapterExportController::class, 'plainText']);
-        Route::put('/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'permissions']);
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', [ChapterController::class, 'showDelete']);
-        Route::delete('/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'destroy']);
-    });
+    // Chapters
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/create-page', [PageController::class, 'create']);
+    Route::post('/books/{bookSlug}/chapter/{chapterSlug}/create-guest-page', [PageController::class, 'createAsGuest']);
+    Route::get('/books/{bookSlug}/create-chapter', [ChapterController::class, 'create']);
+    Route::post('/books/{bookSlug}/create-chapter', [ChapterController::class, 'store']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'show']);
+    Route::put('/books/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'update']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/move', [ChapterController::class, 'showMove']);
+    Route::put('/books/{bookSlug}/chapter/{chapterSlug}/move', [ChapterController::class, 'move']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/edit', [ChapterController::class, 'edit']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'showPermissions']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/pdf', [ChapterExportController::class, 'pdf']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/html', [ChapterExportController::class, 'html']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/markdown', [ChapterExportController::class, 'markdown']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/plaintext', [ChapterExportController::class, 'plainText']);
+    Route::put('/books/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'permissions']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/delete', [ChapterController::class, 'showDelete']);
+    Route::delete('/books/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'destroy']);
 
     // User Profile routes
     Route::get('/user/{slug}', [UserProfileController::class, 'show']);
@@ -204,58 +200,56 @@ Route::middleware('auth')->group(function () {
     Route::get('/custom-head-content', [HomeController::class, 'customHeadContent']);
 
     // Settings
-    Route::prefix('settings')->group(function () {
-        Route::get('/', [SettingController::class, 'index'])->name('settings');
-        Route::post('/', [SettingController::class, 'update']);
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+    Route::post('/settings', [SettingController::class, 'update']);
 
-        // Maintenance
-        Route::get('/maintenance', [MaintenanceController::class, 'index']);
-        Route::delete('/maintenance/cleanup-images', [MaintenanceController::class, 'cleanupImages']);
-        Route::post('/maintenance/send-test-email', [MaintenanceController::class, 'sendTestEmail']);
+    // Maintenance
+    Route::get('/settings/maintenance', [MaintenanceController::class, 'index']);
+    Route::delete('/settings/maintenance/cleanup-images', [MaintenanceController::class, 'cleanupImages']);
+    Route::post('/settings/maintenance/send-test-email', [MaintenanceController::class, 'sendTestEmail']);
 
-        // Recycle Bin
-        Route::get('/recycle-bin', [RecycleBinController::class, 'index']);
-        Route::post('/recycle-bin/empty', [RecycleBinController::class, 'empty']);
-        Route::get('/recycle-bin/{id}/destroy', [RecycleBinController::class, 'showDestroy']);
-        Route::delete('/recycle-bin/{id}', [RecycleBinController::class, 'destroy']);
-        Route::get('/recycle-bin/{id}/restore', [RecycleBinController::class, 'showRestore']);
-        Route::post('/recycle-bin/{id}/restore', [RecycleBinController::class, 'restore']);
+    // Recycle Bin
+    Route::get('/settings/recycle-bin', [RecycleBinController::class, 'index']);
+    Route::post('/settings/recycle-bin/empty', [RecycleBinController::class, 'empty']);
+    Route::get('/settings/recycle-bin/{id}/destroy', [RecycleBinController::class, 'showDestroy']);
+    Route::delete('/settings/recycle-bin/{id}', [RecycleBinController::class, 'destroy']);
+    Route::get('/settings/recycle-bin/{id}/restore', [RecycleBinController::class, 'showRestore']);
+    Route::post('/settings/recycle-bin/{id}/restore', [RecycleBinController::class, 'restore']);
 
-        // Audit Log
-        Route::get('/audit', [AuditLogController::class, 'index']);
+    // Audit Log
+    Route::get('/settings/audit', [AuditLogController::class, 'index']);
 
-        // Users
-        Route::get('/users', [UserController::class, 'index']);
-        Route::get('/users/create', [UserController::class, 'create']);
-        Route::get('/users/{id}/delete', [UserController::class, 'delete']);
-        Route::patch('/users/{id}/switch-books-view', [UserController::class, 'switchBooksView']);
-        Route::patch('/users/{id}/switch-shelves-view', [UserController::class, 'switchShelvesView']);
-        Route::patch('/users/{id}/switch-shelf-view', [UserController::class, 'switchShelfView']);
-        Route::patch('/users/{id}/change-sort/{type}', [UserController::class, 'changeSort']);
-        Route::patch('/users/{id}/update-expansion-preference/{key}', [UserController::class, 'updateExpansionPreference']);
-        Route::patch('/users/toggle-dark-mode', [UserController::class, 'toggleDarkMode']);
-        Route::post('/users/create', [UserController::class, 'store']);
-        Route::get('/users/{id}', [UserController::class, 'edit']);
-        Route::put('/users/{id}', [UserController::class, 'update']);
-        Route::delete('/users/{id}', [UserController::class, 'destroy']);
+    // Users
+    Route::get('/settings/users', [UserController::class, 'index']);
+    Route::get('/settings/users/create', [UserController::class, 'create']);
+    Route::get('/settings/users/{id}/delete', [UserController::class, 'delete']);
+    Route::patch('/settings/users/{id}/switch-books-view', [UserController::class, 'switchBooksView']);
+    Route::patch('/settings/users/{id}/switch-shelves-view', [UserController::class, 'switchShelvesView']);
+    Route::patch('/settings/users/{id}/switch-shelf-view', [UserController::class, 'switchShelfView']);
+    Route::patch('/settings/users/{id}/change-sort/{type}', [UserController::class, 'changeSort']);
+    Route::patch('/settings/users/{id}/update-expansion-preference/{key}', [UserController::class, 'updateExpansionPreference']);
+    Route::patch('/settings/users/toggle-dark-mode', [UserController::class, 'toggleDarkMode']);
+    Route::post('/settings/users/create', [UserController::class, 'store']);
+    Route::get('/settings/users/{id}', [UserController::class, 'edit']);
+    Route::put('/settings/users/{id}', [UserController::class, 'update']);
+    Route::delete('/settings/users/{id}', [UserController::class, 'destroy']);
 
-        // User API Tokens
-        Route::get('/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);
-        Route::post('/users/{userId}/create-api-token', [UserApiTokenController::class, 'store']);
-        Route::get('/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'edit']);
-        Route::put('/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'update']);
-        Route::get('/users/{userId}/api-tokens/{tokenId}/delete', [UserApiTokenController::class, 'delete']);
-        Route::delete('/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'destroy']);
+    // User API Tokens
+    Route::get('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);
+    Route::post('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'store']);
+    Route::get('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'edit']);
+    Route::put('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'update']);
+    Route::get('/settings/users/{userId}/api-tokens/{tokenId}/delete', [UserApiTokenController::class, 'delete']);
+    Route::delete('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'destroy']);
 
-        // Roles
-        Route::get('/roles', [RoleController::class, 'list']);
-        Route::get('/roles/new', [RoleController::class, 'create']);
-        Route::post('/roles/new', [RoleController::class, 'store']);
-        Route::get('/roles/delete/{id}', [RoleController::class, 'showDelete']);
-        Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
-        Route::get('/roles/{id}', [RoleController::class, 'edit']);
-        Route::put('/roles/{id}', [RoleController::class, 'update']);
-    });
+    // Roles
+    Route::get('/settings/roles', [RoleController::class, 'list']);
+    Route::get('/settings/roles/new', [RoleController::class, 'create']);
+    Route::post('/settings/roles/new', [RoleController::class, 'store']);
+    Route::get('/settings/roles/delete/{id}', [RoleController::class, 'showDelete']);
+    Route::delete('/settings/roles/delete/{id}', [RoleController::class, 'delete']);
+    Route::get('/settings/roles/{id}', [RoleController::class, 'edit']);
+    Route::put('/settings/roles/{id}', [RoleController::class, 'update']);
 });
 
 // MFA routes
