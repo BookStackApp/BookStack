@@ -38,11 +38,11 @@ Note: Listed services are not tested, vetted nor supported by the official BookS
 
 <table><tbody><tr>
 <td><a href="https://www.diagrams.net/" target="_blank">
-    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/master/static/images/sponsors/diagramsnet.png" alt="Diagrams.net logo">
+    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/diagramsnet.png" alt="Diagrams.net">
 </a></td>
 
 <td><a href="https://www.stellarhosted.com/bookstack/" target="_blank">
-    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/master/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted Logo">
+    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted">
 </a></td>
 </tr></tbody></table>
 
