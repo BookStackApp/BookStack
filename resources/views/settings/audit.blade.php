@@ -49,9 +49,8 @@
                 </div>
 
 
-                <div class="form-group ml-m"
-                     option:submit-on-change:filter='[name="ip"]'>
-                    <label for="owner">IP address</label>
+                <div class="form-group ml-m">
+                    <label for="ip">{{ trans('settings.ip_address') }}</label>
                     @include('form.text', ['name' => 'ip'])
                 </div>
             </form>
