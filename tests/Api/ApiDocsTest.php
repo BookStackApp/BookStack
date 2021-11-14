@@ -10,6 +10,12 @@ class ApiDocsTest extends TestCase
 
     protected $endpoint = '/api/docs';
 
+    public function test_api_endpoint_redirects_to_docs()
+    {
+        $resp = $this->actingAsApiEditor()->get('/api');
+        $resp->assertRedirect('api/docs');
+    }
+
     public function test_docs_page_returns_view_with_docs_content()
     {
         $resp = $this->actingAsApiEditor()->get($this->endpoint);

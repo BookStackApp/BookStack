@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
         ->where('path', '.*$');
 
     // API docs routes
+    Route::redirect('/api', '/api/docs');
     Route::get('/api/docs', [Api\ApiDocsController::class, 'display']);
 
     Route::get('/pages/recently-updated', [PageController::class, 'showRecentlyUpdated']);
