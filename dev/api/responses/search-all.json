@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "id": 84,
+      "book_id": 1,
+      "slug": "a-chapter-for-cats",
+      "name": "A chapter for cats",
+      "created_at": "2021-11-14T15:57:35.000000Z",
+      "updated_at": "2021-11-14T15:57:35.000000Z",
+      "type": "chapter",
+      "tags": []
+    },
+    {
+      "name": "The hows and whys of cats",
+      "id": 396,
+      "slug": "the-hows-and-whys-of-cats",
+      "book_id": 1,
+      "chapter_id": 75,
+      "draft": false,
+      "template": false,
+      "created_at": "2021-05-15T16:28:10.000000Z",
+      "updated_at": "2021-11-14T15:56:49.000000Z",
+      "type": "page",
+      "tags": [
+        {
+          "name": "Animal",
+          "value": "Cat",
+          "order": 0
+        },
+        {
+          "name": "Category",
+          "value": "Top Content",
+          "order": 0
+        }
+      ]
+    },
+    {
+      "name": "How advanced are cats?",
+      "id": 362,
+      "slug": "how-advanced-are-cats",
+      "book_id": 13,
+      "chapter_id": 73,
+      "draft": false,
+      "template": false,
+      "created_at": "2020-11-29T21:55:07.000000Z",
+      "updated_at": "2021-11-14T16:02:39.000000Z",
+      "type": "page",
+      "tags": []
+    }
+  ],
+  "total": 3
+}
