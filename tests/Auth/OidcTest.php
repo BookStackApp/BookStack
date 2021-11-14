@@ -90,7 +90,7 @@ class OidcTest extends TestCase
     public function test_logout_route_functions()
     {
         $this->actingAs($this->getEditor());
-        $this->get('/logout');
+        $this->post('/logout');
         $this->assertFalse(auth()->check());
     }
 

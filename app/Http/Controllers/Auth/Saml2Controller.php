@@ -5,8 +5,7 @@ namespace BookStack\Http\Controllers\Auth;
 use BookStack\Auth\Access\Saml2Service;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Str;
+use Illuminate\Support\Str;
 
 class Saml2Controller extends Controller
 {
@@ -79,11 +78,6 @@ class Saml2Controller extends Controller
      */
     public function startAcs(Request $request)
     {
-        // Note: This is a bit of a hack to prevent a session being stored
-        // on the response of this request. Within Laravel7+ this could instead
-        // be done via removing the StartSession middleware from the route.
-        config()->set('session.driver', 'array');
-
         $samlResponse = $request->get('SAMLResponse', null);
 
         if (empty($samlResponse)) {
@@ -114,7 +108,7 @@ class Saml2Controller extends Controller
             $samlResponse = decrypt(cache()->pull($cacheKey));
         } catch (\Exception $exception) {
         }
-        $requestId = session()->pull('saml2_request_id', 'unset');
+        $requestId = session()->pull('saml2_request_id', null);
 
         if (empty($acsId) || empty($samlResponse)) {
             $this->showErrorNotification(trans('errors.saml_fail_authed', ['system' => config('saml2.name')]));
