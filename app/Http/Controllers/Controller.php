@@ -165,7 +165,7 @@ abstract class Controller extends BaseController
     /**
      * Log an activity in the system.
      *
-     * @param $detail string|Loggable
+     * @param string|Loggable $detail
      */
     protected function logActivity(string $type, $detail = ''): void
     {
@@ -177,6 +177,6 @@ abstract class Controller extends BaseController
      */
     protected function getImageValidationRules(): array
     {
-        return ['image_extension', 'mimes:jpeg,png,gif,webp'];
+        return ['image_extension', 'mimes:jpeg,png,gif,webp', 'max:' . (config('app.upload_limit') * 1000)];
     }
 }

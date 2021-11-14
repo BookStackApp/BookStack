@@ -11,6 +11,7 @@ class Dropzone {
         this.url = this.$opts.url;
         this.successMessage = this.$opts.successMessage;
         this.removeMessage = this.$opts.removeMessage;
+        this.uploadLimit = Number(this.$opts.uploadLimit);
         this.uploadLimitMessage = this.$opts.uploadLimitMessage;
         this.timeoutMessage = this.$opts.timeoutMessage;
 
@@ -19,7 +20,7 @@ class Dropzone {
             addRemoveLinks: true,
             dictRemoveFile: this.removeMessage,
             timeout: Number(window.uploadTimeout) || 60000,
-            maxFilesize: Number(window.uploadLimit) || 256,
+            maxFilesize: this.uploadLimit,
             url: this.url,
             withCredentials: true,
             init() {

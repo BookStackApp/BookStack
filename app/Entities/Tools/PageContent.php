@@ -135,6 +135,12 @@ class PageContent
             return '';
         }
 
+        // Validate that the content is not over our upload limit
+        $uploadLimitBytes = (config('app.upload_limit') * 1000000);
+        if (strlen($imageInfo['data']) > $uploadLimitBytes) {
+            return '';
+        }
+
         // Save image from data with a random name
         $imageName = 'embedded-image-' . Str::random(8) . '.' . $imageInfo['extension'];
 

@@ -24,9 +24,14 @@ abstract class ApiController extends Controller
 
     /**
      * Get the validation rules for this controller.
+     * Defaults to a $rules property but can be a rules() method.
      */
     public function getValdationRules(): array
     {
+        if (method_exists($this, 'rules')) {
+            return $this->rules();
+        }
+
         return $this->rules;
     }
 }
