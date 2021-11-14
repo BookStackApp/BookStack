@@ -411,4 +411,11 @@ class EntitySearchTest extends TestCase
         $search->assertSee('My &lt;cool&gt; <strong>TestPageContent</strong>', false);
         $search->assertSee('My supercool &lt;great&gt; <strong>TestPageContent</strong> page', false);
     }
+
+    public function test_searches_with_user_filters_adds_them_into_advanced_search_form()
+    {
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:me} {created_by:dan}'));
+        $resp->assertElementExists('form input[type="hidden"][name="filters[updated_by]"][value="me"]');
+        $resp->assertElementExists('form input[type="hidden"][name="filters[created_by]"][value="dan"]');
+    }
 }
