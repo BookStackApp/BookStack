@@ -49,7 +49,7 @@
                 </div>
 
 
-                <div class="form-group ml-m">
+                <div class="form-group ml-auto">
                     <label for="ip">{{ trans('settings.ip_address') }}</label>
                     @include('form.text', ['name' => 'ip'])
                 </div>

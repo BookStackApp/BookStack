@@ -123,6 +123,7 @@ return [
     'audit_table_date' => 'Activity Date',
     'audit_date_from' => 'Date Range From',
     'audit_date_to' => 'Date Range To',
+    'ip_address' => 'IP',
 
     // Role Settings
     'roles' => 'Roles',
