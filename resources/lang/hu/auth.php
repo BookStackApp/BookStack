@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Az email címet a lenti gombra kattintva lehet megerősíteni:',
     'email_confirm_action' => 'Email megerősítése',
     'email_confirm_send_error' => 'Az email megerősítés kötelező, de a rendszer nem tudta elküldeni az emailt. Fel kell venni a kapcsolatot az adminisztrátorral és meg kell győződni róla, hogy az email beállítások megfelelőek.',
-    'email_confirm_success' => 'Az email cím megerősítve!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Megerősítő email újraküldve. Ellenőrizni kell a bejövő üzeneteket.',
 
     'email_not_confirmed' => 'Az email cím nincs megerősítve',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => ':appName üdvözöl!',
     'user_invite_page_text' => 'A fiók véglegesítéséhez és a hozzáféréshez be kell állítani egy jelszót ami :appName weboldalon lesz használva a bejelentkezéshez.',
     'user_invite_page_confirm_button' => 'Jelszó megerősítése',
-    'user_invite_success' => 'Jelszó beállítva, :appName most már elérhető!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
