@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => '请点击下面的按钮确认您的Email地址：',
     'email_confirm_action' => '确认Email',
     'email_confirm_send_error' => '需要Email验证，但系统无法发送电子邮件，请联系网站管理员。',
-    'email_confirm_success' => '您的Email地址已成功验证！',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => '验证邮件已重新发送，请检查收件箱。',
 
     'email_not_confirmed' => 'Email地址未验证',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => '欢迎来到 :appName！',
     'user_invite_page_text' => '要完成您的帐户并获得访问权限，您需要设置一个密码，该密码将在以后访问时用于登录 :appName。',
     'user_invite_page_confirm_button' => '确认密码',
-    'user_invite_success' => '已设置密码，您现在可以访问 :appName！',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => '设置多重身份认证',
