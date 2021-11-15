@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Potvrdite vašu e-mail adresu pritiskom na dugme ispod:',
     'email_confirm_action' => 'Potvrdi e-mail',
     'email_confirm_send_error' => 'Potvrda e-maila je obavezna ali sistem nije mogao poslati e-mail. Kontaktirajte administratora da biste bili sigurni da je e-mail postavljen ispravno.',
-    'email_confirm_success' => 'Vaš e-mail je potvrđen!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'E-mail za potvrdu je ponovno poslan. Provjerite vaš e-mail.',
 
     'email_not_confirmed' => 'E-mail adresa nije potvrđena',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Dobrodošli na :appName!',
     'user_invite_page_text' => 'Da biste završili vaš račun i dobili pristup morate postaviti lozinku koju ćete koristiti da se prijavite na :appName tokom budućih posjeta.',
     'user_invite_page_confirm_button' => 'Potvrdi lozinku',
-    'user_invite_success' => 'Lozinka postavljena, sada imate pristup :sppName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
