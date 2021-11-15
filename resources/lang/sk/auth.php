@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Prosím, potvrďte Vašu e-mailovú adresu kliknutím na tlačidlo nižšie:',
     'email_confirm_action' => 'Potvrdiť e-mail',
     'email_confirm_send_error' => 'Je požadované overenie e-mailu, ale systém nemohol e-mail odoslať. Kontaktujte administrátora, aby ste sa uistili, že je e-mail nastavený správne.',
-    'email_confirm_success' => 'Váš email bol overený!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Potvrdzujúci e-mail bol poslaný znovu, skontrolujte prosím svoju e-mailovú schránku.',
 
     'email_not_confirmed' => 'E-mailová adresa nebola overená',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Vitajte v :appName!',
     'user_invite_page_text' => 'Ak chcete dokončiť svoj účet a získať prístup, musíte nastaviť heslo, ktoré sa použije na prihlásenie do aplikácie :appName pri budúcich návštevách.',
     'user_invite_page_confirm_button' => 'Potvrdiť heslo',
-    'user_invite_success' => 'Heslo bolo nastavené, teraz máte prístup k :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Nastaviť viacúrovňové prihlasovanie',
