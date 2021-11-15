@@ -13,8 +13,8 @@ class SearchApiController extends ApiController
 
     protected $rules = [
         'all' => [
-            'query' => ['required'],
-            'page'  => ['integer', 'min:1'],
+            'query'  => ['required'],
+            'page'   => ['integer', 'min:1'],
             'count'  => ['integer', 'min:1', 'max:100'],
         ],
     ];
@@ -58,10 +58,8 @@ class SearchApiController extends ApiController
         }
 
         return response()->json([
-            'data' => $results['results'],
+            'data'  => $results['results'],
             'total' => $results['total'],
         ]);
     }
-
-
 }
