@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => '¡Bienvenido a :appName!',
     'user_invite_page_text' => 'Para completar la cuenta y tener acceso es necesario que configure una contraseña que se utilizará para entrar en :appName en futuros accesos.',
     'user_invite_page_confirm_button' => 'Confirmar Contraseña',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Contraseña guardada, ¡ahora debería ser capaz de iniciar sesión usando su contraseña establecida para acceder a :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Configurar Autenticación en Dos Pasos',
