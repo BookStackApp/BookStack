@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Lütfen aşağıdaki butona tıklayarak e-posta adresinizi doğrulayın:',
     'email_confirm_action' => 'E-posta Adresini Doğrula',
     'email_confirm_send_error' => 'E-posta adresinin doğrulanması gerekiyor fakat sistem, doğrulama bağlantısını göndermeyi başaramadı. E-posta adresinin doğru bir şekilde ayarlığından emin olmak için yöneticiyle iletişime geçin.',
-    'email_confirm_success' => 'E-posta adresiniz doğrulandı!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Doğrulama e-postası tekrar gönderildi, lütfen gelen kutunuzu kontrol ediniz.',
 
     'email_not_confirmed' => 'E-posta Adresi Doğrulanmadı',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => ':appName uygulamasına hoş geldiniz!',
     'user_invite_page_text' => 'Hesap kurulumunuzu tamamlamak ve gelecekteki :appName ziyaretlerinizde hesabınıza erişim sağlayabilmeniz için bir şifre belirlemeniz gerekiyor.',
     'user_invite_page_confirm_button' => 'Şifreyi Onayla',
-    'user_invite_success' => 'Şifreniz ayarlandı, artık :appName uygulamasına giriş yapabilirsiniz!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
