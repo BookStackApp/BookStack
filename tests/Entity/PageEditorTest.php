@@ -3,6 +3,7 @@
 namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
@@ -73,5 +74,32 @@ class PageEditorTest extends TestCase
             'id'       => $draft->id,
             'draft'    => false,
         ]);
+    }
+
+    public function test_back_link_in_editor_has_correct_url()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('pages')->whereHas('chapters')->firstOrFail();
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        /** @var Chapter $chapter */
+        $chapter = $book->chapters()->firstOrFail();
+        /** @var Page $draft */
+        $draft = $book->pages()->where('draft', '=', true)->firstOrFail();
+
+        // Book draft goes back to book
+        $resp = $this->get($book->getUrl("/draft/{$draft->id}"));
+        $resp->assertElementContains('a[href="' . $book->getUrl() . '"]', 'Back');
+
+        // Chapter draft goes back to chapter
+        $draft->chapter_id = $chapter->id;
+        $draft->save();
+        $resp = $this->get($book->getUrl("/draft/{$draft->id}"));
+        $resp->assertElementContains('a[href="' . $chapter->getUrl() . '"]', 'Back');
+
+        // Saved page goes back to page
+        $this->post($book->getUrl("/draft/{$draft->id}"), ['name' => 'Updated', 'html' => 'Updated']);
+        $draft->refresh();
+        $resp = $this->get($draft->getUrl('/edit'));
+        $resp->assertElementContains('a[href="' . $draft->getUrl() . '"]', 'Back');
     }
 }
