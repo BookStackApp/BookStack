@@ -2,7 +2,6 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\UserTokenExpiredException;
@@ -16,19 +15,17 @@ use Illuminate\Routing\Redirector;
 class UserInviteController extends Controller
 {
     protected $inviteService;
-    protected $loginService;
     protected $userRepo;
 
     /**
      * Create a new controller instance.
      */
-    public function __construct(UserInviteService $inviteService, LoginService $loginService, UserRepo $userRepo)
+    public function __construct(UserInviteService $inviteService, UserRepo $userRepo)
     {
         $this->middleware('guest');
         $this->middleware('guard:standard');
 
         $this->inviteService = $inviteService;
-        $this->loginService = $loginService;
         $this->userRepo = $userRepo;
     }
 
@@ -73,10 +70,9 @@ class UserInviteController extends Controller
         $user->save();
 
         $this->inviteService->deleteByUser($user);
-        $this->showSuccessNotification(trans('auth.user_invite_success', ['appName' => setting('app-name')]));
-        $this->loginService->login($user, auth()->getDefaultDriver());
+        $this->showSuccessNotification(trans('auth.user_invite_success_login', ['appName' => setting('app-name')]));
 
-        return redirect('/');
+        return redirect('/login');
     }
 
     /**

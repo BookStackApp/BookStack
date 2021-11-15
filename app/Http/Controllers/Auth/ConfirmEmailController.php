@@ -79,9 +79,8 @@ class ConfirmEmailController extends Controller
 
         $this->emailConfirmationService->deleteByUser($user);
         $this->showSuccessNotification(trans('auth.email_confirm_success'));
-        $this->loginService->login($user, auth()->getDefaultDriver());
 
-        return redirect('/');
+        return redirect('/login');
     }
 
     /**

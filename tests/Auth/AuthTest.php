@@ -131,8 +131,8 @@ class AuthTest extends TestCase
         });
 
         // Check confirmation email confirmation activation.
-        $this->get('/register/confirm/' . $emailConfirmation->token)->assertRedirect('/');
-        $this->get('/')->assertSee($user->name);
+        $this->get('/register/confirm/' . $emailConfirmation->token)->assertRedirect('/login');
+        $this->get('/login')->assertSee('Your email has been confirmed! You should now be able to login using this email address.');
         $this->assertDatabaseMissing('email_confirmations', ['token' => $emailConfirmation->token]);
         $this->assertDatabaseHas('users', ['name' => $dbUser->name, 'email' => $dbUser->email, 'email_confirmed' => true]);
     }
