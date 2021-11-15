@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Por favor confirme su dirección de correo electrónico haciendo click en el siguiente botón:',
     'email_confirm_action' => 'Confirmar Correo Electrónico',
     'email_confirm_send_error' => 'Confirmation de correo electrónico requerida pero el sistema no pudo enviar el correo. Contacte con el administrador para asegurarse de que el correo electrónico está configurado correctamente.',
-    'email_confirm_success' => '¡Su correo electrónico ha sido confirmado!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'correo electrónico de confirmación reenviado, compruebe su bandeja de entrada.',
 
     'email_not_confirmed' => 'Dirección de Correo Electrónico no confirmada',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => '¡Bienvenido a :appName!',
     'user_invite_page_text' => 'Para completar la cuenta y tener acceso es necesario que configure una contraseña que se utilizará para entrar en :appName en futuros accesos.',
     'user_invite_page_confirm_button' => 'Confirmar Contraseña',
-    'user_invite_success' => '¡Contraseña guardada, ya tiene acceso a :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Configurar Autenticación en Dos Pasos',
