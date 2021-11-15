@@ -390,7 +390,7 @@ class PageContent
      */
     protected function fetchSectionOfPage(Page $page, string $sectionId): string
     {
-        $topLevelTags = ['table', 'ul', 'ol'];
+        $topLevelTags = ['table', 'ul', 'ol', 'pre'];
         $doc = $this->loadDocumentFromHtml($page->html);
 
         // Search included content for the id given and blank out if not exists.

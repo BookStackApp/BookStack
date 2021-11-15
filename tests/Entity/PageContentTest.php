@@ -62,7 +62,9 @@ class PageContentTest extends TestCase
 
     public function test_page_includes_do_not_break_tables()
     {
+        /** @var Page $page */
         $page = Page::query()->first();
+        /** @var Page $secondPage */
         $secondPage = Page::query()->where('id', '!=', $page->id)->first();
 
         $content = '<table id="table"><tbody><tr><td>test</td></tr></tbody></table>';
@@ -72,8 +74,25 @@ class PageContentTest extends TestCase
         $page->html = "{{@{$secondPage->id}#table}}";
         $page->save();
 
-        $this->asEditor();
-        $pageResp = $this->get($page->getUrl());
+        $pageResp = $this->asEditor()->get($page->getUrl());
+        $pageResp->assertSee($content, false);
+    }
+
+    public function test_page_includes_do_not_break_code()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        /** @var Page $secondPage */
+        $secondPage = Page::query()->where('id', '!=', $page->id)->first();
+
+        $content = '<pre id="bkmrk-code"><code>var cat = null;</code></pre>';
+        $secondPage->html = $content;
+        $secondPage->save();
+
+        $page->html = "{{@{$secondPage->id}#bkmrk-code}}";
+        $page->save();
+
+        $pageResp = $this->asEditor()->get($page->getUrl());
         $pageResp->assertSee($content, false);
     }
 
