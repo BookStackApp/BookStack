@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => '다음 버튼을 눌러 인증하세요:',
     'email_confirm_action' => '메일 인증',
     'email_confirm_send_error' => '메일을 보낼 수 없었습니다.',
-    'email_confirm_success' => '인증했습니다!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => '다시 보냈습니다. 메일함을 확인하세요.',
 
     'email_not_confirmed' => '인증하지 않았습니다.',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => ':appName에 오신 것을 환영합니다!',
     'user_invite_page_text' => ':appName에 로그인할 때 입력할 비밀번호를 설정하세요.',
     'user_invite_page_confirm_button' => '비밀번호 확인',
-    'user_invite_success' => '암호가 설정되었고, 이제 :appName에 접근할 수 있습니다.',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
