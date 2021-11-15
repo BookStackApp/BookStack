@@ -23,7 +23,6 @@ class TagRepo
      */
     public function queryWithTotals(string $searchTerm, string $nameFilter): Builder
     {
-        $groupingAttribute = $nameFilter ? 'value' : 'name';
         $query = Tag::query()
             ->select([
                 'name',
@@ -34,11 +33,15 @@ class TagRepo
                 DB::raw('SUM(IF(entity_type = \'BookStack\\\\Book\', 1, 0)) as book_count'),
                 DB::raw('SUM(IF(entity_type = \'BookStack\\\\BookShelf\', 1, 0)) as shelf_count'),
             ])
-            ->groupBy($groupingAttribute)
-            ->orderBy($groupingAttribute);
+            ->orderBy($nameFilter ? 'value' : 'name');
 
         if ($nameFilter) {
             $query->where('name', '=', $nameFilter);
+            $query->groupBy('value');
+        } else if ($searchTerm) {
+            $query->groupBy('name', 'value');
+        } else {
+            $query->groupBy('name');
         }
 
         if ($searchTerm) {

@@ -145,6 +145,18 @@ class TagTest extends TestCase
         $resp->assertElementNotExists('.tag-item .tag-name');
     }
 
+    public function test_tag_index_search_will_show_mulitple_values_of_a_single_tag_name()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->tags()->create(['name' => 'Animal', 'value' => 'Catfish']);
+        $page->tags()->create(['name' => 'Animal', 'value' => 'Catdog']);
+
+        $resp = $this->asEditor()->get('/tags?search=cat');
+        $resp->assertElementContains('.tag-item .tag-value', 'Catfish');
+        $resp->assertElementContains('.tag-item .tag-value', 'Catdog');
+    }
+
     public function test_tag_index_can_be_scoped_to_specific_tag_name()
     {
         /** @var Page $page */
