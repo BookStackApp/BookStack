@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Please confirm your email address by clicking the button below:',
     'email_confirm_action' => 'Confirm Email',
     'email_confirm_send_error' => 'Email confirmation required but the system could not send the email. Contact the admin to ensure email is set up correctly.',
-    'email_confirm_success' => 'Your email has been confirmed!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Confirmation email resent, Please check your inbox.',
 
     'email_not_confirmed' => 'Email Address Not Confirmed',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Welcome to :appName!',
     'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
     'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
