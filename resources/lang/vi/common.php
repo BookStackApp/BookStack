@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Bỏ yêu thích',
     'next' => 'Tiếp theo',
     'previous' => 'Trước đó',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',

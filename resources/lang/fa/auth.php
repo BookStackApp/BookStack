@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'لطفا با کلیک بر روی دکمه زیر پست الکترونیک خود را تایید نمایید:',
     'email_confirm_action' => 'تایید پست الکترونیک',
     'email_confirm_send_error' => 'تایید پست الکترونیک الزامی می باشد، اما سیستم قادر به ارسال پیام نمی باشد.',
-    'email_confirm_success' => 'پست الکترونیک شما تایید گردیده است!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'پیام تایید پست الکترونیک مجدد ارسال گردید، لطفا صندوق ورودی خود را بررسی نمایید.',
 
     'email_not_confirmed' => 'پست الکترونیک تایید نشده است',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'به :appName خوش آمدید!',
     'user_invite_page_text' => 'برای نهایی کردن حساب کاربری خود در :appName و دسترسی به آن، می بایست یک کلمه عبور تنظیم نمایید.',
     'user_invite_page_confirm_button' => 'تایید کلمه عبور',
-    'user_invite_success' => 'کلمه عبور تنظیم شده است، شما اکنون به :appName دسترسی دارید!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'تنظیم احراز هویت چند مرحله‌ای',

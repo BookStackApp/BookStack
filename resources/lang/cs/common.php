@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Odebrat z oblíbených',
     'next' => 'Další',
     'previous' => 'Předchozí',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',

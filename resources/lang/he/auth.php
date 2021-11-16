@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'יש לאמת את כתובת המייל של על ידי לחיצה על הכפור למטה:',
     'email_confirm_action' => 'אמת כתובת אי-מייל',
     'email_confirm_send_error' => 'נדרש אימות אי-מייל אך שליחת האי-מייל אליך נכשלה. יש ליצור קשר עם מנהל המערכת כדי לוודא שאכן ניתן לשלוח מיילים.',
-    'email_confirm_success' => 'האי-מייל שלך אושר!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'אימות נשלח לאי-מייל שלך, יש לבדוק בתיבת הדואר הנכנס',
 
     'email_not_confirmed' => 'כתובת המייל לא אומתה',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Welcome to :appName!',
     'user_invite_page_text' => 'To finalise your account and gain access you need to set a password which will be used to log-in to :appName on future visits.',
     'user_invite_page_confirm_button' => 'Confirm Password',
-    'user_invite_success' => 'Password set, you now have access to :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

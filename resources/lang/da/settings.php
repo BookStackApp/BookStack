@@ -119,7 +119,7 @@ return [
     'audit_table_user' => 'Bruger',
     'audit_table_event' => 'Hændelse',
     'audit_table_related' => 'Relateret element eller detalje',
-    'audit_table_ip' => 'IP Address',
+    'audit_table_ip' => 'IP-adresse',
     'audit_table_date' => 'Aktivitetsdato',
     'audit_date_from' => 'Datointerval fra',
     'audit_date_to' => 'Datointerval til',

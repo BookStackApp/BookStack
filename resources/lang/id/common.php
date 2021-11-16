@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Batal favorit',
     'next' => 'Selanjutnya',
     'previous' => 'Sebelumnya',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Opsi Sortir',
