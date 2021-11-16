@@ -45,6 +45,8 @@ return [
     'unfavourite' => '取消收藏',
     'next' => '下一页',
     'previous' => '上一页',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => '排序选项',

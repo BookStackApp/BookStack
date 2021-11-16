@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Prašome patvirtinti savo elektroninio pašto adresą paspaudus mygtuką žemiau:',
     'email_confirm_action' => 'Patvirtinkite elektroninį paštą',
     'email_confirm_send_error' => 'Būtinas elektroninio laiško patviritnimas, bet sistema negali išsiųsti laiško. Susisiekite su administratoriumi, kad užtikrintumėte, jog elektroninis paštas atsinaujino teisingai.',
-    'email_confirm_success' => 'Jūsų elektroninis paštas buvo patvirtintas!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Elektroninio pašto patvirtinimas persiųstas, prašome patikrinti pašto dėžutę.',
 
     'email_not_confirmed' => 'Elektroninis paštas nepatvirtintas',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Sveiki atvykę į :appName!',
     'user_invite_page_text' => 'Norėdami galutinai pabaigti paskyrą ir gauti prieigą jums reikia nustatyti slaptažodį, kuris bus naudojamas prisijungiant prie :appName ateities vizitų metu.',
     'user_invite_page_confirm_button' => 'Patvirtinti slaptažodį',
-    'user_invite_success' => 'Slaptažodis nustatytas, dabar turite prieigą prie :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

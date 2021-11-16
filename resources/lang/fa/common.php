@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Unfavourite',
     'next' => 'بعدی',
     'previous' => 'قبلى',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'گزینه‌های مرتب سازی',

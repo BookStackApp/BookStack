@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'お気に入りから削除',
     'next' => '次へ',
     'previous' => '前へ',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => '並べ替えオプション',

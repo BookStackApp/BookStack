@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Merci de confirmer en cliquant sur le lien ci-dessous :',
     'email_confirm_action' => 'Confirmez votre adresse e-mail',
     'email_confirm_send_error' => 'La confirmation par e-mail est requise mais le système n\'a pas pu envoyer l\'e-mail. Contactez l\'administrateur système.',
-    'email_confirm_success' => 'Votre adresse e-mail a été confirmée !',
+    'email_confirm_success' => 'Votre adresse e-mail a été confirmée ! Vous devriez maintenant pouvoir vous connecter en utilisant cette adresse e-mail.',
     'email_confirm_resent' => 'L\'e-mail de confirmation a été ré-envoyé. Vérifiez votre boîte de réception.',
 
     'email_not_confirmed' => 'Adresse e-mail non confirmée',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Bienvenue dans :appName !',
     'user_invite_page_text' => 'Pour finaliser votre compte et recevoir l\'accès, vous devez renseigner le mot de passe qui sera utilisé pour la connexion à :appName les prochaines fois.',
     'user_invite_page_confirm_button' => 'Confirmez le mot de passe',
-    'user_invite_success' => 'Mot de passe renseigné, vous avez maintenant accès à :appName !',
+    'user_invite_success_login' => 'Mot de passe défini, vous devriez maintenant pouvoir vous connecter en utilisant votre mot de passe défini pour accéder à :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Authentification multi-facteurs',

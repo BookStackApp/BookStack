@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Lūdzu apstipriniet savu e-pastu nospiežot zemāk redzamo pogu:',
     'email_confirm_action' => 'Apstiprināt e-pastu',
     'email_confirm_send_error' => 'E-pasta apriprināšana ir nepieciešama, bet sistēma nevarēja e-pastu nosūtīt. Lūdzu sazinaties ar administratoru, lai pārliecinātos, ka e-pasts ir iestatīts pareizi.',
-    'email_confirm_success' => 'Jūsu e-pasts ir apstiprināts!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Apstiprinājuma vēstule tika nosūtīta. Lūdzu, pārbaudiet jūsu e-pastu.',
 
     'email_not_confirmed' => 'E-pasts nav apstiprināts',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Sveicināti :appName!',
     'user_invite_page_text' => 'Lai pabeigtu profila izveidi un piekļūtu :appName ir jāizveido parole.',
     'user_invite_page_confirm_button' => 'Apstiprināt paroli',
-    'user_invite_success' => 'Parole iestatīta, tagad varat piekļūt :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Iestati divfaktoru autentifikāciju (2FA)',

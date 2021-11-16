@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Silakan konfirmasi alamat email Anda dengan mengklik tombol di bawah ini:',
     'email_confirm_action' => 'Konfirmasi email',
     'email_confirm_send_error' => 'Konfirmasi email diperlukan tetapi sistem tidak dapat mengirim email. Hubungi admin untuk memastikan email disiapkan dengan benar.',
-    'email_confirm_success' => 'Email Anda telah dikonfirmasi!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Email konfirmasi dikirim ulang, Harap periksa kotak masuk Anda.',
 
     'email_not_confirmed' => 'Alamat Email Tidak Dikonfirmasi',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Selamat datang di :appName!',
     'user_invite_page_text' => 'Untuk menyelesaikan akun Anda dan mendapatkan akses, Anda perlu mengatur kata sandi yang akan digunakan untuk masuk ke :appName pada kunjungan berikutnya.',
     'user_invite_page_confirm_button' => 'Konfirmasi Kata sandi',
-    'user_invite_success' => 'Atur kata sandi, Anda sekarang memiliki akses ke :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

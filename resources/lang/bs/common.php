@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Ukloni favorit',
     'next' => 'Sljedeće',
     'previous' => 'Prethodno',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Opcije sortiranja',

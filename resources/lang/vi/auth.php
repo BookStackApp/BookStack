@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Xin hãy xác nhận địa chỉa email bằng cách bấm vào nút dưới đây:',
     'email_confirm_action' => 'Xác nhận Email',
     'email_confirm_send_error' => 'Email xác nhận cần gửi nhưng hệ thống đã không thể gửi được email. Liên hệ với quản trị viên để chắc chắn email được thiết lập đúng.',
-    'email_confirm_success' => 'Email của bạn đã được xác nhận!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Email xác nhận đã được gửi lại, Vui lòng kiểm tra hộp thư.',
 
     'email_not_confirmed' => 'Địa chỉ email chưa được xác nhận',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Chào mừng đến với :appName!',
     'user_invite_page_text' => 'Để hoàn tất tài khoản và lấy quyền truy cập bạn cần đặt mật khẩu để sử dụng cho các lần đăng nhập sắp tới tại :appName.',
     'user_invite_page_confirm_button' => 'Xác nhận Mật khẩu',
-    'user_invite_success' => 'Mật khẩu đã được thiết lập, bạn có quyền truy cập đến :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Cài đặt xác thực nhiều bước',

@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Bevestig je registratie door op onderstaande knop te drukken:',
     'email_confirm_action' => 'Bevestig je e-mail',
     'email_confirm_send_error' => 'E-mail bevestiging is vereisd maar het systeem kon geen mail verzenden. Neem contact op met de beheerder.',
-    'email_confirm_success' => 'Je e-mailadres is bevestigd!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'De bevestigingse-mails is opnieuw verzonden. Controleer je inbox.',
 
     'email_not_confirmed' => 'E-mailadres nog niet bevestigd',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Welkom bij :appName!',
     'user_invite_page_text' => 'Om je account af te ronden en toegang te krijgen moet je een wachtwoord instellen dat gebruikt wordt om in te loggen op :appName bij toekomstige bezoeken.',
     'user_invite_page_confirm_button' => 'Bevestig wachtwoord',
-    'user_invite_success' => 'Wachtwoord ingesteld, je hebt nu toegang tot :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Multi-factor authenticatie instellen',

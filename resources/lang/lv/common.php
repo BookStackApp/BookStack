@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Noņemt no favorītiem',
     'next' => 'Nākamais',
     'previous' => 'Iepriekšējais',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Kārtošanas Opcijas',

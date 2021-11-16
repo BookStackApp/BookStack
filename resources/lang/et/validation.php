@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute võib sisaldada ainult tähti, numbreid, sidekriipse ja alakriipse.',
     'alpha_num'            => ':attribute võib sisaldada ainult tähti ja numbreid.',
     'array'                => ':attribute peab olema massiiv.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'Kood ei ole korrektne või on seda juba kasutatud.',
     'before'               => ':attribute peab olema kuupäev enne :date.',
     'between'              => [
         'numeric' => ':attribute peab jääma vahemikku :min ja :max.',

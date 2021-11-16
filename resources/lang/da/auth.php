@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Bekræft venligst din E-Mail adresse ved at klikke på linket nedenfor:',
     'email_confirm_action' => 'Bekræft E-Mail',
     'email_confirm_send_error' => 'E-Mail-bekræftelse kræves, men systemet kunne ikke sende E-Mailen. Kontakt administratoren for at sikre, at E-Mail er konfigureret korrekt.',
-    'email_confirm_success' => 'Din E-Mail er blevet bekræftet!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Bekræftelsesmail sendt, tjek venligst din indboks.',
 
     'email_not_confirmed' => 'E-Mail adresse ikke bekræftet',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Velkommen til :appName!',
     'user_invite_page_text' => 'For at færdiggøre din konto og få adgang skal du indstille en adgangskode, der bruges til at logge ind på :appName ved fremtidige besøg.',
     'user_invite_page_confirm_button' => 'Bekræft adgangskode',
-    'user_invite_success' => 'Adgangskode indstillet, du har nu adgang til :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Opsætning af Multi-faktor godkendelse',

@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Avfavorisér',
     'next' => 'Neste',
     'previous' => 'Forrige',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativer',

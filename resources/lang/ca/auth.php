@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Confirmeu la vostra adreça electrònica fent clic al botó a continuació:',
     'email_confirm_action' => 'Confirma el correu',
     'email_confirm_send_error' => 'Cal confirmar l\'adreça electrònica, però el sistema no ha pogut enviar el correu electrònic. Poseu-vos en contacte amb l\'administrador perquè s\'asseguri que el correu electrònic està ben configurat.',
-    'email_confirm_success' => 'S\'ha confirmat el vostre correu electrònic!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'S\'ha tornat a enviar el correu electrònic de confirmació. Reviseu la vostra safata d\'entrada.',
 
     'email_not_confirmed' => 'Adreça electrònica no confirmada',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Us donem la benvinguda a :appName!',
     'user_invite_page_text' => 'Per a enllestir el vostre compte i obtenir-hi accés, cal que definiu una contrasenya, que es farà servir per a iniciar la sessió a :appName en futures visites.',
     'user_invite_page_confirm_button' => 'Confirma la contrasenya',
-    'user_invite_success' => 'S\'ha establert la contrasenya, ara ja teniu accés a :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

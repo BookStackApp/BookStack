@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => '請點選下面的按鈕來確認您的電子郵件地址：',
     'email_confirm_action' => '確認電子郵件',
     'email_confirm_send_error' => '需要電子郵件驗證，但系統無法傳送電子郵件。請與管理員聯絡以確保電子郵件正確設定。',
-    'email_confirm_success' => '您的電子郵件已成功驗證！',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => '確認電子郵件已重新傳送。請檢查您的收件匣。',
 
     'email_not_confirmed' => '電子郵件地址未確認',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => '歡迎使用 :appName！',
     'user_invite_page_text' => '要完成設定您的帳號並取得存取權，您必須設定密碼，此密碼將用於登入 :appName。',
     'user_invite_page_confirm_button' => '確認密碼',
-    'user_invite_success' => '密碼已設定，您現在可以存取 :appName 了！',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

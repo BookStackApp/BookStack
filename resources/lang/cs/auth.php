@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Prosíme potvrďte svou e-mailovou adresu kliknutím na níže uvedené tlačítko:',
     'email_confirm_action' => 'Potvrdit e-mail',
     'email_confirm_send_error' => 'Potvrzení e-mailu je vyžadováno, ale systém nemohl odeslat e-mail. Obraťte se na správce, abyste se ujistili, že je e-mail správně nastaven.',
-    'email_confirm_success' => 'Váš e-mail byla potvrzen!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'E-mail s potvrzením byl znovu odeslán. Zkontrolujte svou příchozí poštu.',
 
     'email_not_confirmed' => 'E-mailová adresa nebyla potvrzena',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Vítejte v :appName!',
     'user_invite_page_text' => 'Pro dokončení vašeho účtu a získání přístupu musíte nastavit heslo, které bude použito k přihlášení do :appName při dalších návštěvách.',
     'user_invite_page_confirm_button' => 'Potvrdit heslo',
-    'user_invite_success' => 'Heslo nastaveno, nyní máte přístup k :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
