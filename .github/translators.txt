@@ -196,3 +196,6 @@ Indrek Haav (IndrekHaav) :: Estonian
 na3shkw :: Japanese
 Giancarlo Di Massa (digitall-it) :: Italian
 M Nafis Al Mukhdi (mnafisalmukhdi1) :: Indonesian
+sulfo :: Danish
+Raukze :: German
+zygimantus :: Lithuanian

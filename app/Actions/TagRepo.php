@@ -38,7 +38,7 @@ class TagRepo
         if ($nameFilter) {
             $query->where('name', '=', $nameFilter);
             $query->groupBy('value');
-        } else if ($searchTerm) {
+        } elseif ($searchTerm) {
             $query->groupBy('name', 'value');
         } else {
             $query->groupBy('name');
