@@ -16,7 +16,7 @@ class OidcTest extends TestCase
     protected $keyFilePath;
     protected $keyFile;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         // Set default config for OpenID Connect
@@ -41,7 +41,7 @@ class OidcTest extends TestCase
         ]);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         if (file_exists($this->keyFilePath)) {
@@ -90,7 +90,7 @@ class OidcTest extends TestCase
     public function test_logout_route_functions()
     {
         $this->actingAs($this->getEditor());
-        $this->get('/logout');
+        $this->post('/logout');
         $this->assertFalse(auth()->check());
     }
 

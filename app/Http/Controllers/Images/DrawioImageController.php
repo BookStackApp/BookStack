@@ -44,8 +44,8 @@ class DrawioImageController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'image'       => 'required|string',
-            'uploaded_to' => 'required|integer',
+            'image'       => ['required', 'string'],
+            'uploaded_to' => ['required', 'integer'],
         ]);
 
         $this->checkPermission('image-create-all');

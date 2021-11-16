@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => '이 메일 주소로는 이 사이트에 접근할 수 없습니다.',
     'register_success' => '가입했습니다! 이제 로그인할 수 있습니다.',
 
-
     // Password Reset
     'reset_password' => '비밀번호 바꾸기',
     'reset_password_send_instructions' => '메일 주소를 입력하세요. 이 주소로 해당 과정을 위한 링크를 보낼 것입니다.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => '비밀번호를 바꿉니다.',
     'email_reset_not_requested' => '원하지 않는다면 이 과정은 필요 없습니다.',
 
-
     // Email Confirmation
     'email_confirm_subject' => ':appName 메일 인증',
     'email_confirm_greeting' => ':appName로 가입해 주셔서 감사합니다!',
     'email_confirm_text' => '다음 버튼을 눌러 인증하세요:',
     'email_confirm_action' => '메일 인증',
     'email_confirm_send_error' => '메일을 보낼 수 없었습니다.',
-    'email_confirm_success' => '인증했습니다!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => '다시 보냈습니다. 메일함을 확인하세요.',
 
     'email_not_confirmed' => '인증하지 않았습니다.',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => ':appName에 오신 것을 환영합니다!',
     'user_invite_page_text' => ':appName에 로그인할 때 입력할 비밀번호를 설정하세요.',
     'user_invite_page_confirm_button' => '비밀번호 확인',
-    'user_invite_success' => '암호가 설정되었고, 이제 :appName에 접근할 수 있습니다.',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

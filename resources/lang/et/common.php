@@ -20,7 +20,7 @@ return [
     'role' => 'Roll',
     'cover_image' => 'Kaanepilt',
     'cover_image_description' => 'See pilt peaks olema umbes 440x250 pikslit.',
-    
+
     // Actions
     'actions' => 'Tegevused',
     'view' => 'Vaata',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Eemalda lemmik',
     'next' => 'Järgmine',
     'previous' => 'Eelmine',
+    'filter_active' => 'Aktiivne filter:',
+    'filter_clear' => 'Tühjenda filter',
 
     // Sort Options
     'sort_options' => 'Sorteerimise valikud',

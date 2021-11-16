@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Du kannst dich mit dieser E-Mail nicht registrieren.',
     'register_success' => 'Vielen Dank für deine Registrierung! Du bist jetzt registriert und eingeloggt.',
 
-
     // Password Reset
     'reset_password' => 'Passwort vergessen',
     'reset_password_send_instructions' => 'Bitte gib Deine E-Mail-Adresse ein. Danach erhältst Du eine E-Mail mit einem Link zum Zurücksetzen Deines Passwortes.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Du erhältsts diese E-Mail, weil jemand versucht hat, Dein Passwort zurückzusetzen.',
     'email_reset_not_requested' => 'Wenn du das zurücksetzen des Passworts nicht angefordert hast, ist keine weitere Aktion erforderlich.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Bestätige Deine E-Mail-Adresse für :appName',
     'email_confirm_greeting' => 'Danke, dass Du dich für :appName registrierst hast!',
     'email_confirm_text' => 'Bitte bestätige Deine E-Mail-Adresse, indem Du auf die Schaltfläche klickst:',
     'email_confirm_action' => 'E-Mail-Adresse bestätigen',
     'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur Bestätigung Deiner E-Mail-Adresse nicht versandt werden. Bitte kontaktiere den Systemadministrator!',
-    'email_confirm_success' => 'Deine E-Mail-Adresse wurde bestätigt!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Bestätigungs-E-Mail wurde erneut versendet, bitte überprüfe Deinen Posteingang.',
 
     'email_not_confirmed' => 'E-Mail-Adresse ist nicht bestätigt',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Willkommen bei :appName!',
     'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft zum Einloggen benötigt.',
     'user_invite_page_confirm_button' => 'Passwort bestätigen',
-    'user_invite_success' => 'Das Passwort wurde gesetzt, du hast nun Zugriff auf :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Multi-Faktor-Authentifizierung einrichten',

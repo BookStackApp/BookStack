@@ -15,8 +15,8 @@
     "name": "Admin",
     "slug": "admin"
   },
-  "created_at": "2021-10-20 06:35:46",
-  "updated_at": "2021-10-20 06:37:11",
+  "created_at": "2021-10-20T06:35:46.000000Z",
+  "updated_at": "2021-10-20T06:37:11.000000Z",
   "links": {
     "html": "<a target=\"_blank\" href=\"https://bookstack.local/attachments/5\">My updated attachment</a>",
     "markdown": "[My updated attachment](https://bookstack.local/attachments/5)"

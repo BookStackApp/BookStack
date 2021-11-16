@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Adresy e-mail z tej domeny nie mają dostępu do tej aplikacji',
     'register_success' => 'Dziękujemy za rejestrację! Zostałeś zalogowany automatycznie.',
 
-
     // Password Reset
     'reset_password' => 'Resetowanie hasła',
     'reset_password_send_instructions' => 'Wprowadź adres e-mail powiązany z Twoim kontem, by otrzymać link do resetowania hasła.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Otrzymujesz tę wiadomość ponieważ ktoś zażądał zresetowania hasła do Twojego konta.',
     'email_reset_not_requested' => 'Jeśli to nie Ty złożyłeś żądanie zresetowania hasła, zignoruj tę wiadomość.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Potwierdź swój adres e-mail w :appName',
     'email_confirm_greeting' => 'Dziękujemy za dołączenie do :appName!',
     'email_confirm_text' => 'Prosimy byś potwierdził swoje hasło klikając przycisk poniżej:',
     'email_confirm_action' => 'Potwierdź e-mail',
     'email_confirm_send_error' => 'Wymagane jest potwierdzenie hasła, lecz wiadomość nie mogła zostać wysłana. Skontaktuj się z administratorem w celu upewnienia się, że skrzynka została skonfigurowana prawidłowo.',
-    'email_confirm_success' => 'Adres e-mail został potwierdzony!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'E-mail z potwierdzeniem został wysłany ponownie, sprawdź swoją skrzynkę odbiorczą.',
 
     'email_not_confirmed' => 'Adres e-mail nie został potwierdzony',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Witaj w :appName!',
     'user_invite_page_text' => 'Aby zakończyć tworzenie konta musisz ustawić hasło, które będzie używane do logowania do :appName w przyszłości.',
     'user_invite_page_confirm_button' => 'Potwierdź hasło',
-    'user_invite_success' => 'Hasło zostało ustawione, teraz masz dostęp do :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Skonfiguruj uwierzytelnianie wieloskładnikowe',

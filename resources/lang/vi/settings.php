@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Bảo trì',
     'maint_image_cleanup' => 'Dọn dẹp ảnh',
-    'maint_image_cleanup_desc' => "Quét nội dung trang và phiên bản để kiểm tra xem các ảnh và hình vẽ nào đang được sử dụng và ảnh nào dư thừa. Đảm bảo rằng bạn đã tạo bản sao lưu toàn dữ liệu và ảnh trước khi chạy chức năng này.",
+    'maint_image_cleanup_desc' => 'Quét nội dung trang và phiên bản để kiểm tra xem các ảnh và hình vẽ nào đang được sử dụng và ảnh nào dư thừa. Đảm bảo rằng bạn đã tạo bản sao lưu toàn dữ liệu và ảnh trước khi chạy chức năng này.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'Chạy Dọn dẹp',
     'maint_image_cleanup_warning' => 'Đã tìm thấy :count ảnh có thể không được sử dụng. Bạn muốn chắc rằng muốn xóa các ảnh này?',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

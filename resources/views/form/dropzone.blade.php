@@ -7,6 +7,7 @@
      option:dropzone:url="{{ $url }}"
      option:dropzone:success-message="{{ $successMessage ?? '' }}"
      option:dropzone:remove-message="{{ trans('components.image_upload_remove') }}"
+     option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
      option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
      option:dropzone:timeout-message="{{ trans('errors.file_upload_timeout') }}"
 

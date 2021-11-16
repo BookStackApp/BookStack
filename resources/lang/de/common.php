@@ -20,7 +20,7 @@ return [
     'role' => 'Rolle',
     'cover_image' => 'Titelbild',
     'cover_image_description' => 'Das Bild sollte eine Auflösung von 440x250px haben.',
-    
+
     // Actions
     'actions' => 'Aktionen',
     'view' => 'Anzeigen',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Kein Favorit',
     'next' => 'Nächste',
     'previous' => 'Vorheriges',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Sortieroptionen',

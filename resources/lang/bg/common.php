@@ -20,7 +20,7 @@ return [
     'role' => 'Роля',
     'cover_image' => 'Основно изображение',
     'cover_image_description' => 'Картината трябва да е приблизително 440х250 пиксела.',
-    
+
     // Actions
     'actions' => 'Действия',
     'view' => 'Преглед',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Unfavourite',
     'next' => 'Next',
     'previous' => 'Previous',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Опции за сортиране',

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Mantenimiento',
     'maint_image_cleanup' => 'Limpiar imágenes',
-    'maint_image_cleanup_desc' => "Analizar contenido de páginas y revisiones para detectar cuáles imágenes y dibujos están en uso y cuáles son redundantes. Asegúrese de crear un respaldo completo de imágenes y base de datos antes de ejecutar esta tarea.",
+    'maint_image_cleanup_desc' => 'Analizar contenido de páginas y revisiones para detectar cuáles imágenes y dibujos están en uso y cuáles son redundantes. Asegúrese de crear un respaldo completo de imágenes y base de datos antes de ejecutar esta tarea.',
     'maint_delete_images_only_in_revisions' => 'También elimina imágenes que sólo existen en antiguas revisiones de páginas',
     'maint_image_cleanup_run' => 'Ejecutar limpieza',
     'maint_image_cleanup_warning' => 'Se encontraron :count imágenes pontencialmente sin uso. Está seguro de que quiere eliminarlas?',
@@ -274,6 +274,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

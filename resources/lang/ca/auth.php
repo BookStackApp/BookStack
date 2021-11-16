@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Aquest domini de correu electrònic no té accés a aquesta aplicació',
     'register_success' => 'Gràcies per registrar-vos! Ja us hi heu registrat i heu iniciat la sessió.',
 
-
     // Password Reset
     'reset_password' => 'Restableix la contrasenya',
     'reset_password_send_instructions' => 'Introduïu la vostra adreça electrònica a continuació i us enviarem un correu electrònic amb un enllaç per a restablir la contrasenya.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Rebeu aquest correu electrònic perquè heu rebut una petició de restabliment de contrasenya per al vostre compte.',
     'email_reset_not_requested' => 'Si no heu demanat restablir la contrasenya, no cal que prengueu cap acció.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Confirmeu la vostra adreça electrònica a :appName',
     'email_confirm_greeting' => 'Gràcies per unir-vos a :appName!',
     'email_confirm_text' => 'Confirmeu la vostra adreça electrònica fent clic al botó a continuació:',
     'email_confirm_action' => 'Confirma el correu',
     'email_confirm_send_error' => 'Cal confirmar l\'adreça electrònica, però el sistema no ha pogut enviar el correu electrònic. Poseu-vos en contacte amb l\'administrador perquè s\'asseguri que el correu electrònic està ben configurat.',
-    'email_confirm_success' => 'S\'ha confirmat el vostre correu electrònic!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'S\'ha tornat a enviar el correu electrònic de confirmació. Reviseu la vostra safata d\'entrada.',
 
     'email_not_confirmed' => 'Adreça electrònica no confirmada',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Us donem la benvinguda a :appName!',
     'user_invite_page_text' => 'Per a enllestir el vostre compte i obtenir-hi accés, cal que definiu una contrasenya, que es farà servir per a iniciar la sessió a :appName en futures visites.',
     'user_invite_page_confirm_button' => 'Confirma la contrasenya',
-    'user_invite_success' => 'S\'ha establert la contrasenya, ara ja teniu accés a :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

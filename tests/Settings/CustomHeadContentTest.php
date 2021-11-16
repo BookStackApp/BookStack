@@ -11,21 +11,21 @@ class CustomHeadContentTest extends TestCase
     {
         $this->setSettings(['app-custom-head' => '<script>console.log("cat");</script>']);
         $resp = $this->get('/login');
-        $resp->assertSee('console.log("cat")');
+        $resp->assertSee('console.log("cat")', false);
     }
 
     public function test_configured_content_does_not_show_on_settings_page()
     {
         $this->setSettings(['app-custom-head' => '<script>console.log("cat");</script>']);
         $resp = $this->asAdmin()->get('/settings');
-        $resp->assertDontSee('console.log("cat")');
+        $resp->assertDontSee('console.log("cat")', false);
     }
 
     public function test_divs_in_js_preserved_in_configured_content()
     {
         $this->setSettings(['app-custom-head' => '<script><div id="hello">cat</div></script>']);
         $resp = $this->get('/login');
-        $resp->assertSee('<div id="hello">cat</div>');
+        $resp->assertSee('<div id="hello">cat</div>', false);
     }
 
     public function test_nonce_application_handles_edge_cases()
@@ -61,6 +61,6 @@ const b = `<script`;
 
         $this->setSettings(['app-custom-head' => $content]);
         $resp = $this->get('/login');
-        $resp->assertSee($expectedOutput);
+        $resp->assertSee($expectedOutput, false);
     }
 }

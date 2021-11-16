@@ -38,11 +38,11 @@ Note: Listed services are not tested, vetted nor supported by the official BookS
 
 <table><tbody><tr>
 <td><a href="https://www.diagrams.net/" target="_blank">
-    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/master/static/images/sponsors/diagramsnet.png" alt="Diagrams.net logo">
+    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/diagramsnet.png" alt="Diagrams.net">
 </a></td>
 
 <td><a href="https://www.stellarhosted.com/bookstack/" target="_blank">
-    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/master/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted Logo">
+    <img width="280" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted">
 </a></td>
 </tr></tbody></table>
 
@@ -206,11 +206,8 @@ These are the great open-source projects used to help build BookStack:
 * [Dropzone.js](http://www.dropzonejs.com/)
 * [clipboard.js](https://clipboardjs.com/)
 * [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists)
-* [BarryVD](https://github.com/barryvdh)
-    * [Debugbar](https://github.com/barryvdh/laravel-debugbar)
-    * [Dompdf](https://github.com/barryvdh/laravel-dompdf)
-    * [Snappy (WKHTML2PDF)](https://github.com/barryvdh/laravel-snappy)
-    * [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
+* [BarryVD/Dompdf](https://github.com/barryvdh/laravel-dompdf)
+* [BarryVD/Snappy (WKHTML2PDF)](https://github.com/barryvdh/laravel-snappy)
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
 * [diagrams.net](https://github.com/jgraph/drawio)
 * [OneLogin's SAML PHP Toolkit](https://github.com/onelogin/php-saml)
@@ -220,3 +217,5 @@ These are the great open-source projects used to help build BookStack:
 * [pragmarx/google2fa](https://github.com/antonioribeiro/google2fa)
 * [Bacon/BaconQrCode](https://github.com/Bacon/BaconQrCode)
 * [phpseclib](https://github.com/phpseclib/phpseclib)
+* [Clockwork](https://github.com/itsgoingd/clockwork)
+* [PHPStan](https://phpstan.org/) & [Larastan](https://github.com/nunomaduro/larastan)

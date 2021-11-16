@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Bakım',
     'maint_image_cleanup' => 'Görselleri Temizle',
-    'maint_image_cleanup_desc' => "Sayfaları ve revizyon içeriklerini tarayarak hangi görsellerin ve çizimlerin kullanımda olduğunu ve hangilerinin gereksiz olduğunu tespit eder. Bunu başlatmadan önce veritabanının ve görsellerin tam bir yedeğinin alındığından emin olun.",
+    'maint_image_cleanup_desc' => 'Sayfaları ve revizyon içeriklerini tarayarak hangi görsellerin ve çizimlerin kullanımda olduğunu ve hangilerinin gereksiz olduğunu tespit eder. Bunu başlatmadan önce veritabanının ve görsellerin tam bir yedeğinin alındığından emin olun.',
     'maint_delete_images_only_in_revisions' => 'Eski sayfa revizyonlarındaki görselleri de sil',
     'maint_image_cleanup_run' => 'Temizliği Başlat',
     'maint_image_cleanup_warning' => 'Muhtemelen kullanılmayan :count adet görsel bulundu. Bu görselleri silmek istediğinize emin misiniz?',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

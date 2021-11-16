@@ -20,7 +20,7 @@ return [
     'role' => '権限',
     'cover_image' => 'カバー画像',
     'cover_image_description' => 'この画像はおよそ440x250pxの大きさが必要です。',
-    
+
     // Actions
     'actions' => '実行',
     'view' => '表示',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'お気に入りから削除',
     'next' => '次へ',
     'previous' => '前へ',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => '並べ替えオプション',

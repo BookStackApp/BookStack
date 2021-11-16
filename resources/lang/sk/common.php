@@ -20,7 +20,7 @@ return [
     'role' => 'Rola',
     'cover_image' => 'Obal knihy',
     'cover_image_description' => 'Tento obrázok by mal byť približne 300 x 170 pixelov.',
-    
+
     // Actions
     'actions' => 'Akcie',
     'view' => 'Zobraziť',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Odstrániť z obľúbených',
     'next' => 'Ďalej',
     'previous' => 'Späť',
+    'filter_active' => 'Aktívny filter:',
+    'filter_clear' => 'Bez filtrovania',
 
     // Sort Options
     'sort_options' => 'Možnosti triedenia',

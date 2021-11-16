@@ -9,7 +9,7 @@ class BookTest extends TestCase
 {
     public function test_create()
     {
-        $book = factory(Book::class)->make([
+        $book = Book::factory()->make([
             'name' => 'My First Book',
         ]);
 
@@ -29,7 +29,7 @@ class BookTest extends TestCase
 
     public function test_create_uses_different_slugs_when_name_reused()
     {
-        $book = factory(Book::class)->make([
+        $book = Book::factory()->make([
             'name' => 'My First Book',
         ]);
 
@@ -187,7 +187,7 @@ class BookTest extends TestCase
             'name' => 'информация',
         ]);
 
-        $this->assertEquals('informatsiya', $book->slug);
+        $this->assertEquals('informaciya', $book->slug);
 
         $book = $this->newBook([
             'name' => '¿Qué?',

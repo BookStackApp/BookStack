@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'メンテナンス',
     'maint_image_cleanup' => '画像のクリーンアップ',
-    'maint_image_cleanup_desc' => "ページや履歴の内容をスキャンして、どの画像や図面が現在使用されているか、どの画像が余っているかをチェックします。この機能を実行する前に、データベースと画像の完全なバックアップを作成してください。",
+    'maint_image_cleanup_desc' => 'ページや履歴の内容をスキャンして、どの画像や図面が現在使用されているか、どの画像が余っているかをチェックします。この機能を実行する前に、データベースと画像の完全なバックアップを作成してください。',
     'maint_delete_images_only_in_revisions' => 'また、古いページのリビジョンにしか存在しない画像も削除します。',
     'maint_image_cleanup_run' => 'クリーンアップを実行',
     'maint_image_cleanup_warning' => ':count 個、使用されていない可能性のある画像が見つかりました。これらの画像を削除してもよろしいですか？',
@@ -140,7 +140,7 @@ return [
     'role_name' => '役割名',
     'role_desc' => '役割の説明',
     'role_mfa_enforced' => '多要素認証を要求する',
-    'role_external_auth_id' => 'External Authentication IDs',
+    'role_external_auth_id' => '外部認証ID',
     'role_system' => 'システム権限',
     'role_manage_users' => 'ユーザ管理',
     'role_manage_roles' => '役割と権限の管理',
@@ -178,7 +178,7 @@ return [
     'users_send_invite_text' => 'このユーザーに招待メールを送信してユーザー自身にパスワードを設定してもらうか、あなたがここでパスワードを設定するかを選択できます。',
     'users_send_invite_option' => 'ユーザーに招待メールを送信',
     'users_external_auth_id' => '外部認証ID',
-    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your external authentication system.',
+    'users_external_auth_id_desc' => 'これは外部認証システムと通信するときにこのユーザーの照合に使用されるIDです。',
     'users_password_warning' => 'パスワードを変更したい場合のみ入力してください',
     'users_system_public' => 'このユーザーはアプリケーションにアクセスする全てのゲストを表します。ログインはできませんが、自動的に割り当てられます。',
     'users_delete' => 'ユーザを削除',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

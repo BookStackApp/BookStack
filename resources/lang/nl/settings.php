@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Onderhoud',
     'maint_image_cleanup' => 'Afbeeldingen opschonen',
-    'maint_image_cleanup_desc' => "Scant pagina- en revisie inhoud om te controleren welke afbeeldingen en tekeningen momenteel worden gebruikt en welke afbeeldingen overbodig zijn. Zorg ervoor dat je een volledige database en afbeelding backup maakt voordat je dit uitvoert.",
+    'maint_image_cleanup_desc' => 'Scant pagina- en revisie inhoud om te controleren welke afbeeldingen en tekeningen momenteel worden gebruikt en welke afbeeldingen overbodig zijn. Zorg ervoor dat je een volledige database en afbeelding backup maakt voordat je dit uitvoert.',
     'maint_delete_images_only_in_revisions' => 'Ook afbeeldingen die alleen in oude pagina revisies bestaan verwijderen',
     'maint_image_cleanup_run' => 'Opschonen uitvoeren',
     'maint_image_cleanup_warning' => ':count potentieel ongebruikte afbeeldingen gevonden. Weet u zeker dat u deze afbeeldingen wilt verwijderen?',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

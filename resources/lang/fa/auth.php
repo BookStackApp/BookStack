@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'دامنه پست الکترونیک به این برنامه دسترسی ندارد',
     'register_success' => 'از ثبت نام شما سپاسگزاریم! شما اکنون ثبت نام کرده و وارد سیستم شده اید.',
 
-
     // Password Reset
     'reset_password' => 'بازنشانی کلمه عبور',
     'reset_password_send_instructions' => 'پست الکترونیک خود را در کادر زیر وارد نموده تا یک پیام حاوی لینک بازنشانی کلمه عبور دریافت نمایید.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'شما این پیام را به علت درخواست بازنشانی کلمه عبور دریافت می نمایید.',
     'email_reset_not_requested' => 'در صورتی که درخواست بازنشانی کلمه عبور از سمت شما نمی باشد، نیاز به انجام هیچ فعالیتی ندارید.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'پست الکترونیک خود را در:appName تایید نمایید',
     'email_confirm_greeting' => 'برای پیوستن به :appName متشکریم!',
     'email_confirm_text' => 'لطفا با کلیک بر روی دکمه زیر پست الکترونیک خود را تایید نمایید:',
     'email_confirm_action' => 'تایید پست الکترونیک',
     'email_confirm_send_error' => 'تایید پست الکترونیک الزامی می باشد، اما سیستم قادر به ارسال پیام نمی باشد.',
-    'email_confirm_success' => 'پست الکترونیک شما تایید گردیده است!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'پیام تایید پست الکترونیک مجدد ارسال گردید، لطفا صندوق ورودی خود را بررسی نمایید.',
 
     'email_not_confirmed' => 'پست الکترونیک تایید نشده است',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'به :appName خوش آمدید!',
     'user_invite_page_text' => 'برای نهایی کردن حساب کاربری خود در :appName و دسترسی به آن، می بایست یک کلمه عبور تنظیم نمایید.',
     'user_invite_page_confirm_button' => 'تایید کلمه عبور',
-    'user_invite_success' => 'کلمه عبور تنظیم شده است، شما اکنون به :appName دسترسی دارید!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'تنظیم احراز هویت چند مرحله‌ای',

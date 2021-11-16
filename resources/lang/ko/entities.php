@@ -258,6 +258,16 @@ return [
     'tags_explain' => "태그로 문서를 분류하세요.",
     'tags_add' => '태그 추가',
     'tags_remove' => '태그 삭제',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => '첨부 파일',
     'attachments_explain' => '파일이나 링크를 첨부하세요. 정보 탭에 나타납니다.',
     'attachments_explain_instant_save' => '여기에서 바꾼 내용은 바로 적용합니다.',
@@ -321,5 +331,5 @@ return [
     'revision_delete_confirm' => '이 수정본을 지울 건가요?',
     'revision_restore_confirm' => '이 수정본을 되돌릴 건가요? 현재 판본을 바꿉니다.',
     'revision_delete_success' => '수정본 지움',
-    'revision_cannot_delete_latest' => '현재 판본은 지울 수 없습니다.'
+    'revision_cannot_delete_latest' => '현재 판본은 지울 수 없습니다.',
 ];

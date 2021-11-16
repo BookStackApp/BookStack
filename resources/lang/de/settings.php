@@ -75,7 +75,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     // Maintenance settings
     'maint' => 'Wartung',
     'maint_image_cleanup' => 'Bilder bereinigen',
-    'maint_image_cleanup_desc' => "Überprüft Seiten- und Versionsinhalte auf ungenutzte und mehrfach vorhandene Bilder. Erstellen Sie vor dem Start ein Backup Ihrer Datenbank und Bilder.",
+    'maint_image_cleanup_desc' => 'Überprüft Seiten- und Versionsinhalte auf ungenutzte und mehrfach vorhandene Bilder. Erstellen Sie vor dem Start ein Backup Ihrer Datenbank und Bilder.',
     'maint_delete_images_only_in_revisions' => 'Lösche auch Bilder, die nur in alten Seitenüberarbeitungen vorhanden sind',
     'maint_image_cleanup_run' => 'Reinigung starten',
     'maint_image_cleanup_warning' => ':count eventuell unbenutze Bilder wurden gefunden. Möchten Sie diese Bilder löschen?',
@@ -276,6 +276,6 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

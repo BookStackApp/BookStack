@@ -20,7 +20,7 @@ return [
     'role' => 'Роль',
     'cover_image' => 'Обложка',
     'cover_image_description' => 'Изображение должно быть размером около 440x250px.',
-    
+
     // Actions
     'actions' => 'Действия',
     'view' => 'Просмотр',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Убрать из избранного',
     'next' => 'Следующая',
     'previous' => 'Предыдущая',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',

@@ -34,7 +34,7 @@ class StatusTest extends TestCase
     {
         $mockStore = Mockery::mock(new ArrayStore())->makePartial();
         Cache::swap($mockStore);
-        $mockStore->shouldReceive('get')->andReturn('cat');
+        $mockStore->shouldReceive('pull')->andReturn('cat');
 
         $resp = $this->get('/status');
         $resp->assertStatus(500);

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Vedligeholdelse',
     'maint_image_cleanup' => 'Ryd op i billeder',
-    'maint_image_cleanup_desc' => "Scanner side & revisionsindhold for at kontrollere, hvilke billeder og tegninger, der i øjeblikket er i brug, og hvilke billeder, der er overflødige. Sørg for, at du opretter en komplet database og billedbackup, før du kører dette.",
+    'maint_image_cleanup_desc' => 'Scanner side & revisionsindhold for at kontrollere, hvilke billeder og tegninger, der i øjeblikket er i brug, og hvilke billeder, der er overflødige. Sørg for, at du opretter en komplet database og billedbackup, før du kører dette.',
     'maint_delete_images_only_in_revisions' => 'Slet også billeder, der kun findes i gamle siderevisioner',
     'maint_image_cleanup_run' => 'Kør Oprydning',
     'maint_image_cleanup_warning' => 'der blev fundet :count potentielt ubrugte billeder. Er du sikker på, at du vil slette disse billeder?',
@@ -119,7 +119,7 @@ return [
     'audit_table_user' => 'Bruger',
     'audit_table_event' => 'Hændelse',
     'audit_table_related' => 'Relateret element eller detalje',
-    'audit_table_ip' => 'IP Address',
+    'audit_table_ip' => 'IP-adresse',
     'audit_table_date' => 'Aktivitetsdato',
     'audit_date_from' => 'Datointerval fra',
     'audit_date_to' => 'Datointerval til',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

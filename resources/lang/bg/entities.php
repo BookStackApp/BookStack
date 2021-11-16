@@ -258,6 +258,16 @@ return [
     'tags_explain' => "Добавете няколко тага за да категоризирате по добре вашето съдържание. \n Може да добавите съдържание на таговете за по-подробна организация.",
     'tags_add' => 'Добави друг таг',
     'tags_remove' => 'Премахни този таг',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Прикачени файлове',
     'attachments_explain' => 'Прикачете файлове или линкове, които да са видими на вашата страница. Същите ще бъдат видими във вашето странично поле.',
     'attachments_explain_instant_save' => 'Промените тук се запазват веднага.',
@@ -321,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Наистина ли искате да изтриете тази версия?',
     'revision_restore_confirm' => 'Сигурни ли сте, че искате да изтриете тази версия? Настоящата страница ще бъде заместена.',
     'revision_delete_success' => 'Версията беше изтрита',
-    'revision_cannot_delete_latest' => 'Не може да изтриете последната версия.'
+    'revision_cannot_delete_latest' => 'Не може да изтриете последната версия.',
 ];

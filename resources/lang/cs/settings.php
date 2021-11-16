@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Údržba',
     'maint_image_cleanup' => 'Pročistění obrázků',
-    'maint_image_cleanup_desc' => "Prohledá stránky a jejich revize, aby zjistil, které obrázky a kresby jsou momentálně používány a které jsou zbytečné. Zajistěte plnou zálohu databáze a obrázků než se do toho pustíte.",
+    'maint_image_cleanup_desc' => 'Prohledá stránky a jejich revize, aby zjistil, které obrázky a kresby jsou momentálně používány a které jsou zbytečné. Zajistěte plnou zálohu databáze a obrázků než se do toho pustíte.',
     'maint_delete_images_only_in_revisions' => 'Odstranit i obrázky, které se vyskytují pouze ve starých revizích stránky',
     'maint_image_cleanup_run' => 'Spustit pročištění',
     'maint_image_cleanup_warning' => 'Nalezeno :count potenciálně nepoužitých obrázků. Jste si jisti, že je chcete odstranit?',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

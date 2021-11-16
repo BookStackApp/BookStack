@@ -258,6 +258,16 @@ return [
     'tags_explain' => "İçeriğinizi daha iyi kategorize etmek için etiket ekleyin. Etiketlere değer atayarak daha derinlemesine bir düzen elde edebilirsiniz.",
     'tags_add' => 'Başka etiket ekle',
     'tags_remove' => 'Bu etiketi sil',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Ekler',
     'attachments_explain' => 'Sayfanızda göstermek için dosyalar yükleyin veya bağlantılar ekleyin. Bunlar, sayfaya ait yan menüde gösterilecektir.',
     'attachments_explain_instant_save' => 'Burada yapılan değişiklikler anında kaydedilir.',
@@ -321,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Bu revizyonu silmek istediğinize emin misiniz?',
     'revision_restore_confirm' => 'Bu revizyonu yeniden yüklemek istediğinize emin misiniz? Sayfanın şu anki içeriği değiştirilecektir.',
     'revision_delete_success' => 'Revizyon silindi',
-    'revision_cannot_delete_latest' => 'Son revizyonu silemezsiniz.'
+    'revision_cannot_delete_latest' => 'Son revizyonu silemezsiniz.',
 ];

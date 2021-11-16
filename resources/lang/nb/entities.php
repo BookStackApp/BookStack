@@ -258,6 +258,16 @@ return [
     'tags_explain' => "Legg til merker for å kategorisere innholdet ditt. \n Du kan legge til merkeverdier for å beskrive dem ytterligere.",
     'tags_add' => 'Legg til flere merker',
     'tags_remove' => 'Fjern merke',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Vedlegg',
     'attachments_explain' => 'Last opp vedlegg eller legg til lenker for å berike innholdet. Disse vil vises i sidestolpen på siden.',
     'attachments_explain_instant_save' => 'Endringer her blir lagret med en gang.',
@@ -321,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Vil du slette revisjonen?',
     'revision_restore_confirm' => 'Vil du gjenopprette revisjonen? Innholdet på siden vil bli overskrevet med denne revisjonen.',
     'revision_delete_success' => 'Revisjonen ble slettet',
-    'revision_cannot_delete_latest' => 'CKan ikke slette siste revisjon.'
+    'revision_cannot_delete_latest' => 'CKan ikke slette siste revisjon.',
 ];

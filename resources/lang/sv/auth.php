@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Den e-postadressen har inte tillgång till den här applikationen',
     'register_success' => 'Tack för din registrering! Du är nu registerad och inloggad.',
 
-
     // Password Reset
     'reset_password' => 'Återställ lösenord',
     'reset_password_send_instructions' => 'Ange din e-postadress nedan så skickar vi ett mail med en länk för att återställa ditt lösenord.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Du får detta mail eftersom vi fått en begäran om att återställa lösenordet till ditt konto.',
     'email_reset_not_requested' => 'Om du inte begärt att få ditt lösenord återställt behöver du inte göra någonting',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Bekräfta din e-post på :appName',
     'email_confirm_greeting' => 'Tack för att du gått med i :appName!',
     'email_confirm_text' => 'Vänligen bekräfta din e-postadress genom att klicka på knappen nedan:',
     'email_confirm_action' => 'Bekräfta e-post',
     'email_confirm_send_error' => 'E-posten behöver bekräftas men systemet kan inte skicka mail. Kontakta adminstratören för att kontrollera att allt är konfigurerat korrekt.',
-    'email_confirm_success' => 'Din e-post har bekräftats',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Bekräftelsemailet har skickats på nytt, kolla din mail',
 
     'email_not_confirmed' => 'E-posadress ej bekräftad',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Välkommen till :appName!',
     'user_invite_page_text' => 'För att slutföra ditt konto och få åtkomst måste du ange ett lösenord som kommer att användas för att logga in på :appName vid framtida besök.',
     'user_invite_page_confirm_button' => 'Bekräfta lösenord',
-    'user_invite_success' => 'Lösenord satt, du har nu tillgång till :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

@@ -20,7 +20,7 @@ return [
     'role' => 'Uloga',
     'cover_image' => 'Naslovna slika',
     'cover_image_description' => 'Slika treba biti približno 440x250px.',
-    
+
     // Actions
     'actions' => 'Aktivnost',
     'view' => 'Pogled',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Unfavourite',
     'next' => 'Next',
     'previous' => 'Previous',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Razvrstaj opcije',

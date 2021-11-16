@@ -13,7 +13,7 @@
 
 @if($endpoint['body_params'] ?? false)
     <details class="mb-m">
-        <summary class="text-muted">Body Parameters</summary>
+        <summary class="text-muted">{{ $endpoint['method'] === 'GET' ? 'Query' : 'Body'  }} Parameters</summary>
         <table class="table">
             <tr>
                 <th>Param Name</th>

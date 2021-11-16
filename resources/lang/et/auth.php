@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Sellel e-posti domeenil ei ole rakendusele ligipääsu',
     'register_success' => 'Aitäh, et registreerusid! Oled nüüd sisse logitud.',
 
-
     // Password Reset
     'reset_password' => 'Lähtesta parool',
     'reset_password_send_instructions' => 'Siseta oma e-posti aadress ning sulle saadetakse link parooli lähtestamiseks.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Said selle e-kirja, sest meile laekus soov sinu konto parooli lähtestamiseks.',
     'email_reset_not_requested' => 'Kui sa ei soovinud parooli lähtestada, ei pea sa rohkem midagi tegema.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Kinnita oma :appName konto e-posti aadress',
     'email_confirm_greeting' => 'Aitäh, et liitusid rakendusega :appName!',
     'email_confirm_text' => 'Palun kinnita oma e-posti aadress, klõpsates alloleval nupul:',
     'email_confirm_action' => 'Kinnita e-posti aadress',
     'email_confirm_send_error' => 'E-posti aadressi kinnitamine on vajalik, aga e-kirja saatmine ebaõnnestus. Võta ühendust administraatoriga.',
-    'email_confirm_success' => 'Sinu e-posti aadress on kinnitatud!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Kinnituskiri on saadetud, vaata oma postkasti.',
 
     'email_not_confirmed' => 'E-posti aadress ei ole kinnitatud',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Tere tulemast rakendusse :appName!',
     'user_invite_page_text' => 'Registreerumise lõpetamiseks ja ligipääsu saamiseks pead seadma parooli, millega edaspidi rakendusse sisse logid.',
     'user_invite_page_confirm_button' => 'Kinnita parool',
-    'user_invite_success' => 'Parool seatud, sul on nüüd ligipääs!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Seadista mitmeastmeline autentimine',

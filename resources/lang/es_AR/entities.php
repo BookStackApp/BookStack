@@ -258,6 +258,16 @@ return [
     'tags_explain' => "Agregar algunas etiquetas para mejorar la categorización de su contenido. \n Se puede asignar un valor a una etiqueta para una organizacón con mayor detalle.",
     'tags_add' => 'Agregar otra etiqueta',
     'tags_remove' => 'Eliminar esta etiqueta',
+    'tags_usages' => 'Uso total de etiquetas',
+    'tags_assigned_pages' => 'Asignadas a páginas',
+    'tags_assigned_chapters' => 'Asignadas a capitulos',
+    'tags_assigned_books' => 'Asignadas a libros',
+    'tags_assigned_shelves' => 'Asignadas a estantes',
+    'tags_x_unique_values' => ':count valores únicos',
+    'tags_all_values' => 'Todos los valores',
+    'tags_view_tags' => 'Ver etiquetas',
+    'tags_view_existing_tags' => 'Ver etiquetas existentes',
+    'tags_list_empty_hint' => 'Las etiquetas se pueden asignar a través de la barra lateral del editor de páginas o mientras se editan los detalles de un libro, capítulo o estante.',
     'attachments' => 'Adjuntos',
     'attachments_explain' => 'Subir archivos o agregar enlaces para mostrar en la página. Estos son visibles en la barra lateral de la página.',
     'attachments_explain_instant_save' => 'Los cambios se guardan de manera instantánea.',
@@ -321,5 +331,5 @@ return [
     'revision_delete_confirm' => '¿Está seguro de que quiere eliminar esta revisión?',
     'revision_restore_confirm' => '¿Está seguro de que quiere restaurar esta revisión? Se reemplazará el contenido de la página actual.',
     'revision_delete_success' => 'Revisión eliminada',
-    'revision_cannot_delete_latest' => 'No se puede eliminar la última revisión.'
+    'revision_cannot_delete_latest' => 'No se puede eliminar la última revisión.',
 ];

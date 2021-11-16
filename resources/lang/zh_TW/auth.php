@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => '這個電子郵件網域沒有權限使用',
     'register_success' => '感謝您註冊！您已註冊完成並可登入。',
 
-
     // Password Reset
     'reset_password' => '重設密碼',
     'reset_password_send_instructions' => '在下方輸入您的電子郵件，您將收到一封帶有密碼重設連結的郵件。',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => '您收到此電子郵件是因為我們收到了您的帳號的密碼重設請求。',
     'email_reset_not_requested' => '如果您沒有要求重設密碼，則不需要採取進一步的操作。',
 
-
     // Email Confirmation
     'email_confirm_subject' => '確認您在 :appName 的電子郵件',
     'email_confirm_greeting' => '感謝您加入 :appName！',
     'email_confirm_text' => '請點選下面的按鈕來確認您的電子郵件地址：',
     'email_confirm_action' => '確認電子郵件',
     'email_confirm_send_error' => '需要電子郵件驗證，但系統無法傳送電子郵件。請與管理員聯絡以確保電子郵件正確設定。',
-    'email_confirm_success' => '您的電子郵件已成功驗證！',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => '確認電子郵件已重新傳送。請檢查您的收件匣。',
 
     'email_not_confirmed' => '電子郵件地址未確認',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => '歡迎使用 :appName！',
     'user_invite_page_text' => '要完成設定您的帳號並取得存取權，您必須設定密碼，此密碼將用於登入 :appName。',
     'user_invite_page_confirm_button' => '確認密碼',
-    'user_invite_success' => '密碼已設定，您現在可以存取 :appName 了！',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

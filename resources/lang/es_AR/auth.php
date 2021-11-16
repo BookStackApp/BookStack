@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Este dominio de correo electrónico no tiene acceso a esta aplicación',
     'register_success' => '¡Gracias por registrarse! Ahora se encuentra registrado y ha accedido a la aplicación.',
 
-
     // Password Reset
     'reset_password' => 'Restablecer la contraseña',
     'reset_password_send_instructions' => 'Introduzca su correo electrónico a continuación y se le enviará un correo electrónico con un enlace para la restauración',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Ud. esta recibiendo este correo electrónico debido a que recibimos una solicitud de restauración de la contraseña de su cuenta.',
     'email_reset_not_requested' => 'Si ud. no solicitó un cambio de contraseña, no se requiere ninguna acción.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Confirme su correo electrónico en :appName',
     'email_confirm_greeting' => '¡Gracias por unirse a :appName!',
     'email_confirm_text' => 'Por favor confirme su dirección de correo electrónico presionando en el siguiente botón:',
     'email_confirm_action' => 'Confirmar correo electrónico',
     'email_confirm_send_error' => 'Se pidió confirmación de correo electrónico pero el sistema no pudo enviar el correo electrónico. Contacte al administrador para asegurarse que el correo electrónico está configurado correctamente.',
-    'email_confirm_success' => '¡Su correo electrónico hasido confirmado!',
+    'email_confirm_success' => '¡Tu correo electrónico ha sido confirmado! Ahora deberías poder iniciar sesión usando esta dirección de correo electrónico.',
     'email_confirm_resent' => 'Correo electrónico de confirmación reenviado, Por favor verifique su bandeja de entrada.',
 
     'email_not_confirmed' => 'Dirección de correo electrónico no confirmada',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Bienvenido a :appName!',
     'user_invite_page_text' => 'Para finalizar la cuenta y tener acceso debe establcer una contraseña que utilizará para ingresar a :appName en visitas futuras.',
     'user_invite_page_confirm_button' => 'Confirmar Contraseña',
-    'user_invite_success' => 'Contraseña establecida, ahora tiene acceso a :appName!',
+    'user_invite_success_login' => 'Contraseña guardada, ¡ahora debería ser capaz de iniciar sesión usando su contraseña establecida para acceder a :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Configurar autenticación de múltiples factores',

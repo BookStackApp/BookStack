@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Цей домен електронної пошти заборонений для реєстрації',
     'register_success' => 'Дякуємо за реєстрацію! Ви зареєстровані та ввійшли в систему.',
 
-
     // Password Reset
     'reset_password' => 'Скинути пароль',
     'reset_password_send_instructions' => 'Введіть адресу електронної пошти нижче, і вам буде надіслано електронне повідомлення з посиланням на зміну пароля.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Ви отримали цей електронний лист, оскільки до нас надійшов запит на скидання пароля для вашого облікового запису.',
     'email_reset_not_requested' => 'Якщо ви не надсилали запит на скидання пароля, подальші дії не потрібні.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Підтвердьте свою електронну пошту на :appName',
     'email_confirm_greeting' => 'Дякуємо, що приєдналися до :appName!',
     'email_confirm_text' => 'Будь ласка, підтвердьте свою адресу електронної пошти, натиснувши кнопку нижче:',
     'email_confirm_action' => 'Підтвердити Email',
     'email_confirm_send_error' => 'Необхідно підтвердження електронною поштою, але система не змогла надіслати електронний лист. Зверніться до адміністратора, щоб правильно налаштувати електронну пошту.',
-    'email_confirm_success' => 'Ваш електронну адресу підтверджено!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Лист з підтвердженням надіслано, перевірте свою пошту.',
 
     'email_not_confirmed' => 'Адресу електронної скриньки не підтверджено',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Ласкаво просимо до :appName!',
     'user_invite_page_text' => 'Для завершення процесу створення облікового запису та отримання доступу вам потрібно задати пароль, який буде використовуватися для входу в :appName в майбутньому.',
     'user_invite_page_confirm_button' => 'Підтвердити пароль',
-    'user_invite_success' => 'Встановлено пароль, тепер у вас є доступ до :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

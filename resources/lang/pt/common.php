@@ -20,7 +20,7 @@ return [
     'role' => 'Cargo',
     'cover_image' => 'Imagem de capa',
     'cover_image_description' => 'Esta imagem deve ser aproximadamente 440x250px.',
-    
+
     // Actions
     'actions' => 'Ações',
     'view' => 'Visualizar',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Retirar Favorito',
     'next' => 'Próximo',
     'previous' => 'Anterior',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Opções de Ordenação',

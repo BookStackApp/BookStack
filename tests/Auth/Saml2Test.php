@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class Saml2Test extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         // Set default config for SAML2
@@ -49,7 +49,7 @@ class Saml2Test extends TestCase
         $req = $this->get('/saml2/metadata');
         $req->assertSee('https://example.com/super-cats');
         $req->assertSee('md:ContactPerson');
-        $req->assertSee('<md:GivenName>Barry Scott</md:GivenName>');
+        $req->assertSee('<md:GivenName>Barry Scott</md:GivenName>', false);
     }
 
     public function test_login_option_shows_on_login_page()
@@ -119,7 +119,7 @@ class Saml2Test extends TestCase
             'saml2.remove_from_groups' => false,
         ]);
 
-        $memberRole = factory(Role::class)->create(['external_auth_id' => 'member']);
+        $memberRole = Role::factory()->create(['external_auth_id' => 'member']);
         $adminRole = Role::getSystemRole('admin');
 
         $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
@@ -141,7 +141,7 @@ class Saml2Test extends TestCase
         $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
         $user = User::query()->where('external_auth_id', '=', 'user')->first();
 
-        $randomRole = factory(Role::class)->create(['external_auth_id' => 'random']);
+        $randomRole = Role::factory()->create(['external_auth_id' => 'random']);
         $user->attachRole($randomRole);
         $this->assertContains($randomRole->id, $user->roles()->pluck('id'));
 
@@ -157,8 +157,7 @@ class Saml2Test extends TestCase
         ]);
 
         $resp = $this->actingAs($this->getEditor())->get('/');
-        $resp->assertElementExists('a[href$="/saml2/logout"]');
-        $resp->assertElementContains('a[href$="/saml2/logout"]', 'Logout');
+        $resp->assertElementContains('form[action$="/saml2/logout"] button', 'Logout');
     }
 
     public function test_logout_sls_flow()
@@ -177,7 +176,7 @@ class Saml2Test extends TestCase
 
         $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
 
-        $req = $this->get('/saml2/logout');
+        $req = $this->post('/saml2/logout');
         $redirect = $req->headers->get('location');
         $this->assertStringStartsWith('http://saml.local/saml2/idp/SingleLogoutService.php', $redirect);
         $this->withGet(['SAMLResponse' => $this->sloResponseData], $handleLogoutResponse);
@@ -193,7 +192,7 @@ class Saml2Test extends TestCase
         $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
         $this->assertTrue($this->isAuthenticated());
 
-        $req = $this->get('/saml2/logout');
+        $req = $this->post('/saml2/logout');
         $req->assertRedirect('/');
         $this->assertFalse($this->isAuthenticated());
     }
@@ -216,13 +215,13 @@ class Saml2Test extends TestCase
     public function test_saml_routes_are_only_active_if_saml_enabled()
     {
         config()->set(['auth.method' => 'standard']);
-        $getRoutes = ['/logout', '/metadata', '/sls'];
+        $getRoutes = ['/metadata', '/sls'];
         foreach ($getRoutes as $route) {
             $req = $this->get('/saml2' . $route);
             $this->assertPermissionError($req);
         }
 
-        $postRoutes = ['/login', '/acs'];
+        $postRoutes = ['/login', '/acs', '/logout'];
         foreach ($postRoutes as $route) {
             $req = $this->post('/saml2' . $route);
             $this->assertPermissionError($req);
@@ -249,7 +248,7 @@ class Saml2Test extends TestCase
         $resp = $this->post('/login');
         $this->assertPermissionError($resp);
 
-        $resp = $this->get('/logout');
+        $resp = $this->post('/logout');
         $this->assertPermissionError($resp);
     }
 
@@ -295,7 +294,7 @@ class Saml2Test extends TestCase
             'saml2.remove_from_groups' => false,
         ]);
 
-        $memberRole = factory(Role::class)->create(['external_auth_id' => 'member']);
+        $memberRole = Role::factory()->create(['external_auth_id' => 'member']);
         $adminRole = Role::getSystemRole('admin');
 
         $acsPost = $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);

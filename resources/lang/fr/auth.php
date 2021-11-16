@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Cette adresse e-mail ne peut pas accéder à l\'application',
     'register_success' => 'Merci pour votre inscription. Vous êtes maintenant inscrit(e) et connecté(e)',
 
-
     // Password Reset
     'reset_password' => 'Réinitialiser le mot de passe',
     'reset_password_send_instructions' => 'Entrez votre adresse e-mail ci-dessous et un e-mail avec un lien de réinitialisation de mot de passe vous sera envoyé.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Vous recevez cet e-mail parce que nous avons reçu une demande de réinitialisation pour votre compte.',
     'email_reset_not_requested' => 'Si vous n\'avez pas effectué cette demande, vous pouvez ignorer cet e-mail.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Confirmez votre adresse e-mail pour :appName',
     'email_confirm_greeting' => 'Merci d\'avoir rejoint :appName !',
     'email_confirm_text' => 'Merci de confirmer en cliquant sur le lien ci-dessous :',
     'email_confirm_action' => 'Confirmez votre adresse e-mail',
     'email_confirm_send_error' => 'La confirmation par e-mail est requise mais le système n\'a pas pu envoyer l\'e-mail. Contactez l\'administrateur système.',
-    'email_confirm_success' => 'Votre adresse e-mail a été confirmée !',
+    'email_confirm_success' => 'Votre adresse e-mail a été confirmée ! Vous devriez maintenant pouvoir vous connecter en utilisant cette adresse e-mail.',
     'email_confirm_resent' => 'L\'e-mail de confirmation a été ré-envoyé. Vérifiez votre boîte de réception.',
 
     'email_not_confirmed' => 'Adresse e-mail non confirmée',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Bienvenue dans :appName !',
     'user_invite_page_text' => 'Pour finaliser votre compte et recevoir l\'accès, vous devez renseigner le mot de passe qui sera utilisé pour la connexion à :appName les prochaines fois.',
     'user_invite_page_confirm_button' => 'Confirmez le mot de passe',
-    'user_invite_success' => 'Mot de passe renseigné, vous avez maintenant accès à :appName !',
+    'user_invite_success_login' => 'Mot de passe défini, vous devriez maintenant pouvoir vous connecter en utilisant votre mot de passe défini pour accéder à :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Authentification multi-facteurs',

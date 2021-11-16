@@ -13,7 +13,7 @@ class CommentTest extends TestCase
         $this->asAdmin();
         $page = Page::first();
 
-        $comment = factory(Comment::class)->make(['parent_id' => 2]);
+        $comment = Comment::factory()->make(['parent_id' => 2]);
         $resp = $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $resp->assertStatus(200);
@@ -36,7 +36,7 @@ class CommentTest extends TestCase
         $this->asAdmin();
         $page = Page::first();
 
-        $comment = factory(Comment::class)->make();
+        $comment = Comment::factory()->make();
         $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $comment = $page->comments()->first();
@@ -60,7 +60,7 @@ class CommentTest extends TestCase
         $this->asAdmin();
         $page = Page::first();
 
-        $comment = factory(Comment::class)->make();
+        $comment = Comment::factory()->make();
         $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $comment = $page->comments()->first();
@@ -88,7 +88,7 @@ class CommentTest extends TestCase
         ]);
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertSee('<h1>My Title</h1>');
+        $pageView->assertSee('<h1>My Title</h1>', false);
     }
 
     public function test_html_cannot_be_injected_via_comment_content()
@@ -102,7 +102,7 @@ class CommentTest extends TestCase
         ]);
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertDontSee($script);
+        $pageView->assertDontSee($script, false);
         $pageView->assertSee('sometextinthecomment');
 
         $comment = $page->comments()->first();
@@ -111,7 +111,7 @@ class CommentTest extends TestCase
         ]);
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertDontSee($script);
+        $pageView->assertDontSee($script, false);
         $pageView->assertSee('sometextinthecommentupdated');
     }
 }

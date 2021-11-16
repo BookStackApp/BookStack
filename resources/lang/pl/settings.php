@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Konserwacja',
     'maint_image_cleanup' => 'Czyszczenie obrazków',
-    'maint_image_cleanup_desc' => "Skanuje zawartość strony i poprzednie wersje, aby sprawdzić, które obrazy i rysunki są aktualnie używane, a które obrazy są zbędne. Przed uruchomieniem tej opcji należy utworzyć pełną kopię zapasową bazy danych i obrazków.",
+    'maint_image_cleanup_desc' => 'Skanuje zawartość strony i poprzednie wersje, aby sprawdzić, które obrazy i rysunki są aktualnie używane, a które obrazy są zbędne. Przed uruchomieniem tej opcji należy utworzyć pełną kopię zapasową bazy danych i obrazków.',
     'maint_delete_images_only_in_revisions' => 'Usuń również obrazy, które istnieją tylko w starych rewizjach strony',
     'maint_image_cleanup_run' => 'Uruchom czyszczenie',
     'maint_image_cleanup_warning' => 'Znaleziono :count potencjalnie niepotrzebnych obrazków. Czy na pewno chcesz je usunąć?',
@@ -273,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

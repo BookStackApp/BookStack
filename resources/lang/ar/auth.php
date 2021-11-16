@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'المجال الخاص بالبريد الإلكتروني لا يملك حق الوصول لهذا التطبيق',
     'register_success' => 'شكراً لإنشاء حسابكم! تم تسجيلكم ودخولكم للحساب الخاص بكم.',
 
-
     // Password Reset
     'reset_password' => 'استعادة كلمة المرور',
     'reset_password_send_instructions' => 'أدخل بريدك الإلكتروني بالأسفل وسيتم إرسال رسالة برابط لاستعادة كلمة المرور.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'تم إرسال هذه الرسالة بسبب تلقينا لطلب استعادة كلمة المرور الخاصة بحسابكم.',
     'email_reset_not_requested' => 'إذا لم يتم طلب استعادة كلمة المرور من قبلكم، فلا حاجة لاتخاذ أية خطوات.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'تأكيد بريدكم الإلكتروني لتطبيق :appName',
     'email_confirm_greeting' => 'شكرا لانضمامكم إلى :appName!',
     'email_confirm_text' => 'الرجاء تأكيد بريدكم الإلكتروني بالضغط على الزر أدناه:',
     'email_confirm_action' => 'تأكيد البريد الإلكتروني',
     'email_confirm_send_error' => 'تأكيد البريد الإلكتروني مطلوب ولكن النظام لم يستطع إرسال الرسالة. تواصل مع مشرف النظام للتأكد من إعدادات البريد.',
-    'email_confirm_success' => 'تم تأكيد بريدكم الإلكتروني!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'تمت إعادة إرسال رسالة التأكيد. الرجاء مراجعة صندوق الوارد',
 
     'email_not_confirmed' => 'لم يتم تأكيد البريد الإلكتروني',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'مرحبا بكم في :appName!',
     'user_invite_page_text' => 'لإكمال حسابك والحصول على حق الوصول تحتاج إلى تعيين كلمة مرور سيتم استخدامها لتسجيل الدخول إلى :appName في الزيارات المستقبلية.',
     'user_invite_page_confirm_button' => 'تأكيد كلمة المرور',
-    'user_invite_success' => 'مجموعة كلمات المرور، لديك الآن حق الوصول إلى :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

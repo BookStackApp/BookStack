@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Questo dominio della mail non ha accesso a questa applicazione',
     'register_success' => 'Grazie per la registrazione! Sei registrato e loggato.',
 
-
     // Password Reset
     'reset_password' => 'Reimposta Password',
     'reset_password_send_instructions' => 'Inserisci il tuo indirizzo sotto e ti verrà inviata una mail contenente un link per resettare la tua password.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Stai ricevendo questa mail perché abbiamo ricevuto una richiesta di reset della password per il tuo account.',
     'email_reset_not_requested' => 'Se non hai richiesto un reset della password, ignora questa mail.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Conferma email per :appName',
     'email_confirm_greeting' => 'Grazie per esserti registrato a :appName!',
     'email_confirm_text' => 'Conferma il tuo indirizzo email cliccando il pulsante sotto:',
     'email_confirm_action' => 'Conferma Email',
     'email_confirm_send_error' => 'La conferma della mail è richiesta ma non è stato possibile mandare la mail. Contatta l\'amministratore.',
-    'email_confirm_success' => 'La tua mail è stata confermata!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Mail di conferma reinviata, controlla la tua posta.',
 
     'email_not_confirmed' => 'Indirizzo Email Non Confermato',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Benvenuto in :appName!',
     'user_invite_page_text' => 'Per completare il tuo account e ottenere l\'accesso devi impostare una password che verrà utilizzata per accedere a :appName in futuro.',
     'user_invite_page_confirm_button' => 'Conferma Password',
-    'user_invite_success' => 'Password impostata, ora hai accesso a :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Imposta Autenticazione Multi-Fattore',

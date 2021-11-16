@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Ova e-mail adresa se ne može koristiti u ovoj aplikaciji',
     'register_success' => 'Hvala na prijavi! Sada ste registrirani i prijavljeni.',
 
-
     // Password Reset
     'reset_password' => 'Promijenite lozinku',
     'reset_password_send_instructions' => 'Upišite svoju e-mail adresu kako biste primili poveznicu za promjenu lozinke.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Primili ste ovu poruku jer je zatražena promjena lozinke za vaš račun.',
     'email_reset_not_requested' => 'Ako niste tražili promjenu lozinke slobodno zanemarite ovu poruku.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Potvrdite svoju e-mail adresu na :appName',
     'email_confirm_greeting' => 'Hvala na prijavi :appName!',
     'email_confirm_text' => 'Molimo potvrdite svoju e-mail adresu klikom na donji gumb.',
     'email_confirm_action' => 'Potvrdi Email',
     'email_confirm_send_error' => 'Potvrda e-mail adrese je obavezna, ali sustav ne može poslati e-mail. Javite se administratoru kako bi provjerio vaš e-mail.',
-    'email_confirm_success' => 'Vaš e-mail adresa je potvrđena!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Ponovno je poslana potvrda. Molimo, provjerite svoj inbox.',
 
     'email_not_confirmed' => 'E-mail adresa nije potvrđena.',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Dobrodošli u :appName!',
     'user_invite_page_text' => 'Da biste postavili račun i dobili pristup trebate unijeti lozinku kojom ćete se ubuduće prijaviti na :appName.',
     'user_invite_page_confirm_button' => 'Potvrdite lozinku',
-    'user_invite_success' => 'Lozinka je postavljena, možete pristupiti :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

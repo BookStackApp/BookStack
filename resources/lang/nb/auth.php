@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Du kan ikke bruke det domenet for å registrere en konto.',
     'register_success' => 'Takk for registreringen! Du kan nå logge inn på tjenesten.',
 
-
     // Password Reset
     'reset_password' => 'Nullstille passord',
     'reset_password_send_instructions' => 'Oppgi e-posten som er koblet til kontoen din, så sender vi en epost hvor du kan nullstille passordet.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Du mottar denne eposten fordi det er blitt bedt om en nullstilling av passord på denne kontoen.',
     'email_reset_not_requested' => 'Om det ikke var deg, så trenger du ikke foreta deg noe.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Bekreft epost-adressen for :appName',
     'email_confirm_greeting' => 'Takk for at du registrerte deg for :appName!',
     'email_confirm_text' => 'Bekreft e-posten din ved å trykke på knappen nedenfor:',
     'email_confirm_action' => 'Bekreft e-post',
     'email_confirm_send_error' => 'Bekreftelse er krevd av systemet, men systemet kan ikke sende disse. Kontakt admin for å løse problemet.',
-    'email_confirm_success' => 'E-posten din er bekreftet!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Bekreftelsespost ble sendt, sjekk innboksen din.',
 
     'email_not_confirmed' => 'E-posten er ikke bekreftet.',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Velkommen til :appName!',
     'user_invite_page_text' => 'For å fullføre prosessen må du oppgi et passord som sikrer din konto på :appName for fremtidige besøk.',
     'user_invite_page_confirm_button' => 'Bekreft passord',
-    'user_invite_success' => 'Passordet er angitt, du kan nå bruke :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Konfigurer flerfaktor-autentisering',

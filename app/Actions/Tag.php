@@ -3,10 +3,19 @@
 namespace BookStack\Actions;
 
 use BookStack\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property int    $id
+ * @property string $name
+ * @property string $value
+ * @property int    $order
+ */
 class Tag extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'value', 'order'];
     protected $hidden = ['id', 'entity_id', 'entity_type', 'created_at', 'updated_at'];
 

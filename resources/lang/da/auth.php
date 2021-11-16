@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'E-Mail domænet har ikke adgang til denne applikation',
     'register_success' => 'Tak for din registrering. Du er nu registeret og logget ind.',
 
-
     // Password Reset
     'reset_password' => 'Nulstil adgangskode',
     'reset_password_send_instructions' => 'Indtast din E-Mail herunder og du vil blive sendt en E-Mail med et link til at nulstille din adgangskode.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Du modtager denne E-Mail fordi vi har modtaget en anmodning om at nulstille din adgangskode.',
     'email_reset_not_requested' => 'Hvis du ikke har anmodet om at få din adgangskode nulstillet, behøver du ikke at foretage dig noget.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Bekræft din E-Mail på :appName',
     'email_confirm_greeting' => 'Tak for at oprette dig på :appName!',
     'email_confirm_text' => 'Bekræft venligst din E-Mail adresse ved at klikke på linket nedenfor:',
     'email_confirm_action' => 'Bekræft E-Mail',
     'email_confirm_send_error' => 'E-Mail-bekræftelse kræves, men systemet kunne ikke sende E-Mailen. Kontakt administratoren for at sikre, at E-Mail er konfigureret korrekt.',
-    'email_confirm_success' => 'Din E-Mail er blevet bekræftet!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Bekræftelsesmail sendt, tjek venligst din indboks.',
 
     'email_not_confirmed' => 'E-Mail adresse ikke bekræftet',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Velkommen til :appName!',
     'user_invite_page_text' => 'For at færdiggøre din konto og få adgang skal du indstille en adgangskode, der bruges til at logge ind på :appName ved fremtidige besøg.',
     'user_invite_page_confirm_button' => 'Bekræft adgangskode',
-    'user_invite_success' => 'Adgangskode indstillet, du har nu adgang til :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Opsætning af Multi-faktor godkendelse',

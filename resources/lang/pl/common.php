@@ -20,7 +20,7 @@ return [
     'role' => 'Rola',
     'cover_image' => 'Zdjęcie z okładki',
     'cover_image_description' => 'Ten obraz powinien posiadać wymiary około 440x250px.',
-    
+
     // Actions
     'actions' => 'Akcje',
     'view' => 'Widok',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Usuń z ulubionych',
     'next' => 'Dalej',
     'previous' => 'Wstecz',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Opcje sortowania',

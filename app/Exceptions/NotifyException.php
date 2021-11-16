@@ -23,7 +23,7 @@ class NotifyException extends Exception implements Responsable
     /**
      * Send the response for this type of exception.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function toResponse($request)
     {
