@@ -267,7 +267,7 @@ return [
     'tags_all_values' => '所有值',
     'tags_view_tags' => '查看标签',
     'tags_view_existing_tags' => '查看已有的标签',
-    'tags_list_empty_hint' => '你可以在页面编辑器的侧边栏添加标签，或者在编辑图书、章节、书架时添加。',
+    'tags_list_empty_hint' => '您可以在页面编辑器的侧边栏添加标签，或者在编辑图书、章节、书架时添加。',
     'attachments' => '附件',
     'attachments_explain' => '上传一些文件或附加一些链接显示在您的网页上。这些在页面的侧边栏中可见。',
     'attachments_explain_instant_save' => '这里的更改将立即保存。',
