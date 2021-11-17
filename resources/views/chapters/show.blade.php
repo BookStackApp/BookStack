@@ -107,6 +107,10 @@
                     <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>
+                <a href="{{ $chapter->getUrl('/sort') }}" class="icon-list-item">
+                    <span>@icon('sort')</span>
+                    <span>{{ trans('common.sort') }}</span>
+                </a>
             @endif
             @if(userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter))
                 <a href="{{ $chapter->getUrl('/move') }}" class="icon-list-item">

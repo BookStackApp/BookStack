@@ -103,6 +103,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@permissions');
         Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', 'ChapterController@showDelete');
         Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/sort', 'ChapterSortController@show');
+        Route::get('/{bookSlug}/chapter/{chapterSlug}/sort-item', 'ChapterSortController@showItem');
+        Route::put('/{bookSlug}/chapter/{chapterSlug}/sort', 'ChapterSortController@update');
     });
 
     // User Profile routes

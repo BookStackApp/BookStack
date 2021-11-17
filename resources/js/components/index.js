@@ -6,6 +6,7 @@ import attachmentsList from "./attachments-list.js"
 import autoSuggest from "./auto-suggest.js"
 import backToTop from "./back-to-top.js"
 import bookSort from "./book-sort.js"
+import chapterSort from "./chapter-sort.js"
 import chapterToggle from "./chapter-toggle.js"
 import codeEditor from "./code-editor.js"
 import codeHighlighter from "./code-highlighter.js"
@@ -61,6 +62,7 @@ const componentMapping = {
     "auto-suggest": autoSuggest,
     "back-to-top": backToTop,
     "book-sort": bookSort,
+    "chapter-sort": chapterSort,
     "chapter-toggle": chapterToggle,
     "code-editor": codeEditor,
     "code-highlighter": codeHighlighter,

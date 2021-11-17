@@ -166,6 +166,15 @@ return [
     'chapters_permissions_active' => 'Chapter Permissions Active',
     'chapters_permissions_success' => 'Chapter Permissions Updated',
     'chapters_search_this' => 'Search this chapter',
+    'chapters_sort' => 'Sort Book Contents',
+    'chapters_sort_named' => 'Sort Book :bookName',
+    'chapters_sort_name' => 'Sort by Name',
+    'chapters_sort_created' => 'Sort by Created Date',
+    'chapters_sort_updated' => 'Sort by Updated Date',
+    'chapters_sort_pages_first' => 'Pages First',
+    'chapters_sort_pages_last' => 'Pages Last',
+    'chapters_sort_show_other' => 'Show Other Chapters',
+    'chapters_sort_save' => 'Save New Order',
 
     // Pages
     'page' => 'Page',

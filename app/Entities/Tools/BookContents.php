@@ -140,6 +140,41 @@ class BookContents
         return $booksInvolved;
     }
 
+    // TODO: Update the function based on chapter content.
+    public function sortChapterUsingMap(Collection $sortMap): Collection
+    {
+        // Load models into map
+        $this->loadModelsIntoSortMap($sortMap);
+        $booksInvolved = $this->getChaptersInvolvedInSort($sortMap);
+
+        // Perform the sort
+        $sortMap->each(function ($mapItem) {
+            $this->applyChapterSortUpdates($mapItem);
+        });
+
+        // Update permissions and activity.
+        $booksInvolved->each(function (Book $book) {
+            $book->rebuildPermissions();
+        });
+
+        return $booksInvolved;
+    }
+    // TODO: Update the function based on chapter content.
+    protected function getChaptersInvolvedInSort(Collection $sortMap): Collection
+    {
+        $chapterIdsInvolved = collect([$this->chapter->id]);
+        $chapterIdsInvolved = $chapterIdsInvolved->concat($sortMap->pluck('chapter'));
+        $chapterIdsInvolved = $chapterIdsInvolved->concat($sortMap->pluck('model.chapter_id'));
+        $chapterIdsInvolved = $chapterIdsInvolved->unique()->toArray();
+
+        $chapters = Chapter::hasPermission('update')->whereIn('id', $chapterIdsInvolved)->get();
+
+        if (count($chapters) !== count($chapterIdsInvolved)) {
+            throw new SortOperationException('Could not find all chapter requested in sort operation');
+        }
+
+        return $chapters;
+    }
     /**
      * Using the given sort map item, detect changes for the related model
      * and update it if required.
@@ -156,6 +191,31 @@ class BookContents
         if ($bookChanged) {
             $model->changeBook($sortMapItem->book);
         }
+
+        if ($chapterChanged) {
+            $model->chapter_id = intval($sortMapItem->parentChapter);
+            $model->save();
+        }
+
+        if ($priorityChanged) {
+            $model->priority = intval($sortMapItem->sort);
+            $model->save();
+        }
+    }
+
+    // TODO: Update the function based on chapter content.
+    protected function applyChapterSortUpdates(\stdClass $sortMapItem)
+    {
+        /** @var BookChild $model */
+        $model = $sortMapItem->model;
+
+        $priorityChanged = intval($model->priority) !== intval($sortMapItem->sort);
+        // $bookChanged = intval($model->book_id) !== intval($sortMapItem->book);
+        $chapterChanged = ($sortMapItem->type === 'page') && intval($model->chapter_id) !== $sortMapItem->parentChapter;
+
+        // if ($bookChanged) {
+        //     $model->changeBook($sortMapItem->book);
+        // }
 
         if ($chapterChanged) {
             $model->chapter_id = intval($sortMapItem->parentChapter);

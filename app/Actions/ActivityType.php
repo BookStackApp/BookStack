@@ -14,6 +14,7 @@ class ActivityType
     const CHAPTER_UPDATE = 'chapter_update';
     const CHAPTER_DELETE = 'chapter_delete';
     const CHAPTER_MOVE = 'chapter_move';
+    const CHAPTER_SORT = 'chapter_sort';
 
     const BOOK_CREATE = 'book_create';
     const BOOK_UPDATE = 'book_update';
