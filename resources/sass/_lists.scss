@@ -185,6 +185,7 @@
     padding-bottom: $-xxs;
     background-clip: content-box;
     border-radius: 0 3px 3px 0;
+    padding-inline-end: 0;
     .content {
       padding-top: $-xs;
       padding-bottom: $-xs;
@@ -201,6 +202,7 @@
   .entity-list-item-name {
     font-size: 1em;
     margin: 0;
+    margin-inline-end: $-m;
   }
   .chapter-child-menu {
     font-size: .8rem;

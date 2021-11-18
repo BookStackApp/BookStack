@@ -44,7 +44,7 @@
 </p>
 <table class="table">
     <tr>
-        <th>Parameter</th>
+        <th width="110">Parameter</th>
         <th>Details</th>
         <th width="30%">Examples</th>
     </tr>

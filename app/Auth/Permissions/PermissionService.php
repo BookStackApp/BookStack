@@ -603,7 +603,7 @@ class PermissionService
     /**
      * Filter items that have entities set as a polymorphic relation.
      *
-     * @param Builder|\Illuminate\Database\Query\Builder $query
+     * @param Builder|QueryBuilder $query
      */
     public function filterRestrictedEntityRelations($query, string $tableName, string $entityIdColumn, string $entityTypeColumn, string $action = 'view')
     {
@@ -611,9 +611,10 @@ class PermissionService
 
         $q = $query->where(function ($query) use ($tableDetails, $action) {
             $query->whereExists(function ($permissionQuery) use (&$tableDetails, $action) {
+                /** @var Builder $permissionQuery */
                 $permissionQuery->select(['role_id'])->from('joint_permissions')
-                    ->whereRaw('joint_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                    ->whereRaw('joint_permissions.entity_type=' . $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
+                    ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                    ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
                     ->where('action', '=', $action)
                     ->whereIn('role_id', $this->getCurrentUserRoles())
                     ->where(function (QueryBuilder $query) {
@@ -639,8 +640,9 @@ class PermissionService
         $q = $query->where(function ($query) use ($tableDetails, $morphClass) {
             $query->where(function ($query) use (&$tableDetails, $morphClass) {
                 $query->whereExists(function ($permissionQuery) use (&$tableDetails, $morphClass) {
+                    /** @var Builder $permissionQuery */
                     $permissionQuery->select('id')->from('joint_permissions')
-                        ->whereRaw('joint_permissions.entity_id=' . $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                        ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where('entity_type', '=', $morphClass)
                         ->where('action', '=', 'view')
                         ->whereIn('role_id', $this->getCurrentUserRoles())

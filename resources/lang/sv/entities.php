@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Ny sida',
     'pages_editing_draft_notification' => 'Du redigerar just nu ett utkast som senast sparades :timeDiff.',
     'pages_draft_edited_notification' => 'Denna sida har uppdaterats sen dess. Vi rekommenderar att du förkastar dina ändringar.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count har börjat redigera den här sidan',
         'start_b' => ':userName har börjat redigera den här sidan',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Lägg till taggar för att kategorisera ditt innehåll bättre. \n Du kan tilldela ett värde till en tagg för ännu bättre organisering.",
     'tags_add' => 'Lägg till ännu en tagg',
     'tags_remove' => 'Ta bort denna etikett',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Bilagor',
     'attachments_explain' => 'Ladda upp filer eller bifoga länkar till ditt innehåll. Dessa visas i sidokolumnen.',
     'attachments_explain_instant_save' => 'Ändringar här sparas omgående.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?',
     'revision_restore_confirm' => 'Är du säker på att du vill använda denna revision? Det nuvarande innehållet kommer att ersättas.',
     'revision_delete_success' => 'Revisionen raderad',
-    'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.'
+    'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.',
 ];

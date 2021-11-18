@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Új oldal',
     'pages_editing_draft_notification' => 'A jelenleg szerkesztett vázlat legutóbb ekkor volt elmentve: :timeDiff.',
     'pages_draft_edited_notification' => 'Ezt az oldalt azóta már frissítették. Javasolt ennek a vázlatnak az elvetése.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count felhasználók kezdte el szerkeszteni ezt az oldalt',
         'start_b' => ':userName elkezdte szerkeszteni ezt az oldalt',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Címkék hozzáadása a tartalom jobb kategorizálásához.\nA mélyebb szervezettség megvalósításához hozzá lehet rendelni egy értéket a címkéhez.",
     'tags_add' => 'Másik címke hozzáadása',
     'tags_remove' => 'Címke eltávolítása',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Csatolmányok',
     'attachments_explain' => 'Az oldalon megjelenő fájlok feltöltése vagy hivatkozások csatolása. Az oldal oldalsávjában fognak megjelenni.',
     'attachments_explain_instant_save' => 'Az itt történt módosítások azonnal el lesznek mentve.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Biztosan törölhető ez a változat?',
     'revision_restore_confirm' => 'Biztosan visszaállítható ez a változat? A oldal jelenlegi tartalma le lesz cserélve.',
     'revision_delete_success' => 'Változat törölve',
-    'revision_cannot_delete_latest' => 'A legutolsó változat nem törölhető.'
+    'revision_cannot_delete_latest' => 'A legutolsó változat nem törölhető.',
 ];

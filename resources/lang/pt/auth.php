@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'O domínio de e-mail usado não tem acesso permitido a esta aplicação',
     'register_success' => 'Obrigado por se registar! Você está agora registado e com a sessão iniciada.',
 
-
     // Password Reset
     'reset_password' => 'Redefinir Senha',
     'reset_password_send_instructions' => 'Insira o seu endereço de e-mail abaixo, e uma mensagem com o link de redefinição de palavra-passe será lhe enviada.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Você recebeu este e-mail pois recebemos uma solicitação de redefinição de senha para a sua conta.',
     'email_reset_not_requested' => 'Caso não tenha sido você a solicitar a redefinição de senha, ignore este e-mail.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Confirme o seu endereço de e-mail para :appName',
     'email_confirm_greeting' => 'Obrigado por se registar em :appName!',
     'email_confirm_text' => 'Por favor, confirme o seu endereço de e-mail ao carregar no botão abaixo:',
     'email_confirm_action' => 'Confirmar E-mail',
     'email_confirm_send_error' => 'A confirmação do endereço de e-mail é requerida, mas o sistema não pôde enviar a mensagem. Por favor, entre em contacto com o administrador para se certificar que o serviço de envio de e-mails está corretamente configurado.',
-    'email_confirm_success' => 'O seu endereço de e-mail foi confirmado!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'E-mail de confirmação reenviado. Por favor, verifique a sua caixa de entrada.',
 
     'email_not_confirmed' => 'Endereço de E-mail Não Confirmado',
@@ -73,15 +71,15 @@ return [
     'user_invite_page_welcome' => 'Bem-vindo(a) a :appName!',
     'user_invite_page_text' => 'Para finalizar a sua conta e obter acesso, precisa de definir uma senha que será utilizada para efetuar login em :appName em visitas futuras.',
     'user_invite_page_confirm_button' => 'Confirmar Palavra-Passe',
-    'user_invite_success' => 'Palavra-passe definida, tem agora acesso a :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
-    'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'mfa_setup_configured' => 'Already configured',
-    'mfa_setup_reconfigure' => 'Reconfigure',
-    'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
-    'mfa_setup_action' => 'Setup',
+    'mfa_setup' => 'Configurar autenticação de múltiplos fatores',
+    'mfa_setup_desc' => 'Configure a autenticação multi-fatores como uma camada extra de segurança para sua conta de utilizador.',
+    'mfa_setup_configured' => 'Já configurado',
+    'mfa_setup_reconfigure' => 'Reconfigurar',
+    'mfa_setup_remove_confirmation' => 'Tem a certeza que deseja remover este método de autenticação de múltiplos fatores?',
+    'mfa_setup_action' => 'Configuração',
     'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
     'mfa_option_totp_title' => 'Mobile App',
     'mfa_option_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',

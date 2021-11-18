@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nova Página',
     'pages_editing_draft_notification' => 'Você está atualmente editando um rascunho que foi salvo da última vez em :timeDiff.',
     'pages_draft_edited_notification' => 'Essa página foi atualizada desde então. É recomendado que você descarte esse rascunho.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count usuários iniciaram a edição dessa página',
         'start_b' => ':userName iniciou a edição dessa página',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Adicione algumas tags para melhor categorizar seu conteúdo. \n Você pode atribuir valores às tags para uma organização mais complexa.",
     'tags_add' => 'Adicionar outra tag',
     'tags_remove' => 'Remover essa tag',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Anexos',
     'attachments_explain' => 'Faça o upload de alguns arquivos ou anexe links para serem exibidos na sua página. Eles estarão visíveis na barra lateral à direita.',
     'attachments_explain_instant_save' => 'Mudanças são salvas instantaneamente.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Tem certeza de que deseja excluir esta revisão?',
     'revision_restore_confirm' => 'Tem certeza que deseja restaurar esta revisão? O conteúdo atual da página será substituído.',
     'revision_delete_success' => 'Revisão excluída',
-    'revision_cannot_delete_latest' => 'Não é possível excluir a revisão mais recente.'
+    'revision_cannot_delete_latest' => 'Não é possível excluir a revisão mais recente.',
 ];

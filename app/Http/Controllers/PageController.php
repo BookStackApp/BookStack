@@ -60,7 +60,7 @@ class PageController extends Controller
     public function createAsGuest(Request $request, string $bookSlug, string $chapterSlug = null)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
         ]);
 
         $parent = $this->pageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
@@ -107,7 +107,7 @@ class PageController extends Controller
     public function store(Request $request, string $bookSlug, int $pageId)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
         ]);
         $draftPage = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-create', $draftPage->getParent());
@@ -176,7 +176,7 @@ class PageController extends Controller
     {
         $page = $this->pageRepo->getById($pageId);
         $page->setHidden(array_diff($page->getHidden(), ['html', 'markdown']));
-        $page->addHidden(['book']);
+        $page->makeHidden(['book']);
 
         return response()->json($page);
     }
@@ -234,7 +234,7 @@ class PageController extends Controller
     public function update(Request $request, string $bookSlug, string $pageSlug)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
         ]);
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
@@ -259,13 +259,13 @@ class PageController extends Controller
         }
 
         $draft = $this->pageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
-
-        $updateTime = $draft->updated_at->timestamp;
+        $warnings = (new PageEditActivity($page))->getWarningMessagesForDraft($draft);
 
         return response()->json([
             'status'    => 'success',
             'message'   => trans('entities.pages_edit_draft_save_at'),
-            'timestamp' => $updateTime,
+            'warning'   => implode("\n", $warnings),
+            'timestamp' => $draft->updated_at->timestamp,
         ]);
     }
 

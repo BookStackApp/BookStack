@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => '维护',
     'maint_image_cleanup' => '清理图像',
-    'maint_image_cleanup_desc' => "扫描页面和修订内容以检查哪些图片是正在使用的以及哪些图片是多余的。确保在运行前完整备份数据库和图片。",
+    'maint_image_cleanup_desc' => '扫描页面和修订内容以检查哪些图片是正在使用的以及哪些图片是多余的。确保在运行前完整备份数据库和图片。',
     'maint_delete_images_only_in_revisions' => '同时删除只存在于旧的页面修订中的图片',
     'maint_image_cleanup_run' => '运行清理',
     'maint_image_cleanup_warning' => '发现了 :count 张可能未使用的图像。您确定要删除这些图像吗？',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => '用户',
     'audit_table_event' => '事件',
     'audit_table_related' => '相关项目或详细信息',
+    'audit_table_ip' => 'IP地址',
     'audit_table_date' => '活动日期',
     'audit_date_from' => '日期范围从',
     'audit_date_to' => '日期范围至',
@@ -208,8 +209,8 @@ return [
     'users_api_tokens_docs' => 'API文档',
     'users_mfa' => '多重身份认证',
     'users_mfa_desc' => '设置多重身份认证能增加您账户的安全性。',
-    'users_mfa_x_methods' => ':count 方法已配置|:count 方法已配置',
-    'users_mfa_configure' => '配置方法',
+    'users_mfa_x_methods' => ':count 个措施已配置|:count 个措施已配置',
+    'users_mfa_configure' => '配置安全措施',
 
     // API Tokens
     'user_api_token_create' => '创建 API 令牌',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

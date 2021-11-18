@@ -12,7 +12,7 @@ class CheckUserHasPermission
      *
      * @param \Illuminate\Http\Request $request
      * @param \Closure                 $next
-     * @param                          $permission
+     * @param string                   $permission
      *
      * @return mixed
      */

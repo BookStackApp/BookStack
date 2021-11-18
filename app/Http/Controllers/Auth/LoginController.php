@@ -43,7 +43,8 @@ class LoginController extends Controller
     public function __construct(SocialAuthService $socialAuthService, LoginService $loginService)
     {
         $this->middleware('guest', ['only' => ['getLogin', 'login']]);
-        $this->middleware('guard:standard,ldap', ['only' => ['login', 'logout']]);
+        $this->middleware('guard:standard,ldap', ['only' => ['login']]);
+        $this->middleware('guard:standard,ldap,oidc', ['only' => ['logout']]);
 
         $this->socialAuthService = $socialAuthService;
         $this->loginService = $loginService;
@@ -175,16 +176,16 @@ class LoginController extends Controller
      */
     protected function validateLogin(Request $request)
     {
-        $rules = ['password' => 'required|string'];
+        $rules = ['password' => ['required', 'string']];
         $authMethod = config('auth.method');
 
         if ($authMethod === 'standard') {
-            $rules['email'] = 'required|email';
+            $rules['email'] = ['required', 'email'];
         }
 
         if ($authMethod === 'ldap') {
-            $rules['username'] = 'required|string';
-            $rules['email'] = 'email';
+            $rules['username'] = ['required', 'string'];
+            $rules['email'] = ['email'];
         }
 
         $request->validate($rules);

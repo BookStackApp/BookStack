@@ -7,7 +7,7 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
 use BookStack\Notifications\ConfirmEmail;
 use BookStack\Notifications\ResetPassword;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Tests\TestResponse;
@@ -44,7 +44,7 @@ class AuthTest extends TestCase
     {
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true']);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // Test form and ensure user is created
         $this->get('/register')
@@ -102,7 +102,7 @@ class AuthTest extends TestCase
 
         // Set settings and get user instance
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // Go through registration process
         $resp = $this->post('/register', $user->only('name', 'email', 'password'));
@@ -131,8 +131,8 @@ class AuthTest extends TestCase
         });
 
         // Check confirmation email confirmation activation.
-        $this->get('/register/confirm/' . $emailConfirmation->token)->assertRedirect('/');
-        $this->get('/')->assertSee($user->name);
+        $this->get('/register/confirm/' . $emailConfirmation->token)->assertRedirect('/login');
+        $this->get('/login')->assertSee('Your email has been confirmed! You should now be able to login using this email address.');
         $this->assertDatabaseMissing('email_confirmations', ['token' => $emailConfirmation->token]);
         $this->assertDatabaseHas('users', ['name' => $dbUser->name, 'email' => $dbUser->email, 'email_confirmed' => true]);
     }
@@ -140,7 +140,7 @@ class AuthTest extends TestCase
     public function test_restricted_registration()
     {
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true', 'registration-restrict' => 'example.com']);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // Go through registration process
         $this->post('/register', $user->only('name', 'email', 'password'))
@@ -166,7 +166,7 @@ class AuthTest extends TestCase
     public function test_restricted_registration_with_confirmation_disabled()
     {
         $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'false', 'registration-restrict' => 'example.com']);
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
 
         // Go through registration process
         $this->post('/register', $user->only('name', 'email', 'password'))
@@ -192,7 +192,7 @@ class AuthTest extends TestCase
     public function test_logout()
     {
         $this->asAdmin()->get('/')->assertOk();
-        $this->get('/logout')->assertRedirect('/');
+        $this->post('/logout')->assertRedirect('/');
         $this->get('/')->assertRedirect('/login');
     }
 
@@ -204,7 +204,7 @@ class AuthTest extends TestCase
         $mfaSession->markVerifiedForUser($user);
         $this->assertTrue($mfaSession->isVerifiedForUser($user));
 
-        $this->asAdmin()->get('/logout');
+        $this->asAdmin()->post('/logout');
         $this->assertFalse($mfaSession->isVerifiedForUser($user));
     }
 
@@ -282,6 +282,22 @@ class AuthTest extends TestCase
             ->assertElementContains('a', 'Sign up');
     }
 
+    public function test_reset_password_request_is_throttled()
+    {
+        $editor = $this->getEditor();
+        Notification::fake();
+        $this->get('/password/email');
+        $this->followingRedirects()->post('/password/email', [
+            'email' => $editor->email,
+        ]);
+
+        $resp = $this->followingRedirects()->post('/password/email', [
+            'email' => $editor->email,
+        ]);
+        Notification::assertTimesSent(1, ResetPassword::class);
+        $resp->assertSee('A password reset link will be sent to ' . $editor->email . ' if that email address is found in the system.');
+    }
+
     public function test_login_redirects_to_initially_requested_url_correctly()
     {
         config()->set('app.url', 'http://localhost');
@@ -318,6 +334,7 @@ class AuthTest extends TestCase
         $this->assertTrue(auth()->check());
         $this->assertTrue(auth('ldap')->check());
         $this->assertTrue(auth('saml2')->check());
+        $this->assertTrue(auth('oidc')->check());
     }
 
     public function test_login_authenticates_nonadmins_on_default_guard_only()
@@ -330,6 +347,7 @@ class AuthTest extends TestCase
         $this->assertTrue(auth()->check());
         $this->assertFalse(auth('ldap')->check());
         $this->assertFalse(auth('saml2')->check());
+        $this->assertFalse(auth('oidc')->check());
     }
 
     public function test_failed_logins_are_logged_when_message_configured()

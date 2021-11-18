@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => '데이터',
     'maint_image_cleanup' => '이미지 정리',
-    'maint_image_cleanup_desc' => "중복한 이미지를 찾습니다. 실행하기 전에 이미지를 백업하세요.",
+    'maint_image_cleanup_desc' => '중복한 이미지를 찾습니다. 실행하기 전에 이미지를 백업하세요.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => '실행',
     'maint_image_cleanup_warning' => '이미지 :count개를 지울 건가요?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => '사용자',
     'audit_table_event' => '이벤트',
     'audit_table_related' => 'Related Item or Detail',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => '활동 날짜',
     'audit_date_from' => '날짜 범위 시작',
     'audit_date_to' => '날짜 범위 끝',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => '히브리어',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

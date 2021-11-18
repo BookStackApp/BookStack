@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Manteniment',
     'maint_image_cleanup' => 'Neteja les imatges',
-    'maint_image_cleanup_desc' => "Escaneja el contingut de les pàgines i les revisions per a comprovar quines imatges i diagrames estan en ús actualment i quines imatges són redundants. Assegureu-vos de crear una còpia de seguretat completa de la base de dades i de les imatges abans d'executar això.",
+    'maint_image_cleanup_desc' => 'Escaneja el contingut de les pàgines i les revisions per a comprovar quines imatges i diagrames estan en ús actualment i quines imatges són redundants. Assegureu-vos de crear una còpia de seguretat completa de la base de dades i de les imatges abans d\'executar això.',
     'maint_delete_images_only_in_revisions' => 'Suprimeix també les imatges que només existeixin en revisions antigues de pàgines',
     'maint_image_cleanup_run' => 'Executa la neteja',
     'maint_image_cleanup_warning' => 'S\'han trobat :count imatges potencialment no utilitzades. Segur que voleu suprimir aquestes imatges?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Usuari',
     'audit_table_event' => 'Esdeveniment',
     'audit_table_related' => 'Element relacionat o detall',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Data de l\'activitat',
     'audit_date_from' => 'Rang de dates a partir de',
     'audit_date_to' => 'Rang de rates fins a',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

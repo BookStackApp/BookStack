@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Jauna lapa',
     'pages_editing_draft_notification' => 'Jūs pašlaik veicat izmaiņas melnrakstā, kurš pēdējo reizi ir saglabāts :timeDiff.',
     'pages_draft_edited_notification' => 'Šī lapa ir tikusi atjaunināta. Šo melnrakstu ieteicams atmest.',
+    'pages_draft_page_changed_since_creation' => 'Šī lapa ir izmainīta kopš šī uzmetuma izveidošanas. Ieteicams šo uzmetumu dzēst, lai netiktu pazaudētas veiktās izmaiņas.',
     'pages_draft_edit_active' => [
         'start_a' => ':count lietotāji pašlaik veic izmaiņas šajā lapā',
         'start_b' => ':userName veic izmaiņas šajā lapā',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Pievieno birkas, lai precīzāk grupētu saturu.\n Tu vari pievienot papildus vērtību birkai vēl precīzākai grupēšanai.",
     'tags_add' => 'Pievienot vēlvienu birku',
     'tags_remove' => 'Noņemt šo birku',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Pielikumi',
     'attachments_explain' => 'Augšupielādējiet dažus failus vai pievieno saites, kas tiks parādītas jūsu lapā. Tie būs redzami lapas sānjoslā.',
     'attachments_explain_instant_save' => 'Izmaiņas šeit tiek saglabātas nekavējoties.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo revīziju?',
     'revision_restore_confirm' => 'Vai tiešām vēlaties atjaunot šo revīziju? Pašreizējais lapas saturs tiks aizvietots.',
     'revision_delete_success' => 'Revīzija dzēsta',
-    'revision_cannot_delete_latest' => 'Nevar dzēst pašreizējo revīziju.'
+    'revision_cannot_delete_latest' => 'Nevar dzēst pašreizējo revīziju.',
 ];

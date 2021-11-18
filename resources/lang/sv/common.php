@@ -20,7 +20,7 @@ return [
     'role' => 'Roll',
     'cover_image' => 'Omslagsbild',
     'cover_image_description' => 'Bilden bör vara cirka 440x250px stor.',
-    
+
     // Actions
     'actions' => 'Åtgärder',
     'view' => 'Visa',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Ta bort favorit',
     'next' => 'Nästa',
     'previous' => 'Föregående',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativ',

@@ -10,8 +10,7 @@
 
 return [
 
-    // Method of authentication to use
-    // Options: standard, ldap, saml2
+    // Options: standard, ldap, saml2, oidc
     'method' => env('AUTH_METHOD', 'standard'),
 
     // Authentication Defaults
@@ -26,7 +25,7 @@ return [
     // All authentication drivers have a user provider. This defines how the
     // users are actually retrieved out of your database or other storage
     // mechanisms used by this application to persist your user's data.
-    // Supported drivers: "session", "api-token", "ldap-session"
+    // Supported drivers: "session", "api-token", "ldap-session", "async-external-session"
     'guards' => [
         'standard' => [
             'driver'   => 'session',
@@ -37,11 +36,15 @@ return [
             'provider' => 'external',
         ],
         'saml2' => [
-            'driver'   => 'saml2-session',
+            'driver'   => 'async-external-session',
+            'provider' => 'external',
+        ],
+        'oidc' => [
+            'driver'   => 'async-external-session',
             'provider' => 'external',
         ],
         'api' => [
-            'driver' => 'api-token',
+            'driver'   => 'api-token',
         ],
     ],
 
@@ -54,10 +57,16 @@ return [
             'driver' => 'eloquent',
             'model'  => \BookStack\Auth\User::class,
         ],
+
         'external' => [
             'driver' => 'external-users',
             'model'  => \BookStack\Auth\User::class,
         ],
+
+        // 'users' => [
+        //     'driver' => 'database',
+        //     'table' => 'users',
+        // ],
     ],
 
     // Resetting Passwords
@@ -70,7 +79,14 @@ return [
             'email'    => 'emails.password',
             'table'    => 'password_resets',
             'expire'   => 60,
+            'throttle' => 60,
         ],
     ],
+
+    // Password Confirmation Timeout
+    // Here you may define the amount of seconds before a password confirmation
+    // times out and the user is prompted to re-enter their password via the
+    // confirmation screen. By default, the timeout lasts for three hours.
+    'password_timeout' => 10800,
 
 ];

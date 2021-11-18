@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Pàgina nova',
     'pages_editing_draft_notification' => 'Esteu editant un esborrany que es va desar per darrer cop :timeDiff.',
     'pages_draft_edited_notification' => 'Aquesta pàgina s\'ha actualitzat d\'ençà d\'aleshores. Us recomanem que descarteu aquest esborrany.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count usuaris han començat a editar aquesta pàgina',
         'start_b' => ':userName ha començat a editar aquesta pàgina',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Afegiu etiquetes per a categoritzar millor el contingut. \n Podeu assignar un valor a cada etiqueta per a una organització més detallada.",
     'tags_add' => 'Afegeix una altra etiqueta',
     'tags_remove' => 'Elimina aquesta etiqueta',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Adjuncions',
     'attachments_explain' => 'Pugeu fitxers o adjunteu enllaços per a mostrar-los a la pàgina. Són visibles a la barra lateral de la pàgina.',
     'attachments_explain_instant_save' => 'Els canvis fets aquí es desen instantàniament.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Segur que voleu suprimir aquesta revisió?',
     'revision_restore_confirm' => 'Segur que voleu restaurar aquesta revisió? Se substituirà el contingut de la pàgina actual.',
     'revision_delete_success' => 'S\'ha suprimit la revisió',
-    'revision_cannot_delete_latest' => 'No es pot suprimir la darrera revisió.'
+    'revision_cannot_delete_latest' => 'No es pot suprimir la darrera revisió.',
 ];

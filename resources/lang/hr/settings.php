@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Održavanje',
     'maint_image_cleanup' => 'Čišćenje slika',
-    'maint_image_cleanup_desc' => "Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.",
+    'maint_image_cleanup_desc' => 'Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.',
     'maint_delete_images_only_in_revisions' => 'Izbriši slike koje postoje u prijašnjim revizijama',
     'maint_image_cleanup_run' => 'Pokreni čišćenje',
     'maint_image_cleanup_warning' => ':count moguće neiskorištene slike. Jeste li sigurni da želite izbrisati ove slike?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Korisnik',
     'audit_table_event' => 'Događaj',
     'audit_table_related' => 'Povezana stavka ili detalj',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Datum aktivnosti',
     'audit_date_from' => 'Rangiraj datum od',
     'audit_date_to' => 'Rangiraj datum do',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

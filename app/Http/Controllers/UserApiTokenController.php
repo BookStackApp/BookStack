@@ -36,8 +36,8 @@ class UserApiTokenController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $this->validate($request, [
-            'name'       => 'required|max:250',
-            'expires_at' => 'date_format:Y-m-d',
+            'name'       => ['required', 'max:250'],
+            'expires_at' => ['date_format:Y-m-d'],
         ]);
 
         $user = User::query()->findOrFail($userId);
@@ -86,8 +86,8 @@ class UserApiTokenController extends Controller
     public function update(Request $request, int $userId, int $tokenId)
     {
         $this->validate($request, [
-            'name'       => 'required|max:250',
-            'expires_at' => 'date_format:Y-m-d',
+            'name'       => ['required', 'max:250'],
+            'expires_at' => ['date_format:Y-m-d'],
         ]);
 
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);

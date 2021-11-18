@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => '新頁面',
     'pages_editing_draft_notification' => '您正在編輯最後儲存為 :timeDiff 的草稿。',
     'pages_draft_edited_notification' => '此頁面已經被更新過。建議您放棄此草稿。',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count 位使用者已經開始編輯此頁面',
         'start_b' => '使用者 :userName 已經開始編輯此頁面',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "加入一些標籤以更好地對您的內容進行分類。 \n 您可以為標籤分配一個值，以進行更深入的組織。",
     'tags_add' => '新增另一個標籤',
     'tags_remove' => '移除此標籤',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => '附件',
     'attachments_explain' => '上傳一些檔案或附加連結以顯示在您的網頁上。將顯示在在頁面的側邊欄。',
     'attachments_explain_instant_save' => '此處的變動將會立刻儲存。',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => '您確定要刪除此修訂版本嗎？',
     'revision_restore_confirm' => '您確定要還原此修訂版本嗎？ 目前頁面內容將被替換。',
     'revision_delete_success' => '修訂版本已刪除',
-    'revision_cannot_delete_latest' => '無法刪除最新修訂版本。'
+    'revision_cannot_delete_latest' => '無法刪除最新修訂版本。',
 ];

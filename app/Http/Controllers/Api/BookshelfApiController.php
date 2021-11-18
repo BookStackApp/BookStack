@@ -18,14 +18,14 @@ class BookshelfApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'name'        => 'required|string|max:255',
-            'description' => 'string|max:1000',
-            'books'       => 'array',
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'books'       => ['array'],
         ],
         'update' => [
-            'name'        => 'string|min:1|max:255',
-            'description' => 'string|max:1000',
-            'books'       => 'array',
+            'name'        => ['string', 'min:1', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'books'       => ['array'],
         ],
     ];
 

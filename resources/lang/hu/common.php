@@ -20,7 +20,7 @@ return [
     'role' => 'Szerepkör',
     'cover_image' => 'Borítókép',
     'cover_image_description' => 'A kép méretének kb. 440x250px-nek kell lennie.',
-    
+
     // Actions
     'actions' => 'Műveletek',
     'view' => 'Megtekintés',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Unfavourite',
     'next' => 'Next',
     'previous' => 'Previous',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Rendezési beállítások',

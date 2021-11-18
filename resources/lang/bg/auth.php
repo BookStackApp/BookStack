@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Този емейл домейн към момента няма достъп до приложението',
     'register_success' => 'Благодарим Ви за регистрацията! В момента сте регистриран и сте вписани в приложението.',
 
-
     // Password Reset
     'reset_password' => 'Нулиране на паролата',
     'reset_password_send_instructions' => 'Въведете емейла си и ще ви бъде изпратен емейл с линк за нулиране на паролата.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Вие получихте този емейл, защото поискахте вашата парола да бъде занулена.',
     'email_reset_not_requested' => 'Ако Вие не сте поискали зануляването на паролата, няма нужда от други действия.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Потвърди емейла си за :appName',
     'email_confirm_greeting' => 'Благодарим Ви, че се присъединихте към :appName!',
     'email_confirm_text' => 'Моля, потвърдете вашия имейл адрес, като следвате връзката по-долу:',
     'email_confirm_action' => 'Потвърдете имейл',
     'email_confirm_send_error' => 'Нужно ви е потвърждение чрез емейл, но системата не успя да го изпрати. Моля свържете се с администратора, за да проверите дали вашият емейл адрес е конфигуриран правилно.',
-    'email_confirm_success' => 'Адресът на електронната ви поща е потвърден!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Беше изпратен имейл с потвърждение, Моля, проверете кутията си.',
 
     'email_not_confirmed' => 'Имейл адресът не е потвърден',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Добре дошли в :appName!',
     'user_invite_page_text' => 'За да финализирате вашият акаунт и да получите достъп трябва да определите парола, която да бъде използвана за следващия влизания в :appName.',
     'user_invite_page_confirm_button' => 'Потвърди паролата',
-    'user_invite_success' => 'Паролата е потвърдена и вече имате достъп до :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

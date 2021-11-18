@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'الصيانة',
     'maint_image_cleanup' => 'تنظيف الصور',
-    'maint_image_cleanup_desc' => "مسح الصفحة ومراجعة المحتوى للتحقق من أي الصور والرسوم المستخدمة حاليًا وأي الصور زائدة عن الحاجة. تأكد من إنشاء قاعدة بيانات كاملة و نسخة احتياطية للصور قبل تشغيل هذا.",
+    'maint_image_cleanup_desc' => 'مسح الصفحة ومراجعة المحتوى للتحقق من أي الصور والرسوم المستخدمة حاليًا وأي الصور زائدة عن الحاجة. تأكد من إنشاء قاعدة بيانات كاملة و نسخة احتياطية للصور قبل تشغيل هذا.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
     'maint_image_cleanup_run' => 'بدء التنظيف',
     'maint_image_cleanup_warning' => 'يوجد عدد :count من الصور المحتمل عدم استخدامها. تأكيد حذف الصور؟',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'المستخدم',
     'audit_table_event' => 'الحدث',
     'audit_table_related' => 'العنصر أو التفاصيل ذات الصلة',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'تاريخ النشاط',
     'audit_date_from' => 'نطاق التاريخ من',
     'audit_date_to' => 'نطاق التاريخ إلى',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

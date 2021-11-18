@@ -20,7 +20,7 @@ return [
     'role' => 'نقش',
     'cover_image' => 'تصویر روی جلد',
     'cover_image_description' => 'سایز تصویر باید 440x250 باشد.',
-    
+
     // Actions
     'actions' => 'عملیات',
     'view' => 'نمایش',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Unfavourite',
     'next' => 'بعدی',
     'previous' => 'قبلى',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'گزینه‌های مرتب سازی',

@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Halaman Baru',
     'pages_editing_draft_notification' => 'Anda sedang menyunting konsep yang terakhir disimpan :timeDiff.',
     'pages_draft_edited_notification' => 'Halaman ini telah diperbarui sejak saat itu. Anda disarankan untuk membuang draf ini.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count pengguna sudah mulai mengedit halaman ini',
         'start_b' => ':userName telah memulai menyunting halaman ini',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Tambahkan beberapa tag untuk mengkategorikan konten Anda dengan lebih baik.\n Anda dapat menetapkan nilai ke tag untuk pengaturan yang lebih mendalam.",
     'tags_add' => 'Tambahkan tag lain',
     'tags_remove' => 'Hapus tag ini',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Lampiran',
     'attachments_explain' => 'Unggah beberapa berkas atau lampirkan beberapa tautan untuk ditampilkan di laman Anda. Ini terlihat di sidebar halaman.',
     'attachments_explain_instant_save' => 'Perubahan di sini disimpan secara instan.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Anda yakin ingin menghapus revisi ini?',
     'revision_restore_confirm' => 'Apakah Anda yakin ingin memulihkan revisi ini? Konten halaman saat ini akan diganti.',
     'revision_delete_success' => 'Revisi dihapus',
-    'revision_cannot_delete_latest' => 'Tidak dapat menghapus revisi terakhir.'
+    'revision_cannot_delete_latest' => 'Tidak dapat menghapus revisi terakhir.',
 ];

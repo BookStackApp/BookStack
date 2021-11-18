@@ -74,18 +74,18 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $validationRules = [
-            'name'  => 'required',
-            'email' => 'required|email|unique:users,email',
+            'name'  => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
         ];
 
         $authMethod = config('auth.method');
         $sendInvite = ($request->get('send_invite', 'false') === 'true');
 
         if ($authMethod === 'standard' && !$sendInvite) {
-            $validationRules['password'] = 'required|min:6';
-            $validationRules['password-confirm'] = 'required|same:password';
-        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2') {
-            $validationRules['external_auth_id'] = 'required';
+            $validationRules['password'] = ['required', 'min:6'];
+            $validationRules['password-confirm'] = ['required', 'same:password'];
+        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'openid') {
+            $validationRules['external_auth_id'] = ['required'];
         }
         $this->validate($request, $validationRules);
 
@@ -93,7 +93,7 @@ class UserController extends Controller
 
         if ($authMethod === 'standard') {
             $user->password = bcrypt($request->get('password', Str::random(32)));
-        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2') {
+        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'openid') {
             $user->external_auth_id = $request->get('external_auth_id');
         }
 
@@ -156,11 +156,11 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name'             => 'min:2',
-            'email'            => 'min:2|email|unique:users,email,' . $id,
-            'password'         => 'min:6|required_with:password_confirm',
-            'password-confirm' => 'same:password|required_with:password',
+            'email'            => ['min:2', 'email', 'unique:users,email,' . $id],
+            'password'         => ['min:6', 'required_with:password_confirm'],
+            'password-confirm' => ['same:password', 'required_with:password'],
             'setting'          => 'array',
-            'profile_image'    => 'nullable|' . $this->getImageValidationRules(),
+            'profile_image'    => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
         $user = $this->userRepo->getById($id);

@@ -76,7 +76,7 @@ class SecurityHeaderTest extends TestCase
 
         $nonce = app()->make(CspService::class)->getNonce();
         $this->assertStringContainsString('nonce-' . $nonce, $scriptHeader);
-        $resp->assertSee('<script nonce="' . $nonce . '">console.log("cat");</script>');
+        $resp->assertSee('<script nonce="' . $nonce . '">console.log("cat");</script>', false);
     }
 
     public function test_script_csp_nonce_changes_per_request()
@@ -117,6 +117,15 @@ class SecurityHeaderTest extends TestCase
         $resp = $this->get('/');
         $scriptHeader = $this->getCspHeader($resp, 'base-uri');
         $this->assertEquals('base-uri \'self\'', $scriptHeader);
+    }
+
+    public function test_cache_control_headers_are_strict_on_responses_when_logged_in()
+    {
+        $this->asEditor();
+        $resp = $this->get('/');
+        $resp->assertHeader('Cache-Control', 'max-age=0, no-store, private');
+        $resp->assertHeader('Pragma', 'no-cache');
+        $resp->assertHeader('Expires', 'Sun, 12 Jul 2015 19:01:00 GMT');
     }
 
     /**

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => '維護',
     'maint_image_cleanup' => '清理圖片',
-    'maint_image_cleanup_desc' => "掃描頁面與修訂版本內容來檢查目前使用了哪些圖片，而哪些圖片又是多餘的。請確保您在執行這個動作前建立了完整的資料庫與映像檔備份。",
+    'maint_image_cleanup_desc' => '掃描頁面與修訂版本內容來檢查目前使用了哪些圖片，而哪些圖片又是多餘的。請確保您在執行這個動作前建立了完整的資料庫與映像檔備份。',
     'maint_delete_images_only_in_revisions' => '也刪除僅存在於舊的頁面修訂版本中存在的圖片',
     'maint_image_cleanup_run' => '執行清理',
     'maint_image_cleanup_warning' => '發現了 :count 張可能未使用的圖片。您確定要刪除這些圖片嗎？',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => '使用者',
     'audit_table_event' => '活動',
     'audit_table_related' => '相關的項目或詳細資訊',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => '活動日期',
     'audit_date_from' => '日期範圍，從',
     'audit_date_to' => '日期範圍，到',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => '希伯來語',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

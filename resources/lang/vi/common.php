@@ -20,7 +20,7 @@ return [
     'role' => 'Quyền',
     'cover_image' => 'Ảnh bìa',
     'cover_image_description' => 'Ảnh nên có kích thước 440x250px.',
-    
+
     // Actions
     'actions' => 'Hành động',
     'view' => 'Xem',
@@ -39,12 +39,14 @@ return [
     'reset' => 'Thiết lập lại',
     'remove' => 'Xóa bỏ',
     'add' => 'Thêm',
-    'configure' => 'Configure',
+    'configure' => 'Cấu hình',
     'fullscreen' => 'Toàn màn hình',
     'favourite' => 'Yêu thích',
     'unfavourite' => 'Bỏ yêu thích',
     'next' => 'Tiếp theo',
     'previous' => 'Trước đó',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',

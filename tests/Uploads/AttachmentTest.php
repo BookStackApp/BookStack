@@ -17,13 +17,13 @@ class AttachmentTest extends TestCase
      */
     protected function getTestFile(string $fileName): UploadedFile
     {
-        return new UploadedFile(base_path('tests/test-data/test-file.txt'), $fileName, 'text/plain', 55, null, true);
+        return new UploadedFile(base_path('tests/test-data/test-file.txt'), $fileName, 'text/plain', null, true);
     }
 
     /**
      * Uploads a file with the given name.
      */
-    protected function uploadFile(string $name, int $uploadedTo = 0): \Illuminate\Foundation\Testing\TestResponse
+    protected function uploadFile(string $name, int $uploadedTo = 0): \Illuminate\Testing\TestResponse
     {
         $file = $this->getTestFile($name);
 
@@ -42,6 +42,21 @@ class AttachmentTest extends TestCase
         ]);
 
         return Attachment::query()->latest()->first();
+    }
+
+    /**
+     * Create a new upload attachment from the given data.
+     */
+    protected function createUploadAttachment(Page $page, string $filename, string $content, string $mimeType): Attachment
+    {
+        $file = tmpfile();
+        $filePath = stream_get_meta_data($file)['uri'];
+        file_put_contents($filePath, $content);
+        $upload = new UploadedFile($filePath, $filename, $mimeType, null, true);
+
+        $this->call('POST', '/attachments/upload', ['uploaded_to' => $page->id], [], ['file' => $upload], []);
+
+        return $page->attachments()->latest()->firstOrFail();
     }
 
     /**
@@ -76,9 +91,9 @@ class AttachmentTest extends TestCase
         $upload->assertStatus(200);
 
         $attachment = Attachment::query()->orderBy('id', 'desc')->first();
-        $expectedResp['path'] = $attachment->path;
-
         $upload->assertJson($expectedResp);
+
+        $expectedResp['path'] = $attachment->path;
         $this->assertDatabaseHas('attachments', $expectedResp);
 
         $this->deleteUploads();
@@ -94,7 +109,8 @@ class AttachmentTest extends TestCase
 
         $attachment = Attachment::query()->orderBy('id', 'desc')->first();
         $this->assertStringNotContainsString($fileName, $attachment->path);
-        $this->assertStringEndsWith('.txt', $attachment->path);
+        $this->assertStringEndsWith('-txt', $attachment->path);
+        $this->deleteUploads();
     }
 
     public function test_file_display_and_access()
@@ -305,6 +321,22 @@ class AttachmentTest extends TestCase
         // http-foundation/Response does some 'fixing' of responses to add charsets to text responses.
         $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
         $attachmentGet->assertHeader('Content-Disposition', 'inline; filename="upload_test_file.txt"');
+        $attachmentGet->assertHeader('X-Content-Type-Options', 'nosniff');
+
+        $this->deleteUploads();
+    }
+
+    public function test_html_file_access_with_open_forces_plain_content_type()
+    {
+        $page = Page::query()->first();
+        $this->asAdmin();
+
+        $attachment = $this->createUploadAttachment($page, 'test_file.html', '<html></html><p>testing</p>', 'text/html');
+
+        $attachmentGet = $this->get($attachment->getUrl(true));
+        // http-foundation/Response does some 'fixing' of responses to add charsets to text responses.
+        $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
+        $attachmentGet->assertHeader('Content-Disposition', 'inline; filename="test_file.html"');
 
         $this->deleteUploads();
     }

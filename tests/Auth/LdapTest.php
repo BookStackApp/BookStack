@@ -20,7 +20,7 @@ class LdapTest extends TestCase
     protected $mockUser;
     protected $resourceId = 'resource-test';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         if (!defined('LDAP_OPT_REFERRALS')) {
@@ -42,7 +42,7 @@ class LdapTest extends TestCase
         ]);
         $this->mockLdap = \Mockery::mock(Ldap::class);
         $this->app[Ldap::class] = $this->mockLdap;
-        $this->mockUser = factory(User::class)->make();
+        $this->mockUser = User::factory()->make();
     }
 
     protected function runFailedAuthLogin()
@@ -264,9 +264,9 @@ class LdapTest extends TestCase
 
     public function test_login_maps_roles_and_retains_existing_roles()
     {
-        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
-        $roleToReceive2 = factory(Role::class)->create(['display_name' => 'LdapTester Second']);
-        $existingRole = factory(Role::class)->create(['display_name' => 'ldaptester-existing']);
+        $roleToReceive = Role::factory()->create(['display_name' => 'LdapTester']);
+        $roleToReceive2 = Role::factory()->create(['display_name' => 'LdapTester Second']);
+        $existingRole = Role::factory()->create(['display_name' => 'ldaptester-existing']);
         $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
         $this->mockUser->attachRole($existingRole);
 
@@ -310,8 +310,8 @@ class LdapTest extends TestCase
 
     public function test_login_maps_roles_and_removes_old_roles_if_set()
     {
-        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
-        $existingRole = factory(Role::class)->create(['display_name' => 'ldaptester-existing']);
+        $roleToReceive = Role::factory()->create(['display_name' => 'LdapTester']);
+        $existingRole = Role::factory()->create(['display_name' => 'ldaptester-existing']);
         $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
         $this->mockUser->attachRole($existingRole);
 
@@ -350,15 +350,15 @@ class LdapTest extends TestCase
 
     public function test_external_auth_id_visible_in_roles_page_when_ldap_active()
     {
-        $role = factory(Role::class)->create(['display_name' => 'ldaptester', 'external_auth_id' => 'ex-auth-a, test-second-param']);
+        $role = Role::factory()->create(['display_name' => 'ldaptester', 'external_auth_id' => 'ex-auth-a, test-second-param']);
         $this->asAdmin()->get('/settings/roles/' . $role->id)
             ->assertSee('ex-auth-a');
     }
 
     public function test_login_maps_roles_using_external_auth_ids_if_set()
     {
-        $roleToReceive = factory(Role::class)->create(['display_name' => 'ldaptester', 'external_auth_id' => 'test-second-param, ex-auth-a']);
-        $roleToNotReceive = factory(Role::class)->create(['display_name' => 'ex-auth-a', 'external_auth_id' => 'test-second-param']);
+        $roleToReceive = Role::factory()->create(['display_name' => 'ldaptester', 'external_auth_id' => 'test-second-param, ex-auth-a']);
+        $roleToNotReceive = Role::factory()->create(['display_name' => 'ex-auth-a', 'external_auth_id' => 'test-second-param']);
 
         app('config')->set([
             'services.ldap.user_to_groups'     => true,
@@ -395,8 +395,8 @@ class LdapTest extends TestCase
 
     public function test_login_group_mapping_does_not_conflict_with_default_role()
     {
-        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
-        $roleToReceive2 = factory(Role::class)->create(['display_name' => 'LdapTester Second']);
+        $roleToReceive = Role::factory()->create(['display_name' => 'LdapTester']);
+        $roleToReceive2 = Role::factory()->create(['display_name' => 'LdapTester Second']);
         $this->mockUser->forceFill(['external_auth_id' => $this->mockUser->name])->save();
 
         setting()->put('registration-role', $roleToReceive->id);
@@ -641,8 +641,8 @@ class LdapTest extends TestCase
 
     public function test_login_with_email_confirmation_required_maps_groups_but_shows_confirmation_screen()
     {
-        $roleToReceive = factory(Role::class)->create(['display_name' => 'LdapTester']);
-        $user = factory(User::class)->make();
+        $roleToReceive = Role::factory()->create(['display_name' => 'LdapTester']);
+        $user = User::factory()->make();
         setting()->put('registration-confirmation', 'true');
 
         app('config')->set([

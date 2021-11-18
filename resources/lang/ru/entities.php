@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Новая страница',
     'pages_editing_draft_notification' => 'В настоящее время вы редактируете черновик, который был сохранён :timeDiff.',
     'pages_draft_edited_notification' => 'Эта страница была обновлена до этого момента. Рекомендуется отменить этот черновик.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count пользователей начали редактирование этой страницы',
         'start_b' => ':userName начал редактирование этой страницы',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Добавьте теги, чтобы лучше классифицировать ваш контент. \\n Вы можете присвоить значение тегу для более глубокой организации.",
     'tags_add' => 'Добавить тег',
     'tags_remove' => 'Удалить этот тег',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Вложения',
     'attachments_explain' => 'Загрузите несколько файлов или добавьте ссылку для отображения на своей странице. Они видны на боковой панели страницы.',
     'attachments_explain_instant_save' => 'Изменения здесь сохраняются мгновенно.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Удалить эту версию?',
     'revision_restore_confirm' => 'Вы уверены, что хотите восстановить эту версию? Текущее содержимое страницы будет заменено.',
     'revision_delete_success' => 'Версия удалена',
-    'revision_cannot_delete_latest' => 'Нельзя удалить последнюю версию.'
+    'revision_cannot_delete_latest' => 'Нельзя удалить последнюю версию.',
 ];

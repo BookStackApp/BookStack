@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'תחזוקה',
     'maint_image_cleanup' => 'ניקוי תמונות',
-    'maint_image_cleanup_desc' => "סורק את הדפים והגרסאות על מנת למצוא אילו תמונות לא בשימוש. יש לוודא גיבוי מלא של מסד הנתונים והתמונות לפני הרצה",
+    'maint_image_cleanup_desc' => 'סורק את הדפים והגרסאות על מנת למצוא אילו תמונות לא בשימוש. יש לוודא גיבוי מלא של מסד הנתונים והתמונות לפני הרצה',
     'maint_delete_images_only_in_revisions' => 'מחק בנוסף תמונות שקיימות בגרסאות ישנות של הדף בלבד',
     'maint_image_cleanup_run' => 'הפעל ניקוי תמונות',
     'maint_image_cleanup_warning' => 'נמצאו כ :count תמונות אשר לא בשימוש האם ברצונך להמשיך?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'משתמש',
     'audit_table_event' => 'אירוע',
     'audit_table_related' => 'פריט או פרט קשור',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'זמן הפעילות',
     'audit_date_from' => 'טווח תאריכים החל מ...',
     'audit_date_to' => 'טווח תאריכים עד ל...',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

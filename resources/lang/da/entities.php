@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Ny side',
     'pages_editing_draft_notification' => 'Du redigerer en kladde der sidst var gemt :timeDiff.',
     'pages_draft_edited_notification' => 'Siden har været opdateret siden da. Det er anbefalet at du kasserer denne kladde.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count brugerer har begyndt at redigere denne side',
         'start_b' => ':userName er begyndt at redigere denne side',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Tilføj nogle tags for bedre at kategorisere dit indhold. \n Du kan tildele en værdi til et tag for mere dybdegående organisering.",
     'tags_add' => 'Tilføj endnu et tag',
     'tags_remove' => 'Fjern dette tag',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Vedhæftninger',
     'attachments_explain' => 'Upload nogle filer, eller vedhæft nogle links, der skal vises på siden. Disse er synlige i sidepanelet.',
     'attachments_explain_instant_save' => 'Ændringer her gemmes med det samme.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Er du sikker på at du vil slette denne revision?',
     'revision_restore_confirm' => 'Er du sikker på at du ønsker at gendanne denne revision? Nuværende sideindhold vil blive erstattet.',
     'revision_delete_success' => 'Revision slettet',
-    'revision_cannot_delete_latest' => 'Kan ikke slette seneste revision.'
+    'revision_cannot_delete_latest' => 'Kan ikke slette seneste revision.',
 ];

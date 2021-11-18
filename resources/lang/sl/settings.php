@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Vzdrževanje',
     'maint_image_cleanup' => 'Odstrani /počisti slike',
-    'maint_image_cleanup_desc' => "Pregleda vsebino strani in revizij ter ugotovi, katere slike in risbe so v uporabi in katere so odvečne. Preden to poženeš, naredi popolno varnostno kopijo podatkovne zbirke in slik.",
+    'maint_image_cleanup_desc' => 'Pregleda vsebino strani in revizij ter ugotovi, katere slike in risbe so v uporabi in katere so odvečne. Preden to poženeš, naredi popolno varnostno kopijo podatkovne zbirke in slik.',
     'maint_delete_images_only_in_revisions' => 'Izbriši tudi slike, ki obstajajo le v starih različicah strani',
     'maint_image_cleanup_run' => 'Zaženi čiščenje',
     'maint_image_cleanup_warning' => 'Najdenih je bilo :count verjetno neuporabljenih slik. Ali si prepričan, da želiš odstraniti izbrane slike?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Uporabnik',
     'audit_table_event' => 'Dogodek',
     'audit_table_related' => 'Povezani predmet ali podrobnost',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Datum zadnje dejavnosti',
     'audit_date_from' => 'Časovno obdobje od',
     'audit_date_to' => 'Časovno obdobje do',
@@ -248,6 +249,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -272,6 +274,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

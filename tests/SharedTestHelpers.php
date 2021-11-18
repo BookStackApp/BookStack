@@ -18,13 +18,18 @@ use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
-use Illuminate\Foundation\Testing\Assert as PHPUnit;
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Testing\Assert as PHPUnit;
 use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use Psr\Http\Client\ClientInterface;
 
 trait SharedTestHelpers
 {
@@ -122,7 +127,7 @@ trait SharedTestHelpers
     /**
      * Create and return a new test chapter.
      */
-    public function newChapter(array $input = ['name' => 'test chapter', 'description' => 'My new test chapter'], Book $book): Chapter
+    public function newChapter(array $input, Book $book): Chapter
     {
         return app(ChapterRepo::class)->create($input, $book);
     }
@@ -205,7 +210,7 @@ trait SharedTestHelpers
     protected function createNewRole(array $permissions = []): Role
     {
         $permissionRepo = app(PermissionsRepo::class);
-        $roleData = factory(Role::class)->make()->toArray();
+        $roleData = Role::factory()->make()->toArray();
         $roleData['permissions'] = array_flip($permissions);
 
         return $permissionRepo->saveNewRole($roleData);
@@ -223,9 +228,9 @@ trait SharedTestHelpers
         }
 
         $userAttrs = ['created_by' => $creatorUser->id, 'owned_by' => $creatorUser->id, 'updated_by' => $updaterUser->id];
-        $book = factory(Book::class)->create($userAttrs);
-        $chapter = factory(Chapter::class)->create(array_merge(['book_id' => $book->id], $userAttrs));
-        $page = factory(Page::class)->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
+        $book = Book::factory()->create($userAttrs);
+        $chapter = Chapter::factory()->create(array_merge(['book_id' => $book->id], $userAttrs));
+        $page = Page::factory()->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
         $restrictionService = $this->app[PermissionService::class];
         $restrictionService->buildJointPermissionsForEntity($book);
 
@@ -242,6 +247,24 @@ trait SharedTestHelpers
         $mockHttp->shouldReceive('fetch')
             ->times($times)
             ->andReturn($returnData);
+    }
+
+    /**
+     * Mock the http client used in BookStack.
+     * Returns a reference to the container which holds all history of http transactions.
+     *
+     * @link https://docs.guzzlephp.org/en/stable/testing.html#history-middleware
+     */
+    protected function &mockHttpClient(array $responses = []): array
+    {
+        $container = [];
+        $history = Middleware::history($container);
+        $mock = new MockHandler($responses);
+        $handlerStack = new HandlerStack($mock);
+        $handlerStack->push($history);
+        $this->app[ClientInterface::class] = new Client(['handler' => $handlerStack]);
+
+        return $container;
     }
 
     /**
@@ -321,6 +344,15 @@ trait SharedTestHelpers
                     $response->json(['error' => 'You do not have permission to perform the requested action.'])
                 )
             );
+    }
+
+    /**
+     * Assert that the session has a particular error notification message set.
+     */
+    protected function assertSessionError(string $message)
+    {
+        $error = session()->get('error');
+        PHPUnit::assertTrue($error === $message, "Failed asserting the session contains an error. \nFound: {$error}\nExpecting: {$message}");
     }
 
     /**

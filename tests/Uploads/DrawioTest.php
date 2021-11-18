@@ -61,7 +61,7 @@ class DrawioTest extends TestCase
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
-        $resp->assertSee('drawio-url="http://cats.com?dog=tree"');
+        $resp->assertSee('drawio-url="http://cats.com?dog=tree"', false);
     }
 
     public function test_drawio_url_can_be_disabled()
@@ -71,10 +71,10 @@ class DrawioTest extends TestCase
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
-        $resp->assertSee('drawio-url="https://embed.diagrams.net/?embed=1&amp;proto=json&amp;spin=1"');
+        $resp->assertSee('drawio-url="https://embed.diagrams.net/?embed=1&amp;proto=json&amp;spin=1"', false);
 
         config()->set('services.drawio', false);
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
-        $resp->assertDontSee('drawio-url');
+        $resp->assertDontSee('drawio-url', false);
     }
 }

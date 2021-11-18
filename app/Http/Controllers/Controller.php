@@ -5,7 +5,7 @@ namespace BookStack\Http\Controllers;
 use BookStack\Facades\Activity;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
-use finfo;
+use BookStack\Util\WebSafeMimeSniffer;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -117,8 +117,9 @@ abstract class Controller extends BaseController
     protected function downloadResponse(string $content, string $fileName): Response
     {
         return response()->make($content, 200, [
-            'Content-Type'        => 'application/octet-stream',
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Content-Type'           => 'application/octet-stream',
+            'Content-Disposition'    => 'attachment; filename="' . $fileName . '"',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 
@@ -128,12 +129,12 @@ abstract class Controller extends BaseController
      */
     protected function inlineDownloadResponse(string $content, string $fileName): Response
     {
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $mime = $finfo->buffer($content) ?: 'application/octet-stream';
+        $mime = (new WebSafeMimeSniffer())->sniff($content);
 
         return response()->make($content, 200, [
-            'Content-Type'        => $mime,
-            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            'Content-Type'           => $mime,
+            'Content-Disposition'    => 'inline; filename="' . $fileName . '"',
+            'X-Content-Type-Options' => 'nosniff',
         ]);
     }
 
@@ -164,7 +165,7 @@ abstract class Controller extends BaseController
     /**
      * Log an activity in the system.
      *
-     * @param string|Loggable
+     * @param string|Loggable $detail
      */
     protected function logActivity(string $type, $detail = ''): void
     {
@@ -174,8 +175,8 @@ abstract class Controller extends BaseController
     /**
      * Get the validation rules for image files.
      */
-    protected function getImageValidationRules(): string
+    protected function getImageValidationRules(): array
     {
-        return 'image_extension|mimes:jpeg,png,gif,webp';
+        return ['image_extension', 'mimes:jpeg,png,gif,webp', 'max:' . (config('app.upload_limit') * 1000)];
     }
 }

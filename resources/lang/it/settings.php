@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Manutenzione',
     'maint_image_cleanup' => 'Pulizia Immagini',
-    'maint_image_cleanup_desc' => "Esegue la scansione del contenuto delle pagine e delle revisioni per verificare quali immagini e disegni sono attualmente in uso e quali immagini sono ridondanti. Assicurati di creare backup completo del database e delle immagini prima di eseguire la pulizia.",
+    'maint_image_cleanup_desc' => 'Esegue la scansione del contenuto delle pagine e delle revisioni per verificare quali immagini e disegni sono attualmente in uso e quali immagini sono ridondanti. Assicurati di creare backup completo del database e delle immagini prima di eseguire la pulizia.',
     'maint_delete_images_only_in_revisions' => 'Elimina anche le immagini che esistono solo nelle vecchie revisioni della pagina',
     'maint_image_cleanup_run' => 'Esegui Pulizia',
     'maint_image_cleanup_warning' => ':count immagini potenzialmente inutilizzate sono state trovate. Sei sicuro di voler eliminare queste immagini?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Utente',
     'audit_table_event' => 'Evento',
     'audit_table_related' => 'Elemento o Dettaglio correlato',
+    'audit_table_ip' => 'Indirizzo IP',
     'audit_table_date' => 'Data attività',
     'audit_date_from' => 'Dalla data',
     'audit_date_to' => 'Alla data',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

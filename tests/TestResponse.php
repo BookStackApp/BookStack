@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Illuminate\Foundation\Testing\TestResponse as BaseTestResponse;
+use Illuminate\Testing\TestResponse as BaseTestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -47,6 +47,26 @@ class TestResponse extends BaseTestResponse
             'Unable to find element matching the selector: ' . PHP_EOL . PHP_EOL .
             "[{$selector}]" . PHP_EOL . PHP_EOL .
             'within' . PHP_EOL . PHP_EOL .
+            "[{$this->getContent()}]."
+        );
+
+        return $this;
+    }
+
+    /**
+     * Assert the response contains the given count of elements
+     * that match the given css selector.
+     *
+     * @return $this
+     */
+    public function assertElementCount(string $selector, int $count)
+    {
+        $elements = $this->crawler()->filter($selector);
+        PHPUnit::assertTrue(
+            $elements->count() === $count,
+            'Unable to ' . $count . ' element(s) matching the selector: ' . PHP_EOL . PHP_EOL .
+            "[{$selector}]" . PHP_EOL . PHP_EOL .
+            'found ' . $elements->count() . ' within' . PHP_EOL . PHP_EOL .
             "[{$this->getContent()}]."
         );
 

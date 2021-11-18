@@ -2,7 +2,6 @@
 
 namespace BookStack\Providers;
 
-use Blade;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Entities\BreadcrumbsViewComposer;
@@ -10,16 +9,22 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Exceptions\WhoopsBookStackPrettyHandler;
 use BookStack\Settings\Setting;
 use BookStack\Settings\SettingService;
 use BookStack\Util\CspService;
+use GuzzleHttp\Client;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
-use Schema;
-use URL;
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
+use Whoops\Handler\HandlerInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -56,6 +61,9 @@ class AppServiceProvider extends ServiceProvider
 
         // View Composers
         View::composer('entities.breadcrumbs', BreadcrumbsViewComposer::class);
+
+        // Set paginator to use bootstrap-style pagination
+        Paginator::useBootstrap();
     }
 
     /**
@@ -65,6 +73,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(HandlerInterface::class, function ($app) {
+            return $app->make(WhoopsBookStackPrettyHandler::class);
+        });
+
         $this->app->singleton(SettingService::class, function ($app) {
             return new SettingService($app->make(Setting::class), $app->make(Repository::class));
         });
@@ -75,6 +87,12 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(CspService::class, function ($app) {
             return new CspService();
+        });
+
+        $this->app->bind(HttpClientInterface::class, function ($app) {
+            return new Client([
+                'timeout' => 3,
+            ]);
         });
     }
 }

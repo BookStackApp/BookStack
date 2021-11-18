@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nova stran',
     'pages_editing_draft_notification' => 'Trenutno urejate osnutek, ki je bil nazadnje shranjen :timeDiff.',
     'pages_draft_edited_notification' => 'Ta stran je odtlej posodobljena. Priporočamo, da zavržete ta osnutek.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count uporabnikov je začelo urejati to stran',
         'start_b' => ':userName je začel urejati to stran',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Dodajte nekaj oznak za boljšo kategorizacijo vaše vsebine.\nZ dodelitvijo oznake lahko poskrbite za bolj poglobljeno organizacijo.",
     'tags_add' => 'Dodaj drugo oznako',
     'tags_remove' => 'Odstrani to oznako',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Priponke',
     'attachments_explain' => 'Naložite nekaj datotek ali pripnite nekaj povezav, da jih prikažete na vaši strani. Vidne so v stranski orodni vrstici.',
     'attachments_explain_instant_save' => 'Spremembe tukaj so takoj shranjene.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Ali ste prepričani, da želite izbrisati to revizijo?',
     'revision_restore_confirm' => 'Ali ste prepričani da želite obnoviti to revizijo? Vsebina trenutne strani bo zamenjana.',
     'revision_delete_success' => 'Revizija izbrisana',
-    'revision_cannot_delete_latest' => 'Ne morem izbrisati zadnje revizije.'
+    'revision_cannot_delete_latest' => 'Ne morem izbrisati zadnje revizije.',
 ];

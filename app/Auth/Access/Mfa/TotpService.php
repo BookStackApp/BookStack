@@ -8,6 +8,7 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
+use BookStack\Auth\User;
 use PragmaRX\Google2FA\Google2FA;
 use PragmaRX\Google2FA\Support\Constants;
 
@@ -36,11 +37,11 @@ class TotpService
     /**
      * Generate a TOTP URL from secret key.
      */
-    public function generateUrl(string $secret): string
+    public function generateUrl(string $secret, User $user): string
     {
         return $this->google2fa->getQRCodeUrl(
             setting('app-name'),
-            user()->email,
+            $user->email,
             $secret
         );
     }

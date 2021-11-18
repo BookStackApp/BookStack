@@ -8,8 +8,8 @@ use BookStack\Exceptions\SamlException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use Exception;
-use Illuminate\Support\Str;
 use OneLogin\Saml2\Auth;
+use OneLogin\Saml2\Constants;
 use OneLogin\Saml2\Error;
 use OneLogin\Saml2\IdPMetadataParser;
 use OneLogin\Saml2\ValidationError;
@@ -18,20 +18,25 @@ use OneLogin\Saml2\ValidationError;
  * Class Saml2Service
  * Handles any app-specific SAML tasks.
  */
-class Saml2Service extends ExternalAuthService
+class Saml2Service
 {
     protected $config;
     protected $registrationService;
     protected $loginService;
+    protected $groupSyncService;
 
     /**
      * Saml2Service constructor.
      */
-    public function __construct(RegistrationService $registrationService, LoginService $loginService)
-    {
+    public function __construct(
+        RegistrationService $registrationService,
+        LoginService $loginService,
+        GroupSyncService $groupSyncService
+    ) {
         $this->config = config('saml2');
         $this->registrationService = $registrationService;
         $this->loginService = $loginService;
+        $this->groupSyncService = $groupSyncService;
     }
 
     /**
@@ -55,13 +60,20 @@ class Saml2Service extends ExternalAuthService
      *
      * @throws Error
      */
-    public function logout(): array
+    public function logout(User $user): array
     {
         $toolKit = $this->getToolkit();
         $returnRoute = url('/');
 
         try {
-            $url = $toolKit->logout($returnRoute, [], null, null, true);
+            $url = $toolKit->logout(
+                $returnRoute,
+                [],
+                $user->email,
+                null,
+                true,
+                Constants::NAMEID_EMAIL_ADDRESS
+            );
             $id = $toolKit->getLastRequestID();
         } catch (Error $error) {
             if ($error->getCode() !== Error::SAML_SINGLE_LOGOUT_NOT_SUPPORTED) {
@@ -87,8 +99,11 @@ class Saml2Service extends ExternalAuthService
      * @throws JsonDebugException
      * @throws UserRegistrationException
      */
-    public function processAcsResponse(?string $requestId): ?User
+    public function processAcsResponse(?string $requestId, string $samlResponse): ?User
     {
+        // The SAML2 toolkit expects the response to be within the $_POST superglobal
+        // so we need to manually put it back there at this point.
+        $_POST['SAMLResponse'] = $samlResponse;
         $toolkit = $this->getToolkit();
         $toolkit->processResponse($requestId);
         $errors = $toolkit->getErrors();
@@ -117,8 +132,13 @@ class Saml2Service extends ExternalAuthService
     public function processSlsResponse(?string $requestId): ?string
     {
         $toolkit = $this->getToolkit();
-        $redirect = $toolkit->processSLO(true, $requestId, false, null, true);
 
+        // The $retrieveParametersFromServer in the call below will mean the library will take the query
+        // parameters, used for the response signing, from the raw $_SERVER['QUERY_STRING']
+        // value so that the exact encoding format is matched when checking the signature.
+        // This is primarily due to ADFS encoding query params with lowercase percent encoding while
+        // PHP (And most other sensible providers) standardise on uppercase.
+        $redirect = $toolkit->processSLO(true, $requestId, true, null, true);
         $errors = $toolkit->getErrors();
 
         if (!empty($errors)) {
@@ -258,6 +278,8 @@ class Saml2Service extends ExternalAuthService
 
     /**
      * Extract the details of a user from a SAML response.
+     *
+     * @return array{external_id: string, name: string, email: string, saml_id: string}
      */
     protected function getUserDetails(string $samlID, $samlAttributes): array
     {
@@ -323,31 +345,6 @@ class Saml2Service extends ExternalAuthService
     }
 
     /**
-     * Get the user from the database for the specified details.
-     *
-     * @throws UserRegistrationException
-     */
-    protected function getOrRegisterUser(array $userDetails): ?User
-    {
-        $user = User::query()
-          ->where('external_auth_id', '=', $userDetails['external_id'])
-          ->first();
-
-        if (is_null($user)) {
-            $userData = [
-                'name'             => $userDetails['name'],
-                'email'            => $userDetails['email'],
-                'password'         => Str::random(32),
-                'external_auth_id' => $userDetails['external_id'],
-            ];
-
-            $user = $this->registrationService->registerUser($userData, null, false);
-        }
-
-        return $user;
-    }
-
-    /**
      * Process the SAML response for a user. Login the user when
      * they exist, optionally registering them automatically.
      *
@@ -377,14 +374,19 @@ class Saml2Service extends ExternalAuthService
             throw new SamlException(trans('errors.saml_already_logged_in'), '/login');
         }
 
-        $user = $this->getOrRegisterUser($userDetails);
+        $user = $this->registrationService->findOrRegister(
+            $userDetails['name'],
+            $userDetails['email'],
+            $userDetails['external_id']
+        );
+
         if ($user === null) {
             throw new SamlException(trans('errors.saml_user_not_registered', ['name' => $userDetails['external_id']]), '/login');
         }
 
         if ($this->shouldSyncGroups()) {
             $groups = $this->getUserGroups($samlAttributes);
-            $this->syncWithGroups($user, $groups);
+            $this->groupSyncService->syncUserWithFoundGroups($user, $groups, $this->config['remove_from_groups']);
         }
 
         $this->loginService->login($user, 'saml2');

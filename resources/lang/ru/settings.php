@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Обслуживание',
     'maint_image_cleanup' => 'Очистка изображений',
-    'maint_image_cleanup_desc' => "Сканирует содержимое страниц и предыдущих версий и определяет изображения, которые не используются. Убедитесь, что у вас есть резервная копия базы данных и папки изображений перед запуском этой функции.",
+    'maint_image_cleanup_desc' => 'Сканирует содержимое страниц и предыдущих версий и определяет изображения, которые не используются. Убедитесь, что у вас есть резервная копия базы данных и папки изображений перед запуском этой функции.',
     'maint_delete_images_only_in_revisions' => 'Также удалять изображения, которые существуют только в старой версии страницы',
     'maint_image_cleanup_run' => 'Выполнить очистку',
     'maint_image_cleanup_warning' => 'Найдено :count возможно бесполезных изображений. Вы уверены, что хотите удалить эти изображения?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Пользователь',
     'audit_table_event' => 'Событие',
     'audit_table_related' => 'Связанный элемент',
+    'audit_table_ip' => 'IP-адрес',
     'audit_table_date' => 'Дата действия',
     'audit_date_from' => 'Диапазон даты от',
     'audit_date_to' => 'Диапазон даты до',
@@ -206,10 +207,10 @@ return [
     'users_api_tokens_create' => 'Создать токен',
     'users_api_tokens_expires' => 'Истекает',
     'users_api_tokens_docs' => 'Документация',
-    'users_mfa' => 'Multi-Factor Authentication',
-    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa' => 'Двухфакторная аутентификация',
+    'users_mfa_desc' => 'Двухфакторная аутентификация повышает степень безопасности вашей учетной записи.',
     'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa_configure' => 'Настройка методов',
 
     // API Tokens
     'user_api_token_create' => 'Создать токен',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

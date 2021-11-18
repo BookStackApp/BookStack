@@ -44,8 +44,8 @@ class DrawioImageController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'image'       => 'required|string',
-            'uploaded_to' => 'required|integer',
+            'image'       => ['required', 'string'],
+            'uploaded_to' => ['required', 'integer'],
         ]);
 
         $this->checkPermission('image-create-all');
@@ -67,13 +67,12 @@ class DrawioImageController extends Controller
     public function getAsBase64($id)
     {
         $image = $this->imageRepo->getById($id);
-        $page = $image->getPage();
-        if ($image === null || $image->type !== 'drawio' || !userCan('page-view', $page)) {
+        if (is_null($image) || $image->type !== 'drawio' || !userCan('page-view', $image->getPage())) {
             return $this->jsonError('Image data could not be found');
         }
 
         $imageData = $this->imageRepo->getImageData($image);
-        if ($imageData === null) {
+        if (is_null($imageData)) {
             return $this->jsonError('Image data could not be found');
         }
 

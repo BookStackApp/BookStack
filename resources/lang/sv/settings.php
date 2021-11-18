@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Underhåll',
     'maint_image_cleanup' => 'Rensa bilder',
-    'maint_image_cleanup_desc' => "Söker igenom innehåll i sidor & revisioner för att se vilka bilder och teckningar som är i bruk och vilka som är överflödiga. Se till att ta en komplett backup av databas och bilder innan du kör detta.",
+    'maint_image_cleanup_desc' => 'Söker igenom innehåll i sidor & revisioner för att se vilka bilder och teckningar som är i bruk och vilka som är överflödiga. Se till att ta en komplett backup av databas och bilder innan du kör detta.',
     'maint_delete_images_only_in_revisions' => 'Ta också bort bilder som bara finns i gamla sidrevideringar',
     'maint_image_cleanup_run' => 'Kör rensning',
     'maint_image_cleanup_warning' => 'Hittade :count bilder som potentiellt inte används. Vill du verkligen ta bort dessa bilder?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Användare',
     'audit_table_event' => 'Händelse',
     'audit_table_related' => 'Relaterat objekt eller detalj',
+    'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Datum för senaste aktiviteten',
     'audit_date_from' => 'Datumintervall från',
     'audit_date_to' => 'Datumintervall till',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

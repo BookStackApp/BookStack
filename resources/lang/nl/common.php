@@ -20,7 +20,7 @@ return [
     'role' => 'Rol',
     'cover_image' => 'Omslagfoto',
     'cover_image_description' => 'Deze afbeelding moet ongeveer 440x250px zijn.',
-    
+
     // Actions
     'actions' => 'Acties',
     'view' => 'Bekijk',
@@ -39,12 +39,14 @@ return [
     'reset' => 'Resetten',
     'remove' => 'Verwijderen',
     'add' => 'Toevoegen',
-    'configure' => 'Configure',
+    'configure' => 'Configureer',
     'fullscreen' => 'Volledig scherm',
     'favourite' => 'Favoriet',
     'unfavourite' => 'Verwijderen uit favoriet',
     'next' => 'Volgende',
     'previous' => 'Vorige',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Sorteeropties',

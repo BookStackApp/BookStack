@@ -20,7 +20,7 @@ return [
     'role' => 'Loma',
     'cover_image' => 'Vāka attēls',
     'cover_image_description' => 'Šim attēlam būtu jābūt aptuveni 440x250px.',
-    
+
     // Actions
     'actions' => 'Darbības',
     'view' => 'Skatīt',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Noņemt no favorītiem',
     'next' => 'Nākamais',
     'previous' => 'Iepriekšējais',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Kārtošanas Opcijas',

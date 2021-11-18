@@ -62,7 +62,9 @@ class PageContentTest extends TestCase
 
     public function test_page_includes_do_not_break_tables()
     {
+        /** @var Page $page */
         $page = Page::query()->first();
+        /** @var Page $secondPage */
         $secondPage = Page::query()->where('id', '!=', $page->id)->first();
 
         $content = '<table id="table"><tbody><tr><td>test</td></tr></tbody></table>';
@@ -72,9 +74,26 @@ class PageContentTest extends TestCase
         $page->html = "{{@{$secondPage->id}#table}}";
         $page->save();
 
-        $this->asEditor();
-        $pageResp = $this->get($page->getUrl());
-        $pageResp->assertSee($content);
+        $pageResp = $this->asEditor()->get($page->getUrl());
+        $pageResp->assertSee($content, false);
+    }
+
+    public function test_page_includes_do_not_break_code()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        /** @var Page $secondPage */
+        $secondPage = Page::query()->where('id', '!=', $page->id)->first();
+
+        $content = '<pre id="bkmrk-code"><code>var cat = null;</code></pre>';
+        $secondPage->html = $content;
+        $secondPage->save();
+
+        $page->html = "{{@{$secondPage->id}#bkmrk-code}}";
+        $page->save();
+
+        $pageResp = $this->asEditor()->get($page->getUrl());
+        $pageResp->assertSee($content, false);
     }
 
     public function test_page_includes_rendered_on_book_export()
@@ -106,7 +125,7 @@ class PageContentTest extends TestCase
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertStatus(200);
-        $pageView->assertDontSee($script);
+        $pageView->assertDontSee($script, false);
         $pageView->assertSee('abc123abc123');
     }
 
@@ -260,8 +279,8 @@ class PageContentTest extends TestCase
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertStatus(200);
-        $pageView->assertDontSee($script);
-        $pageView->assertSee('<p>Hello</p>');
+        $pageView->assertDontSee($script, false);
+        $pageView->assertSee('<p>Hello</p>', false);
     }
 
     public function test_more_complex_inline_on_attributes_escaping_scenarios()
@@ -301,7 +320,7 @@ class PageContentTest extends TestCase
         $page->save();
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertSee($script);
+        $pageView->assertSee($script, false);
         $pageView->assertDontSee('abc123abc123');
     }
 
@@ -338,8 +357,8 @@ class PageContentTest extends TestCase
         $page->save();
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertSee($script);
-        $pageView->assertDontSee('<p>Hello</p>');
+        $pageView->assertSee($script, false);
+        $pageView->assertDontSee('<p>Hello</p>', false);
     }
 
     public function test_duplicate_ids_does_not_break_page_render()
@@ -545,7 +564,7 @@ class PageContentTest extends TestCase
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertStatus(200);
-        $pageView->assertSee($content);
+        $pageView->assertSee($content, false);
     }
 
     public function test_base64_images_get_extracted_from_page_content()
@@ -594,14 +613,58 @@ class PageContentTest extends TestCase
         $this->deleteImage($imagePath);
     }
 
-    public function test_base64_images_blanked_if_not_supported_extension_for_extract()
+    public function test_base64_images_within_html_blanked_if_not_supported_extension_for_extract()
+    {
+        // Relevant to https://github.com/BookStackApp/BookStack/issues/3010 and other cases
+        $extensions = [
+            'jiff', 'pngr', 'png ', ' png', '.png', 'png.', 'p.ng', ',png',
+            'data:image/png', ',data:image/png',
+        ];
+
+        foreach ($extensions as $extension) {
+            $this->asEditor();
+            $page = Page::query()->first();
+
+            $this->put($page->getUrl(), [
+                'name' => $page->name, 'summary' => '',
+                'html' => '<p>test<img src="data:image/' . $extension . ';base64,' . $this->base64Jpeg . '"/></p>',
+            ]);
+
+            $page->refresh();
+            $this->assertStringContainsString('<img src=""', $page->html);
+        }
+    }
+
+    public function test_base64_images_get_extracted_from_markdown_page_content()
     {
         $this->asEditor();
         $page = Page::query()->first();
 
         $this->put($page->getUrl(), [
-            'name' => $page->name, 'summary' => '',
-            'html' => '<p>test<img src="data:image/jiff;base64,' . $this->base64Jpeg . '"/></p>',
+            'name'     => $page->name, 'summary' => '',
+            'markdown' => 'test ![test](data:image/jpeg;base64,' . $this->base64Jpeg . ')',
+        ]);
+
+        $page->refresh();
+        $this->assertStringMatchesFormat('%A<p%A>test <img src="http://localhost/uploads/images/gallery/%A.jpeg" alt="test">%A</p>%A', $page->html);
+
+        $matches = [];
+        preg_match('/src="http:\/\/localhost(.*?)"/', $page->html, $matches);
+        $imagePath = $matches[1];
+        $imageFile = public_path($imagePath);
+        $this->assertEquals(base64_decode($this->base64Jpeg), file_get_contents($imageFile));
+
+        $this->deleteImage($imagePath);
+    }
+
+    public function test_base64_images_within_markdown_blanked_if_not_supported_extension_for_extract()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $this->put($page->getUrl(), [
+            'name'     => $page->name, 'summary' => '',
+            'markdown' => 'test ![test](data:image/jiff;base64,' . $this->base64Jpeg . ')',
         ]);
 
         $page->refresh();

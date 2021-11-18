@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nova stranica',
     'pages_editing_draft_notification' => 'Trenutno uređujete skicu koja je posljednji put snimljena :timeDiff.',
     'pages_draft_edited_notification' => 'Ova stranica je ažurirana nakon tog vremena. Preporučujemo da odbacite ovu skicu.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count korisnika je počelo sa uređivanjem ove stranice',
         'start_b' => ':userName je počeo/la sa uređivanjem ove stranice',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Dodaj nekoliko oznaka da bi sadržaj bio bolje kategorisan. \n Možeš dodati vrijednost oznaci za dublju organizaciju.",
     'tags_add' => 'Dodaj još jednu oznaku',
     'tags_remove' => 'Ukloni ovu oznaku',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Prilozi',
     'attachments_explain' => 'Učitajte fajlove ili priložite poveznice da bi ih prikazali na stranici. Oni su onda vidljivi u navigaciji sa strane.',
     'attachments_explain_instant_save' => 'Sve promjene se snimaju odmah.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
     'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => 'Revision deleted',
-    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.'
+    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.',
 ];

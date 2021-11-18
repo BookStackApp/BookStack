@@ -20,7 +20,8 @@
         <div class="grid third no-break v-center">
 
             <div class="action-buttons text-left px-m py-xs">
-                <a href="{{ back()->getTargetUrl() }}" class="text-button text-primary">@icon('back')<span class="hide-under-l">{{ trans('common.back') }}</span></a>
+                <a href="{{ $page->draft ? $page->getParent()->getUrl() : $page->getUrl() }}"
+                   class="text-button text-primary">@icon('back')<span class="hide-under-l">{{ trans('common.back') }}</span></a>
             </div>
 
             <div class="text-center px-m py-xs">

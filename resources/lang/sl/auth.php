@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Ta e-poštna domena nima dostopa do te aplikacije',
     'register_success' => 'Hvala za registracijo! Sedaj ste registrirani in prijavljeni.',
 
-
     // Password Reset
     'reset_password' => 'Ponastavi geslo',
     'reset_password_send_instructions' => 'Spodaj vpišite vaš e-poštni naslov in prejeli boste e-pošto s povezavo za ponastavitev gesla.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'To e-poštno sporočilo ste prejeli, ker smo prejeli zahtevo za ponastavitev gesla za vaš račun.',
     'email_reset_not_requested' => 'Če niste zahtevali ponastavitve gesla, vam ni potrebno ničesar storiti.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Potrdi svojo e-pošto za :appName',
     'email_confirm_greeting' => 'Hvala ker ste se pridružili :appName!',
     'email_confirm_text' => 'Potrdite svoj e-naslov s klikom spodnjega gumba:',
     'email_confirm_action' => 'Potrdi e-pošto',
     'email_confirm_send_error' => 'E-poštna potrditev je zahtevana ampak sistem ni mogel poslati e-pošte. Kontaktirajte administratorja, da zagotovite, da je e-pošta pravilno nastavljena.',
-    'email_confirm_success' => 'Vaš e-naslov je bil potrjen!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Poslali smo vam potrditveno sporočilo. Prosimo preverite svojo elektronsko pošto.',
 
     'email_not_confirmed' => 'Elektronski naslov ni potrjen',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Dobrodošli na :appName!',
     'user_invite_page_text' => 'Za zaključiti in pridobiti dostop si morate nastaviti geslo, ki bo uporabljeno za prijavo v :appName.',
     'user_invite_page_confirm_button' => 'Potrdi geslo',
-    'user_invite_success' => 'Geslo nastavljeno, sedaj imaš dostop do :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',

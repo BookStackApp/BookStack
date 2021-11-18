@@ -12,7 +12,7 @@ use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -68,9 +68,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => 'required|min:2|max:255',
-            'email'    => 'required|email|max:255|unique:users',
-            'password' => 'required|min:8',
+            'name'     => ['required', 'min:2', 'max:255'],
+            'email'    => ['required', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'min:8'],
         ]);
     }
 

@@ -106,7 +106,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      * Compares this entity to another given entity.
      * Matches by comparing class and id.
      */
-    public function matches(Entity $entity): bool
+    public function matches(self $entity): bool
     {
         return [get_class($this), $this->id] === [get_class($entity), $entity->id];
     }
@@ -114,7 +114,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * Checks if the current entity matches or contains the given.
      */
-    public function matchesOrContains(Entity $entity): bool
+    public function matchesOrContains(self $entity): bool
     {
         if ($this->matches($entity)) {
             return true;
@@ -239,19 +239,11 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * Get the body text of this entity.
-     */
-    public function getText(): string
-    {
-        return $this->{$this->textField} ?? '';
-    }
-
-    /**
      * Get an excerpt of this entity's descriptive content to the specified length.
      */
     public function getExcerpt(int $length = 100): string
     {
-        $text = $this->getText();
+        $text = $this->{$this->textField} ?? '';
 
         if (mb_strlen($text) > $length) {
             $text = mb_substr($text, 0, $length - 3) . '...';
@@ -270,7 +262,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      * This is the "static" parent and does not include dynamic
      * relations such as shelves to books.
      */
-    public function getParent(): ?Entity
+    public function getParent(): ?self
     {
         if ($this instanceof Page) {
             return $this->chapter_id ? $this->chapter()->withTrashed()->first() : $this->book()->withTrashed()->first();
@@ -300,7 +292,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function refreshSlug(): string
     {
@@ -310,7 +302,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function favourites(): MorphMany
     {

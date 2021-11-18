@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'Nova stranica',
     'pages_editing_draft_notification' => 'Uređujete nacrt stranice posljednji put spremljen :timeDiff.',
     'pages_draft_edited_notification' => 'Ova je stranica u međuvremenu ažurirana. Preporučujemo da odbacite ovaj nacrt.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count korisnika koji uređuju ovu stranicu',
         'start_b' => ':userName je počeo uređivati ovu stranicu',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "Add some tags to better categorise your content. \n You can assign a value to a tag for more in-depth organisation.",
     'tags_add' => 'Dodaj oznaku',
     'tags_remove' => 'Makni oznaku',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'Prilozi',
     'attachments_explain' => 'Dodajte datoteke ili poveznice za prikaz na vašoj stranici. Vidljive su na rubnoj oznaci stranice.',
     'attachments_explain_instant_save' => 'Promjene se automatski spremaju.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'Jeste li sigurni da želite izbrisati ovaj ispravak?',
     'revision_restore_confirm' => 'Jeste li sigurni da želite vratiti ovaj ispravak? Trenutni sadržaj će biti zamijenjen.',
     'revision_delete_success' => 'Izbrisani ispravak',
-    'revision_cannot_delete_latest' => 'Posljednji ispravak se ne može izbrisati.'
+    'revision_cannot_delete_latest' => 'Posljednji ispravak se ne može izbrisati.',
 ];

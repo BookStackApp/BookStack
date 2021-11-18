@@ -20,7 +20,7 @@ return [
     'role' => 'Роль',
     'cover_image' => 'Обкладинка',
     'cover_image_description' => 'Це зображення має бути приблизно 440x250px.',
-    
+
     // Actions
     'actions' => 'Дії',
     'view' => 'Подивитись',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Unfavourite',
     'next' => 'Next',
     'previous' => 'Previous',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Параметри сортування',

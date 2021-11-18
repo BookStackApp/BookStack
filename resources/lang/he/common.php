@@ -20,7 +20,7 @@ return [
     'role' => 'תפקיד',
     'cover_image' => 'תמונת נושא',
     'cover_image_description' => 'התמונה צריכה להיות בסביבות 440x250px',
-    
+
     // Actions
     'actions' => 'פעולות',
     'view' => 'הצג',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Unfavourite',
     'next' => 'Next',
     'previous' => 'Previous',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Sort Options',

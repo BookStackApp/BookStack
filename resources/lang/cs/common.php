@@ -20,7 +20,7 @@ return [
     'role' => 'Role',
     'cover_image' => 'Obrázek obálky',
     'cover_image_description' => 'Obrázek by měl být přibližně 440×250px.',
-    
+
     // Actions
     'actions' => 'Akce',
     'view' => 'Zobrazit',
@@ -39,12 +39,14 @@ return [
     'reset' => 'Obnovit',
     'remove' => 'Odebrat',
     'add' => 'Přidat',
-    'configure' => 'Configure',
+    'configure' => 'Nastavit',
     'fullscreen' => 'Celá obrazovka',
     'favourite' => 'Přidat do oblíbených',
     'unfavourite' => 'Odebrat z oblíbených',
     'next' => 'Další',
     'previous' => 'Předchozí',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',

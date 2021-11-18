@@ -37,7 +37,7 @@ class BookShelfTest extends TestCase
 
     public function test_shelves_shows_in_header_if_have_any_shelve_view_permission()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $this->giveUserPermissions($user, ['image-create-all']);
         $shelf = Bookshelf::first();
         $userRole = $user->roles()->first();
@@ -290,7 +290,7 @@ class BookShelfTest extends TestCase
         $shelf = Bookshelf::first();
         $resp = $this->asAdmin()->get($shelf->getUrl('/permissions'));
         $resp->assertSeeText('Copy Permissions');
-        $resp->assertSee("action=\"{$shelf->getUrl('/copy-permissions')}\"");
+        $resp->assertSee("action=\"{$shelf->getUrl('/copy-permissions')}\"", false);
 
         $child = $shelf->books()->first();
         $editorRole = $this->getEditor()->roles()->first();

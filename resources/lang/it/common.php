@@ -20,7 +20,7 @@ return [
     'role' => 'Ruolo',
     'cover_image' => 'Immagine di copertina',
     'cover_image_description' => 'Questa immagine dovrebbe essere approssimativamente 440x250px.',
-    
+
     // Actions
     'actions' => 'Azioni',
     'view' => 'Visualizza',
@@ -39,12 +39,14 @@ return [
     'reset' => 'Azzera',
     'remove' => 'Rimuovi',
     'add' => 'Aggiungi',
-    'configure' => 'Configure',
+    'configure' => 'Configura',
     'fullscreen' => 'Schermo intero',
     'favourite' => 'Aggiungi ai Preferiti',
     'unfavourite' => 'Rimuovi dai preferiti',
     'next' => 'Successivo',
     'previous' => 'Precedente',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Opzioni Ordinamento',

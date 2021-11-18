@@ -31,6 +31,9 @@ return [
     // Set to -1 for unlimited recycle bin lifetime.
     'recycle_bin_lifetime' => env('RECYCLE_BIN_LIFETIME', 30),
 
+    // The limit for all uploaded files, including images and attachments in MB.
+    'upload_limit' => env('FILE_UPLOAD_SIZE_LIMIT', 50),
+
     // Allow <script> tags to entered within page content.
     // <script> tags are escaped by default.
     // Even when overridden the WYSIWYG editor may still escape script content.
@@ -61,7 +64,7 @@ return [
     'locale' => env('APP_LANG', 'en'),
 
     // Locales available
-    'locales' => ['en', 'ar', 'bg', 'bs', 'ca', 'cs', 'da', 'de', 'de_informal', 'es', 'es_AR', 'fa', 'fr', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'nb', 'pt', 'pt_BR', 'sk', 'sl', 'sv', 'pl',  'ru', 'th', 'tr', 'uk', 'vi', 'zh_CN', 'zh_TW'],
+    'locales' => ['en', 'ar', 'bg', 'bs', 'ca', 'cs', 'da', 'de', 'de_informal', 'es', 'es_AR', 'et', 'fa', 'fr', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'nb', 'pt', 'pt_BR', 'sk', 'sl', 'sv', 'pl',  'ru', 'th', 'tr', 'uk', 'vi', 'zh_CN', 'zh_TW'],
 
     //  Application Fallback Locale
     'fallback_locale' => 'en',
@@ -143,7 +146,6 @@ return [
 
     // Class aliases, Registered on application start
     'aliases' => [
-
         // Laravel
         'App'          => Illuminate\Support\Facades\App::class,
         'Arr'          => Illuminate\Support\Arr::class,
@@ -155,21 +157,23 @@ return [
         'Config'       => Illuminate\Support\Facades\Config::class,
         'Cookie'       => Illuminate\Support\Facades\Cookie::class,
         'Crypt'        => Illuminate\Support\Facades\Crypt::class,
+        'Date'         => Illuminate\Support\Facades\Date::class,
         'DB'           => Illuminate\Support\Facades\DB::class,
         'Eloquent'     => Illuminate\Database\Eloquent\Model::class,
         'Event'        => Illuminate\Support\Facades\Event::class,
         'File'         => Illuminate\Support\Facades\File::class,
+        'Gate'         => Illuminate\Support\Facades\Gate::class,
         'Hash'         => Illuminate\Support\Facades\Hash::class,
-        'Input'        => Illuminate\Support\Facades\Input::class,
-        'Inspiring'    => Illuminate\Foundation\Inspiring::class,
+        'Http'         => Illuminate\Support\Facades\Http::class,
         'Lang'         => Illuminate\Support\Facades\Lang::class,
         'Log'          => Illuminate\Support\Facades\Log::class,
         'Mail'         => Illuminate\Support\Facades\Mail::class,
         'Notification' => Illuminate\Support\Facades\Notification::class,
         'Password'     => Illuminate\Support\Facades\Password::class,
         'Queue'        => Illuminate\Support\Facades\Queue::class,
+        'RateLimiter'  => Illuminate\Support\Facades\RateLimiter::class,
         'Redirect'     => Illuminate\Support\Facades\Redirect::class,
-        'Redis'        => Illuminate\Support\Facades\Redis::class,
+        // 'Redis'        => Illuminate\Support\Facades\Redis::class,
         'Request'      => Illuminate\Support\Facades\Request::class,
         'Response'     => Illuminate\Support\Facades\Response::class,
         'Route'        => Illuminate\Support\Facades\Route::class,
@@ -180,6 +184,8 @@ return [
         'URL'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
+
+        // Laravel Packages
         'Socialite'    => Laravel\Socialite\Facades\Socialite::class,
 
         // Third Party

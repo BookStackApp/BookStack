@@ -11,24 +11,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
 {
-    protected $image;
     protected $imageService;
     protected $restrictionService;
-    protected $page;
 
     /**
      * ImageRepo constructor.
      */
-    public function __construct(
-        Image $image,
-        ImageService $imageService,
-        PermissionService $permissionService,
-        Page $page
-    ) {
-        $this->image = $image;
+    public function __construct(ImageService $imageService, PermissionService $permissionService)
+    {
         $this->imageService = $imageService;
         $this->restrictionService = $permissionService;
-        $this->page = $page;
     }
 
     /**
@@ -36,7 +28,7 @@ class ImageRepo
      */
     public function getById($id): Image
     {
-        return $this->image->findOrFail($id);
+        return Image::query()->findOrFail($id);
     }
 
     /**
@@ -49,7 +41,7 @@ class ImageRepo
         $hasMore = count($images) > $pageSize;
 
         $returnImages = $images->take($pageSize);
-        $returnImages->each(function ($image) {
+        $returnImages->each(function (Image $image) {
             $this->loadThumbs($image);
         });
 
@@ -71,7 +63,7 @@ class ImageRepo
         string $search = null,
         callable $whereClause = null
     ): array {
-        $imageQuery = $this->image->newQuery()->where('type', '=', strtolower($type));
+        $imageQuery = Image::query()->where('type', '=', strtolower($type));
 
         if ($uploadedTo !== null) {
             $imageQuery = $imageQuery->where('uploaded_to', '=', $uploadedTo);
@@ -102,7 +94,8 @@ class ImageRepo
         int $uploadedTo = null,
         string $search = null
     ): array {
-        $contextPage = $this->page->findOrFail($uploadedTo);
+        /** @var Page $contextPage */
+        $contextPage = Page::visible()->findOrFail($uploadedTo);
         $parentFilter = null;
 
         if ($filterType === 'book' || $filterType === 'page') {
@@ -110,7 +103,7 @@ class ImageRepo
                 if ($filterType === 'page') {
                     $query->where('uploaded_to', '=', $contextPage->id);
                 } elseif ($filterType === 'book') {
-                    $validPageIds = $contextPage->book->pages()->visible()->get(['id'])->pluck('id')->toArray();
+                    $validPageIds = $contextPage->book->pages()->visible()->pluck('id')->toArray();
                     $query->whereIn('uploaded_to', $validPageIds);
                 }
             };
@@ -137,7 +130,7 @@ class ImageRepo
      *
      * @throws ImageUploadException
      */
-    public function saveNewFromData(string $imageName, string $imageData, string $type, int $uploadedTo = 0)
+    public function saveNewFromData(string $imageName, string $imageData, string $type, int $uploadedTo = 0): Image
     {
         $image = $this->imageService->saveNew($imageName, $imageData, $type, $uploadedTo);
         $this->loadThumbs($image);
@@ -146,13 +139,13 @@ class ImageRepo
     }
 
     /**
-     * Save a drawing the the database.
+     * Save a drawing in the database.
      *
      * @throws ImageUploadException
      */
     public function saveDrawing(string $base64Uri, int $uploadedTo): Image
     {
-        $name = 'Drawing-' . strval(user()->id) . '-' . strval(time()) . '.png';
+        $name = 'Drawing-' . user()->id . '-' . time() . '.png';
 
         return $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawio', $uploadedTo);
     }
@@ -160,7 +153,6 @@ class ImageRepo
     /**
      * Update the details of an image via an array of properties.
      *
-     * @throws ImageUploadException
      * @throws Exception
      */
     public function updateImageDetails(Image $image, $updateDetails): Image
@@ -177,13 +169,11 @@ class ImageRepo
      *
      * @throws Exception
      */
-    public function destroyImage(Image $image = null): bool
+    public function destroyImage(Image $image = null): void
     {
         if ($image) {
             $this->imageService->destroy($image);
         }
-
-        return true;
     }
 
     /**
@@ -191,9 +181,9 @@ class ImageRepo
      *
      * @throws Exception
      */
-    public function destroyByType(string $imageType)
+    public function destroyByType(string $imageType): void
     {
-        $images = $this->image->where('type', '=', $imageType)->get();
+        $images = Image::query()->where('type', '=', $imageType)->get();
         foreach ($images as $image) {
             $this->destroyImage($image);
         }
@@ -201,25 +191,21 @@ class ImageRepo
 
     /**
      * Load thumbnails onto an image object.
-     *
-     * @throws Exception
      */
-    public function loadThumbs(Image $image)
+    public function loadThumbs(Image $image): void
     {
-        $image->thumbs = [
+        $image->setAttribute('thumbs', [
             'gallery' => $this->getThumbnail($image, 150, 150, false),
             'display' => $this->getThumbnail($image, 1680, null, true),
-        ];
+        ]);
     }
 
     /**
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
-     *
-     * @throws Exception
      */
-    protected function getThumbnail(Image $image, ?int $width = 220, ?int $height = 220, bool $keepRatio = false): ?string
+    protected function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio): ?string
     {
         try {
             return $this->imageService->getThumbnail($image, $width, $height, $keepRatio);
@@ -250,7 +236,7 @@ class ImageRepo
             ->get(['id', 'name', 'slug', 'book_id']);
 
         foreach ($pages as $page) {
-            $page->url = $page->getUrl();
+            $page->setAttribute('url', $page->getUrl());
         }
 
         return $pages->all();

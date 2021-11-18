@@ -69,7 +69,10 @@ return [
             'port'           => $mysql_port,
             'charset'        => 'utf8mb4',
             'collation'      => 'utf8mb4_unicode_ci',
-            'prefix'         => '',
+            // Prefixes are only semi-supported and may be unstable
+            // since they are not tested as part of our automated test suite.
+            // If used, the prefix should not be changed otherwise you will likely receive errors.
+            'prefix'         => env('DB_TABLE_PREFIX', ''),
             'prefix_indexes' => true,
             'strict'         => false,
             'engine'         => null,
@@ -102,6 +105,6 @@ return [
     'migrations' => 'migrations',
 
     // Redis configuration to use if set
-    'redis' => env('REDIS_SERVERS', false) ? $redisConfig : [],
+    'redis' => $redisConfig ?? [],
 
 ];

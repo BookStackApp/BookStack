@@ -38,7 +38,6 @@ return [
     'registration_email_domain_invalid' => 'Registrace z této e-mailové domény nejsou povoleny',
     'register_success' => 'Děkujeme za registraci! Nyní jste zaregistrováni a přihlášeni.',
 
-
     // Password Reset
     'reset_password' => 'Obnovit heslo',
     'reset_password_send_instructions' => 'Níže zadejte svou e-mailovou adresu a bude vám zaslán e-mail s odkazem na obnovení hesla.',
@@ -49,14 +48,13 @@ return [
     'email_reset_text' => 'Tento e-mail jste obdrželi, protože jsme obdrželi žádost o obnovení hesla k vašemu účtu.',
     'email_reset_not_requested' => 'Pokud jste o obnovení hesla nežádali, není vyžadována žádná další akce.',
 
-
     // Email Confirmation
     'email_confirm_subject' => 'Potvrďte svůj e-mail pro :appName',
     'email_confirm_greeting' => 'Díky že jste se přidali do :appName!',
     'email_confirm_text' => 'Prosíme potvrďte svou e-mailovou adresu kliknutím na níže uvedené tlačítko:',
     'email_confirm_action' => 'Potvrdit e-mail',
     'email_confirm_send_error' => 'Potvrzení e-mailu je vyžadováno, ale systém nemohl odeslat e-mail. Obraťte se na správce, abyste se ujistili, že je e-mail správně nastaven.',
-    'email_confirm_success' => 'Váš e-mail byla potvrzen!',
+    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'E-mail s potvrzením byl znovu odeslán. Zkontrolujte svou příchozí poštu.',
 
     'email_not_confirmed' => 'E-mailová adresa nebyla potvrzena',
@@ -73,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Vítejte v :appName!',
     'user_invite_page_text' => 'Pro dokončení vašeho účtu a získání přístupu musíte nastavit heslo, které bude použito k přihlášení do :appName při dalších návštěvách.',
     'user_invite_page_confirm_button' => 'Potvrdit heslo',
-    'user_invite_success' => 'Heslo nastaveno, nyní máte přístup k :appName!',
+    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
@@ -83,16 +81,16 @@ return [
     'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
     'mfa_setup_action' => 'Setup',
     'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
-    'mfa_option_totp_title' => 'Mobile App',
+    'mfa_option_totp_title' => 'Mobilní aplikace',
     'mfa_option_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Backup Codes',
     'mfa_option_backup_codes_desc' => 'Securely store a set of one-time-use backup codes which you can enter to verify your identity.',
-    'mfa_gen_confirm_and_enable' => 'Confirm and Enable',
+    'mfa_gen_confirm_and_enable' => 'Potvrdit a povolit',
     'mfa_gen_backup_codes_title' => 'Backup Codes Setup',
     'mfa_gen_backup_codes_desc' => 'Store the below list of codes in a safe place. When accessing the system you\'ll be able to use one of the codes as a second authentication mechanism.',
     'mfa_gen_backup_codes_download' => 'Download Codes',
     'mfa_gen_backup_codes_usage_warning' => 'Each code can only be used once',
-    'mfa_gen_totp_title' => 'Mobile App Setup',
+    'mfa_gen_totp_title' => 'Nastavení mobilní aplikace',
     'mfa_gen_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
     'mfa_gen_totp_scan' => 'Scan the QR code below using your preferred authentication app to get started.',
     'mfa_gen_totp_verify_setup' => 'Verify Setup',

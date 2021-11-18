@@ -20,21 +20,21 @@ return [
     'role' => 'Rôle',
     'cover_image' => 'Image de couverture',
     'cover_image_description' => 'Cette image doit faire environ 440x250 px.',
-    
+
     // Actions
     'actions' => 'Actions',
     'view' => 'Voir',
     'view_all' => 'Tout afficher',
     'create' => 'Créer',
     'update' => 'Modifier',
-    'edit' => 'Editer',
+    'edit' => 'Éditer',
     'sort' => 'Trier',
     'move' => 'Déplacer',
     'copy' => 'Copier',
     'reply' => 'Répondre',
     'delete' => 'Supprimer',
     'delete_confirm' => 'Confirmer la suppression',
-    'search' => 'Chercher',
+    'search' => 'Rechercher',
     'search_clear' => 'Réinitialiser la recherche',
     'reset' => 'Réinitialiser',
     'remove' => 'Enlever',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Supprimer des favoris',
     'next' => 'Suivant',
     'previous' => 'Précédent',
+    'filter_active' => 'Filtre actif :',
+    'filter_clear' => 'Effacer le filtre',
 
     // Sort Options
     'sort_options' => 'Options de tri',

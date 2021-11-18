@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => 'صفحة جديدة',
     'pages_editing_draft_notification' => 'جارٍ تعديل مسودة لم يتم حفظها من :timeDiff.',
     'pages_draft_edited_notification' => 'تم تحديث هذه الصفحة منذ ذلك الوقت. من الأفضل التخلص من هذه المسودة.',
+    'pages_draft_page_changed_since_creation' => 'This page has been updated since this draft was created. It is recommended that you discard this draft or take care not to overwrite any page changes.',
     'pages_draft_edit_active' => [
         'start_a' => ':count من المستخدمين بدأوا بتعديل هذه الصفحة',
         'start_b' => ':userName بدأ بتعديل هذه الصفحة',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "إضافة الوسوم تساعد بترتيب وتقسيم المحتوى. \n من الممكن وضع قيمة لكل وسم لترتيب أفضل وأدق.",
     'tags_add' => 'إضافة وسم آخر',
     'tags_remove' => 'إزالة هذه العلامة',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => 'المرفقات',
     'attachments_explain' => 'ارفع بعض الملفات أو أرفق بعض الروابط لعرضها بصفحتك. ستكون الملفات والروابط معروضة في الشريط الجانبي للصفحة.',
     'attachments_explain_instant_save' => 'سيتم حفظ التغييرات هنا آنيا.',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف هذه المراجعة؟',
     'revision_restore_confirm' => 'هل أنت متأكد من أنك تريد استعادة هذه المراجعة؟ سيتم استبدال محتوى الصفحة الحالية.',
     'revision_delete_success' => 'تم حذف المراجعة',
-    'revision_cannot_delete_latest' => 'لايمكن حذف آخر مراجعة.'
+    'revision_cannot_delete_latest' => 'لايمكن حذف آخر مراجعة.',
 ];

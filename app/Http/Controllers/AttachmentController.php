@@ -36,8 +36,8 @@ class AttachmentController extends Controller
     public function upload(Request $request)
     {
         $this->validate($request, [
-            'uploaded_to' => 'required|integer|exists:pages,id',
-            'file'        => 'required|file',
+            'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
+            'file'        => array_merge(['required'], $this->attachmentService->getFileValidationRules()),
         ]);
 
         $pageId = $request->get('uploaded_to');
@@ -65,9 +65,10 @@ class AttachmentController extends Controller
     public function uploadUpdate(Request $request, $attachmentId)
     {
         $this->validate($request, [
-            'file' => 'required|file',
+            'file' => array_merge(['required'], $this->attachmentService->getFileValidationRules()),
         ]);
 
+        /** @var Attachment $attachment */
         $attachment = Attachment::query()->findOrFail($attachmentId);
         $this->checkOwnablePermission('view', $attachment->page);
         $this->checkOwnablePermission('page-update', $attachment->page);
@@ -86,11 +87,10 @@ class AttachmentController extends Controller
 
     /**
      * Get the update form for an attachment.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getUpdateForm(string $attachmentId)
     {
+        /** @var Attachment $attachment */
         $attachment = Attachment::query()->findOrFail($attachmentId);
 
         $this->checkOwnablePermission('page-update', $attachment->page);
@@ -111,8 +111,8 @@ class AttachmentController extends Controller
 
         try {
             $this->validate($request, [
-                'attachment_edit_name' => 'required|string|min:1|max:255',
-                'attachment_edit_url'  => 'string|min:1|max:255|safe_url',
+                'attachment_edit_name' => ['required', 'string', 'min:1', 'max:255'],
+                'attachment_edit_url'  => ['string', 'min:1', 'max:255', 'safe_url'],
             ]);
         } catch (ValidationException $exception) {
             return response()->view('attachments.manager-edit-form', array_merge($request->only(['attachment_edit_name', 'attachment_edit_url']), [
@@ -121,9 +121,9 @@ class AttachmentController extends Controller
             ]), 422);
         }
 
-        $this->checkOwnablePermission('view', $attachment->page);
+        $this->checkOwnablePermission('page-view', $attachment->page);
         $this->checkOwnablePermission('page-update', $attachment->page);
-        $this->checkOwnablePermission('attachment-create', $attachment);
+        $this->checkOwnablePermission('attachment-update', $attachment);
 
         $attachment = $this->attachmentService->updateFile($attachment, [
             'name' => $request->get('attachment_edit_name'),
@@ -146,9 +146,9 @@ class AttachmentController extends Controller
 
         try {
             $this->validate($request, [
-                'attachment_link_uploaded_to' => 'required|integer|exists:pages,id',
-                'attachment_link_name'        => 'required|string|min:1|max:255',
-                'attachment_link_url'         => 'required|string|min:1|max:255|safe_url',
+                'attachment_link_uploaded_to' => ['required', 'integer', 'exists:pages,id'],
+                'attachment_link_name'        => ['required', 'string', 'min:1', 'max:255'],
+                'attachment_link_url'         => ['required', 'string', 'min:1', 'max:255', 'safe_url'],
             ]);
         } catch (ValidationException $exception) {
             return response()->view('attachments.manager-link-form', array_merge($request->only(['attachment_link_name', 'attachment_link_url']), [
@@ -173,6 +173,8 @@ class AttachmentController extends Controller
 
     /**
      * Get the attachments for a specific page.
+     *
+     * @throws NotFoundException
      */
     public function listForPage(int $pageId)
     {
@@ -193,7 +195,7 @@ class AttachmentController extends Controller
     public function sortForPage(Request $request, int $pageId)
     {
         $this->validate($request, [
-            'order' => 'required|array',
+            'order' => ['required', 'array'],
         ]);
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);

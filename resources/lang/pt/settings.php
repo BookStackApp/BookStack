@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Manutenção',
     'maint_image_cleanup' => 'Limpeza de Imagens',
-    'maint_image_cleanup_desc' => "Examina páginas e reviste os seus conteúdos para verificar quais imagens e desenhos estão atualmente em uso e quais são redundantes. Certifique-se de criar uma cópia de segurança completa da base de dados e imagens antes de executar esta ação.",
+    'maint_image_cleanup_desc' => 'Examina páginas e reviste os seus conteúdos para verificar quais imagens e desenhos estão atualmente em uso e quais são redundantes. Certifique-se de criar uma cópia de segurança completa da base de dados e imagens antes de executar esta ação.',
     'maint_delete_images_only_in_revisions' => 'Eliminar também imagens que existam apenas em revisões de página antigas',
     'maint_image_cleanup_run' => 'Executar Limpeza',
     'maint_image_cleanup_warning' => ':count imagens potencialmente não utilizadas foram encontradas. Tem certeza de que deseja eliminar estas imagens?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Utilizador',
     'audit_table_event' => 'Evento',
     'audit_table_related' => 'Item ou Detalhe Relacionado',
+    'audit_table_ip' => 'Endereço de IP',
     'audit_table_date' => 'Data da Atividade',
     'audit_date_from' => 'Intervalo De',
     'audit_date_to' => 'Intervalo Até',
@@ -138,7 +139,7 @@ return [
     'role_details' => 'Detalhes do Cargo',
     'role_name' => 'Nome do Cargo',
     'role_desc' => 'Breve Descrição do Cargo',
-    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
+    'role_mfa_enforced' => 'Exige autenticação de múltiplos fatores',
     'role_external_auth_id' => 'IDs de Autenticação Externa',
     'role_system' => 'Permissões do Sistema',
     'role_manage_users' => 'Gerir utilizadores',
@@ -148,7 +149,7 @@ return [
     'role_manage_page_templates' => 'Gerir modelos de página',
     'role_access_api' => 'Aceder à API do sistema',
     'role_manage_settings' => 'Gerir as configurações da aplicação',
-    'role_export_content' => 'Export content',
+    'role_export_content' => 'Exportar conteúdo',
     'role_asset' => 'Permissões de Ativos',
     'roles_system_warning' => 'Esteja ciente de que o acesso a qualquer uma das três permissões acima pode permitir que um utilizador altere os seus próprios privilégios ou privilégios de outros no sistema. Apenas atribua cargos com essas permissões a utilizadores de confiança.',
     'role_asset_desc' => 'Estas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por estas permissões.',
@@ -206,10 +207,10 @@ return [
     'users_api_tokens_create' => 'Criar Token',
     'users_api_tokens_expires' => 'Expira',
     'users_api_tokens_docs' => 'Documentação da API',
-    'users_mfa' => 'Multi-Factor Authentication',
-    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa' => 'Autenticação Multi-fator',
+    'users_mfa_desc' => 'Configure a autenticação multi-fatores como uma camada extra de segurança para sua conta de utilizador.',
+    'users_mfa_x_methods' => ':count método configurado|:count métodos configurados',
+    'users_mfa_configure' => 'Configurar Métodos',
 
     // API Tokens
     'user_api_token_create' => 'Criar Token de API',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

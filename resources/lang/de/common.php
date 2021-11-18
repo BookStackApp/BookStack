@@ -20,7 +20,7 @@ return [
     'role' => 'Rolle',
     'cover_image' => 'Titelbild',
     'cover_image_description' => 'Das Bild sollte eine Auflösung von 440x250px haben.',
-    
+
     // Actions
     'actions' => 'Aktionen',
     'view' => 'Anzeigen',
@@ -33,7 +33,7 @@ return [
     'copy' => 'Kopieren',
     'reply' => 'Antworten',
     'delete' => 'Löschen',
-    'delete_confirm' => 'Löschen Bestätigen',
+    'delete_confirm' => 'Löschen bestätigen',
     'search' => 'Suchen',
     'search_clear' => 'Suche löschen',
     'reset' => 'Zurücksetzen',
@@ -41,10 +41,12 @@ return [
     'add' => 'Hinzufügen',
     'configure' => 'Konfigurieren',
     'fullscreen' => 'Vollbild',
-    'favourite' => 'Favorit',
+    'favourite' => 'Favoriten',
     'unfavourite' => 'Kein Favorit',
     'next' => 'Nächste',
     'previous' => 'Vorheriges',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'Sortieroptionen',
@@ -57,9 +59,9 @@ return [
     'sort_updated_at' => 'Aktualisierungsdatum',
 
     // Misc
-    'deleted_user' => 'Gelöschte Benutzer',
+    'deleted_user' => 'Gelöschter Benutzer',
     'no_activity' => 'Keine Aktivitäten zum Anzeigen',
-    'no_items' => 'Keine Einträge gefunden.',
+    'no_items' => 'Keine Einträge gefunden',
     'back_to_top' => 'nach oben',
     'skip_to_main_content' => 'Direkt zum Hauptinhalt',
     'toggle_details' => 'Details zeigen/verstecken',

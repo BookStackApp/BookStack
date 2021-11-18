@@ -139,7 +139,7 @@ class ExportTest extends TestCase
         $this->setSettings(['app-custom-head' => $customHeadContent]);
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
-        $resp->assertSee($customHeadContent);
+        $resp->assertSee($customHeadContent, false);
     }
 
     public function test_page_html_export_does_not_break_with_only_comments_in_custom_head()
@@ -151,7 +151,7 @@ class ExportTest extends TestCase
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
         $resp->assertStatus(200);
-        $resp->assertSee($customHeadContent);
+        $resp->assertSee($customHeadContent, false);
     }
 
     public function test_page_html_export_use_absolute_dates()
@@ -188,7 +188,7 @@ class ExportTest extends TestCase
         Storage::disk('local')->delete('uploads/images/gallery/svg_test.svg');
 
         $resp->assertStatus(200);
-        $resp->assertSee('<img src="data:image/svg+xml;base64');
+        $resp->assertSee('<img src="data:image/svg+xml;base64', false);
     }
 
     public function test_page_image_containment_works_on_multiple_images_within_a_single_line()
@@ -224,9 +224,37 @@ class ExportTest extends TestCase
         $storageDisk->delete('uploads/images/gallery/svg_test.svg');
         $storageDisk->delete('uploads/svg_test.svg');
 
-        $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg');
+        $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg', false);
         $resp->assertSee('http://localhost/uploads/svg_test.svg');
-        $resp->assertSee('src="/uploads/svg_test.svg"');
+        $resp->assertSee('src="/uploads/svg_test.svg"', false);
+    }
+
+    public function test_page_export_contained_html_does_not_allow_upward_traversal_with_local()
+    {
+        $contents = file_get_contents(public_path('.htaccess'));
+        config()->set('filesystems.images', 'local');
+
+        $page = Page::query()->first();
+        $page->html = '<img src="http://localhost/uploads/images/../../.htaccess"/>';
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertDontSee(base64_encode($contents));
+    }
+
+    public function test_page_export_contained_html_does_not_allow_upward_traversal_with_local_secure()
+    {
+        $testFilePath = storage_path('logs/test.txt');
+        config()->set('filesystems.images', 'local_secure');
+        file_put_contents($testFilePath, 'I am a cat');
+
+        $page = Page::query()->first();
+        $page->html = '<img src="http://localhost/uploads/images/../../logs/test.txt"/>';
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertDontSee(base64_encode('I am a cat'));
+        unlink($testFilePath);
     }
 
     public function test_exports_removes_scripts_from_custom_head()
@@ -305,7 +333,7 @@ class ExportTest extends TestCase
         $page->save();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
-        $resp->assertSee("# Dogcat\n\n<p class=\"callout info\">Some callout text</p>\n\nAnother line");
+        $resp->assertSee("# Dogcat\n\n<p class=\"callout info\">Some callout text</p>\n\nAnother line", false);
     }
 
     public function test_page_markdown_export_handles_bookstacks_wysiwyg_codeblock_format()
@@ -317,7 +345,7 @@ class ExportTest extends TestCase
         $page->save();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
-        $resp->assertSee("# Dogcat\n\n```JavaScript\nvar a = 'cat';\n```\n\nAnother line");
+        $resp->assertSee("# Dogcat\n\n```JavaScript\nvar a = 'cat';\n```\n\nAnother line", false);
     }
 
     public function test_chapter_markdown_export()

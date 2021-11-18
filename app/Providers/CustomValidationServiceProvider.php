@@ -2,6 +2,7 @@
 
 namespace BookStack\Providers;
 
+use BookStack\Uploads\ImageService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,9 +14,9 @@ class CustomValidationServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
-            $validImageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
+            $extension = strtolower($value->getClientOriginalExtension());
 
-            return in_array(strtolower($value->getClientOriginalExtension()), $validImageExtensions);
+            return ImageService::isExtensionSupported($extension);
         });
 
         Validator::extend('safe_url', function ($attribute, $value, $parameters, $validator) {

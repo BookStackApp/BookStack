@@ -234,6 +234,7 @@ return [
     'pages_initial_name' => '新页面',
     'pages_editing_draft_notification' => '您正在编辑在 :timeDiff 内保存的草稿.',
     'pages_draft_edited_notification' => '此后，此页面已经被更新，建议您放弃此草稿。',
+    'pages_draft_page_changed_since_creation' => '这个页面在您的草稿创建后被其他用户更新了，您目前的草稿不包含新的内容。建议您放弃此草稿，或是注意不要覆盖新的页面更改。',
     'pages_draft_edit_active' => [
         'start_a' => ':count位用户正在编辑此页面',
         'start_b' => '用户“:userName”已经开始编辑此页面',
@@ -257,6 +258,16 @@ return [
     'tags_explain' => "添加一些标签以更好地对您的内容进行分类。\n您可以为标签分配一个值，以进行更深入的组织。",
     'tags_add' => '添加另一个标签',
     'tags_remove' => '删除此标签',
+    'tags_usages' => 'Total tag usages',
+    'tags_assigned_pages' => 'Assigned to Pages',
+    'tags_assigned_chapters' => 'Assigned to Chapters',
+    'tags_assigned_books' => 'Assigned to Books',
+    'tags_assigned_shelves' => 'Assigned to Shelves',
+    'tags_x_unique_values' => ':count unique values',
+    'tags_all_values' => 'All values',
+    'tags_view_tags' => 'View Tags',
+    'tags_view_existing_tags' => 'View existing tags',
+    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
     'attachments' => '附件',
     'attachments_explain' => '上传一些文件或附加一些链接显示在您的网页上。这些在页面的侧边栏中可见。',
     'attachments_explain_instant_save' => '这里的更改将立即保存。',
@@ -320,5 +331,5 @@ return [
     'revision_delete_confirm' => '您确定要删除此修订版吗？',
     'revision_restore_confirm' => '您确定要恢复到此修订版吗？恢复后原有内容将会被替换。',
     'revision_delete_success' => '修订删除',
-    'revision_cannot_delete_latest' => '无法删除最新版本。'
+    'revision_cannot_delete_latest' => '无法删除最新版本。',
 ];

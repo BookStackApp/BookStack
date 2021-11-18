@@ -20,7 +20,7 @@ return [
     'role' => 'الدور',
     'cover_image' => 'صورة الغلاف',
     'cover_image_description' => 'الصورة يجب أن تكون مقاربة لحجم 440×250 بكسل.',
-    
+
     // Actions
     'actions' => 'إجراءات',
     'view' => 'عرض',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => 'Unfavourite',
     'next' => 'Next',
     'previous' => 'Previous',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => 'خيارات الفرز',

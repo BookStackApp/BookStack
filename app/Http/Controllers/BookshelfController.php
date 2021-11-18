@@ -84,9 +84,9 @@ class BookshelfController extends Controller
     {
         $this->checkPermission('bookshelf-create-all');
         $this->validate($request, [
-            'name'        => 'required|string|max:255',
-            'description' => 'string|max:1000',
-            'image'       => 'nullable|' . $this->getImageValidationRules(),
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));
@@ -161,9 +161,9 @@ class BookshelfController extends Controller
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $this->validate($request, [
-            'name'        => 'required|string|max:255',
-            'description' => 'string|max:1000',
-            'image'       => 'nullable|' . $this->getImageValidationRules(),
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['string', 'max:1000'],
+            'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));

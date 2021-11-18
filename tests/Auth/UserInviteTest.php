@@ -6,9 +6,9 @@ use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\User;
 use BookStack\Notifications\UserInvite;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
-use Notification;
 use Tests\TestCase;
 
 class UserInviteTest extends TestCase
@@ -52,7 +52,7 @@ class UserInviteTest extends TestCase
         $setPasswordResp = $this->followingRedirects()->post('/register/invite/' . $token, [
             'password' => 'my test password',
         ]);
-        $setPasswordResp->assertSee('Password set, you now have access to BookStack!');
+        $setPasswordResp->assertSee('Password set, you should now be able to login using your set password to access BookStack!');
         $newPasswordValid = auth()->validate([
             'email'    => $user->email,
             'password' => 'my test password',

@@ -72,7 +72,7 @@ return [
     // Maintenance settings
     'maint' => 'Údržba',
     'maint_image_cleanup' => 'Pročistění obrázků',
-    'maint_image_cleanup_desc' => "Prohledá stránky a jejich revize, aby zjistil, které obrázky a kresby jsou momentálně používány a které jsou zbytečné. Zajistěte plnou zálohu databáze a obrázků než se do toho pustíte.",
+    'maint_image_cleanup_desc' => 'Prohledá stránky a jejich revize, aby zjistil, které obrázky a kresby jsou momentálně používány a které jsou zbytečné. Zajistěte plnou zálohu databáze a obrázků než se do toho pustíte.',
     'maint_delete_images_only_in_revisions' => 'Odstranit i obrázky, které se vyskytují pouze ve starých revizích stránky',
     'maint_image_cleanup_run' => 'Spustit pročištění',
     'maint_image_cleanup_warning' => 'Nalezeno :count potenciálně nepoužitých obrázků. Jste si jisti, že je chcete odstranit?',
@@ -119,6 +119,7 @@ return [
     'audit_table_user' => 'Uživatel',
     'audit_table_event' => 'Událost',
     'audit_table_related' => 'Související položka nebo detail',
+    'audit_table_ip' => 'IP adresa',
     'audit_table_date' => 'Datum aktivity',
     'audit_date_from' => 'Časový rozsah od',
     'audit_date_to' => 'Časový rozsah do',
@@ -138,7 +139,7 @@ return [
     'role_details' => 'Detaily role',
     'role_name' => 'Název role',
     'role_desc' => 'Stručný popis role',
-    'role_mfa_enforced' => 'Requires Multi-Factor Authentication',
+    'role_mfa_enforced' => 'Vyžaduje Vícefaktorové ověření',
     'role_external_auth_id' => 'Přihlašovací identifikátory třetích stran',
     'role_system' => 'Systémová oprávnění',
     'role_manage_users' => 'Správa uživatelů',
@@ -148,7 +149,7 @@ return [
     'role_manage_page_templates' => 'Správa šablon stránek',
     'role_access_api' => 'Přístup k systémovému API',
     'role_manage_settings' => 'Správa nastavení aplikace',
-    'role_export_content' => 'Export content',
+    'role_export_content' => 'Exportovat obsah',
     'role_asset' => 'Obsahová oprávnění',
     'roles_system_warning' => 'Berte na vědomí, že přístup k některému ze tří výše uvedených oprávnění může uživateli umožnit změnit svá vlastní oprávnění nebo oprávnění ostatních uživatelů v systému. Přiřazujte role s těmito oprávněními pouze důvěryhodným uživatelům.',
     'role_asset_desc' => 'Tato oprávnění řídí přístup k obsahu napříč systémem. Specifická oprávnění na knihách, kapitolách a stránkách převáží tato nastavení.',
@@ -206,10 +207,10 @@ return [
     'users_api_tokens_create' => 'Vytvořit Token',
     'users_api_tokens_expires' => 'Vyprší',
     'users_api_tokens_docs' => 'API Dokumentace',
-    'users_mfa' => 'Multi-Factor Authentication',
-    'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'users_mfa' => 'Vícefázové ověření',
+    'users_mfa_desc' => 'Nastavit vícefaktorové ověřování jako další vrstvu zabezpečení vašeho uživatelského účtu.',
     'users_mfa_x_methods' => ':count method configured|:count methods configured',
-    'users_mfa_configure' => 'Configure Methods',
+    'users_mfa_configure' => 'Konfigurovat metody',
 
     // API Tokens
     'user_api_token_create' => 'Vytvořit API Token',
@@ -247,6 +248,7 @@ return [
         'de_informal' => 'Deutsch (Du)',
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
+        'et' => 'Eesti keel',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
@@ -271,6 +273,6 @@ return [
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
-    ]
+    ],
     //!////////////////////////////////
 ];

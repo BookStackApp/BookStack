@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 /**
  * Caching configuration options.
  *
@@ -38,13 +40,15 @@ return [
         ],
 
         'array' => [
-            'driver' => 'array',
+            'driver'    => 'array',
+            'serialize' => false,
         ],
 
         'database' => [
-            'driver'     => 'database',
-            'table'      => 'cache',
-            'connection' => null,
+            'driver'          => 'database',
+            'table'           => 'cache',
+            'connection'      => null,
+            'lock_connection' => null,
         ],
 
         'file' => [
@@ -53,19 +57,36 @@ return [
         ],
 
         'memcached' => [
-            'driver'  => 'memcached',
-            'servers' => env('CACHE_DRIVER') === 'memcached' ? $memcachedServers : [],
+            'driver'        => 'memcached',
+            'options'       => [
+                // Memcached::OPT_CONNECT_TIMEOUT => 2000,
+            ],
+            'servers' => $memcachedServers ?? [],
         ],
 
         'redis' => [
-            'driver'     => 'redis',
-            'connection' => 'default',
+            'driver'          => 'redis',
+            'connection'      => 'default',
+            'lock_connection' => 'default',
+        ],
+
+        'octane' => [
+            'driver' => 'octane',
         ],
 
     ],
 
-    // Cache key prefix
-    // Used to prevent collisions in shared cache systems.
-    'prefix' => env('CACHE_PREFIX', 'bookstack_cache'),
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Key Prefix
+    |--------------------------------------------------------------------------
+    |
+    | When utilizing a RAM based store such as APC or Memcached, there might
+    | be other applications utilizing the same cache. So, we'll specify a
+    | value to get prefixed to all our keys so we can avoid collisions.
+    |
+    */
+
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache'),
 
 ];

@@ -7,9 +7,9 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
-use File;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use League\CommonMark\ConfigurableEnvironmentInterface;
 
 class ThemeTest extends TestCase
@@ -150,7 +150,7 @@ class ThemeTest extends TestCase
         Theme::listen(ThemeEvents::AUTH_REGISTER, $callback);
         $this->setSettings(['registration-enabled' => 'true']);
 
-        $user = factory(User::class)->make();
+        $user = User::factory()->make();
         $this->post('/register', ['email' => $user->email, 'name' => $user->name, 'password' => 'password']);
 
         $this->assertCount(2, $args);

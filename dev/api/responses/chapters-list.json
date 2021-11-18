@@ -7,8 +7,8 @@
       "slug": "content-creation",
       "description": "How to create documentation on whatever subject you need to write about.",
       "priority": 3,
-      "created_at": "2019-05-05 21:49:56",
-      "updated_at": "2019-09-28 11:24:23",
+      "created_at": "2019-05-05:",
+      "updated_at": "2019-09-28T11:24:23.000000Z",
       "created_by": 1,
       "updated_by": 1,
       "owned_by": 1
@@ -20,8 +20,8 @@
       "slug": "managing-content",
       "description": "How to keep things organised and orderly in the system for easier navigation and better user experience.",
       "priority": 5,
-      "created_at": "2019-05-05 21:58:07",
-      "updated_at": "2019-10-17 15:05:34",
+      "created_at": "2019-05-05T21:58:07.000000Z",
+      "updated_at": "2019-10-17T15:05:34.000000Z",
       "created_by": 3,
       "updated_by": 3,
       "owned_by": 3

@@ -28,7 +28,7 @@ class ApiDocsGenerator
         if (Cache::has($cacheKey) && config('app.env') === 'production') {
             $docs = Cache::get($cacheKey);
         } else {
-            $docs = (new static())->generate();
+            $docs = (new ApiDocsGenerator())->generate();
             Cache::put($cacheKey, $docs, 60 * 24);
         }
 
@@ -55,10 +55,16 @@ class ApiDocsGenerator
     {
         return $routes->map(function (array $route) {
             $exampleTypes = ['request', 'response'];
+            $fileTypes = ['json', 'http'];
             foreach ($exampleTypes as $exampleType) {
-                $exampleFile = base_path("dev/api/{$exampleType}s/{$route['name']}.json");
-                $exampleContent = file_exists($exampleFile) ? file_get_contents($exampleFile) : null;
-                $route["example_{$exampleType}"] = $exampleContent;
+                foreach ($fileTypes as $fileType) {
+                    $exampleFile = base_path("dev/api/{$exampleType}s/{$route['name']}." . $fileType);
+                    if (file_exists($exampleFile)) {
+                        $route["example_{$exampleType}"] = file_get_contents($exampleFile);
+                        continue 2;
+                    }
+                }
+                $route["example_{$exampleType}"] = null;
             }
 
             return $route;
@@ -95,17 +101,14 @@ class ApiDocsGenerator
         }
 
         $rules = $class->getValdationRules()[$methodName] ?? [];
-        foreach ($rules as $param => $ruleString) {
-            $rules[$param] = explode('|', $ruleString);
-        }
 
-        return count($rules) > 0 ? $rules : null;
+        return empty($rules) ? null : $rules;
     }
 
     /**
      * Parse out the description text from a class method comment.
      */
-    protected function parseDescriptionFromMethodComment(string $comment)
+    protected function parseDescriptionFromMethodComment(string $comment): string
     {
         $matches = [];
         preg_match_all('/^\s*?\*\s((?![@\s]).*?)$/m', $comment, $matches);

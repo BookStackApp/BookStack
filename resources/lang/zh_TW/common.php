@@ -20,7 +20,7 @@ return [
     'role' => '角色',
     'cover_image' => '封面圖片',
     'cover_image_description' => '此圖片大小應約為 440x250px。',
-    
+
     // Actions
     'actions' => '動作',
     'view' => '檢視',
@@ -45,6 +45,8 @@ return [
     'unfavourite' => '取消最愛',
     'next' => '下一頁',
     'previous' => '上一頁',
+    'filter_active' => 'Active Filter:',
+    'filter_clear' => 'Clear Filter',
 
     // Sort Options
     'sort_options' => '排序選項',
