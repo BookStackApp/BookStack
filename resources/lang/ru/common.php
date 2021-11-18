@@ -46,7 +46,7 @@ return [
     'next' => 'Следующая',
     'previous' => 'Предыдущая',
     'filter_active' => 'Активный фильтр:',
-    'filter_clear' => 'Clear Filter',
+    'filter_clear' => 'Сбросить фильтр',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',
