@@ -6,6 +6,8 @@ This theme system itself is maintained and supported but usages of this system, 
 
 ## Getting Started
 
+*[Video Guide](https://www.youtube.com/watch?v=gLy_2GBse48)*
+
 This makes use of the theme system. Create a folder for your theme within your BookStack `themes` directory. As an example we'll use `my_theme`, so we'd create a `themes/my_theme` folder.
 You'll need to tell BookStack to use your theme via the `APP_THEME` option in your `.env` file. For example: `APP_THEME=my_theme`.
 
