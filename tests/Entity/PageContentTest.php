@@ -670,4 +670,24 @@ class PageContentTest extends TestCase
         $page->refresh();
         $this->assertStringContainsString('<img src=""', $page->html);
     }
+
+    public function test_nested_headers_gets_assigned_an_id()
+    {
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        $content = '<table><tbody><tr><td><h5>Simple Test</h5></td></tr></tbody></table>';
+        $this->put($page->getUrl(), [
+            'name'    => $page->name,
+            'html'    => $content,
+            'summary' => '',
+        ]);
+
+        $updatedPage = Page::query()->where('id', '=', $page->id)->first();
+
+        // The top level <table> node will get assign the bkmrk-simple-test id because the system will
+        // take the node value of h5
+        // So the h5 should get the bkmrk-simple-test-1 id
+        $this->assertStringContainsString('<h5 id="bkmrk-simple-test-1">Simple Test</h5>', $updatedPage->html);
+    }
 }

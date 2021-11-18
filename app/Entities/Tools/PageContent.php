@@ -193,6 +193,15 @@ class PageContent
             }
         }
 
+        // Set ids on nested header nodes
+        $nestedHeaders = $xPath->query('//body//*//h1|//body//*//h2|//body//*//h3|//body//*//h4|//body//*//h5|//body//*//h6');
+        foreach ($nestedHeaders as $nestedHeader) {
+            [$oldId, $newId] = $this->setUniqueId($nestedHeader, $idMap);
+            if ($newId && $newId !== $oldId) {
+                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
+            }
+        }
+
         // Ensure no duplicate ids within child items
         $idElems = $xPath->query('//body//*//*[@id]');
         foreach ($idElems as $domElem) {
