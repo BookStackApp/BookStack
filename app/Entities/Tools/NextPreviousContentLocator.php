@@ -64,7 +64,7 @@ class NextPreviousContentLocator
         /** @var Entity $item */
         foreach ($bookTree->all() as $item) {
             $flatOrdered->push($item);
-            $childPages = $item->visible_pages ?? [];
+            $childPages = $item->getAttribute('visible_pages') ?? [];
             $flatOrdered = $flatOrdered->concat($childPages);
         }
 

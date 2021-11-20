@@ -4,6 +4,7 @@ namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
@@ -100,13 +101,13 @@ class ActivityService
      */
     public function entityActivity(Entity $entity, int $count = 20, int $page = 1): array
     {
-        /** @var [string => int[]] $queryIds */
+        /** @var array<string, int[]> $queryIds */
         $queryIds = [$entity->getMorphClass() => [$entity->id]];
 
-        if ($entity->isA('book')) {
+        if ($entity instanceof Book) {
             $queryIds[(new Chapter())->getMorphClass()] = $entity->chapters()->visible()->pluck('id');
         }
-        if ($entity->isA('book') || $entity->isA('chapter')) {
+        if ($entity instanceof Book || $entity instanceof Chapter) {
             $queryIds[(new Page())->getMorphClass()] = $entity->pages()->visible()->pluck('id');
         }
 

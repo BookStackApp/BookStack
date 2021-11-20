@@ -156,7 +156,7 @@ class PageContent
     /**
      * Parse a base64 image URI into the data and extension.
      *
-     * @return array{extension: array, data: string}
+     * @return array{extension: string, data: string}
      */
     protected function parseBase64ImageUri(string $uri): array
     {
@@ -230,7 +230,7 @@ class PageContent
      */
     protected function setUniqueId(\DOMNode $element, array &$idMap): array
     {
-        if (get_class($element) !== 'DOMElement') {
+        if (!$element instanceof \DOMElement) {
             return ['', ''];
         }
 
@@ -242,7 +242,7 @@ class PageContent
             return [$existingId, $existingId];
         }
 
-        // Create an unique id for the element
+        // Create a unique id for the element
         // Uses the content as a basis to ensure output is the same every time
         // the same content is passed through.
         $contentId = 'bkmrk-' . mb_substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);

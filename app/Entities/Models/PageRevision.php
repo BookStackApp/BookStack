@@ -84,11 +84,9 @@ class PageRevision extends Model
      * Included here to align with entities in similar use cases.
      * (Yup, Bit of an awkward hack).
      *
-     * @param $type
-     *
-     * @return bool
+     * @deprecated Use instanceof instead.
      */
-    public static function isA($type)
+    public static function isA(string $type): bool
     {
         return $type === 'revision';
     }

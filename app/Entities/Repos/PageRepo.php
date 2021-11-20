@@ -290,6 +290,8 @@ class PageRepo
     public function restoreRevision(Page $page, int $revisionId): Page
     {
         $page->revision_count++;
+
+        /** @var PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
 
         $page->fill($revision->toArray());
@@ -334,7 +336,8 @@ class PageRepo
         }
 
         $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
-        $page->changeBook($parent instanceof Book ? $parent->id : $parent->book->id);
+        $newBookId = ($parent instanceof Chapter) ? $parent->book->id : $parent->id;
+        $page->changeBook($newBookId);
         $page->rebuildPermissions();
 
         Activity::addForEntity($page, ActivityType::PAGE_MOVE);
@@ -406,7 +409,7 @@ class PageRepo
      */
     protected function changeParent(Page $page, Entity $parent)
     {
-        $book = ($parent instanceof Book) ? $parent : $parent->book;
+        $book = ($parent instanceof Chapter) ? $parent->book : $parent;
         $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : 0;
         $page->save();
 
@@ -467,6 +470,7 @@ class PageRepo
     {
         $parent = $page->getParent();
         if ($parent instanceof Chapter) {
+            /** @var ?Page $lastPage */
             $lastPage = $parent->pages('desc')->first();
 
             return $lastPage ? $lastPage->priority + 1 : 0;

@@ -9,6 +9,7 @@ use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\SearchTerm;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -356,7 +357,9 @@ class SearchRunner
                     // We have to do a raw sql query for this since otherwise PDO will quote the value and MySQL will
                     // search the value as a string which prevents being able to do number-based operations
                     // on the tag values. We ensure it has a numeric value and then cast it just to be sure.
-                    $tagValue = (float) trim($query->getConnection()->getPdo()->quote($tagValue), "'");
+                    /** @var Connection $connection */
+                    $connection = $query->getConnection();
+                    $tagValue = (float) trim($connection->getPdo()->quote($tagValue), "'");
                     $query->whereRaw("value ${tagOperator} ${tagValue}");
                 } else {
                     $query->where('value', $tagOperator, $tagValue);
