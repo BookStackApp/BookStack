@@ -4,6 +4,7 @@ namespace BookStack\Auth\Access;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Database\Eloquent\Model;
 
 class ExternalBaseUserProvider implements UserProvider
 {
@@ -16,8 +17,6 @@ class ExternalBaseUserProvider implements UserProvider
 
     /**
      * LdapUserProvider constructor.
-     *
-     * @param $model
      */
     public function __construct(string $model)
     {
@@ -27,7 +26,7 @@ class ExternalBaseUserProvider implements UserProvider
     /**
      * Create a new instance of the model.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return Model
      */
     public function createModel()
     {
@@ -41,7 +40,7 @@ class ExternalBaseUserProvider implements UserProvider
      *
      * @param mixed $identifier
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     * @return Authenticatable|null
      */
     public function retrieveById($identifier)
     {
@@ -54,7 +53,7 @@ class ExternalBaseUserProvider implements UserProvider
      * @param mixed  $identifier
      * @param string $token
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     * @return Authenticatable|null
      */
     public function retrieveByToken($identifier, $token)
     {
@@ -64,7 +63,7 @@ class ExternalBaseUserProvider implements UserProvider
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param Authenticatable $user
      * @param string                                     $token
      *
      * @return void
@@ -79,7 +78,7 @@ class ExternalBaseUserProvider implements UserProvider
      *
      * @param array $credentials
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     * @return Authenticatable|null
      */
     public function retrieveByCredentials(array $credentials)
     {
@@ -94,7 +93,7 @@ class ExternalBaseUserProvider implements UserProvider
     /**
      * Validate a user against the given credentials.
      *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param Authenticatable $user
      * @param array                                      $credentials
      *
      * @return bool

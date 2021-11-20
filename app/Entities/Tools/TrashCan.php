@@ -235,13 +235,15 @@ class TrashCan
     {
         $shouldRestore = true;
         $restoreCount = 0;
-        $parent = $deletion->deletable->getParent();
 
-        if ($parent && $parent->trashed()) {
-            $shouldRestore = false;
+        if ($deletion->deletable instanceof Entity) {
+            $parent = $deletion->deletable->getParent();
+            if ($parent && $parent->trashed()) {
+                $shouldRestore = false;
+            }
         }
 
-        if ($shouldRestore) {
+        if ($deletion->deletable instanceof Entity && $shouldRestore) {
             $restoreCount = $this->restoreEntity($deletion->deletable);
         }
 

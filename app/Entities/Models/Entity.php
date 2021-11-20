@@ -12,6 +12,7 @@ use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Entities\Tools\SearchIndex;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Facades\Permissions;
+use BookStack\Interfaces\Deletable;
 use BookStack\Interfaces\Favouritable;
 use BookStack\Interfaces\Sluggable;
 use BookStack\Interfaces\Viewable;
@@ -44,7 +45,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
-abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
+abstract class Entity extends Model implements Sluggable, Favouritable, Viewable, Deletable
 {
     use SoftDeletes;
     use HasCreatorAndUpdater;
@@ -210,6 +211,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * Check if this instance or class is a certain type of entity.
      * Examples of $type are 'page', 'book', 'chapter'.
+     * @deprecated Use instanceof instead.
      */
     public static function isA(string $type): bool
     {

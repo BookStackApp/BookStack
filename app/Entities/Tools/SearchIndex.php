@@ -67,7 +67,7 @@ class SearchIndex
      * - The number that have been processed so far.
      * - The total number of that model to be processed.
      *
-     * @param callable(Entity, int, int)|null $progressCallback
+     * @param callable(Entity, int, int):void|null $progressCallback
      */
     public function indexAllEntities(?callable $progressCallback = null)
     {

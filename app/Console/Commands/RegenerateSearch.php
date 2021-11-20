@@ -49,7 +49,7 @@ class RegenerateSearch extends Command
             DB::setDefaultConnection($this->option('database'));
         }
 
-        $this->searchIndex->indexAllEntities(function (Entity $model, int $processed, int $total) {
+        $this->searchIndex->indexAllEntities(function (Entity $model, int $processed, int $total): void {
             $this->info('Indexed ' . class_basename($model) . ' entries (' . $processed . '/' . $total . ')');
         });
 
