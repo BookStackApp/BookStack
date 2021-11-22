@@ -210,7 +210,7 @@ class ThemeTest extends TestCase
 
     public function test_register_command_allows_provided_command_to_be_usable_via_artisan()
     {
-        Theme::registerCommand(new MyCustomCommand);
+        Theme::registerCommand(new MyCustomCommand());
 
         Artisan::call('bookstack:test-custom-command', []);
         $output = Artisan::output();
@@ -233,9 +233,12 @@ class ThemeTest extends TestCase
     }
 }
 
-class MyCustomCommand extends Command {
+class MyCustomCommand extends Command
+{
     protected $signature = 'bookstack:test-custom-command';
-    public function handle() {
+
+    public function handle()
+    {
         $this->line('Command ran!');
     }
 }

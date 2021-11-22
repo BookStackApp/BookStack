@@ -211,6 +211,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * Check if this instance or class is a certain type of entity.
      * Examples of $type are 'page', 'book', 'chapter'.
+     *
      * @deprecated Use instanceof instead.
      */
     public static function isA(string $type): bool
