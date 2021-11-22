@@ -114,7 +114,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($slug);
         $bookChildren = (new BookContents($book))->getTree(true);
-        $bookParentShelves = $book->shelves()->visible()->get();
+        $bookParentShelves = $book->shelves()->scopes('visible')->get();
 
         View::incrementFor($book);
         if ($request->has('shelf')) {

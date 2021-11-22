@@ -105,10 +105,10 @@ class ActivityService
         $queryIds = [$entity->getMorphClass() => [$entity->id]];
 
         if ($entity instanceof Book) {
-            $queryIds[(new Chapter())->getMorphClass()] = $entity->chapters()->visible()->pluck('id');
+            $queryIds[(new Chapter())->getMorphClass()] = $entity->chapters()->scopes('visible')->pluck('id');
         }
         if ($entity instanceof Book || $entity instanceof Chapter) {
-            $queryIds[(new Page())->getMorphClass()] = $entity->pages()->visible()->pluck('id');
+            $queryIds[(new Page())->getMorphClass()] = $entity->pages()->scopes('visible')->pluck('id');
         }
 
         $query = $this->activity->newQuery();

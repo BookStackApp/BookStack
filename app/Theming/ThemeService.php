@@ -52,7 +52,7 @@ class ThemeService
      */
     public function registerCommand(Command $command)
     {
-        Artisan::starting(function(Application $application) use ($command) {
+        Artisan::starting(function (Application $application) use ($command) {
             $application->addCommands([$command]);
         });
     }
