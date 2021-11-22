@@ -3,6 +3,8 @@
 namespace BookStack\Theming;
 
 use BookStack\Auth\Access\SocialAuthService;
+use Illuminate\Console\Application;
+use Illuminate\Console\Application as Artisan;
 use Illuminate\Contracts\Console\Kernel;
 use Symfony\Component\Console\Command\Command;
 
@@ -50,9 +52,9 @@ class ThemeService
      */
     public function registerCommand(Command $command)
     {
-        /** @var \Illuminate\Foundation\Console\Kernel $consoleKernel */
-        $consoleKernel = app()->make(Kernel::class);
-        $consoleKernel->registerCommand($command);
+        Artisan::starting(function(Application $application) use ($command) {
+            $application->addCommands([$command]);
+        });
     }
 
     /**
