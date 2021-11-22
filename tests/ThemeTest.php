@@ -7,8 +7,10 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
+use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use League\CommonMark\ConfigurableEnvironmentInterface;
 
@@ -206,6 +208,16 @@ class ThemeTest extends TestCase
         $this->assertStringContainsString('donkey=donut', $redirect);
     }
 
+    public function test_register_command_allows_provided_command_to_be_usable_via_artisan()
+    {
+        Theme::registerCommand(new MyCustomCommand);
+
+        Artisan::call('bookstack:test-custom-command', []);
+        $output = Artisan::output();
+
+        $this->assertStringContainsString('Command ran!', $output);
+    }
+
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
@@ -218,5 +230,12 @@ class ThemeTest extends TestCase
 
         // Cleanup the custom theme folder we created
         File::deleteDirectory($themeFolderPath);
+    }
+}
+
+class MyCustomCommand extends Command {
+    protected $signature = 'bookstack:test-custom-command';
+    public function handle() {
+        $this->line('Command ran!');
     }
 }
