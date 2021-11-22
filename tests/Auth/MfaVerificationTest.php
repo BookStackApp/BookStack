@@ -23,7 +23,7 @@ class MfaVerificationTest extends TestCase
         $resp = $this->get('/mfa/verify');
         $resp->assertSee('Verify Access');
         $resp->assertSee('Enter the code, generated using your mobile app, below:');
-        $resp->assertElementExists('form[action$="/mfa/totp/verify"] input[name="code"]');
+        $resp->assertElementExists('form[action$="/mfa/totp/verify"] input[name="code"][autofocus]');
 
         $google2fa = new Google2FA();
         $resp = $this->post('/mfa/totp/verify', [
