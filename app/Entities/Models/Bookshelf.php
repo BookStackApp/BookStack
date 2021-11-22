@@ -37,7 +37,7 @@ class Bookshelf extends Entity implements HasCoverImage
      */
     public function visibleBooks(): BelongsToMany
     {
-        return $this->books()->visible();
+        return $this->books()->scopes('visible');
     }
 
     /**

@@ -23,6 +23,7 @@ class Chapter extends BookChild
 
     /**
      * Get the pages that this chapter contains.
+     * @return HasMany<Page>
      */
     public function pages(string $dir = 'ASC'): HasMany
     {
@@ -50,7 +51,8 @@ class Chapter extends BookChild
      */
     public function getVisiblePages(): Collection
     {
-        return $this->pages()->visible()
+        return $this->pages()
+        ->scopes('visible')
         ->orderBy('draft', 'desc')
         ->orderBy('priority', 'asc')
         ->get();

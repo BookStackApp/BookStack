@@ -165,7 +165,7 @@ class LdapService
      * Bind the system user to the LDAP connection using the given credentials
      * otherwise anonymous access is attempted.
      *
-     * @param $connection
+     * @param resource $connection
      *
      * @throws LdapException
      */

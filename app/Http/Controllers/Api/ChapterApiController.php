@@ -70,7 +70,7 @@ class ChapterApiController extends ApiController
     public function read(string $id)
     {
         $chapter = Chapter::visible()->with(['tags', 'createdBy', 'updatedBy', 'ownedBy', 'pages' => function (HasMany $query) {
-            $query->visible()->get(['id', 'name', 'slug']);
+            $query->scopes('visible')->get(['id', 'name', 'slug']);
         }])->findOrFail($id);
 
         return response()->json($chapter);

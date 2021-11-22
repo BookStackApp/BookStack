@@ -145,13 +145,13 @@ class SearchRunner
 
         if ($entityModelInstance instanceof BookChild) {
             $relations['book'] = function (BelongsTo $query) {
-                $query->visible();
+                $query->scopes('visible');
             };
         }
 
         if ($entityModelInstance instanceof Page) {
             $relations['chapter'] = function (BelongsTo $query) {
-                $query->visible();
+                $query->scopes('visible');
             };
         }
 

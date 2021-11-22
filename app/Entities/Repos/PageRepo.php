@@ -69,9 +69,10 @@ class PageRepo
      */
     public function getByOldSlug(string $bookSlug, string $pageSlug): ?Page
     {
+        /** @var ?PageRevision $revision */
         $revision = PageRevision::query()
             ->whereHas('page', function (Builder $query) {
-                $query->visible();
+                $query->scopes('visible');
             })
             ->where('slug', '=', $pageSlug)
             ->where('type', '=', 'version')
@@ -80,7 +81,7 @@ class PageRepo
             ->with('page')
             ->first();
 
-        return $revision ? $revision->page : null;
+        return $revision->page ?? null;
     }
 
     /**

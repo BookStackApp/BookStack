@@ -79,53 +79,43 @@ class Book extends Entity implements HasCoverImage
 
     /**
      * Get all pages within this book.
-     *
-     * @return HasMany
      */
-    public function pages()
+    public function pages(): HasMany
     {
         return $this->hasMany(Page::class);
     }
 
     /**
      * Get the direct child pages of this book.
-     *
-     * @return HasMany
      */
-    public function directPages()
+    public function directPages(): HasMany
     {
         return $this->pages()->where('chapter_id', '=', '0');
     }
 
     /**
      * Get all chapters within this book.
-     *
-     * @return HasMany
      */
-    public function chapters()
+    public function chapters(): HasMany
     {
         return $this->hasMany(Chapter::class);
     }
 
     /**
      * Get the shelves this book is contained within.
-     *
-     * @return BelongsToMany
      */
-    public function shelves()
+    public function shelves(): BelongsToMany
     {
         return $this->belongsToMany(Bookshelf::class, 'bookshelves_books', 'book_id', 'bookshelf_id');
     }
 
     /**
      * Get the direct child items within this book.
-     *
-     * @return Collection
      */
     public function getDirectChildren(): Collection
     {
-        $pages = $this->directPages()->visible()->get();
-        $chapters = $this->chapters()->visible()->get();
+        $pages = $this->directPages()->scopes('visible')->get();
+        $chapters = $this->chapters()->scopes('visible')->get();
 
         return $pages->concat($chapters)->sortBy('priority')->sortByDesc('draft');
     }

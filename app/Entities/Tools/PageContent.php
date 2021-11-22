@@ -12,6 +12,8 @@ use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\HtmlContentFilter;
 use DOMDocument;
+use DOMElement;
+use DOMNode;
 use DOMNodeList;
 use DOMXPath;
 use Illuminate\Support\Str;
@@ -237,9 +239,9 @@ class PageContent
      * A map for existing ID's should be passed in to check for current existence.
      * Returns a pair of strings in the format [old_id, new_id].
      */
-    protected function setUniqueId(\DOMNode $element, array &$idMap): array
+    protected function setUniqueId(DOMNode $element, array &$idMap): array
     {
-        if (!$element instanceof \DOMElement) {
+        if (!$element instanceof DOMElement) {
             return ['', ''];
         }
 
@@ -321,7 +323,7 @@ class PageContent
      */
     protected function headerNodesToLevelList(DOMNodeList $nodeList): array
     {
-        $tree = collect($nodeList)->map(function ($header) {
+        $tree = collect($nodeList)->map(function (DOMElement $header) {
             $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
             $text = mb_substr($text, 0, 100);
 

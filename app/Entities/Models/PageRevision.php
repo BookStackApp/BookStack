@@ -63,10 +63,8 @@ class PageRevision extends Model
 
     /**
      * Get the previous revision for the same page if existing.
-     *
-     * @return \BookStack\Entities\PageRevision|null
      */
-    public function getPrevious()
+    public function getPrevious(): ?PageRevision
     {
         $id = static::newQuery()->where('page_id', '=', $this->page_id)
             ->where('id', '<', $this->id)

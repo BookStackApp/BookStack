@@ -9,6 +9,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\SearchTerm;
 use DOMDocument;
 use DOMNode;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class SearchIndex
@@ -76,7 +77,9 @@ class SearchIndex
         foreach ($this->entityProvider->all() as $entityModel) {
             $indexContentField = $entityModel instanceof Page ? 'html' : 'description';
             $selectFields = ['id', 'name', $indexContentField];
-            $total = $entityModel->newQuery()->withTrashed()->count();
+            /** @var Builder<Entity> $query */
+            $query = $entityModel->newQuery();
+            $total = $query->withTrashed()->count();
             $chunkSize = 250;
             $processed = 0;
 
@@ -223,7 +226,7 @@ class SearchIndex
         if ($entity instanceof Page) {
             $bodyTermsMap = $this->generateTermScoreMapFromHtml($entity->html);
         } else {
-            $bodyTermsMap = $this->generateTermScoreMapFromText($entity->description ?? '', $entity->searchFactor);
+            $bodyTermsMap = $this->generateTermScoreMapFromText($entity->getAttribute('description') ?? '', $entity->searchFactor);
         }
 
         $mergedScoreMap = $this->mergeTermScoreMaps($nameTermsMap, $bodyTermsMap, $tagTermsMap);
