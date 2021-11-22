@@ -2,11 +2,8 @@
 
 namespace BookStack\Console;
 
-use BookStack\Facades\Theme;
-use BookStack\Theming\ThemeService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Symfony\Component\Console\Command\Command;
 
 class Kernel extends ConsoleKernel
 {
@@ -38,13 +35,6 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        // Default framework command loading from 'Commands' directory
         $this->load(__DIR__ . '/Commands');
-
-        // Load any user commands that have been registered via the theme system.
-        $themeService = $this->app->make(ThemeService::class);
-        foreach ($themeService->getRegisteredCommands() as $command) {
-            $this->registerCommand($command);
-        }
     }
 }
