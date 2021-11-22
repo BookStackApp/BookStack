@@ -3,10 +3,16 @@
 namespace BookStack\Theming;
 
 use BookStack\Auth\Access\SocialAuthService;
+use Symfony\Component\Console\Command\Command;
 
 class ThemeService
 {
     protected $listeners = [];
+
+    /**
+     * @var Command[]
+     */
+    protected $commands = [];
 
     /**
      * Listen to a given custom theme event,
@@ -41,6 +47,22 @@ class ThemeService
         }
 
         return null;
+    }
+
+    /**
+     * Register a new custom artisan command to be available.
+     */
+    public function registerCommand(Command $command)
+    {
+        $this->commands[] = $command;
+    }
+
+    /**
+     * Get the custom commands that have been registered.
+     */
+    public function getRegisteredCommands(): array
+    {
+        return $this->commands;
     }
 
     /**
