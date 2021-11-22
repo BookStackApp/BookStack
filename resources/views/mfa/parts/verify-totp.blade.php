@@ -6,7 +6,7 @@
     {{ csrf_field() }}
     <input type="text"
            name="code"
-           tabindex="0"
+           autofocus
            placeholder="{{ trans('auth.mfa_gen_totp_provide_code_here') }}"
            class="input-fill-width {{ $errors->has('code') ? 'neg' : '' }}">
     @if($errors->has('code'))
