@@ -13,7 +13,6 @@ use Tests\TestCase;
  */
 class FrameworkAssumptionTest extends TestCase
 {
-
     public function test_scopes_error_if_not_existing()
     {
         $this->expectException(BadMethodCallException::class);
