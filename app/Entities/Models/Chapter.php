@@ -23,6 +23,7 @@ class Chapter extends BookChild
 
     /**
      * Get the pages that this chapter contains.
+     *
      * @return HasMany<Page>
      */
     public function pages(string $dir = 'ASC'): HasMany

@@ -5,7 +5,6 @@ namespace BookStack\Theming;
 use BookStack\Auth\Access\SocialAuthService;
 use Illuminate\Console\Application;
 use Illuminate\Console\Application as Artisan;
-use Illuminate\Contracts\Console\Kernel;
 use Symfony\Component\Console\Command\Command;
 
 class ThemeService
