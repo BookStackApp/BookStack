@@ -12,6 +12,8 @@ use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\HtmlContentFilter;
 use DOMDocument;
+use DOMElement;
+use DOMNode;
 use DOMNodeList;
 use DOMXPath;
 use Illuminate\Support\Str;
@@ -156,7 +158,7 @@ class PageContent
     /**
      * Parse a base64 image URI into the data and extension.
      *
-     * @return array{extension: array, data: string}
+     * @return array{extension: string, data: string}
      */
     protected function parseBase64ImageUri(string $uri): array
     {
@@ -188,6 +190,15 @@ class PageContent
         $idMap = [];
         foreach ($childNodes as $index => $childNode) {
             [$oldId, $newId] = $this->setUniqueId($childNode, $idMap);
+            if ($newId && $newId !== $oldId) {
+                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
+            }
+        }
+
+        // Set ids on nested header nodes
+        $nestedHeaders = $xPath->query('//body//*//h1|//body//*//h2|//body//*//h3|//body//*//h4|//body//*//h5|//body//*//h6');
+        foreach ($nestedHeaders as $nestedHeader) {
+            [$oldId, $newId] = $this->setUniqueId($nestedHeader, $idMap);
             if ($newId && $newId !== $oldId) {
                 $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
             }
@@ -228,9 +239,9 @@ class PageContent
      * A map for existing ID's should be passed in to check for current existence.
      * Returns a pair of strings in the format [old_id, new_id].
      */
-    protected function setUniqueId(\DOMNode $element, array &$idMap): array
+    protected function setUniqueId(DOMNode $element, array &$idMap): array
     {
-        if (get_class($element) !== 'DOMElement') {
+        if (!$element instanceof DOMElement) {
             return ['', ''];
         }
 
@@ -242,7 +253,7 @@ class PageContent
             return [$existingId, $existingId];
         }
 
-        // Create an unique id for the element
+        // Create a unique id for the element
         // Uses the content as a basis to ensure output is the same every time
         // the same content is passed through.
         $contentId = 'bkmrk-' . mb_substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
@@ -312,7 +323,7 @@ class PageContent
      */
     protected function headerNodesToLevelList(DOMNodeList $nodeList): array
     {
-        $tree = collect($nodeList)->map(function ($header) {
+        $tree = collect($nodeList)->map(function (DOMElement $header) {
             $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
             $text = mb_substr($text, 0, 100);
 

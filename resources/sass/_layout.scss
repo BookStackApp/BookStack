@@ -369,6 +369,9 @@ body.flexbox {
     &:focus-within {
       opacity: 1;
     }
+    @media (prefers-contrast: more) {
+      opacity: 1;
+    }
   }
 
 }

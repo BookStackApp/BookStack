@@ -58,6 +58,7 @@ class RecycleBinController extends Controller
                 $searching = false;
             }
         }
+
         /** @var ?Deletion $parentDeletion */
         $parentDeletion = ($currentDeletable === $deletion->deletable) ? null : $currentDeletable->deletions()->first();
 

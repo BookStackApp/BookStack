@@ -5,6 +5,7 @@ namespace BookStack\Entities\Tools;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Collection;
 
@@ -24,7 +25,7 @@ class SiblingFetcher
         }
 
         // Page in book or chapter
-        if (($entity instanceof Page && !$entity->chapter) || $entity->isA('chapter')) {
+        if (($entity instanceof Page && !$entity->chapter) || $entity instanceof Chapter) {
             $entities = $entity->book->getDirectChildren();
         }
 

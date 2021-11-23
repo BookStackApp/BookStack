@@ -7,13 +7,12 @@
 
 @if(count($favourites) > 0)
     <div id="top-favourites" class="mb-xl">
-        <h5>
-            <a href="{{ url('/favourites') }}" class="no-color">{{ trans('entities.my_most_viewed_favourites') }}</a>
-        </h5>
+        <h5>{{ trans('entities.my_most_viewed_favourites') }}</h5>
         @include('entities.list', [
             'entities' => $favourites,
             'style' => 'compact',
         ])
+        <a href="{{ url('/favourites')  }}" class="text-muted block py-xs">{{ trans('common.view_all') }}</a>
     </div>
 @endif
 
@@ -27,7 +26,7 @@
 </div>
 
 <div class="mb-xl">
-    <h5><a class="no-color" href="{{ url("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h5>
+    <h5>{{ trans('entities.recently_updated_pages') }}</h5>
     <div id="recently-updated-pages">
         @include('entities.list', [
         'entities' => $recentlyUpdatedPages,
@@ -35,6 +34,7 @@
         'emptyText' => trans('entities.no_pages_recently_updated')
         ])
     </div>
+    <a href="{{ url('/pages/recently-updated')  }}" class="text-muted block py-xs">{{ trans('common.view_all') }}</a>
 </div>
 
 <div id="recent-activity" class="mb-xl">

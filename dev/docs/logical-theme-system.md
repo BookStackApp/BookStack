@@ -77,6 +77,32 @@ Theme::listen(ThemeEvents::APP_BOOT, function($app) {
 });
 ```
 
+## Custom Commands
+
+The logical theme system supports adding custom [artisan commands](https://laravel.com/docs/8.x/artisan) to BookStack. These can be registered in your `functions.php` file by calling `Theme::registerCommand($command)`, where `$command` is an instance of `\Symfony\Component\Console\Command\Command`. 
+
+Below is an example of registering a command that could then be ran using `php artisan bookstack:meow` on the command line.
+
+```php
+<?php
+
+use BookStack\Facades\Theme;
+use Illuminate\Console\Command;
+
+class MeowCommand extends Command
+{
+    protected $signature = 'bookstack:meow';
+    protected $description = 'Say meow on the command line';
+
+    public function handle()
+    {
+        $this->line('Meow there!');
+    }
+}
+
+Theme::registerCommand(new MeowCommand);
+```
+
 ## Custom Socialite Service Example
 
 The below shows an example of adding a custom reddit socialite service to BookStack. 
