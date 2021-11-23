@@ -262,6 +262,9 @@ header .search-box {
   &:hover, &:focus-within {
     opacity: 1;
   }
+  @media (prefers-contrast: more) {
+    opacity: 1;
+  }
 }
 
 @include smaller-than($l) {
