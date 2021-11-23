@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Пожалуйста, подтвердите свой адрес электронной почты нажав на кнопку ниже:',
     'email_confirm_action' => 'Подтвердить адрес электронной почты',
     'email_confirm_send_error' => 'Требуется подтверждение электронной почты, но система не может отправить письмо. Свяжитесь с администратором, чтобы убедиться, что адрес электронной почты настроен правильно.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Ваш адрес электронной почты был подтвержден! Теперь вы можете войти в систему, используя этот адрес электронной почты.',
     'email_confirm_resent' => 'Письмо с подтверждение выслано снова. Пожалуйста, проверьте ваш почтовый ящик.',
 
     'email_not_confirmed' => 'Адрес электронной почты не подтвержден',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Добро пожаловать в :appName!',
     'user_invite_page_text' => 'Завершите настройку аккаунта, установите пароль для дальнейшего входа в :appName.',
     'user_invite_page_confirm_button' => 'Подтвердите пароль',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Пароль установлен, теперь вы можете войти в систему, используя установленный пароль для доступа к :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Двухфакторная аутентификация',

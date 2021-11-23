@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Palun kinnita oma e-posti aadress, klõpsates alloleval nupul:',
     'email_confirm_action' => 'Kinnita e-posti aadress',
     'email_confirm_send_error' => 'E-posti aadressi kinnitamine on vajalik, aga e-kirja saatmine ebaõnnestus. Võta ühendust administraatoriga.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'E-posti aadress on kinnitatud! Nüüd saad selle aadressiga sisse logida.',
     'email_confirm_resent' => 'Kinnituskiri on saadetud, vaata oma postkasti.',
 
     'email_not_confirmed' => 'E-posti aadress ei ole kinnitatud',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Tere tulemast rakendusse :appName!',
     'user_invite_page_text' => 'Registreerumise lõpetamiseks ja ligipääsu saamiseks pead seadma parooli, millega edaspidi rakendusse sisse logid.',
     'user_invite_page_confirm_button' => 'Kinnita parool',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Parool seatud, nüüd on sul selle parooli abil ligipääs rakendusele :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Seadista mitmeastmeline autentimine',
