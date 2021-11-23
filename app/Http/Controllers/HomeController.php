@@ -39,7 +39,7 @@ class HomeController extends Controller
         $recentlyUpdatedPages = Page::visible()->with('book')
             ->where('draft', false)
             ->orderBy('updated_at', 'desc')
-            ->take($favourites->count() > 0 ? 6 : 12)
+            ->take($favourites->count() > 0 ? 5 : 10)
             ->select(Page::$listAttributes)
             ->get();
 
