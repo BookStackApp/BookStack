@@ -6,6 +6,8 @@ WARNING: This system is currently in alpha so may incur changes. Once we've gath
 
 ## Getting Started
 
+*[Video Guide](https://www.youtube.com/watch?v=YVbpm_35crQ)*
+
 This makes use of the theme system. Create a folder for your theme within your BookStack `themes` directory. As an example we'll use `my_theme`, so we'd create a `themes/my_theme` folder.
 You'll need to tell BookStack to use your theme via the `APP_THEME` option in your `.env` file. For example: `APP_THEME=my_theme`.
 
@@ -50,6 +52,23 @@ This method allows you to register a custom social authentication driver within 
 
 *See "Custom Socialite Service Example" below.*
 
+### `Theme::registerCommand`
+
+This method allows you to register a custom command which can then be used via the artisan console.
+
+**Arguments**
+- string $driverName
+- array $config
+- string $socialiteHandler
+
+**Example**
+
+*See "Custom Command Registration Example" below for a more detailed example.*
+
+```php
+Theme::registerCommand(new SayHelloCommand());
+```
+
 ## Available Events
 
 All available events dispatched by BookStack are exposed as static properties on the `\BookStack\Theming\ThemeEvents` class, which can be found within the file `app/Theming/ThemeEvents.php` relative to your root BookStack folder. Alternatively, the events for the latest release can be [seen on GitHub here](https://github.com/BookStackApp/BookStack/blob/release/app/Theming/ThemeEvents.php).
@@ -77,9 +96,10 @@ Theme::listen(ThemeEvents::APP_BOOT, function($app) {
 });
 ```
 
-## Custom Commands
+## Custom Command Registration Example
 
-The logical theme system supports adding custom [artisan commands](https://laravel.com/docs/8.x/artisan) to BookStack. These can be registered in your `functions.php` file by calling `Theme::registerCommand($command)`, where `$command` is an instance of `\Symfony\Component\Console\Command\Command`. 
+The logical theme system supports adding custom [artisan commands](https://laravel.com/docs/8.x/artisan) to BookStack.
+These can be registered in your `functions.php` file by calling `Theme::registerCommand($command)`, where `$command` is an instance of `\Symfony\Component\Console\Command\Command`. 
 
 Below is an example of registering a command that could then be ran using `php artisan bookstack:meow` on the command line.
 
