@@ -30,6 +30,7 @@ use BookStack\Http\Controllers\UserController;
 use BookStack\Http\Controllers\UserProfileController;
 use BookStack\Http\Controllers\UserSearchController;
 use Illuminate\Support\Facades\Route;
+use BookStack\Http\Controllers\ChapterSortController;
 
 Route::get('/status', [StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
@@ -48,97 +49,93 @@ Route::middleware('auth')->group(function () {
     Route::get('/pages/recently-updated', [PageController::class, 'showRecentlyUpdated']);
 
     // Shelves
-    Route::get('/create-shelf', 'BookshelfController@create');
-    Route::group(['prefix' => 'shelves'], function () {
-        Route::get('/', 'BookshelfController@index');
-        Route::post('/', 'BookshelfController@store');
-        Route::get('/{slug}/edit', 'BookshelfController@edit');
-        Route::get('/{slug}/delete', 'BookshelfController@showDelete');
-        Route::get('/{slug}', 'BookshelfController@show');
-        Route::put('/{slug}', 'BookshelfController@update');
-        Route::delete('/{slug}', 'BookshelfController@destroy');
-        Route::get('/{slug}/permissions', 'BookshelfController@showPermissions');
-        Route::put('/{slug}/permissions', 'BookshelfController@permissions');
-        Route::post('/{slug}/copy-permissions', 'BookshelfController@copyPermissions');
+    Route::get('/create-shelf', [BookshelfController::class, 'create']);
+    Route::get('/shelves/', [BookshelfController::class, 'index']);
+    Route::post('/shelves/', [BookshelfController::class, 'store']);
+    Route::get('/shelves/{slug}/edit', [BookshelfController::class, 'edit']);
+    Route::get('/shelves/{slug}/delete', [BookshelfController::class, 'showDelete']);
+    Route::get('/shelves/{slug}', [BookshelfController::class, 'show']);
+    Route::put('/shelves/{slug}', [BookshelfController::class, 'update']);
+    Route::delete('/shelves/{slug}', [BookshelfController::class, 'destroy']);
+    Route::get('/shelves/{slug}/permissions', [BookshelfController::class, 'showPermissions']);
+    Route::put('/shelves/{slug}/permissions', [BookshelfController::class, 'permissions']);
+    Route::post('/shelves/{slug}/copy-permissions', [BookshelfController::class, 'copyPermissions']);
 
-        Route::get('/{shelfSlug}/create-book', 'BookController@create');
-        Route::post('/{shelfSlug}/create-book', 'BookController@store');
-    });
+    // Book Creation
+    Route::get('/shelves/{shelfSlug}/create-book', [BookController::class, 'create']);
+    Route::post('/shelves/{shelfSlug}/create-book', [BookController::class, 'store']);
+    Route::get('/create-book', [BookController::class, 'create']);
 
-    Route::get('/create-book', 'BookController@create');
-    Route::group(['prefix' => 'books'], function () {
+    // Books
+    Route::get('/books/', [BookController::class, 'index']);
+    Route::post('/books/', [BookController::class, 'store']);
+    Route::get('/books/{slug}/edit', [BookController::class, 'edit']);
+    Route::put('/books/{slug}', [BookController::class, 'update']);
+    Route::delete('/books/{id}', [BookController::class, 'destroy']);
+    Route::get('/books/{slug}/sort-item', [BookSortController::class, 'showItem']);
+    Route::get('/books/{slug}', [BookController::class, 'show']);
+    Route::get('/books/{bookSlug}/permissions', [BookController::class, 'showPermissions']);
+    Route::put('/books/{bookSlug}/permissions', [BookController::class, 'permissions']);
+    Route::get('/books/{slug}/delete', [BookController::class, 'showDelete']);
+    Route::get('/books/{bookSlug}/sort', [BookSortController::class, 'show']);
+    Route::put('/books/{bookSlug}/sort', [BookSortController::class, 'update']);
+    Route::get('/books/{bookSlug}/export/html', [BookExportController::class, 'html']);
+    Route::get('/books/{bookSlug}/export/pdf', [BookExportController::class, 'pdf']);
+    Route::get('/books/{bookSlug}/export/markdown', [BookExportController::class, 'markdown']);
+    Route::get('/books/{bookSlug}/export/zip', [BookExportController::class, 'zip']);
+    Route::get('/books/{bookSlug}/export/plaintext', [BookExportController::class, 'plainText']);
 
-        // Books
-        Route::get('/', 'BookController@index');
-        Route::post('/', 'BookController@store');
-        Route::get('/{slug}/edit', 'BookController@edit');
-        Route::put('/{slug}', 'BookController@update');
-        Route::delete('/{id}', 'BookController@destroy');
-        Route::get('/{slug}/sort-item', 'BookSortController@showItem');
-        Route::get('/{slug}', 'BookController@show');
-        Route::get('/{bookSlug}/permissions', 'BookController@showPermissions');
-        Route::put('/{bookSlug}/permissions', 'BookController@permissions');
-        Route::get('/{slug}/delete', 'BookController@showDelete');
-        Route::get('/{bookSlug}/sort', 'BookSortController@show');
-        Route::put('/{bookSlug}/sort', 'BookSortController@update');
-        Route::get('/{bookSlug}/export/html', 'BookExportController@html');
-        Route::get('/{bookSlug}/export/pdf', 'BookExportController@pdf');
-        Route::get('/{bookSlug}/export/markdown', 'BookExportController@markdown');
-        Route::get('/{bookSlug}/export/zip', 'BookExportController@zip');
-        Route::get('/{bookSlug}/export/plaintext', 'BookExportController@plainText');
+    // Pages
+    Route::get('/books/{bookSlug}/create-page', [PageController::class, 'create']);
+    Route::post('/books/{bookSlug}/create-guest-page', [PageController::class, 'createAsGuest']);
+    Route::get('/books/{bookSlug}/draft/{pageId}', [PageController::class, 'editDraft']);
+    Route::post('/books/{bookSlug}/draft/{pageId}', [PageController::class, 'store']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}', [PageController::class, 'show']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/export/pdf', [PageExportController::class, 'pdf']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/export/html', [PageExportController::class, 'html']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/export/markdown', [PageExportController::class, 'markdown']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/export/plaintext', [PageExportController::class, 'plainText']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/edit', [PageController::class, 'edit']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/move', [PageController::class, 'showMove']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}/move', [PageController::class, 'move']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/copy', [PageController::class, 'showCopy']);
+    Route::post('/books/{bookSlug}/page/{pageSlug}/copy', [PageController::class, 'copy']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/delete', [PageController::class, 'showDelete']);
+    Route::get('/books/{bookSlug}/draft/{pageId}/delete', [PageController::class, 'showDeleteDraft']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/permissions', [PageController::class, 'showPermissions']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}/permissions', [PageController::class, 'permissions']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}', [PageController::class, 'update']);
+    Route::delete('/books/{bookSlug}/page/{pageSlug}', [PageController::class, 'destroy']);
+    Route::delete('/books/{bookSlug}/draft/{pageId}', [PageController::class, 'destroyDraft']);
 
-        // Pages
-        Route::get('/{bookSlug}/create-page', 'PageController@create');
-        Route::post('/{bookSlug}/create-guest-page', 'PageController@createAsGuest');
-        Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
-        Route::post('/{bookSlug}/draft/{pageId}', 'PageController@store');
-        Route::get('/{bookSlug}/page/{pageSlug}', 'PageController@show');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageExportController@pdf');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageExportController@html');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/markdown', 'PageExportController@markdown');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageExportController@plainText');
-        Route::get('/{bookSlug}/page/{pageSlug}/edit', 'PageController@edit');
-        Route::get('/{bookSlug}/page/{pageSlug}/move', 'PageController@showMove');
-        Route::put('/{bookSlug}/page/{pageSlug}/move', 'PageController@move');
-        Route::get('/{bookSlug}/page/{pageSlug}/copy', 'PageController@showCopy');
-        Route::post('/{bookSlug}/page/{pageSlug}/copy', 'PageController@copy');
-        Route::get('/{bookSlug}/page/{pageSlug}/delete', 'PageController@showDelete');
-        Route::get('/{bookSlug}/draft/{pageId}/delete', 'PageController@showDeleteDraft');
-        Route::get('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@showPermissions');
-        Route::put('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@permissions');
-        Route::put('/{bookSlug}/page/{pageSlug}', 'PageController@update');
-        Route::delete('/{bookSlug}/page/{pageSlug}', 'PageController@destroy');
-        Route::delete('/{bookSlug}/draft/{pageId}', 'PageController@destroyDraft');
+    // Revisions
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions', [PageRevisionController::class, 'index']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}', [PageRevisionController::class, 'show']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', [PageRevisionController::class, 'changes']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', [PageRevisionController::class, 'restore']);
+    Route::delete('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', [PageRevisionController::class, 'destroy']);
 
-        // Revisions
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageRevisionController@index');
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageRevisionController@show');
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageRevisionController@changes');
-        Route::put('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageRevisionController@restore');
-        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', 'PageRevisionController@destroy');
-
-        // Chapters
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
-        Route::post('/{bookSlug}/chapter/{chapterSlug}/create-guest-page', 'PageController@createAsGuest');
-        Route::get('/{bookSlug}/create-chapter', 'ChapterController@create');
-        Route::post('/{bookSlug}/create-chapter', 'ChapterController@store');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@show');
-        Route::put('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@update');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@showMove');
-        Route::put('/{bookSlug}/chapter/{chapterSlug}/move', 'ChapterController@move');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/edit', 'ChapterController@edit');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@showPermissions');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/pdf', 'ChapterExportController@pdf');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/html', 'ChapterExportController@html');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/markdown', 'ChapterExportController@markdown');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/export/plaintext', 'ChapterExportController@plainText');
-        Route::put('/{bookSlug}/chapter/{chapterSlug}/permissions', 'ChapterController@permissions');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/delete', 'ChapterController@showDelete');
-        Route::delete('/{bookSlug}/chapter/{chapterSlug}', 'ChapterController@destroy');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/sort', 'ChapterSortController@show');
-        Route::get('/{bookSlug}/chapter/{chapterSlug}/sort-item', 'ChapterSortController@showItem');
-        Route::put('/{bookSlug}/chapter/{chapterSlug}/sort', 'ChapterSortController@update');
-    });
+    // Chapters
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/create-page', [PageController::class, 'create']);
+    Route::post('/books/{bookSlug}/chapter/{chapterSlug}/create-guest-page', [PageController::class, 'createAsGuest']);
+    Route::get('/books/{bookSlug}/create-chapter', [ChapterController::class, 'create']);
+    Route::post('/books/{bookSlug}/create-chapter', [ChapterController::class, 'store']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'show']);
+    Route::put('/books/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'update']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/move', [ChapterController::class, 'showMove']);
+    Route::put('/books/{bookSlug}/chapter/{chapterSlug}/move', [ChapterController::class, 'move']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/edit', [ChapterController::class, 'edit']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'showPermissions']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/pdf', [ChapterExportController::class, 'pdf']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/html', [ChapterExportController::class, 'html']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/markdown', [ChapterExportController::class, 'markdown']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/plaintext', [ChapterExportController::class, 'plainText']);
+    Route::put('/books/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'permissions']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/delete', [ChapterController::class, 'showDelete']);
+    Route::delete('/books/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'destroy']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/sort', [ChapterSortController::class, 'show']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/sort-item', [ChapterSortController::class, 'showItem']);
+    Route::put('/books/{bookSlug}/chapter/{chapterSlug}/sort', [ChapterSortController::class, 'update']);
 
     // User Profile routes
     Route::get('/user/{slug}', [UserProfileController::class, 'show']);
