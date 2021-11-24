@@ -10,6 +10,7 @@ use BookStack\Http\Controllers\BookshelfController;
 use BookStack\Http\Controllers\BookSortController;
 use BookStack\Http\Controllers\ChapterController;
 use BookStack\Http\Controllers\ChapterExportController;
+use BookStack\Http\Controllers\ChapterSortController;
 use BookStack\Http\Controllers\CommentController;
 use BookStack\Http\Controllers\FavouriteController;
 use BookStack\Http\Controllers\HomeController;
@@ -30,7 +31,6 @@ use BookStack\Http\Controllers\UserController;
 use BookStack\Http\Controllers\UserProfileController;
 use BookStack\Http\Controllers\UserSearchController;
 use Illuminate\Support\Facades\Route;
-use BookStack\Http\Controllers\ChapterSortController;
 
 Route::get('/status', [StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
