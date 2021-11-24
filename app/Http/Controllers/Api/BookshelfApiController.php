@@ -75,7 +75,7 @@ class BookshelfApiController extends ApiController
         $shelf = Bookshelf::visible()->with([
             'tags', 'cover', 'createdBy', 'updatedBy', 'ownedBy',
             'books' => function (BelongsToMany $query) {
-                $query->visible()->get(['id', 'name', 'slug']);
+                $query->scopes('visible')->get(['id', 'name', 'slug']);
             },
         ])->findOrFail($id);
 

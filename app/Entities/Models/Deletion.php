@@ -3,13 +3,14 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Auth\User;
+use BookStack\Interfaces\Deletable;
 use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * @property Model $deletable
+ * @property Deletable $deletable
  */
 class Deletion extends Model implements Loggable
 {

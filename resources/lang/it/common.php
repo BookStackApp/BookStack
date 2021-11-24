@@ -45,8 +45,8 @@ return [
     'unfavourite' => 'Rimuovi dai preferiti',
     'next' => 'Successivo',
     'previous' => 'Precedente',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'filter_active' => 'Filtro attivo:',
+    'filter_clear' => 'Pulisci filtro',
 
     // Sort Options
     'sort_options' => 'Opzioni Ordinamento',

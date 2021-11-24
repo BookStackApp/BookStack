@@ -412,4 +412,7 @@ body.mce-fullscreen, body.markdown-fullscreen {
     text-decoration: none;
     opacity: 1;
   }
+  @media (prefers-contrast: more) {
+    opacity: 1;
+  }
 }

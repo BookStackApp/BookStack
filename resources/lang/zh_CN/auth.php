@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => '请点击下面的按钮确认您的Email地址：',
     'email_confirm_action' => '确认Email',
     'email_confirm_send_error' => '需要Email验证，但系统无法发送电子邮件，请联系网站管理员。',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => '您已成功验证电子邮件地址！您现在可以使用此电子邮件地址登录。',
     'email_confirm_resent' => '验证邮件已重新发送，请检查收件箱。',
 
     'email_not_confirmed' => 'Email地址未验证',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => '欢迎来到 :appName！',
     'user_invite_page_text' => '要完成您的帐户并获得访问权限，您需要设置一个密码，该密码将在以后访问时用于登录 :appName。',
     'user_invite_page_confirm_button' => '确认密码',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => '密码已设置，您现在可以使用您设置的密码登录 :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => '设置多重身份认证',
@@ -92,7 +92,7 @@ return [
     'mfa_gen_backup_codes_usage_warning' => '每个认证码只能使用一次',
     'mfa_gen_totp_title' => '移动设备 App',
     'mfa_gen_totp_desc' => '要使用多重身份认证功能，您需要一个支持 TOTP（基于时间的一次性密码算法） 的移动设备 App，如谷歌身份验证器（Google Authenticator）、Authy 或微软身份验证器（Microsoft Authenticator）。',
-    'mfa_gen_totp_scan' => '要开始操作，请使用你的身份验证 App 扫描下面的二维码。',
+    'mfa_gen_totp_scan' => '要开始操作，请使用您的身份验证 App 扫描下面的二维码。',
     'mfa_gen_totp_verify_setup' => '验证设置',
     'mfa_gen_totp_verify_setup_desc' => '请在下面的框中输入您在身份验证 App 中生成的认证码来验证一切是否正常：',
     'mfa_gen_totp_provide_code_here' => '在此输入您的 App 生成的认证码',
@@ -103,7 +103,7 @@ return [
     'mfa_verify_use_totp' => '使用移动设备 App 进行认证',
     'mfa_verify_use_backup_codes' => '使用备用认证码进行认证',
     'mfa_verify_backup_code' => '备用认证码',
-    'mfa_verify_backup_code_desc' => '在下面输入你的其中一个备用认证码：',
+    'mfa_verify_backup_code_desc' => '在下面输入您的其中一个备用认证码：',
     'mfa_verify_backup_code_enter_here' => '在这里输入备用认证码',
     'mfa_verify_totp_desc' => '在下面输入您的移动 App 生成的认证码：',
     'mfa_setup_login_notification' => '多重身份认证已设置，请使用新配置的方法重新登录。',

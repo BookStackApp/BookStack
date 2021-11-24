@@ -15,6 +15,7 @@ use BookStack\Facades\Activity;
 use BookStack\Uploads\AttachmentService;
 use BookStack\Uploads\ImageService;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 
 class TrashCan
@@ -141,11 +142,9 @@ class TrashCan
     {
         $count = 0;
         $pages = $chapter->pages()->withTrashed()->get();
-        if (count($pages)) {
-            foreach ($pages as $page) {
-                $this->destroyPage($page);
-                $count++;
-            }
+        foreach ($pages as $page) {
+            $this->destroyPage($page);
+            $count++;
         }
 
         $this->destroyCommonRelations($chapter);
@@ -183,9 +182,10 @@ class TrashCan
     {
         $counts = [];
 
-        /** @var Entity $instance */
         foreach ((new EntityProvider())->all() as $key => $instance) {
-            $counts[$key] = $instance->newQuery()->onlyTrashed()->count();
+            /** @var Builder<Entity> $query */
+            $query = $instance->newQuery();
+            $counts[$key] = $query->onlyTrashed()->count();
         }
 
         return $counts;
@@ -235,13 +235,15 @@ class TrashCan
     {
         $shouldRestore = true;
         $restoreCount = 0;
-        $parent = $deletion->deletable->getParent();
 
-        if ($parent && $parent->trashed()) {
-            $shouldRestore = false;
+        if ($deletion->deletable instanceof Entity) {
+            $parent = $deletion->deletable->getParent();
+            if ($parent && $parent->trashed()) {
+                $shouldRestore = false;
+            }
         }
 
-        if ($shouldRestore) {
+        if ($deletion->deletable instanceof Entity && $shouldRestore) {
             $restoreCount = $this->restoreEntity($deletion->deletable);
         }
 
@@ -342,9 +344,9 @@ class TrashCan
         $entity->deletions()->delete();
         $entity->favourites()->delete();
 
-        if ($entity instanceof HasCoverImage && $entity->cover) {
+        if ($entity instanceof HasCoverImage && $entity->cover()->exists()) {
             $imageService = app()->make(ImageService::class);
-            $imageService->destroy($entity->cover);
+            $imageService->destroy($entity->cover()->first());
         }
     }
 }

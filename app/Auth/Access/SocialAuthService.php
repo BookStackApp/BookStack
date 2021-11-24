@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Contracts\User as SocialUser;
+use Laravel\Socialite\Two\GoogleProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -278,7 +279,7 @@ class SocialAuthService
     {
         $driver = $this->socialite->driver($driverName);
 
-        if ($driverName === 'google' && config('services.google.select_account')) {
+        if ($driver instanceof GoogleProvider && config('services.google.select_account')) {
             $driver->with(['prompt' => 'select_account']);
         }
 

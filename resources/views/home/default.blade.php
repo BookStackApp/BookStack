@@ -44,27 +44,27 @@
             <div>
                 @if(count($favourites) > 0)
                     <div id="top-favourites" class="card mb-xl">
-                        <h3 class="card-title">
-                            <a href="{{ url('/favourites') }}" class="no-color">{{ trans('entities.my_most_viewed_favourites') }}</a>
-                        </h3>
+                        <h3 class="card-title">{{ trans('entities.my_most_viewed_favourites') }}</h3>
                         <div class="px-m">
                             @include('entities.list', [
                             'entities' => $favourites,
                             'style' => 'compact',
                             ])
                         </div>
+                        <a href="{{ url('/favourites')  }}" class="card-footer-link">{{ trans('common.view_all') }}</a>
                     </div>
                 @endif
 
                 <div id="recent-pages" class="card mb-xl">
-                    <h3 class="card-title"><a class="no-color" href="{{ url("/pages/recently-updated") }}">{{ trans('entities.recently_updated_pages') }}</a></h3>
+                    <h3 class="card-title">{{ trans('entities.recently_updated_pages') }}</h3>
                     <div id="recently-updated-pages" class="px-m">
                         @include('entities.list', [
                         'entities' => $recentlyUpdatedPages,
                         'style' => 'compact',
-                        'emptyText' => trans('entities.no_pages_recently_updated')
+                        'emptyText' => trans('entities.no_pages_recently_updated'),
                         ])
                     </div>
+                    <a href="{{ url("/pages/recently-updated") }}" class="card-footer-link">{{ trans('common.view_all') }}</a>
                 </div>
             </div>
 
