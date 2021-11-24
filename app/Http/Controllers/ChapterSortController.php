@@ -66,7 +66,7 @@ class ChapterSortController extends Controller
         $chaptersInvolved = collect();
 
         try {
-            $chaptersInvolved = $chapterContents->sortChapterUsingMap($sortMap);
+            $chaptersInvolved = $chapterContents->sortUsingMap($sortMap, $chapterSlug);
         } catch (SortOperationException $exception) {
             $this->showPermissionError();
         }
