@@ -2,15 +2,14 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Tools\BookContents;
-use Illuminate\Http\Request;
-use BookStack\Actions\ActivityType;
 use BookStack\Exceptions\SortOperationException;
 use BookStack\Facades\Activity;
-use Throwable;
+use Illuminate\Http\Request;
 
 class ChapterSortController extends Controller
 {
@@ -62,7 +61,7 @@ class ChapterSortController extends Controller
         }
 
         $sortMap = collect(json_decode($request->get('sort-tree')));
-        $chapterContents = new BookContents($chapter->book);
+        $chapterContents = new BookContents($chapter->book, $chapter);
         $chaptersInvolved = collect();
 
         try {

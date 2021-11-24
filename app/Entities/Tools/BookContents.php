@@ -18,11 +18,17 @@ class BookContents
     protected $book;
 
     /**
+     * @var Chapter
+     */
+    protected $chapterNode;
+
+    /**
      * BookContents constructor.
      */
-    public function __construct(Book $book)
+    public function __construct(Book $book, Chapter $chapterNode = NULL )
     {
         $this->book = $book;
+        $this->chapter = $chapterNode;
     }
 
     /**
@@ -127,7 +133,7 @@ class BookContents
         $this->loadModelsIntoSortMap($sortMap);
         $booksInvolved = false;
         $chaptersInvolved = false;
-        if(!$chapterSlug){
+        if (!$chapterSlug) {
             $booksInvolved = $this->getBooksInvolvedInSort($sortMap);
         } else {
             $chaptersInvolved = $this->getChaptersInvolvedInSort($sortMap);
@@ -138,7 +144,7 @@ class BookContents
             $this->applySortUpdates($mapItem);
         });
 
-        if($booksInvolved){
+        if ($booksInvolved) {
             // Update permissions and activity.
             $booksInvolved->each(function (Book $book) {
                 $book->rebuildPermissions();
@@ -146,7 +152,7 @@ class BookContents
             return $booksInvolved;
         }
 
-        if($chaptersInvolved){
+        if ($chaptersInvolved) {
             // Update permissions and activity.
             $chaptersInvolved->each(function (Chapter $chapter) {
                 $chapter->rebuildPermissions();
@@ -163,7 +169,7 @@ class BookContents
      */
     protected function getChaptersInvolvedInSort(Collection $sortMap): Collection
     {
-        $chapterIdsInvolved = collect([$this->book->id]);
+        $chapterIdsInvolved = collect([$this->chapter->id]);
 
         $chapterIdsInvolved = $chapterIdsInvolved->concat($sortMap->pluck('chapter'));
         $chapterIdsInvolved = $chapterIdsInvolved->concat($sortMap->pluck('model.chapter_id'));
@@ -188,7 +194,7 @@ class BookContents
         $model = $sortMapItem->model;
         $bookChanged = false;
         $priorityChanged = intval($model->priority) !== intval($sortMapItem->sort);
-        if(property_exists($sortMapItem, 'book')){
+        if (property_exists($sortMapItem, 'book')) {
             $bookChanged = intval($model->book_id) !== intval($sortMapItem->book);
         }
         $chapterChanged = ($sortMapItem->type === 'page') && intval($model->chapter_id) !== $sortMapItem->parentChapter;
