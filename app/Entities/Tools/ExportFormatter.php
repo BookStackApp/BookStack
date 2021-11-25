@@ -7,21 +7,24 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Uploads\ImageService;
-use DomPDF;
+use DOMDocument;
+use DOMElement;
+use DOMXPath;
 use Exception;
-use SnappyPDF;
 use Throwable;
 
 class ExportFormatter
 {
     protected $imageService;
+    protected $pdfGenerator;
 
     /**
      * ExportService constructor.
      */
-    public function __construct(ImageService $imageService)
+    public function __construct(ImageService $imageService, PdfGenerator $pdfGenerator)
     {
         $this->imageService = $imageService;
+        $this->pdfGenerator = $pdfGenerator;
     }
 
     /**
@@ -139,16 +142,40 @@ class ExportFormatter
      */
     protected function htmlToPdf(string $html): string
     {
-        $containedHtml = $this->containHtml($html);
-        $useWKHTML = config('snappy.pdf.binary') !== false && config('app.allow_untrusted_server_fetching') === true;
-        if ($useWKHTML) {
-            $pdf = SnappyPDF::loadHTML($containedHtml);
-            $pdf->setOption('print-media-type', true);
-        } else {
-            $pdf = DomPDF::loadHTML($containedHtml);
+        $html = $this->containHtml($html);
+        $html = $this->replaceIframesWithLinks($html);
+        return $this->pdfGenerator->fromHtml($html);
+    }
+
+    /**
+     * Within the given HTML content, replace any iframe elements
+     * with anchor links within paragraph blocks.
+     */
+    protected function replaceIframesWithLinks(string $html): string
+    {
+        libxml_use_internal_errors(true);
+
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $xPath = new DOMXPath($doc);
+
+
+        $iframes = $xPath->query('//iframe');
+        /** @var DOMElement $iframe */
+        foreach ($iframes as $iframe) {
+            $link = $iframe->getAttribute('src');
+            if (strpos($link, '//') === 0) {
+                $link = 'https:' . $link;
+            }
+
+            $anchor = $doc->createElement('a', $link);
+            $anchor->setAttribute('href', $link);
+            $paragraph = $doc->createElement('p');
+            $paragraph->appendChild($anchor);
+            $iframe->replaceWith($paragraph);
         }
 
-        return $pdf->output();
+        return $doc->saveHTML();
     }
 
     /**
