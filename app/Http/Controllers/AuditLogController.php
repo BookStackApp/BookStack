@@ -20,6 +20,7 @@ class AuditLogController extends Controller
             'date_from' => $request->get('date_from', ''),
             'date_to'   => $request->get('date_to', ''),
             'user'      => $request->get('user', ''),
+            'ip'        => $request->get('ip', ''),
         ];
 
         $query = Activity::query()
@@ -43,6 +44,9 @@ class AuditLogController extends Controller
         }
         if ($listDetails['date_to']) {
             $query->where('created_at', '<=', $listDetails['date_to']);
+        }
+        if ($listDetails['ip']) {
+            $query->where('ip', '=', $listDetails['ip']);
         }
 
         $activities = $query->paginate(100);
