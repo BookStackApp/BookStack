@@ -41,7 +41,7 @@
                     </div>
                 @endforeach
 
-                <div class="form-group ml-auto"
+                <div class="form-group ml-auto mr-m"
                      component="submit-on-change"
                      option:submit-on-change:filter='[name="user"]'>
                     <label for="owner">{{ trans('settings.audit_table_user') }}</label>
