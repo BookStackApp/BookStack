@@ -51,7 +51,7 @@
 
                 <div class="form-group ml-auto">
                     <label for="ip">{{ trans('settings.ip_address') }}</label>
-                    @include('form.text', ['name' => 'ip'])
+                    @include('form.text', ['name' => 'ip', 'model' => $listDetails['ip'] ? \BookStack\Actions\Activity::query()->where(['ip' => $listDetails['ip']])->first() : null])
                     <input type="submit" style="display: none">
                 </div>
             </form>
