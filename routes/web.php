@@ -38,6 +38,8 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 Route::get('/status', [StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
 
+Route::view('/editor-test', 'editor-test');
+
 // Authenticated routes...
 Route::middleware('auth')->group(function () {
 

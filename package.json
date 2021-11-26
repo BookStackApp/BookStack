@@ -7,6 +7,8 @@
     "build:js:dev": "esbuild --bundle ./resources/js/index.js --outfile=public/dist/app.js --sourcemap --target=es2019 --main-fields=module,main",
     "build:js:watch": "chokidar --initial \"./resources/**/*.js\" -c \"npm run build:js:dev\"",
     "build:js:production": "NODE_ENV=production esbuild --bundle ./resources/js/index.js --outfile=public/dist/app.js --sourcemap --target=es2019 --main-fields=module,main --minify",
+    "build:js:editor:dev": "esbuild --bundle ./resources/js/editor.js --outfile=public/dist/editor.js --sourcemap --target=es2019 --main-fields=module,main",
+    "build:js:editor:watch": "chokidar --initial \"./resources/js/editor.js\" \"./resources/js/editor/*.js\" -c \"npm run build:js:editor:dev\"",
     "build": "npm-run-all --parallel build:*:dev",
     "production": "npm-run-all --parallel build:*:production",
     "dev": "npm-run-all --parallel watch livereload",
@@ -28,6 +30,13 @@
     "dropzone": "^5.9.3",
     "markdown-it": "^12.2.0",
     "markdown-it-task-lists": "^2.1.1",
+    "prosemirror-example-setup": "^1.1.2",
+    "prosemirror-markdown": "^1.6.0",
+    "prosemirror-model": "^1.15.0",
+    "prosemirror-schema-basic": "^1.1.2",
+    "prosemirror-schema-list": "^1.1.6",
+    "prosemirror-state": "^1.3.4",
+    "prosemirror-view": "^1.23.2",
     "sortablejs": "^1.14.0"
   }
 }
