@@ -144,6 +144,7 @@ class ExportFormatter
     {
         $html = $this->containHtml($html);
         $html = $this->replaceIframesWithLinks($html);
+
         return $this->pdfGenerator->fromHtml($html);
     }
 
@@ -159,7 +160,6 @@ class ExportFormatter
         $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         $xPath = new DOMXPath($doc);
 
-
         $iframes = $xPath->query('//iframe');
         /** @var DOMElement $iframe */
         foreach ($iframes as $iframe) {
@@ -172,7 +172,7 @@ class ExportFormatter
             $anchor->setAttribute('href', $link);
             $paragraph = $doc->createElement('p');
             $paragraph->appendChild($anchor);
-            $iframe->replaceWith($paragraph);
+            $iframe->parentNode->replaceChild($paragraph, $iframe);
         }
 
         return $doc->saveHTML();

@@ -2,12 +2,11 @@
 
 namespace BookStack\Entities\Tools;
 
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use Barryvdh\DomPDF\Facade as DomPDF;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 
 class PdfGenerator
 {
-
     /**
      * Generate PDF content from the given HTML content.
      */
@@ -24,5 +23,4 @@ class PdfGenerator
 
         return $pdf->output();
     }
-
 }
