@@ -14,7 +14,7 @@ class AddIndexForUserIp extends Migration
     public function up()
     {
         Schema::table('activities', function (Blueprint $table) {
-            $table->index('ip', 'ip_address_index');
+            $table->index('ip', 'activities_ip_index');
         });
     }
 
@@ -26,7 +26,7 @@ class AddIndexForUserIp extends Migration
     public function down()
     {
         Schema::table('activities', function (Blueprint $table) {
-            $table->dropIndex('ip_address_index');
+            $table->dropIndex('activities_ip_index');
         });
     }
 }
