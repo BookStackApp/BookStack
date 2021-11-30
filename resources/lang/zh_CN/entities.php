@@ -263,7 +263,7 @@ return [
     'tags_assigned_chapters' => '有这个标签的章节',
     'tags_assigned_books' => '有这个标签的图书',
     'tags_assigned_shelves' => '有这个标签的书架',
-    'tags_x_unique_values' => '个不重复项目',
+    'tags_x_unique_values' => ':count 个不重复项目',
     'tags_all_values' => '所有值',
     'tags_view_tags' => '查看标签',
     'tags_view_existing_tags' => '查看已有的标签',

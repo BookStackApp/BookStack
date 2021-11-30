@@ -38,7 +38,7 @@ return [
     'app_homepage_desc' => 'Selecione uma opção para ser exibida como página inicial em vez da padrão. Permissões de página serão ignoradas para as páginas selecionadas.',
     'app_homepage_select' => 'Selecione uma página',
     'app_footer_links' => 'Links do Rodapé',
-    'app_footer_links_desc' => 'Add links to show within the site footer. These will be displayed at the bottom of most pages, including those that do not require login. You can use a label of "trans::<key>" to use system-defined translations. For example: Using "trans::common.privacy_policy" will provide the translated text "Privacy Policy" and "trans::common.terms_of_service" will provide the translated text "Terms of Service".',
+    'app_footer_links_desc' => 'Adicionar links para mostrar dentro do rodapé do site. Estes serão exibidos na parte inferior da maioria das páginas, incluindo aqueles que não necessitam de login. Você pode usar uma etiqueta de "trans::<key>" para usar traduções definidas pelo sistema. Por exemplo: Usando "trans::common.privacy_policy" fornecerá o texto traduzido "Política de Privacidade" e "trans::common.terms_of_service" fornecerá o texto traduzido "Termos de Serviço".',
     'app_footer_links_label' => 'Etiqueta do Link',
     'app_footer_links_url' => 'URL do Link',
     'app_footer_links_add' => 'Adicionar Link de Rodapé',
