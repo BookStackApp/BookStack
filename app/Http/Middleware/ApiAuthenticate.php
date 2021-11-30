@@ -50,11 +50,12 @@ class ApiAuthenticate
     }
 
     /**
-     * Check if the active session user has API access
+     * Check if the active session user has API access.
      */
     protected function sessionUserHasApiAccess(): bool
     {
         $hasApiPermission = user()->can('access-api');
+
         return $hasApiPermission && hasAppAccess();
     }
 

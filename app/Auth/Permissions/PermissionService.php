@@ -625,7 +625,7 @@ class PermissionService
         })->where(function ($query) use ($tableDetails, $pageMorphClass) {
             /** @var Builder $query */
             $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
-                ->orWhereExists(function(QueryBuilder $query) use ($tableDetails, $pageMorphClass) {
+                ->orWhereExists(function (QueryBuilder $query) use ($tableDetails, $pageMorphClass) {
                     $query->select('id')->from('pages')
                         ->whereColumn('pages.id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where($tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'], '=', $pageMorphClass)
@@ -645,10 +645,10 @@ class PermissionService
     public function filterRelatedEntity(string $entityClass, Builder $query, string $tableName, string $entityIdColumn): Builder
     {
         $fullEntityIdColumn = $tableName . '.' . $entityIdColumn;
-        $instance = new $entityClass;
+        $instance = new $entityClass();
         $morphClass = $instance->getMorphClass();
 
-        $existsQuery = function($permissionQuery) use ($fullEntityIdColumn, $morphClass) {
+        $existsQuery = function ($permissionQuery) use ($fullEntityIdColumn, $morphClass) {
             /** @var Builder $permissionQuery */
             $permissionQuery->select('joint_permissions.role_id')->from('joint_permissions')
                 ->whereColumn('joint_permissions.entity_id', '=', $fullEntityIdColumn)
@@ -667,7 +667,7 @@ class PermissionService
 
         if ($instance instanceof Page) {
             // Prevent visibility of non-owned draft pages
-            $q->whereExists(function(QueryBuilder $query) use ($fullEntityIdColumn) {
+            $q->whereExists(function (QueryBuilder $query) use ($fullEntityIdColumn) {
                 $query->select('id')->from('pages')
                     ->whereColumn('pages.id', '=', $fullEntityIdColumn)
                     ->where(function (QueryBuilder $query) {
