@@ -133,7 +133,7 @@ class ActivityService
     }
 
     /**
-     * Get latest activity for a user, Filtering out similar items.
+     * Get the latest activity for a user, Filtering out similar items.
      */
     public function userActivity(User $user, int $count = 20, int $page = 0): array
     {

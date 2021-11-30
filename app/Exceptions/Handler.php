@@ -4,6 +4,7 @@ namespace BookStack\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -75,13 +76,18 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception when the API is in use.
      */
-    protected function renderApiException(Exception $e): JsonResponse
+    protected function renderApiException(Throwable $e): JsonResponse
     {
-        $code = $e->getCode() === 0 ? 500 : $e->getCode();
+        $code = 500;
         $headers = [];
+
         if ($e instanceof HttpException) {
             $code = $e->getStatusCode();
             $headers = $e->getHeaders();
+        }
+
+        if ($e instanceof ModelNotFoundException) {
+            $code = 404;
         }
 
         $responseData = [
