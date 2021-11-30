@@ -224,6 +224,29 @@ class AttachmentsApiTest extends TestCase
         unlink(storage_path($attachment->path));
     }
 
+    public function test_attachment_not_visible_on_other_users_draft()
+    {
+        $this->actingAsApiAdmin();
+        $editor = $this->getEditor();
+
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->draft = true;
+        $page->owned_by = $editor;
+        $page->save();
+        $this->regenEntityPermissions($page);
+
+        $attachment = $this->createAttachmentForPage($page, [
+            'name'  => 'my attachment',
+            'path'  => 'https://example.com',
+            'order' => 1,
+        ]);
+
+        $resp = $this->getJson("{$this->baseEndpoint}/{$attachment->id}");
+
+        $resp->assertStatus(404);
+    }
+
     public function test_update_endpoint()
     {
         $this->actingAsApiAdmin();
