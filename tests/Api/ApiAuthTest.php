@@ -3,6 +3,7 @@
 namespace Tests\Api;
 
 use BookStack\Auth\Permissions\RolePermission;
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -89,6 +90,26 @@ class ApiAuthTest extends TestCase
         $resp = $this->get($this->endpoint);
         $resp->assertStatus(403);
         $resp->assertJson($this->errorResponse('The owner of the used API token does not have permission to make API calls', 403));
+    }
+
+    public function test_access_prevented_for_guest_users_with_api_permission_while_public_access_disabled()
+    {
+        $this->disableCookieEncryption();
+        $publicRole = Role::getSystemRole('public');
+        $accessApiPermission = RolePermission::getByName('access-api');
+        $publicRole->attachPermission($accessApiPermission);
+
+        $this->withCookie('bookstack_session', 'abc123');
+
+        // Test API access when not public
+        setting()->put('app-public', false);
+        $resp = $this->get($this->endpoint);
+        $resp->assertStatus(403);
+
+        // Test API access when public
+        setting()->put('app-public', true);
+        $resp = $this->get($this->endpoint);
+        $resp->assertStatus(200);
     }
 
     public function test_token_expiry_checked()
