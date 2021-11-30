@@ -75,8 +75,8 @@ return [
     // Header
     'header_menu_expand' => '展开标头菜单',
     'profile_menu' => '个人资料',
-    'view_profile' => '查看资料',
-    'edit_profile' => '编辑资料',
+    'view_profile' => '查看个人资料',
+    'edit_profile' => '编辑个人资料',
     'dark_mode' => '夜间模式',
     'light_mode' => '日间模式',
 
