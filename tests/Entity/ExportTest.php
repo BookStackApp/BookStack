@@ -6,6 +6,7 @@ use BookStack\Auth\Role;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\PdfGenerator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -287,6 +288,24 @@ class ExportTest extends TestCase
         $resp = $this->get($page->getUrl('/export/html'));
         $resp->assertStatus(200);
         $resp->assertDontSee('ExportWizardTheFifth');
+    }
+
+    public function test_page_pdf_export_converts_iframes_to_links()
+    {
+        $page = Page::query()->first()->forceFill([
+            'html'     => '<iframe width="560" height="315" src="//www.youtube.com/embed/ShqUjt33uOs"></iframe>',
+        ]);
+        $page->save();
+
+        $pdfHtml = '';
+        $mockPdfGenerator = $this->mock(PdfGenerator::class);
+        $mockPdfGenerator->shouldReceive('fromHtml')
+            ->with(\Mockery::capture($pdfHtml))
+            ->andReturn('');
+
+        $this->asEditor()->get($page->getUrl('/export/pdf'));
+        $this->assertStringNotContainsString('iframe>', $pdfHtml);
+        $this->assertStringContainsString('<p><a href="https://www.youtube.com/embed/ShqUjt33uOs">https://www.youtube.com/embed/ShqUjt33uOs</a></p>', $pdfHtml);
     }
 
     public function test_page_markdown_export()
