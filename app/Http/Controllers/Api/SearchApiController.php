@@ -4,12 +4,14 @@ namespace BookStack\Http\Controllers\Api;
 
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\SearchOptions;
+use BookStack\Entities\Tools\SearchResultsFormatter;
 use BookStack\Entities\Tools\SearchRunner;
 use Illuminate\Http\Request;
 
 class SearchApiController extends ApiController
 {
     protected $searchRunner;
+    protected $resultsFormatter;
 
     protected $rules = [
         'all' => [
@@ -19,9 +21,10 @@ class SearchApiController extends ApiController
         ],
     ];
 
-    public function __construct(SearchRunner $searchRunner)
+    public function __construct(SearchRunner $searchRunner, SearchResultsFormatter $resultsFormatter)
     {
         $this->searchRunner = $searchRunner;
+        $this->resultsFormatter = $resultsFormatter;
     }
 
     /**
@@ -45,6 +48,7 @@ class SearchApiController extends ApiController
         $count = min(intval($request->get('count', '0')) ?: 20, 100);
 
         $results = $this->searchRunner->searchEntities($options, 'all', $page, $count);
+        $this->resultsFormatter->format($results['results']->all(), $options);
 
         /** @var Entity $result */
         foreach ($results['results'] as $result) {
@@ -52,9 +56,14 @@ class SearchApiController extends ApiController
                 'id', 'name', 'slug', 'book_id',
                 'chapter_id', 'draft', 'template',
                 'created_at', 'updated_at',
-                'tags', 'type',
+                'tags', 'type', 'preview_html', 'url',
             ]);
             $result->setAttribute('type', $result->getType());
+            $result->setAttribute('url', $result->getUrl());
+            $result->setAttribute('preview_html', [
+                'name' => (string) $result->getAttribute('preview_name'),
+                'content' => (string) $result->getAttribute('preview_content'),
+            ]);
         }
 
         return response()->json([
