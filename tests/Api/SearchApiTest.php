@@ -36,6 +36,38 @@ class SearchApiTest extends TestCase
         $resp->assertJsonFragment(['name' => $uniqueTerm, 'type' => 'bookshelf']);
     }
 
+    public function test_all_endpoint_returns_entity_url()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->update(['name' => 'name with superuniquevalue within']);
+        $page->indexForSearch();
+
+        $resp = $this->actingAsApiAdmin()->getJson($this->baseEndpoint . '?query=superuniquevalue');
+        $resp->assertJsonFragment([
+            'type' => 'page',
+            'url' => $page->getUrl(),
+        ]);
+    }
+
+    public function test_all_endpoint_returns_items_with_preview_html()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $book->update(['name' => 'name with superuniquevalue within', 'description' => 'Description with superuniquevalue within']);
+        $book->indexForSearch();
+
+        $resp = $this->actingAsApiAdmin()->getJson($this->baseEndpoint . '?query=superuniquevalue');
+        $resp->assertJsonFragment([
+            'type' => 'book',
+            'url' => $book->getUrl(),
+            'preview_html' => [
+                'name' => 'name with <strong>superuniquevalue</strong> within',
+                'content' => 'Description with <strong>superuniquevalue</strong> within',
+            ]
+        ]);
+    }
+
     public function test_all_endpoint_requires_query_parameter()
     {
         $resp = $this->actingAsApiEditor()->get($this->baseEndpoint);
