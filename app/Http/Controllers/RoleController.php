@@ -23,7 +23,7 @@ class RoleController extends Controller
     /**
      * Show a listing of the roles in the system.
      */
-    public function list()
+    public function index()
     {
         $this->checkPermission('user-roles-manage');
         $roles = $this->permissionsRepo->getAllRoles();

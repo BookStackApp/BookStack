@@ -29,7 +29,11 @@ use BookStack\Http\Controllers\UserApiTokenController;
 use BookStack\Http\Controllers\UserController;
 use BookStack\Http\Controllers\UserProfileController;
 use BookStack\Http\Controllers\UserSearchController;
+use BookStack\Http\Controllers\WebhookController;
+use BookStack\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 Route::get('/status', [StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
@@ -244,13 +248,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'destroy']);
 
     // Roles
-    Route::get('/settings/roles', [RoleController::class, 'list']);
+    Route::get('/settings/roles', [RoleController::class, 'index']);
     Route::get('/settings/roles/new', [RoleController::class, 'create']);
     Route::post('/settings/roles/new', [RoleController::class, 'store']);
     Route::get('/settings/roles/delete/{id}', [RoleController::class, 'showDelete']);
     Route::delete('/settings/roles/delete/{id}', [RoleController::class, 'delete']);
     Route::get('/settings/roles/{id}', [RoleController::class, 'edit']);
     Route::put('/settings/roles/{id}', [RoleController::class, 'update']);
+
+    // Webhooks
+    Route::get('/settings/webhooks', [WebhookController::class, 'index']);
 });
 
 // MFA routes
@@ -291,9 +298,9 @@ Route::post('/saml2/logout', [Auth\Saml2Controller::class, 'logout']);
 Route::get('/saml2/metadata', [Auth\Saml2Controller::class, 'metadata']);
 Route::get('/saml2/sls', [Auth\Saml2Controller::class, 'sls']);
 Route::post('/saml2/acs', [Auth\Saml2Controller::class, 'startAcs'])->withoutMiddleware([
-    \Illuminate\Session\Middleware\StartSession::class,
-    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-    \BookStack\Http\Middleware\VerifyCsrfToken::class,
+    StartSession::class,
+    ShareErrorsFromSession::class,
+    VerifyCsrfToken::class,
 ]);
 Route::get('/saml2/acs', [Auth\Saml2Controller::class, 'processAcs']);
 
