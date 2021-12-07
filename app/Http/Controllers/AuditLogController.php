@@ -46,7 +46,7 @@ class AuditLogController extends Controller
             $query->where('created_at', '<=', $listDetails['date_to']);
         }
         if ($listDetails['ip']) {
-            $query->where('ip', 'like', $listDetails['ip'] . "%");
+            $query->where('ip', 'like', $listDetails['ip'] . '%');
         }
 
         $activities = $query->paginate(100);
