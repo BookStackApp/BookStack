@@ -13,7 +13,7 @@
             <p>{{ trans('settings.webhooks_delete_warning', ['webhookName' => $webhook->name]) }}</p>
 
 
-            <form action="{{ url("/settings/webhooks/{$role->id}") }}" method="POST">
+            <form action="{{ $webhook->getUrl() }}" method="POST">
                 {!! csrf_field() !!}
                 {!! method_field('DELETE') !!}
 
@@ -25,7 +25,7 @@
                     </div>
                     <div>
                         <div class="form-group text-right">
-                            <a href="{{ url("/settings/webhooks/{$role->id}") }}" class="button outline">{{ trans('common.cancel') }}</a>
+                            <a href="{{ $webhook->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
                             <button type="submit" class="button">{{ trans('common.confirm') }}</button>
                         </div>
                     </div>

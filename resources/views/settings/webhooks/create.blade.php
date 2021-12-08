@@ -8,7 +8,7 @@
             @include('settings.parts.navbar', ['selected' => 'webhooks'])
         </div>
 
-        <form action="{{ url("/settings/webhooks/new") }}" method="POST">
+        <form action="{{ url("/settings/webhooks/create") }}" method="POST">
             @include('settings.webhooks.parts.form', ['title' => trans('settings.webhooks_create')])
         </form>
     </div>

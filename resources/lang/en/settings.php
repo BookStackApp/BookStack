@@ -246,6 +246,7 @@ return [
     'webhooks_events_all' => 'All system events',
     'webhooks_name' => 'Webhook Name',
     'webhooks_endpoint' => 'Webhook Endpoint',
+    'webhook_events_table_header' => 'Events',
     'webhooks_delete' => 'Delete Webhook',
     'webhooks_delete_warning' => 'This will fully delete this webhook, with the name \':webhookName\', from the system.',
     'webhooks_delete_confirm' => 'Are you sure you want to delete this webhook?',
