@@ -18,6 +18,18 @@ class CreateWebhooksTable extends Migration
             $table->string('name', 150);
             $table->string('endpoint', 500);
             $table->timestamps();
+
+            $table->index('name');
+        });
+
+        Schema::create('webhook_tracked_events', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('webhook_id');
+            $table->string('event', 50);
+            $table->timestamps();
+
+            $table->index('event');
+            $table->index('webhook_id');
         });
     }
 

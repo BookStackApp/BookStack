@@ -7,7 +7,7 @@
             @include('settings.parts.navbar', ['selected' => 'webhooks'])
         </div>
 
-        <form action="{{ url("/settings/webhooks/{$webhook->id}") }}" method="POST">
+        <form action="{{ $webhook->getUrl() }}" method="POST">
             {!! method_field('PUT') !!}
             @include('settings.webhooks.parts.form', ['model' => $webhook, 'title' => trans('settings.webhooks_edit')])
         </form>

@@ -20,8 +20,11 @@ class WebhookController extends Controller
      */
     public function index()
     {
-        // TODO - Get and pass webhooks
-        return view('settings.webhooks.index');
+        $webhooks = Webhook::query()
+            ->orderBy('name', 'desc')
+            ->with('trackedEvents')
+            ->get();
+        return view('settings.webhooks.index', ['webhooks' => $webhooks]);
     }
 
     /**
@@ -37,7 +40,16 @@ class WebhookController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO - Create webhook
+        $validated = $this->validate($request, [
+            'name' => ['required', 'max:150'],
+            'endpoint' => ['required', 'url', 'max:500'],
+            'events' => ['required', 'array']
+        ]);
+
+        $webhook = new Webhook($validated);
+        $webhook->save();
+        $webhook->updateTrackedEvents(array_values($validated['events']));
+
         $this->logActivity(ActivityType::WEBHOOK_CREATE, $webhook);
         return redirect('/settings/webhooks');
     }
@@ -48,7 +60,9 @@ class WebhookController extends Controller
     public function edit(string $id)
     {
         /** @var Webhook $webhook */
-        $webhook = Webhook::query()->findOrFail($id);
+        $webhook = Webhook::query()
+            ->with('trackedEvents')
+            ->findOrFail($id);
 
         return view('settings.webhooks.edit', ['webhook' => $webhook]);
     }
@@ -58,10 +72,17 @@ class WebhookController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validated = $this->validate($request, [
+            'name' => ['required', 'max:150'],
+            'endpoint' => ['required', 'url', 'max:500'],
+            'events' => ['required', 'array']
+        ]);
+
         /** @var Webhook $webhook */
         $webhook = Webhook::query()->findOrFail($id);
 
-        // TODO - Update
+        $webhook->fill($validated)->save();
+        $webhook->updateTrackedEvents($validated['events']);
 
         $this->logActivity(ActivityType::WEBHOOK_UPDATE, $webhook);
         return redirect('/settings/webhooks');
@@ -85,7 +106,7 @@ class WebhookController extends Controller
         /** @var Webhook $webhook */
         $webhook = Webhook::query()->findOrFail($id);
 
-        // TODO - Delete event type relations
+        $webhook->trackedEvents()->delete();
         $webhook->delete();
 
         $this->logActivity(ActivityType::WEBHOOK_DELETE, $webhook);

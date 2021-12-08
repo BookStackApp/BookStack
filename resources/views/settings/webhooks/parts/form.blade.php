@@ -24,22 +24,32 @@
 
         <div component="webhook-events">
             <label class="setting-list-label">{{ trans('settings.webhooks_events') }}</label>
+            @include('form.errors', ['name' => 'events'])
+
             <p class="small">{{ trans('settings.webhooks_events_desc') }}</p>
             <p class="text-warn small">{{ trans('settings.webhooks_events_warning') }}</p>
 
-            <div>
-                <label><input type="checkbox"
-                              name="events[]"
-                              value="all"
-                              refs="webhook-events@all">
-                    {{ trans('settings.webhooks_events_all') }}</label>
+            <div class="toggle-switch-list">
+                @include('form.custom-checkbox', [
+                    'name' => 'events[]',
+                    'value' => 'all',
+                    'label' => trans('settings.webhooks_events_all'),
+                    'checked' => old('events') ? in_array('all', old('events')) : (isset($webhook) ? $webhook->tracksEvent('all') : false),
+                ])
             </div>
 
-            <hr class="my-m">
+            <hr class="my-s">
 
-            <div class="dual-column-content">
+            <div class="dual-column-content toggle-switch-list">
                 @foreach(\BookStack\Actions\ActivityType::all() as $activityType)
-                    <label><input type="checkbox" name="events[]" value="{{ $activityType }}">{{ $activityType }}</label>
+                    <div>
+                        @include('form.custom-checkbox', [
+                           'name' => 'events[]',
+                           'value' => $activityType,
+                           'label' => $activityType,
+                           'checked' => old('events') ? in_array($activityType, old('events')) : (isset($webhook) ? $webhook->tracksEvent($activityType) : false),
+                       ])
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -49,7 +59,7 @@
     <div class="form-group text-right">
         <a href="{{ url("/settings/webhooks") }}" class="button outline">{{ trans('common.cancel') }}</a>
         @if ($webhook->id ?? false)
-            <a href="{{ url("/settings/roles/delete/{$webhook->id}") }}" class="button outline">{{ trans('settings.webhooks_delete') }}</a>
+            <a href="{{ $webhook->getUrl('/delete') }}" class="button outline">{{ trans('settings.webhooks_delete') }}</a>
         @endif
         <button type="submit" class="button">{{ trans('settings.webhooks_save') }}</button>
     </div>

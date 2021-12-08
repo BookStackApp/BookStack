@@ -8,7 +8,7 @@ class WebhookEvents {
 
     setup() {
         this.checkboxes = this.$el.querySelectorAll('input[type="checkbox"]');
-        this.allCheckbox = this.$refs.all;
+        this.allCheckbox = this.$el.querySelector('input[type="checkbox"][value="all"]');
 
         this.$el.addEventListener('change', event => {
             if (event.target.checked && event.target === this.allCheckbox) {
