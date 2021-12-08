@@ -51,6 +51,14 @@ return [
     'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
     'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
 
+    // Webhooks
+    'webhook_create' => 'created webhook',
+    'webhook_create_notification' => 'Webhook successfully created',
+    'webhook_update' => 'updated webhook',
+    'webhook_update_notification' => 'Webhook successfully updated',
+    'webhook_delete' => 'deleted webhook',
+    'webhook_delete_notification' => 'Webhook successfully deleted',
+
     // Other
     'commented_on'                => 'commented on',
     'permissions_update'          => 'updated permissions',

@@ -14,7 +14,7 @@
                 <h1 class="list-heading">{{ trans('settings.webhooks') }}</h1>
 
                 <div class="text-right">
-                    <a href="{{ url("/settings/webhooks/new") }}" class="button outline">{{ trans('settings.webhooks_create') }}</a>
+                    <a href="{{ url("/settings/webhooks/create") }}" class="button outline">{{ trans('settings.webhooks_create') }}</a>
                 </div>
             </div>
 
