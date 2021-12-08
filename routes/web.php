@@ -258,6 +258,12 @@ Route::middleware('auth')->group(function () {
 
     // Webhooks
     Route::get('/settings/webhooks', [WebhookController::class, 'index']);
+    Route::get('/settings/webhooks/create', [WebhookController::class, 'create']);
+    Route::post('/settings/webhooks/create', [WebhookController::class, 'store']);
+    Route::get('/settings/webhooks/{id}', [WebhookController::class, 'edit']);
+    Route::put('/settings/webhooks/{id}', [WebhookController::class, 'update']);
+    Route::get('/settings/webhooks/{id}/delete', [WebhookController::class, 'delete']);
+    Route::delete('/settings/webhooks/{id}', [WebhookController::class, 'destroy']);
 });
 
 // MFA routes
