@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
+use BookStack\Actions\ActivityType;
+use BookStack\Actions\Webhook;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class WebhookFactory extends Factory
+class WebhookTrackedEventFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,8 +16,8 @@ class WebhookFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'My webhook for ' . $this->faker->country(),
-            'endpoint' => $this->faker->url,
+            'webhook_id' => Webhook::factory(),
+            'event' => ActivityType::all()[array_rand(ActivityType::all())],
         ];
     }
 }
