@@ -41,5 +41,6 @@ class CreateWebhooksTable extends Migration
     public function down()
     {
         Schema::dropIfExists('webhooks');
+        Schema::dropIfExists('webhook_tracked_events');
     }
 }
