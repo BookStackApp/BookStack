@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Actions;
 
 use BookStack\Actions\Activity;
 use BookStack\Actions\ActivityService;
@@ -11,6 +11,9 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
 use Carbon\Carbon;
+use Tests\TestCase;
+use function app;
+use function config;
 
 class AuditLogTest extends TestCase
 {
