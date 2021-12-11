@@ -5,6 +5,7 @@ namespace BookStack\Actions;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Entity;
 use BookStack\Interfaces\Loggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
 class ActivityLogger
@@ -35,6 +36,7 @@ class ActivityLogger
 
         $activity->save();
         $this->setNotification($type);
+        $this->dispatchWebhooks($type, $detail);
     }
 
     /**
@@ -68,12 +70,27 @@ class ActivityLogger
     /**
      * Flashes a notification message to the session if an appropriate message is available.
      */
-    protected function setNotification(string $type)
+    protected function setNotification(string $type): void
     {
         $notificationTextKey = 'activities.' . $type . '_notification';
         if (trans()->has($notificationTextKey)) {
             $message = trans($notificationTextKey);
             session()->flash('success', $message);
+        }
+    }
+
+    /**
+     * @param string|Loggable $detail
+     */
+    protected function dispatchWebhooks(string $type, $detail): void
+    {
+        $webhooks = Webhook::query()->whereHas('trackedEvents', function(Builder $query) use ($type) {
+            $query->where('event', '=', $type)
+                ->orWhere('event', '=', 'all');
+        })->get();
+
+        foreach ($webhooks as $webhook) {
+            dispatch(new DispatchWebhookJob($webhook, $type, $detail));
         }
     }
 
