@@ -2,7 +2,6 @@
 
 namespace BookStack\Auth;
 
-use Activity;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -213,14 +212,6 @@ class UserRepo
             $instance->newQuery()->where('owned_by', '=', $fromUser->id)
                 ->update(['owned_by' => $toUser->id]);
         }
-    }
-
-    /**
-     * Get the latest activity for a user.
-     */
-    public function getActivity(User $user, int $count = 20, int $page = 0): array
-    {
-        return Activity::userActivity($user, $count, $page);
     }
 
     /**

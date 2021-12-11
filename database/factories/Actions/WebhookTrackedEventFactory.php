@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Actions;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\Webhook;

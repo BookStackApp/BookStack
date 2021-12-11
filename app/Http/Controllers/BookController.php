@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Bookshelf;
@@ -101,7 +102,7 @@ class BookController extends Controller
 
         if ($bookshelf) {
             $bookshelf->appendBook($book);
-            Activity::addForEntity($bookshelf, ActivityType::BOOKSHELF_UPDATE);
+            Activity::add(ActivityType::BOOKSHELF_UPDATE, $bookshelf);
         }
 
         return redirect($book->getUrl());
@@ -110,7 +111,7 @@ class BookController extends Controller
     /**
      * Display the specified book.
      */
-    public function show(Request $request, string $slug)
+    public function show(Request $request, ActivityQueries $activities, string $slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
         $bookChildren = (new BookContents($book))->getTree(true);
@@ -128,7 +129,7 @@ class BookController extends Controller
             'current'           => $book,
             'bookChildren'      => $bookChildren,
             'bookParentShelves' => $bookParentShelves,
-            'activity'          => Activity::entityActivity($book, 20, 1),
+            'activity'          => $activities->entityActivity($book, 20, 1),
         ]);
     }
 

@@ -2,7 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
-use Activity;
+use BookStack\Actions\ActivityQueries;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\RecentlyViewed;
@@ -16,9 +16,9 @@ class HomeController extends Controller
     /**
      * Display the homepage.
      */
-    public function index()
+    public function index(ActivityQueries $activities)
     {
-        $activity = Activity::latest(10);
+        $activity = $activities->latest(10);
         $draftPages = [];
 
         if ($this->isSignedIn()) {

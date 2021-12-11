@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use Activity;
+use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\BookshelfRepo;
@@ -101,7 +102,7 @@ class BookshelfController extends Controller
      *
      * @throws NotFoundException
      */
-    public function show(string $slug)
+    public function show(ActivityQueries $activities, string $slug)
     {
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-view', $shelf);
@@ -124,7 +125,7 @@ class BookshelfController extends Controller
             'shelf'                   => $shelf,
             'sortedVisibleShelfBooks' => $sortedVisibleShelfBooks,
             'view'                    => $view,
-            'activity'                => Activity::entityActivity($shelf, 20, 1),
+            'activity'                => $activities->entityActivity($shelf, 20, 1),
             'order'                   => $order,
             'sort'                    => $sort,
         ]);

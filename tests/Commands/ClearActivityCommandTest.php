@@ -4,6 +4,8 @@ namespace Tests\Commands;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Page;
+use BookStack\Facades\Activity;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -12,8 +14,9 @@ class ClearActivityCommandTest extends TestCase
     public function test_clear_activity_command()
     {
         $this->asEditor();
-        $page = Page::first();
-        \Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
+        /** @var Page $page */
+        $page = Page::query()->first();
+        Activity::add(ActivityType::PAGE_UPDATE, $page);
 
         $this->assertDatabaseHas('activities', [
             'type'      => 'page_update',
@@ -22,7 +25,7 @@ class ClearActivityCommandTest extends TestCase
         ]);
 
         DB::rollBack();
-        $exitCode = \Artisan::call('bookstack:clear-activity');
+        $exitCode = Artisan::call('bookstack:clear-activity');
         DB::beginTransaction();
         $this->assertTrue($exitCode === 0, 'Command executed successfully');
 
