@@ -11,6 +11,8 @@
         <form action="{{ url("/settings/webhooks/create") }}" method="POST">
             @include('settings.webhooks.parts.form', ['title' => trans('settings.webhooks_create')])
         </form>
+
+        @include('settings.webhooks.parts.format-example')
     </div>
 
 @stop

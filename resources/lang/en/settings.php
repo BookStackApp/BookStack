@@ -252,6 +252,8 @@ return [
     'webhooks_delete' => 'Delete Webhook',
     'webhooks_delete_warning' => 'This will fully delete this webhook, with the name \':webhookName\', from the system.',
     'webhooks_delete_confirm' => 'Are you sure you want to delete this webhook?',
+    'webhooks_format_example' => 'Webhook Format Example',
+    'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
