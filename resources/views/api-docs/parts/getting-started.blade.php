@@ -1,5 +1,27 @@
 <h1 class="list-heading text-capitals mb-l">Getting Started</h1>
 
+<p class="mb-none">
+    This documentation covers use of the REST API. <br>
+    Some alternative options for extension and customization can be found below:
+</p>
+
+<ul>
+    <li>
+        <a href="{{ url('/settings/webhooks') }}" target="_blank" rel="noopener noreferrer">Webhooks</a> -
+        HTTP POST calls upon events occurring in BookStack.
+    </li>
+    <li>
+        <a href="https://github.com/BookStackApp/BookStack/blob/master/dev/docs/visual-theme-system.md" target="_blank" rel="noopener noreferrer">Visual Theme System</a> -
+        Methods to override views, translations and icons within BookStack.
+    </li>
+    <li>
+        <a href="https://github.com/BookStackApp/BookStack/blob/master/dev/docs/logical-theme-system.md" target="_blank" rel="noopener noreferrer">Logical Theme System</a> -
+        Methods to extend back-end functionality within BookStack.
+    </li>
+</ul>
+
+<hr>
+
 <h5 id="authentication" class="text-mono mb-m">Authentication</h5>
 <p>
     To access the API a user has to have the <em>"Access System API"</em> permission enabled on one of their assigned roles.
