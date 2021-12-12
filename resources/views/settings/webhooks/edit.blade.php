@@ -11,6 +11,8 @@
             {!! method_field('PUT') !!}
             @include('settings.webhooks.parts.form', ['model' => $webhook, 'title' => trans('settings.webhooks_edit')])
         </form>
+
+        @include('settings.webhooks.parts.format-example')
     </div>
 
 @stop
