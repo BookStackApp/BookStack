@@ -16,10 +16,12 @@ class CreateWebhooksTable extends Migration
         Schema::create('webhooks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 150);
+            $table->boolean('active');
             $table->string('endpoint', 500);
             $table->timestamps();
 
             $table->index('name');
+            $table->index('active');
         });
 
         Schema::create('webhook_tracked_events', function (Blueprint $table) {

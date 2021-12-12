@@ -84,10 +84,13 @@ class ActivityLogger
      */
     protected function dispatchWebhooks(string $type, $detail): void
     {
-        $webhooks = Webhook::query()->whereHas('trackedEvents', function(Builder $query) use ($type) {
-            $query->where('event', '=', $type)
-                ->orWhere('event', '=', 'all');
-        })->get();
+        $webhooks = Webhook::query()
+            ->whereHas('trackedEvents', function(Builder $query) use ($type) {
+                $query->where('event', '=', $type)
+                    ->orWhere('event', '=', 'all');
+            })
+            ->where('active', '=', true)
+            ->get();
 
         foreach ($webhooks as $webhook) {
             dispatch(new DispatchWebhookJob($webhook, $type, $detail));
