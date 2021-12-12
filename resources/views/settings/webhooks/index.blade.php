@@ -25,6 +25,7 @@
                     <tr>
                         <th>{{ trans('common.name') }}</th>
                         <th>{{ trans('settings.webhook_events_table_header') }}</th>
+                        <th>{{ trans('common.status') }}</th>
                     </tr>
                     @foreach($webhooks as $webhook)
                         <tr>
@@ -39,12 +40,15 @@
                                     {{ $webhook->trackedEvents->count() }}
                                 @endif
                             </td>
+                            <td>
+                                {{ trans('common.status_' . ($webhook->active ? 'active' : 'inactive')) }}
+                            </td>
                         </tr>
                     @endforeach
                 </table>
             @else
-                <p class="text-muted empty-text">
-                    {{ trans('common.no_items') }}
+                <p class="text-muted empty-text px-none">
+                    {{ trans('settings.webhooks_none_created') }}
                 </p>
             @endif
 

@@ -43,10 +43,12 @@ class WebhookController extends Controller
         $validated = $this->validate($request, [
             'name' => ['required', 'max:150'],
             'endpoint' => ['required', 'url', 'max:500'],
-            'events' => ['required', 'array']
+            'events' => ['required', 'array'],
+            'active' => ['required'],
         ]);
 
         $webhook = new Webhook($validated);
+        $webhook->active = $validated['active'] === 'true';
         $webhook->save();
         $webhook->updateTrackedEvents(array_values($validated['events']));
 
@@ -75,12 +77,14 @@ class WebhookController extends Controller
         $validated = $this->validate($request, [
             'name' => ['required', 'max:150'],
             'endpoint' => ['required', 'url', 'max:500'],
-            'events' => ['required', 'array']
+            'events' => ['required', 'array'],
+            'active' => ['required'],
         ]);
 
         /** @var Webhook $webhook */
         $webhook = Webhook::query()->findOrFail($id);
 
+        $webhook->active = $validated['active'] === 'true';
         $webhook->fill($validated)->save();
         $webhook->updateTrackedEvents($validated['events']);
 

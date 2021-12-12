@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $name
  * @property string $endpoint
  * @property Collection $trackedEvents
+ * @property bool $active
  */
 class Webhook extends Model implements Loggable
 {

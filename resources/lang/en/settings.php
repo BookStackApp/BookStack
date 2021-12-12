@@ -236,6 +236,7 @@ return [
     // Webhooks
     'webhooks' => 'Webhooks',
     'webhooks_create' => 'Create New Webhook',
+    'webhooks_none_created' => 'No webhooks have yet been created.',
     'webhooks_edit' => 'Edit Webhook',
     'webhooks_save' => 'Save Webhook',
     'webhooks_details' => 'Webhook Details',
@@ -246,6 +247,7 @@ return [
     'webhooks_events_all' => 'All system events',
     'webhooks_name' => 'Webhook Name',
     'webhooks_endpoint' => 'Webhook Endpoint',
+    'webhooks_active' => 'Webhook Active',
     'webhook_events_table_header' => 'Events',
     'webhooks_delete' => 'Delete Webhook',
     'webhooks_delete_warning' => 'This will fully delete this webhook, with the name \':webhookName\', from the system.',

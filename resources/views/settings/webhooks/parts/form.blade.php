@@ -9,6 +9,14 @@
             <div>
                 <label class="setting-list-label">{{ trans('settings.webhooks_details') }}</label>
                 <p class="small">{{ trans('settings.webhooks_details_desc') }}</p>
+                <div>
+                    @include('form.toggle-switch', [
+                        'name' => 'active',
+                        'value' => old('active') ?? $model->active ?? true,
+                        'label' => trans('settings.webhooks_active'),
+                    ])
+                    @include('form.errors', ['name' => 'active'])
+                </div>
             </div>
             <div>
                 <div class="form-group">

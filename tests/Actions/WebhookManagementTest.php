@@ -22,6 +22,7 @@ class WebhookManagementTest extends TestCase
         $resp->assertElementExists('a[href="' . $webhook->getUrl() . '"]', $webhook->name);
         $resp->assertSee($webhook->endpoint);
         $resp->assertSee('All system events');
+        $resp->assertSee('Active');
     }
 
     public function test_create_view()
@@ -38,6 +39,7 @@ class WebhookManagementTest extends TestCase
             'name' => 'My first webhook',
             'endpoint' => 'https://example.com/webhook',
             'events' => ['all'],
+            'active' => 'true'
         ]);
 
         $resp->assertRedirect('/settings/webhooks');
@@ -49,6 +51,7 @@ class WebhookManagementTest extends TestCase
         $this->assertDatabaseHas('webhooks', [
             'name' => 'My first webhook',
             'endpoint' => 'https://example.com/webhook',
+            'active' => true,
         ]);
 
         /** @var Webhook $webhook */
@@ -79,6 +82,7 @@ class WebhookManagementTest extends TestCase
             'name' => 'My updated webhook',
             'endpoint' => 'https://example.com/updated-webhook',
             'events' => [ActivityType::PAGE_CREATE, ActivityType::PAGE_UPDATE],
+            'active' => 'true'
         ]);
         $resp->assertRedirect('/settings/webhooks');
 
@@ -89,6 +93,7 @@ class WebhookManagementTest extends TestCase
             'id' => $webhook->id,
             'name' => 'My updated webhook',
             'endpoint' => 'https://example.com/updated-webhook',
+            'active' => true,
         ]);
 
         $trackedEvents = $webhook->trackedEvents()->get();
