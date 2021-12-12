@@ -6,16 +6,14 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Psr\Http\Client\ClientExceptionInterface;
 
 class DispatchWebhookJob implements ShouldQueue
 {
@@ -67,22 +65,13 @@ class DispatchWebhookJob implements ShouldQueue
      */
     public function handle()
     {
-        $httpClient = new Client([
-            'timeout' => 3,
-            'allow_redirects' => ['strict' => true],
-        ]);
+        $response = Http::asJson()
+            ->withOptions(['allow_redirects' => ['strict' => true]])
+            ->timeout(3)
+            ->post($this->webhook->endpoint, $this->buildWebhookData());
 
-        $request = new Request('POST', $this->webhook->endpoint, [
-            'Content-Type' => 'application/json'
-        ], json_encode($this->buildWebhookData()));
-
-        try {
-            $response = $httpClient->send($request);
-            if ($response->getStatusCode() >= 400) {
-                Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with status {$response->getStatusCode()}");
-            }
-        } catch (ClientExceptionInterface $exception) {
-            Log::error("Received error during webhook call to endpoint {$this->webhook->endpoint}: {$exception->getMessage()}");
+        if ($response->failed()) {
+            Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with status {$response->status()}");
         }
     }
 
