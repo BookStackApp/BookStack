@@ -45,8 +45,8 @@ return [
     'unfavourite' => 'お気に入りから削除',
     'next' => '次へ',
     'previous' => '前へ',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'filter_active' => '有効なフィルター:',
+    'filter_clear' => 'フィルターを解除',
 
     // Sort Options
     'sort_options' => '並べ替えオプション',
@@ -63,7 +63,7 @@ return [
     'no_activity' => '表示するアクティビティがありません',
     'no_items' => 'アイテムはありません',
     'back_to_top' => '上に戻る',
-    'skip_to_main_content' => 'Skip to main content',
+    'skip_to_main_content' => 'メインコンテンツへスキップ',
     'toggle_details' => '概要の表示切替',
     'toggle_thumbnails' => 'Toggle Thumbnails',
     'details' => '詳細',
