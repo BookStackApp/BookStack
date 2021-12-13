@@ -11,7 +11,7 @@
 return [
 
     // Default driver to use for the queue
-    // Options: null, sync, redis
+    // Options: sync, database, redis
     'default' => env('QUEUE_CONNECTION', 'sync'),
 
     // Queue connection configuration
