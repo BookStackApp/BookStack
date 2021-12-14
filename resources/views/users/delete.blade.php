@@ -12,17 +12,19 @@
 
             <p>{{ trans('settings.users_delete_warning', ['userName' => $user->name]) }}</p>
 
-            <hr class="my-l">
+            @if(userCan('users-manage'))
+                <hr class="my-l">
 
-            <div class="grid half gap-xl v-center">
-                <div>
-                    <label class="setting-list-label">{{ trans('settings.users_migrate_ownership') }}</label>
-                    <p class="small">{{ trans('settings.users_migrate_ownership_desc') }}</p>
+                <div class="grid half gap-xl v-center">
+                    <div>
+                        <label class="setting-list-label">{{ trans('settings.users_migrate_ownership') }}</label>
+                        <p class="small">{{ trans('settings.users_migrate_ownership_desc') }}</p>
+                    </div>
+                    <div>
+                        @include('form.user-select', ['name' => 'new_owner_id', 'user' => null, 'compact' => false])
+                    </div>
                 </div>
-                <div>
-                    @include('form.user-select', ['name' => 'new_owner_id', 'user' => null, 'compact' => false])
-                </div>
-            </div>
+            @endif
 
             <hr class="my-l">
 
