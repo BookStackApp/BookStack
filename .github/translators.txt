@@ -200,3 +200,9 @@ sulfo :: Danish
 Raukze :: German
 zygimantus :: Lithuanian
 marinkaberg :: Russian
+Vitaliy (gviabcua) :: Ukrainian
+mannycarreiro :: Portuguese
+Thiago Rafael Pereira de Carvalho (thiago.rafael) :: Portuguese, Brazilian
+Ken Roger Bolgnes (kenbo124) :: Norwegian Bokmal
+Nguyen Hung Phuong (hnwolf) :: Vietnamese
+Umut ERGENE (umutergene67) :: Turkish
