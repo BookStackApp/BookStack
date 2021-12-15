@@ -130,6 +130,21 @@ class UserManagementTest extends TestCase
         $resp->assertSee('new_owner_id');
     }
 
+    public function test_migrate_option_hidden_if_user_cannot_manage_users()
+    {
+        $editor = $this->getEditor();
+
+        $resp = $this->asEditor()->get("settings/users/{$editor->id}/delete");
+        $resp->assertDontSee('Migrate Ownership');
+        $resp->assertDontSee('new_owner_id');
+
+        $this->giveUserPermissions($editor, ['users-manage']);
+
+        $resp = $this->asEditor()->get("settings/users/{$editor->id}/delete");
+        $resp->assertSee('Migrate Ownership');
+        $resp->assertSee('new_owner_id');
+    }
+
     public function test_delete_with_new_owner_id_changes_ownership()
     {
         $page = Page::query()->first();

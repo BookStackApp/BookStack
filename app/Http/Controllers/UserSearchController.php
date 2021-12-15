@@ -3,7 +3,6 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class UserSearchController extends Controller
@@ -14,19 +13,27 @@ class UserSearchController extends Controller
      */
     public function forSelect(Request $request)
     {
+        $hasPermission = signedInUser() && (
+                   userCan('users-manage')
+                || userCan('restrictions-manage-own')
+                || userCan('restrictions-manage-all')
+        );
+
+        if (!$hasPermission) {
+            $this->showPermissionError();
+        }
+
         $search = $request->get('search', '');
-        $query = User::query()->orderBy('name', 'desc')
+        $query = User::query()
+            ->orderBy('name', 'asc')
             ->take(20);
 
         if (!empty($search)) {
-            $query->where(function (Builder $query) use ($search) {
-                $query->where('email', 'like', '%' . $search . '%')
-                    ->orWhere('name', 'like', '%' . $search . '%');
-            });
+            $query->where('name', 'like', '%' . $search . '%');
         }
 
-        $users = $query->get();
-
-        return view('form.user-select-list', compact('users'));
+        return view('form.user-select-list', [
+            'users' => $query->get(),
+        ]);
     }
 }
