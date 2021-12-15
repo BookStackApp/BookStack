@@ -260,7 +260,7 @@ return [
     'tags_remove' => 'Eliminar esta etiqueta',
     'tags_usages' => 'Uso total de etiquetas',
     'tags_assigned_pages' => 'Asignadas a páginas',
-    'tags_assigned_chapters' => 'Asignadas a capitulos',
+    'tags_assigned_chapters' => 'Asignadas a capítulos',
     'tags_assigned_books' => 'Asignadas a libros',
     'tags_assigned_shelves' => 'Asignadas a estantes',
     'tags_x_unique_values' => ':count valores únicos',
