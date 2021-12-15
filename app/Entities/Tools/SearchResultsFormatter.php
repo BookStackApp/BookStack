@@ -57,17 +57,17 @@ class SearchResultsFormatter
     protected function highlightTagsContainingTerms(array $tags, array $terms): void
     {
         foreach ($tags as $tag) {
-            $tagName = strtolower($tag->name);
-            $tagValue = strtolower($tag->value);
+            $tagName = mb_strtolower($tag->name);
+            $tagValue = mb_strtolower($tag->value);
 
             foreach ($terms as $term) {
-                $termLower = strtolower($term);
+                $termLower = mb_strtolower($term);
 
-                if (strpos($tagName, $termLower) !== false) {
+                if (mb_strpos($tagName, $termLower) !== false) {
                     $tag->setAttribute('highlight_name', true);
                 }
 
-                if (strpos($tagValue, $termLower) !== false) {
+                if (mb_strpos($tagValue, $termLower) !== false) {
                     $tag->setAttribute('highlight_value', true);
                 }
             }
@@ -84,17 +84,17 @@ class SearchResultsFormatter
     protected function getMatchPositions(string $text, array $terms): array
     {
         $matchRefs = [];
-        $text = strtolower($text);
+        $text = mb_strtolower($text);
 
         foreach ($terms as $term) {
             $offset = 0;
-            $term = strtolower($term);
-            $pos = strpos($text, $term, $offset);
+            $term = mb_strtolower($term);
+            $pos = mb_strpos($text, $term, $offset);
             while ($pos !== false) {
-                $end = $pos + strlen($term);
+                $end = $pos + mb_strlen($term);
                 $matchRefs[$pos] = $end;
                 $offset = $end;
-                $pos = strpos($text, $term, $offset);
+                $pos = mb_strpos($text, $term, $offset);
             }
         }
 
@@ -141,7 +141,7 @@ class SearchResultsFormatter
      */
     protected function formatTextUsingMatchPositions(array $matchPositions, string $originalText, int $targetLength): string
     {
-        $maxEnd = strlen($originalText);
+        $maxEnd = mb_strlen($originalText);
         $fetchAll = ($targetLength === 0);
         $contextLength = ($fetchAll ? 0 : 32);
 
@@ -165,7 +165,7 @@ class SearchResultsFormatter
                 $contextStart = $start;
                 // Trims off '$startDiff' number of characters to bring it back to the start
                 // if this current match zone.
-                $content = substr($content, 0, strlen($content) + $startDiff);
+                $content = mb_substr($content, 0, mb_strlen($content) + $startDiff);
                 $contentTextLength += $startDiff;
             }
 
@@ -176,16 +176,16 @@ class SearchResultsFormatter
             } elseif ($fetchAll) {
                 // Or fill in gap since the previous match
                 $fillLength = $contextStart - $lastEnd;
-                $content .= e(substr($originalText, $lastEnd, $fillLength));
+                $content .= e(mb_substr($originalText, $lastEnd, $fillLength));
                 $contentTextLength += $fillLength;
             }
 
             // Add our content including the bolded matching text
-            $content .= e(substr($originalText, $contextStart, $start - $contextStart));
+            $content .= e(mb_substr($originalText, $contextStart, $start - $contextStart));
             $contentTextLength += $start - $contextStart;
-            $content .= '<strong>' . e(substr($originalText, $start, $end - $start)) . '</strong>';
+            $content .= '<strong>' . e(mb_substr($originalText, $start, $end - $start)) . '</strong>';
             $contentTextLength += $end - $start;
-            $content .= e(substr($originalText, $end, $contextEnd - $end));
+            $content .= e(mb_substr($originalText, $end, $contextEnd - $end));
             $contentTextLength += $contextEnd - $end;
 
             // Update our last end position
@@ -204,7 +204,7 @@ class SearchResultsFormatter
 
         // Just copy out the content if we haven't moved along anywhere.
         if ($lastEnd === 0) {
-            $content = e(substr($originalText, 0, $targetLength));
+            $content = e(mb_substr($originalText, 0, $targetLength));
             $contentTextLength = $targetLength;
             $lastEnd = $targetLength;
         }
@@ -213,7 +213,7 @@ class SearchResultsFormatter
         $remainder = $targetLength - $contentTextLength;
         if ($remainder > 10) {
             $padEndLength = min($maxEnd - $lastEnd, $remainder);
-            $content .= e(substr($originalText, $lastEnd, $padEndLength));
+            $content .= e(mb_substr($originalText, $lastEnd, $padEndLength));
             $lastEnd += $padEndLength;
             $contentTextLength += $padEndLength;
         }
@@ -223,7 +223,7 @@ class SearchResultsFormatter
         $firstStart = $firstStart ?: 0;
         if (!$fetchAll && $remainder > 10 && $firstStart !== 0) {
             $padStart = max(0, $firstStart - $remainder);
-            $content = ($padStart === 0 ? '' : '...') . e(substr($originalText, $padStart, $firstStart - $padStart)) . substr($content, 4);
+            $content = ($padStart === 0 ? '' : '...') . e(mb_substr($originalText, $padStart, $firstStart - $padStart)) . mb_substr($content, 4);
         }
 
         // Add ellipsis if we're not at the end
