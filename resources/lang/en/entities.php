@@ -173,6 +173,7 @@ return [
     'x_pages' => ':count Page|:count Pages',
     'pages_popular' => 'Popular Pages',
     'pages_new' => 'New Page',
+    'pages_markdown_new' => 'New Markdown',
     'pages_attachments' => 'Attachments',
     'pages_navigation' => 'Page Navigation',
     'pages_delete' => 'Delete Page',

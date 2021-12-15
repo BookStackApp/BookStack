@@ -46,6 +46,12 @@
                                 <span class="icon">@icon('page')</span>
                                 <span>{{ trans('entities.books_empty_create_page') }}</span>
                             </a>
+                            @if(setting('app-editor') === 'wysiwyg')
+                                <a href="{{ $book->getUrl('/create-markdown-page') }}" class="icon-list-item text-page">
+                                    <span class="icon">@icon('page')</span>
+                                    <span>{{ trans('entities.pages_markdown_new') }}</span>
+                                </a>
+                            @endif
                         @endif
                         @if(userCan('chapter-create', $book))
                             <a href="{{ $book->getUrl('/create-chapter') }}" class="icon-list-item text-chapter">
@@ -90,6 +96,12 @@
                     <span>@icon('add')</span>
                     <span>{{ trans('entities.pages_new') }}</span>
                 </a>
+                @if(setting('app-editor') === 'wysiwyg')
+                    <a href="{{ $book->getUrl('/create-markdown-page') }}" class="icon-list-item text-page">
+                        <span>@icon('add')</span>
+                        <span>{{ trans('entities.pages_markdown_new') }}</span>
+                    </a>
+                @endif
             @endif
             @if(userCan('chapter-create', $book))
                 <a href="{{ $book->getUrl('/create-chapter') }}" class="icon-list-item">

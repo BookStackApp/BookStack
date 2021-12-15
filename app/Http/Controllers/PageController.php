@@ -53,6 +53,26 @@ class PageController extends Controller
     }
 
     /**
+     * Show the form for creating a new makrdown page.
+     * @throws Throwable
+     */
+    public function createMarkdown(string $bookSlug, string $chapterSlug = null)
+    {
+        $parent = $this->pageRepo->getParentFromSlugs($bookSlug, $chapterSlug);
+        $this->checkOwnablePermission('page-create', $parent);
+
+        // Redirect to draft edit screen if signed in
+        if ($this->isSignedIn()) {
+            $draft = $this->pageRepo->getNewMarkdownDraftPage($parent);
+            return redirect($draft->getUrl());
+        }
+
+        // Otherwise show the edit view if they're a guest
+        $this->setPageTitle(trans('entities.pages_new'));
+        return view('pages.guest-create', ['parent' => $parent]);
+    }
+
+    /**
      * Create a new page as a guest user.
      *
      * @throws ValidationException
@@ -89,12 +109,16 @@ class PageController extends Controller
         $draftsEnabled = $this->isSignedIn();
         $templates = $this->pageRepo->getTemplates(10);
 
+        $isMarkdown = false;
+        if(!empty($draft->markdown)) $isMarkdown = true;
+
         return view('pages.edit', [
             'page'          => $draft,
             'book'          => $draft->book,
             'isDraft'       => true,
             'draftsEnabled' => $draftsEnabled,
             'templates'     => $templates,
+            'isMarkdown'    => $isMarkdown,
         ]);
     }
 
@@ -155,6 +179,9 @@ class PageController extends Controller
         View::incrementFor($page);
         $this->setPageTitle($page->getShortName());
 
+        $isMarkdown = false;
+        if(!empty($page->markdown)) $isMarkdown = true;
+
         return view('pages.show', [
             'page'            => $page,
             'book'            => $page->book,
@@ -164,6 +191,7 @@ class PageController extends Controller
             'pageNav'         => $pageNav,
             'next'            => $nextPreviousLocator->getNext(),
             'previous'        => $nextPreviousLocator->getPrevious(),
+            'isMarkdown'      => $isMarkdown,
         ]);
     }
 
@@ -216,12 +244,16 @@ class PageController extends Controller
         $draftsEnabled = $this->isSignedIn();
         $this->setPageTitle(trans('entities.pages_editing_named', ['pageName' => $page->getShortName()]));
 
+        $isMarkdown = false;
+        if(!empty($page->markdown)) $isMarkdown = true;
+
         return view('pages.edit', [
             'page'          => $page,
             'book'          => $page->book,
             'current'       => $page,
             'draftsEnabled' => $draftsEnabled,
             'templates'     => $templates,
+            'isMarkdown'    => $isMarkdown,
         ]);
     }
 

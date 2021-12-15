@@ -154,6 +154,33 @@ class PageRepo
     }
 
     /**
+     * Get a new draft markdown page belonging to the given parent entity.
+     */
+    public function getNewMarkdownDraftPage(Entity $parent)
+    {
+        $page = (new Page())->forceFill([
+            'name' => trans('entities.pages_initial_name'),
+            'created_by' => user()->id,
+            'owned_by' => user()->id,
+            'updated_by' => user()->id,
+            'draft' => true,
+            'markdown' => '## '.trans('entities.pages_initial_name'),
+        ]);
+
+        if ($parent instanceof Chapter) {
+            $page->chapter_id = $parent->id;
+            $page->book_id = $parent->book_id;
+        } else {
+            $page->book_id = $parent->id;
+        }
+
+        $page->save();
+        $page->refresh()->rebuildPermissions();
+        return $page;
+    }
+
+
+    /**
      * Publish a draft page to make it a live, non-draft page.
      */
     public function publishDraft(Page $draft, array $input): Page
@@ -263,7 +290,11 @@ class PageRepo
         // Otherwise save the data to a revision
         $draft = $this->getPageRevisionToUpdate($page);
         $draft->fill($input);
-        if (setting('app-editor') !== 'markdown') {
+
+        $isMarkdown = false;
+        if(!empty($draft->markdown)) $isMarkdown = true;
+
+        if (setting('app-editor') !== 'markdown' && !$isMarkdown) {
             $draft->markdown = '';
         }
 

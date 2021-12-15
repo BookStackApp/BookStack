@@ -173,6 +173,7 @@ return [
     'x_pages' => ':count个页面',
     'pages_popular' => '热门页面',
     'pages_new' => '新页面',
+    'pages_markdown_new' => '新 Markdown',
     'pages_attachments' => '附件',
     'pages_navigation' => '页面导航',
     'pages_delete' => '删除页面',

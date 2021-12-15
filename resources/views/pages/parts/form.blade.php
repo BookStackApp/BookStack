@@ -78,12 +78,12 @@
     <div class="edit-area flex-fill flex">
 
         {{--WYSIWYG Editor--}}
-        @if(setting('app-editor') === 'wysiwyg')
+        @if(setting('app-editor') === 'wysiwyg' && !$isMarkdown)
             @include('pages.parts.wysiwyg-editor', ['model' => $model])
         @endif
 
         {{--Markdown Editor--}}
-        @if(setting('app-editor') === 'markdown')
+        @if(setting('app-editor') === 'markdown' || $isMarkdown)
             @include('pages.parts.markdown-editor', ['model' => $model])
         @endif
 

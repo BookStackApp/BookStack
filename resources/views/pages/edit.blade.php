@@ -15,7 +15,7 @@
             @if(!isset($isDraft))
                 <input type="hidden" name="_method" value="PUT">
             @endif
-            @include('pages.parts.form', ['model' => $page])
+            @include('pages.parts.form', ['model' => $page, 'isMarkdown' => $isMarkdown])
             @include('pages.parts.editor-toolbox')
         </form>
     </div>
