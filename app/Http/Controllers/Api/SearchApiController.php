@@ -61,7 +61,7 @@ class SearchApiController extends ApiController
             $result->setAttribute('type', $result->getType());
             $result->setAttribute('url', $result->getUrl());
             $result->setAttribute('preview_html', [
-                'name' => (string) $result->getAttribute('preview_name'),
+                'name'    => (string) $result->getAttribute('preview_name'),
                 'content' => (string) $result->getAttribute('preview_content'),
             ]);
         }

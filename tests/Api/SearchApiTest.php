@@ -46,7 +46,7 @@ class SearchApiTest extends TestCase
         $resp = $this->actingAsApiAdmin()->getJson($this->baseEndpoint . '?query=superuniquevalue');
         $resp->assertJsonFragment([
             'type' => 'page',
-            'url' => $page->getUrl(),
+            'url'  => $page->getUrl(),
         ]);
     }
 
@@ -59,12 +59,12 @@ class SearchApiTest extends TestCase
 
         $resp = $this->actingAsApiAdmin()->getJson($this->baseEndpoint . '?query=superuniquevalue');
         $resp->assertJsonFragment([
-            'type' => 'book',
-            'url' => $book->getUrl(),
+            'type'         => 'book',
+            'url'          => $book->getUrl(),
             'preview_html' => [
-                'name' => 'name with <strong>superuniquevalue</strong> within',
+                'name'    => 'name with <strong>superuniquevalue</strong> within',
                 'content' => 'Description with <strong>superuniquevalue</strong> within',
-            ]
+            ],
         ]);
     }
 

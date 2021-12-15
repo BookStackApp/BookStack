@@ -14,7 +14,7 @@ class UserSearchController extends Controller
     public function forSelect(Request $request)
     {
         $hasPermission = signedInUser() && (
-                   userCan('users-manage')
+            userCan('users-manage')
                 || userCan('restrictions-manage-own')
                 || userCan('restrictions-manage-all')
         );
