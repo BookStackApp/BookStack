@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => 'Поле :attribute має містити лише літери, цифри, дефіси та підкреслення.',
     'alpha_num'            => 'Поле :attribute має містити лише літери та цифри.',
     'array'                => 'Поле :attribute має бути масивом.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'Наданий код є недійсним або вже використаний.',
     'before'               => 'Поле :attribute має містити дату не пізніше :date.',
     'between'              => [
         'numeric' => 'Поле :attribute має бути між :min та :max.',
@@ -99,7 +99,7 @@ return [
     ],
     'string'               => 'Поле :attribute повинне містити текст.',
     'timezone'             => 'Поле :attribute повинне містити коректну часову зону.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'Наданий код не є дійсним або прострочений.',
     'unique'               => 'Вказане значення поля :attribute вже існує.',
     'url'                  => 'Формат поля :attribute неправильний.',
     'uploaded'             => 'Не вдалося завантажити файл. Сервер може не приймати файли такого розміру.',
