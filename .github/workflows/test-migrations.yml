@@ -36,7 +36,7 @@ jobs:
 
       - name: Start MySQL
         run: |
-          sudo /etc/init.d/mysql start
+          sudo systemctl start mysql
 
       - name: Create database & user
         run: |

@@ -36,7 +36,7 @@ jobs:
 
     - name: Start Database
       run: |
-        sudo /etc/init.d/mysql start
+        sudo systemctl start mysql
 
     - name: Setup Database
       run: |
