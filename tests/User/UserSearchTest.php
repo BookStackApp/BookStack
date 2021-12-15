@@ -7,7 +7,6 @@ use Tests\TestCase;
 
 class UserSearchTest extends TestCase
 {
-
     public function test_select_search_matches_by_name()
     {
         $viewer = $this->getViewer();
@@ -64,5 +63,4 @@ class UserSearchTest extends TestCase
         $resp = $this->get('/search/users/select?search=a');
         $this->assertPermissionError($resp);
     }
-
 }
