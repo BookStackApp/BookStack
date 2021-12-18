@@ -174,7 +174,7 @@ return [
     'users_role' => 'Rôles de l\'utilisateur',
     'users_role_desc' => 'Sélectionnez les rôles auxquels cet utilisateur sera affecté. Si un utilisateur est affecté à plusieurs rôles, les permissions de ces rôles s\'empileront et ils recevront toutes les capacités des rôles affectés.',
     'users_password' => 'Mot de passe de l\'utilisateur',
-    'users_password_desc' => 'Définissez un mot de passe utilisé pour vous connecter à l\'application. Il doit comporter au moins 6 caractères.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Vous pouvez choisir d\'envoyer à cet utilisateur un e-mail d\'invitation qui lui permet de définir son propre mot de passe, sinon vous pouvez définir son mot de passe vous-même.',
     'users_send_invite_option' => 'Envoyer l\'e-mail d\'invitation',
     'users_external_auth_id' => 'Identifiant d\'authentification externe',
