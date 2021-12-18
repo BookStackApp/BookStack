@@ -21,7 +21,7 @@ return [
     'email' => 'E-pasts',
     'password' => 'Parole',
     'password_confirm' => 'Apstiprināt paroli',
-    'password_hint' => 'Jābūt vismaz 8 rakstzīmēm',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Aizmirsta parole?',
     'remember_me' => 'Atcerēties mani',
     'ldap_email_hint' => 'Lūdzu ievadiet e-pastu, kuru izmantosiet šim profilam.',
