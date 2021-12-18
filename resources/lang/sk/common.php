@@ -71,6 +71,9 @@ return [
     'list_view' => 'Zobraziť ako zoznam',
     'default' => 'Predvolené',
     'breadcrumb' => 'Breadcrumb',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Rozbaliť menu v záhlaví',
