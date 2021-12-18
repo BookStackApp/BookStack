@@ -71,6 +71,9 @@ return [
     'list_view' => 'Widok listy',
     'default' => 'Domyślny',
     'breadcrumb' => 'Ścieżka nawigacji',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Rozwiń menu nagłówka',
