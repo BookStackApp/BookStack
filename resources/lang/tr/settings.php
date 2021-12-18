@@ -174,7 +174,7 @@ return [
     'users_role' => 'Kullanıcı Rolleri',
     'users_role_desc' => 'Bu kullanıcının hangi rollere atanacağını belirleyin. Birden fazla role sahip kullanıcılar, atandığı bütün rollerin yetkilerine sahip olurlar.',
     'users_password' => 'Kullanıcı Şifresi',
-    'users_password_desc' => 'Kullanıcının giriş yaparken kullanacağı bir şifre belirleyin. Şifre en az 6 karakterden oluşmalıdır.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Bu kullanıcıya kendi şifresini belirleyebilmesi için bir davetiye e-postası gönderebilir ya da kullanıcının şifresini kendiniz belirleyebilirsiniz.',
     'users_send_invite_option' => 'Kullanıcıya davetiye e-postası gönder',
     'users_external_auth_id' => 'Harici Doğrulama Kimliği',
