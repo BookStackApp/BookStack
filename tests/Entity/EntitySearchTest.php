@@ -403,6 +403,17 @@ class EntitySearchTest extends TestCase
         $search->assertElementContains('.tag-value.highlight', 'MeowieCat');
     }
 
+    public function test_match_highlighting_works_with_multibyte_content()
+    {
+        $this->newPage([
+            'name' => 'Test Page',
+            'html' => '<p>На мен ми трябва нещо добро test</p>'
+        ]);
+
+        $search = $this->asEditor()->get('/search?term=' . urlencode('На мен ми трябва нещо добро'));
+        $search->assertSee('<strong>На</strong> <strong>мен</strong> <strong>ми</strong> <strong>трябва</strong> <strong>нещо</strong> <strong>добро</strong> test', false);
+    }
+
     public function test_html_entities_in_item_details_remains_escaped_in_search_results()
     {
         $this->newPage(['name' => 'My <cool> TestPageContent', 'html' => '<p>My supercool &lt;great&gt; TestPageContent page</p>']);
