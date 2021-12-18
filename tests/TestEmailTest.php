@@ -34,7 +34,7 @@ class TestEmailTest extends TestCase
         $this->app[Dispatcher::class] = $mockDispatcher;
 
         $exception = new \Exception('A random error occurred when testing an email');
-        $mockDispatcher->shouldReceive('send')->andThrow($exception);
+        $mockDispatcher->shouldReceive('sendNow')->andThrow($exception);
 
         $admin = $this->getAdmin();
         $sendReq = $this->actingAs($admin)->post('/settings/maintenance/send-test-email');
