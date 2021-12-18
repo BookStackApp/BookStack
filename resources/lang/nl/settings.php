@@ -174,7 +174,7 @@ return [
     'users_role' => 'Gebruikersrollen',
     'users_role_desc' => 'Selecteer aan welke rollen deze gebruiker zal worden toegewezen. Als een gebruiker aan meerdere rollen wordt toegewezen worden de machtigingen van deze rollen samengevoegd en krijgen ze alle machtigingen van de toegewezen rollen.',
     'users_password' => 'Wachtwoord gebruiker',
-    'users_password_desc' => 'Stel een wachtwoord in dat gebruikt wordt om in te loggen op de applicatie. Dit moet minstens 6 tekens lang zijn.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'U kunt ervoor kiezen om deze gebruiker een uitnodigingsmail te sturen waarmee hij zijn eigen wachtwoord kan instellen, anders kunt u zelf zijn wachtwoord instellen.',
     'users_send_invite_option' => 'Stuur gebruiker uitnodigings e-mail',
     'users_external_auth_id' => 'Externe authenticatie ID',
