@@ -174,7 +174,7 @@ return [
     'users_role' => 'Ruoli Utente',
     'users_role_desc' => 'Seleziona a quali ruoli verrà assegnato questo utente. Se un utente è assegnato a più ruoli riceverà tutte le abilità dei ruoli assegnati.',
     'users_password' => 'Password Utente',
-    'users_password_desc' => 'Imposta una password utilizzata per accedere all\'applicazione. Deve essere lunga almeno 6 caratteri.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Puoi scegliere di inviare a questo utente un\'email di invito che permette loro di impostare la propria password altrimenti puoi impostare la password tu stesso.',
     'users_send_invite_option' => 'Invia email di invito',
     'users_external_auth_id' => 'ID Autenticazioni Esterna',
