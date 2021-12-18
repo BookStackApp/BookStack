@@ -174,7 +174,7 @@ return [
     'users_role' => '使用者角色',
     'users_role_desc' => '選取要分配的此使用者的角色。若使用者被分配到多個角色，則這些角色的權限將會堆疊，使用者將會取得被分配角色的所有功能。',
     'users_password' => '使用者密碼',
-    'users_password_desc' => '設定用於登入應用程式的密碼。密碼必須至少 6 個字元長。',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => '您可以選擇向此使用者傳送邀請電子郵件，讓他們可以設定自己的密碼，您也可以自行設定他們的密碼。',
     'users_send_invite_option' => '傳送邀請電子郵件給使用者',
     'users_external_auth_id' => '外部身份驗證 ID',
