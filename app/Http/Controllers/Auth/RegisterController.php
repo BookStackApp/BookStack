@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
@@ -70,7 +71,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name'     => ['required', 'min:2', 'max:255'],
             'email'    => ['required', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'min:8'],
+            'password' => ['required', Password::default()],
         ]);
     }
 
