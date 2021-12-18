@@ -71,6 +71,9 @@ return [
     'list_view' => 'Zobrazení seznamu',
     'default' => 'Výchozí',
     'breadcrumb' => 'Drobečková navigace',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Rozbalit menu v záhlaví',
