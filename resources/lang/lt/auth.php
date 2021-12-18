@@ -21,7 +21,7 @@ return [
     'email' => 'Elektroninis paštas',
     'password' => 'Slaptažodis',
     'password_confirm' => 'Patvirtinti slaptažodį',
-    'password_hint' => 'Privalo būti daugiau nei 7 simboliai',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Pamiršote slaptažodį?',
     'remember_me' => 'Prisimink mane',
     'ldap_email_hint' => 'Prašome įvesti elektroninį paštą, kad galėtume naudotis šia paskyra.',
