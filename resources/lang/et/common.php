@@ -71,6 +71,9 @@ return [
     'list_view' => 'Loendivaade',
     'default' => 'Vaikimisi',
     'breadcrumb' => 'Jäljerida',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Laienda päisemenüü',
