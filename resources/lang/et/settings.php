@@ -174,7 +174,7 @@ return [
     'users_role' => 'Kasutaja rollid',
     'users_role_desc' => 'Vali, millised rollid sellel kasutajal on. Kui talle on valitud mitu rolli, siis nende õigused kombineeritakse ja kasutaja saab kõigi rollide õigused.',
     'users_password' => 'Kasutaja parool',
-    'users_password_desc' => 'Määra kasutajale parool, millega rakendusse sisse logida. See peab olema vähemalt 6 tähemärki.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Sa võid kasutajale saata e-postiga kutse, mis võimaldab neil ise parooli seada. Vastasel juhul määra parool ise.',
     'users_send_invite_option' => 'Saada e-postiga kutse',
     'users_external_auth_id' => 'Välise autentimise ID',
