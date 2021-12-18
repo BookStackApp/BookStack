@@ -71,6 +71,9 @@ return [
     'list_view' => 'Вид списком',
     'default' => 'По умолчанию',
     'breadcrumb' => 'Навигация',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Развернуть меню заголовка',
