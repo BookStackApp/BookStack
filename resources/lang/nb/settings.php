@@ -174,7 +174,7 @@ return [
     'users_role' => 'Roller',
     'users_role_desc' => 'Velg hvilke roller denne kontoholderen vil bli tildelt. Hvis en kontoholderen er tildelt flere roller, vil tillatelsene fra disse rollene stable seg, og de vil motta alle evnene til de tildelte rollene.',
     'users_password' => 'Passord',
-    'users_password_desc' => 'Angi et passord som brukes til å logge på applikasjonen. Dette må bestå av minst 6 tegn.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Du kan velge å sende denne kontoholderen en invitasjons-e-post som lar dem angi sitt eget passord, ellers kan du selv angi passordet.',
     'users_send_invite_option' => 'Send invitasjonsmelding',
     'users_external_auth_id' => 'Ekstern godkjennings-ID',
