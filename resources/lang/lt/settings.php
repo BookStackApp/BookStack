@@ -174,7 +174,7 @@ return [
     'users_role' => 'Naudotojo vaidmenys',
     'users_role_desc' => 'Pasirinkite, prie kokių vaidmenų bus priskirtas šis naudotojas. Jeigu naudotojas yra priskirtas prie kelių vaidmenų, leidimai iš tų vaidmenų susidės ir jie gaus visus priskirtų vaidmenų gebėjimus.',
     'users_password' => 'Naudotojo slaptažodis',
-    'users_password_desc' => 'Susikurkite slaptažodį, kuris bus naudojamas prisijungti prie aplikacijos. Slaptažodis turi būti bent 6 simbolių ilgio.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Jūs galite pasirinkti nusiųsti šiam naudotojui kvietimą elektroniniu paštu, kuris leistų jiems patiems susikurti slaptažodį. Priešingu atveju slaptažodį galite sukurti patys.',
     'users_send_invite_option' => 'Nusiųsti naudotojui kvietimą elektroniniu paštu',
     'users_external_auth_id' => 'Išorinio autentifikavimo ID',
