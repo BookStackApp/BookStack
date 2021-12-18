@@ -71,6 +71,9 @@ return [
     'list_view' => 'نمای لیست',
     'default' => 'پیش‎فرض',
     'breadcrumb' => 'مسیر جاری',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'گسترش منو',
