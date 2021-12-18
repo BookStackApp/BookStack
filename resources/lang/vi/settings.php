@@ -174,7 +174,7 @@ return [
     'users_role' => 'Quyền người dùng',
     'users_role_desc' => 'Chọn quyền mà người dùng sẽ được gán. Nếu người dùng được gán nhiều quyền, các quyền hạn sẽ ghi đè lên nhau và họ sẽ nhận được tất cả các quyền hạn từ quyền được gán.',
     'users_password' => 'Mật khẩu người dùng',
-    'users_password_desc' => 'Đặt mật khẩu dùng để đăng nhập ứng dụng. Nó phải có độ dài tối thiểu 6 ký tự.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Bạn có thể chọn để gửi cho người dùng này một email mời, giúp họ có thể tự đặt mật khẩu cho chính họ. Nếu không bạn có thể đặt mật khẩu cho họ.',
     'users_send_invite_option' => 'Gửi email mời người dùng',
     'users_external_auth_id' => 'Mã của xác thực ngoài',
