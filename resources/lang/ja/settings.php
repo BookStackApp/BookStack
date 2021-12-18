@@ -174,7 +174,7 @@ return [
     'users_role' => 'ユーザーの役割',
     'users_role_desc' => 'このユーザーに割り当てる役割を選択します。ユーザーが複数の役割に割り当てられている場合は、それらの役割の権限が重ね合わされ、割り当てられた役割のすべての権限が与えられます。',
     'users_password' => 'ユーザー パスワード',
-    'users_password_desc' => 'アプリケーションへのログインに使用するパスワードを設定します。これは少なくとも6文字以上である必要があります。',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'このユーザーに招待メールを送信してユーザー自身にパスワードを設定してもらうか、あなたがここでパスワードを設定するかを選択できます。',
     'users_send_invite_option' => 'ユーザーに招待メールを送信',
     'users_external_auth_id' => '外部認証ID',
