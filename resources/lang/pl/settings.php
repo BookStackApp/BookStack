@@ -174,7 +174,7 @@ return [
     'users_role' => 'Role użytkownika',
     'users_role_desc' => 'Wybierz role, do których ten użytkownik zostanie przypisany. Jeśli użytkownik jest przypisany do wielu ról, uprawnienia z tych ról zostaną nałożone i otrzyma wszystkie uprawnienia przypisanych ról.',
     'users_password' => 'Hasło użytkownika',
-    'users_password_desc' => 'Ustaw hasło logowania do aplikacji. Hasło musi mieć przynajmniej 6 znaków.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Możesz wybrać wysłanie do tego użytkownika wiadomości e-mail z zaproszeniem, która pozwala mu ustawić własne hasło, w przeciwnym razie możesz ustawić je samemu.',
     'users_send_invite_option' => 'Wyślij e-mail z zaproszeniem',
     'users_external_auth_id' => 'Zewnętrzne identyfikatory autentykacji',
