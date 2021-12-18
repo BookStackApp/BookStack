@@ -174,7 +174,7 @@ return [
     'users_role' => 'Cargos do Usuário',
     'users_role_desc' => 'Selecione os cargos aos quais este usuário será vinculado. Se um usuário for vinculado a múltiplos cargos, suas permissões serão empilhadas e ele receberá todas as habilidades dos cargos atribuídos.',
     'users_password' => 'Senha do Usuário',
-    'users_password_desc' => 'Defina uma senha usada para fazer login na aplicação. Esta deve ter pelo menos 6 caracteres.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Você pode escolher enviar a este usuário um convite por e-mail que o possibilitará definir sua própria senha, ou defina você uma senha.',
     'users_send_invite_option' => 'Enviar convite por e-mail',
     'users_external_auth_id' => 'ID de Autenticação Externa',
