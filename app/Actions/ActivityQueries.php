@@ -8,75 +8,16 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\Log;
 
-class ActivityService
+class ActivityQueries
 {
-    protected $activity;
     protected $permissionService;
 
-    public function __construct(Activity $activity, PermissionService $permissionService)
+    public function __construct(PermissionService $permissionService)
     {
-        $this->activity = $activity;
         $this->permissionService = $permissionService;
-    }
-
-    /**
-     * Add activity data to database for an entity.
-     */
-    public function addForEntity(Entity $entity, string $type)
-    {
-        $activity = $this->newActivityForUser($type);
-        $entity->activity()->save($activity);
-        $this->setNotification($type);
-    }
-
-    /**
-     * Add a generic activity event to the database.
-     *
-     * @param string|Loggable $detail
-     */
-    public function add(string $type, $detail = '')
-    {
-        if ($detail instanceof Loggable) {
-            $detail = $detail->logDescriptor();
-        }
-
-        $activity = $this->newActivityForUser($type);
-        $activity->detail = $detail;
-        $activity->save();
-        $this->setNotification($type);
-    }
-
-    /**
-     * Get a new activity instance for the current user.
-     */
-    protected function newActivityForUser(string $type): Activity
-    {
-        $ip = request()->ip() ?? '';
-
-        return $this->activity->newInstance()->forceFill([
-            'type'     => strtolower($type),
-            'user_id'  => user()->id,
-            'ip'       => config('app.env') === 'demo' ? '127.0.0.1' : $ip,
-        ]);
-    }
-
-    /**
-     * Removes the entity attachment from each of its activities
-     * and instead uses the 'extra' field with the entities name.
-     * Used when an entity is deleted.
-     */
-    public function removeEntity(Entity $entity)
-    {
-        $entity->activity()->update([
-            'detail'       => $entity->name,
-            'entity_id'    => null,
-            'entity_type'  => null,
-        ]);
     }
 
     /**
@@ -85,7 +26,7 @@ class ActivityService
     public function latest(int $count = 20, int $page = 0): array
     {
         $activityList = $this->permissionService
-            ->filterRestrictedEntityRelations($this->activity->newQuery(), 'activities', 'entity_id', 'entity_type')
+            ->filterRestrictedEntityRelations(Activity::query(), 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->with(['user', 'entity'])
             ->skip($count * $page)
@@ -111,7 +52,7 @@ class ActivityService
             $queryIds[(new Page())->getMorphClass()] = $entity->pages()->scopes('visible')->pluck('id');
         }
 
-        $query = $this->activity->newQuery();
+        $query = Activity::query();
         $query->where(function (Builder $query) use ($queryIds) {
             foreach ($queryIds as $morphClass => $idArr) {
                 $query->orWhere(function (Builder $innerQuery) use ($morphClass, $idArr) {
@@ -138,7 +79,7 @@ class ActivityService
     public function userActivity(User $user, int $count = 20, int $page = 0): array
     {
         $activityList = $this->permissionService
-            ->filterRestrictedEntityRelations($this->activity->newQuery(), 'activities', 'entity_id', 'entity_type')
+            ->filterRestrictedEntityRelations(Activity::query(), 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->where('user_id', '=', $user->id)
             ->skip($count * $page)
@@ -152,8 +93,6 @@ class ActivityService
      * Filters out similar activity.
      *
      * @param Activity[] $activities
-     *
-     * @return array
      */
     protected function filterSimilar(iterable $activities): array
     {
@@ -171,31 +110,4 @@ class ActivityService
         return $newActivity;
     }
 
-    /**
-     * Flashes a notification message to the session if an appropriate message is available.
-     */
-    protected function setNotification(string $type)
-    {
-        $notificationTextKey = 'activities.' . $type . '_notification';
-        if (trans()->has($notificationTextKey)) {
-            $message = trans($notificationTextKey);
-            session()->flash('success', $message);
-        }
-    }
-
-    /**
-     * Log out a failed login attempt, Providing the given username
-     * as part of the message if the '%u' string is used.
-     */
-    public function logFailedLogin(string $username)
-    {
-        $message = config('logging.failed_login.message');
-        if (!$message) {
-            return;
-        }
-
-        $message = str_replace('%u', $username, $message);
-        $channel = config('logging.failed_login.channel');
-        Log::channel($channel)->warning($message);
-    }
 }

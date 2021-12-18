@@ -90,7 +90,7 @@ class BookshelfRepo
         $shelf = new Bookshelf();
         $this->baseRepo->create($shelf, $input);
         $this->updateBooks($shelf, $bookIds);
-        Activity::addForEntity($shelf, ActivityType::BOOKSHELF_CREATE);
+        Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
 
         return $shelf;
     }
@@ -106,7 +106,7 @@ class BookshelfRepo
             $this->updateBooks($shelf, $bookIds);
         }
 
-        Activity::addForEntity($shelf, ActivityType::BOOKSHELF_UPDATE);
+        Activity::add(ActivityType::BOOKSHELF_UPDATE, $shelf);
 
         return $shelf;
     }
@@ -177,7 +177,7 @@ class BookshelfRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyShelf($shelf);
-        Activity::addForEntity($shelf, ActivityType::BOOKSHELF_DELETE);
+        Activity::add(ActivityType::BOOKSHELF_DELETE, $shelf);
         $trashCan->autoClearOld();
     }
 }

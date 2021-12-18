@@ -10,7 +10,7 @@
     </div>
 
     <div class="card content-wrap auto-height">
-        <h2 class="list-heading">{{ trans('settings.audit') }}</h2>
+        <h1 class="list-heading">{{ trans('settings.audit') }}</h1>
         <p class="text-muted">{{ trans('settings.audit_desc') }}</p>
 
         <div class="flex-container-row">

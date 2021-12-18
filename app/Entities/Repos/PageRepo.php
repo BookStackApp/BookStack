@@ -171,7 +171,7 @@ class PageRepo
         $draft->indexForSearch();
         $draft->refresh();
 
-        Activity::addForEntity($draft, ActivityType::PAGE_CREATE);
+        Activity::add(ActivityType::PAGE_CREATE, $draft);
 
         return $draft;
     }
@@ -205,7 +205,7 @@ class PageRepo
             $this->savePageRevision($page, $summary);
         }
 
-        Activity::addForEntity($page, ActivityType::PAGE_UPDATE);
+        Activity::add(ActivityType::PAGE_UPDATE, $page);
 
         return $page;
     }
@@ -281,7 +281,7 @@ class PageRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyPage($page);
-        Activity::addForEntity($page, ActivityType::PAGE_DELETE);
+        Activity::add(ActivityType::PAGE_DELETE, $page);
         $trashCan->autoClearOld();
     }
 
@@ -312,7 +312,7 @@ class PageRepo
         $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
         $this->savePageRevision($page, $summary);
 
-        Activity::addForEntity($page, ActivityType::PAGE_RESTORE);
+        Activity::add(ActivityType::PAGE_RESTORE, $page);
 
         return $page;
     }
@@ -341,7 +341,7 @@ class PageRepo
         $page->changeBook($newBookId);
         $page->rebuildPermissions();
 
-        Activity::addForEntity($page, ActivityType::PAGE_MOVE);
+        Activity::add(ActivityType::PAGE_MOVE, $page);
 
         return $parent;
     }

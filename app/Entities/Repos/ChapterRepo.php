@@ -49,7 +49,7 @@ class ChapterRepo
         $chapter->book_id = $parentBook->id;
         $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
         $this->baseRepo->create($chapter, $input);
-        Activity::addForEntity($chapter, ActivityType::CHAPTER_CREATE);
+        Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
         return $chapter;
     }
@@ -60,7 +60,7 @@ class ChapterRepo
     public function update(Chapter $chapter, array $input): Chapter
     {
         $this->baseRepo->update($chapter, $input);
-        Activity::addForEntity($chapter, ActivityType::CHAPTER_UPDATE);
+        Activity::add(ActivityType::CHAPTER_UPDATE, $chapter);
 
         return $chapter;
     }
@@ -74,7 +74,7 @@ class ChapterRepo
     {
         $trashCan = new TrashCan();
         $trashCan->softDestroyChapter($chapter);
-        Activity::addForEntity($chapter, ActivityType::CHAPTER_DELETE);
+        Activity::add(ActivityType::CHAPTER_DELETE, $chapter);
         $trashCan->autoClearOld();
     }
 
@@ -103,7 +103,7 @@ class ChapterRepo
 
         $chapter->changeBook($parent->id);
         $chapter->rebuildPermissions();
-        Activity::addForEntity($chapter, ActivityType::CHAPTER_MOVE);
+        Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
 
         return $parent;
     }
