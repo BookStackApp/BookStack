@@ -174,7 +174,7 @@ return [
     'users_role' => 'Uživatelské role',
     'users_role_desc' => 'Zvolte role, do kterých chcete uživatele zařadit. Pokud bude uživatel zařazen do více rolí, oprávnění z těchto rolí se sloučí a uživateli bude dovoleno vše, k čemu mají jednotlivé role oprávnění.',
     'users_password' => 'Heslo uživatele',
-    'users_password_desc' => 'Zadejte heslo pro přihlášení do aplikace. Heslo musí být nejméně 6 znaků dlouhé.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Uživateli můžete poslat pozvánku e-mailem, která umožní uživateli, aby si zvolil sám svoje heslo do aplikace a nebo můžete zadat heslo sami.',
     'users_send_invite_option' => 'Poslat uživateli pozvánku e-mailem',
     'users_external_auth_id' => 'Přihlašovací identifikátor třetích stran',
