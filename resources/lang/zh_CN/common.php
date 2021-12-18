@@ -71,6 +71,9 @@ return [
     'list_view' => '列表视图',
     'default' => '默认',
     'breadcrumb' => '面包屑导航',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => '展开标头菜单',
