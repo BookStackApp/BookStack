@@ -2,6 +2,7 @@
 
 namespace Tests\Actions;
 
+use function app;
 use BookStack\Actions\Activity;
 use BookStack\Actions\ActivityLogger;
 use BookStack\Actions\ActivityType;
@@ -11,9 +12,8 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
 use Carbon\Carbon;
-use Tests\TestCase;
-use function app;
 use function config;
+use Tests\TestCase;
 
 class AuditLogTest extends TestCase
 {

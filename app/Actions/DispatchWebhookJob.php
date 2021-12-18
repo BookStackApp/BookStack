@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Log;
 
 class DispatchWebhookJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var Webhook
@@ -86,14 +89,14 @@ class DispatchWebhookJob implements ShouldQueue
             $textParts[] = '"' . $this->detail->name . '"';
         }
 
-        $data =  [
-            'event' => $this->event,
-            'text' => implode(' ', $textParts),
-            'triggered_at' => Carbon::createFromTimestampUTC($this->initiatedTime)->toISOString(),
-            'triggered_by' => $this->initiator->attributesToArray(),
+        $data = [
+            'event'                    => $this->event,
+            'text'                     => implode(' ', $textParts),
+            'triggered_at'             => Carbon::createFromTimestampUTC($this->initiatedTime)->toISOString(),
+            'triggered_by'             => $this->initiator->attributesToArray(),
             'triggered_by_profile_url' => $this->initiator->getProfileUrl(),
-            'webhook_id' => $this->webhook->id,
-            'webhook_name' => $this->webhook->name,
+            'webhook_id'               => $this->webhook->id,
+            'webhook_name'             => $this->webhook->name,
         ];
 
         if (method_exists($this->detail, 'getUrl')) {

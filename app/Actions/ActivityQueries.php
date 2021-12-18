@@ -109,5 +109,4 @@ class ActivityQueries
 
         return $newActivity;
     }
-
 }

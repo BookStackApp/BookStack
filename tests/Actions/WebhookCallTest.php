@@ -15,7 +15,6 @@ use Tests\TestCase;
 
 class WebhookCallTest extends TestCase
 {
-
     public function test_webhook_listening_to_all_called_on_event()
     {
         $this->newWebhook([], ['all']);
@@ -73,8 +72,9 @@ class WebhookCallTest extends TestCase
 
         $this->runEvent(ActivityType::PAGE_UPDATE, $page, $editor);
 
-        Http::assertSent(function(Request $request) use ($editor, $page, $webhook) {
+        Http::assertSent(function (Request $request) use ($editor, $page, $webhook) {
             $reqData = $request->data();
+
             return $request->isJson()
                 && $reqData['event'] === 'page_update'
                 && $reqData['text'] === ($editor->name . ' updated page "' . $page->name . '"')
@@ -87,7 +87,6 @@ class WebhookCallTest extends TestCase
                 && $reqData['related_item']['name'] === $page->name;
         });
     }
-
 
     protected function runEvent(string $event, $detail = '', ?User $user = null)
     {
@@ -112,5 +111,4 @@ class WebhookCallTest extends TestCase
 
         return $webhook;
     }
-
 }

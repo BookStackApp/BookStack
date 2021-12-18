@@ -17,7 +17,7 @@ class WebhookTrackedEventFactory extends Factory
     {
         return [
             'webhook_id' => Webhook::factory(),
-            'event' => ActivityType::all()[array_rand(ActivityType::all())],
+            'event'      => ActivityType::all()[array_rand(ActivityType::all())],
         ];
     }
 }

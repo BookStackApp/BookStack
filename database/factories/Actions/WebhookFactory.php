@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WebhookFactory extends Factory
 {
-
     protected $model = Webhook::class;
 
     /**
@@ -18,9 +17,9 @@ class WebhookFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'My webhook for ' . $this->faker->country(),
+            'name'     => 'My webhook for ' . $this->faker->country(),
             'endpoint' => $this->faker->url,
-            'active' => true,
+            'active'   => true,
         ];
     }
 }

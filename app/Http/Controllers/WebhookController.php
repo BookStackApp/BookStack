@@ -24,6 +24,7 @@ class WebhookController extends Controller
             ->orderBy('name', 'desc')
             ->with('trackedEvents')
             ->get();
+
         return view('settings.webhooks.index', ['webhooks' => $webhooks]);
     }
 
@@ -41,10 +42,10 @@ class WebhookController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validate($request, [
-            'name' => ['required', 'max:150'],
+            'name'     => ['required', 'max:150'],
             'endpoint' => ['required', 'url', 'max:500'],
-            'events' => ['required', 'array'],
-            'active' => ['required'],
+            'events'   => ['required', 'array'],
+            'active'   => ['required'],
         ]);
 
         $webhook = new Webhook($validated);
@@ -53,6 +54,7 @@ class WebhookController extends Controller
         $webhook->updateTrackedEvents(array_values($validated['events']));
 
         $this->logActivity(ActivityType::WEBHOOK_CREATE, $webhook);
+
         return redirect('/settings/webhooks');
     }
 
@@ -75,10 +77,10 @@ class WebhookController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $this->validate($request, [
-            'name' => ['required', 'max:150'],
+            'name'     => ['required', 'max:150'],
             'endpoint' => ['required', 'url', 'max:500'],
-            'events' => ['required', 'array'],
-            'active' => ['required'],
+            'events'   => ['required', 'array'],
+            'active'   => ['required'],
         ]);
 
         /** @var Webhook $webhook */
@@ -89,6 +91,7 @@ class WebhookController extends Controller
         $webhook->updateTrackedEvents($validated['events']);
 
         $this->logActivity(ActivityType::WEBHOOK_UPDATE, $webhook);
+
         return redirect('/settings/webhooks');
     }
 
@@ -99,6 +102,7 @@ class WebhookController extends Controller
     {
         /** @var Webhook $webhook */
         $webhook = Webhook::query()->findOrFail($id);
+
         return view('settings.webhooks.delete', ['webhook' => $webhook]);
     }
 
@@ -114,6 +118,7 @@ class WebhookController extends Controller
         $webhook->delete();
 
         $this->logActivity(ActivityType::WEBHOOK_DELETE, $webhook);
+
         return redirect('/settings/webhooks');
     }
 }
