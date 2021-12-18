@@ -174,7 +174,7 @@ return [
     'users_role' => '用户角色',
     'users_role_desc' => '选择将分配给该用户的角色。 如果将一个用户分配给多个角色，则这些角色的权限将堆叠在一起，并且他们将获得分配的角色的所有功能。',
     'users_password' => '用户密码',
-    'users_password_desc' => '设置用于登录应用程序的密码。 该长度必须至少为6个字符。',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => '您可以向该用户发送邀请电子邮件，允许他们设置自己的密码，否则，您可以自己设置他们的密码。',
     'users_send_invite_option' => '发送邀请用户电子邮件',
     'users_external_auth_id' => '外部身份认证ID',
