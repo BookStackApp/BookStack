@@ -174,7 +174,7 @@ return [
     'users_role' => 'Vloge uporabnika',
     'users_role_desc' => 'Izberi vloge, ki bodo dodeljene uporabniku. Če je uporabniku dodeljenih več vlog, se dovoljenja združijo in prejmenjo vsa dovoljenja dodeljenih vlog.',
     'users_password' => 'Uporabniško geslo',
-    'users_password_desc' => 'Nastavite geslo, ki se uporablja za prijavo v aplikacijo. Dolgo mora biti vsaj 6 znakov.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Uporabniku lahko pošljete e-poštno sporočilo s povabilom, ki mu omogoča, da nastavi svoje geslo, ali pa ga nastavite kar sami.',
     'users_send_invite_option' => 'Pošlji uporabniku e-poštno povabilo',
     'users_external_auth_id' => 'Zunanje dokazilo ID',
