@@ -71,6 +71,9 @@ return [
     'list_view' => 'Изглед списък',
     'default' => 'Основен',
     'breadcrumb' => 'Трасиране',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Expand Header Menu',
