@@ -175,7 +175,7 @@ return [
     'users_role' => 'Roles de usuario',
     'users_role_desc' => 'Selecciona los roles a los que será asignado este usuario. Si se asignan varios roles los permisos se acumularán y recibirá todas las habilidades de los roles asignados.',
     'users_password' => 'Contraseña de Usuario',
-    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 5 characters long.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Puede optar por enviar a este usuario un correo electrónico de invitación que les permita establecer su propia contraseña; de lo contrario, puede establecerla contraseña usted mismo.',
     'users_send_invite_option' => 'Enviar correo electrónico de invitación al usuario.',
     'users_external_auth_id' => 'ID externo de autenticación',
