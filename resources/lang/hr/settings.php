@@ -174,7 +174,7 @@ return [
     'users_role' => 'Uloge korisnika',
     'users_role_desc' => 'Odaberite koje će uloge biti dodijeljene ovom korisniku. Ako korisnik ima više uloga njihova će se dopuštenja prilagoditi.',
     'users_password' => 'Lozinka korisnika',
-    'users_password_desc' => 'Postavite lozinku za prijavu u aplikaciju. Mora imati najmanje 6 znakova.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Možete odabrati slanje e maila korisniku i dozvoliti mu da postavi svoju lozinku ili vi to možete učiniti za njega.',
     'users_send_invite_option' => 'Pošaljite pozivnicu korisniku putem emaila',
     'users_external_auth_id' => 'Vanjska autorizacija',
