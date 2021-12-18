@@ -71,6 +71,9 @@ return [
     'list_view' => 'Listvy',
     'default' => 'Förvald',
     'breadcrumb' => 'Brödsmula',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Expandera sidhuvudsmenyn',
