@@ -21,7 +21,7 @@ return [
     'email' => 'E-post',
     'password' => 'Parool',
     'password_confirm' => 'Kinnita parool',
-    'password_hint' => 'Peab olema rohkem kui 7 tähemärki',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Unustasid parooli?',
     'remember_me' => 'Jäta mind meelde',
     'ldap_email_hint' => 'Sisesta kasutajakonto e-posti aadress.',
