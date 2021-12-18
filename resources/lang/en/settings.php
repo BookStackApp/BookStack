@@ -174,7 +174,7 @@ return [
     'users_role' => 'User Roles',
     'users_role_desc' => 'Select which roles this user will be assigned to. If a user is assigned to multiple roles the permissions from those roles will stack and they will receive all abilities of the assigned roles.',
     'users_password' => 'User Password',
-    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 6 characters long.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
     'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'External Authentication ID',

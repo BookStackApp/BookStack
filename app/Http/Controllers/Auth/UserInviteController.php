@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Validation\Rules\Password;
 
 class UserInviteController extends Controller
 {
@@ -55,7 +56,7 @@ class UserInviteController extends Controller
     public function setPassword(Request $request, string $token)
     {
         $this->validate($request, [
-            'password' => ['required', 'min:8'],
+            'password' => ['required', Password::default()],
         ]);
 
         try {
