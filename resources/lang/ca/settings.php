@@ -174,7 +174,7 @@ return [
     'users_role' => 'Rols de l\'usuari',
     'users_role_desc' => 'Seleccioneu a quins rols s\'assignarà l\'usuari. Si un usuari s\'assigna a múltiples rols, els permisos dels rols s\'acumularan i l\'usuari rebrà tots els permisos dels rols assignats.',
     'users_password' => 'Contrasenya de l\'usuari',
-    'users_password_desc' => 'Definiu una contrasenya per a iniciar la sessió a l\'aplicació. Cal que tingui un mínim de 6 caràcters.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Podeu elegir enviar un correu d\'invitació a aquest usuari, la qual cosa li permetrà definir la seva contrasenya, o podeu definir-li una contrasenya vós.',
     'users_send_invite_option' => 'Envia un correu d\'invitació a l\'usuari',
     'users_external_auth_id' => 'Identificador d\'autenticació extern',
