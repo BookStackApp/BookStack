@@ -21,7 +21,7 @@ return [
     'email' => 'البريد الإلكتروني',
     'password' => 'كلمة المرور',
     'password_confirm' => 'تأكيد كلمة المرور',
-    'password_hint' => 'يجب أن تكون أكثر من 7 حروف',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'نسيت كلمة المرور؟',
     'remember_me' => 'تذكرني',
     'ldap_email_hint' => 'الرجاء إدخال عنوان بريد إلكتروني لاستخدامه مع الحساب.',
