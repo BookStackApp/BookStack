@@ -71,6 +71,9 @@ return [
     'list_view' => 'Visualizzazione Lista',
     'default' => 'Predefinito',
     'breadcrumb' => 'Navigazione',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Espandi Menù Intestazione',
