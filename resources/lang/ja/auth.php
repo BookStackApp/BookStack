@@ -21,7 +21,7 @@ return [
     'email' => 'メールアドレス',
     'password' => 'パスワード',
     'password_confirm' => 'パスワード (確認)',
-    'password_hint' => '7文字以上である必要があります',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'パスワードをお忘れですか？',
     'remember_me' => 'ログイン情報を保存する',
     'ldap_email_hint' => 'このアカウントで使用するEメールアドレスを入力してください。',
