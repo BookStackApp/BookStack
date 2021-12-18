@@ -21,7 +21,7 @@ return [
     'email' => 'Adreça electrònica',
     'password' => 'Contrasenya',
     'password_confirm' => 'Confirmeu la contrasenya',
-    'password_hint' => 'Cal que tingui més de 7 caràcters',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Heu oblidat la contrasenya?',
     'remember_me' => 'Recorda\'m',
     'ldap_email_hint' => 'Introduïu una adreça electrònica per a aquest compte.',
