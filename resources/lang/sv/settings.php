@@ -174,7 +174,7 @@ return [
     'users_role' => 'Användarroller',
     'users_role_desc' => 'Välj vilka roller den här användaren ska tilldelas. Om en användare har tilldelats flera roller kommer behörigheterna från dessa roller att staplas och de kommer att få alla rättigheter i de tilldelade rollerna.',
     'users_password' => 'Användarlösenord',
-    'users_password_desc' => 'Ange ett lösenord som ska användas för att logga in på sidan. Lösenordet måste vara minst 5 tecken långt.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Du kan välja att skicka denna användare ett e-postmeddelande som tillåter dem att ställa in sitt eget lösenord, eller så kan du ställa in deras lösenord själv.',
     'users_send_invite_option' => 'Skicka e-post med inbjudan',
     'users_external_auth_id' => 'Externt ID för autentisering',
