@@ -8,11 +8,10 @@ use Tests\TestCase;
 
 class WebhookManagementTest extends TestCase
 {
-
     public function test_index_view()
     {
         $webhook = $this->newWebhook([
-            'name' => 'My awesome webhook',
+            'name'     => 'My awesome webhook',
             'endpoint' => 'https://example.com/donkey/webhook',
         ], ['all']);
 
@@ -36,10 +35,10 @@ class WebhookManagementTest extends TestCase
     public function test_store()
     {
         $resp = $this->asAdmin()->post('/settings/webhooks/create', [
-            'name' => 'My first webhook',
+            'name'     => 'My first webhook',
             'endpoint' => 'https://example.com/webhook',
-            'events' => ['all'],
-            'active' => 'true'
+            'events'   => ['all'],
+            'active'   => 'true',
         ]);
 
         $resp->assertRedirect('/settings/webhooks');
@@ -49,16 +48,16 @@ class WebhookManagementTest extends TestCase
         $resp->assertSee('Webhook successfully created');
 
         $this->assertDatabaseHas('webhooks', [
-            'name' => 'My first webhook',
+            'name'     => 'My first webhook',
             'endpoint' => 'https://example.com/webhook',
-            'active' => true,
+            'active'   => true,
         ]);
 
         /** @var Webhook $webhook */
         $webhook = Webhook::query()->where('name', '=', 'My first webhook')->first();
         $this->assertDatabaseHas('webhook_tracked_events', [
             'webhook_id' => $webhook->id,
-            'event' => 'all',
+            'event'      => 'all',
         ]);
     }
 
@@ -79,10 +78,10 @@ class WebhookManagementTest extends TestCase
         $webhook = $this->newWebhook();
 
         $resp = $this->asAdmin()->put('/settings/webhooks/' . $webhook->id, [
-            'name' => 'My updated webhook',
+            'name'     => 'My updated webhook',
             'endpoint' => 'https://example.com/updated-webhook',
-            'events' => [ActivityType::PAGE_CREATE, ActivityType::PAGE_UPDATE],
-            'active' => 'true'
+            'events'   => [ActivityType::PAGE_CREATE, ActivityType::PAGE_UPDATE],
+            'active'   => 'true',
         ]);
         $resp->assertRedirect('/settings/webhooks');
 
@@ -90,10 +89,10 @@ class WebhookManagementTest extends TestCase
         $resp->assertSee('Webhook successfully updated');
 
         $this->assertDatabaseHas('webhooks', [
-            'id' => $webhook->id,
-            'name' => 'My updated webhook',
+            'id'       => $webhook->id,
+            'name'     => 'My updated webhook',
             'endpoint' => 'https://example.com/updated-webhook',
-            'active' => true,
+            'active'   => true,
         ]);
 
         $trackedEvents = $webhook->trackedEvents()->get();
@@ -169,5 +168,4 @@ class WebhookManagementTest extends TestCase
 
         return $webhook;
     }
-
 }

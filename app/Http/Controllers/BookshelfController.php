@@ -2,7 +2,6 @@
 
 namespace BookStack\Http\Controllers;
 
-use Activity;
 use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Book;

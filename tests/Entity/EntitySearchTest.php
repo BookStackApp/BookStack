@@ -407,7 +407,7 @@ class EntitySearchTest extends TestCase
     {
         $this->newPage([
             'name' => 'Test Page',
-            'html' => '<p>На мен ми трябва нещо добро test</p>'
+            'html' => '<p>На мен ми трябва нещо добро test</p>',
         ]);
 
         $search = $this->asEditor()->get('/search?term=' . urlencode('На мен ми трябва нещо добро'));
