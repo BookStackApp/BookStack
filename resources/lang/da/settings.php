@@ -174,7 +174,7 @@ return [
     'users_role' => 'Brugerroller',
     'users_role_desc' => 'Vælg hvilke roller denne bruger skal tildeles. Hvis en bruger er tildelt flere roller, sammenføres tilladelserne fra disse roller, og de får alle evnerne fra de tildelte roller.',
     'users_password' => 'Brugeradgangskode',
-    'users_password_desc' => 'Sæt et kodeord, der bruges til at logge på applikationen. Dette skal være mindst 6 tegn langt.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Du kan vælge at sende denne bruger en invitation på E-Mail, som giver dem mulighed for at indstille deres egen adgangskode, ellers kan du indstille deres adgangskode selv.',
     'users_send_invite_option' => 'Send bruger en invitationsmail',
     'users_external_auth_id' => 'Ekstern godkendelses ID',
