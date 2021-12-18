@@ -71,6 +71,9 @@ return [
     'list_view' => 'Visualització en llista',
     'default' => 'Per defecte',
     'breadcrumb' => 'Ruta de navegació',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
 
     // Header
     'header_menu_expand' => 'Expand Header Menu',
