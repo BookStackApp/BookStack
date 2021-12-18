@@ -21,7 +21,7 @@ return [
     'email' => 'E-mail',
     'password' => 'Heslo',
     'password_confirm' => 'Potvrzení hesla',
-    'password_hint' => 'Musí mít víc než 7 znaků',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Zapomenuté heslo?',
     'remember_me' => 'Zapamatovat si mě',
     'ldap_email_hint' => 'Zadejte email, který chcete přiřadit k tomuto účtu.',
