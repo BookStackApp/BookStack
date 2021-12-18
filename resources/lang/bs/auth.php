@@ -21,7 +21,7 @@ return [
     'email' => 'E-mail',
     'password' => 'Lozinka',
     'password_confirm' => 'Potvrdi lozinku',
-    'password_hint' => 'Mora imati više od 7 karaktera',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Zaboravljena lozinka?',
     'remember_me' => 'Zapamti me',
     'ldap_email_hint' => 'Unesite e-mail koji će se koristiti za ovaj račun.',
