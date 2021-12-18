@@ -174,7 +174,7 @@ return [
     'users_role' => 'Lietotāju grupas',
     'users_role_desc' => 'Izvēlēties kurām grupām pievienot lietotāju. Ja lietotājs ir pievienots vairākām grupām, tad lietotājam būs pieejamas visu grupu atļaujas.',
     'users_password' => 'Lietotāja parole',
-    'users_password_desc' => 'Uzstādiet paroli, ar ko piekļūt aplikācijai. Tai jābūt vismaz 6 simbolus garai.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Jūs varat izvēlētes vai nosūtīt šim lietotājam uzaicinājuma epastu, kas ļauj tam uzstādīt savu paroli pašam, vai arī varat uzstādīt paroli tagad.',
     'users_send_invite_option' => 'Nosūtīt lietotāja uzaicinājuma epastu',
     'users_external_auth_id' => 'Ārējais autentifikācijas ID',
