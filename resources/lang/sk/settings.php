@@ -174,7 +174,7 @@ return [
     'users_role' => 'Používateľské roly',
     'users_role_desc' => 'Vyberte, ku ktorým rolám bude tento používateľ priradený. Ak je používateľ priradený k viacerým rolám, povolenia z týchto rolí sa nahromadia a získajú všetky schopnosti priradených rolí.',
     'users_password' => 'Heslo používateľa',
-    'users_password_desc' => 'Nastavte heslo používané na prihlásenie do aplikácie. Musí mať aspoň 6 znakov.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Môžete sa rozhodnúť poslať tomuto používateľovi e-mail s pozvánkou, ktorý mu umožní nastaviť si vlastné heslo, v opačnom prípade mu ho môžete nastaviť sami.',
     'users_send_invite_option' => 'Odoslať e-mail s pozvánkou pre používateľa',
     'users_external_auth_id' => 'Externé autentifikačné ID',
