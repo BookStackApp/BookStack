@@ -174,7 +174,7 @@ return [
     'users_role' => 'תפקידי משתמשים',
     'users_role_desc' => 'בחר אילו תפקידים ישויכו למשתמש זה. אם המשתמש משוייך למספר תפקידים, ההרשאות יהיו כלל ההרשאות של כל התפקידים',
     'users_password' => 'סיסמא',
-    'users_password_desc' => 'הגדר סיסמא עבור גישה למערכת. על הסיסמא להיות באורך של 5 תווים לפחות',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'תוכלו לבחור לשלוח למשתמש זה דוא"ל הזמנה, המאפשר להם להגדיר סיסמה משלהם. אחרת, תוכלו להגדיר את סיסמתם בעצמכם.',
     'users_send_invite_option' => 'שלח דוא"ל הזמנה למשתמש',
     'users_external_auth_id' => 'זיהוי חיצוני - ID',
