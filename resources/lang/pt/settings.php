@@ -174,7 +174,7 @@ return [
     'users_role' => 'Cargos do Utilizador',
     'users_role_desc' => 'Selecione os cargos aos quais este utilizador será vinculado. Se um utilizador for vinculado a múltiplos cargos, as suas permissões serão empilhadas e ele receberá todas as habilidades dos cargos atribuídos.',
     'users_password' => 'Palavra-passe do Utilizador',
-    'users_password_desc' => 'Defina uma palavra-passe utilizada para efetuar a autenticação na aplicação. Esta deve ter pelo menos 6 caracteres.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Pode escolher enviar a este utilizador um convite por e-mail que o possibilitará definir a sua própria palavra-passe, ou defina você mesmo uma.',
     'users_send_invite_option' => 'Enviar convite por e-mail',
     'users_external_auth_id' => 'ID de Autenticação Externa',
