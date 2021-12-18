@@ -180,8 +180,16 @@ class AuditLogTest extends TestCase
             'X-Forwarded-For' => '192.123.45.1',
         ])->assertRedirect($page->refresh()->getUrl());
 
+        $this->actingAs($editor)->put($page->getUrl(), [
+            'name' => 'Updated page',
+            'html' => '<p>Updated content</p>',
+        ], [
+            'X-Forwarded-For' => '192.122.45.1',
+        ])->assertRedirect($page->refresh()->getUrl());
+
         $resp = $this->asAdmin()->get('/settings/audit?&ip=192.123');
         $resp->assertSee('192.123.45.1');
+        $resp->assertDontSee('192.122.45.1');
     }
 
     public function test_ip_address_not_logged_in_demo_mode()
