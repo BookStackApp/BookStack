@@ -13,4 +13,7 @@
     @if(userCan('user-roles-manage'))
         <a href="{{ url('/settings/roles') }}" @if($selected == 'roles') class="active" @endif>@icon('lock-open'){{ trans('settings.roles') }}</a>
     @endif
+    @if(userCan('settings-manage'))
+        <a href="{{ url('/settings/webhooks') }}" @if($selected == 'webhooks') class="active" @endif>@icon('webhooks'){{ trans('settings.webhooks') }}</a>
+    @endif
 </nav>

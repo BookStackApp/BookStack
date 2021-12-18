@@ -14,6 +14,7 @@ use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Facades\Permissions;
 use BookStack\Interfaces\Deletable;
 use BookStack\Interfaces\Favouritable;
+use BookStack\Interfaces\Loggable;
 use BookStack\Interfaces\Sluggable;
 use BookStack\Interfaces\Viewable;
 use BookStack\Model;
@@ -45,7 +46,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
-abstract class Entity extends Model implements Sluggable, Favouritable, Viewable, Deletable
+abstract class Entity extends Model implements Sluggable, Favouritable, Viewable, Deletable, Loggable
 {
     use SoftDeletes;
     use HasCreatorAndUpdater;
@@ -320,5 +321,13 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
         return $this->favourites()
             ->where('user_id', '=', user()->id)
             ->exists();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function logDescriptor(): string
+    {
+        return "({$this->id}) {$this->name}";
     }
 }

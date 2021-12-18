@@ -2,7 +2,7 @@
 
 namespace BookStack\Providers;
 
-use BookStack\Actions\ActivityService;
+use BookStack\Actions\ActivityLogger;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Theming\ThemeService;
 use BookStack\Uploads\ImageService;
@@ -28,7 +28,7 @@ class CustomFacadeProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('activity', function () {
-            return $this->app->make(ActivityService::class);
+            return $this->app->make(ActivityLogger::class);
         });
 
         $this->app->singleton('images', function () {

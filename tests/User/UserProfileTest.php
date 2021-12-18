@@ -64,8 +64,8 @@ class UserProfileTest extends TestCase
         $newUser = User::factory()->create();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
-        Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
+        Activity::add(ActivityType::BOOK_UPDATE, $entities['book']);
+        Activity::add(ActivityType::PAGE_CREATE, $entities['page']);
 
         $this->asAdmin()->get('/user/' . $newUser->slug)
             ->assertElementContains('#recent-user-activity', 'updated book')
@@ -78,8 +78,8 @@ class UserProfileTest extends TestCase
         $newUser = User::factory()->create();
         $this->actingAs($newUser);
         $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
-        Activity::addForEntity($entities['book'], ActivityType::BOOK_UPDATE);
-        Activity::addForEntity($entities['page'], ActivityType::PAGE_CREATE);
+        Activity::add(ActivityType::BOOK_UPDATE, $entities['book']);
+        Activity::add(ActivityType::PAGE_CREATE, $entities['page']);
 
         $linkSelector = '#recent-activity a[href$="/user/' . $newUser->slug . '"]';
         $this->asAdmin()->get('/')
