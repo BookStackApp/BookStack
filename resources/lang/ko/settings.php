@@ -174,7 +174,7 @@ return [
     'users_role' => '사용자 권한',
     'users_role_desc' => '고른 권한 모두를 적용합니다.',
     'users_password' => '사용자 비밀번호',
-    'users_password_desc' => '여섯 글자를 넘어야 합니다.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => '비밀번호 설정을 권유하는 메일을 보내거나 내가 정할 수 있습니다.',
     'users_send_invite_option' => '메일 보내기',
     'users_external_auth_id' => 'LDAP 확인',
