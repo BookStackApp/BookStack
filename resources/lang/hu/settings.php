@@ -174,7 +174,7 @@ return [
     'users_role' => 'Felhasználói szerepkörök',
     'users_role_desc' => 'A felhasználó melyik szerepkörhöz lesz rendelve. Ha a felhasználó több szerepkörhöz van rendelve, akkor ezeknek a szerepköröknek a jogosultságai összeadódnak, és a a felhasználó a hozzárendelt szerepkörök minden képességét megkapja.',
     'users_password' => 'Felhasználó jelszava',
-    'users_password_desc' => 'Az alkalmazásba bejelentkezéshez használható jelszó beállítása. Legalább 5 karakter hosszúnak kell lennie.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Lehetséges egy meghívó emailt küldeni ennek a felhasználónak ami lehetővé teszi, hogy beállíthassa a saját jelszavát. Máskülönben a jelszót az erre jogosult felhasználónak kell beállítania.',
     'users_send_invite_option' => 'Felhasználó meghívó levél küldése',
     'users_external_auth_id' => 'Külső hitelesítés azonosítója',
