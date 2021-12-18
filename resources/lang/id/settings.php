@@ -174,7 +174,7 @@ return [
     'users_role' => 'Peran Pengguna',
     'users_role_desc' => 'Pilih peran mana yang akan ditetapkan untuk pengguna ini. Jika pengguna ditetapkan ke beberapa peran, izin dari peran tersebut akan bertumpuk dan mereka akan menerima semua kemampuan dari peran yang ditetapkan.',
     'users_password' => 'Kata Sandi Pengguna',
-    'users_password_desc' => 'Atur kata sandi yang digunakan untuk masuk ke aplikasi. Panjangnya minimal harus 6 karakter.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Anda dapat memilih untuk mengirimi pengguna ini email undangan yang memungkinkan mereka menyetel sandi mereka sendiri, atau Anda dapat menyetel sandi mereka sendiri.',
     'users_send_invite_option' => 'Kirim email undangan pengguna',
     'users_external_auth_id' => 'Otentikasi Eksternal ID',
