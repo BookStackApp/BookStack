@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Auth;
 
+use BookStack\Auth\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -12,7 +13,7 @@ class UserFactory extends Factory
      *
      * @var string
      */
-    protected $model = \BookStack\Auth\User::class;
+    protected $model = User::class;
 
     /**
      * Define the model's default state.
@@ -26,7 +27,7 @@ class UserFactory extends Factory
         return [
             'name'            => $name,
             'email'           => $this->faker->email,
-            'slug'            => \Illuminate\Support\Str::slug($name . '-' . \Illuminate\Support\Str::random(5)),
+            'slug'            => Str::slug($name . '-' . Str::random(5)),
             'password'        => Str::random(10),
             'remember_token'  => Str::random(10),
             'email_confirmed' => 1,

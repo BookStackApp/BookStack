@@ -48,7 +48,6 @@ class CreateAdmin extends Command
      */
     public function handle()
     {
-
         $details = $this->options();
 
         if (empty($details['email'])) {
@@ -62,8 +61,8 @@ class CreateAdmin extends Command
         }
 
         $validator = Validator::make($details, [
-            'email' => ['required', 'email', 'min:5', new Unique('users', 'email')],
-            'name' => ['required', 'min:2'],
+            'email'    => ['required', 'email', 'min:5', new Unique('users', 'email')],
+            'name'     => ['required', 'min:2'],
             'password' => ['required', Password::default()],
         ]);
 
@@ -71,6 +70,7 @@ class CreateAdmin extends Command
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
+
             return SymfonyCommand::FAILURE;
         }
 
