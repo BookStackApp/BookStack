@@ -80,7 +80,7 @@ class PageContent
      */
     protected function extractBase64ImagesFromHtml(string $htmlText): string
     {
-        if (empty($htmlText) || strpos($htmlText, 'data:image') === false) {
+        if (empty($htmlText) || mb_strpos($htmlText, 'data:image') === false) {
             return $htmlText;
         }
 
