@@ -7,41 +7,41 @@ return [
 
     // Pages
     'page_create'                 => 'създадена страница',
-    'page_create_notification'    => 'Страницата беше успешно създадена',
+    'page_create_notification'    => 'Page successfully created',
     'page_update'                 => 'обновена страница',
-    'page_update_notification'    => 'Страницата успешно обновена',
+    'page_update_notification'    => 'Page successfully updated',
     'page_delete'                 => 'изтрита страница',
-    'page_delete_notification'    => 'Страницата беше успешно изтрита',
+    'page_delete_notification'    => 'Page successfully deleted',
     'page_restore'                => 'възстановена страница',
-    'page_restore_notification'   => 'Страницата беше успешно възстановена',
+    'page_restore_notification'   => 'Page successfully restored',
     'page_move'                   => 'преместена страница',
 
     // Chapters
     'chapter_create'              => 'създадена страница',
-    'chapter_create_notification' => 'Главата беше успешно създадена',
+    'chapter_create_notification' => 'Chapter successfully created',
     'chapter_update'              => 'обновена глава',
-    'chapter_update_notification' => 'Главата беше успешно обновена',
+    'chapter_update_notification' => 'Chapter successfully updated',
     'chapter_delete'              => 'изтрита глава',
-    'chapter_delete_notification' => 'Главата беше успешно изтрита',
+    'chapter_delete_notification' => 'Chapter successfully deleted',
     'chapter_move'                => 'преместена глава',
 
     // Books
     'book_create'                 => 'създадена книга',
-    'book_create_notification'    => 'Книгата беше успешно създадена',
+    'book_create_notification'    => 'Book successfully created',
     'book_update'                 => 'обновена книга',
-    'book_update_notification'    => 'Книгата беше успешно обновена',
+    'book_update_notification'    => 'Book successfully updated',
     'book_delete'                 => 'изтрита книга',
-    'book_delete_notification'    => 'Книгата беше успешно изтрита',
+    'book_delete_notification'    => 'Book successfully deleted',
     'book_sort'                   => 'сортирана книга',
-    'book_sort_notification'      => 'Книгата беше успешно преподредена',
+    'book_sort_notification'      => 'Book successfully re-sorted',
 
     // Bookshelves
-    'bookshelf_create'            => 'създаден рафт',
-    'bookshelf_create_notification'    => 'Рафтът беше успешно създаден',
+    'bookshelf_create'            => 'created bookshelf',
+    'bookshelf_create_notification'    => 'Bookshelf successfully created',
     'bookshelf_update'                 => 'обновен рафт',
-    'bookshelf_update_notification'    => 'Рафтът беше успешно обновен',
+    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
     'bookshelf_delete'                 => 'изтрит рафт',
-    'bookshelf_delete_notification'    => 'Рафтът беше успешно изтрит',
+    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',
@@ -50,6 +50,14 @@ return [
     // MFA
     'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
     'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+
+    // Webhooks
+    'webhook_create' => 'created webhook',
+    'webhook_create_notification' => 'Webhook successfully created',
+    'webhook_update' => 'updated webhook',
+    'webhook_update_notification' => 'Webhook successfully updated',
+    'webhook_delete' => 'deleted webhook',
+    'webhook_delete_notification' => 'Webhook successfully deleted',
 
     // Other
     'commented_on'                => 'коментирано на',
