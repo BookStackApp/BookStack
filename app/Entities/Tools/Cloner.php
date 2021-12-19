@@ -2,8 +2,12 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\Actions\Tag;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
 
 class Cloner
@@ -14,9 +18,15 @@ class Cloner
      */
     protected $pageRepo;
 
-    public function __construct(PageRepo $pageRepo)
+    /**
+     * @var ChapterRepo
+     */
+    protected $chapterRepo;
+
+    public function __construct(PageRepo $pageRepo, ChapterRepo $chapterRepo)
     {
         $this->pageRepo = $pageRepo;
+        $this->chapterRepo = $chapterRepo;
     }
 
     /**
@@ -27,18 +37,49 @@ class Cloner
         $copyPage = $this->pageRepo->getNewDraftPage($parent);
         $pageData = $original->getAttributes();
 
-        // Update name
+        // Update name & tags
         $pageData['name'] = $newName;
+        $pageData['tags'] = $this->entityTagsToInputArray($original);
 
-        // Copy tags from previous page if set
-        if ($original->tags) {
-            $pageData['tags'] = [];
-            foreach ($original->tags as $tag) {
-                $pageData['tags'][] = ['name' => $tag->name, 'value' => $tag->value];
+        return $this->pageRepo->publishDraft($copyPage, $pageData);
+    }
+
+    /**
+     * Clone the given page into the given parent using the provided name.
+     * Clones all child pages.
+     */
+    public function cloneChapter(Chapter $original, Book $parent, string $newName): Chapter
+    {
+        $chapterDetails = $original->getAttributes();
+        $chapterDetails['name'] = $newName;
+        $chapterDetails['tags'] = $this->entityTagsToInputArray($original);
+
+        $copyChapter = $this->chapterRepo->create($chapterDetails, $parent);
+
+        if (userCan('page-create', $copyChapter)) {
+            /** @var Page $page */
+            foreach ($original->getVisiblePages() as $page) {
+                $this->clonePage($page, $copyChapter, $page->name);
             }
         }
 
-        return $this->pageRepo->publishDraft($copyPage, $pageData);
+        return $copyChapter;
+    }
+
+    /**
+     * Convert the tags on the given entity to the raw format
+     * that's used for incoming request data.
+     */
+    protected function entityTagsToInputArray(Entity $entity): array
+    {
+        $tags = [];
+
+        /** @var Tag $tag */
+        foreach ($entity->tags as $tag) {
+            $tags[] = ['name' => $tag->name, 'value' => $tag->value];
+        }
+
+        return $tags;
     }
 
 }

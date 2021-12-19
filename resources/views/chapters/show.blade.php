@@ -108,6 +108,12 @@
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
+            @if(userCanOnAny('chapter-create'))
+                <a href="{{ $chapter->getUrl('/copy') }}" class="icon-list-item">
+                    <span>@icon('copy')</span>
+                    <span>{{ trans('common.copy') }}</span>
+                </a>
+            @endif
             @if(userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter))
                 <a href="{{ $chapter->getUrl('/move') }}" class="icon-list-item">
                     <span>@icon('folder')</span>

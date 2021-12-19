@@ -161,6 +161,8 @@ return [
     'chapters_move' => 'Move Chapter',
     'chapters_move_named' => 'Move Chapter :chapterName',
     'chapter_move_success' => 'Chapter moved to :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Chapter Permissions',
     'chapters_empty' => 'No pages are currently in this chapter.',
     'chapters_permissions_active' => 'Chapter Permissions Active',
