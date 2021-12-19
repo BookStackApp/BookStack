@@ -247,13 +247,13 @@ return [
     'webhooks_events_all' => 'Todos los eventos del sistema',
     'webhooks_name' => 'Nombre del Webhook',
     'webhooks_endpoint' => 'Punto final del Webhook',
-    'webhooks_active' => 'Webhook Active',
-    'webhook_events_table_header' => 'Events',
-    'webhooks_delete' => 'Delete Webhook',
-    'webhooks_delete_warning' => 'This will fully delete this webhook, with the name \':webhookName\', from the system.',
-    'webhooks_delete_confirm' => 'Are you sure you want to delete this webhook?',
-    'webhooks_format_example' => 'Webhook Format Example',
-    'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
+    'webhooks_active' => 'Webhook Activo',
+    'webhook_events_table_header' => 'Eventos',
+    'webhooks_delete' => 'Eliminar Webhook',
+    'webhooks_delete_warning' => 'Esto eliminará completamente este webhook, con el nombre \':webhookName\', del sistema.',
+    'webhooks_delete_confirm' => '¿Seguro que quieres eliminar este webhook?',
+    'webhooks_format_example' => 'Ejemplo de Formato de Webhook',
+    'webhooks_format_example_desc' => 'Los datos del Webhook se envían como una solicitud POST al punto final configurado como JSON siguiendo el formato mostrado a continuación. Las propiedades "related_item" y "url" son opcionales y dependerán del tipo de evento activado.',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
