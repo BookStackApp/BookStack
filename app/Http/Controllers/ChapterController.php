@@ -6,6 +6,7 @@ use BookStack\Actions\View;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\Cloner;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\MoveOperationException;
@@ -188,6 +189,52 @@ class ChapterController extends Controller
         $this->showSuccessNotification(trans('entities.chapter_move_success', ['bookName' => $newBook->name]));
 
         return redirect($chapter->getUrl());
+    }
+
+    /**
+     * Show the view to copy a chapter.
+     *
+     * @throws NotFoundException
+     */
+    public function showCopy(string $bookSlug, string $chapterSlug)
+    {
+        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
+        $this->checkOwnablePermission('chapter-view', $chapter);
+
+        session()->flashInput(['name' => $chapter->name]);
+
+        return view('chapters.copy', [
+            'book' => $chapter->book,
+            'chapter' => $chapter,
+        ]);
+    }
+
+    /**
+     * Create a copy of a page within the requested target destination.
+     *
+     * @throws NotFoundException
+     * @throws Throwable
+     */
+    public function copy(Request $request, Cloner $cloner, string $bookSlug, string $chapterSlug)
+    {
+        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
+        $this->checkOwnablePermission('chapter-view', $chapter);
+
+        $entitySelection = $request->get('entity_selection') ?: null;
+        $newParentBook = $entitySelection ? $this->chapterRepo->findParentByIdentifier($entitySelection) : $chapter->getParent();
+
+        if (is_null($newParentBook)) {
+            $this->showErrorNotification(trans('errors.selected_book_not_found'));
+            return redirect()->back();
+        }
+
+        $this->checkOwnablePermission('chapter-create', $newParentBook);
+
+        $newName = $request->get('name') ?: $chapter->name;
+        $chapterCopy = $cloner->cloneChapter($chapter, $newParentBook, $newName);
+        $this->showSuccessNotification(trans('entities.chapters_copy_success'));
+
+        return redirect($chapterCopy->getUrl());
     }
 
     /**

@@ -347,7 +347,7 @@ class PageRepo
     }
 
     /**
-     * Find a page parent entity via a identifier string in the format:
+     * Find a page parent entity via an identifier string in the format:
      * {type}:{id}
      * Example: (book:5).
      *
