@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\Permissions\PermissionsRepo;
+use BookStack\Auth\Role;
 use BookStack\Exceptions\PermissionsException;
 use Exception;
 use Illuminate\Http\Request;
@@ -34,11 +35,21 @@ class RoleController extends Controller
     /**
      * Show the form to create a new role.
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->checkPermission('user-roles-manage');
 
-        return view('settings.roles.create');
+        /** @var ?Role $role */
+        $role = null;
+        if ($request->has('copy_from')) {
+            $role = Role::query()->find($request->get('copy_from'));
+        }
+
+        if ($role) {
+            $role->display_name .= ' (' . trans('common.copy') . ')';
+        }
+
+        return view('settings.roles.create', ['role' => $role]);
     }
 
     /**
@@ -49,7 +60,7 @@ class RoleController extends Controller
         $this->checkPermission('user-roles-manage');
         $this->validate($request, [
             'display_name' => ['required', 'min:3', 'max:180'],
-            'description'  => 'max:180',
+            'description'  => ['max:180'],
         ]);
 
         $this->permissionsRepo->saveNewRole($request->all());
@@ -84,7 +95,7 @@ class RoleController extends Controller
         $this->checkPermission('user-roles-manage');
         $this->validate($request, [
             'display_name' => ['required', 'min:3', 'max:180'],
-            'description'  => 'max:180',
+            'description'  => ['max:180'],
         ]);
 
         $this->permissionsRepo->updateRole($id, $request->all());
