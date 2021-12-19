@@ -71,8 +71,8 @@ return [
     'list_view' => 'Vista en Lista',
     'default' => 'Predeterminada',
     'breadcrumb' => 'Rastro de migas de pan',
-    'status' => 'Status',
-    'status_active' => 'Active',
+    'status' => 'Estado',
+    'status_active' => 'Activo',
     'status_inactive' => 'Inactive',
 
     // Header
