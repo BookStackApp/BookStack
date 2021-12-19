@@ -163,6 +163,23 @@ class RolesTest extends TestCase
         $this->assertEquals($this->user->id, $roleA->users()->first()->id);
     }
 
+    public function test_copy_role_button_shown()
+    {
+        /** @var Role $role */
+        $role = Role::query()->first();
+        $resp = $this->asAdmin()->get("/settings/roles/{$role->id}");
+        $resp->assertElementContains('a[href$="/roles/new?copy_from=' . $role->id . '"]', 'Copy');
+    }
+
+    public function test_copy_from_param_on_create_prefills_with_other_role_data()
+    {
+        /** @var Role $role */
+        $role = Role::query()->first();
+        $resp = $this->asAdmin()->get("/settings/roles/new?copy_from={$role->id}");
+        $resp->assertOk();
+        $resp->assertElementExists('input[name="display_name"][value="' . ($role->display_name . ' (Copy)')  . '"]');
+    }
+
     public function test_manage_user_permission()
     {
         $this->actingAs($this->user)->get('/settings/users')->assertRedirect('/');
