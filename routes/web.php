@@ -80,6 +80,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/permissions', [BookController::class, 'showPermissions']);
     Route::put('/books/{bookSlug}/permissions', [BookController::class, 'permissions']);
     Route::get('/books/{slug}/delete', [BookController::class, 'showDelete']);
+    Route::get('/books/{bookSlug}/copy', [BookController::class, 'showCopy']);
+    Route::post('/books/{bookSlug}/copy', [BookController::class, 'copy']);
     Route::get('/books/{bookSlug}/sort', [BookSortController::class, 'show']);
     Route::put('/books/{bookSlug}/sort', [BookSortController::class, 'update']);
     Route::get('/books/{bookSlug}/export/html', [BookExportController::class, 'html']);

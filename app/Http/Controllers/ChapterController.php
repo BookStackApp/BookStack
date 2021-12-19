@@ -210,7 +210,7 @@ class ChapterController extends Controller
     }
 
     /**
-     * Create a copy of a page within the requested target destination.
+     * Create a copy of a chapter within the requested target destination.
      *
      * @throws NotFoundException
      * @throws Throwable

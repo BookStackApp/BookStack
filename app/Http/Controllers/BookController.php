@@ -2,16 +2,18 @@
 
 namespace BookStack\Http\Controllers;
 
-use Activity;
 use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\Cloner;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Exceptions\NotFoundException;
+use BookStack\Facades\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -224,5 +226,40 @@ class BookController extends Controller
         $this->showSuccessNotification(trans('entities.books_permissions_updated'));
 
         return redirect($book->getUrl());
+    }
+
+    /**
+     * Show the view to copy a book.
+     *
+     * @throws NotFoundException
+     */
+    public function showCopy(string $bookSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-view', $book);
+
+        session()->flashInput(['name' => $book->name]);
+
+        return view('books.copy', [
+            'book' => $book,
+        ]);
+    }
+
+    /**
+     * Create a copy of a book within the requested target destination.
+     *
+     * @throws NotFoundException
+     */
+    public function copy(Request $request, Cloner $cloner, string $bookSlug)
+    {
+        $book = $this->bookRepo->getBySlug($bookSlug);
+        $this->checkOwnablePermission('book-view', $book);
+        $this->checkPermission('book-create-all');
+
+        $newName = $request->get('name') ?: $book->name;
+        $bookCopy = $cloner->cloneBook($book, $newName);
+        $this->showSuccessNotification(trans('entities.books_copy_success'));
+
+        return redirect($bookCopy->getUrl());
     }
 }

@@ -7,8 +7,12 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Uploads\Image;
+use BookStack\Uploads\ImageService;
+use Illuminate\Http\UploadedFile;
 
 class Cloner
 {
@@ -23,10 +27,22 @@ class Cloner
      */
     protected $chapterRepo;
 
-    public function __construct(PageRepo $pageRepo, ChapterRepo $chapterRepo)
+    /**
+     * @var BookRepo
+     */
+    protected $bookRepo;
+
+    /**
+     * @var ImageService
+     */
+    protected $imageService;
+
+    public function __construct(PageRepo $pageRepo, ChapterRepo $chapterRepo, BookRepo $bookRepo, ImageService $imageService)
     {
         $this->pageRepo = $pageRepo;
         $this->chapterRepo = $chapterRepo;
+        $this->bookRepo = $bookRepo;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -64,6 +80,55 @@ class Cloner
         }
 
         return $copyChapter;
+    }
+
+    /**
+     * Clone the given book.
+     * Clones all child chapters & pages.
+     */
+    public function cloneBook(Book $original, string $newName): Book
+    {
+        $bookDetails = $original->getAttributes();
+        $bookDetails['name'] = $newName;
+        $bookDetails['tags'] = $this->entityTagsToInputArray($original);
+
+        $copyBook = $this->bookRepo->create($bookDetails);
+
+        $directChildren = $original->getDirectChildren();
+        foreach ($directChildren as $child) {
+
+            if ($child instanceof Chapter && userCan('chapter-create', $copyBook)) {
+                $this->cloneChapter($child, $copyBook, $child->name);
+            }
+
+            if ($child instanceof Page && !$child->draft && userCan('page-create', $copyBook)) {
+                $this->clonePage($child, $copyBook, $child->name);
+            }
+        }
+
+        if ($original->cover) {
+            try {
+                $tmpImgFile = tmpfile();
+                $uploadedFile = $this->imageToUploadedFile($original->cover, $tmpImgFile);
+                $this->bookRepo->updateCoverImage($copyBook, $uploadedFile, false);
+            } catch (\Exception $exception) {
+            }
+        }
+
+        return $copyBook;
+    }
+
+    /**
+     * Convert an image instance to an UploadedFile instance to mimic
+     * a file being uploaded.
+     */
+    protected function imageToUploadedFile(Image $image, &$tmpFile): ?UploadedFile
+    {
+        $imgData = $this->imageService->getImageData($image);
+        $tmpImgFilePath = stream_get_meta_data($tmpFile)['uri'];
+        file_put_contents($tmpImgFilePath, $imgData);
+
+        return new UploadedFile($tmpImgFilePath, basename($image->path));
     }
 
     /**
