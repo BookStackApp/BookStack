@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => '문서 우선',
     'books_sort_show_other' => '다른 책자들',
     'books_sort_save' => '적용',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => '챕터',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => '챕터 이동하기',
     'chapters_move_named' => ':chapterName 이동하기',
     'chapter_move_success' => ':bookName(으)로 옮김',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => '챕터 권한',
     'chapters_empty' => '이 챕터에 문서가 없습니다.',
     'chapters_permissions_active' => '문서 권한 허용함',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => '이 수정본을 되돌릴 건가요? 현재 판본을 바꿉니다.',
     'revision_delete_success' => '수정본 지움',
     'revision_cannot_delete_latest' => '현재 판본은 지울 수 없습니다.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];
