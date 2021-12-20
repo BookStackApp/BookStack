@@ -5,6 +5,7 @@ namespace BookStack\Entities\Repos;
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
@@ -87,17 +88,9 @@ class ChapterRepo
      */
     public function move(Chapter $chapter, string $parentIdentifier): Book
     {
-        $stringExploded = explode(':', $parentIdentifier);
-        $entityType = $stringExploded[0];
-        $entityId = intval($stringExploded[1]);
-
-        if ($entityType !== 'book') {
-            throw new MoveOperationException('Chapters can only be moved into books');
-        }
-
         /** @var Book $parent */
-        $parent = Book::visible()->where('id', '=', $entityId)->first();
-        if ($parent === null) {
+        $parent = $this->findParentByIdentifier($parentIdentifier);
+        if (is_null($parent)) {
             throw new MoveOperationException('Book to move chapter into not found');
         }
 
@@ -106,5 +99,25 @@ class ChapterRepo
         Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
 
         return $parent;
+    }
+
+    /**
+     * Find a page parent entity via an identifier string in the format:
+     * {type}:{id}
+     * Example: (book:5).
+     *
+     * @throws MoveOperationException
+     */
+    public function findParentByIdentifier(string $identifier): ?Book
+    {
+        $stringExploded = explode(':', $identifier);
+        $entityType = $stringExploded[0];
+        $entityId = intval($stringExploded[1]);
+
+        if ($entityType !== 'book') {
+            throw new MoveOperationException('Chapters can only be in books');
+        }
+
+        return Book::visible()->where('id', '=', $entityId)->first();
     }
 }
