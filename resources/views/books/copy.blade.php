@@ -26,6 +26,8 @@
                     @include('form.text', ['name' => 'name'])
                 </div>
 
+                @include('entities.copy-considerations')
+
                 <div class="form-group text-right">
                     <a href="{{ $book->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
                     <button type="submit" class="button">{{ trans('entities.books_copy') }}</button>
