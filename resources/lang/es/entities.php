@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => 'Capítulos al final ',
     'books_sort_show_other' => 'Mostrar otros libros',
     'books_sort_save' => 'Guardar nuevo orden',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => 'Copiar Libro',
+    'books_copy_success' => 'Libro copiado correctamente',
 
     // Chapters
     'chapter' => 'Capítulo',
@@ -163,8 +163,8 @@ return [
     'chapters_move' => 'Mover capítulo',
     'chapters_move_named' => 'Mover Capítulo :chapterName',
     'chapter_move_success' => 'Capítulo movido a :bookName',
-    'chapters_copy' => 'Copy Chapter',
-    'chapters_copy_success' => 'Chapter successfully copied',
+    'chapters_copy' => 'Copiar Capítulo',
+    'chapters_copy_success' => 'Capítulo copiado correctamente',
     'chapters_permissions' => 'Permisos de capítulo',
     'chapters_empty' => 'No existen páginas en este capítulo.',
     'chapters_permissions_active' => 'Permisos de capítulo activos',
@@ -338,10 +338,10 @@ return [
     'revision_cannot_delete_latest' => 'No se puede eliminar la última revisión.',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider' => 'Por favor, tenga en cuenta lo siguiente al copiar el contenido.',
+    'copy_consider_permissions' => 'Los ajustes de permisos personalizados no serán copiados.',
+    'copy_consider_owner' => 'Usted se convertirá en el dueño de todo el contenido copiado.',
+    'copy_consider_images' => 'Los archivos de imagen de de las páginas no serán duplicados y las imágenes originales conservarán su relación con la página a la que fueron subidos originalmente.',
+    'copy_consider_attachments' => 'Los archivos adjuntos de la página no serán copiados.',
+    'copy_consider_access' => 'Un cambio de ubicación, propietario o permisos puede resultar en que este contenido sea accesible para aquellos que anteriormente no tuvieran acceso.',
 ];
