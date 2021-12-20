@@ -21,7 +21,7 @@ return [
     'email' => 'E-Mail',
     'password' => 'Passwort',
     'password_confirm' => 'Passwort bestätigen',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'Muss mindestens 8 Zeichen lang sein',
     'forgot_password' => 'Passwort vergessen?',
     'remember_me' => 'Angemeldet bleiben',
     'ldap_email_hint' => 'Bitte geben Sie eine E-Mail-Adresse ein, um diese mit dem Account zu nutzen.',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Willkommen bei :appName!',
     'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft zum Einloggen benötigt.',
     'user_invite_page_confirm_button' => 'Passwort wiederholen',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Passwort gesetzt, Sie sollten nun in der Lage sein, sich mit Ihrem Passwort an :appName anzumelden!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Multi-Faktor-Authentifizierung einrichten',
