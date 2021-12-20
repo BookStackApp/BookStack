@@ -74,7 +74,7 @@ class ChapterTest extends TestCase
         $resp->assertOk();
         $resp->assertSee('Copy Chapter');
         $resp->assertElementExists("input[name=\"name\"][value=\"{$chapter->name}\"]");
-        $resp->assertElementExists("input[name=\"entity_selection\"]");
+        $resp->assertElementExists('input[name="entity_selection"]');
     }
 
     public function test_copy()
@@ -85,7 +85,7 @@ class ChapterTest extends TestCase
         $otherBook = Book::query()->where('id', '!=', $chapter->book_id)->first();
 
         $resp = $this->asEditor()->post($chapter->getUrl('/copy'), [
-            'name' => 'My copied chapter',
+            'name'             => 'My copied chapter',
             'entity_selection' => 'book:' . $otherBook->id,
         ]);
 

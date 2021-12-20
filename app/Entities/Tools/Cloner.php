@@ -16,7 +16,6 @@ use Illuminate\Http\UploadedFile;
 
 class Cloner
 {
-
     /**
      * @var PageRepo
      */
@@ -96,7 +95,6 @@ class Cloner
 
         $directChildren = $original->getDirectChildren();
         foreach ($directChildren as $child) {
-
             if ($child instanceof Chapter && userCan('chapter-create', $copyBook)) {
                 $this->cloneChapter($child, $copyBook, $child->name);
             }
@@ -146,5 +144,4 @@ class Cloner
 
         return $tags;
     }
-
 }

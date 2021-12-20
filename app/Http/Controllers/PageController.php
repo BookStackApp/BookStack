@@ -458,6 +458,7 @@ class PageController extends Controller
 
         if (is_null($newParent)) {
             $this->showErrorNotification(trans('errors.selected_book_chapter_not_found'));
+
             return redirect()->back();
         }
 

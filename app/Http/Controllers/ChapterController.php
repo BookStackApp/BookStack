@@ -204,7 +204,7 @@ class ChapterController extends Controller
         session()->flashInput(['name' => $chapter->name]);
 
         return view('chapters.copy', [
-            'book' => $chapter->book,
+            'book'    => $chapter->book,
             'chapter' => $chapter,
         ]);
     }
@@ -225,6 +225,7 @@ class ChapterController extends Controller
 
         if (is_null($newParentBook)) {
             $this->showErrorNotification(trans('errors.selected_book_not_found'));
+
             return redirect()->back();
         }
 

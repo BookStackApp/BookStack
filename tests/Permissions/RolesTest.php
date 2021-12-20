@@ -177,7 +177,7 @@ class RolesTest extends TestCase
         $role = Role::query()->first();
         $resp = $this->asAdmin()->get("/settings/roles/new?copy_from={$role->id}");
         $resp->assertOk();
-        $resp->assertElementExists('input[name="display_name"][value="' . ($role->display_name . ' (Copy)')  . '"]');
+        $resp->assertElementExists('input[name="display_name"][value="' . ($role->display_name . ' (Copy)') . '"]');
     }
 
     public function test_manage_user_permission()
