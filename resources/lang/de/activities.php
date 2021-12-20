@@ -7,41 +7,41 @@ return [
 
     // Pages
     'page_create'                 => 'hat die Seite erstellt',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Die Seite wurde erfolgreich erstellt',
     'page_update'                 => 'hat die Seite aktualisiert',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Die Seite wurde erfolgreich aktualisiert',
     'page_delete'                 => 'hat die Seite gelöscht',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Die Seite wurde erfolgreich gelöscht',
     'page_restore'                => 'hat die Seite wiederhergestellt',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Die Seite wurde erfolgreich wiederhergestellt',
     'page_move'                   => 'hat die Seite verschoben',
 
     // Chapters
     'chapter_create'              => 'hat das Kapitel erstellt',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Das Kapitel wurde erfolgreich erstellt',
     'chapter_update'              => 'hat das Kapitel geändert',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Das Kapitel wurde erfolgreich aktualisiert',
     'chapter_delete'              => 'hat das Kapitel gelöscht',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Das Kapitel wurde erfolgreich gelöscht',
     'chapter_move'                => 'hat das Kapitel verschoben',
 
     // Books
     'book_create'                 => 'hat das Buch erstellt',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Das Buch wurde erfolgreich erstellt',
     'book_update'                 => 'hat das Buch aktualisiert',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Das Buch wurde erfolgreich aktualisiert',
     'book_delete'                 => 'hat das Buch gelöscht',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'Das Buch wurde erfolgreich gelöscht',
     'book_sort'                   => 'hat die Buch-Sortierung geändert',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'Das Buch wurde erfolgreich umsortiert',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create'            => 'erstelltes Bücherregal',
+    'bookshelf_create_notification'    => 'Das Bücherregal wurde erfolgreich erstellt',
     'bookshelf_update'                 => 'hat das Bücherregal geändert',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'Das Bücherregal wurde erfolgreich geändert',
     'bookshelf_delete'                 => 'hat das Bücherregal gelöscht',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Das Bücherregal wurde erfolgreich gelöscht',
 
     // Favourites
     'favourite_add_notification' => '":name" wurde zu deinen Favoriten hinzugefügt',
@@ -52,12 +52,12 @@ return [
     'mfa_remove_method_notification' => 'Multi-Faktor-Methode erfolgreich entfernt',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'erstellter Webhook',
+    'webhook_create_notification' => 'Webhook wurde erfolgreich eingerichtet',
+    'webhook_update' => 'aktualisierter Webhook',
+    'webhook_update_notification' => 'Webhook wurde erfolgreich aktualisiert',
+    'webhook_delete' => 'gelöschter Webhook',
+    'webhook_delete_notification' => 'Webhook wurde erfolgreich gelöscht',
 
     // Other
     'commented_on'                => 'hat einen Kommentar hinzugefügt',
