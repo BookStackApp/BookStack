@@ -336,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => 'Revision deleted',
     'revision_cannot_delete_latest' => 'Cannot delete the latest revision.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];
