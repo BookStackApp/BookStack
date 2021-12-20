@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => '章节倒序',
     'books_sort_show_other' => '显示其他图书',
     'books_sort_save' => '保存新顺序',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => '章节',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => '移动章节',
     'chapters_move_named' => '移动章节「:chapterName」',
     'chapter_move_success' => '章节移动到「:bookName」',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => '章节权限',
     'chapters_empty' => '本章目前没有页面。',
     'chapters_permissions_active' => '有效的章节权限',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => '您确定要恢复到此修订版吗？恢复后原有内容将会被替换。',
     'revision_delete_success' => '修订删除',
     'revision_cannot_delete_latest' => '无法删除最新版本。',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];
