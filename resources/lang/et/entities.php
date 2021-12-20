@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Peatükid tagapool',
     'books_sort_show_other' => 'Näita teisi raamatuid',
     'books_sort_save' => 'Salvesta uus järjekord',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Peatükk',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Liiguta peatükk',
     'chapters_move_named' => 'Liiguta peatükk :chapterName',
     'chapter_move_success' => 'Peatükk liigutatud raamatusse :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Peatüki õigused',
     'chapters_empty' => 'Selles peatükis ei ole lehti.',
     'chapters_permissions_active' => 'Peatüki õigused on aktiivsed',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Kas oled kindel, et soovid selle redaktsiooni taastada? Lehe praegune sisu asendatakse.',
     'revision_delete_success' => 'Redaktsioon kustutatud',
     'revision_cannot_delete_latest' => 'Kõige viimast redaktsiooni ei saa kustutada.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];
