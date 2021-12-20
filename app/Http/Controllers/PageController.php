@@ -6,6 +6,7 @@ use BookStack\Actions\View;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\Cloner;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditActivity;
@@ -447,26 +448,23 @@ class PageController extends Controller
      * @throws NotFoundException
      * @throws Throwable
      */
-    public function copy(Request $request, string $bookSlug, string $pageSlug)
+    public function copy(Request $request, Cloner $cloner, string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-view', $page);
 
-        $entitySelection = $request->get('entity_selection', null) ?? null;
-        $newName = $request->get('name', null);
+        $entitySelection = $request->get('entity_selection') ?: null;
+        $newParent = $entitySelection ? $this->pageRepo->findParentByIdentifier($entitySelection) : $page->getParent();
 
-        try {
-            $pageCopy = $this->pageRepo->copy($page, $entitySelection, $newName);
-        } catch (Exception $exception) {
-            if ($exception instanceof PermissionsException) {
-                $this->showPermissionError();
-            }
-
+        if (is_null($newParent)) {
             $this->showErrorNotification(trans('errors.selected_book_chapter_not_found'));
-
             return redirect()->back();
         }
 
+        $this->checkOwnablePermission('page-create', $newParent);
+
+        $newName = $request->get('name') ?: $page->name;
+        $pageCopy = $cloner->clonePage($page, $newParent, $newName);
         $this->showSuccessNotification(trans('entities.pages_copy_success'));
 
         return redirect($pageCopy->getUrl());

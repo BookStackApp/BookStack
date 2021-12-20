@@ -110,6 +110,12 @@
                     <span>{{ trans('common.sort') }}</span>
                 </a>
             @endif
+            @if(userCan('book-create-all'))
+                <a href="{{ $book->getUrl('/copy') }}" class="icon-list-item">
+                    <span>@icon('copy')</span>
+                    <span>{{ trans('common.copy') }}</span>
+                </a>
+            @endif
             @if(userCan('restrictions-manage', $book))
                 <a href="{{ $book->getUrl('/permissions') }}" class="icon-list-item">
                     <span>@icon('lock')</span>

@@ -6,11 +6,10 @@
 
         <div class="my-s">
             @include('entities.breadcrumbs', ['crumbs' => [
-                $page->book,
-                $page->chapter,
-                $page,
-                $page->getUrl('/copy') => [
-                    'text' => trans('entities.pages_copy'),
+                $chapter->book,
+                $chapter,
+                $chapter->getUrl('/copy') => [
+                    'text' => trans('entities.chapters_copy'),
                     'icon' => 'copy',
                 ]
             ]])
@@ -18,9 +17,9 @@
 
         <div class="card content-wrap auto-height">
 
-            <h1 class="list-heading">{{ trans('entities.pages_copy') }}</h1>
+            <h1 class="list-heading">{{ trans('entities.chapters_copy') }}</h1>
 
-            <form action="{{ $page->getUrl('/copy') }}" method="POST">
+            <form action="{{ $chapter->getUrl('/copy') }}" method="POST">
                 {!! csrf_field() !!}
 
                 <div class="form-group title-input">
@@ -33,15 +32,15 @@
                         <label for="entity_selection">{{ trans('entities.pages_copy_desination') }}</label>
                     </button>
                     <div class="collapse-content" collapsible-content>
-                        @include('entities.selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book,chapter', 'entityPermission' => 'page-create'])
+                        @include('entities.selector', ['name' => 'entity_selection', 'selectorSize' => 'large', 'entityTypes' => 'book', 'entityPermission' => 'chapter-create'])
                     </div>
                 </div>
 
                 @include('entities.copy-considerations')
 
                 <div class="form-group text-right">
-                    <a href="{{ $page->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-                    <button type="submit" class="button">{{ trans('entities.pages_copy') }}</button>
+                    <a href="{{ $chapter->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+                    <button type="submit" class="button">{{ trans('entities.chapters_copy') }}</button>
                 </div>
             </form>
 

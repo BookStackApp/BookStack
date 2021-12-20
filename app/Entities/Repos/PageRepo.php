@@ -347,50 +347,13 @@ class PageRepo
     }
 
     /**
-     * Copy an existing page in the system.
-     * Optionally providing a new parent via string identifier and a new name.
-     *
-     * @throws MoveOperationException
-     * @throws PermissionsException
-     */
-    public function copy(Page $page, string $parentIdentifier = null, string $newName = null): Page
-    {
-        $parent = $parentIdentifier ? $this->findParentByIdentifier($parentIdentifier) : $page->getParent();
-        if ($parent === null) {
-            throw new MoveOperationException('Book or chapter to move page into not found');
-        }
-
-        if (!userCan('page-create', $parent)) {
-            throw new PermissionsException('User does not have permission to create a page within the new parent');
-        }
-
-        $copyPage = $this->getNewDraftPage($parent);
-        $pageData = $page->getAttributes();
-
-        // Update name
-        if (!empty($newName)) {
-            $pageData['name'] = $newName;
-        }
-
-        // Copy tags from previous page if set
-        if ($page->tags) {
-            $pageData['tags'] = [];
-            foreach ($page->tags as $tag) {
-                $pageData['tags'][] = ['name' => $tag->name, 'value' => $tag->value];
-            }
-        }
-
-        return $this->publishDraft($copyPage, $pageData);
-    }
-
-    /**
-     * Find a page parent entity via a identifier string in the format:
+     * Find a page parent entity via an identifier string in the format:
      * {type}:{id}
      * Example: (book:5).
      *
      * @throws MoveOperationException
      */
-    protected function findParentByIdentifier(string $identifier): ?Entity
+    public function findParentByIdentifier(string $identifier): ?Entity
     {
         $stringExploded = explode(':', $identifier);
         $entityType = $stringExploded[0];

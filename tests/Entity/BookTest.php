@@ -3,10 +3,15 @@
 namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Repos\BookRepo;
 use Tests\TestCase;
+use Tests\Uploads\UsesImages;
 
 class BookTest extends TestCase
 {
+    use UsesImages;
+
     public function test_create()
     {
         $book = Book::factory()->make([
@@ -203,5 +208,89 @@ class BookTest extends TestCase
         ]);
 
         $this->assertEquals('parta-partb-partc', $book->slug);
+    }
+
+    public function test_show_view_has_copy_button()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $resp = $this->asEditor()->get($book->getUrl());
+
+        $resp->assertElementContains("a[href=\"{$book->getUrl('/copy')}\"]", 'Copy');
+    }
+
+    public function test_copy_view()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $resp = $this->asEditor()->get($book->getUrl('/copy'));
+
+        $resp->assertOk();
+        $resp->assertSee('Copy Book');
+        $resp->assertElementExists("input[name=\"name\"][value=\"{$book->name}\"]");
+    }
+
+    public function test_copy()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('chapters')->whereHas('pages')->first();
+        $resp = $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
+
+        /** @var Book $copy */
+        $copy = Book::query()->where('name', '=', 'My copy book')->first();
+
+        $resp->assertRedirect($copy->getUrl());
+        $this->assertEquals($book->getDirectChildren()->count(), $copy->getDirectChildren()->count());
+    }
+
+    public function test_copy_does_not_copy_non_visible_content()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('chapters')->whereHas('pages')->first();
+
+        // Hide child content
+        /** @var BookChild $page */
+        foreach ($book->getDirectChildren() as $child) {
+            $child->restricted = true;
+            $child->save();
+            $this->regenEntityPermissions($child);
+        }
+
+        $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
+        /** @var Book $copy */
+        $copy = Book::query()->where('name', '=', 'My copy book')->first();
+
+        $this->assertEquals(0, $copy->getDirectChildren()->count());
+    }
+
+    public function test_copy_does_not_copy_pages_or_chapters_if_user_cant_create()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('chapters')->whereHas('directPages')->whereHas('chapters')->first();
+        $viewer = $this->getViewer();
+        $this->giveUserPermissions($viewer, ['book-create-all']);
+
+        $this->actingAs($viewer)->post($book->getUrl('/copy'), ['name' => 'My copy book']);
+        /** @var Book $copy */
+        $copy = Book::query()->where('name', '=', 'My copy book')->first();
+
+        $this->assertEquals(0, $copy->pages()->count());
+        $this->assertEquals(0, $copy->chapters()->count());
+    }
+
+    public function test_copy_clones_cover_image_if_existing()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $bookRepo = $this->app->make(BookRepo::class);
+        $coverImageFile = $this->getTestImage('cover.png');
+        $bookRepo->updateCoverImage($book, $coverImageFile);
+
+        $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
+
+        /** @var Book $copy */
+        $copy = Book::query()->where('name', '=', 'My copy book')->first();
+        $this->assertNotNull($copy->cover);
+        $this->assertNotEquals($book->cover->id, $copy->cover->id);
     }
 }
