@@ -46,7 +46,7 @@ return [
     'reset_password_success' => 'Ihr Passwort wurde erfolgreich zurückgesetzt.',
     'email_reset_subject' => 'Passwort zurücksetzen für :appName',
     'email_reset_text' => 'Sie erhalten diese E-Mail, weil jemand versucht hat, Ihr Passwort zurückzusetzen.',
-    'email_reset_not_requested' => 'Wenn Sie das nicht waren, brauchen Sie nichts weiter zu tun.',
+    'email_reset_not_requested' => 'Wenn Sie das Zurücksetzen des Passworts nicht angefordert haben, ist keine weitere Aktion erforderlich.',
 
     // Email Confirmation
     'email_confirm_subject' => 'Bestätigen Sie Ihre E-Mail-Adresse für :appName',
@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Bitte bestätigen Sie Ihre E-Mail-Adresse, indem Sie auf die Schaltfläche klicken:',
     'email_confirm_action' => 'E-Mail-Adresse bestätigen',
     'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur bestätigung Ihrer E-Mail-Adresse nicht versandt werden. Bitte kontaktieren Sie den Systemadministrator!',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Ihre E-Mail wurde bestätigt! Sie sollten nun in der Lage sein, sich mit dieser E-Mail-Adresse anzumelden.',
     'email_confirm_resent' => 'Bestätigungs-E-Mail wurde erneut versendet, bitte überprüfen Sie Ihren Posteingang.',
 
     'email_not_confirmed' => 'E-Mail-Adresse ist nicht bestätigt',
