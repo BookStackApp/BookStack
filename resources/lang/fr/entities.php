@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Les chapitres en dernier',
     'books_sort_show_other' => 'Afficher d\'autres livres',
     'books_sort_save' => 'Enregistrer l\'ordre',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Chapitre',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Déplacer le chapitre',
     'chapters_move_named' => 'Déplacer le chapitre :chapterName',
     'chapter_move_success' => 'Chapitre déplacé dans :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Permissions du chapitre',
     'chapters_empty' => 'Il n\'y a pas de page dans ce chapitre actuellement.',
     'chapters_permissions_active' => 'Permissions du chapitre activées',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Êtes-vous sûr de vouloir restaurer cette révision ? Le contenu courant de la page va être remplacé.',
     'revision_delete_success' => 'Révision supprimée',
     'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];
