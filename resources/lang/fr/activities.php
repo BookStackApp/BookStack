@@ -36,10 +36,10 @@ return [
     'book_sort_notification'      => 'Livre restauré avec succès',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
+    'bookshelf_create'            => 'a créé l\'étagère',
     'bookshelf_create_notification'    => 'Étagère créée avec succès',
     'bookshelf_update'                 => 'a modifié l\'étagère',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'Étagère modifiée avec succès',
     'bookshelf_delete'                 => 'a supprimé l\'étagère',
     'bookshelf_delete_notification'    => 'Étagère supprimée avec succès',
 
@@ -52,12 +52,12 @@ return [
     'mfa_remove_method_notification' => 'Méthode multi-facteurs supprimée avec succès',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'Créer un Webhook',
+    'webhook_create_notification' => 'Webhook créé avec succès',
+    'webhook_update' => 'éditer un Webhook',
+    'webhook_update_notification' => 'Webhook modifié avec succès',
+    'webhook_delete' => 'supprimer un Webhook',
+    'webhook_delete_notification' => 'Webhook supprimé avec succès',
 
     // Other
     'commented_on'                => 'a commenté',
