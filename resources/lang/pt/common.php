@@ -71,9 +71,9 @@ return [
     'list_view' => 'Visualização em Lista',
     'default' => 'Padrão',
     'breadcrumb' => 'Caminho',
-    'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
+    'status' => 'Estado',
+    'status_active' => 'Ativo',
+    'status_inactive' => 'Inativo',
 
     // Header
     'header_menu_expand' => 'Expandir Menu de Cabeçalho',
