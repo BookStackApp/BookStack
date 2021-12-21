@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => 'Les chapitres en dernier',
     'books_sort_show_other' => 'Afficher d\'autres livres',
     'books_sort_save' => 'Enregistrer l\'ordre',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => 'Copier le livre',
+    'books_copy_success' => 'Livre copié avec succès',
 
     // Chapters
     'chapter' => 'Chapitre',
@@ -163,7 +163,7 @@ return [
     'chapters_move' => 'Déplacer le chapitre',
     'chapters_move_named' => 'Déplacer le chapitre :chapterName',
     'chapter_move_success' => 'Chapitre déplacé dans :bookName',
-    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy' => 'Copier le chapitre',
     'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Permissions du chapitre',
     'chapters_empty' => 'Il n\'y a pas de page dans ce chapitre actuellement.',
@@ -262,7 +262,7 @@ return [
     'tags_explain' => "Ajouter des mots-clés pour catégoriser votre contenu.",
     'tags_add' => 'Ajouter un autre mot-clé',
     'tags_remove' => 'Supprimer le mot-clé',
-    'tags_usages' => 'Total tag usages',
+    'tags_usages' => 'Total des utilisations des tags',
     'tags_assigned_pages' => 'Attribuer aux pages',
     'tags_assigned_chapters' => 'Attribuer aux chapitres',
     'tags_assigned_books' => 'Attribuer aux livres',
