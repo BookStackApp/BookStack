@@ -10,7 +10,7 @@
     </div>
 
     <div class="card content-wrap auto-height">
-        <h2 class="list-heading">{{ trans('settings.audit') }}</h2>
+        <h1 class="list-heading">{{ trans('settings.audit') }}</h1>
         <p class="text-muted">{{ trans('settings.audit_desc') }}</p>
 
         <div class="flex-container-row">
@@ -41,11 +41,18 @@
                     </div>
                 @endforeach
 
-                <div class="form-group ml-auto"
+                <div class="form-group ml-auto mr-m"
                      component="submit-on-change"
                      option:submit-on-change:filter='[name="user"]'>
                     <label for="owner">{{ trans('settings.audit_table_user') }}</label>
                     @include('form.user-select', ['user' => $listDetails['user'] ? \BookStack\Auth\User::query()->find($listDetails['user']) : null, 'name' => 'user', 'compact' =>  true])
+                </div>
+
+
+                <div class="form-group ml-auto">
+                    <label for="ip">{{ trans('settings.audit_table_ip') }}</label>
+                    @include('form.text', ['name' => 'ip', 'model' => (object) $listDetails])
+                    <input type="submit" style="display: none">
                 </div>
             </form>
         </div>

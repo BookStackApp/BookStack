@@ -50,6 +50,7 @@ import templateManager from "./template-manager.js"
 import toggleSwitch from "./toggle-switch.js"
 import triLayout from "./tri-layout.js"
 import userSelect from "./user-select.js"
+import webhookEvents from "./webhook-events";
 import wysiwygEditor from "./wysiwyg-editor.js"
 
 const componentMapping = {
@@ -105,6 +106,7 @@ const componentMapping = {
     "toggle-switch": toggleSwitch,
     "tri-layout": triLayout,
     "user-select": userSelect,
+    "webhook-events": webhookEvents,
     "wysiwyg-editor": wysiwygEditor,
 };
 

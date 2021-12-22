@@ -11,16 +11,16 @@ class AvatarTest extends TestCase
 {
     use UsesImages;
 
-    protected function createUserRequest($user)
+    protected function createUserRequest($user): User
     {
         $this->asAdmin()->post('/settings/users/create', [
             'name'             => $user->name,
             'email'            => $user->email,
-            'password'         => 'testing',
-            'password-confirm' => 'testing',
+            'password'         => 'testing101',
+            'password-confirm' => 'testing101',
         ]);
 
-        return User::where('email', '=', $user->email)->first();
+        return User::query()->where('email', '=', $user->email)->first();
     }
 
     protected function assertImageFetchFrom(string $url)

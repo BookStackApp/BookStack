@@ -35,7 +35,7 @@ class PermissionsUpdater
         $entity->save();
         $entity->rebuildPermissions();
 
-        Activity::addForEntity($entity, ActivityType::PERMISSIONS_UPDATE);
+        Activity::add(ActivityType::PERMISSIONS_UPDATE, $entity);
     }
 
     /**

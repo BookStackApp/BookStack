@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Chapters Last',
     'books_sort_show_other' => 'Show Other Books',
     'books_sort_save' => 'Save New Order',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Chapter',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Move Chapter',
     'chapters_move_named' => 'Move Chapter :chapterName',
     'chapter_move_success' => 'Chapter moved to :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Chapter Permissions',
     'chapters_empty' => 'No pages are currently in this chapter.',
     'chapters_permissions_active' => 'Chapter Permissions Active',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => 'Revision deleted',
     'revision_cannot_delete_latest' => 'Cannot delete the latest revision.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

@@ -1,10 +1,13 @@
 <?php
 
+namespace Tests;
+
+use Exception;
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Tests\TestCase;
+use Mockery;
 
 class StatusTest extends TestCase
 {

@@ -45,7 +45,7 @@ class CommentRepo
         $comment->parent_id = $parent_id;
 
         $entity->comments()->save($comment);
-        ActivityService::addForEntity($entity, ActivityType::COMMENTED_ON);
+        ActivityService::add(ActivityType::COMMENTED_ON, $entity);
 
         return $comment;
     }

@@ -24,8 +24,6 @@
         "{{ $activity->entity->name }}"
     @endif
 
-    @if($activity->extra) "{{ $activity->extra }}" @endif
-
     <br>
 
     <span class="text-muted"><small>@icon('time'){{ $activity->created_at->diffForHumans() }}</small></span>

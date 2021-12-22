@@ -29,7 +29,11 @@ use BookStack\Http\Controllers\UserApiTokenController;
 use BookStack\Http\Controllers\UserController;
 use BookStack\Http\Controllers\UserProfileController;
 use BookStack\Http\Controllers\UserSearchController;
+use BookStack\Http\Controllers\WebhookController;
+use BookStack\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 Route::get('/status', [StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
@@ -76,6 +80,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/permissions', [BookController::class, 'showPermissions']);
     Route::put('/books/{bookSlug}/permissions', [BookController::class, 'permissions']);
     Route::get('/books/{slug}/delete', [BookController::class, 'showDelete']);
+    Route::get('/books/{bookSlug}/copy', [BookController::class, 'showCopy']);
+    Route::post('/books/{bookSlug}/copy', [BookController::class, 'copy']);
     Route::get('/books/{bookSlug}/sort', [BookSortController::class, 'show']);
     Route::put('/books/{bookSlug}/sort', [BookSortController::class, 'update']);
     Route::get('/books/{bookSlug}/export/html', [BookExportController::class, 'html']);
@@ -123,6 +129,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/books/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'update']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/move', [ChapterController::class, 'showMove']);
     Route::put('/books/{bookSlug}/chapter/{chapterSlug}/move', [ChapterController::class, 'move']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/copy', [ChapterController::class, 'showCopy']);
+    Route::post('/books/{bookSlug}/chapter/{chapterSlug}/copy', [ChapterController::class, 'copy']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/edit', [ChapterController::class, 'edit']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'showPermissions']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/pdf', [ChapterExportController::class, 'pdf']);
@@ -244,13 +252,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'destroy']);
 
     // Roles
-    Route::get('/settings/roles', [RoleController::class, 'list']);
+    Route::get('/settings/roles', [RoleController::class, 'index']);
     Route::get('/settings/roles/new', [RoleController::class, 'create']);
     Route::post('/settings/roles/new', [RoleController::class, 'store']);
     Route::get('/settings/roles/delete/{id}', [RoleController::class, 'showDelete']);
     Route::delete('/settings/roles/delete/{id}', [RoleController::class, 'delete']);
     Route::get('/settings/roles/{id}', [RoleController::class, 'edit']);
     Route::put('/settings/roles/{id}', [RoleController::class, 'update']);
+
+    // Webhooks
+    Route::get('/settings/webhooks', [WebhookController::class, 'index']);
+    Route::get('/settings/webhooks/create', [WebhookController::class, 'create']);
+    Route::post('/settings/webhooks/create', [WebhookController::class, 'store']);
+    Route::get('/settings/webhooks/{id}', [WebhookController::class, 'edit']);
+    Route::put('/settings/webhooks/{id}', [WebhookController::class, 'update']);
+    Route::get('/settings/webhooks/{id}/delete', [WebhookController::class, 'delete']);
+    Route::delete('/settings/webhooks/{id}', [WebhookController::class, 'destroy']);
 });
 
 // MFA routes
@@ -291,9 +308,9 @@ Route::post('/saml2/logout', [Auth\Saml2Controller::class, 'logout']);
 Route::get('/saml2/metadata', [Auth\Saml2Controller::class, 'metadata']);
 Route::get('/saml2/sls', [Auth\Saml2Controller::class, 'sls']);
 Route::post('/saml2/acs', [Auth\Saml2Controller::class, 'startAcs'])->withoutMiddleware([
-    \Illuminate\Session\Middleware\StartSession::class,
-    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-    \BookStack\Http\Middleware\VerifyCsrfToken::class,
+    StartSession::class,
+    ShareErrorsFromSession::class,
+    VerifyCsrfToken::class,
 ]);
 Route::get('/saml2/acs', [Auth\Saml2Controller::class, 'processAcs']);
 
