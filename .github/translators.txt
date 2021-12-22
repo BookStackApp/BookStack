@@ -126,7 +126,7 @@ Zenahr Barzani (Zenahr) :: German; Japanese; Dutch; German Informal
 tatsuya.info :: Japanese
 fadiapp :: Arabic
 Jakub Bouček (jakubboucek) :: Czech
-Marco (cdrfun) :: German
+Marco (cdrfun) :: German; German Informal
 10935336 :: Chinese Simplified
 孟繁阳 (FanyangMeng) :: Chinese Simplified
 Andrej Močan (andrejm) :: Slovenian
