@@ -71,8 +71,8 @@ return [
     'list_view' => 'Vista de lista',
     'default' => 'Por defecto',
     'breadcrumb' => 'Miga de Pan',
-    'status' => 'Status',
-    'status_active' => 'Active',
+    'status' => 'Estado',
+    'status_active' => 'Activo',
     'status_inactive' => 'Inactive',
 
     // Header
