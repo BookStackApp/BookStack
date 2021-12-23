@@ -7,36 +7,36 @@ return [
 
     // Pages
     'page_create'                 => '创建了页面',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => '页面已成功创建',
     'page_update'                 => '更新了页面',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => '页面已成功更新',
     'page_delete'                 => '删除了页面',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => '页面已成功删除',
     'page_restore'                => '恢复了页面',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => '页面已成功恢复',
     'page_move'                   => '移动了页面',
 
     // Chapters
     'chapter_create'              => '创建了章节',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => '章节已成功创建',
     'chapter_update'              => '更新了章节',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => '章节已成功更新',
     'chapter_delete'              => '删除了章节',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => '章节已成功删除',
     'chapter_move'                => '移动了章节',
 
     // Books
     'book_create'                 => '创建了图书',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => '图书已成功创建',
     'book_update'                 => '更新了图书',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => '图书已成功更新',
     'book_delete'                 => '删除了图书',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => '图书已成功删除',
     'book_sort'                   => '排序了图书',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => '图书已成功重新排序',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
+    'bookshelf_create'            => '创建了书架',
     'bookshelf_create_notification'    => 'Bookshelf successfully created',
     'bookshelf_update'                 => '更新了书架',
     'bookshelf_update_notification'    => 'Bookshelf successfully updated',
