@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => 'Главы в конце',
     'books_sort_show_other' => 'Показать другие книги',
     'books_sort_save' => 'Сохранить новый порядок',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => 'Копировать книгу',
+    'books_copy_success' => 'Книга успешно скопирована',
 
     // Chapters
     'chapter' => 'Глава',
@@ -163,8 +163,8 @@ return [
     'chapters_move' => 'Переместить главу',
     'chapters_move_named' => 'Переместить главу :chapterName',
     'chapter_move_success' => 'Глава перемещена в :bookName',
-    'chapters_copy' => 'Copy Chapter',
-    'chapters_copy_success' => 'Chapter successfully copied',
+    'chapters_copy' => 'Копировать главу',
+    'chapters_copy_success' => 'Глава успешно скопирована',
     'chapters_permissions' => 'Разрешения главы',
     'chapters_empty' => 'В этой главе нет страниц.',
     'chapters_permissions_active' => 'Действующие разрешения главы',
@@ -338,10 +338,10 @@ return [
     'revision_cannot_delete_latest' => 'Нельзя удалить последнюю версию.',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider' => 'При копировании содержимого, пожалуйста, учтите следующее.',
+    'copy_consider_permissions' => 'Пользовательские настройки прав доступа не будут скопированы.',
+    'copy_consider_owner' => 'Вы станете владельцем всего скопированного контента.',
+    'copy_consider_images' => 'Файлы изображений страницы не будут дублироваться и исходные изображения сохранят их отношение к странице, в которую они были загружены изначально.',
+    'copy_consider_attachments' => 'Вложения страницы не будут скопированы.',
+    'copy_consider_access' => 'Изменение положения, владельца или разрешений может привести к тому, что контент будет доступен пользователям, у которых не было доступа ранее.',
 ];
