@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => 'Peatükid tagapool',
     'books_sort_show_other' => 'Näita teisi raamatuid',
     'books_sort_save' => 'Salvesta uus järjekord',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => 'Kopeeri raamat',
+    'books_copy_success' => 'Raamat on kopeeritud',
 
     // Chapters
     'chapter' => 'Peatükk',
@@ -163,8 +163,8 @@ return [
     'chapters_move' => 'Liiguta peatükk',
     'chapters_move_named' => 'Liiguta peatükk :chapterName',
     'chapter_move_success' => 'Peatükk liigutatud raamatusse :bookName',
-    'chapters_copy' => 'Copy Chapter',
-    'chapters_copy_success' => 'Chapter successfully copied',
+    'chapters_copy' => 'Kopeeri peatükk',
+    'chapters_copy_success' => 'Peatükk on kopeeritud',
     'chapters_permissions' => 'Peatüki õigused',
     'chapters_empty' => 'Selles peatükis ei ole lehti.',
     'chapters_permissions_active' => 'Peatüki õigused on aktiivsed',
@@ -338,10 +338,10 @@ return [
     'revision_cannot_delete_latest' => 'Kõige viimast redaktsiooni ei saa kustutada.',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider' => 'Sisu kopeerimisel pea järgnevat meeles.',
+    'copy_consider_permissions' => 'Kohandatud õiguseid ei kopeerita.',
+    'copy_consider_owner' => 'Sind määratakse kopeeritud sisu omanikuks.',
+    'copy_consider_images' => 'Lehel olevaid pildifaile ei dubleerita. Pildid säilitavad viite lehele, millele nad algselt lisati.',
+    'copy_consider_attachments' => 'Lehe manuseid ei kopeerita.',
+    'copy_consider_access' => 'Asukoha, omaniku või õiguste muudatused võivad teha sisu kättesaadavaks neile, kellel varem sellele ligipääs puudus.',
 ];
