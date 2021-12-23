@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => '章节倒序',
     'books_sort_show_other' => '显示其他图书',
     'books_sort_save' => '保存新顺序',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => '复制图书',
+    'books_copy_success' => '图书已成功复制',
 
     // Chapters
     'chapter' => '章节',
@@ -163,8 +163,8 @@ return [
     'chapters_move' => '移动章节',
     'chapters_move_named' => '移动章节「:chapterName」',
     'chapter_move_success' => '章节移动到「:bookName」',
-    'chapters_copy' => 'Copy Chapter',
-    'chapters_copy_success' => 'Chapter successfully copied',
+    'chapters_copy' => '复制章节',
+    'chapters_copy_success' => '章节已成功复制',
     'chapters_permissions' => '章节权限',
     'chapters_empty' => '本章目前没有页面。',
     'chapters_permissions_active' => '有效的章节权限',
