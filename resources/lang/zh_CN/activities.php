@@ -37,11 +37,11 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => '创建了书架',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create_notification'    => '书架已成功创建',
     'bookshelf_update'                 => '更新了书架',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => '书架已成功更新',
     'bookshelf_delete'                 => '删除了书架',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => '书架已成功删除',
 
     // Favourites
     'favourite_add_notification' => '":name" 已添加到您的收藏',
@@ -52,12 +52,12 @@ return [
     'mfa_remove_method_notification' => '多重身份认证已成功移除',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => '创建了 webhook',
+    'webhook_create_notification' => 'Webhook 已成功创建',
+    'webhook_update' => '更新了 webhook',
+    'webhook_update_notification' => 'Webhook 已成功更新',
+    'webhook_delete' => '删除了 webhook',
+    'webhook_delete_notification' => 'Webhook 已成功删除',
 
     // Other
     'commented_on'                => '评论',
