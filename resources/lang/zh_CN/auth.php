@@ -21,7 +21,7 @@ return [
     'email' => 'Email地址',
     'password' => '密码',
     'password_confirm' => '确认密码',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => '必须至少有 8 个字符',
     'forgot_password' => '忘记密码?',
     'remember_me' => '记住我',
     'ldap_email_hint' => '请输入用于此帐户的电子邮件。',
