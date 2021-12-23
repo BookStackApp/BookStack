@@ -338,10 +338,10 @@ return [
     'revision_cannot_delete_latest' => '无法删除最新版本。',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider' => '复制内容时请注意以下事项。',
+    'copy_consider_permissions' => '自定义权限设置将不会被复制。',
+    'copy_consider_owner' => '您将成为所有已复制内容的所有者。',
+    'copy_consider_images' => '页面中的图像文件不会被复制，原始图像将保留它们与最初上传到的页面的关系。',
+    'copy_consider_attachments' => '页面中的附件不会被复制。',
+    'copy_consider_access' => '改变位置、所有者或权限可能会导致此内容被以前无法访问的人访问。',
 ];
