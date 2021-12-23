@@ -21,7 +21,7 @@ return [
     'email' => 'Email',
     'password' => 'Password',
     'password_confirm' => 'Conferma Password',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'Deve essere lunga almeno 8 caratteri',
     'forgot_password' => 'Password dimenticata?',
     'remember_me' => 'Ricordami',
     'ldap_email_hint' => 'Inserisci un email per usare quest\'account.',
