@@ -52,12 +52,12 @@ return [
     'mfa_remove_method_notification' => 'Двухфакторный метод авторизации успешно удален',
 
     // Webhooks
-    'webhook_create' => 'создал веб-хук',
-    'webhook_create_notification' => 'Веб-хук успешно создан',
-    'webhook_update' => 'обновил веб-хук',
-    'webhook_update_notification' => 'Веб-хук успешно обновлен',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'создал вебхук',
+    'webhook_create_notification' => 'Вебхук успешно создан',
+    'webhook_update' => 'обновил вебхук',
+    'webhook_update_notification' => 'Вебхук успешно обновлен',
+    'webhook_delete' => 'удалил вебхук',
+    'webhook_delete_notification' => 'Вебхук успешно удален',
 
     // Other
     'commented_on'                => 'прокомментировал',
