@@ -21,7 +21,7 @@ return [
     'email' => 'E-mail',
     'password' => 'Senha',
     'password_confirm' => 'Confirmar Senha',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'Deve conter pelo menos 8 caracteres',
     'forgot_password' => 'Esqueceu a senha?',
     'remember_me' => 'Lembrar de mim',
     'ldap_email_hint' => 'Por favor, digite um e-mail para essa conta.',
@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Por favor, confirme seu endereço de e-mail clicando no botão abaixo:',
     'email_confirm_action' => 'Confirmar E-mail',
     'email_confirm_send_error' => 'A confirmação de e-mail é requerida, mas o sistema não pôde enviar a mensagem. Por favor, entre em contato com o administrador para se certificar que o serviço de envio de e-mails está corretamente configurado.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Seu e-mail foi confirmado! Agora você pode de entrar usando este endereço de e-mail.',
     'email_confirm_resent' => 'E-mail de confirmação reenviado. Por favor, verifique sua caixa de entrada.',
 
     'email_not_confirmed' => 'Endereço de E-mail Não Confirmado',
@@ -71,11 +71,11 @@ return [
     'user_invite_page_welcome' => 'Bem-vindo(a) a :appName!',
     'user_invite_page_text' => 'Para finalizar sua conta e obter acesso, você precisa definir uma senha que será usada para efetuar login em :appName em futuras visitas.',
     'user_invite_page_confirm_button' => 'Confirmar Senha',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Senha definida, agora você pode fazer login usando sua senha para acessar :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
-    'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
+    'mfa_setup' => 'Configurar autenticação multi-fator',
+    'mfa_setup_desc' => 'A autenticação multi-fator adiciona outra camada de segurança à sua conta.',
     'mfa_setup_configured' => 'Already configured',
     'mfa_setup_reconfigure' => 'Reconfigure',
     'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
