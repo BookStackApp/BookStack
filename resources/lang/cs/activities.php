@@ -7,13 +7,13 @@ return [
 
     // Pages
     'page_create'                 => 'vytvořil/a stránku',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Stránka byla úspěšně vytvořena',
     'page_update'                 => 'aktualizoval/a stránku',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Stránka byla úspěšně aktualizována',
     'page_delete'                 => 'odstranil/a stránku',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Stránka byla úspěšně smazána',
     'page_restore'                => 'obnovil/a stránku',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Stránka byla úspěšně obnovena',
     'page_move'                   => 'přesunul/a stránku',
 
     // Chapters
@@ -36,7 +36,7 @@ return [
     'book_sort_notification'      => 'Book successfully re-sorted',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
+    'bookshelf_create'            => 'vytvořil/a knihovnu',
     'bookshelf_create_notification'    => 'Bookshelf successfully created',
     'bookshelf_update'                 => 'aktualizoval/a knihovnu',
     'bookshelf_update_notification'    => 'Bookshelf successfully updated',
