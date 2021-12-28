@@ -18,30 +18,30 @@ return [
 
     // Chapters
     'chapter_create'              => 'vytvořil/a kapitolu',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Kapitola byla úspěšně vytvořena',
     'chapter_update'              => 'aktualizoval/a kapitolu',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Kapitola byla úspěšně aktualizována',
     'chapter_delete'              => 'odstranila/a kapitolu',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Kapitola byla úspěšně odstraněna',
     'chapter_move'                => 'přesunul/a kapitolu',
 
     // Books
     'book_create'                 => 'vytvořil/a knihu',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Kniha byla úspěšně vytvořena',
     'book_update'                 => 'aktualizoval/a knihu',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Kniha byla úspěšně aktualizována',
     'book_delete'                 => 'odstranil/a knihu',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'Kniha byla úspěšně odstraněna',
     'book_sort'                   => 'seřadil/a knihu',
     'book_sort_notification'      => 'Book successfully re-sorted',
 
     // Bookshelves
     'bookshelf_create'            => 'vytvořil/a knihovnu',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create_notification'    => 'Knihovna byla úspěšně vytvořena',
     'bookshelf_update'                 => 'aktualizoval/a knihovnu',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'Knihovna byla úspěšně aktualizována',
     'bookshelf_delete'                 => 'odstranil/a knihovnu',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Knihovna byla úspěšně smazána',
 
     // Favourites
     'favourite_add_notification' => '":name" byla přidána do Vašich oblíbených',
@@ -52,12 +52,12 @@ return [
     'mfa_remove_method_notification' => 'Vícefaktorová metoda byla úspěšně odstraněna',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'vytvořil/a webhook',
+    'webhook_create_notification' => 'Webhook byl úspěšně vytvořen',
+    'webhook_update' => 'aktualizoval/a webhook',
+    'webhook_update_notification' => 'Webhook byl úspěšně aktualizován',
+    'webhook_delete' => 'odstranil/a webhook',
+    'webhook_delete_notification' => 'Webhook byl úspěšně odstraněn',
 
     // Other
     'commented_on'                => 'okomentoval/a',
