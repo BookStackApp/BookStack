@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Prosíme potvrďte svou e-mailovou adresu kliknutím na níže uvedené tlačítko:',
     'email_confirm_action' => 'Potvrdit e-mail',
     'email_confirm_send_error' => 'Potvrzení e-mailu je vyžadováno, ale systém nemohl odeslat e-mail. Obraťte se na správce, abyste se ujistili, že je e-mail správně nastaven.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Váš email byl ověřen! Nyní byste měli být schopni se touto emailovou adresou přihlásit.',
     'email_confirm_resent' => 'E-mail s potvrzením byl znovu odeslán. Zkontrolujte svou příchozí poštu.',
 
     'email_not_confirmed' => 'E-mailová adresa nebyla potvrzena',
@@ -71,12 +71,12 @@ return [
     'user_invite_page_welcome' => 'Vítejte v :appName!',
     'user_invite_page_text' => 'Pro dokončení vašeho účtu a získání přístupu musíte nastavit heslo, které bude použito k přihlášení do :appName při dalších návštěvách.',
     'user_invite_page_confirm_button' => 'Potvrdit heslo',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Heslo bylo nasteaveno, nyní byste měli být schopni přihlásit se nastaveným heslem do aplikace :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
+    'mfa_setup' => 'Nastavit vícefaktorové ověření',
     'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'mfa_setup_configured' => 'Already configured',
+    'mfa_setup_configured' => 'Již nastaveno',
     'mfa_setup_reconfigure' => 'Přenastavit',
     'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
     'mfa_setup_action' => 'Setup',
@@ -96,7 +96,7 @@ return [
     'mfa_gen_totp_verify_setup' => 'Verify Setup',
     'mfa_gen_totp_verify_setup_desc' => 'Verify that all is working by entering a code, generated within your authentication app, in the input box below:',
     'mfa_gen_totp_provide_code_here' => 'Provide your app generated code here',
-    'mfa_verify_access' => 'Verify Access',
+    'mfa_verify_access' => 'Ověřit přístup',
     'mfa_verify_access_desc' => 'Your user account requires you to confirm your identity via an additional level of verification before you\'re granted access. Verify using one of your configured methods to continue.',
     'mfa_verify_no_methods' => 'No Methods Configured',
     'mfa_verify_no_methods_desc' => 'No multi-factor authentication methods could be found for your account. You\'ll need to set up at least one method before you gain access.',
