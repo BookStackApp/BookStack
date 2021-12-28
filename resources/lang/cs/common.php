@@ -45,7 +45,7 @@ return [
     'unfavourite' => 'Odebrat z oblíbených',
     'next' => 'Další',
     'previous' => 'Předchozí',
-    'filter_active' => 'Active Filter:',
+    'filter_active' => 'Aktivní filtr:',
     'filter_clear' => 'Clear Filter',
 
     // Sort Options
@@ -72,8 +72,8 @@ return [
     'default' => 'Výchozí',
     'breadcrumb' => 'Drobečková navigace',
     'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
+    'status_active' => 'Aktivní',
+    'status_inactive' => 'Neaktivní',
 
     // Header
     'header_menu_expand' => 'Rozbalit menu v záhlaví',
