@@ -271,7 +271,7 @@ return [
     'tags_all_values' => 'Všechny hodnoty',
     'tags_view_tags' => 'Zobrazit štítky',
     'tags_view_existing_tags' => 'Zobrazit existující štítky',
-    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
+    'tags_list_empty_hint' => 'Štítky mohou být přiřazeny pomocí postranního panelu editoru stránky nebo při úpravách podrobností knihy, kapitoly nebo knihovny.',
     'attachments' => 'Přílohy',
     'attachments_explain' => 'Nahrajte soubory nebo připojte odkazy, které se zobrazí na stránce. Budou k nalezení v postranní liště.',
     'attachments_explain_instant_save' => 'Změny zde provedené se okamžitě ukládají.',
@@ -339,9 +339,9 @@ return [
 
     // Copy view
     'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_permissions' => 'Vlastní nastavení oprávnění nebudou zkopírovány.',
+    'copy_consider_owner' => 'Stanete se vlastníkem veškerého kopírovaného obsahu.',
     'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider_attachments' => 'Přílohy stránky nebudou zkopírovány.',
+    'copy_consider_access' => 'Po změně umístění, vlastníka nebo oprávnění může dojít k tomu, že obsah může být přístupný těm, kteří přístup dříve něměli.',
 ];
