@@ -33,7 +33,7 @@ return [
     'book_delete'                 => 'odstranil/a knihu',
     'book_delete_notification'    => 'Kniha byla úspěšně odstraněna',
     'book_sort'                   => 'seřadil/a knihu',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'Kniha byla úspěšně seřazena',
 
     // Bookshelves
     'bookshelf_create'            => 'vytvořil/a knihovnu',
