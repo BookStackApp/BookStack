@@ -91,7 +91,7 @@ return [
     'mfa_gen_backup_codes_download' => 'Stáhnout kódy',
     'mfa_gen_backup_codes_usage_warning' => 'Každý kód může být použit pouze jednou',
     'mfa_gen_totp_title' => 'Nastavení mobilní aplikace',
-    'mfa_gen_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
+    'mfa_gen_totp_desc' => 'Pro použití vícefaktorového ověření budete potřebovat mobilní aplikaci, která podporuje TOTP jako např. Google Authenticator, Authy nebo Microsoft Authenticator.',
     'mfa_gen_totp_scan' => 'Scan the QR code below using your preferred authentication app to get started.',
     'mfa_gen_totp_verify_setup' => 'Ověřit nastavení',
     'mfa_gen_totp_verify_setup_desc' => 'Verify that all is working by entering a code, generated within your authentication app, in the input box below:',
