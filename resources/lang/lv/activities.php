@@ -52,12 +52,12 @@ return [
     'mfa_remove_method_notification' => '2FA funkcija noņemta',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'izveidoja webhook',
+    'webhook_create_notification' => 'Webhook veiksmīgi izveidots',
+    'webhook_update' => 'atjaunināja webhook',
+    'webhook_update_notification' => 'Webhook veiksmīgi atjaunināts',
+    'webhook_delete' => 'izdzēsa webhook',
+    'webhook_delete_notification' => 'Webhook veiksmīgi izdzēsts',
 
     // Other
     'commented_on'                => 'komentēts',
