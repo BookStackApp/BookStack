@@ -1,4 +1,4 @@
-@extends('layouts.simple')
+@extends('layouts.tri')
 
 @section('body')
     @include('books.parts.list', ['books' => $books, 'view' => $view])
