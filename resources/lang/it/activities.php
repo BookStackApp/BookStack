@@ -36,12 +36,12 @@ return [
     'book_sort_notification'      => 'Libro reindicizzato con successo',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create'            => 'libreria creata',
+    'bookshelf_create_notification'    => 'Libreria creata con successo',
     'bookshelf_update'                 => 'ha aggiornato la libreria',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'Libreria aggiornata con successo',
     'bookshelf_delete'                 => 'ha eliminato la libreria',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Libreria cancellata con successo',
 
     // Favourites
     'favourite_add_notification' => '":name" è stato aggiunto ai tuoi preferiti',
@@ -52,12 +52,12 @@ return [
     'mfa_remove_method_notification' => 'Metodo multi-fattore rimosso con successo',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'webhook creato',
+    'webhook_create_notification' => 'Webhook creato con successo',
+    'webhook_update' => 'webhook aggiornato',
+    'webhook_update_notification' => 'Webhook aggiornato con successo',
+    'webhook_delete' => 'webhook eliminato',
+    'webhook_delete_notification' => 'Webhook eliminato con successo',
 
     // Other
     'commented_on'                => 'ha commentato in',
