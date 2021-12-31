@@ -267,7 +267,7 @@ return [
     'tags_assigned_chapters' => 'Assegnato ai capitoli',
     'tags_assigned_books' => 'Assegnato a Libri',
     'tags_assigned_shelves' => 'Assegnato alle Librerie',
-    'tags_x_unique_values' => ':count unique values',
+    'tags_x_unique_values' => ':count valori univoci',
     'tags_all_values' => 'Tutti i valori',
     'tags_view_tags' => 'Visualizza tag',
     'tags_view_existing_tags' => 'Usa i tag esistenti',
