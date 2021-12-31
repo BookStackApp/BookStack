@@ -240,7 +240,7 @@ return [
     'webhooks_edit' => 'Modifica Webhook',
     'webhooks_save' => 'Salva Webhook',
     'webhooks_details' => 'Dettagli Webhook',
-    'webhooks_details_desc' => 'Provide a user friendly name and a POST endpoint as a location for the webhook data to be sent to.',
+    'webhooks_details_desc' => 'Fornire un nome di facile utilizzo e un endpoint POST come posizione per i dati del webhook da inviare.',
     'webhooks_events' => 'Eventi Webhook',
     'webhooks_events_desc' => 'Seleziona tutti gli eventi che dovrebbero attivare questo webhook da chiamare.',
     'webhooks_events_warning' => 'Tieni presente che questi eventi saranno attivati per tutti gli eventi selezionati, anche se vengono applicati permessi personalizzati. Assicurarsi che l\'uso di questo webhook non esporrà contenuti riservati.',
