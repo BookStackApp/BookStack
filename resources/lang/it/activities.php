@@ -7,33 +7,33 @@ return [
 
     // Pages
     'page_create'                 => 'pagina creata',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Pagina creata con successo',
     'page_update'                 => 'ha aggiornato la pagina',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Pagina aggiornata con successo',
     'page_delete'                 => 'ha eliminato la pagina',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Pagina eliminata con successo',
     'page_restore'                => 'ha ripristinato la pagina',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Pagina ripristinata con successo',
     'page_move'                   => 'ha mosso la pagina',
 
     // Chapters
     'chapter_create'              => 'ha creato il capitolo',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Capitolo creato con successo',
     'chapter_update'              => 'ha aggiornato il capitolo',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Capitolo aggiornato con successo',
     'chapter_delete'              => 'ha eliminato il capitolo',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Capitolo eliminato con successo',
     'chapter_move'                => 'ha spostato il capitolo',
 
     // Books
     'book_create'                 => 'ha creato il libro',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Libro creato con successo',
     'book_update'                 => 'ha aggiornato il libro',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Libro aggiornato con successo',
     'book_delete'                 => 'ha eliminato il libro',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'Libro eliminato con successo',
     'book_sort'                   => 'ha ordinato il libro',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'Libro reindicizzato con successo',
 
     // Bookshelves
     'bookshelf_create'            => 'created bookshelf',
