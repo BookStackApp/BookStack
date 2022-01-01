@@ -46,5 +46,9 @@
             clear: both;
             display: block;
         }
+
+        .page-content a > img {
+            max-width: none;
+        }
     </style>
 @endif
