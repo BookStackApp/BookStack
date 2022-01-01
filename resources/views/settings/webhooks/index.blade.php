@@ -24,8 +24,8 @@
                 <table class="table">
                     <tr>
                         <th>{{ trans('common.name') }}</th>
-                        <th>{{ trans('settings.webhook_events_table_header') }}</th>
-                        <th>{{ trans('common.status') }}</th>
+                        <th width="100">{{ trans('settings.webhook_events_table_header') }}</th>
+                        <th width="100">{{ trans('common.status') }}</th>
                     </tr>
                     @foreach($webhooks as $webhook)
                         <tr>
