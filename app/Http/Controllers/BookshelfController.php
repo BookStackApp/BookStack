@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers;
 use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
@@ -117,11 +118,13 @@ class BookshelfController extends Controller
         View::incrementFor($shelf);
         $this->entityContextManager->setShelfContext($shelf->id);
         $view = setting()->getForCurrentUser('bookshelf_view_type');
-
+        $ListBookShelves = Bookshelf::visible()->get();
+        
         $this->setPageTitle($shelf->getShortName());
 
         return view('shelves.show', [
             'shelf'                   => $shelf,
+            'ListBookShelves'         => $ListBookShelves,
             'sortedVisibleShelfBooks' => $sortedVisibleShelfBooks,
             'view'                    => $view,
             'activity'                => $activities->entityActivity($shelf, 20, 1),
