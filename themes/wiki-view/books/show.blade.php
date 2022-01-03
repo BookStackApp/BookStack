@@ -173,72 +173,18 @@
 
  
                         
-
-	<!-- List shelf tree -->
-		<nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
-            <h5>{{ trans('entities.pages_navigation') }}</h5>
-              <!--  <div class="sidebar-page-nav menu"> -->
-						@include('entities.list', ['entities' => $bookshelfChildren, 'style' => 'compact']) 
-                <!--</div>-->
+ 
+	<nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
+	<h5>{{ trans('entities.pages_navigation') }}</h5> 
+		@include('entities.list', ['entities' => $bookshelfChildren, 'style' => 'compact']) 
+	</nav>
+ 
+   
+	<nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
+	<h5>{{ trans('entities.pages_navigation') }}</h5> 
+		@include('entities.list', ['entities' => $bookChildren, 'style' => 'compact']) 
         </nav>
  
-  
-        	<!-- List book tree -->
-		<nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
-            <h5>{{ trans('entities.pages_navigation') }}</h5>
-              <!--  <div class="sidebar-page-nav menu"> -->
-						@include('entities.list', ['entities' => $bookChildren, 'style' => 'compact']) 
-                <!--</div>-->
-        </nav>
- 
-  
-        
- 
- 
- 
- 
-  
-<!--
-    @if (isset($chapterNav) && count($chapterNav))
-        <nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
-            <h5>{{ trans('entities.pages_navigation') }}</h5>
-            <div class="body">
-                <div class="sidebar-page-nav menu">
-                    @foreach($chapterNav as $navItem)
-                        <li class="page-nav-item h{{ $navItem['level'] }}">
-                            <a href="{{ $navItem['link'] }}" class="text-limit-lines-1 block">{{ $navItem['text'] }}</a>
-                            <div class="primary-background sidebar-page-nav-bullet"></div>
-                        </li>
-                    @endforeach
-                </div>
-            </div>
-        </nav>
-    @endif
- -->
-<!--
-                include('entities.favourite-action', ['entity' => $chapter])
-       
-                include('entities.export-menu', ['entity' => $chapter])
-
-                include('entities.tag-list', ['entity' => $chapter])
-				
-				include('entities.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
-	 -->
-<!--	 
-<nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
-<div class="body"> 
- <div class="sidebar-page-nav menu"> 
-                    @foreach($bookChildren as $childElement)
-                        @if($childElement->isA('chapter'))
-                            @include('chapters.parts.list-item', ['chapter' => $childElement])
-                        @else
-                            @include('pages.parts.list-item', ['page' => $childElement])
-                        @endif
-                    @endforeach
-		  </div>
-		  </div>
-       </nav>
-  -->
 @stop
 
 
