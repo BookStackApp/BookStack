@@ -74,6 +74,7 @@ return [
     'status' => '状态',
     'status_active' => '已激活',
     'status_inactive' => '未激活',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => '展开标头菜单',
