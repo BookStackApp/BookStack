@@ -74,6 +74,7 @@ return [
     'status' => 'Stav',
     'status_active' => 'Aktivní',
     'status_inactive' => 'Neaktivní',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Rozbalit menu v záhlaví',
