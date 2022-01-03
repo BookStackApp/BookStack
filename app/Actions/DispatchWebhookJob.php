@@ -4,8 +4,10 @@ namespace BookStack\Actions;
 
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
+use BookStack\Facades\Theme;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -68,10 +70,13 @@ class DispatchWebhookJob implements ShouldQueue
      */
     public function handle()
     {
+        $themeResponse = Theme::dispatch(ThemeEvents::WEBHOOK_CALL_BEFORE, $this->event, $this->webhook, $this->detail);
+        $webhookData = $themeResponse ?? $this->buildWebhookData();
+
         $response = Http::asJson()
             ->withOptions(['allow_redirects' => ['strict' => true]])
             ->timeout(3)
-            ->post($this->webhook->endpoint, $this->buildWebhookData());
+            ->post($this->webhook->endpoint, $webhookData);
 
         if ($response->failed()) {
             Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with status {$response->status()}");
