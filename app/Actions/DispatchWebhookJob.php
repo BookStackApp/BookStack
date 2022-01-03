@@ -79,7 +79,6 @@ class DispatchWebhookJob implements ShouldQueue
                 ->withOptions(['allow_redirects' => ['strict' => true]])
                 ->timeout($this->webhook->timeout)
                 ->post($this->webhook->endpoint, $webhookData);
-
         } catch (\Exception $exception) {
             $lastError = $exception->getMessage();
             Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with error \"{$lastError}\"");
