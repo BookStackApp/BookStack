@@ -39,6 +39,7 @@ class WebhookManagementTest extends TestCase
             'endpoint' => 'https://example.com/webhook',
             'events'   => ['all'],
             'active'   => 'true',
+            'timeout'  => 4,
         ]);
 
         $resp->assertRedirect('/settings/webhooks');
@@ -51,6 +52,7 @@ class WebhookManagementTest extends TestCase
             'name'     => 'My first webhook',
             'endpoint' => 'https://example.com/webhook',
             'active'   => true,
+            'timeout'  => 4,
         ]);
 
         /** @var Webhook $webhook */
@@ -82,6 +84,7 @@ class WebhookManagementTest extends TestCase
             'endpoint' => 'https://example.com/updated-webhook',
             'events'   => [ActivityType::PAGE_CREATE, ActivityType::PAGE_UPDATE],
             'active'   => 'true',
+            'timeout'  => 5
         ]);
         $resp->assertRedirect('/settings/webhooks');
 
@@ -93,6 +96,7 @@ class WebhookManagementTest extends TestCase
             'name'     => 'My updated webhook',
             'endpoint' => 'https://example.com/updated-webhook',
             'active'   => true,
+            'timeout'  => 5,
         ]);
 
         $trackedEvents = $webhook->trackedEvents()->get();

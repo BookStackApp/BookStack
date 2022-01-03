@@ -4,8 +4,10 @@ namespace BookStack\Actions;
 
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
+use BookStack\Facades\Theme;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -68,14 +70,32 @@ class DispatchWebhookJob implements ShouldQueue
      */
     public function handle()
     {
-        $response = Http::asJson()
-            ->withOptions(['allow_redirects' => ['strict' => true]])
-            ->timeout(3)
-            ->post($this->webhook->endpoint, $this->buildWebhookData());
+        $themeResponse = Theme::dispatch(ThemeEvents::WEBHOOK_CALL_BEFORE, $this->event, $this->webhook, $this->detail);
+        $webhookData = $themeResponse ?? $this->buildWebhookData();
+        $lastError = null;
 
-        if ($response->failed()) {
+        try {
+            $response = Http::asJson()
+                ->withOptions(['allow_redirects' => ['strict' => true]])
+                ->timeout($this->webhook->timeout)
+                ->post($this->webhook->endpoint, $webhookData);
+        } catch (\Exception $exception) {
+            $lastError = $exception->getMessage();
+            Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with error \"{$lastError}\"");
+        }
+
+        if (isset($response) && $response->failed()) {
+            $lastError = "Response status from endpoint was {$response->status()}";
             Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with status {$response->status()}");
         }
+
+        $this->webhook->last_called_at = now();
+        if ($lastError) {
+            $this->webhook->last_errored_at = now();
+            $this->webhook->last_error = $lastError;
+        }
+
+        $this->webhook->save();
     }
 
     protected function buildWebhookData(): array

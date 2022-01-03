@@ -2,16 +2,21 @@
 
 namespace Tests;
 
+use BookStack\Actions\ActivityType;
+use BookStack\Actions\DispatchWebhookJob;
+use BookStack\Actions\Webhook;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use Illuminate\Console\Command;
+use Illuminate\Http\Client\Request as HttpClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use League\CommonMark\ConfigurableEnvironmentInterface;
 
 class ThemeTest extends TestCase
@@ -158,6 +163,36 @@ class ThemeTest extends TestCase
         $this->assertCount(2, $args);
         $this->assertEquals('standard', $args[0]);
         $this->assertInstanceOf(User::class, $args[1]);
+    }
+
+    public function test_event_webhook_call_before()
+    {
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+            return ['test' => 'hello!'];
+        };
+        Theme::listen(ThemeEvents::WEBHOOK_CALL_BEFORE, $callback);
+
+        Http::fake([
+            '*' => Http::response('', 200),
+        ]);
+
+        $webhook = new Webhook(['name' => 'Test webhook', 'endpoint' => 'https://example.com']);
+        $webhook->save();
+        $event = ActivityType::PAGE_UPDATE;
+        $detail = Page::query()->first();
+
+        dispatch((new DispatchWebhookJob($webhook, $event, $detail)));
+
+        $this->assertCount(3, $args);
+        $this->assertEquals($event, $args[0]);
+        $this->assertEquals($webhook->id, $args[1]->id);
+        $this->assertEquals($detail->id, $args[2]->id);
+
+        Http::assertSent(function (HttpClientRequest $request) {
+            return $request->isJson() && $request->data()['test'] === 'hello!';
+        });
     }
 
     public function test_add_social_driver()
