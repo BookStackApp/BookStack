@@ -249,6 +249,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'webhooks_events_warning' => 'Beachten Sie, dass diese Ereignisse für alle ausgewählten Ereignisse ausgelöst werden, auch wenn benutzerdefinierte Berechtigungen angewendet werden. Stellen Sie sicher, dass die Verwendung dieses Webhook keine vertraulichen Inhalte enthüllt.',
     'webhooks_events_all' => 'Alle System-Ereignisse',
     'webhooks_name' => 'Webhook-Name',
+    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
     'webhooks_endpoint' => 'Webhook Endpunkt',
     'webhooks_active' => 'Webhook aktiv',
     'webhook_events_table_header' => 'Ereignisse',
@@ -257,6 +258,11 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'webhooks_delete_confirm' => 'Sind Sie sicher, dass Sie diesen Webhook löschen möchten?',
     'webhooks_format_example' => 'Webhook Format Beispiel',
     'webhooks_format_example_desc' => 'Webhook Daten werden als POST-Anfrage an den konfigurierten Endpunkt als JSON im folgenden Format gesendet. Die Eigenschaften "related_item" und "url" sind optional und hängen vom Typ des ausgelösten Ereignisses ab.',
+    'webhooks_status' => 'Webhook Status',
+    'webhooks_last_called' => 'Last Called:',
+    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_last_error_message' => 'Last Error Message:',
+
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
