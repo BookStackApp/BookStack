@@ -79,4 +79,20 @@ class ThemeEvents
      * @returns \League\CommonMark\ConfigurableEnvironmentInterface|null
      */
     const COMMONMARK_ENVIRONMENT_CONFIGURE = 'commonmark_environment_configure';
+
+    /**
+     * Webhook call before event.
+     * Runs before a webhook endpoint is called. Allows for customization
+     * of the data format & content within the webhook POST request.
+     * Provides the original event name as a string (see \BookStack\Actions\ActivityType)
+     * along with the webhook instance along with the event detail which may be a
+     * "Loggable" model type or a string.
+     * If the listener returns a non-null value, that will be used as the POST data instead
+     * of the system default.
+     *
+     * @param string $event
+     * @param \BookStack\Actions\Webhook $webhook
+     * @param string|\BookStack\Interfaces\Loggable $detail
+     */
+    const WEBHOOK_CALL_BEFORE = 'webhook_call_before';
 }
