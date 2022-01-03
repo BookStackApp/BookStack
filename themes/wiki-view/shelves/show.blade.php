@@ -158,12 +158,21 @@
         </div>
     @endif
  
-
-
-
-
-
-
+ 
 
 @stop
 
+
+
+
+@section('left')	   
+	<!--include('entities.tag-list', ['entity' => $shelf])
+	 include('books.parts.list-item', ['bookshelf' => $book, 'style' => 'compact']) -->
+ 
+                        @foreach($sortedVisibleShelfBooks as $book)
+                            @include('shelves.parts.list-item', ['shelves' => $shelf])
+                        @endforeach
+	  
+	  
+
+@stop
