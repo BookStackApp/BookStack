@@ -181,7 +181,7 @@ return [
     'users_external_auth_id_desc' => 'ID použité pro rozpoznání tohoto uživatele když komunikuje s externím přihlašovacím systémem.',
     'users_password_warning' => 'Vyplňujte pouze v případě, že chcete heslo změnit.',
     'users_system_public' => 'Symbolizuje každého nepřihlášeného návštěvníka, který navštívil aplikaci. Nelze ho použít k přihlášení ale je přiřazen automaticky nepřihlášeným.',
-    'users_delete' => 'Smazat uživatele',
+    'users_delete' => 'Odstranit uživatele',
     'users_delete_named' => 'Odstranit uživatele :userName',
     'users_delete_warning' => 'Uživatel \':userName\' bude zcela odstraněn ze systému.',
     'users_delete_confirm' => 'Opravdu chcete tohoto uživatele smazat?',
@@ -246,6 +246,7 @@ return [
     'webhooks_events_warning' => 'Keep in mind that these events will be triggered for all selected events, even if custom permissions are applied. Ensure that use of this webhook won\'t expose confidential content.',
     'webhooks_events_all' => 'Všechny události systému',
     'webhooks_name' => 'Název webhooku',
+    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
     'webhooks_endpoint' => 'Webhook Endpoint',
     'webhooks_active' => 'Webhook aktivní',
     'webhook_events_table_header' => 'Události',
@@ -254,6 +255,11 @@ return [
     'webhooks_delete_confirm' => 'Opravdu chcete odstranit tento webhook?',
     'webhooks_format_example' => 'Příklad formátu webhooku',
     'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
+    'webhooks_status' => 'Webhook Status',
+    'webhooks_last_called' => 'Last Called:',
+    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_last_error_message' => 'Last Error Message:',
+
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
