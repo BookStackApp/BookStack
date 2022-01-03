@@ -3,6 +3,7 @@
 namespace BookStack\Actions;
 
 use BookStack\Interfaces\Loggable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,12 +15,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string     $endpoint
  * @property Collection $trackedEvents
  * @property bool       $active
+ * @property int        $timeout
+ * @property string     $last_error
+ * @property Carbon     $last_called_at
+ * @property Carbon     $last_errored_at
  */
 class Webhook extends Model implements Loggable
 {
-    protected $fillable = ['name', 'endpoint'];
+    protected $fillable = ['name', 'endpoint', 'timeout'];
 
     use HasFactory;
+
+    protected $casts = [
+        'last_called_at'  => 'datetime',
+        'last_errored_at' => 'datetime',
+    ];
 
     /**
      * Define the tracked event relation a webhook.

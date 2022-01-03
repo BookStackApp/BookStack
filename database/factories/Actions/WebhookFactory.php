@@ -20,6 +20,7 @@ class WebhookFactory extends Factory
             'name'     => 'My webhook for ' . $this->faker->country(),
             'endpoint' => $this->faker->url,
             'active'   => true,
+            'timeout'  => 3,
         ];
     }
 }
