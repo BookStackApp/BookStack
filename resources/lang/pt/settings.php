@@ -246,6 +246,7 @@ return [
     'webhooks_events_warning' => 'Keep in mind that these events will be triggered for all selected events, even if custom permissions are applied. Ensure that use of this webhook won\'t expose confidential content.',
     'webhooks_events_all' => 'Todos os eventos do sistema',
     'webhooks_name' => 'Nome do Webhook',
+    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
     'webhooks_endpoint' => 'Endpoint do Webhook',
     'webhooks_active' => 'Webhook ativo',
     'webhook_events_table_header' => 'Eventos',
@@ -254,6 +255,11 @@ return [
     'webhooks_delete_confirm' => 'Tem a certeza que deseja eliminar este webhook?',
     'webhooks_format_example' => 'Exemplo de formato Webhook',
     'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
+    'webhooks_status' => 'Webhook Status',
+    'webhooks_last_called' => 'Last Called:',
+    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_last_error_message' => 'Last Error Message:',
+
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
