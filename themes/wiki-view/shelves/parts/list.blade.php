@@ -3,7 +3,11 @@
     <div class="grid half v-center">
         <h1 class="list-heading">{{ trans('entities.shelves') }}</h1>
         <div class="text-right">
-            @include('entities.sort', ['options' => $sortOptions, 'order' => $order, 'sort' => $sort, 'type' => 'bookshelves'])
+            @include('entities.sort', [
+            'options' => $sortOptions, 
+            'order' => $order, 
+            'sort' => $sort, 
+            'type' => 'bookshelves'])
         </div>
     </div>
 
