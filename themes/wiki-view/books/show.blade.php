@@ -16,7 +16,7 @@
 @section('body')
 
     <div class="mb-s">
-        @include('entities.breadcrumbs', ['crumbs' => [
+        @include('entities.breadcrumbs', ['crumbs' => [ 
             $book,
         ]])
     </div>
@@ -25,6 +25,7 @@
         <h1 class="break-text">{{$book->name}}</h1>
         <div refs="entity-search@contentView" class="book-content">
             <p class="text-muted">{!! nl2br(e($book->description)) !!}</p>
+			     @include('entities.search-form', ['label' => trans('entities.chapters_search_this')])
             @if(count($bookChildren) > 0)
                 <div class="entity-list book-contents">
                     @foreach($bookChildren as $childElement)
@@ -151,8 +152,11 @@
 
 @section('left')
 
-    @include('entities.search-form', ['label' => trans('entities.books_search_this')])
-
+    <!--@include('entities.search-form', ['label' => trans('entities.books_search_this')])-->
+ <!-- Search -->
+     @include('entities.search-form', ['label' => trans('entities.chapters_search_this')])
+	 
+	 
     @if($book->tags->count() > 0)
         <div class="mb-xl">
             @include('entities.tag-list', ['entity' => $book])
@@ -167,30 +171,63 @@
     @endif
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
+                        
 
-   
+	<!-- List shelf tree -->
+		<nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
+            <h5>{{ trans('entities.pages_navigation') }}</h5>
+              <!--  <div class="sidebar-page-nav menu"> -->
+						@include('entities.list', ['entities' => $bookshelfChildren, 'style' => 'compact']) 
+                <!--</div>-->
+        </nav>
  
-        <div refs="entity-search@contentView" class="book-content">
-            @if(count($bookChildren) > 0)
-                <div class="entity-list book-contents">
+  
+        	<!-- List book tree -->
+		<nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
+            <h5>{{ trans('entities.pages_navigation') }}</h5>
+              <!--  <div class="sidebar-page-nav menu"> -->
+						@include('entities.list', ['entities' => $bookChildren, 'style' => 'compact']) 
+                <!--</div>-->
+        </nav>
+ 
+  
+        
+ 
+ 
+ 
+ 
+  
+<!--
+    @if (isset($chapterNav) && count($chapterNav))
+        <nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
+            <h5>{{ trans('entities.pages_navigation') }}</h5>
+            <div class="body">
+                <div class="sidebar-page-nav menu">
+                    @foreach($chapterNav as $navItem)
+                        <li class="page-nav-item h{{ $navItem['level'] }}">
+                            <a href="{{ $navItem['link'] }}" class="text-limit-lines-1 block">{{ $navItem['text'] }}</a>
+                            <div class="primary-background sidebar-page-nav-bullet"></div>
+                        </li>
+                    @endforeach
+                </div>
+            </div>
+        </nav>
+    @endif
+ -->
+<!--
+                include('entities.favourite-action', ['entity' => $chapter])
+       
+                include('entities.export-menu', ['entity' => $chapter])
+
+                include('entities.tag-list', ['entity' => $chapter])
+				
+				include('entities.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+	 -->
+<!--	 
+<nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
+<div class="body"> 
+ <div class="sidebar-page-nav menu"> 
                     @foreach($bookChildren as $childElement)
                         @if($childElement->isA('chapter'))
                             @include('chapters.parts.list-item', ['chapter' => $childElement])
@@ -198,65 +235,10 @@
                             @include('pages.parts.list-item', ['page' => $childElement])
                         @endif
                     @endforeach
-                </div>
-            @else
-                <div class="mt-xl">
-                    <hr>
-                    <p class="text-muted italic mb-m mt-xl">{{ trans('entities.books_empty_contents') }}</p>
-
-                    <div class="icon-list block inline">
-                        @if(userCan('page-create', $book))
-                            <a href="{{ $book->getUrl('/create-page') }}" class="icon-list-item text-page">
-                                <span class="icon">@icon('page')</span>
-                                <span>{{ trans('entities.books_empty_create_page') }}</span>
-                            </a>
-                        @endif
-                        @if(userCan('chapter-create', $book))
-                            <a href="{{ $book->getUrl('/create-chapter') }}" class="icon-list-item text-chapter">
-                                <span class="icon">@icon('chapter')</span>
-                                <span>{{ trans('entities.books_empty_add_chapter') }}</span>
-                            </a>
-                        @endif
-                    </div>
-
-                </div>
-            @endif
-        </div>
-
-        @include('entities.search-results')
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
-  
+		  </div>
+		  </div>
+       </nav>
+  -->
 @stop
 
 
