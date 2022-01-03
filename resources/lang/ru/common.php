@@ -74,6 +74,7 @@ return [
     'status' => 'Состояние',
     'status_active' => 'Активен',
     'status_inactive' => 'Неактивен',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Развернуть меню заголовка',
