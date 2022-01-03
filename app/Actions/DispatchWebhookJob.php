@@ -72,21 +72,31 @@ class DispatchWebhookJob implements ShouldQueue
     {
         $themeResponse = Theme::dispatch(ThemeEvents::WEBHOOK_CALL_BEFORE, $this->event, $this->webhook, $this->detail);
         $webhookData = $themeResponse ?? $this->buildWebhookData();
+        $lastError = null;
 
         try {
             $response = Http::asJson()
                 ->withOptions(['allow_redirects' => ['strict' => true]])
-                ->timeout(3)
+                ->timeout($this->webhook->timeout)
                 ->post($this->webhook->endpoint, $webhookData);
 
         } catch (\Exception $exception) {
-            Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with error \"{$exception->getMessage()}\"");
-            return;
+            $lastError = $exception->getMessage();
+            Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with error \"{$lastError}\"");
         }
 
-        if ($response->failed()) {
+        if (isset($response) && $response->failed()) {
+            $lastError = "Response status from endpoint was {$response->status()}";
             Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with status {$response->status()}");
         }
+
+        $this->webhook->last_called_at = now();
+        if ($lastError) {
+            $this->webhook->last_errored_at = now();
+            $this->webhook->last_error = $lastError;
+        }
+
+        $this->webhook->save();
     }
 
     protected function buildWebhookData(): array

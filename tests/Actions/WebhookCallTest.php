@@ -53,11 +53,16 @@ class WebhookCallTest extends TestCase
         Http::fake([
             '*' => Http::response('', 500),
         ]);
-        $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
+        $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
+        $this->assertNull($webhook->last_errored_at);
 
         $this->runEvent(ActivityType::ROLE_CREATE);
 
         $this->assertTrue($logger->hasError('Webhook call to endpoint https://wh.example.com failed with status 500'));
+
+        $webhook->refresh();
+        $this->assertEquals('Response status from endpoint was 500', $webhook->last_error);
+        $this->assertNotNull($webhook->last_errored_at);
     }
 
     public function test_webhook_call_exception_is_caught_and_logged()
@@ -65,11 +70,16 @@ class WebhookCallTest extends TestCase
         Http::shouldReceive('asJson')->andThrow(new \Exception('Failed to perform request'));
 
         $logger = $this->withTestLogger();
-        $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
+        $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
+        $this->assertNull($webhook->last_errored_at);
 
         $this->runEvent(ActivityType::ROLE_CREATE);
 
         $this->assertTrue($logger->hasError('Webhook call to endpoint https://wh.example.com failed with error "Failed to perform request"'));
+
+        $webhook->refresh();
+        $this->assertEquals('Failed to perform request', $webhook->last_error);
+        $this->assertNotNull($webhook->last_errored_at);
     }
 
     public function test_webhook_call_data_format()

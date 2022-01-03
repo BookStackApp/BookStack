@@ -46,6 +46,7 @@ class WebhookController extends Controller
             'endpoint' => ['required', 'url', 'max:500'],
             'events'   => ['required', 'array'],
             'active'   => ['required'],
+            'timeout'  => ['required', 'integer', 'min:1', 'max:600'],
         ]);
 
         $webhook = new Webhook($validated);
@@ -81,6 +82,7 @@ class WebhookController extends Controller
             'endpoint' => ['required', 'url', 'max:500'],
             'events'   => ['required', 'array'],
             'active'   => ['required'],
+            'timeout'  => ['required', 'integer', 'min:1', 'max:600'],
         ]);
 
         /** @var Webhook $webhook */
