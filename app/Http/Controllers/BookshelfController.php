@@ -118,13 +118,13 @@ class BookshelfController extends Controller
         View::incrementFor($shelf);
         $this->entityContextManager->setShelfContext($shelf->id);
         $view = setting()->getForCurrentUser('bookshelf_view_type');
-        $ListBookShelves = Bookshelf::visible()->get();
+        $bookshelfChildren = Bookshelf::visible()->get();
         
         $this->setPageTitle($shelf->getShortName());
 
         return view('shelves.show', [
             'shelf'                   => $shelf,
-            'ListBookShelves'         => $ListBookShelves,
+            'bookshelfChildren'       => $bookshelfChildren,
             'sortedVisibleShelfBooks' => $sortedVisibleShelfBooks,
             'view'                    => $view,
             'activity'                => $activities->entityActivity($shelf, 20, 1),
