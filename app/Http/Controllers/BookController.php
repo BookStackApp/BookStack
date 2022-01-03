@@ -118,6 +118,7 @@ class BookController extends Controller
         $book = $this->bookRepo->getBySlug($slug);
         $bookChildren = (new BookContents($book))->getTree(true);
         $bookParentShelves = $book->shelves()->scopes('visible')->get();
+        $bookshelfChildren = Bookshelf::visible()->get();
 
         View::incrementFor($book);
         if ($request->has('shelf')) {
@@ -131,6 +132,7 @@ class BookController extends Controller
             'current'           => $book,
             'bookChildren'      => $bookChildren,
             'bookParentShelves' => $bookParentShelves,
+            'bookshelfChildren' => $bookshelfChildren,
             'activity'          => $activities->entityActivity($book, 20, 1),
         ]);
     }
