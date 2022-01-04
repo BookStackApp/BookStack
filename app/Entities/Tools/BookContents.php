@@ -7,7 +7,6 @@ use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use BookStack\Exceptions\SortOperationException;
 use Illuminate\Support\Collection;
 
 class BookContents
@@ -110,34 +109,42 @@ class BookContents
      * Sort the books content using the given sort map.
      * Returns a list of books that were involved in the operation.
      *
-     * @throws SortOperationException
+     * @returns Book[]
      */
-    public function sortUsingMap(BookSortMap $sortMap): Collection
+    public function sortUsingMap(BookSortMap $sortMap): array
     {
         // Load models into map
-        $this->loadModelsIntoSortMap($sortMap);
-        $booksInvolved = $this->getBooksInvolvedInSort($sortMap);
+        $modelMap = $this->loadModelsFromSortMap($sortMap);
 
         // Perform the sort
         foreach ($sortMap->all() as $item) {
-            $this->applySortUpdates($item);
+            $this->applySortUpdates($item, $modelMap);
         }
 
-        // Update permissions and activity.
-        $booksInvolved->each(function (Book $book) {
+        /** @var Book[] $booksInvolved */
+        $booksInvolved = array_values(array_filter($modelMap, function (string $key) {
+            return strpos($key, 'book:') === 0;
+        }, ARRAY_FILTER_USE_KEY));
+
+        // Update permissions of books involved
+        foreach ($booksInvolved as $book) {
             $book->rebuildPermissions();
-        });
+        }
 
         return $booksInvolved;
     }
 
     /**
      * Using the given sort map item, detect changes for the related model
-     * and update it if required.
+     * and update it if required. Changes where permissions are lacking will
+     * be skipped and not throw an error.
+     *
+     * @param array<string, Entity> $modelMap
      */
-    protected function applySortUpdates(BookSortMapItem $sortMapItem): void
+    protected function applySortUpdates(BookSortMapItem $sortMapItem, array $modelMap): void
     {
-        $model = $sortMapItem->model;
+        /** @var BookChild $model */
+        $model = $modelMap[$sortMapItem->type . ':' . $sortMapItem->id] ?? null;
         if (!$model) {
             return;
         }
@@ -146,73 +153,97 @@ class BookContents
         $bookChanged = $model->book_id !== $sortMapItem->parentBookId;
         $chapterChanged = ($model instanceof Page) && $model->chapter_id !== $sortMapItem->parentChapterId;
 
+        // Stop if there's no change
+        if (!$priorityChanged && !$bookChanged && !$chapterChanged) {
+            return;
+        }
+
+        $currentParentKey =  'book:' . $model->book_id;
+        if ($model instanceof Page && $model->chapter_id) {
+             $currentParentKey = 'chapter:' . $model->chapter_id;
+        }
+
+        $currentParent = $modelMap[$currentParentKey];
+        /** @var Book $newBook */
+        $newBook = $modelMap['book:' . $sortMapItem->parentBookId] ?? null;
+        /** @var ?Chapter $newChapter */
+        $newChapter = $sortMapItem->parentChapterId ? ($modelMap['chapter:' . $sortMapItem->parentChapterId] ?? null) : null;
+
+        // Check permissions of our changes to be made
+        if (!$currentParent || !$newBook) {
+            return;
+        } else if (!userCan('chapter-update', $currentParent) && !userCan('book-update', $currentParent)) {
+            return;
+        } else if ($bookChanged && !$newChapter && !userCan('book-update', $newBook)) {
+            return;
+        } else if ($newChapter && !userCan('chapter-update', $newChapter)) {
+            return;
+        } else if (($chapterChanged || $bookChanged) && $newChapter && $newBook->id !== $newChapter->book_id) {
+            return;
+        }
+
+        // Action the required changes
         if ($bookChanged) {
             $model->changeBook($sortMapItem->parentBookId);
         }
 
         if ($chapterChanged) {
-            $model->chapter_id = intval($sortMapItem->parentChapterId);
-            $model->save();
+            $model->chapter_id = $sortMapItem->parentChapterId ?? 0;
         }
 
         if ($priorityChanged) {
             $model->priority = $sortMapItem->sort;
+        }
+
+        if ($chapterChanged || $priorityChanged) {
             $model->save();
         }
     }
 
     /**
      * Load models from the database into the given sort map.
+     * @return array<string, Entity>
      */
-    protected function loadModelsIntoSortMap(BookSortMap $sortMap): void
+    protected function loadModelsFromSortMap(BookSortMap $sortMap): array
     {
-        $collection = collect($sortMap->all());
+        $modelMap = [];
+        $ids = [
+            'chapter' => [],
+            'page' => [],
+            'book' => [],
+        ];
 
-        $keyMap = $collection->keyBy(function (BookSortMapItem $sortMapItem) {
-            return  $sortMapItem->type . ':' . $sortMapItem->id;
-        });
+        foreach ($sortMap->all() as $sortMapItem) {
+            $ids[$sortMapItem->type][] = $sortMapItem->id;
+            $ids['book'][] = $sortMapItem->parentBookId;
+            if ($sortMapItem->parentChapterId) {
+                $ids['chapter'][] = $sortMapItem->parentChapterId;
+            }
+        }
 
-        $pageIds = $collection->where('type', '=', 'page')->pluck('id');
-        $chapterIds = $collection->where('type', '=', 'chapter')->pluck('id');
-
-        $pages = Page::visible()->whereIn('id', $pageIds)->get();
-        $chapters = Chapter::visible()->whereIn('id', $chapterIds)->get();
-
+        $pages = Page::visible()->whereIn('id', array_unique($ids['page']))->get(Page::$listAttributes);
+        /** @var Page $page */
         foreach ($pages as $page) {
-            /** @var BookSortMapItem $sortItem */
-            $sortItem = $keyMap->get('page:' . $page->id);
-            $sortItem->model = $page;
+            $modelMap['page:' . $page->id] = $page;
+            $ids['book'][] = $page->book_id;
+            if ($page->chapter_id) {
+                $ids['chapter'][] = $page->chapter_id;
+            }
         }
 
+        $chapters = Chapter::visible()->whereIn('id', array_unique($ids['chapter']))->get();
+        /** @var Chapter $chapter */
         foreach ($chapters as $chapter) {
-            /** @var BookSortMapItem $sortItem */
-            $sortItem = $keyMap->get('chapter:' . $chapter->id);
-            $sortItem->model = $chapter;
-        }
-    }
-
-    /**
-     * Get the books involved in a sort.
-     * The given sort map should have its models loaded first.
-     *
-     * @throws SortOperationException
-     */
-    protected function getBooksInvolvedInSort(BookSortMap $sortMap): Collection
-    {
-        $collection = collect($sortMap->all());
-
-        $bookIdsInvolved = array_unique(array_merge(
-            [$this->book->id],
-            $collection->pluck('parentBookId')->values()->all(),
-            $collection->pluck('model.book_id')->values()->all(),
-        ));
-        
-        $books = Book::hasPermission('update')->whereIn('id', $bookIdsInvolved)->get();
-
-        if (count($books) !== count($bookIdsInvolved)) {
-            throw new SortOperationException('Could not find all books requested in sort operation');
+            $modelMap['chapter:' . $chapter->id] = $chapter;
+            $ids['book'][] = $chapter->book_id;
         }
 
-        return $books;
+        $books = Book::visible()->whereIn('id', array_unique($ids['book']))->get();
+        /** @var Book $book */
+        foreach ($books as $book) {
+            $modelMap['book:' . $book->id] = $book;
+        }
+
+        return $modelMap;
     }
 }
