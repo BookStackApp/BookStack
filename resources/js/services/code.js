@@ -211,9 +211,9 @@ function wysiwygView(elem) {
     const doc = elem.ownerDocument;
     const codeElem = elem.querySelector('code');
 
-    let lang = (elem.className || '').replace('language-', '');
-    if (lang === '' && codeElem) {
-        lang = (codeElem.className || '').replace('language-', '')
+    let lang = getLanguageFromCssClasses(elem.className || '');
+    if (!lang && codeElem) {
+        lang = getLanguageFromCssClasses(codeElem.className || '');
     }
 
     elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
@@ -228,7 +228,7 @@ function wysiwygView(elem) {
     elem.parentNode.replaceChild(newWrap, elem);
 
     newWrap.appendChild(newTextArea);
-    newWrap.contentEditable = false;
+    newWrap.contentEditable = 'false';
     newTextArea.textContent = content;
 
     let cm = CodeMirror(function(elt) {
@@ -243,6 +243,16 @@ function wysiwygView(elem) {
     });
 
     return {wrap: newWrap, editor: cm};
+}
+
+/**
+ * Get the code language from the given css classes.
+ * @param {String} classes
+ * @return {String}
+ */
+function getLanguageFromCssClasses(classes) {
+    const langClasses = classes.split(' ').filter(cssClass => cssClass.startsWith('language-'));
+    return (langClasses[0] || '').replace('language-', '');
 }
 
 /**
