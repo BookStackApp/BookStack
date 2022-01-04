@@ -246,7 +246,7 @@ return [
     'webhooks_events_warning' => 'Tenga en cuenta que estos eventos se activarán para todos los eventos seleccionados, incluso si se aplican permisos personalizados. Asegúrese de que el uso de este webhook no exponga contenido confidencial.',
     'webhooks_events_all' => 'Todos los eventos del sistema',
     'webhooks_name' => 'Nombre del Webhook',
-    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_timeout' => 'Tiempo de Espera de Webhook (Segundos)',
     'webhooks_endpoint' => 'Punto final del Webhook',
     'webhooks_active' => 'Webhook Activo',
     'webhook_events_table_header' => 'Eventos',
@@ -255,10 +255,10 @@ return [
     'webhooks_delete_confirm' => '¿Seguro que quieres eliminar este webhook?',
     'webhooks_format_example' => 'Ejemplo de Formato de Webhook',
     'webhooks_format_example_desc' => 'Los datos del Webhook se envían como una solicitud POST al punto final configurado como JSON siguiendo el formato mostrado a continuación. Las propiedades "related_item" y "url" son opcionales y dependerán del tipo de evento activado.',
-    'webhooks_status' => 'Webhook Status',
-    'webhooks_last_called' => 'Last Called:',
-    'webhooks_last_errored' => 'Last Errored:',
-    'webhooks_last_error_message' => 'Last Error Message:',
+    'webhooks_status' => 'Estado del Webhook',
+    'webhooks_last_called' => 'Última Ejecución:',
+    'webhooks_last_errored' => 'Último error:',
+    'webhooks_last_error_message' => 'Último mensaje de error:',
 
 
     //! If editing translations files directly please ignore this in all
