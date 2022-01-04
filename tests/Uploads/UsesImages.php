@@ -4,6 +4,7 @@ namespace Tests\Uploads;
 
 use BookStack\Entities\Models\Page;
 use Illuminate\Http\UploadedFile;
+use stdClass;
 
 trait UsesImages
 {
@@ -85,7 +86,7 @@ trait UsesImages
      *
      * @param Page|null $page
      *
-     * @return array
+     * @return array{name: string, path: string, page: Page, response: stdClass}
      */
     protected function uploadGalleryImage(Page $page = null, ?string $testDataFileName = null)
     {
