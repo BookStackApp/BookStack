@@ -29,6 +29,8 @@ class MfaBackupCodesController extends Controller
 
         $downloadUrl = 'data:application/octet-stream;base64,' . base64_encode(implode("\n\n", $codes));
 
+        $this->setPageTitle(trans('auth.mfa_gen_backup_codes_title'));
+
         return view('mfa.backup-codes-generate', [
             'codes'       => $codes,
             'downloadUrl' => $downloadUrl,

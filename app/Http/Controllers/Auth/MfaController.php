@@ -21,6 +21,8 @@ class MfaController extends Controller
             ->get(['id', 'method'])
             ->groupBy('method');
 
+        $this->setPageTitle(trans('auth.mfa_setup'));
+
         return view('mfa.setup', [
             'userMethods' => $userMethods,
         ]);

@@ -18,6 +18,8 @@ class UserProfileController extends Controller
         $recentlyCreated = $repo->getRecentlyCreated($user, 5);
         $assetCounts = $repo->getAssetCounts($user);
 
+        $this->setPageTitle($user->name);
+
         return view('users.profile', [
             'user'            => $user,
             'activity'        => $userActivity,

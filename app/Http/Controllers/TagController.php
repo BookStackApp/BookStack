@@ -32,6 +32,8 @@ class TagController extends Controller
                 'name'   => $nameFilter,
             ]));
 
+        $this->setPageTitle(trans('entities.tags'));
+
         return view('tags.index', [
             'tags'       => $tags,
             'search'     => $search,
