@@ -7,6 +7,8 @@ class EntitySelectorPopup {
     setup() {
         this.elem = this.$el;
         this.selectButton = this.$refs.select;
+        this.searchInput = this.$refs.searchInput;
+
         window.EntitySelectorPopup = this;
 
         this.callback = null;
@@ -20,6 +22,7 @@ class EntitySelectorPopup {
     show(callback) {
         this.callback = callback;
         this.elem.components.popup.show();
+        this.searchInput.focus();
     }
 
     hide() {
