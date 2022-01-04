@@ -246,7 +246,7 @@ return [
     'webhooks_events_warning' => 'Pea meeles, et veebihaak käivitatakse kõigi valitud sündmuste peale, isegi kui on seatud kohandatud õigused. Hoolitse selle eest, et veebihaak ei teeks avalikuks konfidentsiaalset sisu.',
     'webhooks_events_all' => 'Kõik süsteemsed sündmused',
     'webhooks_name' => 'Veebihaagi nimi',
-    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_timeout' => 'Veebihaagi päringu aegumine (sekundit)',
     'webhooks_endpoint' => 'Veebihaagi lõpp-punkt',
     'webhooks_active' => 'Veebihaak aktiivne',
     'webhook_events_table_header' => 'Sündmused',
@@ -255,10 +255,10 @@ return [
     'webhooks_delete_confirm' => 'Kas oled kindel, et soovid selle veebihaagi kustutada?',
     'webhooks_format_example' => 'Veebihaagi formaadi näidis',
     'webhooks_format_example_desc' => 'Veebihaagi andmed saadetakse POST-päringuga seadistatud lõpp-punktile allpool toodud JSON-formaadis. Omadused "related_item" ja "url" on valikulised ja sõltuvad sündmusest, mis veebihaagi käivitas.',
-    'webhooks_status' => 'Webhook Status',
-    'webhooks_last_called' => 'Last Called:',
-    'webhooks_last_errored' => 'Last Errored:',
-    'webhooks_last_error_message' => 'Last Error Message:',
+    'webhooks_status' => 'Veebihaagi staatus',
+    'webhooks_last_called' => 'Viimati käivitatud:',
+    'webhooks_last_errored' => 'Viimati ebaõnnestunud:',
+    'webhooks_last_error_message' => 'Viimane veateade:',
 
 
     //! If editing translations files directly please ignore this in all
