@@ -17,6 +17,7 @@ class WebSafeMimeSniffer
         'application/json',
         'application/octet-stream',
         'application/pdf',
+        'image/apng',
         'image/bmp',
         'image/jpeg',
         'image/png',

@@ -3,6 +3,7 @@
 namespace BookStack\Uploads;
 
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Util\WebSafeMimeSniffer;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
@@ -229,6 +230,20 @@ class ImageService
     }
 
     /**
+     * Check if the given image and image data is apng.
+     */
+    protected function isApngData(Image $image, string &$imageData): bool
+    {
+        $isPng = strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'png';
+        if (!$isPng) {
+            return false;
+        }
+
+        $initialHeader = substr($imageData, 0, strpos($imageData, 'IDAT'));
+        return strpos($initialHeader, 'acTL') !== false;
+    }
+
+    /**
      * Get the thumbnail for an image.
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
@@ -238,6 +253,7 @@ class ImageService
      */
     public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false): string
     {
+        // Do not resize GIF images where we're not cropping
         if ($keepRatio && $this->isGif($image)) {
             return $this->getPublicUrl($image->path);
         }
@@ -246,19 +262,33 @@ class ImageService
         $imagePath = $image->path;
         $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
 
-        if ($this->cache->has('images-' . $image->id . '-' . $thumbFilePath) && $this->cache->get('images-' . $thumbFilePath)) {
-            return $this->getPublicUrl($thumbFilePath);
+        $thumbCacheKey = 'images::' . $image->id . '::' . $thumbFilePath;
+
+        // Return path if in cache
+        $cachedThumbPath = $this->cache->get($thumbCacheKey);
+        if ($cachedThumbPath) {
+            return $this->getPublicUrl($cachedThumbPath);
         }
 
+        // If thumbnail has already been generated, serve that and cache path
         $storage = $this->getStorageDisk($image->type);
         if ($storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
+            $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
             return $this->getPublicUrl($thumbFilePath);
         }
 
-        $thumbData = $this->resizeImage($storage->get($this->adjustPathForStorageDisk($imagePath, $image->type)), $width, $height, $keepRatio);
+        $imageData = $storage->get($this->adjustPathForStorageDisk($imagePath, $image->type));
 
+        // Do not resize apng images where we're not cropping
+        if ($keepRatio && $this->isApngData($image, $imageData)) {
+            $this->cache->put($thumbCacheKey, $image->path, 60 * 60 * 72);
+            return $this->getPublicUrl($image->path);
+        }
+
+        // If not in cache and thumbnail does not exist, generate thumb and cache path
+        $thumbData = $this->resizeImage($imageData, $width, $height, $keepRatio);
         $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($thumbFilePath, $image->type), $thumbData);
-        $this->cache->put('images-' . $image->id . '-' . $thumbFilePath, $thumbFilePath, 60 * 60 * 72);
+        $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
 
         return $this->getPublicUrl($thumbFilePath);
     }

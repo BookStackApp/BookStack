@@ -61,6 +61,19 @@ class ImageTest extends TestCase
         $this->assertEquals($originalFileSize, $displayFileSize, 'Display thumbnail generation should not increase image size');
     }
 
+    public function test_image_display_thumbnail_generation_for_apng_images_uses_original_file()
+    {
+        $page = Page::query()->first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $imgDetails = $this->uploadGalleryImage($page, 'animated.png');
+        $this->deleteImage($imgDetails['path']);
+
+        $this->assertStringContainsString('thumbs-', $imgDetails['response']->thumbs->gallery);
+        $this->assertStringNotContainsString('thumbs-', $imgDetails['response']->thumbs->display);
+    }
+
     public function test_image_edit()
     {
         $editor = $this->getEditor();
