@@ -2,8 +2,6 @@
 
 namespace BookStack\Entities\Tools;
 
-use BookStack\Entities\Models\BookChild;
-
 class BookSortMapItem
 {
 
@@ -31,11 +29,6 @@ class BookSortMapItem
      * @var int
      */
     public $parentBookId;
-
-    /**
-     * @var ?BookChild
-     */
-    public $model = null;
 
 
     public function __construct(int $id, int $sort, ?int $parentChapterId, string $type, int $parentBookId)
