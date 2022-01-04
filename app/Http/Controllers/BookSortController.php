@@ -6,6 +6,7 @@ use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\BookSortMap;
 use BookStack\Exceptions\SortOperationException;
 use BookStack\Facades\Activity;
 use Illuminate\Http\Request;
@@ -59,7 +60,7 @@ class BookSortController extends Controller
             return redirect($book->getUrl());
         }
 
-        $sortMap = collect(json_decode($request->get('sort-tree')));
+        $sortMap = BookSortMap::fromJson($request->get('sort-tree'));
         $bookContents = new BookContents($book);
         $booksInvolved = collect();
 
