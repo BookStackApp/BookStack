@@ -670,51 +670,6 @@ class EntityPermissionsTest extends TestCase
         $this->actingAs($this->user)->get($firstBook->getUrl('/sort'));
     }
 
-    public function test_book_sort_permission()
-    {
-        /** @var Book $firstBook */
-        $firstBook = Book::query()->first();
-        /** @var Book $secondBook */
-        $secondBook = Book::query()->find(2);
-
-        $this->setRestrictionsForTestRoles($firstBook, ['view', 'update']);
-        $this->setRestrictionsForTestRoles($secondBook, ['view']);
-
-        $firstBookChapter = $this->newChapter(['name' => 'first book chapter'], $firstBook);
-        $secondBookChapter = $this->newChapter(['name' => 'second book chapter'], $secondBook);
-
-        // Create request data
-        $reqData = [
-            [
-                'id'            => $firstBookChapter->id,
-                'sort'          => 0,
-                'parentChapter' => false,
-                'type'          => 'chapter',
-                'book'          => $secondBook->id,
-            ],
-        ];
-
-        // Move chapter from first book to a second book
-        $this->actingAs($this->user)->put($firstBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)])
-            ->assertRedirect('/');
-        $this->get('/')->assertSee('You do not have permission');
-
-        $reqData = [
-            [
-                'id'            => $secondBookChapter->id,
-                'sort'          => 0,
-                'parentChapter' => false,
-                'type'          => 'chapter',
-                'book'          => $firstBook->id,
-            ],
-        ];
-
-        // Move chapter from second book to first book
-        $this->actingAs($this->user)->put($firstBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)])
-                ->assertRedirect('/');
-        $this->get('/')->assertSee('You do not have permission');
-    }
-
     public function test_can_create_page_if_chapter_has_permissions_when_book_not_visible()
     {
         /** @var Book $book */
