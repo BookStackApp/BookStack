@@ -239,20 +239,20 @@ class SortTest extends TestCase
         // Create request data
         $reqData = [
             [
-                'id'            => $chapterToMove->id,
-                'sort'          => 0,
+                'id' => $chapterToMove->id,
+                'sort' => 0,
                 'parentChapter' => false,
-                'type'          => 'chapter',
-                'book'          => $newBook->id,
+                'type' => 'chapter',
+                'book' => $newBook->id,
             ],
         ];
         foreach ($pagesToMove as $index => $page) {
             $reqData[] = [
-                'id'            => $page->id,
-                'sort'          => $index,
+                'id' => $page->id,
+                'sort' => $index,
                 'parentChapter' => $index === count($pagesToMove) - 1 ? $chapterToMove->id : false,
-                'type'          => 'page',
-                'book'          => $newBook->id,
+                'type' => 'page',
+                'book' => $newBook->id,
             ];
         }
 
@@ -260,16 +260,81 @@ class SortTest extends TestCase
         $sortResp->assertRedirect($newBook->getUrl());
         $sortResp->assertStatus(302);
         $this->assertDatabaseHas('chapters', [
-            'id'       => $chapterToMove->id,
-            'book_id'  => $newBook->id,
+            'id' => $chapterToMove->id,
+            'book_id' => $newBook->id,
             'priority' => 0,
         ]);
         $this->assertTrue($newBook->chapters()->count() === 1);
         $this->assertTrue($newBook->chapters()->first()->pages()->count() === 1);
 
         $checkPage = $pagesToMove[1];
-        $checkResp = $this->get(Page::find($checkPage->id)->getUrl());
+        $checkResp = $this->get($checkPage->refresh()->getUrl());
         $checkResp->assertSee($newBook->name);
+    }
+
+    public function test_book_sort_makes_no_changes_if_new_chapter_does_not_align_with_new_book()
+    {
+        /** @var Page $page */
+        $page = Page::query()->where('chapter_id', '!=', 0)->first();
+        $otherChapter = Chapter::query()->where('book_id', '!=', $page->book_id)->first();
+
+        $sortData = [
+            'id' => $page->id,
+            'sort' => 0,
+            'parentChapter' => $otherChapter->id,
+            'type' => 'page',
+            'book' => $page->book_id,
+        ];
+        $this->asEditor()->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
+
+        $this->assertDatabaseHas('pages', [
+            'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
+        ]);
+    }
+
+    public function test_book_sort_makes_no_changes_if_no_view_permissions_on_new_chapter()
+    {
+        /** @var Page $page */
+        $page = Page::query()->where('chapter_id', '!=', 0)->first();
+        /** @var Chapter $otherChapter */
+        $otherChapter = Chapter::query()->where('book_id', '!=', $page->book_id)->first();
+        $this->setEntityRestrictions($otherChapter);
+
+        $sortData = [
+            'id' => $page->id,
+            'sort' => 0,
+            'parentChapter' => $otherChapter->id,
+            'type' => 'page',
+            'book' => $otherChapter->book_id,
+        ];
+        $this->asEditor()->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
+
+        $this->assertDatabaseHas('pages', [
+            'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
+        ]);
+    }
+
+    public function test_book_sort_makes_no_changes_if_no_update_permissions_on_new_chapter()
+    {
+        /** @var Page $page */
+        $page = Page::query()->where('chapter_id', '!=', 0)->first();
+        /** @var Chapter $otherChapter */
+        $otherChapter = Chapter::query()->where('book_id', '!=', $page->book_id)->first();
+        $editor = $this->getEditor();
+        $this->setEntityRestrictions($otherChapter, ['view'], [$editor->roles()->first()]);
+
+        $sortData = [
+            'id' => $page->id,
+            'sort' => 0,
+            'parentChapter' => $otherChapter->id,
+            'type' => 'page',
+            'book' => $otherChapter->book_id,
+        ];
+        $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
+
+        $this->assertDatabaseHas('pages', [
+            'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
+        ]);
     }
 
     public function test_book_sort_item_returns_book_content()
