@@ -116,8 +116,17 @@ class BookContents
         // Load models into map
         $modelMap = $this->loadModelsFromSortMap($sortMap);
 
+        // Sort our changes from our map to be chapters first
+        // Since they need to be process to ensure book alignment for child page changes.
+        $sortMapItems = $sortMap->all();
+        usort($sortMapItems, function(BookSortMapItem $itemA, BookSortMapItem $itemB) {
+            $aScore = $itemA->type === 'page' ? 2 : 1;
+            $bScore = $itemB->type === 'page' ? 2 : 1;
+            return $aScore - $bScore;
+        });
+
         // Perform the sort
-        foreach ($sortMap->all() as $item) {
+        foreach ($sortMapItems as $item) {
             $this->applySortUpdates($item, $modelMap);
         }
 
@@ -163,32 +172,23 @@ class BookContents
              $currentParentKey = 'chapter:' . $model->chapter_id;
         }
 
-        $currentParent = $modelMap[$currentParentKey];
+        $currentParent = $modelMap[$currentParentKey] ?? null;
         /** @var Book $newBook */
-        $newBook = $modelMap['book:' . $sortMapItem->parentBookId] ?? null;
+        $newBook = $modelMap['book:' . $sortMapItem->parentBookId];
         /** @var ?Chapter $newChapter */
         $newChapter = $sortMapItem->parentChapterId ? ($modelMap['chapter:' . $sortMapItem->parentChapterId] ?? null) : null;
 
-        // Check permissions of our changes to be made
-        if (!$currentParent || !$newBook) {
-            return;
-        } else if (!userCan('chapter-update', $currentParent) && !userCan('book-update', $currentParent)) {
-            return;
-        } else if ($bookChanged && !$newChapter && !userCan('book-update', $newBook)) {
-            return;
-        } else if ($newChapter && !userCan('chapter-update', $newChapter)) {
-            return;
-        } else if (($chapterChanged || $bookChanged) && $newChapter && $newBook->id !== $newChapter->book_id) {
+        if (!$this->isSortChangePermissible($sortMapItem, $model, $currentParent, $newBook, $newChapter)) {
             return;
         }
 
         // Action the required changes
         if ($bookChanged) {
-            $model->changeBook($sortMapItem->parentBookId);
+            $model->changeBook($newBook->id);
         }
 
         if ($chapterChanged) {
-            $model->chapter_id = $sortMapItem->parentChapterId ?? 0;
+            $model->chapter_id = $newChapter->id ?? 0;
         }
 
         if ($priorityChanged) {
@@ -198,6 +198,51 @@ class BookContents
         if ($chapterChanged || $priorityChanged) {
             $model->save();
         }
+    }
+
+    /**
+     * Check if the current user has permissions to apply the given sorting change.
+     */
+    protected function isSortChangePermissible(BookSortMapItem $sortMapItem, Entity $model, ?Entity $currentParent, ?Entity $newBook, ?Entity $newChapter): bool
+    {
+        // TODO - Move operations check for create permissions, Needs these also/instead?
+
+        // Stop if we can't see the current parent or new book.
+        if (!$currentParent || !$newBook) {
+            return false;
+        }
+
+        if ($model instanceof Chapter) {
+            $hasPermission = userCan('book-update', $currentParent)
+                && userCan('book-update', $newBook);
+            if (!$hasPermission) {
+                return false;
+            }
+        }
+
+        if ($model instanceof Page) {
+            $parentPermission = ($currentParent instanceof Chapter) ? 'chapter-update' : 'book-update';
+            $hasCurrentParentPermission = userCan($parentPermission, $currentParent);
+
+            // This needs to check if there was an intended chapter location in the original sort map
+            // rather than inferring from the $newChapter since that variable may be null
+            // due to other reasons (Visibility).
+            $newParent = $sortMapItem->parentChapterId ? $newChapter : $newBook;
+            if (!$newParent) {
+                return false;
+            }
+
+            $newParentInRightLocation = ($newParent instanceof Book || $newParent->book_id === $newBook->id);
+            $newParentPermission = ($newParent instanceof Chapter) ? 'chapter-update' : 'book-update';
+            $hasNewParentPermission = userCan($newParentPermission, $newParent);
+
+            $hasPermission = $hasCurrentParentPermission && $newParentInRightLocation && $hasNewParentPermission;
+            if (!$hasPermission) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
