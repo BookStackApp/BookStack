@@ -94,6 +94,8 @@ class ChapterRepo
             throw new MoveOperationException('Book to move chapter into not found');
         }
 
+        // TODO - Check create permissions for new parent?
+
         $chapter->changeBook($parent->id);
         $chapter->rebuildPermissions();
         Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
