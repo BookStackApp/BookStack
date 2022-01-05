@@ -174,7 +174,7 @@ class BookContents
 
         $currentParent = $modelMap[$currentParentKey] ?? null;
         /** @var Book $newBook */
-        $newBook = $modelMap['book:' . $sortMapItem->parentBookId];
+        $newBook = $modelMap['book:' . $sortMapItem->parentBookId] ?? null;
         /** @var ?Chapter $newChapter */
         $newChapter = $sortMapItem->parentChapterId ? ($modelMap['chapter:' . $sortMapItem->parentChapterId] ?? null) : null;
 
@@ -202,19 +202,27 @@ class BookContents
 
     /**
      * Check if the current user has permissions to apply the given sorting change.
+     * Is quite complex since items can gain a different parent change. Acts as a:
+     * - Update of old parent element (Change of content/order).
+     * - Update of sorted/moved element.
+     * - Deletion of element (Relative to parent upon move).
+     * - Creation of element within parent (Upon move to new parent).
      */
-    protected function isSortChangePermissible(BookSortMapItem $sortMapItem, Entity $model, ?Entity $currentParent, ?Entity $newBook, ?Entity $newChapter): bool
+    protected function isSortChangePermissible(BookSortMapItem $sortMapItem, BookChild $model, ?Entity $currentParent, ?Entity $newBook, ?Entity $newChapter): bool
     {
-        // TODO - Move operations check for create permissions, Needs these also/instead?
-
         // Stop if we can't see the current parent or new book.
         if (!$currentParent || !$newBook) {
             return false;
         }
 
+        $hasNewParent = $newBook->id !== $model->book_id || ($model instanceof Page && $model->chapter_id !== ($sortMapItem->parentChapterId ?? 0));
         if ($model instanceof Chapter) {
             $hasPermission = userCan('book-update', $currentParent)
-                && userCan('book-update', $newBook);
+                && userCan('book-update', $newBook)
+                && userCan('chapter-update', $model)
+                && (!$hasNewParent || userCan('chapter-create', $newBook))
+                && (!$hasNewParent || userCan('chapter-delete', $model));
+
             if (!$hasPermission) {
                 return false;
             }
@@ -232,11 +240,21 @@ class BookContents
                 return false;
             }
 
+            $hasPageEditPermission = userCan('page-update', $model);
             $newParentInRightLocation = ($newParent instanceof Book || $newParent->book_id === $newBook->id);
             $newParentPermission = ($newParent instanceof Chapter) ? 'chapter-update' : 'book-update';
             $hasNewParentPermission = userCan($newParentPermission, $newParent);
 
-            $hasPermission = $hasCurrentParentPermission && $newParentInRightLocation && $hasNewParentPermission;
+            $hasDeletePermissionIfMoving = (!$hasNewParent || userCan('page-delete', $model));
+            $hasCreatePermissionIfMoving = (!$hasNewParent || userCan('page-create', $newParent));
+
+            $hasPermission = $hasCurrentParentPermission
+                && $newParentInRightLocation
+                && $hasNewParentPermission
+                && $hasPageEditPermission
+                && $hasDeletePermissionIfMoving
+                && $hasCreatePermissionIfMoving;
+
             if (!$hasPermission) {
                 return false;
             }

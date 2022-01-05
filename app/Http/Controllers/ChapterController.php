@@ -178,6 +178,8 @@ class ChapterController extends Controller
             return redirect($chapter->getUrl());
         }
 
+        // TODO - Check permissions against pages
+
         try {
             $newBook = $this->chapterRepo->move($chapter, $entitySelection);
         } catch (MoveOperationException $exception) {
