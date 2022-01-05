@@ -246,7 +246,7 @@ return [
     'webhooks_events_warning' => '请记住，即使应用了自定义权限，所有选定的事件也仍然会被触发。 确保使用此 webhook 不会泄露机密内容。',
     'webhooks_events_all' => '所有系统事件',
     'webhooks_name' => 'Webhook 名称',
-    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_timeout' => 'Webhook 请求超时（秒）',
     'webhooks_endpoint' => 'Webhook Endpoint',
     'webhooks_active' => '激活 Webhook',
     'webhook_events_table_header' => '事件',
@@ -255,10 +255,10 @@ return [
     'webhooks_delete_confirm' => '您确定要删除此 Webhook 吗？',
     'webhooks_format_example' => 'Webhook 格式示例',
     'webhooks_format_example_desc' => 'Webhook 数据会用 POST 请求按照以下 JSON 格式发送到设置的 endpoint。 “related_item” 和 “url” 属性是可选的，取决于触发的事件类型。',
-    'webhooks_status' => 'Webhook Status',
-    'webhooks_last_called' => 'Last Called:',
-    'webhooks_last_errored' => 'Last Errored:',
-    'webhooks_last_error_message' => 'Last Error Message:',
+    'webhooks_status' => 'Webhook 状态',
+    'webhooks_last_called' => '最后一次调用：',
+    'webhooks_last_errored' => '最后一个错误：',
+    'webhooks_last_error_message' => '最后一个错误消息：',
 
 
     //! If editing translations files directly please ignore this in all
