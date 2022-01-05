@@ -412,11 +412,9 @@ class PageController extends Controller
 
         try {
             $parent = $this->pageRepo->move($page, $entitySelection);
+        } catch (PermissionsException $exception) {
+            $this->showPermissionError();
         } catch (Exception $exception) {
-            if ($exception instanceof PermissionsException) {
-                $this->showPermissionError();
-            }
-
             $this->showErrorNotification(trans('errors.selected_book_chapter_not_found'));
 
             return redirect()->back();

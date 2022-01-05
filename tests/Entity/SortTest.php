@@ -198,6 +198,31 @@ class SortTest extends TestCase
         $this->assertTrue($chapter->book->id == $newBook->id, 'Page book is now the new book');
     }
 
+    public function test_chapter_move_requires_create_permissions_in_new_book()
+    {
+        $chapter = Chapter::query()->first();
+        $currentBook = $chapter->book;
+        $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
+        $editor = $this->getEditor();
+
+        $this->setEntityRestrictions($newBook, ['view', 'update', 'delete'], [$editor->roles->first()]);
+        $this->setEntityRestrictions($chapter, ['view', 'update', 'create', 'delete'], [$editor->roles->first()]);
+
+        $moveChapterResp = $this->actingAs($editor)->put($chapter->getUrl('/move'), [
+            'entity_selection' => 'book:' . $newBook->id,
+        ]);
+        $this->assertPermissionError($moveChapterResp);
+
+        $this->setEntityRestrictions($newBook, ['view', 'update', 'create', 'delete'], [$editor->roles->first()]);
+        $moveChapterResp = $this->put($chapter->getUrl('/move'), [
+            'entity_selection' => 'book:' . $newBook->id,
+        ]);
+
+        $chapter = Chapter::query()->find($chapter->id);
+        $moveChapterResp->assertRedirect($chapter->getUrl());
+        $this->assertTrue($chapter->book->id == $newBook->id, 'Page book is now the new book');
+    }
+
     public function test_chapter_move_changes_book_for_deleted_pages_within()
     {
         /** @var Chapter $chapter */

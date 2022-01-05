@@ -10,6 +10,7 @@ use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
 use Exception;
 
@@ -85,16 +86,18 @@ class ChapterRepo
      * 'book:<id>' (book:5).
      *
      * @throws MoveOperationException
+     * @throws PermissionsException
      */
     public function move(Chapter $chapter, string $parentIdentifier): Book
     {
-        /** @var Book $parent */
         $parent = $this->findParentByIdentifier($parentIdentifier);
         if (is_null($parent)) {
             throw new MoveOperationException('Book to move chapter into not found');
         }
 
-        // TODO - Check create permissions for new parent?
+        if (!userCan('chapter-create', $parent)) {
+            throw new PermissionsException('User does not have permission to create a chapter within the chosen book');
+        }
 
         $chapter->changeBook($parent->id);
         $chapter->rebuildPermissions();

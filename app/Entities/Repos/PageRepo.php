@@ -328,7 +328,7 @@ class PageRepo
     public function move(Page $page, string $parentIdentifier): Entity
     {
         $parent = $this->findParentByIdentifier($parentIdentifier);
-        if ($parent === null) {
+        if (is_null($parent)) {
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
 
