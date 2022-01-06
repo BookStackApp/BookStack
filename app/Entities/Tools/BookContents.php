@@ -119,9 +119,10 @@ class BookContents
         // Sort our changes from our map to be chapters first
         // Since they need to be process to ensure book alignment for child page changes.
         $sortMapItems = $sortMap->all();
-        usort($sortMapItems, function(BookSortMapItem $itemA, BookSortMapItem $itemB) {
+        usort($sortMapItems, function (BookSortMapItem $itemA, BookSortMapItem $itemB) {
             $aScore = $itemA->type === 'page' ? 2 : 1;
             $bScore = $itemB->type === 'page' ? 2 : 1;
+
             return $aScore - $bScore;
         });
 
@@ -167,9 +168,9 @@ class BookContents
             return;
         }
 
-        $currentParentKey =  'book:' . $model->book_id;
+        $currentParentKey = 'book:' . $model->book_id;
         if ($model instanceof Page && $model->chapter_id) {
-             $currentParentKey = 'chapter:' . $model->chapter_id;
+            $currentParentKey = 'chapter:' . $model->chapter_id;
         }
 
         $currentParent = $modelMap[$currentParentKey] ?? null;
@@ -265,6 +266,7 @@ class BookContents
 
     /**
      * Load models from the database into the given sort map.
+     *
      * @return array<string, Entity>
      */
     protected function loadModelsFromSortMap(BookSortMap $sortMap): array
@@ -272,8 +274,8 @@ class BookContents
         $modelMap = [];
         $ids = [
             'chapter' => [],
-            'page' => [],
-            'book' => [],
+            'page'    => [],
+            'book'    => [],
         ];
 
         foreach ($sortMap->all() as $sortMapItem) {

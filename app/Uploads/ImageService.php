@@ -3,7 +3,6 @@
 namespace BookStack\Uploads;
 
 use BookStack\Exceptions\ImageUploadException;
-use BookStack\Util\WebSafeMimeSniffer;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
@@ -240,6 +239,7 @@ class ImageService
         }
 
         $initialHeader = substr($imageData, 0, strpos($imageData, 'IDAT'));
+
         return strpos($initialHeader, 'acTL') !== false;
     }
 
@@ -274,6 +274,7 @@ class ImageService
         $storage = $this->getStorageDisk($image->type);
         if ($storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
             $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
+
             return $this->getPublicUrl($thumbFilePath);
         }
 
@@ -282,6 +283,7 @@ class ImageService
         // Do not resize apng images where we're not cropping
         if ($keepRatio && $this->isApngData($image, $imageData)) {
             $this->cache->put($thumbCacheKey, $image->path, 60 * 60 * 72);
+
             return $this->getPublicUrl($image->path);
         }
 

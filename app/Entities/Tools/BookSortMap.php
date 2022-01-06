@@ -41,5 +41,4 @@ class BookSortMap
 
         return $map;
     }
-
 }

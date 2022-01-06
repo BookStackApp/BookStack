@@ -30,6 +30,7 @@ class RoleController extends Controller
         $roles = $this->permissionsRepo->getAllRoles();
 
         $this->setPageTitle(trans('settings.roles'));
+
         return view('settings.roles.index', ['roles' => $roles]);
     }
 
@@ -51,6 +52,7 @@ class RoleController extends Controller
         }
 
         $this->setPageTitle(trans('settings.role_create'));
+
         return view('settings.roles.create', ['role' => $role]);
     }
 
@@ -85,6 +87,7 @@ class RoleController extends Controller
         }
 
         $this->setPageTitle(trans('settings.role_edit'));
+
         return view('settings.roles.edit', ['role' => $role]);
     }
 
@@ -120,6 +123,7 @@ class RoleController extends Controller
         $roles->prepend($blankRole);
 
         $this->setPageTitle(trans('settings.role_delete'));
+
         return view('settings.roles.delete', ['role' => $role, 'roles' => $roles]);
     }
 

@@ -36,6 +36,7 @@ class WebhookController extends Controller
     public function create()
     {
         $this->setPageTitle(trans('settings.webhooks_create'));
+
         return view('settings.webhooks.create');
     }
 
