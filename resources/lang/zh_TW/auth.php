@@ -21,7 +21,7 @@ return [
     'email' => '電子郵件',
     'password' => '密碼',
     'password_confirm' => '確認密碼',
-    'password_hint' => '必須超過 7 個字元',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => '忘記密碼？',
     'remember_me' => '記住我',
     'ldap_email_hint' => '請輸入此帳號使用的電子郵件。',

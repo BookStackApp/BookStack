@@ -21,7 +21,7 @@ return [
     'email' => 'Email',
     'password' => 'Mật khẩu',
     'password_confirm' => 'Xác nhận mật khẩu',
-    'password_hint' => 'Cần tối thiểu 7 kí tự',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Quên Mật khẩu?',
     'remember_me' => 'Ghi nhớ đăng nhập',
     'ldap_email_hint' => 'Vui lòng điền một địa chỉ email để sử dụng tài khoản này.',

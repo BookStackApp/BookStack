@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Kapitler sidst',
     'books_sort_show_other' => 'Vis andre bøger',
     'books_sort_save' => 'Gem ny ordre',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Kapitel',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Flyt kapitel',
     'chapters_move_named' => 'Flyt kapitel :chapterName',
     'chapter_move_success' => 'Kapitel flyttet til :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Kapiteltilladelser',
     'chapters_empty' => 'Der er lige nu ingen sider i dette kapitel.',
     'chapters_permissions_active' => 'Aktive kapiteltilladelser',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Er du sikker på at du ønsker at gendanne denne revision? Nuværende sideindhold vil blive erstattet.',
     'revision_delete_success' => 'Revision slettet',
     'revision_cannot_delete_latest' => 'Kan ikke slette seneste revision.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

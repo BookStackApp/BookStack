@@ -21,7 +21,7 @@ return [
     'email' => 'E-post',
     'password' => 'Passord',
     'password_confirm' => 'Bekreft passord',
-    'password_hint' => 'Må inneholde 7 tegn',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Glemt passord?',
     'remember_me' => 'Husk meg',
     'ldap_email_hint' => 'Oppgi en e-post for denne kontoen.',

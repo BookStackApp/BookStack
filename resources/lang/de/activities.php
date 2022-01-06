@@ -36,7 +36,7 @@ return [
     'book_sort_notification'      => 'Das Buch wurde erfolgreich umsortiert',
 
     // Bookshelves
-    'bookshelf_create'            => 'hat das Bücherregal erstellt',
+    'bookshelf_create'            => 'erstelltes Bücherregal',
     'bookshelf_create_notification'    => 'Das Bücherregal wurde erfolgreich erstellt',
     'bookshelf_update'                 => 'hat das Bücherregal geändert',
     'bookshelf_update_notification'    => 'Das Bücherregal wurde erfolgreich geändert',
@@ -50,6 +50,14 @@ return [
     // MFA
     'mfa_setup_method_notification' => 'Multi-Faktor-Methode erfolgreich konfiguriert',
     'mfa_remove_method_notification' => 'Multi-Faktor-Methode erfolgreich entfernt',
+
+    // Webhooks
+    'webhook_create' => 'erstellter Webhook',
+    'webhook_create_notification' => 'Webhook wurde erfolgreich eingerichtet',
+    'webhook_update' => 'aktualisierter Webhook',
+    'webhook_update_notification' => 'Webhook wurde erfolgreich aktualisiert',
+    'webhook_delete' => 'gelöschter Webhook',
+    'webhook_delete_notification' => 'Webhook wurde erfolgreich gelöscht',
 
     // Other
     'commented_on'                => 'hat einen Kommentar hinzugefügt',

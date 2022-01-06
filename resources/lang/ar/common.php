@@ -71,6 +71,10 @@ return [
     'list_view' => 'عرض منسدل',
     'default' => 'افتراضي',
     'breadcrumb' => 'شريط التنقل',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'عرض القائمة',

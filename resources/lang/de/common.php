@@ -45,8 +45,8 @@ return [
     'unfavourite' => 'Kein Favorit',
     'next' => 'Nächste',
     'previous' => 'Vorheriges',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'filter_active' => 'Gesetzte Filter:',
+    'filter_clear' => 'Filter löschen',
 
     // Sort Options
     'sort_options' => 'Sortieroptionen',
@@ -71,6 +71,10 @@ return [
     'list_view' => 'Listenansicht',
     'default' => 'Voreinstellung',
     'breadcrumb' => 'Brotkrumen',
+    'status' => 'Status',
+    'status_active' => 'Aktiv',
+    'status_inactive' => 'Inaktiv',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Header-Menü erweitern',

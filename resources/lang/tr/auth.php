@@ -21,7 +21,7 @@ return [
     'email' => 'E-posta',
     'password' => 'Şifre',
     'password_confirm' => 'Şifreyi Onaylayın',
-    'password_hint' => 'En az 8 karakter olmalı',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Şifrenizi mi unuttunuz?',
     'remember_me' => 'Beni Hatırla',
     'ldap_email_hint' => 'Bu hesap için kullanmak istediğiniz e-posta adresini giriniz.',

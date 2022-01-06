@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Rozdziały na końcu',
     'books_sort_show_other' => 'Pokaż inne książki',
     'books_sort_save' => 'Zapisz nową kolejność',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Rozdział',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Przenieś rozdział',
     'chapters_move_named' => 'Przenieś rozdział :chapterName',
     'chapter_move_success' => 'Rozdział przeniesiony do :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Uprawienia rozdziału',
     'chapters_empty' => 'Brak stron w tym rozdziale.',
     'chapters_permissions_active' => 'Uprawnienia rozdziału są aktywne',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Czu ma pewno chcesz przywrócić tą wersję? Aktualna zawartość strony zostanie nadpisana.',
     'revision_delete_success' => 'Usunięto wersję',
     'revision_cannot_delete_latest' => 'Nie można usunąć najnowszej wersji.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

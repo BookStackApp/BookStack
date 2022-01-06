@@ -71,6 +71,10 @@ return [
     'list_view' => 'Sąrašas',
     'default' => 'Numatytas',
     'breadcrumb' => 'Duonos rėžis',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Plėsti antraštės meniu',

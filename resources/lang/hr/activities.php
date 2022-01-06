@@ -7,41 +7,41 @@ return [
 
     // Pages
     'page_create'                 => 'stvorena stranica',
-    'page_create_notification'    => 'Stranica je uspješno stvorena',
+    'page_create_notification'    => 'Page successfully created',
     'page_update'                 => 'ažurirana stranica',
-    'page_update_notification'    => 'Stranica je uspješno ažurirana',
+    'page_update_notification'    => 'Page successfully updated',
     'page_delete'                 => 'izbrisana stranica',
-    'page_delete_notification'    => 'Stranica je uspješno izbrisana',
+    'page_delete_notification'    => 'Page successfully deleted',
     'page_restore'                => 'obnovljena stranica',
-    'page_restore_notification'   => 'Stranica je uspješno obnovljena',
+    'page_restore_notification'   => 'Page successfully restored',
     'page_move'                   => 'premještena stranica',
 
     // Chapters
     'chapter_create'              => 'stvoreno poglavlje',
-    'chapter_create_notification' => 'Poglavlje je uspješno stvoreno',
+    'chapter_create_notification' => 'Chapter successfully created',
     'chapter_update'              => 'ažurirano poglavlje',
-    'chapter_update_notification' => 'Poglavlje je uspješno ažurirano',
+    'chapter_update_notification' => 'Chapter successfully updated',
     'chapter_delete'              => 'izbrisano poglavlje',
-    'chapter_delete_notification' => 'Poglavlje je uspješno izbrisano',
+    'chapter_delete_notification' => 'Chapter successfully deleted',
     'chapter_move'                => 'premiješteno poglavlje',
 
     // Books
     'book_create'                 => 'stvorena knjiga',
-    'book_create_notification'    => 'Knjiga je uspješno stvorena',
+    'book_create_notification'    => 'Book successfully created',
     'book_update'                 => 'ažurirana knjiga',
-    'book_update_notification'    => 'Knjiga je uspješno ažurirana',
+    'book_update_notification'    => 'Book successfully updated',
     'book_delete'                 => 'izbrisana knjiga',
-    'book_delete_notification'    => 'Knjiga je uspješno izbrisana',
+    'book_delete_notification'    => 'Book successfully deleted',
     'book_sort'                   => 'razvrstana knjiga',
-    'book_sort_notification'      => 'Knjiga je uspješno razvrstana',
+    'book_sort_notification'      => 'Book successfully re-sorted',
 
     // Bookshelves
-    'bookshelf_create'            => 'stvorena polica za knjige',
-    'bookshelf_create_notification'    => 'Polica za knjige je uspješno stvorena',
+    'bookshelf_create'            => 'created bookshelf',
+    'bookshelf_create_notification'    => 'Bookshelf successfully created',
     'bookshelf_update'                 => 'ažurirana polica za knjige',
-    'bookshelf_update_notification'    => 'Polica za knjige je uspješno ažurirana',
+    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
     'bookshelf_delete'                 => 'izbrisana polica za knjige',
-    'bookshelf_delete_notification'    => 'Polica za knjige je uspješno izbrisana',
+    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',
@@ -50,6 +50,14 @@ return [
     // MFA
     'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
     'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+
+    // Webhooks
+    'webhook_create' => 'created webhook',
+    'webhook_create_notification' => 'Webhook successfully created',
+    'webhook_update' => 'updated webhook',
+    'webhook_update_notification' => 'Webhook successfully updated',
+    'webhook_delete' => 'deleted webhook',
+    'webhook_delete_notification' => 'Webhook successfully deleted',
 
     // Other
     'commented_on'                => 'komentirano',

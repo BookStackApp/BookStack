@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => '最後一章',
     'books_sort_show_other' => '顯示其他書本',
     'books_sort_save' => '儲存新順序',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => '章節',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => '移動章節',
     'chapters_move_named' => '移動章節 :chapterName',
     'chapter_move_success' => '章節移動到 :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => '章節權限',
     'chapters_empty' => '本章目前沒有頁面。',
     'chapters_permissions_active' => '章節權限已啟用',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => '您確定要還原此修訂版本嗎？ 目前頁面內容將被替換。',
     'revision_delete_success' => '修訂版本已刪除',
     'revision_cannot_delete_latest' => '無法刪除最新修訂版本。',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

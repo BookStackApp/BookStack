@@ -45,8 +45,8 @@ return [
     'unfavourite' => 'Odebrat z oblíbených',
     'next' => 'Další',
     'previous' => 'Předchozí',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'filter_active' => 'Aktivní filtr:',
+    'filter_clear' => 'Zrušit filtr',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',
@@ -71,6 +71,10 @@ return [
     'list_view' => 'Zobrazení seznamu',
     'default' => 'Výchozí',
     'breadcrumb' => 'Drobečková navigace',
+    'status' => 'Stav',
+    'status_active' => 'Aktivní',
+    'status_inactive' => 'Neaktivní',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Rozbalit menu v záhlaví',
@@ -78,7 +82,7 @@ return [
     'view_profile' => 'Zobrazit profil',
     'edit_profile' => 'Upravit profil',
     'dark_mode' => 'Tmavý režim',
-    'light_mode' => 'Světelný režim',
+    'light_mode' => 'Světlý režim',
 
     // Layout tabs
     'tab_info' => 'Informace',

@@ -21,7 +21,7 @@ return [
     'email' => 'پست الکترونیک',
     'password' => 'کلمه عبور',
     'password_confirm' => 'تایید کلمه عبور',
-    'password_hint' => 'باید بیش از 7 کاراکتر باشد',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'کلمه عبور خود را فراموش کرده اید؟',
     'remember_me' => 'مرا به خاطر بسپار',
     'ldap_email_hint' => 'لطفا برای استفاده از این حساب کاربری پست الکترونیک وارد نمایید.',

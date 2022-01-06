@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => '章节倒序',
     'books_sort_show_other' => '显示其他图书',
     'books_sort_save' => '保存新顺序',
+    'books_copy' => '复制图书',
+    'books_copy_success' => '图书已成功复制',
 
     // Chapters
     'chapter' => '章节',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => '移动章节',
     'chapters_move_named' => '移动章节「:chapterName」',
     'chapter_move_success' => '章节移动到「:bookName」',
+    'chapters_copy' => '复制章节',
+    'chapters_copy_success' => '章节已成功复制',
     'chapters_permissions' => '章节权限',
     'chapters_empty' => '本章目前没有页面。',
     'chapters_permissions_active' => '有效的章节权限',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => '您确定要恢复到此修订版吗？恢复后原有内容将会被替换。',
     'revision_delete_success' => '修订删除',
     'revision_cannot_delete_latest' => '无法删除最新版本。',
+
+    // Copy view
+    'copy_consider' => '复制内容时请注意以下事项。',
+    'copy_consider_permissions' => '自定义权限设置将不会被复制。',
+    'copy_consider_owner' => '您将成为所有已复制内容的所有者。',
+    'copy_consider_images' => '页面中的图像文件不会被复制，原始图像将保留它们与最初上传到的页面的关系。',
+    'copy_consider_attachments' => '页面中的附件不会被复制。',
+    'copy_consider_access' => '改变位置、所有者或权限可能会导致此内容被以前无法访问的人访问。',
 ];

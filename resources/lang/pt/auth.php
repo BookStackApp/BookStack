@@ -21,7 +21,7 @@ return [
     'email' => 'E-mail',
     'password' => 'Palavra-passe',
     'password_confirm' => 'Confirmar Palavra-passe',
-    'password_hint' => 'Deve ser maior que 7 caracteres',
+    'password_hint' => 'Deve ter no mínimo 8 caracteres',
     'forgot_password' => 'Esqueceu-se da palavra-passe?',
     'remember_me' => 'Lembrar-se de mim',
     'ldap_email_hint' => 'Por favor insira um endereço de e-mail para esta conta.',

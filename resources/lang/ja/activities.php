@@ -33,7 +33,7 @@ return [
     'book_delete'                 => 'がブックを削除:',
     'book_delete_notification'    => 'ブックを削除しました',
     'book_sort'                   => 'がブックの並び順を変更:',
-    'book_sort_notification'      => '並び順を変更しました',
+    'book_sort_notification'      => 'ブックが再度並び変えられました',
 
     // Bookshelves
     'bookshelf_create'            => 'が本棚を作成:',
@@ -50,6 +50,14 @@ return [
     // MFA
     'mfa_setup_method_notification' => '多要素認証が正常に設定されました',
     'mfa_remove_method_notification' => '多要素認証が正常に解除されました',
+
+    // Webhooks
+    'webhook_create' => 'created webhook',
+    'webhook_create_notification' => 'Webhook successfully created',
+    'webhook_update' => 'updated webhook',
+    'webhook_update_notification' => 'Webhook successfully updated',
+    'webhook_delete' => 'deleted webhook',
+    'webhook_delete_notification' => 'Webhook successfully deleted',
 
     // Other
     'commented_on'                => 'がコメント:',

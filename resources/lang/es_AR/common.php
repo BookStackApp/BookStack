@@ -71,6 +71,10 @@ return [
     'list_view' => 'Vista de lista',
     'default' => 'Por defecto',
     'breadcrumb' => 'Miga de Pan',
+    'status' => 'Estado',
+    'status_active' => 'Activo',
+    'status_inactive' => 'Inactive',
+    'never' => 'Nunca',
 
     // Header
     'header_menu_expand' => 'Expandir el Menú de Cabecera',
