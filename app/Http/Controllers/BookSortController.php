@@ -3,10 +3,9 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
-use BookStack\Exceptions\SortOperationException;
+use BookStack\Entities\Tools\BookSortMap;
 use BookStack\Facades\Activity;
 use Illuminate\Http\Request;
 
@@ -59,20 +58,14 @@ class BookSortController extends Controller
             return redirect($book->getUrl());
         }
 
-        $sortMap = collect(json_decode($request->get('sort-tree')));
+        $sortMap = BookSortMap::fromJson($request->get('sort-tree'));
         $bookContents = new BookContents($book);
-        $booksInvolved = collect();
-
-        try {
-            $booksInvolved = $bookContents->sortUsingMap($sortMap);
-        } catch (SortOperationException $exception) {
-            $this->showPermissionError();
-        }
+        $booksInvolved = $bookContents->sortUsingMap($sortMap);
 
         // Rebuild permissions and add activity for involved books.
-        $booksInvolved->each(function (Book $book) {
-            Activity::add(ActivityType::BOOK_SORT, $book);
-        });
+        foreach ($booksInvolved as $bookInvolved) {
+            Activity::add(ActivityType::BOOK_SORT, $bookInvolved);
+        }
 
         return redirect($book->getUrl());
     }
