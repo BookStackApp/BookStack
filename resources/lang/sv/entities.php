@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Kapitel sist',
     'books_sort_show_other' => 'Visa andra böcker',
     'books_sort_save' => 'Spara ordning',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Kapitel',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Flytta kapitel',
     'chapters_move_named' => 'Flytta kapitel :chapterName',
     'chapter_move_success' => 'Kapitel flyttat till :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Rättigheter för kapitel',
     'chapters_empty' => 'Det finns inga sidor i det här kapitlet.',
     'chapters_permissions_active' => 'Anpassade rättigheter är i bruk',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Är du säker på att du vill använda denna revision? Det nuvarande innehållet kommer att ersättas.',
     'revision_delete_success' => 'Revisionen raderad',
     'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

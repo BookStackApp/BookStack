@@ -21,7 +21,7 @@ return [
     'email' => 'Email',
     'password' => 'Kata Sandi',
     'password_confirm' => 'Konfirmasi Kata Sandi',
-    'password_hint' => 'Harus lebih dari 7 karakter',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Lupa Password?',
     'remember_me' => 'Ingat saya',
     'ldap_email_hint' => 'Harap masukkan email yang akan digunakan untuk akun ini.',

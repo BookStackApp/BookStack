@@ -71,6 +71,10 @@ return [
     'list_view' => 'Loendivaade',
     'default' => 'Vaikimisi',
     'breadcrumb' => 'Jäljerida',
+    'status' => 'Staatus',
+    'status_active' => 'Aktiivne',
+    'status_inactive' => 'Mitteaktiivne',
+    'never' => 'Mitte kunagi',
 
     // Header
     'header_menu_expand' => 'Laienda päisemenüü',
@@ -82,9 +86,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Sakk: Näita sekundaarset infot',
     'tab_content' => 'Sisu',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Sakk: Näita primaarset sisu',
 
     // Email Content
     'email_action_help' => 'Kui sul on probleeme ":actionText" nupu vajutamisega, kopeeri allolev URL oma veebilehitsejasse:',

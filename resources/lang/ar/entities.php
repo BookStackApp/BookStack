@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'الفصول الأخيرة',
     'books_sort_show_other' => 'عرض كتب أخرى',
     'books_sort_save' => 'حفظ الترتيب الجديد',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'فصل',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'نقل الفصل',
     'chapters_move_named' => 'نقل فصل :chapterName',
     'chapter_move_success' => 'تم نقل الفصل إلى :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'أذونات الفصل',
     'chapters_empty' => 'لا توجد أي صفحات في هذا الفصل حالياً',
     'chapters_permissions_active' => 'أذونات الفصل مفعلة',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'هل أنت متأكد من أنك تريد استعادة هذه المراجعة؟ سيتم استبدال محتوى الصفحة الحالية.',
     'revision_delete_success' => 'تم حذف المراجعة',
     'revision_cannot_delete_latest' => 'لايمكن حذف آخر مراجعة.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

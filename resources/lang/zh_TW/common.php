@@ -71,6 +71,10 @@ return [
     'list_view' => '列表檢視',
     'default' => '預設',
     'breadcrumb' => '頁面路徑',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => '展開選單',

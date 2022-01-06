@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Nazadnje poglavja',
     'books_sort_show_other' => 'Prikaži druge knjige',
     'books_sort_save' => 'Shrani novo razvrstitev',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Poglavje',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Premakni poglavje',
     'chapters_move_named' => 'Premakni poglavje :chapterName',
     'chapter_move_success' => 'Poglavje premaknjeno v :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Dovoljenja poglavij',
     'chapters_empty' => 'V tem poglavju trenutno ni strani.',
     'chapters_permissions_active' => 'Dovoljenja poglavij so aktivirana',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Ali ste prepričani da želite obnoviti to revizijo? Vsebina trenutne strani bo zamenjana.',
     'revision_delete_success' => 'Revizija izbrisana',
     'revision_cannot_delete_latest' => 'Ne morem izbrisati zadnje revizije.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

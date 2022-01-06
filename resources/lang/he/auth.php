@@ -21,7 +21,7 @@ return [
     'email' => 'אי-מייל',
     'password' => 'סיסמא',
     'password_confirm' => 'אימות סיסמא',
-    'password_hint' => 'חייבת להיות יותר מ-5 תווים',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'שכחת סיסמא?',
     'remember_me' => 'זכור אותי',
     'ldap_email_hint' => 'אנא ציין כתובת אי-מייל לשימוש בחשבון זה',

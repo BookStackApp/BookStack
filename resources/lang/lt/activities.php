@@ -7,41 +7,41 @@ return [
 
     // Pages
     'page_create'                 => 'sukurtas puslapis',
-    'page_create_notification'    => 'Puslapis sukurtas sėkmingai',
+    'page_create_notification'    => 'Page successfully created',
     'page_update'                 => 'atnaujintas puslapis',
-    'page_update_notification'    => 'Puslapis sėkmingai atnaujintas',
+    'page_update_notification'    => 'Page successfully updated',
     'page_delete'                 => 'ištrintas puslapis',
-    'page_delete_notification'    => 'Puslapis sėkmingai ištrintas',
+    'page_delete_notification'    => 'Page successfully deleted',
     'page_restore'                => 'atkurtas puslapis',
-    'page_restore_notification'   => 'Puslapis sėkmingai atkurtas',
+    'page_restore_notification'   => 'Page successfully restored',
     'page_move'                   => 'perkeltas puslapis',
 
     // Chapters
     'chapter_create'              => 'sukurtas skyrius',
-    'chapter_create_notification' => 'Skyrius sėkmingai sukurtas',
+    'chapter_create_notification' => 'Chapter successfully created',
     'chapter_update'              => 'atnaujintas skyrius',
-    'chapter_update_notification' => 'Skyrius sekmingai atnaujintas',
+    'chapter_update_notification' => 'Chapter successfully updated',
     'chapter_delete'              => 'ištrintas skyrius',
-    'chapter_delete_notification' => 'Skyrius sėkmingai ištrintas',
+    'chapter_delete_notification' => 'Chapter successfully deleted',
     'chapter_move'                => 'perkeltas skyrius',
 
     // Books
     'book_create'                 => 'sukurta knyga',
-    'book_create_notification'    => 'Knyga sėkmingai sukurta',
+    'book_create_notification'    => 'Book successfully created',
     'book_update'                 => 'atnaujinta knyga',
-    'book_update_notification'    => 'Knyga sėkmingai atnaujinta',
+    'book_update_notification'    => 'Book successfully updated',
     'book_delete'                 => 'ištrinta knyga',
-    'book_delete_notification'    => 'Knyga sėkmingai ištrinta',
+    'book_delete_notification'    => 'Book successfully deleted',
     'book_sort'                   => 'surūšiuota knyga',
-    'book_sort_notification'      => 'Knyga sėkmingai perrūšiuota',
+    'book_sort_notification'      => 'Book successfully re-sorted',
 
     // Bookshelves
-    'bookshelf_create'            => 'sukurta knygų lentyna',
-    'bookshelf_create_notification'    => 'Knygų lentyna sėkmingai sukurta',
+    'bookshelf_create'            => 'created bookshelf',
+    'bookshelf_create_notification'    => 'Bookshelf successfully created',
     'bookshelf_update'                 => 'atnaujinta knygų lentyna',
-    'bookshelf_update_notification'    => 'Knygų lentyna sėkmingai atnaujinta',
+    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
     'bookshelf_delete'                 => 'ištrinta knygų lentyna',
-    'bookshelf_delete_notification'    => 'Knygų lentyna sėkmingai ištrinta',
+    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',
@@ -50,6 +50,14 @@ return [
     // MFA
     'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
     'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+
+    // Webhooks
+    'webhook_create' => 'created webhook',
+    'webhook_create_notification' => 'Webhook successfully created',
+    'webhook_update' => 'updated webhook',
+    'webhook_update_notification' => 'Webhook successfully updated',
+    'webhook_delete' => 'deleted webhook',
+    'webhook_delete_notification' => 'Webhook successfully deleted',
 
     // Other
     'commented_on'                => 'pakomentavo',

@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'פרקים בסוף',
     'books_sort_show_other' => 'הצג ספרים אחרונים',
     'books_sort_save' => 'שמור את הסדר החדש',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'פרק',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'העבר פרק',
     'chapters_move_named' => 'העבר פרק :chapterName',
     'chapter_move_success' => 'הפרק הועבר אל :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'הרשאות פרק',
     'chapters_empty' => 'לא נמצאו דפים בפרק זה.',
     'chapters_permissions_active' => 'הרשאות פרק פעילות',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'האם ברצונך לשחזר נוסח זה? תוכן הדף הנוכחי יעודכן לנוסח זה.',
     'revision_delete_success' => 'נוסח נמחק',
     'revision_cannot_delete_latest' => 'לא ניתן למחוק את הנוסח האחרון',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

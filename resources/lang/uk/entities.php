@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Розділи в кінці',
     'books_sort_show_other' => 'Показати інші книги',
     'books_sort_save' => 'Зберегти нове замовлення',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Розділ',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Перемістити розділ',
     'chapters_move_named' => 'Перемістити розділ :chapterName',
     'chapter_move_success' => 'Розділ переміщено до :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Дозволи розділу',
     'chapters_empty' => 'У цьому розділі немає сторінок.',
     'chapters_permissions_active' => 'Діючі дозволи на розділ',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Дійсно відновити цю версію? Вміст поточної сторінки буде замінено.',
     'revision_delete_success' => 'Версія видалена',
     'revision_cannot_delete_latest' => 'Неможливо видалити останню версію.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

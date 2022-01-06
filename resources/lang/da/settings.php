@@ -174,7 +174,7 @@ return [
     'users_role' => 'Brugerroller',
     'users_role_desc' => 'Vælg hvilke roller denne bruger skal tildeles. Hvis en bruger er tildelt flere roller, sammenføres tilladelserne fra disse roller, og de får alle evnerne fra de tildelte roller.',
     'users_password' => 'Brugeradgangskode',
-    'users_password_desc' => 'Sæt et kodeord, der bruges til at logge på applikationen. Dette skal være mindst 6 tegn langt.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Du kan vælge at sende denne bruger en invitation på E-Mail, som giver dem mulighed for at indstille deres egen adgangskode, ellers kan du indstille deres adgangskode selv.',
     'users_send_invite_option' => 'Send bruger en invitationsmail',
     'users_external_auth_id' => 'Ekstern godkendelses ID',
@@ -232,6 +232,34 @@ return [
     'user_api_token_delete_warning' => 'Dette vil helt slette API-token\'en med navnet \':tokenName\' fra systemet.',
     'user_api_token_delete_confirm' => 'Er du sikker på, at du vil slette denne API-token?',
     'user_api_token_delete_success' => 'API-token slettet',
+
+    // Webhooks
+    'webhooks' => 'Webhooks',
+    'webhooks_create' => 'Create New Webhook',
+    'webhooks_none_created' => 'No webhooks have yet been created.',
+    'webhooks_edit' => 'Edit Webhook',
+    'webhooks_save' => 'Save Webhook',
+    'webhooks_details' => 'Webhook Details',
+    'webhooks_details_desc' => 'Provide a user friendly name and a POST endpoint as a location for the webhook data to be sent to.',
+    'webhooks_events' => 'Webhook Events',
+    'webhooks_events_desc' => 'Select all the events that should trigger this webhook to be called.',
+    'webhooks_events_warning' => 'Keep in mind that these events will be triggered for all selected events, even if custom permissions are applied. Ensure that use of this webhook won\'t expose confidential content.',
+    'webhooks_events_all' => 'All system events',
+    'webhooks_name' => 'Webhook Name',
+    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_endpoint' => 'Webhook Endpoint',
+    'webhooks_active' => 'Webhook Active',
+    'webhook_events_table_header' => 'Events',
+    'webhooks_delete' => 'Delete Webhook',
+    'webhooks_delete_warning' => 'This will fully delete this webhook, with the name \':webhookName\', from the system.',
+    'webhooks_delete_confirm' => 'Are you sure you want to delete this webhook?',
+    'webhooks_format_example' => 'Webhook Format Example',
+    'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
+    'webhooks_status' => 'Webhook Status',
+    'webhooks_last_called' => 'Last Called:',
+    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_last_error_message' => 'Last Error Message:',
+
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

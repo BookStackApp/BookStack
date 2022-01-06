@@ -21,7 +21,7 @@ return [
     'email' => 'E-post',
     'password' => 'Lösenord',
     'password_confirm' => 'Bekräfta lösenord',
-    'password_hint' => 'Måste vara fler än 7 tecken',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Glömt lösenord?',
     'remember_me' => 'Kom ihåg mig',
     'ldap_email_hint' => 'Vänligen ange en e-postadress att använda till kontot.',

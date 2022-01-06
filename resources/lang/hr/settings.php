@@ -174,7 +174,7 @@ return [
     'users_role' => 'Uloge korisnika',
     'users_role_desc' => 'Odaberite koje će uloge biti dodijeljene ovom korisniku. Ako korisnik ima više uloga njihova će se dopuštenja prilagoditi.',
     'users_password' => 'Lozinka korisnika',
-    'users_password_desc' => 'Postavite lozinku za prijavu u aplikaciju. Mora imati najmanje 6 znakova.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Možete odabrati slanje e maila korisniku i dozvoliti mu da postavi svoju lozinku ili vi to možete učiniti za njega.',
     'users_send_invite_option' => 'Pošaljite pozivnicu korisniku putem emaila',
     'users_external_auth_id' => 'Vanjska autorizacija',
@@ -232,6 +232,34 @@ return [
     'user_api_token_delete_warning' => 'Ovo će potpuno izbrisati API token naziva \':tokenName\' iz našeg sustava.',
     'user_api_token_delete_confirm' => 'Jeste li sigurni da želite izbrisati ovaj API token?',
     'user_api_token_delete_success' => 'API token uspješno izbrisan',
+
+    // Webhooks
+    'webhooks' => 'Webhooks',
+    'webhooks_create' => 'Create New Webhook',
+    'webhooks_none_created' => 'No webhooks have yet been created.',
+    'webhooks_edit' => 'Edit Webhook',
+    'webhooks_save' => 'Save Webhook',
+    'webhooks_details' => 'Webhook Details',
+    'webhooks_details_desc' => 'Provide a user friendly name and a POST endpoint as a location for the webhook data to be sent to.',
+    'webhooks_events' => 'Webhook Events',
+    'webhooks_events_desc' => 'Select all the events that should trigger this webhook to be called.',
+    'webhooks_events_warning' => 'Keep in mind that these events will be triggered for all selected events, even if custom permissions are applied. Ensure that use of this webhook won\'t expose confidential content.',
+    'webhooks_events_all' => 'All system events',
+    'webhooks_name' => 'Webhook Name',
+    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_endpoint' => 'Webhook Endpoint',
+    'webhooks_active' => 'Webhook Active',
+    'webhook_events_table_header' => 'Events',
+    'webhooks_delete' => 'Delete Webhook',
+    'webhooks_delete_warning' => 'This will fully delete this webhook, with the name \':webhookName\', from the system.',
+    'webhooks_delete_confirm' => 'Are you sure you want to delete this webhook?',
+    'webhooks_format_example' => 'Webhook Format Example',
+    'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
+    'webhooks_status' => 'Webhook Status',
+    'webhooks_last_called' => 'Last Called:',
+    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_last_error_message' => 'Last Error Message:',
+
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

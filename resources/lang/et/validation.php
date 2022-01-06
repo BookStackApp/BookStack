@@ -8,7 +8,7 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'The :attribute must be accepted.',
+    'accepted'             => ':attribute peab olema aktsepteeritud.',
     'active_url'           => ':attribute ei ole kehtiv URL.',
     'after'                => ':attribute peab olema kuupäev pärast :date.',
     'alpha'                => ':attribute võib sisaldada ainult tähti.',
@@ -24,7 +24,7 @@ return [
         'array'   => ':attribute peab olema :min ja :max elemendi vahel.',
     ],
     'boolean'              => ':attribute peab olema tõene või väär.',
-    'confirmed'            => 'The :attribute confirmation does not match.',
+    'confirmed'            => ':attribute kinnitus ei kattu.',
     'date'                 => ':attribute ei ole kehtiv kuupäev.',
     'date_format'          => ':attribute ei ühti formaadiga :format.',
     'different'            => ':attribute ja :other peavad olema erinevad.',
@@ -47,7 +47,7 @@ return [
     ],
     'exists'               => 'Valitud :attribute on vigane.',
     'image'                => ':attribute peab olema pildifail.',
-    'image_extension'      => 'The :attribute must have a valid & supported image extension.',
+    'image_extension'      => ':attribute peab olema lubatud ja toetatud pildiformaadis.',
     'in'                   => 'Valitud :attribute on vigane.',
     'integer'              => ':attribute peab olema täisarv.',
     'ip'                   => ':attribute peab olema kehtiv IP-aadress.',

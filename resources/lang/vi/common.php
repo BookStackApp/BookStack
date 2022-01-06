@@ -71,6 +71,10 @@ return [
     'list_view' => 'Hiển thị dạng danh sách',
     'default' => 'Mặc định',
     'breadcrumb' => 'Đường dẫn liên kết',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Expand Header Menu',

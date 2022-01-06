@@ -21,7 +21,7 @@ return [
     'email' => 'Имейл',
     'password' => 'Парола',
     'password_confirm' => 'Потвърди паролата',
-    'password_hint' => 'Трябва да бъде поне 7 символа',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Забравена парола?',
     'remember_me' => 'Запомни ме',
     'ldap_email_hint' => 'Моля въведете емейл, който да използвате за дадения акаунт.',

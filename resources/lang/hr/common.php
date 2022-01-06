@@ -71,6 +71,10 @@ return [
     'list_view' => 'Prikaz popisa',
     'default' => 'Zadano',
     'breadcrumb' => 'Breadcrumb',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Proširi izbornik',

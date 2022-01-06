@@ -21,7 +21,7 @@ return [
     'email' => 'E-Mail',
     'password' => 'Passwort',
     'password_confirm' => 'Passwort bestätigen',
-    'password_hint' => 'Mindestlänge: 7 Zeichen',
+    'password_hint' => 'Muss mindestens 8 Zeichen lang sein',
     'forgot_password' => 'Passwort vergessen?',
     'remember_me' => 'Angemeldet bleiben',
     'ldap_email_hint' => 'Bitte gib eine E-Mail-Adresse ein, um diese mit dem Account zu nutzen.',
@@ -45,8 +45,8 @@ return [
     'reset_password_sent' => 'Ein Link zum Zurücksetzen des Passworts wird an :email gesendet, wenn diese E-Mail-Adresse im System gefunden wird.',
     'reset_password_success' => 'Dein Passwort wurde erfolgreich zurückgesetzt.',
     'email_reset_subject' => 'Passwort zurücksetzen für :appName',
-    'email_reset_text' => 'Du erhältsts diese E-Mail, weil jemand versucht hat, Dein Passwort zurückzusetzen.',
-    'email_reset_not_requested' => 'Wenn du das zurücksetzen des Passworts nicht angefordert hast, ist keine weitere Aktion erforderlich.',
+    'email_reset_text' => 'Du erhältst diese E-Mail, weil jemand versucht hat, Dein Passwort zurückzusetzen.',
+    'email_reset_not_requested' => 'Wenn du das Zurücksetzen des Passworts nicht angefordert hast, ist keine weitere Aktion erforderlich.',
 
     // Email Confirmation
     'email_confirm_subject' => 'Bestätige Deine E-Mail-Adresse für :appName',
@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Bitte bestätige Deine E-Mail-Adresse, indem Du auf die Schaltfläche klickst:',
     'email_confirm_action' => 'E-Mail-Adresse bestätigen',
     'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur Bestätigung Deiner E-Mail-Adresse nicht versandt werden. Bitte kontaktiere den Systemadministrator!',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Ihre E-Mail wurde bestätigt! Sie sollten nun in der Lage sein, sich mit dieser E-Mail-Adresse anzumelden.',
     'email_confirm_resent' => 'Bestätigungs-E-Mail wurde erneut versendet, bitte überprüfe Deinen Posteingang.',
 
     'email_not_confirmed' => 'E-Mail-Adresse ist nicht bestätigt',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Willkommen bei :appName!',
     'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft zum Einloggen benötigt.',
     'user_invite_page_confirm_button' => 'Passwort bestätigen',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Passwort gesetzt, Sie sollten nun in der Lage sein, sich mit Ihrem Passwort an :appName anzumelden!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Multi-Faktor-Authentifizierung einrichten',

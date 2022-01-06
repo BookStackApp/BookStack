@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Les chapitres en dernier',
     'books_sort_show_other' => 'Afficher d\'autres livres',
     'books_sort_save' => 'Enregistrer l\'ordre',
+    'books_copy' => 'Copier le livre',
+    'books_copy_success' => 'Livre copié avec succès',
 
     // Chapters
     'chapter' => 'Chapitre',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Déplacer le chapitre',
     'chapters_move_named' => 'Déplacer le chapitre :chapterName',
     'chapter_move_success' => 'Chapitre déplacé dans :bookName',
+    'chapters_copy' => 'Copier le chapitre',
+    'chapters_copy_success' => 'Chapitre copié avec succès',
     'chapters_permissions' => 'Permissions du chapitre',
     'chapters_empty' => 'Il n\'y a pas de page dans ce chapitre actuellement.',
     'chapters_permissions_active' => 'Permissions du chapitre activées',
@@ -258,7 +262,7 @@ return [
     'tags_explain' => "Ajouter des mots-clés pour catégoriser votre contenu.",
     'tags_add' => 'Ajouter un autre mot-clé',
     'tags_remove' => 'Supprimer le mot-clé',
-    'tags_usages' => 'Total tag usages',
+    'tags_usages' => 'Total des utilisations des tags',
     'tags_assigned_pages' => 'Attribuer aux pages',
     'tags_assigned_chapters' => 'Attribuer aux chapitres',
     'tags_assigned_books' => 'Attribuer aux livres',
@@ -267,7 +271,7 @@ return [
     'tags_all_values' => 'Toutes les valeurs',
     'tags_view_tags' => 'Voir les tags',
     'tags_view_existing_tags' => 'Voir les tags existants',
-    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
+    'tags_list_empty_hint' => 'Les tags peuvent être assignés via la barre latérale de l\'éditeur de page ou lors de l\'édition des détails d\'un livre, d\'un chapitre ou d\'une étagère.',
     'attachments' => 'Fichiers joints',
     'attachments_explain' => 'Ajouter des fichiers ou des liens pour les afficher sur votre page. Ils seront affichés dans la barre latérale',
     'attachments_explain_instant_save' => 'Ces changements sont enregistrés immédiatement.',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Êtes-vous sûr de vouloir restaurer cette révision ? Le contenu courant de la page va être remplacé.',
     'revision_delete_success' => 'Révision supprimée',
     'revision_cannot_delete_latest' => 'Impossible de supprimer la dernière révision.',
+
+    // Copy view
+    'copy_consider' => 'Veuillez prendre en compte ce qui suit lors de la copie du contenu.',
+    'copy_consider_permissions' => 'Les paramètres de permission personnalisés ne seront pas copiés.',
+    'copy_consider_owner' => 'Vous deviendrez le propriétaire de tout le contenu copié.',
+    'copy_consider_images' => 'Les fichiers image de la page ne seront pas dupliqués et les images originales conserveront leur relation avec la page vers laquelle elles ont été initialement téléchargées.',
+    'copy_consider_attachments' => 'Les pièces jointes de la page ne seront pas copiées.',
+    'copy_consider_access' => 'Un changement d\'emplacement, de propriétaire ou d\'autorisation peut rendre ce contenu accessible à ceux précédemment sans accès.',
 ];

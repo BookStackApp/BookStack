@@ -21,7 +21,7 @@ return [
     'email' => 'E-mail',
     'password' => 'Adgangskode',
     'password_confirm' => 'Bekræft adgangskode',
-    'password_hint' => 'Skal være på mindst 7 karakterer',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Glemt Adgangskode?',
     'remember_me' => 'Husk mig',
     'ldap_email_hint' => 'Angiv venligst din kontos e-mail.',

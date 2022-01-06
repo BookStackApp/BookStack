@@ -71,6 +71,10 @@ return [
     'list_view' => 'Lista nézet',
     'default' => 'Alapértelmezés szerinti',
     'breadcrumb' => 'Morzsa',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Expand Header Menu',

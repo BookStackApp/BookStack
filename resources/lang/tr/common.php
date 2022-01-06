@@ -71,6 +71,10 @@ return [
     'list_view' => 'Liste Görünümü',
     'default' => 'Varsayılan',
     'breadcrumb' => 'Gezinti Menüsü',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Expand Header Menu',

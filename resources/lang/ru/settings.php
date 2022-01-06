@@ -174,7 +174,7 @@ return [
     'users_role' => 'Роли пользователя',
     'users_role_desc' => 'Назначьте роли пользователю. Если назначено несколько ролей, разрешения будут суммироваться и пользователь получит все права назначенных ролей.',
     'users_password' => 'Пароль пользователя',
-    'users_password_desc' => 'Установите пароль для входа в приложение. Длина пароля должна быть не менее 6 символов.',
+    'users_password_desc' => 'Установите пароль для входа в приложение. Длина пароля должна быть не менее 8 символов.',
     'users_send_invite_text' => 'Вы можете отправить этому пользователю письмо с приглашением, которое позволит ему установить пароль самостоятельно или задайте пароль сами.',
     'users_send_invite_option' => 'Отправить пользователю письмо с приглашением',
     'users_external_auth_id' => 'Внешний ID аутентификации',
@@ -232,6 +232,34 @@ return [
     'user_api_token_delete_warning' => 'Это полностью удалит API токен с именем \':tokenName\' из системы.',
     'user_api_token_delete_confirm' => 'Вы уверены, что хотите удалить этот API токен?',
     'user_api_token_delete_success' => 'API токен успешно удален',
+
+    // Webhooks
+    'webhooks' => 'Вебхуки',
+    'webhooks_create' => 'Создать вебхук',
+    'webhooks_none_created' => 'Вебхуки еще не созданы.',
+    'webhooks_edit' => 'Редактировать вебхук',
+    'webhooks_save' => 'Сохранить вебхук',
+    'webhooks_details' => 'Детали вебхука',
+    'webhooks_details_desc' => 'Укажите удобное для пользователя название и адрес для отправки данных вебхука с помощью POST.',
+    'webhooks_events' => 'События вебхука',
+    'webhooks_events_desc' => 'Выберите все события, которые должны вызывать этот вебхук.',
+    'webhooks_events_warning' => 'Имейте в виду, что эти события будут срабатывать для всех выбранных событий, даже если применяются пользовательские разрешения. Убедитесь, что использование этого вебхука не будет раскрывать конфиденциальные данные.',
+    'webhooks_events_all' => 'Все системные события',
+    'webhooks_name' => 'Имя вебхука',
+    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_endpoint' => 'Конечная точка вебхука',
+    'webhooks_active' => 'Вебхук активен',
+    'webhook_events_table_header' => 'События',
+    'webhooks_delete' => 'Удалить вебхук',
+    'webhooks_delete_warning' => 'Это полностью удалит этот вебхук с названием \':webhookName\' из системы.',
+    'webhooks_delete_confirm' => 'Вы уверены, что хотите удалить этот вебхук?',
+    'webhooks_format_example' => 'Пример вебхука',
+    'webhooks_format_example_desc' => 'Данные вебхука отправляются как POST запрос к настроенной конечной точке в виде JSON в соответствии с форматом ниже. Свойства "related_item" и "url" необязательны и зависят от типа вызванного события.',
+    'webhooks_status' => 'Webhook Status',
+    'webhooks_last_called' => 'Last Called:',
+    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_last_error_message' => 'Last Error Message:',
+
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'チャプターを後に',
     'books_sort_show_other' => '他のブックを表示',
     'books_sort_save' => '並び順を保存',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'チャプター',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'チャプターを移動',
     'chapters_move_named' => 'チャプター「:chapterName」を移動',
     'chapter_move_success' => 'チャプターを「:bookName」に移動しました',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'チャプター権限',
     'chapters_empty' => 'まだチャプター内にページはありません。',
     'chapters_permissions_active' => 'チャプターの権限は有効です',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
     'revision_delete_success' => 'リビジョンを削除しました',
     'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

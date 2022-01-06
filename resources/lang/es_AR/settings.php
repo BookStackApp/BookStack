@@ -175,7 +175,7 @@ return [
     'users_role' => 'Roles de usuario',
     'users_role_desc' => 'Selecciona los roles a los que será asignado este usuario. Si se asignan varios roles los permisos se acumularán y recibirá todas las habilidades de los roles asignados.',
     'users_password' => 'Contraseña de Usuario',
-    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 5 characters long.',
+    'users_password_desc' => 'Establezca una contraseña para iniciar sesión en la aplicación. Debe tener al menos 8 caracteres.',
     'users_send_invite_text' => 'Puede optar por enviar a este usuario un correo electrónico de invitación que les permita establecer su propia contraseña; de lo contrario, puede establecerla contraseña usted mismo.',
     'users_send_invite_option' => 'Enviar correo electrónico de invitación al usuario.',
     'users_external_auth_id' => 'ID externo de autenticación',
@@ -233,6 +233,34 @@ return [
     'user_api_token_delete_warning' => 'Esto eliminará completamente este token API con el nombre \':tokenName\' del sistema.',
     'user_api_token_delete_confirm' => '¿Está seguro de que desea borrar este API token?',
     'user_api_token_delete_success' => 'Token API borrado correctamente',
+
+    // Webhooks
+    'webhooks' => 'Webhooks',
+    'webhooks_create' => 'Crear Webhook',
+    'webhooks_none_created' => 'No hay webhooks creados.',
+    'webhooks_edit' => 'Editar Webhook',
+    'webhooks_save' => 'Guardar Webhook',
+    'webhooks_details' => 'Detalles del Webhook',
+    'webhooks_details_desc' => 'Proporcione un nombre y un punto final POST como destino para los datos del webhook que se enviarán.',
+    'webhooks_events' => 'Eventos del Webhook',
+    'webhooks_events_desc' => 'Seleccione todos los eventos que deberían activar este webhook.',
+    'webhooks_events_warning' => 'Tenga en cuenta que estos eventos se activarán para todos los eventos seleccionados, incluso si se aplican permisos personalizados. Asegúrese de que el uso de este webhook no exponga contenido confidencial.',
+    'webhooks_events_all' => 'Todos los eventos del sistema',
+    'webhooks_name' => 'Nombre del Webhook',
+    'webhooks_timeout' => 'Tiempo de Espera de Webhook (Segundos)',
+    'webhooks_endpoint' => 'Punto final del Webhook',
+    'webhooks_active' => 'Webhook Activo',
+    'webhook_events_table_header' => 'Eventos',
+    'webhooks_delete' => 'Eliminar Webhook',
+    'webhooks_delete_warning' => 'Esto eliminará completamente este webhook, con el nombre \':webhookName\', del sistema.',
+    'webhooks_delete_confirm' => '¿Seguro que quieres eliminar este webhook?',
+    'webhooks_format_example' => 'Ejemplo de Formato de Webhook',
+    'webhooks_format_example_desc' => 'Los datos del Webhook se envían como una solicitud POST al punto final configurado como JSON siguiendo el formato mostrado a continuación. Las propiedades "related_item" y "url" son opcionales y dependerán del tipo de evento activado.',
+    'webhooks_status' => 'Estado del Webhook',
+    'webhooks_last_called' => 'Última Ejecución:',
+    'webhooks_last_errored' => 'Último error:',
+    'webhooks_last_error_message' => 'Último mensaje de error:',
+
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

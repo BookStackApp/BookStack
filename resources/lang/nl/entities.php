@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Hoofdstukken laatst',
     'books_sort_show_other' => 'Bekijk andere boeken',
     'books_sort_save' => 'Nieuwe volgorde opslaan',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Hoofdstuk',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Hoofdstuk verplaatsen',
     'chapters_move_named' => 'Verplaatst hoofdstuk :chapterName',
     'chapter_move_success' => 'Hoofdstuk verplaatst naar :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Hoofdstuk permissies',
     'chapters_empty' => 'Er zijn geen pagina\'s in dit hoofdstuk aangemaakt.',
     'chapters_permissions_active' => 'Hoofdstuk permissies actief',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Weet u zeker dat u deze revisie wilt herstellen? De huidige pagina-inhoud wordt vervangen.',
     'revision_delete_success' => 'Revisie verwijderd',
     'revision_cannot_delete_latest' => 'Kan de laatste revisie niet verwijderen.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];
