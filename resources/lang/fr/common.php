@@ -71,6 +71,10 @@ return [
     'list_view' => 'Vue en liste',
     'default' => 'Défaut',
     'breadcrumb' => 'Fil d\'Ariane',
+    'status' => 'Statut',
+    'status_active' => 'Actif',
+    'status_inactive' => 'Inactif',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Développer le menu',

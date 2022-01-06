@@ -71,6 +71,10 @@ return [
     'list_view' => 'Lijstweergave',
     'default' => 'Standaard',
     'breadcrumb' => 'Kruimelpad',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Header menu uitvouwen',

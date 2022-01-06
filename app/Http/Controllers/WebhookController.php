@@ -25,6 +25,8 @@ class WebhookController extends Controller
             ->with('trackedEvents')
             ->get();
 
+        $this->setPageTitle(trans('settings.webhooks'));
+
         return view('settings.webhooks.index', ['webhooks' => $webhooks]);
     }
 
@@ -33,6 +35,8 @@ class WebhookController extends Controller
      */
     public function create()
     {
+        $this->setPageTitle(trans('settings.webhooks_create'));
+
         return view('settings.webhooks.create');
     }
 
@@ -46,6 +50,7 @@ class WebhookController extends Controller
             'endpoint' => ['required', 'url', 'max:500'],
             'events'   => ['required', 'array'],
             'active'   => ['required'],
+            'timeout'  => ['required', 'integer', 'min:1', 'max:600'],
         ]);
 
         $webhook = new Webhook($validated);
@@ -68,6 +73,8 @@ class WebhookController extends Controller
             ->with('trackedEvents')
             ->findOrFail($id);
 
+        $this->setPageTitle(trans('settings.webhooks_edit'));
+
         return view('settings.webhooks.edit', ['webhook' => $webhook]);
     }
 
@@ -81,6 +88,7 @@ class WebhookController extends Controller
             'endpoint' => ['required', 'url', 'max:500'],
             'events'   => ['required', 'array'],
             'active'   => ['required'],
+            'timeout'  => ['required', 'integer', 'min:1', 'max:600'],
         ]);
 
         /** @var Webhook $webhook */
@@ -102,6 +110,8 @@ class WebhookController extends Controller
     {
         /** @var Webhook $webhook */
         $webhook = Webhook::query()->findOrFail($id);
+
+        $this->setPageTitle(trans('settings.webhooks_delete'));
 
         return view('settings.webhooks.delete', ['webhook' => $webhook]);
     }

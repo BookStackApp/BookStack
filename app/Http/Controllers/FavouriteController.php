@@ -21,6 +21,8 @@ class FavouriteController extends Controller
 
         $hasMoreLink = ($favourites->count() > $viewCount) ? url('/favourites?page=' . ($page + 1)) : null;
 
+        $this->setPageTitle(trans('entities.my_favourites'));
+
         return view('common.detailed-listing-with-more', [
             'title'       => trans('entities.my_favourites'),
             'entities'    => $favourites->slice(0, $viewCount),

@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Последна глава',
     'books_sort_show_other' => 'Покажи други книги',
     'books_sort_save' => 'Запази новата подредба',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Глава',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Премести глава',
     'chapters_move_named' => 'Премести глава :chapterName',
     'chapter_move_success' => 'Главата беше преместена в :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Настойки за достъп на главата',
     'chapters_empty' => 'Няма създадени страници в тази глава.',
     'chapters_permissions_active' => 'Настройките за достъп до глава са активни',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Сигурни ли сте, че искате да изтриете тази версия? Настоящата страница ще бъде заместена.',
     'revision_delete_success' => 'Версията беше изтрита',
     'revision_cannot_delete_latest' => 'Не може да изтриете последната версия.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

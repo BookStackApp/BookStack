@@ -29,6 +29,8 @@ class RoleController extends Controller
         $this->checkPermission('user-roles-manage');
         $roles = $this->permissionsRepo->getAllRoles();
 
+        $this->setPageTitle(trans('settings.roles'));
+
         return view('settings.roles.index', ['roles' => $roles]);
     }
 
@@ -48,6 +50,8 @@ class RoleController extends Controller
         if ($role) {
             $role->display_name .= ' (' . trans('common.copy') . ')';
         }
+
+        $this->setPageTitle(trans('settings.role_create'));
 
         return view('settings.roles.create', ['role' => $role]);
     }
@@ -82,6 +86,8 @@ class RoleController extends Controller
             throw new PermissionsException(trans('errors.role_cannot_be_edited'));
         }
 
+        $this->setPageTitle(trans('settings.role_edit'));
+
         return view('settings.roles.edit', ['role' => $role]);
     }
 
@@ -115,6 +121,8 @@ class RoleController extends Controller
         $roles = $this->permissionsRepo->getAllRolesExcept($role);
         $blankRole = $role->newInstance(['display_name' => trans('settings.role_delete_no_migration')]);
         $roles->prepend($blankRole);
+
+        $this->setPageTitle(trans('settings.role_delete'));
 
         return view('settings.roles.delete', ['role' => $role, 'roles' => $roles]);
     }

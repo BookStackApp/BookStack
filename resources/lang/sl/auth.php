@@ -21,7 +21,7 @@ return [
     'email' => 'E-pošta',
     'password' => 'Geslo',
     'password_confirm' => 'Potrdi geslo',
-    'password_hint' => 'Mora vebovati vsaj 8 znakov',
+    'password_hint' => 'Must be at least 8 characters',
     'forgot_password' => 'Pozabljeno geslo?',
     'remember_me' => 'Zapomni si me',
     'ldap_email_hint' => 'Prosimo vpišite e-poštni naslov za ta račun.',

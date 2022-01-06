@@ -71,6 +71,10 @@ return [
     'list_view' => 'Tampilan Daftar',
     'default' => 'Bawaan',
     'breadcrumb' => 'Breadcrumb',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Perluas Menu Tajuk',

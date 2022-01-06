@@ -174,7 +174,7 @@ return [
     'users_role' => 'Felhasználói szerepkörök',
     'users_role_desc' => 'A felhasználó melyik szerepkörhöz lesz rendelve. Ha a felhasználó több szerepkörhöz van rendelve, akkor ezeknek a szerepköröknek a jogosultságai összeadódnak, és a a felhasználó a hozzárendelt szerepkörök minden képességét megkapja.',
     'users_password' => 'Felhasználó jelszava',
-    'users_password_desc' => 'Az alkalmazásba bejelentkezéshez használható jelszó beállítása. Legalább 5 karakter hosszúnak kell lennie.',
+    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
     'users_send_invite_text' => 'Lehetséges egy meghívó emailt küldeni ennek a felhasználónak ami lehetővé teszi, hogy beállíthassa a saját jelszavát. Máskülönben a jelszót az erre jogosult felhasználónak kell beállítania.',
     'users_send_invite_option' => 'Felhasználó meghívó levél küldése',
     'users_external_auth_id' => 'Külső hitelesítés azonosítója',
@@ -232,6 +232,34 @@ return [
     'user_api_token_delete_warning' => '\':tokenName\' nevű API vezérjel teljesen törölve lesz a rendszerből.',
     'user_api_token_delete_confirm' => 'Biztosan törölhető ez az API vezérjel?',
     'user_api_token_delete_success' => 'API vezérjel sikeresen törölve',
+
+    // Webhooks
+    'webhooks' => 'Webhooks',
+    'webhooks_create' => 'Create New Webhook',
+    'webhooks_none_created' => 'No webhooks have yet been created.',
+    'webhooks_edit' => 'Edit Webhook',
+    'webhooks_save' => 'Save Webhook',
+    'webhooks_details' => 'Webhook Details',
+    'webhooks_details_desc' => 'Provide a user friendly name and a POST endpoint as a location for the webhook data to be sent to.',
+    'webhooks_events' => 'Webhook Events',
+    'webhooks_events_desc' => 'Select all the events that should trigger this webhook to be called.',
+    'webhooks_events_warning' => 'Keep in mind that these events will be triggered for all selected events, even if custom permissions are applied. Ensure that use of this webhook won\'t expose confidential content.',
+    'webhooks_events_all' => 'All system events',
+    'webhooks_name' => 'Webhook Name',
+    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_endpoint' => 'Webhook Endpoint',
+    'webhooks_active' => 'Webhook Active',
+    'webhook_events_table_header' => 'Events',
+    'webhooks_delete' => 'Delete Webhook',
+    'webhooks_delete_warning' => 'This will fully delete this webhook, with the name \':webhookName\', from the system.',
+    'webhooks_delete_confirm' => 'Are you sure you want to delete this webhook?',
+    'webhooks_format_example' => 'Webhook Format Example',
+    'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
+    'webhooks_status' => 'Webhook Status',
+    'webhooks_last_called' => 'Last Called:',
+    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_last_error_message' => 'Last Error Message:',
+
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

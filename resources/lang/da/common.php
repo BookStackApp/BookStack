@@ -71,6 +71,10 @@ return [
     'list_view' => 'Listevisning',
     'default' => 'Standard',
     'breadcrumb' => 'Brødkrumme',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Udvid header menu',

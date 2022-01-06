@@ -51,6 +51,14 @@ return [
     'mfa_setup_method_notification' => 'Mitmeastmeline autentimine seadistatud',
     'mfa_remove_method_notification' => 'Mitmeastmeline autentimine eemaldatud',
 
+    // Webhooks
+    'webhook_create' => 'lisas veebihaagi',
+    'webhook_create_notification' => 'Veebihaak on lisatud',
+    'webhook_update' => 'muutis veebihaaki',
+    'webhook_update_notification' => 'Veebihaak on muudetud',
+    'webhook_delete' => 'kustutas veebihaagi',
+    'webhook_delete_notification' => 'Veebihaak on kustutatud',
+
     // Other
     'commented_on'                => 'kommenteeris lehte',
     'permissions_update'          => 'muutis õiguseid',

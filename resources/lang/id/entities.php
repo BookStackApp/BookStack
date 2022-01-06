@@ -143,6 +143,8 @@ return [
     'books_sort_chapters_last' => 'Bab Terakhir',
     'books_sort_show_other' => 'Tunjukkan Buku Lain',
     'books_sort_save' => 'Simpan Pesanan Baru',
+    'books_copy' => 'Copy Book',
+    'books_copy_success' => 'Book successfully copied',
 
     // Chapters
     'chapter' => 'Bab',
@@ -161,6 +163,8 @@ return [
     'chapters_move' => 'Pindahkan Bab',
     'chapters_move_named' => 'Pindahkan Bab :chapterName',
     'chapter_move_success' => 'Bab dipindahkan ke :bookName',
+    'chapters_copy' => 'Copy Chapter',
+    'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Izin Bab',
     'chapters_empty' => 'Saat ini tidak ada halaman dalam bab ini.',
     'chapters_permissions_active' => 'Izin Bab Aktif',
@@ -332,4 +336,12 @@ return [
     'revision_restore_confirm' => 'Apakah Anda yakin ingin memulihkan revisi ini? Konten halaman saat ini akan diganti.',
     'revision_delete_success' => 'Revisi dihapus',
     'revision_cannot_delete_latest' => 'Tidak dapat menghapus revisi terakhir.',
+
+    // Copy view
+    'copy_consider' => 'Please consider the below when copying content.',
+    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
+    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider_attachments' => 'Page attachments will not be copied.',
+    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];

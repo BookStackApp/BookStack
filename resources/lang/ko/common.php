@@ -71,6 +71,10 @@ return [
     'list_view' => '목록 보기',
     'default' => '기본 설정',
     'breadcrumb' => '탐색 경로',
+    'status' => 'Status',
+    'status_active' => 'Active',
+    'status_inactive' => 'Inactive',
+    'never' => 'Never',
 
     // Header
     'header_menu_expand' => 'Expand Header Menu',

@@ -4,7 +4,7 @@
          option:entity-selector:entity-types="{{ $entityTypes ?? 'book,chapter,page' }}"
          option:entity-selector:entity-permission="{{ $entityPermission ?? 'view' }}">
         <input refs="entity-selector@input" type="hidden" name="{{$name}}" value="">
-        <input type="text" placeholder="{{ trans('common.search') }}" @if($autofocus ?? false) autofocus @endif refs="entity-selector@search">
+        <input refs="entity-selector@search entity-selector-popup@searchInput" type="text" placeholder="{{ trans('common.search') }}" @if($autofocus ?? false) autofocus @endif>
         <div class="text-center loading" refs="entity-selector@loading">@include('common.loading-icon')</div>
         <div refs="entity-selector@results"></div>
         @if($showAdd ?? false)

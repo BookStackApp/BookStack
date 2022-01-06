@@ -7,41 +7,41 @@ return [
 
     // Pages
     'page_create'                 => 'pagina creata',
-    'page_create_notification'    => 'Pagina Creata Correttamente',
+    'page_create_notification'    => 'Pagina creata con successo',
     'page_update'                 => 'ha aggiornato la pagina',
-    'page_update_notification'    => 'Pagina Aggiornata Correttamente',
+    'page_update_notification'    => 'Pagina aggiornata con successo',
     'page_delete'                 => 'ha eliminato la pagina',
-    'page_delete_notification'    => 'Pagina Eliminata Correttamente',
+    'page_delete_notification'    => 'Pagina eliminata con successo',
     'page_restore'                => 'ha ripristinato la pagina',
-    'page_restore_notification'   => 'Pagina Ripristinata Correttamente',
+    'page_restore_notification'   => 'Pagina ripristinata con successo',
     'page_move'                   => 'ha mosso la pagina',
 
     // Chapters
     'chapter_create'              => 'ha creato il capitolo',
-    'chapter_create_notification' => 'Capitolo Creato Correttamente',
+    'chapter_create_notification' => 'Capitolo creato con successo',
     'chapter_update'              => 'ha aggiornato il capitolo',
-    'chapter_update_notification' => 'Capitolo Aggiornato Correttamente',
+    'chapter_update_notification' => 'Capitolo aggiornato con successo',
     'chapter_delete'              => 'ha eliminato il capitolo',
-    'chapter_delete_notification' => 'Capitolo Eliminato Correttamente',
+    'chapter_delete_notification' => 'Capitolo eliminato con successo',
     'chapter_move'                => 'ha spostato il capitolo',
 
     // Books
     'book_create'                 => 'ha creato il libro',
-    'book_create_notification'    => 'Libro Creato Correttamente',
+    'book_create_notification'    => 'Libro creato con successo',
     'book_update'                 => 'ha aggiornato il libro',
-    'book_update_notification'    => 'Libro Aggiornato Correttamente',
+    'book_update_notification'    => 'Libro aggiornato con successo',
     'book_delete'                 => 'ha eliminato il libro',
-    'book_delete_notification'    => 'Libro Eliminato Correttamente',
+    'book_delete_notification'    => 'Libro eliminato con successo',
     'book_sort'                   => 'ha ordinato il libro',
-    'book_sort_notification'      => 'Libro Riordinato Correttamente',
+    'book_sort_notification'      => 'Libro reindicizzato con successo',
 
     // Bookshelves
-    'bookshelf_create'            => 'ha creato la Libreria',
-    'bookshelf_create_notification'    => 'Libreria Creata Correttamente',
+    'bookshelf_create'            => 'libreria creata',
+    'bookshelf_create_notification'    => 'Libreria creata con successo',
     'bookshelf_update'                 => 'ha aggiornato la libreria',
-    'bookshelf_update_notification'    => 'Libreria Aggiornata Correttamente',
+    'bookshelf_update_notification'    => 'Libreria aggiornata con successo',
     'bookshelf_delete'                 => 'ha eliminato la libreria',
-    'bookshelf_delete_notification'    => 'Libreria Eliminata Correttamente',
+    'bookshelf_delete_notification'    => 'Libreria cancellata con successo',
 
     // Favourites
     'favourite_add_notification' => '":name" è stato aggiunto ai tuoi preferiti',
@@ -50,6 +50,14 @@ return [
     // MFA
     'mfa_setup_method_notification' => 'Metodo multi-fattore impostato con successo',
     'mfa_remove_method_notification' => 'Metodo multi-fattore rimosso con successo',
+
+    // Webhooks
+    'webhook_create' => 'webhook creato',
+    'webhook_create_notification' => 'Webhook creato con successo',
+    'webhook_update' => 'webhook aggiornato',
+    'webhook_update_notification' => 'Webhook aggiornato con successo',
+    'webhook_delete' => 'webhook eliminato',
+    'webhook_delete_notification' => 'Webhook eliminato con successo',
 
     // Other
     'commented_on'                => 'ha commentato in',

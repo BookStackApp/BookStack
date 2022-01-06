@@ -11,6 +11,7 @@ use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\PermissionsException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -180,6 +181,8 @@ class ChapterController extends Controller
 
         try {
             $newBook = $this->chapterRepo->move($chapter, $entitySelection);
+        } catch (PermissionsException $exception) {
+            $this->showPermissionError();
         } catch (MoveOperationException $exception) {
             $this->showErrorNotification(trans('errors.selected_book_not_found'));
 
