@@ -264,20 +264,20 @@ class SortTest extends TestCase
         // Create request data
         $reqData = [
             [
-                'id' => $chapterToMove->id,
-                'sort' => 0,
+                'id'            => $chapterToMove->id,
+                'sort'          => 0,
                 'parentChapter' => false,
-                'type' => 'chapter',
-                'book' => $newBook->id,
+                'type'          => 'chapter',
+                'book'          => $newBook->id,
             ],
         ];
         foreach ($pagesToMove as $index => $page) {
             $reqData[] = [
-                'id' => $page->id,
-                'sort' => $index,
+                'id'            => $page->id,
+                'sort'          => $index,
                 'parentChapter' => $index === count($pagesToMove) - 1 ? $chapterToMove->id : false,
-                'type' => 'page',
-                'book' => $newBook->id,
+                'type'          => 'page',
+                'book'          => $newBook->id,
             ];
         }
 
@@ -285,8 +285,8 @@ class SortTest extends TestCase
         $sortResp->assertRedirect($newBook->getUrl());
         $sortResp->assertStatus(302);
         $this->assertDatabaseHas('chapters', [
-            'id' => $chapterToMove->id,
-            'book_id' => $newBook->id,
+            'id'       => $chapterToMove->id,
+            'book_id'  => $newBook->id,
             'priority' => 0,
         ]);
         $this->assertTrue($newBook->chapters()->count() === 1);
@@ -304,11 +304,11 @@ class SortTest extends TestCase
         $otherChapter = Chapter::query()->where('book_id', '!=', $page->book_id)->first();
 
         $sortData = [
-            'id' => $page->id,
-            'sort' => 0,
+            'id'            => $page->id,
+            'sort'          => 0,
             'parentChapter' => $otherChapter->id,
-            'type' => 'page',
-            'book' => $page->book_id,
+            'type'          => 'page',
+            'book'          => $page->book_id,
         ];
         $this->asEditor()->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
@@ -326,11 +326,11 @@ class SortTest extends TestCase
         $this->setEntityRestrictions($otherChapter);
 
         $sortData = [
-            'id' => $page->id,
-            'sort' => 0,
+            'id'            => $page->id,
+            'sort'          => 0,
             'parentChapter' => $otherChapter->id,
-            'type' => 'page',
-            'book' => $otherChapter->book_id,
+            'type'          => 'page',
+            'book'          => $otherChapter->book_id,
         ];
         $this->asEditor()->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
@@ -349,11 +349,11 @@ class SortTest extends TestCase
         $this->setEntityRestrictions($otherChapter->book, ['update', 'delete'], [$editor->roles()->first()]);
 
         $sortData = [
-            'id' => $page->id,
-            'sort' => 0,
+            'id'            => $page->id,
+            'sort'          => 0,
             'parentChapter' => $otherChapter->id,
-            'type' => 'page',
-            'book' => $otherChapter->book_id,
+            'type'          => 'page',
+            'book'          => $otherChapter->book_id,
         ];
         $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
@@ -372,11 +372,11 @@ class SortTest extends TestCase
         $this->setEntityRestrictions($otherChapter, ['view', 'delete'], [$editor->roles()->first()]);
 
         $sortData = [
-            'id' => $page->id,
-            'sort' => 0,
+            'id'            => $page->id,
+            'sort'          => 0,
             'parentChapter' => $otherChapter->id,
-            'type' => 'page',
-            'book' => $otherChapter->book_id,
+            'type'          => 'page',
+            'book'          => $otherChapter->book_id,
         ];
         $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
@@ -395,11 +395,11 @@ class SortTest extends TestCase
         $this->setEntityRestrictions($page, ['view', 'delete'], [$editor->roles()->first()]);
 
         $sortData = [
-            'id' => $page->id,
-            'sort' => 0,
+            'id'            => $page->id,
+            'sort'          => 0,
             'parentChapter' => $otherChapter->id,
-            'type' => 'page',
-            'book' => $otherChapter->book_id,
+            'type'          => 'page',
+            'book'          => $otherChapter->book_id,
         ];
         $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
@@ -418,11 +418,11 @@ class SortTest extends TestCase
         $this->setEntityRestrictions($page, ['view', 'update'], [$editor->roles()->first()]);
 
         $sortData = [
-            'id' => $page->id,
-            'sort' => 0,
+            'id'            => $page->id,
+            'sort'          => 0,
             'parentChapter' => $otherChapter->id,
-            'type' => 'page',
-            'book' => $otherChapter->book_id,
+            'type'          => 'page',
+            'book'          => $otherChapter->book_id,
         ];
         $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
@@ -430,7 +430,6 @@ class SortTest extends TestCase
             'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
         ]);
     }
-
 
     public function test_book_sort_item_returns_book_content()
     {

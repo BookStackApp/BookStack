@@ -170,6 +170,7 @@ class ThemeTest extends TestCase
         $args = [];
         $callback = function (...$eventArgs) use (&$args) {
             $args = $eventArgs;
+
             return ['test' => 'hello!'];
         };
         Theme::listen(ThemeEvents::WEBHOOK_CALL_BEFORE, $callback);

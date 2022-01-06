@@ -84,7 +84,7 @@ class WebhookManagementTest extends TestCase
             'endpoint' => 'https://example.com/updated-webhook',
             'events'   => [ActivityType::PAGE_CREATE, ActivityType::PAGE_UPDATE],
             'active'   => 'true',
-            'timeout'  => 5
+            'timeout'  => 5,
         ]);
         $resp->assertRedirect('/settings/webhooks');
 
