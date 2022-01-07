@@ -12,11 +12,11 @@ const nodeCallout = {
     group: "block",
     defining: true,
     parseDOM: [
-        {tag: 'p.callout.info', attrs: {type: 'info'}},
-        {tag: 'p.callout.success', attrs: {type: 'success'}},
-        {tag: 'p.callout.danger', attrs: {type: 'danger'}},
-        {tag: 'p.callout.warning', attrs: {type: 'warning'}},
-        {tag: 'p.callout', attrs: {type: 'info'}},
+        {tag: 'p.callout.info', attrs: {type: 'info'}, priority: 75,},
+        {tag: 'p.callout.success', attrs: {type: 'success'}, priority: 75,},
+        {tag: 'p.callout.danger', attrs: {type: 'danger'}, priority: 75,},
+        {tag: 'p.callout.warning', attrs: {type: 'warning'}, priority: 75,},
+        {tag: 'p.callout', attrs: {type: 'info'}, priority: 75},
     ],
     toDOM: function(node) {
         const type = node.attrs.type || 'info';
@@ -24,7 +24,7 @@ const nodeCallout = {
     }
 };
 
-const customNodes = baseNodes.prepend({
+const customNodes = baseNodes.append({
     callout: nodeCallout,
 });
 
