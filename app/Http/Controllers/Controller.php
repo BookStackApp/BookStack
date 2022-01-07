@@ -48,6 +48,8 @@ abstract class Controller extends BaseController
     /**
      * On a permission error redirect to home and display.
      * the error as a notification.
+     *
+     * @return never
      */
     protected function showPermissionError()
     {
