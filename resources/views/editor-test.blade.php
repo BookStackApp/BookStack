@@ -23,6 +23,9 @@
                 <li>Item C</li>
             </ul>
             <p>Lorem ipsum dolor sit amet.</p>
+            <p class="callout info">
+                This is an info callout test!
+            </p>
         </div>
 
     </div>
