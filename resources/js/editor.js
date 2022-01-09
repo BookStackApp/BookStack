@@ -1,6 +1,7 @@
 import MarkdownView from "./editor/MarkdownView";
 import ProseMirrorView from "./editor/ProseMirrorView";
 
+// Next step: https://prosemirror.net/examples/menu/
 
 const place = document.querySelector("#editor");
 let view = new ProseMirrorView(place, document.getElementById('content').innerHTML);

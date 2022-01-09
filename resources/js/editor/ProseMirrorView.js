@@ -5,6 +5,7 @@ import {exampleSetup} from "prosemirror-example-setup";
 import {DOMParser, DOMSerializer} from "prosemirror-model";
 
 import schema from "./schema";
+import menu from "./menu";
 
 class ProseMirrorView {
     constructor(target, content) {
@@ -16,7 +17,10 @@ class ProseMirrorView {
         this.view = new EditorView(target, {
             state: EditorState.create({
                 doc: DOMParser.fromSchema(schema).parse(renderDoc.body),
-                plugins: exampleSetup({schema})
+                plugins: [
+                    ...exampleSetup({schema, menuBar: false}),
+                    menu,
+                ]
             })
         });
     }

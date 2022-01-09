@@ -1,9 +1,5 @@
 @extends('layouts.simple')
 
-@section('head')
-    <link rel=stylesheet href="https://prosemirror.net/css/editor.css">
-@endsection
-
 @section('body')
     <div class="container">
 
@@ -11,7 +7,7 @@
             <input id="markdown-toggle" type="checkbox">
         </div>
 
-        <div id=editor style="margin-bottom: 23px"></div>
+        <div id="editor" class="bs-editor" style="margin-bottom: 23px"></div>
 
         <div id="content" style="display: none;">
             <h2>This is an editable block</h2>
