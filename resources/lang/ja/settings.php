@@ -234,8 +234,8 @@ return [
     'user_api_token_delete_success' => 'APIトークンが正常に削除されました',
 
     // Webhooks
-    'webhooks' => 'Webhooks',
-    'webhooks_create' => 'Create New Webhook',
+    'webhooks' => 'Webhook',
+    'webhooks_create' => 'Webhookを作成',
     'webhooks_none_created' => 'No webhooks have yet been created.',
     'webhooks_edit' => 'Edit Webhook',
     'webhooks_save' => 'Save Webhook',
