@@ -338,10 +338,10 @@ return [
     'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider' => 'コンテンツをコピーする場合は以下の点にご注意ください。',
+    'copy_consider_permissions' => 'カスタム権限設定はコピーされません。',
+    'copy_consider_owner' => 'あなたはコピーされた全てのコンテンツの所有者になります。',
+    'copy_consider_images' => 'ページの画像ファイルは複製されず、元の画像は最初にアップロードされたページとの関係を保持します。',
+    'copy_consider_attachments' => 'ページの添付ファイルはコピーされません。',
+    'copy_consider_access' => '場所、所有者または権限を変更すると、以前アクセスできなかったユーザーがこのコンテンツにアクセスできるようになる可能性があります。',
 ];
