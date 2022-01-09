@@ -22,7 +22,7 @@ return [
     'meta_created_name' => '作成: :timeLength (:user)',
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
-    'meta_owned_name' => 'Owned by :user',
+    'meta_owned_name' => '所有者: :user',
     'entity_select' => 'エンティティ選択',
     'images' => '画像',
     'my_recent_drafts' => '最近の下書き',
@@ -36,14 +36,14 @@ return [
     'export_html' => 'Webページ',
     'export_pdf' => 'PDF',
     'export_text' => 'テキストファイル',
-    'export_md' => 'Markdown File',
+    'export_md' => 'Markdown',
 
     // Permissions and restrictions
     'permissions' => '権限',
     'permissions_intro' => 'この設定は各ユーザの役割よりも優先して適用されます。',
     'permissions_enable' => 'カスタム権限設定を有効にする',
     'permissions_save' => '権限を保存',
-    'permissions_owner' => 'Owner',
+    'permissions_owner' => '所有者',
 
     // Search
     'search_results' => '検索結果',
@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => 'チャプターを後に',
     'books_sort_show_other' => '他のブックを表示',
     'books_sort_save' => '並び順を保存',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => 'ブックをコピー',
+    'books_copy_success' => 'ブックが正常にコピーされました',
 
     // Chapters
     'chapter' => 'チャプター',
@@ -163,8 +163,8 @@ return [
     'chapters_move' => 'チャプターを移動',
     'chapters_move_named' => 'チャプター「:chapterName」を移動',
     'chapter_move_success' => 'チャプターを「:bookName」に移動しました',
-    'chapters_copy' => 'Copy Chapter',
-    'chapters_copy_success' => 'Chapter successfully copied',
+    'chapters_copy' => 'チャプターをコピー',
+    'chapters_copy_success' => 'チャプターが正常にコピーされました',
     'chapters_permissions' => 'チャプター権限',
     'chapters_empty' => 'まだチャプター内にページはありません。',
     'chapters_permissions_active' => 'チャプターの権限は有効です',
@@ -215,16 +215,16 @@ return [
     'pages_copy_success' => 'ページが正常にコピーされました',
     'pages_permissions' => 'ページの権限設定',
     'pages_permissions_success' => 'ページの権限を更新しました',
-    'pages_revision' => 'Revision',
+    'pages_revision' => '編集履歴',
     'pages_revisions' => '編集履歴',
     'pages_revisions_named' => ':pageName のリビジョン',
     'pages_revision_named' => ':pageName のリビジョン',
-    'pages_revision_restored_from' => 'Restored from #:id; :summary',
+    'pages_revision_restored_from' => '#:id :summary から復元',
     'pages_revisions_created_by' => '作成者',
     'pages_revisions_date' => '日付',
     'pages_revisions_number' => '#',
-    'pages_revisions_numbered' => 'Revision #:id',
-    'pages_revisions_numbered_changes' => 'Revision #:id Changes',
+    'pages_revisions_numbered' => 'リビジョン #:id',
+    'pages_revisions_numbered_changes' => 'リビジョン #:id の変更',
     'pages_revisions_changelog' => '説明',
     'pages_revisions_changes' => '変更点',
     'pages_revisions_current' => '現在のバージョン',
@@ -333,7 +333,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => 'このリビジョンを削除しますか？',
-    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
+    'revision_restore_confirm' => 'このリビジョンを復元してよろしいですか？現在のページの内容が置換されます。',
     'revision_delete_success' => 'リビジョンを削除しました',
     'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。',
 
