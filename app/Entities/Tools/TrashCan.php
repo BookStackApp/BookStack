@@ -22,6 +22,7 @@ class TrashCan
 {
     /**
      * Send a shelf to the recycle bin.
+     *
      * @throws NotifyException
      */
     public function softDestroyShelf(Bookshelf $shelf)
