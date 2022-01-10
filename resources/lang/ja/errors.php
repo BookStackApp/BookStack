@@ -99,7 +99,7 @@ return [
     'api_no_authorization_found' => 'リクエストに認証トークンが見つかりません',
     'api_bad_authorization_format' => 'リクエストに認証トークンが見つかりましたが、形式が正しくないようです',
     'api_user_token_not_found' => '提供された認証トークンに一致するAPIトークンが見つかりませんでした',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_incorrect_token_secret' => '利用されたAPIトークンに対して提供されたシークレットが正しくありません',
     'api_user_no_api_permission' => '使用されているAPIトークンの所有者には、API呼び出しを行う権限がありません',
     'api_user_token_expired' => '認証トークンが期限切れです。',
 

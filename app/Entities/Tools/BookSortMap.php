@@ -24,7 +24,7 @@ class BookSortMap
 
     public static function fromJson(string $json): self
     {
-        $map = new static();
+        $map = new BookSortMap();
         $mapData = json_decode($json);
 
         foreach ($mapData as $mapDataItem) {
