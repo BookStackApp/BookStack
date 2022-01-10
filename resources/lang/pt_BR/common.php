@@ -39,14 +39,14 @@ return [
     'reset' => 'Redefinir',
     'remove' => 'Remover',
     'add' => 'Adicionar',
-    'configure' => 'Configure',
+    'configure' => 'Configurar',
     'fullscreen' => 'Tela cheia',
     'favourite' => 'Favoritos',
     'unfavourite' => 'Remover dos Favoritos',
     'next' => 'Seguinte',
     'previous' => 'Anterior',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'filter_active' => 'Filtro Ativo:',
+    'filter_clear' => 'Limpar Filtro',
 
     // Sort Options
     'sort_options' => 'Opções de Ordenação',
@@ -72,12 +72,12 @@ return [
     'default' => 'Padrão',
     'breadcrumb' => 'Caminho',
     'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
-    'never' => 'Never',
+    'status_active' => 'Ativo',
+    'status_inactive' => 'Inativo',
+    'never' => 'Nunca',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Expandir Cabeçalho do Menu',
     'profile_menu' => 'Menu de Perfil',
     'view_profile' => 'Visualizar Perfil',
     'edit_profile' => 'Editar Perfil',
@@ -86,9 +86,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Informações',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Aba: Mostrar Informação Secundária',
     'tab_content' => 'Conteúdo',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Aba: Mostrar Conteúdo Primário',
 
     // Email Content
     'email_action_help' => 'Se você estiver tendo problemas ao clicar o botão ":actionText", copie e cole a URL abaixo no seu navegador:',
