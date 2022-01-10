@@ -85,10 +85,10 @@ return [
     'light_mode' => 'ライトモード',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Show Secondary Information',
-    'tab_content' => 'Content',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_info' => '情報',
+    'tab_info_label' => 'タブ: サブコンテンツを表示',
+    'tab_content' => '内容',
+    'tab_content_label' => 'タブ: メインコンテンツを表示',
 
     // Email Content
     'email_action_help' => '":actionText" をクリックできない場合、以下のURLをコピーしブラウザで開いてください:',

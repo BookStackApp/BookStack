@@ -236,7 +236,7 @@ return [
     // Webhooks
     'webhooks' => 'Webhooks',
     'webhooks_create' => '新建 Webhook',
-    'webhooks_none_created' => '不存在已创建的 webhooks',
+    'webhooks_none_created' => '尚未创建任何 webhook',
     'webhooks_edit' => '编辑 Webhook',
     'webhooks_save' => '保存 Webhook',
     'webhooks_details' => 'Webhook 详情',
