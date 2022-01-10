@@ -79,6 +79,24 @@ class HomepageTest extends TestCase
         $pageDeleteReq->assertSessionMissing('error');
     }
 
+    public function test_custom_homepage_cannot_be_deleted_from_parent_deletion()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $this->setSettings([
+            'app-homepage'      => $page->id,
+            'app-homepage-type' => 'page',
+        ]);
+
+        $this->asEditor()->delete($page->book->getUrl());
+        $this->assertSessionError('Cannot delete a page while it is set as a homepage');
+        $this->assertDatabaseMissing('deletions', ['deletable_id' => $page->book->id]);
+
+        $page->refresh();
+        $this->assertNull($page->deleted_at);
+        $this->assertNull($page->book->deleted_at);
+    }
+
     public function test_custom_homepage_renders_includes()
     {
         $this->asEditor();
