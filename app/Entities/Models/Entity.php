@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string     $slug
  * @property Carbon     $created_at
  * @property Carbon     $updated_at
+ * @property Carbon     $deleted_at
  * @property int        $created_by
  * @property int        $updated_by
  * @property bool       $restricted

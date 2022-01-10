@@ -22,9 +22,11 @@ class TrashCan
 {
     /**
      * Send a shelf to the recycle bin.
+     * @throws NotifyException
      */
     public function softDestroyShelf(Bookshelf $shelf)
     {
+        $this->ensureDeletable($shelf);
         Deletion::createForEntity($shelf);
         $shelf->delete();
     }
@@ -36,6 +38,7 @@ class TrashCan
      */
     public function softDestroyBook(Book $book)
     {
+        $this->ensureDeletable($book);
         Deletion::createForEntity($book);
 
         foreach ($book->pages as $page) {
@@ -57,6 +60,7 @@ class TrashCan
     public function softDestroyChapter(Chapter $chapter, bool $recordDelete = true)
     {
         if ($recordDelete) {
+            $this->ensureDeletable($chapter);
             Deletion::createForEntity($chapter);
         }
 
@@ -77,19 +81,47 @@ class TrashCan
     public function softDestroyPage(Page $page, bool $recordDelete = true)
     {
         if ($recordDelete) {
+            $this->ensureDeletable($page);
             Deletion::createForEntity($page);
         }
 
-        // Check if set as custom homepage & remove setting if not used or throw error if active
-        $customHome = setting('app-homepage', '0:');
-        if (intval($page->id) === intval(explode(':', $customHome)[0])) {
-            if (setting('app-homepage-type') === 'page') {
-                throw new NotifyException(trans('errors.page_custom_home_deletion'), $page->getUrl());
+        $page->delete();
+    }
+
+    /**
+     * Ensure the given entity is deletable.
+     * Is not for permissions, but logical conditions within the application.
+     * Will throw if not deletable.
+     *
+     * @throws NotifyException
+     */
+    protected function ensureDeletable(Entity $entity): void
+    {
+        $customHomeId = intval(explode(':', setting('app-homepage', '0:'))[0]);
+        $customHomeActive = setting('app-homepage-type') === 'page';
+        $removeCustomHome = false;
+
+        // Check custom homepage usage for pages
+        if ($entity instanceof Page && $entity->id === $customHomeId) {
+            if ($customHomeActive) {
+                throw new NotifyException(trans('errors.page_custom_home_deletion'), $entity->getUrl());
             }
-            setting()->remove('app-homepage');
+            $removeCustomHome = true;
         }
 
-        $page->delete();
+        // Check custom homepage usage within chapters or books
+        if ($entity instanceof Chapter || $entity instanceof Book) {
+            if ($entity->pages()->where('id', '=', $customHomeId)->exists()) {
+                if ($customHomeActive) {
+                    throw new NotifyException(trans('errors.page_custom_home_deletion'), $entity->getUrl());
+                }
+                $removeCustomHome = true;
+            }
+        }
+
+        if ($removeCustomHome) {
+            setting()->remove('app-homepage');
+        }
     }
 
     /**
