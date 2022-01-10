@@ -563,8 +563,9 @@ class WysiwygEditor {
                         }
 
                         // Replace the actively selected content with the linked image
+                        const imageUrl = image.thumbs.display || image.url;
                         let html = `<a href="${image.url}" target="_blank">`;
-                        html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
+                        html += `<img src="${imageUrl}" alt="${image.name}">`;
                         html += '</a>';
                         win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
                     }, 'gallery');
@@ -723,8 +724,9 @@ class WysiwygEditor {
                     tooltip: 'Insert an image',
                     onclick: function () {
                         window.ImageManager.show(function (image) {
+                            const imageUrl = image.thumbs.display || image.url;
                             let html = `<a href="${image.url}" target="_blank">`;
-                            html += `<img src="${image.thumbs.display}" alt="${image.name}">`;
+                            html += `<img src="${imageUrl}" alt="${image.name}">`;
                             html += '</a>';
                             editor.execCommand('mceInsertContent', false, html);
                         }, 'gallery');

@@ -395,8 +395,9 @@ class MarkdownEditor {
     actionInsertImage() {
         const cursorPos = this.cm.getCursor('from');
         window.ImageManager.show(image => {
+            const imageUrl = image.thumbs.display || image.url;
             let selectedText = this.cm.getSelection();
-            let newText = "[![" + (selectedText || image.name) + "](" + image.thumbs.display + ")](" + image.url + ")";
+            let newText = "[![" + (selectedText || image.name) + "](" + imageUrl + ")](" + image.url + ")";
             this.cm.focus();
             this.cm.replaceSelection(newText);
             this.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
