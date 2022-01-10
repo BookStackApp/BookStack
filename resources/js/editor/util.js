@@ -14,3 +14,38 @@ export function docToHtml(doc) {
     renderDoc.body.appendChild(fragment);
     return renderDoc.body.innerHTML;
 }
+
+/**
+ * @class KeyedMultiStack
+ * Holds many stacks, seperated via a key, with a simple
+ * interface to pop and push values to the stacks.
+ */
+export class KeyedMultiStack {
+
+    constructor() {
+        this.stack = {};
+    }
+
+    /**
+     * @param {String} key
+     * @return {undefined|*}
+     */
+    pop(key) {
+        if (Array.isArray(this.stack[key])) {
+            return this.stack[key].pop();
+        }
+        return undefined;
+    }
+
+    /**
+     * @param {String} key
+     * @param {*} value
+     */
+    push(key, value) {
+        if (this.stack[key] === undefined) {
+            this.stack[key] = [];
+        }
+
+        this.stack[key].push(value);
+    }
+}

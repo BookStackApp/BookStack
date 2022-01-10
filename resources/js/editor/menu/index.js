@@ -1,10 +1,3 @@
-/**
- * Much of this code originates from https://github.com/ProseMirror/prosemirror-menu
- * and is hence subject to the MIT license found here:
- * https://github.com/ProseMirror/prosemirror-menu/blob/master/LICENSE
- * @copyright Marijn Haverbeke and others
- */
-
 import {
     MenuItem, Dropdown, DropdownSubmenu, renderGrouped, icons, joinUpItem, liftItem, selectParentNodeItem,
     undoItem, redoItem, wrapItem, blockTypeItem
@@ -62,6 +55,7 @@ function markItem(markType, options) {
 const inlineStyles = [
     markItem(schema.marks.strong, {title: "Bold", icon: icons.strong}),
     markItem(schema.marks.em, {title: "Italic", icon: icons.em}),
+    markItem(schema.marks.underline, {title: "Underline", label: 'U'}),
 ];
 
 const formats = [
@@ -109,9 +103,8 @@ const menu = menuBar({
     floating: false,
     content: [
         [undoItem, redoItem],
-        inlineStyles,
         [new DropdownSubmenu(formats, { label: 'Formats' })],
-
+        inlineStyles,
     ],
 });
 

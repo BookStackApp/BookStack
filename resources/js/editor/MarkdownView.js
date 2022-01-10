@@ -11,6 +11,8 @@ class MarkdownView {
 
         this.textarea = target.appendChild(document.createElement("textarea"))
         this.textarea.value = markdown;
+        this.textarea.style.width = '1000px';
+        this.textarea.style.height = '1000px';
     }
 
     get content() {

@@ -11,7 +11,10 @@
 
         <div id="content" style="display: none;">
             <h2>This is an editable block</h2>
-            <p>Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit. Asperiores?</p>
+            <p>
+                Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit. Asperiores? <br>
+                Some <span style="text-decoration: underline">Underlined content</span> Lorem ipsum dolor sit amet.
+            </p>
             <p><img src="/user_avatar.png" alt="Logo"></p>
             <ul>
                 <li>Item A</li>
