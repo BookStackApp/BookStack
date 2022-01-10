@@ -7,29 +7,29 @@ return [
 
     // Pages
     'page_create'                 => 'criou a página',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Página criada com sucesso',
     'page_update'                 => 'atualizou a página',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Página atualizada com sucesso',
     'page_delete'                 => 'excluiu a página',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Página excluída com sucesso',
     'page_restore'                => 'restaurou a página',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Página restaurada com sucesso',
     'page_move'                   => 'moveu a página',
 
     // Chapters
     'chapter_create'              => 'criou o capítulo',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Capítulo criado com sucesso',
     'chapter_update'              => 'atualizou o capítulo',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Capítulo atualizado com sucesso',
     'chapter_delete'              => 'excluiu o capítulo',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Capítulo excluída com sucesso',
     'chapter_move'                => 'moveu o capítulo',
 
     // Books
     'book_create'                 => 'criou o livro',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Livro criado com sucesso',
     'book_update'                 => 'atualizou o livro',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Livro atualizado com sucesso',
     'book_delete'                 => 'excluiu o livro',
     'book_delete_notification'    => 'Book successfully deleted',
     'book_sort'                   => 'ordenou o livro',
