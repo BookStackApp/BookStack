@@ -210,3 +210,4 @@ Tomáš Batelka (Vofy) :: Czech
 Mundo Racional (ismael.mesquita) :: Portuguese, Brazilian
 Zarik (3apuk) :: Russian
 Ali Shaatani (a.shaatani) :: Arabic
+ChacMaster :: Portuguese, Brazilian
