@@ -59,7 +59,7 @@ class Deletion extends Model implements Loggable
     /**
      * Get a URL for this specific deletion.
      */
-    public function getUrl($path): string
+    public function getUrl(string $path = 'restore'): string
     {
         return url("/settings/recycle-bin/{$this->id}/" . ltrim($path, '/'));
     }

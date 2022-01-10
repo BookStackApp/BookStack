@@ -46,19 +46,10 @@ class PageRevision extends Model
 
     /**
      * Get the url for this revision.
-     *
-     * @param null|string $path
-     *
-     * @return string
      */
-    public function getUrl($path = null)
+    public function getUrl(string $path = ''): string
     {
-        $url = $this->page->getUrl() . '/revisions/' . $this->id;
-        if ($path) {
-            return $url . '/' . trim($path, '/');
-        }
-
-        return $url;
+        return $this->page->getUrl('/revisions/' . $this->id . '/' . ltrim($path, '/'));
     }
 
     /**
