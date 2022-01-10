@@ -8,7 +8,7 @@
 
         <div class="image-manager-viewer">
             <a href="{{ $image->url }}" target="_blank" rel="noopener" class="block">
-                <img src="{{ $image->thumbs['display'] }}"
+                <img src="{{ $image->thumbs['display'] ?? $image->url }}"
                      alt="{{ $image->name }}"
                      class="anim fadeIn"
                      title="{{ $image->name }}">

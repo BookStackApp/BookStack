@@ -74,6 +74,10 @@ class ImageManager {
 
         this.listContainer.addEventListener('event-emit-select-image', this.onImageSelectEvent.bind(this));
 
+        this.listContainer.addEventListener('error', event => {
+            event.target.src = baseUrl('loading_error.png');
+        }, true);
+
         onSelect(this.selectButton, () => {
             if (this.callback) {
                 this.callback(this.lastSelected);
