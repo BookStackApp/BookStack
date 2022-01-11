@@ -30,7 +30,28 @@ const markUnderline = {
     toDOM() {
         return ["span", {style: "text-decoration: underline;"}, 0];
     }
-}
+};
+
+const markStrike = {
+    parseDOM: [{tag: "s"}, {tag: "strike"}, {style: "text-decoration=line-through"}],
+    toDOM() {
+        return ["span", {style: "text-decoration: line-through;"}, 0];
+    }
+};
+
+const markSuperscript = {
+    parseDOM: [{tag: "sup"}],
+    toDOM() {
+        return ["sup", 0];
+    }
+};
+
+const markSubscript = {
+    parseDOM: [{tag: "sub"}],
+    toDOM() {
+        return ["sub", 0];
+    }
+};
 
 const customNodes = baseNodes.append({
     callout: nodeCallout,
@@ -38,6 +59,9 @@ const customNodes = baseNodes.append({
 
 const customMarks = baseMarks.append({
     underline: markUnderline,
+    strike: markStrike,
+    superscript: markSuperscript,
+    subscript: markSubscript,
 });
 
 const schema = new Schema({

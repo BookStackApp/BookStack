@@ -56,6 +56,9 @@ const inlineStyles = [
     markItem(schema.marks.strong, {title: "Bold", icon: icons.strong}),
     markItem(schema.marks.em, {title: "Italic", icon: icons.em}),
     markItem(schema.marks.underline, {title: "Underline", label: 'U'}),
+    markItem(schema.marks.strike, {title: "Strikethrough", label: '-S-'}),
+    markItem(schema.marks.superscript, {title: "Superscript", label: 'sup'}),
+    markItem(schema.marks.subscript, {title: "Subscript", label: 'sub'}),
 ];
 
 const formats = [

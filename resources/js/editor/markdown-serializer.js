@@ -13,6 +13,21 @@ marks.underline = {
     close: '</span>',
 };
 
+marks.strike = {
+    open: '<span style="text-decoration: line-through;">',
+    close: '</span>',
+};
+
+marks.superscript = {
+    open: '<sup>',
+    close: '</sup>',
+};
+
+marks.subscript = {
+    open: '<sub>',
+    close: '</sub>',
+};
+
 function writeNodeAsHtml(state, node) {
     const html = docToHtml({ content: [node] });
     state.write(html);
