@@ -5,7 +5,7 @@ import {
 
 import {toggleMark} from "prosemirror-commands";
 import {menuBar} from "./menubar"
-import schema from "../schema";
+import index from "../schema/schema";
 
 
 function cmdItem(cmd, options) {
@@ -53,49 +53,49 @@ function markItem(markType, options) {
 }
 
 const inlineStyles = [
-    markItem(schema.marks.strong, {title: "Bold", icon: icons.strong}),
-    markItem(schema.marks.em, {title: "Italic", icon: icons.em}),
-    markItem(schema.marks.underline, {title: "Underline", label: 'U'}),
-    markItem(schema.marks.strike, {title: "Strikethrough", label: '-S-'}),
-    markItem(schema.marks.superscript, {title: "Superscript", label: 'sup'}),
-    markItem(schema.marks.subscript, {title: "Subscript", label: 'sub'}),
+    markItem(index.marks.strong, {title: "Bold", icon: icons.strong}),
+    markItem(index.marks.em, {title: "Italic", icon: icons.em}),
+    markItem(index.marks.underline, {title: "Underline", label: 'U'}),
+    markItem(index.marks.strike, {title: "Strikethrough", label: '-S-'}),
+    markItem(index.marks.superscript, {title: "Superscript", label: 'sup'}),
+    markItem(index.marks.subscript, {title: "Subscript", label: 'sub'}),
 ];
 
 const formats = [
-    blockTypeItem(schema.nodes.heading, {
+    blockTypeItem(index.nodes.heading, {
         label: "Header Large",
         attrs: {level: 2}
     }),
-    blockTypeItem(schema.nodes.heading, {
+    blockTypeItem(index.nodes.heading, {
         label: "Header Medium",
         attrs: {level: 3}
     }),
-    blockTypeItem(schema.nodes.heading, {
+    blockTypeItem(index.nodes.heading, {
         label: "Header Small",
         attrs: {level: 4}
     }),
-    blockTypeItem(schema.nodes.heading, {
+    blockTypeItem(index.nodes.heading, {
         label: "Header Tiny",
         attrs: {level: 5}
     }),
-    blockTypeItem(schema.nodes.paragraph, {
+    blockTypeItem(index.nodes.paragraph, {
         label: "Paragraph",
         attrs: {}
     }),
     new DropdownSubmenu([
-        blockTypeItem(schema.nodes.callout, {
+        blockTypeItem(index.nodes.callout, {
             label: "Info Callout",
             attrs: {type: 'info'}
         }),
-        blockTypeItem(schema.nodes.callout, {
+        blockTypeItem(index.nodes.callout, {
             label: "Danger Callout",
             attrs: {type: 'danger'}
         }),
-        blockTypeItem(schema.nodes.callout, {
+        blockTypeItem(index.nodes.callout, {
             label: "Success Callout",
             attrs: {type: 'success'}
         }),
-        blockTypeItem(schema.nodes.callout, {
+        blockTypeItem(index.nodes.callout, {
             label: "Warning Callout",
             attrs: {type: 'warning'}
         })
