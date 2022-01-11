@@ -1,7 +1,104 @@
-import {schema as basicSchema} from "prosemirror-schema-basic";
-import {addListNodes} from "prosemirror-schema-list";
+import {orderedList, bulletList, listItem} from "prosemirror-schema-list";
 
-const baseNodes = addListNodes(basicSchema.spec.nodes, "paragraph block*", "block");
+const doc = {
+    content: "block+",
+};
+
+const paragraph = {
+    content: "inline*",
+    group: "block",
+    parseDOM: [{tag: "p"}],
+    toDOM() {
+        return ["p", 0];
+    }
+};
+
+const blockquote = {
+    content: "block+",
+    group: "block",
+    defining: true,
+    parseDOM: [{tag: "blockquote"}],
+    toDOM() {
+        return ["blockquote", 0];
+    }
+};
+
+const horizontal_rule = {
+    group: "block",
+    parseDOM: [{tag: "hr"}],
+    toDOM() {
+        return ["hr"];
+    }
+};
+
+const heading = {
+    attrs: {level: {default: 1}},
+    content: "inline*",
+    group: "block",
+    defining: true,
+    parseDOM: [{tag: "h1", attrs: {level: 1}},
+        {tag: "h2", attrs: {level: 2}},
+        {tag: "h3", attrs: {level: 3}},
+        {tag: "h4", attrs: {level: 4}},
+        {tag: "h5", attrs: {level: 5}},
+        {tag: "h6", attrs: {level: 6}}],
+    toDOM(node) {
+        return ["h" + node.attrs.level, 0]
+    }
+};
+
+const code_block = {
+    content: "text*",
+    marks: "",
+    group: "block",
+    code: true,
+    defining: true,
+    parseDOM: [{tag: "pre", preserveWhitespace: "full"}],
+    toDOM() {
+        return ["pre", ["code", 0]];
+    }
+};
+
+const text = {
+    group: "inline"
+};
+
+const image = {
+    inline: true,
+    attrs: {
+        src: {},
+        alt: {default: null},
+        title: {default: null}
+    },
+    group: "inline",
+    draggable: true,
+    parseDOM: [{
+        tag: "img[src]", getAttrs: function getAttrs(dom) {
+            return {
+                src: dom.getAttribute("src"),
+                title: dom.getAttribute("title"),
+                alt: dom.getAttribute("alt")
+            }
+        }
+    }],
+    toDOM: function toDOM(node) {
+        const ref = node.attrs;
+        const src = ref.src;
+        const alt = ref.alt;
+        const title = ref.title;
+        return ["img", {src: src, alt: alt, title: title}]
+    }
+};
+
+const hard_break = {
+    inline: true,
+    group: "inline",
+    selectable: false,
+    parseDOM: [{tag: "br"}],
+    toDOM() {
+        return ["br"];
+    }
+};
 
 const callout = {
     attrs: {
@@ -23,8 +120,24 @@ const callout = {
     }
 };
 
-const nodes = baseNodes.append({
+const ordered_list = Object.assign({}, orderedList, {content: "list_item+", group: "block"});
+const bullet_list = Object.assign({}, bulletList, {content: "list_item+", group: "block"});
+const list_item = Object.assign({}, listItem, {content: 'paragraph block*'});
+
+const nodes = {
+    doc,
+    paragraph,
+    blockquote,
+    horizontal_rule,
+    heading,
+    code_block,
+    text,
+    image,
+    hard_break,
     callout,
-});
+    ordered_list,
+    bullet_list,
+    list_item,
+};
 
 export default nodes;
