@@ -1,5 +1,21 @@
 import {orderedList, bulletList, listItem} from "prosemirror-schema-list";
 
+const alignAttrFromDomNode = node => {
+    if (node.classList.contains('align-right')) {
+        return 'right';
+    }
+    if (node.classList.contains('align-left')) {
+        return 'left';
+    }
+    if (node.classList.contains('align-center')) {
+        return 'center';
+    }
+    if (node.classList.contains('align-justify')) {
+        return 'justify';
+    }
+    return null;
+};
+
 const doc = {
     content: "block+",
 };
@@ -7,9 +23,30 @@ const doc = {
 const paragraph = {
     content: "inline*",
     group: "block",
-    parseDOM: [{tag: "p"}],
-    toDOM() {
-        return ["p", 0];
+    parseDOM: [
+        {
+            tag: "p",
+            getAttrs(node) {
+                return {
+                    align: alignAttrFromDomNode(node),
+                };
+            }
+        }
+    ],
+    attrs: {
+        align: {
+            default: null,
+        }
+    },
+    toDOM(node) {
+        const attrs = {};
+        if (node.attrs.align === 'right') {
+            attrs['class'] = 'align-right';
+        }
+        if (node.attrs.align === 'left') {
+            attrs['class'] = 'align-left';
+        }
+        return ["p", attrs, 0];
     }
 };
 
@@ -18,6 +55,9 @@ const blockquote = {
     group: "block",
     defining: true,
     parseDOM: [{tag: "blockquote"}],
+    align: {
+        default: null,
+    },
     toDOM() {
         return ["blockquote", 0];
     }
@@ -32,7 +72,7 @@ const horizontal_rule = {
 };
 
 const heading = {
-    attrs: {level: {default: 1}},
+    attrs: {level: {default: 1}, align: {default: null}},
     content: "inline*",
     group: "block",
     defining: true,
@@ -103,6 +143,7 @@ const hard_break = {
 const callout = {
     attrs: {
         type: {default: 'info'},
+        align: {default: null},
     },
     content: "inline*",
     group: "block",

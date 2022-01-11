@@ -8,6 +8,7 @@
 import crel from "crelt"
 import {lift, joinUp, selectParentNode, wrapIn, setBlockType} from "prosemirror-commands"
 import {undo, redo} from "prosemirror-history"
+import {setBlockAttr} from "../commands";
 
 import {getIcon} from "./icons"
 
@@ -454,6 +455,21 @@ export function blockTypeItem(nodeType, options) {
     }
   }
   for (let prop in options) passedOptions[prop] = options[prop]
+  return new MenuItem(passedOptions)
+}
+
+export function setAttrItem(attrName, attrValue, options) {
+  const command = setBlockAttr(attrName, attrValue);
+  const passedOptions = {
+    run: command,
+    enable(state) { return command(state) },
+    active(state) {
+      const {$from, to, node} = state.selection
+      if (node) return node.attrs[attrValue] === attrValue;
+      return to <= $from.end() && $from.parent.attrs[attrValue] === attrValue;
+    }
+  }
+  for (const prop in options) passedOptions[prop] = options[prop]
   return new MenuItem(passedOptions)
 }
 

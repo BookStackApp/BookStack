@@ -7,7 +7,7 @@
             <input id="markdown-toggle" type="checkbox">
         </div>
 
-        <div id="editor" class="bs-editor" style="margin-bottom: 23px"></div>
+        <div id="editor" class="bs-editor page-content" style="margin-bottom: 23px"></div>
 
         <div id="content" style="display: none;">
             <h2>This is an editable block</h2>
@@ -22,7 +22,10 @@
                 <li>Item B</li>
                 <li>Item C</li>
             </ul>
+
             <p>Lorem ipsum dolor sit amet.</p>
+            <p class="align-right">Lorem ipsum dolor sit amet.</p>
+
             <p class="callout info">
                 This is an info callout test!
             </p>

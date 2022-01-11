@@ -1,6 +1,6 @@
 import {
     MenuItem, Dropdown, DropdownSubmenu, renderGrouped, icons, joinUpItem, liftItem, selectParentNodeItem,
-    undoItem, redoItem, wrapItem, blockTypeItem
+    undoItem, redoItem, wrapItem, blockTypeItem, setAttrItem,
 } from "./menu"
 
 import {toggleMark} from "prosemirror-commands";
@@ -102,12 +102,28 @@ const formats = [
     ], { label: 'Callouts' }),
 ];
 
+const alignments = [
+    setAttrItem('align', 'left', {
+        label: 'Align Left'
+    }),
+    setAttrItem('align', 'right', {
+        label: 'Align Right'
+    }),
+    setAttrItem('align', 'center', {
+        label: 'Align Center'
+    }),
+    setAttrItem('align', 'justify', {
+        label: 'Align Justify'
+    }),
+];
+
 const menu = menuBar({
     floating: false,
     content: [
         [undoItem, redoItem],
         [new DropdownSubmenu(formats, { label: 'Formats' })],
         inlineStyles,
+        alignments,
     ],
 });
 
