@@ -30,11 +30,27 @@ const subscript = {
     }
 };
 
+const text_color = {
+    attrs: {
+        color: {},
+    },
+    parseDOM: [{
+        style: 'color',
+        getAttrs(color) {
+            return {color}
+        }
+    }],
+    toDOM(node) {
+        return ['span', {style: `color: ${node.attrs.color};`}, 0];
+    }
+};
+
 const marks = baseMarks.append({
     underline,
     strike,
     superscript,
     subscript,
+    text_color,
 });
 
 export default marks;

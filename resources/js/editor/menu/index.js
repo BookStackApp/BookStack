@@ -49,7 +49,7 @@ function markItem(markType, options) {
         passedOptions[prop] = options[prop];
     }
 
-    return cmdItem(toggleMark(markType), passedOptions)
+    return cmdItem(toggleMark(markType, passedOptions.attrs), passedOptions)
 }
 
 const inlineStyles = [
@@ -117,11 +117,17 @@ const alignments = [
     }),
 ];
 
+const colors = [
+    markItem(schema.marks.text_color, {title: "Green", label: "Green", attrs: {color: '#00FF00'}}),
+    markItem(schema.marks.text_color, {title: "Blue", label: "Blue", attrs: {color: '#0000FF'}}),
+];
+
 const menu = menuBar({
     floating: false,
     content: [
         [undoItem, redoItem],
         [new DropdownSubmenu(formats, { label: 'Formats' })],
+        colors,
         inlineStyles,
         alignments,
     ],
