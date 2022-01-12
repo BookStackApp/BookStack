@@ -7,20 +7,20 @@ return [
 
     // Pages
     'page_create'                 => 'vytvoril(a) stránku',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Stránka úspešne vytvorená',
     'page_update'                 => 'aktualizoval(a) stránku',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Stránka úspešne aktualizovaná',
     'page_delete'                 => 'odstránil(a) stránku',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Stránka úspešne odstránená',
     'page_restore'                => 'obnovil(a) stránku',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Stránka úspešne obnovená',
     'page_move'                   => 'presunul(a) stránku',
 
     // Chapters
     'chapter_create'              => 'vytvoril(a) kapitolu',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Kapitola úspešne vytvorená',
     'chapter_update'              => 'aktualizoval(a) kapitolu',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Kapitola úspešne aktualizovaná',
     'chapter_delete'              => 'odstránil(a) kapitolu',
     'chapter_delete_notification' => 'Chapter successfully deleted',
     'chapter_move'                => 'presunul(a) kapitolu',
