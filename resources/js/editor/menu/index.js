@@ -1,9 +1,9 @@
 import {
-    MenuItem, Dropdown, DropdownSubmenu, renderGrouped, icons, joinUpItem, liftItem, selectParentNodeItem,
+    MenuItem, Dropdown, DropdownSubmenu, renderGrouped, joinUpItem, liftItem, selectParentNodeItem,
     undoItem, redoItem, wrapItem, blockTypeItem, setAttrItem,
 } from "./menu"
+import {icons} from "./icons";
 import ColorPickerGrid from "./ColorPickerGrid";
-
 import {toggleMark} from "prosemirror-commands";
 import {menuBar} from "./menubar"
 import schema from "../schema";
@@ -56,10 +56,10 @@ function markItem(markType, options) {
 const inlineStyles = [
     markItem(schema.marks.strong, {title: "Bold", icon: icons.strong}),
     markItem(schema.marks.em, {title: "Italic", icon: icons.em}),
-    markItem(schema.marks.underline, {title: "Underline", label: 'U'}),
-    markItem(schema.marks.strike, {title: "Strikethrough", label: '-S-'}),
-    markItem(schema.marks.superscript, {title: "Superscript", label: 'sup'}),
-    markItem(schema.marks.subscript, {title: "Subscript", label: 'sub'}),
+    markItem(schema.marks.underline, {title: "Underline", icon: icons.underline}),
+    markItem(schema.marks.strike, {title: "Strikethrough", icon: icons.strike}),
+    markItem(schema.marks.superscript, {title: "Superscript", icon: icons.superscript}),
+    markItem(schema.marks.subscript, {title: "Subscript", icon: icons.subscript}),
 ];
 
 const formats = [
@@ -105,16 +105,16 @@ const formats = [
 
 const alignments = [
     setAttrItem('align', 'left', {
-        label: 'Align Left'
+        icon: icons.align_left
     }),
     setAttrItem('align', 'right', {
-        label: 'Align Right'
+        icon: icons.align_right
     }),
     setAttrItem('align', 'center', {
-        label: 'Align Center'
+        icon: icons.align_center
     }),
     setAttrItem('align', 'justify', {
-        label: 'Align Justify'
+        icon: icons.align_justify
     }),
 ];
 
@@ -123,10 +123,10 @@ const colorOptions = ["#000000","#993300","#333300","#003300","#003366","#000080
 const colors = [
     new DropdownSubmenu([
         new ColorPickerGrid(schema.marks.text_color, 'color', colorOptions),
-    ], {label: 'Text Color'}),
+    ], {icon: icons.text_color}),
     new DropdownSubmenu([
         new ColorPickerGrid(schema.marks.background_color, 'color', colorOptions),
-    ], {label: 'Background Color'}),
+    ], {icon: icons.background_color}),
 ];
 
 const menu = menuBar({
