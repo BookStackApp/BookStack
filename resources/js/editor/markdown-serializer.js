@@ -30,6 +30,20 @@ marks.subscript = {
     close: '</sub>',
 };
 
+marks.text_color = {
+    open(state, mark, parent, index) {
+        return `<span style="color: ${mark.attrs.color};">`
+    },
+    close: '</span>',
+};
+
+marks.background_color = {
+    open(state, mark, parent, index) {
+        return `<span style="background-color: ${mark.attrs.color};">`
+    },
+    close: '</span>',
+};
+
 
 function writeNodeAsHtml(state, node) {
     const html = docToHtml({ content: [node] });
@@ -43,11 +57,11 @@ function writeNodeAsHtml(state, node) {
 // or element that cannot be represented in commonmark without losing
 // formatting or content.
 for (const [nodeType, serializerFunction] of Object.entries(nodes)) {
-    nodes[nodeType] = function(state, node) {
+    nodes[nodeType] = function(state, node, parent, index) {
         if (node.attrs.align) {
             writeNodeAsHtml(state, node);
         } else {
-            serializerFunction(state, node);
+            serializerFunction(state, node, parent, index);
         }
     }
 }

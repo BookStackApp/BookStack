@@ -366,3 +366,15 @@ img.ProseMirror-separator {
 }
 
 .ProseMirror p { margin-bottom: 1em }
+
+.ProseMirror-menu-color-grid-container {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.ProseMirror-menu-color-grid-item {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #FFF;
+  display: block;
+}

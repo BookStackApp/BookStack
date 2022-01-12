@@ -6,7 +6,7 @@
  */
 
 import crel from "crelt"
-import {lift, joinUp, selectParentNode, wrapIn, setBlockType} from "prosemirror-commands"
+import {lift, joinUp, selectParentNode, wrapIn, setBlockType, toggleMark} from "prosemirror-commands"
 import {undo, redo} from "prosemirror-history"
 import {setBlockAttr} from "../commands";
 
@@ -320,6 +320,8 @@ export function renderGrouped(view, content) {
 function separator() {
   return crel("span", {class: prefix + "separator"})
 }
+
+
 
 // :: Object
 // A set of basic editor-related icons. Contains the properties

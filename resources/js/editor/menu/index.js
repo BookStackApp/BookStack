@@ -2,6 +2,7 @@ import {
     MenuItem, Dropdown, DropdownSubmenu, renderGrouped, icons, joinUpItem, liftItem, selectParentNodeItem,
     undoItem, redoItem, wrapItem, blockTypeItem, setAttrItem,
 } from "./menu"
+import ColorPickerGrid from "./ColorPickerGrid";
 
 import {toggleMark} from "prosemirror-commands";
 import {menuBar} from "./menubar"
@@ -117,9 +118,15 @@ const alignments = [
     }),
 ];
 
+const colorOptions = ["#000000","#993300","#333300","#003300","#003366","#000080","#333399","#333333","#800000","#FF6600","#808000","#008000","#008080","#0000FF","#666699","#808080","#FF0000","#FF9900","#99CC00","#339966","#33CCCC","#3366FF","#800080","#999999","#FF00FF","#FFCC00","#FFFF00","#00FF00","#00FFFF","#00CCFF","#993366","#FFFFFF","#FF99CC","#FFCC99","#FFFF99","#CCFFCC","#CCFFFF","#99CCFF","#CC99FF"];
+
 const colors = [
-    markItem(schema.marks.text_color, {title: "Green", label: "Green", attrs: {color: '#00FF00'}}),
-    markItem(schema.marks.text_color, {title: "Blue", label: "Blue", attrs: {color: '#0000FF'}}),
+    new DropdownSubmenu([
+        new ColorPickerGrid(schema.marks.text_color, 'color', colorOptions),
+    ], {label: 'Text Color'}),
+    new DropdownSubmenu([
+        new ColorPickerGrid(schema.marks.background_color, 'color', colorOptions),
+    ], {label: 'Background Color'}),
 ];
 
 const menu = menuBar({
@@ -127,8 +134,8 @@ const menu = menuBar({
     content: [
         [undoItem, redoItem],
         [new DropdownSubmenu(formats, { label: 'Formats' })],
-        colors,
         inlineStyles,
+        colors,
         alignments,
     ],
 });

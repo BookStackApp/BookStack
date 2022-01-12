@@ -45,12 +45,28 @@ const text_color = {
     }
 };
 
+const background_color = {
+    attrs: {
+        color: {},
+    },
+    parseDOM: [{
+        style: 'background-color',
+        getAttrs(color) {
+            return {color}
+        }
+    }],
+    toDOM(node) {
+        return ['span', {style: `background-color: ${node.attrs.color};`}, 0];
+    }
+};
+
 const marks = baseMarks.append({
     underline,
     strike,
     superscript,
     subscript,
     text_color,
+    background_color,
 });
 
 export default marks;
