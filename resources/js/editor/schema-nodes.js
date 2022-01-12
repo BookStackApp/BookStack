@@ -1,20 +1,52 @@
 import {orderedList, bulletList, listItem} from "prosemirror-schema-list";
 
-const alignAttrFromDomNode = node => {
-    if (node.classList.contains('align-right')) {
-        return 'right';
-    }
-    if (node.classList.contains('align-left')) {
-        return 'left';
-    }
-    if (node.classList.contains('align-center')) {
-        return 'center';
-    }
-    if (node.classList.contains('align-justify')) {
-        return 'justify';
+/**
+ * @param {HTMLElement} node
+ * @return {string|null}
+ */
+function getAlignAttrFromDomNode(node) {
+    const classList = node.classList;
+    const styles = node.style || {};
+    const alignments = ['right', 'left', 'center', 'justify'];
+    for (const alignment of alignments) {
+        if (classList.contains('align-' + alignment) || styles.textAlign === alignment) {
+            return alignment;
+        }
     }
     return null;
-};
+}
+
+/**
+ * @param {String} className
+ * @param {Object} attrs
+ * @return {Object}
+ */
+function addClassToAttrs(className, attrs) {
+    return Object.assign({}, attrs, {
+        class: attrs.class ? attrs.class + ' ' + className : className,
+    });
+}
+
+/**
+ * @param node
+ * @param {Object} attrs
+ * @return {Object}
+ */
+function addAlignmentAttr(node, attrs) {
+    const positions = ['right', 'left', 'center', 'justify'];
+    for (const position of positions) {
+        if (node.attrs.align === position) {
+            return addClassToAttrs('align-' + position, attrs);
+        }
+    }
+    return attrs;
+}
+
+function getAttrsParserForAlignment(node) {
+    return {
+        align: getAlignAttrFromDomNode(node),
+    };
+}
 
 const doc = {
     content: "block+",
@@ -26,11 +58,7 @@ const paragraph = {
     parseDOM: [
         {
             tag: "p",
-            getAttrs(node) {
-                return {
-                    align: alignAttrFromDomNode(node),
-                };
-            }
+            getAttrs: getAttrsParserForAlignment,
         }
     ],
     attrs: {
@@ -39,14 +67,7 @@ const paragraph = {
         }
     },
     toDOM(node) {
-        const attrs = {};
-        if (node.attrs.align === 'right') {
-            attrs['class'] = 'align-right';
-        }
-        if (node.attrs.align === 'left') {
-            attrs['class'] = 'align-left';
-        }
-        return ["p", attrs, 0];
+        return ["p", addAlignmentAttr(node, {}), 0];
     }
 };
 
@@ -54,12 +75,14 @@ const blockquote = {
     content: "block+",
     group: "block",
     defining: true,
-    parseDOM: [{tag: "blockquote"}],
-    align: {
-        default: null,
+    parseDOM: [{tag: "blockquote", getAttrs: getAttrsParserForAlignment}],
+    attrs: {
+        align: {
+            default: null,
+        }
     },
-    toDOM() {
-        return ["blockquote", 0];
+    toDOM(node) {
+        return ["blockquote", addAlignmentAttr(node, {}), 0];
     }
 };
 
@@ -71,19 +94,27 @@ const horizontal_rule = {
     }
 };
 
+
+const headingParseGetAttrs = (level) => {
+    return function (node) {
+        return {level, align: getAlignAttrFromDomNode(node)};
+    };
+};
 const heading = {
     attrs: {level: {default: 1}, align: {default: null}},
     content: "inline*",
     group: "block",
     defining: true,
-    parseDOM: [{tag: "h1", attrs: {level: 1}},
-        {tag: "h2", attrs: {level: 2}},
-        {tag: "h3", attrs: {level: 3}},
-        {tag: "h4", attrs: {level: 4}},
-        {tag: "h5", attrs: {level: 5}},
-        {tag: "h6", attrs: {level: 6}}],
+    parseDOM: [
+        {tag: "h1", getAttrs: headingParseGetAttrs(1)},
+        {tag: "h2", getAttrs: headingParseGetAttrs(2)},
+        {tag: "h3", getAttrs: headingParseGetAttrs(3)},
+        {tag: "h4", getAttrs: headingParseGetAttrs(4)},
+        {tag: "h5", getAttrs: headingParseGetAttrs(5)},
+        {tag: "h6", getAttrs: headingParseGetAttrs(6)},
+    ],
     toDOM(node) {
-        return ["h" + node.attrs.level, 0]
+        return ["h" + node.attrs.level, addAlignmentAttr(node, {}), 0]
     }
 };
 
@@ -140,6 +171,12 @@ const hard_break = {
     }
 };
 
+
+const calloutParseGetAttrs = (type) => {
+    return function (node) {
+        return {type, align: getAlignAttrFromDomNode(node)};
+    };
+};
 const callout = {
     attrs: {
         type: {default: 'info'},
@@ -149,15 +186,15 @@ const callout = {
     group: "block",
     defining: true,
     parseDOM: [
-        {tag: 'p.callout.info', attrs: {type: 'info'}, priority: 75,},
-        {tag: 'p.callout.success', attrs: {type: 'success'}, priority: 75,},
-        {tag: 'p.callout.danger', attrs: {type: 'danger'}, priority: 75,},
-        {tag: 'p.callout.warning', attrs: {type: 'warning'}, priority: 75,},
-        {tag: 'p.callout', attrs: {type: 'info'}, priority: 75},
+        {tag: 'p.callout.info', getAttrs: calloutParseGetAttrs('info'), priority: 75},
+        {tag: 'p.callout.success', getAttrs: calloutParseGetAttrs('success'), priority: 75},
+        {tag: 'p.callout.danger', getAttrs: calloutParseGetAttrs('danger'), priority: 75},
+        {tag: 'p.callout.warning', getAttrs: calloutParseGetAttrs('warning'), priority: 75},
+        {tag: 'p.callout', getAttrs: calloutParseGetAttrs('info'), priority: 75},
     ],
     toDOM(node) {
         const type = node.attrs.type || 'info';
-        return ['p', {class: 'callout ' + type}, 0];
+        return ['p', addAlignmentAttr(node, {class: 'callout ' + type}) , 0];
     }
 };
 
