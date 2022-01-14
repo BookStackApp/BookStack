@@ -26,7 +26,7 @@ export function setBlockAttr(attrName, attrValue) {
                 const nodeAttrs = Object.assign({}, node.attrs);
                 if (node.attrs[attrName] !== undefined) {
                     nodeAttrs[attrName] = attrValue;
-                    tr.setBlockType(pos, pos+1, node.type, nodeAttrs)
+                    tr.setBlockType(pos, pos + 1, node.type, nodeAttrs)
                 }
             });
 
@@ -46,5 +46,14 @@ export function insertBlockBefore(blockType) {
         }
 
         return true
+    }
+}
+
+export function removeMarks() {
+    return function (state, dispatch) {
+        if (dispatch) {
+            dispatch(state.tr.removeMark(state.selection.from, state.selection.to, null));
+        }
+        return true;
     }
 }

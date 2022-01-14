@@ -7,6 +7,7 @@ import ColorPickerGrid from "./ColorPickerGrid";
 import {toggleMark} from "prosemirror-commands";
 import {menuBar} from "./menubar"
 import schema from "../schema";
+import {removeMarks} from "../commands";
 
 
 function cmdItem(cmd, options) {
@@ -83,6 +84,10 @@ const formats = [
         label: "Paragraph",
         attrs: {}
     }),
+    markItem(schema.marks.code, {
+        label: "Inline Code",
+        attrs: {}
+    }),
     new DropdownSubmenu([
         blockTypeItem(schema.nodes.callout, {
             label: "Info Callout",
@@ -147,6 +152,15 @@ const inserts = [
     }),
 ];
 
+const utilities = [
+    new MenuItem({
+        title: 'Clear Formatting',
+        icon: icons.format_clear,
+        run: removeMarks(),
+        enable: state => true,
+    }),
+];
+
 const menu = menuBar({
     floating: false,
     content: [
@@ -157,6 +171,7 @@ const menu = menuBar({
         alignments,
         lists,
         inserts,
+        utilities,
     ],
 });
 
