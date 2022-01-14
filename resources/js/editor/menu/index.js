@@ -107,11 +107,11 @@ const alignments = [
     setAttrItem('align', 'left', {
         icon: icons.align_left
     }),
-    setAttrItem('align', 'right', {
-        icon: icons.align_right
-    }),
     setAttrItem('align', 'center', {
         icon: icons.align_center
+    }),
+    setAttrItem('align', 'right', {
+        icon: icons.align_right
     }),
     setAttrItem('align', 'justify', {
         icon: icons.align_justify
@@ -129,6 +129,17 @@ const colors = [
     ], {icon: icons.background_color}),
 ];
 
+const lists = [
+    wrapItem(schema.nodes.bullet_list, {
+        title: "Bullet List",
+        icon: icons.bullet_list,
+    }),
+    wrapItem(schema.nodes.ordered_list, {
+        title: "Ordered List",
+        icon: icons.ordered_list,
+    }),
+];
+
 const menu = menuBar({
     floating: false,
     content: [
@@ -137,6 +148,7 @@ const menu = menuBar({
         inlineStyles,
         colors,
         alignments,
+        lists,
     ],
 });
 
