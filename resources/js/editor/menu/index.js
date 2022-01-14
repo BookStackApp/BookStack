@@ -1,6 +1,6 @@
 import {
     MenuItem, Dropdown, DropdownSubmenu, renderGrouped, joinUpItem, liftItem, selectParentNodeItem,
-    undoItem, redoItem, wrapItem, blockTypeItem, setAttrItem,
+    undoItem, redoItem, wrapItem, blockTypeItem, setAttrItem, insertBlockBeforeItem,
 } from "./menu"
 import {icons} from "./icons";
 import ColorPickerGrid from "./ColorPickerGrid";
@@ -140,6 +140,13 @@ const lists = [
     }),
 ];
 
+const inserts = [
+    insertBlockBeforeItem(schema.nodes.horizontal_rule, {
+        title: "Horizontal Rule",
+        icon: icons.horizontal_rule,
+    }),
+];
+
 const menu = menuBar({
     floating: false,
     content: [
@@ -149,6 +156,7 @@ const menu = menuBar({
         colors,
         alignments,
         lists,
+        inserts,
     ],
 });
 

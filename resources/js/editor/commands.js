@@ -36,3 +36,15 @@ export function setBlockAttr(attrName, attrValue) {
         return true
     }
 }
+
+export function insertBlockBefore(blockType) {
+    return function (state, dispatch) {
+        const startPosition = state.selection.$from.before(1);
+
+        if (dispatch) {
+            dispatch(state.tr.insert(startPosition, blockType.create()));
+        }
+
+        return true
+    }
+}

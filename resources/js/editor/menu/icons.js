@@ -101,6 +101,10 @@ export const icons = {
     width: 24, height: 24,
     path: "M3 21h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V7H3v2zm0-6v2h18V3H3z"
   },
+  horizontal_rule: {
+    width: 24, height: 24,
+    path: "m 4,11 h 16 v 2 H 4 Z"
+  },
 };
 
 const SVG = "http://www.w3.org/2000/svg"

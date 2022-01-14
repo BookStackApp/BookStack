@@ -259,17 +259,9 @@ img.ProseMirror-separator {
 /* Add space around the hr to make clicking it easier */
 
 .ProseMirror-example-setup-style hr {
-  padding: 2px 10px;
-  border: none;
-  margin: 1em 0;
-}
-
-.ProseMirror-example-setup-style hr:after {
-  content: "";
-  display: block;
-  height: 1px;
-  background-color: silver;
-  line-height: 2px;
+  border-top: 3px solid #FFF;
+  border-bottom: 3px solid #FFF;
+  box-sizing: content-box;
 }
 
 .ProseMirror ul, .ProseMirror ol {

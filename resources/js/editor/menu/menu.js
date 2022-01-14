@@ -8,7 +8,7 @@
 import crel from "crelt"
 import {lift, joinUp, selectParentNode, wrapIn, setBlockType, toggleMark} from "prosemirror-commands"
 import {undo, redo} from "prosemirror-history"
-import {setBlockAttr} from "../commands";
+import {setBlockAttr, insertBlockBefore} from "../commands";
 
 import {getIcon, icons} from "./icons"
 
@@ -418,6 +418,19 @@ export function setAttrItem(attrName, attrValue, options) {
   }
   for (const prop in options) passedOptions[prop] = options[prop]
   return new MenuItem(passedOptions)
+}
+
+export function insertBlockBeforeItem(blockType, options) {
+  const command = insertBlockBefore(blockType);
+  const passedOptions = {
+    run: command,
+    enable(state) { return command(state) },
+    active(state) {
+      return false;
+    }
+  }
+  for (const prop in options) passedOptions[prop] = options[prop]
+  return new MenuItem(passedOptions);
 }
 
 // Work around classList.toggle being broken in IE11
