@@ -69,8 +69,10 @@
   display: block;
 }
 
-.page-content.mce-content-body > :last-child {
-  margin-bottom: 3rem;
+.page-content.mce-content-body::after {
+    content: "";
+    display: block;
+    height: 80vh;
 }
 
 // Fix to prevent 'No color' option from not being clickable.
