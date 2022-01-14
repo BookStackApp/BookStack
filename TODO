@@ -1,0 +1,30 @@
+- Render color picker view menu item.
+
+### Features
+
+- Tables
+- Links
+- Images
+  - Image Resizing in editor
+- Drawings
+- LTR/RTL control
+- Fullscreen
+- Paste Image Uploading
+- Drag + Drop Image Uploading
+- Details/Summary
+- Checkbox/TODO list items
+- Code blocks
+- Inline Code
+- Indents
+- Iframe/Media
+- Clear formatting
+- View Code
+- Attachment integration (Drag & drop)
+- Template system integration.
+
+### Improvements
+
+- List type changing.
+- Color picker options should have "clear" option.
+- Color picker buttons should be split, with button to re-apply last selected color.
+- Color picker options should change color if different instead of remove.
