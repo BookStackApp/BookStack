@@ -370,3 +370,86 @@ img.ProseMirror-separator {
   border: 2px solid #FFF;
   display: block;
 }
+
+.ProseMirror-menu-dialog-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  display: grid;
+}
+
+.ProseMirror-menu-dialog-title {
+  padding: $-xs $-s;
+  border-bottom: 1px solid #DDD;
+  font-weight: bold;
+  position: relative;
+  margin-bottom: $-xs;
+}
+
+.ProseMirror-menu-dialog-footer {
+  padding: $-xs $-s;
+  border-top: 1px solid #DDD;
+  display: flex;
+  justify-content: end;
+  margin-top: $-xs;
+}
+
+.ProseMirror-menu-dialog-title-close {
+  color: #FFF;
+  position: absolute;
+  top: $-xs + 2px;
+  right: $-s;
+  border-radius: 9px;
+  height: 18px;
+  width: 18px;
+  text-align: center;
+  line-height: 0;
+  vertical-align: top;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ProseMirror-menu-dialog {
+  background-color: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  box-shadow: $bs-large;
+  width: fit-content;
+  min-width: 300px;
+  min-height: 100px;
+  margin: auto;
+}
+
+.ProseMirror-menu-dialog-button {
+  border: 1px solid #DDD;
+  padding: $-xs $-s;
+  color: #666;
+  min-width: 80px;
+  cursor: pointer;
+  &:hover {
+    background-color: #EEE;
+  }
+}
+
+.ProseMirror-menu-dialog-button + .ProseMirror-menu-dialog-button {
+  margin-left: $-xs;
+}
+
+.ProseMirror-menu-dialog-form-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  padding: $-xs 0;
+  label {
+    padding: 0 $-s;
+    font-size: .9rem;
+  }
+  input {
+    margin: 0 $-s;
+  }
+}

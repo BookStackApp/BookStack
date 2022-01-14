@@ -1,5 +1,5 @@
 import crel from "crelt"
-const prefix = "ProseMirror-menu"
+import {prefix} from "./menu-utils";
 import {toggleMark} from "prosemirror-commands";
 
 class ColorPickerGrid {

@@ -9,10 +9,10 @@ import crel from "crelt"
 import {lift, joinUp, selectParentNode, wrapIn, setBlockType, toggleMark} from "prosemirror-commands"
 import {undo, redo} from "prosemirror-history"
 import {setBlockAttr, insertBlockBefore} from "../commands";
+import {renderDropdownItems, combineUpdates} from "./menu-utils";
 
 import {getIcon, icons} from "./icons"
-
-const prefix = "ProseMirror-menu"
+import {prefix} from "./menu-utils";
 
 // ::- An icon or label that, when clicked, executes a command.
 export class MenuItem {
@@ -212,27 +212,6 @@ export class Dropdown {
   }
 }
 
-function renderDropdownItems(items, view) {
-  let rendered = [], updates = []
-  for (let i = 0; i < items.length; i++) {
-    let {dom, update} = items[i].render(view)
-    rendered.push(crel("div", {class: prefix + "-dropdown-item"}, dom))
-    updates.push(update)
-  }
-  return {dom: rendered, update: combineUpdates(updates, rendered)}
-}
-
-function combineUpdates(updates, nodes) {
-  return state => {
-    let something = false
-    for (let i = 0; i < updates.length; i++) {
-      let up = updates[i](state)
-      nodes[i].style.display = up ? "" : "none"
-      if (up) something = true
-    }
-    return something
-  }
-}
 
 // ::- Represents a submenu wrapping a group of elements that start
 // hidden and expand to the right when hovered over or tapped.

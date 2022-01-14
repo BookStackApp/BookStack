@@ -16,6 +16,7 @@
                 Some <span style="text-decoration: underline">Underlined content</span> Lorem ipsum dolor sit amet. <br>
                 Some <span style="text-decoration: line-through;">striked content</span> Lorem ipsum dolor sit amet. <br>
                 Some <span style="color: red;">Red Content</span> Lorem ipsum dolor sit amet. <br>
+                Some <a href="https://cats.com" target="_blank" title="link A">Linked Content</a> Lorem ipsum dolor sit amet. <br>
             </p>
             <p><img src="/user_avatar.png" alt="Logo"></p>
             <ul>

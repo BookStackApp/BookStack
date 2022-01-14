@@ -4,10 +4,13 @@ import {
 } from "./menu"
 import {icons} from "./icons";
 import ColorPickerGrid from "./ColorPickerGrid";
+import DialogBox from "./DialogBox";
 import {toggleMark} from "prosemirror-commands";
 import {menuBar} from "./menubar"
 import schema from "../schema";
 import {removeMarks} from "../commands";
+import DialogForm from "./DialogForm";
+import DialogInput from "./DialogInput";
 
 
 function cmdItem(cmd, options) {
@@ -161,6 +164,37 @@ const utilities = [
     }),
 ];
 
+function getMarkAttribute(markType, attribute) {
+    return function(state) {
+        const marks = state.selection.$head.marks();
+        for (const mark of marks) {
+            if (mark.type === markType) {
+                return mark.attrs[attribute];
+            }
+        }
+
+        return null;
+    };
+}
+
+let box = new DialogBox([
+    new DialogForm([
+        new DialogInput({
+            label: 'URL',
+            id: 'url',
+            value: getMarkAttribute(schema.marks.link, 'href'),
+        }),
+        new DialogInput({
+            label: 'Title',
+            id: 'title',
+            value: getMarkAttribute(schema.marks.link, 'title'),
+        })
+    ], {
+        canceler: () =>  box.close(),
+        action: (data) => console.log('submit', data),
+    }),
+], {label: 'Insert Link', closer: () => {console.log('close')}});
+
 const menu = menuBar({
     floating: false,
     content: [
@@ -172,6 +206,7 @@ const menu = menuBar({
         lists,
         inserts,
         utilities,
+        [box]
     ],
 });
 
