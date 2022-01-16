@@ -1,15 +1,8 @@
 ### In-Progress
 
-- Modal Dialogs for details such as links
-  - Got dialog + form + input ready
-  - Next stage is creating a button (eg, anchor insert) which toggles/shows dialog box.
-    - Dialog box should attach at bottom of dom (Prevent z-index issues).
-    - At some level a layer is needed to wire up the existing components.
-
 ### Features
 
 - Tables
-- Links
 - Images
   - Image Resizing in editor
 - Drawings
@@ -33,4 +26,7 @@
 - Color picker buttons should be split, with button to re-apply last selected color.
 - Color picker options should change color if different instead of remove.
 - Clear formatting, If no selection range, clear the formatting of parent block.
-  - If no marks, clear the block type if text type? 
+  - If no marks, clear the block type if text type?
+- Remove links button? (Action already in place if link href is empty).
+- Links - Limit target attribute options and validate URL.
+- Links - Integrate entity picker.

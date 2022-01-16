@@ -53,10 +53,6 @@ class DialogBox {
         if (this.options.closer) {
             this.options.closer();
         }
-
-        if (this.closeMouseDownListener) {
-            this.wrap.removeEventListener("click", this.closeMouseDownListener);
-        }
     }
 }
 

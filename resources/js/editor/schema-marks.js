@@ -1,19 +1,25 @@
 const link = {
     attrs: {
         href: {},
-        title: {default: null}
+        title: {default: null},
+        target: {default: null}
     },
     inclusive: false,
     parseDOM: [{
         tag: "a[href]", getAttrs: function getAttrs(dom) {
-            return {href: dom.getAttribute("href"), title: dom.getAttribute("title")}
+            return {
+                href: dom.getAttribute("href"),
+                title: dom.getAttribute("title"),
+                target: dom.getAttribute("target"),
+            }
         }
     }],
     toDOM: function toDOM(node) {
         const ref = node.attrs;
         const href = ref.href;
         const title = ref.title;
-        return ["a", {href: href, title: title}, 0]
+        const target = ref.target;
+        return ["a", {href, title, target}, 0]
     }
 };
 
