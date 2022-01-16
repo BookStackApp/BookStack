@@ -48,6 +48,10 @@ parser.tokenHandlers.html_inline = function(state, tok, tokens, i) {
     }
 }
 
+/**
+ * @param {String} html
+ * @return {PmMark[]}
+ */
 function extractMarksFromHtml(html) {
     const contentDoc = htmlToDoc('<p>' + (html || '') + '</p>');
     const marks = contentDoc?.content?.content?.[0]?.content?.content?.[0]?.marks;

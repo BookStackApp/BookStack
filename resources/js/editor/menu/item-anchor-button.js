@@ -6,7 +6,11 @@ import schema from "../schema";
 import {MenuItem} from "./menu";
 import {icons} from "./icons";
 
-
+/**
+ * @param {PmMarkType} markType
+ * @param {String} attribute
+ * @return {(function(PmEditorState): (string|null))}
+ */
 function getMarkAttribute(markType, attribute) {
     return function (state) {
         const marks = state.selection.$head.marks();
@@ -20,6 +24,11 @@ function getMarkAttribute(markType, attribute) {
     };
 }
 
+/**
+ * @param {(function(FormData))} submitter
+ * @param {Function} closer
+ * @return {DialogBox}
+ */
 function getLinkDialog(submitter, closer) {
     return new DialogBox([
         new DialogForm([
@@ -64,6 +73,12 @@ function applyLink(formData, state, dispatch) {
     return true;
 }
 
+/**
+ * @param {PmEditorState} state
+ * @param {PmDispatchFunction} dispatch
+ * @param {PmView} view
+ * @param {Event} e
+ */
 function onPress(state, dispatch, view, e) {
     const dialog = getLinkDialog((data) => {
         applyLink(data, state, dispatch);
@@ -77,6 +92,9 @@ function onPress(state, dispatch, view, e) {
     document.body.appendChild(dom);
 }
 
+/**
+ * @return {MenuItem}
+ */
 function anchorButtonItem() {
     return new MenuItem({
         title: "Insert/Edit Anchor Link",

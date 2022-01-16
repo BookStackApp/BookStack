@@ -1,3 +1,8 @@
+/**
+ * @param {String} attrName
+ * @param {String} attrValue
+ * @return {PmCommandHandler}
+ */
 export function setBlockAttr(attrName, attrValue) {
     return function (state, dispatch) {
         const ref = state.selection;
@@ -37,6 +42,10 @@ export function setBlockAttr(attrName, attrValue) {
     }
 }
 
+/**
+ * @param {PmNodeType} blockType
+ * @return {PmCommandHandler}
+ */
 export function insertBlockBefore(blockType) {
     return function (state, dispatch) {
         const startPosition = state.selection.$from.before(1);
@@ -49,6 +58,9 @@ export function insertBlockBefore(blockType) {
     }
 }
 
+/**
+ * @return {PmCommandHandler}
+ */
 export function removeMarks() {
     return function (state, dispatch) {
         if (dispatch) {
