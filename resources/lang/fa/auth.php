@@ -21,7 +21,7 @@ return [
     'email' => 'پست الکترونیک',
     'password' => 'کلمه عبور',
     'password_confirm' => 'تایید کلمه عبور',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'باید بیش از 8 کاراکتر باشد',
     'forgot_password' => 'کلمه عبور خود را فراموش کرده اید؟',
     'remember_me' => 'مرا به خاطر بسپار',
     'ldap_email_hint' => 'لطفا برای استفاده از این حساب کاربری پست الکترونیک وارد نمایید.',
@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'لطفا با کلیک بر روی دکمه زیر پست الکترونیک خود را تایید نمایید:',
     'email_confirm_action' => 'تایید پست الکترونیک',
     'email_confirm_send_error' => 'تایید پست الکترونیک الزامی می باشد، اما سیستم قادر به ارسال پیام نمی باشد.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'ایمیل شما تایید شد! اکنون باید بتوانید با استفاده از این آدرس ایمیل وارد شوید.',
     'email_confirm_resent' => 'پیام تایید پست الکترونیک مجدد ارسال گردید، لطفا صندوق ورودی خود را بررسی نمایید.',
 
     'email_not_confirmed' => 'پست الکترونیک تایید نشده است',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'به :appName خوش آمدید!',
     'user_invite_page_text' => 'برای نهایی کردن حساب کاربری خود در :appName و دسترسی به آن، می بایست یک کلمه عبور تنظیم نمایید.',
     'user_invite_page_confirm_button' => 'تایید کلمه عبور',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'رمز عبور تنظیم شده است، اکنون باید بتوانید با استفاده از رمز عبور تعیین شده خود وارد شوید تا به :appName دسترسی پیدا کنید!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'تنظیم احراز هویت چند مرحله‌ای',
@@ -80,7 +80,7 @@ return [
     'mfa_setup_reconfigure' => 'تنظیم مجدد',
     'mfa_setup_remove_confirmation' => 'از حذف احراز هویت چند مرحله ای اطمینان دارید؟',
     'mfa_setup_action' => 'تنظیم',
-    'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
+    'mfa_backup_codes_usage_limit_warning' => 'کمتر از 5 کد پشتیبان باقی مانده است، لطفاً قبل از تمام شدن کدها یک مجموعه جدید ایجاد و ذخیره کنید تا از قفل شدن حساب خود جلوگیری کنید.',
     'mfa_option_totp_title' => 'Mobile App',
     'mfa_option_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Backup Codes',
