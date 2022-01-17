@@ -255,9 +255,9 @@ return [
     'webhooks_delete_confirm' => 'آیا مطمئن هستید که می خواهید این وب هوک را حذف کنید؟',
     'webhooks_format_example' => 'نمونه قالب وب هوک',
     'webhooks_format_example_desc' => 'داده‌های وب هوک به‌عنوان یک درخواست POST به نقطه پایانی پیکربندی‌شده به‌عنوان JSON با فرمت زیر ارسال می‌شوند. ویژگی های "related_item" و "url" اختیاری هستند و به نوع رویداد راه اندازی شده بستگی دارد.',
-    'webhooks_status' => 'Webhook Status',
-    'webhooks_last_called' => 'Last Called:',
-    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_status' => 'وضعیت وب هوک',
+    'webhooks_last_called' => 'آخرین تماس:',
+    'webhooks_last_errored' => 'آخرین خطا:',
     'webhooks_last_error_message' => 'آخرین پیغام خطا:',
 
 
