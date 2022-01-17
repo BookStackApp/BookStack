@@ -104,7 +104,7 @@ return [
     'mfa_verify_use_backup_codes' => 'با استفاده از یک کد پشتیبان تأیید کنید',
     'mfa_verify_backup_code' => 'کد پشتیبان',
     'mfa_verify_backup_code_desc' => 'یکی از کدهای پشتیبان باقی مانده خود را در زیر وارد کنید:',
-    'mfa_verify_backup_code_enter_here' => 'Enter backup code here',
-    'mfa_verify_totp_desc' => 'Enter the code, generated using your mobile app, below:',
-    'mfa_setup_login_notification' => 'Multi-factor method configured, Please now login again using the configured method.',
+    'mfa_verify_backup_code_enter_here' => 'کد پشتیبان را در اینجا وارد کنید',
+    'mfa_verify_totp_desc' => 'کد ایجاد شده با استفاده از برنامه تلفن همراه خود را در زیر وارد کنید:',
+    'mfa_setup_login_notification' => 'روش چند عاملی پیکربندی شد، لطفاً اکنون دوباره با استفاده از روش پیکربندی شده وارد شوید.',
 ];
