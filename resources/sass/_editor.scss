@@ -453,3 +453,45 @@ img.ProseMirror-separator {
     margin: 0 $-s;
   }
 }
+
+.ProseMirror-imagewrap {
+  display: inline-block;
+  line-height: 0;
+  font-size: 0;
+  position: relative;
+}
+.ProseMirror-imagewrap.ProseMirror-selectednode {
+  outline: 0;
+}
+
+.ProseMirror img[data-show-handles] {
+  outline: 4px solid #000;
+}
+.ProseMirror-dragdummy {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  max-width: none !important;
+  max-height: none !important;
+}
+.ProseMirror-grabhandle {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #000;
+  z-index: 4;
+  position: absolute;
+  background-color: #FFF;
+}
+.ProseMirror-grabhandle-left-top {
+  cursor: nw-resize;
+}
+.ProseMirror-grabhandle-right-top {
+  cursor: ne-resize;
+}
+.ProseMirror-grabhandle-right-bottom {
+  cursor: se-resize;
+}
+.ProseMirror-grabhandle-left-bottom {
+  cursor: sw-resize;
+}

@@ -92,7 +92,7 @@ function writeNodeAsHtml(state, node) {
 // formatting or content.
 for (const [nodeType, serializerFunction] of Object.entries(nodes)) {
     nodes[nodeType] = function (state, node, parent, index) {
-        if (node.attrs.align) {
+        if (node.attrs.align || node.attrs.height || node.attrs.width) {
             writeNodeAsHtml(state, node);
         } else {
             serializerFunction(state, node, parent, index);

@@ -139,7 +139,9 @@ const image = {
     attrs: {
         src: {},
         alt: {default: null},
-        title: {default: null}
+        title: {default: null},
+        height: {default: null},
+        width: {default: null},
     },
     group: "inline",
     draggable: true,
@@ -148,7 +150,9 @@ const image = {
             return {
                 src: dom.getAttribute("src"),
                 title: dom.getAttribute("title"),
-                alt: dom.getAttribute("alt")
+                alt: dom.getAttribute("alt"),
+                height: dom.getAttribute("height"),
+                width: dom.getAttribute("width"),
             }
         }
     }],
@@ -157,7 +161,9 @@ const image = {
         const src = ref.src;
         const alt = ref.alt;
         const title = ref.title;
-        return ["img", {src: src, alt: alt, title: title}]
+        const width = ref.width;
+        const height = ref.height;
+        return ["img", {src, alt, title, width, height}]
     }
 };
 

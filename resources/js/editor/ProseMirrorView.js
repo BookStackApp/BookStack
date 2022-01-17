@@ -6,6 +6,7 @@ import {DOMParser, DOMSerializer} from "prosemirror-model";
 
 import schema from "./schema";
 import menu from "./menu";
+import nodeViews from "./node-views";
 
 class ProseMirrorView {
     constructor(target, content) {
@@ -21,7 +22,8 @@ class ProseMirrorView {
                     ...exampleSetup({schema, menuBar: false}),
                     menu,
                 ]
-            })
+            }),
+            nodeViews,
         });
     }
 
