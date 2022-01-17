@@ -39,14 +39,14 @@ return [
     'reset' => 'بازنشانی',
     'remove' => 'حذف',
     'add' => 'ﺍﻓﺰﻭﺩﻥ',
-    'configure' => 'Configure',
+    'configure' => 'پیکربندی کنید',
     'fullscreen' => 'تمام صفحه',
     'favourite' => 'علاقه‌مندی',
     'unfavourite' => 'Unfavourite',
     'next' => 'بعدی',
     'previous' => 'قبلى',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'filter_active' => 'فیلتر فعال:',
+    'filter_clear' => 'پاک کردن فیلتر',
 
     // Sort Options
     'sort_options' => 'گزینه‌های مرتب سازی',
@@ -71,10 +71,10 @@ return [
     'list_view' => 'نمای لیست',
     'default' => 'پیش‎فرض',
     'breadcrumb' => 'مسیر جاری',
-    'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
-    'never' => 'Never',
+    'status' => 'وضعیت',
+    'status_active' => 'فعال',
+    'status_inactive' => 'غیر فعال',
+    'never' => 'هرگز',
 
     // Header
     'header_menu_expand' => 'گسترش منو',
