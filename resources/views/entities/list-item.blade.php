@@ -20,4 +20,13 @@
     </div>
 @endif
 
+@if(($showUpdatedBy ?? false) && $entity->relationLoaded('updatedBy') && $entity->updatedBy)
+    <small title="{{ $entity->updated_at->toDayDateTimeString() }}">
+        {!! trans('entities.meta_updated_name', [
+            'timeLength' => $entity->updated_at->diffForHumans(),
+            'user' => e($entity->updatedBy->name)
+        ]) !!}
+    </small>
+@endif
+
 @endcomponent
