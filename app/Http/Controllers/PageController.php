@@ -364,15 +364,17 @@ class PageController extends Controller
      */
     public function showRecentlyUpdated()
     {
-        $pages = Page::visible()->orderBy('updated_at', 'desc')
+        $pages = Page::visible()->with('updatedBy')
+            ->orderBy('updated_at', 'desc')
             ->paginate(20)
             ->setPath(url('/pages/recently-updated'));
 
         $this->setPageTitle(trans('entities.recently_updated_pages'));
 
         return view('common.detailed-listing-paginated', [
-            'title'    => trans('entities.recently_updated_pages'),
-            'entities' => $pages,
+            'title'         => trans('entities.recently_updated_pages'),
+            'entities'      => $pages,
+            'showUpdatedBy' => true,
         ]);
     }
 
