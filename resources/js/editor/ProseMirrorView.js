@@ -1,6 +1,7 @@
 import {EditorState} from "prosemirror-state";
 import {EditorView} from "prosemirror-view";
 import {exampleSetup} from "prosemirror-example-setup";
+import {tableEditing} from "prosemirror-tables";
 
 import {DOMParser} from "prosemirror-model";
 
@@ -22,6 +23,7 @@ class ProseMirrorView {
                 plugins: [
                     ...exampleSetup({schema, menuBar: false}),
                     menu,
+                    tableEditing(),
                 ]
             }),
             nodeViews,

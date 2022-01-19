@@ -1,4 +1,5 @@
 import {orderedList, bulletList, listItem} from "prosemirror-schema-list";
+import {tableNodes} from "prosemirror-tables";
 
 /**
  * @param {HTMLElement} node
@@ -200,13 +201,23 @@ const callout = {
     ],
     toDOM(node) {
         const type = node.attrs.type || 'info';
-        return ['p', addAlignmentAttr(node, {class: 'callout ' + type}) , 0];
+        return ['p', addAlignmentAttr(node, {class: 'callout ' + type}), 0];
     }
 };
 
 const ordered_list = Object.assign({}, orderedList, {content: "list_item+", group: "block"});
 const bullet_list = Object.assign({}, bulletList, {content: "list_item+", group: "block"});
 const list_item = Object.assign({}, listItem, {content: 'paragraph block*'});
+
+const {
+    table,
+    table_row,
+    table_cell,
+    table_header,
+} = tableNodes({
+    tableGroup: "block",
+    cellContent: "block*"
+});
 
 const nodes = {
     doc,
@@ -222,6 +233,10 @@ const nodes = {
     ordered_list,
     bullet_list,
     list_item,
+    table,
+    table_row,
+    table_cell,
+    table_header,
 };
 
 export default nodes;

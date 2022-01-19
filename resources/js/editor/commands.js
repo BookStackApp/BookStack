@@ -59,6 +59,35 @@ export function insertBlockBefore(blockType) {
 }
 
 /**
+ * @param {Number} rows
+ * @param {Number} columns
+ * @return {PmCommandHandler}
+ */
+export function insertTable(rows, columns) {
+    return function (state, dispatch) {
+        if (!dispatch) return true;
+
+        const tr = state.tr;
+        const nodes = state.schema.nodes;
+
+        const rowNodes = [];
+        for (let y = 0; y < rows; y++) {
+            const rowCells = [];
+            for (let x = 0; x < columns; x++) {
+                rowCells.push(nodes.table_cell.create(null));
+            }
+            rowNodes.push(nodes.table_row.create(null, rowCells));
+        }
+
+        const table = nodes.table.create(null, rowNodes);
+        tr.replaceSelectionWith(table);
+        dispatch(tr);
+
+        return true;
+    }
+}
+
+/**
  * @return {PmCommandHandler}
  */
 export function removeMarks() {

@@ -371,6 +371,29 @@ img.ProseMirror-separator {
   display: block;
 }
 
+.ProseMirror-menu-table-creator-grid {
+  display: grid;
+  gap: 2px;
+}
+
+.ProseMirror-menu-table-creator-grid-item {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #BBB;
+  display: block;
+  cursor: pointer;
+}
+
+.ProseMirror-menu-table-creator-grid-item-active {
+  border: 2px solid #555;
+  background-color: #DDD;
+}
+
+.ProseMirror-menu-table-creator-grid-label {
+  padding: $-xs;
+  text-align: center;
+}
+
 .ProseMirror-menu-dialog-wrap {
   position: fixed;
   top: 0;

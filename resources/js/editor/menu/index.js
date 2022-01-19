@@ -4,13 +4,11 @@ import {
 } from "./menu"
 import {icons} from "./icons";
 import ColorPickerGrid from "./ColorPickerGrid";
-import DialogBox from "./DialogBox";
+import TableCreatorGrid from "./TableCreatorGrid";
 import {toggleMark} from "prosemirror-commands";
 import {menuBar} from "./menubar"
 import schema from "../schema";
 import {removeMarks} from "../commands";
-import DialogForm from "./DialogForm";
-import DialogInput from "./DialogInput";
 
 import itemAnchorButtonItem from "./item-anchor-button";
 import itemHtmlSourceButton from "./item-html-source-button";
@@ -157,6 +155,9 @@ const inserts = [
         title: "Horizontal Rule",
         icon: icons.horizontal_rule,
     }),
+    new DropdownSubmenu([
+        new TableCreatorGrid()
+    ], {icon: icons.table}),
     itemHtmlSourceButton(),
 ];
 
