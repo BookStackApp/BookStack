@@ -5,7 +5,6 @@ import {insertTable} from "../commands";
 class TableCreatorGrid {
 
     constructor() {
-        this.gridItems = [];
         this.size = 10;
         this.label = null;
     }
@@ -14,26 +13,31 @@ class TableCreatorGrid {
     // Renders the submenu.
     render(view) {
 
+        const gridItems = [];
         for (let y = 0; y < this.size; y++) {
             for (let x = 0; x < this.size; x++) {
                 const elem = crel("div", {class: prefix + "-table-creator-grid-item"});
-                this.gridItems.push(elem);
-                elem.addEventListener('mouseenter', event => this.updateGridItemActiveStatus(elem));
+                gridItems.push(elem);
+                elem.addEventListener('mouseenter', event => {
+                    this.updateGridItemActiveStatus(elem, gridItems);
+                });
             }
         }
 
         const gridWrap = crel("div", {
             class: prefix + "-table-creator-grid",
             style: `grid-template-columns: repeat(${this.size}, 14px);`,
-        }, this.gridItems);
+        }, gridItems);
 
         gridWrap.addEventListener('mouseleave', event => {
-            this.updateGridItemActiveStatus(null);
+            this.updateGridItemActiveStatus(null, gridItems);
         });
         gridWrap.addEventListener('click', event => {
             if (event.target.classList.contains(prefix + "-table-creator-grid-item")) {
-                const {x, y} = this.getPositionOfGridItem(event.target);
-                insertTable(y + 1, x + 1)(view.state, view.dispatch);
+                const {x, y} = this.getPositionOfGridItem(event.target, gridItems);
+                insertTable(y + 1, x + 1, {
+                    style: 'width: 100%;',
+                })(view.state, view.dispatch);
             }
         });
 
@@ -50,15 +54,16 @@ class TableCreatorGrid {
 
     /**
      * @param {Element|null} newTarget
+     * @param {Element[]} gridItems
      */
-    updateGridItemActiveStatus(newTarget) {
-        const {x: xPos, y: yPos} = this.getPositionOfGridItem(newTarget);
+    updateGridItemActiveStatus(newTarget, gridItems) {
+        const {x: xPos, y: yPos} = this.getPositionOfGridItem(newTarget, gridItems);
 
         for (let y = 0; y < this.size; y++) {
             for (let x = 0; x < this.size; x++) {
                 const active = x <= xPos && y <= yPos;
                 const index = (y * this.size) + x;
-                this.gridItems[index].classList.toggle(prefix + "-table-creator-grid-item-active", active);
+                gridItems[index].classList.toggle(prefix + "-table-creator-grid-item-active", active);
             }
         }
 
@@ -67,10 +72,11 @@ class TableCreatorGrid {
 
     /**
      * @param {Element} gridItem
+     * @param {Element[]} gridItems
      * @return {{x: number, y: number}}
      */
-    getPositionOfGridItem(gridItem) {
-        const index = this.gridItems.indexOf(gridItem);
+    getPositionOfGridItem(gridItem, gridItems) {
+        const index = gridItems.indexOf(gridItem);
         const y = Math.floor(index / this.size);
         const x = index % this.size;
         return {x, y};

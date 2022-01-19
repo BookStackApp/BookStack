@@ -61,9 +61,10 @@ export function insertBlockBefore(blockType) {
 /**
  * @param {Number} rows
  * @param {Number} columns
+ * @param {Object} tableAttrs
  * @return {PmCommandHandler}
  */
-export function insertTable(rows, columns) {
+export function insertTable(rows, columns, tableAttrs) {
     return function (state, dispatch) {
         if (!dispatch) return true;
 
@@ -74,12 +75,13 @@ export function insertTable(rows, columns) {
         for (let y = 0; y < rows; y++) {
             const rowCells = [];
             for (let x = 0; x < columns; x++) {
-                rowCells.push(nodes.table_cell.create(null));
+                const cellText = nodes.paragraph.create(null);
+                rowCells.push(nodes.table_cell.create(null, cellText));
             }
             rowNodes.push(nodes.table_row.create(null, rowCells));
         }
 
-        const table = nodes.table.create(null, rowNodes);
+        const table = nodes.table.create(tableAttrs, rowNodes);
         tr.replaceSelectionWith(table);
         dispatch(tr);
 

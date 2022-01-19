@@ -18,17 +18,6 @@ function getAlignAttrFromDomNode(node) {
 }
 
 /**
- * @param {String} className
- * @param {Object} attrs
- * @return {Object}
- */
-function addClassToAttrs(className, attrs) {
-    return Object.assign({}, attrs, {
-        class: attrs.class ? attrs.class + ' ' + className : className,
-    });
-}
-
-/**
  * @param node
  * @param {Object} attrs
  * @return {Object}
@@ -47,6 +36,45 @@ function getAttrsParserForAlignment(node) {
     return {
         align: getAlignAttrFromDomNode(node),
     };
+}
+
+/**
+ * @param {String} className
+ * @param {Object} attrs
+ * @return {Object}
+ */
+function addClassToAttrs(className, attrs) {
+    return Object.assign({}, attrs, {
+        class: attrs.class ? attrs.class + ' ' + className : className,
+    });
+}
+
+/**
+ * @param {String[]} attrNames
+ * @return {function(Element): {}}
+ */
+function domAttrsToAttrsParser(attrNames) {
+    return function (node) {
+        const attrs = {};
+        for (const attr of attrNames) {
+            attrs[attr] = node.hasAttribute(attr) ? node.getAttribute(attr) : null;
+        }
+        return attrs;
+    };
+}
+
+/**
+ * @param {PmNode} node
+ * @param {String[]} attrNames
+ */
+function extractAttrsForDom(node, attrNames) {
+    const domAttrs = {};
+    for (const attr of attrNames) {
+        if (node.attrs[attr]) {
+            domAttrs[attr] = node.attrs[attr];
+        }
+    }
+    return domAttrs;
 }
 
 const doc = {
@@ -210,14 +238,28 @@ const bullet_list = Object.assign({}, bulletList, {content: "list_item+", group:
 const list_item = Object.assign({}, listItem, {content: 'paragraph block*'});
 
 const {
-    table,
     table_row,
     table_cell,
     table_header,
 } = tableNodes({
     tableGroup: "block",
-    cellContent: "block*"
+    cellContent: "block+"
 });
+
+const table = {
+    content: "table_row+",
+    attrs: {
+        style: {default: null},
+    },
+    tableRole: "table",
+    isolating: true,
+    group: "block",
+    parseDOM: [{tag: "table", getAttrs: domAttrsToAttrsParser(['style'])}],
+    toDOM(node) {
+        console.log(extractAttrsForDom(node, ['style']));
+        return ["table", extractAttrsForDom(node, ['style']), ["tbody", 0]]
+    }
+};
 
 const nodes = {
     doc,

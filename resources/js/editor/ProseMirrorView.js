@@ -1,7 +1,7 @@
 import {EditorState} from "prosemirror-state";
 import {EditorView} from "prosemirror-view";
 import {exampleSetup} from "prosemirror-example-setup";
-import {tableEditing} from "prosemirror-tables";
+import {tableEditing, columnResizing} from "prosemirror-tables";
 
 import {DOMParser} from "prosemirror-model";
 
@@ -23,11 +23,16 @@ class ProseMirrorView {
                 plugins: [
                     ...exampleSetup({schema, menuBar: false}),
                     menu,
+                    columnResizing(),
                     tableEditing(),
                 ]
             }),
             nodeViews,
         });
+
+        // Fix for native handles (Such as table size handling) in some browsers
+        document.execCommand("enableObjectResizing", false, "false")
+        document.execCommand("enableInlineTableEditing", false, "false")
     }
 
     get content() {

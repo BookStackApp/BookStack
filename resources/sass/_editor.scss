@@ -1,5 +1,4 @@
 
-
 #editor.bs-editor {
   padding-top: 0;
 }
@@ -46,9 +45,21 @@
   position: relative;
 }
 
-.ProseMirror-hideselection *::selection { background: transparent; }
-.ProseMirror-hideselection *::-moz-selection { background: transparent; }
-.ProseMirror-hideselection { caret-color: transparent; }
+.ProseMirror table td, .ProseMirror table th {
+  min-height: 1rem;
+}
+
+.ProseMirror-hideselection *::selection {
+  background: transparent;
+}
+
+.ProseMirror-hideselection *::-moz-selection {
+  background: transparent;
+}
+
+.ProseMirror-hideselection {
+  caret-color: transparent;
+}
 
 .ProseMirror-selectednode {
   outline: 2px solid #8cf;
@@ -64,7 +75,9 @@ li.ProseMirror-selectednode:after {
   content: "";
   position: absolute;
   left: -32px;
-  right: -2px; top: -2px; bottom: -2px;
+  right: -2px;
+  top: -2px;
+  bottom: -2px;
   border: 2px solid #8cf;
   pointer-events: none;
 }
@@ -201,7 +214,9 @@ img.ProseMirror-separator {
   min-height: 1em;
   color: #666;
   padding: 1px 6px;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   border-bottom: 1px solid silver;
   background: white;
   z-index: 10;
@@ -256,6 +271,7 @@ img.ProseMirror-separator {
 .ProseMirror-focused .ProseMirror-gapcursor {
   display: block;
 }
+
 /* Add space around the hr to make clicking it easier */
 
 .ProseMirror-example-setup-style hr {
@@ -271,7 +287,8 @@ img.ProseMirror-separator {
 .ProseMirror blockquote {
   padding-left: 1em;
   border-left: 3px solid #eee;
-  margin-left: 0; margin-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .ProseMirror-example-setup-style img {
@@ -308,9 +325,12 @@ img.ProseMirror-separator {
 
 .ProseMirror-prompt-close {
   position: absolute;
-  left: 2px; top: 1px;
+  left: 2px;
+  top: 1px;
   color: #666;
-  border: none; background: transparent; padding: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
 }
 
 .ProseMirror-prompt-close:after {
@@ -331,6 +351,7 @@ img.ProseMirror-separator {
   margin-top: 5px;
   display: none;
 }
+
 #editor, .editor {
   background: white;
   color: black;
@@ -341,13 +362,13 @@ img.ProseMirror-separator {
   margin-bottom: 23px;
 }
 
-.ProseMirror p:first-child,
-.ProseMirror h1:first-child,
-.ProseMirror h2:first-child,
-.ProseMirror h3:first-child,
-.ProseMirror h4:first-child,
-.ProseMirror h5:first-child,
-.ProseMirror h6:first-child {
+.ProseMirror > p:first-child,
+.ProseMirror > h1:first-child,
+.ProseMirror > h2:first-child,
+.ProseMirror > h3:first-child,
+.ProseMirror > h4:first-child,
+.ProseMirror > h5:first-child,
+.ProseMirror > h6:first-child {
   margin-top: 10px;
 }
 
@@ -357,7 +378,9 @@ img.ProseMirror-separator {
   outline: none;
 }
 
-.ProseMirror p { margin-bottom: 1em }
+.ProseMirror > p {
+  margin-bottom: 1em
+}
 
 .ProseMirror-menu-color-grid-container {
   display: grid;
@@ -454,6 +477,7 @@ img.ProseMirror-separator {
   color: #666;
   min-width: 80px;
   cursor: pointer;
+
   &:hover {
     background-color: #EEE;
   }
@@ -468,10 +492,12 @@ img.ProseMirror-separator {
   grid-template-columns: 1fr 2fr;
   align-items: center;
   padding: $-xs 0;
+
   label {
     padding: 0 $-s;
     font-size: .9rem;
   }
+
   input {
     margin: 0 $-s;
   }
@@ -479,10 +505,12 @@ img.ProseMirror-separator {
 
 .ProseMirror-menu-dialog-textarea-wrap {
   padding: $-xs $-s;
+
   label {
     padding: 0 $-s;
     font-size: .9rem;
   }
+
   textarea {
     width: 100%;
     font-size: 0.8rem;
@@ -495,6 +523,7 @@ img.ProseMirror-separator {
   font-size: 0;
   position: relative;
 }
+
 .ProseMirror-imagewrap.ProseMirror-selectednode {
   outline: 0;
 }
@@ -502,6 +531,7 @@ img.ProseMirror-separator {
 .ProseMirror img[data-show-handles] {
   outline: 4px solid #000;
 }
+
 .ProseMirror-dragdummy {
   position: absolute;
   z-index: 2;
@@ -510,6 +540,7 @@ img.ProseMirror-separator {
   max-width: none !important;
   max-height: none !important;
 }
+
 .ProseMirror-grabhandle {
   width: 12px;
   height: 12px;
@@ -518,15 +549,55 @@ img.ProseMirror-separator {
   position: absolute;
   background-color: #FFF;
 }
+
 .ProseMirror-grabhandle-left-top {
   cursor: nw-resize;
 }
+
 .ProseMirror-grabhandle-right-top {
   cursor: ne-resize;
 }
+
 .ProseMirror-grabhandle-right-bottom {
   cursor: se-resize;
 }
+
 .ProseMirror-grabhandle-left-bottom {
   cursor: sw-resize;
+}
+
+.ProseMirror .tableWrapper {
+  overflow-x: auto;
+}
+.ProseMirror table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  overflow: hidden;
+}
+.ProseMirror td, .ProseMirror th {
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+}
+.ProseMirror .column-resize-handle {
+  position: absolute;
+  right: -2px; top: 0; bottom: 0;
+  width: 4px;
+  z-index: 20;
+  background-color: #adf;
+  pointer-events: none;
+}
+.ProseMirror.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+/* Give selected cells a blue overlay */
+.ProseMirror .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0; right: 0; top: 0; bottom: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
 }

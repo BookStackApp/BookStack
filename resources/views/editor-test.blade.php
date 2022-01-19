@@ -18,6 +18,22 @@
                 Some <span style="color: red;">Red Content</span> Lorem ipsum dolor sit amet. <br>
                 Some <a href="https://cats.com" target="_blank" title="link A">Linked Content</a> Lorem ipsum dolor sit amet. <br>
             </p>
+
+            <table style="width: 100%;">
+                <thead>
+                <tr>
+                    <th>Header A</th>
+                    <th>Header B</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Content 1</td>
+                    <td>Content 2</td>
+                </tr>
+                </tbody>
+            </table>
+
             <p><img src="/user_avatar.png" alt="Logo"></p>
             <ul>
                 <li>Item A</li>
