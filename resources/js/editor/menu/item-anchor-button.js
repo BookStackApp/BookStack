@@ -6,7 +6,7 @@ import schema from "../schema";
 
 import {MenuItem} from "./menu";
 import {icons} from "./icons";
-import {markRangeAtPosition, nullifyEmptyValues} from "../util";
+import {expandSelectionToMark, nullifyEmptyValues} from "../util";
 
 /**
  * @param {PmMarkType} markType
@@ -74,17 +74,7 @@ function applyLink(formData, state, dispatch) {
     if (!dispatch) return true;
 
     const tr = state.tr;
-    const noRange = (selection.from - selection.to === 0);
-    let from = selection.from;
-    let to = selection.to;
-
-    if (noRange) {
-        const linkRange = markRangeAtPosition(state, schema.marks.link, selection.from);
-        if (linkRange.from !== -1) {
-            from = linkRange.from;
-            to = linkRange.to;
-        }
-    }
+    const {from, to} = expandSelectionToMark(state, selection, schema.marks.link);
 
     if (attrs.href) {
         tr.addMark(from, to, schema.marks.link.create(attrs));

@@ -1,6 +1,8 @@
 import crel from "crelt"
 import {prefix} from "./menu-utils";
-import {toggleMark} from "prosemirror-commands";
+import {TextSelection} from "prosemirror-state"
+import {expandSelectionToMark} from "../util";
+
 
 class ColorPickerGrid {
 
@@ -24,8 +26,7 @@ class ColorPickerGrid {
         wrap.addEventListener('click', event => {
             if (event.target.classList.contains(prefix + "-color-grid-item")) {
                 const color = event.target.style.backgroundColor;
-                const attrs = {[this.attrName]: color};
-                toggleMark(this.markType, attrs)(view.state, view.dispatch, view, event);
+                this.onColorSelect(view, color);
             }
         });
 
@@ -34,6 +35,27 @@ class ColorPickerGrid {
         }
 
         return {dom: wrap, update}
+    }
+
+    onColorSelect(view, color) {
+        const attrs = {[this.attrName]: color};
+        const selection = view.state.selection;
+        const {from, to} = expandSelectionToMark(view.state, selection, this.markType);
+        const tr = view.state.tr;
+
+        const currentColorMarks = selection.$from.marksAcross(selection.$to) || [];
+        const activeRelevantMark = currentColorMarks.filter(mark => {
+            return mark.type === this.markType;
+        })[0];
+        const colorIsActive = activeRelevantMark && activeRelevantMark.attrs[this.attrName] === color;
+
+        tr.removeMark(from, to, this.markType);
+        if (!colorIsActive) {
+            tr.addMark(from, to, this.markType.create(attrs));
+        }
+
+        tr.setSelection(TextSelection.create(tr.doc, from, to));
+        view.dispatch(tr);
     }
 }
 

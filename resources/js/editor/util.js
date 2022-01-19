@@ -47,6 +47,25 @@ export function nullifyEmptyValues(object) {
 
 /**
  * @param {PmEditorState} state
+ * @param {PmSelection} selection
+ * @param {PmMarkType} markType
+ * @return {{from: Number, to: Number}}
+ */
+export function expandSelectionToMark(state, selection, markType) {
+    let {from, to} = selection;
+    const noRange = (from === to);
+    if (noRange) {
+        const markRange = markRangeAtPosition(state, markType, from);
+        if (markRange.from !== -1) {
+            from = markRange.from;
+            to = markRange.to;
+        }
+    }
+    return {from, to};
+}
+
+/**
+ * @param {PmEditorState} state
  * @param {PmMarkType} markType
  * @param {Number} pos
  * @return {{from: Number, to: Number}}
@@ -54,7 +73,7 @@ export function nullifyEmptyValues(object) {
 export function markRangeAtPosition(state, markType, pos) {
     const $pos = state.doc.resolve(pos);
 
-    const { parent, parentOffset } = $pos;
+    const {parent, parentOffset} = $pos;
     const start = parent.childAfter(parentOffset);
     if (!start.node) return {from: -1, to: -1};
 
@@ -73,7 +92,7 @@ export function markRangeAtPosition(state, markType, pos) {
         endPos += parent.child(endIndex).nodeSize;
         endIndex += 1;
     }
-    return { from: startPos, to: endPos };
+    return {from: startPos, to: endPos};
 }
 
 /**
