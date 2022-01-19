@@ -6,6 +6,7 @@ import schema from "../schema";
 
 import {MenuItem} from "./menu";
 import {icons} from "./icons";
+import {markRangeAtPosition, nullifyEmptyValues} from "../util";
 
 /**
  * @param {PmMarkType} markType
@@ -46,7 +47,7 @@ function getLinkDialog(submitter, closer) {
             new DialogRadioOptions({
                 "Same tab or window": "",
                 "New tab or window": "_blank",
-            },{
+            }, {
                 label: 'Behaviour',
                 id: 'target',
                 value: getMarkAttribute(schema.marks.link, 'target'),
@@ -69,17 +70,29 @@ function getLinkDialog(submitter, closer) {
  */
 function applyLink(formData, state, dispatch) {
     const selection = state.selection;
-    const attrs = Object.fromEntries(formData);
-    if (dispatch) {
-        const tr = state.tr;
+    const attrs = nullifyEmptyValues(Object.fromEntries(formData));
+    if (!dispatch) return true;
 
-        if (attrs.href) {
-            tr.addMark(selection.from, selection.to, schema.marks.link.create(attrs));
-        } else {
-            tr.removeMark(selection.from, selection.to, schema.marks.link);
+    const tr = state.tr;
+    const noRange = (selection.from - selection.to === 0);
+    let from = selection.from;
+    let to = selection.to;
+
+    if (noRange) {
+        const linkRange = markRangeAtPosition(state, schema.marks.link, selection.from);
+        if (linkRange.from !== -1) {
+            from = linkRange.from;
+            to = linkRange.to;
         }
-        dispatch(tr);
     }
+
+    if (attrs.href) {
+        tr.addMark(from, to, schema.marks.link.create(attrs));
+    } else {
+        tr.removeMark(from, to, schema.marks.link);
+    }
+
+    dispatch(tr);
     return true;
 }
 
