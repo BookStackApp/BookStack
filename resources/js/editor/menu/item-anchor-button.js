@@ -1,6 +1,7 @@
 import DialogBox from "./DialogBox";
 import DialogForm from "./DialogForm";
 import DialogInput from "./DialogInput";
+import DialogRadioOptions from "./DialogRadioOptions";
 import schema from "../schema";
 
 import {MenuItem} from "./menu";
@@ -38,12 +39,15 @@ function getLinkDialog(submitter, closer) {
                 value: getMarkAttribute(schema.marks.link, 'href'),
             }),
             new DialogInput({
-                label: 'Title',
+                label: 'Hover Label',
                 id: 'title',
                 value: getMarkAttribute(schema.marks.link, 'title'),
             }),
-            new DialogInput({
-                label: 'Target',
+            new DialogRadioOptions({
+                "Same tab or window": "",
+                "New tab or window": "_blank",
+            },{
+                label: 'Behaviour',
                 id: 'target',
                 value: getMarkAttribute(schema.marks.link, 'target'),
             })
