@@ -23,6 +23,17 @@ export function docToHtml(doc) {
 }
 
 /**
+ * @param {PmEditorState} state
+ * @return {String}
+ */
+export function stateToHtml(state) {
+    const fragment = DOMSerializer.fromSchema(schema).serializeFragment(state.doc.content);
+    const renderDoc = document.implementation.createHTMLDocument();
+    renderDoc.body.appendChild(fragment);
+    return renderDoc.body.innerHTML;
+}
+
+/**
  * @class KeyedMultiStack
  * Holds many stacks, seperated via a key, with a simple
  * interface to pop and push values to the stacks.

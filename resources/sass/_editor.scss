@@ -454,6 +454,18 @@ img.ProseMirror-separator {
   }
 }
 
+.ProseMirror-menu-dialog-textarea-wrap {
+  padding: $-xs $-s;
+  label {
+    padding: 0 $-s;
+    font-size: .9rem;
+  }
+  textarea {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+}
+
 .ProseMirror-imagewrap {
   display: inline-block;
   line-height: 0;

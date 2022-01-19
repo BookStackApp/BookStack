@@ -2,11 +2,12 @@ import {EditorState} from "prosemirror-state";
 import {EditorView} from "prosemirror-view";
 import {exampleSetup} from "prosemirror-example-setup";
 
-import {DOMParser, DOMSerializer} from "prosemirror-model";
+import {DOMParser} from "prosemirror-model";
 
 import schema from "./schema";
 import menu from "./menu";
 import nodeViews from "./node-views";
+import {stateToHtml} from "./util";
 
 class ProseMirrorView {
     constructor(target, content) {
@@ -28,13 +29,16 @@ class ProseMirrorView {
     }
 
     get content() {
-        const fragment = DOMSerializer.fromSchema(schema).serializeFragment(this.view.state.doc.content);
-        const renderDoc = document.implementation.createHTMLDocument();
-        renderDoc.body.appendChild(fragment);
-        return renderDoc.body.innerHTML;
+        return stateToHtml(this.view.state);
     }
-    focus() { this.view.focus() }
-    destroy() { this.view.destroy() }
+
+    focus() {
+        this.view.focus()
+    }
+
+    destroy() {
+        this.view.destroy()
+    }
 }
 
 export default ProseMirrorView;

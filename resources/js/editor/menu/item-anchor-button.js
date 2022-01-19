@@ -57,6 +57,12 @@ function getLinkDialog(submitter, closer) {
     });
 }
 
+/**
+ * @param {FormData} formData
+ * @param {PmEditorState} state
+ * @param {PmDispatchFunction} dispatch
+ * @return {boolean}
+ */
 function applyLink(formData, state, dispatch) {
     const selection = state.selection;
     const attrs = Object.fromEntries(formData);

@@ -13,6 +13,7 @@ import DialogForm from "./DialogForm";
 import DialogInput from "./DialogInput";
 
 import itemAnchorButtonItem from "./item-anchor-button";
+import itemHtmlSourceButton from "./item-html-source-button";
 
 
 function cmdItem(cmd, options) {
@@ -156,6 +157,7 @@ const inserts = [
         title: "Horizontal Rule",
         icon: icons.horizontal_rule,
     }),
+    itemHtmlSourceButton(),
 ];
 
 const utilities = [

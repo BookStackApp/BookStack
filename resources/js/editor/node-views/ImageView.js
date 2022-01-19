@@ -65,7 +65,6 @@ class ImageView {
     }
 
     removeHandlesListener(event) {
-        console.log(this.dom.contains(event.target), event.target);
         if (!this.dom.contains(event.target)) {
             this.removeHandles();
             this.handles = [];
