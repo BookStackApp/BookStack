@@ -517,7 +517,7 @@ img.ProseMirror-separator {
   }
 }
 
-.ProseMirror-imagewrap {
+.ProseMirror-imagewrap, .ProseMirror-iframewrap {
   display: inline-block;
   line-height: 0;
   font-size: 0;
@@ -530,6 +530,10 @@ img.ProseMirror-separator {
 
 .ProseMirror img[data-show-handles] {
   outline: 4px solid #000;
+}
+
+.ProseMirror .ProseMirror-iframewrap iframe {
+  pointer-events: none !important;
 }
 
 .ProseMirror-dragdummy {

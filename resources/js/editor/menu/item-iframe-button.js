@@ -107,6 +107,7 @@ function iframeButtonItem() {
         title: "Embed Content",
         run: onPress,
         enable: state => true,
+        active: state => (state.selection.node || {type: ''}).type === schema.nodes.iframe,
         icon: icons.iframe,
     });
 }
