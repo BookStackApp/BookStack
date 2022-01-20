@@ -196,6 +196,27 @@ const image = {
     }
 };
 
+const iframe = {
+    attrs: {
+        src: {},
+        height: {default: null},
+        width: {default: null},
+        title: {default: null},
+        allow: {default: null},
+        sandbox: {default: null},
+    },
+    group: "block",
+    draggable: true,
+    parseDOM: [{
+        tag: "iframe",
+        getAttrs: domAttrsToAttrsParser(["src", "width", "height", "title", "allow", "sandbox"]),
+    }],
+    toDOM(node) {
+        const attrs = extractAttrsForDom(node, ["src", "width", "height", "title", "allow", "sandbox"])
+        return ["iframe", attrs];
+    }
+};
+
 const hard_break = {
     inline: true,
     group: "inline",
@@ -270,6 +291,7 @@ const nodes = {
     code_block,
     text,
     image,
+    iframe,
     hard_break,
     callout,
     ordered_list,

@@ -13,6 +13,10 @@ nodes.table = function (state, node) {
     writeNodeAsHtml(state, node);
 };
 
+nodes.iframe = function (state, node) {
+    writeNodeAsHtml(state, node);
+};
+
 function isPlainURL(link, parent, index, side) {
     if (link.attrs.title || !/^\w+:/.test(link.attrs.href)) {
         return false

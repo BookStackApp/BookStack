@@ -34,6 +34,8 @@
                 </tbody>
             </table>
 
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/n6hIa-fPx0M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
             <p><img src="/user_avatar.png" alt="Logo"></p>
             <ul>
                 <li>Item A</li>

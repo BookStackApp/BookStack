@@ -12,6 +12,7 @@ import {removeMarks} from "../commands";
 
 import itemAnchorButtonItem from "./item-anchor-button";
 import itemHtmlSourceButton from "./item-html-source-button";
+import itemIframeButton from "./item-iframe-button";
 
 
 function cmdItem(cmd, options) {
@@ -158,6 +159,7 @@ const inserts = [
     new DropdownSubmenu([
         new TableCreatorGrid()
     ], {icon: icons.table}),
+    itemIframeButton(),
     itemHtmlSourceButton(),
 ];
 
