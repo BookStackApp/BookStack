@@ -1,5 +1,5 @@
 import {orderedList, bulletList, listItem} from "prosemirror-schema-list";
-import {tableNodes} from "prosemirror-tables";
+import {Fragment} from "prosemirror-model";
 
 /**
  * @param {HTMLElement} node
@@ -328,6 +328,35 @@ const table_header = {
     toDOM(node) { return ["th", setCellAttrs(node), 0] }
 };
 
+
+const details = {
+    content: "details_summary block*",
+    isolating: true,
+    group: "block",
+    parseDOM: [{
+        tag: "details",
+        getAttrs(domNode) {
+            return {}
+        },
+    }],
+    toDOM(node) {
+        return ["details",  0];
+    }
+};
+
+const details_summary = {
+    content: "inline*",
+    group: "block",
+    parseDOM: [{
+        tag: "details summary",
+    }],
+    toDOM(node) {
+        return ["summary",  0];
+    }
+};
+
+
+
 const nodes = {
     doc,
     paragraph,
@@ -347,6 +376,8 @@ const nodes = {
     table_row,
     table_cell,
     table_header,
+    details,
+    details_summary,
 };
 
 export default nodes;

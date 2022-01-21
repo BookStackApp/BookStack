@@ -19,6 +19,12 @@
                 Some <a href="https://cats.com" target="_blank" title="link A">Linked Content</a> Lorem ipsum dolor sit amet. <br>
             </p>
 
+            <details>
+                <summary>Dropdown here</summary>
+                <h1>Inner header</h1>
+                <p>Paragraph</p>
+            </details>
+
             <table style="width: 100%;">
                 <thead>
                 <tr>

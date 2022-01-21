@@ -5,9 +5,15 @@
   - Have updated column resizing to set cell widths
     - Now need to handle table overall size on change, then heights. 
 
+- Details/Summary
+  - Need view to control summary editability, make readonly but editable via popover.
+  - Need some default styles to visualise details boundary.
+  - Markdown parser needs to be updated to handle separate open/close tags for blocks. 
+
 ### In-Progress
 
 - Tables
+- Details/Summary
 
 ### Features
 
@@ -17,7 +23,6 @@
 - Fullscreen
 - Paste Image Uploading
 - Drag + Drop Image Uploading
-- Details/Summary
 - Checkbox/TODO list items
 - Code blocks
 - Indents

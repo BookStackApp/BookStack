@@ -17,6 +17,14 @@ nodes.iframe = function (state, node) {
     writeNodeAsHtml(state, node);
 };
 
+nodes.details = function (state, node) {
+    wrapNodeWithHtml(state, node, '<details>', '</details>');
+};
+
+nodes.details_summary = function(state, node) {
+    writeNodeAsHtml(state, node);
+};
+
 function isPlainURL(link, parent, index, side) {
     if (link.attrs.title || !/^\w+:/.test(link.attrs.href)) {
         return false
@@ -85,7 +93,7 @@ marks.background_color = {
 
 /**
  * @param {MarkdownSerializerState} state
- * @param node
+ * @param {PmNode} node
  */
 function writeNodeAsHtml(state, node) {
     const html = docToHtml({content: [node]});
@@ -93,6 +101,22 @@ function writeNodeAsHtml(state, node) {
     state.ensureNewLine();
     state.write('\n');
     state.closeBlock();
+}
+
+/**
+ * @param {MarkdownSerializerState} state
+ * @param {PmNode} node
+ * @param {String} openTag
+ * @param {String} closeTag
+ */
+function wrapNodeWithHtml(state, node, openTag, closeTag) {
+    state.write(openTag);
+    state.ensureNewLine();
+    state.renderContent(node);
+    state.write(closeTag);
+    state.closeBlock();
+    state.ensureNewLine();
+    state.write('\n');
 }
 
 // Update serializers to just write out as HTML if we have an attribute

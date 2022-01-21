@@ -160,7 +160,10 @@ const inserts = [
         new TableCreatorGrid()
     ], {icon: icons.table}),
     itemIframeButton(),
-    itemHtmlSourceButton(),
+    wrapItem(schema.nodes.details, {
+        title: "Dropdown Block",
+        icon: icons.details,
+    })
 ];
 
 const utilities = [
@@ -170,6 +173,7 @@ const utilities = [
         run: removeMarks(),
         enable: state => true,
     }),
+    itemHtmlSourceButton(),
 ];
 
 const menu = menuBar({
