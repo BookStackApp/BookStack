@@ -1,7 +1,7 @@
 import {EditorState} from "prosemirror-state";
 import {EditorView} from "prosemirror-view";
 import {exampleSetup} from "prosemirror-example-setup";
-import {tableEditing, columnResizing} from "prosemirror-tables";
+import {tableEditing} from "prosemirror-tables";
 
 import {DOMParser} from "prosemirror-model";
 
@@ -9,6 +9,7 @@ import schema from "./schema";
 import menu from "./menu";
 import nodeViews from "./node-views";
 import {stateToHtml} from "./util";
+import {columnResizing} from "./plugins/table-resizing";
 
 class ProseMirrorView {
     constructor(target, content) {

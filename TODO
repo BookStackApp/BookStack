@@ -2,7 +2,8 @@
 
 - Table cell height resize & cell width resize via width style
   - Column resize source: https://github.com/ProseMirror/prosemirror-tables/blob/master/src/columnresizing.js
-  - Looks like all the required internals are exported so we can copy out & modify easily.
+  - Have updated column resizing to set cell widths
+    - Now need to handle table overall size on change, then heights. 
 
 ### In-Progress
 

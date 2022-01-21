@@ -28,13 +28,27 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Content 1</td>
-                    <td>Content 2</td>
+                    <td style="width: 250px; height: 30px">Content 1</td>
+                    <td style="width: 320px; height: 30px">Content 2</td>
+                    <td style="width: 320px; height: 30px">Content 2</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Row 2, Spanning 2</td>
+                    <td>Row 2 spanning 1</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Row 3/4, Column 1</td>
+                    <td>Row 3, Column 2</td>
+                    <td>Row 3, Column 3</td>
+                </tr>
+                <tr>
+                    <td>Row 4, Column 2</td>
+                    <td>Row 4, Column 3</td>
                 </tr>
                 </tbody>
             </table>
 
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/n6hIa-fPx0M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{--            <iframe width="560" height="315" src="https://www.youtube.com/embed/n6hIa-fPx0M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>--}}
 
             <p><img src="/user_avatar.png" alt="Logo"></p>
             <ul>

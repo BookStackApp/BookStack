@@ -258,15 +258,6 @@ const ordered_list = Object.assign({}, orderedList, {content: "list_item+", grou
 const bullet_list = Object.assign({}, bulletList, {content: "list_item+", group: "block"});
 const list_item = Object.assign({}, listItem, {content: 'paragraph block*'});
 
-const {
-    table_row,
-    table_cell,
-    table_header,
-} = tableNodes({
-    tableGroup: "block",
-    cellContent: "block+"
-});
-
 const table = {
     content: "table_row+",
     attrs: {
@@ -277,9 +268,64 @@ const table = {
     group: "block",
     parseDOM: [{tag: "table", getAttrs: domAttrsToAttrsParser(['style'])}],
     toDOM(node) {
-        console.log(extractAttrsForDom(node, ['style']));
         return ["table", extractAttrsForDom(node, ['style']), ["tbody", 0]]
     }
+};
+
+const table_row = {
+    content: "(table_cell | table_header)*",
+    tableRole: "row",
+    parseDOM: [{tag: "tr"}],
+    toDOM() { return ["tr", 0] }
+};
+
+let cellAttrs = {
+    colspan: {default: 1},
+    rowspan: {default: 1},
+    width: {default: null},
+    height: {default: null},
+};
+
+function getCellAttrs(dom) {
+    return {
+        colspan: Number(dom.getAttribute("colspan") || 1),
+        rowspan: Number(dom.getAttribute("rowspan") || 1),
+        width: dom.style.width || null,
+        height: dom.style.height || null,
+    };
+}
+
+function setCellAttrs(node) {
+    let attrs = {};
+
+    const styles = [];
+    if (node.attrs.colspan != 1) attrs.colspan = node.attrs.colspan;
+    if (node.attrs.rowspan != 1) attrs.rowspan = node.attrs.rowspan;
+    if (node.attrs.width) styles.push(`width: ${node.attrs.width}`);
+    if (node.attrs.height) styles.push(`height: ${node.attrs.height}`);
+    if (styles) {
+        attrs.style = styles.join(';');
+    }
+
+    return attrs
+}
+
+const table_cell = {
+    content: "block+",
+    attrs: cellAttrs,
+    tableRole: "cell",
+    isolating: true,
+    parseDOM: [{tag: "td", getAttrs: dom => getCellAttrs(dom)}],
+    toDOM(node) { return ["td", setCellAttrs(node), 0] }
+};
+
+const table_header = {
+    content: "block+",
+    attrs: cellAttrs,
+    tableRole: "header_cell",
+    isolating: true,
+    parseDOM: [{tag: "th", getAttrs: dom => getCellAttrs(dom)}],
+    toDOM(node) { return ["th", setCellAttrs(node), 0] }
 };
 
 const nodes = {

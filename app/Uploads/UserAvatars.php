@@ -2,6 +2,7 @@
 
 namespace BookStack\Uploads;
 
+use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\HttpFetchException;
 use Exception;
@@ -16,6 +17,7 @@ class UserAvatars
     {
         $this->imageService = $imageService;
         $this->http = $http;
+        $ldapService = app()->make(LdapService::class);
     }
 
     /**
