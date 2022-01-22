@@ -38,7 +38,10 @@ services:
       - ${DEV_PORT:-8080}:80
     volumes:
       - ./:/app
+      - ./dev/docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     entrypoint: /app/dev/docker/entrypoint.app.sh
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
   node:
     image: node:alpine
     working_dir: /app
