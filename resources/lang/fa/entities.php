@@ -309,7 +309,7 @@ return [
     'profile_user_for_x' => 'کاربر برای :time',
     'profile_created_content' => 'محتوا ایجاد کرد',
     'profile_not_created_pages' => ':userName هیچ صفحه ای ایجاد نکرده است',
-    'profile_not_created_chapters' => ':userName has not created any chapters',
+    'profile_not_created_chapters' => ':userName هیچ فصلی ایجاد نکرده است',
     'profile_not_created_books' => ':userName هیچ کتابی ایجاد نکرده است',
     'profile_not_created_shelves' => ':userName هیچ قفسه ای ایجاد نکرده است',
 
@@ -323,12 +323,12 @@ return [
     'comment_saving' => 'در حال ذخیره نظر...',
     'comment_deleting' => 'در حال حذف نظر...',
     'comment_new' => 'نظر جدید',
-    'comment_created' => 'commented :createDiff',
-    'comment_updated' => 'Updated :updateDiff by :username',
-    'comment_deleted_success' => 'Comment deleted',
-    'comment_created_success' => 'Comment added',
-    'comment_updated_success' => 'Comment updated',
-    'comment_delete_confirm' => 'Are you sure you want to delete this comment?',
+    'comment_created' => ':createDiff نظر داد',
+    'comment_updated' => 'به روز رسانی :updateDiff توسط :username',
+    'comment_deleted_success' => 'نظر حذف شد',
+    'comment_created_success' => 'نظر اضافه شد',
+    'comment_updated_success' => 'نظر به روز شد',
+    'comment_delete_confirm' => 'آیا مطمئن هستید که می خواهید این نظر را حذف کنید؟',
     'comment_in_reply_to' => 'In reply to :commentId',
 
     // Revision
