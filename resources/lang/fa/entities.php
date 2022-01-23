@@ -329,19 +329,19 @@ return [
     'comment_created_success' => 'نظر اضافه شد',
     'comment_updated_success' => 'نظر به روز شد',
     'comment_delete_confirm' => 'آیا مطمئن هستید که می خواهید این نظر را حذف کنید؟',
-    'comment_in_reply_to' => 'In reply to :commentId',
+    'comment_in_reply_to' => 'در پاسخ به :commentId',
 
     // Revision
-    'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
-    'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
-    'revision_delete_success' => 'Revision deleted',
-    'revision_cannot_delete_latest' => 'Cannot delete the latest revision.',
+    'revision_delete_confirm' => 'آیا مطمئن هستید که می خواهید این ویرایش را حذف کنید؟',
+    'revision_restore_confirm' => 'آیا مطمئن هستید که می خواهید این ویرایش را بازیابی کنید؟ محتوای صفحه فعلی جایگزین خواهد شد.',
+    'revision_delete_success' => 'ویرایش حذف شد',
+    'revision_cannot_delete_latest' => 'نمی توان آخرین نسخه را حذف کرد.',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
+    'copy_consider' => 'لطفاً هنگام کپی کردن مطالب به موارد زیر توجه کنید.',
+    'copy_consider_permissions' => 'تنظیمات مجوز سفارشی کپی نخواهد شد.',
+    'copy_consider_owner' => 'شما مالک تمام محتوای کپی شده خواهید شد.',
+    'copy_consider_images' => 'فایل های تصویر صفحه تکراری نخواهند شد و تصاویر اصلی ارتباط خود را با صفحه ای که در ابتدا در آن آپلود شده اند حفظ می کنند.',
     'copy_consider_attachments' => 'Page attachments will not be copied.',
     'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
 ];
