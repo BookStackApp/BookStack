@@ -92,6 +92,7 @@ class ExportFormatter
         $html = view('pages.export', [
             'page'   => $page,
             'format' => 'pdf',
+            'engine' => $this->pdfGenerator->getActiveEngine(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -113,6 +114,7 @@ class ExportFormatter
             'chapter' => $chapter,
             'pages'   => $pages,
             'format'  => 'pdf',
+            'engine'  => $this->pdfGenerator->getActiveEngine(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -130,6 +132,7 @@ class ExportFormatter
             'book'         => $book,
             'bookChildren' => $bookTree,
             'format'       => 'pdf',
+            'engine'       => $this->pdfGenerator->getActiveEngine(),
         ])->render();
 
         return $this->htmlToPdf($html);

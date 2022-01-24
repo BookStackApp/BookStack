@@ -47,8 +47,15 @@
             display: block;
         }
 
+        @if($engine === \BookStack\Entities\Tools\PdfGenerator::ENGINE_DOMPDF)
+        {{-- Fix for full width linked image sizes on DOMPDF --}}
         .page-content a > img {
-            max-width: none;
+            max-width: 700px;
         }
+        {{-- Undoes the above for table images to prevent visually worse scenario, Awaiting next DOMPDF release for patch --}}
+        .page-content td a > img {
+            max-width: 100%;
+        }
+        @endif
     </style>
 @endif
