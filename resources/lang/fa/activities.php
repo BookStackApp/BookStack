@@ -7,57 +7,57 @@ return [
 
     // Pages
     'page_create'                 => 'صفحه ایجاد شده',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'صفحه با موفقیت ایجاد شد',
     'page_update'                 => 'صفحه بروز شده',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'صفحه با موفقیت به روزرسانی شد',
     'page_delete'                 => 'حذف صفحه',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'صفحه با موفقیت حذف شد',
     'page_restore'                => 'بازیابی صفحه',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'صفحه با موفقیت بازیابی شد',
     'page_move'                   => 'انتقال صفحه',
 
     // Chapters
     'chapter_create'              => 'ایجاد فصل',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'فصل با موفقیت ایجاد شد',
     'chapter_update'              => 'به روزرسانی فصل',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'فصل با موفقیت به روزرسانی شد',
     'chapter_delete'              => 'حذف فصل',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'فصل با موفقیت حذف شد',
     'chapter_move'                => 'انتقال فصل',
 
     // Books
     'book_create'                 => 'ایجاد کتاب',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'کتاب با موفقیت ایجاد شد',
     'book_update'                 => 'به روزرسانی کتاب',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'کتاب با موفقیت به روزرسانی شد',
     'book_delete'                 => 'حذف کتاب',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'کتاب با موفقیت حذف شد',
     'book_sort'                   => 'مرتب سازی کتاب',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'کتاب با موفقیت مرتب سازی شد',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create'            => 'ایجاد قفسه کتاب',
+    'bookshelf_create_notification'    => 'قفسه کتاب با موفقیت ایجاد شد',
     'bookshelf_update'                 => 'به روزرسانی قفسه کتاب',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'قفسه کتاب با موفقیت به روزرسانی شد',
     'bookshelf_delete'                 => 'حذف قفسه کتاب',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => 'قفسه کتاب با موفقیت حذف شد',
 
     // Favourites
     'favourite_add_notification' => '":name" به علاقه مندی های شما اضافه شد',
     'favourite_remove_notification' => '":name" از علاقه مندی های شما حذف شد',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'روش چند فاکتوری با موفقیت پیکربندی شد',
+    'mfa_remove_method_notification' => 'روش چند فاکتوری با موفقیت حذف شد',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'ایجاد وب هوک',
+    'webhook_create_notification' => 'وب هوک با موفقیت ایجاد شد',
+    'webhook_update' => 'به روزرسانی وب هوک',
+    'webhook_update_notification' => 'وب هوک با موفقیت بروزرسانی شد',
+    'webhook_delete' => 'حذف وب هوک',
+    'webhook_delete_notification' => 'وب هوک با موفقیت حذف شد',
 
     // Other
     'commented_on'                => 'ثبت دیدگاه',

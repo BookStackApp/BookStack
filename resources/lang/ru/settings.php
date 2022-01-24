@@ -246,7 +246,7 @@ return [
     'webhooks_events_warning' => 'Имейте в виду, что эти события будут срабатывать для всех выбранных событий, даже если применяются пользовательские разрешения. Убедитесь, что использование этого вебхука не будет раскрывать конфиденциальные данные.',
     'webhooks_events_all' => 'Все системные события',
     'webhooks_name' => 'Имя вебхука',
-    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_timeout' => 'Таймаут запроса Webhook (секунды)',
     'webhooks_endpoint' => 'Конечная точка вебхука',
     'webhooks_active' => 'Вебхук активен',
     'webhook_events_table_header' => 'События',
@@ -255,10 +255,10 @@ return [
     'webhooks_delete_confirm' => 'Вы уверены, что хотите удалить этот вебхук?',
     'webhooks_format_example' => 'Пример вебхука',
     'webhooks_format_example_desc' => 'Данные вебхука отправляются как POST запрос к настроенной конечной точке в виде JSON в соответствии с форматом ниже. Свойства "related_item" и "url" необязательны и зависят от типа вызванного события.',
-    'webhooks_status' => 'Webhook Status',
-    'webhooks_last_called' => 'Last Called:',
-    'webhooks_last_errored' => 'Last Errored:',
-    'webhooks_last_error_message' => 'Last Error Message:',
+    'webhooks_status' => 'Состояние Webhook',
+    'webhooks_last_called' => 'Последний вызов:',
+    'webhooks_last_errored' => 'Последняя ошибка:',
+    'webhooks_last_error_message' => 'Последнее сообщение об ошибке:',
 
 
     //! If editing translations files directly please ignore this in all
