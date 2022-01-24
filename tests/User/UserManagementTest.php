@@ -3,11 +3,14 @@
 namespace Tests\User;
 
 use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Mockery\MockInterface;
+use RuntimeException;
 use Tests\TestCase;
 
 class UserManagementTest extends TestCase
@@ -178,5 +181,47 @@ class UserManagementTest extends TestCase
         $resp->assertRedirect('/settings/users/' . $guestUser->id);
         $resp = $this->followRedirects($resp);
         $resp->assertSee('cannot delete the guest user');
+    }
+
+    public function test_user_creation_is_not_performed_if_the_invitation_sending_fails()
+    {
+        /** @var User $user */
+        $user = User::factory()->make();
+        $adminRole = Role::getRole('admin');
+
+        // Simulate an invitation sending failure
+        $this->mock(UserInviteService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('sendInvitation')->once()->andThrow(RuntimeException::class);
+        });
+
+        $this->asAdmin()->post('/settings/users/create', [
+            'name'                          => $user->name,
+            'email'                         => $user->email,
+            'send_invite'                   => 'true',
+            'roles[' . $adminRole->id . ']' => 'true',
+        ]);
+
+        // Since the invitation failed, the user should not exist in the database
+        $this->assertDatabaseMissing('users', $user->only('name', 'email'));
+    }
+
+    public function test_user_create_activity_is_not_persisted_if_the_invitation_sending_fails()
+    {
+        /** @var User $user */
+        $user = User::factory()->make();
+        $adminRole = Role::getRole('admin');
+
+        $this->mock(UserInviteService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('sendInvitation')->once()->andThrow(RuntimeException::class);
+        });
+
+        $this->asAdmin()->post('/settings/users/create', [
+            'name'                          => $user->name,
+            'email'                         => $user->email,
+            'send_invite'                   => 'true',
+            'roles[' . $adminRole->id . ']' => 'true',
+        ]);
+
+        $this->assertDatabaseMissing('activities', ['type' => 'USER_CREATE']);
     }
 }
