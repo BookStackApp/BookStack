@@ -261,6 +261,21 @@ class PageTest extends TestCase
             ->assertElementContains('.entity-list .page:nth-child(1)', $content['page']->name);
     }
 
+    public function test_recently_updated_pages_view_shows_updated_by_details()
+    {
+        $user = $this->getEditor();
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $this->actingAs($user)->put($page->getUrl(), [
+            'name' => 'Updated title',
+            'html' => '<p>Updated content</p>',
+        ]);
+
+        $resp = $this->asAdmin()->get('/pages/recently-updated');
+        $resp->assertElementContains('.entity-list .page:nth-child(1)', 'Updated 1 second ago by ' . $user->name);
+    }
+
     public function test_recently_updated_pages_on_home()
     {
         /** @var Page $page */
