@@ -341,7 +341,7 @@ return [
     'copy_consider' => 'Por favor, tenga en cuenta lo siguiente al copiar el contenido.',
     'copy_consider_permissions' => 'Los ajustes de permisos personalizados no serán copiados.',
     'copy_consider_owner' => 'Usted se convertirá en el dueño de todo el contenido copiado.',
-    'copy_consider_images' => 'Los archivos de imagen de de las páginas no serán duplicados y las imágenes originales conservarán su relación con la página a la que fueron subidos originalmente.',
+    'copy_consider_images' => 'Los archivos de imagen de la página no serán duplicados y las imágenes originales conservarán su relación con la página a la que fueron subidos originalmente.',
     'copy_consider_attachments' => 'Los archivos adjuntos de la página no serán copiados.',
     'copy_consider_access' => 'Un cambio de ubicación, propietario o permisos puede resultar en que este contenido sea accesible para aquellos que anteriormente no tuvieran acceso.',
 ];
