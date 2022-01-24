@@ -41,7 +41,9 @@ class EditorToolbox {
             if (cName === tabName) this.contentElements[i].style.display = 'block';
         }
 
-        if (openToolbox) this.elem.classList.add('open');
+        if (openToolbox && !this.elem.classList.contains('open')) {
+            this.toggle();
+        }
     }
 
 }
