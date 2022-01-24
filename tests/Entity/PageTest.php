@@ -276,6 +276,42 @@ class PageTest extends TestCase
         $resp->assertElementContains('.entity-list .page:nth-child(1)', 'Updated 1 second ago by ' . $user->name);
     }
 
+    public function test_recently_updated_pages_view_shows_parent_chain()
+    {
+        $user = $this->getEditor();
+        /** @var Page $page */
+        $page = Page::query()->whereNotNull('chapter_id')->first();
+
+        $this->actingAs($user)->put($page->getUrl(), [
+            'name' => 'Updated title',
+            'html' => '<p>Updated content</p>',
+        ]);
+
+        $resp = $this->asAdmin()->get('/pages/recently-updated');
+        $resp->assertElementContains('.entity-list .page:nth-child(1)', $page->chapter->getShortName(42));
+        $resp->assertElementContains('.entity-list .page:nth-child(1)', $page->book->getShortName(42));
+    }
+
+    public function test_recently_updated_pages_view_does_not_show_parent_if_not_visible()
+    {
+        $user = $this->getEditor();
+        /** @var Page $page */
+        $page = Page::query()->whereNotNull('chapter_id')->first();
+
+        $this->actingAs($user)->put($page->getUrl(), [
+            'name' => 'Updated title',
+            'html' => '<p>Updated content</p>',
+        ]);
+
+        $this->setEntityRestrictions($page->book);
+        $this->setEntityRestrictions($page, ['view'], [$user->roles->first()]);
+
+        $resp = $this->get('/pages/recently-updated');
+        $resp->assertDontSee($page->book->getShortName(42));
+        $resp->assertDontSee($page->chapter->getShortName(42));
+        $resp->assertElementContains('.entity-list .page:nth-child(1)', 'Updated title');
+    }
+
     public function test_recently_updated_pages_on_home()
     {
         /** @var Page $page */
