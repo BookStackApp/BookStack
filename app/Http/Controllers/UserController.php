@@ -112,9 +112,9 @@ class UserController extends Controller
                 $roles = $request->get('roles');
                 $this->userRepo->setUserRoles($user, $roles);
             }
-    
+
             $this->userRepo->downloadAndAssignUserAvatar($user);
-    
+
             $this->logActivity(ActivityType::USER_CREATE, $user);
         });
 

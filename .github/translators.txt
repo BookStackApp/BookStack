@@ -211,3 +211,7 @@ Mundo Racional (ismael.mesquita) :: Portuguese, Brazilian
 Zarik (3apuk) :: Russian
 Ali Shaatani (a.shaatani) :: Arabic
 ChacMaster :: Portuguese, Brazilian
+Saeed (saeed205) :: Persian
+Julesdevops :: French
+peter cerny (posli.to.semka) :: Slovak
+Pavel Karlin (pavelkarlin) :: Russian

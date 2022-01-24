@@ -32,6 +32,7 @@ class PdfGenerator
     public function getActiveEngine(): string
     {
         $useWKHTML = config('snappy.pdf.binary') !== false && config('app.allow_untrusted_server_fetching') === true;
+
         return $useWKHTML ? self::ENGINE_WKHTML : self::ENGINE_DOMPDF;
     }
 }
