@@ -12,6 +12,7 @@ use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
@@ -99,20 +100,23 @@ class UserController extends Controller
         }
 
         $user->refreshSlug();
-        $user->save();
 
-        if ($sendInvite) {
-            $this->inviteService->sendInvitation($user);
-        }
+        DB::transaction(function () use ($user, $sendInvite, $request) {
+            $user->save();
 
-        if ($request->filled('roles')) {
-            $roles = $request->get('roles');
-            $this->userRepo->setUserRoles($user, $roles);
-        }
+            if ($sendInvite) {
+                $this->inviteService->sendInvitation($user);
+            }
 
-        $this->userRepo->downloadAndAssignUserAvatar($user);
-
-        $this->logActivity(ActivityType::USER_CREATE, $user);
+            if ($request->filled('roles')) {
+                $roles = $request->get('roles');
+                $this->userRepo->setUserRoles($user, $roles);
+            }
+    
+            $this->userRepo->downloadAndAssignUserAvatar($user);
+    
+            $this->logActivity(ActivityType::USER_CREATE, $user);
+        });
 
         return redirect('/settings/users');
     }
