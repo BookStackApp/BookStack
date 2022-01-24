@@ -302,6 +302,7 @@ class ExportTest extends TestCase
         $mockPdfGenerator->shouldReceive('fromHtml')
             ->with(\Mockery::capture($pdfHtml))
             ->andReturn('');
+        $mockPdfGenerator->shouldReceive('getActiveEngine')->andReturn(PdfGenerator::ENGINE_DOMPDF);
 
         $this->asEditor()->get($page->getUrl('/export/pdf'));
         $this->assertStringNotContainsString('iframe>', $pdfHtml);

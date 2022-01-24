@@ -122,6 +122,9 @@ class ImageManager {
         };
 
         const {data: html} = await window.$http.get(`images/${this.type}`, params);
+        if (params.page === 1) {
+            this.listContainer.innerHTML = '';
+        }
         this.addReturnedHtmlElementsToList(html);
         removeLoading(this.listContainer);
     }

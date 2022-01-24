@@ -73,7 +73,7 @@ return [
     'breadcrumb' => 'Miga de Pan',
     'status' => 'Estado',
     'status_active' => 'Activo',
-    'status_inactive' => 'Inactive',
+    'status_inactive' => 'Inactivo',
     'never' => 'Nunca',
 
     // Header

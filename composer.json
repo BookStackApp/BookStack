@@ -41,7 +41,7 @@
         "socialiteproviders/okta": "^4.1",
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
-        "ssddanbrown/htmldiff": "^1.0.1"
+        "ssddanbrown/htmldiff": "^1.0.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.16",
