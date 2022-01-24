@@ -112,6 +112,11 @@ class MarkdownEditor {
         if (scrollText) {
             this.scrollToText(scrollText);
         }
+
+        // Refresh CodeMirror on container resize
+        const resizeDebounced = debounce(() => code.updateLayout(this.cm), 100, false);
+        const observer = new ResizeObserver(resizeDebounced);
+        observer.observe(this.elem);
     }
 
     // Update the input content and render the display.
