@@ -14,6 +14,7 @@ use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use Exception;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -364,7 +365,11 @@ class PageController extends Controller
      */
     public function showRecentlyUpdated()
     {
-        $pages = Page::visible()->with('updatedBy')
+        $visibleBelongsScope = function (BelongsTo $query) {
+            $query->scopes('visible');
+        };
+
+        $pages = Page::visible()->with(['updatedBy', 'book' => $visibleBelongsScope, 'chapter' => $visibleBelongsScope])
             ->orderBy('updated_at', 'desc')
             ->paginate(20)
             ->setPath(url('/pages/recently-updated'));
@@ -375,6 +380,7 @@ class PageController extends Controller
             'title'         => trans('entities.recently_updated_pages'),
             'entities'      => $pages,
             'showUpdatedBy' => true,
+            'showPath'      => true,
         ]);
     }
 
