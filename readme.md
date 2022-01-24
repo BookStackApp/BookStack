@@ -156,6 +156,11 @@ Once the database has been migrated & seeded, you can run the tests like so:
 docker-compose run app php vendor/bin/phpunit
 ```
 
+#### Debugging
+
+The docker-compose setup ships with Xdebug, which you can listen to on port 9090.
+NB : For some editors like Visual Studio Code, you might need to map your workspace folder to the /app folder within the docker container for this to work.
+
 ## 🌎 Translations
 
 Translations for text within BookStack is managed through the [BookStack project on Crowdin](https://crowdin.com/project/bookstack). Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time. Crowdin is the preferred way to provide translations, otherwise the raw translations files can be found within the `resources/lang` path.
