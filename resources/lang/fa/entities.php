@@ -342,6 +342,6 @@ return [
     'copy_consider_permissions' => 'تنظیمات مجوز سفارشی کپی نخواهد شد.',
     'copy_consider_owner' => 'شما مالک تمام محتوای کپی شده خواهید شد.',
     'copy_consider_images' => 'فایل های تصویر صفحه تکراری نخواهند شد و تصاویر اصلی ارتباط خود را با صفحه ای که در ابتدا در آن آپلود شده اند حفظ می کنند.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider_attachments' => 'پیوست های صفحه کپی نمی شود.',
+    'copy_consider_access' => 'تغییر مکان، مالک یا مجوزها ممکن است منجر به دسترسی به این محتوا برای افرادی شود که قبلاً به آنها دسترسی نداشتند.',
 ];
