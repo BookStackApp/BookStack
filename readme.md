@@ -34,11 +34,14 @@ Big thanks to these companies for supporting the project.
 Note: Listed services are not tested, vetted nor supported by the official BookStack project in any manner.
 [View all sponsors](https://github.com/sponsors/ssddanbrown).
 
-#### Silver Sponsor
+#### Silver Sponsors
 
 <table><tbody><tr>
 <td><a href="https://www.diagrams.net/" target="_blank">
-    <img width="420" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/diagramsnet.png" alt="Diagrams.net">
+    <img width="400" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/diagramsnet.png" alt="Diagrams.net">
+</a></td>
+<td><a href="https://cloudabove.com/hosting" target="_blank">
+    <img height="100" src="https://raw.githubusercontent.com/BookStackApp/website/main/static/images/sponsors/cloudabove.svg" alt="Cloudabove">
 </a></td>
 </tr></tbody></table>
 
