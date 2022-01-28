@@ -164,7 +164,8 @@ class OidcProviderSettings
     protected function filterKeys(array $keys): array
     {
         return array_filter($keys, function (array $key) {
-            return $key['kty'] === 'RSA' && $key['use'] === 'sig' && $key['alg'] === 'RS256';
+            $alg = $key['alg'] ?? null;
+            return $key['kty'] === 'RSA' && $key['use'] === 'sig' && (is_null($alg) || $alg === 'RS256');
         });
     }
 
