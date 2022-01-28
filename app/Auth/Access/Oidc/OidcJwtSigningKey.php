@@ -60,8 +60,11 @@ class OidcJwtSigningKey
      */
     protected function loadFromJwkArray(array $jwk)
     {
-        if ($jwk['alg'] !== 'RS256') {
-            throw new OidcInvalidKeyException("Only RS256 keys are currently supported. Found key using {$jwk['alg']}");
+        // 'alg' is optional for a JWK, but we will still attempt to validate if
+        // it exists otherwise presume it will be compatible.
+        $alg = $jwk['alg'] ?? null;
+        if ($jwk['kty'] !== 'RSA' || !(is_null($alg) || $alg === 'RS256')) {
+            throw new OidcInvalidKeyException("Only RS256 keys are currently supported. Found key using {$alg}");
         }
 
         if (empty($jwk['use'])) {

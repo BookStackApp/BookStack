@@ -318,6 +318,31 @@ class OidcTest extends TestCase
         $this->assertCount(4, $transactions);
     }
 
+    public function test_auth_login_with_autodiscovery_with_keys_that_do_not_have_alg_property()
+    {
+        $this->withAutodiscovery();
+
+        $keyArray = OidcJwtHelper::publicJwkKeyArray();
+        unset($keyArray['alg']);
+
+        $this->mockHttpClient([
+            $this->getAutoDiscoveryResponse(),
+            new Response(200, [
+                'Content-Type'  => 'application/json',
+                'Cache-Control' => 'no-cache, no-store',
+                'Pragma'        => 'no-cache',
+            ], json_encode([
+                'keys' => [
+                    $keyArray,
+                ],
+            ])),
+        ]);
+
+        $this->assertFalse(auth()->check());
+        $this->runLogin();
+        $this->assertTrue(auth()->check());
+    }
+
     protected function withAutodiscovery()
     {
         config()->set([
