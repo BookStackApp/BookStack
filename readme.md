@@ -1,7 +1,7 @@
 # BookStack
 
 [![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg)](https://github.com/BookStackApp/BookStack/releases/latest)
-[![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/BookStackApp/BookStack/blob/development/LICENSE)
 [![Crowdin](https://badges.crowdin.net/bookstack/localized.svg)](https://crowdin.com/project/bookstack)
 [![Discord](https://img.shields.io/static/v1?label=chat&message=discord&color=738adb&logo=discord)](https://discord.gg/ztkBqR2)
 [![Repo Stats](https://img.shields.io/static/v1?label=GitHub+project&message=stats&color=f27e3f)](https://gh-stats.bookstackapp.com/)
@@ -82,7 +82,7 @@ Feature releases, and some patch releases, will be accompanied by a post on the 
 
 ## 🛠️ Development & Testing
 
-All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
+All development on BookStack is currently done on the `development` branch. When it's time for a release the `development` branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
 * [Node.js](https://nodejs.org/en/) v14.0+
 
@@ -178,9 +178,9 @@ Feel free to create issues to request new features or to report bugs & problems.
 
 Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge. Just because a feature request exists, or is tagged, does not mean that feature would be accepted into the core project.
 
-Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
+Pull requests should be created from the `development` branch since they will be merged back into `development` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
-The project's code of conduct [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/CODE_OF_CONDUCT.md).
+The project's code of conduct [can be found here](https://github.com/BookStackApp/BookStack/blob/development/.github/CODE_OF_CONDUCT.md).
 
 ## 🔒 Security
 
@@ -188,7 +188,7 @@ Security information for administering a BookStack instance can be found on the 
 
 If you'd like to be notified of new potential security concerns you can [sign-up to the BookStack security mailing list](https://updates.bookstackapp.com/signup/bookstack-security-updates).
 
-If you would like to report a security concern, details of doing so can [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/SECURITY.md).
+If you would like to report a security concern, details of doing so can [can be found here](https://github.com/BookStackApp/BookStack/blob/development/.github/SECURITY.md).
 
 ## ♿ Accessibility
 
@@ -206,7 +206,7 @@ The BookStack source is provided under the MIT License. The libraries used by, a
 
 The great people that have worked to build and improve BookStack can [be seen here](https://github.com/BookStackApp/BookStack/graphs/contributors).
 
-The wonderful people that have provided translations, either through GitHub or via Crowdin [can be seen here](https://github.com/BookStackApp/BookStack/blob/master/.github/translators.txt).
+The wonderful people that have provided translations, either through GitHub or via Crowdin [can be seen here](https://github.com/BookStackApp/BookStack/blob/development/.github/translators.txt).
 
 These are the great open-source projects used to help build BookStack:
 
