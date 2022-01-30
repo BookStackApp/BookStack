@@ -3,10 +3,10 @@ name: phpunit
 on:
   push:
     branches-ignore:
-      - l10n_master
+      - l10n_development
   pull_request:
     branches-ignore:
-      - l10n_master
+      - l10n_development
 
 jobs:
   build:
