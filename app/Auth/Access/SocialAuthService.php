@@ -46,6 +46,7 @@ class SocialAuthService
         'gitlab',
         'twitch',
         'discord',
+        'nextcloud',
     ];
 
     /**

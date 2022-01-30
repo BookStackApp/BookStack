@@ -116,6 +116,16 @@ return [
         'auto_confirm'  => env('DISCORD_AUTO_CONFIRM_EMAIL', false),
     ],
 
+    'nextcloud' => [
+        'client_id'     => env('NEXTCLOUD_CLIENT_ID'),
+        'client_secret' => env('NEXTCLOUD_CLIENT_SECRET'),
+        'redirect'      => env('APP_URL') . '/login/service/nextcloud/callback',
+        'instance_uri'  => env('NEXTCLOUD_BASE_URI'),
+        'name'          => env('NEXTCLOUD_NAME', 'Nextcloud'),
+        'auto_register' => env('NEXTCLOUD_AUTO_REGISTER', false),
+        'auto_confirm'  => env('NEXTCLOUD_AUTO_CONFIRM_EMAIL', false),
+    ],
+
     'ldap' => [
         'server'                 => env('LDAP_SERVER', false),
         'dump_user_details'      => env('LDAP_DUMP_USER_DETAILS', false),
