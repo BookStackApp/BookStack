@@ -28,8 +28,8 @@ return [
     'create_account' => 'Loo konto',
     'already_have_account' => 'Kasutajakonto juba olemas?',
     'dont_have_account' => 'Sul ei ole veel kontot?',
-    'social_login' => 'Social Login',
-    'social_registration' => 'Social Registration',
+    'social_login' => 'Sisene läbi sotsiaalmeedia',
+    'social_registration' => 'Registreeru läbi sotsiaalmeedia',
     'social_registration_text' => 'Registreeru ja logi sisse välise teenuse kaudu.',
 
     'register_thanks' => 'Aitäh, et registreerusid!',
