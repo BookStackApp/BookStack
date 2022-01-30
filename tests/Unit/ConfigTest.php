@@ -82,6 +82,20 @@ class ConfigTest extends TestCase
         $this->checkEnvConfigResult('ALLOW_UNTRUSTED_SERVER_FETCHING', 'true', 'dompdf.defines.enable_remote', true);
     }
 
+    public function test_dompdf_paper_size_options_are_limited()
+    {
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'cat', 'dompdf.defines.default_paper_size', 'a4');
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'letter', 'dompdf.defines.default_paper_size', 'letter');
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'a4', 'dompdf.defines.default_paper_size', 'a4');
+    }
+
+    public function test_snappy_paper_size_options_are_limited()
+    {
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'cat', 'snappy.pdf.options.page-size', 'A4');
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'letter', 'snappy.pdf.options.page-size', 'Letter');
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'a4', 'snappy.pdf.options.page-size', 'A4');
+    }
+
     /**
      * Set an environment variable of the given name and value
      * then check the given config key to see if it matches the given result.
