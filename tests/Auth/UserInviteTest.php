@@ -6,6 +6,7 @@ use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\User;
 use BookStack\Notifications\UserInvite;
 use Carbon\Carbon;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
@@ -20,8 +21,8 @@ class UserInviteTest extends TestCase
 
         $email = Str::random(16) . '@example.com';
         $resp = $this->actingAs($admin)->post('/settings/users/create', [
-            'name'        => 'Barry',
-            'email'       => $email,
+            'name' => 'Barry',
+            'email' => $email,
             'send_invite' => 'true',
         ]);
         $resp->assertRedirect('/settings/users');
@@ -32,6 +33,31 @@ class UserInviteTest extends TestCase
         $this->assertDatabaseHas('user_invites', [
             'user_id' => $newUser->id,
         ]);
+    }
+
+    public function test_user_invite_sent_in_selected_language()
+    {
+        Notification::fake();
+        $admin = $this->getAdmin();
+
+        $email = Str::random(16) . '@example.com';
+        $resp = $this->actingAs($admin)->post('/settings/users/create', [
+            'name' => 'Barry',
+            'email' => $email,
+            'send_invite' => 'true',
+            'setting' => [
+                'language' => 'de',
+            ]
+        ]);
+        $resp->assertRedirect('/settings/users');
+
+        $newUser = User::query()->where('email', '=', $email)->orderBy('id', 'desc')->first();
+        Notification::assertSentTo($newUser, UserInvite::class, function ($notification, $channels, $notifiable) {
+            /** @var MailMessage $mail */
+            $mail = $notification->toMail($notifiable);
+            return 'Du wurdest eingeladen BookStack beizutreten!' === $mail->subject &&
+                'Ein Konto wurde für Sie auf BookStack erstellt.' === $mail->greeting;
+        });
     }
 
     public function test_invite_set_password()
@@ -54,7 +80,7 @@ class UserInviteTest extends TestCase
         ]);
         $setPasswordResp->assertSee('Password set, you should now be able to login using your set password to access BookStack!');
         $newPasswordValid = auth()->validate([
-            'email'    => $user->email,
+            'email' => $user->email,
             'password' => 'my test password',
         ]);
         $this->assertTrue($newPasswordValid);

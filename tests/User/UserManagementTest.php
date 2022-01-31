@@ -183,6 +183,16 @@ class UserManagementTest extends TestCase
         $resp->assertSee('cannot delete the guest user');
     }
 
+    public function test_user_create_language_reflects_default_system_locale()
+    {
+        $langs = ['en', 'fr', 'hr'];
+        foreach ($langs as $lang) {
+            config()->set('app.locale', $lang);
+            $resp = $this->asAdmin()->get('/settings/users/create');
+            $resp->assertElementExists('select[name="setting[language]"] option[value="' . $lang . '"][selected]');
+        }
+    }
+
     public function test_user_creation_is_not_performed_if_the_invitation_sending_fails()
     {
         /** @var User $user */
