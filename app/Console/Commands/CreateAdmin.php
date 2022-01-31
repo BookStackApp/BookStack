@@ -3,8 +3,10 @@
 namespace BookStack\Console\Commands;
 
 use BookStack\Auth\UserRepo;
+use BookStack\Exceptions\NotFoundException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rules\Unique;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
@@ -19,7 +21,8 @@ class CreateAdmin extends Command
     protected $signature = 'bookstack:create-admin
                             {--email= : The email address for the new admin user}
                             {--name= : The name of the new admin user}
-                            {--password= : The password to assign to the new admin user}';
+                            {--password= : The password to assign to the new admin user}
+                            {--external-auth-id= : The external authentication system id for the new admin user (SAML2/LDAP/OIDC)}';
 
     /**
      * The console command description.
@@ -42,28 +45,35 @@ class CreateAdmin extends Command
     /**
      * Execute the console command.
      *
-     * @throws \BookStack\Exceptions\NotFoundException
+     * @throws NotFoundException
      *
      * @return mixed
      */
     public function handle()
     {
-        $details = $this->options();
+        $details = $this->snakeCaseOptions();
 
         if (empty($details['email'])) {
             $details['email'] = $this->ask('Please specify an email address for the new admin user');
         }
+
         if (empty($details['name'])) {
             $details['name'] = $this->ask('Please specify a name for the new admin user');
         }
+
         if (empty($details['password'])) {
-            $details['password'] = $this->ask('Please specify a password for the new admin user (8 characters min)');
+            if (empty($details['external_auth_id'])) {
+                $details['password'] = $this->ask('Please specify a password for the new admin user (8 characters min)');
+            } else {
+                $details['password'] = Str::random(32);
+            }
         }
 
         $validator = Validator::make($details, [
-            'email'    => ['required', 'email', 'min:5', new Unique('users', 'email')],
-            'name'     => ['required', 'min:2'],
-            'password' => ['required', Password::default()],
+            'email'            => ['required', 'email', 'min:5', new Unique('users', 'email')],
+            'name'             => ['required', 'min:2'],
+            'password'         => ['required_without:external_auth_id', Password::default()],
+            'external_auth_id' => ['required_without:password'],
         ]);
 
         if ($validator->fails()) {
@@ -83,5 +93,14 @@ class CreateAdmin extends Command
         $this->info("Admin account with email \"{$user->email}\" successfully created!");
 
         return SymfonyCommand::SUCCESS;
+    }
+
+    protected function snakeCaseOptions(): array
+    {
+        $returnOpts = [];
+        foreach ($this->options() as $key => $value) {
+            $returnOpts[str_replace('-', '_', $key)] = $value;
+        }
+        return $returnOpts;
     }
 }
