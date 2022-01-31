@@ -74,7 +74,7 @@ return [
     'status' => 'Stato',
     'status_active' => 'Attivo',
     'status_inactive' => 'Inattivo',
-    'never' => 'Never',
+    'never' => 'Mai',
     'none' => 'None',
 
     // Header
