@@ -3,6 +3,7 @@
 namespace Tests\Auth;
 
 use BookStack\Auth\Access\Mfa\MfaSession;
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
 use BookStack\Notifications\ConfirmEmail;
@@ -43,7 +44,10 @@ class AuthTest extends TestCase
     public function test_normal_registration()
     {
         // Set settings and get user instance
-        $this->setSettings(['registration-enabled' => 'true']);
+        /** @var Role $registrationRole */
+        $registrationRole = Role::query()->first();
+        $this->setSettings(['registration-enabled' => 'true', 'registration-role' => $registrationRole->id]);
+        /** @var User $user */
         $user = User::factory()->make();
 
         // Test form and ensure user is created
@@ -57,7 +61,12 @@ class AuthTest extends TestCase
         $resp = $this->get('/');
         $resp->assertOk();
         $resp->assertSee($user->name);
+
         $this->assertDatabaseHas('users', ['name' => $user->name, 'email' => $user->email]);
+
+        $user = User::query()->where('email', '=', $user->email)->first();
+        $this->assertEquals(1, $user->roles()->count());
+        $this->assertEquals($registrationRole->id, $user->roles()->first()->id);
     }
 
     public function test_empty_registration_redirects_back_with_errors()
@@ -187,6 +196,14 @@ class AuthTest extends TestCase
         $resp->assertRedirect('/register/confirm/awaiting');
         $this->get('/register/confirm/awaiting')->assertSee('Email Address Not Confirmed');
         $this->assertNull(auth()->user());
+    }
+
+    public function test_registration_role_unset_by_default()
+    {
+        $this->assertFalse(setting('registration-role'));
+
+        $resp = $this->asAdmin()->get('/settings');
+        $resp->assertElementContains('select[name="setting-registration-role"] option[value="0"][selected]', '-- None --');
     }
 
     public function test_logout()

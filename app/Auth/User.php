@@ -146,7 +146,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function attachDefaultRole(): void
     {
-        $roleId = setting('registration-role');
+        $roleId = intval(setting('registration-role'));
         if ($roleId && $this->roles()->where('id', '=', $roleId)->count() === 0) {
             $this->roles()->attach($roleId);
         }
