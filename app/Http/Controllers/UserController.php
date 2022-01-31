@@ -62,6 +62,7 @@ class UserController extends Controller
         $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
         $roles = $this->userRepo->getAllRoles();
+        $this->setPageTitle(trans('settings.users_add_new'));
 
         return view('users.create', ['authMethod' => $authMethod, 'roles' => $roles]);
     }
@@ -78,6 +79,7 @@ class UserController extends Controller
         $validationRules = [
             'name'  => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
+            'setting' => ['array'],
         ];
 
         $authMethod = config('auth.method');
@@ -103,6 +105,13 @@ class UserController extends Controller
 
         DB::transaction(function () use ($user, $sendInvite, $request) {
             $user->save();
+
+            // Save user-specific settings
+            if ($request->filled('setting')) {
+                foreach ($request->get('setting') as $key => $value) {
+                    setting()->putUser($user, $key, $value);
+                }
+            }
 
             if ($sendInvite) {
                 $this->inviteService->sendInvitation($user);
@@ -198,7 +207,7 @@ class UserController extends Controller
             $user->external_auth_id = $request->get('external_auth_id');
         }
 
-        // Save an user-specific settings
+        // Save user-specific settings
         if ($request->filled('setting')) {
             foreach ($request->get('setting') as $key => $value) {
                 setting()->putUser($user, $key, $value);
