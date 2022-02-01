@@ -75,6 +75,7 @@ return [
     'status_active' => 'Ativo',
     'status_inactive' => 'Inativo',
     'never' => 'Nunca',
+    'none' => 'None',
 
     // Header
     'header_menu_expand' => 'Expandir Cabeçalho do Menu',
