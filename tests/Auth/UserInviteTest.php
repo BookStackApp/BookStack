@@ -21,8 +21,8 @@ class UserInviteTest extends TestCase
 
         $email = Str::random(16) . '@example.com';
         $resp = $this->actingAs($admin)->post('/settings/users/create', [
-            'name' => 'Barry',
-            'email' => $email,
+            'name'        => 'Barry',
+            'email'       => $email,
             'send_invite' => 'true',
         ]);
         $resp->assertRedirect('/settings/users');
@@ -42,12 +42,12 @@ class UserInviteTest extends TestCase
 
         $email = Str::random(16) . '@example.com';
         $resp = $this->actingAs($admin)->post('/settings/users/create', [
-            'name' => 'Barry',
-            'email' => $email,
+            'name'        => 'Barry',
+            'email'       => $email,
             'send_invite' => 'true',
-            'setting' => [
+            'setting'     => [
                 'language' => 'de',
-            ]
+            ],
         ]);
         $resp->assertRedirect('/settings/users');
 
@@ -55,6 +55,7 @@ class UserInviteTest extends TestCase
         Notification::assertSentTo($newUser, UserInvite::class, function ($notification, $channels, $notifiable) {
             /** @var MailMessage $mail */
             $mail = $notification->toMail($notifiable);
+
             return 'Du wurdest eingeladen BookStack beizutreten!' === $mail->subject &&
                 'Ein Konto wurde für Sie auf BookStack erstellt.' === $mail->greeting;
         });
@@ -80,7 +81,7 @@ class UserInviteTest extends TestCase
         ]);
         $setPasswordResp->assertSee('Password set, you should now be able to login using your set password to access BookStack!');
         $newPasswordValid = auth()->validate([
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'my test password',
         ]);
         $this->assertTrue($newPasswordValid);

@@ -101,6 +101,7 @@ class CreateAdmin extends Command
         foreach ($this->options() as $key => $value) {
             $returnOpts[str_replace('-', '_', $key)] = $value;
         }
+
         return $returnOpts;
     }
 }
