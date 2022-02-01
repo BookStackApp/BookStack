@@ -75,6 +75,7 @@ return [
     'status_active' => '有効',
     'status_inactive' => '無効',
     'never' => '該当なし',
+    'none' => 'None',
 
     // Header
     'header_menu_expand' => 'ヘッダーメニューを展開',
