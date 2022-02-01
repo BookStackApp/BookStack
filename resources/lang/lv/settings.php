@@ -246,7 +246,7 @@ return [
     'webhooks_events_warning' => 'Ņemiet vērā, ka šie notikumi tiks palaisti visiem izvēlētajiem notikumiem, pat ja norādītas pielāgotas piekļuves tiesības. Pārliecineities, ka webhook lietošana neatklās ierobežotas pieejamības saturu.',
     'webhooks_events_all' => 'Visi sistēmas notikumi',
     'webhooks_name' => 'Webhook nosaukums',
-    'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
+    'webhooks_timeout' => 'Webhook pieprasījuma laika ierobežojums (sekundēs)',
     'webhooks_endpoint' => 'Webhook adrese (endpoint)',
     'webhooks_active' => 'Webhook aktīvs',
     'webhook_events_table_header' => 'Notikumi',
@@ -255,10 +255,10 @@ return [
     'webhooks_delete_confirm' => 'Vai tiešām vēlaties dzēst šo webhook?',
     'webhooks_format_example' => 'Webhook formāta piemērs',
     'webhooks_format_example_desc' => 'Webhook dati tiek nosūtīti kā POST pieprasījums norādītajai endpoint adresei kā JSON tālāk norādītajā formātā. "related_item" un "url" īpašības nav obligātas un ir atkarīgas no palaistā notikuma veida.',
-    'webhooks_status' => 'Webhook Status',
-    'webhooks_last_called' => 'Last Called:',
-    'webhooks_last_errored' => 'Last Errored:',
-    'webhooks_last_error_message' => 'Last Error Message:',
+    'webhooks_status' => 'Webhook statuss',
+    'webhooks_last_called' => 'Pēdejoreiz izsaukts:',
+    'webhooks_last_errored' => 'Pedējoreiz kļūda:',
+    'webhooks_last_error_message' => 'Pēdējais kļūdas paziņojums:',
 
 
     //! If editing translations files directly please ignore this in all
