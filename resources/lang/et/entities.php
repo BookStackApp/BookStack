@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Muudetud :timeLength',
     'meta_updated_name' => 'Muudetud :timeLength kasutaja :user poolt',
     'meta_owned_name' => 'Kuulub kasutajale :user',
-    'entity_select' => 'Entity Select',
+    'entity_select' => 'Objekti valik',
     'images' => 'Pildid',
     'my_recent_drafts' => 'Minu hiljutised mustandid',
     'my_recently_viewed' => 'Minu viimati vaadatud',

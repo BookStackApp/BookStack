@@ -64,7 +64,7 @@ return [
     'email_not_confirmed_resend_button' => 'Reenviar Correo Electrónico de confirmación',
 
     // User Invite
-    'user_invite_email_subject' => 'Has sido invitado a unirte a :appName!',
+    'user_invite_email_subject' => 'As sido invitado a unirte a :appName!',
     'user_invite_email_greeting' => 'Se ha creado una cuenta para usted en :appName.',
     'user_invite_email_text' => 'Clica en el botón a continuación para ajustar una contraseña y poder acceder:',
     'user_invite_email_action' => 'Ajustar la Contraseña de la Cuenta',

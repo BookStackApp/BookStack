@@ -75,6 +75,7 @@ return [
     'status_active' => 'Active',
     'status_inactive' => 'Inactive',
     'never' => 'Never',
+    'none' => 'None',
 
     // Header
     'header_menu_expand' => '展開選單',

@@ -75,6 +75,7 @@ return [
     'status_active' => 'Aktīvs',
     'status_inactive' => 'Neaktīvs',
     'never' => 'Never',
+    'none' => 'None',
 
     // Header
     'header_menu_expand' => 'Izvērst galvenes izvēlni',
