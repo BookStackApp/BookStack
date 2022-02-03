@@ -11,6 +11,7 @@ class ListingResponseBuilder
     protected $query;
     protected $request;
     protected $fields;
+    protected $hiddenFields;
 
     protected $filterOperators = [
         'eq'   => '=',
@@ -25,11 +26,12 @@ class ListingResponseBuilder
     /**
      * ListingResponseBuilder constructor.
      */
-    public function __construct(Builder $query, Request $request, array $fields)
+    public function __construct(Builder $query, Request $request, array $fields, array $hiddenFields )
     {
         $this->query = $query;
         $this->request = $request;
         $this->fields = $fields;
+        $this->hiddenFields = $hiddenFields;
     }
 
     /**
@@ -41,6 +43,7 @@ class ListingResponseBuilder
 
         $total = $filteredQuery->count();
         $data = $this->fetchData($filteredQuery);
+        $data = $data->makeVisible($this->hiddenFields);
 
         return response()->json([
             'data'  => $data,

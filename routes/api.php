@@ -65,3 +65,6 @@ Route::post('shelves', [BookshelfApiController::class, 'create']);
 Route::get('shelves/{id}', [BookshelfApiController::class, 'read']);
 Route::put('shelves/{id}', [BookshelfApiController::class, 'update']);
 Route::delete('shelves/{id}', [BookshelfApiController::class, 'delete']);
+
+Route::get('users', 'UserApiController@list');
+Route::get('users/{id}', 'UserApiController@read');
