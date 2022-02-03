@@ -188,7 +188,6 @@ return [
     'users_migrate_ownership' => 'Migrate Ownership',
     'users_migrate_ownership_desc' => 'Select a user here if you want another user to become the owner of all items currently owned by this user.',
     'users_none_selected' => 'No user selected',
-    'users_delete_success' => 'User successfully removed',
     'users_edit' => 'Edit User',
     'users_edit_profile' => 'Edit Profile',
     'users_edit_success' => 'User successfully updated',

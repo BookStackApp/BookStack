@@ -2,13 +2,16 @@
 
 namespace BookStack\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\UserUpdateException;
+use BookStack\Facades\Activity;
 use BookStack\Uploads\UserAvatars;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
@@ -189,6 +192,8 @@ class UserRepo
      */
     public function destroy(User $user, ?int $newOwnerId = null)
     {
+        $this->ensureDeletable($user);
+
         $user->socialAccounts()->delete();
         $user->apiTokens()->delete();
         $user->favourites()->delete();
@@ -203,6 +208,22 @@ class UserRepo
             if (!is_null($newOwner)) {
                 $this->migrateOwnership($user, $newOwner);
             }
+        }
+
+        Activity::add(ActivityType::USER_DELETE, $user);
+    }
+
+    /**
+     * @throws NotifyException
+     */
+    protected function ensureDeletable(User $user): void
+    {
+        if ($this->isOnlyAdmin($user)) {
+            throw new NotifyException(trans('errors.users_cannot_delete_only_admin'), $user->getEditUrl());
+        }
+
+        if ($user->system_name === 'public') {
+            throw new NotifyException(trans('errors.users_cannot_delete_guest'), $user->getEditUrl());
         }
     }
 

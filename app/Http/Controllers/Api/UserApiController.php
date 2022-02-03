@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers\Api;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use Closure;
+use Illuminate\Http\Request;
 
 class UserApiController extends ApiController
 {
@@ -18,6 +19,9 @@ class UserApiController extends ApiController
         'create' => [
         ],
         'update' => [
+        ],
+        'delete' => [
+            'migrate_ownership_id' => ['integer', 'exists:users,id'],
         ],
     ];
 
@@ -54,6 +58,24 @@ class UserApiController extends ApiController
         $this->singleFormatter($singleUser);
 
         return response()->json($singleUser);
+    }
+
+    /**
+     * Delete a user from the system.
+     * Can optionally accept a user id via `migrate_ownership_id` to indicate
+     * who should be the new owner of their related content.
+     * Requires permission to manage users.
+     */
+    public function delete(Request $request, string $id)
+    {
+        $this->checkPermission('users-manage');
+
+        $user = $this->userRepo->getById($id);
+        $newOwnerId = $request->get('migrate_ownership_id', null);
+
+        $this->userRepo->destroy($user, $newOwnerId);
+
+        return response('', 204);
     }
 
     /**
