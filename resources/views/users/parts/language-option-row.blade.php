@@ -9,7 +9,7 @@ $value - Currently selected lanuage value
         </p>
     </div>
     <div>
-        <select name="setting[language]" id="user-language">
+        <select name="language" id="user-language">
             @foreach(trans('settings.language_select') as $lang => $label)
                 <option @if($value === $lang) selected @endif value="{{ $lang }}">{{ $label }}</option>
             @endforeach

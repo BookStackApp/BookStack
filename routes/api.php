@@ -69,4 +69,5 @@ Route::delete('shelves/{id}', [BookshelfApiController::class, 'delete']);
 
 Route::get('users', [UserApiController::class, 'list']);
 Route::get('users/{id}', [UserApiController::class, 'read']);
+Route::put('users/{id}', [UserApiController::class, 'update']);
 Route::delete('users/{id}', [UserApiController::class, 'delete']);

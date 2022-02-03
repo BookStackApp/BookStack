@@ -58,12 +58,13 @@ class UserRepo
     /**
      * Get all users as Builder for API
      */
-    public function getApiUsersBuilder() : Builder
+    public function getApiUsersBuilder(): Builder
     {
         return User::query()->select(['*'])
             ->scopes('withLastActivityAt')
             ->with(['avatar']);
     }
+
     /**
      * Get all the users with their permissions in a paginated format.
      * Note: Due to the use of email search this should only be used when
@@ -170,10 +171,10 @@ class UserRepo
     public function create(array $data, bool $emailConfirmed = false): User
     {
         $details = [
-            'name'             => $data['name'],
-            'email'            => $data['email'],
-            'password'         => bcrypt($data['password']),
-            'email_confirmed'  => $emailConfirmed,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'email_confirmed' => $emailConfirmed,
             'external_auth_id' => $data['external_auth_id'] ?? '',
         ];
 
@@ -181,6 +182,44 @@ class UserRepo
         $user->forceFill($details);
         $user->refreshSlug();
         $user->save();
+
+        return $user;
+    }
+
+    /**
+     * Update the given user with the given data.
+     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string} $data
+     * @throws UserUpdateException
+     */
+    public function update(User $user, array $data, bool $manageUsersAllowed): User
+    {
+        if (!empty($data['name'])) {
+            $user->name = $data['name'];
+            $user->refreshSlug();
+        }
+
+        if (!empty($data['email']) && $manageUsersAllowed) {
+            $user->email = $data['email'];
+        }
+
+        if (!empty($data['external_auth_id']) && $manageUsersAllowed) {
+            $user->external_auth_id = $data['external_auth_id'];
+        }
+
+        if (isset($data['roles']) && $manageUsersAllowed) {
+            $this->setUserRoles($user, $data['roles']);
+        }
+
+        if (!empty($data['password'])) {
+            $user->password = bcrypt($data['password']);
+        }
+
+        if (!empty($data['language'])) {
+            setting()->putUser($user, 'language', $data['language']);
+        }
+
+        $user->save();
+        Activity::add(ActivityType::USER_UPDATE, $user);
 
         return $user;
     }
@@ -252,10 +291,10 @@ class UserRepo
         };
 
         return [
-            'pages'    => $query(Page::visible()->where('draft', '=', false)),
+            'pages' => $query(Page::visible()->where('draft', '=', false)),
             'chapters' => $query(Chapter::visible()),
-            'books'    => $query(Book::visible()),
-            'shelves'  => $query(Bookshelf::visible()),
+            'books' => $query(Book::visible()),
+            'shelves' => $query(Bookshelf::visible()),
         ];
     }
 
@@ -267,10 +306,10 @@ class UserRepo
         $createdBy = ['created_by' => $user->id];
 
         return [
-            'pages'       => Page::visible()->where($createdBy)->count(),
-            'chapters'    => Chapter::visible()->where($createdBy)->count(),
-            'books'       => Book::visible()->where($createdBy)->count(),
-            'shelves'     => Bookshelf::visible()->where($createdBy)->count(),
+            'pages' => Page::visible()->where($createdBy)->count(),
+            'chapters' => Chapter::visible()->where($createdBy)->count(),
+            'books' => Book::visible()->where($createdBy)->count(),
+            'shelves' => Bookshelf::visible()->where($createdBy)->count(),
         ];
     }
 

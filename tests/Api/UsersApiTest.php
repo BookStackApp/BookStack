@@ -4,6 +4,8 @@ namespace Tests\Api;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UsersApiTest extends TestCase
@@ -68,6 +70,53 @@ class UsersApiTest extends TestCase
                 ]
             ],
         ]);
+    }
+
+    public function test_update_endpoint()
+    {
+        $this->actingAsApiAdmin();
+        /** @var User $user */
+        $user = $this->getAdmin();
+        $roles = Role::query()->pluck('id');
+        $resp = $this->putJson($this->baseEndpoint . "/{$user->id}", [
+            'name' => 'My updated user',
+            'email' => 'barrytest@example.com',
+            'roles' => $roles,
+            'external_auth_id' => 'btest',
+            'password' => 'barrytester',
+            'language' => 'fr',
+        ]);
+
+        $resp->assertStatus(200);
+        $resp->assertJson([
+            'id' => $user->id,
+            'name' => 'My updated user',
+            'email' => 'barrytest@example.com',
+            'external_auth_id' => 'btest',
+        ]);
+        $user->refresh();
+        $this->assertEquals('fr', setting()->getUser($user, 'language'));
+        $this->assertEquals(count($roles), $user->roles()->count());
+        $this->assertNotEquals('barrytester', $user->password);
+        $this->assertTrue(Hash::check('barrytester', $user->password));
+    }
+
+    public function test_update_endpoint_does_not_remove_info_if_not_provided()
+    {
+        $this->actingAsApiAdmin();
+        /** @var User $user */
+        $user = $this->getAdmin();
+        $roleCount = $user->roles()->count();
+        $resp = $this->putJson($this->baseEndpoint . "/{$user->id}", []);
+
+        $resp->assertStatus(200);
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $user->password,
+        ]);
+        $this->assertEquals($roleCount, $user->roles()->count());
     }
 
     public function test_delete_endpoint()

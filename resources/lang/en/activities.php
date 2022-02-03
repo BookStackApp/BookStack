@@ -60,6 +60,7 @@ return [
     'webhook_delete_notification' => 'Webhook successfully deleted',
 
     // Users
+    'user_update_notification' => 'User successfully updated',
     'user_delete_notification' => 'User successfully removed',
 
     // Other
