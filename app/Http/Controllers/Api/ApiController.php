@@ -10,15 +10,19 @@ use Illuminate\Http\JsonResponse;
 abstract class ApiController extends Controller
 {
     protected $rules = [];
-    protected $printHidden = [];
+    protected $fieldsToExpose = [];
 
     /**
      * Provide a paginated listing JSON response in a standard format
      * taking into account any pagination parameters passed by the user.
      */
-    protected function apiListingResponse(Builder $query, array $fields, array $protectedFieldsToPrint = []): JsonResponse
+    protected function apiListingResponse(Builder $query, array $fields, array $modifiers = []): JsonResponse
     {
-        $listing = new ListingResponseBuilder($query, request(), $fields, $protectedFieldsToPrint);
+        $listing = new ListingResponseBuilder($query, request(), $fields);
+
+        foreach ($modifiers as $modifier) {
+            $listing->modifyResults($modifier);
+        }
 
         return $listing->toResponse();
     }

@@ -28,6 +28,8 @@ class Role extends Model implements Loggable
 
     protected $fillable = ['display_name', 'description', 'external_auth_id'];
 
+    protected $hidden = ['pivot'];
+
     /**
      * The roles that belong to the role.
      */
