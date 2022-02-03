@@ -6,6 +6,8 @@ use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rules\Unique;
 
 class UserApiController extends ApiController
 {
@@ -15,19 +17,33 @@ class UserApiController extends ApiController
         'email', 'created_at', 'updated_at', 'last_activity_at', 'external_auth_id'
     ];
 
-    protected $rules = [
-        'create' => [
-        ],
-        'update' => [
-        ],
-        'delete' => [
-            'migrate_ownership_id' => ['integer', 'exists:users,id'],
-        ],
-    ];
-
     public function __construct(UserRepo $userRepo)
     {
         $this->userRepo = $userRepo;
+    }
+
+    protected function rules(int $userId = null): array
+    {
+        return [
+            'create' => [
+            ],
+            'update' => [
+                'name' => ['min:2'],
+                'email' => [
+                    'min:2',
+                    'email',
+                    (new Unique('users', 'email'))->ignore($userId ?? null)
+                ],
+                'external_auth_id' => ['string'],
+                'language' => ['string'],
+                'password' => [Password::default()],
+                'roles' => ['array'],
+                'roles.*' => ['integer'],
+            ],
+            'delete' => [
+                'migrate_ownership_id' => ['integer', 'exists:users,id'],
+            ],
+        ];
     }
 
     /**
@@ -54,10 +70,26 @@ class UserApiController extends ApiController
     {
         $this->checkPermission('users-manage');
 
-        $singleUser = $this->userRepo->getById($id);
-        $this->singleFormatter($singleUser);
+        $user = $this->userRepo->getById($id);
+        $this->singleFormatter($user);
 
-        return response()->json($singleUser);
+        return response()->json($user);
+    }
+
+    /**
+     * Update an existing user in the system.
+     * @throws \BookStack\Exceptions\UserUpdateException
+     */
+    public function update(Request $request, string $id)
+    {
+        $this->checkPermission('users-manage');
+
+        $data = $this->validate($request, $this->rules($id)['update']);
+        $user = $this->userRepo->getById($id);
+        $this->userRepo->update($user, $data, userCan('users-manage'));
+        $this->singleFormatter($user);
+
+        return response()->json($user);
     }
 
     /**

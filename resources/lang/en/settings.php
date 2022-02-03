@@ -190,7 +190,6 @@ return [
     'users_none_selected' => 'No user selected',
     'users_edit' => 'Edit User',
     'users_edit_profile' => 'Edit Profile',
-    'users_edit_success' => 'User successfully updated',
     'users_avatar' => 'User Avatar',
     'users_avatar_desc' => 'Select an image to represent this user. This should be approx 256px square.',
     'users_preferred_language' => 'Preferred Language',

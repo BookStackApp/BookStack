@@ -10,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 abstract class ApiController extends Controller
 {
     protected $rules = [];
-    protected $fieldsToExpose = [];
 
     /**
      * Provide a paginated listing JSON response in a standard format
@@ -31,7 +30,7 @@ abstract class ApiController extends Controller
      * Get the validation rules for this controller.
      * Defaults to a $rules property but can be a rules() method.
      */
-    public function getValdationRules(): array
+    public function getValidationRules(): array
     {
         if (method_exists($this, 'rules')) {
             return $this->rules();

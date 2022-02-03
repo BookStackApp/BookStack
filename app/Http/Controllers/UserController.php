@@ -168,51 +168,19 @@ class UserController extends Controller
         $this->preventAccessInDemoMode();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
-        $this->validate($request, [
+        $validated = $this->validate($request, [
             'name'             => ['min:2'],
             'email'            => ['min:2', 'email', 'unique:users,email,' . $id],
             'password'         => ['required_with:password_confirm', Password::default()],
             'password-confirm' => ['same:password', 'required_with:password'],
-            'setting'          => ['array'],
+            'language'         => ['string'],
+            'roles'            => ['array'],
+            'roles.*'          => ['integer'],
             'profile_image'    => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
         $user = $this->userRepo->getById($id);
-        $user->fill($request->except(['email']));
-
-        // Email updates
-        if (userCan('users-manage') && $request->filled('email')) {
-            $user->email = $request->get('email');
-        }
-
-        // Refresh the slug if the user's name has changed
-        if ($user->isDirty('name')) {
-            $user->refreshSlug();
-        }
-
-        // Role updates
-        if (userCan('users-manage') && $request->filled('roles')) {
-            $roles = $request->get('roles');
-            $this->userRepo->setUserRoles($user, $roles);
-        }
-
-        // Password updates
-        if ($request->filled('password')) {
-            $password = $request->get('password');
-            $user->password = bcrypt($password);
-        }
-
-        // External auth id updates
-        if (user()->can('users-manage') && $request->filled('external_auth_id')) {
-            $user->external_auth_id = $request->get('external_auth_id');
-        }
-
-        // Save user-specific settings
-        if ($request->filled('setting')) {
-            foreach ($request->get('setting') as $key => $value) {
-                setting()->putUser($user, $key, $value);
-            }
-        }
+        $this->userRepo->update($user, $validated, userCan('users-manage'));
 
         // Save profile image if in request
         if ($request->hasFile('profile_image')) {
@@ -220,6 +188,7 @@ class UserController extends Controller
             $this->imageRepo->destroyImage($user->avatar);
             $image = $this->imageRepo->saveNew($imageUpload, 'user', $user->id);
             $user->image_id = $image->id;
+            $user->save();
         }
 
         // Delete the profile image if reset option is in request
@@ -227,11 +196,7 @@ class UserController extends Controller
             $this->imageRepo->destroyImage($user->avatar);
         }
 
-        $user->save();
-        $this->showSuccessNotification(trans('settings.users_edit_success'));
-        $this->logActivity(ActivityType::USER_UPDATE, $user);
-
-        $redirectUrl = userCan('users-manage') ? '/settings/users' : ('/settings/users/' . $user->id);
+        $redirectUrl = userCan('users-manage') ? '/settings/users' : "/settings/users/{$user->id}";
 
         return redirect($redirectUrl);
     }
