@@ -53,22 +53,13 @@ class UserRepo
     }
 
     /**
-     * Get all the users with their permissions.
-     */
-    public function getAllUsers(): Collection
-    {
-        return User::query()->with('roles', 'avatar')->orderBy('name', 'asc')->get();
-    }
-
-    /**
      * Get all users as Builder for API
      */
-    public function getUsersBuilder(int $id = null ) : Builder
+    public function getApiUsersBuilder() : Builder
     {
-        $query = User::query()->select(['*'])
-            ->withLastActivityAt()
-            ->with(['roles', 'avatar']);
-        return $query;
+        return User::query()->select(['*'])
+            ->scopes('withLastActivityAt')
+            ->with(['avatar']);
     }
     /**
      * Get all the users with their permissions in a paginated format.

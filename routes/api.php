@@ -10,6 +10,7 @@ use BookStack\Http\Controllers\Api\ChapterExportApiController;
 use BookStack\Http\Controllers\Api\PageApiController;
 use BookStack\Http\Controllers\Api\PageExportApiController;
 use BookStack\Http\Controllers\Api\SearchApiController;
+use BookStack\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -66,5 +67,5 @@ Route::get('shelves/{id}', [BookshelfApiController::class, 'read']);
 Route::put('shelves/{id}', [BookshelfApiController::class, 'update']);
 Route::delete('shelves/{id}', [BookshelfApiController::class, 'delete']);
 
-Route::get('users', 'UserApiController@list');
-Route::get('users/{id}', 'UserApiController@read');
+Route::get('users', [UserApiController::class, 'list']);
+Route::get('users/{id}', [UserApiController::class, 'read']);
