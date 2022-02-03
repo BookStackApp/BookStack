@@ -262,21 +262,7 @@ class UserController extends Controller
         $user = $this->userRepo->getById($id);
         $newOwnerId = $request->get('new_owner_id', null);
 
-        if ($this->userRepo->isOnlyAdmin($user)) {
-            $this->showErrorNotification(trans('errors.users_cannot_delete_only_admin'));
-
-            return redirect($user->getEditUrl());
-        }
-
-        if ($user->system_name === 'public') {
-            $this->showErrorNotification(trans('errors.users_cannot_delete_guest'));
-
-            return redirect($user->getEditUrl());
-        }
-
         $this->userRepo->destroy($user, $newOwnerId);
-        $this->showSuccessNotification(trans('settings.users_delete_success'));
-        $this->logActivity(ActivityType::USER_DELETE, $user);
 
         return redirect('/settings/users');
     }

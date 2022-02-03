@@ -17,6 +17,14 @@ class UsersApiTest extends TestCase
         // TODO
     }
 
+    public function test_no_endpoints_accessible_in_demo_mode()
+    {
+        // TODO
+        // $this->preventAccessInDemoMode();
+        // Can't use directly in constructor as blocks access to docs
+        // Maybe via route middleware
+    }
+
     public function test_index_endpoint_returns_expected_shelf()
     {
         $this->actingAsApiAdmin();
@@ -60,5 +68,44 @@ class UsersApiTest extends TestCase
                 ]
             ],
         ]);
+    }
+
+    public function test_delete_endpoint()
+    {
+        $this->actingAsApiAdmin();
+        /** @var User $user */
+        $user = User::query()->where('id', '!=', $this->getAdmin()->id)
+            ->whereNull('system_name')
+            ->first();
+
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$user->id}");
+
+        $resp->assertStatus(204);
+        $this->assertActivityExists('user_delete', null, $user->logDescriptor());
+    }
+
+    public function test_delete_endpoint_fails_deleting_only_admin()
+    {
+        $this->actingAsApiAdmin();
+        $adminRole = Role::getSystemRole('admin');
+        $adminToDelete = $adminRole->users()->first();
+        $adminRole->users()->where('id', '!=', $adminToDelete->id)->delete();
+
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$adminToDelete->id}");
+
+        $resp->assertStatus(500);
+        $resp->assertJson($this->errorResponse('You cannot delete the only admin', 500));
+    }
+
+    public function test_delete_endpoint_fails_deleting_public_user()
+    {
+        $this->actingAsApiAdmin();
+        /** @var User $publicUser */
+        $publicUser = User::query()->where('system_name', '=', 'public')->first();
+
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$publicUser->id}");
+
+        $resp->assertStatus(500);
+        $resp->assertJson($this->errorResponse('You cannot delete the guest user', 500));
     }
 }
