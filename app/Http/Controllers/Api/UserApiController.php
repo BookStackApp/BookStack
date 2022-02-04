@@ -81,6 +81,7 @@ class UserApiController extends ApiController
 
     /**
      * Create a new user in the system.
+     * Requires permission to manage users.
      */
     public function create(Request $request)
     {
@@ -111,6 +112,7 @@ class UserApiController extends ApiController
 
     /**
      * Update an existing user in the system.
+     * Requires permission to manage users.
      * @throws UserUpdateException
      */
     public function update(Request $request, string $id)
