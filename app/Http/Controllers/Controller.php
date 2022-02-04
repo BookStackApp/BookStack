@@ -2,13 +2,13 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use BookStack\Util\WebSafeMimeSniffer;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
@@ -53,14 +53,8 @@ abstract class Controller extends BaseController
      */
     protected function showPermissionError()
     {
-        if (request()->wantsJson()) {
-            $response = response()->json(['error' => trans('errors.permissionJson')], 403);
-        } else {
-            $response = redirect('/');
-            $this->showErrorNotification(trans('errors.permission'));
-        }
-
-        throw new HttpResponseException($response);
+        $message = request()->wantsJson() ? trans('errors.permissionJson') : trans('errors.permission');
+        throw new NotifyException($message, '/', 403);
     }
 
     /**

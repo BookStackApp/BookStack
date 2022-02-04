@@ -9,15 +9,25 @@ class NotifyException extends Exception implements Responsable
 {
     public $message;
     public $redirectLocation;
+    protected $status;
 
     /**
      * NotifyException constructor.
      */
-    public function __construct(string $message, string $redirectLocation = '/')
+    public function __construct(string $message, string $redirectLocation = '/', int $status = 500)
     {
         $this->message = $message;
         $this->redirectLocation = $redirectLocation;
+        $this->status = $status;
         parent::__construct();
+    }
+
+    /**
+     * Get the desired status code for this exception.
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
     }
 
     /**

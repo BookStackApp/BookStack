@@ -2,9 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
-use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\SocialAuthService;
-use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\ImageUploadException;
@@ -13,25 +11,20 @@ use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    protected $user;
     protected $userRepo;
-    protected $inviteService;
     protected $imageRepo;
 
     /**
      * UserController constructor.
      */
-    public function __construct(User $user, UserRepo $userRepo, UserInviteService $inviteService, ImageRepo $imageRepo)
+    public function __construct(UserRepo $userRepo, ImageRepo $imageRepo)
     {
-        $this->user = $user;
         $this->userRepo = $userRepo;
-        $this->inviteService = $inviteService;
         $this->imageRepo = $imageRepo;
     }
 
@@ -68,63 +61,34 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created user in storage.
+     * Store a new user in storage.
      *
-     * @throws UserUpdateException
      * @throws ValidationException
      */
     public function store(Request $request)
     {
         $this->checkPermission('users-manage');
-        $validationRules = [
-            'name'    => ['required'],
-            'email'   => ['required', 'email', 'unique:users,email'],
-            'setting' => ['array'],
-        ];
 
         $authMethod = config('auth.method');
         $sendInvite = ($request->get('send_invite', 'false') === 'true');
+        $externalAuth = $authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'oidc';
+        $passwordRequired = ($authMethod === 'standard' && !$sendInvite);
 
-        if ($authMethod === 'standard' && !$sendInvite) {
-            $validationRules['password'] = ['required', Password::default()];
-            $validationRules['password-confirm'] = ['required', 'same:password'];
-        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'openid') {
-            $validationRules['external_auth_id'] = ['required'];
-        }
-        $this->validate($request, $validationRules);
+        $validationRules = [
+            'name'    => ['required'],
+            'email'   => ['required', 'email', 'unique:users,email'],
+            'language' => ['string'],
+            'roles'            => ['array'],
+            'roles.*'          => ['integer'],
+            'password' => $passwordRequired ? ['required', Password::default()] : null,
+            'password-confirm' => $passwordRequired ? ['required', 'same:password'] : null,
+            'external_auth_id' => $externalAuth ? ['required'] : null,
+        ];
 
-        $user = $this->user->fill($request->all());
+        $validated = $this->validate($request, array_filter($validationRules));
 
-        if ($authMethod === 'standard') {
-            $user->password = bcrypt($request->get('password', Str::random(32)));
-        } elseif ($authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'openid') {
-            $user->external_auth_id = $request->get('external_auth_id');
-        }
-
-        $user->refreshSlug();
-
-        DB::transaction(function () use ($user, $sendInvite, $request) {
-            $user->save();
-
-            // Save user-specific settings
-            if ($request->filled('setting')) {
-                foreach ($request->get('setting') as $key => $value) {
-                    setting()->putUser($user, $key, $value);
-                }
-            }
-
-            if ($sendInvite) {
-                $this->inviteService->sendInvitation($user);
-            }
-
-            if ($request->filled('roles')) {
-                $roles = $request->get('roles');
-                $this->userRepo->setUserRoles($user, $roles);
-            }
-
-            $this->userRepo->downloadAndAssignUserAvatar($user);
-
-            $this->logActivity(ActivityType::USER_CREATE, $user);
+        DB::transaction(function () use ($validated, $sendInvite) {
+            $this->userRepo->create($validated, $sendInvite);
         });
 
         return redirect('/settings/users');
@@ -138,7 +102,7 @@ class UserController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         /** @var User $user */
-        $user = $this->user->newQuery()->with(['apiTokens', 'mfaValues'])->findOrFail($id);
+        $user = User::query()->with(['apiTokens', 'mfaValues'])->findOrFail($id);
 
         $authMethod = ($user->system_name) ? 'system' : config('auth.method');
 
@@ -312,7 +276,7 @@ class UserController extends Controller
 
         $newState = $request->get('expand', 'false');
 
-        $user = $this->user->findOrFail($id);
+        $user = $this->userRepo->getById($id);
         setting()->putUser($user, 'section_expansion#' . $key, $newState);
 
         return response('', 204);
@@ -335,7 +299,7 @@ class UserController extends Controller
             $order = 'asc';
         }
 
-        $user = $this->user->findOrFail($userId);
+        $user = $this->userRepo->getById($userId);
         $sortKey = $listName . '_sort';
         $orderKey = $listName . '_sort_order';
         setting()->putUser($user, $sortKey, $sort);

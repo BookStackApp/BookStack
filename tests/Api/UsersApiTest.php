@@ -2,10 +2,13 @@
 
 namespace Tests\Api;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use Illuminate\Support\Facades\Auth;
+use BookStack\Entities\Models\Entity;
+use BookStack\Notifications\UserInvite;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class UsersApiTest extends TestCase
@@ -14,17 +17,34 @@ class UsersApiTest extends TestCase
 
     protected $baseEndpoint = '/api/users';
 
+    protected $endpointMap = [
+        ['get', '/api/users'],
+        ['post', '/api/users'],
+        ['get', '/api/users/1'],
+        ['put', '/api/users/1'],
+        ['delete', '/api/users/1'],
+    ];
+
     public function test_users_manage_permission_needed_for_all_endpoints()
     {
-        // TODO
+        $this->actingAsApiEditor();
+        foreach ($this->endpointMap as [$method, $uri]) {
+            $resp = $this->json($method, $uri);
+            $resp->assertStatus(403);
+            $resp->assertJson($this->permissionErrorResponse());
+        }
     }
 
     public function test_no_endpoints_accessible_in_demo_mode()
     {
-        // TODO
-        // $this->preventAccessInDemoMode();
-        // Can't use directly in constructor as blocks access to docs
-        // Maybe via route middleware
+        config()->set('app.env', 'demo');
+        $this->actingAsApiAdmin();
+
+        foreach ($this->endpointMap as [$method, $uri]) {
+            $resp = $this->json($method, $uri);
+            $resp->assertStatus(403);
+            $resp->assertJson($this->permissionErrorResponse());
+        }
     }
 
     public function test_index_endpoint_returns_expected_shelf()
@@ -45,6 +65,85 @@ class UsersApiTest extends TestCase
                 'avatar_url' => $firstUser->getAvatar(),
             ],
         ]]);
+    }
+
+    public function test_create_endpoint()
+    {
+        $this->actingAsApiAdmin();
+        /** @var Role $role */
+        $role = Role::query()->first();
+
+        $resp = $this->postJson($this->baseEndpoint, [
+            'name' => 'Benny Boris',
+            'email' => 'bboris@example.com',
+            'password' => 'mysuperpass',
+            'language' => 'it',
+            'roles' => [$role->id],
+            'send_invite' => false,
+        ]);
+
+        $resp->assertStatus(200);
+        $resp->assertJson([
+            'name' => 'Benny Boris',
+            'email' => 'bboris@example.com',
+            'external_auth_id' => '',
+            'roles' => [
+                [
+                    'id' => $role->id,
+                    'display_name' => $role->display_name,
+                ]
+            ],
+        ]);
+        $this->assertDatabaseHas('users', ['email' => 'bboris@example.com']);
+
+        /** @var User $user */
+        $user = User::query()->where('email', '=', 'bboris@example.com')->first();
+        $this->assertActivityExists(ActivityType::USER_CREATE, null, $user->logDescriptor());
+        $this->assertEquals(1, $user->roles()->count());
+        $this->assertEquals('it', setting()->getUser($user, 'language'));
+    }
+
+    public function test_create_with_send_invite()
+    {
+        $this->actingAsApiAdmin();
+        Notification::fake();
+
+        $resp = $this->postJson($this->baseEndpoint, [
+            'name' => 'Benny Boris',
+            'email' => 'bboris@example.com',
+            'send_invite' => true,
+        ]);
+
+        $resp->assertStatus(200);
+        /** @var User $user */
+        $user = User::query()->where('email', '=', 'bboris@example.com')->first();
+        Notification::assertSentTo($user, UserInvite::class);
+    }
+
+    public function test_create_name_and_email_validation()
+    {
+        $this->actingAsApiAdmin();
+        /** @var User $existingUser */
+        $existingUser = User::query()->first();
+
+        $resp = $this->postJson($this->baseEndpoint, [
+            'email' => 'bboris@example.com',
+        ]);
+        $resp->assertStatus(422);
+        $resp->assertJson($this->validationResponse(['name' => ['The name field is required.']]));
+
+        $resp = $this->postJson($this->baseEndpoint, [
+            'name' => 'Benny Boris',
+        ]);
+        $resp->assertStatus(422);
+        $resp->assertJson($this->validationResponse(['email' => ['The email field is required.']]));
+
+        $resp = $this->postJson($this->baseEndpoint, [
+            'email' => $existingUser->email,
+            'name' => 'Benny Boris',
+        ]);
+        $resp->assertStatus(422);
+        $resp->assertJson($this->validationResponse(['email' => ['The email has already been taken.']]));
     }
 
     public function test_read_endpoint()
@@ -131,6 +230,33 @@ class UsersApiTest extends TestCase
 
         $resp->assertStatus(204);
         $this->assertActivityExists('user_delete', null, $user->logDescriptor());
+    }
+
+    public function test_delete_endpoint_with_ownership_migration_user()
+    {
+        $this->actingAsApiAdmin();
+        /** @var User $user */
+        $user = User::query()->where('id', '!=', $this->getAdmin()->id)
+            ->whereNull('system_name')
+            ->first();
+        $entityChain = $this->createEntityChainBelongingToUser($user);
+        /** @var User $newOwner */
+        $newOwner = User::query()->where('id', '!=', $user->id)->first();
+
+        /** @var Entity $entity */
+        foreach ($entityChain as $entity) {
+            $this->assertEquals($user->id, $entity->owned_by);
+        }
+
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$user->id}", [
+            'migrate_ownership_id' => $newOwner->id,
+        ]);
+
+        $resp->assertStatus(204);
+        /** @var Entity $entity */
+        foreach ($entityChain as $entity) {
+            $this->assertEquals($newOwner->id, $entity->refresh()->owned_by);
+        }
     }
 
     public function test_delete_endpoint_fails_deleting_only_admin()

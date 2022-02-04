@@ -36,6 +36,14 @@ trait TestsApi
     }
 
     /**
+     * Get the structure that matches a permission error response.
+     */
+    protected function permissionErrorResponse(): array
+    {
+        return $this->errorResponse('You do not have permission to perform the requested action.', 403);
+    }
+
+    /**
      * Format the given (field_name => ["messages"]) array
      * into a standard validation response format.
      */
