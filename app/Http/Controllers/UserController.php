@@ -140,6 +140,7 @@ class UserController extends Controller
             'language'         => ['string'],
             'roles'            => ['array'],
             'roles.*'          => ['integer'],
+            'external_auth_id' => ['string'],
             'profile_image'    => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 

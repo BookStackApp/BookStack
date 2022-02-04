@@ -192,7 +192,7 @@ class UserRepo
      */
     public function create(array $data, bool $sendInvite = false): User
     {
-        $user = $this->createWithoutActivity($data, false);
+        $user = $this->createWithoutActivity($data, true);
 
         if ($sendInvite) {
             $this->inviteService->sendInvitation($user);

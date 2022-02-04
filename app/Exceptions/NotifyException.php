@@ -39,6 +39,11 @@ class NotifyException extends Exception implements Responsable
     {
         $message = $this->getMessage();
 
+        // Front-end JSON handling. API-side handling managed via handler.
+        if ($request->wantsJson()) {
+            return response()->json(['error' => $message], 403);
+        }
+
         if (!empty($message)) {
             session()->flash('error', $message);
         }
