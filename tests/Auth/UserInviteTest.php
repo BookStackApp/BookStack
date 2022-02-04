@@ -45,9 +45,7 @@ class UserInviteTest extends TestCase
             'name'        => 'Barry',
             'email'       => $email,
             'send_invite' => 'true',
-            'setting'     => [
-                'language' => 'de',
-            ],
+            'language'    => 'de',
         ]);
         $resp->assertRedirect('/settings/users');
 
