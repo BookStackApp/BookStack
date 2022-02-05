@@ -136,7 +136,7 @@ function codePlugin() {
         const selectedNode = editor.selection.getNode();
 
         if (!elemIsCodeBlock(selectedNode)) {
-            const providedCode = editor.selection.getNode().textContent;
+            const providedCode = editor.selection.getNode().innerText;
             window.components.first('code-editor').open(providedCode, '', (code, lang) => {
                 const wrap = document.createElement('div');
                 wrap.innerHTML = `<pre><code class="language-${lang}"></code></pre>`;
