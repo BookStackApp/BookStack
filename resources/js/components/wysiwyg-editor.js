@@ -189,10 +189,12 @@ function codePlugin() {
 
         const $ = editor.$;
 
-        editor.addButton('codeeditor', {
+        editor.ui.registry.addButton('codeeditor', {
             text: 'Code block',
             icon: false,
-            cmd: 'codeeditor'
+            onAction() {
+                editor.execCommand('codeeditor');
+            }
         });
 
         editor.addCommand('codeeditor', () => {
@@ -337,23 +339,30 @@ function drawIoPlugin(drawioUrl, isDarkMode, pageId, wysiwygComponent) {
             showDrawingEditor(editor, isDrawing(selectedNode) ? selectedNode : null);
         });
 
-        editor.addButton('drawio', {
-            type: 'splitbutton',
+        // editor.ui.registry.addIcon('diagram', `<svg height="24" width="24" fill="${isDarkMode ? '#BBB' : '#000000'}"  ><path d="M23 7V1h-6v2H7V1H1v6h2v10H1v6h6v-2h10v2h6v-6h-2V7h2zM3 3h2v2H3V3zm2 18H3v-2h2v2zm12-2H7v-2H5V7h2V5h10v2h2v10h-2v2zm4 2h-2v-2h2v2zM19 5V3h2v2h-2zm-5.27 9h-3.49l-.73 2H7.89l3.4-9h1.4l3.41 9h-1.63l-.74-2zm-3.04-1.26h2.61L12 8.91l-1.31 3.83z"/></svg>`)
+        editor.ui.registry.addIcon('diagram', `<svg width="24" height="24" fill="${isDarkMode ? '#BBB' : '#000000'}" xmlns="http://www.w3.org/2000/svg"><path d="M20.716 7.639V2.845h-4.794v1.598h-7.99V2.845H3.138v4.794h1.598v7.99H3.138v4.794h4.794v-1.598h7.99v1.598h4.794v-4.794h-1.598v-7.99zM4.736 4.443h1.598V6.04H4.736zm1.598 14.382H4.736v-1.598h1.598zm9.588-1.598h-7.99v-1.598H6.334v-7.99h1.598V6.04h7.99v1.598h1.598v7.99h-1.598zm3.196 1.598H17.52v-1.598h1.598zM17.52 6.04V4.443h1.598V6.04zm-4.21 7.19h-2.79l-.582 1.599H8.643l2.717-7.191h1.119l2.724 7.19h-1.302zm-2.43-1.006h2.086l-1.039-3.06z"/></svg>`)
+
+        editor.ui.registry.addSplitButton('drawio', {
             tooltip: 'Drawing',
-            image: `data:image/svg+xml;base64,${btoa(`<svg viewBox="0 0 24 24" fill="${isDarkMode ? '#BBB' : '#000000'}"  xmlns="http://www.w3.org/2000/svg">
-    <path d="M23 7V1h-6v2H7V1H1v6h2v10H1v6h6v-2h10v2h6v-6h-2V7h2zM3 3h2v2H3V3zm2 18H3v-2h2v2zm12-2H7v-2H5V7h2V5h10v2h2v10h-2v2zm4 2h-2v-2h2v2zM19 5V3h2v2h-2zm-5.27 9h-3.49l-.73 2H7.89l3.4-9h1.4l3.41 9h-1.63l-.74-2zm-3.04-1.26h2.61L12 8.91l-1.31 3.83z"/>
-    <path d="M0 0h24v24H0z" fill="none"/>
-</svg>`)}`,
-            cmd: 'drawio',
-            menu: [
-                {
-                    text: 'Drawing Manager',
-                    onclick() {
-                        let selectedNode = editor.selection.getNode();
-                        showDrawingManager(editor, isDrawing(selectedNode) ? selectedNode : null);
+            icon: 'diagram',
+            onAction() {
+                editor.execCommand('drawio');
+            },
+            fetch(callback) {
+                callback([
+                    {
+                        type: 'choiceitem',
+                        text: 'Drawing Manager',
+                        value: 'drawing-manager',
                     }
+                ]);
+            },
+            onItemAction(api, value) {
+                if (value === 'drawing-manager') {
+                    const selectedNode = editor.selection.getNode();
+                    showDrawingManager(editor, isDrawing(selectedNode) ? selectedNode : null);
                 }
-            ]
+            }
         });
 
         editor.on('dblclick', event => {
@@ -385,17 +394,21 @@ function customHrPlugin() {
             parentNode.insertBefore(hrElem, cNode);
         });
 
-        editor.addButton('hr', {
-            icon: 'hr',
+        editor.ui.registry.addButton('hr', {
+            icon: 'horizontal-rule',
             tooltip: 'Horizontal line',
-            cmd: 'InsertHorizontalRule'
+            onAction() {
+                editor.execCommand('InsertHorizontalRule');
+            }
         });
 
-        editor.addMenuItem('hr', {
-            icon: 'hr',
+        editor.ui.registry.addMenuItem('hr', {
+            icon: 'horizontal-rule',
             text: 'Horizontal line',
-            cmd: 'InsertHorizontalRule',
-            context: 'insert'
+            context: 'insert',
+            onAction() {
+                editor.execCommand('InsertHorizontalRule');
+            }
         });
     });
 }
@@ -476,12 +489,14 @@ class WysiwygEditor {
         const context = this;
 
         return {
+            width: '100%',
+            height: '100%',
             selector: '#html-editor',
             content_css: [
                 window.baseUrl('/dist/styles.css'),
             ],
             branding: false,
-            skin: this.isDarkMode ? 'dark' : 'lightgray',
+            skin: this.isDarkMode ? 'oxide-dark' : 'oxide',
             body_class: 'page-content',
             browser_spellcheck: true,
             relative_urls: false,
@@ -500,14 +515,14 @@ class WysiwygEditor {
             toolbar: this.getToolBar(),
             content_style: `html, body, html.dark-mode {background: ${this.isDarkMode ? '#222' : '#fff'};} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}`,
             style_formats: [
-                {title: "Header Large", format: "h2"},
+                {title: "Header Large", format: "h2", preview: 'color: blue;'},
                 {title: "Header Medium", format: "h3"},
                 {title: "Header Small", format: "h4"},
                 {title: "Header Tiny", format: "h5"},
                 {title: "Paragraph", format: "p", exact: true, classes: ''},
                 {title: "Blockquote", format: "blockquote"},
-                {title: "Code Block", icon: "code", cmd: 'codeeditor', format: 'codeeditor'},
-                {title: "Inline Code", icon: "code", inline: "code"},
+                {title: "<Code Block>", cmd: 'codeeditor', format: 'codeeditor'},
+                {title: "Inline Code", inline: "code"},
                 {title: "Callouts", items: [
                         {title: "Info", format: 'calloutinfo'},
                         {title: "Success", format: 'calloutsuccess'},
@@ -718,11 +733,11 @@ class WysiwygEditor {
                 });
 
                 // Custom Image picker button
-                editor.addButton('image-insert', {
+                editor.ui.registry.addButton('image-insert', {
                     title: 'My title',
                     icon: 'image',
                     tooltip: 'Insert an image',
-                    onclick: function () {
+                    onAction() {
                         window.ImageManager.show(function (image) {
                             const imageUrl = image.thumbs.display || image.url;
                             let html = `<a href="${image.url}" target="_blank">`;

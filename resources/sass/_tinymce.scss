@@ -1,5 +1,5 @@
 
-.mce-tinymce.mce-container.mce-fullscreen {
+.tox.tox-fullscreen {
   position: fixed;
   top: 0;
   height: 100%;
@@ -8,77 +8,45 @@
   z-index: 100;
 }
 
-.mce-tinymce {
-  .mce-panel {
-    @include lightDark(background-color, #fff, #333);
-  }
-  .mce-btn {
-    @include lightDark(background-color, #fff, #333);
-  }
+.page-content.mce-content-body {
+  padding-block-start: 1rem;
+  padding-block-end: 1rem;
+  outline: 0;
+  display: block;
 }
 
-.mce-container-body.mce-flow-layout {
-  text-align: center;
-}
-
-@include smaller-than($l) {
-  .mce-container-body.mce-flow-layout {
-    overflow-x: scroll;
-    white-space: nowrap;
-  }
-}
-
-.edit-area.flex > div > .mce-tinymce.mce-container.mce-panel {
-  flex: 1 1 auto;
-  display: flex !important;
-  flex-direction: column;
-  align-items: stretch;
-  margin: 0 -1px;
-  > .mce-container-body {
-    flex: 1 1 auto;
-    display: flex !important;
-    flex-direction: column;
-    align-items: stretch;
-    > .mce-toolbar-grp {
-      flex: 0 1 auto;
-    }
-    > .mce-edit-area {
-      flex: 1 1 auto;
-      display: flex !important;
-      flex-direction: column;
-      align-items: stretch;
-      -webkit-overflow-scrolling:touch;
-      overflow:auto;
-      iframe {
-        flex: 1;
-        // Force TinyMCE iframe to render on its own layer
-        // for much greater performance in Safari
-        will-change: transform;
-      }
-    }
-  }
-}
 .page-content.mce-content-body p {
   line-height: 1.6;
 }
 
-.page-content.mce-content-body {
-  padding-block-start: 1rem;
-  padding-block-end: 1rem;
-  outline: none;
-  display: block;
+.tox-toolbar__primary {
+  justify-content: center;
 }
 
-.page-content.mce-content-body > :last-child {
-  margin-bottom: 3rem;
+/**
+ * Format Menu Hacks
+ */
+.tox-menu .tox-collection__item blockquote::before {
+  content: none;
 }
-
-// Fix to prevent 'No color' option from not being clickable.
-.mce-colorbtn-trans {
-  overflow: hidden;
+.tox-menu .tox-collection__item blockquote {
+  border-left: 4px solid var(--color-primary) !important;
+  padding: 4px 6px !important;
 }
-
-// Fix to prevent CodeMirror focus events throwing TinyMCE cursor position.
-.mce-content-body .CodeMirrorContainer > .CodeMirror {
-  pointer-events: none;
+.tox-menu .tox-collection__item blockquote {
+  border-left: 4px solid var(--color-primary) !important;
+  padding: 4px 6px !important;
+}
+.tox-menu .tox-collection__item p[style*="background-color"] {
+  padding: 4px 6px !important;
+  border-left: 3px solid currentColor !important;
+}
+.tox-menu .tox-collection__item[title^="<"] > div > div {
+  font-family: $mono !important;
+  border: 1px solid #DDD !important;
+  background-color: #EEE !important;
+  padding: 4px 6px !important;
+}
+.tox-menu .tox-collection__item-label {
+  line-height: normal !important;
 }
