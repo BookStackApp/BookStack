@@ -189,9 +189,11 @@ function codePlugin() {
 
         const $ = editor.$;
 
+        editor.ui.registry.addIcon('codeblock', '<svg width="24" height="24"><path d="M4 3h16c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1V4c0-.6.4-1 1-1Zm1 2v14h14V5Z"/><path d="M11.103 15.423c.277.277.277.738 0 .922a.692.692 0 0 1-1.106 0l-4.057-3.78a.738.738 0 0 1 0-1.107l4.057-3.872c.276-.277.83-.277 1.106 0a.724.724 0 0 1 0 1.014L7.6 12.012ZM12.897 8.577c-.245-.312-.2-.675.08-.955.28-.281.727-.27 1.027.033l4.057 3.78a.738.738 0 0 1 0 1.107l-4.057 3.872c-.277.277-.83.277-1.107 0a.724.724 0 0 1 0-1.014l3.504-3.412z"/></svg>')
+
         editor.ui.registry.addButton('codeeditor', {
-            text: 'Code block',
-            icon: false,
+            title: 'Insert code block',
+            icon: 'codeblock',
             onAction() {
                 editor.execCommand('codeeditor');
             }
@@ -455,7 +457,7 @@ class WysiwygEditor {
         this.serverUploadLimitText = this.$opts.serverUploadLimitText;
         this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
-        this.plugins = "image imagetools table textcolor paste link autolink fullscreen code customhr autosave lists codeeditor media";
+        this.plugins = "image imagetools table paste link autolink fullscreen code customhr autosave lists codeeditor media";
         this.loadPlugins();
 
         this.tinyMceConfig = this.getTinyMceConfig();
@@ -481,7 +483,7 @@ class WysiwygEditor {
 
     getToolBar() {
         const textDirPlugins = this.textDirection === 'rtl' ? 'ltr rtl' : '';
-        return `undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr drawio media | removeformat code ${textDirPlugins} fullscreen`
+        return `undo redo | styleselect | bold italic underline strikethrough superscript subscript | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table image-insert link hr codeeditor drawio media | removeformat code ${textDirPlugins} fullscreen`
     }
 
     getTinyMceConfig() {
@@ -512,6 +514,7 @@ class WysiwygEditor {
             valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[img]",
             plugins: this.plugins,
             imagetools_toolbar: 'imageoptions',
+            contextmenu: false,
             toolbar: this.getToolBar(),
             content_style: `html, body, html.dark-mode {background: ${this.isDarkMode ? '#222' : '#fff'};} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}`,
             style_formats: [
@@ -521,7 +524,6 @@ class WysiwygEditor {
                 {title: "Header Tiny", format: "h5"},
                 {title: "Paragraph", format: "p", exact: true, classes: ''},
                 {title: "Blockquote", format: "blockquote"},
-                {title: "<Code Block>", cmd: 'codeeditor', format: 'codeeditor'},
                 {title: "Inline Code", inline: "code"},
                 {title: "Callouts", items: [
                         {title: "Info", format: 'calloutinfo'},
@@ -543,60 +545,37 @@ class WysiwygEditor {
                 calloutwarning: {block: 'p', exact: true, attributes: {class: 'callout warning'}},
                 calloutdanger: {block: 'p', exact: true, attributes: {class: 'callout danger'}}
             },
-            file_browser_callback: function (field_name, url, type, win) {
+            file_picker_types: 'file image',
+            file_picker_callback(callback, value, meta) {
 
-                if (type === 'file') {
-                    window.EntitySelectorPopup.show(function(entity) {
-                        const originalField = win.document.getElementById(field_name);
-                        originalField.value = entity.link;
-                        const mceForm = originalField.closest('.mce-form');
-                        const inputs = mceForm.querySelectorAll('input');
-
-                        // Set text to display if not empty
-                        if (!inputs[1].value) {
-                            inputs[1].value = entity.name;
-                        }
-
-                        // Set title field
-                        inputs[2].value = entity.name;
+                // field_name, url, type, win
+                if (meta.filetype === 'file') {
+                    window.EntitySelectorPopup.show(entity => {
+                        callback(entity.link, {
+                            text: entity.name,
+                            title: entity.name,
+                        });
                     });
                 }
 
-                if (type === 'image') {
+                if (meta.filetype === 'image') {
                     // Show image manager
                     window.ImageManager.show(function (image) {
-
-                        // Set popover link input to image url then fire change event
-                        // to ensure the new value sticks
-                        win.document.getElementById(field_name).value = image.url;
-                        if ("createEvent" in document) {
-                            let evt = document.createEvent("HTMLEvents");
-                            evt.initEvent("change", false, true);
-                            win.document.getElementById(field_name).dispatchEvent(evt);
-                        } else {
-                            win.document.getElementById(field_name).fireEvent("onchange");
-                        }
-
-                        // Replace the actively selected content with the linked image
-                        const imageUrl = image.thumbs.display || image.url;
-                        let html = `<a href="${image.url}" target="_blank">`;
-                        html += `<img src="${imageUrl}" alt="${image.name}">`;
-                        html += '</a>';
-                        win.tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
+                        callback(image.url, {alt: image.name});
                     }, 'gallery');
                 }
 
             },
-            paste_preprocess: function (plugin, args) {
+            paste_preprocess(plugin, args) {
                 let content = args.content;
                 if (content.indexOf('<img src="file://') !== -1) {
                     args.content = '';
                 }
             },
-            init_instance_callback: function(editor) {
+            init_instance_callback(editor) {
                 loadCustomHeadContent(editor);
             },
-            setup: function (editor) {
+            setup(editor) {
 
                 editor.on('ExecCommand change input NodeChange ObjectResized', editorChange);
 
@@ -734,7 +713,7 @@ class WysiwygEditor {
 
                 // Custom Image picker button
                 editor.ui.registry.addButton('image-insert', {
-                    title: 'My title',
+                    title: 'Insert an image',
                     icon: 'image',
                     tooltip: 'Insert an image',
                     onAction() {

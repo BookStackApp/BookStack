@@ -19,6 +19,10 @@
   line-height: 1.6;
 }
 
+.page-content.mce-content-body > :last-child {
+  margin-bottom: 5rem;
+}
+
 .tox-toolbar__primary {
   justify-content: center;
 }
