@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute, en az :min ve en fazla :max basamaklı olmalıdır.',
     'email'                => ':attribute, geçerli bir e-posta adresi olmalıdır.',
     'ends_with' => ':attribute, şunlardan birisiyle bitmelidir: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute alanı zorunludur.',
     'gt'                   => [
         'numeric' => ':attribute, :max değerinden büyük olmalıdır.',
