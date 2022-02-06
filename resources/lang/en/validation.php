@@ -32,6 +32,7 @@ return [
     'digits_between'       => 'The :attribute must be between :min and :max digits.',
     'email'                => 'The :attribute must be a valid email address.',
     'ends_with' => 'The :attribute must end with one of the following: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'The :attribute field is required.',
     'gt'                   => [
         'numeric' => 'The :attribute must be greater than :value.',
