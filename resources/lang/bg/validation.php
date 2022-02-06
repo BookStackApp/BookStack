@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute трябва да бъде с дължина между :min и :max цифри.',
     'email'                => ':attribute трябва да бъде валиден имейл адрес.',
     'ends_with' => ':attribute трябва да свършва с един от следните символи: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'Полето :attribute е задължителен.',
     'gt'                   => [
         'numeric' => ':attribute трябва да бъде по-голям от :value.',

@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute måste vara mellan :min och :max siffror.',
     'email'                => ':attribute måste vara en giltig e-postadress.',
     'ends_with' => ':attribute måste sluta med något av följande: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute är obligatoriskt.',
     'gt'                   => [
         'numeric' => ':attribute måste vara större än :value.',

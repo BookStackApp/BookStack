@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute harus diantara :min dan :max digit.',
     'email'                => ':attrtibute Harus alamat e-mail yang valid.',
     'ends_with' => ':attribute harus diakhiri dengan salah satu dari berikut ini: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute bidang diperlukan.',
     'gt'                   => [
         'numeric' => ':attribute harus lebih besar dari :value.',

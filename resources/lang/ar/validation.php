@@ -32,6 +32,7 @@ return [
     'digits_between'       => 'يجب أن يكون :attribute بعدد خانات بين :min و :max.',
     'email'                => 'يجب أن يكون :attribute عنوان بريد إلكتروني صالح.',
     'ends_with' => 'يجب أن تنتهي السمة بأحد القيم التالية',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'حقل :attribute مطلوب.',
     'gt'                   => [
         'numeric' => 'يجب أن تكون السمة أكبر من: القيمة.',

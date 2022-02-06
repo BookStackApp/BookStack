@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute hosszának :min és :max számjegy között kell lennie.',
     'email'                => ':attribute érvényes email cím kell legyen.',
     'ends_with' => ':attribute attribútumnak a következők egyikével kell végződnie: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute mező kötelező.',
     'gt'                   => [
         'numeric' => ':attribute nagyobb kell, hogy legyen, mint :value.',

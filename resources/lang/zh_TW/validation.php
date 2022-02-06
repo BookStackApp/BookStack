@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute 必須為 :min 到 :max 位數。',
     'email'                => ':attribute 必須是有效的電子郵件地址。',
     'ends_with' => ':attribute必須以下列之一結尾：:values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute 欄位必填。',
     'gt'                   => [
         'numeric' => ':attribute 必須大於 :value。',

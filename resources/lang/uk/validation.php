@@ -32,6 +32,7 @@ return [
     'digits_between'       => 'Довжина цифрового поля :attribute повинна бути від :min до :max.',
     'email'                => 'Поле :attribute повинне містити коректну електронну адресу.',
     'ends_with' => 'Поле :attribute має закінчуватися одним з наступних значень: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'Поле :attribute є обов\'язковим для заповнення.',
     'gt'                   => [
         'numeric' => 'Поле :attribute має бути більше ніж :value.',

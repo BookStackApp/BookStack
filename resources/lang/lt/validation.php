@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute turi būti tarp :min ir :max skaitmenų.',
     'email'                => ':attribute turi būti tinkamas elektroninio pašto adresas.',
     'ends_with' => ':attribute turi pasibaigti vienu iš šių: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute laukas yra privalomas.',
     'gt'                   => [
         'numeric' => ':attribute turi būti didesnis negu :value.',
