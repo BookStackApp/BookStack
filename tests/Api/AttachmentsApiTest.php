@@ -122,7 +122,7 @@ class AttachmentsApiTest extends TestCase
         $resp = $this->call('POST', $this->baseEndpoint, $details, [], ['file' => $file]);
         $resp->assertStatus(422);
         $resp->assertJson($this->validationResponse([
-            "file" => ["The file may not be greater than 1000 kilobytes."]
+            'file' => ['The file may not be greater than 1000 kilobytes.'],
         ]));
     }
 
@@ -139,15 +139,7 @@ class AttachmentsApiTest extends TestCase
 
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
-        $resp->assertJson([
-            'error' => [
-                'message'    => 'The given data was invalid.',
-                'validation' => [
-                    'name' => ['The name field is required.'],
-                ],
-                'code' => 422,
-            ],
-        ]);
+        $resp->assertJson($this->validationResponse(['name' => ['The name field is required.']]));
     }
 
     public function test_link_or_file_needed_to_create()
@@ -163,16 +155,27 @@ class AttachmentsApiTest extends TestCase
 
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(422);
-        $resp->assertJson([
-            'error' => [
-                'message'    => 'The given data was invalid.',
-                'validation' => [
-                    'file' => ['The file field is required when link is not present.'],
-                    'link' => ['The link field is required when file is not present.'],
-                ],
-                'code' => 422,
-            ],
-        ]);
+        $resp->assertJson($this->validationResponse([
+            'file' => ['The file field is required when link is not present.'],
+            'link' => ['The link field is required when file is not present.'],
+        ]));
+    }
+
+    public function test_message_shown_if_file_is_not_a_valid_file()
+    {
+        $this->actingAsApiAdmin();
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $details = [
+            'name'        => 'my attachment',
+            'uploaded_to' => $page->id,
+            'file'        => 'cat',
+        ];
+
+        $resp = $this->postJson($this->baseEndpoint, $details);
+        $resp->assertStatus(422);
+        $resp->assertJson($this->validationResponse(['file' => ['The file must be provided as a valid file.']]));
     }
 
     public function test_read_endpoint_for_link_attachment()
