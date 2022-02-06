@@ -657,6 +657,39 @@ class PageContentTest extends TestCase
         $this->deleteImage($imagePath);
     }
 
+    public function test_markdown_base64_extract_not_limited_by_pcre_limits()
+    {
+        $pcreBacktrackLimit = ini_get("pcre.backtrack_limit");
+        $pcreRecursionLimit = ini_get("pcre.recursion_limit");
+
+        $this->asEditor();
+        $page = Page::query()->first();
+
+        ini_set("pcre.backtrack_limit", "500");
+        ini_set("pcre.recursion_limit", "500");
+
+        $content = str_repeat('a', 5000);
+        $base64Content = base64_encode($content);
+
+        $this->put($page->getUrl(), [
+            'name'     => $page->name, 'summary' => '',
+            'markdown' => 'test ![test](data:image/jpeg;base64,' . $base64Content . ') ![test](data:image/jpeg;base64,' . $base64Content . ')',
+        ]);
+
+        $page->refresh();
+        $this->assertStringMatchesFormat('<p%A>test <img src="http://localhost/uploads/images/gallery/%A.jpeg" alt="test"> <img src="http://localhost/uploads/images/gallery/%A.jpeg" alt="test">%A</p>%A', $page->html);
+
+        $matches = [];
+        preg_match('/src="http:\/\/localhost(.*?)"/', $page->html, $matches);
+        $imagePath = $matches[1];
+        $imageFile = public_path($imagePath);
+        $this->assertEquals($content, file_get_contents($imageFile));
+
+        $this->deleteImage($imagePath);
+        ini_set("pcre.backtrack_limit", $pcreBacktrackLimit);
+        ini_set("pcre.recursion_limit", $pcreRecursionLimit);
+    }
+
     public function test_base64_images_within_markdown_blanked_if_not_supported_extension_for_extract()
     {
         $this->asEditor();
