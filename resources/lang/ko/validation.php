@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute(을)를 :min~:max자리로 구성하세요.',
     'email'                => ':attribute(을)를 유효한 메일 주소로 구성하세요.',
     'ends_with' => ':attribute(을)를 :values(으)로 끝나게 구성하세요.',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute(을)를 구성하세요.',
     'gt'                   => [
         'numeric' => ':attribute(을)를 :value(이)가 넘게 구성하세요.',

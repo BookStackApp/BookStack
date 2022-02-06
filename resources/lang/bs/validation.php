@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute mora imati između :min i :max brojeva.',
     'email'                => ':attribute mora biti ispravna e-mail adresa.',
     'ends_with' => ':attribute mora završavati sa jednom od sljedećih: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'Polje :attribute je obavezno.',
     'gt'                   => [
         'numeric' => ':attribute mora biti veći od :value.',

@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute phải có từ :min đến :max chữ số.',
     'email'                => ':attribute phải là địa chỉ email hợp lệ.',
     'ends_with' => ':attribute phải kết thúc bằng một trong các ký tự: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'Trường :attribute là bắt buộc.',
     'gt'                   => [
         'numeric' => ':attribute phải lớn hơn :value.',

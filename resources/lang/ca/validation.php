@@ -32,6 +32,7 @@ return [
     'digits_between'       => 'El camp :attribute ha de tenir entre :min i :max dígits.',
     'email'                => 'El camp :attribute ha de ser una adreça electrònica vàlida.',
     'ends_with' => 'El camp :attribute ha d\'acabar amb un dels següents valors: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'El camp :attribute és obligatori.',
     'gt'                   => [
         'numeric' => 'El camp :attribute ha de ser més gran que :value.',
