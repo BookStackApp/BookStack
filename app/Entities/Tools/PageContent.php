@@ -109,15 +109,35 @@ class PageContent
 
     /**
      * Convert all inline base64 content to uploaded image files.
+     * Regex is used to locate the start of data-uri definitions then
+     * manual looping over content is done to parse the whole data uri.
+     * Attempting to capture the whole data uri using regex can cause PHP
+     * PCRE limits to be hit with larger, multi-MB, files.
      */
     protected function extractBase64ImagesFromMarkdown(string $markdown)
     {
         $matches = [];
-        preg_match_all('/!\[.*?]\(.*?(data:image\/.*?)[)"\s]/', $markdown, $matches);
+        $contentLength = strlen($markdown);
+        $replacements = [];
+        preg_match_all('/!\[.*?]\(.*?(data:image\/.{1,6};base64,)/', $markdown, $matches, PREG_OFFSET_CAPTURE);
 
-        foreach ($matches[1] as $base64Match) {
-            $newUrl = $this->base64ImageUriToUploadedImageUrl($base64Match);
-            $markdown = str_replace($base64Match, $newUrl, $markdown);
+        foreach ($matches[1] as $base64MatchPair) {
+            [$dataUri, $index] = $base64MatchPair;
+
+            for ($i = strlen($dataUri) + $index; $i < $contentLength; $i++) {
+                $char = $markdown[$i];
+                if ($char === ')' || $char === ' ' || $char === "\n" || $char === '"') {
+                    break;
+                }
+                $dataUri .= $char;
+            }
+
+            $newUrl = $this->base64ImageUriToUploadedImageUrl($dataUri);
+            $replacements[] = [$dataUri, $newUrl];
+        }
+
+        foreach ($replacements as [$dataUri, $newUrl]) {
+            $markdown = str_replace($dataUri, $newUrl, $markdown);
         }
 
         return $markdown;

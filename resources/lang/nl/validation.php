@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute moet tussen de :min en :max cijfers zijn.',
     'email'                => ':attribute is geen geldig e-mailadres.',
     'ends_with' => ':attribute moet eindigen met een van de volgende: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute is verplicht.',
     'gt'                   => [
         'numeric' => ':attribute moet groter zijn dan :value.',
