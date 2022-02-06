@@ -32,6 +32,7 @@ return [
     'digits_between'       => ':attribute musí být dlouhé nejméně :min a nejvíce :max pozic.',
     'email'                => ':attribute není platný formát.',
     'ends_with' => ':attribute musí končit jednou z následujících hodnot: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => ':attribute musí být vyplněno.',
     'gt'                   => [
         'numeric' => ':attribute musí být větší než :value.',
