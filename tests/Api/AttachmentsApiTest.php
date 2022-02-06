@@ -102,6 +102,30 @@ class AttachmentsApiTest extends TestCase
         unlink(storage_path($newItem->path));
     }
 
+    public function test_upload_limit_restricts_attachment_uploads()
+    {
+        $this->actingAsApiAdmin();
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        config()->set('app.upload_limit', 1);
+
+        $file = tmpfile();
+        $filePath = stream_get_meta_data($file)['uri'];
+        fwrite($file, str_repeat('a', 1200000));
+        $file = new UploadedFile($filePath, 'test.txt', 'text/plain', null, true);
+
+        $details = [
+            'name'        => 'My attachment',
+            'uploaded_to' => $page->id,
+        ];
+        $resp = $this->call('POST', $this->baseEndpoint, $details, [], ['file' => $file]);
+        $resp->assertStatus(422);
+        $resp->assertJson($this->validationResponse([
+            "file" => ["The file may not be greater than 1000 kilobytes."]
+        ]));
+    }
+
     public function test_name_needed_to_create()
     {
         $this->actingAsApiAdmin();
