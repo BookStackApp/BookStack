@@ -32,6 +32,7 @@ return [
     'digits_between'       => 'שדה :attribute חייב להיות בין :min ו-:max ספרות.',
     'email'                => 'שדה :attribute חייב להיות כתובת אימייל תקנית.',
     'ends_with' => 'The :attribute must end with one of the following: :values',
+    'file'                 => 'The :attribute must be provided as a valid file.',
     'filled'               => 'שדה :attribute הוא חובה.',
     'gt'                   => [
         'numeric' => 'The :attribute must be greater than :value.',
