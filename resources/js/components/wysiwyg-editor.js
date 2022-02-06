@@ -136,18 +136,14 @@ function codePlugin() {
         const selectedNode = editor.selection.getNode();
 
         if (!elemIsCodeBlock(selectedNode)) {
-            const providedCode = editor.selection.getNode().innerText;
+            const providedCode = editor.selection.getContent({format: 'text'});
             window.components.first('code-editor').open(providedCode, '', (code, lang) => {
                 const wrap = document.createElement('div');
                 wrap.innerHTML = `<pre><code class="language-${lang}"></code></pre>`;
                 wrap.querySelector('code').innerText = code;
 
-                editor.formatter.toggle('pre');
-                const node = editor.selection.getNode();
-                editor.dom.setHTML(node, wrap.querySelector('pre').innerHTML);
-                editor.fire('SetContent');
-
-                editor.focus()
+                editor.insertContent(wrap.innerHTML);
+                editor.focus();
             });
             return;
         }
