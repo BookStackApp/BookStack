@@ -9,16 +9,16 @@ import {getPlugin as getCustomhrPlugin} from "./plugins-customhr";
 import {getPlugin as getImagemanagerPlugin} from "./plugins-imagemanager";
 
 const style_formats = [
-    {title: "Header Large", format: "h2", preview: 'color: blue;'},
-    {title: "Header Medium", format: "h3"},
-    {title: "Header Small", format: "h4"},
-    {title: "Header Tiny", format: "h5"},
+    {title: "Large Header", format: "h2", preview: 'color: blue;'},
+    {title: "Medium Header", format: "h3"},
+    {title: "Small Header", format: "h4"},
+    {title: "Tiny Header", format: "h5"},
     {title: "Paragraph", format: "p", exact: true, classes: ''},
     {title: "Blockquote", format: "blockquote"},
     {title: "Inline Code", inline: "code"},
     {
         title: "Callouts", items: [
-            {title: "Info", format: 'calloutinfo'},
+            {title: "Information", format: 'calloutinfo'},
             {title: "Success", format: 'calloutsuccess'},
             {title: "Warning", format: 'calloutwarning'},
             {title: "Danger", format: 'calloutdanger'}
@@ -174,6 +174,10 @@ function getSetupCallback(options) {
  */
 export function build(options) {
 
+    // Set language
+    window.tinymce.addI18n(options.language, options.translationMap);
+
+    // Return config object
     return {
         width: '100%',
         height: '100%',
@@ -186,6 +190,7 @@ export function build(options) {
         body_class: 'page-content',
         browser_spellcheck: true,
         relative_urls: false,
+        language: options.language,
         directionality: options.textDirection,
         remove_script_host: false,
         document_base_url: window.baseUrl('/'),
@@ -224,9 +229,11 @@ export function build(options) {
 /**
  * @typedef {Object} WysiwygConfigOptions
  * @property {Element} containerElement
+ * @property {string} language
  * @property {boolean} darkMode
  * @property {string} textDirection
  * @property {string} drawioUrl
  * @property {int} pageId
  * @property {Object} translations
+ * @property {Object} translationMap
  */

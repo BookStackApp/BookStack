@@ -12,16 +12,7 @@ function register(editor, url) {
 
     editor.ui.registry.addButton('hr', {
         icon: 'horizontal-rule',
-        tooltip: 'Horizontal line',
-        onAction() {
-            editor.execCommand('InsertHorizontalRule');
-        }
-    });
-
-    editor.ui.registry.addMenuItem('hr', {
-        icon: 'horizontal-rule',
-        text: 'Horizontal line',
-        context: 'insert',
+        tooltip: 'Insert horizontal line',
         onAction() {
             editor.execCommand('InsertHorizontalRule');
         }
