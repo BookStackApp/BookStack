@@ -10,6 +10,7 @@ class WysiwygEditor {
         this.isDarkMode = document.documentElement.classList.contains('dark-mode');
 
         this.tinyMceConfig = buildEditorConfig({
+            language: this.$opts.language,
             containerElement: this.elem,
             darkMode: this.isDarkMode,
             textDirection: this.textDirection,
@@ -18,7 +19,8 @@ class WysiwygEditor {
             translations: {
                 imageUploadErrorText: this.$opts.imageUploadErrorText,
                 serverUploadLimitText: this.$opts.serverUploadLimitText,
-            }
+            },
+            translationMap: window.editor_translations,
         });
 
         window.$events.emitPublic(this.elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});

@@ -6,9 +6,9 @@ function register(editor, url) {
 
     // Custom Image picker button
     editor.ui.registry.addButton('imagemanager-insert', {
-        title: 'Insert an image',
+        title: 'Insert image',
         icon: 'image',
-        tooltip: 'Insert an image',
+        tooltip: 'Insert image',
         onAction() {
             window.ImageManager.show(function (image) {
                 const imageUrl = image.thumbs.display || image.url;

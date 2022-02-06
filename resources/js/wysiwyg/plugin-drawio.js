@@ -102,7 +102,7 @@ export function getPlugin(providedOptions) {
         editor.ui.registry.addIcon('diagram', `<svg width="24" height="24" fill="${options.darkMode ? '#BBB' : '#000000'}" xmlns="http://www.w3.org/2000/svg"><path d="M20.716 7.639V2.845h-4.794v1.598h-7.99V2.845H3.138v4.794h1.598v7.99H3.138v4.794h4.794v-1.598h7.99v1.598h4.794v-4.794h-1.598v-7.99zM4.736 4.443h1.598V6.04H4.736zm1.598 14.382H4.736v-1.598h1.598zm9.588-1.598h-7.99v-1.598H6.334v-7.99h1.598V6.04h7.99v1.598h1.598v7.99h-1.598zm3.196 1.598H17.52v-1.598h1.598zM17.52 6.04V4.443h1.598V6.04zm-4.21 7.19h-2.79l-.582 1.599H8.643l2.717-7.191h1.119l2.724 7.19h-1.302zm-2.43-1.006h2.086l-1.039-3.06z"/></svg>`)
 
         editor.ui.registry.addSplitButton('drawio', {
-            tooltip: 'Drawing',
+            tooltip: 'Insert/edit drawing',
             icon: 'diagram',
             onAction() {
                 editor.execCommand('drawio');
@@ -111,7 +111,7 @@ export function getPlugin(providedOptions) {
                 callback([
                     {
                         type: 'choiceitem',
-                        text: 'Drawing Manager',
+                        text: 'Drawing manager',
                         value: 'drawing-manager',
                     }
                 ]);
