@@ -74,8 +74,8 @@ return [
     'status' => '상태',
     'status_active' => '활성',
     'status_inactive' => '비활성',
-    'never' => 'Never',
-    'none' => 'None',
+    'never' => '안 함',
+    'none' => '없음',
 
     // Header
     'header_menu_expand' => '헤더 메뉴 펼치기',
