@@ -7,18 +7,18 @@ return [
 
     // Pages
     'page_create'                 => 'created page',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'הדף נוצר בהצלחה',
     'page_update'                 => 'updated page',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'הדף עודכן בהצלחה',
     'page_delete'                 => 'deleted page',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'הדף הוסר בהצלחה',
     'page_restore'                => 'restored page',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'הדף שוחזר בהצלחה',
     'page_move'                   => 'moved page',
 
     // Chapters
     'chapter_create'              => 'created chapter',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'הפרק נוצר בהצלחה',
     'chapter_update'              => 'updated chapter',
     'chapter_update_notification' => 'Chapter successfully updated',
     'chapter_delete'              => 'deleted chapter',
