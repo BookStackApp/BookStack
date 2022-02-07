@@ -30,6 +30,9 @@
 /**
  * Format Menu Hacks
  */
+.tox .tox-tbtn--bespoke .tox-tbtn__select-label {
+  width: 6em !important;
+}
 .tox-menu .tox-collection__item blockquote::before {
   content: none;
 }
