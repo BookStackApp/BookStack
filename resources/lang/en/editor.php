@@ -130,4 +130,17 @@ return [
     'open_link' => 'Open link in...',
     'open_link_current' => 'Current window',
     'open_link_new' => 'New window',
+
+    // About view
+    'editor_license' => 'Editor License & Copyright',
+    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under an LGPLv2.1 license.',
+    'editor_tiny_license_link' => 'The copyright and license details of TinyMCE can be found here.',
+    'save_continue' => 'Save Page & Continue',
+    'callouts_cycle' => '(Keep pressing to toggle through types)',
+    'shortcuts' => 'Shortcuts',
+    'shortcut' => 'Shortcut',
+    'shortcuts_intro' => 'The following shortcuts are available in the editor:',
+    'windows_linux' => '(Windows/Linux)',
+    'mac' => '(Mac)',
+    'description' => 'Description',
 ];
