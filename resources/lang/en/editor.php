@@ -23,6 +23,7 @@ return [
     'bottom' => 'Bottom',
     'width' => 'Width',
     'height' => 'Height',
+    'More' => 'More',
 
     // Toolbar
     'formats' => 'Formats',
@@ -32,7 +33,7 @@ return [
     'header_tiny' => 'Tiny Header',
     'paragraph' => 'Paragraph',
     'blockquote' => 'Blockquote',
-    'inline_code' => 'Inline Code',
+    'inline_code' => 'Inline code',
     'callouts' => 'Callouts',
     'callout_information' => 'Information',
     'callout_success' => 'Success',
@@ -132,6 +133,7 @@ return [
     'open_link_new' => 'New window',
 
     // About view
+    'about_title' => 'About the WYSIWYG Editor',
     'editor_license' => 'Editor License & Copyright',
     'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under an LGPLv2.1 license.',
     'editor_tiny_license_link' => 'The copyright and license details of TinyMCE can be found here.',

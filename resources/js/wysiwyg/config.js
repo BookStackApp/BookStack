@@ -16,7 +16,6 @@ const style_formats = [
     {title: "Tiny Header", format: "h5"},
     {title: "Paragraph", format: "p", exact: true, classes: ''},
     {title: "Blockquote", format: "blockquote"},
-    {title: "Inline Code", inline: "code"},
     {
         title: "Callouts", items: [
             {title: "Information", format: 'calloutinfo'},
@@ -61,24 +60,45 @@ function file_picker_callback(callback, value, meta) {
 
 /**
  * @param {WysiwygConfigOptions} options
- * @return {string}
+ * @return {{toolbar: string, groupButtons: Object<string, Object>}}
  */
 function buildToolbar(options) {
     const textDirPlugins = options.textDirection === 'rtl' ? 'ltr rtl' : '';
 
+    const groupButtons = {
+        formatoverflow: {
+            icon: 'more-drawer',
+            tooltip: 'More',
+            items: 'strikethrough superscript subscript inlinecode removeformat'
+        },
+        listoverflow: {
+            icon: 'more-drawer',
+            tooltip: 'More',
+            items: 'outdent indent'
+        },
+        insertoverflow: {
+            icon: 'more-drawer',
+            tooltip: 'More',
+            items: 'hr codeeditor drawio media'
+        }
+    };
+
     const toolbar = [
         'undo redo',
         'styleselect',
-        'bold italic underline strikethrough superscript subscript',
+        'bold italic underline formatoverflow',
         'forecolor backcolor',
         'alignleft aligncenter alignright alignjustify',
-        'bullist numlist outdent indent',
+        'bullist numlist listoverflow',
         textDirPlugins,
-        'table imagemanager-insert link hr codeeditor drawio media',
-        'removeformat code about fullscreen'
+        'link table imagemanager-insert insertoverflow',
+        'code about fullscreen'
     ];
 
-    return toolbar.filter(row => Boolean(row)).join(' | ');
+    return {
+        toolbar: toolbar.filter(row => Boolean(row)).join(' | '),
+        groupButtons,
+    };
 }
 
 /**
@@ -168,6 +188,15 @@ function getSetupCallback(options) {
 
         // Custom handler hook
         window.$events.emitPublic(options.containerElement, 'editor-tinymce::setup', {editor});
+
+        // Inline code format button
+        editor.ui.registry.addButton('inlinecode', {
+            tooltip: 'Inline code',
+            icon: 'sourcecode',
+            onAction() {
+                editor.execCommand('mceToggleFormat', false, 'code');
+            }
+        })
     }
 }
 
@@ -179,6 +208,8 @@ export function build(options) {
 
     // Set language
     window.tinymce.addI18n(options.language, options.translationMap);
+
+    const {toolbar, groupButtons: toolBarGroupButtons} = buildToolbar(options);
 
     // Return config object
     return {
@@ -207,7 +238,7 @@ export function build(options) {
         plugins: gatherPlugins(options),
         imagetools_toolbar: 'imageoptions',
         contextmenu: false,
-        toolbar: buildToolbar(options),
+        toolbar: toolbar,
         content_style: `html, body, html.dark-mode {background: ${options.darkMode ? '#222' : '#fff'};} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}`,
         style_formats,
         style_formats_merge: false,
@@ -225,7 +256,12 @@ export function build(options) {
         init_instance_callback(editor) {
             loadCustomHeadContent(editor);
         },
-        setup: getSetupCallback(options),
+        setup(editor) {
+            for (const [key, config] of Object.entries(toolBarGroupButtons)) {
+                editor.ui.registry.addGroupToolbarButton(key, config);
+            }
+            getSetupCallback(options)(editor);
+        },
     };
 }
 
