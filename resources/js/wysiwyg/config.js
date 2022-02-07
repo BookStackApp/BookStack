@@ -7,6 +7,7 @@ import {getPlugin as getCodeeditorPlugin} from "./plugin-codeeditor";
 import {getPlugin as getDrawioPlugin} from "./plugin-drawio";
 import {getPlugin as getCustomhrPlugin} from "./plugins-customhr";
 import {getPlugin as getImagemanagerPlugin} from "./plugins-imagemanager";
+import {getPlugin as getAboutPlugin} from "./plugins-about";
 
 const style_formats = [
     {title: "Large Header", format: "h2", preview: 'color: blue;'},
@@ -74,7 +75,7 @@ function buildToolbar(options) {
         'bullist numlist outdent indent',
         textDirPlugins,
         'table imagemanager-insert link hr codeeditor drawio media',
-        'removeformat code ${textDirPlugins} fullscreen'
+        'removeformat code about fullscreen'
     ];
 
     return toolbar.filter(row => Boolean(row)).join(' | ');
@@ -100,12 +101,14 @@ function gatherPlugins(options) {
         "codeeditor",
         "media",
         "imagemanager",
+        "about",
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
     window.tinymce.PluginManager.add('codeeditor', getCodeeditorPlugin(options));
     window.tinymce.PluginManager.add('customhr', getCustomhrPlugin(options));
     window.tinymce.PluginManager.add('imagemanager', getImagemanagerPlugin(options));
+    window.tinymce.PluginManager.add('about', getAboutPlugin(options));
 
     if (options.drawioUrl) {
         window.tinymce.PluginManager.add('drawio', getDrawioPlugin(options));
