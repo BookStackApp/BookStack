@@ -59,6 +59,10 @@ return [
     'webhook_delete' => 'izdzēsa webhook',
     'webhook_delete_notification' => 'Webhook veiksmīgi izdzēsts',
 
+    // Users
+    'user_update_notification' => 'User successfully updated',
+    'user_delete_notification' => 'User successfully removed',
+
     // Other
     'commented_on'                => 'komentēts',
     'permissions_update'          => 'atjaunoja atļaujas',

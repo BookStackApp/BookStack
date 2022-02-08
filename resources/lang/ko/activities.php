@@ -10,7 +10,7 @@ return [
     'page_create_notification'    => '문서 생성함',
     'page_update'                 => '문서 수정',
     'page_update_notification'    => '문서 수정함',
-    'page_delete'                 => '문서 지우기',
+    'page_delete'                 => '삭제 된 페이지',
     'page_delete_notification'    => '문서 삭제함',
     'page_restore'                => '문서 복원',
     'page_restore_notification'   => '문서 복원함',
@@ -21,18 +21,18 @@ return [
     'chapter_create_notification' => '챕터 생성함',
     'chapter_update'              => '챕터 수정',
     'chapter_update_notification' => '챕터 수정함',
-    'chapter_delete'              => '챕터 지우기',
+    'chapter_delete'              => '삭제된 챕터',
     'chapter_delete_notification' => '챕터 삭제함',
-    'chapter_move'                => '챕터 이동',
+    'chapter_move'                => '챕터 이동된',
 
     // Books
-    'book_create'                 => '책 만들기',
+    'book_create'                 => '책자 만들기',
     'book_create_notification'    => '책 생성함',
     'book_update'                 => '책 수정',
     'book_update_notification'    => '책 수정함',
     'book_delete'                 => '책 지우기',
     'book_delete_notification'    => '책 삭제함',
-    'book_sort'                   => '책 정렬',
+    'book_sort'                   => '책자 정렬',
     'book_sort_notification'      => '책 정렬 바꿈',
 
     // Bookshelves
@@ -58,6 +58,10 @@ return [
     'webhook_update_notification' => '웹 훅 수정함',
     'webhook_delete' => '웹 훅 지우기',
     'webhook_delete_notification' => '웹 훅 삭제함',
+
+    // Users
+    'user_update_notification' => 'User successfully updated',
+    'user_delete_notification' => 'User successfully removed',
 
     // Other
     'commented_on'                => '댓글 쓰기',

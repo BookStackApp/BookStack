@@ -219,14 +219,14 @@ return [
     'pages_revisions' => '页面修订',
     'pages_revisions_named' => '“:pageName”页面修订',
     'pages_revision_named' => '“:pageName”页面修订',
-    'pages_revision_restored_from' => '从 #:id; :summary 恢复',
+    'pages_revision_restored_from' => '恢复到 #:id，:summary',
     'pages_revisions_created_by' => '创建者',
     'pages_revisions_date' => '修订日期',
     'pages_revisions_number' => '#',
     'pages_revisions_numbered' => '修订 #:id',
     'pages_revisions_numbered_changes' => '修改 #:id ',
     'pages_revisions_changelog' => '更新说明',
-    'pages_revisions_changes' => '说明',
+    'pages_revisions_changes' => '查看更改',
     'pages_revisions_current' => '当前版本',
     'pages_revisions_preview' => '预览',
     'pages_revisions_restore' => '恢复',
@@ -333,7 +333,7 @@ return [
 
     // Revision
     'revision_delete_confirm' => '您确定要删除此修订版吗？',
-    'revision_restore_confirm' => '您确定要恢复到此修订版吗？恢复后原有内容将会被替换。',
+    'revision_restore_confirm' => '您确定要恢复到此修订版吗？恢复后当前页面内容将被替换。',
     'revision_delete_success' => '修订删除',
     'revision_cannot_delete_latest' => '无法删除最新版本。',
 
