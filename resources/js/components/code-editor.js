@@ -1,4 +1,3 @@
-import Code from "../services/code";
 import {onChildEvent, onEnterPress, onSelect} from "../services/dom";
 
 /**
@@ -63,13 +62,17 @@ class CodeEditor {
         this.show();
         this.updateEditorMode(language);
 
-        Code.setContent(this.editor, code);
+        window.importVersioned('code').then(Code => {
+            Code.setContent(this.editor, code);
+        });
     }
 
-    show() {
+    async show() {
+        const Code = await window.importVersioned('code');
         if (!this.editor) {
             this.editor = Code.popupEditor(this.editorInput, this.languageInput.value);
         }
+
         this.loadHistory();
         this.popup.components.popup.show(() => {
             Code.updateLayout(this.editor);
@@ -84,7 +87,8 @@ class CodeEditor {
         this.addHistory();
     }
 
-    updateEditorMode(language) {
+    async updateEditorMode(language) {
+        const Code = await window.importVersioned('code');
         Code.setMode(this.editor, language, this.editor.getValue());
     }
 

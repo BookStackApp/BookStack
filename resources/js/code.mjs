@@ -98,7 +98,7 @@ const modeMap = {
 /**
  * Highlight pre elements on a page
  */
-function highlight() {
+export function highlight() {
     const codeBlocks = document.querySelectorAll('.page-content pre, .comment-box .content pre');
     for (const codeBlock of codeBlocks) {
         highlightElem(codeBlock);
@@ -109,7 +109,7 @@ function highlight() {
  * Highlight all code blocks within the given parent element
  * @param {HTMLElement} parent
  */
-function highlightWithin(parent) {
+export function highlightWithin(parent) {
     const codeBlocks = parent.querySelectorAll('pre');
     for (const codeBlock of codeBlocks) {
         highlightElem(codeBlock);
@@ -207,7 +207,7 @@ function getTheme() {
  * @param {HTMLElement} elem
  * @returns {{wrap: Element, editor: *}}
  */
-function wysiwygView(elem) {
+export function wysiwygView(elem) {
     const doc = elem.ownerDocument;
     const codeElem = elem.querySelector('code');
 
@@ -261,7 +261,7 @@ function getLanguageFromCssClasses(classes) {
  * @param {String} modeSuggestion
  * @returns {*}
  */
-function popupEditor(elem, modeSuggestion) {
+export function popupEditor(elem, modeSuggestion) {
     const content = elem.textContent;
 
     return CodeMirror(function(elt) {
@@ -281,7 +281,7 @@ function popupEditor(elem, modeSuggestion) {
  * @param cmInstance
  * @param modeSuggestion
  */
-function setMode(cmInstance, modeSuggestion, content) {
+export function setMode(cmInstance, modeSuggestion, content) {
       cmInstance.setOption('mode', getMode(modeSuggestion, content));
 }
 
@@ -290,7 +290,7 @@ function setMode(cmInstance, modeSuggestion, content) {
  * @param cmInstance
  * @param codeContent
  */
-function setContent(cmInstance, codeContent) {
+export function setContent(cmInstance, codeContent) {
     cmInstance.setValue(codeContent);
     setTimeout(() => {
         updateLayout(cmInstance);
@@ -301,7 +301,7 @@ function setContent(cmInstance, codeContent) {
  * Update the layout (codemirror refresh) of a cm instance.
  * @param cmInstance
  */
-function updateLayout(cmInstance) {
+export function updateLayout(cmInstance) {
     cmInstance.refresh();
 }
 
@@ -310,7 +310,7 @@ function updateLayout(cmInstance) {
  * @param {HTMLElement} elem
  * @returns {*}
  */
-function markdownEditor(elem) {
+export function markdownEditor(elem) {
     const content = elem.textContent;
     const config = {
         value: content,
@@ -330,22 +330,10 @@ function markdownEditor(elem) {
 }
 
 /**
- * Get the 'meta' key dependant on the user's system.
+ * Get the 'meta' key dependent on the user's system.
  * @returns {string}
  */
-function getMetaKey() {
+export function getMetaKey() {
     let mac = CodeMirror.keyMap["default"] == CodeMirror.keyMap.macDefault;
     return mac ? "Cmd" : "Ctrl";
 }
-
-export default {
-    highlight: highlight,
-    highlightWithin: highlightWithin,
-    wysiwygView: wysiwygView,
-    popupEditor: popupEditor,
-    setMode: setMode,
-    setContent: setContent,
-    updateLayout: updateLayout,
-    markdownEditor: markdownEditor,
-    getMetaKey: getMetaKey,
-};

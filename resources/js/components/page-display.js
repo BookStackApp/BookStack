@@ -1,5 +1,4 @@
 import Clipboard from "clipboard/dist/clipboard.min";
-import Code from "../services/code";
 import * as DOM from "../services/dom";
 import {scrollAndHighlightElement} from "../services/util";
 
@@ -9,7 +8,7 @@ class PageDisplay {
         this.elem = elem;
         this.pageId = elem.getAttribute('page-display');
 
-        Code.highlight();
+        window.importVersioned('code').then(Code => Code.highlight());
         this.setupPointer();
         this.setupNavHighlighting();
         this.setupDetailsCodeBlockRefresh();
