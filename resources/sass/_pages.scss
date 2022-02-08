@@ -19,12 +19,12 @@
   }
 }
 
-body.mce-fullscreen .page-editor .edit-area,
+body.tox-fullscreen .page-editor .edit-area,
 body.markdown-fullscreen .page-editor .edit-area {
   z-index: 12;
 }
 
-body.mce-fullscreen, body.markdown-fullscreen {
+body.tox-fullscreen, body.markdown-fullscreen {
   .page-editor, .flex-fill {
     overflow: visible;
   }
