@@ -86,8 +86,7 @@ function buildToolbar(options) {
     const toolbar = [
         'undo redo',
         'styleselect',
-        'bold italic underline formatoverflow',
-        'forecolor backcolor',
+        'bold italic underline forecolor backcolor formatoverflow',
         'alignleft aligncenter alignright alignjustify',
         'bullist numlist listoverflow',
         textDirPlugins,
