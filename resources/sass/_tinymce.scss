@@ -1,4 +1,5 @@
 
+// Custom full screen mode
 .tox.tox-fullscreen {
   position: fixed;
   top: 0;
@@ -8,6 +9,7 @@
   z-index: 100;
 }
 
+// In editor body overrides
 .page-content.mce-content-body {
   padding-block-start: 1rem;
   padding-block-end: 1rem;
@@ -15,17 +17,43 @@
   display: block;
 }
 
+// In editor line height override
 .page-content.mce-content-body p {
   line-height: 1.6;
 }
 
+// Pad out bottom of editor
 .page-content.mce-content-body > :last-child {
   margin-bottom: 5rem;
 }
 
+// Center toolbar items
 .tox-toolbar__primary {
   justify-content: center;
 }
+
+
+/**
+ * Dark Mode Overrides
+ */
+.dark-mode .tox .tox-toolbar__primary,
+.dark-mode .tox .tox-menu,
+.dark-mode .tox .tox-dialog__header,
+.dark-mode .tox .tox-dialog,
+.dark-mode .tox .tox-dialog__footer,
+.dark-mode .tox .tox-pop__dialog,
+.dark-mode .tox.tox-tinymce-aux .tox-toolbar__overflow {
+    background-color: #333;
+}
+.dark-mode .tox .tox-tbtn svg,
+.dark-mode .tox .tox-tbtn,
+.dark-mode .tox .tox-collection--list .tox-collection__item--active:not(.tox-collection__item--state-disabled)
+{
+  color: #dbdbdb;
+  fill: #dbdbdb;
+}
+
+
 
 /**
  * Format Menu Hacks
