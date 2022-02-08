@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 
 ENV APACHE_DOCUMENT_ROOT /app/public
 WORKDIR /app
