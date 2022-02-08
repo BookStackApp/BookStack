@@ -59,6 +59,10 @@ return [
     'webhook_delete' => 'odstránil(a) si webhook',
     'webhook_delete_notification' => 'Webhook úspešne odstránený',
 
+    // Users
+    'user_update_notification' => 'User successfully updated',
+    'user_delete_notification' => 'User successfully removed',
+
     // Other
     'commented_on'                => 'komentoval(a)',
     'permissions_update'          => 'aktualizované oprávnenia',

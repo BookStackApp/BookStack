@@ -93,7 +93,6 @@ return [
 
     // Email Content
     'email_action_help' => ':actionText를 클릭할 수 없을 때는 웹 브라우저에서 다음 링크로 접속할 수 있습니다.',
-    // Don't Translate
     'email_rights' => 'All rights reserved.',
 
     // Footer Link Options
