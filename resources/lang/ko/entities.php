@@ -279,7 +279,7 @@ return [
     'attachments_upload' => '파일 올리기',
     'attachments_link' => '링크로 첨부',
     'attachments_set_link' => '링크 설정',
-    'attachments_delete' => '이 첨부파일을 정말 삭제하시겠습니까?',
+    'attachments_delete' => '첨부 파일을 지울까요?',
     'attachments_dropzone' => '여기에 파일을 드롭하거나 여기를 클릭하세요.',
     'attachments_no_files' => '올린 파일 없음',
     'attachments_explain_link' => '파일을 올리지 않고 링크로 첨부할 수 있습니다.',
