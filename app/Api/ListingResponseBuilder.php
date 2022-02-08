@@ -48,7 +48,7 @@ class ListingResponseBuilder
         $filteredQuery = $this->filterQuery($this->query);
 
         $total = $filteredQuery->count();
-        $data = $this->fetchData($filteredQuery)->each(function($model) {
+        $data = $this->fetchData($filteredQuery)->each(function ($model) {
             foreach ($this->resultModifiers as $modifier) {
                 $modifier($model);
             }
@@ -61,7 +61,8 @@ class ListingResponseBuilder
     }
 
     /**
-     * Add a callback to modify each element of the results
+     * Add a callback to modify each element of the results.
+     *
      * @param (callable(Model)) $modifier
      */
     public function modifyResults($modifier): void

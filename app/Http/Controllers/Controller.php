@@ -54,6 +54,7 @@ abstract class Controller extends BaseController
     protected function showPermissionError()
     {
         $message = request()->wantsJson() ? trans('errors.permissionJson') : trans('errors.permission');
+
         throw new NotifyException($message, '/', 403);
     }
 

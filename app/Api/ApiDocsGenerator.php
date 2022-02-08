@@ -102,8 +102,8 @@ class ApiDocsGenerator
             $this->controllerClasses[$className] = $class;
         }
 
-        $rules = collect($class->getValidationRules()[$methodName] ?? [])->map(function($validations) {
-            return array_map(function($validation) {
+        $rules = collect($class->getValidationRules()[$methodName] ?? [])->map(function ($validations) {
+            return array_map(function ($validation) {
                 return $this->getValidationAsString($validation);
             }, $validations);
         })->toArray();
@@ -129,6 +129,7 @@ class ApiDocsGenerator
         }
 
         $class = get_class($validation);
+
         throw new Exception("Cannot provide string representation of rule for class: {$class}");
     }
 

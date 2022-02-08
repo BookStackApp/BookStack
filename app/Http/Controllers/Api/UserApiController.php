@@ -16,7 +16,7 @@ class UserApiController extends ApiController
     protected $userRepo;
 
     protected $fieldsToExpose = [
-        'email', 'created_at', 'updated_at', 'last_activity_at', 'external_auth_id'
+        'email', 'created_at', 'updated_at', 'last_activity_at', 'external_auth_id',
     ];
 
     public function __construct(UserRepo $userRepo)
@@ -27,6 +27,7 @@ class UserApiController extends ApiController
         $this->middleware(function ($request, $next) {
             $this->checkPermission('users-manage');
             $this->preventAccessInDemoMode();
+
             return $next($request);
         });
     }
@@ -35,29 +36,29 @@ class UserApiController extends ApiController
     {
         return [
             'create' => [
-                'name' => ['required', 'min:2'],
+                'name'  => ['required', 'min:2'],
                 'email' => [
-                    'required', 'min:2', 'email', new Unique('users', 'email')
+                    'required', 'min:2', 'email', new Unique('users', 'email'),
                 ],
                 'external_auth_id' => ['string'],
-                'language' => ['string'],
-                'password' => [Password::default()],
-                'roles' => ['array'],
-                'roles.*' => ['integer'],
-                'send_invite' => ['boolean'],
+                'language'         => ['string'],
+                'password'         => [Password::default()],
+                'roles'            => ['array'],
+                'roles.*'          => ['integer'],
+                'send_invite'      => ['boolean'],
             ],
             'update' => [
-                'name' => ['min:2'],
+                'name'  => ['min:2'],
                 'email' => [
                     'min:2',
                     'email',
-                    (new Unique('users', 'email'))->ignore($userId ?? null)
+                    (new Unique('users', 'email'))->ignore($userId ?? null),
                 ],
                 'external_auth_id' => ['string'],
-                'language' => ['string'],
-                'password' => [Password::default()],
-                'roles' => ['array'],
-                'roles.*' => ['integer'],
+                'language'         => ['string'],
+                'password'         => [Password::default()],
+                'roles'            => ['array'],
+                'roles.*'          => ['integer'],
             ],
             'delete' => [
                 'migrate_ownership_id' => ['integer', 'exists:users,id'],
@@ -113,6 +114,7 @@ class UserApiController extends ApiController
     /**
      * Update an existing user in the system.
      * Requires permission to manage users.
+     *
      * @throws UserUpdateException
      */
     public function update(Request $request, string $id)

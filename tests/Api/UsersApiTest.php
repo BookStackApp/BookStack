@@ -56,13 +56,13 @@ class UsersApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
-                'id'   => $firstUser->id,
-                'name' => $firstUser->name,
-                'slug' => $firstUser->slug,
-                'email' => $firstUser->email,
+                'id'          => $firstUser->id,
+                'name'        => $firstUser->name,
+                'slug'        => $firstUser->slug,
+                'email'       => $firstUser->email,
                 'profile_url' => $firstUser->getProfileUrl(),
-                'edit_url' => $firstUser->getEditUrl(),
-                'avatar_url' => $firstUser->getAvatar(),
+                'edit_url'    => $firstUser->getEditUrl(),
+                'avatar_url'  => $firstUser->getAvatar(),
             ],
         ]]);
     }
@@ -74,24 +74,24 @@ class UsersApiTest extends TestCase
         $role = Role::query()->first();
 
         $resp = $this->postJson($this->baseEndpoint, [
-            'name' => 'Benny Boris',
-            'email' => 'bboris@example.com',
-            'password' => 'mysuperpass',
-            'language' => 'it',
-            'roles' => [$role->id],
+            'name'        => 'Benny Boris',
+            'email'       => 'bboris@example.com',
+            'password'    => 'mysuperpass',
+            'language'    => 'it',
+            'roles'       => [$role->id],
             'send_invite' => false,
         ]);
 
         $resp->assertStatus(200);
         $resp->assertJson([
-            'name' => 'Benny Boris',
-            'email' => 'bboris@example.com',
+            'name'             => 'Benny Boris',
+            'email'            => 'bboris@example.com',
             'external_auth_id' => '',
-            'roles' => [
+            'roles'            => [
                 [
-                    'id' => $role->id,
+                    'id'           => $role->id,
                     'display_name' => $role->display_name,
-                ]
+                ],
             ],
         ]);
         $this->assertDatabaseHas('users', ['email' => 'bboris@example.com']);
@@ -109,8 +109,8 @@ class UsersApiTest extends TestCase
         Notification::fake();
 
         $resp = $this->postJson($this->baseEndpoint, [
-            'name' => 'Benny Boris',
-            'email' => 'bboris@example.com',
+            'name'        => 'Benny Boris',
+            'email'       => 'bboris@example.com',
             'send_invite' => true,
         ]);
 
@@ -140,7 +140,7 @@ class UsersApiTest extends TestCase
 
         $resp = $this->postJson($this->baseEndpoint, [
             'email' => $existingUser->email,
-            'name' => 'Benny Boris',
+            'name'  => 'Benny Boris',
         ]);
         $resp->assertStatus(422);
         $resp->assertJson($this->validationResponse(['email' => ['The email has already been taken.']]));
@@ -158,15 +158,15 @@ class UsersApiTest extends TestCase
 
         $resp->assertStatus(200);
         $resp->assertJson([
-            'id'         => $user->id,
-            'slug'       => $user->slug,
-            'email'      => $user->email,
+            'id'               => $user->id,
+            'slug'             => $user->slug,
+            'email'            => $user->email,
             'external_auth_id' => $user->external_auth_id,
-            'roles' => [
+            'roles'            => [
                 [
-                    'id' => $userRole->id,
+                    'id'           => $userRole->id,
                     'display_name' => $userRole->display_name,
-                ]
+                ],
             ],
         ]);
     }
@@ -178,19 +178,19 @@ class UsersApiTest extends TestCase
         $user = $this->getAdmin();
         $roles = Role::query()->pluck('id');
         $resp = $this->putJson($this->baseEndpoint . "/{$user->id}", [
-            'name' => 'My updated user',
-            'email' => 'barrytest@example.com',
-            'roles' => $roles,
+            'name'             => 'My updated user',
+            'email'            => 'barrytest@example.com',
+            'roles'            => $roles,
             'external_auth_id' => 'btest',
-            'password' => 'barrytester',
-            'language' => 'fr',
+            'password'         => 'barrytester',
+            'language'         => 'fr',
         ]);
 
         $resp->assertStatus(200);
         $resp->assertJson([
-            'id' => $user->id,
-            'name' => 'My updated user',
-            'email' => 'barrytest@example.com',
+            'id'               => $user->id,
+            'name'             => 'My updated user',
+            'email'            => 'barrytest@example.com',
             'external_auth_id' => 'btest',
         ]);
         $user->refresh();
@@ -210,9 +210,9 @@ class UsersApiTest extends TestCase
 
         $resp->assertStatus(200);
         $this->assertDatabaseHas('users', [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
+            'id'       => $user->id,
+            'name'     => $user->name,
+            'email'    => $user->email,
             'password' => $user->password,
         ]);
         $this->assertEquals($roleCount, $user->roles()->count());

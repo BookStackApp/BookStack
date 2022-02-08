@@ -75,12 +75,12 @@ class UserController extends Controller
         $passwordRequired = ($authMethod === 'standard' && !$sendInvite);
 
         $validationRules = [
-            'name'    => ['required'],
-            'email'   => ['required', 'email', 'unique:users,email'],
-            'language' => ['string'],
+            'name'             => ['required'],
+            'email'            => ['required', 'email', 'unique:users,email'],
+            'language'         => ['string'],
             'roles'            => ['array'],
             'roles.*'          => ['integer'],
-            'password' => $passwordRequired ? ['required', Password::default()] : null,
+            'password'         => $passwordRequired ? ['required', Password::default()] : null,
             'password-confirm' => $passwordRequired ? ['required', 'same:password'] : null,
             'external_auth_id' => $externalAuth ? ['required'] : null,
         ];
