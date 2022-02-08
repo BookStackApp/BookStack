@@ -108,14 +108,6 @@ class HomeController extends Controller
     }
 
     /**
-     * Get custom head HTML, Used in ajax calls to show in editor.
-     */
-    public function customHeadContent()
-    {
-        return view('common.custom-head');
-    }
-
-    /**
      * Show the view for /robots.txt.
      */
     public function robots()

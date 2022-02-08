@@ -206,7 +206,6 @@ Route::middleware('auth')->group(function () {
     // Other Pages
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index']);
-    Route::get('/custom-head-content', [HomeController::class, 'customHeadContent']);
 
     // Settings
     Route::get('/settings', [SettingController::class, 'index'])->name('settings');

@@ -138,16 +138,16 @@ function gatherPlugins(options) {
 }
 
 /**
- * Load custom HTML head content from the settings into the editor.
- * TODO: We should be able to get this from current parent page?
- * @param {Editor} editor
+ * Fetch custom HTML head content from the parent page head into the editor.
  */
-function loadCustomHeadContent(editor) {
-    window.$http.get(window.baseUrl('/custom-head-content')).then(resp => {
-        if (!resp.data) return;
-        let head = editor.getDoc().querySelector('head');
-        head.innerHTML += resp.data;
-    });
+function fetchCustomHeadContent() {
+    const headContentLines = document.head.innerHTML.split("\n");
+    const startLineIndex = headContentLines.findIndex(line => line.trim() === '<!-- Start: custom user content -->');
+    const endLineIndex = headContentLines.findIndex(line => line.trim() === '<!-- End: custom user content -->');
+    if (startLineIndex === -1 || endLineIndex === -1) {
+        return ''
+    }
+    return headContentLines.slice(startLineIndex + 1, endLineIndex).join('\n');
 }
 
 /**
@@ -175,15 +175,6 @@ function getSetupCallback(options) {
             }
             window.$events.emit('editor-html-change', content);
         }
-
-        // TODO - Update to standardise across both editors
-        // Use events within listenForBookStackEditorEvents instead (Different event signature)
-        window.$events.listen('editor-html-update', html => {
-            editor.setContent(html);
-            editor.selection.select(editor.getBody(), true);
-            editor.selection.collapse(false);
-            editorChange(html);
-        });
 
         // Custom handler hook
         window.$events.emitPublic(options.containerElement, 'editor-tinymce::setup', {editor});
@@ -253,7 +244,9 @@ export function build(options) {
             }
         },
         init_instance_callback(editor) {
-            loadCustomHeadContent(editor);
+            let head = editor.getDoc().querySelector('head');
+            console.log(fetchCustomHeadContent());
+            head.innerHTML += fetchCustomHeadContent();
         },
         setup(editor) {
             for (const [key, config] of Object.entries(toolBarGroupButtons)) {

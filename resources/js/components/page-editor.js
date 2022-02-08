@@ -158,8 +158,10 @@ class PageEditor {
 
         this.draftDisplay.innerText = this.editingPageText;
         this.toggleDiscardDraftVisibility(false);
-        window.$events.emit('editor-html-update', response.data.html || '');
-        window.$events.emit('editor-markdown-update', response.data.markdown || response.data.html);
+        window.$events.emit('editor::replace', {
+            html: response.data.html,
+            markdown: response.data.markdown,
+        });
 
         this.titleElem.value = response.data.name;
         window.setTimeout(() => {

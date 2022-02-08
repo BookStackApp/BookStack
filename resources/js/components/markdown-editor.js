@@ -98,11 +98,6 @@ class MarkdownEditor {
             toolbarLabel.closest('.markdown-editor-wrap').classList.add('active');
         });
 
-        window.$events.listen('editor-markdown-update', value => {
-            this.cm.setValue(value);
-            this.updateAndRender();
-        });
-
         this.codeMirrorSetup();
         this.listenForBookStackEditorEvents();
 
