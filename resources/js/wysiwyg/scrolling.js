@@ -12,21 +12,6 @@ export function scrollToQueryString(editor) {
 }
 
 /**
- * Override for touch events to allow scrolling on mobile devices.
- * TODO - Check if still needed or if needs editing.
- * @param {Editor} editor
- */
-export function fixScrollForMobile(editor) {
-    const container = editor.getContainer();
-    const toolbarButtons = container.querySelectorAll('.mce-btn');
-    for (let button of toolbarButtons) {
-        button.addEventListener('touchstart', event => {
-            event.stopPropagation();
-        });
-    }
-}
-
-/**
  * @param {Editor} editor
  * @param {String} scrollId
  */
