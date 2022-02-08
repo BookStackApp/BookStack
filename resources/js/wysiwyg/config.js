@@ -191,6 +191,25 @@ function getSetupCallback(options) {
 
 /**
  * @param {WysiwygConfigOptions} options
+ */
+function getContentStyle(options) {
+    return `
+html, body, html.dark-mode {
+    background: ${options.darkMode ? '#222' : '#fff'};
+} 
+body {
+    padding-left: 15px !important;
+    padding-right: 15px !important; 
+    height: initial !important;
+    margin:0!important; 
+    margin-left: auto! important;
+    margin-right: auto !important;
+    overflow-y: hidden !important;
+}`.trim().replace('\n', '');
+}
+
+/**
+ * @param {WysiwygConfigOptions} options
  * @return {Object}
  */
 export function build(options) {
@@ -228,7 +247,7 @@ export function build(options) {
         imagetools_toolbar: 'imageoptions',
         contextmenu: false,
         toolbar: toolbar,
-        content_style: `html, body, html.dark-mode {background: ${options.darkMode ? '#222' : '#fff'};} body {padding-left: 15px !important; padding-right: 15px !important; margin:0!important; margin-left:auto!important;margin-right:auto!important;}`,
+        content_style: getContentStyle(options),
         style_formats,
         style_formats_merge: false,
         media_alt_source: false,

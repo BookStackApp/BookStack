@@ -23,8 +23,8 @@
 }
 
 // Pad out bottom of editor
-.page-content.mce-content-body > :last-child {
-  margin-bottom: 5rem;
+body.page-content.mce-content-body  {
+  padding-bottom: 5rem;
 }
 
 // Center toolbar items
