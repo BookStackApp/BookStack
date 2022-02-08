@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "name": "Dan Spaggleforth",
+  "email": "dspaggles@example.com",
+  "created_at": "2022-02-03T16:27:55.000000Z",
+  "updated_at": "2022-02-03T16:27:55.000000Z",
+  "external_auth_id": "abc123456",
+  "slug": "dan-spaggleforth",
+  "last_activity_at": "2022-02-03T16:27:55.000000Z",
+  "profile_url": "https://docs.example.com/user/dan-spaggleforth",
+  "edit_url": "https://docs.example.com/settings/users/1",
+  "avatar_url": "https://docs.example.com/uploads/images/user/2021-10/thumbs-50-50/profile-2021.jpg",
+  "roles": [
+    {
+      "id": 2,
+      "display_name": "Editors"
+    }
+  ]
+}

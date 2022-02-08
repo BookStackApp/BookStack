@@ -84,9 +84,8 @@ class CreateAdmin extends Command
             return SymfonyCommand::FAILURE;
         }
 
-        $user = $this->userRepo->create($validator->validated());
+        $user = $this->userRepo->createWithoutActivity($validator->validated());
         $this->userRepo->attachSystemRole($user, 'admin');
-        $this->userRepo->downloadAndAssignUserAvatar($user);
         $user->email_confirmed = true;
         $user->save();
 

@@ -2,8 +2,10 @@
 
 namespace BookStack\Api;
 
+use BookStack\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ListingResponseBuilder
@@ -11,6 +13,11 @@ class ListingResponseBuilder
     protected $query;
     protected $request;
     protected $fields;
+
+    /**
+     * @var array<callable>
+     */
+    protected $resultModifiers = [];
 
     protected $filterOperators = [
         'eq'   => '=',
@@ -24,6 +31,7 @@ class ListingResponseBuilder
 
     /**
      * ListingResponseBuilder constructor.
+     * The given fields will be forced visible within the model results.
      */
     public function __construct(Builder $query, Request $request, array $fields)
     {
@@ -35,12 +43,16 @@ class ListingResponseBuilder
     /**
      * Get the response from this builder.
      */
-    public function toResponse()
+    public function toResponse(): JsonResponse
     {
         $filteredQuery = $this->filterQuery($this->query);
 
         $total = $filteredQuery->count();
-        $data = $this->fetchData($filteredQuery);
+        $data = $this->fetchData($filteredQuery)->each(function($model) {
+            foreach ($this->resultModifiers as $modifier) {
+                $modifier($model);
+            }
+        });
 
         return response()->json([
             'data'  => $data,
@@ -49,7 +61,16 @@ class ListingResponseBuilder
     }
 
     /**
-     * Fetch the data to return in the response.
+     * Add a callback to modify each element of the results
+     * @param (callable(Model)) $modifier
+     */
+    public function modifyResults($modifier): void
+    {
+        $this->resultModifiers[] = $modifier;
+    }
+
+    /**
+     * Fetch the data to return within the response.
      */
     protected function fetchData(Builder $query): Collection
     {

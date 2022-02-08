@@ -84,7 +84,7 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
             try {
                 $user = $this->createNewFromLdapAndCreds($userDetails, $credentials);
             } catch (UserRegistrationException $exception) {
-                throw new LoginAttemptException($exception->message);
+                throw new LoginAttemptException($exception->getMessage());
             }
         }
 

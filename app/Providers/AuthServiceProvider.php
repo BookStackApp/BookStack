@@ -23,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         // Password Configuration
+        // Changes here must be reflected in ApiDocsGenerate@getValidationAsString.
         Password::defaults(function () {
             return Password::min(8);
         });
