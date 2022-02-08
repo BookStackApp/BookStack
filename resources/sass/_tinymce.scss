@@ -37,6 +37,11 @@ body.page-content.mce-content-body  {
   pointer-events: none;
 }
 
+// Prevent details summary clicks {
+.page-content.mce-content-body details summary {
+  pointer-events: none;
+}
+
 /**
  * Dark Mode Overrides
  */
