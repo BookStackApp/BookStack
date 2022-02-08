@@ -27,6 +27,8 @@ export function listen(editor) {
 
     // Focus on the editor
     window.$events.listen('editor::focus', () => {
-        editor.focus();
+        if (editor.initialized) {
+            editor.focus();
+        }
     });
 }
