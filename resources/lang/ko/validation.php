@@ -108,7 +108,7 @@ return [
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => '같은 비밀번호를 다시 입력하세요.',
+            'required_with' => '같은 패스워드를 다시 입력하세요.',
         ],
     ],
 

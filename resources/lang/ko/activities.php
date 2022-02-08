@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name"을 북마크에서 지웠습니다.',
 
     // MFA
-    'mfa_setup_method_notification' => 'MFA를 설정했습니다.',
-    'mfa_remove_method_notification' => 'MFA 설정을 지웠습니다.',
+    'mfa_setup_method_notification' => '다중 인증을 설정했습니다.',
+    'mfa_remove_method_notification' => '다중 인증을 해제했습니다.',
 
     // Webhooks
     'webhook_create' => '웹 훅 만들기',

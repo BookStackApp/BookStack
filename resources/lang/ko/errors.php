@@ -37,7 +37,7 @@ return [
     'social_account_register_instructions' => '계정이 없어도 :socialAccount로 가입할 수 있습니다.',
     'social_driver_not_found' => '가입할 수 없습니다.',
     'social_driver_not_configured' => ':socialAccount가 유효하지 않습니다.',
-    'invite_token_expired' => '이 링크는 더 이상 유효하지 않습니다. 비밀번호를 바꾸세요.',
+    'invite_token_expired' => '이 링크는 더 이상 유효하지 않습니다. 패스워드를 바꾸세요.',
 
     // System
     'path_not_writable' => ':filePath에 쓰는 것을 서버에서 허용하지 않습니다.',
@@ -58,12 +58,12 @@ return [
 
     // Entities
     'entity_not_found' => '항목이 없습니다.',
-    'bookshelf_not_found' => '서가가 없습니다.',
-    'book_not_found' => '책자가 없습니다.',
-    'page_not_found' => '문서가 없습니다.',
+    'bookshelf_not_found' => '책꽂이가 없습니다.',
+    'book_not_found' => '책이 없습니다.',
+    'page_not_found' => '문책꽂이 없습니다.',
     'chapter_not_found' => '챕터가 없습니다.',
-    'selected_book_not_found' => '고른 책자가 없습니다.',
-    'selected_book_chapter_not_found' => '고른 책자나 챕터가 없습니다.',
+    'selected_book_not_found' => '고른 책이 없습니다.',
+    'selected_book_chapter_not_found' => '고른 책나 챕터가 없습니다.',
     'guests_cannot_save_drafts' => 'Guest는 초안 문서를 보관할 수 없습니다.',
 
     // Users
