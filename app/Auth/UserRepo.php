@@ -60,7 +60,7 @@ class UserRepo
     }
 
     /**
-     * Get all users as Builder for API
+     * Get all users as Builder for API.
      */
     public function getApiUsersBuilder(): Builder
     {
@@ -159,6 +159,7 @@ class UserRepo
 
     /**
      * Create a new basic instance of user with the given pre-validated data.
+     *
      * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data
      */
     public function createWithoutActivity(array $data, bool $emailConfirmed = false): User
@@ -188,6 +189,7 @@ class UserRepo
 
     /**
      * As per "createWithoutActivity" but records a "create" activity.
+     *
      * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data
      */
     public function create(array $data, bool $sendInvite = false): User
@@ -199,12 +201,15 @@ class UserRepo
         }
 
         Activity::add(ActivityType::USER_CREATE, $user);
+
         return $user;
     }
 
     /**
      * Update the given user with the given data.
+     *
      * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string} $data
+     *
      * @throws UserUpdateException
      */
     public function update(User $user, array $data, bool $manageUsersAllowed): User
@@ -307,10 +312,10 @@ class UserRepo
         };
 
         return [
-            'pages' => $query(Page::visible()->where('draft', '=', false)),
+            'pages'    => $query(Page::visible()->where('draft', '=', false)),
             'chapters' => $query(Chapter::visible()),
-            'books' => $query(Book::visible()),
-            'shelves' => $query(Bookshelf::visible()),
+            'books'    => $query(Book::visible()),
+            'shelves'  => $query(Bookshelf::visible()),
         ];
     }
 
@@ -322,10 +327,10 @@ class UserRepo
         $createdBy = ['created_by' => $user->id];
 
         return [
-            'pages' => Page::visible()->where($createdBy)->count(),
+            'pages'    => Page::visible()->where($createdBy)->count(),
             'chapters' => Chapter::visible()->where($createdBy)->count(),
-            'books' => Book::visible()->where($createdBy)->count(),
-            'shelves' => Bookshelf::visible()->where($createdBy)->count(),
+            'books'    => Book::visible()->where($createdBy)->count(),
+            'shelves'  => Bookshelf::visible()->where($createdBy)->count(),
         ];
     }
 

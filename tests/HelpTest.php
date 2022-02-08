@@ -4,7 +4,6 @@ namespace Tests;
 
 class HelpTest extends TestCase
 {
-
     public function test_wysiwyg_help_shows_tiny_and_tiny_license_link()
     {
         $resp = $this->get('/help/wysiwyg');
@@ -21,5 +20,4 @@ class HelpTest extends TestCase
         $contents = file_get_contents($expectedPath);
         $this->assertStringContainsString('GNU LESSER GENERAL PUBLIC LICENSE', $contents);
     }
-
 }
