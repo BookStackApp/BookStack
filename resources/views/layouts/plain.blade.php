@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.lang') }}"
-      dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}">
+      dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
+      class="@yield('document-class')">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
 

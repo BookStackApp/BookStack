@@ -1,4 +1,5 @@
 @extends('layouts.plain')
+@section('document-class', setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : '')
 
 @section('content')
     <div class="px-l pb-m m-s card">

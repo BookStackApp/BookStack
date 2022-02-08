@@ -237,14 +237,13 @@ export function build(options) {
         file_picker_types: 'file image',
         file_picker_callback,
         paste_preprocess(plugin, args) {
-            let content = args.content;
+            const content = args.content;
             if (content.indexOf('<img src="file://') !== -1) {
                 args.content = '';
             }
         },
         init_instance_callback(editor) {
-            let head = editor.getDoc().querySelector('head');
-            console.log(fetchCustomHeadContent());
+            const head = editor.getDoc().querySelector('head');
             head.innerHTML += fetchCustomHeadContent();
         },
         setup(editor) {
