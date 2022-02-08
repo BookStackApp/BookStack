@@ -189,7 +189,7 @@ class UserManagementTest extends TestCase
         foreach ($langs as $lang) {
             config()->set('app.locale', $lang);
             $resp = $this->asAdmin()->get('/settings/users/create');
-            $resp->assertElementExists('select[name="setting[language]"] option[value="' . $lang . '"][selected]');
+            $resp->assertElementExists('select[name="language"] option[value="' . $lang . '"][selected]');
         }
     }
 

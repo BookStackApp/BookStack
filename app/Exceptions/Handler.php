@@ -101,6 +101,10 @@ class Handler extends ExceptionHandler
             $code = $e->status;
         }
 
+        if (method_exists($e, 'getStatus')) {
+            $code = $e->getStatus();
+        }
+
         $responseData['error']['code'] = $code;
 
         return new JsonResponse($responseData, $code, $headers);

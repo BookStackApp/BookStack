@@ -3,11 +3,13 @@
 namespace BookStack\Api;
 
 use BookStack\Http\Controllers\Api\ApiController;
+use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -100,9 +102,34 @@ class ApiDocsGenerator
             $this->controllerClasses[$className] = $class;
         }
 
-        $rules = $class->getValdationRules()[$methodName] ?? [];
+        $rules = collect($class->getValidationRules()[$methodName] ?? [])->map(function($validations) {
+            return array_map(function($validation) {
+                return $this->getValidationAsString($validation);
+            }, $validations);
+        })->toArray();
 
         return empty($rules) ? null : $rules;
+    }
+
+    /**
+     * Convert the given validation message to a readable string.
+     */
+    protected function getValidationAsString($validation): string
+    {
+        if (is_string($validation)) {
+            return $validation;
+        }
+
+        if (is_object($validation) && method_exists($validation, '__toString')) {
+            return strval($validation);
+        }
+
+        if ($validation instanceof Password) {
+            return 'min:8';
+        }
+
+        $class = get_class($validation);
+        throw new Exception("Cannot provide string representation of rule for class: {$class}");
     }
 
     /**

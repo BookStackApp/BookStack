@@ -1,0 +1,7 @@
+{
+  "name": "Dan Brown",
+  "email": "dannyb@example.com",
+  "roles": [1],
+  "language": "fr",
+  "send_invite": true
+}

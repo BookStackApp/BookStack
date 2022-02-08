@@ -9,15 +9,25 @@ class NotifyException extends Exception implements Responsable
 {
     public $message;
     public $redirectLocation;
+    protected $status;
 
     /**
      * NotifyException constructor.
      */
-    public function __construct(string $message, string $redirectLocation = '/')
+    public function __construct(string $message, string $redirectLocation = '/', int $status = 500)
     {
         $this->message = $message;
         $this->redirectLocation = $redirectLocation;
+        $this->status = $status;
         parent::__construct();
+    }
+
+    /**
+     * Get the desired status code for this exception.
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
     }
 
     /**
@@ -28,6 +38,11 @@ class NotifyException extends Exception implements Responsable
     public function toResponse($request)
     {
         $message = $this->getMessage();
+
+        // Front-end JSON handling. API-side handling managed via handler.
+        if ($request->wantsJson()) {
+            return response()->json(['error' => $message], 403);
+        }
 
         if (!empty($message)) {
             session()->flash('error', $message);

@@ -2,30 +2,37 @@
 
 namespace BookStack\Auth;
 
+use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\UserInviteService;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\UserUpdateException;
+use BookStack\Facades\Activity;
 use BookStack\Uploads\UserAvatars;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class UserRepo
 {
     protected $userAvatar;
+    protected $inviteService;
 
     /**
      * UserRepo constructor.
      */
-    public function __construct(UserAvatars $userAvatar)
+    public function __construct(UserAvatars $userAvatar, UserInviteService $inviteService)
     {
         $this->userAvatar = $userAvatar;
+        $this->inviteService = $inviteService;
     }
 
     /**
@@ -53,11 +60,13 @@ class UserRepo
     }
 
     /**
-     * Get all the users with their permissions.
+     * Get all users as Builder for API
      */
-    public function getAllUsers(): Collection
+    public function getApiUsersBuilder(): Builder
     {
-        return User::query()->with('roles', 'avatar')->orderBy('name', 'asc')->get();
+        return User::query()->select(['*'])
+            ->scopes('withLastActivityAt')
+            ->with(['avatar']);
     }
 
     /**
@@ -85,18 +94,6 @@ class UserRepo
         }
 
         return $query->paginate($count);
-    }
-
-    /**
-     * Creates a new user and attaches a role to them.
-     */
-    public function registerNew(array $data, bool $emailConfirmed = false): User
-    {
-        $user = $this->create($data, $emailConfirmed);
-        $user->attachDefaultRole();
-        $this->downloadAndAssignUserAvatar($user);
-
-        return $user;
     }
 
     /**
@@ -161,22 +158,84 @@ class UserRepo
     }
 
     /**
-     * Create a new basic instance of user.
+     * Create a new basic instance of user with the given pre-validated data.
+     * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data
      */
-    public function create(array $data, bool $emailConfirmed = false): User
+    public function createWithoutActivity(array $data, bool $emailConfirmed = false): User
     {
-        $details = [
-            'name'             => $data['name'],
-            'email'            => $data['email'],
-            'password'         => bcrypt($data['password']),
-            'email_confirmed'  => $emailConfirmed,
-            'external_auth_id' => $data['external_auth_id'] ?? '',
-        ];
-
         $user = new User();
-        $user->forceFill($details);
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = bcrypt(empty($data['password']) ? Str::random(32) : $data['password']);
+        $user->email_confirmed = $emailConfirmed;
+        $user->external_auth_id = $data['external_auth_id'] ?? '';
+
         $user->refreshSlug();
         $user->save();
+
+        if (!empty($data['language'])) {
+            setting()->putUser($user, 'language', $data['language']);
+        }
+
+        if (isset($data['roles'])) {
+            $this->setUserRoles($user, $data['roles']);
+        }
+
+        $this->downloadAndAssignUserAvatar($user);
+
+        return $user;
+    }
+
+    /**
+     * As per "createWithoutActivity" but records a "create" activity.
+     * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data
+     */
+    public function create(array $data, bool $sendInvite = false): User
+    {
+        $user = $this->createWithoutActivity($data, true);
+
+        if ($sendInvite) {
+            $this->inviteService->sendInvitation($user);
+        }
+
+        Activity::add(ActivityType::USER_CREATE, $user);
+        return $user;
+    }
+
+    /**
+     * Update the given user with the given data.
+     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string} $data
+     * @throws UserUpdateException
+     */
+    public function update(User $user, array $data, bool $manageUsersAllowed): User
+    {
+        if (!empty($data['name'])) {
+            $user->name = $data['name'];
+            $user->refreshSlug();
+        }
+
+        if (!empty($data['email']) && $manageUsersAllowed) {
+            $user->email = $data['email'];
+        }
+
+        if (!empty($data['external_auth_id']) && $manageUsersAllowed) {
+            $user->external_auth_id = $data['external_auth_id'];
+        }
+
+        if (isset($data['roles']) && $manageUsersAllowed) {
+            $this->setUserRoles($user, $data['roles']);
+        }
+
+        if (!empty($data['password'])) {
+            $user->password = bcrypt($data['password']);
+        }
+
+        if (!empty($data['language'])) {
+            setting()->putUser($user, 'language', $data['language']);
+        }
+
+        $user->save();
+        Activity::add(ActivityType::USER_UPDATE, $user);
 
         return $user;
     }
@@ -188,6 +247,8 @@ class UserRepo
      */
     public function destroy(User $user, ?int $newOwnerId = null)
     {
+        $this->ensureDeletable($user);
+
         $user->socialAccounts()->delete();
         $user->apiTokens()->delete();
         $user->favourites()->delete();
@@ -202,6 +263,22 @@ class UserRepo
             if (!is_null($newOwner)) {
                 $this->migrateOwnership($user, $newOwner);
             }
+        }
+
+        Activity::add(ActivityType::USER_DELETE, $user);
+    }
+
+    /**
+     * @throws NotifyException
+     */
+    protected function ensureDeletable(User $user): void
+    {
+        if ($this->isOnlyAdmin($user)) {
+            throw new NotifyException(trans('errors.users_cannot_delete_only_admin'), $user->getEditUrl());
+        }
+
+        if ($user->system_name === 'public') {
+            throw new NotifyException(trans('errors.users_cannot_delete_guest'), $user->getEditUrl());
         }
     }
 
@@ -230,10 +307,10 @@ class UserRepo
         };
 
         return [
-            'pages'    => $query(Page::visible()->where('draft', '=', false)),
+            'pages' => $query(Page::visible()->where('draft', '=', false)),
             'chapters' => $query(Chapter::visible()),
-            'books'    => $query(Book::visible()),
-            'shelves'  => $query(Bookshelf::visible()),
+            'books' => $query(Book::visible()),
+            'shelves' => $query(Bookshelf::visible()),
         ];
     }
 
@@ -245,10 +322,10 @@ class UserRepo
         $createdBy = ['created_by' => $user->id];
 
         return [
-            'pages'       => Page::visible()->where($createdBy)->count(),
-            'chapters'    => Chapter::visible()->where($createdBy)->count(),
-            'books'       => Book::visible()->where($createdBy)->count(),
-            'shelves'     => Bookshelf::visible()->where($createdBy)->count(),
+            'pages' => Page::visible()->where($createdBy)->count(),
+            'chapters' => Chapter::visible()->where($createdBy)->count(),
+            'books' => Book::visible()->where($createdBy)->count(),
+            'shelves' => Bookshelf::visible()->where($createdBy)->count(),
         ];
     }
 
