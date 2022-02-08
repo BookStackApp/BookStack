@@ -60,8 +60,8 @@ return [
     'webhook_delete_notification' => 'Veebihaak on kustutatud',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Kasutaja on muudetud',
+    'user_delete_notification' => 'Kasutaja on kustutatud',
 
     // Other
     'commented_on'                => 'kommenteeris lehte',
