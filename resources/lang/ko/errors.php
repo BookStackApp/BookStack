@@ -18,15 +18,15 @@ return [
     'ldap_fail_authed' => '이 정보로 LDAP 서버에 접근할 수 없습니다.',
     'ldap_extension_not_installed' => 'PHP에 LDAP 확장 도구를 설치하세요.',
     'ldap_cannot_connect' => 'LDAP 서버에 연결할 수 없습니다.',
-    'saml_already_logged_in' => '이미 로그인되어있습니다.',
-    'saml_user_not_registered' => '사용자 이름이 등록되지 않았으며 자동 계정 등록이 활성화되지 않았습니다.',
-    'saml_no_email_address' => '이 사용자에 대하여 외부 인증시스템에 의해 제공된 데이타 중 이메일 주소를 찾을 수 없습니다.',
-    'saml_invalid_response_id' => '이 응용프로그램에 의해 시작된 프로세스에 의하면 외부 인증시스템으로 온 요청이 인식되지 않습니다. 인증 후에 뒤로가기 기능을 사용했을 경우 이런 현상이 발생할 수 있습니다.',
-    'saml_fail_authed' => '시스템 로그인에 실패하였습니다. ( 해당 시스템이 인증성공값을 제공하지 않았습니다. )',
-    'oidc_already_logged_in' => 'Already logged in',
-    'oidc_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
-    'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'saml_already_logged_in' => '로그인 중입니다.',
+    'saml_user_not_registered' => ':name 사용자가 없습니다. 자동 가입 옵션이 비활성 상태입니다.',
+    'saml_no_email_address' => '인증 시스템이 제공한 메일 주소가 없습니다.',
+    'saml_invalid_response_id' => '인증 시스템이 요청을 받지 못했습니다. 인증 후 이전 페이지로 돌아갈 때 발생할 수 있는 현상입니다.',
+    'saml_fail_authed' => ':system에 로그인할 수 없습니다.',
+    'oidc_already_logged_in' => '로그인 중입니다.',
+    'oidc_user_not_registered' => ':name 사용자가 없습니다. 자동 가입 옵션이 비활성 상태입니다.',
+    'oidc_no_email_address' => '인증 시스템이 제공한 메일 주소가 없습니다.',
+    'oidc_fail_authed' => ':system에 로그인할 수 없습니다.',
     'social_no_action_defined' => '무슨 활동인지 알 수 없습니다.',
     'social_login_bad_response' => ":socialAccount에 로그인할 수 없습니다. : \\n:error",
     'social_account_in_use' => ':socialAccount(을)를 가진 사용자가 있습니다. :socialAccount로 로그인하세요.',
@@ -37,7 +37,7 @@ return [
     'social_account_register_instructions' => '계정이 없어도 :socialAccount로 가입할 수 있습니다.',
     'social_driver_not_found' => '가입할 수 없습니다.',
     'social_driver_not_configured' => ':socialAccount가 유효하지 않습니다.',
-    'invite_token_expired' => '이 링크는 더 이상 유효하지 않습니다. 비밀번호를 바꾸세요.',
+    'invite_token_expired' => '이 링크는 더 이상 유효하지 않습니다. 패스워드를 바꾸세요.',
 
     // System
     'path_not_writable' => ':filePath에 쓰는 것을 서버에서 허용하지 않습니다.',
@@ -58,12 +58,12 @@ return [
 
     // Entities
     'entity_not_found' => '항목이 없습니다.',
-    'bookshelf_not_found' => '서가가 없습니다.',
-    'book_not_found' => '책자가 없습니다.',
+    'bookshelf_not_found' => '책꽂이가 없습니다.',
+    'book_not_found' => '책이 없습니다.',
     'page_not_found' => '문서가 없습니다.',
     'chapter_not_found' => '챕터가 없습니다.',
-    'selected_book_not_found' => '고른 책자가 없습니다.',
-    'selected_book_chapter_not_found' => '고른 책자나 챕터가 없습니다.',
+    'selected_book_not_found' => '고른 책이 없습니다.',
+    'selected_book_chapter_not_found' => '고른 책이나 챕터가 없습니다.',
     'guests_cannot_save_drafts' => 'Guest는 초안 문서를 보관할 수 없습니다.',
 
     // Users
@@ -86,24 +86,24 @@ return [
     // Error pages
     '404_page_not_found' => '404 Not Found',
     'sorry_page_not_found' => '문서를 못 찾았습니다.',
-    'sorry_page_not_found_permission_warning' => '이 페이지가 존재하기를 기대했다면, 볼 수 있는 권한이 없을 수 있다.',
+    'sorry_page_not_found_permission_warning' => '문서를 볼 권한이 없습니다.',
     'image_not_found' => 'Image Not Found',
-    'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
-    'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
+    'image_not_found_subtitle' => '이미지를 못 찾았습니다.',
+    'image_not_found_details' => '이미지가 지워졌을 수 있습니다.',
     'return_home' => '처음으로 돌아가기',
     'error_occurred' => '문제가 생겼습니다.',
-    'app_down' => ':appName에 문제가 있는 것 같습니다',
-    'back_soon' => '곧 되돌아갑니다.',
+    'app_down' => ':appName에 문제가 생겼습니다.',
+    'back_soon' => '곧 돌아갑니다.',
 
     // API errors
-    'api_no_authorization_found' => '요청에서 인증 토큰을 찾을 수 없다.',
-    'api_bad_authorization_format' => '요청에서 인증 토큰을 찾았지만, 형식이 잘못된 것 같다.',
-    'api_user_token_not_found' => '제공된 인증 토큰과 일치하는 API 토큰을 찾을 수 없다.',
-    'api_incorrect_token_secret' => '사용한 API 토큰에 대해 제공한 시크릿이 맞지 않는다.',
-    'api_user_no_api_permission' => '사용한 API 토큰의 소유자가, API 호출을 할 수 있는 권한이 없다.',
-    'api_user_token_expired' => '사용된 인증 토큰이 만료되었다.',
+    'api_no_authorization_found' => '요청에서 인증 토큰을 찾을 수 없습니다.',
+    'api_bad_authorization_format' => '요청에서 인증 토큰을 찾았으나 형식에 문제가 있습니다.',
+    'api_user_token_not_found' => '인증 토큰과 일치하는 API 토큰을 찾을 수 없습니다.',
+    'api_incorrect_token_secret' => 'API 토큰이 제공한 암호에 문제가 있습니다.',
+    'api_user_no_api_permission' => 'API 토큰의 소유자가 API를 호출할 권한이 없습니다.',
+    'api_user_token_expired' => '인증 토큰이 만료되었습니다.',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => '테스트 이메일 발송할 때 발생한 오류:',
+    'maintenance_test_email_failure' => '메일을 발송하는 도중 문제가 생겼습니다:',
 
 ];
