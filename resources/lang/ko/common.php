@@ -63,7 +63,7 @@ return [
     'no_activity' => '활동 없음',
     'no_items' => '항목 없음',
     'back_to_top' => '맨 위로',
-    'skip_to_main_content' => '메인 콘텐츠로',
+    'skip_to_main_content' => '메인 항목으로',
     'toggle_details' => '내용 보기',
     'toggle_thumbnails' => '섬네일 보기',
     'details' => '정보',
@@ -89,7 +89,7 @@ return [
     'tab_info' => '정보',
     'tab_info_label' => 'Tab: 보조 정보 보이기',
     'tab_content' => '내용',
-    'tab_content_label' => 'Tab: 우선 콘텐츠 보이기',
+    'tab_content_label' => 'Tab: 우선 항목 보이기',
 
     // Email Content
     'email_action_help' => ':actionText를 클릭할 수 없을 때는 웹 브라우저에서 다음 링크로 접속할 수 있습니다.',
@@ -99,5 +99,5 @@ return [
     // Footer Link Options
     // Not directly used but available for convenience to users.
     'privacy_policy' => '개인 정보 처리 방침',
-    'terms_of_service' => '이용 약관',
+    'terms_of_service' => '서비스 이용 약관',
 ];
