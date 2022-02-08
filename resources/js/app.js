@@ -6,6 +6,12 @@ window.baseUrl = function(path) {
     return basePath + '/' + path;
 };
 
+window.importVersioned = function(moduleName) {
+    const version = document.querySelector('link[href*="/dist/styles.css?version="]').href.split('?version=').pop();
+    const importPath = window.baseUrl(`dist/${moduleName}.js?version=${version}`);
+    return import(importPath);
+};
+
 // Set events and http services on window
 import events from "./services/events"
 import httpInstance from "./services/http"

@@ -1,5 +1,3 @@
-import Code from "../services/code";
-
 function elemIsCodeBlock(elem) {
     return elem.className === 'CodeMirrorContainer';
 }
@@ -31,8 +29,10 @@ function showPopup(editor) {
         const editorElem = selectedNode.querySelector('.CodeMirror');
         const cmInstance = editorElem.CodeMirror;
         if (cmInstance) {
-            Code.setContent(cmInstance, code);
-            Code.setMode(cmInstance, lang, code);
+            window.importVersioned('code').then(Code => {
+                Code.setContent(cmInstance, code);
+                Code.setMode(cmInstance, lang, code);
+            });
         }
         const textArea = selectedNode.querySelector('textarea');
         if (textArea) textArea.textContent = code;
@@ -93,7 +93,7 @@ function register(editor, url) {
         showPopup(editor);
     });
 
-    function parseCodeMirrorInstances() {
+    function parseCodeMirrorInstances(Code) {
 
         // Recover broken codemirror instances
         $('.CodeMirrorContainer').filter((index ,elem) => {
@@ -111,17 +111,18 @@ function register(editor, url) {
         });
     }
 
-    editor.on('init', function() {
+    editor.on('init', async function() {
+        const Code = await window.importVersioned('code');
         // Parse code mirror instances on init, but delay a little so this runs after
         // initial styles are fetched into the editor.
         editor.undoManager.transact(function () {
-            parseCodeMirrorInstances();
+            parseCodeMirrorInstances(Code);
         });
         // Parsed code mirror blocks when content is set but wait before setting this handler
         // to avoid any init 'SetContent' events.
         setTimeout(() => {
             editor.on('SetContent', () => {
-                setTimeout(parseCodeMirrorInstances, 100);
+                setTimeout(() => parseCodeMirrorInstances(Code), 100);
             });
         }, 200);
     });

@@ -1,6 +1,5 @@
 import MarkdownIt from "markdown-it";
 import mdTasksLists from 'markdown-it-task-lists';
-import code from '../services/code';
 import Clipboard from "../services/clipboard";
 import {debounce} from "../services/util";
 
@@ -23,13 +22,20 @@ class MarkdownEditor {
 
         this.displayStylesLoaded = false;
         this.input = this.elem.querySelector('textarea');
-        this.cm = code.markdownEditor(this.input);
+
+        this.cm = null;
+        this.Code = null;
+        const cmLoadPromise = window.importVersioned('code').then(Code => {
+            this.cm = Code.markdownEditor(this.input);
+            this.Code = Code;
+            return this.cm;
+        });
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
 
         const displayLoad = () => {
             this.displayDoc = this.display.contentDocument;
-            this.init();
+            this.init(cmLoadPromise);
         };
 
         if (this.display.contentDocument.readyState === 'complete') {
@@ -45,7 +51,7 @@ class MarkdownEditor {
         });
     }
 
-    init() {
+    init(cmLoadPromise) {
 
         let lastClick = 0;
 
@@ -98,7 +104,15 @@ class MarkdownEditor {
             toolbarLabel.closest('.markdown-editor-wrap').classList.add('active');
         });
 
-        this.codeMirrorSetup();
+        cmLoadPromise.then(cm => {
+            this.codeMirrorSetup(cm);
+
+            // Refresh CodeMirror on container resize
+            const resizeDebounced = debounce(() => this.Code.updateLayout(cm), 100, false);
+            const observer = new ResizeObserver(resizeDebounced);
+            observer.observe(this.elem);
+        });
+
         this.listenForBookStackEditorEvents();
 
         // Scroll to text if needed.
@@ -107,11 +121,6 @@ class MarkdownEditor {
         if (scrollText) {
             this.scrollToText(scrollText);
         }
-
-        // Refresh CodeMirror on container resize
-        const resizeDebounced = debounce(() => code.updateLayout(this.cm), 100, false);
-        const observer = new ResizeObserver(resizeDebounced);
-        observer.observe(this.elem);
     }
 
     // Update the input content and render the display.
@@ -158,15 +167,14 @@ class MarkdownEditor {
         topElem.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth'});
     }
 
-    codeMirrorSetup() {
-        const cm = this.cm;
+    codeMirrorSetup(cm) {
         const context = this;
 
         // Text direction
         // cm.setOption('direction', this.textDirection);
         cm.setOption('direction', 'ltr'); // Will force to remain as ltr for now due to issues when HTML is in editor.
         // Custom key commands
-        let metaKey = code.getMetaKey();
+        let metaKey = this.Code.getMetaKey();
         const extraKeys = {};
         // Insert Image shortcut
         extraKeys[`${metaKey}-Alt-I`] = function(cm) {

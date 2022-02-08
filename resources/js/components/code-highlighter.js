@@ -1,8 +1,12 @@
-import Code from "../services/code"
 class CodeHighlighter {
 
     constructor(elem) {
-        Code.highlightWithin(elem);
+        const codeBlocks = elem.querySelectorAll('pre');
+        if (codeBlocks.length > 0) {
+            window.importVersioned('code').then(Code => {
+               Code.highlightWithin(elem);
+            });
+        }
     }
 
 }
