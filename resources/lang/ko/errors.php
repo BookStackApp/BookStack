@@ -63,7 +63,7 @@ return [
     'page_not_found' => '문서가 없습니다.',
     'chapter_not_found' => '챕터가 없습니다.',
     'selected_book_not_found' => '고른 책이 없습니다.',
-    'selected_book_chapter_not_found' => '고른 책나 챕터가 없습니다.',
+    'selected_book_chapter_not_found' => '고른 책이나 챕터가 없습니다.',
     'guests_cannot_save_drafts' => 'Guest는 초안 문서를 보관할 수 없습니다.',
 
     // Users
