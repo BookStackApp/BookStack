@@ -135,6 +135,27 @@ body.tox-fullscreen, body.markdown-fullscreen {
     background: #FFECEC;
   }
 
+  details {
+    border: 1px solid #DDD;
+    margin-bottom: 1em;
+    padding: $-s;
+  }
+  details > summary {
+    margin-top: -$-s;
+    margin-left: -$-s;
+    margin-right: -$-s;
+    margin-bottom: -$-s;
+    font-weight: bold;
+    background-color: #EEEEEE;
+    padding: $-xs $-s;
+  }
+  details[open] > summary {
+    margin-bottom: 0;
+  }
+  details > summary + * {
+    margin-top: .2em;
+  }
+
   &.page-revision {
     pre code {
       white-space: pre-wrap;
