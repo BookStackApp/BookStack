@@ -59,6 +59,10 @@ return [
     'webhook_delete' => 'حذف وب هوک',
     'webhook_delete_notification' => 'وب هوک با موفقیت حذف شد',
 
+    // Users
+    'user_update_notification' => 'User successfully updated',
+    'user_delete_notification' => 'User successfully removed',
+
     // Other
     'commented_on'                => 'ثبت دیدگاه',
     'permissions_update'          => 'به روزرسانی مجوزها',
