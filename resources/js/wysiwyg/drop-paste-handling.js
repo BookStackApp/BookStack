@@ -43,7 +43,6 @@ function paste(editor, options, event) {
                 editor.dom.replace(newEl, id);
             }).catch(err => {
                 editor.dom.remove(id);
-                // TODO - Check we have this translation
                 window.$events.emit('error', options.translations.imageUploadErrorText);
                 console.log(err);
             });

@@ -1,6 +1,6 @@
 import {register as registerShortcuts} from "./shortcuts";
 import {listen as listenForCommonEvents} from "./common-events";
-import {scrollToQueryString, fixScrollForMobile} from "./scrolling";
+import {scrollToQueryString} from "./scrolling";
 import {listenForDragAndPaste} from "./drop-paste-handling";
 
 import {getPlugin as getCodeeditorPlugin} from "./plugin-codeeditor";
@@ -164,7 +164,6 @@ function getSetupCallback(options) {
         editor.on('init', () => {
             editorChange();
             scrollToQueryString(editor);
-            fixScrollForMobile(editor);
             window.editor = editor;
         });
 
