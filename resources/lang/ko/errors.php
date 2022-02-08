@@ -60,7 +60,7 @@ return [
     'entity_not_found' => '항목이 없습니다.',
     'bookshelf_not_found' => '책꽂이가 없습니다.',
     'book_not_found' => '책이 없습니다.',
-    'page_not_found' => '문책꽂이 없습니다.',
+    'page_not_found' => '문서가 없습니다.',
     'chapter_not_found' => '챕터가 없습니다.',
     'selected_book_not_found' => '고른 책이 없습니다.',
     'selected_book_chapter_not_found' => '고른 책나 챕터가 없습니다.',
