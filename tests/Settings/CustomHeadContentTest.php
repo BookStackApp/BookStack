@@ -14,6 +14,15 @@ class CustomHeadContentTest extends TestCase
         $resp->assertSee('console.log("cat")', false);
     }
 
+    public function test_content_wrapped_in_specific_html_comments()
+    {
+        // These comments are used to identify head content for editor injection
+        $this->setSettings(['app-custom-head' => '<script>console.log("cat");</script>']);
+        $resp = $this->get('/login');
+        $resp->assertSee('<!-- Start: custom user content -->', false);
+        $resp->assertSee('<!-- End: custom user content -->', false);
+    }
+
     public function test_configured_content_does_not_show_on_settings_page()
     {
         $this->setSettings(['app-custom-head' => '<script>console.log("cat");</script>']);

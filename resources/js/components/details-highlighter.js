@@ -1,4 +1,3 @@
-import Code from "../services/code"
 class DetailsHighlighter {
 
     constructor(elem) {
@@ -10,7 +9,11 @@ class DetailsHighlighter {
     onToggle() {
         if (this.dealtWith) return;
 
-        Code.highlightWithin(this.elem);
+        if (this.elem.querySelector('pre')) {
+            window.importVersioned('code').then(Code => {
+                Code.highlightWithin(this.elem);
+            });
+        }
         this.dealtWith = true;
     }
 }
