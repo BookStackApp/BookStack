@@ -59,6 +59,10 @@ return [
     'webhook_delete' => 'kustutas veebihaagi',
     'webhook_delete_notification' => 'Veebihaak on kustutatud',
 
+    // Users
+    'user_update_notification' => 'User successfully updated',
+    'user_delete_notification' => 'User successfully removed',
+
     // Other
     'commented_on'                => 'kommenteeris lehte',
     'permissions_update'          => 'muutis õiguseid',
