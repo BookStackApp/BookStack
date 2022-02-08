@@ -59,6 +59,10 @@ return [
     'webhook_delete' => 'удалил вебхук',
     'webhook_delete_notification' => 'Вебхук успешно удален',
 
+    // Users
+    'user_update_notification' => 'User successfully updated',
+    'user_delete_notification' => 'User successfully removed',
+
     // Other
     'commented_on'                => 'прокомментировал',
     'permissions_update'          => 'обновил разрешения',
