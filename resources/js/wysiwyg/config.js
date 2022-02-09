@@ -210,6 +210,16 @@ body {
 }`.trim().replace('\n', '');
 }
 
+// Custom "Document Root" element, a custom element to identify/define
+// block that may act as another "editable body".
+// Using a custom node means we can identify and add/remove these as desired
+// without affecting user content.
+class DocRootElement extends HTMLDivElement {
+    constructor() {
+        super();
+    }
+}
+
 /**
  * @param {WysiwygConfigOptions} options
  * @return {Object}
@@ -218,8 +228,10 @@ export function build(options) {
 
     // Set language
     window.tinymce.addI18n(options.language, options.translationMap);
-
+    // Build toolbar content
     const {toolbar, groupButtons: toolBarGroupButtons} = buildToolbar(options);
+    // Define our custom root node
+    customElements.define('doc-root', DocRootElement, {extends: 'div'});
 
     // Return config object
     return {
@@ -242,9 +254,10 @@ export function build(options) {
         statusbar: false,
         menubar: false,
         paste_data_images: false,
-        extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram],details[*],summary[*]',
+        extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram],details[*],summary[*],doc-root',
         automatic_uploads: false,
-        valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[img]",
+        custom_elements: 'doc-root',
+        valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote|div],+div[pre],+div[img],+doc-root[p|h1|h2|h3|h4|h5|h6|blockquote|pre|img|ul|ol],-doc-root[doc-root|#text]",
         plugins: gatherPlugins(options),
         imagetools_toolbar: 'imageoptions',
         contextmenu: false,
