@@ -37,9 +37,15 @@ body.page-content.mce-content-body  {
   pointer-events: none;
 }
 
-// Prevent details summary clicks {
+// Details/summary editor usability
 .page-content.mce-content-body details summary {
   pointer-events: none;
+}
+.page-content.mce-content-body details [detailswrap] {
+  padding: $-s;
+  margin-left: (2px - $-s);
+  margin-right: (2px - $-s);
+  margin-bottom: (2px - $-s);
 }
 
 /**
