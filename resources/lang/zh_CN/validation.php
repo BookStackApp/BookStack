@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute 必须为:min到:max位数。',
     'email'                => ':attribute 必须是有效的电子邮件地址。',
     'ends_with' => ' :attribute 必须以 :values 后缀结尾',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => ':attribute 必须是一个有效的文件。',
     'filled'               => ':attribute 字段是必需的。',
     'gt'                   => [
         'numeric' => ':attribute必须大于 :value.',
