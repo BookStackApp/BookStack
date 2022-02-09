@@ -120,7 +120,7 @@ return [
     'show_caption' => 'Mostra didascalia',
     'constrain' => 'Mantieni proporzioni',
 
-    // Images, links & embed
+    // Images, links, details/summary & embed
     'source' => 'Sorgente',
     'alt_desc' => 'Descrizione alternativa',
     'embed' => 'Incorpora',
@@ -131,6 +131,12 @@ return [
     'open_link' => 'Apri collegamento in...',
     'open_link_current' => 'Finestra corrente',
     'open_link_new' => 'Nuova finestra',
+    'insert_collapsible' => 'Insert collapsible block',
+    'collapsible_unwrap' => 'Unwrap',
+    'edit_label' => 'Edit label',
+    'toggle_open_closed' => 'Toggle open/closed',
+    'collapsible_edit' => 'Edit collapsible block',
+    'toggle_label' => 'Toggle label',
 
     // About view
     'about_title' => 'Informazioni sull\'editor di WYSIWYG',
