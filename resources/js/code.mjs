@@ -204,56 +204,22 @@ function getTheme() {
 /**
  * Create a CodeMirror instance for showing inside the WYSIWYG editor.
  *  Manages a textarea element to hold code content.
- * @param {HTMLElement} elem
+ * @param {HTMLElement} cmContainer
+ * @param {String} content
+ * @param {String} language
  * @returns {{wrap: Element, editor: *}}
  */
-export function wysiwygView(elem) {
-    const doc = elem.ownerDocument;
-    const codeElem = elem.querySelector('code');
-
-    let lang = getLanguageFromCssClasses(elem.className || '');
-    if (!lang && codeElem) {
-        lang = getLanguageFromCssClasses(codeElem.className || '');
-    }
-
-    elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
-    const content = elem.textContent;
-    const newWrap = doc.createElement('div');
-    const newTextArea = doc.createElement('textarea');
-
-    newWrap.className = 'CodeMirrorContainer';
-    newWrap.setAttribute('data-lang', lang);
-    newWrap.setAttribute('dir', 'ltr');
-    newTextArea.style.display = 'none';
-    elem.parentNode.replaceChild(newWrap, elem);
-
-    newWrap.appendChild(newTextArea);
-    newWrap.contentEditable = 'false';
-    newTextArea.textContent = content;
-
-    let cm = CodeMirror(function(elt) {
-        newWrap.appendChild(elt);
-    }, {
+export function wysiwygView(cmContainer, content, language) {
+    return CodeMirror(cmContainer, {
         value: content,
-        mode:  getMode(lang, content),
+        mode: getMode(language, content),
         lineNumbers: true,
         lineWrapping: false,
         theme: getTheme(),
         readOnly: true
     });
-
-    return {wrap: newWrap, editor: cm};
 }
 
-/**
- * Get the code language from the given css classes.
- * @param {String} classes
- * @return {String}
- */
-function getLanguageFromCssClasses(classes) {
-    const langClasses = classes.split(' ').filter(cssClass => cssClass.startsWith('language-'));
-    return (langClasses[0] || '').replace('language-', '');
-}
 
 /**
  * Create a CodeMirror instance to show in the WYSIWYG pop-up editor

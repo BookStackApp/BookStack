@@ -136,6 +136,7 @@ return [
     'edit_label' => 'Edit label',
     'toggle_open_closed' => 'Toggle open/closed',
     'collapsible_edit' => 'Edit collapsible block',
+    'toggle_label' => 'Toggle label',
 
     // About view
     'about_title' => 'About the WYSIWYG Editor',
