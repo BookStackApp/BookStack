@@ -8,6 +8,7 @@ import {getPlugin as getDrawioPlugin} from "./plugin-drawio";
 import {getPlugin as getCustomhrPlugin} from "./plugins-customhr";
 import {getPlugin as getImagemanagerPlugin} from "./plugins-imagemanager";
 import {getPlugin as getAboutPlugin} from "./plugins-about";
+import {getPlugin as getDetailsPlugin} from "./plugins-details";
 
 const style_formats = [
     {title: "Large Header", format: "h2", preview: 'color: blue;'},
@@ -27,7 +28,6 @@ const style_formats = [
 ];
 
 const formats = {
-    codeeditor: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div'},
     alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
     aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
     alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
@@ -79,7 +79,7 @@ function buildToolbar(options) {
         insertoverflow: {
             icon: 'more-drawer',
             tooltip: 'More',
-            items: 'hr codeeditor drawio media'
+            items: 'hr codeeditor drawio media details'
         }
     };
 
@@ -121,6 +121,7 @@ function gatherPlugins(options) {
         "media",
         "imagemanager",
         "about",
+        "details",
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
@@ -128,6 +129,7 @@ function gatherPlugins(options) {
     window.tinymce.PluginManager.add('customhr', getCustomhrPlugin(options));
     window.tinymce.PluginManager.add('imagemanager', getImagemanagerPlugin(options));
     window.tinymce.PluginManager.add('about', getAboutPlugin(options));
+    window.tinymce.PluginManager.add('details', getDetailsPlugin(options));
 
     if (options.drawioUrl) {
         window.tinymce.PluginManager.add('drawio', getDrawioPlugin(options));
@@ -216,7 +218,7 @@ export function build(options) {
 
     // Set language
     window.tinymce.addI18n(options.language, options.translationMap);
-
+    // Build toolbar content
     const {toolbar, groupButtons: toolBarGroupButtons} = buildToolbar(options);
 
     // Return config object
@@ -240,9 +242,17 @@ export function build(options) {
         statusbar: false,
         menubar: false,
         paste_data_images: false,
-        extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram]',
+        extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram],details[*],summary[*],div[*]',
         automatic_uploads: false,
-        valid_children: "-div[p|h1|h2|h3|h4|h5|h6|blockquote],+div[pre],+div[img]",
+        custom_elements: 'doc-root,code-block',
+        valid_children: [
+            "-div[p|h1|h2|h3|h4|h5|h6|blockquote|code-block]",
+            "+div[pre|img]",
+            "-doc-root[doc-root|#text]",
+            "-li[details]",
+            "+code-block[pre]",
+            "+doc-root[code-block]"
+        ].join(','),
         plugins: gatherPlugins(options),
         imagetools_toolbar: 'imageoptions',
         contextmenu: false,

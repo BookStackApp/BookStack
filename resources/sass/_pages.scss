@@ -135,6 +135,35 @@ body.tox-fullscreen, body.markdown-fullscreen {
     background: #FFECEC;
   }
 
+  details {
+    border: 1px solid;
+    @include lightDark(border-color, #DDD, #555);
+    margin-bottom: 1em;
+    padding: $-s;
+  }
+  details > summary {
+    margin-top: -$-s;
+    margin-left: -$-s;
+    margin-right: -$-s;
+    margin-bottom: -$-s;
+    font-weight: bold;
+    @include lightDark(background-color, #EEE, #333);
+    padding: $-xs $-s;
+  }
+  details[open] > summary {
+    margin-bottom: $-s;
+    border-bottom: 1px solid;
+    @include lightDark(border-color, #DDD, #555);
+  }
+  details > summary + * {
+    margin-top: .2em;
+  }
+  details:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
   &.page-revision {
     pre code {
       white-space: pre-wrap;
