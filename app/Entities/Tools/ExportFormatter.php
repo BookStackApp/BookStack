@@ -147,8 +147,29 @@ class ExportFormatter
     {
         $html = $this->containHtml($html);
         $html = $this->replaceIframesWithLinks($html);
+        $html = $this->openDetailElements($html);
 
         return $this->pdfGenerator->fromHtml($html);
+    }
+
+    /**
+     * Within the given HTML content, Open any detail blocks
+     */
+    protected function openDetailElements(string $html): string
+    {
+        libxml_use_internal_errors(true);
+
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $xPath = new DOMXPath($doc);
+
+        $details = $xPath->query('//details');
+        /** @var DOMElement $detail */
+        foreach ($details as $detail) {
+            $detail->setAttribute('open', 'open');
+        }
+
+        return $doc->saveHTML();
     }
 
     /**

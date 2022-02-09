@@ -309,6 +309,24 @@ class ExportTest extends TestCase
         $this->assertStringContainsString('<p><a href="https://www.youtube.com/embed/ShqUjt33uOs">https://www.youtube.com/embed/ShqUjt33uOs</a></p>', $pdfHtml);
     }
 
+    public function test_page_pdf_export_opens_details_blocks()
+    {
+        $page = Page::query()->first()->forceFill([
+            'html'     => '<details><summary>Hello</summary><p>Content!</p></details>',
+        ]);
+        $page->save();
+
+        $pdfHtml = '';
+        $mockPdfGenerator = $this->mock(PdfGenerator::class);
+        $mockPdfGenerator->shouldReceive('fromHtml')
+            ->with(\Mockery::capture($pdfHtml))
+            ->andReturn('');
+        $mockPdfGenerator->shouldReceive('getActiveEngine')->andReturn(PdfGenerator::ENGINE_DOMPDF);
+
+        $this->asEditor()->get($page->getUrl('/export/pdf'));
+        $this->assertStringContainsString('<details open="open"', $pdfHtml);
+    }
+
     public function test_page_markdown_export()
     {
         $page = Page::query()->first();
