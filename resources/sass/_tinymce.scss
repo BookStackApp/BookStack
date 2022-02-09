@@ -17,6 +17,11 @@
   display: block;
 }
 
+// Default styles for our custom root nodes
+.page-content.mce-content-body doc-root {
+  display: block;
+}
+
 // In editor line height override
 .page-content.mce-content-body p {
   line-height: 1.6;
@@ -41,7 +46,7 @@ body.page-content.mce-content-body  {
 .page-content.mce-content-body details summary {
   pointer-events: none;
 }
-.page-content.mce-content-body details [detailswrap] {
+.page-content.mce-content-body details doc-root {
   padding: $-s;
   margin-left: (2px - $-s);
   margin-right: (2px - $-s);

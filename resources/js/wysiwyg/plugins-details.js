@@ -178,13 +178,16 @@ function setupElementFilters(editor) {
  * @param {tinymce.html.Node} detailsEl
  */
 function ensureDetailsWrappedInEditable(detailsEl) {
+    unwrapDetailsEditable(detailsEl);
+
     detailsEl.attr('contenteditable', 'false');
-    const wrap = tinymce.html.Node.create('div', {detailswrap: 'true', contenteditable: 'true'});
+    const wrap = tinymce.html.Node.create('doc-root', {contenteditable: 'true'});
     for (const child of detailsEl.children()) {
         if (child.name !== 'summary') {
             wrap.append(child);
         }
     }
+
     detailsEl.append(wrap);
 }
 
@@ -193,10 +196,16 @@ function ensureDetailsWrappedInEditable(detailsEl) {
  */
 function unwrapDetailsEditable(detailsEl) {
     detailsEl.attr('contenteditable', null);
+    let madeUnwrap = false;
     for (const child of detailsEl.children()) {
-        if (child.attr('detailswrap')) {
+        if (child.name === 'doc-root') {
             child.unwrap();
+            madeUnwrap = true;
         }
+    }
+
+    if (madeUnwrap) {
+        unwrapDetailsEditable(detailsEl);
     }
 }
 

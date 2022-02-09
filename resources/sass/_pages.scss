@@ -136,7 +136,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 
   details {
-    border: 1px solid #DDD;
+    border: 1px solid;
+    @include lightDark(border-color, #DDD, #555);
     margin-bottom: 1em;
     padding: $-s;
   }
@@ -146,11 +147,13 @@ body.tox-fullscreen, body.markdown-fullscreen {
     margin-right: -$-s;
     margin-bottom: -$-s;
     font-weight: bold;
-    background-color: #EEEEEE;
+    @include lightDark(background-color, #EEE, #333);
     padding: $-xs $-s;
   }
   details[open] > summary {
-    margin-bottom: 0;
+    margin-bottom: $-s;
+    border-bottom: 1px solid;
+    @include lightDark(border-color, #DDD, #555);
   }
   details > summary + * {
     margin-top: .2em;
