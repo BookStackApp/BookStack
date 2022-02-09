@@ -17,6 +17,14 @@
   display: block;
 }
 
+// Default styles for our custom root nodes
+.page-content.mce-content-body doc-root {
+  display: block;
+}
+.page-content.mce-content-body code-block {
+  display: block;
+}
+
 // In editor line height override
 .page-content.mce-content-body p {
   line-height: 1.6;
@@ -33,8 +41,24 @@ body.page-content.mce-content-body  {
 }
 
 // Prevent scroll jumps on codemirror clicks
-.page-content.mce-content-body .CodeMirror {
+.page-content.mce-content-body code-block > * {
   pointer-events: none;
+}
+.page-content.mce-content-body code-block pre {
+  display: none;
+}
+
+// Details/summary editor usability
+.page-content.mce-content-body details summary {
+  pointer-events: none;
+}
+.page-content.mce-content-body details doc-root {
+  padding: $-s;
+  margin-left: (2px - $-s);
+  margin-right: (2px - $-s);
+  margin-bottom: (2px - $-s);
+  margin-top: (2px - $-s);
+  overflow: hidden;
 }
 
 /**
