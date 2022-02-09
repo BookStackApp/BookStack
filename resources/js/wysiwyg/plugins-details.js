@@ -6,6 +6,8 @@
 function register(editor, url) {
 
     editor.ui.registry.addIcon('details', '<svg width="24" height="24"><path d="M8.2 9a.5.5 0 0 0-.4.8l4 5.6a.5.5 0 0 0 .8 0l4-5.6a.5.5 0 0 0-.4-.8ZM20.122 18.151h-16c-.964 0-.934 2.7 0 2.7h16c1.139 0 1.173-2.7 0-2.7zM20.122 3.042h-16c-.964 0-.934 2.7 0 2.7h16c1.139 0 1.173-2.7 0-2.7z"/></svg>');
+    editor.ui.registry.addIcon('togglefold', '<svg height="24"  width="24"><path d="M8.12 19.3c.39.39 1.02.39 1.41 0L12 16.83l2.47 2.47c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41l-3.17-3.17c-.39-.39-1.02-.39-1.41 0l-3.17 3.17c-.4.38-.4 1.02-.01 1.41zm7.76-14.6c-.39-.39-1.02-.39-1.41 0L12 7.17 9.53 4.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.03 0 1.42l3.17 3.17c.39.39 1.02.39 1.41 0l3.17-3.17c.4-.39.4-1.03.01-1.42z"/></svg>');
+    editor.ui.registry.addIcon('togglelabel', '<svg height="18" width="18" viewBox="0 0 24 24"><path d="M21.41,11.41l-8.83-8.83C12.21,2.21,11.7,2,11.17,2H4C2.9,2,2,2.9,2,4v7.17c0,0.53,0.21,1.04,0.59,1.41l8.83,8.83 c0.78,0.78,2.05,0.78,2.83,0l7.17-7.17C22.2,13.46,22.2,12.2,21.41,11.41z M6.5,8C5.67,8,5,7.33,5,6.5S5.67,5,6.5,5S8,5.67,8,6.5 S7.33,8,6.5,8z"/></svg>');
 
     editor.ui.registry.addButton('details', {
         icon: 'details',
@@ -17,14 +19,14 @@ function register(editor, url) {
 
     editor.ui.registry.addButton('removedetails', {
         icon: 'table-delete-table',
-        tooltip: 'Unwrap collapsible block',
+        tooltip: 'Unwrap',
         onAction() {
             unwrapDetailsInSelection(editor)
         }
     });
 
     editor.ui.registry.addButton('editdetials', {
-        icon: 'tag',
+        icon: 'togglelabel',
         tooltip: 'Edit label',
         onAction() {
             const details = getSelectedDetailsBlock(editor);
@@ -33,22 +35,12 @@ function register(editor, url) {
         }
     });
 
-    editor.ui.registry.addButton('collapsedetails', {
-        icon: 'action-prev',
-        tooltip: 'Collapse',
+    editor.ui.registry.addButton('toggledetails', {
+        icon: 'togglefold',
+        tooltip: 'Toggle open/closed',
         onAction() {
             const details = getSelectedDetailsBlock(editor);
-            details.removeAttribute('open');
-            editor.focus();
-        }
-    });
-
-    editor.ui.registry.addButton('expanddetails', {
-        icon: 'action-next',
-        tooltip: 'Expand',
-        onAction() {
-            const details = getSelectedDetailsBlock(editor);
-            details.setAttribute('open', 'open');
+            details.toggleAttribute('open');
             editor.focus();
         }
     });
@@ -67,7 +59,7 @@ function register(editor, url) {
         predicate: function (node) {
             return node.nodeName.toLowerCase() === 'details';
         },
-        items: 'removedetails editdetials collapsedetails expanddetails',
+        items: 'editdetials toggledetails removedetails',
         position: 'node',
         scope: 'node'
     });
@@ -138,7 +130,7 @@ function setSummary(editor, summaryContent) {
         let summary = details.querySelector('summary');
         if (!summary) {
             summary = document.createElement('summary');
-            details.appendChild(summary);
+            details.prepend(summary);
         }
         summary.textContent = summaryContent;
     });
@@ -170,31 +162,42 @@ function unwrapDetailsInSelection(editor) {
 function setupElementFilters(editor) {
     editor.parser.addNodeFilter('details', function(elms) {
         for (const el of elms) {
-            // el.attr('contenteditable', 'false');
-            // console.log(el);
-            // let wrap = el.find('div[detailswrap]');
-            // if (!wrap) {
-            //    wrap = document.createElement('div');
-            //    wrap.setAttribute('detailswrap', 'true');
-            // }
-            //
-            // for (const child of el.children) {
-            //     if (child.nodeName.toLowerCase() === 'summary' || child.hasAttribute('detailswrap')) {
-            //         continue;
-            //     }
-            //     wrap.appendChild(child);
-            // }
-            //
-            // el.appendChild(wrap);
-            // wrap.setAttribute('contenteditable', 'true');
+            ensureDetailsWrappedInEditable(el);
         }
     });
 
     editor.serializer.addNodeFilter('details', function(elms) {
-        for (const summaryEl of elms) {
-            summaryEl.attr('contenteditable', null);
+        for (const el of elms) {
+            unwrapDetailsEditable(el);
+            el.attr('open', null);
         }
     });
+}
+
+/**
+ * @param {tinymce.html.Node} detailsEl
+ */
+function ensureDetailsWrappedInEditable(detailsEl) {
+    detailsEl.attr('contenteditable', 'false');
+    const wrap = tinymce.html.Node.create('div', {detailswrap: 'true', contenteditable: 'true'});
+    for (const child of detailsEl.children()) {
+        if (child.name !== 'summary') {
+            wrap.append(child);
+        }
+    }
+    detailsEl.append(wrap);
+}
+
+/**
+ * @param {tinymce.html.Node} detailsEl
+ */
+function unwrapDetailsEditable(detailsEl) {
+    detailsEl.attr('contenteditable', null);
+    for (const child of detailsEl.children()) {
+        if (child.attr('detailswrap')) {
+            child.unwrap();
+        }
+    }
 }
 
 

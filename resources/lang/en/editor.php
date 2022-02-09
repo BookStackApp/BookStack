@@ -120,7 +120,7 @@ return [
     'show_caption' => 'Show caption',
     'constrain' => 'Constrain proportions',
 
-    // Images, links & embed
+    // Images, links, details/summary & embed
     'source' => 'Source',
     'alt_desc' => 'Alternative description',
     'embed' => 'Embed',
@@ -131,6 +131,11 @@ return [
     'open_link' => 'Open link in...',
     'open_link_current' => 'Current window',
     'open_link_new' => 'New window',
+    'insert_collapsible' => 'Insert collapsible block',
+    'collapsible_unwrap' => 'Unwrap',
+    'edit_label' => 'Edit label',
+    'toggle_open_closed' => 'Toggle open/closed',
+    'collapsible_edit' => 'Edit collapsible block',
 
     // About view
     'about_title' => 'About the WYSIWYG Editor',
