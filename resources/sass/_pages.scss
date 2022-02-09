@@ -158,6 +158,11 @@ body.tox-fullscreen, body.markdown-fullscreen {
   details > summary + * {
     margin-top: .2em;
   }
+  details:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
 
   &.page-revision {
     pre code {

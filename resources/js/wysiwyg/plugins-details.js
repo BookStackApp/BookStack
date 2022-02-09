@@ -29,10 +29,13 @@ function register(editor, url) {
         icon: 'togglelabel',
         tooltip: 'Edit label',
         onAction() {
-            const details = getSelectedDetailsBlock(editor);
-            const dialog = editor.windowManager.open(detailsDialog(editor));
-            dialog.setData({summary: getSummaryTextFromDetails(details)});
+            showDetailLabelEditWindow(editor);
         }
+    });
+
+    editor.on('dblclick', event => {
+        if (!getSelectedDetailsBlock(editor) || event.target.closest('doc-root')) return;
+        showDetailLabelEditWindow(editor);
     });
 
     editor.ui.registry.addButton('toggledetails', {
@@ -46,13 +49,29 @@ function register(editor, url) {
     });
 
     editor.addCommand('InsertDetailsBlock', function () {
-        const content = editor.selection.getContent({format: 'html'});
+        let content = editor.selection.getContent({format: 'html'});
         const details = document.createElement('details');
         const summary = document.createElement('summary');
+        const id = 'details-' + Date.now();
+        details.setAttribute('data-id', id)
         details.appendChild(summary);
-        details.innerHTML += content;
 
+        if (!content) {
+            content = '<p><br></p>';
+        }
+
+        details.innerHTML += content;
         editor.insertContent(details.outerHTML);
+        editor.focus();
+
+        const domDetails = editor.dom.$(`[data-id="${id}"]`);
+        if (domDetails) {
+            const firstChild = domDetails.find('doc-root > *');
+            if (firstChild) {
+                firstChild[0].focus();
+            }
+            domDetails.removeAttr('data-id');
+        }
     });
 
     editor.ui.registry.addContextToolbar('details', {
@@ -67,6 +86,15 @@ function register(editor, url) {
     editor.on('PreInit', () => {
         setupElementFilters(editor);
     });
+}
+
+/**
+ * @param {Editor} editor
+ */
+function showDetailLabelEditWindow(editor) {
+    const details = getSelectedDetailsBlock(editor);
+    const dialog = editor.windowManager.open(detailsDialog(editor));
+    dialog.setData({summary: getSummaryTextFromDetails(details)});
 }
 
 /**
@@ -99,7 +127,7 @@ function detailsDialog(editor) {
                 {
                     type: 'input',
                     name: 'summary',
-                    label: 'Toggle label text',
+                    label: 'Toggle label',
                 },
             ],
         },
@@ -141,14 +169,13 @@ function setSummary(editor, summaryContent) {
  */
 function unwrapDetailsInSelection(editor) {
     const details = editor.selection.getNode().closest('details');
+
     if (details) {
-        const summary = details.querySelector('summary');
+        const elements = details.querySelectorAll('details > *:not(summary, doc-root), doc-root > *');
+
         editor.undoManager.transact(() => {
-            if (summary) {
-                summary.remove();
-            }
-            while (details.firstChild) {
-                details.parentNode.insertBefore(details.firstChild, details);
+            for (const element of elements) {
+                details.parentNode.insertBefore(element, details);
             }
             details.remove();
         });
@@ -170,6 +197,12 @@ function setupElementFilters(editor) {
         for (const el of elms) {
             unwrapDetailsEditable(el);
             el.attr('open', null);
+        }
+    });
+
+    editor.serializer.addNodeFilter('doc-root', function(elms) {
+        for (const el of elms) {
+            el.unwrap();
         }
     });
 }
