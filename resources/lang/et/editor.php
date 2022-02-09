@@ -120,7 +120,7 @@ return [
     'show_caption' => 'Näita tiitlit',
     'constrain' => 'Piira proportsioone',
 
-    // Images, links & embed
+    // Images, links, details/summary & embed
     'source' => 'Allikas',
     'alt_desc' => 'Alternatiivne kirjeldus',
     'embed' => 'Manusta',
@@ -131,6 +131,12 @@ return [
     'open_link' => 'Ava link...',
     'open_link_current' => 'Samas aknas',
     'open_link_new' => 'Uues aknas',
+    'insert_collapsible' => 'Insert collapsible block',
+    'collapsible_unwrap' => 'Unwrap',
+    'edit_label' => 'Edit label',
+    'toggle_open_closed' => 'Toggle open/closed',
+    'collapsible_edit' => 'Edit collapsible block',
+    'toggle_label' => 'Toggle label',
 
     // About view
     'about_title' => 'Info WYSIWYG redaktori kohta',
