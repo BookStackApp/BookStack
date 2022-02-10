@@ -7,41 +7,41 @@ return [
 
     // Pages
     'page_create'                 => 'létrehozta az oldalt:',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Oldal sikeresen létrehozva',
     'page_update'                 => 'frissítette az oldalt:',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Oldal sikeresen frissítve',
     'page_delete'                 => 'törölte az oldalt:',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Oldal sikeresen törölve',
     'page_restore'                => 'visszaállította az oldalt:',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Oldal sikeresen visszaállítva',
     'page_move'                   => 'áthelyezte az oldalt:',
 
     // Chapters
     'chapter_create'              => 'létrehozta a fejezetet:',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Fejezet sikeresen létrehozva',
     'chapter_update'              => 'frissítette a fejezetet:',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Fejezet sikeresen frissítve',
     'chapter_delete'              => 'törölte a fejezetet:',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Fejezet sikeresen törölve',
     'chapter_move'                => 'áthelyezte a fejezetet:',
 
     // Books
     'book_create'                 => 'létrehozott egy könyvet:',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Könyv sikeresen létrehozva',
     'book_update'                 => 'frissítette a könyvet:',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Könyv sikeresen frissítve',
     'book_delete'                 => 'törölte a könyvet:',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'Könyv sikeresen törölve',
     'book_sort'                   => 'átrendezte a könyvet:',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'Könyv sikeresen újrarendezve',
 
     // Bookshelves
     'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create_notification'    => 'Könyvespolc sikeresen létrehozva',
     'bookshelf_update'                 => 'frissítette a könyvespolcot:',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'Könyvespolc sikeresen frissítve',
     'bookshelf_delete'                 => 'törölte a könyvespolcot:',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Könyvespolc sikeresen törölve',
 
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',
@@ -53,15 +53,15 @@ return [
 
     // Webhooks
     'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
+    'webhook_create_notification' => 'Webhook sikeresen létrehozva',
     'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
+    'webhook_update_notification' => 'Webhook sikeresen frissítve',
     'webhook_delete' => 'deleted webhook',
     'webhook_delete_notification' => 'Webhook successfully deleted',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Felhasználó sikeresen frissítve',
+    'user_delete_notification' => 'Felhasználó sikeresen eltávolítva',
 
     // Other
     'commented_on'                => 'megjegyzést fűzött hozzá:',
