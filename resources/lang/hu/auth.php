@@ -84,7 +84,7 @@ return [
     'mfa_option_totp_title' => 'Mobilalkalmazás',
     'mfa_option_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Visszaállítási kulcsok',
-    'mfa_option_backup_codes_desc' => 'Securely store a set of one-time-use backup codes which you can enter to verify your identity.',
+    'mfa_option_backup_codes_desc' => 'Biztonságosan tárolja el az egyszer használatos visszaállítási kódjait, amiket a későbbiekben fel tud majd használni bejelentkezése során.',
     'mfa_gen_confirm_and_enable' => 'Jóváhagyás és engedélyezés',
     'mfa_gen_backup_codes_title' => 'Visszaállítási kódok beállítása',
     'mfa_gen_backup_codes_desc' => 'Tárolja el egy biztonságos helyen az alábbi kódokat. Bejelentkezés során fel tudja használni őket másodlagos bejelentkezési kódként.',
