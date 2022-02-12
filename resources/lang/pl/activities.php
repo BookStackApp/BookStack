@@ -52,16 +52,16 @@ return [
     'mfa_remove_method_notification' => 'Metoda wieloskładnikowa pomyślnie usunięta',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'utworzył webhook',
+    'webhook_create_notification' => 'Webhook utworzony pomyślnie',
+    'webhook_update' => 'zaktualizował webhook',
+    'webhook_update_notification' => 'Webhook zaktualizowany pomyślnie',
+    'webhook_delete' => 'usunął webhook',
+    'webhook_delete_notification' => 'Webhook usunięty pomyślnie',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Użytkownik zaktualizowany pomyślnie',
+    'user_delete_notification' => 'Użytkownik pomyślnie usunięty',
 
     // Other
     'commented_on'                => 'skomentował',
