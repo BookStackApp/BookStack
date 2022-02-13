@@ -9,7 +9,7 @@ return [
     // General editor terms
     'general' => 'Allgemein',
     'advanced' => 'Erweitert',
-    'none' => 'Nichts',
+    'none' => 'Keine Auswahl',
     'cancel' => 'Abbrechen',
     'save' => 'Speichern',
     'close' => 'Schließen',
