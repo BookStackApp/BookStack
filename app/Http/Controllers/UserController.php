@@ -48,8 +48,8 @@ class UserController extends Controller
         $users->appends($listDetails);
 
         return view('users.index', [
-            'users' => $users,
-            'listDetails' => $listDetails
+            'users'       => $users,
+            'listDetails' => $listDetails,
         ]);
     }
 
