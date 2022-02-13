@@ -270,8 +270,8 @@ return [
         'ca' => 'Catalan',
         'cs' => 'Tchèque',
         'da' => 'Danois',
-        'de' => 'Deutsch (Sie)',
-        'de_informal' => 'Deutsch (Du)',
+        'de' => 'Allemand',
+        'de_informal' => 'Allemand (informel)',
         'es' => 'Espagnol',
         'es_AR' => 'Espagnol (Argentine)',
         'et' => 'Estonien',
@@ -298,7 +298,7 @@ return [
         'uk' => 'Ukrainien',
         'vi' => 'Vietnamien',
         'zh_CN' => 'Chinois (simplifié)',
-        'zh_TW' => '繁體中文',
+        'zh_TW' => 'Mandarin de Taïwan',
     ],
     //!////////////////////////////////
 ];
