@@ -2,7 +2,6 @@
 
 namespace BookStack\Auth\Queries;
 
-
 use BookStack\Auth\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -14,7 +13,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class AllUsersPaginatedAndSorted
 {
-
     /**
      * @param array{sort: string, order: string, search: string} $sortData
      */
@@ -38,5 +36,4 @@ class AllUsersPaginatedAndSorted
 
         return $query->paginate($count);
     }
-
 }

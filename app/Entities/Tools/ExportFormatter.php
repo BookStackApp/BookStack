@@ -153,7 +153,7 @@ class ExportFormatter
     }
 
     /**
-     * Within the given HTML content, Open any detail blocks
+     * Within the given HTML content, Open any detail blocks.
      */
     protected function openDetailElements(string $html): string
     {
