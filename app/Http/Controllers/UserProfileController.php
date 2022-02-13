@@ -3,6 +3,8 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityQueries;
+use BookStack\Auth\Queries\UserContentCounts;
+use BookStack\Auth\Queries\UserRecentlyCreatedContent;
 use BookStack\Auth\UserRepo;
 
 class UserProfileController extends Controller
@@ -15,8 +17,8 @@ class UserProfileController extends Controller
         $user = $repo->getBySlug($slug);
 
         $userActivity = $activities->userActivity($user);
-        $recentlyCreated = $repo->getRecentlyCreated($user, 5);
-        $assetCounts = $repo->getAssetCounts($user);
+        $recentlyCreated = (new UserRecentlyCreatedContent())->run($user, 5);
+        $assetCounts = (new UserContentCounts())->run($user);
 
         $this->setPageTitle($user->name);
 

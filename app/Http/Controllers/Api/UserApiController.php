@@ -72,7 +72,9 @@ class UserApiController extends ApiController
      */
     public function list()
     {
-        $users = $this->userRepo->getApiUsersBuilder();
+        $users = User::query()->select(['*'])
+            ->scopes('withLastActivityAt')
+            ->with(['avatar']);
 
         return $this->apiListingResponse($users, [
             'id', 'name', 'slug', 'email', 'external_auth_id',

@@ -2,6 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
+use BookStack\Auth\Role;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Console\Command;
@@ -85,7 +86,7 @@ class CreateAdmin extends Command
         }
 
         $user = $this->userRepo->createWithoutActivity($validator->validated());
-        $this->userRepo->attachSystemRole($user, 'admin');
+        $user->attachRole(Role::getSystemRole('admin'));
         $user->email_confirmed = true;
         $user->save();
 

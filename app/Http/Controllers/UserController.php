@@ -3,6 +3,8 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Auth\Queries\AllUsersPaginatedAndSorted;
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\ImageUploadException;
@@ -39,12 +41,16 @@ class UserController extends Controller
             'search' => $request->get('search', ''),
             'sort'   => $request->get('sort', 'name'),
         ];
-        $users = $this->userRepo->getAllUsersPaginatedAndSorted(20, $listDetails);
+
+        $users = (new AllUsersPaginatedAndSorted())->run(20, $listDetails);
 
         $this->setPageTitle(trans('settings.users'));
         $users->appends($listDetails);
 
-        return view('users.index', ['users' => $users, 'listDetails' => $listDetails]);
+        return view('users.index', [
+            'users' => $users,
+            'listDetails' => $listDetails
+        ]);
     }
 
     /**
@@ -54,7 +60,7 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $authMethod = config('auth.method');
-        $roles = $this->userRepo->getAllRoles();
+        $roles = Role::query()->orderBy('display_name', 'asc')->get();
         $this->setPageTitle(trans('settings.users_add_new'));
 
         return view('users.create', ['authMethod' => $authMethod, 'roles' => $roles]);
@@ -109,7 +115,7 @@ class UserController extends Controller
         $activeSocialDrivers = $socialAuthService->getActiveDrivers();
         $mfaMethods = $user->mfaValues->groupBy('method');
         $this->setPageTitle(trans('settings.user_profile'));
-        $roles = $this->userRepo->getAllRoles();
+        $roles = Role::query()->orderBy('display_name', 'asc')->get();
 
         return view('users.edit', [
             'user'                => $user,
