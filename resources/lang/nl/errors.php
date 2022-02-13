@@ -5,8 +5,8 @@
 return [
 
     // Permissions
-    'permission' => 'U heeft geen toestemming om de gevraagde pagina te openen.',
-    'permissionJson' => 'U heeft geen toestemming om de gevraagde actie uit te voeren.',
+    'permission' => 'U heeft geen machtiging om de gevraagde pagina te openen.',
+    'permissionJson' => 'U heeft geen machtiging om de gevraagde actie uit te voeren.',
 
     // Auth
     'error_user_exists_different_creds' => 'Er bestaat al een gebruiker met het e-mailadres :email, maar met andere inloggegevens.',
@@ -86,7 +86,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Pagina Niet Gevonden',
     'sorry_page_not_found' => 'Sorry, de pagina die je zocht kan niet gevonden worden.',
-    'sorry_page_not_found_permission_warning' => 'Als u verwacht dat deze pagina bestaat heeft u misschien geen rechten om het te bekijken.',
+    'sorry_page_not_found_permission_warning' => 'Als u verwachtte dat deze pagina zou bestaan, hebt u misschien geen machtiging om deze te bekijken.',
     'image_not_found' => 'Afbeelding niet gevonden',
     'image_not_found_subtitle' => 'Sorry, de afbeelding die je zocht is niet beschikbaar.',
     'image_not_found_details' => 'Als u verwachtte dat deze afbeelding zou bestaan, dan is deze misschien verwijderd.',
@@ -100,7 +100,7 @@ return [
     'api_bad_authorization_format' => 'Een autorisatie token is gevonden, maar het formaat schijnt onjuist te zijn',
     'api_user_token_not_found' => 'Er is geen overeenkomende API token gevonden voor de opgegeven autorisatie token',
     'api_incorrect_token_secret' => 'Het opgegeven geheim voor de API token is onjuist',
-    'api_user_no_api_permission' => 'De eigenaar van de gebruikte API token heeft geen toestemming om API calls te maken',
+    'api_user_no_api_permission' => 'De eigenaar van de gebruikte API token heeft geen machtiging om API calls te maken',
     'api_user_token_expired' => 'De gebruikte autorisatie token is verlopen',
 
     // Settings & Maintenance
