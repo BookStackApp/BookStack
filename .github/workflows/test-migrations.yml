@@ -1,15 +1,10 @@
 name: test-migrations
 
-on:
-  push:
-    branches-ignore:
-      - l10n_development
-  pull_request:
-    branches-ignore:
-      - l10n_development
+on: [push, pull_request]
 
 jobs:
   build:
+    if: ${{ github.ref != 'refs/heads/l10n_development' }}
     runs-on: ubuntu-20.04
     strategy:
       matrix:
