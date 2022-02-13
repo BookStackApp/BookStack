@@ -77,17 +77,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * This holds the user's permissions when loaded.
-     *
-     * @var ?Collection
      */
-    protected $permissions;
+    protected ?Collection $permissions;
 
     /**
      * This holds the default user when loaded.
      *
      * @var null|User
      */
-    protected static $defaultUser = null;
+    protected static ?User $defaultUser = null;
 
     /**
      * Returns the default public user.
