@@ -53,8 +53,8 @@ return [
     'attachment_not_found' => 'Bijlage niet gevonden',
 
     // Pages
-    'page_draft_autosave_fail' => 'Kon het concept niet opslaan. Zorg ervoor dat je een werkende internetverbinding hebt.',
-    'page_custom_home_deletion' => 'Kan geen pagina verwijderen terwijl deze is ingesteld als een homepage',
+    'page_draft_autosave_fail' => 'Kon het concept niet opslaan. Zorg ervoor dat je een werkende internetverbinding hebt',
+    'page_custom_home_deletion' => 'Een pagina die als startpagina is ingesteld, kan niet verwijderd worden',
 
     // Entities
     'entity_not_found' => 'Entiteit niet gevonden',
@@ -79,13 +79,13 @@ return [
     // Comments
     'comment_list' => 'Er is een fout opgetreden tijdens het ophalen van de reacties.',
     'cannot_add_comment_to_draft' => 'U kunt geen reacties toevoegen aan een concept.',
-    'comment_add' => 'Er is een fout opgetreden tijdens het toevoegen van de reactie.',
+    'comment_add' => 'Er is een fout opgetreden tijdens het aanpassen / toevoegen van de reactie.',
     'comment_delete' => 'Er is een fout opgetreden tijdens het verwijderen van de reactie.',
     'empty_comment' => 'Kan geen lege reactie toevoegen.',
 
     // Error pages
     '404_page_not_found' => 'Pagina Niet Gevonden',
-    'sorry_page_not_found' => 'Sorry, de pagina die je zocht is niet beschikbaar.',
+    'sorry_page_not_found' => 'Sorry, de pagina die je zocht kan niet gevonden worden.',
     'sorry_page_not_found_permission_warning' => 'Als u verwacht dat deze pagina bestaat heeft u misschien geen rechten om het te bekijken.',
     'image_not_found' => 'Afbeelding niet gevonden',
     'image_not_found_subtitle' => 'Sorry, de afbeelding die je zocht is niet beschikbaar.',
