@@ -7,31 +7,31 @@ return [
 
     // Pages
     'page_create'                 => 'maakte pagina',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Pagina succesvol aangemaakt',
     'page_update'                 => 'wijzigde pagina',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Pagina succesvol bijgewerkt',
     'page_delete'                 => 'verwijderde pagina',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Pagina met succes verwijderd',
     'page_restore'                => 'herstelde pagina',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Pagina met succes hersteld',
     'page_move'                   => 'verplaatste pagina',
 
     // Chapters
     'chapter_create'              => 'maakte hoofdstuk',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Hoofdstuk succesvol aangemaakt',
     'chapter_update'              => 'wijzigde hoofdstuk',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Hoofdstuk succesvol bijgewerkt',
     'chapter_delete'              => 'verwijderde hoofdstuk',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Hoofdstuk met succes verwijderd',
     'chapter_move'                => 'verplaatste hoofdstuk',
 
     // Books
     'book_create'                 => 'maakte boek',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Boek succesvol aangemaakt',
     'book_update'                 => 'wijzigde boek',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Boek succesvol bijgewerkt',
     'book_delete'                 => 'verwijderde boek',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'Boek met succes verwijderd',
     'book_sort'                   => 'sorteerde boek',
     'book_sort_notification'      => 'Book successfully re-sorted',
 
@@ -65,5 +65,5 @@ return [
 
     // Other
     'commented_on'                => 'reageerde op',
-    'permissions_update'          => 'wijzigde permissies',
+    'permissions_update'          => 'bijgewerkte machtigingen',
 ];
