@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'maakte pagina',
+    'page_create'                 => 'gemaakte pagina',
     'page_create_notification'    => 'Pagina succesvol aangemaakt',
     'page_update'                 => 'wijzigde pagina',
     'page_update_notification'    => 'Pagina succesvol bijgewerkt',
@@ -33,15 +33,15 @@ return [
     'book_delete'                 => 'verwijderde boek',
     'book_delete_notification'    => 'Boek met succes verwijderd',
     'book_sort'                   => 'sorteerde boek',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'Boek succesvol opnieuw gesorteerd',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create'            => 'boekenplank aangemaakt',
+    'bookshelf_create_notification'    => 'Boekenplank succesvol aangemaakt',
     'bookshelf_update'                 => 'wijzigde boekenplank',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'Boekenplank succesvol bijgewerkt',
     'bookshelf_delete'                 => 'verwijderde boekenplank',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Boekenplank met succes verwijderd',
 
     // Favourites
     'favourite_add_notification' => '":name" is toegevoegd aan je favorieten',
@@ -52,16 +52,16 @@ return [
     'mfa_remove_method_notification' => 'Multi-factor methode succesvol verwijderd',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'webhook aangemaakt',
+    'webhook_create_notification' => 'Webhook succesvol aangemaakt',
+    'webhook_update' => 'webhook bijgewerkt',
+    'webhook_update_notification' => 'Webhook succesvol bijgewerkt',
+    'webhook_delete' => 'webhook verwijderd',
+    'webhook_delete_notification' => 'Webhook met succes verwijderd',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Gebruiker succesvol bijgewerkt',
+    'user_delete_notification' => 'Gebruiker met succes verwijderd',
 
     // Other
     'commented_on'                => 'reageerde op',
