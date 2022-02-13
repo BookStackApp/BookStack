@@ -8,8 +8,8 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'Het :attribuut moet geaccepteerd worden.',
-    'active_url'           => 'Het :attribuut is geen geldige URL.',
+    'accepted'             => 'Het :attribute moet geaccepteerd worden.',
+    'active_url'           => 'Het :attribute is geen geldige URL.',
     'after'                => ':attribute moet een datum zijn later dan :date.',
     'alpha'                => ':attribute mag alleen letters bevatten.',
     'alpha_dash'           => ':attribute mag alleen letters, cijfers, streepjes en liggende streepjes bevatten.',
@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute moet tussen de :min en :max cijfers zijn.',
     'email'                => ':attribute is geen geldig e-mailadres.',
     'ends_with' => ':attribute moet eindigen met een van de volgende: :values',
-    'file'                 => 'Het :attribuut moet als een geldig bestand opgegeven worden.',
+    'file'                 => 'Het :attribute moet als een geldig bestand opgegeven worden.',
     'filled'               => ':attribute is verplicht.',
     'gt'                   => [
         'numeric' => ':attribute moet groter zijn dan :value.',
