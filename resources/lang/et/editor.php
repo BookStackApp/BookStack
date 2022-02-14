@@ -131,12 +131,12 @@ return [
     'open_link' => 'Ava link...',
     'open_link_current' => 'Samas aknas',
     'open_link_new' => 'Uues aknas',
-    'insert_collapsible' => 'Insert collapsible block',
-    'collapsible_unwrap' => 'Unwrap',
-    'edit_label' => 'Edit label',
-    'toggle_open_closed' => 'Toggle open/closed',
-    'collapsible_edit' => 'Edit collapsible block',
-    'toggle_label' => 'Toggle label',
+    'insert_collapsible' => 'Lisa kokkupandav plokk',
+    'collapsible_unwrap' => 'Paki lahti',
+    'edit_label' => 'Muuda silti',
+    'toggle_open_closed' => 'Avatud/suletud',
+    'collapsible_edit' => 'Muuda kokkupandavat plokki',
+    'toggle_label' => 'Näita silti',
 
     // About view
     'about_title' => 'Info WYSIWYG redaktori kohta',
