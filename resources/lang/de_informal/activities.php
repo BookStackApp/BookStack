@@ -45,7 +45,7 @@ return [
 
     // Favourites
     'favourite_add_notification' => '":name" wurde zu deinen Favoriten hinzugefügt',
-    'favourite_remove_notification' => '":name" wurde aus Ihren Favoriten entfernt',
+    'favourite_remove_notification' => '":name" wurde aus deinen Favoriten entfernt',
 
     // MFA
     'mfa_setup_method_notification' => 'Multi-Faktor-Methode erfolgreich konfiguriert',
