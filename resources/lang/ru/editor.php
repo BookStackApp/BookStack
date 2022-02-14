@@ -142,7 +142,7 @@ return [
     'about_title' => 'О редакторе WYSIWYG',
     'editor_license' => 'Лицензия редактора и авторские права',
     'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under an LGPL v2.1 license.',
-    'editor_tiny_license_link' => 'The copyright and license details of TinyMCE can be found here.',
+    'editor_tiny_license_link' => 'Авторские права и подробности лицензии TinyMCE Вы можете найти здесь.',
     'save_continue' => 'Сохранить страницу и продолжить',
     'callouts_cycle' => '(Keep pressing to toggle through types)',
     'shortcuts' => 'Сочетания клавиш',
