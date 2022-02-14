@@ -58,7 +58,7 @@ return [
     'indent_increase' => 'Increase indent',
     'indent_decrease' => 'Decrease indent',
     'table' => 'Table',
-    'insert_image' => 'Insert image',
+    'insert_image' => 'Вставить изображение',
     'insert_image_title' => 'Insert/Edit Image',
     'insert_link' => 'Insert/edit link',
     'insert_link_title' => 'Insert/Edit Link',
