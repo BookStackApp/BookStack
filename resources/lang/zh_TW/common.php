@@ -46,7 +46,7 @@ return [
     'next' => '下一頁',
     'previous' => '上一頁',
     'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'filter_clear' => '清理過濾',
 
     // Sort Options
     'sort_options' => '排序選項',
@@ -71,9 +71,9 @@ return [
     'list_view' => '列表檢視',
     'default' => '預設',
     'breadcrumb' => '頁面路徑',
-    'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
+    'status' => '狀態',
+    'status_active' => '啟用中',
+    'status_inactive' => '未啟用',
     'never' => 'Never',
     'none' => 'None',
 
