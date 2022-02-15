@@ -39,13 +39,13 @@ return [
     'reset' => '重設',
     'remove' => '移除',
     'add' => '新增',
-    'configure' => 'Configure',
+    'configure' => '配置',
     'fullscreen' => '全螢幕',
     'favourite' => '最愛',
     'unfavourite' => '取消最愛',
     'next' => '下一頁',
     'previous' => '上一頁',
-    'filter_active' => 'Active Filter:',
+    'filter_active' => '使用中的過濾器',
     'filter_clear' => '清理過濾',
 
     // Sort Options
@@ -74,8 +74,8 @@ return [
     'status' => '狀態',
     'status_active' => '啟用中',
     'status_inactive' => '未啟用',
-    'never' => 'Never',
-    'none' => 'None',
+    'never' => '永不',
+    'none' => '無',
 
     // Header
     'header_menu_expand' => '展開選單',
