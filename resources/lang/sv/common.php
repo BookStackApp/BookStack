@@ -19,7 +19,7 @@ return [
     'description' => 'Beskrivning',
     'role' => 'Roll',
     'cover_image' => 'Omslagsbild',
-    'cover_image_description' => 'Bilden bör vara cirka 440x250px stor.',
+    'cover_image_description' => 'Bilden bör vara cirka 440x250px.',
 
     // Actions
     'actions' => 'Åtgärder',
@@ -83,7 +83,7 @@ return [
     'view_profile' => 'Visa profil',
     'edit_profile' => 'Redigera profil',
     'dark_mode' => 'Mörkt läge',
-    'light_mode' => 'Ljust Läge',
+    'light_mode' => 'Ljust läge',
 
     // Layout tabs
     'tab_info' => 'Information',
@@ -92,7 +92,7 @@ return [
     'tab_content_label' => 'Flik: Visa primärt innehåll',
 
     // Email Content
-    'email_action_help' => 'Om du har problem, klicka på knappen ":actionText", och kopiera och klistra in den här adressen i din webbläsare:',
+    'email_action_help' => 'Om du har problem att klicka på ":actionText"-knappen, kopiera och klistra in URL\'n nedan i din webbläsare:',
     'email_rights' => 'Alla rättigheter är reserverade',
 
     // Footer Link Options
