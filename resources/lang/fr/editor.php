@@ -33,7 +33,7 @@ return [
     'header_tiny' => 'En-tête minuscule',
     'paragraph' => 'Paragraphe',
     'blockquote' => 'Bloc de citation',
-    'inline_code' => 'Inline code',
+    'inline_code' => 'Ligne de Code',
     'callouts' => 'Callouts',
     'callout_information' => 'Information',
     'callout_success' => 'Succès',
