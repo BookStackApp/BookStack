@@ -34,7 +34,7 @@ return [
     'paragraph' => 'Paragraphe',
     'blockquote' => 'Bloc de citation',
     'inline_code' => 'Ligne de Code',
-    'callouts' => 'Callouts',
+    'callouts' => 'Légendes',
     'callout_information' => 'Information',
     'callout_success' => 'Succès',
     'callout_warning' => 'Avertissement',
