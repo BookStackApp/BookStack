@@ -2,20 +2,18 @@
 
 namespace BookStack\Auth\Access\Oidc;
 
-use function auth;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
-use BookStack\Exceptions\OpenIdConnectException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
-use function config;
-use Exception;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
-use Psr\Http\Client\ClientExceptionInterface;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Client\ClientInterface as HttpClient;
+use function auth;
+use function config;
 use function trans;
 use function url;
 
@@ -25,9 +23,9 @@ use function url;
  */
 class OidcService
 {
-    protected $registrationService;
-    protected $loginService;
-    protected $httpClient;
+    protected RegistrationService $registrationService;
+    protected LoginService $loginService;
+    protected HttpClient $httpClient;
 
     /**
      * OpenIdService constructor.
@@ -43,6 +41,7 @@ class OidcService
      * Initiate an authorization flow.
      *
      * @return array{url: string, state: string}
+     * @throws OidcException
      */
     public function login(): array
     {
@@ -57,14 +56,15 @@ class OidcService
 
     /**
      * Process the Authorization response from the authorization server and
-     * return the matching, or new if registration active, user matched to
-     * the authorization server.
-     * Returns null if not authenticated.
+     * return the matching, or new if registration active, user matched to the
+     * authorization server. Throws if the user cannot be auth if not authenticated.
      *
-     * @throws Exception
-     * @throws ClientExceptionInterface
+     * @throws JsonDebugException
+     * @throws OidcException
+     * @throws StoppedAuthenticationException
+     * @throws IdentityProviderException
      */
-    public function processAuthorizeResponse(?string $authorizationCode): ?User
+    public function processAuthorizeResponse(?string $authorizationCode): User
     {
         $settings = $this->getProviderSettings();
         $provider = $this->getProvider($settings);
@@ -77,9 +77,9 @@ class OidcService
         return $this->processAccessTokenCallback($accessToken, $settings);
     }
 
+
     /**
-     * @throws OidcIssuerDiscoveryException
-     * @throws ClientExceptionInterface
+     * @throws OidcException
      */
     protected function getProviderSettings(): OidcProviderSettings
     {
@@ -100,7 +100,11 @@ class OidcService
 
         // Run discovery
         if ($config['discover'] ?? false) {
-            $settings->discoverFromIssuer($this->httpClient, Cache::store(null), 15);
+            try {
+                $settings->discoverFromIssuer($this->httpClient, Cache::store(null), 15);
+            } catch (OidcIssuerDiscoveryException $exception) {
+                throw new OidcException('OIDC Discovery Error: ' . $exception->getMessage());
+            }
         }
 
         $settings->validate();
@@ -161,9 +165,8 @@ class OidcService
      * Processes a received access token for a user. Login the user when
      * they exist, optionally registering them automatically.
      *
-     * @throws OpenIdConnectException
+     * @throws OidcException
      * @throws JsonDebugException
-     * @throws UserRegistrationException
      * @throws StoppedAuthenticationException
      */
     protected function processAccessTokenCallback(OidcAccessToken $accessToken, OidcProviderSettings $settings): User
@@ -182,28 +185,28 @@ class OidcService
         try {
             $idToken->validate($settings->clientId);
         } catch (OidcInvalidTokenException $exception) {
-            throw new OpenIdConnectException("ID token validate failed with error: {$exception->getMessage()}");
+            throw new OidcException("ID token validate failed with error: {$exception->getMessage()}");
         }
 
         $userDetails = $this->getUserDetails($idToken);
         $isLoggedIn = auth()->check();
 
         if (empty($userDetails['email'])) {
-            throw new OpenIdConnectException(trans('errors.oidc_no_email_address'));
+            throw new OidcException(trans('errors.oidc_no_email_address'));
         }
 
         if ($isLoggedIn) {
-            throw new OpenIdConnectException(trans('errors.oidc_already_logged_in'), '/login');
+            throw new OidcException(trans('errors.oidc_already_logged_in'));
         }
 
-        $user = $this->registrationService->findOrRegister(
-            $userDetails['name'],
-            $userDetails['email'],
-            $userDetails['external_id']
-        );
-
-        if ($user === null) {
-            throw new OpenIdConnectException(trans('errors.oidc_user_not_registered', ['name' => $userDetails['external_id']]), '/login');
+        try {
+            $user = $this->registrationService->findOrRegister(
+                $userDetails['name'],
+                $userDetails['email'],
+                $userDetails['external_id']
+            );
+        } catch (UserRegistrationException $exception) {
+            throw new OidcException($exception->getMessage());
         }
 
         $this->loginService->login($user, 'oidc');

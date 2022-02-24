@@ -4,4 +4,4 @@ namespace BookStack\Auth\Access\Oidc;
 
 use Exception;
 
-class OidcIssuerDiscoveryException extends Exception {}
+class OidcException extends Exception {}
