@@ -169,6 +169,7 @@ function setSummary(editor, summaryContent) {
  */
 function unwrapDetailsInSelection(editor) {
     const details = editor.selection.getNode().closest('details');
+    const selectionBm = editor.selection.getBookmark();
 
     if (details) {
         const elements = details.querySelectorAll('details > *:not(summary, doc-root), doc-root > *');
@@ -180,7 +181,9 @@ function unwrapDetailsInSelection(editor) {
             details.remove();
         });
     }
+
     editor.focus();
+    editor.selection.moveToBookmark(selectionBm);
 }
 
 /**
