@@ -2,8 +2,8 @@
 
 namespace BookStack\Http\Controllers\Auth;
 
-use BookStack\Auth\Access\Oidc\OidcService;
 use BookStack\Auth\Access\Oidc\OidcException;
+use BookStack\Auth\Access\Oidc\OidcService;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -29,6 +29,7 @@ class OidcController extends Controller
             $loginDetails = $this->oidcService->login();
         } catch (OidcException $exception) {
             $this->showErrorNotification($exception->getMessage());
+
             return redirect('/login');
         }
 
@@ -56,6 +57,7 @@ class OidcController extends Controller
             $this->oidcService->processAuthorizeResponse($request->query('code'));
         } catch (OidcException $oidcException) {
             $this->showErrorNotification($oidcException->getMessage());
+
             return redirect('/login');
         }
 

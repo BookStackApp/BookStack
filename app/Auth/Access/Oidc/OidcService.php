@@ -2,18 +2,18 @@
 
 namespace BookStack\Auth\Access\Oidc;
 
+use function auth;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
+use function config;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Client\ClientInterface as HttpClient;
-use function auth;
-use function config;
 use function trans;
 use function url;
 
@@ -40,8 +40,9 @@ class OidcService
     /**
      * Initiate an authorization flow.
      *
-     * @return array{url: string, state: string}
      * @throws OidcException
+     *
+     * @return array{url: string, state: string}
      */
     public function login(): array
     {
@@ -76,7 +77,6 @@ class OidcService
 
         return $this->processAccessTokenCallback($accessToken, $settings);
     }
-
 
     /**
      * @throws OidcException
