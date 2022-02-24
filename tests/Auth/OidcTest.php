@@ -6,14 +6,13 @@ use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Filesystem\Cache;
 use Tests\Helpers\OidcJwtHelper;
 use Tests\TestCase;
 use Tests\TestResponse;
 
 class OidcTest extends TestCase
 {
-    protected $keyFilePath;
+    protected string $keyFilePath;
     protected $keyFile;
 
     protected function setUp(): void
@@ -236,22 +235,24 @@ class OidcTest extends TestCase
 
         $this->assertFalse(auth()->check());
 
-        $this->runLogin([
+        $resp = $this->runLogin([
             'email' => $editor->email,
             'sub'   => 'benny505',
         ]);
+        $resp = $this->followRedirects($resp);
 
-        $this->assertSessionError('A user with the email ' . $editor->email . ' already exists but with different credentials.');
+        $resp->assertSeeText('A user with the email ' . $editor->email . ' already exists but with different credentials.');
         $this->assertFalse(auth()->check());
     }
 
     public function test_auth_login_with_invalid_token_fails()
     {
-        $this->runLogin([
+        $resp = $this->runLogin([
             'sub' => null,
         ]);
+        $resp = $this->followRedirects($resp);
 
-        $this->assertSessionError('ID token validate failed with error: Missing token subject value');
+        $resp->assertSeeText('ID token validate failed with error: Missing token subject value');
         $this->assertFalse(auth()->check());
     }
 
@@ -287,9 +288,9 @@ class OidcTest extends TestCase
             new Response(404, [], 'Not found'),
         ]);
 
-        $this->runLogin();
+        $resp = $this->followRedirects($this->runLogin());
         $this->assertFalse(auth()->check());
-        $this->assertSessionError('Login using SingleSignOn-Testing failed, system did not provide successful authorization');
+        $resp->assertSeeText('Login using SingleSignOn-Testing failed, system did not provide successful authorization');
     }
 
     public function test_autodiscovery_calls_are_cached()

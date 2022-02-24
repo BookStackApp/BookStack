@@ -11,9 +11,6 @@ class NotifyException extends Exception implements Responsable
     public $redirectLocation;
     protected $status;
 
-    /**
-     * NotifyException constructor.
-     */
     public function __construct(string $message, string $redirectLocation = '/', int $status = 500)
     {
         $this->message = $message;

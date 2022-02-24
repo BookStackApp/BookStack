@@ -3,23 +3,25 @@
 namespace BookStack\Exceptions;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class JsonDebugException extends Exception
 {
-    protected $data;
+    protected array $data;
 
     /**
      * JsonDebugException constructor.
      */
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->data = $data;
+        parent::__construct();
     }
 
     /**
      * Covert this exception into a response.
      */
-    public function render()
+    public function render(): JsonResponse
     {
         return response()->json($this->data);
     }

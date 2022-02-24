@@ -3,12 +3,13 @@
 namespace BookStack\Http\Controllers\Auth;
 
 use BookStack\Auth\Access\Oidc\OidcService;
+use BookStack\Auth\Access\Oidc\OidcException;
 use BookStack\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class OidcController extends Controller
 {
-    protected $oidcService;
+    protected OidcService $oidcService;
 
     /**
      * OpenIdController constructor.
@@ -24,7 +25,13 @@ class OidcController extends Controller
      */
     public function login()
     {
-        $loginDetails = $this->oidcService->login();
+        try {
+            $loginDetails = $this->oidcService->login();
+        } catch (OidcException $exception) {
+            $this->showErrorNotification($exception->getMessage());
+            return redirect('/login');
+        }
+
         session()->flash('oidc_state', $loginDetails['state']);
 
         return redirect($loginDetails['url']);
@@ -45,7 +52,12 @@ class OidcController extends Controller
             return redirect('/login');
         }
 
-        $this->oidcService->processAuthorizeResponse($request->query('code'));
+        try {
+            $this->oidcService->processAuthorizeResponse($request->query('code'));
+        } catch (OidcException $oidcException) {
+            $this->showErrorNotification($oidcException->getMessage());
+            return redirect('/login');
+        }
 
         return redirect()->intended();
     }
