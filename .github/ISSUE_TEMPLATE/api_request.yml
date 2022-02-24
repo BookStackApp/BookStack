@@ -1,6 +1,5 @@
 name: New API Endpoint or API Ability
 description: Request a new endpoint or API feature be added
-title: "[API Request]: "
 labels: [":nut_and_bolt: API Request"]
 body:
   - type: textarea

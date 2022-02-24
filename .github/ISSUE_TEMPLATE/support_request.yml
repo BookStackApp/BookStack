@@ -1,6 +1,5 @@
 name: Support Request
 description: Request support for a specific problem you have not been able to solve yourself
-title: "[Support Request]: "
 labels: [":dog2: Support"]
 body:
   - type: checkboxes
