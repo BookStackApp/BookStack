@@ -18,7 +18,7 @@ return [
     'name' => 'Nazwa',
     'description' => 'Opis',
     'role' => 'Rola',
-    'cover_image' => 'Zdjęcie z okładki',
+    'cover_image' => 'Okładka',
     'cover_image_description' => 'Ten obraz powinien posiadać wymiary około 440x250px.',
 
     // Actions
@@ -45,8 +45,8 @@ return [
     'unfavourite' => 'Usuń z ulubionych',
     'next' => 'Dalej',
     'previous' => 'Wstecz',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'filter_active' => 'Aktywny filtr:',
+    'filter_clear' => 'Wyczyść Filtr',
 
     // Sort Options
     'sort_options' => 'Opcje sortowania',
@@ -72,10 +72,10 @@ return [
     'default' => 'Domyślny',
     'breadcrumb' => 'Ścieżka nawigacji',
     'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
-    'never' => 'Never',
-    'none' => 'None',
+    'status_active' => 'Aktywny',
+    'status_inactive' => 'Nieaktywny',
+    'never' => 'Nigdy',
+    'none' => 'Żaden',
 
     // Header
     'header_menu_expand' => 'Rozwiń menu nagłówka',

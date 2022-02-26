@@ -6,42 +6,42 @@
 return [
 
     // Pages
-    'page_create'                 => 'utworzono stronę',
-    'page_create_notification'    => 'Page successfully created',
-    'page_update'                 => 'zaktualizowano stronę',
-    'page_update_notification'    => 'Page successfully updated',
-    'page_delete'                 => 'usunięto stronę',
-    'page_delete_notification'    => 'Page successfully deleted',
-    'page_restore'                => 'przywrócono stronę',
-    'page_restore_notification'   => 'Page successfully restored',
-    'page_move'                   => 'przeniesiono stronę',
+    'page_create'                 => 'utworzył stronę',
+    'page_create_notification'    => 'Strona została utworzona',
+    'page_update'                 => 'zaktualizował stronę',
+    'page_update_notification'    => 'Strona zaktualizowana pomyślnie',
+    'page_delete'                 => 'usunął stronę',
+    'page_delete_notification'    => 'Strona została usunięta',
+    'page_restore'                => 'przywrócił stronę',
+    'page_restore_notification'   => 'Strona przywrócona pomyślnie',
+    'page_move'                   => 'przeniósł stronę',
 
     // Chapters
-    'chapter_create'              => 'utworzono rozdział',
-    'chapter_create_notification' => 'Chapter successfully created',
-    'chapter_update'              => 'zaktualizowano rozdział',
-    'chapter_update_notification' => 'Chapter successfully updated',
-    'chapter_delete'              => 'usunięto rozdział',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
-    'chapter_move'                => 'przeniesiono rozdział',
+    'chapter_create'              => 'utworzył rozdział',
+    'chapter_create_notification' => 'Rozdział utworzony pomyślnie',
+    'chapter_update'              => 'zaktualizował rozdział',
+    'chapter_update_notification' => 'Rozdział zaktualizowany pomyślnie',
+    'chapter_delete'              => 'usunął rozdział',
+    'chapter_delete_notification' => 'Rozdział usunięty pomyślnie',
+    'chapter_move'                => 'przeniósł rozdział',
 
     // Books
-    'book_create'                 => 'utworzono książkę',
-    'book_create_notification'    => 'Book successfully created',
-    'book_update'                 => 'zaktualizowano książkę',
-    'book_update_notification'    => 'Book successfully updated',
-    'book_delete'                 => 'usunięto książkę',
-    'book_delete_notification'    => 'Book successfully deleted',
-    'book_sort'                   => 'posortowano książkę',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_create'                 => 'utworzył książkę',
+    'book_create_notification'    => 'Książka utworzona pomyślnie',
+    'book_update'                 => 'zaktualizował książkę',
+    'book_update_notification'    => 'Książka zaktualizowana pomyślnie',
+    'book_delete'                 => 'usunął książkę',
+    'book_delete_notification'    => 'Książka usunięta pomyślnie',
+    'book_sort'                   => 'posortował książkę',
+    'book_sort_notification'      => 'Książka przywrócona pomyślnie',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
-    'bookshelf_update'                 => 'zaktualizowano półkę',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
-    'bookshelf_delete'                 => 'usunięto półkę',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_create'            => 'utworzył półkę',
+    'bookshelf_create_notification'    => 'Półka utworzona pomyślnie',
+    'bookshelf_update'                 => 'zaktualizował półkę',
+    'bookshelf_update_notification'    => 'Półka zaktualizowana pomyślnie',
+    'bookshelf_delete'                 => 'usunął półkę',
+    'bookshelf_delete_notification'    => 'Półka usunięta pomyślnie',
 
     // Favourites
     'favourite_add_notification' => '":name" został dodany do Twoich ulubionych',
@@ -52,18 +52,18 @@ return [
     'mfa_remove_method_notification' => 'Metoda wieloskładnikowa pomyślnie usunięta',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'utworzył webhook',
+    'webhook_create_notification' => 'Webhook utworzony pomyślnie',
+    'webhook_update' => 'zaktualizował webhook',
+    'webhook_update_notification' => 'Webhook zaktualizowany pomyślnie',
+    'webhook_delete' => 'usunął webhook',
+    'webhook_delete_notification' => 'Webhook usunięty pomyślnie',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Użytkownik zaktualizowany pomyślnie',
+    'user_delete_notification' => 'Użytkownik pomyślnie usunięty',
 
     // Other
     'commented_on'                => 'skomentował',
-    'permissions_update'          => 'zaktualizowane uprawnienia',
+    'permissions_update'          => 'zaktualizował uprawnienia',
 ];

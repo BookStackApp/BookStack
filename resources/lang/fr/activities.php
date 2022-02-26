@@ -60,8 +60,8 @@ return [
     'webhook_delete_notification' => 'Webhook supprimé avec succès',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Utilisateur mis à jour avec succès',
+    'user_delete_notification' => 'Utilisateur supprimé avec succès',
 
     // Other
     'commented_on'                => 'a commenté',

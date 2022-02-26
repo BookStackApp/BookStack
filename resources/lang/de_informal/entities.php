@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => 'Kapitel zuletzt',
     'books_sort_show_other' => 'Andere Bücher anzeigen',
     'books_sort_save' => 'Neue Reihenfolge speichern',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => 'Buch kopieren',
+    'books_copy_success' => 'Das Buch wurde erfolgreich kopiert',
 
     // Chapters
     'chapter' => 'Kapitel',
@@ -163,8 +163,8 @@ return [
     'chapters_move' => 'Kapitel verschieben',
     'chapters_move_named' => 'Kapitel ":chapterName" verschieben',
     'chapter_move_success' => 'Das Kapitel wurde in das Buch ":bookName" verschoben.',
-    'chapters_copy' => 'Copy Chapter',
-    'chapters_copy_success' => 'Chapter successfully copied',
+    'chapters_copy' => 'Kapitel kopieren',
+    'chapters_copy_success' => 'Kapitel erfolgreich kopiert',
     'chapters_permissions' => 'Kapitel-Berechtigungen',
     'chapters_empty' => 'Aktuell sind keine Kapitel diesem Buch hinzugefügt worden.',
     'chapters_permissions_active' => 'Kapitel-Berechtigungen aktiv',
@@ -338,10 +338,10 @@ return [
     'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider' => 'Bitte beachten Sie das Untenstehende, wenn Sie Inhalte kopieren.',
+    'copy_consider_permissions' => 'Benutzerdefinierte Berechtigungseinstellungen werden nicht kopiert.',
+    'copy_consider_owner' => 'Sie werden Eigentümer aller kopierten Inhalte.',
+    'copy_consider_images' => 'Bilder auf der Seite werden nicht dupliziert und die originalen Bilder werden die Beziehung zur ursprünglichen Seite, auf der sie hochgeladen wurden, behalten.',
+    'copy_consider_attachments' => 'Seitenanhänge werden nicht kopiert.',
+    'copy_consider_access' => 'Eine Veränderung der Position, Besitzers oder Berechtigungen könnte dafür sorgen, dass Unberechtigte, Zugriff bekommen.',
 ];

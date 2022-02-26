@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute peab olema :min ja :max numbri vahel.',
     'email'                => ':attribute peab olema kehtiv e-posti aadress.',
     'ends_with' => ':attribute lõpus peab olema üks järgmistest väärtustest: :values',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => ':attribute peab olema sobiv fail.',
     'filled'               => ':attribute väli on kohustuslik.',
     'gt'                   => [
         'numeric' => ':attribute peab olema suurem kui :value.',

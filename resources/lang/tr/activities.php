@@ -7,7 +7,7 @@ return [
 
     // Pages
     'page_create'                 => 'sayfa oluşturdu',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Sayfa Başarıyla Oluşturuldu',
     'page_update'                 => 'sayfayı güncelledi',
     'page_update_notification'    => 'Page successfully updated',
     'page_delete'                 => 'sayfayı sildi',

@@ -45,7 +45,7 @@ return [
 
     // Favourites
     'favourite_add_notification' => '":name" wurde zu deinen Favoriten hinzugefügt',
-    'favourite_remove_notification' => '":name" wurde aus Ihren Favoriten entfernt',
+    'favourite_remove_notification' => '":name" wurde aus deinen Favoriten entfernt',
 
     // MFA
     'mfa_setup_method_notification' => 'Multi-Faktor-Methode erfolgreich konfiguriert',
@@ -60,8 +60,8 @@ return [
     'webhook_delete_notification' => 'Webhook wurde erfolgreich gelöscht',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Benutzer erfolgreich aktualisiert',
+    'user_delete_notification' => 'Benutzer erfolgreich entfernt',
 
     // Other
     'commented_on'                => 'kommentiert',

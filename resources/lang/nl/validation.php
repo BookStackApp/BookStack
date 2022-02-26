@@ -8,14 +8,14 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => ':attribute moet geaccepteerd worden.',
-    'active_url'           => ':attribute is geen geldige URL.',
+    'accepted'             => 'Het :attribute moet geaccepteerd worden.',
+    'active_url'           => 'Het :attribute is geen geldige URL.',
     'after'                => ':attribute moet een datum zijn later dan :date.',
     'alpha'                => ':attribute mag alleen letters bevatten.',
     'alpha_dash'           => ':attribute mag alleen letters, cijfers, streepjes en liggende streepjes bevatten.',
     'alpha_num'            => ':attribute mag alleen letters en nummers bevatten.',
     'array'                => ':attribute moet een reeks zijn.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'De opgegeven code is niet geldig of eerder al gebruikt.',
     'before'               => ':attribute moet een datum zijn voor :date.',
     'between'              => [
         'numeric' => ':attribute moet tussen de :min en :max zijn.',
@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute moet tussen de :min en :max cijfers zijn.',
     'email'                => ':attribute is geen geldig e-mailadres.',
     'ends_with' => ':attribute moet eindigen met een van de volgende: :values',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => 'Het :attribute moet als een geldig bestand opgegeven worden.',
     'filled'               => ':attribute is verplicht.',
     'gt'                   => [
         'numeric' => ':attribute moet groter zijn dan :value.',
@@ -100,7 +100,7 @@ return [
     ],
     'string'               => ':attribute moet tekst zijn.',
     'timezone'             => ':attribute moet een geldige zone zijn.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'De opgegeven code is niet geldig of verlopen.',
     'unique'               => ':attribute is al in gebruik.',
     'url'                  => ':attribute formaat is ongeldig.',
     'uploaded'             => 'Het bestand kon niet worden geüpload. De server accepteert mogelijk geen bestanden van deze grootte.',
