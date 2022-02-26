@@ -75,7 +75,7 @@ return [
     'status_active' => 'Aktiivne',
     'status_inactive' => 'Mitteaktiivne',
     'never' => 'Mitte kunagi',
-    'none' => 'None',
+    'none' => 'Puudub',
 
     // Header
     'header_menu_expand' => 'Laienda päisemenüü',

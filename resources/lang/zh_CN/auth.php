@@ -12,7 +12,7 @@ return [
     // Login & Register
     'sign_up' => '注册',
     'log_in' => '登录',
-    'log_in_with' => '以:socialDriver登录',
+    'log_in_with' => '使用 :socialDriver 账户登录',
     'sign_up_with' => '通过 :socialDriver 账号登录',
     'logout' => '注销',
 

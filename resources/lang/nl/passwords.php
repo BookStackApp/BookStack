@@ -6,7 +6,7 @@
  */
 return [
 
-    'password' => 'Wachtwoorden moeten overeenkomen en minimaal zes tekens lang zijn.',
+    'password' => 'Wachtwoorden moeten uit ten minste acht tekens bestaan en overeenkomen met de bevestiging.',
     'user' => "We kunnen niemand vinden met dat e-mailadres.",
     'token' => 'Het wachtwoord reset token is ongeldig voor dit e-mailadres.',
     'sent' => 'We hebben je een link gestuurd om je wachtwoord te herstellen!',

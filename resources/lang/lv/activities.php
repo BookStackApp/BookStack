@@ -60,8 +60,8 @@ return [
     'webhook_delete_notification' => 'Webhook veiksmīgi izdzēsts',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Lietotājs veiksmīgi atjaunināts',
+    'user_delete_notification' => 'Lietotājs veiksmīgi dzēsts',
 
     // Other
     'commented_on'                => 'komentēts',
