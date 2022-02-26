@@ -20,9 +20,9 @@ return [
     'username' => 'Nazwa użytkownika',
     'email' => 'E-mail',
     'password' => 'Hasło',
-    'password_confirm' => 'Potwierdzenie hasła',
-    'password_hint' => 'Must be at least 8 characters',
-    'forgot_password' => 'Zapomniałem hasła',
+    'password_confirm' => 'Potwierdź hasło',
+    'password_hint' => 'Musi mieć co najmniej 8 znaków',
+    'forgot_password' => 'Zapomniałeś hasła?',
     'remember_me' => 'Zapamiętaj mnie',
     'ldap_email_hint' => 'Wprowadź adres e-mail dla tego konta.',
     'create_account' => 'Utwórz konto',
@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Prosimy byś potwierdził swoje hasło klikając przycisk poniżej:',
     'email_confirm_action' => 'Potwierdź e-mail',
     'email_confirm_send_error' => 'Wymagane jest potwierdzenie hasła, lecz wiadomość nie mogła zostać wysłana. Skontaktuj się z administratorem w celu upewnienia się, że skrzynka została skonfigurowana prawidłowo.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Twój e-mail został potwierdzony! Powinieneś teraz mieć możliwość zalogowania się za pomocą tego adresu e-mail.',
     'email_confirm_resent' => 'E-mail z potwierdzeniem został wysłany ponownie, sprawdź swoją skrzynkę odbiorczą.',
 
     'email_not_confirmed' => 'Adres e-mail nie został potwierdzony',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Witaj w :appName!',
     'user_invite_page_text' => 'Aby zakończyć tworzenie konta musisz ustawić hasło, które będzie używane do logowania do :appName w przyszłości.',
     'user_invite_page_confirm_button' => 'Potwierdź hasło',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Hasło ustawione, teraz powinieneś mieć możliwość logowania się przy użyciu ustawionego hasła, aby uzyskać dostęp do :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Skonfiguruj uwierzytelnianie wieloskładnikowe',

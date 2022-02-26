@@ -206,7 +206,6 @@ Route::middleware('auth')->group(function () {
     // Other Pages
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index']);
-    Route::get('/custom-head-content', [HomeController::class, 'customHeadContent']);
 
     // Settings
     Route::get('/settings', [SettingController::class, 'index'])->name('settings');
@@ -322,12 +321,15 @@ Route::get('/oidc/callback', [Auth\OidcController::class, 'callback']);
 Route::get('/register/invite/{token}', [Auth\UserInviteController::class, 'showSetPassword']);
 Route::post('/register/invite/{token}', [Auth\UserInviteController::class, 'setPassword']);
 
-// Password reset link request routes...
+// Password reset link request routes
 Route::get('/password/email', [Auth\ForgotPasswordController::class, 'showLinkRequestForm']);
 Route::post('/password/email', [Auth\ForgotPasswordController::class, 'sendResetLinkEmail']);
 
-// Password reset routes...
+// Password reset routes
 Route::get('/password/reset/{token}', [Auth\ResetPasswordController::class, 'showResetForm']);
 Route::post('/password/reset', [Auth\ResetPasswordController::class, 'reset']);
+
+// Metadata routes
+Route::view('/help/wysiwyg', 'help.wysiwyg');
 
 Route::fallback([HomeController::class, 'notFound'])->name('fallback');

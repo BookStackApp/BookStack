@@ -59,6 +59,10 @@ return [
     'webhook_delete' => '删除了 webhook',
     'webhook_delete_notification' => 'Webhook 已成功删除',
 
+    // Users
+    'user_update_notification' => '用户更新成功',
+    'user_delete_notification' => '已成功移除用户',
+
     // Other
     'commented_on'                => '评论',
     'permissions_update'          => '权限已更新',

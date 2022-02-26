@@ -8,7 +8,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-fileinfo": "*",
@@ -17,8 +17,8 @@
         "ext-mbstring": "*",
         "ext-xml": "*",
         "bacon/bacon-qr-code": "^2.0",
-        "barryvdh/laravel-dompdf": "^0.9.0",
-        "barryvdh/laravel-snappy": "^0.4.8",
+        "barryvdh/laravel-dompdf": "^1.0",
+        "barryvdh/laravel-snappy": "^1.0",
         "doctrine/dbal": "^3.1",
         "filp/whoops": "^2.14",
         "guzzlehttp/guzzle": "^7.4",
@@ -95,7 +95,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "7.3.0"
+            "php": "7.4.0"
         }
     },
     "extra": {

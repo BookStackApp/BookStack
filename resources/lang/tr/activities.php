@@ -7,7 +7,7 @@ return [
 
     // Pages
     'page_create'                 => 'sayfa oluşturdu',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Sayfa Başarıyla Oluşturuldu',
     'page_update'                 => 'sayfayı güncelledi',
     'page_update_notification'    => 'Page successfully updated',
     'page_delete'                 => 'sayfayı sildi',
@@ -58,6 +58,10 @@ return [
     'webhook_update_notification' => 'Webhook successfully updated',
     'webhook_delete' => 'deleted webhook',
     'webhook_delete_notification' => 'Webhook successfully deleted',
+
+    // Users
+    'user_update_notification' => 'User successfully updated',
+    'user_delete_notification' => 'User successfully removed',
 
     // Other
     'commented_on'                => 'yorum yaptı',

@@ -4,9 +4,9 @@
     "build:css:dev": "sass ./resources/sass:./public/dist",
     "build:css:watch": "sass ./resources/sass:./public/dist --watch",
     "build:css:production": "sass ./resources/sass:./public/dist -s compressed",
-    "build:js:dev": "esbuild --bundle ./resources/js/index.js --outfile=public/dist/app.js --sourcemap --target=es2019 --main-fields=module,main",
+    "build:js:dev": "esbuild --bundle ./resources/js/*.{js,mjs} --outdir=public/dist/ --sourcemap --target=es2020 --main-fields=module,main --format=esm",
     "build:js:watch": "chokidar --initial \"./resources/**/*.js\" -c \"npm run build:js:dev\"",
-    "build:js:production": "NODE_ENV=production esbuild --bundle ./resources/js/index.js --outfile=public/dist/app.js --sourcemap --target=es2019 --main-fields=module,main --minify",
+    "build:js:production": "NODE_ENV=production esbuild --bundle ./resources/js/*.{js,mjs} --outdir=public/dist/ --sourcemap --target=es2020 --main-fields=module,main --minify --format=esm",
     "build": "npm-run-all --parallel build:*:dev",
     "production": "npm-run-all --parallel build:*:production",
     "dev": "npm-run-all --parallel watch livereload",
@@ -16,15 +16,15 @@
   },
   "devDependencies": {
     "chokidar-cli": "^3.0",
-    "esbuild": "0.14.13",
+    "esbuild": "0.14.23",
     "livereload": "^0.9.3",
     "npm-run-all": "^4.1.5",
     "punycode": "^2.1.1",
-    "sass": "^1.49.0"
+    "sass": "^1.49.8"
   },
   "dependencies": {
-    "clipboard": "^2.0.8",
-    "codemirror": "^5.65.1",
+    "clipboard": "^2.0.10",
+    "codemirror": "^5.65.2",
     "dropzone": "^5.9.3",
     "markdown-it": "^12.3.2",
     "markdown-it-task-lists": "^2.1.1",

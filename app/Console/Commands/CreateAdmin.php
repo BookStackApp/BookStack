@@ -2,6 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
+use BookStack\Auth\Role;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Console\Command;
@@ -84,9 +85,8 @@ class CreateAdmin extends Command
             return SymfonyCommand::FAILURE;
         }
 
-        $user = $this->userRepo->create($validator->validated());
-        $this->userRepo->attachSystemRole($user, 'admin');
-        $this->userRepo->downloadAndAssignUserAvatar($user);
+        $user = $this->userRepo->createWithoutActivity($validator->validated());
+        $user->attachRole(Role::getSystemRole('admin'));
         $user->email_confirmed = true;
         $user->save();
 

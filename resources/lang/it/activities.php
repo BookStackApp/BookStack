@@ -59,6 +59,10 @@ return [
     'webhook_delete' => 'webhook eliminato',
     'webhook_delete_notification' => 'Webhook eliminato con successo',
 
+    // Users
+    'user_update_notification' => 'Utente aggiornato con successo',
+    'user_delete_notification' => 'Utente rimosso con successo',
+
     // Other
     'commented_on'                => 'ha commentato in',
     'permissions_update'          => 'autorizzazioni aggiornate',

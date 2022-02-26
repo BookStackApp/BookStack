@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute(을)를 문자, 숫자, -, _로만 구성하세요.',
     'alpha_num'            => ':attribute(을)를 문자, 숫자로만 구성하세요.',
     'array'                => ':attribute(을)를 배열로 구성하세요.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => '유효하지 않거나 사용 중인 코드입니다.',
     'before'               => ':attribute(을)를 :date 전으로 설정하세요.',
     'between'              => [
         'numeric' => ':attribute(을)를 :min~:max(으)로 구성하세요.',
@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute(을)를 :min~:max자리로 구성하세요.',
     'email'                => ':attribute(을)를 유효한 메일 주소로 구성하세요.',
     'ends_with' => ':attribute(을)를 :values(으)로 끝나게 구성하세요.',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => ':attribute(을)를 유효한 파일로 설정하세요.',
     'filled'               => ':attribute(을)를 구성하세요.',
     'gt'                   => [
         'numeric' => ':attribute(을)를 :value(이)가 넘게 구성하세요.',
@@ -91,7 +91,7 @@ return [
     'required_without'     => ':values(이)가 없을 때 :attribute(을)를 구성해야 합니다.',
     'required_without_all' => ':values(이)가 모두 없을 때 :attribute(을)를 구성해야 합니다.',
     'same'                 => ':attribute(와)과 :other(을)를 똑같이 구성하세요.',
-    'safe_url'             => 'The provided link may not be safe.',
+    'safe_url'             => '안전하지 않은 URL입니다.',
     'size'                 => [
         'numeric' => ':attribute(을)를 :size(으)로 구성하세요.',
         'file'    => ':attribute(을)를 :size킬로바이트로 구성하세요.',
@@ -100,7 +100,7 @@ return [
     ],
     'string'               => ':attribute(을)를 문자로 구성하세요.',
     'timezone'             => ':attribute(을)를 유효한 시간대로 구성하세요.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => '유효하지 않거나 만료된 코드입니다.',
     'unique'               => ':attribute(은)는 이미 있습니다.',
     'url'                  => ':attribute(은)는 유효하지 않은 형식입니다.',
     'uploaded'             => '파일 크기가 서버에서 허용하는 수치를 넘습니다.',
@@ -108,7 +108,7 @@ return [
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => '같은 비밀번호를 다시 입력하세요.',
+            'required_with' => '같은 패스워드를 다시 입력하세요.',
         ],
     ],
 

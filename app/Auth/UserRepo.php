@@ -2,30 +2,29 @@
 
 namespace BookStack\Auth;
 
+use BookStack\Actions\ActivityType;
+use BookStack\Auth\Access\UserInviteService;
 use BookStack\Entities\EntityProvider;
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
-use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\UserUpdateException;
+use BookStack\Facades\Activity;
 use BookStack\Uploads\UserAvatars;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class UserRepo
 {
-    protected $userAvatar;
+    protected UserAvatars $userAvatar;
+    protected UserInviteService $inviteService;
 
     /**
      * UserRepo constructor.
      */
-    public function __construct(UserAvatars $userAvatar)
+    public function __construct(UserAvatars $userAvatar, UserInviteService $inviteService)
     {
         $this->userAvatar = $userAvatar;
+        $this->inviteService = $inviteService;
     }
 
     /**
@@ -53,70 +52,164 @@ class UserRepo
     }
 
     /**
-     * Get all the users with their permissions.
+     * Create a new basic instance of user with the given pre-validated data.
+     *
+     * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data
      */
-    public function getAllUsers(): Collection
+    public function createWithoutActivity(array $data, bool $emailConfirmed = false): User
     {
-        return User::query()->with('roles', 'avatar')->orderBy('name', 'asc')->get();
-    }
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = bcrypt(empty($data['password']) ? Str::random(32) : $data['password']);
+        $user->email_confirmed = $emailConfirmed;
+        $user->external_auth_id = $data['external_auth_id'] ?? '';
 
-    /**
-     * Get all the users with their permissions in a paginated format.
-     * Note: Due to the use of email search this should only be used when
-     * user is assumed to be trusted. (Admin users).
-     * Email search can be abused to extract email addresses.
-     */
-    public function getAllUsersPaginatedAndSorted(int $count, array $sortData): LengthAwarePaginator
-    {
-        $sort = $sortData['sort'];
+        $user->refreshSlug();
+        $user->save();
 
-        $query = User::query()->select(['*'])
-            ->scopes(['withLastActivityAt'])
-            ->with(['roles', 'avatar'])
-            ->withCount('mfaValues')
-            ->orderBy($sort, $sortData['order']);
-
-        if ($sortData['search']) {
-            $term = '%' . $sortData['search'] . '%';
-            $query->where(function ($query) use ($term) {
-                $query->where('name', 'like', $term)
-                    ->orWhere('email', 'like', $term);
-            });
+        if (!empty($data['language'])) {
+            setting()->putUser($user, 'language', $data['language']);
         }
 
-        return $query->paginate($count);
-    }
+        if (isset($data['roles'])) {
+            $this->setUserRoles($user, $data['roles']);
+        }
 
-    /**
-     * Creates a new user and attaches a role to them.
-     */
-    public function registerNew(array $data, bool $emailConfirmed = false): User
-    {
-        $user = $this->create($data, $emailConfirmed);
-        $user->attachDefaultRole();
         $this->downloadAndAssignUserAvatar($user);
 
         return $user;
     }
 
     /**
-     * Assign a user to a system-level role.
+     * As per "createWithoutActivity" but records a "create" activity.
      *
-     * @throws NotFoundException
+     * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data
      */
-    public function attachSystemRole(User $user, string $systemRoleName)
+    public function create(array $data, bool $sendInvite = false): User
     {
-        $role = Role::getSystemRole($systemRoleName);
-        if (is_null($role)) {
-            throw new NotFoundException("Role '{$systemRoleName}' not found");
+        $user = $this->createWithoutActivity($data, true);
+
+        if ($sendInvite) {
+            $this->inviteService->sendInvitation($user);
         }
-        $user->attachRole($role);
+
+        Activity::add(ActivityType::USER_CREATE, $user);
+
+        return $user;
+    }
+
+    /**
+     * Update the given user with the given data.
+     *
+     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string} $data
+     *
+     * @throws UserUpdateException
+     */
+    public function update(User $user, array $data, bool $manageUsersAllowed): User
+    {
+        if (!empty($data['name'])) {
+            $user->name = $data['name'];
+            $user->refreshSlug();
+        }
+
+        if (!empty($data['email']) && $manageUsersAllowed) {
+            $user->email = $data['email'];
+        }
+
+        if (!empty($data['external_auth_id']) && $manageUsersAllowed) {
+            $user->external_auth_id = $data['external_auth_id'];
+        }
+
+        if (isset($data['roles']) && $manageUsersAllowed) {
+            $this->setUserRoles($user, $data['roles']);
+        }
+
+        if (!empty($data['password'])) {
+            $user->password = bcrypt($data['password']);
+        }
+
+        if (!empty($data['language'])) {
+            setting()->putUser($user, 'language', $data['language']);
+        }
+
+        $user->save();
+        Activity::add(ActivityType::USER_UPDATE, $user);
+
+        return $user;
+    }
+
+    /**
+     * Remove the given user from storage, Delete all related content.
+     *
+     * @throws Exception
+     */
+    public function destroy(User $user, ?int $newOwnerId = null)
+    {
+        $this->ensureDeletable($user);
+
+        $user->socialAccounts()->delete();
+        $user->apiTokens()->delete();
+        $user->favourites()->delete();
+        $user->mfaValues()->delete();
+        $user->delete();
+
+        // Delete user profile images
+        $this->userAvatar->destroyAllForUser($user);
+
+        if (!empty($newOwnerId)) {
+            $newOwner = User::query()->find($newOwnerId);
+            if (!is_null($newOwner)) {
+                $this->migrateOwnership($user, $newOwner);
+            }
+        }
+
+        Activity::add(ActivityType::USER_DELETE, $user);
+    }
+
+    /**
+     * @throws NotifyException
+     */
+    protected function ensureDeletable(User $user): void
+    {
+        if ($this->isOnlyAdmin($user)) {
+            throw new NotifyException(trans('errors.users_cannot_delete_only_admin'), $user->getEditUrl());
+        }
+
+        if ($user->system_name === 'public') {
+            throw new NotifyException(trans('errors.users_cannot_delete_guest'), $user->getEditUrl());
+        }
+    }
+
+    /**
+     * Migrate ownership of items in the system from one user to another.
+     */
+    protected function migrateOwnership(User $fromUser, User $toUser)
+    {
+        $entities = (new EntityProvider())->all();
+        foreach ($entities as $instance) {
+            $instance->newQuery()->where('owned_by', '=', $fromUser->id)
+                ->update(['owned_by' => $toUser->id]);
+        }
+    }
+
+    /**
+     * Get an avatar image for a user and set it as their avatar.
+     * Returns early if avatars disabled or not set in config.
+     */
+    protected function downloadAndAssignUserAvatar(User $user): void
+    {
+        try {
+            $this->userAvatar->fetchAndAssignToUser($user);
+        } catch (Exception $e) {
+            Log::error('Failed to save user avatar image');
+        }
     }
 
     /**
      * Checks if the give user is the only admin.
      */
-    public function isOnlyAdmin(User $user): bool
+    protected function isOnlyAdmin(User $user): bool
     {
         if (!$user->hasSystemRole('admin')) {
             return false;
@@ -135,7 +228,7 @@ class UserRepo
      *
      * @throws UserUpdateException
      */
-    public function setUserRoles(User $user, array $roles)
+    protected function setUserRoles(User $user, array $roles)
     {
         if ($this->demotingLastAdmin($user, $roles)) {
             throw new UserUpdateException(trans('errors.role_cannot_remove_only_admin'), $user->getEditUrl());
@@ -158,118 +251,5 @@ class UserRepo
         }
 
         return false;
-    }
-
-    /**
-     * Create a new basic instance of user.
-     */
-    public function create(array $data, bool $emailConfirmed = false): User
-    {
-        $details = [
-            'name'             => $data['name'],
-            'email'            => $data['email'],
-            'password'         => bcrypt($data['password']),
-            'email_confirmed'  => $emailConfirmed,
-            'external_auth_id' => $data['external_auth_id'] ?? '',
-        ];
-
-        $user = new User();
-        $user->forceFill($details);
-        $user->refreshSlug();
-        $user->save();
-
-        return $user;
-    }
-
-    /**
-     * Remove the given user from storage, Delete all related content.
-     *
-     * @throws Exception
-     */
-    public function destroy(User $user, ?int $newOwnerId = null)
-    {
-        $user->socialAccounts()->delete();
-        $user->apiTokens()->delete();
-        $user->favourites()->delete();
-        $user->mfaValues()->delete();
-        $user->delete();
-
-        // Delete user profile images
-        $this->userAvatar->destroyAllForUser($user);
-
-        if (!empty($newOwnerId)) {
-            $newOwner = User::query()->find($newOwnerId);
-            if (!is_null($newOwner)) {
-                $this->migrateOwnership($user, $newOwner);
-            }
-        }
-    }
-
-    /**
-     * Migrate ownership of items in the system from one user to another.
-     */
-    protected function migrateOwnership(User $fromUser, User $toUser)
-    {
-        $entities = (new EntityProvider())->all();
-        foreach ($entities as $instance) {
-            $instance->newQuery()->where('owned_by', '=', $fromUser->id)
-                ->update(['owned_by' => $toUser->id]);
-        }
-    }
-
-    /**
-     * Get the recently created content for this given user.
-     */
-    public function getRecentlyCreated(User $user, int $count = 20): array
-    {
-        $query = function (Builder $query) use ($user, $count) {
-            return $query->orderBy('created_at', 'desc')
-                ->where('created_by', '=', $user->id)
-                ->take($count)
-                ->get();
-        };
-
-        return [
-            'pages'    => $query(Page::visible()->where('draft', '=', false)),
-            'chapters' => $query(Chapter::visible()),
-            'books'    => $query(Book::visible()),
-            'shelves'  => $query(Bookshelf::visible()),
-        ];
-    }
-
-    /**
-     * Get asset created counts for the give user.
-     */
-    public function getAssetCounts(User $user): array
-    {
-        $createdBy = ['created_by' => $user->id];
-
-        return [
-            'pages'       => Page::visible()->where($createdBy)->count(),
-            'chapters'    => Chapter::visible()->where($createdBy)->count(),
-            'books'       => Book::visible()->where($createdBy)->count(),
-            'shelves'     => Bookshelf::visible()->where($createdBy)->count(),
-        ];
-    }
-
-    /**
-     * Get the roles in the system that are assignable to a user.
-     */
-    public function getAllRoles(): Collection
-    {
-        return Role::query()->orderBy('display_name', 'asc')->get();
-    }
-
-    /**
-     * Get an avatar image for a user and set it as their avatar.
-     * Returns early if avatars disabled or not set in config.
-     */
-    public function downloadAndAssignUserAvatar(User $user): void
-    {
-        try {
-            $this->userAvatar->fetchAndAssignToUser($user);
-        } catch (Exception $e) {
-            Log::error('Failed to save user avatar image');
-        }
     }
 }

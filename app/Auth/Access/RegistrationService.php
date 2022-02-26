@@ -96,7 +96,8 @@ class RegistrationService
         }
 
         // Create the user
-        $newUser = $this->userRepo->registerNew($userData, $emailConfirmed);
+        $newUser = $this->userRepo->createWithoutActivity($userData, $emailConfirmed);
+        $newUser->attachDefaultRole();
 
         // Assign social account if given
         if ($socialAccount) {

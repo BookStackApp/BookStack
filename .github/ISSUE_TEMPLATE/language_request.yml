@@ -1,6 +1,5 @@
 name: Language Request
 description: Request a new language to be added to CrowdIn for you to translate
-title: "[Language Request]: "
 labels: [":earth_africa: Translations"]
 assignees:
   - ssddanbrown
