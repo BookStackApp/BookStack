@@ -158,7 +158,7 @@ HenrijsS :: Latvian
 Pascal R-B (pborgner) :: German
 Boris (Ginfred) :: Russian
 Jonas Anker Rasmussen (jonasanker) :: Danish
-Gerwin de Keijzer (gdekeijzer) :: Dutch; German; German Informal
+Gerwin de Keijzer (gdekeijzer) :: Dutch; German Informal; German
 kometchtech :: Japanese
 Auri (Atalonica) :: Catalan
 Francesco Franchina (ffranchina) :: Italian
@@ -215,3 +215,18 @@ Saeed (saeed205) :: Persian
 Julesdevops :: French
 peter cerny (posli.to.semka) :: Slovak
 Pavel Karlin (pavelkarlin) :: Russian
+SmokingCrop :: Dutch
+Maciej Lebiest (Szwendacz) :: Polish
+DiscordDigital :: German; German Informal
+Gábor Marton (dodver) :: Hungarian
+Jasell :: Swedish
+Ghost_chu (ghostchu) :: Chinese Simplified
+Ravid Shachar (ravidshachar) :: Hebrew
+Helga Guchshenskaya (guchshenskaya) :: Russian
+daniel chou (chou0214) :: Chinese Traditional
+Manolis PATRIARCHE (m.patriarche) :: French
+Mohammed Haboubi (haboubi92) :: Arabic
+roncallyt :: Portuguese, Brazilian
+goegol :: Dutch
+msevgen :: Turkish
+Khroners :: French
