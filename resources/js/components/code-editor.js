@@ -59,12 +59,10 @@ class CodeEditor {
         this.languageInput.value = language;
         this.callback = callback;
 
-        this.show();
-        this.updateEditorMode(language);
-
-        window.importVersioned('code').then(Code => {
-            Code.setContent(this.editor, code);
-        });
+        this.show()
+            .then(() => this.updateEditorMode(language))
+            .then(() => window.importVersioned('code'))
+            .then(Code => Code.setContent(this.editor, code));
     }
 
     async show() {
