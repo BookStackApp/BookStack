@@ -57,7 +57,7 @@ return [
     'list_numbered' => '有序列表',
     'indent_increase' => '增加缩进',
     'indent_decrease' => '减少缩进',
-    'table' => '表',
+    'table' => '表格',
     'insert_image' => '插入图片',
     'insert_image_title' => '插入/编辑图片',
     'insert_link' => '插入/编辑链接',
