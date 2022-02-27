@@ -91,14 +91,34 @@ function defineCodeBlockCustomElement(editor) {
         }
 
         connectedCallback() {
+            const connectedTime = Date.now();
             if (this.cm) {
                 return;
             }
 
+            this.cleanChildContent();
+
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
-            importVersioned('code').then(Code => {
+            const renderCodeMirror = (Code) => {
                 this.cm = Code.wysiwygView(container, this.getContent(), this.getLanguage());
+                Code.updateLayout(this.cm);
+            };
+
+            window.importVersioned('code').then((Code) => {
+                const timeout = (Date.now() - connectedTime < 20) ? 20 : 0;
+                setTimeout(() => renderCodeMirror(Code), timeout);
             });
+        }
+
+        cleanChildContent() {
+            const pre = this.querySelector('pre');
+            if (!pre) return;
+
+            for (const preChild of pre.childNodes) {
+                if (preChild.nodeName === '#text' && preChild.textContent === '﻿') {
+                    preChild.remove();
+                }
+            }
         }
     }
 
@@ -130,15 +150,13 @@ function register(editor, url) {
         } else {
             const textContent = editor.selection.getContent({format: 'text'});
             showPopup(editor, textContent, '', (newCode, newLang) => {
-                const wrap = doc.createElement('code-block');
                 const pre = doc.createElement('pre');
                 const code = doc.createElement('code');
                 code.classList.add(`language-${newLang}`);
                 code.innerText = newCode;
                 pre.append(code);
-                wrap.append(pre);
 
-                editor.insertContent(wrap.outerHTML);
+                editor.insertContent(pre.outerHTML);
             });
         }
     });
@@ -168,7 +186,7 @@ function register(editor, url) {
 
         editor.parser.addNodeFilter('code-block', function(elms) {
             for (const el of elms) {
-                el.attr('content-editable', 'false');
+                el.attr('contenteditable', 'false');
             }
         });
 
