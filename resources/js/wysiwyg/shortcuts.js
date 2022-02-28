@@ -39,4 +39,19 @@ export function register(editor) {
 
         editor.formatter.apply('callout' + newFormat);
     });
+
+    // Link selector shortcut
+    editor.shortcuts.add('meta+shift+K', '', function() {
+        window.EntitySelectorPopup.show(function(entity) {
+
+            if (editor.selection.isCollapsed()) {
+                editor.insertContent(editor.dom.createHTML('a', {href: entity.link}, editor.dom.encode(entity.name)));
+            } else {
+                editor.formatter.apply('link', {href: entity.link});
+            }
+
+            editor.selection.collapse(false);
+            editor.focus();
+        })
+    });
 }
