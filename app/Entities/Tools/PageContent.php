@@ -239,6 +239,9 @@ class PageContent
             $html .= $doc->saveHTML($childNode);
         }
 
+        // Perform required string-level tweaks
+        $html = str_replace(' ', '&nbsp;', $html);
+
         return $html;
     }
 
