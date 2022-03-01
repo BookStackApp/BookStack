@@ -193,7 +193,7 @@
     }
   }
   .entity-list-item.selected {
-    background-color: rgba(0, 0, 0, 0.08);
+    @include lightDark(background-color, rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
   }
   .entity-list-item.no-hover {
     margin-top: -$-xs;

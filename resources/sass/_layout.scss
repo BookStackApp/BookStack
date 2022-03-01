@@ -361,16 +361,13 @@ body.flexbox {
     display: none;
   }
   .tri-layout-left-contents > *, .tri-layout-right-contents > * {
-    opacity: 0.6;
+    @include lightDark(opacity, 0.6, 0.7);
     transition: opacity ease-in-out 120ms;
-    &:hover {
-      opacity: 1;
-    }
-    &:focus-within {
-      opacity: 1;
+    &:hover, &:focus-within {
+      opacity: 1 !important;
     }
     @media (prefers-contrast: more) {
-      opacity: 1;
+      opacity: 1 !important;
     }
   }
 

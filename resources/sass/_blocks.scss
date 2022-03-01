@@ -238,13 +238,13 @@
 }
 
 .fade-in-when-active {
-  opacity: 0.6;
+  @include lightDark(opacity, 0.6, 0.7);
   transition: opacity ease-in-out 120ms;
   &:hover, &:focus-within {
-    opacity: 1;
+    opacity: 1 !important;
   }
   @media (prefers-contrast: more) {
-    opacity: 1;
+    opacity: 1 !important;
   }
 }
 
