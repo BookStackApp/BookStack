@@ -131,12 +131,12 @@ return [
     'open_link' => 'Apri collegamento in...',
     'open_link_current' => 'Finestra corrente',
     'open_link_new' => 'Nuova finestra',
-    'insert_collapsible' => 'Insert collapsible block',
-    'collapsible_unwrap' => 'Unwrap',
-    'edit_label' => 'Edit label',
-    'toggle_open_closed' => 'Toggle open/closed',
-    'collapsible_edit' => 'Edit collapsible block',
-    'toggle_label' => 'Toggle label',
+    'insert_collapsible' => 'Inserisci blocco collassabile',
+    'collapsible_unwrap' => 'Espandi',
+    'edit_label' => 'Modifica etichetta',
+    'toggle_open_closed' => 'Espandi/Comprimi',
+    'collapsible_edit' => 'Modifica blocco collassabile',
+    'toggle_label' => 'Attiva/Disattiva etichetta',
 
     // About view
     'about_title' => 'Informazioni sull\'editor di WYSIWYG',
