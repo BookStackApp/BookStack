@@ -243,6 +243,7 @@ export function build(options) {
         remove_script_host: false,
         document_base_url: window.baseUrl('/'),
         end_container_on_empty_block: true,
+        remove_trailing_brs: false,
         statusbar: false,
         menubar: false,
         paste_data_images: false,
