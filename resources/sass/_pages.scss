@@ -164,6 +164,10 @@ body.tox-fullscreen, body.markdown-fullscreen {
     clear: both;
   }
 
+  p:empty {
+    min-height: 1.6em;
+  }
+
   &.page-revision {
     pre code {
       white-space: pre-wrap;
