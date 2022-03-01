@@ -221,11 +221,15 @@ export function build(options) {
     // Build toolbar content
     const {toolbar, groupButtons: toolBarGroupButtons} = buildToolbar(options);
 
+    // BookStack Version
+    const version = document.querySelector('script[src*="/dist/app.js"]').getAttribute('src').split('?version=')[1];
+
     // Return config object
     return {
         width: '100%',
         height: '100%',
         selector: '#html-editor',
+        cache_suffix: '?version=' + version,
         content_css: [
             window.baseUrl('/dist/styles.css'),
         ],
