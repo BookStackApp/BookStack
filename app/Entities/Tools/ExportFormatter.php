@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Uploads\ImageService;
+use BookStack\Util\CspService;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
@@ -15,16 +16,18 @@ use Throwable;
 
 class ExportFormatter
 {
-    protected $imageService;
-    protected $pdfGenerator;
+    protected ImageService $imageService;
+    protected PdfGenerator $pdfGenerator;
+    protected CspService $cspService;
 
     /**
      * ExportService constructor.
      */
-    public function __construct(ImageService $imageService, PdfGenerator $pdfGenerator)
+    public function __construct(ImageService $imageService, PdfGenerator $pdfGenerator, CspService $cspService)
     {
         $this->imageService = $imageService;
         $this->pdfGenerator = $pdfGenerator;
+        $this->cspService = $cspService;
     }
 
     /**
@@ -37,8 +40,9 @@ class ExportFormatter
     {
         $page->html = (new PageContent($page))->render();
         $pageHtml = view('pages.export', [
-            'page'   => $page,
-            'format' => 'html',
+            'page'       => $page,
+            'format'     => 'html',
+            'cspContent' => $this->cspService->getCspMetaTagValue(),
         ])->render();
 
         return $this->containHtml($pageHtml);
@@ -56,9 +60,10 @@ class ExportFormatter
             $page->html = (new PageContent($page))->render();
         });
         $html = view('chapters.export', [
-            'chapter' => $chapter,
-            'pages'   => $pages,
-            'format'  => 'html',
+            'chapter'    => $chapter,
+            'pages'      => $pages,
+            'format'     => 'html',
+            'cspContent' => $this->cspService->getCspMetaTagValue(),
         ])->render();
 
         return $this->containHtml($html);
@@ -76,6 +81,7 @@ class ExportFormatter
             'book'         => $book,
             'bookChildren' => $bookTree,
             'format'       => 'html',
+            'cspContent'   => $this->cspService->getCspMetaTagValue(),
         ])->render();
 
         return $this->containHtml($html);

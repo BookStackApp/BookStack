@@ -57,6 +57,13 @@ return [
     // Space separated if multiple. BookStack host domain is auto-inferred.
     'iframe_hosts' => env('ALLOWED_IFRAME_HOSTS', null),
 
+    // A list of sources/hostnames that can be loaded within iframes within BookStack.
+    // Space separated if multiple. BookStack host domain is auto-inferred.
+    // Can be set to a lone "*" to allow all sources for iframe content (Not advised).
+    // Defaults to a set of common services.
+    // Current host and source for the "DRAWIO" setting will be auto-appended to the sources configured.
+    'iframe_sources' => env('ALLOWED_IFRAME_SOURCES', 'https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com'),
+
     // Application timezone for back-end date functions.
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 

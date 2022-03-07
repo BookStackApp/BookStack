@@ -3,12 +3,10 @@
 namespace BookStack\Util;
 
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\Response;
 
 class CspService
 {
-    /** @var string */
-    protected $nonce;
+    protected string $nonce;
 
     public function __construct(string $nonce = '')
     {
@@ -24,37 +22,34 @@ class CspService
     }
 
     /**
-     * Sets CSP 'script-src' headers to restrict the forms of script that can
-     * run on the page.
+     * Get the CSP headers for the application
      */
-    public function setScriptSrc(Response $response)
+    public function getCspHeader(): string
     {
-        if (config('app.allow_content_scripts')) {
-            return;
-        }
-
-        $parts = [
-            'http:',
-            'https:',
-            '\'nonce-' . $this->nonce . '\'',
-            '\'strict-dynamic\'',
+        $headers = [
+            $this->getFrameAncestors(),
+            $this->getFrameSrc(),
+            $this->getScriptSrc(),
+            $this->getObjectSrc(),
+            $this->getBaseUri(),
         ];
 
-        $value = 'script-src ' . implode(' ', $parts);
-        $response->headers->set('Content-Security-Policy', $value, false);
+        return implode('; ', array_filter($headers));
     }
 
     /**
-     * Sets CSP "frame-ancestors" headers to restrict the hosts that BookStack can be
-     * iframed within. Also adjusts the cookie samesite options so that cookies will
-     * operate in the third-party context.
+     * Get the CSP rules for the application for a HTML meta tag.
      */
-    public function setFrameAncestors(Response $response)
+    public function getCspMetaTagValue(): string
     {
-        $iframeHosts = $this->getAllowedIframeHosts();
-        array_unshift($iframeHosts, "'self'");
-        $cspValue = 'frame-ancestors ' . implode(' ', $iframeHosts);
-        $response->headers->set('Content-Security-Policy', $cspValue, false);
+        $headers = [
+            $this->getFrameSrc(),
+            $this->getScriptSrc(),
+            $this->getObjectSrc(),
+            $this->getBaseUri(),
+        ];
+
+        return implode('; ', array_filter($headers));
     }
 
     /**
@@ -66,25 +61,65 @@ class CspService
     }
 
     /**
-     * Sets CSP 'object-src' headers to restrict the types of dynamic content
-     * that can be embedded on the page.
+     * Create CSP 'script-src' rule to restrict the forms of script that can run on the page.
      */
-    public function setObjectSrc(Response $response)
+    protected function getScriptSrc(): string
     {
         if (config('app.allow_content_scripts')) {
-            return;
+            return '';
         }
 
-        $response->headers->set('Content-Security-Policy', 'object-src \'self\'', false);
+        $parts = [
+            'http:',
+            'https:',
+            '\'nonce-' . $this->nonce . '\'',
+            '\'strict-dynamic\'',
+        ];
+
+        return 'script-src ' . implode(' ', $parts);
     }
 
     /**
-     * Sets CSP 'base-uri' headers to restrict what base tags can be set on
+     * Create CSP "frame-ancestors" rule to restrict the hosts that BookStack can be iframed within.
+     */
+    protected function getFrameAncestors(): string
+    {
+        $iframeHosts = $this->getAllowedIframeHosts();
+        array_unshift($iframeHosts, "'self'");
+        return 'frame-ancestors ' . implode(' ', $iframeHosts);
+    }
+
+    /**
+     * Creates CSP "frame-src" rule to restrict what hosts/sources can be loaded
+     * within iframes to provide an allow-list-style approach to iframe content.
+     */
+    protected function getFrameSrc(): string
+    {
+        $iframeHosts = $this->getAllowedIframeSources();
+        array_unshift($iframeHosts, "'self'");
+        return 'frame-src ' . implode(' ', $iframeHosts);
+    }
+
+    /**
+     * Creates CSP 'object-src' rule to restrict the types of dynamic content
+     * that can be embedded on the page.
+     */
+    protected function getObjectSrc(): string
+    {
+        if (config('app.allow_content_scripts')) {
+            return '';
+        }
+
+        return "object-src 'self'";
+    }
+
+    /**
+     * Creates CSP 'base-uri' rule to restrict what base tags can be set on
      * the page to prevent manipulation of relative links.
      */
-    public function setBaseUri(Response $response)
+    protected function getBaseUri(): string
     {
-        $response->headers->set('Content-Security-Policy', 'base-uri \'self\'', false);
+        return "base-uri 'self'";
     }
 
     protected function getAllowedIframeHosts(): array
@@ -92,5 +127,22 @@ class CspService
         $hosts = config('app.iframe_hosts', '');
 
         return array_filter(explode(' ', $hosts));
+    }
+
+    protected function getAllowedIframeSources(): array
+    {
+        $sources = config('app.iframe_sources', '');
+        $hosts = array_filter(explode(' ', $sources));
+
+        // Extract drawing service url to allow embedding if active
+        $drawioConfigValue = config('services.drawio');
+        if ($drawioConfigValue) {
+            $drawioSource = is_string($drawioConfigValue) ? $drawioConfigValue : 'https://embed.diagrams.net/';
+            $drawioSourceParsed = parse_url($drawioSource);
+            $drawioHost = $drawioSourceParsed['scheme'] . '://' . $drawioSourceParsed['host'];
+            $hosts[] = $drawioHost;
+        }
+
+        return $hosts;
     }
 }

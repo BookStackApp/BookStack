@@ -268,7 +268,7 @@ class ExportTest extends TestCase
         foreach ($entities as $entity) {
             $resp = $this->asEditor()->get($entity->getUrl('/export/html'));
             $resp->assertDontSee('window.donkey');
-            $resp->assertDontSee('script');
+            $resp->assertDontSee('<script', false);
             $resp->assertSee('.my-test-class { color: red; }');
         }
     }
@@ -447,5 +447,19 @@ class ExportTest extends TestCase
         config()->set('app.allow_untrusted_server_fetching', true);
         $resp = $this->get($page->getUrl('/export/pdf'));
         $resp->assertStatus(500); // Bad response indicates wkhtml usage
+    }
+
+    public function test_html_exports_contain_csp_meta_tag()
+    {
+        $entities = [
+            Page::query()->first(),
+            Book::query()->first(),
+            Chapter::query()->first(),
+        ];
+
+        foreach ($entities as $entity) {
+            $resp = $this->asEditor()->get($entity->getUrl('/export/html'));
+            $resp->assertElementExists('head meta[http-equiv="Content-Security-Policy"][content*="script-src "]');
+        }
     }
 }
