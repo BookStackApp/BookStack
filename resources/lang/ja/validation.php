@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attributeは:min〜:maxである必要があります。',
     'email'                => ':attributeは正しいEメールアドレスである必要があります。',
     'ends_with' => ':attributeは:valuesのいずれかで終わる必要があります。',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => ':attributeは有効なファイルである必要があります。',
     'filled'               => ':attributeは必須です。',
     'gt'                   => [
         'numeric' => ':attributeは:valueより大きな値である必要があります。',
