@@ -8,10 +8,7 @@ use Illuminate\Http\Request;
 
 class ApplyCspRules
 {
-    /**
-     * @var CspService
-     */
-    protected $cspService;
+    protected CspService $cspService;
 
     public function __construct(CspService $cspService)
     {
@@ -35,10 +32,8 @@ class ApplyCspRules
 
         $response = $next($request);
 
-        $this->cspService->setFrameAncestors($response);
-        $this->cspService->setScriptSrc($response);
-        $this->cspService->setObjectSrc($response);
-        $this->cspService->setBaseUri($response);
+        $cspHeader = $this->cspService->getCspHeader();
+        $response->headers->set('Content-Security-Policy', $cspHeader, false);
 
         return $response;
     }

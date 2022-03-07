@@ -119,6 +119,25 @@ class SecurityHeaderTest extends TestCase
         $this->assertEquals('base-uri \'self\'', $scriptHeader);
     }
 
+    public function test_frame_src_csp_header_set()
+    {
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'frame-src');
+        $this->assertEquals('frame-src \'self\' https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com', $scriptHeader);
+    }
+
+    public function test_frame_src_csp_header_has_drawio_host_added()
+    {
+        config()->set([
+            'app.iframe_sources' => 'https://example.com',
+            'services.drawio'   => 'https://diagrams.example.com/testing?cat=dog',
+        ]);
+
+        $resp = $this->get('/');
+        $scriptHeader = $this->getCspHeader($resp, 'frame-src');
+        $this->assertEquals('frame-src \'self\' https://example.com https://diagrams.example.com', $scriptHeader);
+    }
+
     public function test_cache_control_headers_are_strict_on_responses_when_logged_in()
     {
         $this->asEditor();
@@ -133,10 +152,14 @@ class SecurityHeaderTest extends TestCase
      */
     protected function getCspHeader(TestResponse $resp, string $type): string
     {
-        $cspHeaders = collect($resp->headers->all('Content-Security-Policy'));
+        $cspHeaders = explode('; ', $resp->headers->get('Content-Security-Policy'));
 
-        return $cspHeaders->filter(function ($val) use ($type) {
-            return strpos($val, $type) === 0;
-        })->first() ?? '';
+        foreach ($cspHeaders as $cspHeader) {
+            if (strpos($cspHeader, $type) === 0) {
+                return $cspHeader;
+            }
+        }
+
+        return '';
     }
 }

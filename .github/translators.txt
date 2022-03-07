@@ -230,3 +230,5 @@ roncallyt :: Portuguese, Brazilian
 goegol :: Dutch
 msevgen :: Turkish
 Khroners :: French
+MASOUD HOSSEINY (masoudme) :: Persian
+Thomerson Roncally (roncallyt) :: Portuguese, Brazilian
