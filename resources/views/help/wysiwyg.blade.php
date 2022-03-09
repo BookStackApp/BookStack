@@ -115,6 +115,15 @@
                     {{ trans('editor.callouts_cycle') }}
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <code>Ctrl</code>+<code>Shift</code>+<code>K</code>
+                </td>
+                <td>
+                    <code>Cmd</code>+<code>Shift</code>+<code>K</code>
+                </td>
+                <td>{{ trans('editor.link_selector') }}</td>
+            </tr>
             </tbody>
         </table>
 

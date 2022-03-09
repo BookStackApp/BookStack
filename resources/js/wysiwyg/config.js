@@ -2,6 +2,7 @@ import {register as registerShortcuts} from "./shortcuts";
 import {listen as listenForCommonEvents} from "./common-events";
 import {scrollToQueryString} from "./scrolling";
 import {listenForDragAndPaste} from "./drop-paste-handling";
+import {getPrimaryToolbar, registerAdditionalToolbars} from "./toolbars";
 
 import {getPlugin as getCodeeditorPlugin} from "./plugin-codeeditor";
 import {getPlugin as getDrawioPlugin} from "./plugin-drawio";
@@ -56,48 +57,6 @@ function file_picker_callback(callback, value, meta) {
         }, 'gallery');
     }
 
-}
-
-/**
- * @param {WysiwygConfigOptions} options
- * @return {{toolbar: string, groupButtons: Object<string, Object>}}
- */
-function buildToolbar(options) {
-    const textDirPlugins = options.textDirection === 'rtl' ? 'ltr rtl' : '';
-
-    const groupButtons = {
-        formatoverflow: {
-            icon: 'more-drawer',
-            tooltip: 'More',
-            items: 'strikethrough superscript subscript inlinecode removeformat'
-        },
-        listoverflow: {
-            icon: 'more-drawer',
-            tooltip: 'More',
-            items: 'outdent indent'
-        },
-        insertoverflow: {
-            icon: 'more-drawer',
-            tooltip: 'More',
-            items: 'hr codeeditor drawio media details'
-        }
-    };
-
-    const toolbar = [
-        'undo redo',
-        'styleselect',
-        'bold italic underline forecolor backcolor formatoverflow',
-        'alignleft aligncenter alignright alignjustify',
-        'bullist numlist listoverflow',
-        textDirPlugins,
-        'link table imagemanager-insert insertoverflow',
-        'code about fullscreen'
-    ];
-
-    return {
-        toolbar: toolbar.filter(row => Boolean(row)).join(' | '),
-        groupButtons,
-    };
 }
 
 /**
@@ -218,8 +177,6 @@ export function build(options) {
 
     // Set language
     window.tinymce.addI18n(options.language, options.translationMap);
-    // Build toolbar content
-    const {toolbar, groupButtons: toolBarGroupButtons} = buildToolbar(options);
 
     // BookStack Version
     const version = document.querySelector('script[src*="/dist/app.js"]').getAttribute('src').split('?version=')[1];
@@ -261,7 +218,7 @@ export function build(options) {
         plugins: gatherPlugins(options),
         imagetools_toolbar: 'imageoptions',
         contextmenu: false,
-        toolbar: toolbar,
+        toolbar: getPrimaryToolbar(options),
         content_style: getContentStyle(options),
         style_formats,
         style_formats_merge: false,
@@ -281,9 +238,7 @@ export function build(options) {
             head.innerHTML += fetchCustomHeadContent();
         },
         setup(editor) {
-            for (const [key, config] of Object.entries(toolBarGroupButtons)) {
-                editor.ui.registry.addGroupToolbarButton(key, config);
-            }
+            registerAdditionalToolbars(editor, options);
             getSetupCallback(options)(editor);
         },
     };
