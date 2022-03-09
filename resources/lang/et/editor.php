@@ -145,6 +145,7 @@ return [
     'editor_tiny_license_link' => 'TinyMCE autoriõigused ja litsents on saadaval siin.',
     'save_continue' => 'Salvesta leht ja jätka',
     'callouts_cycle' => '(Vajuta, et tüüpide vahel valida)',
+    'link_selector' => 'Link to content',
     'shortcuts' => 'Otseteed',
     'shortcut' => 'Otsetee',
     'shortcuts_intro' => 'Redaktoris on saadaval järgmised otseteed:',
