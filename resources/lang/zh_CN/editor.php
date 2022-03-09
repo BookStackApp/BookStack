@@ -145,6 +145,7 @@ return [
     'editor_tiny_license_link' => 'TinyMCE 的版权和许可证详细信息可以在这里找到。',
     'save_continue' => '保存页面并继续',
     'callouts_cycle' => '(继续按下以切换类型)',
+    'link_selector' => 'Link to content',
     'shortcuts' => '快捷键',
     'shortcut' => '快捷键',
     'shortcuts_intro' => '编辑器中提供了以下快捷键：',
