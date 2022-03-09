@@ -145,6 +145,7 @@ return [
     'editor_tiny_license_link' => 'I dettagli del copyright e della licenza di TinyMCE sono disponibili qui.',
     'save_continue' => 'Salva Pagina E Continua',
     'callouts_cycle' => '(Continua a premere per passare da un tipo all\'altro)',
+    'link_selector' => 'Link to content',
     'shortcuts' => 'Scorciatoie',
     'shortcut' => 'Scorciatoia',
     'shortcuts_intro' => 'Le seguenti scorciatoie sono disponibili nell\'editor:',
