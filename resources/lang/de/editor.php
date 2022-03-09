@@ -145,6 +145,7 @@ return [
     'editor_tiny_license_link' => 'Die Copyright- und Lizenzdetails von TinyMCE finden Sie hier.',
     'save_continue' => 'Speichern & Fortfahren',
     'callouts_cycle' => '(Drücken Sie weiter, um durch Typen umzuschalten)',
+    'link_selector' => 'Link to content',
     'shortcuts' => 'Verknüpfungen',
     'shortcut' => 'Verknüpfung',
     'shortcuts_intro' => 'Die folgenden Verknüpfungen sind im Editor verfügbar:',
