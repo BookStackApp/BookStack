@@ -145,6 +145,7 @@ return [
     'editor_tiny_license_link' => 'TinyMCEの著作権およびライセンスの詳細は、こちらをご覧ください。',
     'save_continue' => 'ページを保存して続行',
     'callouts_cycle' => '(押し続けて種類を切り替え)',
+    'link_selector' => 'Link to content',
     'shortcuts' => 'ショートカット',
     'shortcut' => 'ショートカット',
     'shortcuts_intro' => 'エディタでは次に示すショートカットが利用できます。',
