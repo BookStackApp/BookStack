@@ -145,6 +145,7 @@ return [
     'editor_tiny_license_link' => 'Авторские права и подробности лицензии TinyMCE вы можете найти здесь.',
     'save_continue' => 'Сохранить страницу и продолжить',
     'callouts_cycle' => '(Держите нажатым для переключения типов)',
+    'link_selector' => 'Link to content',
     'shortcuts' => 'Сочетания клавиш',
     'shortcut' => 'Сочетания клавиш',
     'shortcuts_intro' => 'Следующие сочетания клавиш доступны в редакторе:',
