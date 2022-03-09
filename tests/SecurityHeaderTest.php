@@ -130,7 +130,7 @@ class SecurityHeaderTest extends TestCase
     {
         config()->set([
             'app.iframe_sources' => 'https://example.com',
-            'services.drawio'   => 'https://diagrams.example.com/testing?cat=dog',
+            'services.drawio'    => 'https://diagrams.example.com/testing?cat=dog',
         ]);
 
         $resp = $this->get('/');

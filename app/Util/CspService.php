@@ -22,7 +22,7 @@ class CspService
     }
 
     /**
-     * Get the CSP headers for the application
+     * Get the CSP headers for the application.
      */
     public function getCspHeader(): string
     {
@@ -86,6 +86,7 @@ class CspService
     {
         $iframeHosts = $this->getAllowedIframeHosts();
         array_unshift($iframeHosts, "'self'");
+
         return 'frame-ancestors ' . implode(' ', $iframeHosts);
     }
 
@@ -97,6 +98,7 @@ class CspService
     {
         $iframeHosts = $this->getAllowedIframeSources();
         array_unshift($iframeHosts, "'self'");
+
         return 'frame-src ' . implode(' ', $iframeHosts);
     }
 
