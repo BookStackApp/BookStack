@@ -6,22 +6,22 @@
 return [
 
     // Pages
-    'page_create'                 => 'created page',
-    'page_create_notification'    => 'Page successfully created',
-    'page_update'                 => 'updated page',
-    'page_update_notification'    => 'Page successfully updated',
-    'page_delete'                 => 'deleted page',
-    'page_delete_notification'    => 'Page successfully deleted',
-    'page_restore'                => 'restored page',
-    'page_restore_notification'   => 'Page successfully restored',
-    'page_move'                   => 'moved page',
+    'page_create'                 => 'sortu orria',
+    'page_create_notification'    => 'Orria ongi sortu da',
+    'page_update'                 => 'eguneratu orrialdea',
+    'page_update_notification'    => 'Orria egoki egunerauta',
+    'page_delete'                 => 'ezabatu orrialdea',
+    'page_delete_notification'    => 'Ondo ezabatu da',
+    'page_restore'                => 'leheneratu orria',
+    'page_restore_notification'   => 'Dokumentua behar bezala leheneratuta',
+    'page_move'                   => 'mugitu orrialdea',
 
     // Chapters
-    'chapter_create'              => 'created chapter',
-    'chapter_create_notification' => 'Chapter successfully created',
-    'chapter_update'              => 'updated chapter',
-    'chapter_update_notification' => 'Chapter successfully updated',
-    'chapter_delete'              => 'deleted chapter',
+    'chapter_create'              => 'kapitulua sortu',
+    'chapter_create_notification' => 'Kapitulua egoki sortuta',
+    'chapter_update'              => 'eguneratu kapitulua',
+    'chapter_update_notification' => 'Kapitulua egoki eguneratuta',
+    'chapter_delete'              => 'kapitulua ezabatu',
     'chapter_delete_notification' => 'Chapter successfully deleted',
     'chapter_move'                => 'moved chapter',
 
