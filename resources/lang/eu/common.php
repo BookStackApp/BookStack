@@ -88,15 +88,15 @@ return [
     // Layout tabs
     'tab_info' => 'Info',
     'tab_info_label' => 'Tab: Show Secondary Information',
-    'tab_content' => 'Content',
+    'tab_content' => 'Edukia',
     'tab_content_label' => 'Tab: Show Primary Content',
 
     // Email Content
     'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
-    'email_rights' => 'All rights reserved',
+    'email_rights' => 'Eskubide guztiak erreserbatuta',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Pribatutasun politika',
+    'terms_of_service' => 'Zerbitzu-baldintzak',
 ];
