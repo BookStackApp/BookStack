@@ -7,41 +7,41 @@ return [
 
     // Pages
     'page_create'                 => 'створив сторінку',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Сторінка успішно створена',
     'page_update'                 => 'оновив сторінку',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Сторінка успішно оновлена',
     'page_delete'                 => 'видалив сторінку',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Сторінка успішно видалена',
     'page_restore'                => 'відновив сторінку',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Сторінка успішно відновлена',
     'page_move'                   => 'перемістив сторінку',
 
     // Chapters
     'chapter_create'              => 'створив розділ',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Розділ успішно створено',
     'chapter_update'              => 'оновив розділ',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Розділ успішно оновлено',
     'chapter_delete'              => 'видалив розділ',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Розділ успішно видалено',
     'chapter_move'                => 'перемістив розділ',
 
     // Books
     'book_create'                 => 'створив книгу',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Книгу успішно створено',
     'book_update'                 => 'оновив книгу',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Книгу успішно оновлено',
     'book_delete'                 => 'видалив книгу',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'Книгу успішно видалено',
     'book_sort'                   => 'sorted книгу',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'Книгу успішно відновлено',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create'            => 'створив книжкову полицю',
+    'bookshelf_create_notification'    => 'Книжкову полицю успішно створено',
     'bookshelf_update'                 => 'оновив книжкову полицю',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'Книжкову полицю успішно оновлено',
     'bookshelf_delete'                 => 'видалив книжкову полицю',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Книжкову полицю успішно видалено',
 
     // Favourites
     'favourite_add_notification' => '":ім\'я" було додане до ваших улюлених',
@@ -52,16 +52,16 @@ return [
     'mfa_remove_method_notification' => 'Багатофакторний метод успішно видалений',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'створений вебхук',
+    'webhook_create_notification' => 'Веб хук успішно створений',
+    'webhook_update' => 'оновлений вебхук',
+    'webhook_update_notification' => 'Вебхуки успішно оновлено',
+    'webhook_delete' => 'видалений вебхук',
+    'webhook_delete_notification' => 'Вебхуки успішно видалено',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Користувача було успішно оновлено',
+    'user_delete_notification' => 'Користувача успішно видалено',
 
     // Other
     'commented_on'                => 'прокоментував',
