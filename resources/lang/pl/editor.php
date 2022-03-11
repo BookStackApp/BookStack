@@ -145,7 +145,7 @@ return [
     'editor_tiny_license_link' => 'Szczegóły dotyczące praw autorskich i licencji TinyMCE można znaleźć tutaj.',
     'save_continue' => 'Zapisz stronę i kontynuuj',
     'callouts_cycle' => '(Naciskaj dalej, aby przełączyć przez typy)',
-    'link_selector' => 'Link to content',
+    'link_selector' => 'Link do treści',
     'shortcuts' => 'Skróty',
     'shortcut' => 'Skrót',
     'shortcuts_intro' => 'Następujące skróty są dostępne w edytorze:',
