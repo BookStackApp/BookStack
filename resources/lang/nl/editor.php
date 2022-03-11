@@ -145,7 +145,7 @@ return [
     'editor_tiny_license_link' => 'De copyright- en licentiegegevens van TinyMCE vindt u hier.',
     'save_continue' => 'Pagina opslaan en verdergaan',
     'callouts_cycle' => '(Blijf drukken om door de types te wisselen)',
-    'link_selector' => 'Link to content',
+    'link_selector' => 'Koppeling naar inhoud',
     'shortcuts' => 'Snelkoppelingen',
     'shortcut' => 'Snelkoppeling',
     'shortcuts_intro' => 'De volgende sneltoetsen zijn beschikbaar in de bewerker:',
