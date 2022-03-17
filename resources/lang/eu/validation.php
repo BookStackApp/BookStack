@@ -8,13 +8,13 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'The :attribute must be accepted.',
-    'active_url'           => 'The :attribute is not a valid URL.',
+    'accepted'             => ':attribute onartua izan behar du.',
+    'active_url'           => ':attribute ez da baliozko URLa.',
     'after'                => 'The :attribute must be a date after :date.',
     'alpha'                => 'The :attribute may only contain letters.',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, dashes and underscores.',
     'alpha_num'            => 'The :attribute may only contain letters and numbers.',
-    'array'                => 'The :attribute must be an array.',
+    'array'                => ':attribute array bat izan behar da.',
     'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => 'The :attribute must be a date before :date.',
     'between'              => [
@@ -25,7 +25,7 @@ return [
     ],
     'boolean'              => 'The :attribute field must be true or false.',
     'confirmed'            => 'The :attribute confirmation does not match.',
-    'date'                 => 'The :attribute is not a valid date.',
+    'date'                 => ':attribute ez da baliozko data.',
     'date_format'          => 'The :attribute does not match the format :format.',
     'different'            => 'The :attribute and :other must be different.',
     'digits'               => 'The :attribute must be :digits digits.',
@@ -33,7 +33,7 @@ return [
     'email'                => 'The :attribute must be a valid email address.',
     'ends_with' => 'The :attribute must end with one of the following: :values',
     'file'                 => 'The :attribute must be provided as a valid file.',
-    'filled'               => 'The :attribute field is required.',
+    'filled'               => ':attribute eremua beharrezkoa da.',
     'gt'                   => [
         'numeric' => 'The :attribute must be greater than :value.',
         'file'    => 'The :attribute must be greater than :value kilobytes.',
@@ -47,7 +47,7 @@ return [
         'array'   => 'The :attribute must have :value items or more.',
     ],
     'exists'               => 'The selected :attribute is invalid.',
-    'image'                => 'The :attribute must be an image.',
+    'image'                => ':attribute irudi bat izan behar da.',
     'image_extension'      => 'The :attribute must have a valid & supported image extension.',
     'in'                   => 'The selected :attribute is invalid.',
     'integer'              => 'The :attribute must be an integer.',
