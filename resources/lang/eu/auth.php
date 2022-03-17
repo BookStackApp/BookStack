@@ -6,14 +6,14 @@
  */
 return [
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Kredentzial hauek ez dira egokiak.',
+    'throttle' => 'Login saiakera kopurua pasa duzu. Mesedez, saiatu berriz :seconds segundu barru.',
 
     // Login & Register
     'sign_up' => 'Izena eman',
     'log_in' => 'Saioa hasi',
-    'log_in_with' => 'Login with :socialDriver',
-    'sign_up_with' => 'Sign up with :socialDriver',
+    'log_in_with' => ':socialDriver bidez hasi saioa',
+    'sign_up_with' => ':socialDriver bidez izena eman',
     'logout' => 'Logout',
 
     'name' => 'Izena',
