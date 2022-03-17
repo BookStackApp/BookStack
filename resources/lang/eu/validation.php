@@ -50,7 +50,7 @@ return [
     'image'                => ':attribute irudi bat izan behar da.',
     'image_extension'      => 'The :attribute must have a valid & supported image extension.',
     'in'                   => 'The selected :attribute is invalid.',
-    'integer'              => 'The :attribute must be an integer.',
+    'integer'              => ':attribute zenbaki oso bat izan behar da.',
     'ip'                   => 'The :attribute must be a valid IP address.',
     'ipv4'                 => 'The :attribute must be a valid IPv4 address.',
     'ipv6'                 => 'The :attribute must be a valid IPv6 address.',
@@ -81,10 +81,10 @@ return [
         'array'   => 'The :attribute must have at least :min items.',
     ],
     'not_in'               => 'The selected :attribute is invalid.',
-    'not_regex'            => 'The :attribute format is invalid.',
-    'numeric'              => 'The :attribute must be a number.',
-    'regex'                => 'The :attribute format is invalid.',
-    'required'             => 'The :attribute field is required.',
+    'not_regex'            => ':attribute formatua baliogabea da.',
+    'numeric'              => ':attribute zenbaki bat izan behar da.',
+    'regex'                => ':attribute formatua baliogabea da.',
+    'required'             => ':attribute eremua beharrezkoa da.',
     'required_if'          => 'The :attribute field is required when :other is :value.',
     'required_with'        => 'The :attribute field is required when :values is present.',
     'required_with_all'    => 'The :attribute field is required when :values is present.',
@@ -98,7 +98,7 @@ return [
         'string'  => 'The :attribute must be :size characters.',
         'array'   => 'The :attribute must contain :size items.',
     ],
-    'string'               => 'The :attribute must be a string.',
+    'string'               => ':attribute textua izan behar da.',
     'timezone'             => 'The :attribute must be a valid zone.',
     'totp'                 => 'The provided code is not valid or has expired.',
     'unique'               => 'The :attribute has already been taken.',
@@ -108,7 +108,7 @@ return [
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'Password confirmation required',
+            'required_with' => 'Baieztatu zure pasahitza',
         ],
     ],
 
