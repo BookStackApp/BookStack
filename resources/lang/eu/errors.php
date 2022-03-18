@@ -11,15 +11,15 @@ return [
     // Auth
     'error_user_exists_different_creds' => ':email kontuakin erabiltzaile bat badago, baina kredentzial ezberdinekin.',
     'email_already_confirmed' => 'Email kontua berretsita dago, saiatu saioa hasten.',
-    'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
-    'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
-    'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
-    'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
-    'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
-    'ldap_cannot_connect' => 'Cannot connect to ldap server, Initial connection failed',
-    'saml_already_logged_in' => 'Already logged in',
-    'saml_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
+    'email_confirmation_invalid' => 'Berrezpen token hau ez da baliozkoa eta iada erabiltzen da, mesedez, saiatu berriz erregistroa burutzen.',
+    'email_confirmation_expired' => 'Berrezpen tokena iraungi da, berrezpen email berri bnat bidali da.',
+    'email_confirmation_awaiting' => 'Erabiltzen ari den kontuko emaiala berreztea falta da',
+    'ldap_fail_anonymous' => 'LDAP sarrerak akatsa eman du lotura anonimoa erabiliz',
+    'ldap_fail_authed' => 'LDAP sarrera akatsa eman du dn eta pasahitz hauekin',
+    'ldap_extension_not_installed' => 'PHP LDAP extentsioa ez dago instalatuta',
+    'ldap_cannot_connect' => 'Ezin izan da ldap zerbitzarira konektatu, hasierako konexioak huts egin du',
+    'saml_already_logged_in' => 'Saioa aurretik hasita dago',
+    'saml_user_not_registered' => ':name erabiltzailea ez dago erregistratua eta erregistro automatikoa ezgaituta dago',
     'saml_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'saml_invalid_response_id' => 'The request from the external authentication system is not recognised by a process started by this application. Navigating back after a login could cause this issue.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
@@ -45,12 +45,12 @@ return [
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'image_upload_error' => 'An error occurred uploading the image',
+    'image_upload_error' => 'Errorea gertatu da irudia igotzerakoan',
     'image_upload_type_error' => 'The image type being uploaded is invalid',
     'file_upload_timeout' => 'The file upload has timed out.',
 
     // Attachments
-    'attachment_not_found' => 'Attachment not found',
+    'attachment_not_found' => 'Atxikia ez da aurkitu',
 
     // Pages
     'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
@@ -91,7 +91,7 @@ return [
     'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
     'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
     'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
+    'error_occurred' => 'Akats bat gertatu da',
     'app_down' => ':appName is down right now',
     'back_soon' => 'It will be back up soon.',
 
