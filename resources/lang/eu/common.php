@@ -78,8 +78,8 @@ return [
     'none' => 'Bat ere ez',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
-    'profile_menu' => 'Profile Menu',
+    'header_menu_expand' => 'Zabaldu goiburuko menua',
+    'profile_menu' => 'Perfileko menua',
     'view_profile' => 'Ikusi profila',
     'edit_profile' => 'Editatu profila',
     'dark_mode' => 'Modu iluna',
@@ -87,12 +87,12 @@ return [
 
     // Layout tabs
     'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tab: Erakutsi bigarren mailako informazioa',
     'tab_content' => 'Edukia',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tab: Erakutsi eduki nagusia',
 
     // Email Content
-    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
+    'email_action_help' => 'Arazoak badituzu ":actionText" botoiarekin, kopiatu eta itsatsi URL hau nabigatzailean:',
     'email_rights' => 'Eskubide guztiak erreserbatuta',
 
     // Footer Link Options
