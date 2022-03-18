@@ -5,12 +5,12 @@
 return [
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
-    'permissionJson' => 'You do not have permission to perform the requested action.',
+    'permission' => 'Ez duzu baimenik eskatutako baliabidean sartzeko.',
+    'permissionJson' => 'Ez duzu baimenik ekintza hau egiteko.',
 
     // Auth
-    'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
-    'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
+    'error_user_exists_different_creds' => ':email kontuakin erabiltzaile bat badago, baina kredentzial ezberdinekin.',
+    'email_already_confirmed' => 'Email kontua berretsita dago, saiatu saioa hasten.',
     'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
     'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
     'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
