@@ -6,7 +6,7 @@
 return [
 
     // Shared
-    'recently_created' => 'Recently Created',
+    'recently_created' => 'Duela gutxi sortuak',
     'recently_created_pages' => 'Recently Created Pages',
     'recently_updated_pages' => 'Recently Updated Pages',
     'recently_created_chapters' => 'Recently Created Chapters',
