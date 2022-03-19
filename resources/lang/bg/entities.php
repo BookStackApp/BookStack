@@ -36,7 +36,7 @@ return [
     'export_html' => 'Прикачени уеб файлове',
     'export_pdf' => 'PDF файл',
     'export_text' => 'Обикновен текстов файл',
-    'export_md' => 'Markdown File',
+    'export_md' => 'Markdown файл',
 
     // Permissions and restrictions
     'permissions' => 'Права',
@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => 'Последна глава',
     'books_sort_show_other' => 'Покажи други книги',
     'books_sort_save' => 'Запази новата подредба',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => 'Копирай книгата',
+    'books_copy_success' => 'Книгата е копирана успешно',
 
     // Chapters
     'chapter' => 'Глава',
@@ -155,7 +155,7 @@ return [
     'chapters_create' => 'Създай нова глава',
     'chapters_delete' => 'Изтрий глава',
     'chapters_delete_named' => 'Изтрий глава :chapterName',
-    'chapters_delete_explain' => 'This will delete the chapter with the name \':chapterName\'. All pages that exist within this chapter will also be deleted.',
+    'chapters_delete_explain' => 'Това ще изтрие главата \':chapterName\'. Всички страници в главата също ще бъдат изтрити.',
     'chapters_delete_confirm' => 'Сигурни ли сте, че искате да изтриете тази глава?',
     'chapters_edit' => 'Редактирай глава',
     'chapters_edit_named' => 'Актуализирай глава :chapterName',
@@ -163,8 +163,8 @@ return [
     'chapters_move' => 'Премести глава',
     'chapters_move_named' => 'Премести глава :chapterName',
     'chapter_move_success' => 'Главата беше преместена в :bookName',
-    'chapters_copy' => 'Copy Chapter',
-    'chapters_copy_success' => 'Chapter successfully copied',
+    'chapters_copy' => 'Копирай главата',
+    'chapters_copy_success' => 'Главата е копирана успешно',
     'chapters_permissions' => 'Настойки за достъп на главата',
     'chapters_empty' => 'Няма създадени страници в тази глава.',
     'chapters_permissions_active' => 'Настройките за достъп до глава са активни',
@@ -268,7 +268,7 @@ return [
     'tags_assigned_books' => 'Assigned to Books',
     'tags_assigned_shelves' => 'Assigned to Shelves',
     'tags_x_unique_values' => ':count unique values',
-    'tags_all_values' => 'All values',
+    'tags_all_values' => 'Всички стойности',
     'tags_view_tags' => 'View Tags',
     'tags_view_existing_tags' => 'View existing tags',
     'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
