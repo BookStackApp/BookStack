@@ -7,11 +7,11 @@ return [
 
     // Pages
     'page_create'                 => 'създадена страница',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Страницата е създадена успешно',
     'page_update'                 => 'обновена страница',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Страницата е обновена успешно',
     'page_delete'                 => 'изтрита страница',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Страницата е изтрита успешно',
     'page_restore'                => 'възстановена страница',
     'page_restore_notification'   => 'Page successfully restored',
     'page_move'                   => 'преместена страница',
