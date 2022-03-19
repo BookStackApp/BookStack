@@ -1,60 +1,27 @@
 /**
  * @param {Editor} editor
- */
-function defineTaskListCustomElement(editor) {
-    const doc = editor.getDoc();
-    const win = doc.defaultView;
-
-    class TaskListElement extends win.HTMLElement {
-        constructor() {
-            super();
-            // this.attachShadow({mode: 'open'});
-            //
-            // const input = doc.createElement('input');
-            // input.setAttribute('type', 'checkbox');
-            // input.setAttribute('disabled', 'disabled');
-            //
-            // if (this.hasAttribute('selected')) {
-            //     input.setAttribute('selected', 'selected');
-            // }
-            //
-            // this.shadowRoot.append(input);
-            // this.shadowRoot.close();
-        }
-    }
-
-    win.customElements.define('task-list-item', TaskListElement);
-}
-
-/**
- * @param {Editor} editor
  * @param {String} url
  */
-function register(editor, url) {
 
-    // editor.on('NewBlock', ({ newBlock}) => {
-    //     ensureElementHasCheckbox(newBlock);
-    // });
+function register(editor, url) {
 
     editor.on('PreInit', () => {
 
-        defineTaskListCustomElement(editor);
-
-        editor.parser.addNodeFilter('li', function(elms) {
-            for (const elem of elms) {
-                if (elem.attributes.map.class === 'task-list-item') {
-                    replaceTaskListNode(elem);
+        editor.parser.addNodeFilter('li', function(nodes) {
+            for (const node of nodes) {
+                if (node.attributes.map.class === 'task-list-item') {
+                    parseTaskListNode(node);
                 }
             }
         });
 
-        // editor.serializer.addNodeFilter('li', function(elms) {
-        //     for (const elem of elms) {
-        //         if (elem.attributes.map.class === 'task-list-item') {
-        //             ensureNodeHasCheckbox(elem);
-        //         }
-        //     }
-        // });
+        editor.serializer.addNodeFilter('li', function(nodes) {
+            for (const node of nodes) {
+                if (node.attributes.map.class === 'task-list-item') {
+                    serializeTaskListNode(node);
+                }
+            }
+        });
 
     });
 
@@ -63,56 +30,37 @@ function register(editor, url) {
 /**
  * @param {AstNode} node
  */
-function replaceTaskListNode(node) {
+function parseTaskListNode(node) {
+    // Force task list item class
+    node.attr('class', 'task-list-item');
 
-    const taskListItem = new tinymce.html.Node.create('task-list-item', {
-    });
-
+    // Copy checkbox status and remove checkbox within editor
     for (const child of node.children()) {
-        if (node.name !== 'input') {
-            taskListItem.append(child);
+        if (child.name === 'input') {
+            if (child.attr('checked') === 'checked') {
+                node.attr('checked', 'checked');
+            }
+            child.remove();
         }
     }
-
-    node.replace(taskListItem);
 }
-
-// /**
-//  * @param {Element} elem
-//  */
-// function ensureElementHasCheckbox(elem) {
-//     const hasCheckbox = elem.querySelector(':scope > input[type="checkbox"]') !== null;
-//     if (hasCheckbox) {
-//         return;
-//     }
-//
-//     const input = elem.ownerDocument.createElement('input');
-//     input.setAttribute('type', 'checkbox');
-//     input.setAttribute('disabled', 'disabled');
-//     elem.prepend(input);
-// }
 
 /**
- * @param {AstNode} elem
+ * @param {AstNode} node
  */
-function ensureNodeHasCheckbox(elem) {
-    // Stop if there's already an input
-    if (elem.firstChild && elem.firstChild.name === 'input') {
-        return;
+function serializeTaskListNode(node) {
+    const isChecked = node.attr('checked') === 'checked';
+    node.attr('checked', null);
+
+    const inputAttrs = {type: 'checkbox', disabled: 'disabled'};
+    if (isChecked) {
+        inputAttrs.checked = 'checked';
     }
 
-    const input = new tinymce.html.Node.create('input', {
-        type: 'checkbox',
-        disabled: 'disabled',
-    });
-
-    if (elem.firstChild) {
-        elem.insert(input, elem.firstChild, true);
-    } else {
-        elem.append(input);
-    }
+    const checkbox = new tinymce.html.Node.create('input', inputAttrs);
+    checkbox.shortEnded = true;
+    node.firstChild ? node.insert(checkbox, node.firstChild, true) : node.append(checkbox);
 }
-
 
 /**
  * @param {WysiwygConfigOptions} options
