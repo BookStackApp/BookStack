@@ -43,8 +43,8 @@ return [
     'fullscreen' => 'Пълен екран',
     'favourite' => 'Добави в любими',
     'unfavourite' => 'Премахни от любими',
-    'next' => 'Next',
-    'previous' => 'Previous',
+    'next' => 'Следващ',
+    'previous' => 'Предишен',
     'filter_active' => 'Активен филтър:',
     'filter_clear' => 'Изчисти филтъра',
 
@@ -54,7 +54,7 @@ return [
     'sort_ascending' => 'Сортирай възходящо',
     'sort_descending' => 'Низходящо сортиране',
     'sort_name' => 'Име',
-    'sort_default' => 'Default',
+    'sort_default' => 'По подразбиране',
     'sort_created_at' => 'Дата на създаване',
     'sort_updated_at' => 'Дата на обновяване',
 
@@ -75,7 +75,7 @@ return [
     'status_active' => 'Активен',
     'status_inactive' => 'Неактивен',
     'never' => 'Никога',
-    'none' => 'None',
+    'none' => 'Няма',
 
     // Header
     'header_menu_expand' => 'Expand Header Menu',
