@@ -340,8 +340,8 @@ return [
     // Copy view
     'copy_consider' => 'Please consider the below when copying content.',
     'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
+    'copy_consider_owner' => 'Ти ще станеш собственикът на цялото копирано съдържание.',
     'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
     'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider_access' => 'Смяна на местоположението, собственика или привилегиите може да направи това съдържание достъпно за тези, които не са го виждали преди.',
 ];
