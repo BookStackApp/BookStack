@@ -48,8 +48,8 @@ return [
     'favourite_remove_notification' => '":name" е премахнат от любими успешно',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Многофакторният метод е конфигуриран успешно',
+    'mfa_remove_method_notification' => 'Многофакторният метод е премахнат успешно',
 
     // Webhooks
     'webhook_create' => 'created webhook',
