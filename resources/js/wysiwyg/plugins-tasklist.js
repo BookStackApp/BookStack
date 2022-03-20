@@ -2,11 +2,59 @@
  * @param {Editor} editor
  * @param {String} url
  */
-
 function register(editor, url) {
 
-    editor.on('PreInit', () => {
+    // Tasklist UI buttons
+    editor.ui.registry.addIcon('tasklist', '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M22,8c0-0.55-0.45-1-1-1h-7c-0.55,0-1,0.45-1,1s0.45,1,1,1h7C21.55,9,22,8.55,22,8z M13,16c0,0.55,0.45,1,1,1h7 c0.55,0,1-0.45,1-1c0-0.55-0.45-1-1-1h-7C13.45,15,13,15.45,13,16z M10.47,4.63c0.39,0.39,0.39,1.02,0,1.41l-4.23,4.25 c-0.39,0.39-1.02,0.39-1.42,0L2.7,8.16c-0.39-0.39-0.39-1.02,0-1.41c0.39-0.39,1.02-0.39,1.41,0l1.42,1.42l3.54-3.54 C9.45,4.25,10.09,4.25,10.47,4.63z M10.48,12.64c0.39,0.39,0.39,1.02,0,1.41l-4.23,4.25c-0.39,0.39-1.02,0.39-1.42,0L2.7,16.16 c-0.39-0.39-0.39-1.02,0-1.41s1.02-0.39,1.41,0l1.42,1.42l3.54-3.54C9.45,12.25,10.09,12.25,10.48,12.64L10.48,12.64z"/></svg>');
+    editor.ui.registry.addToggleButton('tasklist', {
+        tooltip: 'Task list',
+        icon: 'tasklist',
+        active: false,
+        onAction(api) {
+            if (api.isActive()) {
+                editor.execCommand('RemoveList');
+            } else {
+                editor.execCommand('InsertUnorderedList', null, {
+                    'list-item-attributes': {
+                        class: 'task-list-item',
+                    },
+                    'list-style-type': 'tasklist',
+                });
+            }
+        },
+        onSetup(api) {
+            editor.on('NodeChange', event => {
+                const inList = event.parents.find(el => el.nodeName === 'LI' && el.classList.contains('task-list-item')) !== undefined;
+                api.setActive(inList);
+            });
+        }
+    });
 
+    // Tweak existing bullet list button active state to not be active
+    // when we're in a task list.
+    const existingBullListButton = editor.ui.registry.getAll().buttons.bullist;
+    existingBullListButton.onSetup = function(api) {
+        editor.on('NodeChange', event => {
+            const notInTaskList = event.parents.find(el => el.nodeName === 'LI' && el.classList.contains('task-list-item')) === undefined;
+            const inList = event.parents.find(el => el.nodeName === 'UL') !== undefined;
+            api.setActive(inList && notInTaskList);
+        });
+    };
+    existingBullListButton.onAction = function() {
+        editor.execCommand('InsertUnorderedList', null, {
+            'list-item-attributes': {class: null}
+        });
+    };
+    // Tweak existing number list to not allow classes on child items
+    const existingNumListButton = editor.ui.registry.getAll().buttons.numlist;
+    existingNumListButton.onAction = function() {
+        editor.execCommand('InsertOrderedList', null, {
+            'list-item-attributes': {class: null}
+        });
+    };
+
+    // Setup filters on pre-init
+    editor.on('PreInit', () => {
         editor.parser.addNodeFilter('li', function(nodes) {
             for (const node of nodes) {
                 if (node.attributes.map.class === 'task-list-item') {
@@ -14,7 +62,6 @@ function register(editor, url) {
                 }
             }
         });
-
         editor.serializer.addNodeFilter('li', function(nodes) {
             for (const node of nodes) {
                 if (node.attributes.map.class === 'task-list-item') {
@@ -22,16 +69,15 @@ function register(editor, url) {
                 }
             }
         });
-
     });
 
+    // Handle checkbox click in editor
     editor.on('click', function(event) {
         const clickedEl = event.originalTarget;
         if (clickedEl.nodeName === 'LI' && clickedEl.classList.contains('task-list-item')) {
             handleTaskListItemClick(event, clickedEl, editor);
         }
     });
-
 }
 
 /**
