@@ -10,7 +10,7 @@ export function getPrimaryToolbar(options) {
         'styleselect',
         'bold italic underline forecolor backcolor formatoverflow',
         'alignleft aligncenter alignright alignjustify',
-        'bullist numlist listoverflow',
+        'bullist numlist tasklist listoverflow',
         textDirPlugins,
         'link table imagemanager-insert insertoverflow',
         'code about fullscreen'
