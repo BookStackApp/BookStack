@@ -35,7 +35,7 @@ return [
     'social_account_already_used_existing' => 'Този :socialAccount вече се използва от друг потребител.',
     'social_account_not_used' => 'Социалният профил :socialAccount не е свързан с потребител. Моля, свържи го в настройките на профила си. ',
     'social_account_register_instructions' => 'Ако все още нямаш профил, може да се регистрираш чрез опцията :socialAccount.',
-    'social_driver_not_found' => 'Social driver not found',
+    'social_driver_not_found' => 'Кодът за връзка със социалната мрежа не съществува',
     'social_driver_not_configured' => 'Социалните настройки на твоя :socialAccount не са конфигурирани правилно.',
     'invite_token_expired' => 'Твоята покана е изтекла. Вместо това може да пробваш да възстановиш паролата на профила си.',
 
