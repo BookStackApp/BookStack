@@ -25,6 +25,37 @@ function register(editor, url) {
 
     });
 
+    editor.on('click', function(event) {
+        const clickedEl = event.originalTarget;
+        if (clickedEl.nodeName === 'LI' && clickedEl.classList.contains('task-list-item')) {
+            handleTaskListItemClick(event, clickedEl, editor);
+        }
+    });
+
+}
+
+/**
+ * @param {MouseEvent} event
+ * @param {Element} clickedEl
+ * @param {Editor} editor
+ */
+function handleTaskListItemClick(event, clickedEl, editor) {
+    const bounds = clickedEl.getBoundingClientRect();
+    const withinBounds = event.clientX <= bounds.right
+                        && event.clientX >= bounds.left
+                        && event.clientY >= bounds.top
+                        && event.clientY <= bounds.bottom;
+
+    // Outside of the task list item bounds mean we're probably clicking the pseudo-element.
+    if (!withinBounds) {
+        editor.undoManager.transact(() => {
+            if (clickedEl.hasAttribute('checked')) {
+                clickedEl.removeAttribute('checked');
+            }  else {
+                clickedEl.setAttribute('checked', 'checked');
+            }
+        });
+    }
 }
 
 /**
