@@ -117,6 +117,10 @@ body.page-content.mce-content-body  {
 /**
  * Fake task list checkboxes
  */
+.page-content.mce-content-body .task-list-item {
+  margin-left: 0;
+  position: relative;
+}
 .page-content.mce-content-body .task-list-item > input[type="checkbox"] {
   display: none;
 }
@@ -130,6 +134,9 @@ body.page-content.mce-content-body  {
   margin-right: 8px;
   vertical-align: text-top;
   cursor: pointer;
+  position: absolute;
+  left: -24px;
+  top: 4px;
 }
 
 .page-content.mce-content-body .task-list-item[checked]:before {
