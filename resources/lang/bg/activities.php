@@ -52,12 +52,12 @@ return [
     'mfa_remove_method_notification' => 'Многофакторният метод е премахнат успешно',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'създадена уебкука',
+    'webhook_create_notification' => 'Уебкуката е създадена успешно',
+    'webhook_update' => 'обновена уебкука',
+    'webhook_update_notification' => 'Уебкуката е обновена успешно',
+    'webhook_delete' => 'изтрита уебкука',
+    'webhook_delete_notification' => 'Уебкуката е изтрита успешно',
 
     // Users
     'user_update_notification' => 'Потребителят е обновен успешно',
