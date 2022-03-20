@@ -78,7 +78,7 @@ return [
     'none' => 'Няма',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Разшири заглавното меню',
     'profile_menu' => 'Профил меню',
     'view_profile' => 'Разглеждане на профил',
     'edit_profile' => 'Редактиране на профила',
@@ -87,9 +87,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Информация',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Таб: Покажи вторична информация',
     'tab_content' => 'Съдържание',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Таб: Покажи първично съдържание',
 
     // Email Content
     'email_action_help' => 'Ако имате проблеми с бутона ":actionText" по-горе, копирайте и поставете URL адреса по-долу в уеб браузъра си:',
