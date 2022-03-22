@@ -24,7 +24,8 @@ function register(editor, url) {
         },
         onSetup(api) {
             editor.on('NodeChange', event => {
-                const inList = event.parents.find(el => el.nodeName === 'LI' && el.classList.contains('task-list-item')) !== undefined;
+                const parentListEl = event.parents.find(el => el.nodeName === 'LI');
+                const inList = parentListEl && parentListEl.classList.contains('task-list-item');
                 api.setActive(inList);
             });
         }
@@ -35,12 +36,22 @@ function register(editor, url) {
     const existingBullListButton = editor.ui.registry.getAll().buttons.bullist;
     existingBullListButton.onSetup = function(api) {
         editor.on('NodeChange', event => {
-            const notInTaskList = event.parents.find(el => el.nodeName === 'LI' && el.classList.contains('task-list-item')) === undefined;
-            const inList = event.parents.find(el => el.nodeName === 'UL') !== undefined;
-            api.setActive(inList && notInTaskList);
+            const parentList = event.parents.find(el => el.nodeName === 'LI');
+            const inTaskList = parentList && parentList.classList.contains('task-list-item');
+            const inUlList = parentList && parentList.parentNode.nodeName === 'UL';
+            api.setActive(inUlList && !inTaskList);
         });
     };
     existingBullListButton.onAction = function() {
+        // Cheeky hack to prevent list toggle action treating tasklists as normal
+        // unordered lists which would unwrap the list on toggle from tasklist to bullet list.
+        // Instead we quickly jump through an ordered list first if we're within a tasklist.
+        if (elementWithinTaskList(editor.selection.getNode())) {
+            editor.execCommand('InsertOrderedList', null, {
+                'list-item-attributes': {class: null}
+            });
+        }
+
         editor.execCommand('InsertUnorderedList', null, {
             'list-item-attributes': {class: null}
         });
@@ -78,6 +89,15 @@ function register(editor, url) {
             handleTaskListItemClick(event, clickedEl, editor);
         }
     });
+}
+
+/**
+ * @param {Element} element
+ * @return {boolean}
+ */
+function elementWithinTaskList(element) {
+    const listEl = element.closest('li');
+    return listEl && listEl.parentNode.nodeName === 'UL' && listEl.classList.contains('task-list-item');
 }
 
 /**
@@ -126,6 +146,7 @@ function parseTaskListNode(node) {
  * @param {AstNode} node
  */
 function serializeTaskListNode(node) {
+    // Get checked status and clean it from list node
     const isChecked = node.attr('checked') === 'checked';
     node.attr('checked', null);
 
@@ -134,6 +155,7 @@ function serializeTaskListNode(node) {
         inputAttrs.checked = 'checked';
     }
 
+    // Create & insert checkbox input element
     const checkbox = new tinymce.html.Node.create('input', inputAttrs);
     checkbox.shortEnded = true;
     node.firstChild ? node.insert(checkbox, node.firstChild, true) : node.append(checkbox);
