@@ -435,7 +435,7 @@ class ExportTest extends TestCase
         $pageB->save();
 
         $resp = $this->get($book->getUrl('/export/markdown'));
-        $resp->assertDontSee("hello tester# The second page in this test");
+        $resp->assertDontSee('hello tester# The second page in this test');
         $resp->assertSee("hello tester\n\n# The second page in this test");
     }
 
