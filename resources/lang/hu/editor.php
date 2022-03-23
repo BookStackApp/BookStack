@@ -24,6 +24,7 @@ return [
     'width' => 'Szélesség',
     'height' => 'Magasság',
     'More' => 'Több',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'Formátumok',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Cella Tulajdonságai',
     'cell_type' => 'Cella típusa',
     'cell_type_cell' => 'Cella',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Címsor cella',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Sorcsoport',
     'table_column_group' => 'Oszlopcsoport',
     'horizontal_align' => 'Vízszintes elrendezés',
@@ -120,6 +124,16 @@ return [
     'caption' => 'Felirat',
     'show_caption' => 'Képaláírás mutatása',
     'constrain' => 'Arányok megőrzése',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'Forrás',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'Toggle label',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'About the WYSIWYG Editor',
     'editor_license' => 'Editor License & Copyright',
     'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under an LGPL v2.1 license.',
