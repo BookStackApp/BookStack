@@ -24,6 +24,7 @@ return [
     'width' => 'רוחב',
     'height' => 'גובה',
     'More' => 'עוד',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'פורמט',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Cell Properties',
     'cell_type' => 'Cell type',
     'cell_type_cell' => 'Cell',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Header cell',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Row Group',
     'table_column_group' => 'Column Group',
     'horizontal_align' => 'Horizontal align',
@@ -120,6 +124,16 @@ return [
     'caption' => 'כיתוב',
     'show_caption' => 'הצג כיתוב',
     'constrain' => 'הגדרת אילוצים',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'קוד מקור',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'החלף תגית',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'אודות עורך הטקסט הויזואלי',
     'editor_license' => 'רשיון וזכויות העורך',
     'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under an LGPL v2.1 license.',
