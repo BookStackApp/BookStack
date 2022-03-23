@@ -24,6 +24,7 @@ return [
     'width' => '幅',
     'height' => '高さ',
     'More' => 'さらに表示',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => '書式',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'セルの詳細設定',
     'cell_type' => 'セルタイプ',
     'cell_type_cell' => 'セル',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'ヘッダーセル',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => '行グループ',
     'table_column_group' => '列グループ',
     'horizontal_align' => '水平方向の配置',
@@ -120,6 +124,16 @@ return [
     'caption' => '表題',
     'show_caption' => 'キャプションの表示',
     'constrain' => '縦横比を保持する',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => '画像のソース',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'ブロックのラベル',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'WYSIWYGエディタについて',
     'editor_license' => 'エディタのライセンスと著作権',
     'editor_tiny_license' => 'このエディタはLGPL v2.1ライセンスの下で提供される:tinyLinkを利用して構築されています。',
