@@ -52,7 +52,7 @@ return [
     'align_left' => 'Align left',
     'align_center' => 'Align center',
     'align_right' => 'Align right',
-    'align_justify' => 'Align justify',
+    'align_justify' => 'Justify',
     'list_bullet' => 'Bullet list',
     'list_numbered' => 'Numbered list',
     'indent_increase' => 'Increase indent',
