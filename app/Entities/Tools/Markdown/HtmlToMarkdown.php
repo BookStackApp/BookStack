@@ -87,6 +87,7 @@ class HtmlToMarkdown
         $environment->addConverter(new CustomParagraphConverter());
         $environment->addConverter(new PreformattedConverter());
         $environment->addConverter(new TextConverter());
+        $environment->addConverter(new CheckboxConverter());
 
         return $environment;
     }
