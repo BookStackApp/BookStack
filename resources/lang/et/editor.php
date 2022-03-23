@@ -24,6 +24,7 @@ return [
     'width' => 'Laius',
     'height' => 'Kõrgus',
     'More' => 'Rohkem',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'Vormindamine',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Lahtri omadused',
     'cell_type' => 'Lahtri tüüp',
     'cell_type_cell' => 'Lahter',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Päiselahter',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Rea grupp',
     'table_column_group' => 'Veeru grupp',
     'horizontal_align' => 'Horisontaalne joondus',
@@ -120,6 +124,16 @@ return [
     'caption' => 'Tiitel',
     'show_caption' => 'Näita tiitlit',
     'constrain' => 'Piira proportsioone',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'Allikas',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'Näita silti',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'Info WYSIWYG redaktori kohta',
     'editor_license' => 'Redaktori litsents ja autoriõigused',
     'editor_tiny_license' => 'See redaktor on loodud :tinyLink abil, mis on saadaval LGPL v2.1 litsentsi alusel.',
