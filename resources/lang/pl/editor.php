@@ -24,6 +24,7 @@ return [
     'width' => 'Szerokość',
     'height' => 'Wysokość',
     'More' => 'Więcej',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'Formaty',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Właściwości Komórki',
     'cell_type' => 'Typ komórki',
     'cell_type_cell' => 'Komórka',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Komórka nagłówka',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Grupa wierszy',
     'table_column_group' => 'Grupa kolumn',
     'horizontal_align' => 'Wyrównanie w poziomie',
@@ -120,6 +124,16 @@ return [
     'caption' => 'Opis',
     'show_caption' => 'Pokaż opis',
     'constrain' => 'Zachowaj proporcje',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'Źródło',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'Przełącz etykietę',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'O edytorze WYSIWYG',
     'editor_license' => 'Licencja edytora i prawa autorskie',
     'editor_tiny_license' => 'Ten edytor jest zbudowany przy użyciu :tinyLink, który jest dostępny na licencji LGPL v2.1.',
