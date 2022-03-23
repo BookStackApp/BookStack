@@ -24,6 +24,7 @@ return [
     'width' => 'Largeur',
     'height' => 'Hauteur',
     'More' => 'Plus',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'Formats',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Propriétés de la cellule',
     'cell_type' => 'Type de cellule',
     'cell_type_cell' => 'Cellule',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Cellule d\'en-tête',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Groupe de ligne',
     'table_column_group' => 'Groupe de colonnes',
     'horizontal_align' => 'Aligner horizontalement',
@@ -120,6 +124,16 @@ return [
     'caption' => 'Légende',
     'show_caption' => 'Afficher la légende',
     'constrain' => 'Conserver les proportions',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'Source',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'Activer/désactiver le libellé',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'À propos de l\'éditeur WYSIWYG',
     'editor_license' => 'Licence d\'éditeur et droit d\'auteur',
     'editor_tiny_license' => 'Cet éditeur est construit en utilisant :tinyLink qui est fourni sous une licence LGPL v2.1.',
