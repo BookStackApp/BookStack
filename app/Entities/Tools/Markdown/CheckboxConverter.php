@@ -7,11 +7,11 @@ use League\HTMLToMarkdown\ElementInterface;
 
 class CheckboxConverter implements ConverterInterface
 {
-
     public function convert(ElementInterface $element): string
     {
         if (strtolower($element->getAttribute('type')) === 'checkbox') {
             $isChecked = $element->getAttribute('checked') === 'checked';
+
             return $isChecked ? ' [x] ' : ' [ ] ';
         }
 
