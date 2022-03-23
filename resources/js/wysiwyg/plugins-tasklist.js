@@ -84,9 +84,10 @@ function register(editor, url) {
 
     // Handle checkbox click in editor
     editor.on('click', function(event) {
-        const clickedEl = event.originalTarget;
+        const clickedEl = event.target;
         if (clickedEl.nodeName === 'LI' && clickedEl.classList.contains('task-list-item')) {
             handleTaskListItemClick(event, clickedEl, editor);
+            event.preventDefault();
         }
     });
 }
