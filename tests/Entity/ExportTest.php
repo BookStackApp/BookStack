@@ -420,6 +420,25 @@ class ExportTest extends TestCase
         $resp->assertSee('# ' . $page->name);
     }
 
+    public function test_book_markdown_export_concats_immediate_pages_with_newlines()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('pages')->first();
+
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        $this->get($book->getUrl('/create-page'));
+
+        [$pageA, $pageB] = $book->pages()->where('chapter_id', '=', 0)->get();
+        $pageA->html = '<p>hello tester</p>';
+        $pageA->save();
+        $pageB->name = 'The second page in this test';
+        $pageB->save();
+
+        $resp = $this->get($book->getUrl('/export/markdown'));
+        $resp->assertDontSee("hello tester# The second page in this test");
+        $resp->assertSee("hello tester\n\n# The second page in this test");
+    }
+
     public function test_export_option_only_visible_and_accessible_with_permission()
     {
         $book = Book::query()->whereHas('pages')->whereHas('chapters')->first();
