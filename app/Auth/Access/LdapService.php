@@ -15,12 +15,17 @@ use Illuminate\Support\Facades\Log;
  */
 class LdapService
 {
-    protected $ldap;
-    protected $groupSyncService;
+    protected Ldap $ldap;
+    protected GroupSyncService $groupSyncService;
+    protected UserAvatars $userAvatars;
+
+    /**
+     * @var resource
+     */
     protected $ldapConnection;
-    protected $userAvatars;
-    protected $config;
-    protected $enabled;
+
+    protected array $config;
+    protected bool $enabled;
 
     /**
      * LdapService constructor.
@@ -274,6 +279,7 @@ class LdapService
      * Get the groups a user is a part of on ldap.
      *
      * @throws LdapException
+     * @throws JsonDebugException
      */
     public function getUserGroups(string $userName): array
     {
@@ -285,8 +291,17 @@ class LdapService
         }
 
         $userGroups = $this->groupFilter($user);
+        $allGroups = $this->getGroupsRecursive($userGroups, []);
 
-        return $this->getGroupsRecursive($userGroups, []);
+        if ($this->config['dump_user_groups']) {
+            throw new JsonDebugException([
+                'details_from_ldap'  => $user,
+                'parsed_direct_user_groups' => $userGroups,
+                'parsed_recursive_user_groups'  => $allGroups,
+            ]);
+        }
+
+        return $allGroups;
     }
 
     /**
@@ -369,6 +384,7 @@ class LdapService
      * Sync the LDAP groups to the user roles for the current user.
      *
      * @throws LdapException
+     * @throws JsonDebugException
      */
     public function syncGroups(User $user, string $username)
     {

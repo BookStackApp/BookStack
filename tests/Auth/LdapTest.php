@@ -348,6 +348,62 @@ class LdapTest extends TestCase
         ]);
     }
 
+    public function test_dump_user_groups_shows_group_related_details_as_json()
+    {
+        app('config')->set([
+            'services.ldap.user_to_groups'     => true,
+            'services.ldap.group_attribute'    => 'memberOf',
+            'services.ldap.remove_from_groups' => true,
+            'services.ldap.dump_user_groups'   => true,
+        ]);
+
+        $userResp = ['count' => 1, 0 => [
+            'uid'      => [$this->mockUser->name],
+            'cn'       => [$this->mockUser->name],
+            'dn'       => 'dc=test,' . config('services.ldap.base_dn'),
+            'mail'     => [$this->mockUser->email],
+        ]];
+        $this->commonLdapMocks(1, 1, 4, 5, 4, 2);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn($userResp, ['count' => 1,
+                0 => [
+                    'dn'       => 'dc=test,' . config('services.ldap.base_dn'),
+                    'memberof' => [
+                        'count' => 1,
+                        0       => 'cn=ldaptester,ou=groups,dc=example,dc=com',
+                    ],
+                ],
+            ], [
+                'count' => 1,
+                0 => [
+                    'dn' => 'cn=ldaptester,ou=groups,dc=example,dc=com',
+                    'memberof' => [
+                        'count' => 1,
+                        0       => 'cn=monsters,ou=groups,dc=example,dc=com',
+                    ],
+                ]
+            ], ['count' => 0]);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertJson([
+            'details_from_ldap' => [
+                'dn'       => 'dc=test,' . config('services.ldap.base_dn'),
+                'memberof' => [
+                    0 => 'cn=ldaptester,ou=groups,dc=example,dc=com',
+                    'count' => 1,
+                ]
+            ],
+            'parsed_direct_user_groups' => [
+                'ldaptester',
+            ],
+            'parsed_recursive_user_groups' => [
+                'ldaptester',
+                'monsters',
+            ],
+        ]);
+    }
+
     public function test_external_auth_id_visible_in_roles_page_when_ldap_active()
     {
         $role = Role::factory()->create(['display_name' => 'ldaptester', 'external_auth_id' => 'ex-auth-a, test-second-param']);
