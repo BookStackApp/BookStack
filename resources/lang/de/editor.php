@@ -24,6 +24,7 @@ return [
     'width' => 'Breite',
     'height' => 'Höhe',
     'More' => 'Mehr',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'Formate',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Zelleneigenschaften',
     'cell_type' => 'Zellentyp',
     'cell_type_cell' => 'Zelle',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Tabellen-Kopfzelle',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Zeilengruppe',
     'table_column_group' => 'Spaltengruppe',
     'horizontal_align' => 'Horizontal ausrichten',
@@ -120,6 +124,16 @@ return [
     'caption' => 'Beschriftung',
     'show_caption' => 'Beschriftungen anzeigen',
     'constrain' => 'Proportionen beschränken',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'Quelle',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'Label umschalten',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'Über den WYSIWYG-Editor',
     'editor_license' => 'Editorlizenz & Copyright',
     'editor_tiny_license' => 'Dieser Editor wird unter der LGPL v2.1 Lizenz entwickelt, welche hier zu finden ist :tinyLink.',
