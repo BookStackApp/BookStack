@@ -24,6 +24,7 @@ return [
     'width' => 'Larghezza',
     'height' => 'Altezza',
     'More' => 'Altro',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'Formati',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Proprietà Cella',
     'cell_type' => 'Tipo di cella',
     'cell_type_cell' => 'Cella',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Cella intestazione',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Gruppo Riga',
     'table_column_group' => 'Gruppo Colonna',
     'horizontal_align' => 'Allineamento orizzontale',
@@ -120,6 +124,16 @@ return [
     'caption' => 'Didascalia',
     'show_caption' => 'Mostra didascalia',
     'constrain' => 'Mantieni proporzioni',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'Sorgente',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'Attiva/Disattiva etichetta',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'Informazioni sull\'editor di WYSIWYG',
     'editor_license' => 'Licenza & Copyright Dell\'Editor',
     'editor_tiny_license' => 'Questo editor è costruito usando :tinyLink che è fornito sotto una licenza LGPL v2.1.',
