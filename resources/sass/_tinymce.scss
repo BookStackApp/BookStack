@@ -113,3 +113,35 @@ body.page-content.mce-content-body  {
 .tox-menu .tox-collection__item-label {
   line-height: normal !important;
 }
+
+/**
+ * Fake task list checkboxes
+ */
+.page-content.mce-content-body .task-list-item {
+  margin-left: 0;
+  position: relative;
+}
+.page-content.mce-content-body .task-list-item > input[type="checkbox"] {
+  display: none;
+}
+.page-content.mce-content-body .task-list-item:before {
+  content: '';
+  display: inline-block;
+  border: 2px solid #CCC;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 8px;
+  vertical-align: text-top;
+  cursor: pointer;
+  position: absolute;
+  left: -24px;
+  top: 4px;
+}
+
+.page-content.mce-content-body .task-list-item[checked]:before {
+  background-color: #CCC;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m8.4856 20.274-6.736-6.736 2.9287-2.7823 3.8073 3.8073 10.836-10.836 2.9287 2.9287z" stroke-width="1.4644"/></svg>');
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+}

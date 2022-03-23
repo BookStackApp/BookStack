@@ -10,6 +10,7 @@ import {getPlugin as getCustomhrPlugin} from "./plugins-customhr";
 import {getPlugin as getImagemanagerPlugin} from "./plugins-imagemanager";
 import {getPlugin as getAboutPlugin} from "./plugins-about";
 import {getPlugin as getDetailsPlugin} from "./plugins-details";
+import {getPlugin as getTasklistPlugin} from "./plugins-tasklist";
 
 const style_formats = [
     {title: "Large Header", format: "h2", preview: 'color: blue;'},
@@ -81,6 +82,7 @@ function gatherPlugins(options) {
         "imagemanager",
         "about",
         "details",
+        "tasklist",
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
@@ -89,6 +91,7 @@ function gatherPlugins(options) {
     window.tinymce.PluginManager.add('imagemanager', getImagemanagerPlugin(options));
     window.tinymce.PluginManager.add('about', getAboutPlugin(options));
     window.tinymce.PluginManager.add('details', getDetailsPlugin(options));
+    window.tinymce.PluginManager.add('tasklist', getTasklistPlugin(options));
 
     if (options.drawioUrl) {
         window.tinymce.PluginManager.add('drawio', getDrawioPlugin(options));
@@ -204,7 +207,7 @@ export function build(options) {
         statusbar: false,
         menubar: false,
         paste_data_images: false,
-        extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram],details[*],summary[*],div[*]',
+        extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram],details[*],summary[*],div[*],li[class|checked]',
         automatic_uploads: false,
         custom_elements: 'doc-root,code-block',
         valid_children: [

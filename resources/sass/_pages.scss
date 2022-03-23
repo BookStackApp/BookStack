@@ -164,6 +164,11 @@ body.tox-fullscreen, body.markdown-fullscreen {
     clear: both;
   }
 
+  li > input[type="checkbox"] {
+    vertical-align: top;
+    margin-top: 0.3em;
+  }
+
   p:empty {
     min-height: 1.6em;
   }

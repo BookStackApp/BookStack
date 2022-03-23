@@ -31,7 +31,7 @@ function registerPrimaryToolbarGroups(editor) {
     editor.ui.registry.addGroupToolbarButton('listoverflow', {
         icon: 'more-drawer',
         tooltip: 'More',
-        items: 'outdent indent'
+        items: 'tasklist outdent indent'
     });
     editor.ui.registry.addGroupToolbarButton('insertoverflow', {
         icon: 'more-drawer',
