@@ -52,7 +52,7 @@ return [
     'align_left' => 'По левому краю',
     'align_center' => 'По центру',
     'align_right' => 'По правому краю',
-    'align_justify' => 'Justify',
+    'align_justify' => 'По ширине',
     'list_bullet' => 'Маркированный список',
     'list_numbered' => 'Нумерованный список',
     'list_task' => 'Task list',
