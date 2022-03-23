@@ -24,6 +24,7 @@ return [
     'width' => 'Широчина',
     'height' => 'Височина',
     'More' => 'Още',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'Формати',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Настройки на клетката',
     'cell_type' => 'Тип на клетката',
     'cell_type_cell' => 'Клетка',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Заглавна клетка',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Група от редове',
     'table_column_group' => 'Група от колони',
     'horizontal_align' => 'Хоризонтално разположение',
@@ -120,6 +124,16 @@ return [
     'caption' => 'Надпис',
     'show_caption' => 'Покажи надпис',
     'constrain' => 'Ограничи пропорциите',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'Източник',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'Превключи надписа',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'Относно визуалния редактор',
     'editor_license' => 'Лиценз, авторски и сходни права на редактора',
     'editor_tiny_license' => 'Този редактор е създаден с :tinyLink, който е предоставен с лиценз LGPL v2.1.',
