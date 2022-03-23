@@ -24,6 +24,7 @@ return [
     'width' => 'Ширина',
     'height' => 'Висота',
     'More' => 'Більше',
+    'select' => 'Select...',
 
     // Toolbar
     'formats' => 'Формати',
@@ -92,7 +93,10 @@ return [
     'cell_properties_title' => 'Властивості клітинки',
     'cell_type' => 'Тип клітинки',
     'cell_type_cell' => 'Комірка',
+    'cell_scope' => 'Scope',
     'cell_type_header' => 'Комірка заголовка',
+    'merge_cells' => 'Merge cells',
+    'split_cell' => 'Split cell',
     'table_row_group' => 'Група рядків',
     'table_column_group' => 'Група стовпців',
     'horizontal_align' => 'Горизонтальне вирівнювання',
@@ -120,6 +124,16 @@ return [
     'caption' => 'Підпис',
     'show_caption' => 'Показати заголовок',
     'constrain' => 'Обмеження пропорції',
+    'cell_border_solid' => 'Solid',
+    'cell_border_dotted' => 'Dotted',
+    'cell_border_dashed' => 'Dashed',
+    'cell_border_double' => 'Double',
+    'cell_border_groove' => 'Groove',
+    'cell_border_ridge' => 'Ridge',
+    'cell_border_inset' => 'Inset',
+    'cell_border_outset' => 'Outset',
+    'cell_border_none' => 'None',
+    'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed
     'source' => 'Вихідний код',
@@ -140,6 +154,7 @@ return [
     'toggle_label' => 'Перемкнути ярлики',
 
     // About view
+    'about' => 'About the editor',
     'about_title' => 'Про WYSIWYG редактор',
     'editor_license' => 'Ліцензія редактора і авторські права',
     'editor_tiny_license' => 'Цей редактор побудований за допомогою :tinyLink що забезпечується під ліцензією LGPL v2.1.',
