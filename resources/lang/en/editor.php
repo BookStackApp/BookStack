@@ -55,6 +55,7 @@ return [
     'align_justify' => 'Align justify',
     'list_bullet' => 'Bullet list',
     'list_numbered' => 'Numbered list',
+    'list_task' => 'Task list',
     'indent_increase' => 'Increase indent',
     'indent_decrease' => 'Decrease indent',
     'table' => 'Table',
