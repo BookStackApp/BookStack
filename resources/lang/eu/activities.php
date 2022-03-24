@@ -22,48 +22,48 @@ return [
     'chapter_update'              => 'eguneratu kapitulua',
     'chapter_update_notification' => 'Kapitulua egoki eguneratuta',
     'chapter_delete'              => 'kapitulua ezabatu',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
-    'chapter_move'                => 'moved chapter',
+    'chapter_delete_notification' => 'Kapitulua egoki ezabatua',
+    'chapter_move'                => 'kapitulua mugituta',
 
     // Books
-    'book_create'                 => 'created book',
-    'book_create_notification'    => 'Book successfully created',
-    'book_update'                 => 'updated book',
-    'book_update_notification'    => 'Book successfully updated',
-    'book_delete'                 => 'deleted book',
-    'book_delete_notification'    => 'Book successfully deleted',
-    'book_sort'                   => 'sorted book',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_create'                 => 'liburua sortuta',
+    'book_create_notification'    => 'Liburua ongi sortu da',
+    'book_update'                 => 'liburua eguneratuta',
+    'book_update_notification'    => 'Liburua egoki eguneratua',
+    'book_delete'                 => 'liburua ezabatua',
+    'book_delete_notification'    => 'Liburua egoki ezabatua',
+    'book_sort'                   => 'liburua sailkatua',
+    'book_sort_notification'      => 'Liburua ongi bersailaktu da',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_create'            => 'apalategia sortuta',
+    'bookshelf_create_notification'    => 'Apalategia egoki sortuta',
+    'bookshelf_update'                 => 'apalategia eguneratuta',
+    'bookshelf_update_notification'    => 'Apalategia egoki eguneratuta',
+    'bookshelf_delete'                 => 'apalategia ezabatua',
+    'bookshelf_delete_notification'    => 'Apalategia egoki ezabatua',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" zure gogoetara gehitua izan da',
+    'favourite_remove_notification' => '":name" zure gogokoetatik ezabatua izan da',
 
     // MFA
     'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
     'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'sortu webhook',
+    'webhook_create_notification' => 'Webhook egoki sortua',
+    'webhook_update' => 'webhook eguneratua',
+    'webhook_update_notification' => 'Webhook egoki eguneratua',
+    'webhook_delete' => 'webhook ezabatua',
+    'webhook_delete_notification' => 'Webhook egoki ezabatua',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Erabiltzailea egoki eguneratua',
+    'user_delete_notification' => 'Erabiltzailea egoki ezabatua',
 
     // Other
-    'commented_on'                => 'commented on',
-    'permissions_update'          => 'updated permissions',
+    'commented_on'                => 'iruzkinak',
+    'permissions_update'          => 'eguneratu baimenak',
 ];
