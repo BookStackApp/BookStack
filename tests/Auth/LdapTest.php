@@ -367,7 +367,7 @@ class LdapTest extends TestCase
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(4)
             ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
             ->andReturn($userResp, ['count' => 1,
-                0 => [
+                0                           => [
                     'dn'       => 'dc=test,' . config('services.ldap.base_dn'),
                     'memberof' => [
                         'count' => 1,
@@ -376,13 +376,13 @@ class LdapTest extends TestCase
                 ],
             ], [
                 'count' => 1,
-                0 => [
-                    'dn' => 'cn=ldaptester,ou=groups,dc=example,dc=com',
+                0       => [
+                    'dn'       => 'cn=ldaptester,ou=groups,dc=example,dc=com',
                     'memberof' => [
                         'count' => 1,
                         0       => 'cn=monsters,ou=groups,dc=example,dc=com',
                     ],
-                ]
+                ],
             ], ['count' => 0]);
 
         $resp = $this->mockUserLogin();
@@ -390,9 +390,9 @@ class LdapTest extends TestCase
             'details_from_ldap' => [
                 'dn'       => 'dc=test,' . config('services.ldap.base_dn'),
                 'memberof' => [
-                    0 => 'cn=ldaptester,ou=groups,dc=example,dc=com',
+                    0       => 'cn=ldaptester,ou=groups,dc=example,dc=com',
                     'count' => 1,
-                ]
+                ],
             ],
             'parsed_direct_user_groups' => [
                 'ldaptester',
