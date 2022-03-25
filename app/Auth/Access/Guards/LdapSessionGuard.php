@@ -58,13 +58,13 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
      * Attempt to authenticate a user using the given credentials.
      *
      * @param array $credentials
-     * @param bool $remember
+     * @param bool  $remember
      *
-     * @return bool
      * @throws LdapException*@throws \BookStack\Exceptions\JsonDebugException
-     *
      * @throws LoginAttemptException
      * @throws JsonDebugException
+     *
+     * @return bool
      */
     public function attempt(array $credentials = [], $remember = false)
     {

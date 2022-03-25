@@ -295,8 +295,8 @@ class LdapService
 
         if ($this->config['dump_user_groups']) {
             throw new JsonDebugException([
-                'details_from_ldap'  => $user,
-                'parsed_direct_user_groups' => $userGroups,
+                'details_from_ldap'             => $user,
+                'parsed_direct_user_groups'     => $userGroups,
                 'parsed_recursive_user_groups'  => $allGroups,
             ]);
         }
