@@ -129,11 +129,11 @@ return [
     'cell_border_dashed' => 'Gestreept',
     'cell_border_double' => 'Dubbel',
     'cell_border_groove' => 'Gegroefd',
-    'cell_border_ridge' => 'Ridge',
+    'cell_border_ridge' => 'Geribbeld',
     'cell_border_inset' => 'Inset',
     'cell_border_outset' => 'Outset',
-    'cell_border_none' => 'None',
-    'cell_border_hidden' => 'Hidden',
+    'cell_border_none' => 'Geen',
+    'cell_border_hidden' => 'Verborgen',
 
     // Images, links, details/summary & embed
     'source' => 'Bron',
@@ -154,7 +154,7 @@ return [
     'toggle_label' => 'Schakel label aan/uit',
 
     // About view
-    'about' => 'About the editor',
+    'about' => 'Over de editor',
     'about_title' => 'Over de WYSIWYG-bewerker',
     'editor_license' => 'Editor Licentie & Copyright',
     'editor_tiny_license' => 'Deze editor is gebouwd met :tinyLink, dat aangeboden wordt via een LGPL v2.1 licentie.',
