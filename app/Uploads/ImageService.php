@@ -338,7 +338,7 @@ class ImageService
      * can be used (At least when created using binary string data) so we need to do some
      * implementation on our side to use the original image data.
      * Bulk of logic taken from: https://github.com/Intervention/image/blob/b734a4988b2148e7d10364b0609978a88d277536/src/Intervention/Image/Commands/OrientateCommand.php
-     * Copyright (c) Oliver Vogel, MIT License
+     * Copyright (c) Oliver Vogel, MIT License.
      */
     protected function orientImageToOriginalExif(InterventionImage $image, string $originalData): void
     {
@@ -347,7 +347,8 @@ class ImageService
         }
 
         $stream = Utils::streamFor($originalData)->detach();
-        $orientation = exif_read_data($stream)['Orientation'] ?? null;
+        $exif = @exif_read_data($stream);
+        $orientation = $exif ? ($exif['Orientation'] ?? null) : null;
 
         switch ($orientation) {
             case 2:

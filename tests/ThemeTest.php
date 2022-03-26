@@ -186,7 +186,7 @@ class ThemeTest extends TestCase
 
         dispatch((new DispatchWebhookJob($webhook, $event, $detail)));
 
-        $this->assertCount(3, $args);
+        $this->assertCount(5, $args);
         $this->assertEquals($event, $args[0]);
         $this->assertEquals($webhook->id, $args[1]->id);
         $this->assertEquals($detail->id, $args[2]->id);
