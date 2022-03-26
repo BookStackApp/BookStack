@@ -60,13 +60,13 @@ class WebhookFormatter
 
     /**
      * @param callable(string, Model):bool $condition
-     * @param callable(Model):void $format
+     * @param callable(Model):void         $format
      */
     public function addModelFormatter(callable $condition, callable $format): void
     {
         $this->modelFormatters[] = [
             'condition' => $condition,
-            'format' => $format,
+            'format'    => $format,
         ];
     }
 
@@ -74,14 +74,14 @@ class WebhookFormatter
     {
         // Load entity owner, creator, updater details
         $this->addModelFormatter(
-            fn($event, $model) => ($model instanceof Entity),
-            fn($model) => $model->load(['ownedBy', 'createdBy', 'updatedBy'])
+            fn ($event, $model) => ($model instanceof Entity),
+            fn ($model) => $model->load(['ownedBy', 'createdBy', 'updatedBy'])
         );
 
         // Load revision detail for page update and create events
         $this->addModelFormatter(
-            fn($event, $model) => ($model instanceof Page && ($event === ActivityType::PAGE_CREATE || $event === ActivityType::PAGE_UPDATE)),
-            fn($model) => $model->load('currentRevision')
+            fn ($event, $model) => ($model instanceof Page && ($event === ActivityType::PAGE_CREATE || $event === ActivityType::PAGE_UPDATE)),
+            fn ($model) => $model->load('currentRevision')
         );
     }
 
@@ -118,6 +118,7 @@ class WebhookFormatter
     {
         $instance = new static($event, $webhook, $detail, $initiator, $initiatedTime);
         $instance->addDefaultModelFormatters();
+
         return $instance;
     }
 }

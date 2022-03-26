@@ -16,9 +16,9 @@ class WebhookFormatTesting extends TestCase
     public function test_entity_events_show_related_user_info()
     {
         $events = [
-            ActivityType::BOOK_UPDATE => Book::query()->first(),
+            ActivityType::BOOK_UPDATE    => Book::query()->first(),
             ActivityType::CHAPTER_CREATE => Chapter::query()->first(),
-            ActivityType::PAGE_MOVE => Page::query()->first(),
+            ActivityType::PAGE_MOVE      => Page::query()->first(),
         ];
 
         foreach ($events as $event => $entity) {
@@ -47,6 +47,7 @@ class WebhookFormatTesting extends TestCase
         $webhook = Webhook::factory()->make();
         $user = $this->getEditor();
         $formatter = WebhookFormatter::getDefault($event, $webhook, $detail, $user, time());
+
         return $formatter->format();
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Class PageRevision.
  *
- * @property mixed $id
+ * @property mixed  $id
  * @property int    $page_id
  * @property string $slug
  * @property string $book_slug
