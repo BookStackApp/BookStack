@@ -93,6 +93,8 @@ class ThemeEvents
      * @param string                                $event
      * @param \BookStack\Actions\Webhook            $webhook
      * @param string|\BookStack\Interfaces\Loggable $detail
+     * @param \BookStack\Auth\User                  $initiator
+     * @param int                                   $initiatedTime
      */
     const WEBHOOK_CALL_BEFORE = 'webhook_call_before';
 }

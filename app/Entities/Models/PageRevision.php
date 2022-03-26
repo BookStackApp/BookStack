@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Class PageRevision.
  *
+ * @property mixed $id
  * @property int    $page_id
  * @property string $slug
  * @property string $book_slug
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PageRevision extends Model
 {
     protected $fillable = ['name', 'html', 'text', 'markdown', 'summary'];
+    protected $hidden = ['html', 'markdown', 'restricted', 'text'];
 
     /**
      * Get the user that created the page revision.

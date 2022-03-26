@@ -3,17 +3,14 @@
 namespace BookStack\Actions;
 
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Theme;
 use BookStack\Interfaces\Loggable;
-use BookStack\Model;
 use BookStack\Theming\ThemeEvents;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -24,30 +21,15 @@ class DispatchWebhookJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    /**
-     * @var Webhook
-     */
-    protected $webhook;
-
-    /**
-     * @var string
-     */
-    protected $event;
+    protected Webhook $webhook;
+    protected string $event;
+    protected User $initiator;
+    protected int $initiatedTime;
 
     /**
      * @var string|Loggable
      */
     protected $detail;
-
-    /**
-     * @var User
-     */
-    protected $initiator;
-
-    /**
-     * @var int
-     */
-    protected $initiatedTime;
 
     /**
      * Create a new job instance.
@@ -70,8 +52,8 @@ class DispatchWebhookJob implements ShouldQueue
      */
     public function handle()
     {
-        $themeResponse = Theme::dispatch(ThemeEvents::WEBHOOK_CALL_BEFORE, $this->event, $this->webhook, $this->detail);
-        $webhookData = $themeResponse ?? $this->buildWebhookData();
+        $themeResponse = Theme::dispatch(ThemeEvents::WEBHOOK_CALL_BEFORE, $this->event, $this->webhook, $this->detail, $this->initiator, $this->initiatedTime);
+        $webhookData = $themeResponse ?? WebhookFormatter::getDefault($this->event, $this->webhook, $this->detail, $this->initiator, $this->initiatedTime)->format();
         $lastError = null;
 
         try {
@@ -96,37 +78,5 @@ class DispatchWebhookJob implements ShouldQueue
         }
 
         $this->webhook->save();
-    }
-
-    protected function buildWebhookData(): array
-    {
-        $textParts = [
-            $this->initiator->name,
-            trans('activities.' . $this->event),
-        ];
-
-        if ($this->detail instanceof Entity) {
-            $textParts[] = '"' . $this->detail->name . '"';
-        }
-
-        $data = [
-            'event'                    => $this->event,
-            'text'                     => implode(' ', $textParts),
-            'triggered_at'             => Carbon::createFromTimestampUTC($this->initiatedTime)->toISOString(),
-            'triggered_by'             => $this->initiator->attributesToArray(),
-            'triggered_by_profile_url' => $this->initiator->getProfileUrl(),
-            'webhook_id'               => $this->webhook->id,
-            'webhook_name'             => $this->webhook->name,
-        ];
-
-        if (method_exists($this->detail, 'getUrl')) {
-            $data['url'] = $this->detail->getUrl();
-        }
-
-        if ($this->detail instanceof Model) {
-            $data['related_item'] = $this->detail->attributesToArray();
-        }
-
-        return $data;
     }
 }
