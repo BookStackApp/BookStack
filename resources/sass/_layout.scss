@@ -8,6 +8,9 @@
   margin-inline-end: auto;
   padding-inline-start: $-m;
   padding-inline-end: $-m;
+  &.medium {
+    max-width: 1100px;
+  }
   &.small {
     max-width: 840px;
   }
