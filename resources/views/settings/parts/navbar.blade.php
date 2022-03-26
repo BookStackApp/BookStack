@@ -1,5 +1,5 @@
 
-<nav class="active-link-list">
+<nav class="active-link-list py-m flex-container-row justify-center wrap">
     @if(userCan('settings-manage'))
         <a href="{{ url('/settings') }}" @if($selected == 'settings') class="active" @endif>@icon('settings'){{ trans('settings.settings') }}</a>
         <a href="{{ url('/settings/maintenance') }}" @if($selected == 'maintenance') class="active" @endif>@icon('spanner'){{ trans('settings.maint') }}</a>

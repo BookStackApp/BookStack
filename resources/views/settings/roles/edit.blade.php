@@ -3,9 +3,7 @@
 @section('body')
 
     <div class="container small">
-        <div class="py-m">
-            @include('settings.parts.navbar', ['selected' => 'roles'])
-        </div>
+        @include('settings.parts.navbar', ['selected' => 'roles'])
 
         <div class="card content-wrap">
             <h1 class="list-heading">{{ trans('settings.role_edit') }}</h1>
