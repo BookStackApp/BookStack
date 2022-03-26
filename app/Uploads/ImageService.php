@@ -5,6 +5,7 @@ namespace BookStack\Uploads;
 use BookStack\Exceptions\ImageUploadException;
 use ErrorException;
 use Exception;
+use GuzzleHttp\Psr7\Utils;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem as Storage;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
+use Intervention\Image\Image as InterventionImage;
 use Intervention\Image\ImageManager;
 use League\Flysystem\Util;
 use Psr\SimpleCache\InvalidArgumentException;
@@ -308,6 +310,8 @@ class ImageService
             throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
         }
 
+        $this->orientImageToOriginalExif($thumb, $imageData);
+
         if ($keepRatio) {
             $thumb->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
@@ -326,6 +330,48 @@ class ImageService
         }
 
         return $thumbData;
+    }
+
+    /**
+     * Orientate the given intervention image based upon the given original image data.
+     * Intervention does have an `orientate` method but the exif data it needs is lost before it
+     * can be used (At least when created using binary string data) so we need to do some
+     * implementation on our side to use the original image data.
+     * Bulk of logic taken from: https://github.com/Intervention/image/blob/b734a4988b2148e7d10364b0609978a88d277536/src/Intervention/Image/Commands/OrientateCommand.php
+     * Copyright (c) Oliver Vogel, MIT License
+     */
+    protected function orientImageToOriginalExif(InterventionImage $image, string $originalData): void
+    {
+        if (!extension_loaded('exif')) {
+            return;
+        }
+
+        $stream = Utils::streamFor($originalData)->detach();
+        $orientation = exif_read_data($stream)['Orientation'] ?? null;
+
+        switch ($orientation) {
+            case 2:
+                $image->flip();
+                break;
+            case 3:
+                $image->rotate(180);
+                break;
+            case 4:
+                $image->rotate(180)->flip();
+                break;
+            case 5:
+                $image->rotate(270)->flip();
+                break;
+            case 6:
+                $image->rotate(270);
+                break;
+            case 7:
+                $image->rotate(90)->flip();
+                break;
+            case 8:
+                $image->rotate(90);
+                break;
+        }
     }
 
     /**
