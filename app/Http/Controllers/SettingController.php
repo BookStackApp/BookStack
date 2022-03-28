@@ -9,11 +9,10 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    protected $imageRepo;
+    protected ImageRepo $imageRepo;
 
-    /**
-     * SettingController constructor.
-     */
+    protected array $settingCategories = ['features', 'customization', 'registration'];
+
     public function __construct(ImageRepo $imageRepo)
     {
         $this->imageRepo = $imageRepo;
@@ -22,15 +21,17 @@ class SettingController extends Controller
     /**
      * Display a listing of the settings.
      */
-    public function index()
+    public function index(string $category)
     {
+        $this->ensureCategoryExists($category);
         $this->checkPermission('settings-manage');
         $this->setPageTitle(trans('settings.settings'));
 
         // Get application version
         $version = trim(file_get_contents(base_path('version')));
 
-        return view('settings.index', [
+        return view('settings.' . $category, [
+            'category'  => $category,
             'version'   => $version,
             'guestUser' => User::getDefault(),
         ]);
@@ -39,8 +40,9 @@ class SettingController extends Controller
     /**
      * Update the specified settings in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, string $category)
     {
+        $this->ensureCategoryExists($category);
         $this->preventAccessInDemoMode();
         $this->checkPermission('settings-manage');
         $this->validate($request, [
@@ -57,7 +59,7 @@ class SettingController extends Controller
         }
 
         // Update logo image if set
-        if ($request->hasFile('app_logo')) {
+        if ($category === 'customization' && $request->hasFile('app_logo')) {
             $logoFile = $request->file('app_logo');
             $this->imageRepo->destroyByType('system');
             $image = $this->imageRepo->saveNew($logoFile, 'system', 0, null, 86);
@@ -65,16 +67,21 @@ class SettingController extends Controller
         }
 
         // Clear logo image if requested
-        if ($request->get('app_logo_reset', null)) {
+        if ($category === 'customization' &&  $request->get('app_logo_reset', null)) {
             $this->imageRepo->destroyByType('system');
             setting()->remove('app-logo');
         }
 
-        $section = $request->get('section', '');
-        $this->logActivity(ActivityType::SETTINGS_UPDATE, $section);
+        $this->logActivity(ActivityType::SETTINGS_UPDATE, $category);
         $this->showSuccessNotification(trans('settings.settings_save_success'));
-        $redirectLocation = '/settings#' . $section;
 
-        return redirect(rtrim($redirectLocation, '#'));
+        return redirect("/settings/${category}");
+    }
+
+    protected function ensureCategoryExists(string $category): void
+    {
+        if (!in_array($category, $this->settingCategories)) {
+            abort(404);
+        }
     }
 }

@@ -677,11 +677,21 @@ ul.pagination {
     padding: $-s;
   }
   a:not(.active) {
-    @include lightDark(color, #444, #666);
+    @include lightDark(color, #444, #888);
   }
   a:hover {
     @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
-    border-radius: 3px;
+    border-radius: 4px;
     text-decoration: none;
+  }
+  &.in-sidebar {
+    a {
+      display: block;
+      margin-bottom: $-xs;
+    }
+    a.active {
+      border-radius: 4px;
+      @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
+    }
   }
 }
