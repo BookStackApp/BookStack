@@ -27,7 +27,7 @@ class RolesTest extends TestCase
 
     public function test_admin_can_see_settings()
     {
-        $this->asAdmin()->get('/settings')->assertSee('Settings');
+        $this->asAdmin()->get('/settings/features')->assertSee('Settings');
     }
 
     public function test_cannot_delete_admin_role()
@@ -58,7 +58,7 @@ class RolesTest extends TestCase
         $testRoleUpdateName = 'An Super Updated role';
 
         // Creation
-        $resp = $this->asAdmin()->get('/settings');
+        $resp = $this->asAdmin()->get('/settings/features');
         $resp->assertElementContains('a[href="' . url('/settings/roles') . '"]', 'Roles');
 
         $resp = $this->get('/settings/roles');
@@ -247,13 +247,13 @@ class RolesTest extends TestCase
 
     public function test_settings_manage_permission()
     {
-        $this->actingAs($this->user)->get('/settings')->assertRedirect('/');
+        $this->actingAs($this->user)->get('/settings/features')->assertRedirect('/');
         $this->giveUserPermissions($this->user, ['settings-manage']);
-        $this->get('/settings')->assertOk();
+        $this->get('/settings/features')->assertOk();
 
-        $resp = $this->post('/settings', []);
-        $resp->assertRedirect('/settings');
-        $resp = $this->get('/settings');
+        $resp = $this->post('/settings/features', []);
+        $resp->assertRedirect('/settings/features');
+        $resp = $this->get('/settings/features');
         $resp->assertSee('Settings saved');
     }
 
@@ -762,7 +762,7 @@ class RolesTest extends TestCase
 
     public function test_public_role_visible_in_default_role_setting()
     {
-        $this->asAdmin()->get('/settings')
+        $this->asAdmin()->get('/settings/registration')
             ->assertElementExists('[data-system-role-name="admin"]')
             ->assertElementExists('[data-system-role-name="public"]');
     }

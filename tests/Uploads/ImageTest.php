@@ -314,8 +314,8 @@ class ImageTest extends TestCase
         $galleryFile = $this->getTestImage('my-system-test-upload.png');
         $expectedPath = public_path('uploads/images/system/' . date('Y-m') . '/my-system-test-upload.png');
 
-        $upload = $this->call('POST', '/settings', [], [], ['app_logo' => $galleryFile], []);
-        $upload->assertRedirect('/settings');
+        $upload = $this->call('POST', '/settings/customization', [], [], ['app_logo' => $galleryFile], []);
+        $upload->assertRedirect('/settings/customization');
 
         $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: ' . $expectedPath);
 

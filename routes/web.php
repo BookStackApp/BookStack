@@ -207,10 +207,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index']);
 
-    // Settings
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
-    Route::post('/settings', [SettingController::class, 'update']);
-
     // Maintenance
     Route::get('/settings/maintenance', [MaintenanceController::class, 'index']);
     Route::delete('/settings/maintenance/cleanup-images', [MaintenanceController::class, 'cleanupImages']);
@@ -267,6 +263,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/webhooks/{id}', [WebhookController::class, 'update']);
     Route::get('/settings/webhooks/{id}/delete', [WebhookController::class, 'delete']);
     Route::delete('/settings/webhooks/{id}', [WebhookController::class, 'destroy']);
+
+    // Settings
+    Route::redirect('/settings', '/settings/features')->name('settings');
+    Route::get('/settings/{category}', [SettingController::class, 'index']);
+    Route::post('/settings/{category}', [SettingController::class, 'update']);
 });
 
 // MFA routes
