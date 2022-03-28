@@ -10,6 +10,8 @@ return [
     'settings' => 'Instellingen',
     'settings_save' => 'Instellingen opslaan',
     'settings_save_success' => 'Instellingen Opgeslagen',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Aanpassingen',
