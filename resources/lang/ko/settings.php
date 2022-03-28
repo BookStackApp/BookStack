@@ -10,6 +10,8 @@ return [
     'settings' => '설정',
     'settings_save' => '적용',
     'settings_save_success' => '설정 적용함',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => '맞춤',
