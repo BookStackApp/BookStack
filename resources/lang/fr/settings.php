@@ -10,6 +10,8 @@ return [
     'settings' => 'Préférences',
     'settings_save' => 'Enregistrer les préférences',
     'settings_save_success' => 'Préférences enregistrées',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Personnalisation',
