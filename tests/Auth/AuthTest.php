@@ -202,7 +202,7 @@ class AuthTest extends TestCase
     {
         $this->assertFalse(setting('registration-role'));
 
-        $resp = $this->asAdmin()->get('/settings');
+        $resp = $this->asAdmin()->get('/settings/registration');
         $resp->assertElementContains('select[name="setting-registration-role"] option[value="0"][selected]', '-- None --');
     }
 
