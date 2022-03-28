@@ -1,7 +1,7 @@
 @extends('settings.layout')
 
 @section('card')
-    <h1 id="registration" class="list-heading">{{ trans('settings.reg_settings') }}</h2>
+    <h1 id="registration" class="list-heading">{{ trans('settings.reg_settings') }}</h1>
     <form action="{{ url("/settings/registration") }}" method="POST">
         {!! csrf_field() !!}
         <input type="hidden" name="section" value="registration">

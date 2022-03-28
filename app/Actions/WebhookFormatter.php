@@ -116,7 +116,7 @@ class WebhookFormatter
 
     public static function getDefault(string $event, Webhook $webhook, $detail, User $initiator, int $initiatedTime): self
     {
-        $instance = new static($event, $webhook, $detail, $initiator, $initiatedTime);
+        $instance = new self($event, $webhook, $detail, $initiator, $initiatedTime);
         $instance->addDefaultModelFormatters();
 
         return $instance;

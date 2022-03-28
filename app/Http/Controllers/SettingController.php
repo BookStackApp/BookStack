@@ -67,7 +67,7 @@ class SettingController extends Controller
         }
 
         // Clear logo image if requested
-        if ($category === 'customization' &&  $request->get('app_logo_reset', null)) {
+        if ($category === 'customization' && $request->get('app_logo_reset', null)) {
             $this->imageRepo->destroyByType('system');
             setting()->remove('app-logo');
         }

@@ -17,9 +17,9 @@ class SettingsTest extends TestCase
     {
         $this->asAdmin();
         $categories = [
-            'features' => 'Features & Security',
+            'features'      => 'Features & Security',
             'customization' => 'Customization',
-            'registration' => 'Registration',
+            'registration'  => 'Registration',
         ];
 
         foreach ($categories as $category => $title) {
