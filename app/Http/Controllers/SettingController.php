@@ -11,6 +11,8 @@ class SettingController extends Controller
 {
     protected ImageRepo $imageRepo;
 
+    protected array $settingCategories = ['features', 'customization', 'registration'];
+
     public function __construct(ImageRepo $imageRepo)
     {
         $this->imageRepo = $imageRepo;
@@ -21,6 +23,7 @@ class SettingController extends Controller
      */
     public function index(string $category)
     {
+        $this->ensureCategoryExists($category);
         $this->checkPermission('settings-manage');
         $this->setPageTitle(trans('settings.settings'));
 
@@ -39,6 +42,7 @@ class SettingController extends Controller
      */
     public function update(Request $request, string $category)
     {
+        $this->ensureCategoryExists($category);
         $this->preventAccessInDemoMode();
         $this->checkPermission('settings-manage');
         $this->validate($request, [
@@ -72,5 +76,12 @@ class SettingController extends Controller
         $this->showSuccessNotification(trans('settings.settings_save_success'));
 
         return redirect("/settings/${category}");
+    }
+
+    protected function ensureCategoryExists(string $category): void
+    {
+        if (!in_array($category, $this->settingCategories)) {
+            abort(404);
+        }
     }
 }

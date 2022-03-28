@@ -28,4 +28,12 @@ class SettingsTest extends TestCase
             $resp->assertElementExists("form[action$=\"/settings/{$category}\"]");
         }
     }
+
+    public function test_not_found_setting_category_throws_404()
+    {
+        $resp = $this->asAdmin()->get('/settings/biscuits');
+
+        $resp->assertStatus(404);
+        $resp->assertSee('Page Not Found');
+    }
 }
