@@ -10,6 +10,8 @@ return [
     'settings' => 'Nastavitve',
     'settings_save' => 'Shrani nastavitve',
     'settings_save_success' => 'Nastavitve shranjene',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Prilagoditev',
