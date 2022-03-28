@@ -10,6 +10,8 @@ return [
     'settings' => 'Ezarpenak',
     'settings_save' => 'Gorde aldaketak',
     'settings_save_success' => 'Aldaketak gordeta',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Pertsonalizazioa',
