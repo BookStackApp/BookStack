@@ -24,7 +24,7 @@ return [
     'width' => 'Larghezza',
     'height' => 'Altezza',
     'More' => 'Altro',
-    'select' => 'Select...',
+    'select' => 'Seleziona...',
 
     // Toolbar
     'formats' => 'Formati',
@@ -56,7 +56,7 @@ return [
     'align_justify' => 'Justify',
     'list_bullet' => 'Elenco puntato',
     'list_numbered' => 'Elenco numerato',
-    'list_task' => 'Task list',
+    'list_task' => 'Elenco attività',
     'indent_increase' => 'Aumenta rientro',
     'indent_decrease' => 'Riduci rientro',
     'table' => 'Tabella',
@@ -95,8 +95,8 @@ return [
     'cell_type_cell' => 'Cella',
     'cell_scope' => 'Scope',
     'cell_type_header' => 'Cella intestazione',
-    'merge_cells' => 'Merge cells',
-    'split_cell' => 'Split cell',
+    'merge_cells' => 'Unisci celle',
+    'split_cell' => 'Dividi cella',
     'table_row_group' => 'Gruppo Riga',
     'table_column_group' => 'Gruppo Colonna',
     'horizontal_align' => 'Allineamento orizzontale',
