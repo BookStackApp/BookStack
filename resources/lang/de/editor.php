@@ -130,10 +130,10 @@ return [
     'cell_border_double' => 'Doppelt',
     'cell_border_groove' => 'Rille',
     'cell_border_ridge' => 'Erhaben',
-    'cell_border_inset' => 'Inset',
-    'cell_border_outset' => 'Outset',
-    'cell_border_none' => 'None',
-    'cell_border_hidden' => 'Hidden',
+    'cell_border_inset' => 'vertiefte Fläche',
+    'cell_border_outset' => 'erhabene Fläche',
+    'cell_border_none' => 'Keine',
+    'cell_border_hidden' => 'Versteckt',
 
     // Images, links, details/summary & embed
     'source' => 'Quelle',
@@ -154,14 +154,14 @@ return [
     'toggle_label' => 'Label umschalten',
 
     // About view
-    'about' => 'About the editor',
+    'about' => 'Über den Editor',
     'about_title' => 'Über den WYSIWYG-Editor',
     'editor_license' => 'Editorlizenz & Copyright',
     'editor_tiny_license' => 'Dieser Editor wird unter der LGPL v2.1 Lizenz entwickelt, welche hier zu finden ist :tinyLink.',
     'editor_tiny_license_link' => 'Die Copyright- und Lizenzdetails von TinyMCE finden Sie hier.',
     'save_continue' => 'Speichern & Fortfahren',
     'callouts_cycle' => '(Drücken Sie weiter, um durch Typen umzuschalten)',
-    'link_selector' => 'Link to content',
+    'link_selector' => 'Inhalt verlinken',
     'shortcuts' => 'Verknüpfungen',
     'shortcut' => 'Verknüpfung',
     'shortcuts_intro' => 'Die folgenden Verknüpfungen sind im Editor verfügbar:',
