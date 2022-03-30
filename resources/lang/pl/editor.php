@@ -24,6 +24,7 @@ return [
     'width' => 'Szerokość',
     'height' => 'Wysokość',
     'More' => 'Więcej',
+    'select' => 'Wybierz...',
 
     // Toolbar
     'formats' => 'Formaty',
@@ -55,6 +56,7 @@ return [
     'align_justify' => 'Wyjustuj',
     'list_bullet' => 'Lista punktowana',
     'list_numbered' => 'Lista numerowana',
+    'list_task' => 'Lista zadań',
     'indent_increase' => 'Zwiększ wcięcie',
     'indent_decrease' => 'Zmniejsz wcięcie',
     'table' => 'Tabela',
@@ -91,7 +93,10 @@ return [
     'cell_properties_title' => 'Właściwości Komórki',
     'cell_type' => 'Typ komórki',
     'cell_type_cell' => 'Komórka',
+    'cell_scope' => 'Zakres',
     'cell_type_header' => 'Komórka nagłówka',
+    'merge_cells' => 'Scal komórki',
+    'split_cell' => 'Podziel komórkę',
     'table_row_group' => 'Grupa wierszy',
     'table_column_group' => 'Grupa kolumn',
     'horizontal_align' => 'Wyrównanie w poziomie',
@@ -119,6 +124,16 @@ return [
     'caption' => 'Opis',
     'show_caption' => 'Pokaż opis',
     'constrain' => 'Zachowaj proporcje',
+    'cell_border_solid' => 'Ciągły',
+    'cell_border_dotted' => 'Kropkowany',
+    'cell_border_dashed' => 'Kreskowany',
+    'cell_border_double' => 'Podwójny',
+    'cell_border_groove' => 'Rowek',
+    'cell_border_ridge' => 'Grzbiet',
+    'cell_border_inset' => 'Ramka',
+    'cell_border_outset' => 'Wypukły',
+    'cell_border_none' => 'Brak',
+    'cell_border_hidden' => 'Ukryty',
 
     // Images, links, details/summary & embed
     'source' => 'Źródło',
@@ -139,12 +154,14 @@ return [
     'toggle_label' => 'Przełącz etykietę',
 
     // About view
+    'about' => 'O edytorze',
     'about_title' => 'O edytorze WYSIWYG',
     'editor_license' => 'Licencja edytora i prawa autorskie',
     'editor_tiny_license' => 'Ten edytor jest zbudowany przy użyciu :tinyLink, który jest dostępny na licencji LGPL v2.1.',
     'editor_tiny_license_link' => 'Szczegóły dotyczące praw autorskich i licencji TinyMCE można znaleźć tutaj.',
     'save_continue' => 'Zapisz stronę i kontynuuj',
     'callouts_cycle' => '(Naciskaj dalej, aby przełączyć przez typy)',
+    'link_selector' => 'Link do treści',
     'shortcuts' => 'Skróty',
     'shortcut' => 'Skrót',
     'shortcuts_intro' => 'Następujące skróty są dostępne w edytorze:',

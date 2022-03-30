@@ -21,7 +21,7 @@ return [
     'email' => 'Адреса електронної пошти',
     'password' => 'Пароль',
     'password_confirm' => 'Підтвердження пароля',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'Повинен бути щонайменше 8 символів',
     'forgot_password' => 'Забули пароль?',
     'remember_me' => 'Запам\'ятати мене',
     'ldap_email_hint' => 'Введіть email для цього облікового запису.',
