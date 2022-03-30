@@ -125,15 +125,15 @@ return [
     'show_caption' => 'Mostrar legenda',
     'constrain' => 'Restringir proporções',
     'cell_border_solid' => 'Sólido',
-    'cell_border_dotted' => 'Dotted',
-    'cell_border_dashed' => 'Dashed',
-    'cell_border_double' => 'Double',
+    'cell_border_dotted' => 'Pontilhado',
+    'cell_border_dashed' => 'Tracejado',
+    'cell_border_double' => 'Dupla',
     'cell_border_groove' => 'Groove',
     'cell_border_ridge' => 'Ridge',
-    'cell_border_inset' => 'Inset',
-    'cell_border_outset' => 'Outset',
-    'cell_border_none' => 'None',
-    'cell_border_hidden' => 'Hidden',
+    'cell_border_inset' => 'Interna',
+    'cell_border_outset' => 'Externa',
+    'cell_border_none' => 'Nenhuma',
+    'cell_border_hidden' => 'Ocultada',
 
     // Images, links, details/summary & embed
     'source' => 'Fonte',
@@ -154,7 +154,7 @@ return [
     'toggle_label' => 'Alternar etiqueta',
 
     // About view
-    'about' => 'About the editor',
+    'about' => 'Sobre o editor',
     'about_title' => 'Sobre o Editor WYSIWYG',
     'editor_license' => 'Editor da licença de direitos autorais',
     'editor_tiny_license' => 'Este editor é criado utilizando :tinyLink que é fornecido sob uma licença LGPL v2.1.',
