@@ -277,6 +277,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'et' => 'Estoński',
+        'eu' => 'Euskara',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
