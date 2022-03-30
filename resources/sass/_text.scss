@@ -310,6 +310,7 @@ li > ol, li > ul {
 }
 
 li.checkbox-item, li.task-list-item {
+  display: list-item;
   list-style: none;
   margin-left: -($-m * 1.2);
   input[type="checkbox"] {

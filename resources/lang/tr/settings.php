@@ -10,6 +10,8 @@ return [
     'settings' => 'Ayarlar',
     'settings_save' => 'Ayarları Kaydet',
     'settings_save_success' => 'Ayarlar kaydedildi',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Özelleştirme',
@@ -275,6 +277,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'et' => 'Eesti keel',
+        'eu' => 'Euskara',
         'fr' => 'Français',
         'he' => 'İbranice',
         'hr' => 'Hrvatski',

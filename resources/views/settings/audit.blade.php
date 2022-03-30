@@ -3,11 +3,7 @@
 @section('body')
 <div class="container">
 
-    <div class="grid left-focus v-center no-row-gap">
-        <div class="py-m">
-            @include('settings.parts.navbar', ['selected' => 'audit'])
-        </div>
-    </div>
+    @include('settings.parts.navbar', ['selected' => 'audit'])
 
     <div class="card content-wrap auto-height">
         <h1 class="list-heading">{{ trans('settings.audit') }}</h1>

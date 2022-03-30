@@ -10,6 +10,8 @@ return [
     'settings' => 'Nastavení',
     'settings_save' => 'Uložit nastavení',
     'settings_save_success' => 'Nastavení uloženo',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Přizpůsobení',
@@ -275,6 +277,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'et' => 'Eesti keel',
+        'eu' => 'Euskara',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',

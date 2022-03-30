@@ -232,3 +232,9 @@ msevgen :: Turkish
 Khroners :: French
 MASOUD HOSSEINY (masoudme) :: Persian
 Thomerson Roncally (roncallyt) :: Portuguese, Brazilian
+metaarch :: Bulgarian
+Xabi (xabikip) :: Basque
+pedromcsousa :: Portuguese
+Nir Louk (looknear) :: Hebrew
+Alex (qianmengnet) :: Chinese Simplified
+stothew :: German

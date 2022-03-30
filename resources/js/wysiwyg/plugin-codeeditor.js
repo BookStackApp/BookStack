@@ -97,11 +97,18 @@ function defineCodeBlockCustomElement(editor) {
             }
 
             this.cleanChildContent();
+            const content = this.getContent();
+            const lines = content.split('\n').length;
+            const height = (lines * 19.2) + 18 + 24;
+            this.style.height = `${height}px`;
 
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
             const renderCodeMirror = (Code) => {
-                this.cm = Code.wysiwygView(container, this.getContent(), this.getLanguage());
+                this.cm = Code.wysiwygView(container, content, this.getLanguage());
                 Code.updateLayout(this.cm);
+                setTimeout(() => {
+                    this.style.height = null;
+                }, 1);
             };
 
             window.importVersioned('code').then((Code) => {

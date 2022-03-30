@@ -10,6 +10,8 @@ return [
     'settings' => 'Seaded',
     'settings_save' => 'Salvesta seaded',
     'settings_save_success' => 'Seaded salvestatud',
+    'system_version' => 'Süsteemi versioon',
+    'categories' => 'Kategooriad',
 
     // App Settings
     'app_customization' => 'Kohandamine',
@@ -275,6 +277,7 @@ return [
         'es' => 'Español (hispaania keel)',
         'es_AR' => 'Español Argentina (Argentiina hispaania keel)',
         'et' => 'Eesti keel',
+        'eu' => 'Euskara',
         'fr' => 'Français (prantsuse keel)',
         'he' => 'עברית (heebrea keel)',
         'hr' => 'Hrvatski (horvaadi keel)',

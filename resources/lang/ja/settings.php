@@ -10,6 +10,8 @@ return [
     'settings' => '設定',
     'settings_save' => '設定を保存',
     'settings_save_success' => '設定を保存しました',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'カスタマイズ',
@@ -275,6 +277,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'et' => 'Eesti keel',
+        'eu' => 'Euskara',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',

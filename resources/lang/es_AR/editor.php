@@ -24,6 +24,7 @@ return [
     'width' => 'Anchura',
     'height' => 'Altura',
     'More' => 'Más',
+    'select' => 'Seleccionar...',
 
     // Toolbar
     'formats' => 'Formatos',
@@ -55,6 +56,7 @@ return [
     'align_justify' => 'Justificado',
     'list_bullet' => 'Lista sin ordenar',
     'list_numbered' => 'Lista ordenada',
+    'list_task' => 'Lista de tareas',
     'indent_increase' => 'Aumentar sangría',
     'indent_decrease' => 'Reducir sangría',
     'table' => 'Tabla',
@@ -91,7 +93,10 @@ return [
     'cell_properties_title' => 'Propiedades de Celda',
     'cell_type' => 'Tipo de celda',
     'cell_type_cell' => 'Celda',
+    'cell_scope' => 'Ámbito',
     'cell_type_header' => 'Celda de cabecera',
+    'merge_cells' => 'Combinar celdas',
+    'split_cell' => 'Dividir celda',
     'table_row_group' => 'Grupo de filas',
     'table_column_group' => 'Grupo de columnas',
     'horizontal_align' => 'Alineación horizontal',
@@ -119,6 +124,16 @@ return [
     'caption' => 'Leyenda',
     'show_caption' => 'Mostrar leyenda',
     'constrain' => 'Restringir proporciones',
+    'cell_border_solid' => 'Sólida',
+    'cell_border_dotted' => 'Punteada',
+    'cell_border_dashed' => 'Discontinua',
+    'cell_border_double' => 'Doble',
+    'cell_border_groove' => 'Surcos',
+    'cell_border_ridge' => 'Cresta',
+    'cell_border_inset' => 'Interno',
+    'cell_border_outset' => 'Externo',
+    'cell_border_none' => 'Ninguno',
+    'cell_border_hidden' => 'Oculto',
 
     // Images, links, details/summary & embed
     'source' => 'Origen',
@@ -139,12 +154,14 @@ return [
     'toggle_label' => 'Cambiar etiqueta',
 
     // About view
+    'about' => 'Acerca del editor',
     'about_title' => 'Acerca del editor WYSIWYG',
     'editor_license' => 'Licencia del editor y derechos de autor',
     'editor_tiny_license' => 'Este editor se construye usando :tinyLink que se proporciona bajo una licencia LGPL v2.1.',
     'editor_tiny_license_link' => 'Aquí encontrará los detalles de los derechos de autor y la licencia de TinyMCE.',
     'save_continue' => 'Guardar Página y Continuar',
     'callouts_cycle' => '(Siga presionando para alternar entre tipos)',
+    'link_selector' => 'Enlace a contenido',
     'shortcuts' => 'Atajos',
     'shortcut' => 'Atajo',
     'shortcuts_intro' => 'Los siguientes atajos están disponibles en el editor:',

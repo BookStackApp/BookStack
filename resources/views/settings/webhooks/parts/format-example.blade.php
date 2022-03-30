@@ -23,12 +23,37 @@
         "priority": 2,
         "created_at": "2021-12-11T21:53:24.000000Z",
         "updated_at": "2021-12-11T22:25:10.000000Z",
-        "created_by": 1,
-        "updated_by": 1,
+        "created_by": {
+            "id": 1,
+            "name": "Benny",
+            "slug": "benny"
+        },
+        "updated_by": {
+            "id": 1,
+            "name": "Benny",
+            "slug": "benny"
+        },
         "draft": false,
         "revision_count": 9,
         "template": false,
-        "owned_by": 1
+        "owned_by": {
+            "id": 1,
+            "name": "Benny",
+            "slug": "benny"
+        },
+       "current_revision": {
+            "id": 597,
+            "page_id": 2598,
+            "name": "My wonderful updated page",
+            "created_by": 1,
+            "created_at": "2021-12-11T21:53:24.000000Z",
+            "updated_at": "2021-12-11T21:53:24.000000Z",
+            "slug": "my-wonderful-updated-page",
+            "book_slug": "my-awesome-book",
+            "type": "version",
+            "summary": "Updated the title and fixed some spelling",
+            "revision_number": 2
+        }
     }
 }</code></pre>
 </div>

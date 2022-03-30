@@ -3,9 +3,7 @@
 @section('body')
     <div class="container small">
 
-        <div class="py-m">
-            @include('settings.parts.navbar', ['selected' => 'users'])
-        </div>
+        @include('settings.parts.navbar', ['selected' => 'users'])
 
         <main class="card content-wrap">
 

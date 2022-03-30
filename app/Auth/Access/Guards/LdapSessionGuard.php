@@ -5,6 +5,7 @@ namespace BookStack\Auth\Access\Guards;
 use BookStack\Auth\Access\LdapService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
+use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\LdapException;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
@@ -15,7 +16,7 @@ use Illuminate\Support\Str;
 
 class LdapSessionGuard extends ExternalBaseSessionGuard
 {
-    protected $ldapService;
+    protected LdapService $ldapService;
 
     /**
      * LdapSessionGuard constructor.
@@ -59,8 +60,9 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
      * @param array $credentials
      * @param bool  $remember
      *
+     * @throws LdapException*@throws \BookStack\Exceptions\JsonDebugException
      * @throws LoginAttemptException
-     * @throws LdapException
+     * @throws JsonDebugException
      *
      * @return bool
      */

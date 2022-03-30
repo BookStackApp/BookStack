@@ -326,7 +326,7 @@ class ExportFormatter
             $text .= $this->pageToMarkdown($page) . "\n\n";
         }
 
-        return $text;
+        return trim($text);
     }
 
     /**
@@ -338,12 +338,12 @@ class ExportFormatter
         $text = '# ' . $book->name . "\n\n";
         foreach ($bookTree as $bookChild) {
             if ($bookChild instanceof Chapter) {
-                $text .= $this->chapterToMarkdown($bookChild);
+                $text .= $this->chapterToMarkdown($bookChild) . "\n\n";
             } else {
-                $text .= $this->pageToMarkdown($bookChild);
+                $text .= $this->pageToMarkdown($bookChild) . "\n\n";
             }
         }
 
-        return $text;
+        return trim($text);
     }
 }

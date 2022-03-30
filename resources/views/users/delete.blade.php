@@ -3,9 +3,7 @@
 @section('body')
     <div class="container small">
 
-        <div class="py-m">
-            @include('settings.parts.navbar', ['selected' => 'users'])
-        </div>
+        @include('settings.parts.navbar', ['selected' => 'users'])
 
         <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ trans('settings.users_delete') }}</h1>

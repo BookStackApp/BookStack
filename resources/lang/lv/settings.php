@@ -10,6 +10,8 @@ return [
     'settings' => 'Iestatījumi',
     'settings_save' => 'Saglabāt iestatījumus',
     'settings_save_success' => 'Iestatījumi saglabāti',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Pielāgojumi',
@@ -275,6 +277,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'et' => 'Igauņu',
+        'eu' => 'Euskara',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',

@@ -3,7 +3,7 @@
 @section('body')
 <div class="container small">
 
-    @include('settings.parts.navbar-with-version', ['selected' => 'maintenance'])
+    @include('settings.parts.navbar', ['selected' => 'maintenance'])
 
     <div class="card content-wrap auto-height pb-xl">
         <h2 class="list-heading">{{ trans('settings.recycle_bin') }}</h2>

@@ -7,63 +7,63 @@ return [
 
     // Pages
     'page_create'                 => 'създадена страница',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Страницата е създадена успешно',
     'page_update'                 => 'обновена страница',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Страницата е обновена успешно',
     'page_delete'                 => 'изтрита страница',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Страницата е изтрита успешно',
     'page_restore'                => 'възстановена страница',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Страницата е възстановена успешно',
     'page_move'                   => 'преместена страница',
 
     // Chapters
     'chapter_create'              => 'създадена страница',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Главата е добавена успешно',
     'chapter_update'              => 'обновена глава',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Главата е обновена успешно',
     'chapter_delete'              => 'изтрита глава',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Главата е изтрита успешно',
     'chapter_move'                => 'преместена глава',
 
     // Books
     'book_create'                 => 'създадена книга',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Книгата е създадена успешно',
     'book_update'                 => 'обновена книга',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Книгата е обновена успешно',
     'book_delete'                 => 'изтрита книга',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'Книгата е изтрита успешно',
     'book_sort'                   => 'сортирана книга',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'Книгата е преподредена успешно',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create'            => 'създаден рафт',
+    'bookshelf_create_notification'    => 'Рафтът е създаден успешно',
     'bookshelf_update'                 => 'обновен рафт',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
+    'bookshelf_update_notification'    => 'Рафтът е обновен успешно',
     'bookshelf_delete'                 => 'изтрит рафт',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Рафтът е изтрит успешно',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" е добавен към любими успешно',
+    'favourite_remove_notification' => '":name" е премахнат от любими успешно',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Многофакторният метод е конфигуриран успешно',
+    'mfa_remove_method_notification' => 'Многофакторният метод е премахнат успешно',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'създадена уебкука',
+    'webhook_create_notification' => 'Уебкуката е създадена успешно',
+    'webhook_update' => 'обновена уебкука',
+    'webhook_update_notification' => 'Уебкуката е обновена успешно',
+    'webhook_delete' => 'изтрита уебкука',
+    'webhook_delete_notification' => 'Уебкуката е изтрита успешно',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Потребителят е обновен успешно',
+    'user_delete_notification' => 'Потребителят е премахнат успешно',
 
     // Other
     'commented_on'                => 'коментирано на',
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'обновени права',
 ];

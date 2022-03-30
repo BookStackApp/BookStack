@@ -10,6 +10,8 @@ return [
     'settings' => '設定',
     'settings_save' => '儲存設定',
     'settings_save_success' => '設定已儲存',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => '自訂',
@@ -275,6 +277,7 @@ return [
         'es' => 'Español',
         'es_AR' => 'Español Argentina',
         'et' => 'Eesti keel',
+        'eu' => 'Euskara',
         'fr' => 'Français',
         'he' => '希伯來語',
         'hr' => 'Hrvatski',
