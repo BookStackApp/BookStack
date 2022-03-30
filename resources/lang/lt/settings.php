@@ -10,6 +10,8 @@ return [
     'settings' => 'Nustatymai',
     'settings_save' => 'Išsaugoti nustatymus',
     'settings_save_success' => 'Nustatymai išsaugoti',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Tinkinimas',

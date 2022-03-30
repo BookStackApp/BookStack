@@ -10,6 +10,8 @@ return [
     'settings' => 'Innstillinger',
     'settings_save' => 'Lagre innstillinger',
     'settings_save_success' => 'Innstillinger lagret',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Tilpassing',

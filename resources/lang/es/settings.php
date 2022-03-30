@@ -10,6 +10,8 @@ return [
     'settings' => 'Ajustes',
     'settings_save' => 'Guardar ajustes',
     'settings_save_success' => 'Ajustes guardados',
+    'system_version' => 'Versión del Sistema',
+    'categories' => 'Categorías',
 
     // App Settings
     'app_customization' => 'Personalización',

@@ -10,6 +10,8 @@ return [
     'settings' => 'الإعدادات',
     'settings_save' => 'حفظ الإعدادات',
     'settings_save_success' => 'تم حفظ الإعدادات',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'تخصيص',

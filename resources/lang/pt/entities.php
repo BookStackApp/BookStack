@@ -143,8 +143,8 @@ return [
     'books_sort_chapters_last' => 'Capítulos por Último',
     'books_sort_show_other' => 'Mostrar Outros Livros',
     'books_sort_save' => 'Guardar Nova Ordenação',
-    'books_copy' => 'Copy Book',
-    'books_copy_success' => 'Book successfully copied',
+    'books_copy' => 'Copiar livro',
+    'books_copy_success' => 'Livro criado com sucesso',
 
     // Chapters
     'chapter' => 'Capítulo',
@@ -163,8 +163,8 @@ return [
     'chapters_move' => 'Mover Capítulo',
     'chapters_move_named' => 'Mover Capítulo :chapterName',
     'chapter_move_success' => 'Capítulo movido para :bookName',
-    'chapters_copy' => 'Copy Chapter',
-    'chapters_copy_success' => 'Chapter successfully copied',
+    'chapters_copy' => 'Copiar capítulo',
+    'chapters_copy_success' => 'Capítulo copiado com sucesso',
     'chapters_permissions' => 'Permissões do Capítulo',
     'chapters_empty' => 'Nenhuma página existente neste capítulo.',
     'chapters_permissions_active' => 'Permissões de Capítulo Ativas',
@@ -271,7 +271,7 @@ return [
     'tags_all_values' => 'Todos os valores',
     'tags_view_tags' => 'Ver Marcadores',
     'tags_view_existing_tags' => 'Ver marcadores existentes',
-    'tags_list_empty_hint' => 'Tags can be assigned via the page editor sidebar or while editing the details of a book, chapter or shelf.',
+    'tags_list_empty_hint' => 'As tags podem ser atribuídas através da barra lateral do editor de página ou ao editar os detalhes de um livro, capítulo ou prateleira.',
     'attachments' => 'Anexos',
     'attachments_explain' => 'Carregue alguns arquivos ou anexe links para serem exibidos na sua página. Eles estarão visíveis na barra lateral à direita.',
     'attachments_explain_instant_save' => 'As mudanças são guardadas instantaneamente.',
@@ -338,10 +338,10 @@ return [
     'revision_cannot_delete_latest' => 'Não é possível eliminar a revisão mais recente.',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider' => 'Ao copiar conteúdo considere, por favor, a informação abaixo.',
+    'copy_consider_permissions' => 'Configurações personalizada não serão copiadas.',
+    'copy_consider_owner' => 'Você se tornará o proprietário de todos os conteúdos copiados.',
+    'copy_consider_images' => 'A imagem da página não será duplicada e as imagens originais manterão sua relação com a página para a qual foram enviadas originalmente.',
+    'copy_consider_attachments' => 'Anexos da página não serão copiados.',
+    'copy_consider_access' => 'Uma alteração de localização, proprietário ou permissões pode resultar em que este conteúdo seja acessível para aqueles previamente sem acesso.',
 ];

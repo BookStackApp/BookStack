@@ -10,6 +10,8 @@ return [
     'settings' => 'Postavke',
     'settings_save' => 'Spremi postavke',
     'settings_save_success' => 'Postavke spremljene',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Prilagođavanje',

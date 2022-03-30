@@ -77,7 +77,7 @@ return [
     'mfa_setup' => 'Multi-factor authenticatie instellen',
     'mfa_setup_desc' => 'Stel multi-factor authenticatie in als een extra beveiligingslaag voor uw gebruikersaccount.',
     'mfa_setup_configured' => 'Reeds geconfigureerd',
-    'mfa_setup_reconfigure' => 'Herconfigureren1',
+    'mfa_setup_reconfigure' => 'Herconfigureren',
     'mfa_setup_remove_confirmation' => 'Weet je zeker dat je deze multi-factor authenticatie methode wilt verwijderen?',
     'mfa_setup_action' => 'Instellen',
     'mfa_backup_codes_usage_limit_warning' => 'U heeft minder dan 5 back-upcodes resterend. Genereer en sla een nieuwe set op voordat je geen codes meer hebt om te voorkomen dat je buiten je account wordt gesloten.',

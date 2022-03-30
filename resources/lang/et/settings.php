@@ -10,6 +10,8 @@ return [
     'settings' => 'Seaded',
     'settings_save' => 'Salvesta seaded',
     'settings_save_success' => 'Seaded salvestatud',
+    'system_version' => 'Süsteemi versioon',
+    'categories' => 'Kategooriad',
 
     // App Settings
     'app_customization' => 'Kohandamine',

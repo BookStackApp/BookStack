@@ -10,6 +10,8 @@ return [
     'settings' => 'Inställningar',
     'settings_save' => 'Spara inställningar',
     'settings_save_success' => 'Inställningarna har sparats',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Sidanpassning',

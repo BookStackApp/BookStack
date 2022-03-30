@@ -10,6 +10,8 @@ return [
     'settings' => 'Indstillinger',
     'settings_save' => 'Gem indstillinger',
     'settings_save_success' => 'Indstillingerne blev gemt',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Tilpasning',

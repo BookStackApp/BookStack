@@ -29,6 +29,6 @@ return [
     'code_editor' => 'Редактиране на кода',
     'code_language' => 'Език на кода',
     'code_content' => 'Съдържание на кода',
-    'code_session_history' => 'Session History',
+    'code_session_history' => 'История на сесиите',
     'code_save' => 'Запази кода',
 ];

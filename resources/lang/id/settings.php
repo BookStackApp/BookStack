@@ -10,6 +10,8 @@ return [
     'settings' => 'Pengaturan',
     'settings_save' => 'Simpan Pengaturan',
     'settings_save_success' => 'Pengaturan disimpan',
+    'system_version' => 'System Version',
+    'categories' => 'Categories',
 
     // App Settings
     'app_customization' => 'Kustomisasi',
