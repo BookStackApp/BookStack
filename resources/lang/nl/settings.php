@@ -277,6 +277,7 @@ return [
         'es' => 'Español (Spaans)',
         'es_AR' => 'Español Argentina (Argentijns Spaans)',
         'et' => 'Eesti keel (Estisch)',
+        'eu' => 'Euskara',
         'fr' => 'Français (Frans)',
         'he' => 'עברית (Hebreeuws)',
         'hr' => 'Hrvatski (Kroatisch)',
