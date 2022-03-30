@@ -19,9 +19,17 @@ class SettingController extends Controller
     }
 
     /**
-     * Display a listing of the settings.
+     * Handle requests to the settings index path
      */
-    public function index(string $category)
+    public function index()
+    {
+        return redirect('/settings/features');
+    }
+
+    /**
+     * Display the settings for the given category.
+     */
+    public function category(string $category)
     {
         $this->ensureCategoryExists($category);
         $this->checkPermission('settings-manage');

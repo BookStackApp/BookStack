@@ -26,7 +26,7 @@ class CustomHeadContentTest extends TestCase
     public function test_configured_content_does_not_show_on_settings_page()
     {
         $this->setSettings(['app-custom-head' => '<script>console.log("cat");</script>']);
-        $resp = $this->asAdmin()->get('/settings');
+        $resp = $this->asAdmin()->get('/settings/features');
         $resp->assertDontSee('console.log("cat")', false);
     }
 

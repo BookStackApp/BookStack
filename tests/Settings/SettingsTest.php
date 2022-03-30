@@ -10,7 +10,11 @@ class SettingsTest extends TestCase
     {
         $resp = $this->asAdmin()->get('/settings');
 
-        $resp->assertRedirect('/settings/features');
+        $resp->assertStatus(302);
+
+        // Manually check path to ensure it's generated as the full path
+        $location = $resp->headers->get('location');
+        $this->assertEquals(url('/settings/features'), $location);
     }
 
     public function test_settings_category_links_work_as_expected()

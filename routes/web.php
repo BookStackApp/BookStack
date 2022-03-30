@@ -265,8 +265,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/webhooks/{id}', [WebhookController::class, 'destroy']);
 
     // Settings
-    Route::redirect('/settings', '/settings/features')->name('settings');
-    Route::get('/settings/{category}', [SettingController::class, 'index']);
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+    Route::get('/settings/{category}', [SettingController::class, 'category'])->name('settings.category');
     Route::post('/settings/{category}', [SettingController::class, 'update']);
 });
 
