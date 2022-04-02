@@ -127,6 +127,7 @@ abstract class Controller extends BaseController
     protected function streamedDownloadResponse($stream, string $fileName): StreamedResponse
     {
         return response()->stream(function() use ($stream) {
+            ob_end_clean();
             fpassthru($stream);
             fclose($stream);
         }, 200, [
