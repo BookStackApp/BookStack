@@ -10,7 +10,6 @@ use BookStack\Uploads\AttachmentService;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
 
