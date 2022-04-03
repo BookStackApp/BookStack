@@ -5,6 +5,7 @@ namespace Tests\Api;
 use BookStack\Entities\Models\Page;
 use BookStack\Uploads\Attachment;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Testing\AssertableJsonString;
 use Tests\TestCase;
 
 class AttachmentsApiTest extends TestCase
@@ -228,9 +229,11 @@ class AttachmentsApiTest extends TestCase
         $attachment = Attachment::query()->orderByDesc('id')->where('name', '=', $details['name'])->firstOrFail();
 
         $resp = $this->getJson("{$this->baseEndpoint}/{$attachment->id}");
-
         $resp->assertStatus(200);
-        $resp->assertJson([
+        $resp->assertHeader('Content-Type', 'application/json');
+
+        $json = new AssertableJsonString($resp->streamedContent());
+        $json->assertSubset([
             'id'          => $attachment->id,
             'content'     => base64_encode(file_get_contents(storage_path($attachment->path))),
             'external'    => false,

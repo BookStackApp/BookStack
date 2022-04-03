@@ -116,7 +116,7 @@ abstract class Controller extends BaseController
     {
         return response()->make($content, 200, [
             'Content-Type'           => 'application/octet-stream',
-            'Content-Disposition'    => 'attachment; filename="' . $fileName . '"',
+            'Content-Disposition'    => 'attachment; filename="' . str_replace('"', '', $fileName) . '"',
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }
@@ -127,12 +127,17 @@ abstract class Controller extends BaseController
     protected function streamedDownloadResponse($stream, string $fileName): StreamedResponse
     {
         return response()->stream(function() use ($stream) {
-            ob_end_clean();
+            // End & flush the output buffer otherwise we still seem to use memory.
+            // Ignore in testing since output buffers are used to gather a response.
+            if (!app()->runningUnitTests()) {
+                ob_end_clean();
+            }
+
             fpassthru($stream);
             fclose($stream);
         }, 200, [
             'Content-Type'           => 'application/octet-stream',
-            'Content-Disposition'    => 'attachment; filename="' . $fileName . '"',
+            'Content-Disposition'    => 'attachment; filename="' . str_replace('"', '', $fileName) . '"',
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }
@@ -147,7 +152,7 @@ abstract class Controller extends BaseController
 
         return response()->make($content, 200, [
             'Content-Type'           => $mime,
-            'Content-Disposition'    => 'inline; filename="' . $fileName . '"',
+            'Content-Disposition'    => 'inline; filename="' . str_replace('"', '', $fileName) . '"',
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }
@@ -168,7 +173,7 @@ abstract class Controller extends BaseController
            fclose($stream);
         }, 200, [
             'Content-Type'           => $mime,
-            'Content-Disposition'    => 'inline; filename="' . $fileName . '"',
+            'Content-Disposition'    => 'inline; filename="' . str_replace('"', '', $fileName) . '"',
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }
