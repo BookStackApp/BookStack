@@ -7,12 +7,12 @@
  */
 return [
     // General editor terms
-    'general' => 'General',
-    'advanced' => 'Advanced',
-    'none' => 'None',
-    'cancel' => 'Cancel',
-    'save' => 'Save',
-    'close' => 'Close',
+    'general' => 'Umum',
+    'advanced' => 'Lanjutan',
+    'none' => 'Tidak Ada',
+    'cancel' => 'Batal',
+    'save' => 'Simpan',
+    'close' => 'Tutup',
     'undo' => 'Undo',
     'redo' => 'Redo',
     'left' => 'Left',
