@@ -11,8 +11,8 @@ use Illuminate\Http\UploadedFile;
 
 class BaseRepo
 {
-    protected $tagRepo;
-    protected $imageRepo;
+    protected TagRepo $tagRepo;
+    protected ImageRepo $imageRepo;
 
     public function __construct(TagRepo $tagRepo, ImageRepo $imageRepo)
     {
@@ -58,6 +58,7 @@ class BaseRepo
 
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
+            $entity->touch();
         }
 
         $entity->rebuildPermissions();
