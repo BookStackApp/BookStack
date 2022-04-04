@@ -24,7 +24,7 @@ return [
     'width' => 'Ширина',
     'height' => 'Высота',
     'More' => 'Еще',
-    'select' => 'Select...',
+    'select' => 'Выбрать...',
 
     // Toolbar
     'formats' => 'Форматы',
@@ -95,7 +95,7 @@ return [
     'cell_type_cell' => 'Ячейка',
     'cell_scope' => 'Scope',
     'cell_type_header' => 'Заголовок ячейки',
-    'merge_cells' => 'Merge cells',
+    'merge_cells' => 'Объединить ячейки',
     'split_cell' => 'Split cell',
     'table_row_group' => 'Объединить строки',
     'table_column_group' => 'Объединить столбцы',
@@ -154,7 +154,7 @@ return [
     'toggle_label' => 'Метка',
 
     // About view
-    'about' => 'About the editor',
+    'about' => 'О редакторе',
     'about_title' => 'О редакторе WYSIWYG',
     'editor_license' => 'Лицензия редактора и авторские права',
     'editor_tiny_license' => 'Этот редактор собран с помощью :tinyLink, который предоставляется под лицензией LGPL v2.1.',
