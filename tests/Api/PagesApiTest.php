@@ -5,13 +5,15 @@ namespace Tests\Api;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class PagesApiTest extends TestCase
 {
     use TestsApi;
 
-    protected $baseEndpoint = '/api/pages';
+    protected string $baseEndpoint = '/api/pages';
 
     public function test_index_endpoint_returns_expected_page()
     {
@@ -238,6 +240,21 @@ class PagesApiTest extends TestCase
         $page->refresh();
 
         $this->assertEquals($originalContent, $page->html);
+    }
+
+    public function test_update_increments_updated_date_if_only_tags_are_sent()
+    {
+        $this->actingAsApiEditor();
+        $page = Page::visible()->first();
+        DB::table('pages')->where('id', '=', $page->id)->update(['updated_at' => Carbon::now()->subWeek()]);
+
+        $details = [
+            'tags' => [['name' => 'Category', 'value' => 'Testing']]
+        ];
+
+        $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $page->refresh();
+        $this->assertGreaterThan(Carbon::now()->subDay()->unix(), $page->updated_at->unix());
     }
 
     public function test_delete_endpoint()

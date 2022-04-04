@@ -4,13 +4,15 @@ namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class ChaptersApiTest extends TestCase
 {
     use TestsApi;
 
-    protected $baseEndpoint = '/api/chapters';
+    protected string $baseEndpoint = '/api/chapters';
 
     public function test_index_endpoint_returns_expected_chapter()
     {
@@ -145,6 +147,21 @@ class ChaptersApiTest extends TestCase
             'id' => $chapter->id, 'slug' => $chapter->slug, 'book_id' => $chapter->book_id,
         ]));
         $this->assertActivityExists('chapter_update', $chapter);
+    }
+
+    public function test_update_increments_updated_date_if_only_tags_are_sent()
+    {
+        $this->actingAsApiEditor();
+        $chapter = Chapter::visible()->first();
+        DB::table('chapters')->where('id', '=', $chapter->id)->update(['updated_at' => Carbon::now()->subWeek()]);
+
+        $details = [
+            'tags' => [['name' => 'Category', 'value' => 'Testing']]
+        ];
+
+        $this->putJson($this->baseEndpoint . "/{$chapter->id}", $details);
+        $chapter->refresh();
+        $this->assertGreaterThan(Carbon::now()->subDay()->unix(), $chapter->updated_at->unix());
     }
 
     public function test_delete_endpoint()
