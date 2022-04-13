@@ -26,6 +26,7 @@ class Request extends LaravelRequest
     /**
      * Override the default request methods to get the base URL
      * to directly use the custom APP_URL, if set.
+     * The base URL never ends with a / but should start with one if not empty.
      *
      * @return string
      */
@@ -34,7 +35,7 @@ class Request extends LaravelRequest
         $appUrl = config('app.url', null);
 
         if ($appUrl) {
-            return rtrim(implode('/', array_slice(explode('/', $appUrl), 3)), '/');
+            return '/' . rtrim(implode('/', array_slice(explode('/', $appUrl), 3)), '/');
         }
 
         return parent::getBaseUrl();
