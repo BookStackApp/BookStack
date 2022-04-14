@@ -202,7 +202,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_social_accounts' => 'Social-Media Konten',
     'users_social_accounts_info' => 'Hier können Sie andere Social-Media-Konten für eine schnellere und einfachere Anmeldung verknüpfen. Wenn Sie ein Social-Media Konto lösen, bleibt der Zugriff erhalten. Entfernen Sie in diesem Falle die Berechtigung in Ihren Profil-Einstellungen des verknüpften Social-Media-Kontos.',
     'users_social_connect' => 'Social-Media-Konto verknüpfen',
-    'users_social_disconnect' => 'Social-Media-Konto lösen',
+    'users_social_disconnect' => 'Social-Media-Konto löschen',
     'users_social_connected' => ':socialAccount-Konto wurde erfolgreich mit dem Profil verknüpft.',
     'users_social_disconnected' => ':socialAccount-Konto wurde erfolgreich vom Profil gelöst.',
     'users_api_tokens' => 'API-Token',

@@ -10,8 +10,8 @@ return [
     'settings' => '设置',
     'settings_save' => '保存设置',
     'settings_save_success' => '设置已保存',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => '系统版本',
+    'categories' => '类别',
 
     // App Settings
     'app_customization' => '定制',
@@ -121,7 +121,7 @@ return [
     'audit_table_user' => '用户',
     'audit_table_event' => '事件',
     'audit_table_related' => '相关项目或详细信息',
-    'audit_table_ip' => 'IP地址',
+    'audit_table_ip' => 'IP 地址',
     'audit_table_date' => '活动日期',
     'audit_date_from' => '日期范围从',
     'audit_date_to' => '日期范围至',

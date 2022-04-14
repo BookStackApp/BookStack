@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute должен иметь от :min до :max цифр.',
     'email'                => ':attribute должен быть корректным email адресом.',
     'ends_with' => ':attribute должен заканчиваться одним из следующих: :values',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => ':attribute должен быть указан как допустимый файл.',
     'filled'               => ':attribute поле необходимо.',
     'gt'                   => [
         'numeric' => 'Значение :attribute должно быть больше чем :value.',
