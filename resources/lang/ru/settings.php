@@ -10,8 +10,8 @@ return [
     'settings' => 'Настройки',
     'settings_save' => 'Сохранить настройки',
     'settings_save_success' => 'Настройки сохранены',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => 'Версия системы',
+    'categories' => 'Категории',
 
     // App Settings
     'app_customization' => 'Настройки',

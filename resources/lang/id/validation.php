@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute hanya boleh berisi huruf, angka, tanda hubung, dan garis bawah.',
     'alpha_num'            => ':attribute hanya boleh berisi huruf dan angka.',
     'array'                => ':attribute harus berupa larik.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'Kode yang diberikan tidak valid atau telah digunakan.',
     'before'               => ':attribute harus tanggal sebelum :date.',
     'between'              => [
         'numeric' => ':attribute harus di antara :min dan :max.',
@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute harus diantara :min dan :max digit.',
     'email'                => ':attrtibute Harus alamat e-mail yang valid.',
     'ends_with' => ':attribute harus diakhiri dengan salah satu dari berikut ini: :values',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => ':attribute harus diberikan sebagai file yang valid.',
     'filled'               => ':attribute bidang diperlukan.',
     'gt'                   => [
         'numeric' => ':attribute harus lebih besar dari :value.',
@@ -100,7 +100,7 @@ return [
     ],
     'string'               => ':attribute harus berupa string.',
     'timezone'             => ':attribute harus menjadi zona yang valid.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'Kode yang diberikan tidak valid atau telah kedaluwarsa.',
     'unique'               => ':attribute sudah diambil.',
     'url'                  => ':attribute format tidak valid.',
     'uploaded'             => 'Berkas tidak dapat diunggah. Server mungkin tidak menerima berkas dengan ukuran ini.',

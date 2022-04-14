@@ -13,7 +13,7 @@ return [
     'page_delete'                 => 'página eliminada',
     'page_delete_notification'    => 'Página excluída com sucesso.',
     'page_restore'                => 'página restaurada',
-    'page_restore_notification'   => 'Imagem restaurada com sucesso',
+    'page_restore_notification'   => 'Página restaurada com sucesso',
     'page_move'                   => 'página movida',
 
     // Chapters
@@ -48,11 +48,11 @@ return [
     'favourite_remove_notification' => '":name" foi removido dos seus favoritos',
 
     // MFA
-    'mfa_setup_method_notification' => 'Método de múltiplos-fatores configurado com sucesso',
-    'mfa_remove_method_notification' => 'Método de múltiplos-fatores removido com sucesso',
+    'mfa_setup_method_notification' => 'Método de autenticação por múltiplos-fatores configurado com sucesso',
+    'mfa_remove_method_notification' => 'Método de autenticação por múltiplos-fatores removido com sucesso',
 
     // Webhooks
-    'webhook_create' => 'criar webhook',
+    'webhook_create' => 'webhook criado',
     'webhook_create_notification' => 'Webhook criado com sucesso',
     'webhook_update' => 'atualizar um webhook',
     'webhook_update_notification' => 'Webhook criado com sucesso',
