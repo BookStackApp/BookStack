@@ -6,15 +6,15 @@
 return [
 
     // Pages
-    'page_create'                 => 'created page',
-    'page_create_notification'    => 'Page successfully created',
-    'page_update'                 => 'updated page',
-    'page_update_notification'    => 'Page successfully updated',
-    'page_delete'                 => 'deleted page',
-    'page_delete_notification'    => 'Page successfully deleted',
-    'page_restore'                => 'restored page',
-    'page_restore_notification'   => 'Page successfully restored',
-    'page_move'                   => 'moved page',
+    'page_create'                 => 'yaratilgan sahifa',
+    'page_create_notification'    => 'Sahifa muvaffaqiyatli yaratildi',
+    'page_update'                 => 'yangilangan sahifa',
+    'page_update_notification'    => 'Sahifa muvaffaqiyatli yangilandi',
+    'page_delete'                 => 'o\'chirilgan sahifa',
+    'page_delete_notification'    => 'Sahifa muvaffaqiyatli o\'chirildi',
+    'page_restore'                => 'tiklangan sahifa',
+    'page_restore_notification'   => 'Sahifa muvaffaqiyatli qayta tiklandi',
+    'page_move'                   => 'ko\'chirilgan sahifa',
 
     // Chapters
     'chapter_create'              => 'created chapter',
