@@ -17,53 +17,53 @@ return [
     'page_move'                   => 'ko\'chirilgan sahifa',
 
     // Chapters
-    'chapter_create'              => 'created chapter',
-    'chapter_create_notification' => 'Chapter successfully created',
-    'chapter_update'              => 'updated chapter',
-    'chapter_update_notification' => 'Chapter successfully updated',
-    'chapter_delete'              => 'deleted chapter',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
-    'chapter_move'                => 'moved chapter',
+    'chapter_create'              => 'yaratilgan bo\'lim',
+    'chapter_create_notification' => 'Bo\'lim muvaffaqiyatli yaratildi',
+    'chapter_update'              => 'yangilangan bo\'lim',
+    'chapter_update_notification' => 'Bo\'lim muvaffaqiyatli yangilandi',
+    'chapter_delete'              => 'o\'chirilgan bo\'lim',
+    'chapter_delete_notification' => 'Bo\'lim muvaffaqiyatli o\'chirildi',
+    'chapter_move'                => 'ko\'chirilgan bo\'lim',
 
     // Books
-    'book_create'                 => 'created book',
-    'book_create_notification'    => 'Book successfully created',
-    'book_update'                 => 'updated book',
-    'book_update_notification'    => 'Book successfully updated',
-    'book_delete'                 => 'deleted book',
-    'book_delete_notification'    => 'Book successfully deleted',
-    'book_sort'                   => 'sorted book',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_create'                 => 'yaratilgan kitob',
+    'book_create_notification'    => 'Kitob muvaffaqiyatli yaratildi',
+    'book_update'                 => 'yangilangan kitob',
+    'book_update_notification'    => 'Kitob muvaffaqiyatli yangilandi',
+    'book_delete'                 => 'o\'chirilgan kitob',
+    'book_delete_notification'    => 'Kitob muvaffaqiyatli o\'chirildi',
+    'book_sort'                   => 'tartiblangan kitob',
+    'book_sort_notification'      => 'Kitob muvaffaqiyatli qayta tartiblandi',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_create'            => 'yaratilgan kitobjavon',
+    'bookshelf_create_notification'    => 'Kitobjavon muvaffaqiyatli yaratildi',
+    'bookshelf_update'                 => 'yangilangan kitobjavob',
+    'bookshelf_update_notification'    => 'Kitobjavon muvaffaqiyatli yangilandi',
+    'bookshelf_delete'                 => 'o\'chirilgan kitobjavon',
+    'bookshelf_delete_notification'    => 'Kitobjavon muvaffaqiyatli o\'chirildi',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" sevimlilaringizga qo\'shildi',
+    'favourite_remove_notification' => '":name" sevimlilaringizdan olib tashlandi',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Multi-faktor uslubi muvaffaqiyatli sozlandi',
+    'mfa_remove_method_notification' => 'Multi-faktor uslubi muvaffaqiyatli o\'chirildi',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'yaratilgan webhook',
+    'webhook_create_notification' => 'Webhook muvaffaqiyatli yaratildi',
+    'webhook_update' => 'yangilangan webhook',
+    'webhook_update_notification' => 'Webhook muvaffaqiyatli yangilandi',
+    'webhook_delete' => 'o\'chirilgan webhook',
+    'webhook_delete_notification' => 'Webhook muvaffaqiyatli o\'chirildi',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Foydalanuvchi muvaffaqiyatli yangilandi',
+    'user_delete_notification' => 'Foydalanuvchi muvaffaqiyatli olib tashlandi',
 
     // Other
-    'commented_on'                => 'commented on',
-    'permissions_update'          => 'updated permissions',
+    'commented_on'                => 'fikr qoldirdi',
+    'permissions_update'          => 'yangilangan huquqlar',
 ];
