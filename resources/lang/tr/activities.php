@@ -36,7 +36,7 @@ return [
     'book_sort_notification'      => 'Kitap başarıyla yeniden sıralandı',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
+    'bookshelf_create'            => 'kitaplık oluşturuldu',
     'bookshelf_create_notification'    => 'Kitaplık başarıyla oluşturuldu',
     'bookshelf_update'                 => 'kitaplığı güncelledi',
     'bookshelf_update_notification'    => 'Kitaplık başarıyla güncellendi',
@@ -48,16 +48,16 @@ return [
     'favourite_remove_notification' => '":name" favorilerinizden çıkarıldı',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Çok aşamalı kimlik doğrulama yöntemi başarıyla yapılandırıldı',
+    'mfa_remove_method_notification' => 'Çok aşamalı kimlik doğrulama yöntemi başarıyla kaldırıldı',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'web kancası oluşturuldu',
+    'webhook_create_notification' => 'Web kancası başarıyla oluşturuldu',
+    'webhook_update' => 'web kancası güncellendi',
+    'webhook_update_notification' => 'Web kancası başarıyla güncellendi',
+    'webhook_delete' => 'web kancası silindi',
+    'webhook_delete_notification' => 'Web kancası başarıyla silindi',
 
     // Users
     'user_update_notification' => 'Kullanıcı başarıyla güncellendi',
