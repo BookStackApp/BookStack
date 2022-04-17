@@ -8,8 +8,8 @@
      @endif
      option:page-editor:editor-type="{{ setting('app-editor') }}"
      option:page-editor:page-id="{{ $model->id ?? '0' }}"
-     option:page-editor:page-new-draft="{{ ($model->draft ?? false) ? 'true' : 'false' }}"
-     option:page-editor:draft-text="{{ ($model->draft || $model->isDraft) ? trans('entities.pages_editing_draft') : trans('entities.pages_editing_page') }}"
+     option:page-editor:page-new-draft="{{ $isDraft ? 'true' : 'false' }}"
+     option:page-editor:draft-text="{{ ($isDraft || $isDraftRevision) ? trans('entities.pages_editing_draft') : trans('entities.pages_editing_page') }}"
      option:page-editor:autosave-fail-text="{{ trans('errors.page_draft_autosave_fail') }}"
      option:page-editor:editing-page-text="{{ trans('entities.pages_editing_page') }}"
      option:page-editor:draft-discarded-text="{{ trans('entities.pages_draft_discarded') }}"
@@ -20,7 +20,7 @@
         <div class="grid third no-break v-center">
 
             <div class="action-buttons text-left px-m py-xs">
-                <a href="{{ $page->draft ? $page->getParent()->getUrl() : $page->getUrl() }}"
+                <a href="{{ $isDraft ? $page->getParent()->getUrl() : $page->getUrl() }}"
                    class="text-button text-primary">@icon('back')<span class="hide-under-l">{{ trans('common.back') }}</span></a>
             </div>
 
@@ -34,20 +34,19 @@
                         <li>
                             <button refs="page-editor@saveDraft" type="button" class="text-pos">@icon('save'){{ trans('entities.pages_edit_save_draft') }}</button>
                         </li>
-                        @if ($model->draft)
+                        @if($isDraft)
                         <li>
                             <a href="{{ $model->getUrl('/delete') }}" class="text-neg">@icon('delete'){{ trans('entities.pages_edit_delete_draft') }}</a>
                         </li>
                         @endif
-                        <li refs="page-editor@discardDraftWrap" class="{{ ($model->isDraft ?? false) ? '' : 'hidden' }}">
+                        <li refs="page-editor@discardDraftWrap" class="{{ $isDraft ? '' : 'hidden' }}">
                             <button refs="page-editor@discardDraft" type="button" class="text-neg">@icon('cancel'){{ trans('entities.pages_edit_discard_draft') }}</button>
                         </li>
                         @if(userCan('editor-change'))
                             <li>
-                                <button refs="page-editor@swapEditor" type="button">
-                                    @icon('swap-horizontal')
-                                    {{ $editor === 'wysiwyg' ? trans('entities.pages_edit_switch_to_markdown') : trans('entities.pages_edit_switch_to_wysiwyg') }}
-                                </button>
+                                <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor={{ $editor === 'wysiwyg' ? 'markdown' : 'wysiwyg' }}">
+                                    @icon('swap-horizontal'){{ $editor === 'wysiwyg' ? trans('entities.pages_edit_switch_to_markdown') : trans('entities.pages_edit_switch_to_wysiwyg') }}
+                                </a>
                             </li>
                         @endif
                     </ul>
