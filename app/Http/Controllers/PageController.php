@@ -97,6 +97,7 @@ class PageController extends Controller
             'isDraft'       => true,
             'draftsEnabled' => $draftsEnabled,
             'templates'     => $templates,
+            'editor'        =>  setting('app-editor') === 'wysiwyg' ? 'wysiwyg' : 'markdown',
         ]);
     }
 
@@ -224,6 +225,7 @@ class PageController extends Controller
             'current'       => $page,
             'draftsEnabled' => $draftsEnabled,
             'templates'     => $templates,
+            'editor'        =>  setting('app-editor') === 'wysiwyg' ? 'wysiwyg' : 'markdown',
         ]);
     }
 
