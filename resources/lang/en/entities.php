@@ -196,6 +196,8 @@ return [
     'pages_edit_draft_save_at' => 'Draft saved at ',
     'pages_edit_delete_draft' => 'Delete Draft',
     'pages_edit_discard_draft' => 'Discard Draft',
+    'pages_edit_switch_to_markdown' => 'Switch to Markdown editor',
+    'pages_edit_switch_to_wysiwyg' => 'Switch to WYSIWYG editor',
     'pages_edit_set_changelog' => 'Set Changelog',
     'pages_edit_enter_changelog_desc' => 'Enter a brief description of the changes you\'ve made',
     'pages_edit_enter_changelog' => 'Enter Changelog',

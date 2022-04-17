@@ -42,6 +42,14 @@
                         <li refs="page-editor@discardDraftWrap" class="{{ ($model->isDraft ?? false) ? '' : 'hidden' }}">
                             <button refs="page-editor@discardDraft" type="button" class="text-neg">@icon('cancel'){{ trans('entities.pages_edit_discard_draft') }}</button>
                         </li>
+                        @if(userCan('editor-change'))
+                            <li>
+                                <button refs="page-editor@swapEditor" type="button">
+                                    @icon('swap-horizontal')
+                                    {{ $editor === 'wysiwyg' ? trans('entities.pages_edit_switch_to_markdown') : trans('entities.pages_edit_switch_to_wysiwyg') }}
+                                </button>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -78,12 +86,12 @@
     <div class="edit-area flex-fill flex">
 
         {{--WYSIWYG Editor--}}
-        @if(setting('app-editor') === 'wysiwyg')
+        @if($editor === 'wysiwyg')
             @include('pages.parts.wysiwyg-editor', ['model' => $model])
         @endif
 
         {{--Markdown Editor--}}
-        @if(setting('app-editor') === 'markdown')
+        @if($editor === 'markdown')
             @include('pages.parts.markdown-editor', ['model' => $model])
         @endif
 
