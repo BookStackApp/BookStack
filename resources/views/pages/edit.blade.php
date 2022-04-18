@@ -8,7 +8,7 @@
         <form action="{{ $page->getUrl() }}" autocomplete="off" data-page-id="{{ $page->id }}" method="POST" class="flex flex-fill">
             {{ csrf_field() }}
 
-            @if($isDraft) {{ method_field('PUT') }} @endif
+            @if(!$isDraft) {{ method_field('PUT') }} @endif
             @include('pages.parts.form', ['model' => $page])
             @include('pages.parts.editor-toolbox')
         </form>

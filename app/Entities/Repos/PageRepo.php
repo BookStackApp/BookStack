@@ -260,10 +260,15 @@ class PageRepo
             return $page;
         }
 
-        // Otherwise save the data to a revision
+        // Otherwise, save the data to a revision
         $draft = $this->getPageRevisionToUpdate($page);
         $draft->fill($input);
-        if (setting('app-editor') !== 'markdown') {
+
+        if (!empty($input['markdown'])) {
+            $draft->markdown = $input['markdown'];
+            $draft->html = '';
+        } else {
+            $draft->html = $input['html'];
             $draft->markdown = '';
         }
 

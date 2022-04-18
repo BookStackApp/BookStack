@@ -83,12 +83,12 @@ class PageController extends Controller
      *
      * @throws NotFoundException
      */
-    public function editDraft(string $bookSlug, int $pageId)
+    public function editDraft(Request $request, string $bookSlug, int $pageId)
     {
         $draft = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-create', $draft->getParent());
 
-        $editorData = new PageEditorData($draft, $this->pageRepo);
+        $editorData = new PageEditorData($draft, $this->pageRepo, $request->query('editor', ''));
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
         return view('pages.edit', $editorData->getViewData());
@@ -182,12 +182,12 @@ class PageController extends Controller
      *
      * @throws NotFoundException
      */
-    public function edit(string $bookSlug, string $pageSlug)
+    public function edit(Request $request, string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
 
-        $editorData = new PageEditorData($page, $this->pageRepo);
+        $editorData = new PageEditorData($page, $this->pageRepo, $request->query('editor', ''));
         if ($editorData->getWarnings()) {
             $this->showWarningNotification(implode("\n", $editorData->getWarnings()));
         }
