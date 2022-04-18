@@ -6,7 +6,7 @@
      @if($model->name === trans('entities.pages_initial_name'))
         option:page-editor:has-default-title="true"
      @endif
-     option:page-editor:editor-type="{{ setting('app-editor') }}"
+     option:page-editor:editor-type="{{ $editor }}"
      option:page-editor:page-id="{{ $model->id ?? '0' }}"
      option:page-editor:page-new-draft="{{ $isDraft ? 'true' : 'false' }}"
      option:page-editor:draft-text="{{ ($isDraft || $isDraftRevision) ? trans('entities.pages_editing_draft') : trans('entities.pages_editing_page') }}"

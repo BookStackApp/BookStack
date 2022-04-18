@@ -21,7 +21,7 @@ use League\HTMLToMarkdown\HtmlConverter;
 
 class HtmlToMarkdown
 {
-    protected $html;
+    protected string $html;
 
     public function __construct(string $html)
     {

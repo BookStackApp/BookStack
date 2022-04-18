@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class PageRevision extends Model
 {
-    protected $fillable = ['name', 'html', 'text', 'markdown', 'summary'];
+    protected $fillable = ['name', 'text', 'summary'];
     protected $hidden = ['html', 'markdown', 'restricted', 'text'];
 
     /**
