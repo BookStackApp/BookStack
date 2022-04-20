@@ -120,6 +120,11 @@
     width: 800px;
     max-width: 90%;
   }
+  &.very-small {
+    margin: 2% auto;
+    width: 600px;
+    max-width: 90%;
+  }
   &:before {
     display: flex;
     align-self: flex-start;
