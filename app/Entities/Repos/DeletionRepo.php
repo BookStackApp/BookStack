@@ -21,6 +21,7 @@ class DeletionRepo
         /** @var Deletion $deletion */
         $deletion = Deletion::query()->findOrFail($id);
         Activity::add(ActivityType::RECYCLE_BIN_RESTORE, $deletion);
+
         return $this->trashCan->restoreFromDeletion($deletion);
     }
 
@@ -29,6 +30,7 @@ class DeletionRepo
         /** @var Deletion $deletion */
         $deletion = Deletion::query()->findOrFail($id);
         Activity::add(ActivityType::RECYCLE_BIN_DESTROY, $deletion);
+
         return $this->trashCan->destroyFromDeletion($deletion);
     }
 }
