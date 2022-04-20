@@ -42,7 +42,6 @@ class ConfirmDialog {
      */
     sendResult(result) {
         if (this.res) {
-            console.log('sending result', result);
             this.res(result)
             this.res = null;
         }
