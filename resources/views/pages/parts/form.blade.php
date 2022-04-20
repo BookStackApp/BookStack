@@ -40,8 +40,24 @@
 
     </div>
 
+    {{--Mobile Save Button--}}
     <button type="submit"
             id="save-button-mobile"
             title="{{ trans('entities.pages_save') }}"
             class="text-primary text-button hide-over-m page-save-mobile-button">@icon('save')</button>
+
+    {{--Editor Change Dialog--}}
+    @component('common.confirm-dialog', ['title' => trans('entities.pages_editor_switch_title'), 'ref' => 'page-editor@switchDialog'])
+        <p>
+            {{ trans('entities.pages_editor_switch_are_you_sure') }}
+            <br>
+            {{ trans('entities.pages_editor_switch_consider_following') }}
+        </p>
+
+        <ul>
+            <li>{{ trans('entities.pages_editor_switch_consideration_a') }}</li>
+            <li>{{ trans('entities.pages_editor_switch_consideration_b') }}</li>
+            <li>{{ trans('entities.pages_editor_switch_consideration_c') }}</li>
+        </ul>
+    @endcomponent
 </div>

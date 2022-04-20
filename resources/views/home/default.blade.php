@@ -17,6 +17,22 @@
         </div>
     </div>
 
+    @component('common.confirm-dialog', ['title' => 'Destroy Dogs'])
+        <p>Are you sure you want to do this thingy?</p>
+        <ul>
+            <li>This could be bad</li>
+            <li>This could be very bad</li>
+            <li>This might be very bad</li>
+        </ul>
+    @endcomponent
+
+    <script nonce="{{ $cspNonce }}">
+        setTimeout(async () => {
+            const result = await window.components["confirm-dialog"][0].show();
+            console.log({result});
+        }, 1000);
+    </script>
+
     <div class="container" id="home-default">
         <div class="grid third gap-xxl no-row-gap" >
             <div>

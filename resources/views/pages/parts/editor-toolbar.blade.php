@@ -36,7 +36,7 @@
                     @if(userCan('editor-change'))
                         <li>
                             @if($editor === 'wysiwyg')
-                                <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-clean" class="icon-item">
+                                <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-clean" refs="page-editor@changeEditor" class="icon-item">
                                     @icon('swap-horizontal')
                                     <div>
                                         {{ trans('entities.pages_edit_switch_to_markdown') }}
@@ -44,7 +44,7 @@
                                         <small>{{ trans('entities.pages_edit_switch_to_markdown_clean') }}</small>
                                     </div>
                                 </a>
-                                <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-stable" class="icon-item">
+                                <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-stable" refs="page-editor@changeEditor" class="icon-item">
                                     @icon('swap-horizontal')
                                     <div>
                                         {{ trans('entities.pages_edit_switch_to_markdown') }}
@@ -53,7 +53,7 @@
                                     </div>
                                 </a>
                             @else
-                                <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=wysiwyg" class="icon-item">
+                                <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=wysiwyg" refs="page-editor@changeEditor" class="icon-item">
                                     @icon('swap-horizontal')
                                     <div>{{ trans('entities.pages_edit_switch_to_wysiwyg') }}</div>
                                 </a>
