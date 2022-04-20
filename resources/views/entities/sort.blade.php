@@ -16,7 +16,7 @@
                 <div refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('common.sort_options') }}" tabindex="0">{{ $options[$selectedSort] }}</div>
                 <ul refs="dropdown@menu" class="dropdown-menu">
                     @foreach($options as $key => $label)
-                        <li @if($key === $selectedSort) class="active" @endif><a href="#" data-sort-value="{{$key}}">{{ $label }}</a></li>
+                        <li @if($key === $selectedSort) class="active" @endif><a href="#" data-sort-value="{{$key}}" class="text-item">{{ $label }}</a></li>
                     @endforeach
                 </ul>
             </div>

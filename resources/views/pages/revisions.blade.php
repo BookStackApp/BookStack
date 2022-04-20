@@ -58,7 +58,10 @@
                                                 <form action="{{ $revision->getUrl('/restore') }}" method="POST">
                                                     {!! csrf_field() !!}
                                                     <input type="hidden" name="_method" value="PUT">
-                                                    <button type="submit" class="text-button text-primary">@icon('history'){{ trans('entities.pages_revisions_restore') }}</button>
+                                                    <button type="submit" class="text-primary icon-item">
+                                                        @icon('history')
+                                                        <div>{{ trans('entities.pages_revisions_restore') }}</div>
+                                                    </button>
                                                 </form>
                                             </li>
                                         </ul>
@@ -72,7 +75,10 @@
                                                 <form action="{{ $revision->getUrl('/delete/') }}" method="POST">
                                                     {!! csrf_field() !!}
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="text-button text-neg">@icon('delete'){{ trans('common.delete') }}</button>
+                                                    <button type="submit" class="text-neg icon-item">
+                                                        @icon('delete')
+                                                        <div>{{ trans('common.delete') }}</div>
+                                                    </button>
                                                 </form>
                                             </li>
                                         </ul>

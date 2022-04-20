@@ -163,7 +163,6 @@ em, i, .italic {
 
 small, p.small, span.small, .text-small {
   font-size: 0.75rem;
-  @include lightDark(color, #5e5e5e, #999);
 }
 
 sup, .superscript {

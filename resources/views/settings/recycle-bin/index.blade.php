@@ -22,7 +22,7 @@
 
                             <form action="{{ url('/settings/recycle-bin/empty') }}" method="POST">
                                 {!! csrf_field() !!}
-                                <button type="submit" class="text-primary small delete">{{ trans('common.confirm') }}</button>
+                                <button type="submit" class="text-primary small delete text-item">{{ trans('common.confirm') }}</button>
                             </form>
                         </div>
                     </div>
@@ -93,8 +93,8 @@
                         <div component="dropdown" class="dropdown-container">
                             <button type="button" refs="dropdown@toggle" class="button outline">{{ trans('common.actions') }}</button>
                             <ul refs="dropdown@menu" class="dropdown-menu">
-                                <li><a class="block" href="{{ $deletion->getUrl('/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
-                                <li><a class="block" href="{{ $deletion->getUrl('/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
+                                <li><a class="text-item" href="{{ $deletion->getUrl('/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
+                                <li><a class="text-item" href="{{ $deletion->getUrl('/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
                             </ul>
                         </div>
                     </td>
