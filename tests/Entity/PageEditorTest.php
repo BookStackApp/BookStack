@@ -178,4 +178,29 @@ class PageEditorTest extends TestCase
         $resp->assertElementNotExists("a[href*=\"${editLink}\"]");
     }
 
+    public function test_page_editor_type_switch_does_not_work_without_change_editor_permissions()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->html = '<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>';
+        $page->save();
+
+        $resp = $this->asEditor()->get($page->getUrl('/edit?editor=markdown-stable'));
+        $resp->assertStatus(200);
+        $resp->assertElementExists('[component="wysiwyg-editor"]');
+        $resp->assertElementNotExists('[component="markdown-editor"]');
+    }
+
+    public function test_page_save_does_not_change_active_editor_without_change_editor_permissions()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->html = '<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>';
+        $page->editor = 'wysiwyg';
+        $page->save();
+
+        $this->asEditor()->put($page->getUrl(), ['name' => $page->name, 'markdown' => '## Updated content abc']);
+        $this->assertEquals('wysiwyg', $page->refresh()->editor);
+    }
+
 }
