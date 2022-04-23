@@ -18,36 +18,39 @@ class PageEditorTest extends TestCase
         $this->page = Page::query()->first();
     }
 
-    public function test_default_editor_is_wysiwyg()
+    public function test_default_editor_is_wysiwyg_for_new_pages()
     {
         $this->assertEquals('wysiwyg', setting('app-editor'));
-        $this->asAdmin()->get($this->page->getUrl() . '/edit')
-            ->assertElementExists('#html-editor');
+        $resp = $this->asAdmin()->get($this->page->book->getUrl('/create-page'));
+        $this->followRedirects($resp)->assertElementExists('#html-editor');
     }
 
-    public function test_markdown_setting_shows_markdown_editor()
+    public function test_markdown_setting_shows_markdown_editor_for_new_pages()
     {
         $this->setSettings(['app-editor' => 'markdown']);
-        $this->asAdmin()->get($this->page->getUrl() . '/edit')
+
+        $resp = $this->asAdmin()->get($this->page->book->getUrl('/create-page'));
+        $this->followRedirects($resp)
             ->assertElementNotExists('#html-editor')
             ->assertElementExists('#markdown-editor');
     }
 
     public function test_markdown_content_given_to_editor()
     {
-        $this->setSettings(['app-editor' => 'markdown']);
-
         $mdContent = '# hello. This is a test';
         $this->page->markdown = $mdContent;
+        $this->page->editor = 'markdown';
         $this->page->save();
 
-        $this->asAdmin()->get($this->page->getUrl() . '/edit')
+        $this->asAdmin()->get($this->page->getUrl('/edit'))
             ->assertElementContains('[name="markdown"]', $mdContent);
     }
 
     public function test_html_content_given_to_editor_if_no_markdown()
     {
-        $this->setSettings(['app-editor' => 'markdown']);
+        $this->page->editor = 'markdown';
+        $this->page->save();
+
         $this->asAdmin()->get($this->page->getUrl() . '/edit')
             ->assertElementContains('[name="markdown"]', $this->page->html);
     }
@@ -143,44 +146,35 @@ class PageEditorTest extends TestCase
         $resp->assertSee("<h2>A Header</h2>\n<p>Some content with <strong>bold</strong> text!</p>", true);
     }
 
-    public function test_page_editor_depends_on_content_type()
+    public function test_page_editor_changes_with_editor_property()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
-
-        $resp = $this->asAdmin()->get($page->getUrl('/edit'));
+        $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
         $resp->assertElementExists('[component="wysiwyg-editor"]');
 
-        $page->html = '';
-        $page->markdown = "## A Header\n\nSome content with **bold** text!";
-        $page->save();
+        $this->page->markdown = "## A Header\n\nSome content with **bold** text!";
+        $this->page->editor = 'markdown';
+        $this->page->save();
 
-        $resp = $this->asAdmin()->get($page->getUrl('/edit'));
+        $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
         $resp->assertElementExists('[component="markdown-editor"]');
     }
 
     public function test_editor_type_switch_options_show()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
-
-        $resp = $this->asAdmin()->get($page->getUrl('/edit'));
-        $editLink = $page->getUrl('/edit') . '?editor=';
+        $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
+        $editLink = $this->page->getUrl('/edit') . '?editor=';
         $resp->assertElementContains("a[href=\"${editLink}markdown-clean\"]", '(Clean Content)');
         $resp->assertElementContains("a[href=\"${editLink}markdown-stable\"]", '(Stable Content)');
 
-        $resp = $this->asAdmin()->get($page->getUrl('/edit?editor=markdown-stable'));
-        $editLink = $page->getUrl('/edit') . '?editor=';
+        $resp = $this->asAdmin()->get($this->page->getUrl('/edit?editor=markdown-stable'));
+        $editLink = $this->page->getUrl('/edit') . '?editor=';
         $resp->assertElementContains("a[href=\"${editLink}wysiwyg\"]", 'Switch to WYSIWYG Editor');
     }
 
     public function test_editor_type_switch_options_dont_show_if_without_change_editor_permissions()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
-
-        $resp = $this->asEditor()->get($page->getUrl('/edit'));
-        $editLink = $page->getUrl('/edit') . '?editor=';
+        $resp = $this->asEditor()->get($this->page->getUrl('/edit'));
+        $editLink = $this->page->getUrl('/edit') . '?editor=';
         $resp->assertElementNotExists("a[href*=\"${editLink}\"]");
     }
 
