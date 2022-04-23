@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property mixed  $id
  * @property int    $page_id
+ * @property string $name
  * @property string $slug
  * @property string $book_slug
  * @property int    $created_by
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $summary
  * @property string $markdown
  * @property string $html
+ * @property string $text
  * @property int    $revision_number
  * @property Page   $page
  * @property-read ?User $createdBy

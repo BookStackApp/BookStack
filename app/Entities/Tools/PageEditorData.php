@@ -94,10 +94,7 @@ class PageEditorData
      */
     protected function getEditorType(Page $page): string
     {
-        $emptyPage = empty($page->html) && empty($page->markdown);
-        $pageType = (!empty($page->html) && empty($page->markdown)) ? 'wysiwyg' : 'markdown';
-        $systemDefault = setting('app-editor') === 'wysiwyg' ? 'wysiwyg' : 'markdown';
-        $editorType = $emptyPage ? $systemDefault : $pageType;
+        $editorType = $page->editor ?: self::getSystemDefaultEditor();
 
         // Use requested editor if valid and if we have permission
         $requestedType = explode('-', $this->requestedEditor)[0];
@@ -106,6 +103,14 @@ class PageEditorData
         }
 
         return $editorType;
+    }
+
+    /**
+     * Get the configured system default editor.
+     */
+    public static function getSystemDefaultEditor(): string
+    {
+        return setting('app-editor') === 'markdown' ? 'markdown' : 'wysiwyg';
     }
 
 }
