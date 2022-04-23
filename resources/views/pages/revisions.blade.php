@@ -21,26 +21,39 @@
 
                 <table class="table">
                     <tr>
-                        <th width="3%">{{ trans('entities.pages_revisions_number') }}</th>
-                        <th width="23%">{{ trans('entities.pages_name') }}</th>
-                        <th colspan="2" width="8%">{{ trans('entities.pages_revisions_created_by') }}</th>
-                        <th width="15%">{{ trans('entities.pages_revisions_date') }}</th>
-                        <th width="25%">{{ trans('entities.pages_revisions_changelog') }}</th>
-                        <th width="20%">{{ trans('common.actions') }}</th>
+                        <th width="40">{{ trans('entities.pages_revisions_number') }}</th>
+                        <th>
+                            {{ trans('entities.pages_name') }} / {{ trans('entities.pages_revisions_editor') }}
+                        </th>
+                        <th colspan="2">{{ trans('entities.pages_revisions_created_by') }} / {{ trans('entities.pages_revisions_date') }}</th>
+                        <th>{{ trans('entities.pages_revisions_changelog') }}</th>
+                        <th class="text-right">{{ trans('common.actions') }}</th>
                     </tr>
                     @foreach($page->revisions as $index => $revision)
                         <tr>
                             <td>{{ $revision->revision_number == 0 ? '' : $revision->revision_number }}</td>
-                            <td>{{ $revision->name }}</td>
-                            <td style="line-height: 0;">
+                            <td>
+                                {{ $revision->name }}
+                                <br>
+                                <small class="text-muted">({{ $revision->markdown ? 'Markdown' : 'WYSIWYG' }})</small>
+                            </td>
+                            <td style="line-height: 0;" width="30">
                                 @if($revision->createdBy)
                                     <img class="avatar" src="{{ $revision->createdBy->getAvatar(30) }}" alt="{{ $revision->createdBy->name }}">
                                 @endif
                             </td>
-                            <td> @if($revision->createdBy) {{ $revision->createdBy->name }} @else {{ trans('common.deleted_user') }} @endif</td>
-                            <td><small>{{ $revision->created_at->formatLocalized('%e %B %Y %H:%M:%S') }} <br> ({{ $revision->created_at->diffForHumans() }})</small></td>
-                            <td>{{ $revision->summary }}</td>
-                            <td class="actions">
+                            <td width="260">
+                                @if($revision->createdBy) {{ $revision->createdBy->name }} @else {{ trans('common.deleted_user') }} @endif
+                                    <br>
+                                <div class="text-muted">
+                                    <small>{{ $revision->created_at->formatLocalized('%e %B %Y %H:%M:%S') }}</small>
+                                    <small>({{ $revision->created_at->diffForHumans() }})</small>
+                                </div>
+                            </td>
+                            <td>
+                                {{ $revision->summary }}
+                            </td>
+                            <td class="actions text-small text-right">
                                 <a href="{{ $revision->getUrl('changes') }}" target="_blank" rel="noopener">{{ trans('entities.pages_revisions_changes') }}</a>
                                 <span class="text-muted">&nbsp;|&nbsp;</span>
 

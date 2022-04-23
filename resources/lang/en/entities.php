@@ -235,6 +235,7 @@ return [
     'pages_revisions_number' => '#',
     'pages_revisions_numbered' => 'Revision #:id',
     'pages_revisions_numbered_changes' => 'Revision #:id Changes',
+    'pages_revisions_editor' => 'Editor Type',
     'pages_revisions_changelog' => 'Changelog',
     'pages_revisions_changes' => 'Changes',
     'pages_revisions_current' => 'Current Version',
