@@ -102,4 +102,86 @@ class PageEditorTest extends TestCase
         $resp = $this->get($draft->getUrl('/edit'));
         $resp->assertElementContains('a[href="' . $draft->getUrl() . '"]', 'Back');
     }
+
+    public function test_switching_from_html_to_clean_markdown_works()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->html = '<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>';
+        $page->save();
+
+        $resp = $this->asAdmin()->get($page->getUrl('/edit?editor=markdown-clean'));
+        $resp->assertStatus(200);
+        $resp->assertSee("## A Header\n\nSome **bold** content.");
+        $resp->assertElementExists('#markdown-editor');
+    }
+
+    public function test_switching_from_html_to_stable_markdown_works()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->html = '<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>';
+        $page->save();
+
+        $resp = $this->asAdmin()->get($page->getUrl('/edit?editor=markdown-stable'));
+        $resp->assertStatus(200);
+        $resp->assertSee("<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>", true);
+        $resp->assertElementExists('[component="markdown-editor"]');
+    }
+
+    public function test_switching_from_markdown_to_wysiwyg_works()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $page->html = '';
+        $page->markdown = "## A Header\n\nSome content with **bold** text!";
+        $page->save();
+
+        $resp = $this->asAdmin()->get($page->getUrl('/edit?editor=wysiwyg'));
+        $resp->assertStatus(200);
+        $resp->assertElementExists('[component="wysiwyg-editor"]');
+        $resp->assertSee("<h2>A Header</h2>\n<p>Some content with <strong>bold</strong> text!</p>", true);
+    }
+
+    public function test_page_editor_depends_on_content_type()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $resp = $this->asAdmin()->get($page->getUrl('/edit'));
+        $resp->assertElementExists('[component="wysiwyg-editor"]');
+
+        $page->html = '';
+        $page->markdown = "## A Header\n\nSome content with **bold** text!";
+        $page->save();
+
+        $resp = $this->asAdmin()->get($page->getUrl('/edit'));
+        $resp->assertElementExists('[component="markdown-editor"]');
+    }
+
+    public function test_editor_type_switch_options_show()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $resp = $this->asAdmin()->get($page->getUrl('/edit'));
+        $editLink = $page->getUrl('/edit') . '?editor=';
+        $resp->assertElementContains("a[href=\"${editLink}markdown-clean\"]", '(Clean Content)');
+        $resp->assertElementContains("a[href=\"${editLink}markdown-stable\"]", '(Stable Content)');
+
+        $resp = $this->asAdmin()->get($page->getUrl('/edit?editor=markdown-stable'));
+        $editLink = $page->getUrl('/edit') . '?editor=';
+        $resp->assertElementContains("a[href=\"${editLink}wysiwyg\"]", 'Switch to WYSIWYG Editor');
+    }
+
+    public function test_editor_type_switch_options_dont_show_if_without_change_editor_permissions()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $resp = $this->asEditor()->get($page->getUrl('/edit'));
+        $editLink = $page->getUrl('/edit') . '?editor=';
+        $resp->assertElementNotExists("a[href*=\"${editLink}\"]");
+    }
+
 }
