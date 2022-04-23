@@ -17,15 +17,6 @@
         </div>
     </div>
 
-    @component('common.confirm-dialog', ['title' => 'Destroy Dogs'])
-        <p>Are you sure you want to do this thingy?</p>
-        <ul>
-            <li>This could be bad</li>
-            <li>This could be very bad</li>
-            <li>This might be very bad</li>
-        </ul>
-    @endcomponent
-
     <script nonce="{{ $cspNonce }}">
         setTimeout(async () => {
             const result = await window.components["confirm-dialog"][0].show();
