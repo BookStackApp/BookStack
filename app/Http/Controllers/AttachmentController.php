@@ -15,8 +15,8 @@ use Illuminate\Validation\ValidationException;
 
 class AttachmentController extends Controller
 {
-    protected $attachmentService;
-    protected $pageRepo;
+    protected AttachmentService $attachmentService;
+    protected PageRepo $pageRepo;
 
     /**
      * AttachmentController constructor.
@@ -230,13 +230,13 @@ class AttachmentController extends Controller
         }
 
         $fileName = $attachment->getFileName();
-        $attachmentContents = $this->attachmentService->getAttachmentFromStorage($attachment);
+        $attachmentStream = $this->attachmentService->streamAttachmentFromStorage($attachment);
 
         if ($request->get('open') === 'true') {
-            return $this->inlineDownloadResponse($attachmentContents, $fileName);
+            return $this->streamedInlineDownloadResponse($attachmentStream, $fileName);
         }
 
-        return $this->downloadResponse($attachmentContents, $fileName);
+        return $this->streamedDownloadResponse($attachmentStream, $fileName);
     }
 
     /**

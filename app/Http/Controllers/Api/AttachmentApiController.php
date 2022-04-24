@@ -87,14 +87,32 @@ class AttachmentApiController extends ApiController
             'markdown' => $attachment->markdownLink(),
         ]);
 
-        if (!$attachment->external) {
-            $attachmentContents = $this->attachmentService->getAttachmentFromStorage($attachment);
-            $attachment->setAttribute('content', base64_encode($attachmentContents));
-        } else {
+        // Simply return a JSON response of the attachment for link-based attachments
+        if ($attachment->external) {
             $attachment->setAttribute('content', $attachment->path);
+            return response()->json($attachment);
         }
 
-        return response()->json($attachment);
+        // Build and split our core JSON, at point of content.
+        $splitter = 'CONTENT_SPLIT_LOCATION_' . time() . '_' . rand(1, 40000);
+        $attachment->setAttribute('content', $splitter);
+        $json = $attachment->toJson();
+        $jsonParts = explode($splitter, $json);
+        // Get a stream for the file data from storage
+        $stream = $this->attachmentService->streamAttachmentFromStorage($attachment);
+
+        return response()->stream(function () use ($jsonParts, $stream) {
+            // Output the pre-content JSON data
+            echo $jsonParts[0];
+
+            // Stream out our attachment data as base64 content
+            stream_filter_append($stream, 'convert.base64-encode', STREAM_FILTER_READ);
+            fpassthru($stream);
+            fclose($stream);
+
+            // Output our post-content JSON data
+            echo $jsonParts[1];
+        }, 200, ['Content-Type' => 'application/json']);
     }
 
     /**
