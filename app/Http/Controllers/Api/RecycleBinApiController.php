@@ -2,14 +2,16 @@
 
 namespace BookStack\Http\Controllers\Api;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Repos\DeletionRepo;
 use Closure;
 
 class RecycleBinApiController extends ApiController
 {
+    protected $fieldsToExpose = [
+        'id', 'deleted_by', 'created_at', 'updated_at', 'deletable_type', 'deletable_id',
+    ];
+
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -20,9 +22,13 @@ class RecycleBinApiController extends ApiController
         });
     }
 
+    /**
+     * Get a top-level listing of the items in the recycle bin.
+     * Requires the permission to manage settings and restrictions.
+     */
     public function list()
     {
-        return $this->apiListingResponse(Deletion::query(), [
+        return $this->apiListingResponse(Deletion::query()->with('deletable'), [
             'id',
             'deleted_by',
             'created_at',
@@ -32,6 +38,10 @@ class RecycleBinApiController extends ApiController
         ], [Closure::fromCallable([$this, 'listFormatter'])]);
     }
 
+    /**
+     * Restore a single deletion from the recycle bin.
+     * You must provide the deletion id, not the id of the corresponding deleted item.
+     */
     public function restore(DeletionRepo $deletionRepo, string $id)
     {
         $restoreCount = $deletionRepo->restore((int) $id);
@@ -39,6 +49,11 @@ class RecycleBinApiController extends ApiController
         return response()->json(['restore_count' => $restoreCount]);
     }
 
+    /**
+     * Remove a single deletion from the recycle bin.
+     * Use this endpoint carefully as it will entirely remove the underlying deleted items from the system.
+     * You must provide the deletion id, not the id of the corresponding deleted item.
+     */
     public function destroy(DeletionRepo $deletionRepo, string $id)
     {
         $deleteCount = $deletionRepo->destroy((int) $id);
@@ -48,23 +63,26 @@ class RecycleBinApiController extends ApiController
 
     protected function listFormatter(Deletion $deletion)
     {
+        $deletion->makeVisible($this->fieldsToExpose);
+        $deletion->makeHidden('deletable');
+
         $deletable = $deletion->deletable;
-        $isBook = $deletable instanceof Book;
+        $isBook = $deletion->deletable_type === "BookStack\Book";
         $parent = null;
         $children = null;
 
         if ($isBook) {
-            $chapterCount = $deletable->chapters()->withTrashed()->count();       
-            $children['Bookstack\Chapter'] = $chapterCount;
+            $chapterCount = $deletable->chapters()->withTrashed()->count();
+            $children['BookStack\Chapter'] = $chapterCount;
         }
 
-        if ($isBook || $deletion->deletable instanceof Chapter) {
-            $pageCount = $deletable->pages()->withTrashed()->count();     
-            $children['Bookstack\Page'] = $pageCount;
+        if ($isBook || $deletion->deletable_type === "BookStack\Chapter") {
+            $pageCount = $deletable->pages()->withTrashed()->count();
+            $children['BookStack\Page'] = $pageCount;
         }
 
         $parentEntity = $deletable->getParent();
-        $parent = [];
+        $parent = null;
 
         if ($parentEntity) {
             $parent['type'] = $parentEntity->getMorphClass();

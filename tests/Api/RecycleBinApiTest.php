@@ -33,12 +33,12 @@ class RecycleBinApiTest extends TestCase
         }
     }
 
-    public function test_restrictions_manage_all_permission_neeed_for_all_endpoints()
+    public function test_restrictions_manage_all_permission_needed_for_all_endpoints()
     {
         $editor = $this->getEditor();
         $this->giveUserPermissions($editor, ['restrictions-manage-all']);
         $this->actingAs($editor);
-        
+
         foreach ($this->endpointMap as [$method, $uri]) {
             $resp = $this->json($method, $uri);
             $resp->assertStatus(403);
@@ -74,7 +74,7 @@ class RecycleBinApiTest extends TestCase
             });
 
         $resp->assertJson([
-            'data' => $expectedData->values()->all(), 
+            'data'  => $expectedData->values()->all(),
             'total' => 2,
         ]);
     }
@@ -82,7 +82,7 @@ class RecycleBinApiTest extends TestCase
     public function test_index_endpoint_returns_children()
     {
         $this->actingAsAuthorizedUser();
-        
+
         $book = Book::query()->whereHas('pages')->whereHas('chapters')->withCount(['pages', 'chapters'])->first();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($book->getUrl());
@@ -100,15 +100,15 @@ class RecycleBinApiTest extends TestCase
                 'deletable_type'    => $book->getMorphClass(),
                 'deletable_id'      => $book->getKey(),
                 'children'          => [
-                    'Bookstack\Page'    => $book->pages_count,
-                    'Bookstack\Chapter' => $book->chapters_count,
+                    'BookStack\Page'    => $book->pages_count,
+                    'BookStack\Chapter' => $book->chapters_count,
                 ],
                 'parent' => null,
-            ]
+            ],
         ];
 
         $resp->assertJson([
-            'data' => $expectedData, 
+            'data'  => $expectedData,
             'total' => 1,
         ]);
     }
@@ -136,22 +136,22 @@ class RecycleBinApiTest extends TestCase
                 'deletable_id'      => $page->getKey(),
                 'parent'            => [
                     'type'  => 'BookStack\Chapter',
-                    'id'    => $page->chapter->getKey()
+                    'id'    => $page->chapter->getKey(),
                 ],
                 'children' => null,
-            ]
+            ],
         ];
 
         $resp->assertJson([
-            'data' => $expectedData, 
-            'total' => 1
+            'data'  => $expectedData,
+            'total' => 1,
         ]);
     }
 
     public function test_restore_endpoint()
     {
         $this->actingAsAuthorizedUser();
-        
+
         $page = Page::query()->first();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
@@ -160,22 +160,22 @@ class RecycleBinApiTest extends TestCase
         $deletion = Deletion::query()->orderBy('id')->first();
 
         $this->assertDatabaseHas('pages', [
-            'id' => $page->getKey(),
-            'deleted_at' => $page->deleted_at,
+            'id'            => $page->getKey(),
+            'deleted_at'    => $page->deleted_at,
         ]);
 
         $this->putJson($this->baseEndpoint . '/' . $deletion->getKey());
 
         $this->assertDatabaseHas('pages', [
-            'id' => $page->getKey(),
-            'deleted_at' => null,
+            'id'            => $page->getKey(),
+            'deleted_at'    => null,
         ]);
     }
 
     public function test_destroy_endpoint()
     {
         $this->actingAsAuthorizedUser();
-        
+
         $page = Page::query()->first();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
@@ -184,8 +184,8 @@ class RecycleBinApiTest extends TestCase
         $deletion = Deletion::query()->orderBy('id')->first();
 
         $this->assertDatabaseHas('pages', [
-            'id' => $page->getKey(),
-            'deleted_at' => $page->deleted_at,
+            'id'            => $page->getKey(),
+            'deleted_at'    => $page->deleted_at,
         ]);
 
         $this->deleteJson($this->baseEndpoint . '/' . $deletion->getKey());
