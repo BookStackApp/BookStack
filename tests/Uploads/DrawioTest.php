@@ -71,7 +71,7 @@ class DrawioTest extends TestCase
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
-        $resp->assertSee('drawio-url="https://embed.diagrams.net/?embed=1&amp;proto=json&amp;spin=1"', false);
+        $resp->assertSee('drawio-url="https://embed.diagrams.net/?embed=1&amp;proto=json&amp;spin=1&amp;configure=1"', false);
 
         config()->set('services.drawio', false);
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
