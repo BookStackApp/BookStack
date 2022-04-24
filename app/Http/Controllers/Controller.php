@@ -126,7 +126,7 @@ abstract class Controller extends BaseController
      */
     protected function streamedDownloadResponse($stream, string $fileName): StreamedResponse
     {
-        return response()->stream(function() use ($stream) {
+        return response()->stream(function () use ($stream) {
             // End & flush the output buffer otherwise we still seem to use memory.
             // Ignore in testing since output buffers are used to gather a response.
             if (!app()->runningUnitTests()) {
@@ -167,10 +167,10 @@ abstract class Controller extends BaseController
         $sniffContent = fread($stream, 1000);
         $mime = (new WebSafeMimeSniffer())->sniff($sniffContent);
 
-        return response()->stream(function() use ($sniffContent, $stream) {
-           echo $sniffContent;
-           fpassthru($stream);
-           fclose($stream);
+        return response()->stream(function () use ($sniffContent, $stream) {
+            echo $sniffContent;
+            fpassthru($stream);
+            fclose($stream);
         }, 200, [
             'Content-Type'           => $mime,
             'Content-Disposition'    => 'inline; filename="' . str_replace('"', '', $fileName) . '"',

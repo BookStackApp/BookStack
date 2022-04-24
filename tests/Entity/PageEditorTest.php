@@ -128,7 +128,7 @@ class PageEditorTest extends TestCase
 
         $resp = $this->asAdmin()->get($page->getUrl('/edit?editor=markdown-stable'));
         $resp->assertStatus(200);
-        $resp->assertSee("<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>", true);
+        $resp->assertSee('<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>', true);
         $resp->assertElementExists('[component="markdown-editor"]');
     }
 
@@ -202,5 +202,4 @@ class PageEditorTest extends TestCase
         $this->asEditor()->put($page->getUrl(), ['name' => $page->name, 'markdown' => '## Updated content abc']);
         $this->assertEquals('wysiwyg', $page->refresh()->editor);
     }
-
 }

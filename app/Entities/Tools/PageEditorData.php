@@ -112,5 +112,4 @@ class PageEditorData
     {
         return setting('app-editor') === 'markdown' ? 'markdown' : 'wysiwyg';
     }
-
 }

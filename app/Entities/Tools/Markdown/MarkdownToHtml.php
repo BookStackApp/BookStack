@@ -12,7 +12,6 @@ use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 class MarkdownToHtml
 {
-
     protected string $markdown;
 
     public function __construct(string $markdown)
@@ -33,5 +32,4 @@ class MarkdownToHtml
 
         return $converter->convertToHtml($this->markdown);
     }
-
 }

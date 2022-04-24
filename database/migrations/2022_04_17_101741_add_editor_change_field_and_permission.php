@@ -16,7 +16,7 @@ class AddEditorChangeFieldAndPermission extends Migration
     public function up()
     {
         // Add the new 'editor' column to the pages table
-        Schema::table('pages', function(Blueprint $table) {
+        Schema::table('pages', function (Blueprint $table) {
             $table->string('editor', 50)->default('');
         });
 
@@ -52,7 +52,7 @@ class AddEditorChangeFieldAndPermission extends Migration
     public function down()
     {
         // Drop the new column from the pages table
-        Schema::table('pages', function(Blueprint $table) {
+        Schema::table('pages', function (Blueprint $table) {
             $table->dropColumn('editor');
         });
 

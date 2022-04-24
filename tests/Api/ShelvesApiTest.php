@@ -120,7 +120,7 @@ class ShelvesApiTest extends TestCase
         DB::table('bookshelves')->where('id', '=', $shelf->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
-            'tags' => [['name' => 'Category', 'value' => 'Testing']]
+            'tags' => [['name' => 'Category', 'value' => 'Testing']],
         ];
 
         $this->putJson($this->baseEndpoint . "/{$shelf->id}", $details);
