@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentService
 {
-    protected $fileSystem;
+    protected FilesystemManager $fileSystem;
 
     /**
      * AttachmentService constructor.
@@ -71,6 +71,18 @@ class AttachmentService
     public function getAttachmentFromStorage(Attachment $attachment): string
     {
         return $this->getStorageDisk()->get($this->adjustPathForStorageDisk($attachment->path));
+    }
+
+    /**
+     * Stream an attachment from storage.
+     *
+     * @return resource|null
+     * @throws FileNotFoundException
+     */
+    public function streamAttachmentFromStorage(Attachment $attachment)
+    {
+
+        return $this->getStorageDisk()->readStream($this->adjustPathForStorageDisk($attachment->path));
     }
 
     /**
@@ -211,8 +223,6 @@ class AttachmentService
      */
     protected function putFileInStorage(UploadedFile $uploadedFile): string
     {
-        $attachmentData = file_get_contents($uploadedFile->getRealPath());
-
         $storage = $this->getStorageDisk();
         $basePath = 'uploads/files/' . date('Y-m-M') . '/';
 
@@ -221,10 +231,11 @@ class AttachmentService
             $uploadFileName = Str::random(3) . $uploadFileName;
         }
 
+        $attachmentStream = fopen($uploadedFile->getRealPath(), 'r');
         $attachmentPath = $basePath . $uploadFileName;
 
         try {
-            $storage->put($this->adjustPathForStorageDisk($attachmentPath), $attachmentData);
+            $storage->writeStream($this->adjustPathForStorageDisk($attachmentPath), $attachmentStream);
         } catch (Exception $e) {
             Log::error('Error when attempting file upload:' . $e->getMessage());
 

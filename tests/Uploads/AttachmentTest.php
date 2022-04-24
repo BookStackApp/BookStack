@@ -128,7 +128,8 @@ class AttachmentTest extends TestCase
         $pageGet->assertSee($attachment->getUrl());
 
         $attachmentGet = $this->get($attachment->getUrl());
-        $attachmentGet->assertSee('Hi, This is a test file for testing the upload process.');
+        $content = $attachmentGet->streamedContent();
+        $this->assertStringContainsString('Hi, This is a test file for testing the upload process.', $content);
 
         $this->deleteUploads();
     }
