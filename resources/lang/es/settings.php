@@ -27,7 +27,7 @@ return [
     'app_secure_images' => 'Mayor seguridad para subir imágenes',
     'app_secure_images_toggle' => 'Habilitar mayor seguridad en la subida de imágenes',
     'app_secure_images_desc' => 'Por razones de rendimiento, todas las imágenes son públicas. Esta opción agrega una cadena de texto larga difícil de adivinar. Asegúrese que los índices de directorio no están habilitados para evitar el acceso fácil a las imágenes.',
-    'app_default_editor' => 'Default Page Editor',
+    'app_default_editor' => 'Editor de Página por defecto',
     'app_default_editor_desc' => 'Select which editor will be used by default when editing new pages. This can be overridden at a page level where permissions allow.',
     'app_custom_html' => 'Contenido de cabecera HTML personalizado',
     'app_custom_html_desc' => 'Cualquier contenido agregado aquí será insertado al final de la sección <head> de cada página. Esto es útil para sobreescribir estilos o agregar código para analíticas web.',
