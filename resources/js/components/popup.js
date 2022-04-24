@@ -34,7 +34,7 @@ class Popup {
     }
 
     hide(onComplete = null) {
-        fadeOut(this.container, 240, onComplete);
+        fadeOut(this.container, 120, onComplete);
         if (this.onkeyup) {
             window.removeEventListener('keyup', this.onkeyup);
             this.onkeyup = null;
@@ -45,7 +45,7 @@ class Popup {
     }
 
     show(onComplete = null, onHide = null) {
-        fadeIn(this.container, 240, onComplete);
+        fadeIn(this.container, 120, onComplete);
 
         this.onkeyup = (event) => {
             if (event.key === 'Escape') {

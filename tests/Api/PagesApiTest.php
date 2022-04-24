@@ -252,7 +252,9 @@ class PagesApiTest extends TestCase
             'tags' => [['name' => 'Category', 'value' => 'Testing']]
         ];
 
-        $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $resp->assertOk();
+
         $page->refresh();
         $this->assertGreaterThan(Carbon::now()->subDay()->unix(), $page->updated_at->unix());
     }

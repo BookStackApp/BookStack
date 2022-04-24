@@ -131,7 +131,7 @@ class AutoSuggest {
             return this.hideSuggestions();
         }
 
-        this.list.innerHTML = suggestions.map(value => `<li><button type="button">${escapeHtml(value)}</button></li>`).join('');
+        this.list.innerHTML = suggestions.map(value => `<li><button type="button" class="text-item">${escapeHtml(value)}</button></li>`).join('');
         this.list.style.display = 'block';
         for (const button of this.list.querySelectorAll('button')) {
             button.addEventListener('blur', this.hideSuggestionsIfFocusedLost.bind(this));

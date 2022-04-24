@@ -24,6 +24,8 @@ class PageEditor {
         this.draftDisplayIcon = this.$refs.draftDisplayIcon;
         this.changelogInput = this.$refs.changelogInput;
         this.changelogDisplay = this.$refs.changelogDisplay;
+        this.changeEditorButtons = this.$manyRefs.changeEditor;
+        this.switchDialogContainer = this.$refs.switchDialog;
 
         // Translations
         this.draftText = this.$opts.draftText;
@@ -72,6 +74,9 @@ class PageEditor {
         // Draft Controls
         onSelect(this.saveDraftButton, this.saveDraft.bind(this));
         onSelect(this.discardDraftButton, this.discardDraft.bind(this));
+
+        // Change editor controls
+        onSelect(this.changeEditorButtons, this.changeEditor.bind(this));
     }
 
     setInitialFocus() {
@@ -113,17 +118,21 @@ class PageEditor {
             data.markdown = this.editorMarkdown;
         }
 
+        let didSave = false;
         try {
             const resp = await window.$http.put(`/ajax/page/${this.pageId}/save-draft`, data);
             if (!this.isNewDraft) {
                 this.toggleDiscardDraftVisibility(true);
             }
+
             this.draftNotifyChange(`${resp.data.message} ${Dates.utcTimeStampToLocalTime(resp.data.timestamp)}`);
             this.autoSave.last = Date.now();
             if (resp.data.warning && !this.shownWarningsCache.has(resp.data.warning)) {
                 window.$events.emit('warning', resp.data.warning);
                 this.shownWarningsCache.add(resp.data.warning);
             }
+
+            didSave = true;
         } catch (err) {
             // Save the editor content in LocalStorage as a last resort, just in case.
             try {
@@ -134,6 +143,7 @@ class PageEditor {
             window.$events.emit('error', this.autosaveFailText);
         }
 
+        return didSave;
     }
 
     draftNotifyChange(text) {
@@ -183,6 +193,18 @@ class PageEditor {
 
     toggleDiscardDraftVisibility(show) {
         this.discardDraftWrap.classList.toggle('hidden', !show);
+    }
+
+    async changeEditor(event) {
+        event.preventDefault();
+
+        const link = event.target.closest('a').href;
+        const dialog = this.switchDialogContainer.components['confirm-dialog'];
+        const [saved, confirmed] = await Promise.all([this.saveDraft(), dialog.show()]);
+
+        if (saved && confirmed) {
+            window.location = link;
+        }
     }
 
 }

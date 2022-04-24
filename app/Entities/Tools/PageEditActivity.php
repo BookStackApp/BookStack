@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PageEditActivity
 {
-    protected $page;
+    protected Page $page;
 
     /**
      * PageEditActivity constructor.

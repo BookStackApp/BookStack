@@ -19,7 +19,7 @@
                     <form action="{{ url('/mfa/' . $method . '/remove') }}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('delete') }}
-                        <button class="text-primary small delete">{{ trans('common.confirm') }}</button>
+                        <button class="text-primary small text-item">{{ trans('common.confirm') }}</button>
                     </form>
                 </div>
             </div>
