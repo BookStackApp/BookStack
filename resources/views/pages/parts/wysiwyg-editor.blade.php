@@ -1,3 +1,7 @@
+@push('head')
+    <script src="{{ url('/libs/tinymce/tinymce.min.js?ver=5.10.2') }}" nonce="{{ $cspNonce }}"></script>
+@endpush
+
 <div component="wysiwyg-editor"
      option:wysiwyg-editor:language="{{ config('app.lang') }}"
      option:wysiwyg-editor:page-id="{{ $model->id ?? 0 }}"

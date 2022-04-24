@@ -28,7 +28,7 @@
                             class="drag-card-action text-center text-neg">@icon('close')</button>
                     <div refs="dropdown@menu" class="dropdown-menu">
                         <p class="text-neg small px-m mb-xs">{{ trans('entities.attachments_delete') }}</p>
-                        <button refs="ajax-delete-row@delete" type="button" class="text-primary small delete">{{ trans('common.confirm') }}</button>
+                        <button refs="ajax-delete-row@delete" type="button" class="text-primary small delete text-item">{{ trans('common.confirm') }}</button>
                     </div>
                 </div>
             </div>

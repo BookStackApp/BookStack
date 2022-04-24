@@ -23,12 +23,12 @@
                 </div>
             </div>
 
-            <div class="grid half gap-xl">
+            <div class="grid half gap-xl items-center">
                 <div>
-                    <label class="setting-list-label">{{ trans('settings.app_editor') }}</label>
-                    <p class="small">{{ trans('settings.app_editor_desc') }}</p>
+                    <label class="setting-list-label" for="setting-app-editor">{{ trans('settings.app_default_editor') }}</label>
+                    <p class="small">{{ trans('settings.app_default_editor_desc') }}</p>
                 </div>
-                <div class="pt-xs">
+                <div>
                     <select name="setting-app-editor" id="setting-app-editor">
                         <option @if(setting('app-editor') === 'wysiwyg') selected @endif value="wysiwyg">WYSIWYG</option>
                         <option @if(setting('app-editor') === 'markdown') selected @endif value="markdown">Markdown</option>
@@ -90,12 +90,12 @@
                 </div>
             </div>
 
-            <div homepage-control id="homepage-control" class="grid half gap-xl">
+            <div homepage-control id="homepage-control" class="grid half gap-xl items-center">
                 <div>
-                    <label for="setting-app-homepage" class="setting-list-label">{{ trans('settings.app_homepage') }}</label>
+                    <label for="setting-app-homepage-type" class="setting-list-label">{{ trans('settings.app_homepage') }}</label>
                     <p class="small">{{ trans('settings.app_homepage_desc') }}</p>
                 </div>
-                <div class="pt-xs">
+                <div>
                     <select name="setting-app-homepage-type" id="setting-app-homepage-type">
                         <option @if(setting('app-homepage-type') === 'default') selected @endif value="default">{{ trans('common.default') }}</option>
                         <option @if(setting('app-homepage-type') === 'books') selected @endif value="books">{{ trans('entities.books') }}</option>
