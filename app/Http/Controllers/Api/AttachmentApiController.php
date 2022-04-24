@@ -90,6 +90,7 @@ class AttachmentApiController extends ApiController
         // Simply return a JSON response of the attachment for link-based attachments
         if ($attachment->external) {
             $attachment->setAttribute('content', $attachment->path);
+
             return response()->json($attachment);
         }
 

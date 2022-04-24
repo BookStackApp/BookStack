@@ -3,8 +3,8 @@
 namespace Tests;
 
 use BookStack\Http\Request;
-use function url;
 use function request;
+use function url;
 
 class UrlTest extends TestCase
 {

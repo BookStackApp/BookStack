@@ -249,7 +249,7 @@ class PagesApiTest extends TestCase
         DB::table('pages')->where('id', '=', $page->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
-            'tags' => [['name' => 'Category', 'value' => 'Testing']]
+            'tags' => [['name' => 'Category', 'value' => 'Testing']],
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);

@@ -110,7 +110,7 @@ class BooksApiTest extends TestCase
         DB::table('books')->where('id', '=', $book->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
-            'tags' => [['name' => 'Category', 'value' => 'Testing']]
+            'tags' => [['name' => 'Category', 'value' => 'Testing']],
         ];
 
         $this->putJson($this->baseEndpoint . "/{$book->id}", $details);

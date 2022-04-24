@@ -156,7 +156,7 @@ class ChaptersApiTest extends TestCase
         DB::table('chapters')->where('id', '=', $chapter->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
-            'tags' => [['name' => 'Category', 'value' => 'Testing']]
+            'tags' => [['name' => 'Category', 'value' => 'Testing']],
         ];
 
         $this->putJson($this->baseEndpoint . "/{$chapter->id}", $details);
