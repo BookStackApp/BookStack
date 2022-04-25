@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * @property int $id
- * @property int $deleted_by
- * @property string $deletable_type
- * @property int $deletable_id
+ * @property int       $id
+ * @property int       $deleted_by
+ * @property string    $deletable_type
+ * @property int       $deletable_id
  * @property Deletable $deletable
  */
 class Deletion extends Model implements Loggable

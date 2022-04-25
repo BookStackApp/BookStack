@@ -125,9 +125,9 @@ class RecycleBinApiTest extends TestCase
                     'parent' => [
                         'id'   => $page->chapter->id,
                         'name' => $page->chapter->name,
-                        'type' => 'chapter'
-                    ]
-                ]
+                        'type' => 'chapter',
+                    ],
+                ],
             ],
         ];
 
@@ -152,7 +152,7 @@ class RecycleBinApiTest extends TestCase
 
         $resp = $this->putJson($this->baseEndpoint . '/' . $deletion->id);
         $resp->assertJson([
-            'restore_count' => 1
+            'restore_count' => 1,
         ]);
 
         $this->assertDatabaseHas('pages', [
@@ -176,7 +176,7 @@ class RecycleBinApiTest extends TestCase
 
         $resp = $this->deleteJson($this->baseEndpoint . '/' . $deletion->id);
         $resp->assertJson([
-            'delete_count' => 1
+            'delete_count' => 1,
         ]);
 
         $this->assertDatabaseMissing('pages', ['id' => $page->id]);
