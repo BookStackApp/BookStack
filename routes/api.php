@@ -74,6 +74,6 @@ Route::get('users/{id}', [UserApiController::class, 'read']);
 Route::put('users/{id}', [UserApiController::class, 'update']);
 Route::delete('users/{id}', [UserApiController::class, 'delete']);
 
-Route::get('recycle_bin', [RecycleBinApiController::class, 'list']);
-Route::put('recycle_bin/{id}', [RecycleBinApiController::class, 'restore']);
-Route::delete('recycle_bin/{id}', [RecycleBinApiController::class, 'destroy']);
+Route::get('recycle-bin', [RecycleBinApiController::class, 'list']);
+Route::put('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'restore']);
+Route::delete('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'destroy']);

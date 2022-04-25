@@ -2,16 +2,16 @@
 
 namespace BookStack\Http\Controllers\Api;
 
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Repos\DeletionRepo;
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
 
 class RecycleBinApiController extends ApiController
 {
-    protected $fieldsToExpose = [
-        'id', 'deleted_by', 'created_at', 'updated_at', 'deletable_type', 'deletable_id',
-    ];
-
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -24,7 +24,11 @@ class RecycleBinApiController extends ApiController
 
     /**
      * Get a top-level listing of the items in the recycle bin.
-     * Requires the permission to manage settings and restrictions.
+     * The "deletable" property will reflect the main item deleted.
+     * For books and chapters, counts of child pages/chapters will
+     * be loaded within this "deletable" data.
+     * For chapters & pages, the parent item will be loaded within this "deletable" data.
+     * Requires permission to manage both system settings and permissions.
      */
     public function list()
     {
@@ -40,11 +44,11 @@ class RecycleBinApiController extends ApiController
 
     /**
      * Restore a single deletion from the recycle bin.
-     * You must provide the deletion id, not the id of the corresponding deleted item.
+     * Requires permission to manage both system settings and permissions.
      */
-    public function restore(DeletionRepo $deletionRepo, string $id)
+    public function restore(DeletionRepo $deletionRepo, string $deletionId)
     {
-        $restoreCount = $deletionRepo->restore((int) $id);
+        $restoreCount = $deletionRepo->restore(intval($deletionId));
 
         return response()->json(['restore_count' => $restoreCount]);
     }
@@ -52,44 +56,35 @@ class RecycleBinApiController extends ApiController
     /**
      * Remove a single deletion from the recycle bin.
      * Use this endpoint carefully as it will entirely remove the underlying deleted items from the system.
-     * You must provide the deletion id, not the id of the corresponding deleted item.
+     * Requires permission to manage both system settings and permissions.
      */
-    public function destroy(DeletionRepo $deletionRepo, string $id)
+    public function destroy(DeletionRepo $deletionRepo, string $deletionId)
     {
-        $deleteCount = $deletionRepo->destroy((int) $id);
+        $deleteCount = $deletionRepo->destroy(intval($deletionId));
 
         return response()->json(['delete_count' => $deleteCount]);
     }
 
+    /**
+     * Load some related details for the deletion listing.
+     */
     protected function listFormatter(Deletion $deletion)
     {
-        $deletion->makeVisible($this->fieldsToExpose);
-        $deletion->makeHidden('deletable');
-
         $deletable = $deletion->deletable;
-        $isBook = $deletion->deletable_type === "BookStack\Book";
-        $parent = null;
-        $children = null;
+        $withTrashedQuery = fn(Builder $query) => $query->withTrashed();
 
-        if ($isBook) {
-            $chapterCount = $deletable->chapters()->withTrashed()->count();
-            $children['BookStack\Chapter'] = $chapterCount;
+        if ($deletable instanceof BookChild) {
+            $parent = $deletable->getParent();
+            $parent->setAttribute('type', $parent->getType());
+            $deletable->setRelation('parent', $parent);
         }
 
-        if ($isBook || $deletion->deletable_type === "BookStack\Chapter") {
-            $pageCount = $deletable->pages()->withTrashed()->count();
-            $children['BookStack\Page'] = $pageCount;
+        if ($deletable instanceof Book || $deletable instanceof Chapter) {
+            $countsToLoad = ['pages' => $withTrashedQuery];
+            if ($deletable instanceof Book) {
+                $countsToLoad['chapters'] = $withTrashedQuery;
+            }
+            $deletable->loadCount($countsToLoad);
         }
-
-        $parentEntity = $deletable->getParent();
-        $parent = null;
-
-        if ($parentEntity) {
-            $parent['type'] = $parentEntity->getMorphClass();
-            $parent['id'] = $parentEntity->getKey();
-        }
-
-        $deletion->setAttribute('parent', $parent);
-        $deletion->setAttribute('children', $children);
     }
 }
