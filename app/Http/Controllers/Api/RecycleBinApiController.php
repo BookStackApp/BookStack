@@ -71,7 +71,7 @@ class RecycleBinApiController extends ApiController
     protected function listFormatter(Deletion $deletion)
     {
         $deletable = $deletion->deletable;
-        $withTrashedQuery = fn(Builder $query) => $query->withTrashed();
+        $withTrashedQuery = fn (Builder $query) => $query->withTrashed();
 
         if ($deletable instanceof BookChild) {
             $parent = $deletable->getParent();

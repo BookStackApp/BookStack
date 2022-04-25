@@ -19,15 +19,15 @@ class UpdatePolymorphicTypes extends Migration
      * Mapping of tables and columns that contain polymorphic types.
      */
     protected $columnsByTable = [
-        'activities' => 'entity_type',
-        'comments'   => 'entity_type',
-        'deletions'  => 'deletable_type',
+        'activities'         => 'entity_type',
+        'comments'           => 'entity_type',
+        'deletions'          => 'deletable_type',
         'entity_permissions' => 'restrictable_type',
-        'favourites' => 'favouritable_type',
-        'joint_permissions' => 'entity_type',
-        'search_terms' => 'entity_type',
-        'tags' => 'entity_type',
-        'views' => 'viewable_type',
+        'favourites'         => 'favouritable_type',
+        'joint_permissions'  => 'entity_type',
+        'search_terms'       => 'entity_type',
+        'tags'               => 'entity_type',
+        'views'              => 'viewable_type',
     ];
 
     /**
