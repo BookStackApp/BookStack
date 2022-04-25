@@ -51,12 +51,12 @@ class AppServiceProvider extends ServiceProvider
         // Allow longer string lengths after upgrade to utf8mb4
         Schema::defaultStringLength(191);
 
-        // Set morph-map due to namespace changes
-        Relation::morphMap([
-            'BookStack\\Bookshelf' => Bookshelf::class,
-            'BookStack\\Book'      => Book::class,
-            'BookStack\\Chapter'   => Chapter::class,
-            'BookStack\\Page'      => Page::class,
+        // Set morph-map for our relations to friendlier aliases
+        Relation::enforceMorphMap([
+            'bookshelf' => Bookshelf::class,
+            'book'      => Book::class,
+            'chapter'   => Chapter::class,
+            'page'      => Page::class,
         ]);
 
         // View Composers
