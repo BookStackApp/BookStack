@@ -9,6 +9,7 @@ use BookStack\Http\Controllers\Api\ChapterApiController;
 use BookStack\Http\Controllers\Api\ChapterExportApiController;
 use BookStack\Http\Controllers\Api\PageApiController;
 use BookStack\Http\Controllers\Api\PageExportApiController;
+use BookStack\Http\Controllers\Api\RecycleBinApiController;
 use BookStack\Http\Controllers\Api\SearchApiController;
 use BookStack\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
@@ -72,3 +73,7 @@ Route::post('users', [UserApiController::class, 'create']);
 Route::get('users/{id}', [UserApiController::class, 'read']);
 Route::put('users/{id}', [UserApiController::class, 'update']);
 Route::delete('users/{id}', [UserApiController::class, 'delete']);
+
+Route::get('recycle-bin', [RecycleBinApiController::class, 'list']);
+Route::put('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'restore']);
+Route::delete('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'destroy']);

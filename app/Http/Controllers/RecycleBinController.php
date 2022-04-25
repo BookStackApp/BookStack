@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers;
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Repos\DeletionRepo;
 use BookStack\Entities\Tools\TrashCan;
 
 class RecycleBinController extends Controller
@@ -73,12 +74,9 @@ class RecycleBinController extends Controller
      *
      * @throws \Exception
      */
-    public function restore(string $id)
+    public function restore(DeletionRepo $deletionRepo, string $id)
     {
-        /** @var Deletion $deletion */
-        $deletion = Deletion::query()->findOrFail($id);
-        $this->logActivity(ActivityType::RECYCLE_BIN_RESTORE, $deletion);
-        $restoreCount = (new TrashCan())->restoreFromDeletion($deletion);
+        $restoreCount = $deletionRepo->restore((int) $id);
 
         $this->showSuccessNotification(trans('settings.recycle_bin_restore_notification', ['count' => $restoreCount]));
 
@@ -103,12 +101,9 @@ class RecycleBinController extends Controller
      *
      * @throws \Exception
      */
-    public function destroy(string $id)
+    public function destroy(DeletionRepo $deletionRepo, string $id)
     {
-        /** @var Deletion $deletion */
-        $deletion = Deletion::query()->findOrFail($id);
-        $this->logActivity(ActivityType::RECYCLE_BIN_DESTROY, $deletion);
-        $deleteCount = (new TrashCan())->destroyFromDeletion($deletion);
+        $deleteCount = $deletionRepo->destroy((int) $id);
 
         $this->showSuccessNotification(trans('settings.recycle_bin_destroy_notification', ['count' => $deleteCount]));
 
