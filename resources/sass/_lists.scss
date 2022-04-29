@@ -593,13 +593,22 @@ ul.pagination {
   li.active a {
     font-weight: 600;
   }
-  a, button {
-    display: block;
-    padding: $-xs $-m;
+  button {
+    width: 100%;
+    text-align: start;
+  }
+  li.border-bottom {
+    border-bottom: 1px solid #DDD;
+  }
+  li hr {
+    margin: $-xs 0;
+  }
+  .icon-item, .text-item, .label-item {
+    padding: 8px $-m;
     @include lightDark(color, #555, #eee);
     fill: currentColor;
     white-space: nowrap;
-    line-height: 1.6;
+    line-height: 1.4;
     cursor: pointer;
     &:hover, &:focus {
       text-decoration: none;
@@ -616,15 +625,30 @@ ul.pagination {
       width: 16px;
     }
   }
-  button {
-    width: 100%;
-    text-align: start;
+  .text-item {
+    display: block;
   }
-  li.border-bottom {
-    border-bottom: 1px solid #DDD;
+  .label-item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto min-content;
+    gap: $-m;
   }
-  li hr {
-    margin: $-xs 0;
+  .label-item > *:nth-child(2) {
+    opacity: 0.7;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .icon-item {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 16px auto;
+    gap: $-m;
+    svg {
+      margin-inline-end: 0;
+      margin-block-start: 1px;
+    }
   }
 }
 

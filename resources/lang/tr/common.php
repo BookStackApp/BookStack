@@ -39,14 +39,14 @@ return [
     'reset' => 'Sıfırla',
     'remove' => 'Kaldır',
     'add' => 'Ekle',
-    'configure' => 'Configure',
+    'configure' => 'Yapılandır',
     'fullscreen' => 'Tam Ekran',
-    'favourite' => 'Favourite',
-    'unfavourite' => 'Unfavourite',
-    'next' => 'Next',
-    'previous' => 'Previous',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
+    'favourite' => 'Favoriye ekle',
+    'unfavourite' => 'Favorilerden çıkar',
+    'next' => 'Sonraki',
+    'previous' => 'Önceki',
+    'filter_active' => 'Aktif filtre:',
+    'filter_clear' => 'Filtreyi Kaldır',
 
     // Sort Options
     'sort_options' => 'Sıralama Seçenekleri',
@@ -54,7 +54,7 @@ return [
     'sort_ascending' => 'Artan Sıralama',
     'sort_descending' => 'Azalan Sıralama',
     'sort_name' => 'İsim',
-    'sort_default' => 'Default',
+    'sort_default' => 'Varsayılan',
     'sort_created_at' => 'Oluşturulma Tarihi',
     'sort_updated_at' => 'Güncelleme Tarihi',
 
@@ -63,7 +63,7 @@ return [
     'no_activity' => 'Gösterilecek eylem bulunamadı',
     'no_items' => 'Herhangi bir öge bulunamadı',
     'back_to_top' => 'Başa dön',
-    'skip_to_main_content' => 'Skip to main content',
+    'skip_to_main_content' => 'Ana içeriğe geç',
     'toggle_details' => 'Detayları Göster/Gizle',
     'toggle_thumbnails' => 'Ön İzleme Görsellerini Göster/Gizle',
     'details' => 'Detaylar',
@@ -71,14 +71,14 @@ return [
     'list_view' => 'Liste Görünümü',
     'default' => 'Varsayılan',
     'breadcrumb' => 'Gezinti Menüsü',
-    'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
-    'never' => 'Never',
-    'none' => 'None',
+    'status' => 'Durum',
+    'status_active' => 'Etkin',
+    'status_inactive' => 'Devre dışı',
+    'never' => 'Hiçbir zaman',
+    'none' => 'Hiçbiri',
 
     // Header
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Başlık Menüsünü Genişlet',
     'profile_menu' => 'Profil Menüsü',
     'view_profile' => 'Profili Görüntüle',
     'edit_profile' => 'Profili Düzenle',
@@ -97,6 +97,6 @@ return [
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Gizlilik Politikası',
+    'terms_of_service' => 'Hizmet Şartları',
 ];

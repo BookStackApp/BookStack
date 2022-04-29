@@ -24,7 +24,7 @@ return [
     'width' => 'Ширина',
     'height' => 'Высота',
     'More' => 'Еще',
-    'select' => 'Select...',
+    'select' => 'Выбрать...',
 
     // Toolbar
     'formats' => 'Форматы',
@@ -95,8 +95,8 @@ return [
     'cell_type_cell' => 'Ячейка',
     'cell_scope' => 'Scope',
     'cell_type_header' => 'Заголовок ячейки',
-    'merge_cells' => 'Merge cells',
-    'split_cell' => 'Split cell',
+    'merge_cells' => 'Объединить ячейки',
+    'split_cell' => 'Разделить ячейку',
     'table_row_group' => 'Объединить строки',
     'table_column_group' => 'Объединить столбцы',
     'horizontal_align' => 'Выровнять по горизонтали',
@@ -124,16 +124,16 @@ return [
     'caption' => 'Подпись',
     'show_caption' => 'Показать подпись',
     'constrain' => 'Сохранять пропорции',
-    'cell_border_solid' => 'Solid',
-    'cell_border_dotted' => 'Dotted',
-    'cell_border_dashed' => 'Dashed',
-    'cell_border_double' => 'Double',
+    'cell_border_solid' => 'Сплошная',
+    'cell_border_dotted' => 'Точками',
+    'cell_border_dashed' => 'Пунктирная',
+    'cell_border_double' => 'Двойная сплошная',
     'cell_border_groove' => 'Groove',
     'cell_border_ridge' => 'Ridge',
     'cell_border_inset' => 'Inset',
     'cell_border_outset' => 'Outset',
-    'cell_border_none' => 'None',
-    'cell_border_hidden' => 'Hidden',
+    'cell_border_none' => 'Нет',
+    'cell_border_hidden' => 'Прозрачная',
 
     // Images, links, details/summary & embed
     'source' => 'Источник',
@@ -154,7 +154,7 @@ return [
     'toggle_label' => 'Метка',
 
     // About view
-    'about' => 'About the editor',
+    'about' => 'О редакторе',
     'about_title' => 'О редакторе WYSIWYG',
     'editor_license' => 'Лицензия редактора и авторские права',
     'editor_tiny_license' => 'Этот редактор собран с помощью :tinyLink, который предоставляется под лицензией LGPL v2.1.',

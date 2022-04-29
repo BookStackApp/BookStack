@@ -203,4 +203,19 @@ class PageRevisionTest extends TestCase
         $revisionCount = $page->revisions()->count();
         $this->assertEquals(12, $revisionCount);
     }
+
+    public function test_revision_list_shows_editor_type()
+    {
+        /** @var Page $page */
+        $page = Page::first();
+        $this->asAdmin()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html']);
+
+        $resp = $this->get($page->refresh()->getUrl('/revisions'));
+        $resp->assertElementContains('td', '(WYSIWYG)');
+        $resp->assertElementNotContains('td', '(Markdown)');
+
+        $this->asAdmin()->put($page->getUrl(), ['name' => 'Updated page', 'markdown' => '# Some markdown content']);
+        $resp = $this->get($page->refresh()->getUrl('/revisions'));
+        $resp->assertElementContains('td', '(Markdown)');
+    }
 }

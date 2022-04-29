@@ -19,7 +19,7 @@ class SettingController extends Controller
     }
 
     /**
-     * Handle requests to the settings index path
+     * Handle requests to the settings index path.
      */
     public function index()
     {

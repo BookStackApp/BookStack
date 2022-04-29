@@ -43,6 +43,8 @@ function drawReceive(event) {
         drawEventSave(message);
     } else if (message.event === 'export') {
         drawEventExport(message);
+    } else if (message.event === 'configure') {
+        drawEventConfigure();
     }
 }
 
@@ -61,6 +63,12 @@ function drawEventInit() {
     onInit().then(xml => {
         drawPostMessage({action: 'load', autosave: 1, xml: xml});
     });
+}
+
+function drawEventConfigure() {
+    const config = {};
+    window.$events.emitPublic(iFrame, 'editor-drawio::configure', {config});
+    drawPostMessage({action: 'configure', config});
 }
 
 function drawEventClose() {

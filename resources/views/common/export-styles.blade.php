@@ -1,5 +1,5 @@
 <style>
-    @if (!app()->environment('testing'))
+    @if (!app()->runningUnitTests())
         {!! file_get_contents(public_path('/dist/export-styles.css')) !!}
     @endif
 </style>

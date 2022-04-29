@@ -17,6 +17,13 @@
         </div>
     </div>
 
+    <script nonce="{{ $cspNonce }}">
+        setTimeout(async () => {
+            const result = await window.components["confirm-dialog"][0].show();
+            console.log({result});
+        }, 1000);
+    </script>
+
     <div class="container" id="home-default">
         <div class="grid third gap-xxl no-row-gap" >
             <div>

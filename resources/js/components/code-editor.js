@@ -96,7 +96,7 @@ class CodeEditor {
         this.historyDropDown.classList.toggle('hidden', historyKeys.length === 0);
         this.historyList.innerHTML = historyKeys.map(key => {
              const localTime = (new Date(parseInt(key))).toLocaleTimeString();
-             return `<li><button type="button" data-time="${key}">${localTime}</button></li>`;
+             return `<li><button type="button" data-time="${key}" class="text-item">${localTime}</button></li>`;
         }).join('');
     }
 

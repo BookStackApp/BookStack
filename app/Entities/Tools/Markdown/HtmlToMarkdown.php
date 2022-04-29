@@ -5,12 +5,10 @@ namespace BookStack\Entities\Tools\Markdown;
 use League\HTMLToMarkdown\Converter\BlockquoteConverter;
 use League\HTMLToMarkdown\Converter\CodeConverter;
 use League\HTMLToMarkdown\Converter\CommentConverter;
-use League\HTMLToMarkdown\Converter\DivConverter;
 use League\HTMLToMarkdown\Converter\EmphasisConverter;
 use League\HTMLToMarkdown\Converter\HardBreakConverter;
 use League\HTMLToMarkdown\Converter\HeaderConverter;
 use League\HTMLToMarkdown\Converter\HorizontalRuleConverter;
-use League\HTMLToMarkdown\Converter\ImageConverter;
 use League\HTMLToMarkdown\Converter\LinkConverter;
 use League\HTMLToMarkdown\Converter\ListBlockConverter;
 use League\HTMLToMarkdown\Converter\ListItemConverter;
@@ -21,7 +19,7 @@ use League\HTMLToMarkdown\HtmlConverter;
 
 class HtmlToMarkdown
 {
-    protected $html;
+    protected string $html;
 
     public function __construct(string $html)
     {
@@ -75,12 +73,12 @@ class HtmlToMarkdown
         $environment->addConverter(new BlockquoteConverter());
         $environment->addConverter(new CodeConverter());
         $environment->addConverter(new CommentConverter());
-        $environment->addConverter(new DivConverter());
+        $environment->addConverter(new CustomDivConverter());
         $environment->addConverter(new EmphasisConverter());
         $environment->addConverter(new HardBreakConverter());
         $environment->addConverter(new HeaderConverter());
         $environment->addConverter(new HorizontalRuleConverter());
-        $environment->addConverter(new ImageConverter());
+        $environment->addConverter(new CustomImageConverter());
         $environment->addConverter(new LinkConverter());
         $environment->addConverter(new ListBlockConverter());
         $environment->addConverter(new ListItemConverter());
@@ -88,6 +86,7 @@ class HtmlToMarkdown
         $environment->addConverter(new PreformattedConverter());
         $environment->addConverter(new TextConverter());
         $environment->addConverter(new CheckboxConverter());
+        $environment->addConverter(new SpacedTagFallbackConverter());
 
         return $environment;
     }
