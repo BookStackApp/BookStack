@@ -27,7 +27,7 @@
                             </a>
                         </li>
                     @endif
-                    <li refs="page-editor@discardDraftWrap" class="{{ $isDraft ? '' : 'hidden' }}">
+                    <li refs="page-editor@discardDraftWrap" class="{{ $isDraftRevision ? '' : 'hidden' }}">
                         <button refs="page-editor@discardDraft" type="button" class="text-neg icon-item">
                             @icon('cancel')
                             <div>{{ trans('entities.pages_edit_discard_draft') }}</div>

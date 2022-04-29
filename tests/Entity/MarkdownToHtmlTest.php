@@ -47,6 +47,22 @@ class MarkdownToHtmlTest extends TestCase
         );
     }
 
+    public function test_summary_tags_have_newlines_after_to_separate_content()
+    {
+        $this->assertConversion(
+            '<details><summary>Toggle</summary><p>Test</p></details>',
+            "<details><summary>Toggle</summary>\n\nTest\n\n</details>"
+        );
+    }
+
+    public function test_iframes_tags_have_newlines_after_to_separate_content()
+    {
+        $this->assertConversion(
+            '<iframe src="https://example.com"></iframe><p>Beans</p>',
+            "<iframe src=\"https://example.com\"></iframe>\n\nBeans"
+        );
+    }
+
     protected function assertConversion(string $html, string $expectedMarkdown, bool $partialMdMatch = false)
     {
         $markdown = (new HtmlToMarkdown($html))->convert();

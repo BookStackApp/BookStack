@@ -88,6 +88,7 @@ class HtmlToMarkdown
         $environment->addConverter(new PreformattedConverter());
         $environment->addConverter(new TextConverter());
         $environment->addConverter(new CheckboxConverter());
+        $environment->addConverter(new SpacedTagFallbackConverter());
 
         return $environment;
     }
