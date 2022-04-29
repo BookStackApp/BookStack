@@ -53,15 +53,15 @@ return [
 
     // Webhooks
     'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
+    'webhook_create_notification' => 'Webhookが正常に作成されました',
     'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
+    'webhook_update_notification' => 'Webhookが正常に更新されました',
     'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_delete_notification' => 'Webhookが正常に削除されました',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'ユーザーが正常に更新されました',
+    'user_delete_notification' => 'ユーザーが正常に削除されました',
 
     // Other
     'commented_on'                => 'がコメント:',
