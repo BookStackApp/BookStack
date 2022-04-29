@@ -39,6 +39,14 @@ class MarkdownToHtmlTest extends TestCase
         );
     }
 
+    public function test_drawing_blocks_remain_html()
+    {
+        $this->assertConversion(
+            '<div drawio-diagram="190" id="bkmrk--0" contenteditable="false"><img src="http://example.com/uploads/images/drawio/2022-04/drawing-1.png" alt="" /></div>Some text',
+            '<div drawio-diagram="190"><img src="http://example.com/uploads/images/drawio/2022-04/drawing-1.png" alt=""/></div>' . "\n\nSome text"
+        );
+    }
+
     protected function assertConversion(string $html, string $expectedMarkdown, bool $partialMdMatch = false)
     {
         $markdown = (new HtmlToMarkdown($html))->convert();

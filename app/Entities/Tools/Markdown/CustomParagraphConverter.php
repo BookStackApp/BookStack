@@ -9,7 +9,7 @@ class CustomParagraphConverter extends ParagraphConverter
 {
     public function convert(ElementInterface $element): string
     {
-        $class = $element->getAttribute('class');
+        $class = e($element->getAttribute('class'));
         if (strpos($class, 'callout') !== false) {
             return "<{$element->getTagName()} class=\"{$class}\">{$element->getValue()}</{$element->getTagName()}>\n\n";
         }
