@@ -16,6 +16,7 @@ class CustomImageConverter extends ImageConverter
         if ($withinDrawing) {
             $src = e($element->getAttribute('src'));
             $alt = e($element->getAttribute('alt'));
+
             return "<img src=\"{$src}\" alt=\"{$alt}\"/>";
         }
 

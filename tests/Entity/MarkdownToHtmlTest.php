@@ -73,5 +73,4 @@ class MarkdownToHtmlTest extends TestCase
             static::assertEquals($expectedMarkdown, $markdown);
         }
     }
-
 }
