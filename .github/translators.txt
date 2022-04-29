@@ -165,7 +165,7 @@ Francesco Franchina (ffranchina) :: Italian
 Aimrane Kds (aimrane.kds) :: Arabic
 whenwesober :: Indonesian
 Rem (remkovdhoef) :: Dutch
-syn7ax69 :: Bulgarian; Turkish
+syn7ax69 :: Bulgarian; Turkish; German
 Blaade :: French
 Behzad HosseinPoor (behzad.hp) :: Persian
 Ole Aldric (Swoy) :: Norwegian Bokmal
@@ -238,3 +238,7 @@ pedromcsousa :: Portuguese
 Nir Louk (looknear) :: Hebrew
 Alex (qianmengnet) :: Chinese Simplified
 stothew :: German
+sgenc :: Turkish
+Shukrullo (vodiylik) :: Uzbek
+William W. (Nevnt) :: Chinese Traditional
+eamaro :: Portuguese
