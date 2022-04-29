@@ -362,42 +362,6 @@ class ExportTest extends TestCase
         $resp->assertSee("# Dogcat\n\nSome **bold** text");
     }
 
-    public function test_page_markdown_export_does_not_convert_callouts()
-    {
-        $page = Page::query()->first()->forceFill([
-            'markdown' => '',
-            'html'     => '<h1>Dogcat</h1><p class="callout info">Some callout text</p><p>Another line</p>',
-        ]);
-        $page->save();
-
-        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
-        $resp->assertSee("# Dogcat\n\n<p class=\"callout info\">Some callout text</p>\n\nAnother line", false);
-    }
-
-    public function test_page_markdown_export_handles_bookstacks_wysiwyg_codeblock_format()
-    {
-        $page = Page::query()->first()->forceFill([
-            'markdown' => '',
-            'html'     => '<h1>Dogcat</h1>' . "\r\n" . '<pre id="bkmrk-var-a-%3D-%27cat%27%3B"><code class="language-JavaScript">var a = \'cat\';</code></pre><p>Another line</p>',
-        ]);
-        $page->save();
-
-        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
-        $resp->assertSee("# Dogcat\n\n```JavaScript\nvar a = 'cat';\n```\n\nAnother line", false);
-    }
-
-    public function test_page_markdown_export_handles_tasklist_checkboxes()
-    {
-        $page = Page::query()->first()->forceFill([
-            'markdown' => '',
-            'html'     => '<ul><li><input type="checkbox" checked="checked">Item A</li><li><input type="checkbox">Item B</li></ul>',
-        ]);
-        $page->save();
-
-        $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
-        $resp->assertSee("- [x] Item A\n- [ ] Item B", false);
-    }
-
     public function test_chapter_markdown_export()
     {
         $chapter = Chapter::query()->first();
