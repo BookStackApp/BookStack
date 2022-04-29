@@ -73,7 +73,7 @@ return [
     'breadcrumb' => 'Brödsmula',
     'status' => 'Status',
     'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
+    'status_inactive' => 'Inaktiv',
     'never' => 'Never',
     'none' => 'None',
 
