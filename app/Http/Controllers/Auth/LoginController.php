@@ -25,14 +25,14 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers { logout as traitLogout; }
 
     /**
      * Redirection paths.
      */
     protected $redirectTo = '/';
     protected $redirectPath = '/';
-    protected $redirectAfterLogout = '/login';
+    protected $redirectAfterLogout = '/';
 
     protected $socialAuthService;
     protected $loginService;
@@ -50,7 +50,7 @@ class LoginController extends Controller
         $this->loginService = $loginService;
 
         $this->redirectPath = url('/');
-        $this->redirectAfterLogout = url('/login');
+        $this->redirectAfterLogout = url(config('auth.auto_redirect') ? '/login?logout=1' : '/');
     }
 
     public function username()
@@ -73,6 +73,7 @@ class LoginController extends Controller
     {
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
         $authMethod = config('auth.method');
+        $autoRedirect = config('auth.auto_redirect');
 
         if ($request->has('email')) {
             session()->flashInput([
@@ -83,6 +84,12 @@ class LoginController extends Controller
 
         // Store the previous location for redirect after login
         $this->updateIntendedFromPrevious();
+
+        if ($autoRedirect && !($request->has('logout') && $request->get('logout') == '1') && count($socialDrivers) == 0 && in_array($authMethod, ['oidc', 'saml2'])) {
+            return view('auth.login-redirect', [
+                'authMethod'    => $authMethod,
+            ]);
+        }
 
         return view('auth.login', [
             'socialDrivers' => $socialDrivers,
@@ -250,5 +257,19 @@ class LoginController extends Controller
         }
 
         redirect()->setIntendedUrl($previous);
+    }
+
+    /**
+     * Logout user and perform subsequent redirect.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function logout(Request $request)
+    {
+        $this->traitLogout($request);
+
+        return redirect($this->redirectAfterLogout);
     }
 }
