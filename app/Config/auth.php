@@ -13,6 +13,11 @@ return [
     // Options: standard, ldap, saml2, oidc
     'method' => env('AUTH_METHOD', 'standard'),
 
+    // Automatically redirect to external login provider if only one provider is being used
+    // instead of displaying a single-button login page and requiring users to click through
+    // Supported methods: saml2, oidc
+    'auto_redirect' => env('AUTH_AUTO_REDIRECT', false),
+
     // Authentication Defaults
     // This option controls the default authentication "guard" and password
     // reset options for your application.
