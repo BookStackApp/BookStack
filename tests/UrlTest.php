@@ -34,4 +34,19 @@ class UrlTest extends TestCase
         $this->assertEquals('/cool/docs', $bsRequest->getBaseUrl());
         $this->assertEquals('https://donkey.example.com:8091/cool/docs/login', $bsRequest->getUri());
     }
+
+    public function test_app_url_without_path_does_not_duplicate_path_slash()
+    {
+        config()->set('app.url', 'https://donkey.example.com');
+
+        // Have to manually get and wrap request in our custom type due to testing mechanics
+        $this->get('/settings');
+        $bsRequest = Request::createFrom(request());
+
+        $this->assertEquals('https://donkey.example.com', $bsRequest->getSchemeAndHttpHost());
+        $this->assertEquals('', $bsRequest->getBaseUrl());
+        $this->assertEquals('/settings', $bsRequest->getPathInfo());
+        $this->assertEquals('https://donkey.example.com/settings', $bsRequest->getUri());
+    }
+
 }
