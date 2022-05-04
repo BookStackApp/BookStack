@@ -35,7 +35,8 @@ class Request extends LaravelRequest
         $appUrl = config('app.url', null);
 
         if ($appUrl) {
-            return '/' . rtrim(implode('/', array_slice(explode('/', $appUrl), 3)), '/');
+            $parsedBaseUrl = rtrim(implode('/', array_slice(explode('/', $appUrl), 3)), '/');
+            return empty($parsedBaseUrl) ? '' : ('/' . $parsedBaseUrl);
         }
 
         return parent::getBaseUrl();
