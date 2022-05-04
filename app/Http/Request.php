@@ -36,6 +36,7 @@ class Request extends LaravelRequest
 
         if ($appUrl) {
             $parsedBaseUrl = rtrim(implode('/', array_slice(explode('/', $appUrl), 3)), '/');
+
             return empty($parsedBaseUrl) ? '' : ('/' . $parsedBaseUrl);
         }
 

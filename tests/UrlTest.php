@@ -48,5 +48,4 @@ class UrlTest extends TestCase
         $this->assertEquals('/settings', $bsRequest->getPathInfo());
         $this->assertEquals('https://donkey.example.com/settings', $bsRequest->getUri());
     }
-
 }
