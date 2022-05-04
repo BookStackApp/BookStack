@@ -75,7 +75,7 @@ return [
     'status_active' => 'فعال',
     'status_inactive' => 'غیر فعال',
     'never' => 'هرگز',
-    'none' => 'None',
+    'none' => 'هیچکدام',
 
     // Header
     'header_menu_expand' => 'گسترش منو',
