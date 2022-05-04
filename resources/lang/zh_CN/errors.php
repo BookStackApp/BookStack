@@ -57,7 +57,7 @@ return [
     'page_custom_home_deletion' => '无法删除一个被设置为主页的页面',
 
     // Entities
-    'entity_not_found' => '未找到实体',
+    'entity_not_found' => '未找到项目',
     'bookshelf_not_found' => '未找到书架',
     'book_not_found' => '未找到图书',
     'page_not_found' => '未找到页面',

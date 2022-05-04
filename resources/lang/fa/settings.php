@@ -10,8 +10,8 @@ return [
     'settings' => 'تنظیمات',
     'settings_save' => 'تنظیمات را ذخیره کن',
     'settings_save_success' => 'تنظیمات ذخیره شد',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => 'نسخه سیستم',
+    'categories' => 'دسته بندی ها',
 
     // App Settings
     'app_customization' => 'سفارشی سازی',
@@ -27,7 +27,7 @@ return [
     'app_secure_images' => 'آپلود تصویر با امنیت بالاتر',
     'app_secure_images_toggle' => 'آپلود تصویر با امنیت بالاتر',
     'app_secure_images_desc' => 'به دلایل عملکرد، همه تصاویر عمومی هستند. این گزینه یک رشته تصادفی و غیرقابل حدس زدن را در مقابل آدرس های تصویر اضافه می کند. برای جلوگیری از دسترسی آسان، اطمینان حاصل کنید که فهرست های دایرکتوری فعال نیستند.',
-    'app_default_editor' => 'Default Page Editor',
+    'app_default_editor' => 'ویرایشگر پیش فرض صفحه',
     'app_default_editor_desc' => 'Select which editor will be used by default when editing new pages. This can be overridden at a page level where permissions allow.',
     'app_custom_html' => 'محتوای اصلی HTML سفارشی',
     'app_custom_html_desc' => 'هر محتوای اضافه شده در اینجا در پایین بخش <head> هر صفحه درج می شود. این برای تغییر سبک ها یا اضافه کردن کد تجزیه و تحلیل مفید است.',
