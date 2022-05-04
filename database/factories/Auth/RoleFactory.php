@@ -23,6 +23,7 @@ class RoleFactory extends Factory
         return [
             'display_name' => $this->faker->sentence(3),
             'description'  => $this->faker->sentence(10),
+            'external_auth_id' => '',
         ];
     }
 }

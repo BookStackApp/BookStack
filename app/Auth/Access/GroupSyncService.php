@@ -28,15 +28,25 @@ class GroupSyncService
      */
     protected function externalIdMatchesGroupNames(string $externalId, array $groupNames): bool
     {
-        $externalAuthIds = explode(',', strtolower($externalId));
-
-        foreach ($externalAuthIds as $externalAuthId) {
-            if (in_array(trim($externalAuthId), $groupNames)) {
+        foreach ($this->parseRoleExternalAuthId($externalId) as $externalAuthId) {
+            if (in_array($externalAuthId, $groupNames)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    protected function parseRoleExternalAuthId(string $externalId): array
+    {
+        $inputIds = preg_split('/(?<!\\\),/', $externalId);
+        $cleanIds = [];
+
+        foreach ($inputIds as $inputId) {
+            $cleanIds[] = str_replace('\,', ',', trim($inputId));
+        }
+
+        return $cleanIds;
     }
 
     /**
