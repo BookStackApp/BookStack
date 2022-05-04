@@ -60,8 +60,8 @@ return [
     'webhook_delete_notification' => 'وب هوک با موفقیت حذف شد',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'کاربر با موفقیت به روز شد',
+    'user_delete_notification' => 'کاربر با موفقیت حذف شد',
 
     // Other
     'commented_on'                => 'ثبت دیدگاه',
