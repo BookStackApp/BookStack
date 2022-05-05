@@ -10,8 +10,8 @@ return [
     'settings' => 'Налаштування',
     'settings_save' => 'Зберегти налаштування',
     'settings_save_success' => 'Налаштування збережено',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => 'Версія',
+    'categories' => 'Категорії',
 
     // App Settings
     'app_customization' => 'Налаштування',
@@ -27,7 +27,7 @@ return [
     'app_secure_images' => 'Вищі налаштування безпеки для зображень',
     'app_secure_images_toggle' => 'Увімкунти вищі налаштування безпеки для завантаження зображень',
     'app_secure_images_desc' => 'З міркувань продуктивності всі зображення є загальнодоступними. Цей параметр додає випадковий, важко передбачуваний рядок перед URL-адресами зображень. Переконайтеся, що індексація каталогів не активована, щоб запобігти легкому доступу.',
-    'app_default_editor' => 'Default Page Editor',
+    'app_default_editor' => 'Стандартний редактор сторінок',
     'app_default_editor_desc' => 'Select which editor will be used by default when editing new pages. This can be overridden at a page level where permissions allow.',
     'app_custom_html' => 'Користувацький вміст HTML-заголовку',
     'app_custom_html_desc' => 'Будь-який доданий тут вміст буде вставлено в нижню частину розділу <head> кожної сторінки. Це зручно для перевизначення стилів, або додавання коду аналітики.',
