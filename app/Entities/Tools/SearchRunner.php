@@ -360,7 +360,7 @@ class SearchRunner
                     /** @var Connection $connection */
                     $connection = $query->getConnection();
                     $tagValue = (float) trim($connection->getPdo()->quote($tagValue), "'");
-                    $query->whereRaw("value ${tagOperator} ${tagValue}");
+                    $query->whereRaw("value {$tagOperator} {$tagValue}");
                 } else {
                     $query->where('value', $tagOperator, $tagValue);
                 }
