@@ -24,7 +24,7 @@ return [
     'width' => 'Ширина',
     'height' => 'Висота',
     'More' => 'Більше',
-    'select' => 'Select...',
+    'select' => 'Вибрати…',
 
     // Toolbar
     'formats' => 'Формати',
@@ -53,10 +53,10 @@ return [
     'align_left' => 'Вирівняти по лівому краю',
     'align_center' => 'Вирівняти по центру',
     'align_right' => 'Вирівнювання по правому краю',
-    'align_justify' => 'Justify',
+    'align_justify' => 'За шириною',
     'list_bullet' => 'Маркований список',
     'list_numbered' => 'Нумерований список',
-    'list_task' => 'Task list',
+    'list_task' => 'Список завдань',
     'indent_increase' => 'Збільшити відступ',
     'indent_decrease' => 'Зменшити відступ',
     'table' => 'Таблиця',
@@ -95,8 +95,8 @@ return [
     'cell_type_cell' => 'Комірка',
     'cell_scope' => 'Scope',
     'cell_type_header' => 'Комірка заголовка',
-    'merge_cells' => 'Merge cells',
-    'split_cell' => 'Split cell',
+    'merge_cells' => 'Об\'єднати комірки',
+    'split_cell' => 'Роз\'єднати комірку',
     'table_row_group' => 'Група рядків',
     'table_column_group' => 'Група стовпців',
     'horizontal_align' => 'Горизонтальне вирівнювання',
@@ -154,7 +154,7 @@ return [
     'toggle_label' => 'Перемкнути ярлики',
 
     // About view
-    'about' => 'About the editor',
+    'about' => 'Про редактор',
     'about_title' => 'Про WYSIWYG редактор',
     'editor_license' => 'Ліцензія редактора і авторські права',
     'editor_tiny_license' => 'Цей редактор побудований за допомогою :tinyLink що забезпечується під ліцензією LGPL v2.1.',
