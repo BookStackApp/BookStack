@@ -615,7 +615,7 @@ class LdapTest extends TestCase
 
     public function test_dump_user_details_option_works()
     {
-        config()->set(['services.ldap.dump_user_details' => true]);
+        config()->set(['services.ldap.dump_user_details' => true, 'services.ldap.thumbnail_attribute' => 'jpegphoto']);
 
         $this->commonLdapMocks(1, 1, 1, 1, 1);
         $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
@@ -623,6 +623,8 @@ class LdapTest extends TestCase
             ->andReturn(['count' => 1, 0 => [
                 'uid' => [$this->mockUser->name],
                 'cn'  => [$this->mockUser->name],
+                // Test dumping binary data for avatar responses
+                'jpegphoto' => base64_decode('/9j/4AAQSkZJRg=='),
                 'dn'  => ['dc=test' . config('services.ldap.base_dn')],
             ]]);
 
