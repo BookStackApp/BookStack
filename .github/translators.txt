@@ -242,3 +242,4 @@ sgenc :: Turkish
 Shukrullo (vodiylik) :: Uzbek
 William W. (Nevnt) :: Chinese Traditional
 eamaro :: Portuguese
+Ypsilon-dev :: Arabic

@@ -625,7 +625,7 @@ class LdapTest extends TestCase
                 'cn'  => [$this->mockUser->name],
                 // Test dumping binary data for avatar responses
                 'jpegphoto' => base64_decode('/9j/4AAQSkZJRg=='),
-                'dn'  => ['dc=test' . config('services.ldap.base_dn')],
+                'dn'        => ['dc=test' . config('services.ldap.base_dn')],
             ]]);
 
         $resp = $this->post('/login', [
