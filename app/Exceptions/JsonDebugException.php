@@ -19,10 +19,13 @@ class JsonDebugException extends Exception
     }
 
     /**
-     * Covert this exception into a response.
+     * Convert this exception into a response.
+     * We add a manual data conversion to UTF8 to ensure any binary data is presentable as a JSON string.
      */
     public function render(): JsonResponse
     {
-        return response()->json($this->data);
+        $cleaned = mb_convert_encoding($this->data, 'UTF-8');
+
+        return response()->json($cleaned);
     }
 }
