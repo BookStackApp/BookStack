@@ -161,3 +161,22 @@
 	}
 }
 </code></pre>
+
+<hr>
+
+<h5 id="rate-limits" class="text-mono mb-m">Rate Limits</h5>
+<p>
+    The API has built-in per-user rate-limiting to prevent potential abuse using the API.
+    By default, this is set to 180 requests per minute but this can be changed by an administrator
+    by setting an "API_REQUESTS_PER_MIN" .env option like so:
+</p>
+
+<pre><code class="language-bash"># The number of API requests that can be made per minute by a single user.
+API_REQUESTS_PER_MIN=180</code></pre>
+
+<p>
+    When the limit is reached you will receive a 429 "Too Many Attempts." error response.
+    It's generally good practice to limit requests made from your API client, where possible, to avoid
+    affecting normal use of the system caused by over-consuming system resources.
+    Keep in mind there may be other rate-limiting factors such as web-server & firewall controls.
+</p>
