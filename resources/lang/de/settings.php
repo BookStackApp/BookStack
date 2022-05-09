@@ -282,6 +282,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'es_AR' => 'Spanisch Argentinisch',
         'et' => 'Estnisch',
         'eu' => 'Euskara',
+        'fa' => 'فارسی',
         'fr' => 'Französisch',
         'he' => 'Hebräisch',
         'hr' => 'Kroatisch',

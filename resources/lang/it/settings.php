@@ -279,6 +279,7 @@ return [
         'es_AR' => 'Spagnolo d\'Argentina',
         'et' => 'Estone',
         'eu' => 'Euskara',
+        'fa' => 'فارسی',
         'fr' => 'Francese',
         'he' => 'Ebraico',
         'hr' => 'Croato',
