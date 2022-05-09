@@ -279,6 +279,7 @@ return [
         'es_AR' => 'Español Argentina (Argentiina hispaania keel)',
         'et' => 'Eesti keel',
         'eu' => 'Euskara',
+        'fa' => 'فارسی',
         'fr' => 'Français (prantsuse keel)',
         'he' => 'עברית (heebrea keel)',
         'hr' => 'Hrvatski (horvaadi keel)',

@@ -127,9 +127,11 @@ abstract class Controller extends BaseController
     protected function streamedDownloadResponse($stream, string $fileName): StreamedResponse
     {
         return response()->stream(function () use ($stream) {
-            // End & flush the output buffer otherwise we still seem to use memory.
+
+            // End & flush the output buffer, if we're in one, otherwise we still use memory.
+            // Output buffer may or may not exist depending on PHP `output_buffering` setting.
             // Ignore in testing since output buffers are used to gather a response.
-            if (!app()->runningUnitTests()) {
+            if (!empty(ob_get_status()) && !app()->runningUnitTests()) {
                 ob_end_clean();
             }
 
