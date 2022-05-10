@@ -180,7 +180,7 @@ return [
     'pages_attachments' => 'Eranskinak',
     'pages_navigation' => 'Nabigazio orrialdea',
     'pages_delete' => 'Ezabatu orria',
-    'pages_delete_named' => 'Delete Page :pageName',
+    'pages_delete_named' => ':pageName Orria ezabatu',
     'pages_delete_draft_named' => 'Delete Draft Page :pageName',
     'pages_delete_draft' => 'Delete Draft Page',
     'pages_delete_success' => 'Orria ezabatua',
