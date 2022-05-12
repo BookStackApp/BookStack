@@ -235,6 +235,7 @@
     display: none;
     padding-inline-start: 0;
     position: relative;
+    margin-bottom: 0;
   }
   [chapter-toggle].open + .sub-menu {
     display: block;
@@ -484,6 +485,9 @@ ul.pagination {
     text-align: start;
     display: block;
     white-space: nowrap;
+  }
+  > .entity-list > .entity-list-item:last-child {
+    margin-bottom: -$-xs;
   }
 }
 
