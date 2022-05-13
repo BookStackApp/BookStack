@@ -64,15 +64,21 @@
 
     <div class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
-        <div class="blended-links text-small text-muted">
+        <div class="blended-links">
             @include('entities.meta', ['entity' => $chapter])
 
             @if($book->restricted)
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $book))
-                        <a href="{{ $book->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.books_permissions_active') }}</a>
+                        <a href="{{ $book->getUrl('/permissions') }}" class="entity-meta-item">
+                            @icon('lock')
+                            <div>{{ trans('entities.books_permissions_active') }}</div>
+                        </a>
                     @else
-                        @icon('lock'){{ trans('entities.books_permissions_active') }}
+                        <div class="entity-meta-item">
+                            @icon('lock')
+                            <div>{{ trans('entities.books_permissions_active') }}</div>
+                        </div>
                     @endif
                 </div>
             @endif
@@ -80,9 +86,15 @@
             @if($chapter->restricted)
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $chapter))
-                        <a href="{{ $chapter->getUrl('/permissions') }}">@icon('lock'){{ trans('entities.chapters_permissions_active') }}</a>
+                        <a href="{{ $chapter->getUrl('/permissions') }}" class="entity-meta-item">
+                            @icon('lock')
+                            <div>{{ trans('entities.chapters_permissions_active') }}</div>
+                        </a>
                     @else
-                        @icon('lock'){{ trans('entities.chapters_permissions_active') }}
+                        <div class="entity-meta-item">
+                            @icon('lock')
+                            <div>{{ trans('entities.chapters_permissions_active') }}</div>
+                        </div>
                     @endif
                 </div>
             @endif

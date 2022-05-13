@@ -729,3 +729,19 @@ ul.pagination {
     }
   }
 }
+
+.entity-meta-item {
+  display: flex;
+  line-height: 1.2;
+  margin: 0.6em 0;
+  align-content: start;
+  gap: $-s;
+  a {
+    line-height: 1.2;
+  }
+  svg {
+    flex-shrink: 0;
+    width: 1em;
+    margin: 0;
+  }
+}
