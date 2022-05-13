@@ -247,7 +247,7 @@ return [
     'pages_permissions_active' => 'Oprávnění stránky byla aktivována',
     'pages_initial_revision' => 'První vydání',
     'pages_initial_name' => 'Nová stránka',
-    'pages_editing_draft_notification' => 'Právě upravujete koncept, který byl uložen před :timeDiff.',
+    'pages_editing_draft_notification' => 'Právě upravujete koncept, který byl uložen :timeDiff.',
     'pages_draft_edited_notification' => 'Tato stránka se od té doby změnila. Je doporučeno aktuální koncept zahodit.',
     'pages_draft_page_changed_since_creation' => 'Tato stránka byla aktualizována od vytvoření tohoto konceptu. Doporučuje se zrušit tento koncept nebo se postarat o to, abyste si nepřepsali žádné již zadané změny.',
     'pages_draft_edit_active' => [
