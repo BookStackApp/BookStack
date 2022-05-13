@@ -157,22 +157,6 @@
   @include margin($-xs, -$-s, 0, -$-s);
   padding-inline-start: 0;
   padding-inline-end: 0;
-  position: relative;
-
-  &:after, .sub-menu:after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: $-m;
-    top: 1rem;
-    bottom: 1rem;
-    border-inline-start: 4px solid rgba(0, 0, 0, 0.1);
-    z-index: 0;
-    @include rtl {
-      left: auto;
-      right: $-m;
-    }
-  }
 
   ul {
     list-style: none;
@@ -181,8 +165,8 @@
   }
 
   .entity-list-item {
-    padding-top: $-xxs;
-    padding-bottom: $-xxs;
+    padding-top: 2px;
+    padding-bottom: 2px;
     background-clip: content-box;
     border-radius: 0 3px 3px 0;
     padding-inline-end: 0;
@@ -193,7 +177,7 @@
     }
   }
   .entity-list-item.selected {
-    @include lightDark(background-color, rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
+    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
   }
   .entity-list-item.no-hover {
     margin-top: -$-xs;
@@ -220,7 +204,7 @@
     align-self: stretch;
     flex-shrink: 0;
     border-radius: 1px;
-    opacity: 0.6;
+    opacity: 0.8;
   }
   .entity-list-item .icon:after {
     opacity: 1;
@@ -440,8 +424,8 @@ ul.pagination {
     cursor: pointer;
   }
   &:not(.no-hover):hover {
+    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
     text-decoration: none;
-    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
   }
   &.outline-hover:hover {
