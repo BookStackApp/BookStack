@@ -578,8 +578,8 @@ ul.pagination {
   right: 0;
   margin: $-m 0;
   @include lightDark(background-color, #fff, #333);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
-  border-radius: 1px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
   min-width: 180px;
   padding: $-xs 0;
   @include lightDark(color, #555, #eee);
@@ -654,6 +654,12 @@ ul.pagination {
       margin-block-start: 1px;
     }
   }
+}
+
+// Shift in right-sidebar dropdown menus to prevent shadows
+// being cut by scrollable container.
+.tri-layout-right .dropdown-menu {
+  right: $-xs;
 }
 
 // Books grid view
