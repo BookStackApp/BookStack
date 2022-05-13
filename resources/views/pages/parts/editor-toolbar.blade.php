@@ -65,7 +65,9 @@
         </div>
 
         <div class="action-buttons px-m py-xs">
-            <div component="dropdown" dropdown-move-menu class="dropdown-container">
+            <div component="dropdown"
+                 option:dropdown:move-menu="true"
+                 class="dropdown-container">
                 <button refs="dropdown@toggle" type="button" aria-haspopup="true" aria-expanded="false" class="text-primary text-button">@icon('edit') <span refs="page-editor@changelogDisplay">{{ trans('entities.pages_edit_set_changelog') }}</span></button>
                 <ul refs="dropdown@menu" class="wide dropdown-menu">
                     <li class="px-l py-m">
