@@ -155,6 +155,13 @@ body.flexbox {
   }
 }
 
+.gap-m {
+  gap: $-m;
+}
+
+.justify-flex-start {
+  justify-content: flex-start;
+}
 .justify-flex-end {
   justify-content: flex-end;
 }

@@ -19,7 +19,7 @@
                         <p class="small">{{ trans('settings.users_migrate_ownership_desc') }}</p>
                     </div>
                     <div>
-                        @include('form.user-select', ['name' => 'new_owner_id', 'user' => null, 'compact' => false])
+                        @include('form.user-select', ['name' => 'new_owner_id', 'user' => null])
                     </div>
                 </div>
             @endif

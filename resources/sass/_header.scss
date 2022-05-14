@@ -86,6 +86,8 @@ header .search-box {
     border-radius: 40px;
     color: #EEE;
     z-index: 2;
+    height: auto;
+    padding: $-xs*1.5;
     padding-inline-start: 40px;
     &:focus {
       outline: none;
@@ -276,29 +278,6 @@ header .search-box {
     > span:first-child {
       margin-inline-end: 0;
     }
-  }
-}
-
-.dropdown-search {
-  position: relative;
-  .dropdown-search-toggle {
-    padding: $-xs;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    &:hover {
-      border-color: #DDD;
-    }
-  }
-  .svg-icon {
-    margin-inline-end: 0;
-  }
-}
-
-.dropdown-search-toggle.compact {
-  padding: $-xxs $-xs;
-  .avatar {
-    height: 22px;
-    width: 22px;
   }
 }
 
