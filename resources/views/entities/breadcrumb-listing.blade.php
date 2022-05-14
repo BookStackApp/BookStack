@@ -18,6 +18,6 @@
         <div refs="dropdown-search@loading">
             @include('common.loading-icon')
         </div>
-        <div refs="dropdown-search@listContainer" class="dropdown-search-list px-m"></div>
+        <div refs="dropdown-search@listContainer" class="dropdown-search-list px-m" tabindex="-1"></div>
     </div>
 </div>
