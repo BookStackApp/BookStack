@@ -400,6 +400,7 @@ ul.pagination {
   padding: $-s $-m;
   display: flex;
   align-items: center;
+  gap: $-m;
   background-color: transparent;
   border: 0;
   width: 100%;
@@ -409,7 +410,6 @@ ul.pagination {
     color: #666;
   }
   > span:first-child {
-    margin-inline-end: $-m;
     flex-basis: 1.88em;
     flex: none;
   }
@@ -449,7 +449,8 @@ ul.pagination {
 }
 
 .card .entity-list-item:not(.no-hover):hover {
-  @include lightDark(background-color, #F2F2F2, #2d2d2d)
+  @include lightDark(background-color, #F2F2F2, #2d2d2d);
+  border-radius: 0;
 }
 .card .entity-list-item .entity-list-item:hover {
   background-color: #EEEEEE;
@@ -518,6 +519,9 @@ ul.pagination {
   .entity-list-item p {
     font-size: $fs-m * 0.8;
     padding-top: $-xs;
+  }
+  .entity-list-item p:empty {
+    padding-top: 0;
   }
   p {
     margin: 0;
