@@ -2,7 +2,7 @@
      option:dropdown-search:url="/search/entity/siblings?entity_type={{$entity->getType()}}&entity_id={{ $entity->id }}"
      option:dropdown-search:local-search-selector=".entity-list-item"
 >
-    <div class="dropdown-search-toggle" refs="dropdown@toggle"
+    <div class="dropdown-search-toggle-breadcrumb" refs="dropdown@toggle"
          aria-haspopup="true" aria-expanded="false" tabindex="0">
         <div class="separator">@icon('chevron-right')</div>
     </div>
