@@ -83,6 +83,38 @@ export function slideDown(element, animTime = 400) {
 }
 
 /**
+ * Transition the height of the given element between two states.
+ * Call with first state, and you'll receive a function in return.
+ * Call the returned function in the second state to animate between those two states.
+ * If animating to/from 0-height use the slide-up/slide down as easier alternatives.
+ * @param {Element} element - Element to animate
+ * @param {Number} animTime - Animation time in ms
+ * @returns {function} - Function to run in second state to trigger animation.
+ */
+export function transitionHeight(element, animTime = 400) {
+    const startHeight = element.getBoundingClientRect().height;
+    const initialComputedStyles = getComputedStyle(element);
+    const startPaddingTop = initialComputedStyles.getPropertyValue('padding-top');
+    const startPaddingBottom = initialComputedStyles.getPropertyValue('padding-bottom');
+
+    return () => {
+        cleanupExistingElementAnimation(element);
+        const targetHeight = element.getBoundingClientRect().height;
+        const computedStyles = getComputedStyle(element);
+        const targetPaddingTop = computedStyles.getPropertyValue('padding-top');
+        const targetPaddingBottom = computedStyles.getPropertyValue('padding-bottom');
+        const animStyles = {
+            height: [`${startHeight}px`, `${targetHeight}px`],
+            overflow: ['hidden', 'hidden'],
+            paddingTop: [startPaddingTop, targetPaddingTop],
+            paddingBottom: [startPaddingBottom, targetPaddingBottom],
+        };
+
+        animateStyles(element, animStyles, animTime);
+    };
+}
+
+/**
  * Animate the css styles of an element using FLIP animation techniques.
  * Styles must be an object where the keys are style properties, camelcase, and the values
  * are an array of two items in the format [initialValue, finalValue]
