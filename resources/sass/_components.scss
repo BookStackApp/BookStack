@@ -739,7 +739,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: none;
   position: absolute;
   z-index: 80;
-  right: -$-m;
+  right: 0;
+  top: 0;
+  margin-top: $-m;
   @include rtl {
     right: auto;
     left: -$-m;
