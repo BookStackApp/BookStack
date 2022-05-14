@@ -101,7 +101,7 @@ class DropDown {
     }
 
     getFocusable() {
-        return Array.from(this.menu.querySelectorAll('[tabindex],[href],button,input:not([type=hidden])'));
+        return Array.from(this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"]),[href],button,input:not([type=hidden])'));
     }
 
     focusNext() {
