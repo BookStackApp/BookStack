@@ -61,7 +61,7 @@ return [
 
     // Users
     'user_update_notification' => 'Usuario actualizado correctamente',
-    'user_delete_notification' => 'Usuario eliminado correctamente',
+    'user_delete_notification' => 'El usuario fue eliminado correctamente',
 
     // Other
     'commented_on'                => 'comentado',
