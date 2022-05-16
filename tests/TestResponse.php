@@ -111,7 +111,7 @@ class TestResponse extends BaseTestResponse
 
         foreach ($elements as $element) {
             $element = new Crawler($element);
-            if (preg_match("/$pattern/i", $element->html())) {
+            if (preg_match("/$pattern/i", $element->text())) {
                 $matched = true;
                 break;
             }
