@@ -6,13 +6,13 @@
 return [
 
     // Pages
-    'page_create'                 => 'created page',
-    'page_create_notification'    => 'Page successfully created',
-    'page_update'                 => 'updated page',
-    'page_update_notification'    => 'Page successfully updated',
-    'page_delete'                 => 'deleted page',
-    'page_delete_notification'    => 'Page successfully deleted',
-    'page_restore'                => 'restored page',
+    'page_create'                 => 'tudalen wedi\'i chreu',
+    'page_create_notification'    => 'Tudalen wedi\'i chreu\'n llwyddiannus',
+    'page_update'                 => 'tudalen wedi\'i diweddaru',
+    'page_update_notification'    => 'Tudalen wedi\'i diweddaru\'n llwyddiannus',
+    'page_delete'                 => 'tudalen wedi\'i dileu',
+    'page_delete_notification'    => 'Cafodd y dudalen ei dileu yn llwyddiannus',
+    'page_restore'                => 'tudalen wedi\'i hadfer',
     'page_restore_notification'   => 'Page successfully restored',
     'page_move'                   => 'moved page',
 
