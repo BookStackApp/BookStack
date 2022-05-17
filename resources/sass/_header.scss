@@ -21,10 +21,14 @@ header {
   color: rgb(250, 250, 250);
   border-bottom: 1px solid #DDD;
   box-shadow: $bs-card;
-  padding: $-xxs 0;
   @include lightDark(border-bottom-color, #DDD, #000);
   @include whenDark {
     filter: saturate(0.8) brightness(0.8);
+  }
+  .header-links {
+    display: flex;
+    align-items: center;
+    justify-content: end;
   }
   .links {
     display: inline-block;
@@ -32,8 +36,13 @@ header {
   }
   .links a {
     display: inline-block;
-    padding: $-m;
+    padding: 10px $-m;
     color: #FFF;
+    border-radius: 3px;
+  }
+  .links a:hover {
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, .15);
   }
   .dropdown-container {
     padding-inline-start: $-m;
@@ -49,19 +58,25 @@ header {
   .user-name {
     vertical-align: top;
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
-    > * {
-      vertical-align: top;
-    }
+    padding: $-s;
+    margin: 0 (-$-s);
+    border-radius: 3px;
+    gap: $-xs;
     > span {
       padding-inline-start: $-xs;
       display: inline-block;
-      padding-top: $-xxs;
+      line-height: 1;
     }
     > svg {
-      padding-top: 4px;
       font-size: 18px;
+      margin-top: -2px;
+      margin-inline-end: 0;
+    }
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
     }
     @include between($l, $xl) {
       padding-inline-start: $-xs;
@@ -79,7 +94,6 @@ header {
 
 header .search-box {
   display: inline-block;
-  margin-top: 10px;
   input {
     background-color: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -91,12 +105,15 @@ header .search-box {
     padding-inline-start: 40px;
     &:focus {
       outline: none;
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
   }
   button {
     z-index: 1;
     left: 16px;
+    top: 10px;
+    color: #FFF;
+    opacity: 0.6;
     @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
     @include rtl {
       left: auto;
@@ -106,36 +123,39 @@ header .search-box {
       margin-block-end: 0;
     }
   }
-  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: #DDD;
-  }
-  ::-moz-placeholder { /* Firefox 19+ */
-    color: #DDD;
+  input::placeholder {
+    color: #FFF;
+    opacity: 0.6;
   }
   @include between($l, $xl) {
     max-width: 200px;
   }
+  &:focus-within button {
+    opacity: 1;
+  }
 }
 
 .logo {
-  display: inline-block;
+  display: inline-flex;
+  padding: ($-s - 6px) $-s;
+  margin: 6px (-$-s);
+  gap: $-s;
+  align-items: center;
+  border-radius: 4px;
   &:hover {
     color: #FFF;
     text-decoration: none;
+    background-color: rgba(255, 255, 255, .15);
   }
 }
+
 .logo-text {
-  display: inline-block;
   font-size: 1.8em;
   color: #fff;
   font-weight: 400;
-  @include padding(14px, $-l, 14px, 0);
-  vertical-align: top;
   line-height: 1;
 }
 .logo-image {
-  @include margin($-xs, $-s, $-xs, 0);
-  vertical-align: top;
   height: 43px;
 }
 
