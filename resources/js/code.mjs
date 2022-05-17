@@ -243,6 +243,21 @@ export function popupEditor(elem, modeSuggestion) {
 }
 
 /**
+ * Create an inline editor to replace the given textarea.
+ * @param {HTMLTextAreaElement} textArea
+ * @param {String} mode
+ * @returns {CodeMirror3}
+ */
+export function inlineEditor(textArea, mode) {
+    return CodeMirror.fromTextArea(textArea, {
+        mode: getMode(mode, textArea.value),
+        lineNumbers: true,
+        lineWrapping: false,
+        theme: getTheme(),
+    });
+}
+
+/**
  * Set the mode of a codemirror instance.
  * @param cmInstance
  * @param modeSuggestion
