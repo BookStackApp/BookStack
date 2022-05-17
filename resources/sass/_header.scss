@@ -194,23 +194,29 @@ header .search-box {
     overflow: hidden;
     position: absolute;
     box-shadow: $bs-hover;
-    margin-top: -$-xs;
+    margin-top: $-m;
+    padding: $-xs 0;
     &.show {
       display: block;
     }
   }
   header .links a, header .dropdown-container ul li a, header .dropdown-container ul li button {
     text-align: start;
-    display: block;
-    padding: $-s $-m;
+    display: grid;
+    align-items: center;
+    padding: 8px $-m;
+    gap: $-m;
     color: $text-dark;
+    grid-template-columns: 16px auto;
+    line-height: 1.4;
     @include lightDark(color, $text-dark, #eee);
     svg {
       margin-inline-end: $-s;
+      width: 16px;
     }
     &:hover {
-      @include lightDark(background-color, #eee, #333);
-      @include lightDark(color, #000, #fff);
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
       text-decoration: none;
     }
     &:focus {
