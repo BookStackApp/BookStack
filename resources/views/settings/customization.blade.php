@@ -119,7 +119,13 @@
             <div>
                 <label for="setting-app-custom-head" class="setting-list-label">{{ trans('settings.app_custom_html') }}</label>
                 <p class="small">{{ trans('settings.app_custom_html_desc') }}</p>
-                <textarea name="setting-app-custom-head" id="setting-app-custom-head" class="simple-code-input mt-m">{{ setting('app-custom-head', '') }}</textarea>
+                <div class="mt-m">
+                    <textarea component="code-textarea"
+                              option:code-textarea:mode="html"
+                              name="setting-app-custom-head"
+                              id="setting-app-custom-head"
+                              class="simple-code-input">{{ setting('app-custom-head', '') }}</textarea>
+                </div>
                 <p class="small text-right">{{ trans('settings.app_custom_html_disabled_notice') }}</p>
             </div>
 

@@ -9,6 +9,7 @@ import bookSort from "./book-sort.js"
 import chapterToggle from "./chapter-toggle.js"
 import codeEditor from "./code-editor.js"
 import codeHighlighter from "./code-highlighter.js"
+import codeTextarea from "./code-textarea.js"
 import collapsible from "./collapsible.js"
 import confirmDialog from "./confirm-dialog"
 import customCheckbox from "./custom-checkbox.js"
@@ -65,6 +66,7 @@ const componentMapping = {
     "chapter-toggle": chapterToggle,
     "code-editor": codeEditor,
     "code-highlighter": codeHighlighter,
+    "code-textarea": codeTextarea,
     "collapsible": collapsible,
     "confirm-dialog": confirmDialog,
     "custom-checkbox": customCheckbox,
