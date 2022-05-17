@@ -351,16 +351,13 @@ input[type=color] {
   }
 }
 
-.inline-input-style {
+.title-input input[type="text"] {
   display: block;
   width: 100%;
   padding: $-s;
-}
-
-.title-input input[type="text"] {
-  @extend .inline-input-style;
   margin-top: 0;
   font-size: 2em;
+  height: auto;
 }
 
 .title-input.page-title {
@@ -385,10 +382,12 @@ input[type=color] {
 }
 
 .description-input textarea {
-  @extend .inline-input-style;
+  display: block;
+  width: 100%;
+  padding: $-s;
   font-size: $fs-m;
   color: #666;
-  width: 100%;
+  height: auto;
 }
 
 div[editor-type="markdown"] .title-input.page-title input[type="text"] {
