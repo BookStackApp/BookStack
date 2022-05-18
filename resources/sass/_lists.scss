@@ -6,7 +6,7 @@
     justify-self: stretch;
     align-self: stretch;
     height: auto;
-    margin-inline-end: $-l;
+    margin-inline-end: $-xs;
   }
   .icon:after {
     opacity: 0.5;
@@ -58,7 +58,7 @@
   }
   .chapter-expansion-toggle {
     border-radius: 0 4px 4px 0;
-    padding: $-xs $-m;
+    padding: $-xs ($-m + $-xxs);
     width: 100%;
     text-align: start;
   }
@@ -448,7 +448,7 @@ ul.pagination {
   }
 }
 
-.card .entity-list-item:not(.no-hover):hover {
+.card .entity-list-item:not(.no-hover, .book-contents .entity-list-item):hover {
   @include lightDark(background-color, #F2F2F2, #2d2d2d);
   border-radius: 0;
 }
