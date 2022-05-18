@@ -12,11 +12,12 @@
 @if ($chapter->visible_pages->count() > 0)
     <div class="chapter chapter-expansion">
         <span class="icon text-chapter">@icon('page')</span>
-        <div class="content">
-            <button type="button" chapter-toggle
+        <div component="chapter-contents" class="content">
+            <button type="button"
+                    refs="chapter-contents@toggle"
                     aria-expanded="false"
-                    class="text-muted chapter-expansion-toggle">@icon('caret-right') <span>{{ trans_choice('entities.x_pages', $chapter->visible_pages->count()) }}</span></button>
-            <div class="inset-list">
+                    class="text-muted chapter-contents-toggle">@icon('caret-right') <span>{{ trans_choice('entities.x_pages', $chapter->visible_pages->count()) }}</span></button>
+            <div refs="chapter-contents@list" class="inset-list chapter-contents-list">
                 <div class="entity-list-item-children">
                     @include('entities.list', ['entities' => $chapter->visible_pages])
                 </div>

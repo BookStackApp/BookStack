@@ -56,13 +56,13 @@
   > .content {
     flex: 1;
   }
-  .chapter-expansion-toggle {
+  .chapter-contents-toggle {
     border-radius: 0 4px 4px 0;
     padding: $-xs ($-m + $-xxs);
     width: 100%;
     text-align: start;
   }
-  .chapter-expansion-toggle:hover {
+  .chapter-contents-toggle:hover {
     background-color: rgba(0, 0, 0, 0.06);
   }
 }
@@ -171,6 +171,7 @@
     border-radius: 0 3px 3px 0;
     padding-inline-end: 0;
     .content {
+      width: 100%;
       padding-top: $-xs;
       padding-bottom: $-xs;
       max-width: calc(100% - 20px);
@@ -193,9 +194,18 @@
     margin-top: -.2rem;
     margin-inline-start: -1rem;
   }
-  [chapter-toggle] {
-    padding-inline-start: .7rem;
-    padding-bottom: .2rem;
+  .chapter-contents-toggle {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: $-xxs $-s ($-xxs * 2) $-s;
+    border-radius: 0 3px 3px 0;
+    line-height: 1;
+    margin-top: -$-xxs;
+    margin-bottom: -$-xxs;
+    &:hover {
+      @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+    }
   }
   .entity-list-item .icon {
     z-index: 2;
@@ -214,16 +224,11 @@
   }
 }
 
-.chapter-child-menu {
-  ul.sub-menu {
-    display: none;
-    padding-inline-start: 0;
-    position: relative;
-    margin-bottom: 0;
-  }
-  [chapter-toggle].open + .sub-menu {
-    display: block;
-  }
+.chapter-child-menu ul.sub-menu {
+  display: none;
+  padding-inline-start: 0;
+  position: relative;
+  margin-bottom: 0;
 }
 
 // Sortable Lists
@@ -457,7 +462,7 @@ ul.pagination {
 }
 
 .entity-list-item-children {
-  padding: $-m;
+  padding: $-m $-l;
   > div {
     overflow: hidden;
     padding: 0 0 $-xs 0;
