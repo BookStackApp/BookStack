@@ -12,14 +12,14 @@ class ChapterToggle {
         const list = this.elem.parentNode.querySelector('.inset-list');
         this.elem.classList.add('open');
         this.elem.setAttribute('aria-expanded', 'true');
-        slideDown(list, 240);
+        slideDown(list, 180);
     }
 
     close() {
         const list = this.elem.parentNode.querySelector('.inset-list');
         this.elem.classList.remove('open');
         this.elem.setAttribute('aria-expanded', 'false');
-        slideUp(list, 240);
+        slideUp(list, 180);
     }
 
     click(event) {

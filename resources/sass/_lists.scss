@@ -460,8 +460,7 @@ ul.pagination {
   padding: $-m;
   > div {
     overflow: hidden;
-    padding: $-xs 0;
-    margin-top: -$-xs;
+    padding: 0 0 $-xs 0;
   }
   .entity-chip {
     text-overflow: ellipsis;

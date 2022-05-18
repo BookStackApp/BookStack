@@ -49,7 +49,7 @@ export function slideUp(element, animTime = 400) {
     const currentPaddingTop = computedStyles.getPropertyValue('padding-top');
     const currentPaddingBottom = computedStyles.getPropertyValue('padding-bottom');
     const animStyles = {
-        height: [`${currentHeight}px`, '0px'],
+        maxHeight: [`${currentHeight}px`, '0px'],
         overflow: ['hidden', 'hidden'],
         paddingTop: [currentPaddingTop, '0px'],
         paddingBottom: [currentPaddingBottom, '0px'],
@@ -73,7 +73,7 @@ export function slideDown(element, animTime = 400) {
     const targetPaddingTop = computedStyles.getPropertyValue('padding-top');
     const targetPaddingBottom = computedStyles.getPropertyValue('padding-bottom');
     const animStyles = {
-        height: ['0px', `${targetHeight}px`],
+        maxHeight: ['0px', `${targetHeight}px`],
         overflow: ['hidden', 'hidden'],
         paddingTop: ['0px', targetPaddingTop],
         paddingBottom: ['0px', targetPaddingBottom],
