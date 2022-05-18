@@ -61,7 +61,7 @@
   }
 }
 
-[chapter-toggle] {
+.chapter-contents-toggle {
   cursor: pointer;
   margin: 0;
   transition: all ease-in-out 180ms;
@@ -77,7 +77,7 @@
     transform: rotate(90deg);
   }
   svg[data-icon="caret-right"] + * {
-    margin-inline-start: $-xs;
+    margin-inline-start: $-xxs;
   }
 }
 
