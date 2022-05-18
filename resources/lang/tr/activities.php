@@ -13,7 +13,7 @@ return [
     'page_delete'                 => 'sayfayı sildi',
     'page_delete_notification'    => 'Sayfa başarıyla silindi',
     'page_restore'                => 'sayfayı eski haline getirdi',
-    'page_restore_notification'   => 'Sayfa başarıyla kurtarıldı',
+    'page_restore_notification'   => 'Sayfa Başarıyla Eski Haline Getirildi',
     'page_move'                   => 'sayfayı taşıdı',
 
     // Chapters
