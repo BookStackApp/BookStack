@@ -453,6 +453,61 @@ ul.pagination {
   }
 }
 
+.split-icon-list-item {
+  display: flex;
+  align-items: center;
+  gap: $-m;
+  background-color: transparent;
+  border: 0;
+  width: 100%;
+  position: relative;
+  word-break: break-word;
+  border-radius: 4px;
+  > a {
+    padding: $-s $-m;
+    display: flex;
+    align-items: center;
+    gap: $-m;
+    flex: 1;
+  }
+  > a:hover {
+    text-decoration: none;
+  }
+  .icon {
+    flex-basis: 1.88em;
+    flex: none;
+  }
+  &:hover {
+    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+  }
+}
+
+.icon-list-item-dropdown {
+  margin-inline-start: auto;
+  align-self: stretch;
+  display: flex;
+  align-items: stretch;
+  border-inline-start: 1px solid rgba(0, 0, 0, .1);
+  visibility: hidden;
+}
+.split-icon-list-item:hover .icon-list-item-dropdown,
+.split-icon-list-item:focus-within .icon-list-item-dropdown {
+  visibility: visible;
+}
+.icon-list-item-dropdown-toggle {
+  padding: $-xs;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  @include lightDark(color, #888, #999);
+  svg {
+    margin: 0;
+  }
+  &:hover {
+    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+  }
+}
+
 .card .entity-list-item:not(.no-hover, .book-contents .entity-list-item):hover {
   @include lightDark(background-color, #F2F2F2, #2d2d2d);
   border-radius: 0;
@@ -648,9 +703,10 @@ ul.pagination {
   }
 }
 
-// Shift in right-sidebar dropdown menus to prevent shadows
+// Shift in sidebar dropdown menus to prevent shadows
 // being cut by scrollable container.
-.tri-layout-right .dropdown-menu {
+.tri-layout-right .dropdown-menu,
+.tri-layout-left .dropdown-menu {
   right: $-xs;
 }
 

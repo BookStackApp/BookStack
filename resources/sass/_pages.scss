@@ -396,10 +396,14 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 }
 
-.entity-list-item > span:first-child, .icon-list-item > span:first-child, .chapter-expansion > .icon {
+.entity-list-item > span:first-child,
+.icon-list-item > span:first-child,
+.split-icon-list-item > a > .icon,
+.chapter-expansion > .icon {
   font-size: 0.8rem;
   width: 1.88em;
   height: 1.88em;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
