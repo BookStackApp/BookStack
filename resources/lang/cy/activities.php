@@ -32,11 +32,11 @@ return [
     'book_update_notification'    => 'Llyfr wedi\'i diweddaru\'n llwyddiannus',
     'book_delete'                 => 'llyfr wedi\'i dileu',
     'book_delete_notification'    => 'Cafodd y llyfr ei dileu yn llwyddiannus',
-    'book_sort'                   => 'sorted book',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort'                   => 'llyfr wedi\'i ddidoli',
+    'book_sort_notification'      => 'Ail-archebwyd y llyfr yn llwyddiannus',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
+    'bookshelf_create'            => 'creu silff lyfrau',
     'bookshelf_create_notification'    => 'Bookshelf successfully created',
     'bookshelf_update'                 => 'updated bookshelf',
     'bookshelf_update_notification'    => 'Bookshelf successfully updated',
