@@ -151,7 +151,7 @@ return [
     'role_manage_page_templates' => '管理頁面範本',
     'role_access_api' => '存取系統 API',
     'role_manage_settings' => '管理應用程式設定',
-    'role_export_content' => '匯入內容',
+    'role_export_content' => '匯出內容',
     'role_editor_change' => 'Change page editor',
     'role_asset' => '資源權限',
     'roles_system_warning' => '請注意，有上述三項權限中的任一項的使用者都可以更改自己或系統中其他人的權限。有這些權限的角色只應分配給受信任的使用者。',
