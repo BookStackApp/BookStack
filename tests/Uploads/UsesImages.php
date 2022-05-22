@@ -40,9 +40,9 @@ trait UsesImages
     /**
      * Get a test image that can be uploaded.
      */
-    protected function getTestImage(string $fileName, ?string $testDataFileName = null): UploadedFile
+    protected function getTestImage(string $fileName, ?string $testDataFileName = null, $mimeType = 'image/png'): UploadedFile
     {
-        return new UploadedFile($this->getTestImageFilePath($testDataFileName), $fileName, 'image/png', null, true);
+        return new UploadedFile($this->getTestImageFilePath($testDataFileName), $fileName, $mimeType, null, true);
     }
 
     /**
@@ -74,7 +74,7 @@ trait UsesImages
      */
     protected function uploadImage($name, $uploadedTo = 0, $contentType = 'image/png', ?string $testDataFileName = null)
     {
-        $file = $this->getTestImage($name, $testDataFileName);
+        $file = $this->getTestImage($name, $testDataFileName, $contentType);
 
         return $this->withHeader('Content-Type', $contentType)
             ->call('POST', '/images/gallery', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
@@ -87,13 +87,13 @@ trait UsesImages
      *
      * @return array{name: string, path: string, page: Page, response: stdClass}
      */
-    protected function uploadGalleryImage(Page $page = null, string $testDataFileName = 'first-image.png', string $contentType = 'image/png')
+    protected function uploadGalleryImage(Page $page = null, string $testDataFileName = null, string $contentType = 'image/png')
     {
         if ($page === null) {
             $page = Page::query()->first();
         }
 
-        $imageName = $testDataFileName;
+        $imageName = $testDataFileName ?? 'first-image.png';
         $relPath = $this->getTestImagePath('gallery', $imageName);
         $this->deleteImage($relPath);
 
