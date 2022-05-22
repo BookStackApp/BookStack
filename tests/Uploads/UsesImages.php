@@ -3,6 +3,7 @@
 namespace Tests\Uploads;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Uploads\Image;
 use Illuminate\Http\UploadedFile;
 use stdClass;
 
@@ -84,21 +85,19 @@ trait UsesImages
      * Returns the image name.
      * Can provide a page to relate the image to.
      *
-     * @param Page|null $page
-     *
      * @return array{name: string, path: string, page: Page, response: stdClass}
      */
-    protected function uploadGalleryImage(Page $page = null, ?string $testDataFileName = null)
+    protected function uploadGalleryImage(Page $page = null, string $testDataFileName = 'first-image.png', string $contentType = 'image/png')
     {
         if ($page === null) {
             $page = Page::query()->first();
         }
 
-        $imageName = $testDataFileName ?? 'first-image.png';
+        $imageName = $testDataFileName;
         $relPath = $this->getTestImagePath('gallery', $imageName);
         $this->deleteImage($relPath);
 
-        $upload = $this->uploadImage($imageName, $page->id, 'image/png', $testDataFileName);
+        $upload = $this->uploadImage($imageName, $page->id, $contentType, $testDataFileName);
         $upload->assertStatus(200);
 
         return [

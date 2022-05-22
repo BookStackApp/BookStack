@@ -30,7 +30,7 @@ class ImageService
     protected $image;
     protected $fileSystem;
 
-    protected static $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    protected static $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 
     /**
      * ImageService constructor.
@@ -231,6 +231,14 @@ class ImageService
     }
 
     /**
+     * Check if the given image is an SVG image file.
+     */
+    protected function isSvg(Image $image): bool
+    {
+        return strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'svg';
+    }
+
+    /**
      * Check if the given image and image data is apng.
      */
     protected function isApngData(Image $image, string &$imageData): bool
@@ -255,8 +263,8 @@ class ImageService
      */
     public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false): string
     {
-        // Do not resize GIF images where we're not cropping
-        if ($keepRatio && $this->isGif($image)) {
+        // Do not resize GIF images where we're not cropping or SVG images.
+        if (($keepRatio && $this->isGif($image)) || $this->isSvg($image)) {
             return $this->getPublicUrl($image->path);
         }
 

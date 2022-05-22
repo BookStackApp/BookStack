@@ -74,6 +74,23 @@ class ImageTest extends TestCase
         $this->assertStringNotContainsString('thumbs-', $imgDetails['response']->thumbs->display);
     }
 
+    public function test_svg_upload()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $admin = $this->getAdmin();
+        $this->actingAs($admin);
+
+        $imgDetails = $this->uploadGalleryImage($page, 'diagram.svg', 'image/svg+xml');
+        $this->assertFileExists(public_path($imgDetails['path']));
+        $this->assertTrue(
+            $imgDetails['response']->url === $imgDetails['response']->thumbs->gallery
+            && $imgDetails['response']->url === $imgDetails['response']->thumbs->display,
+        );
+
+        $this->deleteImage($imgDetails['path']);
+    }
+
     public function test_image_edit()
     {
         $editor = $this->getEditor();
