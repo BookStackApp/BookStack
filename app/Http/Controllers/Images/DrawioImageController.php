@@ -76,8 +76,11 @@ class DrawioImageController extends Controller
             return $this->jsonError('Image data could not be found');
         }
 
+        $isSvg = strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'svg';
+        $uriPrefix = $isSvg ? 'data:image/svg+xml;base64,' : 'data:image/png;base64,';
+
         return response()->json([
-            'content' => base64_encode($imageData),
+            'content' => $uriPrefix . base64_encode($imageData),
         ]);
     }
 }

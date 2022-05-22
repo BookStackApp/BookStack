@@ -34,7 +34,7 @@ function showDrawingEditor(mceEditor, selectedNode = null) {
     DrawIO.show(options.drawioUrl, drawingInit, updateContent);
 }
 
-async function updateContent(pngData) {
+async function updateContent(drawingData) {
     const id = "image-" + Math.random().toString(16).slice(2);
     const loadingImage = window.baseUrl('/loading.gif');
 
@@ -52,7 +52,7 @@ async function updateContent(pngData) {
         DrawIO.close();
         let imgElem = currentNode.querySelector('img');
         try {
-            const img = await DrawIO.upload(pngData, options.pageId);
+            const img = await DrawIO.upload(drawingData, options.pageId);
             pageEditor.dom.setAttrib(imgElem, 'src', img.url);
             pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', img.id);
         } catch (err) {
@@ -65,7 +65,7 @@ async function updateContent(pngData) {
         pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
         DrawIO.close();
         try {
-            const img = await DrawIO.upload(pngData, options.pageId);
+            const img = await DrawIO.upload(drawingData, options.pageId);
             pageEditor.dom.setAttrib(id, 'src', img.url);
             pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
         } catch (err) {

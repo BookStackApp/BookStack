@@ -445,10 +445,10 @@ class MarkdownEditor {
 
         DrawIO.show(url,() => {
             return Promise.resolve('');
-        }, (pngData) => {
+        }, (drawingData) => {
 
             const data = {
-                image: pngData,
+                image: drawingData,
                 uploaded_to: Number(this.pageId),
             };
 
@@ -480,10 +480,10 @@ class MarkdownEditor {
 
         DrawIO.show(drawioUrl, () => {
             return DrawIO.load(drawingId);
-        }, (pngData) => {
+        }, (drawingData) => {
 
             let data = {
-                image: pngData,
+                image: drawingData,
                 uploaded_to: Number(this.pageId),
             };
 

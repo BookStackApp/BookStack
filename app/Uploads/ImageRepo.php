@@ -148,7 +148,8 @@ class ImageRepo
      */
     public function saveDrawing(string $base64Uri, int $uploadedTo): Image
     {
-        $name = 'Drawing-' . user()->id . '-' . time() . '.png';
+        $isSvg = strpos($base64Uri, 'data:image/svg+xml;') === 0;
+        $name = 'Drawing-' . user()->id . '-' . time() . ($isSvg ? '.svg' : '.png');
 
         return $this->imageService->saveNewFromBase64Uri($base64Uri, $name, 'drawio', $uploadedTo);
     }
