@@ -258,6 +258,24 @@ class ExportTest extends TestCase
         unlink($testFilePath);
     }
 
+    public function test_page_export_contained_html_embed_element_srcs_are_inlined()
+    {
+        $page = Page::query()->first();
+        $page->html = '<embed src="http://localhost/uploads/images/gallery/svg_test.svg"/>';
+        $page->save();
+
+        $storageDisk = Storage::disk('local');
+        $storageDisk->makeDirectory('uploads/images/gallery');
+        $storageDisk->put('uploads/images/gallery/svg_test.svg', '<svg>good</svg>');
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+
+        $storageDisk->delete('uploads/images/gallery/svg_test.svg');
+
+        $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg', false);
+        $resp->assertSee('<embed src="data:image/svg+xml;base64,PHN2Zz5nb29kPC9zdmc+">', false);
+    }
+
     public function test_exports_removes_scripts_from_custom_head()
     {
         $entities = [

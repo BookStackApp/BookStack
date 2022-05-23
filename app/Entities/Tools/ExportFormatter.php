@@ -215,14 +215,13 @@ class ExportFormatter
      */
     protected function containHtml(string $htmlContent): string
     {
+        // Replace image & embed src attributes with base64 encoded data strings
         $imageTagsOutput = [];
-        preg_match_all("/\<img.*?src\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $imageTagsOutput);
-
-        // Replace image src with base64 encoded image strings
+        preg_match_all("/<(?:img|embed) .*?src=['\"](.*?)['\"].*?>/i", $htmlContent, $imageTagsOutput);
         if (isset($imageTagsOutput[0]) && count($imageTagsOutput[0]) > 0) {
             foreach ($imageTagsOutput[0] as $index => $imgMatch) {
                 $oldImgTagString = $imgMatch;
-                $srcString = $imageTagsOutput[2][$index];
+                $srcString = $imageTagsOutput[1][$index];
                 $imageEncoded = $this->imageService->imageUriToBase64($srcString);
                 if ($imageEncoded === null) {
                     $imageEncoded = $srcString;
@@ -232,14 +231,13 @@ class ExportFormatter
             }
         }
 
+        // Replace any relative links with full system URL
         $linksOutput = [];
-        preg_match_all("/\<a.*href\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $linksOutput);
-
-        // Replace image src with base64 encoded image strings
+        preg_match_all("/<a .*href=['\"](.*?)['\"].*?>/i", $htmlContent, $linksOutput);
         if (isset($linksOutput[0]) && count($linksOutput[0]) > 0) {
             foreach ($linksOutput[0] as $index => $linkMatch) {
                 $oldLinkString = $linkMatch;
-                $srcString = $linksOutput[2][$index];
+                $srcString = $linksOutput[1][$index];
                 if (strpos(trim($srcString), 'http') !== 0) {
                     $newSrcString = url($srcString);
                     $newLinkString = str_replace($srcString, $newSrcString, $oldLinkString);
@@ -248,7 +246,6 @@ class ExportFormatter
             }
         }
 
-        // Replace any relative links with system domain
         return $htmlContent;
     }
 
