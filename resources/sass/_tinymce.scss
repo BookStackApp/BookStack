@@ -48,6 +48,11 @@ body.page-content.mce-content-body  {
   display: none;
 }
 
+// Prevent interaction with embed contents
+.page-content.mce-content-body embed {
+  pointer-events: none;
+}
+
 // Details/summary editor usability
 .page-content.mce-content-body details summary {
   pointer-events: none;

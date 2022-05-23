@@ -99,4 +99,18 @@ async function load(drawingId) {
     return resp.data.content;
 }
 
-export default {show, close, upload, load};
+
+function buildDrawingContentHtml(drawing) {
+    const isSvg = drawing.url.split('.').pop().toLowerCase() === 'svg';
+    const image = `<img src="${drawing.url}">`;
+    const embed = `<embed src="${drawing.url}" type="image/svg+xml">`;
+    return `<div drawio-diagram="${drawing.id}">${isSvg ? embed : image}</div>`
+}
+
+function buildDrawingContentNode(drawing) {
+    const div = document.createElement('div');
+    div.innerHTML = buildDrawingContentHtml(drawing);
+    return div.children[0];
+}
+
+export default {show, close, upload, load, buildDrawingContentHtml, buildDrawingContentNode};

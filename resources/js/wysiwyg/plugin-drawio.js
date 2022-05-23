@@ -1,4 +1,5 @@
 import DrawIO from "../services/drawio";
+import {build} from "./config";
 
 let pageEditor = null;
 let currentNode = null;
@@ -15,15 +16,14 @@ function isDrawing(node) {
 function showDrawingManager(mceEditor, selectedNode = null) {
     pageEditor = mceEditor;
     currentNode = selectedNode;
+
     // Show image manager
     window.ImageManager.show(function (image) {
         if (selectedNode) {
-            let imgElem = selectedNode.querySelector('img');
-            pageEditor.dom.setAttrib(imgElem, 'src', image.url);
-            pageEditor.dom.setAttrib(selectedNode, 'drawio-diagram', image.id);
+            pageEditor.dom.replace(buildDrawingNode(image), selectedNode);
         } else {
-            let imgHTML = `<div drawio-diagram="${image.id}" contenteditable="false"><img src="${image.url}"></div>`;
-            pageEditor.insertContent(imgHTML);
+            const drawingHtml = DrawIO.buildDrawingContentHtml(image);
+            pageEditor.insertContent(drawingHtml);
         }
     }, 'drawio');
 }
@@ -32,6 +32,13 @@ function showDrawingEditor(mceEditor, selectedNode = null) {
     pageEditor = mceEditor;
     currentNode = selectedNode;
     DrawIO.show(options.drawioUrl, drawingInit, updateContent);
+}
+
+function buildDrawingNode(drawing) {
+    const drawingEl = DrawIO.buildDrawingContentNode(drawing);
+    drawingEl.setAttribute('contenteditable', 'false');
+    drawingEl.setAttribute('data-ephox-embed-iri', 'true');
+    return drawingEl;
 }
 
 async function updateContent(drawingData) {
@@ -50,11 +57,9 @@ async function updateContent(drawingData) {
     // Handle updating an existing image
     if (currentNode) {
         DrawIO.close();
-        let imgElem = currentNode.querySelector('img');
         try {
             const img = await DrawIO.upload(drawingData, options.pageId);
-            pageEditor.dom.setAttrib(imgElem, 'src', img.url);
-            pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', img.id);
+            pageEditor.dom.replace(buildDrawingNode(img), currentNode);
         } catch (err) {
             handleUploadError(err);
         }
@@ -62,12 +67,11 @@ async function updateContent(drawingData) {
     }
 
     setTimeout(async () => {
-        pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
+        pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" alt="Loading" id="${id}"></div>`);
         DrawIO.close();
         try {
             const img = await DrawIO.upload(drawingData, options.pageId);
-            pageEditor.dom.setAttrib(id, 'src', img.url);
-            pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
+            pageEditor.dom.replace(buildDrawingNode(img), pageEditor.dom.get(id).parentNode);
         } catch (err) {
             pageEditor.dom.remove(id);
             handleUploadError(err);
@@ -86,7 +90,6 @@ function drawingInit() {
 }
 
 /**
- *
  * @param {WysiwygConfigOptions} providedOptions
  * @return {function(Editor, string)}
  */
@@ -130,14 +133,28 @@ export function getPlugin(providedOptions) {
             showDrawingEditor(editor, selectedNode);
         });
 
-        editor.on('SetContent', function () {
-            const drawings = editor.$('body > div[drawio-diagram]');
-            if (!drawings.length) return;
+        editor.on('PreInit', () => {
+            editor.parser.addNodeFilter('div', function(nodes) {
+                for (const node of nodes) {
+                    if (node.attr('drawio-diagram')) {
+                        // Set content editable to be false to prevent direct editing of child content.
+                        node.attr('contenteditable', 'false');
+                        // Set this attribute to prevent drawing contents being parsed as media embeds
+                        // to avoid contents being replaced with placeholder images.
+                        // TinyMCE embed plugin sources looks for this attribute in its logic.
+                        node.attr('data-ephox-embed-iri', 'true');
+                    }
+                }
+            });
 
-            editor.undoManager.transact(function () {
-                drawings.each((index, elem) => {
-                    elem.setAttribute('contenteditable', 'false');
-                });
+            editor.serializer.addNodeFilter('div', function(nodes) {
+                for (const node of nodes) {
+                    // Clean up content attributes
+                    if (node.attr('drawio-diagram')) {
+                        node.attr('contenteditable', null);
+                        node.attr('data-ephox-embed-iri', null);
+                    }
+                }
             });
         });
 
