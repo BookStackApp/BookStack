@@ -21,7 +21,7 @@ return [
     'email' => 'Email',
     'password' => 'Mật khẩu',
     'password_confirm' => 'Xác nhận mật khẩu',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'Phải có ít nhất 8 ký tự',
     'forgot_password' => 'Quên Mật khẩu?',
     'remember_me' => 'Ghi nhớ đăng nhập',
     'ldap_email_hint' => 'Vui lòng điền một địa chỉ email để sử dụng tài khoản này.',
@@ -54,7 +54,7 @@ return [
     'email_confirm_text' => 'Xin hãy xác nhận địa chỉa email bằng cách bấm vào nút dưới đây:',
     'email_confirm_action' => 'Xác nhận Email',
     'email_confirm_send_error' => 'Email xác nhận cần gửi nhưng hệ thống đã không thể gửi được email. Liên hệ với quản trị viên để chắc chắn email được thiết lập đúng.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Email của bạn đã được xác nhận! Bạn có thể đăng nhập với email này ngay bây giờ.',
     'email_confirm_resent' => 'Email xác nhận đã được gửi lại, Vui lòng kiểm tra hộp thư.',
 
     'email_not_confirmed' => 'Địa chỉ email chưa được xác nhận',
@@ -71,7 +71,7 @@ return [
     'user_invite_page_welcome' => 'Chào mừng đến với :appName!',
     'user_invite_page_text' => 'Để hoàn tất tài khoản và lấy quyền truy cập bạn cần đặt mật khẩu để sử dụng cho các lần đăng nhập sắp tới tại :appName.',
     'user_invite_page_confirm_button' => 'Xác nhận Mật khẩu',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Đã đặt mật khẩu, bạn có thể đăng nhập với mật khẩu trên để truy cập :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Cài đặt xác thực nhiều bước',
@@ -80,9 +80,9 @@ return [
     'mfa_setup_reconfigure' => 'Cài đặt lại',
     'mfa_setup_remove_confirmation' => 'Bạn có chắc muốn gỡ bỏ phương thức xác thực nhiều bước này?',
     'mfa_setup_action' => 'Cài đặt',
-    'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
+    'mfa_backup_codes_usage_limit_warning' => 'Bạn có ít hơn 5 mã dự phòng, Xin vui lòng tạo và lưu trữ bộ mã mới trước khi bạn dùng hết mã để tránh việc bị khóa quyền truy cập tài khoản.',
     'mfa_option_totp_title' => 'Ứng dụng di động',
-    'mfa_option_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
+    'mfa_option_totp_desc' => 'Để sử dụng xác thực đa lớp bạn cần ưng dụng trên điện thoại có hỗ trợ TOTP như Google Authenticator, Authy hoặc Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Mã dự phòng',
     'mfa_option_backup_codes_desc' => 'Securely store a set of one-time-use backup codes which you can enter to verify your identity.',
     'mfa_gen_confirm_and_enable' => 'Xác nhận và Mở',
