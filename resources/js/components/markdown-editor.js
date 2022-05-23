@@ -18,10 +18,8 @@ class MarkdownEditor {
         this.markdown = new MarkdownIt({html: true});
         this.markdown.use(mdTasksLists, {label: true});
 
-        this.display = this.elem.querySelector('.markdown-display');
-
-        this.displayStylesLoaded = false;
-        this.input = this.elem.querySelector('textarea');
+        this.display = this.$refs.display;
+        this.input = this.$refs.input;
 
         this.cm = null;
         this.Code = null;
@@ -32,23 +30,13 @@ class MarkdownEditor {
         });
 
         this.onMarkdownScroll = this.onMarkdownScroll.bind(this);
-
-        const displayLoad = () => {
-            this.displayDoc = this.display.contentDocument;
-            this.init(cmLoadPromise);
-        };
-
-        if (this.display.contentDocument.readyState === 'complete') {
-            displayLoad();
-        } else {
-            this.display.addEventListener('load', displayLoad.bind(this));
-        }
-
         window.$events.emitPublic(this.elem, 'editor-markdown::setup', {
             markdownIt: this.markdown,
             displayEl: this.display,
             codeMirrorInstance: this.cm,
         });
+
+        this.init(cmLoadPromise);
     }
 
     init(cmLoadPromise) {
@@ -56,17 +44,17 @@ class MarkdownEditor {
         let lastClick = 0;
 
         // Prevent markdown display link click redirect
-        this.displayDoc.addEventListener('click', event => {
-            let isDblClick = Date.now() - lastClick < 300;
+        this.display.addEventListener('click', event => {
+            const isDblClick = Date.now() - lastClick < 300;
 
-            let link = event.target.closest('a');
+            const link = event.target.closest('a');
             if (link !== null) {
                 event.preventDefault();
                 window.open(link.getAttribute('href'));
                 return;
             }
 
-            let drawing = event.target.closest('[drawio-diagram]');
+            const drawing = event.target.closest('[drawio-diagram]');
             if (drawing !== null && isDblClick) {
                 this.actionEditDrawing(drawing);
                 return;
@@ -77,10 +65,10 @@ class MarkdownEditor {
 
         // Button actions
         this.elem.addEventListener('click', event => {
-            let button = event.target.closest('button[data-action]');
+            const button = event.target.closest('button[data-action]');
             if (button === null) return;
 
-            let action = button.getAttribute('data-action');
+            const action = button.getAttribute('data-action');
             if (action === 'insertImage') this.actionInsertImage();
             if (action === 'insertLink') this.actionShowLinkSelector();
             if (action === 'insertDrawing' && (event.ctrlKey || event.metaKey)) {
@@ -132,35 +120,11 @@ class MarkdownEditor {
         window.$events.emit('editor-markdown-change', content);
 
         // Set body content
-        this.displayDoc.body.className = 'page-content';
-        this.displayDoc.body.innerHTML = html;
-
-        // Copy styles from page head and set custom styles for editor
-        this.loadStylesIntoDisplay();
-    }
-
-    loadStylesIntoDisplay() {
-        if (this.displayStylesLoaded) return;
-        this.displayDoc.documentElement.classList.add('markdown-editor-display');
-        // Set display to be dark mode if parent is
-
-        if (document.documentElement.classList.contains('dark-mode')) {
-            this.displayDoc.documentElement.style.backgroundColor = '#222';
-            this.displayDoc.documentElement.classList.add('dark-mode');
-        }
-
-        this.displayDoc.head.innerHTML = '';
-        const styles = document.head.querySelectorAll('style,link[rel=stylesheet]');
-        for (let style of styles) {
-            const copy = style.cloneNode(true);
-            this.displayDoc.head.appendChild(copy);
-        }
-
-        this.displayStylesLoaded = true;
+        this.display.innerHTML = html;
     }
 
     onMarkdownScroll(lineCount) {
-        const elems = this.displayDoc.body.children;
+        const elems = this.display.children;
         if (elems.length <= lineCount) return;
 
         const topElem = (lineCount === -1) ? elems[elems.length-1] : elems[lineCount];
@@ -317,7 +281,7 @@ class MarkdownEditor {
             let cursor = cm.getCursor();
             let lineContent = cm.getLine(cursor.line);
             let lineLen = lineContent.length;
-            let newLineContent = lineContent;
+            let newLineContent;
 
             if (lineContent.indexOf(start) === 0 && lineContent.slice(-end.length) === end) {
                 newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
@@ -333,9 +297,9 @@ class MarkdownEditor {
             let selection = cm.getSelection();
             if (selection === '') return wrapLine(start, end);
 
-            let newSelection = selection;
+            let newSelection;
             let frontDiff = 0;
-            let endDiff = 0;
+            let endDiff;
 
             if (selection.indexOf(start) === 0 && selection.slice(-end.length) === end) {
                 newSelection = selection.slice(start.length, selection.length - end.length);

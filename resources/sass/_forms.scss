@@ -114,26 +114,20 @@
 
 .markdown-display {
   margin-inline-start: -1px;
-}
-
-.markdown-editor-display {
+  display: block;
   background-color: #fff;
-  body {
-    display: block;
-    background-color: #fff;
-    padding-inline-start: 16px;
-    padding-inline-end: 16px;
-  }
+  padding: $-m;
+  overflow-y: scroll;
   [drawio-diagram]:hover {
     outline: 2px solid var(--color-primary);
   }
+  [drawio-diagram] embed {
+    pointer-events: none;
+  }
 }
 
-html.markdown-editor-display.dark-mode {
+.dark-mode .markdown-display {
   background-color: #222;
-  body {
-    background-color: #222;
-  }
 }
 
 .editor-toolbar {
