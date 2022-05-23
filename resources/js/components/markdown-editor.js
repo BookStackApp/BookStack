@@ -462,7 +462,7 @@ class MarkdownEditor {
     }
 
     insertDrawing(image, originalCursor) {
-        const newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
+        const newText = DrawIO.buildDrawingContentHtml(image);
         this.cm.focus();
         this.cm.replaceSelection(newText);
         this.cm.setCursor(originalCursor.line, originalCursor.ch + newText.length);
@@ -488,13 +488,14 @@ class MarkdownEditor {
             };
 
             window.$http.post("/images/drawio", data).then(resp => {
-                let newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
-                let newContent = this.cm.getValue().split('\n').map(line => {
-                    if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
-                        return newText;
-                    }
-                    return line;
+                const image = resp.data;
+                const newText = DrawIO.buildDrawingContentHtml(image);
+
+                const newContent = this.cm.getValue().split('\n').map(line => {
+                    const isDrawing = line.includes(`drawio-diagram="${drawingId}"`);
+                    return isDrawing ? newText : line;
                 }).join('\n');
+
                 this.cm.setValue(newContent);
                 this.cm.setCursor(cursorPos);
                 this.cm.focus();

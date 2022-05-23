@@ -24,7 +24,7 @@ class PageEditor {
         this.draftDisplayIcon = this.$refs.draftDisplayIcon;
         this.changelogInput = this.$refs.changelogInput;
         this.changelogDisplay = this.$refs.changelogDisplay;
-        this.changeEditorButtons = this.$manyRefs.changeEditor;
+        this.changeEditorButtons = this.$manyRefs.changeEditor || [];
         this.switchDialogContainer = this.$refs.switchDialog;
 
         // Translations
