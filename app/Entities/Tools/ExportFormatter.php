@@ -215,9 +215,12 @@ class ExportFormatter
      */
     protected function containHtml(string $htmlContent): string
     {
+        // Replace embed tags with images
+        $htmlContent = preg_replace("/<embed (.*?)>/i", '<img $1>', $htmlContent);
+
         // Replace image & embed src attributes with base64 encoded data strings
         $imageTagsOutput = [];
-        preg_match_all("/<(?:img|embed) .*?src=['\"](.*?)['\"].*?>/i", $htmlContent, $imageTagsOutput);
+        preg_match_all("/<img .*?src=['\"](.*?)['\"].*?>/i", $htmlContent, $imageTagsOutput);
         if (isset($imageTagsOutput[0]) && count($imageTagsOutput[0]) > 0) {
             foreach ($imageTagsOutput[0] as $index => $imgMatch) {
                 $oldImgTagString = $imgMatch;

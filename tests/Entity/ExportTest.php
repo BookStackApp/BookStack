@@ -258,7 +258,7 @@ class ExportTest extends TestCase
         unlink($testFilePath);
     }
 
-    public function test_page_export_contained_html_embed_element_srcs_are_inlined()
+    public function test_page_export_contained_html_embed_elements_are_converted_to_images_with_srcs_inlined()
     {
         $page = Page::query()->first();
         $page->html = '<embed src="http://localhost/uploads/images/gallery/svg_test.svg"/>';
@@ -273,7 +273,7 @@ class ExportTest extends TestCase
         $storageDisk->delete('uploads/images/gallery/svg_test.svg');
 
         $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg', false);
-        $resp->assertSee('<embed src="data:image/svg+xml;base64,PHN2Zz5nb29kPC9zdmc+">', false);
+        $resp->assertSee('<img src="data:image/svg+xml;base64,PHN2Zz5nb29kPC9zdmc+">', false);
     }
 
     public function test_exports_removes_scripts_from_custom_head()
