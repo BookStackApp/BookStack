@@ -24,7 +24,7 @@ return [
     'width' => 'Largeur',
     'height' => 'Hauteur',
     'More' => 'Plus',
-    'select' => 'Select...',
+    'select' => 'Sélectionner...',
 
     // Toolbar
     'formats' => 'Formats',
@@ -139,7 +139,7 @@ return [
     'source' => 'Source',
     'alt_desc' => 'Description alternative',
     'embed' => 'Intégrer',
-    'paste_embed' => 'Collez votre code intégré ci-dessous:',
+    'paste_embed' => 'Collez votre code intégré ci-dessous :',
     'url' => 'URL',
     'text_to_display' => 'Texte à afficher',
     'title' => 'Titre',
@@ -154,14 +154,14 @@ return [
     'toggle_label' => 'Activer/désactiver le libellé',
 
     // About view
-    'about' => 'About the editor',
+    'about' => 'À propos de l\'éditeur',
     'about_title' => 'À propos de l\'éditeur WYSIWYG',
     'editor_license' => 'Licence d\'éditeur et droit d\'auteur',
     'editor_tiny_license' => 'Cet éditeur est construit en utilisant :tinyLink qui est fourni sous une licence LGPL v2.1.',
     'editor_tiny_license_link' => 'Vous trouverez ici les détails sur les droits d\'auteur et les licences de TinyMCE.',
     'save_continue' => 'Enregistrer et continuer',
     'callouts_cycle' => '(Continuez d\'appuyer pour basculer entre les types)',
-    'link_selector' => 'Link to content',
+    'link_selector' => 'Lien vers le contenu',
     'shortcuts' => 'Raccourcis',
     'shortcut' => 'Raccourci',
     'shortcuts_intro' => 'Les raccourcis suivants sont disponibles dans l\'éditeur :',
