@@ -125,7 +125,7 @@ return [
     'show_caption' => 'Afficher la légende',
     'constrain' => 'Conserver les proportions',
     'cell_border_solid' => 'En continue',
-    'cell_border_dotted' => 'Pointillé',
+    'cell_border_dotted' => 'En pointillé',
     'cell_border_dashed' => 'En tirets',
     'cell_border_double' => 'En double trait',
     'cell_border_groove' => 'En creux',
