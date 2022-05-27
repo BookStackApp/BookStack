@@ -37,8 +37,8 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'creu silff lyfrau',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
-    'bookshelf_update'                 => 'updated bookshelf',
+    'bookshelf_create_notification'    => 'Silff lyfrau wedi\'i chreu\'n llwyddiannus',
+    'bookshelf_update'                 => 'silff lyfrau wedi\'i diweddaru',
     'bookshelf_update_notification'    => 'Bookshelf successfully updated',
     'bookshelf_delete'                 => 'deleted bookshelf',
     'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
