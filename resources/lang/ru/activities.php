@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'создал страницу',
+    'page_create'                 => 'Создать страницу',
     'page_create_notification'    => 'Страница успешно создана',
     'page_update'                 => 'обновил страницу',
     'page_update_notification'    => 'Страница успешно обновлена',
