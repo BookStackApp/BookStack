@@ -6,7 +6,7 @@
     justify-self: stretch;
     align-self: stretch;
     height: auto;
-    margin-inline-end: $-l;
+    margin-inline-end: $-xs;
   }
   .icon:after {
     opacity: 0.5;
@@ -56,13 +56,13 @@
   > .content {
     flex: 1;
   }
-  .chapter-expansion-toggle {
+  .chapter-contents-toggle {
     border-radius: 0 4px 4px 0;
-    padding: $-xs $-m;
+    padding: $-xs ($-m + $-xxs);
     width: 100%;
     text-align: start;
   }
-  .chapter-expansion-toggle:hover {
+  .chapter-contents-toggle:hover {
     background-color: rgba(0, 0, 0, 0.06);
   }
 }
@@ -157,22 +157,6 @@
   @include margin($-xs, -$-s, 0, -$-s);
   padding-inline-start: 0;
   padding-inline-end: 0;
-  position: relative;
-
-  &:after, .sub-menu:after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: $-m;
-    top: 1rem;
-    bottom: 1rem;
-    border-inline-start: 4px solid rgba(0, 0, 0, 0.1);
-    z-index: 0;
-    @include rtl {
-      left: auto;
-      right: $-m;
-    }
-  }
 
   ul {
     list-style: none;
@@ -181,19 +165,20 @@
   }
 
   .entity-list-item {
-    padding-top: $-xxs;
-    padding-bottom: $-xxs;
+    padding-top: 2px;
+    padding-bottom: 2px;
     background-clip: content-box;
     border-radius: 0 3px 3px 0;
     padding-inline-end: 0;
     .content {
+      width: 100%;
       padding-top: $-xs;
       padding-bottom: $-xs;
       max-width: calc(100% - 20px);
     }
   }
   .entity-list-item.selected {
-    @include lightDark(background-color, rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
+    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
   }
   .entity-list-item.no-hover {
     margin-top: -$-xs;
@@ -209,9 +194,18 @@
     margin-top: -.2rem;
     margin-inline-start: -1rem;
   }
-  [chapter-toggle] {
-    padding-inline-start: .7rem;
-    padding-bottom: .2rem;
+  .chapter-contents-toggle {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: $-xxs $-s ($-xxs * 2) $-s;
+    border-radius: 0 3px 3px 0;
+    line-height: 1;
+    margin-top: -$-xxs;
+    margin-bottom: -$-xxs;
+    &:hover {
+      @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+    }
   }
   .entity-list-item .icon {
     z-index: 2;
@@ -220,7 +214,7 @@
     align-self: stretch;
     flex-shrink: 0;
     border-radius: 1px;
-    opacity: 0.6;
+    opacity: 0.8;
   }
   .entity-list-item .icon:after {
     opacity: 1;
@@ -230,15 +224,11 @@
   }
 }
 
-.chapter-child-menu {
-  ul.sub-menu {
-    display: none;
-    padding-inline-start: 0;
-    position: relative;
-  }
-  [chapter-toggle].open + .sub-menu {
-    display: block;
-  }
+.chapter-child-menu ul.sub-menu {
+  display: none;
+  padding-inline-start: 0;
+  position: relative;
+  margin-bottom: 0;
 }
 
 // Sortable Lists
@@ -415,6 +405,7 @@ ul.pagination {
   padding: $-s $-m;
   display: flex;
   align-items: center;
+  gap: $-m;
   background-color: transparent;
   border: 0;
   width: 100%;
@@ -424,7 +415,6 @@ ul.pagination {
     color: #666;
   }
   > span:first-child {
-    margin-inline-end: $-m;
     flex-basis: 1.88em;
     flex: none;
   }
@@ -439,8 +429,8 @@ ul.pagination {
     cursor: pointer;
   }
   &:not(.no-hover):hover {
+    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
     text-decoration: none;
-    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
   }
   &.outline-hover:hover {
@@ -463,19 +453,74 @@ ul.pagination {
   }
 }
 
-.card .entity-list-item:not(.no-hover):hover {
-  @include lightDark(background-color, #F2F2F2, #2d2d2d)
+.split-icon-list-item {
+  display: flex;
+  align-items: center;
+  gap: $-m;
+  background-color: transparent;
+  border: 0;
+  width: 100%;
+  position: relative;
+  word-break: break-word;
+  border-radius: 4px;
+  > a {
+    padding: $-s $-m;
+    display: flex;
+    align-items: center;
+    gap: $-m;
+    flex: 1;
+  }
+  > a:hover {
+    text-decoration: none;
+  }
+  .icon {
+    flex-basis: 1.88em;
+    flex: none;
+  }
+  &:hover {
+    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+  }
+}
+
+.icon-list-item-dropdown {
+  margin-inline-start: auto;
+  align-self: stretch;
+  display: flex;
+  align-items: stretch;
+  border-inline-start: 1px solid rgba(0, 0, 0, .1);
+  visibility: hidden;
+}
+.split-icon-list-item:hover .icon-list-item-dropdown,
+.split-icon-list-item:focus-within .icon-list-item-dropdown {
+  visibility: visible;
+}
+.icon-list-item-dropdown-toggle {
+  padding: $-xs;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  @include lightDark(color, #888, #999);
+  svg {
+    margin: 0;
+  }
+  &:hover {
+    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+  }
+}
+
+.card .entity-list-item:not(.no-hover, .book-contents .entity-list-item):hover {
+  @include lightDark(background-color, #F2F2F2, #2d2d2d);
+  border-radius: 0;
 }
 .card .entity-list-item .entity-list-item:hover {
   background-color: #EEEEEE;
 }
 
 .entity-list-item-children {
-  padding: $-m;
+  padding: $-m $-l;
   > div {
     overflow: hidden;
-    padding: $-xs 0;
-    margin-top: -$-xs;
+    padding: 0 0 $-xs 0;
   }
   .entity-chip {
     text-overflow: ellipsis;
@@ -484,6 +529,9 @@ ul.pagination {
     text-align: start;
     display: block;
     white-space: nowrap;
+  }
+  > .entity-list > .entity-list-item:last-child {
+    margin-bottom: -$-xs;
   }
 }
 
@@ -531,6 +579,9 @@ ul.pagination {
     font-size: $fs-m * 0.8;
     padding-top: $-xs;
   }
+  .entity-list-item p:empty {
+    padding-top: 0;
+  }
   p {
     margin: 0;
   }
@@ -574,8 +625,8 @@ ul.pagination {
   right: 0;
   margin: $-m 0;
   @include lightDark(background-color, #fff, #333);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
-  border-radius: 1px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
   min-width: 180px;
   padding: $-xs 0;
   @include lightDark(color, #555, #eee);
@@ -652,6 +703,13 @@ ul.pagination {
   }
 }
 
+// Shift in sidebar dropdown menus to prevent shadows
+// being cut by scrollable container.
+.tri-layout-right .dropdown-menu,
+.tri-layout-left .dropdown-menu {
+  right: $-xs;
+}
+
 // Books grid view
 .featured-image-container {
   position: relative;
@@ -717,5 +775,21 @@ ul.pagination {
       border-radius: 4px;
       @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
     }
+  }
+}
+
+.entity-meta-item {
+  display: flex;
+  line-height: 1.2;
+  margin: 0.6em 0;
+  align-content: start;
+  gap: $-s;
+  a {
+    line-height: 1.2;
+  }
+  svg {
+    flex-shrink: 0;
+    width: 1em;
+    margin: 0;
   }
 }
