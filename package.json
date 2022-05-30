@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "build:css:dev": "sass ./resources/sass:./public/dist",
-    "build:css:watch": "sass ./resources/sass:./public/dist --watch",
+    "build:css:dev": "sass ./resources/sass:./public/dist --embed-sources",
+    "build:css:watch": "sass ./resources/sass:./public/dist --watch --embed-sources",
     "build:css:production": "sass ./resources/sass:./public/dist -s compressed",
     "build:js:dev": "node dev/build/esbuild.js",
     "build:js:watch": "chokidar --initial \"./resources/**/*.js\" -c \"npm run build:js:dev\"",

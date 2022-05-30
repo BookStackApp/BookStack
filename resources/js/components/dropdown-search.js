@@ -1,4 +1,5 @@
 import {debounce} from "../services/util";
+import {transitionHeight} from "../services/animations";
 
 class DropdownSearch {
 
@@ -51,7 +52,9 @@ class DropdownSearch {
 
         try {
             const resp = await window.$http.get(this.getAjaxUrl(searchTerm));
+            const animate = transitionHeight(this.listContainerElem, 80);
             this.listContainerElem.innerHTML = resp.data;
+            animate();
         } catch (err) {
             console.error(err);
         }
