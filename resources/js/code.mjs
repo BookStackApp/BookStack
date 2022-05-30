@@ -25,6 +25,7 @@ import 'codemirror/mode/ruby/ruby';
 import 'codemirror/mode/rust/rust';
 import 'codemirror/mode/shell/shell';
 import 'codemirror/mode/sql/sql';
+import 'codemirror/mode/stex/stex';
 import 'codemirror/mode/toml/toml';
 import 'codemirror/mode/vb/vb';
 import 'codemirror/mode/vbscript/vbscript';
@@ -59,6 +60,7 @@ const modeMap = {
     js: 'javascript',
     jl: 'julia',
     julia: 'julia',
+    latex: 'text/x-stex',
     lua: 'lua',
     md: 'markdown',
     mdown: 'markdown',
@@ -83,6 +85,7 @@ const modeMap = {
     rs: 'rust',
     shell: 'shell',
     sh: 'shell',
+    stext: 'text/x-stex',
     bash: 'shell',
     toml: 'toml',
     sql: 'text/x-sql',

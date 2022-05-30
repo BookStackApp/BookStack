@@ -23,6 +23,7 @@
                             <a refs="code-editor@languageLink" data-lang="Java">Java</a>
                             <a refs="code-editor@languageLink" data-lang="JavaScript">JavaScript</a>
                             <a refs="code-editor@languageLink" data-lang="JSON">JSON</a>
+                            <a refs="code-editor@languageLink" data-lang="LaTeX">LaTeX</a>
                             <a refs="code-editor@languageLink" data-lang="Lua">Lua</a>
                             <a refs="code-editor@languageLink" data-lang="MarkDown">MarkDown</a>
                             <a refs="code-editor@languageLink" data-lang="Nginx">Nginx</a>
