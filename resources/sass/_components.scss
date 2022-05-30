@@ -61,7 +61,7 @@
   }
 }
 
-[chapter-toggle] {
+.chapter-contents-toggle {
   cursor: pointer;
   margin: 0;
   transition: all ease-in-out 180ms;
@@ -77,7 +77,7 @@
     transform: rotate(90deg);
   }
   svg[data-icon="caret-right"] + * {
-    margin-inline-start: $-xs;
+    margin-inline-start: $-xxs;
   }
 }
 
@@ -731,6 +731,55 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
+
+.dropdown-search {
+  position: relative;
+}
+.dropdown-search-toggle-breadcrumb {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  line-height: normal;
+  padding: $-xs;
+  &:hover {
+    border-color: #DDD;
+  }
+  .svg-icon {
+    margin-inline-end: 0;
+  }
+}
+.dropdown-search-toggle-select {
+  display: flex;
+  gap: $-s;
+  line-height: normal;
+  .svg-icon {
+    height: 16px;
+    margin: 0;
+  }
+  .avatar {
+    height: 22px;
+    width: 22px;
+  }
+  .avatar + span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .dropdown-search-toggle-caret {
+    font-size: 1.15rem;
+  }
+}
+.dropdown-search-toggle-select-label {
+  min-width: 0;
+  white-space: nowrap;
+}
+.dropdown-search-toggle-select-caret {
+  font-size: 1.5rem;
+  line-height: 0;
+  margin-left: auto;
+  margin-top: -2px;
+}
+
 .dropdown-search-dropdown {
   box-shadow: $bs-med;
   overflow: hidden;
@@ -739,7 +788,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: none;
   position: absolute;
   z-index: 80;
-  right: -$-m;
+  right: 0;
+  top: 0;
+  margin-top: $-m;
   @include rtl {
     right: auto;
     left: -$-m;
@@ -767,11 +818,14 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
       text-decoration: none;
     }
   }
-  input {
+  input, input:focus {
     padding-inline-start: $-xl;
     border-radius: 0;
     border: 0;
     border-bottom: 1px solid #DDD;
+  }
+  input:focus {
+    outline: 0;
   }
 }
 
@@ -784,10 +838,4 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   .dropdown-search-dropdown .dropdown-search-list {
     max-height: 240px;
   }
-}
-
-.custom-select-input {
-  max-width: 280px;
-  border: 1px solid #D4D4D4;
-  border-radius: 3px;
 }
