@@ -241,6 +241,16 @@ class MfaVerificationTest extends TestCase
         }
     }
 
+    public function test_login_mfa_interception_does_not_log_error()
+    {
+        $logHandler = $this->withTestLogger();
+
+        [$user, $secret, $loginResp] = $this->startTotpLogin();
+
+        $loginResp->assertRedirect('/mfa/verify');
+        $this->assertFalse($logHandler->hasErrorRecords());
+    }
+
     /**
      * @return array<User, string, TestResponse>
      */
