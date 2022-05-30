@@ -16,17 +16,17 @@
   },
   "devDependencies": {
     "chokidar-cli": "^3.0",
-    "esbuild": "0.14.36",
+    "esbuild": "0.14.42",
     "livereload": "^0.9.3",
     "npm-run-all": "^4.1.5",
     "punycode": "^2.1.1",
-    "sass": "^1.50.0"
+    "sass": "^1.52.1"
   },
   "dependencies": {
-    "clipboard": "^2.0.10",
-    "codemirror": "^5.65.2",
+    "clipboard": "^2.0.11",
+    "codemirror": "^5.65.5",
     "dropzone": "^5.9.3",
-    "markdown-it": "^12.3.2",
+    "markdown-it": "^13.0.1",
     "markdown-it-task-lists": "^2.1.1",
     "sortablejs": "^1.15.0"
   }
