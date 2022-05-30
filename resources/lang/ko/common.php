@@ -47,6 +47,8 @@ return [
     'previous' => '이전',
     'filter_active' => '적용 중:',
     'filter_clear' => '모든 필터 해제',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => '정렬 기준',
