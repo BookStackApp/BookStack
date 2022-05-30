@@ -47,6 +47,8 @@ return [
     'previous' => 'Trước đó',
     'filter_active' => 'Bộ lọc có hiệu lực:',
     'filter_clear' => 'Xóa bộ lọc',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',
