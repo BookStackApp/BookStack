@@ -15,7 +15,7 @@
         <div>
             <div class="form-group">
                 <label for="owner">{{ trans('entities.permissions_owner') }}</label>
-                @include('form.user-select', ['user' => $model->ownedBy, 'name' => 'owned_by', 'compact' => false])
+                @include('form.user-select', ['user' => $model->ownedBy, 'name' => 'owned_by'])
             </div>
         </div>
     </div>

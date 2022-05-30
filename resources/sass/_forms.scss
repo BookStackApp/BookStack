@@ -7,7 +7,8 @@
   @include lightDark(color, #666, #AAA);
   display: inline-block;
   font-size: $fs-m;
-  padding: $-xs*1.5;
+  padding: $-xs*1.8;
+  height: 40px;
   width: 250px;
   max-width: 100%;
 
@@ -350,16 +351,13 @@ input[type=color] {
   }
 }
 
-.inline-input-style {
+.title-input input[type="text"] {
   display: block;
   width: 100%;
   padding: $-s;
-}
-
-.title-input input[type="text"] {
-  @extend .inline-input-style;
   margin-top: 0;
   font-size: 2em;
+  height: auto;
 }
 
 .title-input.page-title {
@@ -373,6 +371,7 @@ input[type=color] {
     max-width: 840px;
     margin: 0 auto;
     border: none;
+    height: auto;
   }
 }
 
@@ -383,10 +382,12 @@ input[type=color] {
 }
 
 .description-input textarea {
-  @extend .inline-input-style;
+  display: block;
+  width: 100%;
+  padding: $-s;
   font-size: $fs-m;
   color: #666;
-  width: 100%;
+  height: auto;
 }
 
 div[editor-type="markdown"] .title-input.page-title input[type="text"] {
@@ -413,9 +414,11 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   }
   input {
     display: block;
+    padding: $-xs * 1.5;
     padding-inline-start: $-l + 4px;
     width: 300px;
     max-width: 100%;
+    height: auto;
   }
   &.flexible input {
     width: 100%;

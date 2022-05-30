@@ -79,17 +79,17 @@ $loadingSize: 10px;
     animation-timing-function: cubic-bezier(.62, .28, .23, .99);
     margin-inline-end: 4px;
     background-color: var(--color-page);
-    animation-delay: 0.3s;
+    animation-delay: -300ms;
   }
   > div:first-child {
       left: -($loadingSize+$-xs);
       background-color: var(--color-book);
-      animation-delay: 0s;
+      animation-delay: -600ms;
   }
   > div:last-of-type {
     left: $loadingSize+$-xs;
     background-color: var(--color-chapter);
-    animation-delay: 0.6s;
+    animation-delay: 0ms;
   }
   > span {
     margin-inline-start: $-s;
@@ -138,7 +138,7 @@ $btt-size: 40px;
 
 .skip-to-content-link {
   position: fixed;
-  top: -$-xxl;
+  top: -52px;
   left: 0;
   background-color: #FFF;
   z-index: 15;

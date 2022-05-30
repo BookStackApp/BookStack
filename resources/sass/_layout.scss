@@ -155,6 +155,13 @@ body.flexbox {
   }
 }
 
+.gap-m {
+  gap: $-m;
+}
+
+.justify-flex-start {
+  justify-content: flex-start;
+}
 .justify-flex-end {
   justify-content: flex-end;
 }
@@ -295,9 +302,9 @@ body.flexbox {
 }
 @include larger-than($xxl) {
   .tri-layout-left-contents, .tri-layout-right-contents {
-    padding: $-m;
+    padding: $-xl $-m;
     position: sticky;
-    top: $-m;
+    top: 0;
     max-height: 100vh;
     min-height: 50vh;
     overflow-y: scroll;
