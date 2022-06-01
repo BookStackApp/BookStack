@@ -196,7 +196,7 @@ return [
     'pages_edit_draft_save_at' => 'Entwurf gespeichert um ',
     'pages_edit_delete_draft' => 'Entwurf löschen',
     'pages_edit_discard_draft' => 'Entwurf verwerfen',
-    'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
+    'pages_edit_switch_to_markdown' => 'Zum Markdown Editor wechseln',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
     'pages_edit_switch_to_markdown_stable' => '(Stable Content)',
     'pages_edit_switch_to_wysiwyg' => 'Switch to WYSIWYG Editor',
