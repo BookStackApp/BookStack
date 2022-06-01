@@ -37,6 +37,7 @@
         "predis/predis": "^1.1",
         "socialiteproviders/discord": "^4.1",
         "socialiteproviders/gitlab": "^4.1",
+        "socialiteproviders/mattermost": "^4.1",
         "socialiteproviders/microsoft-azure": "^5.0.1",
         "socialiteproviders/okta": "^4.1",
         "socialiteproviders/slack": "^4.1",

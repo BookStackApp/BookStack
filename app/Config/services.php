@@ -116,6 +116,16 @@ return [
         'auto_confirm'  => env('DISCORD_AUTO_CONFIRM_EMAIL', false),
     ],
 
+    'mattermost' => [
+        'client_id'     => env('MATTERMOST_APP_ID'),
+        'client_secret' => env('MATTERMOST_APP_SECRET'),
+        'redirect'      => env('APP_URL') . '/login/service/mattermost/callback',
+        'instance_uri'  => env('MATTERMOST_BASE_URI'), // Needed only for self hosted instances
+        'name'          => 'Mattermost',
+        'auto_register' => env('MATTERMOST_AUTO_REGISTER', false),
+        'auto_confirm'  => env('MATTERMOST_AUTO_CONFIRM_EMAIL', false),
+    ],
+
     'ldap' => [
         'server'                 => env('LDAP_SERVER', false),
         'dump_user_details'      => env('LDAP_DUMP_USER_DETAILS', false),
