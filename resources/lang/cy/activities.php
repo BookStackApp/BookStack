@@ -39,31 +39,31 @@ return [
     'bookshelf_create'            => 'creu silff lyfrau',
     'bookshelf_create_notification'    => 'Silff lyfrau wedi\'i chreu\'n llwyddiannus',
     'bookshelf_update'                 => 'silff lyfrau wedi\'i diweddaru',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_update_notification'    => 'Diweddarwyd y silff lyfrau yn llwyddiannus',
+    'bookshelf_delete'                 => 'silff lyfrau wedi\'i dileu',
+    'bookshelf_delete_notification'    => 'Silff lyfrau wedi\'i dileu\'n llwyddiannus',
 
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',
     'favourite_remove_notification' => '":name" has been removed from your favourites',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Dull aml-ffactor wedi\'i ffurfweddu\'n llwyddiannus',
+    'mfa_remove_method_notification' => 'Llwyddwyd i ddileu dull aml-ffactor',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'webhook wedi creu',
+    'webhook_create_notification' => 'Webhook wedi\'i creu\'n llwyddiannus',
+    'webhook_update' => 'webhook wedi\'i diweddaru',
+    'webhook_update_notification' => 'Webhook wedi\'i diweddaru\'n llwyddiannus',
+    'webhook_delete' => 'webhook wedi\'i dileu',
+    'webhook_delete_notification' => 'Webhook wedi\'i dileu\'n llwyddiannus',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Diweddarwyd y defnyddiwr yn llwyddiannus',
+    'user_delete_notification' => 'Tynnwyd y defnyddiwr yn llwyddiannus',
 
     // Other
-    'commented_on'                => 'commented on',
-    'permissions_update'          => 'updated permissions',
+    'commented_on'                => 'gwnaeth sylwadau ar',
+    'permissions_update'          => 'caniatadau wedi\'u diweddaru',
 ];
