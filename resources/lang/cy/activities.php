@@ -44,8 +44,8 @@ return [
     'bookshelf_delete_notification'    => 'Silff lyfrau wedi\'i dileu\'n llwyddiannus',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => 'Mae ":name" wedi\'i ychwanegu at eich ffefrynnau',
+    'favourite_remove_notification' => 'Mae ":name" wedi\'i tynnu o\'ch ffefrynnau',
 
     // MFA
     'mfa_setup_method_notification' => 'Dull aml-ffactor wedi\'i ffurfweddu\'n llwyddiannus',
