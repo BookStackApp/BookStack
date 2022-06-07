@@ -9,8 +9,7 @@
       "updated_at": "2019-12-11T20:57:31.000000Z",
       "created_by": 1,
       "updated_by": 1,
-      "owned_by": 1,
-      "image_id": 3
+      "owned_by": 1
     },
     {
       "id": 2,
@@ -21,8 +20,7 @@
       "updated_at": "2019-12-11T20:57:23.000000Z",
       "created_by": 4,
       "updated_by": 3,
-      "owned_by": 3,
-      "image_id": 34
+      "owned_by": 3
     }
   ],
   "total": 14
