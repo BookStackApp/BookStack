@@ -2,7 +2,7 @@ import MarkdownIt from "markdown-it";
 import mdTasksLists from 'markdown-it-task-lists';
 import Clipboard from "../services/clipboard";
 import {debounce} from "../services/util";
-
+import {patchDomFromHtmlString} from "../services/vdom";
 import DrawIO from "../services/drawio";
 
 class MarkdownEditor {
@@ -127,16 +127,29 @@ class MarkdownEditor {
     updateAndRender() {
         const content = this.cm.getValue();
         this.input.value = content;
+
         const html = this.markdown.render(content);
         window.$events.emit('editor-html-change', html);
         window.$events.emit('editor-markdown-change', content);
 
         // Set body content
+        const target = this.getDisplayTarget();
         this.displayDoc.body.className = 'page-content';
-        this.displayDoc.body.innerHTML = html;
+        patchDomFromHtmlString(target, html);
 
         // Copy styles from page head and set custom styles for editor
         this.loadStylesIntoDisplay();
+    }
+
+    getDisplayTarget() {
+        const body = this.displayDoc.body;
+
+        if (body.children.length === 0) {
+            const wrap = document.createElement('div');
+            this.displayDoc.body.append(wrap);
+        }
+
+        return body.children[0];
     }
 
     loadStylesIntoDisplay() {

@@ -28,6 +28,7 @@
     "dropzone": "^5.9.3",
     "markdown-it": "^13.0.1",
     "markdown-it-task-lists": "^2.1.1",
+    "snabbdom": "^3.5.0",
     "sortablejs": "^1.15.0"
   }
 }
