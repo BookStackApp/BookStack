@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\PermissionsException;
+use Closure;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -43,14 +44,14 @@ class PageApiController extends ApiController
      */
     public function list()
     {
-        $pages = Page::visible();
+        $pages = Page::visible()->with('favourites');
 
         return $this->apiListingResponse($pages, [
             'id', 'book_id', 'chapter_id', 'name', 'slug', 'priority',
             'draft', 'template',
             'created_at', 'updated_at',
             'created_by', 'updated_by', 'owned_by',
-        ]);
+        ], [Closure::fromCallable([$this, 'listFormatter'])]);
     }
 
     /**
@@ -146,5 +147,13 @@ class PageApiController extends ApiController
         $this->pageRepo->destroy($page);
 
         return response('', 204);
+    }
+
+    /**
+     * Format the given user model for a listing multi-result display.
+     */
+    protected function listFormatter(Page $page)
+    {
+        $page->setAttribute('is_favourite', $page->isFavourite());
     }
 }

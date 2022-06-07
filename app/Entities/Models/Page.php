@@ -39,7 +39,7 @@ class Page extends BookChild
 
     public $textField = 'text';
 
-    protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot', 'deleted_at'];
+    protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot', 'deleted_at', 'favourites'];
 
     protected $casts = [
         'draft'    => 'boolean',
@@ -139,8 +139,9 @@ class Page extends BookChild
      */
     public function forJsonDisplay(): self
     {
-        $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
+        $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy', 'favourites']);
         $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
+        $refreshed->setAttribute('is_favourite', $refreshed->isFavourite());
         $refreshed->html = (new PageContent($refreshed))->render();
 
         return $refreshed;
