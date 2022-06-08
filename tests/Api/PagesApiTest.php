@@ -200,7 +200,7 @@ class PagesApiTest extends TestCase
 
         $resp->assertStatus(200);
         $resp->assertJson(array_merge($details, [
-            'id' => $page->id, 'is_favourite' => true
+            'id' => $page->id, 'is_favourite' => true,
         ]));
     }
 
