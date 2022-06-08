@@ -32,6 +32,9 @@ class PageApiController extends ApiController
             'markdown'   => ['string'],
             'tags'       => ['array'],
         ],
+        'updateFavourite' => [
+            'is_favourite' => ['required', 'boolean'],
+        ],
     ];
 
     public function __construct(PageRepo $pageRepo)
@@ -133,6 +136,31 @@ class PageApiController extends ApiController
         $updatedPage = $this->pageRepo->update($page, $requestData);
 
         return response()->json($updatedPage->forJsonDisplay());
+    }
+
+    /**
+     * Update favourite state of a single page for the current user.
+     */
+    public function updateFavourite(Request $request, string $id)
+    {
+        if (!signedInUser()) {
+            $this->showPermissionError();
+        }
+        $requestData = $this->validate($request, $this->rules['updateFavourite']);
+
+        $page = $this->pageRepo->getById($id, ['favourites']);
+
+        if ($requestData['is_favourite'] == true) {
+            $page->favourites()->firstOrCreate([
+                'user_id' => user()->id,
+            ]);
+        } else {
+            $page->favourites()->where([
+                'user_id' => user()->id,
+            ])->delete();
+        }
+
+        return response()->json($page->forJsonDisplay());
     }
 
     /**

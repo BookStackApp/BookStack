@@ -52,6 +52,7 @@ Route::get('chapters/{id}/export/markdown', [ChapterExportApiController::class, 
 Route::get('pages', [PageApiController::class, 'list']);
 Route::post('pages', [PageApiController::class, 'create']);
 Route::get('pages/{id}', [PageApiController::class, 'read']);
+Route::put('pages/{id}/favourite', [PageApiController::class, 'updateFavourite']);
 Route::put('pages/{id}', [PageApiController::class, 'update']);
 Route::delete('pages/{id}', [PageApiController::class, 'delete']);
 
