@@ -24,6 +24,7 @@ class WebSafeMimeSniffer
         'audio/opus',
         'audio/wav',
         'audio/webm',
+        'audio/x-m4a',
         'image/apng',
         'image/bmp',
         'image/jpeg',

@@ -26,7 +26,7 @@ class PageExportApiController extends ApiController
         $page = Page::visible()->findOrFail($id);
         $pdfContent = $this->exportFormatter->pageToPdf($page);
 
-        return $this->downloadResponse($pdfContent, $page->slug . '.pdf');
+        return $this->download()->directly($pdfContent, $page->slug . '.pdf');
     }
 
     /**
@@ -39,7 +39,7 @@ class PageExportApiController extends ApiController
         $page = Page::visible()->findOrFail($id);
         $htmlContent = $this->exportFormatter->pageToContainedHtml($page);
 
-        return $this->downloadResponse($htmlContent, $page->slug . '.html');
+        return $this->download()->directly($htmlContent, $page->slug . '.html');
     }
 
     /**
@@ -50,7 +50,7 @@ class PageExportApiController extends ApiController
         $page = Page::visible()->findOrFail($id);
         $textContent = $this->exportFormatter->pageToPlainText($page);
 
-        return $this->downloadResponse($textContent, $page->slug . '.txt');
+        return $this->download()->directly($textContent, $page->slug . '.txt');
     }
 
     /**
@@ -61,6 +61,6 @@ class PageExportApiController extends ApiController
         $page = Page::visible()->findOrFail($id);
         $markdown = $this->exportFormatter->pageToMarkdown($page);
 
-        return $this->downloadResponse($markdown, $page->slug . '.md');
+        return $this->download()->directly($markdown, $page->slug . '.md');
     }
 }

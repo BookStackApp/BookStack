@@ -29,7 +29,7 @@ class ChapterExportApiController extends ApiController
         $chapter = Chapter::visible()->findOrFail($id);
         $pdfContent = $this->exportFormatter->chapterToPdf($chapter);
 
-        return $this->downloadResponse($pdfContent, $chapter->slug . '.pdf');
+        return $this->download()->directly($pdfContent, $chapter->slug . '.pdf');
     }
 
     /**
@@ -42,7 +42,7 @@ class ChapterExportApiController extends ApiController
         $chapter = Chapter::visible()->findOrFail($id);
         $htmlContent = $this->exportFormatter->chapterToContainedHtml($chapter);
 
-        return $this->downloadResponse($htmlContent, $chapter->slug . '.html');
+        return $this->download()->directly($htmlContent, $chapter->slug . '.html');
     }
 
     /**
@@ -53,7 +53,7 @@ class ChapterExportApiController extends ApiController
         $chapter = Chapter::visible()->findOrFail($id);
         $textContent = $this->exportFormatter->chapterToPlainText($chapter);
 
-        return $this->downloadResponse($textContent, $chapter->slug . '.txt');
+        return $this->download()->directly($textContent, $chapter->slug . '.txt');
     }
 
     /**
@@ -64,6 +64,6 @@ class ChapterExportApiController extends ApiController
         $chapter = Chapter::visible()->findOrFail($id);
         $markdown = $this->exportFormatter->chapterToMarkdown($chapter);
 
-        return $this->downloadResponse($markdown, $chapter->slug . '.md');
+        return $this->download()->directly($markdown, $chapter->slug . '.md');
     }
 }

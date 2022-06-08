@@ -36,7 +36,7 @@ class PageExportController extends Controller
         $page->html = (new PageContent($page))->render();
         $pdfContent = $this->exportFormatter->pageToPdf($page);
 
-        return $this->downloadResponse($pdfContent, $pageSlug . '.pdf');
+        return $this->download()->directly($pdfContent, $pageSlug . '.pdf');
     }
 
     /**
@@ -51,7 +51,7 @@ class PageExportController extends Controller
         $page->html = (new PageContent($page))->render();
         $containedHtml = $this->exportFormatter->pageToContainedHtml($page);
 
-        return $this->downloadResponse($containedHtml, $pageSlug . '.html');
+        return $this->download()->directly($containedHtml, $pageSlug . '.html');
     }
 
     /**
@@ -64,7 +64,7 @@ class PageExportController extends Controller
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $pageText = $this->exportFormatter->pageToPlainText($page);
 
-        return $this->downloadResponse($pageText, $pageSlug . '.txt');
+        return $this->download()->directly($pageText, $pageSlug . '.txt');
     }
 
     /**
@@ -77,6 +77,6 @@ class PageExportController extends Controller
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $pageText = $this->exportFormatter->pageToMarkdown($page);
 
-        return $this->downloadResponse($pageText, $pageSlug . '.md');
+        return $this->download()->directly($pageText, $pageSlug . '.md');
     }
 }

@@ -64,16 +64,6 @@ class AttachmentService
     }
 
     /**
-     * Get an attachment from storage.
-     *
-     * @throws FileNotFoundException
-     */
-    public function getAttachmentFromStorage(Attachment $attachment): string
-    {
-        return $this->getStorageDisk()->get($this->adjustPathForStorageDisk($attachment->path));
-    }
-
-    /**
      * Stream an attachment from storage.
      *
      * @throws FileNotFoundException
