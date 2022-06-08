@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class GroupSyncServiceTest extends TestCase
 {
-
     public function test_user_is_assigned_to_matching_roles()
     {
         $user = $this->getViewer();
@@ -19,7 +18,7 @@ class GroupSyncServiceTest extends TestCase
         $roleC = Role::factory()->create(['display_name' => 'ABC123', 'external_auth_id' => 'sales']);
         $roleD = Role::factory()->create(['display_name' => 'DEF456', 'external_auth_id' => 'admin-team']);
 
-        foreach([$roleA, $roleB, $roleC, $roleD] as $role) {
+        foreach ([$roleA, $roleB, $roleC, $roleD] as $role) {
             $this->assertFalse($user->hasRole($role->id));
         }
 
@@ -55,5 +54,4 @@ class GroupSyncServiceTest extends TestCase
         $user = User::query()->find($user->id);
         $this->assertTrue($user->hasRole($role->id));
     }
-
 }

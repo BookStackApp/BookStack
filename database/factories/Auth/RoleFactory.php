@@ -21,8 +21,8 @@ class RoleFactory extends Factory
     public function definition()
     {
         return [
-            'display_name' => $this->faker->sentence(3),
-            'description'  => $this->faker->sentence(10),
+            'display_name'     => $this->faker->sentence(3),
+            'description'      => $this->faker->sentence(10),
             'external_auth_id' => '',
         ];
     }
