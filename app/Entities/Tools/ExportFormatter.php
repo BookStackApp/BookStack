@@ -39,7 +39,7 @@ class ExportFormatter
     public function pageToContainedHtml(Page $page)
     {
         $page->html = (new PageContent($page))->render();
-        $pageHtml = view('pages.export', [
+        $pageHtml = view('exports.page', [
             'page'       => $page,
             'format'     => 'html',
             'cspContent' => $this->cspService->getCspMetaTagValue(),
@@ -59,7 +59,7 @@ class ExportFormatter
         $pages->each(function ($page) {
             $page->html = (new PageContent($page))->render();
         });
-        $html = view('chapters.export', [
+        $html = view('exports.chapter', [
             'chapter'    => $chapter,
             'pages'      => $pages,
             'format'     => 'html',
@@ -77,7 +77,7 @@ class ExportFormatter
     public function bookToContainedHtml(Book $book)
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
-        $html = view('books.export', [
+        $html = view('exports.book', [
             'book'         => $book,
             'bookChildren' => $bookTree,
             'format'       => 'html',
@@ -95,7 +95,7 @@ class ExportFormatter
     public function pageToPdf(Page $page)
     {
         $page->html = (new PageContent($page))->render();
-        $html = view('pages.export', [
+        $html = view('exports.page', [
             'page'   => $page,
             'format' => 'pdf',
             'engine' => $this->pdfGenerator->getActiveEngine(),
@@ -116,7 +116,7 @@ class ExportFormatter
             $page->html = (new PageContent($page))->render();
         });
 
-        $html = view('chapters.export', [
+        $html = view('exports.chapter', [
             'chapter' => $chapter,
             'pages'   => $pages,
             'format'  => 'pdf',
@@ -134,7 +134,7 @@ class ExportFormatter
     public function bookToPdf(Book $book)
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
-        $html = view('books.export', [
+        $html = view('exports.book', [
             'book'         => $book,
             'bookChildren' => $bookTree,
             'format'       => 'pdf',

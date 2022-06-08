@@ -457,4 +457,12 @@ class ExportTest extends TestCase
             $resp->assertElementExists('head meta[http-equiv="Content-Security-Policy"][content*="script-src "]');
         }
     }
+
+    public function test_html_exports_contain_body_classes_for_export_identification()
+    {
+        $page = Page::query()->first();
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/html'));
+        $resp->assertElementExists('body.export.export-format-html.export-engine-none');
+    }
 }

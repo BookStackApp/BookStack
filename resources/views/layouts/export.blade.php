@@ -8,10 +8,10 @@
         <meta http-equiv="Content-Security-Policy" content="{{ $cspContent }}">
     @endif
 
-    @include('common.export-styles', ['format' => $format, 'engine' => $engine ?? ''])
-    @include('common.export-custom-head')
+    @include('exports.parts.styles', ['format' => $format, 'engine' => $engine ?? ''])
+    @include('exports.parts.custom-head')
 </head>
-<body>
+<body class="export export-format-{{ $format }} export-engine-{{ $engine ?? 'none' }}">
 <div class="page-content">
     @yield('content')
 </div>

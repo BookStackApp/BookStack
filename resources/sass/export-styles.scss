@@ -60,3 +60,46 @@ ul.contents ul li {
 .chapter-hint + h1 {
   margin-top: 0;
 }
+
+// PDF specific overrides
+body.export-format-pdf {
+  font-size: 14px;
+  line-height: 1.2;
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+  }
+
+  table {
+    max-width: 800px !important;
+    font-size: 0.8em;
+    width: 100% !important;
+  }
+
+  table td {
+    width: auto !important;
+  }
+
+  .page-content .float {
+    float: none !important;
+  }
+
+  .page-content img.align-left, .page-content img.align-right  {
+    float: none !important;
+    clear: both;
+    display: block;
+  }
+
+}
+
+// DOMPDF pdf export specific overrides
+body.export-format-pdf.export-engine-dompdf {
+  // Fix for full width linked image sizes on DOMPDF
+  .page-content a > img {
+    max-width: 700px;
+  }
+  // Undoes the above for table images to prevent visually worse scenario, Awaiting next DOMPDF release for patch
+  .page-content td a > img {
+    max-width: 100%;
+  }
+}
