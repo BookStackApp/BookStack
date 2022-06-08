@@ -8,6 +8,6 @@
     <hr>
 
     <div class="text-muted text-small">
-        @include('entities.export-meta', ['entity' => $page])
+        @include('exports.parts.meta', ['entity' => $page])
     </div>
 @endsection
