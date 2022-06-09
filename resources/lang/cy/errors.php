@@ -5,8 +5,8 @@
 return [
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
-    'permissionJson' => 'You do not have permission to perform the requested action.',
+    'permission' => 'Nid oes gennych ganiatâd i gael mynediad i\'r dudalen y gofynnwyd amdani.',
+    'permissionJson' => 'Nid oes gennych ganiatâd i gyflawni\'r weithred y gofynnwyd amdani.',
 
     // Auth
     'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
