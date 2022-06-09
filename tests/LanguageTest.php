@@ -18,9 +18,11 @@ class LanguageTest extends TestCase
     public function test_locales_config_key_set_properly()
     {
         $configLocales = config('app.locales');
-        sort($configLocales);
-        sort($this->langs);
-        $this->assertEquals(implode(':', $configLocales), implode(':', $this->langs), 'app.locales configuration variable does not match those found in lang files');
+
+        $this->assertEmpty(
+            array_diff($configLocales, $this->langs),
+            'app.locales configuration variable does not match those found in lang files'
+        );
     }
 
     // Not part of standard phpunit test runs since we sometimes expect non-added langs.
