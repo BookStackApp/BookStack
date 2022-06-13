@@ -83,15 +83,14 @@ class BookshelfController extends Controller
     public function store(Request $request)
     {
         $this->checkPermission('bookshelf-create-all');
-        $this->validate($request, [
+        $validated = $this->validate($request, [
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));
-        $shelf = $this->bookshelfRepo->create($request->all(), $bookIds);
-        $this->bookshelfRepo->updateCoverImage($shelf, $request->file('image', null));
+        $shelf = $this->bookshelfRepo->create($validated, $bookIds);
 
         return redirect($shelf->getUrl());
     }
@@ -160,16 +159,20 @@ class BookshelfController extends Controller
     {
         $shelf = $this->bookshelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
-        $this->validate($request, [
+        $validated = $this->validate($request, [
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
+        if ($request->has('image_reset')) {
+            $validated['image'] = null;
+        } else if (is_null($validated['image'])) {
+            unset($validated['image']);
+        }
+
         $bookIds = explode(',', $request->get('books', ''));
-        $shelf = $this->bookshelfRepo->update($shelf, $request->all(), $bookIds);
-        $resetCover = $request->has('image_reset');
-        $this->bookshelfRepo->updateCoverImage($shelf, $request->file('image', null), $resetCover);
+        $shelf = $this->bookshelfRepo->update($shelf, $validated, $bookIds);
 
         return redirect($shelf->getUrl());
     }

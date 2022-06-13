@@ -100,7 +100,6 @@ class BookController extends Controller
         }
 
         $book = $this->bookRepo->create($request->all());
-        $this->bookRepo->updateCoverImage($book, $request->file('image', null));
 
         if ($bookshelf) {
             $bookshelf->appendBook($book);
@@ -158,15 +157,20 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-update', $book);
-        $this->validate($request, [
+
+        $validated = $this->validate($request, [
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
-        $book = $this->bookRepo->update($book, $request->all());
-        $resetCover = $request->has('image_reset');
-        $this->bookRepo->updateCoverImage($book, $request->file('image', null), $resetCover);
+        if ($request->has('image_reset')) {
+            $validated['image'] = null;
+        } else if (is_null($validated['image'])) {
+            unset($validated['image']);
+        }
+
+        $book = $this->bookRepo->update($book, $validated);
 
         return redirect($book->getUrl());
     }

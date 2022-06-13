@@ -11,19 +11,6 @@ class BookApiController extends ApiController
 {
     protected $bookRepo;
 
-    protected $rules = [
-        'create' => [
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'tags'        => ['array'],
-        ],
-        'update' => [
-            'name'        => ['string', 'min:1', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'tags'        => ['array'],
-        ],
-    ];
-
     public function __construct(BookRepo $bookRepo)
     {
         $this->bookRepo = $bookRepo;
@@ -96,5 +83,22 @@ class BookApiController extends ApiController
         $this->bookRepo->destroy($book);
 
         return response('', 204);
+    }
+
+    protected function rules(): array {
+        return [
+            'create' => [
+                'name'        => ['required', 'string', 'max:255'],
+                'description' => ['string', 'max:1000'],
+                'tags'        => ['array'],
+                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            ],
+            'update' => [
+                'name'        => ['string', 'min:1', 'max:255'],
+                'description' => ['string', 'max:1000'],
+                'tags'        => ['array'],
+                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            ],
+        ];
     }
 }
