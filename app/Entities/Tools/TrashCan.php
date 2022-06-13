@@ -344,7 +344,7 @@ class TrashCan
      *
      * @throws Exception
      */
-    protected function destroyEntity(Entity $entity): int
+    public function destroyEntity(Entity $entity): int
     {
         if ($entity instanceof Page) {
             return $this->destroyPage($entity);

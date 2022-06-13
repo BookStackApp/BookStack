@@ -89,6 +89,7 @@ class BookshelfRepo
     {
         $shelf = new Bookshelf();
         $this->baseRepo->create($shelf, $input);
+        $this->baseRepo->updateCoverImage($shelf, $input['image']);
         $this->updateBooks($shelf, $bookIds);
         Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
 
@@ -106,14 +107,17 @@ class BookshelfRepo
             $this->updateBooks($shelf, $bookIds);
         }
 
+        if (isset($input['image'])) {
+            $this->baseRepo->updateCoverImage($shelf, $input['image'], $input['image'] === null);
+        }
+
         Activity::add(ActivityType::BOOKSHELF_UPDATE, $shelf);
 
         return $shelf;
     }
 
     /**
-     * Update which books are assigned to this shelf by
-     * syncing the given book ids.
+     * Update which books are assigned to this shelf by syncing the given book ids.
      * Function ensures the books are visible to the current user and existing.
      */
     protected function updateBooks(Bookshelf $shelf, array $bookIds)
@@ -130,17 +134,6 @@ class BookshelfRepo
             });
 
         $shelf->books()->sync($syncData);
-    }
-
-    /**
-     * Update the given shelf cover image, or clear it.
-     *
-     * @throws ImageUploadException
-     * @throws Exception
-     */
-    public function updateCoverImage(Bookshelf $shelf, ?UploadedFile $coverImage, bool $removeImage = false)
-    {
-        $this->baseRepo->updateCoverImage($shelf, $coverImage, $removeImage);
     }
 
     /**

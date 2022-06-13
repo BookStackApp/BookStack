@@ -50,11 +50,8 @@ class Cloner
     public function clonePage(Page $original, Entity $parent, string $newName): Page
     {
         $copyPage = $this->pageRepo->getNewDraftPage($parent);
-        $pageData = $original->getAttributes();
-
-        // Update name & tags
+        $pageData = $this->entityToInputData($original);
         $pageData['name'] = $newName;
-        $pageData['tags'] = $this->entityTagsToInputArray($original);
 
         return $this->pageRepo->publishDraft($copyPage, $pageData);
     }
@@ -65,9 +62,8 @@ class Cloner
      */
     public function cloneChapter(Chapter $original, Book $parent, string $newName): Chapter
     {
-        $chapterDetails = $original->getAttributes();
+        $chapterDetails = $this->entityToInputData($original);
         $chapterDetails['name'] = $newName;
-        $chapterDetails['tags'] = $this->entityTagsToInputArray($original);
 
         $copyChapter = $this->chapterRepo->create($chapterDetails, $parent);
 
@@ -87,9 +83,8 @@ class Cloner
      */
     public function cloneBook(Book $original, string $newName): Book
     {
-        $bookDetails = $original->getAttributes();
+        $bookDetails = $this->entityToInputData($original);
         $bookDetails['name'] = $newName;
-        $bookDetails['tags'] = $this->entityTagsToInputArray($original);
 
         $copyBook = $this->bookRepo->create($bookDetails);
 
@@ -104,16 +99,26 @@ class Cloner
             }
         }
 
-        if ($original->cover) {
-            try {
-                $tmpImgFile = tmpfile();
-                $uploadedFile = $this->imageToUploadedFile($original->cover, $tmpImgFile);
-                $this->bookRepo->updateCoverImage($copyBook, $uploadedFile, false);
-            } catch (\Exception $exception) {
-            }
+        return $copyBook;
+    }
+
+    /**
+     * Convert an entity to a raw data array of input data.
+     * @return array<string, mixed>
+     */
+    public function entityToInputData(Entity $entity): array
+    {
+        $inputData = $entity->getAttributes();
+        $inputData['tags'] = $this->entityTagsToInputArray($entity);
+
+        // Add a cover to the data if existing on the original entity
+        if ($entity->cover instanceof Image) {
+            $tmpImgFile = tmpfile();
+            $uploadedFile = $this->imageToUploadedFile($entity->cover, $tmpImgFile);
+            $inputData['image'] = $uploadedFile;
         }
 
-        return $copyBook;
+        return $inputData;
     }
 
     /**
