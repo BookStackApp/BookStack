@@ -91,7 +91,7 @@ class BookRepo
     {
         $book = new Book();
         $this->baseRepo->create($book, $input);
-        $this->baseRepo->updateCoverImage($book, $input['image']);
+        $this->baseRepo->updateCoverImage($book, $input['image'] ?? null);
         Activity::add(ActivityType::BOOK_CREATE, $book);
 
         return $book;
@@ -104,7 +104,7 @@ class BookRepo
     {
         $this->baseRepo->update($book, $input);
 
-        if (isset($input['image'])) {
+        if (array_key_exists('image', $input)) {
             $this->baseRepo->updateCoverImage($book, $input['image'], $input['image'] === null);
         }
 

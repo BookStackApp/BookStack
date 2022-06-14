@@ -2,12 +2,14 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
+use BookStack\Facades\Activity;
 
 class HierarchyTransformer
 {
@@ -16,10 +18,20 @@ class HierarchyTransformer
     protected Cloner $cloner;
     protected TrashCan $trashCan;
 
+    public function __construct(BookRepo $bookRepo, BookshelfRepo $shelfRepo, Cloner $cloner, TrashCan $trashCan)
+    {
+        $this->bookRepo = $bookRepo;
+        $this->shelfRepo = $shelfRepo;
+        $this->cloner = $cloner;
+        $this->trashCan = $trashCan;
+    }
+
+    /**
+     * Transform a chapter into a book.
+     * Does not check permissions, check before calling.
+     */
     public function transformChapterToBook(Chapter $chapter): Book
     {
-        // TODO - Check permissions before call
-        //   Permissions: edit-chapter, delete-chapter, create-book
         $inputData = $this->cloner->entityToInputData($chapter);
         $book = $this->bookRepo->create($inputData);
         $this->cloner->copyEntityPermissions($chapter, $book);
@@ -32,7 +44,7 @@ class HierarchyTransformer
 
         $this->trashCan->destroyEntity($chapter);
 
-        // TODO - Log activity for change
+        Activity::add(ActivityType::BOOK_CREATE_FROM_CHAPTER);
         return $book;
     }
 

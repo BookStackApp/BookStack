@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'created book',
     'book_create_notification'    => 'Book successfully created',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'updated book',
     'book_update_notification'    => 'Book successfully updated',
     'book_delete'                 => 'deleted book',
