@@ -122,6 +122,18 @@ class Cloner
     }
 
     /**
+     * Copy the permission settings from the source entity to the target entity.
+     */
+    public function copyEntityPermissions(Entity $sourceEntity, Entity $targetEntity): void
+    {
+        $targetEntity->restricted = $sourceEntity->restricted;
+        $permissions = $sourceEntity->permissions()->get(['role_id', 'action'])->toArray();
+        $targetEntity->permissions()->delete();
+        $targetEntity->permissions()->createMany($permissions);
+        $targetEntity->rebuildPermissions();
+    }
+
+    /**
      * Convert an image instance to an UploadedFile instance to mimic
      * a file being uploaded.
      */

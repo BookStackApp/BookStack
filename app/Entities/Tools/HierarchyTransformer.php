@@ -16,19 +16,13 @@ class HierarchyTransformer
     protected Cloner $cloner;
     protected TrashCan $trashCan;
 
-    // TODO - Test setting book cover image from API
-    //   Ensure we can update without resetting image accidentally
-    //   Ensure api docs correct.
-    // TODO - As above but for shelves.
-
     public function transformChapterToBook(Chapter $chapter): Book
     {
         // TODO - Check permissions before call
         //   Permissions: edit-chapter, delete-chapter, create-book
         $inputData = $this->cloner->entityToInputData($chapter);
         $book = $this->bookRepo->create($inputData);
-
-        // TODO - Copy permissions
+        $this->cloner->copyEntityPermissions($chapter, $book);
 
         /** @var Page $page */
         foreach ($chapter->pages as $page) {
@@ -48,8 +42,7 @@ class HierarchyTransformer
         //   Permissions: edit-book, delete-book, create-shelf
         $inputData = $this->cloner->entityToInputData($book);
         $shelf = $this->shelfRepo->create($inputData, []);
-
-        // TODO - Copy permissions?
+        $this->cloner->copyEntityPermissions($book, $shelf);
 
         $shelfBookSyncData = [];
 
