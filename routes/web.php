@@ -132,6 +132,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/copy', [ChapterController::class, 'showCopy']);
     Route::post('/books/{bookSlug}/chapter/{chapterSlug}/copy', [ChapterController::class, 'copy']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/edit', [ChapterController::class, 'edit']);
+    Route::post('/books/{bookSlug}/chapter/{chapterSlug}/convert-to-book', [ChapterController::class, 'convertToBook']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'showPermissions']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/pdf', [ChapterExportController::class, 'pdf']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/html', [ChapterExportController::class, 'html']);
