@@ -89,7 +89,7 @@ class BookshelfRepo
     {
         $shelf = new Bookshelf();
         $this->baseRepo->create($shelf, $input);
-        $this->baseRepo->updateCoverImage($shelf, $input['image']);
+        $this->baseRepo->updateCoverImage($shelf, $input['image'] ?? null);
         $this->updateBooks($shelf, $bookIds);
         Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
 
@@ -107,7 +107,7 @@ class BookshelfRepo
             $this->updateBooks($shelf, $bookIds);
         }
 
-        if (isset($input['image'])) {
+        if (array_key_exists('image', $input)) {
             $this->baseRepo->updateCoverImage($shelf, $input['image'], $input['image'] === null);
         }
 
