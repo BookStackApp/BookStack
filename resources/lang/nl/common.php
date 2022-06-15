@@ -48,7 +48,7 @@ return [
     'filter_active' => 'Actieve Filter:',
     'filter_clear' => 'Wis Filter',
     'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'open_in_tab' => 'Open als Tabblad',
 
     // Sort Options
     'sort_options' => 'Sorteeropties',
