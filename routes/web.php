@@ -82,6 +82,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{slug}/delete', [BookController::class, 'showDelete']);
     Route::get('/books/{bookSlug}/copy', [BookController::class, 'showCopy']);
     Route::post('/books/{bookSlug}/copy', [BookController::class, 'copy']);
+    Route::post('/books/{bookSlug}/convert-to-shelf', [BookController::class, 'convertToShelf']);
     Route::get('/books/{bookSlug}/sort', [BookSortController::class, 'show']);
     Route::put('/books/{bookSlug}/sort', [BookSortController::class, 'update']);
     Route::get('/books/{bookSlug}/export/html', [BookExportController::class, 'html']);

@@ -44,14 +44,16 @@ class HierarchyTransformer
 
         $this->trashCan->destroyEntity($chapter);
 
-        Activity::add(ActivityType::BOOK_CREATE_FROM_CHAPTER);
+        Activity::add(ActivityType::BOOK_CREATE_FROM_CHAPTER, $book);
         return $book;
     }
 
+    /**
+     * Transform a book into a shelf.
+     * Does not check permissions, check before calling.
+     */
     public function transformBookToShelf(Book $book): Bookshelf
     {
-        // TODO - Check permissions before call
-        //   Permissions: edit-book, delete-book, create-shelf
         $inputData = $this->cloner->entityToInputData($book);
         $shelf = $this->shelfRepo->create($inputData, []);
         $this->cloner->copyEntityPermissions($book, $shelf);
@@ -62,17 +64,22 @@ class HierarchyTransformer
         foreach ($book->chapters as $index => $chapter) {
             $newBook = $this->transformChapterToBook($chapter);
             $shelfBookSyncData[$newBook->id] = ['order' => $index];
+            if (!$newBook->restricted) {
+                $this->cloner->copyEntityPermissions($shelf, $newBook);
+            }
         }
-
-        $shelf->books()->sync($shelfBookSyncData);
 
         if ($book->directPages->count() > 0) {
             $book->name .= ' ' . trans('entities.pages');
+            $shelfBookSyncData[$book->id] = ['order' => count($shelfBookSyncData) + 1];
+            $book->save();
         } else {
             $this->trashCan->destroyEntity($book);
         }
 
-        // TODO - Log activity for change
+        $shelf->books()->sync($shelfBookSyncData);
+
+        Activity::add(ActivityType::BOOKSHELF_CREATE_FROM_BOOK, $shelf);
         return $shelf;
     }
 }
