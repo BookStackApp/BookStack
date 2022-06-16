@@ -5,6 +5,7 @@ namespace Tests\Entity;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use DOMXPath;
 use Tests\TestCase;
 
 class ChapterTest extends TestCase
@@ -145,5 +146,107 @@ class ChapterTest extends TestCase
         /** @var Chapter $newChapter2 */
         $newChapter2 = Chapter::query()->where('name', '=', 'My copied again chapter')->first();
         $this->assertEquals($chapter->pages()->count(), $newChapter2->pages()->count());
+    }
+
+    /**
+     * Test copy chapter having pages with html containing links pointing to pages with the same chapter as parent.
+     * Make sure we update the links so they points to the new cloned pages (which will have the new cloned chapter
+     * as parent)
+     */
+    public function test_copy_does_update_html_self_referentials_child_page_links()
+    {
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->whereHas('pages')->first();
+        $pages = $chapter->pages->all();
+        $pageCount = count($pages);
+
+        $previousPage = $pages[$pageCount - 1];
+        $previousPage->name = $pageCount - 1;
+        $previousPage->refreshSlug();
+        $previousPage->save();
+
+        for ($i = 0; $i < $pageCount; $i++) {
+            $page = $pages[$i];
+            $page->name = $i;   
+            $page->html = "<p><a title='Some link' href='{$previousPage->getUrl()}'>some serious test content</a></p>";
+            $previousPage = $page;
+            $page->refreshSlug();
+            $page->save();
+        }
+
+        $this->asEditor()->post($chapter->getUrl('/copy'), [
+            'name' => 'My copied chapter wxcd',
+        ]);
+
+        /** @var Chapter $copiedChapter */
+        $copiedChapter = Chapter::query()->where('name', '=', 'My copied chapter wxcd')->first();
+        $copiedPages = $copiedChapter->pages->sortBy('name')->all();
+
+        $previousPage = $copiedPages[$pageCount - 1];
+
+        for ($i = 0; $i < $pageCount; $i++) {
+            $page = $copiedPages[$i];
+            $this->assertEquals("<p id=\"bkmrk-some-serious-test-co\"><a title='Some link' href='{$previousPage->getUrl()}'>some serious test content</a></p>", $page->html);
+            $previousPage = $page;
+        }
+    }
+
+    /** @see Tests\Entity\ChapterTest::test_copy_does_update_html_self_referentials_child_page_links() */
+    public function test_copy_does_update_markdown_self_referentials_child_page_links()
+    {
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->whereHas('pages')->first();
+        $firstPage = $chapter->pages[0];
+        $secondPage = $chapter->pages[1];
+
+        $firstPage->markdown = "[Awesome related page]({$secondPage->getUrl()})";
+        $secondPage->markdown = "[Awesome related page]({$firstPage->getUrl()})";
+        $firstPage->save();
+        $secondPage->save();
+
+        $this->asEditor()->post($chapter->getUrl('/copy'), [
+            'name' => 'My copied chapter wxcd',
+        ]);
+
+        /** @var Chapter $copiedChapter */
+        $copiedChapter = Chapter::query()->where('name', '=', 'My copied chapter wxcd')->first();
+
+        $copiedFirstPage = $copiedChapter->pages[0];
+        $copiedSecondPage = $copiedChapter->pages[1];
+
+        $this->assertEquals($copiedFirstPage->markdown, "[Awesome related page]({$copiedSecondPage->getUrl()})");
+        $this->assertEquals($copiedSecondPage->markdown, "[Awesome related page]({$copiedFirstPage->getUrl()})");
+    }
+
+    /**
+     * Test chapter copy having pages with content that does not contains any self-referential links.
+     * Copy should not alter those links.
+     */
+    public function test_copy_does_not_update_html_external_page_links()
+    {
+        // todo
+        $this->assertTrue(true);
+    }
+
+    /** @see \Tests\Entity\ChapterTest::test_copy_does_not_update_html_external_page_links() */
+    public function test_copy_does_not_update_markdown_external_page_links()
+    {
+        // todo
+        $this->assertTrue(true);
+    }
+
+    /**
+     * Test copy chapter having pages with html containing links pointing to the very same chapter.
+     * Make sure we update the links so they points to the new cloned chapter.
+     */
+    public function test_copy_does_update_html_self_referentials_links()
+    {
+        $this->assertTrue(true);
+    }
+
+    /** @see \Tests\Entity\ChapterTest::test_copy_does_update_html_self_referentials_links() */
+    public function test_copy_does_update_markdown_self_referentials_links()
+    {
+        $this->assertTrue(true);
     }
 }

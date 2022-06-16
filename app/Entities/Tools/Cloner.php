@@ -31,11 +31,29 @@ class Cloner
 
     /**
      * Clone the given page into the given parent using the provided name.
+     * $oldParent should be provided if $updateLinks is set to true
      */
-    public function clonePage(Page $original, Entity $parent, string $newName): Page
+    public function clonePage(Page $original, Entity $parent, string $newName, bool $updateLinks, Entity $oldParent = null): Page
     {
         $copyPage = $this->pageRepo->getNewDraftPage($parent);
         $pageData = $this->entityToInputData($original);
+
+        // TODO do a thorough check to figure out if it makes sense to try to update the links
+        // we need to make sure we're not doing stupid things and generate wrong links that leads to nowhere
+        if ($updateLinks) {
+            // todo search for relevant links in the html attribute content and replace with newer links
+            // search links using $oldParent and replace using $parent
+            $link = $oldParent->getUrl();
+            // if it has chapter in the url get rid of it
+
+            preg_match_all("$link", $original->html, $matched);
+
+            foreach ($matched as $match) {
+                var_dump($match);
+            }
+        }
+
+        // Update name & tags
         $pageData['name'] = $newName;
 
         return $this->pageRepo->publishDraft($copyPage, $pageData);
@@ -55,7 +73,7 @@ class Cloner
         if (userCan('page-create', $copyChapter)) {
             /** @var Page $page */
             foreach ($original->getVisiblePages() as $page) {
-                $this->clonePage($page, $copyChapter, $page->name);
+                $this->clonePage($page, $copyChapter, $page->name, true, $original);
             }
         }
 
@@ -80,7 +98,7 @@ class Cloner
             }
 
             if ($child instanceof Page && !$child->draft && userCan('page-create', $copyBook)) {
-                $this->clonePage($child, $copyBook, $child->name);
+                $this->clonePage($child, $copyBook, $child->name, true, $original);
             }
         }
 

@@ -443,7 +443,9 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-create', $newParent);
 
         $newName = $request->get('name') ?: $page->name;
-        $pageCopy = $cloner->clonePage($page, $newParent, $newName);
+
+        // Do not try to update links when moving a single page
+        $pageCopy = $cloner->clonePage($page, $newParent, $newName, false);
         $this->showSuccessNotification(trans('entities.pages_copy_success'));
 
         return redirect($pageCopy->getUrl());

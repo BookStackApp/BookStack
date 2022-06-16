@@ -294,4 +294,68 @@ class BookTest extends TestCase
         $this->assertNotNull($copy->cover);
         $this->assertNotEquals($book->cover->id, $copy->cover->id);
     }
+
+    public function test_copy_does_update_html_self_referentials_page_links()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('pages')->first();
+        $firstPage = $book->pages[0];
+        $secondPage = $book->pages[1];
+
+        $firstPage->html = "<p><a title='Some link' href='{$secondPage->getUrl()}'>some serious test content</a></p>";
+        $secondPage->html = "<p><a title='Some link' href='{$firstPage->getUrl()}'>some serious test content</a></p>";
+        $firstPage->save();
+        $secondPage->save();
+
+        $this->asEditor()->post($book->getUrl('/copy'), [
+            'name' => 'My copied book wxcd',
+        ]);
+
+        /** @var Book $copiedBook */
+        $copiedBook = Book::query()->where('name', '=', 'My copied book wxcd')->first();
+
+        $copiedFirstPage = $copiedBook->pages[0];
+        $copiedSecondPage = $copiedBook->pages[1];
+
+        $this->assertEquals("<p><a title='Some link' href='{$copiedSecondPage->getUrl()}'>some serious test content</a></p>", $copiedFirstPage->html);
+        // $this->assertEquals("<p><a title='Some link' href='{$copiedFirstPage->getUrl()}'>some serious test content</a></p>", $copiedSecondPage->html);
+    }
+
+    public function test_copy_does_not_update_html_external_page_links()
+    {
+        // todo
+        $this->assertTrue(true);
+    }
+
+    public function test_copy_does_update_markdown_self_referentials_page_links()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('pages')->first();
+        $firstPage = $book->pages[0];
+        $secondPage = $book->pages[1];
+
+        $firstPage->markdown = "[Awesome related page]({$secondPage->getUrl()})";
+        $secondPage->markdown = "[Awesome related page]({$firstPage->getUrl()})";
+        $firstPage->save();
+        $secondPage->save();
+
+        $this->asEditor()->post($book->getUrl('/copy'), [
+            'name' => 'My copied book wxcd',
+        ]);
+
+        /** @var Book $copiedBook */
+        $copiedBook = Book::query()->where('name', '=', 'My copied book wxcd')->first();
+
+        $copiedFirstPage = $copiedBook->pages[0];
+        $copiedSecondPage = $copiedBook->pages[1];
+
+        $this->assertEquals("[Awesome related page]({$copiedSecondPage->getUrl()})", $copiedFirstPage->markdown);
+        $this->assertEquals("[Awesome related page]({$copiedFirstPage->getUrl()})", $copiedSecondPage->markdown);
+    }
+
+    public function test_copy_does_not_update_markdown_external_page_links()
+    {
+        // todo
+        $this->assertTrue(true);
+    }
 }

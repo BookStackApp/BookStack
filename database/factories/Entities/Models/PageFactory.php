@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Entities\Models;
 
+use BookStack\Entities\Models\Entity;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
