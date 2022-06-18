@@ -254,7 +254,7 @@ return [
     'webhooks_delete' => 'Supprimer le Webhook',
     'webhooks_delete_warning' => 'Ceci supprimera complètement du système le webhook ayant le nom \':webhookName\'.',
     'webhooks_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce webhook ?',
-    'webhooks_format_example' => 'Exemple de Format de Webhook',
+    'webhooks_format_example' => 'Exemple de format de webhook',
     'webhooks_format_example_desc' => 'Les données du webhook sont envoyées dans une requête POST vers l\'endpoint au format JSON respectant le format ci-dessous. Les propriétés "related_item" et "url" sont optionnelles et dépendront du type d\'événement déclenché.',
     'webhooks_status' => 'Statut du webhook',
     'webhooks_last_called' => 'Dernier appel :',
