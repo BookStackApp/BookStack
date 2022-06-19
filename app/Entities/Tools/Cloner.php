@@ -122,7 +122,7 @@ class Cloner
      * Convert an image instance to an UploadedFile instance to mimic
      * a file being uploaded.
      */
-    protected function imageToUploadedFile(Image $image,): ?UploadedFile
+    protected function imageToUploadedFile(Image $image): ?UploadedFile
     {
         $imgData = $this->imageService->getImageData($image);
         $tmpImgFilePath = tempnam(sys_get_temp_dir(), 'bs_cover_clone_');
