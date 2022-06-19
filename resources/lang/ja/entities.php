@@ -328,7 +328,7 @@ return [
     'comment' => 'コメント',
     'comments' => 'コメント',
     'comment_add' => 'コメント追加',
-    'comment_placeholder' => 'コメントを記入してく下さい',
+    'comment_placeholder' => 'コメントを記入してください',
     'comment_count' => '{0} コメントはありません|[1,*] コメント:count件',
     'comment_save' => 'コメントを保存',
     'comment_saving' => 'コメントを保存中...',
