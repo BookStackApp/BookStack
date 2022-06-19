@@ -1,19 +1,19 @@
 <div class="content-wrap card auto-height">
-    <h2 class="list-heading">Convert to Book</h2>
+    <h2 class="list-heading">{{ trans('entities.convert_to_book') }}</h2>
     <div class="grid half left-focus no-row-gap">
         <p>
-            You can convert this chapter to a new book with the same contents.
-            Any permissions set on this chapter will be copied to the new book but any inherited permissions,
-            from the parent book, will not be copied which could lead to a change of access control.
+            {{ trans('entities.convert_to_book_desc') }}
         </p>
         <div class="text-m-right">
             <div component="dropdown" class="dropdown-container">
-                <button refs="dropdown@toggle" class="button outline" aria-haspopup="true" aria-expanded="false">Convert Chapter</button>
+                <button refs="dropdown@toggle" class="button outline" aria-haspopup="true" aria-expanded="false">
+                    {{ trans('entities.convert_chapter') }}
+                </button>
                 <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                     <li class="px-m py-s text-small text-muted">
-                        Are you sure you want to convert this chapter?
+                        {{ trans('entities.convert_chapter_confirm') }}
                         <br>
-                        This cannot be as easily undone.
+                        {{ trans('entities.convert_undo_warning') }}
                     </li>
                     <li>
                         <form action="{{ $chapter->getUrl('/convert-to-book') }}" method="POST">
