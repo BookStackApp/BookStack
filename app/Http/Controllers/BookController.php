@@ -167,7 +167,7 @@ class BookController extends Controller
 
         if ($request->has('image_reset')) {
             $validated['image'] = null;
-        } else if (array_key_exists('image', $validated) && is_null($validated['image'])) {
+        } elseif (array_key_exists('image', $validated) && is_null($validated['image'])) {
             unset($validated['image']);
         }
 

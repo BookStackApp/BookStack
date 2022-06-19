@@ -139,7 +139,7 @@ class BooksApiTest extends TestCase
 
         // Ensure further updates without image do not clear cover image
         $resp = $this->put($this->baseEndpoint . "/{$book->id}", [
-            'name' => 'My updated book again'
+            'name' => 'My updated book again',
         ]);
         $book->refresh();
 
