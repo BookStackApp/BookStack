@@ -99,8 +99,7 @@ class Cloner
 
         // Add a cover to the data if existing on the original entity
         if ($entity->cover instanceof Image) {
-            $tmpImgFile = tmpfile();
-            $uploadedFile = $this->imageToUploadedFile($entity->cover, $tmpImgFile);
+            $uploadedFile = $this->imageToUploadedFile($entity->cover);
             $inputData['image'] = $uploadedFile;
         }
 
@@ -123,10 +122,10 @@ class Cloner
      * Convert an image instance to an UploadedFile instance to mimic
      * a file being uploaded.
      */
-    protected function imageToUploadedFile(Image $image, &$tmpFile): ?UploadedFile
+    protected function imageToUploadedFile(Image $image,): ?UploadedFile
     {
         $imgData = $this->imageService->getImageData($image);
-        $tmpImgFilePath = stream_get_meta_data($tmpFile)['uri'];
+        $tmpImgFilePath = tempnam(sys_get_temp_dir(), 'bs_cover_clone_');
         file_put_contents($tmpImgFilePath, $imgData);
 
         return new UploadedFile($tmpImgFilePath, basename($image->path));
