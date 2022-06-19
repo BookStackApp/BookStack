@@ -49,6 +49,27 @@ class ConvertTest extends TestCase
         $this->assertActivityExists(ActivityType::BOOK_CREATE_FROM_CHAPTER, $newBook);
     }
 
+    public function test_convert_chapter_to_book_requires_permissions()
+    {
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
+        $user = $this->getViewer();
+
+        $permissions = ['chapter-delete-all', 'book-create-all', 'chapter-update-all'];
+        $this->giveUserPermissions($user, $permissions);
+
+        foreach ($permissions as $permission) {
+            $this->removePermissionFromUser($user, $permission);
+            $resp = $this->actingAs($user)->post($chapter->getUrl('/convert-to-book'));
+            $this->assertPermissionError($resp);
+            $this->giveUserPermissions($user, [$permission]);
+        }
+
+        $resp = $this->actingAs($user)->post($chapter->getUrl('/convert-to-book'));
+        $this->assertNotPermissionError($resp);
+        $resp->assertRedirect();
+    }
+
     public function test_book_edit_view_shows_convert_option()
     {
         $book = Book::query()->first();
@@ -100,6 +121,27 @@ class ConvertTest extends TestCase
         $chapterChildPage->refresh();
         $this->assertEquals(0, $chapterChildPage->chapter_id);
         $this->assertEquals($childChapter->name, $chapterChildPage->book->name);
+    }
+
+    public function test_book_convert_to_shelf_requires_permissions()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $user = $this->getViewer();
+
+        $permissions = ['book-delete-all', 'bookshelf-create-all', 'book-update-all', 'book-create-all'];
+        $this->giveUserPermissions($user, $permissions);
+
+        foreach ($permissions as $permission) {
+            $this->removePermissionFromUser($user, $permission);
+            $resp = $this->actingAs($user)->post($book->getUrl('/convert-to-shelf'));
+            $this->assertPermissionError($resp);
+            $this->giveUserPermissions($user, [$permission]);
+        }
+
+        $resp = $this->actingAs($user)->post($book->getUrl('/convert-to-shelf'));
+        $this->assertNotPermissionError($resp);
+        $resp->assertRedirect();
     }
 
 }

@@ -194,13 +194,23 @@ trait SharedTestHelpers
     /**
      * Completely remove the given permission name from the given user.
      */
-    protected function removePermissionFromUser(User $user, string $permission)
+    protected function removePermissionFromUser(User $user, string $permissionName)
     {
-        $permission = RolePermission::query()->where('name', '=', $permission)->first();
+        $permissionService = app()->make(PermissionService::class);
+
+        /** @var RolePermission $permission */
+        $permission = RolePermission::query()->where('name', '=', $permissionName)->firstOrFail();
+
+        $roles = $user->roles()->whereHas('permissions', function($query) use ($permission) {
+            $query->where('id', '=', $permission->id);
+        })->get();
+
         /** @var Role $role */
-        foreach ($user->roles as $role) {
+        foreach ($roles as $role) {
             $role->detachPermission($permission);
+            $permissionService->buildJointPermissionForRole($role);
         }
+
         $user->clearPermissionCache();
     }
 
