@@ -89,6 +89,7 @@ class Cloner
 
     /**
      * Convert an entity to a raw data array of input data.
+     *
      * @return array<string, mixed>
      */
     public function entityToInputData(Entity $entity): array

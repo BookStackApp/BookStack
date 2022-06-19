@@ -167,7 +167,7 @@ class ShelvesApiTest extends TestCase
 
         // Ensure further updates without image do not clear cover image
         $resp = $this->put($this->baseEndpoint . "/{$shelf->id}", [
-            'name' => 'My updated shelf again'
+            'name' => 'My updated shelf again',
         ]);
         $shelf->refresh();
 

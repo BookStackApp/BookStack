@@ -89,7 +89,8 @@ class BookApiController extends ApiController
         return response('', 204);
     }
 
-    protected function rules(): array {
+    protected function rules(): array
+    {
         return [
             'create' => [
                 'name'        => ['required', 'string', 'max:255'],

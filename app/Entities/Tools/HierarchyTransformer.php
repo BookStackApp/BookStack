@@ -45,6 +45,7 @@ class HierarchyTransformer
         $this->trashCan->destroyEntity($chapter);
 
         Activity::add(ActivityType::BOOK_CREATE_FROM_CHAPTER, $book);
+
         return $book;
     }
 
@@ -80,6 +81,7 @@ class HierarchyTransformer
         $shelf->books()->sync($shelfBookSyncData);
 
         Activity::add(ActivityType::BOOKSHELF_CREATE_FROM_BOOK, $shelf);
+
         return $shelf;
     }
 }

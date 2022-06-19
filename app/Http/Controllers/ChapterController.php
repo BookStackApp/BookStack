@@ -274,7 +274,6 @@ class ChapterController extends Controller
         return redirect($chapter->getUrl());
     }
 
-
     /**
      * Convert the chapter to a book.
      */

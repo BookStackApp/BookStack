@@ -8,7 +8,6 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BaseRepo;
 use BookStack\Entities\Repos\BookRepo;
-use BookStack\Entities\Repos\BookshelfRepo;
 use Illuminate\Support\Str;
 use Tests\Uploads\UsesImages;
 

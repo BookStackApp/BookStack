@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class ConvertTest extends TestCase
 {
-
     public function test_chapter_edit_view_shows_convert_option()
     {
         /** @var Chapter $chapter */
@@ -143,5 +142,4 @@ class ConvertTest extends TestCase
         $this->assertNotPermissionError($resp);
         $resp->assertRedirect();
     }
-
 }

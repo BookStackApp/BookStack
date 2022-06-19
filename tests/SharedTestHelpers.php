@@ -201,7 +201,7 @@ trait SharedTestHelpers
         /** @var RolePermission $permission */
         $permission = RolePermission::query()->where('name', '=', $permissionName)->firstOrFail();
 
-        $roles = $user->roles()->whereHas('permissions', function($query) use ($permission) {
+        $roles = $user->roles()->whereHas('permissions', function ($query) use ($permission) {
             $query->where('id', '=', $permission->id);
         })->get();
 
