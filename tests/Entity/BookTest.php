@@ -290,6 +290,7 @@ class BookTest extends TestCase
 
         /** @var Book $copy */
         $copy = Book::query()->where('name', '=', 'My copy book')->first();
+
         $this->assertNotNull($copy->cover);
         $this->assertNotEquals($book->cover->id, $copy->cover->id);
     }

@@ -87,6 +87,7 @@ class BookshelfController extends Controller
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'        => ['array'],
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));
@@ -163,6 +164,7 @@ class BookshelfController extends Controller
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'        => ['array'],
         ]);
 
         if ($request->has('image_reset')) {
