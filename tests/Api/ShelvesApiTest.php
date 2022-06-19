@@ -7,10 +7,12 @@ use BookStack\Entities\Models\Bookshelf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
+use Tests\Uploads\UsesImages;
 
 class ShelvesApiTest extends TestCase
 {
     use TestsApi;
+    use UsesImages;
 
     protected string $baseEndpoint = '/api/shelves';
 
@@ -144,6 +146,42 @@ class ShelvesApiTest extends TestCase
         $resp = $this->putJson($this->baseEndpoint . "/{$shelf->id}", ['books' => []]);
         $resp->assertStatus(200);
         $this->assertTrue($shelf->books()->count() === 0);
+    }
+
+    public function test_update_cover_image_control()
+    {
+        $this->actingAsApiEditor();
+        /** @var Book $shelf */
+        $shelf = Bookshelf::visible()->first();
+        $this->assertNull($shelf->cover);
+        $file = $this->getTestImage('image.png');
+
+        // Ensure cover image can be set via API
+        $resp = $this->call('PUT', $this->baseEndpoint . "/{$shelf->id}", [
+            'name'  => 'My updated API shelf with image',
+        ], [], ['image' => $file]);
+        $shelf->refresh();
+
+        $resp->assertStatus(200);
+        $this->assertNotNull($shelf->cover);
+
+        // Ensure further updates without image do not clear cover image
+        $resp = $this->put($this->baseEndpoint . "/{$shelf->id}", [
+            'name' => 'My updated shelf again'
+        ]);
+        $shelf->refresh();
+
+        $resp->assertStatus(200);
+        $this->assertNotNull($shelf->cover);
+
+        // Ensure update with null image property clears image
+        $resp = $this->put($this->baseEndpoint . "/{$shelf->id}", [
+            'image' => null,
+        ]);
+        $shelf->refresh();
+
+        $resp->assertStatus(200);
+        $this->assertNull($shelf->cover);
     }
 
     public function test_delete_endpoint()
