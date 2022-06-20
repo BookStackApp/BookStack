@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
+use BookStack\Entities\Tools\HierarchyTransformer;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\MoveOperationException;
@@ -271,5 +272,20 @@ class ChapterController extends Controller
         $this->showSuccessNotification(trans('entities.chapters_permissions_success'));
 
         return redirect($chapter->getUrl());
+    }
+
+    /**
+     * Convert the chapter to a book.
+     */
+    public function convertToBook(HierarchyTransformer $transformer, string $bookSlug, string $chapterSlug)
+    {
+        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
+        $this->checkOwnablePermission('chapter-update', $chapter);
+        $this->checkOwnablePermission('chapter-delete', $chapter);
+        $this->checkPermission('book-create-all');
+
+        $book = $transformer->transformChapterToBook($chapter);
+
+        return redirect($book->getUrl());
     }
 }

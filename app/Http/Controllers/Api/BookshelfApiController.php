@@ -13,21 +13,6 @@ class BookshelfApiController extends ApiController
 {
     protected BookshelfRepo $bookshelfRepo;
 
-    protected $rules = [
-        'create' => [
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'books'       => ['array'],
-            'tags'        => ['array'],
-        ],
-        'update' => [
-            'name'        => ['string', 'min:1', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'books'       => ['array'],
-            'tags'        => ['array'],
-        ],
-    ];
-
     /**
      * BookshelfApiController constructor.
      */
@@ -52,13 +37,15 @@ class BookshelfApiController extends ApiController
      * Create a new shelf in the system.
      * An array of books IDs can be provided in the request. These
      * will be added to the shelf in the same order as provided.
+     * The cover image of a shelf can be set by sending a file via an 'image' property within a 'multipart/form-data' request.
+     * If the 'image' property is null then the shelf cover image will be removed.
      *
      * @throws ValidationException
      */
     public function create(Request $request)
     {
         $this->checkPermission('bookshelf-create-all');
-        $requestData = $this->validate($request, $this->rules['create']);
+        $requestData = $this->validate($request, $this->rules()['create']);
 
         $bookIds = $request->get('books', []);
         $shelf = $this->bookshelfRepo->create($requestData, $bookIds);
@@ -86,6 +73,8 @@ class BookshelfApiController extends ApiController
      * An array of books IDs can be provided in the request. These
      * will be added to the shelf in the same order as provided and overwrite
      * any existing book assignments.
+     * The cover image of a shelf can be set by sending a file via an 'image' property within a 'multipart/form-data' request.
+     * If the 'image' property is null then the shelf cover image will be removed.
      *
      * @throws ValidationException
      */
@@ -94,7 +83,7 @@ class BookshelfApiController extends ApiController
         $shelf = Bookshelf::visible()->findOrFail($id);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
-        $requestData = $this->validate($request, $this->rules['update']);
+        $requestData = $this->validate($request, $this->rules()['update']);
         $bookIds = $request->get('books', null);
 
         $shelf = $this->bookshelfRepo->update($shelf, $requestData, $bookIds);
@@ -116,5 +105,25 @@ class BookshelfApiController extends ApiController
         $this->bookshelfRepo->destroy($shelf);
 
         return response('', 204);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'create' => [
+                'name'        => ['required', 'string', 'max:255'],
+                'description' => ['string', 'max:1000'],
+                'books'       => ['array'],
+                'tags'        => ['array'],
+                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            ],
+            'update' => [
+                'name'        => ['string', 'min:1', 'max:255'],
+                'description' => ['string', 'max:1000'],
+                'books'       => ['array'],
+                'tags'        => ['array'],
+                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            ],
+        ];
     }
 }
