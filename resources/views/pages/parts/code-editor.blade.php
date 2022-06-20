@@ -63,8 +63,8 @@
 
             </div>
 
-            <div class="popup-footer primary-background-light">
-                <button refs="code-editor@saveButton" type="button" class="button corner-button">{{ trans('components.code_save') }}</button>
+            <div class="popup-footer">
+                <button refs="code-editor@saveButton" type="button" class="button">{{ trans('components.code_save') }}</button>
             </div>
 
         </div>

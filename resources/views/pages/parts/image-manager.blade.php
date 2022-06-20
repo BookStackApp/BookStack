@@ -9,7 +9,7 @@
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
-                <button refs="popup@hide" type="button" class="popup-header-close">x</button>
+                <button refs="popup@hide" type="button" class="popup-header-close">@icon('close')</button>
             </div>
 
             <div class="flex-fill image-manager-body">
@@ -53,12 +53,14 @@
                     </div>
 
                     <div refs="image-manager@formContainer" class="inner flex"></div>
-
-                    <button refs="image-manager@selectButton" type="button" class="hidden button corner-button">
-                        {{ trans('components.image_select_image') }}
-                    </button>
                 </div>
 
+            </div>
+
+            <div class="popup-footer">
+                <button refs="image-manager@selectButton" type="button" class="hidden button">
+                    {{ trans('components.image_select_image') }}
+                </button>
             </div>
 
         </div>
