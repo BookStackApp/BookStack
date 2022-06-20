@@ -33,10 +33,11 @@ class CodeEditor {
         onSelect(this.languageLinks, event => {
             const language = event.target.dataset.lang;
             this.languageInput.value = language;
-            this.updateEditorMode(language);
+            this.languageInputChange(language);
         });
 
         onEnterPress(this.languageInput, e => this.save());
+        this.languageInput.addEventListener('input', e => this.languageInputChange(this.languageInput.value));
         onSelect(this.saveButton, e => this.save());
 
         onChildEvent(this.historyList, 'button', 'click', (event, elem) => {
@@ -60,7 +61,7 @@ class CodeEditor {
         this.callback = callback;
 
         this.show()
-            .then(() => this.updateEditorMode(language))
+            .then(() => this.languageInputChange(language))
             .then(() => window.importVersioned('code'))
             .then(Code => Code.setContent(this.editor, code));
     }
@@ -88,6 +89,22 @@ class CodeEditor {
     async updateEditorMode(language) {
         const Code = await window.importVersioned('code');
         Code.setMode(this.editor, language, this.editor.getValue());
+    }
+
+    languageInputChange(language) {
+        this.updateEditorMode(language);
+        const inputLang = language.toLowerCase();
+        let matched = false;
+
+        for (const link of this.languageLinks) {
+            const lang = link.dataset.lang.toLowerCase().trim();
+            const isMatch = inputLang && lang.startsWith(inputLang);
+            link.classList.toggle('active', isMatch);
+            if (isMatch && !matched) {
+                link.scrollIntoView({block: "center", behavior: "smooth"});
+                matched = true;
+            }
+        }
     }
 
     loadHistory() {
