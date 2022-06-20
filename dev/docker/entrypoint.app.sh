@@ -11,5 +11,6 @@ else
     wait-for-it db:3306 -t 45
     php artisan migrate --database=mysql --force
     chown -R www-data:www-data storage
+    chown -R www-data:www-data themes
     exec apache2-foreground
 fi
