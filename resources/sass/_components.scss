@@ -1,3 +1,4 @@
+
 // System wide notifications
 [notification] {
   position: fixed;
@@ -137,34 +138,53 @@
   }
 }
 
-.popup-footer button, .popup-header-close {
-  position: absolute;
-  top: 0;
-  right: 0;
+.popup-header button, .popup-footer button {
   margin: 0;
-  height: 40px;
   border-radius: 0;
   box-shadow: none;
-  &:active {
-    outline: 0;
+  color: #FFF;
+  padding: $-xs $-m;
+}
+
+.popup-header button:not(.popup-header-close) {
+  font-size: 0.8rem;
+}
+
+.popup-header button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.popup-footer {
+  justify-content: end;
+  background-color: var(--color-primary-light);
+  min-height: 41px;
+  button {
+    padding: 10px $-m;
   }
 }
+
 .popup-header-close {
-  background-color: transparent;
   border: 0;
   color: #FFF;
   font-size: 16px;
-  padding: 0 $-m;
+  cursor: pointer;
+  svg {
+    margin-right: 0;
+  }
 }
 
 .popup-header, .popup-footer {
-  display: block !important;
+  display: flex;
   position: relative;
   height: 40px;
-  flex: none !important;
+  flex: 0;
   .popup-title {
     color: #FFF;
+    margin-right: auto;
     padding: 8px $-m;
+  }
+  &.flex-container-row {
+    display: flex !important;
   }
 }
 body.flexbox-support #entity-selector-wrap .popup-body .form-group {
@@ -296,12 +316,6 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   .full-tab {
     text-align: center;
   }
-}
-
-.image-manager .corner-button {
-  margin: 0;
-  border-radius: 0;
-  padding: $-m;
 }
 
 // Dropzone
@@ -630,24 +644,76 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .code-editor .CodeMirror {
-  height: 400px;
+  height: auto;
+  min-height: 50vh;
+  border-bottom: 0;
 }
 
 .code-editor .lang-options {
-  max-width: 540px;
-  margin-bottom: $-s;
-  a {
-    margin-inline-end: $-xs;
-    text-decoration: underline;
+  overflow-y: scroll;
+  flex-basis: 200px;
+  flex-grow: 1;
+}
+
+.code-editor .lang-options button {
+  display: block;
+  padding: $-xs $-m;
+  border-bottom: 1px solid;
+  @include lightDark(color, #333, #AAA);
+  @include lightDark(border-bottom-color, #EEE, #000);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: $mono;
+  font-size: 0.7rem;
+  &:hover, &.active {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
   }
 }
 
-@include smaller-than($m) {
-  .code-editor .lang-options {
+.code-editor label {
+  background-color: var(--color-primary-light);
+  width: 100%;
+  color: var(--color-primary);
+  padding: $-xxs $-m;
+  margin-bottom: 0;
+}
+
+.code-editor-language-list {
+  position: relative;
+  width: 160px;
+  z-index: 2;
+  align-items: stretch;
+}
+
+.code-editor-language-list input {
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid #DDD;
+  padding: $-xs $-m;
+}
+
+.code-editor-main {
+  flex: 1;
+  min-width: 0;
+  .CodeMirror {
+    margin-bottom: 0;
+    z-index: 1;
     max-width: 100%;
+    width: 100%;
   }
-  .code-editor .CodeMirror {
-    height: 200px;
+}
+
+@include smaller-than($s) {
+  .code-editor .lang-options {
+    display: none;
+  }
+  .code-editor-body-wrap {
+    flex-direction: column;
+  }
+  .code-editor-language-list, .code-editor-language-list input {
+    width: 100%;
   }
 }
 
