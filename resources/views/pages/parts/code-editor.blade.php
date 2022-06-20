@@ -4,17 +4,17 @@
 
             <div class="popup-header flex-container-row primary-background">
                 <div class="popup-title">{{ trans('components.code_editor') }}</div>
-                <div component="dropdown" refs="code-editor@historyDropDown" class="block">
-                    <button refs="dropdown@toggle" class="text-small">
+                <div component="dropdown" refs="code-editor@historyDropDown" class="flex-container-row">
+                    <button refs="dropdown@toggle">
                         <span>@icon('history')</span>
                         <span>{{ trans('components.code_session_history') }}</span>
                     </button>
                     <ul refs="dropdown@menu code-editor@historyList" class="dropdown-menu"></ul>
                 </div>
-                <button class="popup-header-close" refs="popup@hide">x</button>
+                <button class="popup-header-close" refs="popup@hide">@icon('close')</button>
             </div>
 
-            <div class="flex-container-row flex-fill gap-m">
+            <div class="flex-container-row flex-fill">
                 <div class="code-editor-language-list flex-container-column flex-fill">
                     <label for="code-editor-language">{{ trans('components.code_language') }}</label>
                     <input refs="code-editor@languageInput" id="code-editor-language" type="text">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
 
-                <div class="code-editor-main">
+                <div class="code-editor-main flex-fill">
                     <textarea refs="code-editor@editor"></textarea>
                 </div>
 

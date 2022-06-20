@@ -1,3 +1,4 @@
+
 // System wide notifications
 [notification] {
   position: fixed;
@@ -137,33 +138,47 @@
   }
 }
 
-.popup-footer button, .popup-header-close {
-  position: absolute;
-  top: 0;
-  right: 0;
+.popup-header button, .popup-footer button {
   margin: 0;
-  height: 40px;
   border-radius: 0;
   box-shadow: none;
-  &:active {
-    outline: 0;
+  color: #FFF;
+  padding: $-xs $-m;
+}
+
+.popup-header button:not(.popup-header-close) {
+  font-size: 0.8rem;
+}
+
+.popup-header button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.popup-footer {
+  justify-content: end;
+  button {
+    padding: 10px $-m;
   }
 }
+
 .popup-header-close {
-  background-color: transparent;
   border: 0;
   color: #FFF;
   font-size: 16px;
-  padding: 0 $-m;
+  cursor: pointer;
+  svg {
+    margin-right: 0;
+  }
 }
 
 .popup-header, .popup-footer {
-  display: block !important;
+  display: flex;
   position: relative;
   height: 40px;
-  flex: none !important;
+  flex: 0;
   .popup-title {
     color: #FFF;
+    margin-right: auto;
     padding: 8px $-m;
   }
   &.flex-container-row {
@@ -633,11 +648,15 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .code-editor .CodeMirror {
-  height: 400px;
+  height: auto;
+  min-height: 50vh;
+  border-bottom: 0;
 }
 
 .code-editor .lang-options {
   overflow-y: scroll;
+  flex-basis: 200px;
+  flex-grow: 1;
 }
 
 .code-editor .lang-options button {
@@ -648,7 +667,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   text-align: left;
   font-family: $mono;
   font-size: 0.7rem;
-  &:hover {
+  &:hover, &.active {
     background-color: var(--color-primary-light);
     color: var(--color-primary);
   }
@@ -659,32 +678,31 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   width: 100%;
   color: var(--color-primary);
   padding: $-xxs $-m;
+  margin-bottom: 0;
 }
 
 .code-editor-language-list {
+  position: relative;
   flex-basis: 200px;
-  border-right: 1px solid #DDD;
-  box-shadow: $bs-card;
+  z-index: 2;
+  align-items: stretch;
 }
 
 .code-editor-language-list input {
   border-radius: 0;
   border: 0;
   border-bottom: 1px solid #DDD;
+  padding: $-xs $-m;
 }
 
 .code-editor-main {
   flex: 1;
-  height: 100%;
-  overflow-y: scroll;
-}
-
-@include smaller-than($m) {
-  .code-editor .lang-options {
+  min-width: 0;
+  .CodeMirror {
+    margin-bottom: 0;
+    z-index: 1;
     max-width: 100%;
-  }
-  .code-editor .CodeMirror {
-    height: 200px;
+    width: 100%;
   }
 }
 
