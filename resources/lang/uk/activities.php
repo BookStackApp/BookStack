@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'створив книгу',
     'book_create_notification'    => 'Книгу успішно створено',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'оновив книгу',
     'book_update_notification'    => 'Книгу успішно оновлено',
     'book_delete'                 => 'видалив книгу',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'створив книжкову полицю',
     'bookshelf_create_notification'    => 'Книжкову полицю успішно створено',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'оновив книжкову полицю',
     'bookshelf_update_notification'    => 'Книжкову полицю успішно оновлено',
     'bookshelf_delete'                 => 'видалив книжкову полицю',
