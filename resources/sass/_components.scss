@@ -166,6 +166,9 @@
     color: #FFF;
     padding: 8px $-m;
   }
+  &.flex-container-row {
+    display: flex !important;
+  }
 }
 body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   height: 444px;
@@ -634,12 +637,46 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .code-editor .lang-options {
-  max-width: 540px;
-  margin-bottom: $-s;
-  a {
-    margin-inline-end: $-xs;
-    text-decoration: underline;
+  overflow-y: scroll;
+}
+
+.code-editor .lang-options button {
+  display: block;
+  padding: $-xs $-m;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  text-align: left;
+  font-family: $mono;
+  font-size: 0.7rem;
+  &:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
   }
+}
+
+.code-editor label {
+  background-color: var(--color-primary-light);
+  width: 100%;
+  color: var(--color-primary);
+  padding: $-xxs $-m;
+}
+
+.code-editor-language-list {
+  flex-basis: 200px;
+  border-right: 1px solid #DDD;
+  box-shadow: $bs-card;
+}
+
+.code-editor-language-list input {
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid #DDD;
+}
+
+.code-editor-main {
+  flex: 1;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 @include smaller-than($m) {
