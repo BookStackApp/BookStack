@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'llyfr wedi creu',
     'book_create_notification'    => 'Llyfr wedi\'i creu\'n llwyddiannus',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'llyfr wedi diweddaru',
     'book_update_notification'    => 'Llyfr wedi\'i diweddaru\'n llwyddiannus',
     'book_delete'                 => 'llyfr wedi\'i dileu',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'creu silff lyfrau',
     'bookshelf_create_notification'    => 'Silff lyfrau wedi\'i chreu\'n llwyddiannus',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'silff lyfrau wedi\'i diweddaru',
     'bookshelf_update_notification'    => 'Diweddarwyd y silff lyfrau yn llwyddiannus',
     'bookshelf_delete'                 => 'silff lyfrau wedi\'i dileu',
