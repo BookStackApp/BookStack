@@ -23,25 +23,33 @@
                         <button type="button" refs="code-editor@languageLink" data-lang="C">C</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="C++">C++</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="C#">C#</button>
+                        <button type="button" refs="code-editor@languageLink" data-lang="diff">Diff</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Fortran">Fortran</button>
+                        <button type="button" refs="code-editor@languageLink" data-lang="F#">F#</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Go">Go</button>
+                        <button type="button" refs="code-editor@languageLink" data-lang="Haskell">Haskell</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="HTML">HTML</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="INI">INI</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Java">Java</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="JavaScript">JavaScript</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="JSON">JSON</button>
+                        <button type="button" refs="code-editor@languageLink" data-lang="Julia">Julia</button>
+                        <button type="button" refs="code-editor@languageLink" data-lang="kotlin">Kotlin</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="LaTeX">LaTeX</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Lua">Lua</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="MarkDown">MarkDown</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Nginx">Nginx</button>
+                        <button type="button" refs="code-editor@languageLink" data-lang="ocaml">OCaml</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="PASCAL">Pascal</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Perl">Perl</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="PHP">PHP</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Powershell">Powershell</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Python">Python</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="Ruby">Ruby</button>
+                        <button type="button" refs="code-editor@languageLink" data-lang="rust">Rust</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="shell">Shell/Bash</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="SQL">SQL</button>
+                        <button type="button" refs="code-editor@languageLink" data-lang="typescript">TypeScript</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="VBScript">VBScript</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="VB.NET">VB.NET</button>
                         <button type="button" refs="code-editor@languageLink" data-lang="XML">XML</button>
