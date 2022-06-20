@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => 'maakte boek',
     'book_create_notification'    => 'Boek succesvol aangemaakt',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'hoofdstuk omzetten naar boek',
+    'book_create_from_chapter_notification' => 'Hoofdstuk is omgezet naar een boek',
     'book_update'                 => 'wijzigde boek',
     'book_update_notification'    => 'Boek succesvol bijgewerkt',
     'book_delete'                 => 'verwijderde boek',
