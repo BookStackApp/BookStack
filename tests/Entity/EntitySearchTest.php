@@ -423,6 +423,17 @@ class EntitySearchTest extends TestCase
         $search->assertSee('My supercool &lt;great&gt; <strong>TestPageContent</strong> page', false);
     }
 
+    public function test_words_adjacent_to_lines_breaks_can_be_matched_with_normal_terms()
+    {
+        $page = $this->newPage(['name' => 'TermA', 'html' => '
+            <p>TermA<br>TermB<br>TermC</p>
+        ']);
+
+        $search = $this->asEditor()->get('/search?term=' . urlencode('TermB TermC'));
+
+        $search->assertSee($page->getUrl(), false);
+    }
+
     public function test_searches_with_user_filters_adds_them_into_advanced_search_form()
     {
         $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:me} {created_by:dan}'));
