@@ -6,8 +6,8 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Repos\BaseRepo;
 use BookStack\Entities\Repos\BookRepo;
-use BookStack\Entities\Repos\BookshelfRepo;
 use Illuminate\Support\Str;
 use Tests\Uploads\UsesImages;
 
@@ -69,8 +69,8 @@ class OpenGraphTest extends TestCase
         $this->assertArrayNotHasKey('image', $tags);
 
         // Test image set if image has cover image
-        $shelfRepo = app(BookshelfRepo::class);
-        $shelfRepo->updateCoverImage($shelf, $this->getTestImage('image.png'));
+        $baseRepo = app(BaseRepo::class);
+        $baseRepo->updateCoverImage($shelf, $this->getTestImage('image.png'));
         $resp = $this->asEditor()->get($shelf->getUrl());
         $tags = $this->getOpenGraphTags($resp);
 

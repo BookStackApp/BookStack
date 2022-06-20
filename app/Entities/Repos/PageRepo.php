@@ -393,23 +393,6 @@ class PageRepo
     }
 
     /**
-     * Change the page's parent to the given entity.
-     */
-    protected function changeParent(Page $page, Entity $parent)
-    {
-        $book = ($parent instanceof Chapter) ? $parent->book : $parent;
-        $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : 0;
-        $page->save();
-
-        if ($page->book->id !== $book->id) {
-            $page->changeBook($book->id);
-        }
-
-        $page->load('book');
-        $book->rebuildPermissions();
-    }
-
-    /**
      * Get a page revision to update for the given page.
      * Checks for an existing revisions before providing a fresh one.
      */
