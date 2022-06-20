@@ -658,7 +658,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .code-editor .lang-options button {
   display: block;
   padding: $-xs $-m;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid;
+  @include lightDark(color, #333, #AAA);
+  @include lightDark(border-bottom-color, #EEE, #000);
+  cursor: pointer;
   width: 100%;
   text-align: left;
   font-family: $mono;
