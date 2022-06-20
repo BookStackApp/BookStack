@@ -705,6 +705,18 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
+@include smaller-than($s) {
+  .code-editor .lang-options {
+    display: none;
+  }
+  .code-editor-body-wrap {
+    flex-direction: column;
+  }
+  .code-editor-language-list, .code-editor-language-list input {
+    width: 100%;
+  }
+}
+
 .comment-box {
   border-radius: 4px;
   border: 1px solid #DDD;

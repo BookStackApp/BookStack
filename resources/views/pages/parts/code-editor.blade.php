@@ -14,7 +14,7 @@
                 <button class="popup-header-close" refs="popup@hide">@icon('close')</button>
             </div>
 
-            <div class="flex-container-row flex-fill">
+            <div class="code-editor-body-wrap flex-container-row flex-fill">
                 <div class="code-editor-language-list flex-container-column flex-fill">
                     <label for="code-editor-language">{{ trans('components.code_language') }}</label>
                     <input refs="code-editor@languageInput" id="code-editor-language" type="text">
