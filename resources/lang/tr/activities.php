@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'kitap oluşturdu',
     'book_create_notification'    => 'Kitap başarıyla oluşturuldu',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'kitabı güncelledi',
     'book_update_notification'    => 'Kitap başarıyla güncellendi',
     'book_delete'                 => 'kitabı sildi',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'kitaplık oluşturuldu',
     'bookshelf_create_notification'    => 'Kitaplık başarıyla oluşturuldu',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'kitaplığı güncelledi',
     'bookshelf_update_notification'    => 'Kitaplık başarıyla güncellendi',
     'bookshelf_delete'                 => 'kitaplığı sildi',
