@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'lisas raamatu',
     'book_create_notification'    => 'Raamat on lisatud',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'muutis raamatut',
     'book_update_notification'    => 'Raamat on muudetud',
     'book_delete'                 => 'kustutas raamatu',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'lisas riiuli',
     'bookshelf_create_notification'    => 'Riiul on lisatud',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'muutis riiulit',
     'bookshelf_update_notification'    => 'Riiul on muudetud',
     'bookshelf_delete'                 => 'kustutas riiuli',
