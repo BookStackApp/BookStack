@@ -156,6 +156,8 @@
 
 .popup-footer {
   justify-content: end;
+  background-color: var(--color-primary-light);
+  min-height: 41px;
   button {
     padding: 10px $-m;
   }
@@ -314,12 +316,6 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   .full-tab {
     text-align: center;
   }
-}
-
-.image-manager .corner-button {
-  margin: 0;
-  border-radius: 0;
-  padding: $-m;
 }
 
 // Dropzone
