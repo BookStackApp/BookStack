@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => '创建了图书',
     'book_create_notification'    => '图书已成功创建',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => '更新了图书',
     'book_update_notification'    => '图书已成功更新',
     'book_delete'                 => '删除了图书',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => '创建了书架',
     'bookshelf_create_notification'    => '书架已成功创建',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => '更新了书架',
     'bookshelf_update_notification'    => '书架已成功更新',
     'bookshelf_delete'                 => '删除了书架',
