@@ -39,9 +39,9 @@ return [
     'register_success' => '¡Gracias por registrarse! Ahora se encuentra registrado y logueado.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Intentando iniciar sesión',
+    'auto_init_starting_desc' => 'Estamos contactando con su sistema de autenticación para comenzar el proceso de inicio de sesión. Si no hay progreso después de 5 segundos puede intentar hacer clic en el enlace de abajo.',
+    'auto_init_start_link' => 'Continuar con la autenticación',
 
     // Password Reset
     'reset_password' => 'Resetear Contraseña',
