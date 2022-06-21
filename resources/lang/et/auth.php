@@ -39,9 +39,9 @@ return [
     'register_success' => 'Aitäh, et registreerusid! Oled nüüd sisse logitud.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Sisselogimiskatse',
+    'auto_init_starting_desc' => 'Sisselogimise protsessi alustamiseks autentimissüsteemiga ühendumine. Kui 5 sekundi jooksul edasiminekut ei ole, proovi alloleval lingil klikkida.',
+    'auto_init_start_link' => 'Jätka autentimisega',
 
     // Password Reset
     'reset_password' => 'Lähtesta parool',
