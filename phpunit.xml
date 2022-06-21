@@ -29,6 +29,7 @@
     <server name="MAIL_DRIVER" value="array"/>
     <server name="LOG_CHANNEL" value="single"/>
     <server name="AUTH_METHOD" value="standard"/>
+    <server name="AUTH_AUTO_INITIATE" value="false"/>
     <server name="DISABLE_EXTERNAL_SERVICES" value="true"/>
     <server name="ALLOW_UNTRUSTED_SERVER_FETCHING" value="false"/>
     <server name="AVATAR_URL" value=""/>

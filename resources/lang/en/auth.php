@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'That email domain does not have access to this application',
     'register_success' => 'Thanks for signing up! You are now registered and signed in.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Reset Password',
     'reset_password_send_instructions' => 'Enter your email below and you will be sent an email with a password reset link.',
