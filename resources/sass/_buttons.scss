@@ -99,6 +99,9 @@ button {
     fill: var(--color-primary);
   }
 }
+.text-button.hover-underline:hover {
+  text-decoration: underline;
+}
 
 .button.block {
   width: 100%;
