@@ -86,7 +86,13 @@ function defineCodeBlockCustomElement(editor) {
         getContent() {
             const code = this.querySelector('code') || this.querySelector('pre');
             const tempEl = document.createElement('pre');
-            tempEl.innerHTML = code.innerHTML.replace().replace(/<br\s*[\/]?>/gi ,'\n').replace(/\ufeff/g, '');
+            tempEl.innerHTML = code.innerHTML.replace(/\ufeff/g, '');
+
+            const brs = tempEl.querySelectorAll('br');
+            for (const br of brs) {
+                br.replaceWith('\n');
+            }
+
             return tempEl.textContent;
         }
 
@@ -104,6 +110,7 @@ function defineCodeBlockCustomElement(editor) {
 
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
             const renderCodeMirror = (Code) => {
+                console.log({content});
                 this.cm = Code.wysiwygView(container, content, this.getLanguage());
                 Code.updateLayout(this.cm);
                 setTimeout(() => {
@@ -159,6 +166,7 @@ function register(editor, url) {
             showPopup(editor, textContent, '', (newCode, newLang) => {
                 const pre = doc.createElement('pre');
                 const code = doc.createElement('code');
+                console.log(newCode);
                 code.classList.add(`language-${newLang}`);
                 code.innerText = newCode;
                 pre.append(code);
