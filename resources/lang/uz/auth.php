@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Ushbu domendagi email bilan ro\'yxatdan o\'tib bo\'lmaydi',
     'register_success' => 'Ro\'yxatdan o\'tganingiz uchun rahmat! Endi siz ushbu hisob bilan saytga kirishingiz mumkin.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Parolni tiklash',
     'reset_password_send_instructions' => 'Parolni tiklash manzilini olish uchun emailingizni quyidagi maydonga kiriting.',
