@@ -106,6 +106,45 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     }
 
     /**
+     * Check for SSO with Kerberos
+     *
+     * @param $credentials
+     * @return bool
+     * @throws JsonDebugException
+     * @throws LdapException
+     * @throws LoginAttemptEmailNeededException
+     * @throws LoginAttemptException
+     */
+    public function attemptSSO($credentials)
+    {
+        $username = $credentials['username'];
+        $userDetails = $this->ldapService->getUserDetails($username);
+        $user = null;
+        if (isset($userDetails['uid'])) {
+            $this->lastAttempted = $user = $this->provider->retrieveByCredentials([
+                'external_auth_id' => $userDetails['uid'],]);
+        }
+        if (is_null($user)) {
+            try {
+                $user = $this->createNewFromLdapAndCreds($userDetails,
+                    $credentials);
+            } catch (UserRegistrationException $exception) {
+                throw new LoginAttemptException($exception->getMessage());
+            }
+        }
+        // Sync LDAP groups if required
+        if ($this->ldapService->shouldSyncGroups()) {
+            $this->ldapService->syncGroups($user, $username);
+        }
+        // Attach avatar if non-existent
+        if (!$user->avatar()->exists()) {
+            $this->ldapService->saveAndAttachAvatar($user, $userDetails);
+        }
+        $this->login($user, true);
+        return true;
+    }
+
+    /**
      * Create a new user from the given ldap credentials and login credentials.
      *
      * @throws LoginAttemptEmailNeededException
