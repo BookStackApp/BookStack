@@ -26,7 +26,6 @@ class OidcTest extends TestCase
 
         config()->set([
             'auth.method'                 => 'oidc',
-            'auth.auto_redirect'          => false,
             'auth.defaults.guard'         => 'oidc',
             'oidc.name'                   => 'SingleSignOn-Testing',
             'oidc.display_name_claims'    => ['name'],
@@ -110,19 +109,6 @@ class OidcTest extends TestCase
 
         $resp = $this->post('/register');
         $this->assertPermissionError($resp);
-    }
-
-    public function test_automatic_redirect_on_login()
-    {
-        config()->set([
-            'auth.auto_redirect'        => true,
-            'services.google.client_id' => false,
-            'services.github.client_id' => false,
-        ]);
-        $req = $this->get('/login');
-        $req->assertSeeText('SingleSignOn-Testing');
-        $req->assertElementExists('form[action$="/oidc/login"][method=POST] button');
-        $req->assertElementExists('div#loginredirect-wrapper');
     }
 
     public function test_login()

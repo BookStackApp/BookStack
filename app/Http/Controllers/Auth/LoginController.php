@@ -32,10 +32,9 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
     protected $redirectPath = '/';
-    protected $redirectAfterLogout = '/';
 
-    protected $socialAuthService;
-    protected $loginService;
+    protected SocialAuthService $socialAuthService;
+    protected LoginService $loginService;
 
     /**
      * Create a new controller instance.
@@ -50,7 +49,6 @@ class LoginController extends Controller
         $this->loginService = $loginService;
 
         $this->redirectPath = url('/');
-        $this->redirectAfterLogout = url(config('auth.auto_redirect') ? '/login?logout=1' : '/');
     }
 
     public function username()
@@ -73,7 +71,7 @@ class LoginController extends Controller
     {
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
         $authMethod = config('auth.method');
-        $autoRedirect = config('auth.auto_redirect');
+        $preventInitiation = $request->get('prevent_auto_init') === 'true';
 
         if ($request->has('email')) {
             session()->flashInput([
@@ -85,8 +83,8 @@ class LoginController extends Controller
         // Store the previous location for redirect after login
         $this->updateIntendedFromPrevious();
 
-        if ($autoRedirect && !($request->has('logout') && $request->get('logout') == '1') && count($socialDrivers) == 0 && in_array($authMethod, ['oidc', 'saml2'])) {
-            return view('auth.login-redirect', [
+        if (!$preventInitiation && $this->shouldAutoInitiate()) {
+            return view('auth.login-initiate', [
                 'authMethod'    => $authMethod,
             ]);
         }
@@ -260,6 +258,18 @@ class LoginController extends Controller
     }
 
     /**
+     * Check if login auto-initiate should be valid based upon authentication config.
+     */
+    protected function shouldAutoInitiate(): bool
+    {
+        $socialDrivers = $this->socialAuthService->getActiveDrivers();
+        $authMethod = config('auth.method');
+        $autoRedirect = config('auth.auto_initiate');
+
+        return $autoRedirect && count($socialDrivers) === 0 && in_array($authMethod, ['oidc', 'saml2']);
+    }
+
+    /**
      * Logout user and perform subsequent redirect.
      *
      * @param \Illuminate\Http\Request $request
@@ -270,6 +280,8 @@ class LoginController extends Controller
     {
         $this->traitLogout($request);
 
-        return redirect($this->redirectAfterLogout);
+        $redirectUri = $this->shouldAutoInitiate() ? '/login?prevent_auto_init=true' : '/';
+
+        return redirect($redirectUri);
     }
 }
