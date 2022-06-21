@@ -13,10 +13,9 @@ return [
     // Options: standard, ldap, saml2, oidc
     'method' => env('AUTH_METHOD', 'standard'),
 
-    // Automatically redirect to external login provider if only one provider is being used
-    // instead of displaying a single-button login page and requiring users to click through
-    // Supported methods: saml2, oidc
-    'auto_redirect' => env('AUTH_AUTO_REDIRECT', false),
+    // Automatically initiate login via external auth system if it's the sole auth method.
+    // Works with saml2 or oidc auth methods.
+    'auto_initiate' => env('AUTH_AUTO_INITIATE', false),
 
     // Authentication Defaults
     // This option controls the default authentication "guard" and password
