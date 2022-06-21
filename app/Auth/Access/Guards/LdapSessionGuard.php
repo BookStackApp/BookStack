@@ -119,12 +119,16 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     {
         $username = $credentials['username'];
         $userDetails = $this->ldapService->getUserDetails($username);
+
         $user = null;
         if (isset($userDetails['uid'])) {
             $this->lastAttempted = $user = $this->provider->retrieveByCredentials([
                 'external_auth_id' => $userDetails['uid'],]);
         }
         if (is_null($user)) {
+            if (is_null($userDetails)) {
+                return false;
+            }
             try {
                 $user = $this->createNewFromLdapAndCreds($userDetails,
                     $credentials);
