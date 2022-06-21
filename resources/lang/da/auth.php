@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'E-Mail domænet har ikke adgang til denne applikation',
     'register_success' => 'Tak for din registrering. Du er nu registeret og logget ind.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Nulstil adgangskode',
     'reset_password_send_instructions' => 'Indtast din E-Mail herunder og du vil blive sendt en E-Mail med et link til at nulstille din adgangskode.',
