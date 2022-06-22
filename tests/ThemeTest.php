@@ -17,7 +17,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 use League\CommonMark\ConfigurableEnvironmentInterface;
 
 class ThemeTest extends TestCase
@@ -260,7 +259,7 @@ class ThemeTest extends TestCase
         $bodyStartStr = 'barry-fought-against-the-panther';
         $bodyEndStr = 'barry-lost-his-fight-with-grace';
 
-        $this->usingThemeFolder(function(string $folder) use ($bodyStartStr, $bodyEndStr) {
+        $this->usingThemeFolder(function (string $folder) use ($bodyStartStr, $bodyEndStr) {
             $viewDir = theme_path('layouts/parts');
             mkdir($viewDir, 0777, true);
             file_put_contents($viewDir . '/base-body-start.blade.php', $bodyStartStr);
@@ -281,7 +280,7 @@ class ThemeTest extends TestCase
         File::makeDirectory($themeFolderPath);
 
         // Run provided callback with theme env option set
-        $this->runWithEnv('APP_THEME', $themeFolderName, function() use ($callback, $themeFolderName) {
+        $this->runWithEnv('APP_THEME', $themeFolderName, function () use ($callback, $themeFolderName) {
             call_user_func($callback, $themeFolderName);
         });
 

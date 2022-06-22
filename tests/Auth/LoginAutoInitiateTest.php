@@ -6,13 +6,12 @@ use Tests\TestCase;
 
 class LoginAutoInitiateTest extends TestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
 
         config()->set([
-            'auth.auto_initiate' => true,
+            'auth.auto_initiate'        => true,
             'services.google.client_id' => false,
             'services.github.client_id' => false,
         ]);
@@ -45,8 +44,8 @@ class LoginAutoInitiateTest extends TestCase
     public function test_it_does_not_run_if_social_provider_is_active()
     {
         config()->set([
-            'auth.method' => 'oidc',
-            'services.google.client_id' => 'abc123a',
+            'auth.method'                   => 'oidc',
+            'services.google.client_id'     => 'abc123a',
             'services.google.client_secret' => 'def456',
         ]);
 
@@ -76,5 +75,4 @@ class LoginAutoInitiateTest extends TestCase
         $req = $this->post('/logout');
         $req->assertRedirect('/login?prevent_auto_init=true');
     }
-
 }
