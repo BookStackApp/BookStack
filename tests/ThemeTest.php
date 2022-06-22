@@ -17,6 +17,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use League\CommonMark\ConfigurableEnvironmentInterface;
 
 class ThemeTest extends TestCase
@@ -254,6 +255,23 @@ class ThemeTest extends TestCase
         $this->assertStringContainsString('Command ran!', $output);
     }
 
+    public function test_body_start_and_end_template_files_can_be_used()
+    {
+        $bodyStartStr = 'barry-fought-against-the-panther';
+        $bodyEndStr = 'barry-lost-his-fight-with-grace';
+
+        $this->usingThemeFolder(function(string $folder) use ($bodyStartStr, $bodyEndStr) {
+            $viewDir = theme_path('layouts/parts');
+            mkdir($viewDir, 0777, true);
+            file_put_contents($viewDir . '/base-body-start.blade.php', $bodyStartStr);
+            file_put_contents($viewDir . '/base-body-end.blade.php', $bodyEndStr);
+
+            $resp = $this->asEditor()->get('/');
+            $resp->assertSee($bodyStartStr);
+            $resp->assertSee($bodyEndStr);
+        });
+    }
+
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
@@ -262,7 +280,10 @@ class ThemeTest extends TestCase
         $themeFolderPath = theme_path('');
         File::makeDirectory($themeFolderPath);
 
-        call_user_func($callback, $themeFolderName);
+        // Run provided callback with theme env option set
+        $this->runWithEnv('APP_THEME', $themeFolderName, function() use ($callback, $themeFolderName) {
+            call_user_func($callback, $themeFolderName);
+        });
 
         // Cleanup the custom theme folder we created
         File::deleteDirectory($themeFolderPath);
