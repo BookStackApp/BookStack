@@ -33,6 +33,7 @@
 </head>
 <body class="@yield('body-class')">
 
+    @include('layouts.parts.base-body-start')
     @include('common.skip-to-content')
     @include('common.notifications')
     @include('common.header')
@@ -53,5 +54,6 @@
     <script src="{{ versioned_asset('dist/app.js') }}" nonce="{{ $cspNonce }}"></script>
     @yield('scripts')
 
+    @include('layouts.parts.base-body-end')
 </body>
 </html>
