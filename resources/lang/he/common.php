@@ -47,6 +47,8 @@ return [
     'previous' => 'קודם',
     'filter_active' => 'מסנן פעיל:',
     'filter_clear' => 'נקה מסננים',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => 'אפשרויות מיון',

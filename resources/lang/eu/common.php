@@ -47,6 +47,8 @@ return [
     'previous' => 'Aurrekoa',
     'filter_active' => 'Iragazki aktiboa:',
     'filter_clear' => 'Iragazkia garbitu',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => 'Ordenatzeko aukerak',

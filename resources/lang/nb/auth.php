@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Du kan ikke bruke det domenet for å registrere en konto.',
     'register_success' => 'Takk for registreringen! Du kan nå logge inn på tjenesten.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Nullstille passord',
     'reset_password_send_instructions' => 'Oppgi e-posten som er koblet til kontoen din, så sender vi en epost hvor du kan nullstille passordet.',

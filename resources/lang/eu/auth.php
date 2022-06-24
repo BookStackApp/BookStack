@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Posta elektronikoko domeinu hori ez dago eskuragarri aplikazio honetarako',
     'register_success' => 'Eskerrik asko izen emateagatik! Orain izena emanda eta saioa hasita zaude.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Pasahitza berrezarri',
     'reset_password_send_instructions' => 'Sartu zure posta elektronikoa eta posta elektroniko bat bidaliko dizute pasahitza berritzeko esteka batekin.',

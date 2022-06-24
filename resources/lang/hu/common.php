@@ -47,6 +47,8 @@ return [
     'previous' => 'Előző',
     'filter_active' => 'Aktív szűrő:',
     'filter_clear' => 'Szűrő törlése',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => 'Rendezési beállítások',

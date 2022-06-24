@@ -355,4 +355,16 @@ return [
     'copy_consider_images' => '页面中的图像文件不会被复制，原始图像将保留它们与最初上传到的页面的关系。',
     'copy_consider_attachments' => '页面中的附件不会被复制。',
     'copy_consider_access' => '改变位置、所有者或权限可能会导致此内容被以前无法访问的人访问。',
+
+    // Conversions
+    'convert_to_shelf' => 'Convert to Shelf',
+    'convert_to_shelf_contents_desc' => 'You can convert this book to a new shelf with the same contents. Chapters contained within this book will be converted to new books. If this book contains any pages, that are not in a chapter, this book will be renamed and contain such pages, and this book will become part of the new shelf.',
+    'convert_to_shelf_permissions_desc' => 'Any permissions set on this book will be copied to the new shelf and to all new child books that don\'t have their own permissions enforced. Note that permissions on shelves do not auto-cascade to content within, as they do for books.',
+    'convert_book' => 'Convert Book',
+    'convert_book_confirm' => 'Are you sure you want to convert this book?',
+    'convert_undo_warning' => 'This cannot be as easily undone.',
+    'convert_to_book' => 'Convert to Book',
+    'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
+    'convert_chapter' => 'Convert Chapter',
+    'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
 ];

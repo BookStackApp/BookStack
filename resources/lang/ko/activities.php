@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => '책자 만들기',
     'book_create_notification'    => '책 생성함',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => '책 수정',
     'book_update_notification'    => '책 수정함',
     'book_delete'                 => '책 지우기',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => '책꽂이 만들기',
     'bookshelf_create_notification'    => '책꽂이 생성함',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => '책꽂이 수정',
     'bookshelf_update_notification'    => '책꽂이 수정함',
     'bookshelf_delete'                 => '책꽂이 지우기',

@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'liburua sortuta',
     'book_create_notification'    => 'Liburua ongi sortu da',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'liburua eguneratuta',
     'book_update_notification'    => 'Liburua egoki eguneratua',
     'book_delete'                 => 'liburua ezabatua',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'apalategia sortuta',
     'bookshelf_create_notification'    => 'Apalategia egoki sortuta',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'apalategia eguneratuta',
     'bookshelf_update_notification'    => 'Apalategia egoki eguneratuta',
     'bookshelf_delete'                 => 'apalategia ezabatua',

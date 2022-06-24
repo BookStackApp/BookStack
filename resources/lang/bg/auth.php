@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Този емейл домейн към момента няма достъп до приложението',
     'register_success' => 'Благодарим Ви за регистрацията! В момента сте регистриран и сте вписани в приложението.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Нулиране на паролата',
     'reset_password_send_instructions' => 'Въведете емейла си и ще ви бъде изпратен емейл с линк за нулиране на паролата.',

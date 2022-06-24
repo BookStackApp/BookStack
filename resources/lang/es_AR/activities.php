@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'libro creado',
     'book_create_notification'    => 'Libro creado correctamente',
+    'book_create_from_chapter'              => 'convertido capítulo a libro',
+    'book_create_from_chapter_notification' => 'Capítulo convertido a libro con éxito',
     'book_update'                 => 'libro actualizado',
     'book_update_notification'    => 'Libro actualizado correctamente',
     'book_delete'                 => 'libro borrado',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'estante creado',
     'bookshelf_create_notification'    => 'Estante creado correctamente',
+    'bookshelf_create_from_book'    => 'convertido libro a estante',
+    'bookshelf_create_from_book_notification'    => 'Libro convertido a estante con éxito',
     'bookshelf_update'                 => 'Estante actualizado',
     'bookshelf_update_notification'    => 'Estante actualizado correctamente',
     'bookshelf_delete'                 => 'Estante borrado',
@@ -61,7 +65,7 @@ return [
 
     // Users
     'user_update_notification' => 'Usuario actualizado correctamente',
-    'user_delete_notification' => 'Usuario eliminado correctamente',
+    'user_delete_notification' => 'El usuario fue eliminado correctamente',
 
     // Other
     'commented_on'                => 'comentado',

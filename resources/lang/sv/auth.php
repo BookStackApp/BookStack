@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Den e-postadressen har inte tillgång till den här applikationen',
     'register_success' => 'Tack för din registrering! Du är nu registerad och inloggad.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Återställ lösenord',
     'reset_password_send_instructions' => 'Ange din e-postadress nedan så skickar vi ett mail med en länk för att återställa ditt lösenord.',

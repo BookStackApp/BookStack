@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'je kreirao/la knjigu',
     'book_create_notification'    => 'Book successfully created',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'je ažurirao/la knjigu',
     'book_update_notification'    => 'Book successfully updated',
     'book_delete'                 => 'je izbrisao/la knjigu',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'created bookshelf',
     'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'je ažurirao/la policu za knjige',
     'bookshelf_update_notification'    => 'Bookshelf successfully updated',
     'bookshelf_delete'                 => 'je izbrisao/la policu za knjige',

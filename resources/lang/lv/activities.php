@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'izveidoja grāmatu',
     'book_create_notification'    => 'Grāmata veiksmīgi izveidota',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'atjaunoja grāmatu',
     'book_update_notification'    => 'Grāmata veiksmīgi atjaunināta',
     'book_delete'                 => 'izdzēsa grāmatu',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'izveidoja plautku',
     'bookshelf_create_notification'    => 'Plaukts veiksmīgi izveidots',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'atjaunoja plauktu',
     'bookshelf_update_notification'    => 'Plaukts veiksmīgi atjaunināts',
     'bookshelf_delete'                 => 'izdzēsa plauktu',

@@ -47,6 +47,8 @@ return [
     'previous' => 'Späť',
     'filter_active' => 'Aktívny filter:',
     'filter_clear' => 'Bez filtrovania',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => 'Možnosti triedenia',

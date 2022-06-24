@@ -47,6 +47,8 @@ return [
     'previous' => '上一页',
     'filter_active' => '标签过滤器：',
     'filter_clear' => '清除过滤器',
+    'download' => '下载',
+    'open_in_tab' => '在标签页中打开。',
 
     // Sort Options
     'sort_options' => '排序选项',

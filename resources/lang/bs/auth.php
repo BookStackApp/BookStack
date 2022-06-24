@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Ta e-mail domena nema pristup ovoj aplikaciji',
     'register_success' => 'Hvala na registraciji! Sada ste registrovani i prijavljeni.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Resetuj Lozinku',
     'reset_password_send_instructions' => 'Unesite vašu e-mail adresu ispod i na nju ćemo vam poslati e-mail sa linkom za promjenu lozinke.',

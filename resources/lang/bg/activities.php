@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'създадена книга',
     'book_create_notification'    => 'Книгата е създадена успешно',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'обновена книга',
     'book_update_notification'    => 'Книгата е обновена успешно',
     'book_delete'                 => 'изтрита книга',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'създаден рафт',
     'bookshelf_create_notification'    => 'Рафтът е създаден успешно',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'обновен рафт',
     'bookshelf_update_notification'    => 'Рафтът е обновен успешно',
     'bookshelf_delete'                 => 'изтрит рафт',

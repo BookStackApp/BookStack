@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => '這個電子郵件網域沒有權限使用',
     'register_success' => '感謝您註冊！您已註冊完成並可登入。',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => '重設密碼',
     'reset_password_send_instructions' => '在下方輸入您的電子郵件，您將收到一封帶有密碼重設連結的郵件。',

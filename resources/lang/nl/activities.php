@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'maakte boek',
     'book_create_notification'    => 'Boek succesvol aangemaakt',
+    'book_create_from_chapter'              => 'hoofdstuk omzetten naar boek',
+    'book_create_from_chapter_notification' => 'Hoofdstuk is omgezet naar een boek',
     'book_update'                 => 'wijzigde boek',
     'book_update_notification'    => 'Boek succesvol bijgewerkt',
     'book_delete'                 => 'verwijderde boek',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'boekenplank aangemaakt',
     'bookshelf_create_notification'    => 'Boekenplank succesvol aangemaakt',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'wijzigde boekenplank',
     'bookshelf_update_notification'    => 'Boekenplank succesvol bijgewerkt',
     'bookshelf_delete'                 => 'verwijderde boekenplank',
