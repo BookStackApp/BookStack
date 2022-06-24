@@ -5,7 +5,7 @@
 
         <div class="popup-header primary-background">
             <div class="popup-title">{{ $title }}</div>
-            <button refs="popup@hide" type="button" class="popup-header-close">x</button>
+            <button refs="popup@hide" type="button" class="popup-header-close">@icon('close')</button>
         </div>
 
         <div class="px-m py-m">

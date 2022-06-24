@@ -16,11 +16,13 @@ class ActivityType
     const CHAPTER_MOVE = 'chapter_move';
 
     const BOOK_CREATE = 'book_create';
+    const BOOK_CREATE_FROM_CHAPTER = 'book_create_from_chapter';
     const BOOK_UPDATE = 'book_update';
     const BOOK_DELETE = 'book_delete';
     const BOOK_SORT = 'book_sort';
 
     const BOOKSHELF_CREATE = 'bookshelf_create';
+    const BOOKSHELF_CREATE_FROM_BOOK = 'bookshelf_create_from_book';
     const BOOKSHELF_UPDATE = 'bookshelf_update';
     const BOOKSHELF_DELETE = 'bookshelf_delete';
 

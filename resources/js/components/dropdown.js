@@ -28,18 +28,31 @@ class DropDown {
         this.menu.classList.add('anim', 'menuIn');
         this.toggle.setAttribute('aria-expanded', 'true');
 
+        const menuOriginalRect = this.menu.getBoundingClientRect();
+        let heightOffset = 0;
+        const toggleHeight = this.toggle.getBoundingClientRect().height;
+        const dropUpwards = menuOriginalRect.bottom > window.innerHeight;
+
+        // If enabled, Move to body to prevent being trapped within scrollable sections
         if (this.moveMenu) {
-            // Move to body to prevent being trapped within scrollable sections
-            this.rect = this.menu.getBoundingClientRect();
             this.body.appendChild(this.menu);
             this.menu.style.position = 'fixed';
             if (this.direction === 'right') {
-                this.menu.style.right = `${(this.rect.right - this.rect.width)}px`;
+                this.menu.style.right = `${(menuOriginalRect.right - menuOriginalRect.width)}px`;
             } else {
-                this.menu.style.left = `${this.rect.left}px`;
+                this.menu.style.left = `${menuOriginalRect.left}px`;
             }
-            this.menu.style.top = `${this.rect.top}px`;
-            this.menu.style.width = `${this.rect.width}px`;
+            this.menu.style.width = `${menuOriginalRect.width}px`;
+            heightOffset = dropUpwards ? (window.innerHeight - menuOriginalRect.top  - toggleHeight / 2) : menuOriginalRect.top;
+        }
+
+        // Adjust menu to display upwards if near the bottom of the screen
+        if (dropUpwards) {
+            this.menu.style.top = 'initial';
+            this.menu.style.bottom = `${heightOffset}px`;
+        } else {
+            this.menu.style.top = `${heightOffset}px`;
+            this.menu.style.bottom = 'initial';
         }
 
         // Set listener to hide on mouse leave or window click
@@ -74,18 +87,21 @@ class DropDown {
         this.menu.style.display = 'none';
         this.menu.classList.remove('anim', 'menuIn');
         this.toggle.setAttribute('aria-expanded', 'false');
+        this.menu.style.top = '';
+        this.menu.style.bottom = '';
+
         if (this.moveMenu) {
             this.menu.style.position = '';
             this.menu.style[this.direction] = '';
-            this.menu.style.top = '';
             this.menu.style.width = '';
             this.container.appendChild(this.menu);
         }
+
         this.showing = false;
     }
 
     getFocusable() {
-        return Array.from(this.menu.querySelectorAll('[tabindex],[href],button,input:not([type=hidden])'));
+        return Array.from(this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"]),[href],button,input:not([type=hidden])'));
     }
 
     focusNext() {

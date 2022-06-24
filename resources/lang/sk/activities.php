@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'vytvoril(a) knihu',
     'book_create_notification'    => 'Kniha úspešne vytvorená',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'aktualizoval(a) knihu',
     'book_update_notification'    => 'Kniha úspešne aktualizovaná',
     'book_delete'                 => 'odstránil(a) knihu',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'vytvoril(a) knižnicu',
     'bookshelf_create_notification'    => 'Knižnica úspešne vytvorená',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'aktualizoval(a) knižnicu',
     'bookshelf_update_notification'    => 'Knižnica úspešne aktualizovaná',
     'bookshelf_delete'                 => 'odstránil(a) knižnicu',

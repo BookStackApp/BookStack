@@ -233,10 +233,10 @@ class AttachmentController extends Controller
         $attachmentStream = $this->attachmentService->streamAttachmentFromStorage($attachment);
 
         if ($request->get('open') === 'true') {
-            return $this->streamedInlineDownloadResponse($attachmentStream, $fileName);
+            return $this->download()->streamedInline($attachmentStream, $fileName);
         }
 
-        return $this->streamedDownloadResponse($attachmentStream, $fileName);
+        return $this->download()->streamedDirectly($attachmentStream, $fileName);
     }
 
     /**

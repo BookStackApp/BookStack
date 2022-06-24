@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'ספר נוצר',
     'book_create_notification'    => 'ספר נוצר בהצלחה',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'ספר הועדכן',
     'book_update_notification'    => 'ספר התעדכן בהצלחה',
     'book_delete'                 => 'ספר נמחק',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'created bookshelf',
     'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'updated bookshelf',
     'bookshelf_update_notification'    => 'Bookshelf successfully updated',
     'bookshelf_delete'                 => 'deleted bookshelf',

@@ -25,6 +25,7 @@ import 'codemirror/mode/ruby/ruby';
 import 'codemirror/mode/rust/rust';
 import 'codemirror/mode/shell/shell';
 import 'codemirror/mode/sql/sql';
+import 'codemirror/mode/stex/stex';
 import 'codemirror/mode/toml/toml';
 import 'codemirror/mode/vb/vb';
 import 'codemirror/mode/vbscript/vbscript';
@@ -49,16 +50,19 @@ const modeMap = {
     diff: 'diff',
     for: 'fortran',
     fortran: 'fortran',
+    'f#': 'text/x-fsharp',
+    fsharp: 'text/x-fsharp',
     go: 'go',
     haskell: 'haskell',
     hs: 'haskell',
     html: 'htmlmixed',
     ini: 'properties',
-    javascript: 'javascript',
-    json: {name: 'javascript', json: true},
-    js: 'javascript',
-    jl: 'julia',
-    julia: 'julia',
+    javascript: 'text/javascript',
+    json: 'application/json',
+    js: 'text/javascript',
+    jl: 'text/x-julia',
+    julia: 'text/x-julia',
+    latex: 'text/x-stex',
     lua: 'lua',
     md: 'markdown',
     mdown: 'markdown',
@@ -69,7 +73,7 @@ const modeMap = {
     pl: 'perl',
     powershell: 'powershell',
     properties: 'properties',
-    ocaml: 'mllike',
+    ocaml: 'text/x-ocaml',
     pascal: 'text/x-pascal',
     pas: 'text/x-pascal',
     php: (content) => {
@@ -83,8 +87,11 @@ const modeMap = {
     rs: 'rust',
     shell: 'shell',
     sh: 'shell',
+    stext: 'text/x-stex',
     bash: 'shell',
     toml: 'toml',
+    ts: 'text/typescript',
+    typescript: 'text/typescript',
     sql: 'text/x-sql',
     vbs: 'vbscript',
     vbscript: 'vbscript',
@@ -239,6 +246,21 @@ export function popupEditor(elem, modeSuggestion) {
         lineNumbers: true,
         lineWrapping: false,
         theme: getTheme()
+    });
+}
+
+/**
+ * Create an inline editor to replace the given textarea.
+ * @param {HTMLTextAreaElement} textArea
+ * @param {String} mode
+ * @returns {CodeMirror3}
+ */
+export function inlineEditor(textArea, mode) {
+    return CodeMirror.fromTextArea(textArea, {
+        mode: getMode(mode, textArea.value),
+        lineNumbers: true,
+        lineWrapping: false,
+        theme: getTheme(),
     });
 }
 

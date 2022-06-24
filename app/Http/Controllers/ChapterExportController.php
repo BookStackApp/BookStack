@@ -33,7 +33,7 @@ class ChapterExportController extends Controller
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $pdfContent = $this->exportFormatter->chapterToPdf($chapter);
 
-        return $this->downloadResponse($pdfContent, $chapterSlug . '.pdf');
+        return $this->download()->directly($pdfContent, $chapterSlug . '.pdf');
     }
 
     /**
@@ -47,7 +47,7 @@ class ChapterExportController extends Controller
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $containedHtml = $this->exportFormatter->chapterToContainedHtml($chapter);
 
-        return $this->downloadResponse($containedHtml, $chapterSlug . '.html');
+        return $this->download()->directly($containedHtml, $chapterSlug . '.html');
     }
 
     /**
@@ -60,7 +60,7 @@ class ChapterExportController extends Controller
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $chapterText = $this->exportFormatter->chapterToPlainText($chapter);
 
-        return $this->downloadResponse($chapterText, $chapterSlug . '.txt');
+        return $this->download()->directly($chapterText, $chapterSlug . '.txt');
     }
 
     /**
@@ -70,10 +70,9 @@ class ChapterExportController extends Controller
      */
     public function markdown(string $bookSlug, string $chapterSlug)
     {
-        // TODO: This should probably export to a zip file.
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $chapterText = $this->exportFormatter->chapterToMarkdown($chapter);
 
-        return $this->downloadResponse($chapterText, $chapterSlug . '.md');
+        return $this->download()->directly($chapterText, $chapterSlug . '.md');
     }
 }

@@ -355,4 +355,16 @@ return [
     'copy_consider_images' => 'Pliki obrazów znajdujących się na stronie nie będą zduplikowane i oryginalne obrazy zachowają swój związek ze stroną, do której zostały pierwotnie przesłane.',
     'copy_consider_attachments' => 'Załączniki strony nie zostaną skopiowane.',
     'copy_consider_access' => 'Zmiana lokalizacji, właściciela lub uprawnień może spowodować, że ta zawartość będzie dostępna dla tych, którzy wcześniej nie mieli dostępu.',
+
+    // Conversions
+    'convert_to_shelf' => 'Konwertuj na półkę',
+    'convert_to_shelf_contents_desc' => 'Możesz przekonwertować tę książkę do nowej półki z tą samą zawartością. Rozdziały zawarte w tej książce zostaną przekonwertowane na nowe książki. Jeśli ta książka zawiera jakieś strony, które nie znajdują się w rozdziale, wtedy nazwa tej książki zostanie zmieniona i będzie ona zawierać te strony, a sama książka stanie się częścią nowej półki.',
+    'convert_to_shelf_permissions_desc' => 'Wszelkie uprawnienia ustawione w tej książce zostaną skopiowane do nowej półki i do wszystkich nowych książek tej półki, które nie mają własnych uprawnień. Zauważ, że uprawnienia na półkach nie są automatycznie kaskadowane do ich zawartości, tak jak to ma miejsce w przypadku książek.',
+    'convert_book' => 'Konwertuj książkę',
+    'convert_book_confirm' => 'Czy na pewno chcesz skonwertować tę książkę?',
+    'convert_undo_warning' => 'Nie da się tego łatwo cofnąć.',
+    'convert_to_book' => 'Konwertuj na książkę',
+    'convert_to_book_desc' => 'Możesz skonwertować ten rozdział do nowej książki o tej samej treści. Wszelkie uprawnienia ustawione w tym rozdziale zostaną skopiowane do nowej książki, ale wszelkie dziedziczone uprawnienia z poprzedniej nadrzędnej książki nie będą skopiowane, co może doprowadzić do zmiany w kontroli dostępu.',
+    'convert_chapter' => 'Konwertuj rozdział',
+    'convert_chapter_confirm' => 'Czy na pewno chcesz skonwertować ten rozdział?',
 ];

@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Táto e-mailová doména nemá prístup k tejto aplikácii',
     'register_success' => 'Ďakujeme za registráciu! Teraz ste registrovaný a prihlásený.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Resetovanie hesla',
     'reset_password_send_instructions' => 'Nižšie zadajte svoj e-mail, na ktorý Vám zašleme odkaz pre resetovanie hesla.',

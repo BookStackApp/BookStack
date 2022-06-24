@@ -21,6 +21,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         NotFoundException::class,
+        StoppedAuthenticationException::class,
     ];
 
     /**

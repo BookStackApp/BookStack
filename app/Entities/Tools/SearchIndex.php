@@ -147,6 +147,8 @@ class SearchIndex
         ];
 
         $html = '<body>' . $html . '</body>';
+        $html = str_ireplace(['<br>', '<br />', '<br/>'], "\n", $html);
+
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));

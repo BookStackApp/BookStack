@@ -11,19 +11,6 @@ class BookApiController extends ApiController
 {
     protected $bookRepo;
 
-    protected $rules = [
-        'create' => [
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'tags'        => ['array'],
-        ],
-        'update' => [
-            'name'        => ['string', 'min:1', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'tags'        => ['array'],
-        ],
-    ];
-
     public function __construct(BookRepo $bookRepo)
     {
         $this->bookRepo = $bookRepo;
@@ -37,19 +24,21 @@ class BookApiController extends ApiController
         $books = Book::visible();
 
         return $this->apiListingResponse($books, [
-            'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by', 'image_id',
+            'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by',
         ]);
     }
 
     /**
      * Create a new book in the system.
+     * The cover image of a book can be set by sending a file via an 'image' property within a 'multipart/form-data' request.
+     * If the 'image' property is null then the book cover image will be removed.
      *
      * @throws ValidationException
      */
     public function create(Request $request)
     {
         $this->checkPermission('book-create-all');
-        $requestData = $this->validate($request, $this->rules['create']);
+        $requestData = $this->validate($request, $this->rules()['create']);
 
         $book = $this->bookRepo->create($requestData);
 
@@ -68,6 +57,8 @@ class BookApiController extends ApiController
 
     /**
      * Update the details of a single book.
+     * The cover image of a book can be set by sending a file via an 'image' property within a 'multipart/form-data' request.
+     * If the 'image' property is null then the book cover image will be removed.
      *
      * @throws ValidationException
      */
@@ -76,7 +67,7 @@ class BookApiController extends ApiController
         $book = Book::visible()->findOrFail($id);
         $this->checkOwnablePermission('book-update', $book);
 
-        $requestData = $this->validate($request, $this->rules['update']);
+        $requestData = $this->validate($request, $this->rules()['update']);
         $book = $this->bookRepo->update($book, $requestData);
 
         return response()->json($book);
@@ -96,5 +87,23 @@ class BookApiController extends ApiController
         $this->bookRepo->destroy($book);
 
         return response('', 204);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'create' => [
+                'name'        => ['required', 'string', 'max:255'],
+                'description' => ['string', 'max:1000'],
+                'tags'        => ['array'],
+                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            ],
+            'update' => [
+                'name'        => ['string', 'min:1', 'max:255'],
+                'description' => ['string', 'max:1000'],
+                'tags'        => ['array'],
+                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            ],
+        ];
     }
 }

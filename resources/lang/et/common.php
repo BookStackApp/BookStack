@@ -47,6 +47,8 @@ return [
     'previous' => 'Eelmine',
     'filter_active' => 'Aktiivne filter:',
     'filter_clear' => 'Tühjenda filter',
+    'download' => 'Laadi alla',
+    'open_in_tab' => 'Ava vahelehel',
 
     // Sort Options
     'sort_options' => 'Sorteerimise valikud',

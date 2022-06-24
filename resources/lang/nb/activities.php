@@ -29,6 +29,8 @@ return [
     // Books
     'book_create'                 => 'opprettet bok',
     'book_create_notification'    => 'Book successfully created',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'oppdaterte bok',
     'book_update_notification'    => 'Book successfully updated',
     'book_delete'                 => 'slettet bok',
@@ -39,6 +41,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'created bookshelf',
     'bookshelf_create_notification'    => 'Bookshelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'oppdaterte bokhylle',
     'bookshelf_update_notification'    => 'Bookshelf successfully updated',
     'bookshelf_delete'                 => 'slettet bokhylle',
