@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Sellel e-posti domeenil ei ole rakendusele ligipääsu',
     'register_success' => 'Aitäh, et registreerusid! Oled nüüd sisse logitud.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Sisselogimiskatse',
+    'auto_init_starting_desc' => 'Sisselogimise protsessi alustamiseks autentimissüsteemiga ühendumine. Kui 5 sekundi jooksul edasiminekut ei ole, proovi alloleval lingil klikkida.',
+    'auto_init_start_link' => 'Jätka autentimisega',
+
     // Password Reset
     'reset_password' => 'Lähtesta parool',
     'reset_password_send_instructions' => 'Siseta oma e-posti aadress ning sulle saadetakse link parooli lähtestamiseks.',

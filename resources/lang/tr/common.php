@@ -47,6 +47,8 @@ return [
     'previous' => 'Önceki',
     'filter_active' => 'Aktif filtre:',
     'filter_clear' => 'Filtreyi Kaldır',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => 'Sıralama Seçenekleri',

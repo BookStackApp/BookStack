@@ -47,6 +47,8 @@ return [
     'previous' => 'قبلى',
     'filter_active' => 'فیلتر فعال:',
     'filter_clear' => 'پاک کردن فیلتر',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => 'گزینه‌های مرتب سازی',

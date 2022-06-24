@@ -47,6 +47,8 @@ return [
     'previous' => 'Iepriekšējais',
     'filter_active' => 'Aktīvais filtrs:',
     'filter_clear' => 'Notīrīt filtru',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => 'Kārtošanas Opcijas',

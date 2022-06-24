@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'تم إنشاء كتاب',
     'book_create_notification'    => 'تم إنشاء الكتاب بنجاح',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'تم تحديث الكتاب',
     'book_update_notification'    => 'تم تحديث الكتاب بنجاح',
     'book_delete'                 => 'تم حذف الكتاب',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'تم إنشاء رف كتب',
     'bookshelf_create_notification'    => 'تم إنشاء الرف بنجاح',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'تم تحديث الرف',
     'bookshelf_update_notification'    => 'تم تحديث الرف بنجاح',
     'bookshelf_delete'                 => 'تم تحديث الرف',

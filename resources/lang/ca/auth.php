@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Aquest domini de correu electrònic no té accés a aquesta aplicació',
     'register_success' => 'Gràcies per registrar-vos! Ja us hi heu registrat i heu iniciat la sessió.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Restableix la contrasenya',
     'reset_password_send_instructions' => 'Introduïu la vostra adreça electrònica a continuació i us enviarem un correu electrònic amb un enllaç per a restablir la contrasenya.',

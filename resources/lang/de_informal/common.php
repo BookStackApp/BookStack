@@ -47,6 +47,8 @@ return [
     'previous' => 'Vorheriges',
     'filter_active' => 'Gesetzte Filter:',
     'filter_clear' => 'Filter löschen',
+    'download' => 'Herunterladen',
+    'open_in_tab' => 'In Neuem Tab öffnen',
 
     // Sort Options
     'sort_options' => 'Sortieroptionen',

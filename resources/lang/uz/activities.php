@@ -28,6 +28,8 @@ return [
     // Books
     'book_create'                 => 'yaratilgan kitob',
     'book_create_notification'    => 'Kitob muvaffaqiyatli yaratildi',
+    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'yangilangan kitob',
     'book_update_notification'    => 'Kitob muvaffaqiyatli yangilandi',
     'book_delete'                 => 'o\'chirilgan kitob',
@@ -38,6 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'yaratilgan kitobjavon',
     'bookshelf_create_notification'    => 'Kitobjavon muvaffaqiyatli yaratildi',
+    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'yangilangan kitobjavob',
     'bookshelf_update_notification'    => 'Kitobjavon muvaffaqiyatli yangilandi',
     'bookshelf_delete'                 => 'o\'chirilgan kitobjavon',

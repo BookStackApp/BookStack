@@ -47,6 +47,8 @@ return [
     'previous' => '上一頁',
     'filter_active' => '使用中的過濾器',
     'filter_clear' => '清理過濾',
+    'download' => 'Download',
+    'open_in_tab' => 'Open in Tab',
 
     // Sort Options
     'sort_options' => '排序選項',

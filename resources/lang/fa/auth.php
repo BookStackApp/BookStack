@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'دامنه پست الکترونیک به این برنامه دسترسی ندارد',
     'register_success' => 'از ثبت نام شما سپاسگزاریم! شما اکنون ثبت نام کرده و وارد سیستم شده اید.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'بازنشانی کلمه عبور',
     'reset_password_send_instructions' => 'پست الکترونیک خود را در کادر زیر وارد نموده تا یک پیام حاوی لینک بازنشانی کلمه عبور دریافت نمایید.',

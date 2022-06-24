@@ -38,6 +38,11 @@ return [
     'registration_email_domain_invalid' => 'Bu e-posta sağlayıcısının uygulamaya erişim izni bulunmuyor',
     'register_success' => 'Kaydolduğunuz için teşekkürler! Artık kayıtlı bir kullanıcı olarak giriş yaptınız.',
 
+    // Login auto-initiation
+    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_start_link' => 'Proceed with authentication',
+
     // Password Reset
     'reset_password' => 'Şifreyi Sıfırla',
     'reset_password_send_instructions' => 'Aşağıya gireceğiniz e-posta adresine şifre sıfırlama bağlantısı gönderilecektir.',
@@ -84,15 +89,15 @@ return [
     'mfa_option_totp_title' => 'Mobil Uygulama',
     'mfa_option_totp_desc' => 'Çok aşamalı kimlik doğrulamayı kullanabilmek için Google Authenticator, Authy veya Microsoft Authenticator gibi TOTP destekleyen bir mobil uygulamaya ihtiyacınız olacaktır.',
     'mfa_option_backup_codes_title' => 'Yedekleme Kodları',
-    'mfa_option_backup_codes_desc' => 'Securely store a set of one-time-use backup codes which you can enter to verify your identity.',
+    'mfa_option_backup_codes_desc' => 'Kimliğini doğrulamak için kullanabileceğin aşağıdaki tek kullanımlık yedek kodlarını güvenli bir yerde sakla.',
     'mfa_gen_confirm_and_enable' => 'Onayla ve aktive et',
     'mfa_gen_backup_codes_title' => 'Yedekleme Kodları Kurulumu',
-    'mfa_gen_backup_codes_desc' => 'Store the below list of codes in a safe place. When accessing the system you\'ll be able to use one of the codes as a second authentication mechanism.',
+    'mfa_gen_backup_codes_desc' => 'Aşağıdaki kod listesini güvenli bir yerde sakla. Sisteme giriş yaparken kodlardan birini ikinci bir kimlik doğrulama mekanizması olarak kullanabileceksin.',
     'mfa_gen_backup_codes_download' => 'İndirme Kodları',
     'mfa_gen_backup_codes_usage_warning' => 'Her kod tek seferlik kullanılabilir',
     'mfa_gen_totp_title' => 'Mobil Uygulama Kurulumu',
-    'mfa_gen_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
-    'mfa_gen_totp_scan' => 'Scan the QR code below using your preferred authentication app to get started.',
+    'mfa_gen_totp_desc' => 'Çok aşamalı kimlik doğrulamayı kullanabilmek için Google Authenticator, Authy veya Microsoft Authenticator gibi TOTP destekleyen bir mobil uygulamaya ihtiyacınız olacaktır.',
+    'mfa_gen_totp_scan' => 'Başlamak için aşağıdaki QR kodunu tercih ettiğin kimlik doğrulama uygulamasında tara.',
     'mfa_gen_totp_verify_setup' => 'Kurulumu Doğrula',
     'mfa_gen_totp_verify_setup_desc' => 'Aşağıdaki kutuya kimlik doğrulama uygulamanızda üretilmiş olan kodu girerek hepsini doğrulayabilirsiniz:',
     'mfa_gen_totp_provide_code_here' => 'Uygulamada üretilen kodunuzu buraya giriniz',

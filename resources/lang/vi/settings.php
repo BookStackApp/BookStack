@@ -10,8 +10,8 @@ return [
     'settings' => 'Cài đặt',
     'settings_save' => 'Lưu Cài đặt',
     'settings_save_success' => 'Đã lưu cài đặt',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => 'Phiên bản Hệ thống',
+    'categories' => 'Danh mục',
 
     // App Settings
     'app_customization' => 'Tuỳ biến',
@@ -43,7 +43,7 @@ return [
     'app_footer_links_desc' => 'Add links to show within the site footer. These will be displayed at the bottom of most pages, including those that do not require login. You can use a label of "trans::<key>" to use system-defined translations. For example: Using "trans::common.privacy_policy" will provide the translated text "Privacy Policy" and "trans::common.terms_of_service" will provide the translated text "Terms of Service".',
     'app_footer_links_label' => 'Link Label',
     'app_footer_links_url' => 'Link URL',
-    'app_footer_links_add' => 'Add Footer Link',
+    'app_footer_links_add' => 'Thêm Footer Link',
     'app_disable_comments' => 'Tắt bình luận',
     'app_disable_comments_toggle' => 'Tắt bình luận',
     'app_disable_comments_desc' => 'Tắt các bình luận trên tất cả các trang của ứng dụng. <br> Các bình luận đã tồn tại sẽ không được hiển thị.',
@@ -236,17 +236,17 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
-    'webhooks_create' => 'Create New Webhook',
-    'webhooks_none_created' => 'No webhooks have yet been created.',
-    'webhooks_edit' => 'Edit Webhook',
-    'webhooks_save' => 'Save Webhook',
-    'webhooks_details' => 'Webhook Details',
+    'webhooks_create' => 'Tạo Webhook mới',
+    'webhooks_none_created' => 'Chưa có webhooks nào được tạo.',
+    'webhooks_edit' => 'Chỉnh sửa Webhook',
+    'webhooks_save' => 'Lưu Webhook',
+    'webhooks_details' => 'Chi tiết Webhook',
     'webhooks_details_desc' => 'Provide a user friendly name and a POST endpoint as a location for the webhook data to be sent to.',
     'webhooks_events' => 'Webhook Events',
     'webhooks_events_desc' => 'Select all the events that should trigger this webhook to be called.',
     'webhooks_events_warning' => 'Keep in mind that these events will be triggered for all selected events, even if custom permissions are applied. Ensure that use of this webhook won\'t expose confidential content.',
     'webhooks_events_all' => 'All system events',
-    'webhooks_name' => 'Webhook Name',
+    'webhooks_name' => 'Tên Webhook',
     'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
     'webhooks_endpoint' => 'Webhook Endpoint',
     'webhooks_active' => 'Webhook Active',
@@ -256,10 +256,10 @@ return [
     'webhooks_delete_confirm' => 'Are you sure you want to delete this webhook?',
     'webhooks_format_example' => 'Webhook Format Example',
     'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
-    'webhooks_status' => 'Webhook Status',
-    'webhooks_last_called' => 'Last Called:',
-    'webhooks_last_errored' => 'Last Errored:',
-    'webhooks_last_error_message' => 'Last Error Message:',
+    'webhooks_status' => 'Trạng thái Webhook',
+    'webhooks_last_called' => 'Lần cuối được gọi:',
+    'webhooks_last_errored' => 'Lần cuối xảy ra lỗi:',
+    'webhooks_last_error_message' => 'Nội dung lỗi gần nhất:',
 
 
     //! If editing translations files directly please ignore this in all
