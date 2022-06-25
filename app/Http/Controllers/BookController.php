@@ -88,10 +88,11 @@ class BookController extends Controller
     public function store(Request $request, string $shelfSlug = null)
     {
         $this->checkPermission('book-create-all');
-        $this->validate($request, [
+        $validated = $this->validate($request, [
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'        => ['array'],
         ]);
 
         $bookshelf = null;
@@ -100,7 +101,7 @@ class BookController extends Controller
             $this->checkOwnablePermission('bookshelf-update', $bookshelf);
         }
 
-        $book = $this->bookRepo->create($request->all());
+        $book = $this->bookRepo->create($validated);
 
         if ($bookshelf) {
             $bookshelf->appendBook($book);
@@ -163,6 +164,7 @@ class BookController extends Controller
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'        => ['array'],
         ]);
 
         if ($request->has('image_reset')) {

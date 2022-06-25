@@ -50,6 +50,33 @@ class BookTest extends TestCase
         $this->assertEquals('my-first-book', $books[1]->slug);
     }
 
+    public function test_create_sets_tags()
+    {
+        // Cheeky initial update to refresh slug
+        $this->asEditor()->post('books', [
+            'name' => 'My book with tags',
+            'description' => 'A book with tags',
+            'tags' => [
+                [
+                    'name' => 'Category',
+                    'value' => 'Donkey Content',
+                ],
+                [
+                    'name' => 'Level',
+                    'value' => '5',
+                ]
+            ],
+        ]);
+
+        /** @var Book $book */
+        $book = Book::query()->where('name', '=', 'My book with tags')->firstOrFail();
+        $tags = $book->tags()->get();
+
+        $this->assertEquals(2, $tags->count());
+        $this->assertEquals('Donkey Content', $tags[0]->value);
+        $this->assertEquals('Level', $tags[1]->name);
+    }
+
     public function test_update()
     {
         /** @var Book $book */
@@ -72,6 +99,36 @@ class BookTest extends TestCase
         $resp = $this->get($book->getUrl() . '-updated');
         $resp->assertSee($newName);
         $resp->assertSee($newDesc);
+    }
+
+    public function test_update_sets_tags()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+
+        $this->assertEquals(0, $book->tags()->count());
+
+        // Cheeky initial update to refresh slug
+        $this->asEditor()->put($book->getUrl(), [
+            'name' => $book->name,
+            'tags' => [
+                [
+                    'name' => 'Category',
+                    'value' => 'Dolphin Content',
+                ],
+                [
+                    'name' => 'Level',
+                    'value' => '5',
+                ]
+            ],
+        ]);
+
+        $book->refresh();
+        $tags = $book->tags()->get();
+
+        $this->assertEquals(2, $tags->count());
+        $this->assertEquals('Dolphin Content', $tags[0]->value);
+        $this->assertEquals('Level', $tags[1]->name);
     }
 
     public function test_delete()
