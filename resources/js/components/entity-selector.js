@@ -87,6 +87,16 @@ class EntitySelector {
         }
     }
 
+    reset() {
+        this.searchInput.value = '';
+        this.showLoading();
+        this.initialLoad();
+    }
+
+    focusSearch() {
+        this.searchInput.focus();
+    }
+
     showLoading() {
         this.loading.style.display = 'block';
         this.resultsContainer.style.display = 'none';

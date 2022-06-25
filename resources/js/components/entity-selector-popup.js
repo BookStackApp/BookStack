@@ -7,9 +7,9 @@ class EntitySelectorPopup {
     setup() {
         this.elem = this.$el;
         this.selectButton = this.$refs.select;
-        this.searchInput = this.$refs.searchInput;
 
         window.EntitySelectorPopup = this;
+        this.selectorEl = this.$refs.selector;
 
         this.callback = null;
         this.selection = null;
@@ -22,11 +22,15 @@ class EntitySelectorPopup {
     show(callback) {
         this.callback = callback;
         this.elem.components.popup.show();
-        this.searchInput.focus();
+        this.getSelector().focusSearch();
     }
 
     hide() {
         this.elem.components.popup.hide();
+    }
+
+    getSelector() {
+        return this.selectorEl.components['entity-selector'];
     }
 
     onSelectButtonClick() {
@@ -36,6 +40,7 @@ class EntitySelectorPopup {
 
     onSelectionConfirm(entity) {
         this.hide();
+        this.getSelector().reset();
         if (this.callback && entity) this.callback(entity);
     }
 
