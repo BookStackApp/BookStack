@@ -54,17 +54,17 @@ class BookTest extends TestCase
     {
         // Cheeky initial update to refresh slug
         $this->asEditor()->post('books', [
-            'name' => 'My book with tags',
+            'name'        => 'My book with tags',
             'description' => 'A book with tags',
-            'tags' => [
+            'tags'        => [
                 [
-                    'name' => 'Category',
+                    'name'  => 'Category',
                     'value' => 'Donkey Content',
                 ],
                 [
-                    'name' => 'Level',
+                    'name'  => 'Level',
                     'value' => '5',
-                ]
+                ],
             ],
         ]);
 
@@ -113,13 +113,13 @@ class BookTest extends TestCase
             'name' => $book->name,
             'tags' => [
                 [
-                    'name' => 'Category',
+                    'name'  => 'Category',
                     'value' => 'Dolphin Content',
                 ],
                 [
-                    'name' => 'Level',
+                    'name'  => 'Level',
                     'value' => '5',
-                ]
+                ],
             ],
         ]);
 
