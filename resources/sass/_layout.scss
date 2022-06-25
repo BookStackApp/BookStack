@@ -26,6 +26,9 @@
   display: grid;
   grid-column-gap: $-l;
   grid-row-gap: $-l;
+  > * {
+    min-width: 0;
+  }
   &.half {
     grid-template-columns: 1fr 1fr;
   }
