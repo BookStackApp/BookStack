@@ -358,8 +358,8 @@ return [
 
     // Conversions
     'convert_to_shelf' => 'Преобразовать в полку',
-    'convert_to_shelf_contents_desc' => 'You can convert this book to a new shelf with the same contents. Chapters contained within this book will be converted to new books. If this book contains any pages, that are not in a chapter, this book will be renamed and contain such pages, and this book will become part of the new shelf.',
-    'convert_to_shelf_permissions_desc' => 'Any permissions set on this book will be copied to the new shelf and to all new child books that don\'t have their own permissions enforced. Note that permissions on shelves do not auto-cascade to content within, as they do for books.',
+    'convert_to_shelf_contents_desc' => 'Вы можете превратить эту книгу в новую полку с тем же содержимым. Главы, содержащиеся в этой книге, будут преобразованы в новые книги. Если эта книга содержит какие-либо страницы, которых нет в главе, она будет переименована и будет содержать такие страницы, и эта книга станет частью новой полки.',
+    'convert_to_shelf_permissions_desc' => 'Любые разрешения, установленные для этой книги, будут скопированы на новую полку и во все новые дочерние книги, для которых не применяются собственные разрешения. Обратите внимание, что разрешения на полки не применяются автоматически к содержимому внутри, как это происходит с книгами.',
     'convert_book' => 'Преобразовать книгу',
     'convert_book_confirm' => 'Вы уверены, что хотите преобразовать эту книгу?',
     'convert_undo_warning' => 'Это не отменяется простым способом.',
