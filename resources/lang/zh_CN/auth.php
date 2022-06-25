@@ -39,9 +39,9 @@ return [
     'register_success' => '感谢您注册:appName，您现在已经登录。',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => '尝试登录中',
+    'auto_init_starting_desc' => '我们正在联系您的身份验证系统以启动登录过程。如果 5 秒后还没有进展，您可以尝试点击下面的链接。',
+    'auto_init_start_link' => '继续进行身份验证',
 
     // Password Reset
     'reset_password' => '重置密码',
