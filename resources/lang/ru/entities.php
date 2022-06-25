@@ -364,7 +364,7 @@ return [
     'convert_book_confirm' => 'Вы уверены, что хотите преобразовать эту книгу?',
     'convert_undo_warning' => 'Это не отменяется простым способом.',
     'convert_to_book' => 'Преобразовать в книгу',
-    'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
+    'convert_to_book_desc' => 'Вы можете преобразовать эту главу в новую книгу с тем же содержанием. Любые разрешения, установленные в этой главе, будут скопированы в новую книгу, но любые унаследованные разрешения из родительской книги не будут скопированы, что может привести к изменению контроля доступа.',
     'convert_chapter' => 'Преобразовать главу',
     'convert_chapter_confirm' => 'Вы уверены, что хотите преобразовать эту главу?',
 ];
