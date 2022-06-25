@@ -10,9 +10,9 @@
             <div>
                 <h5>{{ trans('settings.categories') }}</h5>
                 <nav class="active-link-list in-sidebar">
-                    <a href="{{ url('/settings/features') }}" class="{{ $category === 'features' ? 'active' : '' }}">@icon('star') Features & Security</a>
-                    <a href="{{ url('/settings/customization') }}" class="{{ $category === 'customization' ? 'active' : '' }}">@icon('palette') Customization</a>
-                    <a href="{{ url('/settings/registration') }}" class="{{ $category === 'registration' ? 'active' : '' }}">@icon('lock') Registration</a>
+                    <a href="{{ url('/settings/features') }}" class="{{ $category === 'features' ? 'active' : '' }}">@icon('star') {{ trans('settings.app_features_security') }}</a>
+                    <a href="{{ url('/settings/customization') }}" class="{{ $category === 'customization' ? 'active' : '' }}">@icon('palette') {{ trans('settings.app_customization') }}</a>
+                    <a href="{{ url('/settings/registration') }}" class="{{ $category === 'registration' ? 'active' : '' }}">@icon('lock') {{ trans('settings.reg_settings') }}</a>
                 </nav>
 
                 <h5 class="mt-xl">{{ trans('settings.system_version') }}</h5>
