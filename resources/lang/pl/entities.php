@@ -247,7 +247,7 @@ return [
     'pages_permissions_active' => 'Uprawnienia strony są aktywne',
     'pages_initial_revision' => 'Pierwsze wydanie',
     'pages_initial_name' => 'Nowa strona',
-    'pages_editing_draft_notification' => 'Edytujesz obecnie wersje roboczą, która była ostatnio zapisana :timeDiff.',
+    'pages_editing_draft_notification' => 'Edytujesz obecnie wersję roboczą, która była ostatnio zapisana :timeDiff.',
     'pages_draft_edited_notification' => 'Od tego czasu ta strona była zmieniana. Zalecane jest odrzucenie tej wersji roboczej.',
     'pages_draft_page_changed_since_creation' => 'Ta strona została zaktualizowana od czasu utworzenia tego szkicu. Zaleca się, aby odrzucić ten szkic lub nie nadpisywać żadnych zmian na stronie.',
     'pages_draft_edit_active' => [
@@ -358,7 +358,7 @@ return [
 
     // Conversions
     'convert_to_shelf' => 'Konwertuj na półkę',
-    'convert_to_shelf_contents_desc' => 'Możesz przekonwertować tę książkę do nowej półki z tą samą zawartością. Rozdziały zawarte w tej książce zostaną przekonwertowane na nowe książki. Jeśli ta książka zawiera jakieś strony, które nie znajdują się w rozdziale, wtedy nazwa tej książki zostanie zmieniona i będzie ona zawierać te strony, a sama książka stanie się częścią nowej półki.',
+    'convert_to_shelf_contents_desc' => 'Możesz skonwertować tę książkę do nowej półki z tą samą zawartością. Rozdziały zawarte w tej książce zostaną skonwertowane na nowe książki. Jeśli ta książka zawiera jakieś strony, które nie znajdują się w rozdziale, wtedy nazwa tej książki zostanie zmieniona i będzie ona zawierać te strony, a sama książka stanie się częścią nowej półki.',
     'convert_to_shelf_permissions_desc' => 'Wszelkie uprawnienia ustawione w tej książce zostaną skopiowane do nowej półki i do wszystkich nowych książek tej półki, które nie mają własnych uprawnień. Zauważ, że uprawnienia na półkach nie są automatycznie kaskadowane do ich zawartości, tak jak to ma miejsce w przypadku książek.',
     'convert_book' => 'Konwertuj książkę',
     'convert_book_confirm' => 'Czy na pewno chcesz skonwertować tę książkę?',
