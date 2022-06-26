@@ -65,7 +65,7 @@ return [
     'email_not_confirmed' => 'Adres e-mail nie został potwierdzony',
     'email_not_confirmed_text' => 'Twój adres e-mail nie został jeszcze potwierdzony.',
     'email_not_confirmed_click_link' => 'Aby potwierdzić swoje konto, kliknij link wysłany w wiadomości po rejestracji.',
-    'email_not_confirmed_resend' => 'Jeśli wiadomość do Ciebie nie dotarła możesz wysłać ją ponownie wypełniając formularz poniżej.',
+    'email_not_confirmed_resend' => 'Jeśli wiadomość do Ciebie nie dotarła, możesz wysłać ją ponownie, wypełniając formularz poniżej.',
     'email_not_confirmed_resend_button' => 'Wyślij ponownie wiadomość z potwierdzeniem',
 
     // User Invite
