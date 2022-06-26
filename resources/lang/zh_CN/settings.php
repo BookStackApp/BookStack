@@ -14,7 +14,7 @@ return [
     'categories' => '类别',
 
     // App Settings
-    'app_customization' => '定制',
+    'app_customization' => '个性化',
     'app_features_security' => '功能与安全',
     'app_name' => '站点名称',
     'app_name_desc' => '此名称将在网页头部和系统发送的电子邮件中显示。',
