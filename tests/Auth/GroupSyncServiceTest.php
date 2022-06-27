@@ -54,4 +54,16 @@ class GroupSyncServiceTest extends TestCase
         $user = User::query()->find($user->id);
         $this->assertTrue($user->hasRole($role->id));
     }
+
+    public function test_external_auth_id_matches_ignoring_case()
+    {
+        $user = $this->getViewer();
+        $role = Role::factory()->create(['display_name' => 'ABC123', 'external_auth_id' => 'WaRRioRs']);
+        $this->assertFalse($user->hasRole($role->id));
+
+        (new GroupSyncService())->syncUserWithFoundGroups($user, ['wArriors', 'penguiNs'], false);
+
+        $user = User::query()->find($user->id);
+        $this->assertTrue($user->hasRole($role->id));
+    }
 }
