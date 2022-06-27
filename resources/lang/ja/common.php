@@ -47,8 +47,8 @@ return [
     'previous' => '前へ',
     'filter_active' => '有効なフィルター:',
     'filter_clear' => 'フィルターを解除',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => 'ダウンロード',
+    'open_in_tab' => 'タブで開く',
 
     // Sort Options
     'sort_options' => '並べ替えオプション',
