@@ -39,9 +39,9 @@ return [
     'register_success' => 'Спасибо за регистрацию! Регистрация и вход в систему выполнены.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Попытка входа',
+    'auto_init_starting_desc' => 'Мы связываемся с вашей системой аутентификации, для процесса входа. Если через 5 секунд ничего не произошло, вы можете попробовать нажать на ссылку ниже.',
+    'auto_init_start_link' => 'Повторить аутентификацию',
 
     // Password Reset
     'reset_password' => 'Сброс пароля',

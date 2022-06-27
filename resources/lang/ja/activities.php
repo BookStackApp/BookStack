@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => 'がブックを作成:',
     'book_create_notification'    => 'ブックを作成しました',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'がチャプターをブックに変換:',
+    'book_create_from_chapter_notification' => 'チャプターがブックへ正常に変換されました',
     'book_update'                 => 'がブックを更新:',
     'book_update_notification'    => 'ブックを更新しました',
     'book_delete'                 => 'がブックを削除:',
@@ -40,8 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'が本棚を作成:',
     'bookshelf_create_notification'    => '本棚を作成しました',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
+    'bookshelf_create_from_book'    => 'がブックを本棚に変換:',
+    'bookshelf_create_from_book_notification'    => 'ブックが本棚へ正常に変換されました',
     'bookshelf_update'                 => 'が本棚を更新:',
     'bookshelf_update_notification'    => '本棚を更新しました',
     'bookshelf_delete'                 => 'が本棚を削除:',
