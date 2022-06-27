@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'Создать страницу',
+    'page_create'                 => 'создал страницу',
     'page_create_notification'    => 'Страница успешно создана',
     'page_update'                 => 'обновил страницу',
     'page_update_notification'    => 'Страница успешно обновлена',
@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => 'создал книгу',
     'book_create_notification'    => 'Книга успешно создана',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'преобразовал главу в книгу',
+    'book_create_from_chapter_notification' => 'Глава успешно преобразована в книгу',
     'book_update'                 => 'обновил книгу',
     'book_update_notification'    => 'Книга успешно обновлена',
     'book_delete'                 => 'удалил книгу',
@@ -40,8 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'создал полку',
     'bookshelf_create_notification'    => 'Полка успешно создана',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
+    'bookshelf_create_from_book'    => 'преобразовать книгу в полку',
+    'bookshelf_create_from_book_notification'    => 'Книга успешно преобразована в полку',
     'bookshelf_update'                 => 'обновил полку',
     'bookshelf_update_notification'    => 'Полка успешно обновлена',
     'bookshelf_delete'                 => 'удалил полку',
