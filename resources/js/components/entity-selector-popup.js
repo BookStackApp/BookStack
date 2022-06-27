@@ -16,7 +16,7 @@ class EntitySelectorPopup {
 
         this.selectButton.addEventListener('click', this.onSelectButtonClick.bind(this));
         window.$events.listen('entity-select-change', this.onSelectionChange.bind(this));
-        window.$events.listen('entity-select-confirm', this.onSelectionConfirm.bind(this));
+        window.$events.listen('entity-select-confirm', this.handleConfirmedSelection.bind(this));
     }
 
     show(callback) {
@@ -34,14 +34,7 @@ class EntitySelectorPopup {
     }
 
     onSelectButtonClick() {
-        this.hide();
-        if (this.selection !== null && this.callback) this.callback(this.selection);
-    }
-
-    onSelectionConfirm(entity) {
-        this.hide();
-        this.getSelector().reset();
-        if (this.callback && entity) this.callback(entity);
+        this.handleConfirmedSelection(this.selection);
     }
 
     onSelectionChange(entity) {
@@ -51,6 +44,12 @@ class EntitySelectorPopup {
         } else {
             this.selectButton.removeAttribute('disabled');
         }
+    }
+
+    handleConfirmedSelection(entity) {
+        this.hide();
+        this.getSelector().reset();
+        if (this.callback && entity) this.callback(entity);
     }
 }
 
