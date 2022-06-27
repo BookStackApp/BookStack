@@ -13,7 +13,8 @@ You'll need to tell BookStack to use your theme via the `APP_THEME` option in yo
 
 ## Customizing View Files
 
-Content placed in your `themes/<theme_name>/` folder will override the original view files found in the `resources/views` folder. These files are typically [Laravel Blade](https://laravel.com/docs/6.x/blade) files.
+Content placed in your `themes/<theme_name>/` folder will override the original view files found in the `resources/views` folder. These files are typically [Laravel Blade](https://laravel.com/docs/8.x/blade) files.
+As an example, I could override the `resources/views/books/parts/list-item.blade.php` file with my own template at the path `themes/<theme_name>/books/parts/list-item.blade.php`. 
 
 ## Customizing Icons
 
