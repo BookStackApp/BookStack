@@ -39,7 +39,7 @@ class GroupSyncService
 
     protected function parseRoleExternalAuthId(string $externalId): array
     {
-        $inputIds = preg_split('/(?<!\\\),/', $externalId);
+        $inputIds = preg_split('/(?<!\\\),/', strtolower($externalId));
         $cleanIds = [];
 
         foreach ($inputIds as $inputId) {
