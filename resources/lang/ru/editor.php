@@ -7,7 +7,7 @@
  */
 return [
     // General editor terms
-    'general' => 'Общее',
+    'general' => 'Общие',
     'advanced' => 'Дополнительно',
     'none' => 'Нет',
     'cancel' => 'Отмена',
