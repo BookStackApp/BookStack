@@ -7,6 +7,14 @@ use Illuminate\Database\Query\JoinClause;
 
 class TopFavourites extends EntityQuery
 {
+
+    private $types;
+
+    public function __construct($types = ['page', 'chapter', 'book', 'bookshelf'])
+    {
+        $this->types = $types;
+    }
+
     public function run(int $count, int $skip = 0)
     {
         $user = user();
@@ -16,6 +24,7 @@ class TopFavourites extends EntityQuery
 
         $query = $this->permissionService()
             ->filterRestrictedEntityRelations(Favourite::query(), 'favourites', 'favouritable_id', 'favouritable_type', 'view')
+            ->whereIn('favouritable_type',  $this->types)
             ->select('favourites.*')
             ->leftJoin('views', function (JoinClause $join) {
                 $join->on('favourites.favouritable_id', '=', 'views.viewable_id');
