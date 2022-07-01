@@ -143,7 +143,6 @@ class PagesApiTest extends TestCase
             'owned_by' => [
                 'name' => $page->ownedBy->name,
             ],
-            'is_favourite' => $page->isFavourite(),
         ]);
     }
 
@@ -185,23 +184,6 @@ class PagesApiTest extends TestCase
             'id' => $page->id, 'slug' => $page->slug, 'book_id' => $page->book_id,
         ]));
         $this->assertActivityExists('page_update', $page);
-    }
-
-    public function test_update_favourite_endpoint()
-    {
-        $this->actingAsApiEditor();
-        $page = Page::visible()->first();
-        $details = [
-            'is_favourite' => true,
-        ];
-
-        $resp = $this->putJson($this->baseEndpoint . "/{$page->id}/favourite", $details);
-        $page->refresh();
-
-        $resp->assertStatus(200);
-        $resp->assertJson(array_merge($details, [
-            'id' => $page->id, 'is_favourite' => true,
-        ]));
     }
 
     public function test_providing_new_chapter_id_on_update_will_move_page()

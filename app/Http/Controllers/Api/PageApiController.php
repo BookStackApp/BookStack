@@ -32,9 +32,6 @@ class PageApiController extends ApiController
             'markdown'   => ['string'],
             'tags'       => ['array'],
         ],
-        'updateFavourite' => [
-            'is_favourite' => ['required', 'boolean'],
-        ],
     ];
 
     public function __construct(PageRepo $pageRepo)
@@ -47,14 +44,14 @@ class PageApiController extends ApiController
      */
     public function list()
     {
-        $pages = Page::visible()->with('favourites');
+        $pages = Page::visible();
 
         return $this->apiListingResponse($pages, [
             'id', 'book_id', 'chapter_id', 'name', 'slug', 'priority',
             'draft', 'template',
             'created_at', 'updated_at',
             'created_by', 'updated_by', 'owned_by',
-        ], [Closure::fromCallable([$this, 'listFormatter'])]);
+        ]);
     }
 
     /**
@@ -150,13 +147,5 @@ class PageApiController extends ApiController
         $this->pageRepo->destroy($page);
 
         return response('', 204);
-    }
-
-    /**
-     * Format the given user model for a listing multi-result display.
-     */
-    protected function listFormatter(Page $page)
-    {
-        $page->setAttribute('is_favourite', $page->isFavourite());
     }
 }

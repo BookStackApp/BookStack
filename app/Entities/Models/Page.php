@@ -32,14 +32,14 @@ class Page extends BookChild
 {
     use HasFactory;
 
-    public static $listAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'text', 'created_at', 'updated_at', 'priority'];
+    public static $listAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'html', 'text', 'created_at', 'updated_at', 'priority'];
     public static $contentAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'html', 'text', 'created_at', 'updated_at', 'priority'];
 
     protected $fillable = ['name', 'priority'];
 
-    public $textField = 'text';
+    public $textField = 'html';
 
-    protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot', 'deleted_at', 'favourites'];
+    protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot', 'deleted_at'];
 
     protected $casts = [
         'draft'    => 'boolean',
@@ -139,9 +139,8 @@ class Page extends BookChild
      */
     public function forJsonDisplay(): self
     {
-        $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy', 'favourites']);
+        $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
         $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
-        $refreshed->setAttribute('is_favourite', $refreshed->isFavourite());
         $refreshed->html = (new PageContent($refreshed))->render();
 
         return $refreshed;

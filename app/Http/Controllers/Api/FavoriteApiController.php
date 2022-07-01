@@ -2,14 +2,9 @@
 
 namespace BookStack\Http\Controllers\Api;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\TopFavourites;
 use BookStack\Entities\Repos\PageRepo;
-use BookStack\Exceptions\PermissionsException;
-use Closure;
-use Exception;
 use Illuminate\Http\Request;
 
 class FavoriteApiController extends ApiController
@@ -17,22 +12,6 @@ class FavoriteApiController extends ApiController
     protected PageRepo $pageRepo;
 
     protected $rules = [
-        'create' => [
-            'book_id'    => ['required_without:chapter_id', 'integer'],
-            'chapter_id' => ['required_without:book_id', 'integer'],
-            'name'       => ['required', 'string', 'max:255'],
-            'html'       => ['required_without:markdown', 'string'],
-            'markdown'   => ['required_without:html', 'string'],
-            'tags'       => ['array'],
-        ],
-        'update' => [
-            'book_id'    => ['integer'],
-            'chapter_id' => ['integer'],
-            'name'       => ['string', 'min:1', 'max:255'],
-            'html'       => ['string'],
-            'markdown'   => ['string'],
-            'tags'       => ['array'],
-        ],
         'updateFavourite' => [
             'is_favourite' => ['required', 'boolean'],
         ],
@@ -48,7 +27,7 @@ class FavoriteApiController extends ApiController
      */
     public function list()
     {
-        return (new TopFavourites(['page']))->run(100, 0);
+        return ['data' => (new TopFavourites(['page']))->run(100, 0)];
     }
 
     /**
