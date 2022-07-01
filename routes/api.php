@@ -80,5 +80,7 @@ Route::get('recycle-bin', [RecycleBinApiController::class, 'list']);
 Route::put('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'restore']);
 Route::delete('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'destroy']);
 
-Route::get('favourites', [FavoriteApiController::class, 'list']);
-Route::put('pages/{id}/favourite', [FavoriteApiController::class, 'updateFavourite']);
+Route::get('user/profile', [ProfileApiController::class, 'profile']);
+Route::get('user/favourites', [FavoriteApiController::class, 'list']);
+Route::put('user/pages/{id}/favourite', [FavoriteApiController::class, 'updateFavourite']);
+Route::post('user/pages/{id}/add-view', [ProfileApiController::class, 'addPageView']);
