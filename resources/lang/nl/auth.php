@@ -39,9 +39,9 @@ return [
     'register_success' => 'Bedankt voor het aanmelden! Je bent nu geregistreerd en aangemeld.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Poging tot inloggen',
+    'auto_init_starting_desc' => 'We maken contact met uw authenticatiesysteem om het inlogproces te starten. Als er na 5 seconden geen vooruitgang is, kunt u proberen op de onderstaande link te klikken.',
+    'auto_init_start_link' => 'Ga verder met authenticatie',
 
     // Password Reset
     'reset_password' => 'Wachtwoord herstellen',
