@@ -11,7 +11,7 @@ return [
     'save' => 'Opslaan',
     'continue' => 'Doorgaan',
     'select' => 'Selecteer',
-    'toggle_all' => 'Toggle alle',
+    'toggle_all' => 'Wissel Alles',
     'more' => 'Meer',
 
     // Form Labels
