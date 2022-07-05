@@ -103,6 +103,7 @@
 
 #content {
   flex: 1 0 auto;
+  background: #FBF4F4;
 }
 
 /**
@@ -151,6 +152,7 @@ body.flexbox {
 .flex {
   min-height: 0;
   flex: 1;
+  margin:10px;
   max-width: 100%;
   &.fit-content {
     flex-basis: auto;
@@ -185,6 +187,7 @@ body.flexbox {
 .block {
   display: block !important;
   position: relative;
+  background: #FBF4F4;
 }
 
 .inline {

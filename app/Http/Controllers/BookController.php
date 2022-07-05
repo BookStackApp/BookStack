@@ -285,4 +285,23 @@ class BookController extends Controller
 
         return redirect($shelf->getUrl());
     }
+    // nci changes
+    public function nci_basic_c_ceneter(){
+        return view('types_of_cancer/nci_basic_cancer_center');
+    }
+    public function nci_mlevel_c_ceneter(){
+        return view('types_of_cancer/nci_mlevel_cancer_center');
+    }
+    public function nci_comprehensive_c_ceneter(){
+        return view('types_of_cancer/nci_comprehensive_cancer_center');
+    }
+    public function nci_customer_ratings(){
+        return view('types_of_cancer/nci_customer_satisfaction_ratings');
+    }
+    public function nci_cancer_forms(){
+        return view('types_of_cancer/cancer_center_patients_form');
+    }
+    public function nci_operation_consideration_req(){
+        return view('types_of_cancer/operational_consideration_req');
+    }
 }

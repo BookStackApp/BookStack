@@ -4,6 +4,20 @@
  * Books, Shelves, Chapters & Pages
  */
 return [
+    //APPROVED CANCER CENTERS
+    'approved_cancer_ceneter' => 'APPROVED CANCER CENTERS',
+    // CANCER CENTER REQUIREMENTS
+    'cancer_ceneter_requirements' => 'CANCER CENTER REQUIREMENTS',
+    // CUSTOMER SATISFACTION RATINGS
+    'customer_satisfaction_ratings' => 'CUSTOMER SATISFACTION RATINGS',
+    // DOWNLOADS
+    'downloads' => 'DOWNLOADS',
+    // APPLY HERE
+    'apply_here' => 'APPLY HERE',
+    // ACCOUNT
+    'account' => 'ACCOUNT',
+    //NATIONAL CANCER INSTITUTE OF KENYA
+    'national_cancer_institute_of_kenya' => 'NATIONAL CANCER INSTITUTE OF KENYA',
 
     // Shared
     'recently_created' => 'Recently Created',

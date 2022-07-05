@@ -38,10 +38,9 @@
                         <a class="active" href="{{ url('/NATIONAL/CANCER/INSTITUTE/OF/KENYA') }}">{{ trans('entities.national_cancer_institute_of_kenya') }}</a>
                         <a href="{{ url('/shelves') }}">{{ trans('entities.approved_cancer_ceneter') }}</a>
                         <a href="{{ url('/shelves') }}">{{ trans('entities.cancer_ceneter_requirements') }}</a>
-                        <a href="{{ url('/nci/customer/satisfaction/ratings') }}">{{ trans('entities.customer_satisfaction_ratings') }}</a>
+                        <a href="{{ url('/shelves') }}">{{ trans('entities.customer_satisfaction_ratings') }}</a>
                         <a href="{{ url('/shelves') }}">{{ trans('entities.downloads') }}</a>
                         <a href="{{ url('/shelves') }}">{{ trans('entities.apply_here') }}</a>
-                        <!-- <a href="{{ url('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a> -->
                         <!-- <a href="{{ url('/shelves') }}">{{ trans('entities.national_cancer_institute_of_kenya') }}</a> -->
                     @endif
                     <!-- <a href="{{ url('/books') }}">@icon('books'){{ trans('entities.books') }}</a>
@@ -98,10 +97,6 @@
                                     <div>{{ trans('auth.logout') }}</div>
                                 </button>
                             </form>
-                        </li>
-                        <li>
-                        <a href="{{ url('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
-
                         </li>
                         <li><hr></li>
                         <li>

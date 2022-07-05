@@ -50,11 +50,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/docs', [Api\ApiDocsController::class, 'display']);
 
     Route::get('/pages/recently-updated', [PageController::class, 'showRecentlyUpdated']);
+    //new routes
+    Route::get('/NATIONAL/CANCER/INSTITUTE/OF/KENYA', [BookshelfController::class, 'index']);
 
     // Shelves
     Route::get('/create-shelf', [BookshelfController::class, 'create']);
-    Route::get('/shelves/', [BookshelfController::class, 'index']);
-    Route::post('/shelves/', [BookshelfController::class, 'store']);
+    Route::get('/shelves', [BookshelfController::class, 'index']);
+    Route::post('/shelves', [BookshelfController::class, 'store']);
     Route::get('/shelves/{slug}/edit', [BookshelfController::class, 'edit']);
     Route::get('/shelves/{slug}/delete', [BookshelfController::class, 'showDelete']);
     Route::get('/shelves/{slug}', [BookshelfController::class, 'show']);
@@ -70,6 +72,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/create-book', [BookController::class, 'create']);
 
     // Books
+    
+    
+    // nci custom routes
+    Route::get('/nci/basic/cancer/ceneter/', [BookController::class, 'nci_basic_c_ceneter']);
+    Route::get('/nci/mlevel/cancer/ceneter', [BookController::class, 'nci_mlevel_c_ceneter']);
+    Route::get('/nci/comprehensive/cancer/ceneter/', [BookController::class, 'nci_comprehensive_c_ceneter']);
+    Route::get('/nci/customer/satisfaction/ratings', [BookController::class, 'nci_customer_ratings']);
+    Route::get('/nci/cancer/ceneter/forms', [BookController::class, 'nci_cancer_forms']);
+    Route::get('/nci/operational/consideration/requirements', [BookController::class, 'nci_operation_consideration_req']);
+
+
+
+    // end of nci
     Route::get('/books/', [BookController::class, 'index']);
     Route::post('/books/', [BookController::class, 'store']);
     Route::get('/books/{slug}/edit', [BookController::class, 'edit']);

@@ -73,7 +73,7 @@ class CspService
             'http:',
             'https:',
             '\'nonce-' . $this->nonce . '\'',
-            '\'strict-dynamic\'',
+            // '\'strict-dynamic\'',
         ];
 
         return 'script-src ' . implode(' ', $parts);

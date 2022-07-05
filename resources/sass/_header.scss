@@ -3,7 +3,8 @@
  */
 
 header .grid {
-  grid-template-columns: minmax(max-content, 2fr) 1fr minmax(max-content, 2fr);
+  //grid-template-columns: minmax(max-content, 2fr) 1fr minmax(max-content, 2fr);
+  grid-template-columns: auto auto auto auto;
 }
 
 @include smaller-than($l) {

@@ -34,7 +34,7 @@ class RegistrationService
      */
     public function ensureRegistrationAllowed()
     {
-        if (!$this->registrationAllowed()) {
+        if ($this->registrationAllowed()) {
             throw new UserRegistrationException(trans('auth.registrations_disabled'), '/login');
         }
     }
@@ -57,7 +57,7 @@ class RegistrationService
      *
      * @throws UserRegistrationException
      */
-    public function findOrRegister(string $name, string $email, string $externalId): User
+    public function findOrRegister(string $name,string $designation,string $country, string $email, string $externalId): User
     {
         $user = User::query()
             ->where('external_auth_id', '=', $externalId)
@@ -65,6 +65,9 @@ class RegistrationService
 
         if (is_null($user)) {
             $userData = [
+                //daded fields
+                'designation'      => $designation,
+                'country'          => $country,
                 'name'             => $name,
                 'email'            => $email,
                 'password'         => Str::random(32),
