@@ -153,9 +153,11 @@ in Kenya
       <div class="card" >
   <div class="card-body">
    <!-- <a class="active" href="{{ url('/NATIONAL/CANCER/INSTITUTE/OF/KENYA') }}">{{ trans('entities.national_cancer_institute_of_kenya') }}</a>  -->
-<a href="{{ url('/nci/basic/cancer/ceneter/') }}"><img class="images" src="{{ asset('/uploads/bcc.png') }}" alt="New york">
+<!-- <a href="{{ url('/nci/basic/cancer/ceneter/') }}"> -->
+  <img class="images" src="{{ asset('/uploads/bcc.png') }}" alt="New york">
     <h4 class="card-title management">Basic Cancer Center
-</h4></a>
+</h4>
+<!-- </a> -->
   </div>
 </div>
       </div>
@@ -184,9 +186,7 @@ in Kenya
 </div>
       </div>
       </div>
-       <!-- end of cancer management centers 
-
-       start of downloadable contents  -->
+       <!-- end of cancer management centers start of downloadable contents  -->
       <div class="row mission">
       <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Downloadable Content</h4></div>
       <div class="col-md-4">
@@ -203,15 +203,14 @@ in Kenya
       <div class="card" >
   <div class="card-body">
   <!-- <a href="#">--><img class="images" src="{{ asset('/uploads/download.png') }}" alt="New york"> 
-  <h4 class="card-title management">NCI Checklist Forms
-</h4>
+  <h4 class="card-title management">NCI Checklist Forms</h4>
 <!-- </a> -->
   </div>
 </div>
       </div>
       <div class="col-md-4">
       <div class="card" >
-  <div class="card-body">
+  <div class="card-body">-
   <!-- <a href="#"> -->
     <img class="images" src="{{ asset('/uploads/download.png') }}" alt="New york"> 
   <h4 class="card-title management">Patient Details Forms
