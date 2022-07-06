@@ -34,7 +34,7 @@
                 @if (hasAppAccess())
                     <!-- <a class="hide-over-l" href="{{ url('/search') }}">@icon('search'){{ trans('common.search') }}</a> -->
                     @if(userCanOnAny('view', \BookStack\Entities\Models\Bookshelf::class) || userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
-                        <!-- <a href="{{ url('/shelves') }}">@icon('bookshelf'){{ trans('entities.shelves') }}</a> -->
+                        <a href="{{ url('/shelves') }}">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
                         <a class="active" href="{{ url('/NATIONAL/CANCER/INSTITUTE/OF/KENYA') }}">{{ trans('entities.national_cancer_institute_of_kenya') }}</a>
                         <a href="{{ url('/shelves') }}">{{ trans('entities.approved_cancer_ceneter') }}</a>
                         <a href="{{ url('/shelves') }}">{{ trans('entities.cancer_ceneter_requirements') }}</a>
@@ -44,10 +44,11 @@
                         <!-- <a href="{{ url('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a> -->
                         <!-- <a href="{{ url('/shelves') }}">{{ trans('entities.national_cancer_institute_of_kenya') }}</a> -->
                     @endif
-                    <!-- <a href="{{ url('/books') }}">@icon('books'){{ trans('entities.books') }}</a>
+                    <a href="{{ url('/books') }}">@icon('books'){{ trans('entities.books') }}</a>
                     @if(signedInUser() && userCan('settings-manage'))
                         <a href="{{ url('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
                     @endif
+                     <!--
                     @if(signedInUser() && userCan('users-manage') && !userCan('settings-manage'))
                         <a href="{{ url('/settings/users') }}">@icon('users'){{ trans('settings.users') }}</a>
                     @endif -->
@@ -99,10 +100,10 @@
                                 </button>
                             </form>
                         </li>
-                        <li>
+                        <!-- <li>
                         <a href="{{ url('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
 
-                        </li>
+                        </li> -->
                         <li><hr></li>
                         <li>
                             @include('common.dark-mode-toggle', ['classes' => 'icon-item'])

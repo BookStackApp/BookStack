@@ -5,19 +5,19 @@
  */
 return [
     //APPROVED CANCER CENTERS
-    'approved_cancer_ceneter' => 'APPROVED CANCER CENTERS',
+    'approved_cancer_ceneter' => 'Approved Cancer Centers',
     // CANCER CENTER REQUIREMENTS
-    'cancer_ceneter_requirements' => 'CANCER CENTER REQUIREMENTS',
+    'cancer_ceneter_requirements' => 'Cancer Center Requirements',
     // CUSTOMER SATISFACTION RATINGS
-    'customer_satisfaction_ratings' => 'CUSTOMER SATISFACTION RATINGS',
+    'customer_satisfaction_ratings' => 'Customer Satisfaction Ratings',
     // DOWNLOADS
-    'downloads' => 'DOWNLOADS',
+    'downloads' => 'Downloads',
     // APPLY HERE
-    'apply_here' => 'APPLY HERE',
+    'apply_here' => 'Apply Here',
     // ACCOUNT
-    'account' => 'ACCOUNT',
+    'account' => 'Account',
     //NATIONAL CANCER INSTITUTE OF KENYA
-    'national_cancer_institute_of_kenya' => 'NATIONAL CANCER INSTITUTE OF KENYA',
+    'national_cancer_institute_of_kenya' => 'National Cancer Institute Of Kenya',
 
     // Shared
     'recently_created' => 'Recently Created',

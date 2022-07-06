@@ -10,7 +10,7 @@
             @if(count($socialDrivers) > 0)
                 <hr class="my-l">
                 @foreach($socialDrivers as $driver => $name)
-                    <div>
+                    <div style="border: 13px solid #FBF4F4;">
                         <a id="social-login-{{$driver}}" class="button outline svg" href="{{ url("/login/service/" . $driver) }}">
                             @icon('auth/' . $driver)
                             <span>{{ trans('auth.log_in_with', ['socialDriver' => $name]) }}</span>

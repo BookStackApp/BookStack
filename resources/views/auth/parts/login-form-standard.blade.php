@@ -36,7 +36,7 @@
 <h1 class="list-heading">{{ Str::title(trans('auth.log_in')) }}</h1>
 <form action="{{ url('/login') }}" method="POST" id="login-form" class="mt-l form">
     {!! csrf_field() !!}
-      <fieldset class="email mt-5">{{ trans('auth.email') }}
+      <fieldset  class="email mt-5">{{ trans('auth.email') }}
         <input id="infield" type="text" placeholder="Email" name="email" autofocus='true'/>
       </fieldset>
       <!-- <fieldset class="email">
