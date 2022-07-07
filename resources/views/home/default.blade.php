@@ -133,12 +133,12 @@ in Kenya
 </h4>
     <h6>
 <ul>
-        <li>IntegritG</li>
-        <li>InnovatioP </li>
-        <li>CompetencM</li>
-        <li> AualitG </li>
-        <li>EquitG</li>
-        <li>Responsivenes8</li>
+        <li>Integrity</li>
+        <li>Innovation </li>
+        <li>Competence</li>
+        <li> Auality </li>
+        <li>Equity</li>
+        <li>Responsivenes</li>
         <li>Rights based approach</li>
       </ul>
     </h6>

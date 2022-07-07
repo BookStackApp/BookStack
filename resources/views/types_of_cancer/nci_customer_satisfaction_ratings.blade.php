@@ -57,7 +57,7 @@
 <input type="radio" name="satisfied" value="costChange">
 <label class="inline" style="    margin-left:20px;">Very satisfied</label>
             </div>
-            <li>Nuclear medicine</li>
+            <li>Any additional Comments?</li>
             <!-- <div class="form-control"> -->
             <input type="text"  style="background-color: #FBF4F4;width: 100%;" class="form-control" id="comment" placeholder="Enter any additional comments here..." name="comment">
             

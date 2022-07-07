@@ -20,7 +20,15 @@ Essential Package of Health (KEPH).
           <!-- start definition -->
           <div class="row mission" style="margin-top:40px;">
           <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Chemotherapy: Operational Considerations</h4></div>
-        
+          <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
+          <div class="card">
+            <div class="card-body">
+            <a href="{{url('/nci/books/chemoteraphy/considerations')}}"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
+    <h4 class="card-title management">{{trans('auth.chemotherapy')}}
+</h4></a>
+            </div>
+          </div>
+        </div>
         <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
@@ -34,21 +42,13 @@ Essential Package of Health (KEPH).
         <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
-            <a href="{{url('/nci/books/chemoteraphy/operational/considerations')}}"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
+            <a href="#"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
     <h4 class="card-title management">{{trans('auth.nuclear_radiology')}}
 </h4></a>
             </div>
           </div>
         </div>
-        <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
-          <div class="card">
-            <div class="card-body">
-            <a href="{{url('/nci/books/chemoteraphy/operational/considerations')}}"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
-    <h4 class="card-title management">{{trans('auth.chemotherapy')}}
-</h4></a>
-            </div>
-          </div>
-        </div>
+       
         <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">

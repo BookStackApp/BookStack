@@ -29,6 +29,17 @@ background-color:white;
   background-color:#FBF4F4;
 
 }
+#name{
+  background-color:#FBF4F4;
+
+}
+.signup{
+  height: 670px;
+}
+#email{
+  background-color:#FBF4F4;
+
+}
 h2{
 text-align:center;
 }

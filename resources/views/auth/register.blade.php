@@ -96,8 +96,8 @@
                 </div>
                 <div class=" row grid half collapse-xs gap-xl v-center mt-m">
                     <div class="col from-group text-right" styl>
-                        <button class="button" style="background-color: #D820C5;border:none">{{ trans('auth.create_account') }}</button><br>
-                        Already have an account?<a href="{{ url('/login') }}">{{ trans('auth.already_have_account') }}</a>
+                        <button class="button" style="background-color: #D820C5;border:none">{{ trans('auth.create_account') }}</button>
+                        <p>Already have an account? <a href="{{ url('/login') }}">{{trans('auth.already_have_account')}}</a></p>
 
                     </div>
                 </div>

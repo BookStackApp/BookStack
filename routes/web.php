@@ -81,6 +81,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/nci/customer/satisfaction/ratings', [BookController::class, 'nci_customer_ratings']);
     Route::get('/nci/cancer/ceneter/forms', [BookController::class, 'nci_cancer_forms']);
     Route::get('/nci/operational/consideration/requirements', [BookController::class, 'nci_operation_consideration_req']);
+    Route::get('/nci/books/chemoteraphy/operational/considerations', [BookController::class, 'nci_chemotherapy']);
+    Route::get('/nci/books/chemoteraphy/considerations', [BookController::class, 'chemoteraphy_considerations']);
+
 
 
 

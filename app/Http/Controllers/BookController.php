@@ -304,4 +304,10 @@ class BookController extends Controller
     public function nci_operation_consideration_req(){
         return view('types_of_cancer/operational_consideration_req');
     }
+    public function nci_chemotherapy(){
+        return view('types_of_cancer/bcc/chemoteraphy');
+    }
+    public function chemoteraphy_considerations(){
+        return view('types_of_cancer/bcc/chemoteraphy_considerations');
+    }
 }
