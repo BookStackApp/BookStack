@@ -8,18 +8,14 @@
           @include('common/nci_search')
           <!-- end of search -->
           <div class="row mission" style="margin-top:40px;">
-          <h2 style="text-align:center">{{trans('auth.bcc_title')}}</h2>
+          <h2 style="text-align:center">{{ $chapter->name }}</h2>
             <h3 class="card-text" style="text-align:center">
-            A basic cancer treatment centre is able to provide at least one cancer treatment modality either as a stand-alone 
-facility (chemotherapy, radiotherapy or surgical oncology unit) or within the precincts of a hospital. In addition, it 
-should also be able to offer prevention, screening, early detection, diagnosis, registration, treatment, palliative 
-care and survivorship services. It is expected that this centre will be a facility at level 4 or above as per the Kenya 
-Essential Package of Health (KEPH).
-</h3>
+            {!! nl2br(e($chapter->description)) !!}
+           </h3>
           </div>
           <!-- start definition -->
           <div class="row mission" style="margin-top:40px;">
-          <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Chemotherapy: Operational Considerations</h4></div>
+          <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Services offered in a basic cancer center</h4></div>
         
         <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
           <div class="card">

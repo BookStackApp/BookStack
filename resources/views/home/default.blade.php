@@ -149,42 +149,32 @@ in Kenya
        <!-- start of types of cancer management centers  -->
       <div class="row mission">
       <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Types of Cancer Management Centers</h4></div>
+     
+@foreach ($books as $book)
       <div class="col-md-4">
       <div class="card" >
   <div class="card-body">
-   <!-- <a class="active" href="{{ url('/NATIONAL/CANCER/INSTITUTE/OF/KENYA') }}">{{ trans('entities.national_cancer_institute_of_kenya') }}</a>  -->
-<!-- <a href="{{ url('/nci/basic/cancer/ceneter/') }}"> -->
-  <img class="images" src="{{ asset('/uploads/bcc.png') }}" alt="New york">
-    <h4 class="card-title management">Basic Cancer Center
-</h4>
-<!-- </a> -->
-  </div>
-</div>
-      </div>
-
-      <div class="col-md-4">
-      <div class="card" >
-  <div class="card-body">
-  
 <!-- <a href="{{ url('/nci/mlevel/cancer/ceneter') }}"> -->
+<a href="{{ $book->getUrl() }}" class="" data-entity-type="book" data-entity-id="{{$book->id}}">
   <img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
-    <h4 class="card-title management">Middle Level Cancer Center
+    <h4 class="card-title management">{{ $book->name }}
 </h4>
-<!-- </a> -->
+</a>
   </div>
 </div>
       </div>
-      <div class="col-md-4">
+      @endforeach
+      <!-- <div class="col-md-4">
       <div class="card" >
-  <div class="card-body">
+  <div class="card-body"> -->
 <!-- <a href="{{ url('/nci/comprehensive/cancer/ceneter/') }}"> -->
-  <img class="images" src="{{ asset('/uploads/mlcc.png') }}" alt="New york">
+  <!-- <img class="images" src="{{ asset('/uploads/mlcc.png') }}" alt="New york">
     <h4 class="card-title management">Comprehensive Cancer Center
-</h4>
+</h4> -->
 <!-- </a> -->
-  </div>
+  <!-- </div>
 </div>
-      </div>
+      </div> -->
       </div>
        <!-- end of cancer management centers start of downloadable contents  -->
       <div class="row mission">
@@ -231,67 +221,6 @@ in Kenya
 </div>
      <!-- </div>  -->
 
-    <!-- <div class="container" id="home-default">
-        <div class="grid third gap-xxl no-row-gap" >
-            <div>
-                @if(count($draftPages) > 0)
-                    <div id="recent-drafts" class="card mb-xl">
-                        <h3 class="card-title">{{ trans('entities.my_recent_drafts') }}</h3>
-                        <div class="px-m">
-                            @include('entities.list', ['entities' => $draftPages, 'style' => 'compact'])
-                        </div>
-                    </div>
-                @endif
-
-                <div id="{{ auth()->check() ? 'recently-viewed' : 'recent-books' }}" class="card mb-xl">
-                    <h3 class="card-title">{{ trans('entities.' . (auth()->check() ? 'my_recently_viewed' : 'books_recent')) }}</h3>
-                    <div class="px-m">
-                        @include('entities.list', [
-                        'entities' => $recents,
-                        'style' => 'compact',
-                        'emptyText' => auth()->check() ? trans('entities.no_pages_viewed') : trans('entities.books_empty')
-                        ])
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                @if(count($favourites) > 0)
-                    <div id="top-favourites" class="card mb-xl">
-                        <h3 class="card-title">{{ trans('entities.my_most_viewed_favourites') }}</h3>
-                        <div class="px-m">
-                            @include('entities.list', [
-                            'entities' => $favourites,
-                            'style' => 'compact',
-                            ])
-                        </div>
-                        <a href="{{ url('/favourites')  }}" class="card-footer-link">{{ trans('common.view_all') }}</a>
-                    </div>
-                @endif
-
-                <div id="recent-pages" class="card mb-xl">
-                    <h3 class="card-title">{{ trans('entities.recently_updated_pages') }}</h3>
-                    <div id="recently-updated-pages" class="px-m">
-                        @include('entities.list', [
-                        'entities' => $recentlyUpdatedPages,
-                        'style' => 'compact',
-                        'emptyText' => trans('entities.no_pages_recently_updated'),
-                        ])
-                    </div>
-                    <a href="{{ url("/pages/recently-updated") }}" class="card-footer-link">{{ trans('common.view_all') }}</a>
-                </div>
-            </div>
-
-            <div>
-                <div id="recent-activity">
-                    <div class="card mb-xl">
-                        <h3 class="card-title">{{ trans('entities.recent_activity') }}</h3>
-                        @include('common.activity-list', ['activity' => $activity])
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div> -->
+    
 
 @stop

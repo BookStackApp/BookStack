@@ -287,6 +287,26 @@ class BookController extends Controller
     }
     // nci changes
     public function nci_basic_c_ceneter(){
+        $view = setting()->getForCurrentUser('books_view_type');
+        $sort = setting()->getForCurrentUser('books_sort', 'name');
+        $order = setting()->getForCurrentUser('books_sort_order', 'asc');
+
+        $books = $this->bookRepo->getAllPaginated(18, $sort, $order);
+        $recents = $this->isSignedIn() ? $this->bookRepo->getRecentlyViewed(4) : false;
+        $popular = $this->bookRepo->getPopular(4);
+        $new = $this->bookRepo->getRecentlyCreated(4);
+
+        $this->entityContextManager->clearShelfContext();
+dd($books);
+        $this->setPageTitle(trans('entities.books' ,[
+            'books'   => $books,
+            'recents' => $recents,
+            'popular' => $popular,
+            'new'     => $new,
+            'view'    => $view,
+            'sort'    => $sort,
+            'order'   => $order,
+        ]));
         return view('types_of_cancer/nci_basic_cancer_center');
     }
     public function nci_mlevel_c_ceneter(){

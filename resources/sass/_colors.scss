@@ -38,11 +38,11 @@
  --------------------*/
  .btn {
    display: block;
-   background: hsl(86, 76%, 71%);
+   background-color:#D820C5;
    color: hsl(0, 0, 100);
    text-decoration: none;
-   margin: 20px 0;
-   padding: 15px 15px;
+  //  margin: 20px 0;
+  //  padding: 15px 15px;
    border-radius: 5px;
    position: relative;
    
@@ -55,14 +55,14 @@
      width: 100%;
      height: 100%;
      transition: all .2s ease-in-out;
-     box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0), 0 3px 3px hsla(0, 0, 0, .2);
+    //  box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0), 0 3px 3px hsla(0, 0, 0, .2);
      border-radius: 5px;
    }
    
-   &:hover::after {
-     background: hsla(0, 0, 0, 0.1);
-     box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0.2);
-   }
+  //  &:hover::after {
+  //    background: hsla(0, 0, 0, 0.1);
+  //    box-shadow: inset 0 3px 0 hsla(0, 0, 0, 0.2);
+  //  }
    
  } 
  .btn-social {
@@ -147,7 +147,7 @@
    left: 50%;
    transform: translate(-50%, -50%);
    z-index: 1;
-   width: 1000px;
+   width: 980px;
    background: #FBF4F4;
    border-radius: 10px;
    box-shadow: 0 3px 25px hsla(0, 0, 0, 0.2);
@@ -156,10 +156,10 @@
  }
  
  .signup-classic
- {
-   width: 50%;
-   padding: 30px 50px;
-   background:white;
+  {
+//    width: 40%;
+//    padding: 30px 30px;
+    background:white;
  }
  
  .signup-connect {

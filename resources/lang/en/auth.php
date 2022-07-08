@@ -26,9 +26,9 @@ return [
 // requirements fro establishing bcmc
     // Login & Register
     'sign_up' => 'Submit',
-    'register' => 'Register',
+    'register' => 'Sign Up',
     'log_in' => 'Log in',
-    'submit' => 'Submit',
+    'submit' => 'SUBMIT',
     'log_in_with' => 'Login with :socialDriver',
     'sign_up_with' => 'Sign up with :socialDriver',
     'logout' => 'Logout',

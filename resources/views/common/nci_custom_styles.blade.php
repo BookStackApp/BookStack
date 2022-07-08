@@ -33,9 +33,9 @@ background-color:white;
   background-color:#FBF4F4;
 
 }
-.signup{
+/* .signup{
   height: 670px;
-}
+} */
 #email{
   background-color:#FBF4F4;
 
