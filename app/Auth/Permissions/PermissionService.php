@@ -37,7 +37,7 @@ class PermissionService
     protected $db;
 
     /**
-     * @var array
+     * @var array<string, array<int, Entity>>
      */
     protected $entityCache;
 
@@ -68,10 +68,12 @@ class PermissionService
 
         foreach ($entities as $entity) {
             $class = get_class($entity);
+
             if (!isset($this->entityCache[$class])) {
-                $this->entityCache[$class] = collect();
+                $this->entityCache[$class] = [];
             }
-            $this->entityCache[$class]->put($entity->id, $entity);
+
+            $this->entityCache[$class][$entity->getRawAttribute('id')] = $entity;
         }
     }
 
@@ -80,8 +82,8 @@ class PermissionService
      */
     protected function getBook(int $bookId): ?Book
     {
-        if (isset($this->entityCache[Book::class]) && $this->entityCache[Book::class]->has($bookId)) {
-            return $this->entityCache[Book::class]->get($bookId);
+        if ($this->entityCache[Book::class][$bookId] ?? false) {
+            return $this->entityCache[Book::class][$bookId];
         }
 
         return Book::query()->withTrashed()->find($bookId);
@@ -92,8 +94,8 @@ class PermissionService
      */
     protected function getChapter(int $chapterId): ?Chapter
     {
-        if (isset($this->entityCache[Chapter::class]) && $this->entityCache[Chapter::class]->has($chapterId)) {
-            return $this->entityCache[Chapter::class]->get($chapterId);
+        if ($this->entityCache[Chapter::class][$chapterId] ?? false) {
+            return $this->entityCache[Chapter::class][$chapterId];
         }
 
         return Chapter::query()
@@ -206,7 +208,7 @@ class PermissionService
         $entities = [$entity];
         if ($entity instanceof Book) {
             $books = $this->bookFetchQuery()->where('id', '=', $entity->id)->get();
-            $this->buildJointPermissionsForBooks($books, Role::query()->get()->all(), true);
+            $this->buildJointPermissionsForBooks($books, Role::query()->with('permissions')->get()->all(), true);
 
             return;
         }
@@ -270,7 +272,7 @@ class PermissionService
     }
 
     /**
-     * Delete all of the entity jointPermissions for a list of entities.
+     * Delete all the entity jointPermissions for a list of entities.
      *
      * @param Role[] $roles
      */
@@ -283,19 +285,7 @@ class PermissionService
     }
 
     /**
-     * Delete the entity jointPermissions for a particular entity.
-     *
-     * @param Entity $entity
-     *
-     * @throws Throwable
-     */
-    public function deleteJointPermissionsForEntity(Entity $entity)
-    {
-        $this->deleteManyJointPermissionsForEntities([$entity]);
-    }
-
-    /**
-     * Delete all of the entity jointPermissions for a list of entities.
+     * Delete all the entity jointPermissions for a list of entities.
      *
      * @param Entity[] $entities
      *
@@ -303,20 +293,16 @@ class PermissionService
      */
     protected function deleteManyJointPermissionsForEntities(array $entities)
     {
-        if (count($entities) === 0) {
-            return;
-        }
+        $idsByType = $this->entitiesToTypeIdMap($entities);
 
-        $this->db->transaction(function () use ($entities) {
-            foreach (array_chunk($entities, 1000) as $entityChunk) {
-                $query = $this->db->table('joint_permissions');
-                foreach ($entityChunk as $entity) {
-                    $query->orWhere(function (QueryBuilder $query) use ($entity) {
-                        $query->where('entity_id', '=', $entity->id)
-                            ->where('entity_type', '=', $entity->getMorphClass());
-                    });
+        $this->db->transaction(function () use ($idsByType) {
+            foreach ($idsByType as $type => $ids) {
+                foreach (array_chunk($ids, 1000) as $idChunk) {
+                    $this->db->table('joint_permissions')
+                        ->where('entity_type', '=', $type)
+                        ->whereIn('entity_id', $idChunk)
+                        ->delete();
                 }
-                $query->delete();
             }
         });
     }
@@ -334,16 +320,14 @@ class PermissionService
         $this->readyEntityCache($entities);
         $jointPermissions = [];
 
-        // Fetch Entity Permissions and create a mapping of entity restricted statuses
+        // Create a mapping of entity restricted statuses
         $entityRestrictedMap = [];
-        $permissionFetch = EntityPermission::query();
         foreach ($entities as $entity) {
-            $entityRestrictedMap[$entity->getMorphClass() . ':' . $entity->id] = boolval($entity->getRawAttribute('restricted'));
-            $permissionFetch->orWhere(function ($query) use ($entity) {
-                $query->where('restrictable_id', '=', $entity->id)->where('restrictable_type', '=', $entity->getMorphClass());
-            });
+            $entityRestrictedMap[$entity->getMorphClass() . ':' . $entity->getRawAttribute('id')] = boolval($entity->getRawAttribute('restricted'));
         }
-        $permissions = $permissionFetch->get();
+
+        // Fetch related entity permissions
+        $permissions = $this->getEntityPermissionsForEntities($entities);
 
         // Create a mapping of explicit entity permissions
         $permissionMap = [];
@@ -375,6 +359,48 @@ class PermissionService
                 $this->db->table('joint_permissions')->insert($jointPermissionChunk);
             }
         });
+    }
+
+    /**
+     * From the given entity list, provide back a mapping of entity types to
+     * the ids of that given type. The type used is the DB morph class.
+     * @param Entity[] $entities
+     * @return array<string, int[]>
+     */
+    protected function entitiesToTypeIdMap(array $entities): array
+    {
+        $idsByType = [];
+
+        foreach ($entities as $entity) {
+            $type = $entity->getMorphClass();
+
+            if (!isset($idsByType[$type])) {
+                $idsByType[$type] = [];
+            }
+
+            $idsByType[$type][] = $entity->getRawAttribute('id');
+        }
+
+        return $idsByType;
+    }
+
+    /**
+     * Get the entity permissions for all the given entities
+     * @param Entity[] $entities
+     * @return EloquentCollection
+     */
+    protected function getEntityPermissionsForEntities(array $entities)
+    {
+        $idsByType = $this->entitiesToTypeIdMap($entities);
+        $permissionFetch = EntityPermission::query();
+
+        foreach ($idsByType as $type => $ids) {
+            $permissionFetch->orWhere(function (Builder $query) use ($type, $ids) {
+                $query->where('restrictable_type', '=', $type)->whereIn('restrictable_id', $ids);
+            });
+        }
+
+        return $permissionFetch->get();
     }
 
     /**
