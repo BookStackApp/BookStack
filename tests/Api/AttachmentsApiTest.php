@@ -262,7 +262,7 @@ class AttachmentsApiTest extends TestCase
         /** @var Page $page */
         $page = Page::query()->first();
         $page->draft = true;
-        $page->owned_by = $editor;
+        $page->owned_by = $editor->id;
         $page->save();
         $this->regenEntityPermissions($page);
 
