@@ -69,7 +69,7 @@ class DummyContentSeeder extends Seeder
         ]);
         $token->save();
 
-        app(JointPermissionBuilder::class)->buildJointPermissions();
+        app(JointPermissionBuilder::class)->rebuildForAll();
         app(SearchIndex::class)->indexAllEntities();
     }
 }

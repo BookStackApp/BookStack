@@ -35,7 +35,7 @@ class LargeContentSeeder extends Seeder
         $largeBook->chapters()->saveMany($chapters);
         $all = array_merge([$largeBook], array_values($pages->all()), array_values($chapters->all()));
 
-        app()->make(JointPermissionBuilder::class)->buildJointPermissionsForEntity($largeBook);
+        app()->make(JointPermissionBuilder::class)->rebuildForEntity($largeBook);
         app()->make(SearchIndex::class)->indexEntities($all);
     }
 }

@@ -3,7 +3,7 @@
 namespace Tests;
 
 use BookStack\Auth\Permissions\JointPermissionBuilder;
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
@@ -177,7 +177,7 @@ trait SharedTestHelpers
 
         $entity->save();
         $entity->load('permissions');
-        $this->app->make(JointPermissionBuilder::class)->buildJointPermissionsForEntity($entity);
+        $this->app->make(JointPermissionBuilder::class)->rebuildForEntity($entity);
         $entity->load('jointPermissions');
     }
 
@@ -209,7 +209,7 @@ trait SharedTestHelpers
         /** @var Role $role */
         foreach ($roles as $role) {
             $role->detachPermission($permission);
-            $permissionBuilder->buildJointPermissionForRole($role);
+            $permissionBuilder->rebuildForRole($role);
         }
 
         $user->clearPermissionCache();
@@ -243,7 +243,7 @@ trait SharedTestHelpers
         $chapter = Chapter::factory()->create(array_merge(['book_id' => $book->id], $userAttrs));
         $page = Page::factory()->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
 
-        $this->app->make(JointPermissionBuilder::class)->buildJointPermissionsForEntity($book);
+        $this->app->make(JointPermissionBuilder::class)->rebuildForEntity($book);
 
         return compact('book', 'chapter', 'page');
     }

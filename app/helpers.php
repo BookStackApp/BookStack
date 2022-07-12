@@ -1,6 +1,6 @@
 <?php
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\User;
 use BookStack\Model;
 use BookStack\Settings\SettingService;
@@ -65,9 +65,9 @@ function userCan(string $permission, Model $ownable = null): bool
     }
 
     // Check permission on ownable item
-    $permissionService = app(PermissionService::class);
+    $permissions = app(PermissionApplicator::class);
 
-    return $permissionService->checkOwnableUserAccess($ownable, $permission);
+    return $permissions->checkOwnableUserAccess($ownable, $permission);
 }
 
 /**
@@ -76,9 +76,9 @@ function userCan(string $permission, Model $ownable = null): bool
  */
 function userCanOnAny(string $permission, string $entityClass = null): bool
 {
-    $permissionService = app(PermissionService::class);
+    $permissions = app(PermissionApplicator::class);
 
-    return $permissionService->checkUserHasPermissionOnAnything($permission, $entityClass);
+    return $permissions->checkUserHasPermissionOnAnything($permission, $entityClass);
 }
 
 /**

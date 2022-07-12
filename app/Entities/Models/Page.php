@@ -2,8 +2,8 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Tools\PageContent;
-use BookStack\Facades\Permissions;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -51,7 +51,7 @@ class Page extends BookChild
      */
     public function scopeVisible(Builder $query): Builder
     {
-        $query = Permissions::enforceDraftVisibilityOnQuery($query);
+        $query = app()->make(PermissionApplicator::class)->enforceDraftVisibilityOnQuery($query);
 
         return parent::scopeVisible($query);
     }

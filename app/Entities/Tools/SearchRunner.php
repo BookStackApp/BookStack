@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Tools;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\BookChild;
@@ -21,20 +21,14 @@ use SplObjectStorage;
 
 class SearchRunner
 {
-    /**
-     * @var EntityProvider
-     */
-    protected $entityProvider;
 
-    /**
-     * @var PermissionService
-     */
-    protected $permissionService;
+    protected EntityProvider $entityProvider;
+    protected PermissionApplicator $permissions;
 
     /**
      * Acceptable operators to be used in a query.
      *
-     * @var array
+     * @var string[]
      */
     protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
@@ -46,10 +40,10 @@ class SearchRunner
      */
     protected $termAdjustmentCache;
 
-    public function __construct(EntityProvider $entityProvider, PermissionService $permissionService)
+    public function __construct(EntityProvider $entityProvider, PermissionApplicator $permissions)
     {
         $this->entityProvider = $entityProvider;
-        $this->permissionService = $permissionService;
+        $this->permissions = $permissions;
         $this->termAdjustmentCache = new SplObjectStorage();
     }
 
@@ -199,7 +193,7 @@ class SearchRunner
             }
         }
 
-        return $this->permissionService->enforceEntityRestrictions($entityModelInstance, $entityQuery, $action);
+        return $this->permissions->enforceEntityRestrictions($entityModelInstance, $entityQuery, $action);
     }
 
     /**

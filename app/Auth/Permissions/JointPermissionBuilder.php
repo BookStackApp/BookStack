@@ -21,6 +21,82 @@ class JointPermissionBuilder
     protected $entityCache;
 
     /**
+     * Re-generate all entity permission from scratch.
+     */
+    public function rebuildForAll()
+    {
+        JointPermission::query()->truncate();
+        $this->readyEntityCache();
+
+        // Get all roles (Should be the most limited dimension)
+        $roles = Role::query()->with('permissions')->get()->all();
+
+        // Chunk through all books
+        $this->bookFetchQuery()->chunk(5, function (EloquentCollection $books) use ($roles) {
+            $this->buildJointPermissionsForBooks($books, $roles);
+        });
+
+        // Chunk through all bookshelves
+        Bookshelf::query()->withTrashed()->select(['id', 'restricted', 'owned_by'])
+            ->chunk(50, function (EloquentCollection $shelves) use ($roles) {
+                $this->createManyJointPermissions($shelves->all(), $roles);
+            });
+    }
+
+    /**
+     * Rebuild the entity jointPermissions for a particular entity.
+     *
+     * @throws Throwable
+     */
+    public function rebuildForEntity(Entity $entity)
+    {
+        $entities = [$entity];
+        if ($entity instanceof Book) {
+            $books = $this->bookFetchQuery()->where('id', '=', $entity->id)->get();
+            $this->buildJointPermissionsForBooks($books, Role::query()->with('permissions')->get()->all(), true);
+
+            return;
+        }
+
+        /** @var BookChild $entity */
+        if ($entity->book) {
+            $entities[] = $entity->book;
+        }
+
+        if ($entity instanceof Page && $entity->chapter_id) {
+            $entities[] = $entity->chapter;
+        }
+
+        if ($entity instanceof Chapter) {
+            foreach ($entity->pages as $page) {
+                $entities[] = $page;
+            }
+        }
+
+        $this->buildJointPermissionsForEntities($entities);
+    }
+
+    /**
+     * Build the entity jointPermissions for a particular role.
+     */
+    public function rebuildForRole(Role $role)
+    {
+        $roles = [$role];
+        $role->jointPermissions()->delete();
+
+        // Chunk through all books
+        $this->bookFetchQuery()->chunk(20, function ($books) use ($roles) {
+            $this->buildJointPermissionsForBooks($books, $roles);
+        });
+
+        // Chunk through all bookshelves
+        Bookshelf::query()->select(['id', 'restricted', 'owned_by'])
+            ->chunk(50, function ($shelves) use ($roles) {
+                $this->createManyJointPermissions($shelves->all(), $roles);
+            });
+    }
+
+    /**
      * Prepare the local entity cache and ensure it's empty.
      *
      * @param Entity[] $entities
@@ -67,29 +143,6 @@ class JointPermissionBuilder
     }
 
     /**
-     * Re-generate all entity permission from scratch.
-     */
-    public function buildJointPermissions()
-    {
-        JointPermission::query()->truncate();
-        $this->readyEntityCache();
-
-        // Get all roles (Should be the most limited dimension)
-        $roles = Role::query()->with('permissions')->get()->all();
-
-        // Chunk through all books
-        $this->bookFetchQuery()->chunk(5, function (EloquentCollection $books) use ($roles) {
-            $this->buildJointPermissionsForBooks($books, $roles);
-        });
-
-        // Chunk through all bookshelves
-        Bookshelf::query()->withTrashed()->select(['id', 'restricted', 'owned_by'])
-            ->chunk(50, function (EloquentCollection $shelves) use ($roles) {
-                $this->buildJointPermissionsForShelves($shelves, $roles);
-            });
-    }
-
-    /**
      * Get a query for fetching a book with it's children.
      */
     protected function bookFetchQuery(): Builder
@@ -105,18 +158,6 @@ class JointPermissionBuilder
             ]);
     }
 
-    /**
-     * Build joint permissions for the given shelf and role combinations.
-     *
-     * @throws Throwable
-     */
-    protected function buildJointPermissionsForShelves(EloquentCollection $shelves, array $roles, bool $deleteOld = false)
-    {
-        if ($deleteOld) {
-            $this->deleteManyJointPermissionsForEntities($shelves->all());
-        }
-        $this->createManyJointPermissions($shelves->all(), $roles);
-    }
 
     /**
      * Build joint permissions for the given book and role combinations.
@@ -145,39 +186,6 @@ class JointPermissionBuilder
     }
 
     /**
-     * Rebuild the entity jointPermissions for a particular entity.
-     *
-     * @throws Throwable
-     */
-    public function buildJointPermissionsForEntity(Entity $entity)
-    {
-        $entities = [$entity];
-        if ($entity instanceof Book) {
-            $books = $this->bookFetchQuery()->where('id', '=', $entity->id)->get();
-            $this->buildJointPermissionsForBooks($books, Role::query()->with('permissions')->get()->all(), true);
-
-            return;
-        }
-
-        /** @var BookChild $entity */
-        if ($entity->book) {
-            $entities[] = $entity->book;
-        }
-
-        if ($entity instanceof Page && $entity->chapter_id) {
-            $entities[] = $entity->chapter;
-        }
-
-        if ($entity instanceof Chapter) {
-            foreach ($entity->pages as $page) {
-                $entities[] = $page;
-            }
-        }
-
-        $this->buildJointPermissionsForEntities($entities);
-    }
-
-    /**
      * Rebuild the entity jointPermissions for a collection of entities.
      *
      * @throws Throwable
@@ -187,26 +195,6 @@ class JointPermissionBuilder
         $roles = Role::query()->get()->values()->all();
         $this->deleteManyJointPermissionsForEntities($entities);
         $this->createManyJointPermissions($entities, $roles);
-    }
-
-    /**
-     * Build the entity jointPermissions for a particular role.
-     */
-    public function buildJointPermissionForRole(Role $role)
-    {
-        $roles = [$role];
-        $role->jointPermissions()->delete();
-
-        // Chunk through all books
-        $this->bookFetchQuery()->chunk(20, function ($books) use ($roles) {
-            $this->buildJointPermissionsForBooks($books, $roles);
-        });
-
-        // Chunk through all bookshelves
-        Bookshelf::query()->select(['id', 'restricted', 'owned_by'])
-            ->chunk(50, function ($shelves) use ($roles) {
-                $this->buildJointPermissionsForShelves($shelves, $roles);
-            });
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace BookStack\Actions;
 
-use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Entity;
 use BookStack\Interfaces\Loggable;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,13 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class ActivityLogger
 {
-    protected $permissionService;
-
-    public function __construct(PermissionService $permissionService)
-    {
-        $this->permissionService = $permissionService;
-    }
-
     /**
      * Add a generic activity event to the database.
      *
