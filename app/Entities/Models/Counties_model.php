@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Counties_model extends Model
 {
-    protected $tableName = 'counties';
+    //protected $tableName = 'counties';
     use HasFactory;
 }
