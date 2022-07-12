@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use BookStack\Auth\Permissions\JointPermissionBuilder;
 use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Permissions\RolePermission;
@@ -176,7 +177,7 @@ trait SharedTestHelpers
 
         $entity->save();
         $entity->load('permissions');
-        $this->app[PermissionService::class]->buildJointPermissionsForEntity($entity);
+        $this->app->make(JointPermissionBuilder::class)->buildJointPermissionsForEntity($entity);
         $entity->load('jointPermissions');
     }
 
@@ -196,7 +197,7 @@ trait SharedTestHelpers
      */
     protected function removePermissionFromUser(User $user, string $permissionName)
     {
-        $permissionService = app()->make(PermissionService::class);
+        $permissionBuilder = app()->make(JointPermissionBuilder::class);
 
         /** @var RolePermission $permission */
         $permission = RolePermission::query()->where('name', '=', $permissionName)->firstOrFail();
@@ -208,7 +209,7 @@ trait SharedTestHelpers
         /** @var Role $role */
         foreach ($roles as $role) {
             $role->detachPermission($permission);
-            $permissionService->buildJointPermissionForRole($role);
+            $permissionBuilder->buildJointPermissionForRole($role);
         }
 
         $user->clearPermissionCache();
@@ -241,8 +242,8 @@ trait SharedTestHelpers
         $book = Book::factory()->create($userAttrs);
         $chapter = Chapter::factory()->create(array_merge(['book_id' => $book->id], $userAttrs));
         $page = Page::factory()->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
-        $restrictionService = $this->app[PermissionService::class];
-        $restrictionService->buildJointPermissionsForEntity($book);
+
+        $this->app->make(JointPermissionBuilder::class)->buildJointPermissionsForEntity($book);
 
         return compact('book', 'chapter', 'page');
     }
