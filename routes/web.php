@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/nci/operational/consideration/requirements', [BookController::class, 'nci_operation_consideration_req']);
     Route::get('/nci/books/chemoteraphy/operational/considerations', [BookController::class, 'nci_chemotherapy']);
     Route::get('/nci/books/chemoteraphy/considerations', [BookController::class, 'chemoteraphy_considerations']);
+    Route::post('/add/user/ratings', [BookController::class, 'add_user_ratings']);
+    Route::get('/select2-autocomplete-ajax', [BookController::class, 'dataAjax']);
 
 
 

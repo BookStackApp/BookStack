@@ -6,6 +6,7 @@ use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Counties_model;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controllers\Controller;
@@ -14,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
-
+use Illuminate\Support\Facades\DB;
 class RegisterController extends Controller
 {
     /*
@@ -86,9 +87,11 @@ class RegisterController extends Controller
     {
         $this->registrationService->ensureRegistrationAllowed();
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-
+        $data =DB::table('counties')->select("id","name")
+            		->get();
         return view('auth.register', [
             'socialDrivers' => $socialDrivers,
+            'countes' =>$data
         ]);
     }
 

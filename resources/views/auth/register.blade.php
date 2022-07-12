@@ -84,14 +84,15 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"  for="country">{{ trans('auth.county') }}:</label>
+                    <label class="col-sm-2 col-form-label"  for="designation">{{ trans('auth.county') }}:</label>
                     <div class="col-sm-10">
-                    <select class="form-select" id="inputGroupSelect01" name="country">
-                        <option  selected disabled>Choose...country</option>
-                        <option value="1">Kenya</option>
-                        <option value="2">Uganda</option>
-                        <option value="3">Tanzania</option>
-                    </select>
+                    <select style="display: inline"class="form-select" id="inputGroupSelect01" name="country">
+                    <option selected disabled>Choose...county</option>
+                   
+                    @foreach ($countes as $county)
+                    <option value="{{$county->id}}">{{$county->name}}</option>
+                    @endforeach
+                </select>
                     </div>
                 </div>
                 <div class="form-group row">

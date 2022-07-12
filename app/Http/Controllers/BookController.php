@@ -6,6 +6,8 @@ use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Ratings_model;
+use BookStack\Entities\Models\Counties_model;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
@@ -329,5 +331,31 @@ dd($books);
     }
     public function chemoteraphy_considerations(){
         return view('types_of_cancer/bcc/chemoteraphy_considerations');
+    }
+    public function add_user_ratings(Request $request){
+     $ratings= new Ratings_model();
+     $ratings->additional_comments = $request->comment;
+     $ratings->experience_rating = $request->difficult;
+     $ratings->empathetic_rating = $request->empathetic;
+     $ratings->doctor_attends_rating = $request->long;
+     $ratings->satisfied_doctor_rating = $request->satisfied;
+     $ratings->user_id =auth()->user()->id;
+     $rates=$ratings->save();
+     if ($rates) {
+        # code...
+        return redirect('/nci/customer/satisfaction/ratings')->with('message', 'Thanks for your feedback and your coment!');
+     }
+    }
+    public function dataAjax(Request $request)
+    {
+    	$data = [];
+
+        if($request->has('q')){
+            $search = $request->q;
+            $data =Counties_model::select("id","name")
+            		->where('name','LIKE',"%$search%")
+            		->get();
+        }
+        return response()->json($data);
     }
 }

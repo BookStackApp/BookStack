@@ -56,7 +56,7 @@
 
     @if (isset($pageNav) && count($pageNav))
         <nav id="page-navigation" class="mb-xl" aria-label="{{ trans('entities.pages_navigation') }}">
-            <h5>{{ trans('entities.pages_navigation') }}</h5>
+            <!-- <h5>{{ trans('entities.pages_navigation') }}</h5> -->
             <div class="body">
                 <div class="sidebar-page-nav menu">
                     @foreach($pageNav as $navItem)

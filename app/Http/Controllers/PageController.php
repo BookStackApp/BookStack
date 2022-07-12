@@ -150,8 +150,9 @@ class PageController extends Controller
 
         View::incrementFor($page);
         $this->setPageTitle($page->getShortName());
-
-        return view('pages.show', [
+        //var_dump($pageNav[0]);
+// pages.show
+        return view('types_of_cancer/bcc/chemoteraphy_considerations', [
             'page'            => $page,
             'book'            => $page->book,
             'current'         => $page,

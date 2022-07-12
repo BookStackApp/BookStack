@@ -16,7 +16,7 @@
           <!-- start definition -->
           <div class="row mission" style="margin-top:40px;">
           <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Services offered in a basic cancer center</h4></div>
-        
+         
         <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
@@ -27,21 +27,26 @@
             </div>
           </div>
         </div>
+        
         <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
-            <a href="{{url('/nci/books/chemoteraphy/operational/considerations')}}"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
+            <!-- <a href="{{url('/nci/books/chemoteraphy/operational/considerations')}}"> -->
+              <img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
     <h4 class="card-title management">{{trans('auth.nuclear_radiology')}}
-</h4></a>
+</h4>
+<!-- </a> -->
             </div>
           </div>
         </div>
         <div class="col-xl-2 col-lg-2-0 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
-            <a href="{{url('/nci/books/chemoteraphy/operational/considerations')}}"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
+            <!-- <a href="{{url('/nci/books/chemoteraphy/operational/considerations')}}"> -->
+              <img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
     <h4 class="card-title management">{{trans('auth.chemotherapy')}}
-</h4></a>
+</h4>
+<!-- </a> -->
             </div>
           </div>
         </div>
@@ -68,16 +73,19 @@
           <!--  Requirements for Establishing a Basic Cancer Management Center-->
           <div class="row mission" style="margin-top:40px;">
           <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>{{trans('auth.requiremnt')}}</h4></div>
+          @foreach($pages as $page)
         <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
-            <a href="#"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
-    <h4 class="card-title management">{{trans('auth.operational_consideration_requirement')}}
+            <?php $type = $page->getType(); ?>
+<a href="{{ $page->getUrl() }}"  data-page-type="{{$type}}" data-page-id="{{$page->id}}">
+              <img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
+    <h4 class="card-title management">{{$page->name}}
 </h4></a>
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
+        </div> @endforeach
+        <!-- <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
               <a href="#"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
@@ -86,8 +94,8 @@
             
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
+        </div> -->
+        <!-- <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
             <a href="#"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
@@ -95,8 +103,8 @@
 </h4></a>
             </div>
           </div>
-        </div>
-        <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
+        </div> -->
+        <!-- <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">
             <a href="#"><img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
@@ -104,7 +112,7 @@
 </h4></a>
             </div>
           </div>
-        </div>
+        </div> -->
 
           </div>
           <!--  end Requirements for Establishing a Basic Cancer Management Center-->

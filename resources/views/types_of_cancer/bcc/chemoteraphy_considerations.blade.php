@@ -27,6 +27,11 @@
 .accordion-item{
     border:0;
 }
+.accordion .card-header:after {
+    font-family: 'FontAwesome';  
+    content: "\f068";
+    float: left; 
+}
 </style>
 <div style="margin:5px">
           <!-- search for nci -->
@@ -87,7 +92,7 @@
           </div> -->
           <!-- end of Services offered in a basic cancer center-->
           <!--  -->
-          <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
+          <!-- <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
           <div style="background-color:white;text-align:center;margin-top:30px;"><h4>{{trans('auth.requiremnt')}}</h4></div>
          <div class="accordion" style="margin-bottom: 9px;" id="myAccordion">
         <div class="accordion-item">
@@ -116,12 +121,12 @@ Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS all
             </div>
         </div>
     </div>
-</div>
+</div> -->
           <!--  -->
-          <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
+          <!-- <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
           <div style="background-color:white;text-align:center;margin-top:30px;"><h4>{{trans('auth.requiremnt')}}</h4></div>
-         <div class="accordion" style="margin-bottom: 9px;" id="myAccordion">
-        <div class="accordion-item">
+         <div class="accordion" style="margin-bottom: 9px;" id="myAccordion"> -->
+        <!-- <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
                 <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">1. What is HTML?</button>									
             </h2>
@@ -130,8 +135,8 @@ Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS all
                     <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure of web pages. <a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
                 </div>
             </div>
-        </div>
-        <div class="accordion-item">
+        </div> -->
+        <!-- <div class="accordion-item">
             <h2 class="accordion-header" id="headingThree">
                 <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">3. What is CSS?</button>                     
             </h2>
@@ -145,24 +150,29 @@ care and survivorship services. It is expected that this centre will be a facili
 Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS allows you to specify various style properties for a given HTML element such as colors, backgrounds, fonts etc. <a href="https://www.tutorialrepublic.com/css-tutorial/" target="_blank">Learn more.</a></p>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+        </div> -->
+    <!-- </div>
+</div> -->
 <!-- nnzz -->
 <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
-          <div style="background-color:white;text-align:center;margin-top:30px;"><h4>{{trans('auth.requiremnt')}}</h4></div>
+          <div style="background-color:white;text-align:center;margin-top:30px;"><h4>{{$page->name}}</h4></div>
          <div class="accordion" style="margin-bottom: 9px;" id="myAccordion">
-        <div class="accordion-item">
+         <?php $type=0; ?>
+        @if (isset($pageNav) && count($pageNav))
+         @foreach($pageNav as $navItem)
+         <?php $type++ ?>
+         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
-                <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">1. What is HTML?</button>									
+                <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne{{$type}}">{{ $navItem['text'] }}</button>									
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+            <div id="collapseOne{{$type}}" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
                 <div class="card-body">
-                    <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure of web pages. <a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+                    <p>{!! isset($page->renderedHTML) ? $page->renderedHTML : $page->html !!}<a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
                 </div>
             </div>
-        </div>
-        <div class="accordion-item">
+        </div> @endforeach
+        @endif
+        <!-- <div class="accordion-item">
             <h2 class="accordion-header" id="headingThree">
                 <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">3. What is CSS?</button>                     
             </h2>
@@ -176,24 +186,34 @@ care and survivorship services. It is expected that this centre will be a facili
 Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS allows you to specify various style properties for a given HTML element such as colors, backgrounds, fonts etc. <a href="https://www.tutorialrepublic.com/css-tutorial/" target="_blank">Learn more.</a></p>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
           <!--  Requirements for Establishing a Basic Cancer Management Center-->
-          <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
-          <div style="background-color:white;text-align:center;margin-top:30px;"><h4>{{trans('auth.requiremnt')}}</h4></div>
+          <!-- <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
+          <div style="background-color:white;text-align:center;margin-top:30px;"><h4>{{$page->name}}</h4></div>
          <div class="accordion" style="margin-bottom: 9px;" id="myAccordion">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">1. What is HTML?</button>									
+         <//?php $type=0; ?>
+         @if (isset($pageNav) && count($pageNav))
+         @foreach($pageNav as $navItem)
+         <//?php $type++ ?>
+        <div class="accordion-item{{$type}}">
+            <h2 class="accordion-header" id="headingOne{{$type}}">
+                <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#headingOne{{$type}}">{{ $navItem['text'] }}</button>									
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
+            <div id="headingOne{{$type}}" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
                 <div class="card-body">
-                    <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure of web pages. <a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+                @if (isset($diff) && $diff)
+                    {!! $diff !!}
+                @else
+                    {!! isset($page->renderedHTML) ? $page->renderedHTML : $page->html !!}
+                @endif
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
+        @endforeach
+        @endif -->
+        <!-- <div class="accordion-item">
             <h2 class="accordion-header" id="headingThree">
                 <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">3. What is CSS?</button>                     
             </h2>
@@ -207,9 +227,9 @@ care and survivorship services. It is expected that this centre will be a facili
 Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS allows you to specify various style properties for a given HTML element such as colors, backgrounds, fonts etc. <a href="https://www.tutorialrepublic.com/css-tutorial/" target="_blank">Learn more.</a></p>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+        </div> -->
+    <!-- </div>
+</div> -->
           </div>
           <!--  end Requirements for Establishing a Basic Cancer Management Center-->
           <!-- footer start -->
