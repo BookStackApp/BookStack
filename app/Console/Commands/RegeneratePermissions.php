@@ -42,11 +42,11 @@ class RegeneratePermissions extends Command
     {
         $connection = DB::getDefaultConnection();
 
-        if ($this->hasOption('database')) {
+        if ($this->option('database')) {
             DB::setDefaultConnection($this->option('database'));
         }
 
-        $this->permissionBuilder->buildJointPermissions();
+        $this->permissionBuilder->rebuildForAll();
 
         DB::setDefaultConnection($connection);
         $this->comment('Permissions regenerated');

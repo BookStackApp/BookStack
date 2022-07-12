@@ -89,7 +89,7 @@ class PublicActionTest extends TestCase
         foreach (RolePermission::all() as $perm) {
             $publicRole->attachPermission($perm);
         }
-        $this->app->make(JointPermissionBuilder::class)->buildJointPermissionForRole($publicRole);
+        $this->app->make(JointPermissionBuilder::class)->rebuildForRole($publicRole);
 
         /** @var Chapter $chapter */
         $chapter = Chapter::query()->first();

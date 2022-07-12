@@ -2,7 +2,7 @@
 
 namespace BookStack\Actions;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
@@ -13,11 +13,11 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ActivityQueries
 {
-    protected $permissionService;
+    protected PermissionApplicator $permissions;
 
-    public function __construct(PermissionService $permissionService)
+    public function __construct(PermissionApplicator $permissions)
     {
-        $this->permissionService = $permissionService;
+        $this->permissions = $permissions;
     }
 
     /**
@@ -25,7 +25,7 @@ class ActivityQueries
      */
     public function latest(int $count = 20, int $page = 0): array
     {
-        $activityList = $this->permissionService
+        $activityList = $this->permissions
             ->filterRestrictedEntityRelations(Activity::query(), 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->with(['user', 'entity'])
@@ -78,7 +78,7 @@ class ActivityQueries
      */
     public function userActivity(User $user, int $count = 20, int $page = 0): array
     {
-        $activityList = $this->permissionService
+        $activityList = $this->permissions
             ->filterRestrictedEntityRelations(Activity::query(), 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->where('user_id', '=', $user->id)

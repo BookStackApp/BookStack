@@ -27,7 +27,7 @@ class PermissionsRepo
      */
     public function getAllRoles(): Collection
     {
-        return Role::query()->all();
+        return Role::query()->get();
     }
 
     /**
@@ -57,7 +57,7 @@ class PermissionsRepo
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
-        $this->permissionBuilder->buildJointPermissionForRole($role);
+        $this->permissionBuilder->rebuildForRole($role);
 
         Activity::add(ActivityType::ROLE_CREATE, $role);
 
@@ -88,7 +88,7 @@ class PermissionsRepo
         $role->fill($roleData);
         $role->mfa_enforced = ($roleData['mfa_enforced'] ?? 'false') === 'true';
         $role->save();
-        $this->permissionBuilder->buildJointPermissionForRole($role);
+        $this->permissionBuilder->rebuildForRole($role);
 
         Activity::add(ActivityType::ROLE_UPDATE, $role);
     }
@@ -102,7 +102,7 @@ class PermissionsRepo
         $permissionNameArray = array_values($permissionNameArray);
 
         if ($permissionNameArray) {
-            $permissions = EntityPermission::query()
+            $permissions = RolePermission::query()
                 ->whereIn('name', $permissionNameArray)
                 ->pluck('id')
                 ->toArray();

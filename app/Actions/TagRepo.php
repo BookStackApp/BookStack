@@ -2,7 +2,7 @@
 
 namespace BookStack\Actions;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Models\Entity;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -10,12 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class TagRepo
 {
-    protected $tag;
-    protected $permissionService;
+    protected PermissionApplicator $permissions;
 
-    public function __construct(PermissionService $ps)
+    public function __construct(PermissionApplicator $permissions)
     {
-        $this->permissionService = $ps;
+        $this->permissions = $permissions;
     }
 
     /**
@@ -51,7 +50,7 @@ class TagRepo
             });
         }
 
-        return $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+        return $this->permissions->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
     }
 
     /**
@@ -70,7 +69,7 @@ class TagRepo
             $query = $query->orderBy('count', 'desc')->take(50);
         }
 
-        $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+        $query = $this->permissions->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
 
         return $query->get(['name'])->pluck('name');
     }
@@ -96,7 +95,7 @@ class TagRepo
             $query = $query->where('name', '=', $tagName);
         }
 
-        $query = $this->permissionService->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+        $query = $this->permissions->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
 
         return $query->get(['value'])->pluck('value');
     }

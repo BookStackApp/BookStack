@@ -2,7 +2,7 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ImageUploadException;
 use Exception;
@@ -11,16 +11,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
 {
-    protected $imageService;
-    protected $restrictionService;
+    protected ImageService $imageService;
+    protected PermissionApplicator $permissions;
 
     /**
      * ImageRepo constructor.
      */
-    public function __construct(ImageService $imageService, PermissionService $permissionService)
+    public function __construct(ImageService $imageService, PermissionApplicator $permissions)
     {
         $this->imageService = $imageService;
-        $this->restrictionService = $permissionService;
+        $this->permissions = $permissions;
     }
 
     /**
@@ -74,7 +74,7 @@ class ImageRepo
         }
 
         // Filter by page access
-        $imageQuery = $this->restrictionService->filterRelatedEntity(Page::class, $imageQuery, 'images', 'uploaded_to');
+        $imageQuery = $this->permissions->filterRelatedEntity(Page::class, $imageQuery, 'images', 'uploaded_to');
 
         if ($whereClause !== null) {
             $imageQuery = $imageQuery->where($whereClause);

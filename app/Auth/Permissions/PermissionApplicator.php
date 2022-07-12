@@ -12,10 +12,10 @@ use BookStack\Traits\HasOwner;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
-class PermissionService
+class PermissionApplicator
 {
     /**
-     * @var ?array
+     * @var ?array<int>
      */
     protected $userRoles = null;
 
@@ -23,7 +23,6 @@ class PermissionService
      * @var ?User
      */
     protected $currentUserModel = null;
-
 
     /**
      * Get the roles for the current logged in user.
