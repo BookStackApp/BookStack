@@ -7,13 +7,13 @@ return [
 
     // Pages
     'page_create'                 => 'stvorena stranica',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Stranica uspješno kreirana',
     'page_update'                 => 'ažurirana stranica',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Stranica uspješno ažurirana',
     'page_delete'                 => 'izbrisana stranica',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Stranica je uspješno izbrisana',
     'page_restore'                => 'obnovljena stranica',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Stranica je uspješno obnovljena',
     'page_move'                   => 'premještena stranica',
 
     // Chapters
