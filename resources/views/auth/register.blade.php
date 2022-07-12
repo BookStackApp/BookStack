@@ -59,22 +59,22 @@
                 {!! csrf_field() !!}
 
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="email">{{ trans('auth.name') }}:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 col-form-label" for="email">{{ trans('auth.name') }}:</label>
+                    <div class="col-sm-9">
                     @include('form.text', ['name' => 'name'])
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"  for="email">{{ trans('auth.email') }}:</label>
-                   <div class="col-sm-10">
+                    <label class="col-sm-3 col-form-label"  for="email">{{ trans('auth.email') }}:</label>
+                   <div class="col-sm-9">
                    @include('form.text', ['name' => 'email'])
                    </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"  for="designation">{{ trans('auth.designation') }}:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 col-form-label"  for="designation">{{ trans('auth.designation') }}:</label>
+                    <div class="col-sm-9">
                     <select style="display: inline"class="form-select" id="inputGroupSelect01" name="designation">
                     <option selected disabled>Choose...designation</option>
                     <option value="1">Admin</option>
@@ -84,8 +84,8 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"  for="designation">{{ trans('auth.county') }}:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 col-form-label"  for="designation">{{ trans('auth.county') }}:</label>
+                    <div class="col-sm-9">
                     <select style="display: inline"class="form-select" id="inputGroupSelect01" name="country">
                     <option selected disabled>Choose...county</option>
                    
@@ -96,15 +96,15 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="password">{{ trans('auth.password') }}:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 col-form-label" for="password">{{ trans('auth.password') }}:</label>
+                    <div class="col-sm-9">
                     @include('form.password', ['name' => 'password', 'placeholder' => trans('auth.password_hint')])
 
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="confirm_password">{{ trans('auth.confirm_password') }}:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 col-form-label" for="confirm_password">{{ trans('auth.confirm_password') }}:</label>
+                    <div class="col-sm-9">
                     @include('form.password', ['name' => 'password_confirmed', 'placeholder' => trans('auth.confirm_password')])
 
                     </div>
