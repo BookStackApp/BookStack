@@ -36,7 +36,7 @@ return [
     'export_html' => 'HTML-Datei',
     'export_pdf' => 'PDF-Datei',
     'export_text' => 'Textdatei',
-    'export_md' => 'Markdown-Dateir',
+    'export_md' => 'Markdown-Datei',
 
     // Permissions and restrictions
     'permissions' => 'Berechtigungen',
@@ -168,7 +168,7 @@ return [
     'chapters_permissions' => 'Kapitel-Berechtigungen',
     'chapters_empty' => 'Aktuell sind keine Kapitel diesem Buch hinzugefügt worden.',
     'chapters_permissions_active' => 'Kapitel-Berechtigungen aktiv',
-    'chapters_permissions_success' => 'Kapitel-Berechtigungenen aktualisisert',
+    'chapters_permissions_success' => 'Kapitel-Berechtigungen aktualisiert',
     'chapters_search_this' => 'Dieses Kapitel durchsuchen',
 
     // Pages
@@ -247,7 +247,7 @@ return [
     'pages_permissions_active' => 'Seiten-Berechtigungen aktiv',
     'pages_initial_revision' => 'Erste Veröffentlichung',
     'pages_initial_name' => 'Neue Seite',
-    'pages_editing_draft_notification' => 'Du bearbeitest momenten einen Entwurf, der zuletzt :timeDiff gespeichert wurde.',
+    'pages_editing_draft_notification' => 'Du bearbeitest momentan einen Entwurf, der zuletzt :timeDiff gespeichert wurde.',
     'pages_draft_edited_notification' => 'Diese Seite wurde seit diesem Zeitpunkt verändert. Wir empfehlen Ihnen, diesen Entwurf zu verwerfen.',
     'pages_draft_page_changed_since_creation' => 'Diese Seite wurde seit der Erstellung dieses Entwurfs aktualisiert. Es wird empfohlen, diesen Entwurf zu verwerfen oder darauf zu achten, dass keine Seitenänderungen überschrieben werden.',
     'pages_draft_edit_active' => [
@@ -339,7 +339,7 @@ return [
     'comment_deleted_success' => 'Kommentar gelöscht',
     'comment_created_success' => 'Kommentar hinzugefügt',
     'comment_updated_success' => 'Kommentar aktualisiert',
-    'comment_delete_confirm' => 'Möchtst Du diesen Kommentar wirklich löschen?',
+    'comment_delete_confirm' => 'Möchtest Du diesen Kommentar wirklich löschen?',
     'comment_in_reply_to' => 'Antwort auf :commentId',
 
     // Revision
@@ -357,7 +357,7 @@ return [
     'copy_consider_access' => 'Eine Veränderung der Position, Besitzers oder Berechtigungen könnte dafür sorgen, dass Unberechtigte, Zugriff bekommen.',
 
     // Conversions
-    'convert_to_shelf' => 'Convert to Shelf',
+    'convert_to_shelf' => 'In Regal umwandeln',
     'convert_to_shelf_contents_desc' => 'You can convert this book to a new shelf with the same contents. Chapters contained within this book will be converted to new books. If this book contains any pages, that are not in a chapter, this book will be renamed and contain such pages, and this book will become part of the new shelf.',
     'convert_to_shelf_permissions_desc' => 'Any permissions set on this book will be copied to the new shelf and to all new child books that don\'t have their own permissions enforced. Note that permissions on shelves do not auto-cascade to content within, as they do for books.',
     'convert_book' => 'Convert Book',

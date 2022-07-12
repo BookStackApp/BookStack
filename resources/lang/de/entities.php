@@ -29,9 +29,9 @@ return [
     'my_recently_viewed' => 'Kürzlich von mir angesehen',
     'my_most_viewed_favourites' => 'Meine meistgesehenen Favoriten',
     'my_favourites' => 'Meine Favoriten',
-    'no_pages_viewed' => 'Sie haben bisher keine Seiten angesehen',
-    'no_pages_recently_created' => 'Sie haben bisher keine Seiten angelegt',
-    'no_pages_recently_updated' => 'Sie haben bisher keine Seiten aktualisiert',
+    'no_pages_viewed' => 'Sie haben bisher keine Seiten angesehen.',
+    'no_pages_recently_created' => 'Sie haben bisher keine Seiten angelegt.',
+    'no_pages_recently_updated' => 'Sie haben bisher keine Seiten aktualisiert.',
     'export' => 'Exportieren',
     'export_html' => 'HTML-Datei',
     'export_pdf' => 'PDF-Datei',
@@ -168,7 +168,7 @@ return [
     'chapters_permissions' => 'Kapitel-Berechtigungen',
     'chapters_empty' => 'Aktuell sind keine Kapitel diesem Buch hinzugefügt worden.',
     'chapters_permissions_active' => 'Kapitel-Berechtigungen aktiv',
-    'chapters_permissions_success' => 'Kapitel-Berechtigungenen aktualisisert',
+    'chapters_permissions_success' => 'Kapitel-Berechtigungen aktualisiert',
     'chapters_search_this' => 'Dieses Kapitel durchsuchen',
 
     // Pages
@@ -185,7 +185,7 @@ return [
     'pages_delete_draft' => 'Seitenentwurf löschen',
     'pages_delete_success' => 'Seite gelöscht',
     'pages_delete_draft_success' => 'Seitenentwurf gelöscht',
-    'pages_delete_confirm' => 'Sind Sie sicher, dass Sie diese Seite löschen möchen?',
+    'pages_delete_confirm' => 'Sind Sie sicher, dass Sie diese Seite löschen möchten?',
     'pages_delete_draft_confirm' => 'Sind Sie sicher, dass Sie diesen Seitenentwurf löschen möchten?',
     'pages_editing_named' => 'Seite ":pageName" bearbeiten',
     'pages_edit_draft_options' => 'Entwurfsoptionen',
@@ -357,7 +357,7 @@ return [
     'copy_consider_access' => 'Eine Veränderung der Position, Besitzers oder Berechtigungen könnte dafür sorgen, dass Unberechtigte, Zugriff bekommen.',
 
     // Conversions
-    'convert_to_shelf' => 'Convert to Shelf',
+    'convert_to_shelf' => 'In Regal umwandeln',
     'convert_to_shelf_contents_desc' => 'You can convert this book to a new shelf with the same contents. Chapters contained within this book will be converted to new books. If this book contains any pages, that are not in a chapter, this book will be renamed and contain such pages, and this book will become part of the new shelf.',
     'convert_to_shelf_permissions_desc' => 'Any permissions set on this book will be copied to the new shelf and to all new child books that don\'t have their own permissions enforced. Note that permissions on shelves do not auto-cascade to content within, as they do for books.',
     'convert_book' => 'Convert Book',
