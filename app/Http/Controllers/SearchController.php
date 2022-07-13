@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     protected $searchRunner;
-    protected $entityContextManager;
 
     public function __construct(SearchRunner $searchRunner)
     {
@@ -79,12 +78,12 @@ class SearchController extends Controller
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
             $searchTerm .= ' {type:' . implode('|', $entityTypes) . '}';
-            $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20, $permission)['results'];
+            $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20)['results'];
         } else {
-            $entities = (new Popular())->run(20, 0, $entityTypes, $permission);
+            $entities = (new Popular())->run(20, 0, $entityTypes);
         }
 
-        return view('search.parts.entity-ajax-list', ['entities' => $entities]);
+        return view('search.parts.entity-ajax-list', ['entities' => $entities, 'permission' => $permission]);
     }
 
     /**

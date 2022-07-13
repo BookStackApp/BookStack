@@ -1,6 +1,12 @@
-@component('entities.list-item-basic', ['entity' => $entity])
+@component('entities.list-item-basic', ['entity' => $entity, 'classes' => (($locked ?? false) ? 'disabled ' : '') . ($classes ?? '') ])
 
 <div class="entity-item-snippet">
+
+    @if($locked ?? false)
+        <div class="text-warn my-xxs bold">
+            @icon('lock')You don't have the required permissions to select this item.
+        </div>
+    @endif
 
     @if($showPath ?? false)
         @if($entity->relationLoaded('book') && $entity->book)

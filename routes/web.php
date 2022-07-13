@@ -38,6 +38,13 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 Route::get('/status', [StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
 
+Route::get('/test', function() {
+    $book = \BookStack\Entities\Models\Book::query()->where('slug', '=', 'k5TrhXxaNb')->firstOrFail();
+    $builder= app()->make(\BookStack\Auth\Permissions\JointPermissionBuilder::class);
+    $builder->rebuildForEntity($book);
+    return 'finished';
+})->withoutMiddleware('web');
+
 // Authenticated routes...
 Route::middleware('auth')->group(function () {
 
