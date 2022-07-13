@@ -76,7 +76,7 @@ class ChapterController extends Controller
 
         $this->setPageTitle($chapter->getShortName());
         //dd($pages);
-// chapters.show
+// types_of_cancer/nci_basic_cancer_center
         return view('types_of_cancer/nci_basic_cancer_center', [
             'book'        => $chapter->book,
             'chapter'     => $chapter,

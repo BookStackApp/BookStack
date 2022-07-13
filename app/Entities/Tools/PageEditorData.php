@@ -1,7 +1,7 @@
 <?php
 
 namespace BookStack\Entities\Tools;
-
+use BookStack\Entities\Models\PageContent_model;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
@@ -57,11 +57,14 @@ class PageEditorData
             $isDraftRevision = true;
             $this->warnings[] = $editActivity->getEditingActiveDraftMessage($userDraft);
         }
+        $pagedata=$page['id'];
+        $pagess=PageContent_model::where('page_id',$pagedata)->get();
 
         $editorType = $this->getEditorType($page);
         $this->updateContentForEditor($page, $editorType);
 
         return [
+            'pagedata'=>$pagess,
             'page'            => $page,
             'book'            => $page->book,
             'isDraft'         => $isDraft,

@@ -69,14 +69,14 @@ class CspService
             return '';
         }
 
-        $parts = [
-            'http:',
-            'https:',
-            '\'nonce-' . $this->nonce . '\'',
-            // '\'strict-dynamic\'',
-        ];
-
-        return 'script-src ' . implode(' ', $parts);
+        // $parts = [
+        //     'http:',
+        //     'https:',
+        //     '\'nonce-' . $this->nonce . '\'',
+        //     // '\'strict-dynamic\'',
+        // ];
+        return '';
+        //return 'script-src ' . implode(' ', $parts);
     }
 
     /**

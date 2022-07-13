@@ -27,10 +27,8 @@
 .accordion-item{
     border:0;
 }
-.accordion .card-header:after {
-    font-family: 'FontAwesome';  
-    content: "\f068";
-    float: left; 
+.accordion-button {
+    float: left;
 }
 </style>
 <div style="margin:5px">
@@ -154,20 +152,22 @@ Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS all
     <!-- </div>
 </div> -->
 <!-- nnzz -->
+
 <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
+<div class="col-md-10">
           <div style="background-color:white;text-align:center;margin-top:30px;"><h4>{{$page->name}}</h4></div>
          <div class="accordion" style="margin-bottom: 9px;" id="myAccordion">
-         <?php $type=0; ?>
-        @if (isset($pageNav) && count($pageNav))
-         @foreach($pageNav as $navItem)
-         <?php $type++ ?>
+         <?php $type=0; $increment=1; ?>
+        @if (isset($pageContent) && count($pageContent))
+         @foreach($pageContent as $navItem)
+         <?php $type++;$increment=$increment+(1/10);?>
          <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
-                <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne{{$type}}">{{ $navItem['text'] }}</button>									
+                <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne{{$type}}">{{$increment.' '. $navItem['page_sub_title'] }}</button>									
             </h2>
             <div id="collapseOne{{$type}}" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
                 <div class="card-body">
-                    <p>{!! isset($page->renderedHTML) ? $page->renderedHTML : $page->html !!}<a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+                    <p>{!! $navItem->page_description !!}</a></p>
                 </div>
             </div>
         </div> @endforeach
@@ -188,6 +188,63 @@ Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS all
             </div>
         </div> -->
     </div>
+</div>
+<div class="col-md-2">
+<div class="actions mb-xl">
+        <h5>{{ trans('common.actions') }}</h5>
+
+        <div class="icon-list text-primary">
+
+            {{--User Actions--}}
+            @if(userCan('page-update', $page))
+                <a href="{{ $page->getUrl('/edit') }}" class="icon-list-item">
+                    <span>@icon('edit')</span>
+                    <span>{{ trans('common.edit') }}</span>
+                </a>
+            @endif
+            @if(userCanOnAny('page-create'))
+                <a href="{{ $page->getUrl('/copy') }}" class="icon-list-item">
+                    <span>@icon('copy')</span>
+                    <span>{{ trans('common.copy') }}</span>
+                </a>
+            @endif
+            @if(userCan('page-update', $page))
+                @if(userCan('page-delete', $page))
+	                <a href="{{ $page->getUrl('/move') }}" class="icon-list-item">
+	                    <span>@icon('folder')</span>
+	                    <span>{{ trans('common.move') }}</span>
+	                </a>
+                @endif
+                <a href="{{ $page->getUrl('/revisions') }}" class="icon-list-item">
+                    <span>@icon('history')</span>
+                    <span>{{ trans('entities.revisions') }}</span>
+                </a>
+            @endif
+            @if(userCan('restrictions-manage', $page))
+                <a href="{{ $page->getUrl('/permissions') }}" class="icon-list-item">
+                    <span>@icon('lock')</span>
+                    <span>{{ trans('entities.permissions') }}</span>
+                </a>
+            @endif
+            @if(userCan('page-delete', $page))
+                <a href="{{ $page->getUrl('/delete') }}" class="icon-list-item">
+                    <span>@icon('delete')</span>
+                    <span>{{ trans('common.delete') }}</span>
+                </a>
+            @endif
+
+            <hr class="primary-background"/>
+
+            @if(signedInUser())
+                @include('entities.favourite-action', ['entity' => $page])
+            @endif
+            @if(userCan('content-export'))
+                @include('entities.export-menu', ['entity' => $page])
+            @endif
+        </div>
+
+    </div>
+</div>
 </div>
           <!--  Requirements for Establishing a Basic Cancer Management Center-->
           <!-- <div class="row mission" style="margin-top:40px;margin-bottom:30px;">
@@ -230,7 +287,9 @@ Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS all
         </div> -->
     <!-- </div>
 </div> -->
+
           </div>
+
           <!--  end Requirements for Establishing a Basic Cancer Management Center-->
           <!-- footer start -->
       @include('common/nci_footer')

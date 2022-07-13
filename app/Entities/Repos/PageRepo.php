@@ -159,6 +159,7 @@ class PageRepo
      */
     public function publishDraft(Page $draft, array $input): Page
     {
+        //return $draft;
         $this->updateTemplateStatusAndContentFromInput($draft, $input);
         $this->baseRepo->update($draft, $input);
 
@@ -213,6 +214,7 @@ class PageRepo
 
     protected function updateTemplateStatusAndContentFromInput(Page $page, array $input)
     {
+        //return $input['html'];
         if (isset($input['template']) && userCan('templates-manage')) {
             $page->template = ($input['template'] === 'true');
         }

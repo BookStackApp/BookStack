@@ -72,6 +72,7 @@
           <!-- end of Services offered in a basic cancer center-->
           <!--  Requirements for Establishing a Basic Cancer Management Center-->
           <div class="row mission" style="margin-top:40px;">
+          <div class="col-md-10">
           <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>{{trans('auth.requiremnt')}}</h4></div>
           @foreach($pages as $page)
         <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
@@ -85,6 +86,63 @@
             </div>
           </div>
         </div> @endforeach
+          </div>
+          <div class="col-md-2">
+          <div class="actions mb-xl">
+        <h5>{{ trans('common.actions') }}</h5>
+        <div class="icon-list text-primary">
+
+            @if(userCan('page-create', $chapter))
+                <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item">
+                    <span>@icon('add')</span>
+                    <span>{{ trans('entities.pages_new') }}</span>
+                </a>
+            @endif
+
+            <hr class="primary-background"/>
+
+            @if(userCan('chapter-update', $chapter))
+                <a href="{{ $chapter->getUrl('/edit') }}" class="icon-list-item">
+                    <span>@icon('edit')</span>
+                    <span>{{ trans('common.edit') }}</span>
+                </a>
+            @endif
+            @if(userCanOnAny('chapter-create'))
+                <a href="{{ $chapter->getUrl('/copy') }}" class="icon-list-item">
+                    <span>@icon('copy')</span>
+                    <span>{{ trans('common.copy') }}</span>
+                </a>
+            @endif
+            @if(userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter))
+                <a href="{{ $chapter->getUrl('/move') }}" class="icon-list-item">
+                    <span>@icon('folder')</span>
+                    <span>{{ trans('common.move') }}</span>
+                </a>
+            @endif
+            @if(userCan('restrictions-manage', $chapter))
+                <a href="{{ $chapter->getUrl('/permissions') }}" class="icon-list-item">
+                    <span>@icon('lock')</span>
+                    <span>{{ trans('entities.permissions') }}</span>
+                </a>
+            @endif
+            @if(userCan('chapter-delete', $chapter))
+                <a href="{{ $chapter->getUrl('/delete') }}" class="icon-list-item">
+                    <span>@icon('delete')</span>
+                    <span>{{ trans('common.delete') }}</span>
+                </a>
+            @endif
+
+            <hr class="primary-background"/>
+
+            @if(signedInUser())
+                @include('entities.favourite-action', ['entity' => $chapter])
+            @endif
+            @if(userCan('content-export'))
+                @include('entities.export-menu', ['entity' => $chapter])
+            @endif
+        </div>
+    </div>
+          </div>
         <!-- <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">

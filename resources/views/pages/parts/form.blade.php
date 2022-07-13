@@ -27,10 +27,12 @@
 
     {{--Editors--}}
     <div class="edit-area flex-fill flex">
+    
 
         {{--WYSIWYG Editor--}}
         @if($editor === 'wysiwyg')
-            @include('pages.parts.wysiwyg-editor', ['model' => $model])
+        
+            @include('pages.parts.wysiwyg-editor', ['model' => $model,'pagedata' => $pagedata])
         @endif
 
         {{--Markdown Editor--}}
