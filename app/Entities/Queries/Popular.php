@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class Popular extends EntityQuery
 {
-    public function run(int $count, int $page, array $filterModels = null, string $action = 'view')
+    public function run(int $count, int $page, array $filterModels = null)
     {
         $query = $this->permissionService()
-            ->filterRestrictedEntityRelations(View::query(), 'views', 'viewable_id', 'viewable_type', $action)
+            ->filterRestrictedEntityRelations(View::query(), 'views', 'viewable_id', 'viewable_type', 'view')
             ->select('*', 'viewable_id', 'viewable_type', DB::raw('SUM(views) as view_count'))
             ->groupBy('viewable_id', 'viewable_type')
             ->orderBy('view_count', 'desc');

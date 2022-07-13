@@ -54,7 +54,7 @@ class SearchRunner
      *
      * @return array{total: int, count: int, has_more: bool, results: Entity[]}
      */
-    public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20, string $action = 'view'): array
+    public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20): array
     {
         $entityTypes = array_keys($this->entityProvider->all());
         $entityTypesToSearch = $entityTypes;
@@ -75,7 +75,7 @@ class SearchRunner
             }
 
             $entityModelInstance = $this->entityProvider->get($entityType);
-            $searchQuery = $this->buildQuery($searchOpts, $entityModelInstance, $action);
+            $searchQuery = $this->buildQuery($searchOpts, $entityModelInstance);
             $entityTotal = $searchQuery->count();
             $searchResults = $this->getPageOfDataFromQuery($searchQuery, $entityModelInstance, $page, $count);
 
@@ -159,7 +159,7 @@ class SearchRunner
     /**
      * Create a search query for an entity.
      */
-    protected function buildQuery(SearchOptions $searchOpts, Entity $entityModelInstance, string $action = 'view'): EloquentBuilder
+    protected function buildQuery(SearchOptions $searchOpts, Entity $entityModelInstance): EloquentBuilder
     {
         $entityQuery = $entityModelInstance->newQuery();
 
@@ -193,7 +193,7 @@ class SearchRunner
             }
         }
 
-        return $this->permissions->enforceEntityRestrictions($entityModelInstance, $entityQuery, $action);
+        return $this->permissions->enforceEntityRestrictions($entityModelInstance, $entityQuery);
     }
 
     /**

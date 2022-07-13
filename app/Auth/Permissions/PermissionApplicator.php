@@ -72,6 +72,7 @@ class PermissionApplicator
             $action = $permission;
         }
 
+        // TODO - Use a non-query based check
         $hasAccess = $this->entityRestrictionQuery($baseQuery, $action)->count() > 0;
         $this->clean();
 
@@ -163,14 +164,14 @@ class PermissionApplicator
     /**
      * Add restrictions for a generic entity.
      */
-    public function enforceEntityRestrictions(Entity $entity, Builder $query, string $action = 'view'): Builder
+    public function enforceEntityRestrictions(Entity $entity, Builder $query): Builder
     {
         if ($entity instanceof Page) {
             // Prevent drafts being visible to others.
             $this->enforceDraftVisibilityOnQuery($query);
         }
 
-        return $this->entityRestrictionQuery($query, $action);
+        return $this->entityRestrictionQuery($query, 'view');
     }
 
     /**
