@@ -13,11 +13,11 @@ return [
     'page_delete'                 => 'gelöschte Seite',
     'page_delete_notification'    => 'Seite erfolgreich gelöscht',
     'page_restore'                => 'wiederhergestellte Seite',
-    'page_restore_notification'   => 'Die Seite wurde erfolgreich wiederhergestellt',
-    'page_move'                   => 'hat die Seite verschoben',
+    'page_restore_notification'   => 'Seite erfolgreich wiederhergestellt',
+    'page_move'                   => 'Seite verschoben',
 
     // Chapters
-    'chapter_create'              => 'hat das Kapitel erstellt',
+    'chapter_create'              => 'erstellte Kapitel',
     'chapter_create_notification' => 'Das Kapitel wurde erfolgreich erstellt',
     'chapter_update'              => 'hat das Kapitel geändert',
     'chapter_update_notification' => 'Das Kapitel wurde erfolgreich aktualisiert',
