@@ -12,7 +12,7 @@
        <!-- start of types of cancer management centers  -->
       <div class="row mission">
       <div class="col-md-10">
-      <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Types of Cancer Management Centers</h4></div>
+      <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Cancer Management Centers level</h4></div>
      
      @foreach ($bookd as $books)
            <div class="col-md-4">

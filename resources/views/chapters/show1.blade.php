@@ -11,20 +11,20 @@
         ]])
     </div>
           <!-- search for nci -->
-          @include('common/nci_search')
+          <!-- @include('common/nci_search') -->
           <!-- end of search -->
-          <div class="row mission" style="margin-top:40px;">
+          <!-- <div class="row mission" style="margin-top:40px;">
           <h2 style="text-align:center">{{ $chapter->name }}</h2>
             <h3 class="card-text" style="text-align:center">
             {!! nl2br(e($chapter->description)) !!}
            </h3>
-          </div>
+          </div> -->
         
           <!-- end of Services offered in a basic cancer center-->
           <!--  Requirements for Establishing a Basic Cancer Management Center-->
           <div class="row mission" style="margin-top:40px;">
           <!-- <div class="col-md-10"> -->
-          <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>{{ $chapter->name }} Pages</h4></div>
+          <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>{{ $chapter->name }} Page Contents</h4></div>
           <div class="col-md-10">
           @foreach($pages as $page)
         <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
