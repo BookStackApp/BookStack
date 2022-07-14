@@ -4,7 +4,7 @@
 @include('common/nci_custom_styles')
 <style>
     .row {
-    margin-right: 65px;
+    margin-right: 40px;
     margin-left: 15px;
 }
 </style>
