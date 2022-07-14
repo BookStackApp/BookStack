@@ -142,7 +142,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', [PageRevisionController::class, 'destroy']);
 
     // Chapters
-    //Route::get('/books/{bookSlug}/chapter/{chapterSlug}/create-page', [PageController::class, 'create']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/create-page', [PageController::class, 'create']);
     Route::post('/books/{bookSlug}/chapter/{chapterSlug}/create-guest-page', [PageController::class, 'createAsGuest']);
     Route::get('/books/{bookSlug}/create-chapter', [ChapterController::class, 'create']);
     Route::post('/books/{bookSlug}/create-chapter', [ChapterController::class, 'store']);
