@@ -49,8 +49,7 @@ class BookController extends Controller
         $this->entityContextManager->clearShelfContext();
 
         $this->setPageTitle(trans('entities.books'));
-
-        return view('books.index', [
+        return view('books.index1', [
             'books'   => $books,
             'recents' => $recents,
             'popular' => $popular,
@@ -121,17 +120,21 @@ class BookController extends Controller
         $book = $this->bookRepo->getBySlug($slug);
         $bookChildren = (new BookContents($book))->getTree(true);
         $bookParentShelves = $book->shelves()->scopes('visible')->get();
-
+        // foreach ($books as $book) {
+            
+            $books = (new BookContents($book))->getTree(true);
+        // }
         View::incrementFor($book);
         if ($request->has('shelf')) {
             $this->entityContextManager->setShelfContext(intval($request->get('shelf')));
         }
 
         $this->setPageTitle($book->getShortName());
-
-        return view('books.show', [
+//dd($books);
+        return view('books.show1', [
+            'bookd'              => $books,
             'book'              => $book,
-            'current'           => $book,
+            'current'           => $books,
             'bookChildren'      => $bookChildren,
             'bookParentShelves' => $bookParentShelves,
             'activity'          => $activities->entityActivity($book, 20, 1),
@@ -299,7 +302,7 @@ class BookController extends Controller
         $new = $this->bookRepo->getRecentlyCreated(4);
 
         $this->entityContextManager->clearShelfContext();
-dd($books);
+
         $this->setPageTitle(trans('entities.books' ,[
             'books'   => $books,
             'recents' => $recents,

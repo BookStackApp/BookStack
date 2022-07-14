@@ -239,22 +239,32 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-update', $page);
         $pagedata=$this->pageRepo->update($page, $request->all());
         if ($pagedata) {
-            $subtitle=$request->sectionTitle;
+            $subtitle=$request->sectionTitle1;
+            $edited=$request->edited;
+            $newcontenttitle=$request->newcontenttitle;
+            $newcontent=$request->newcontent;
             $pagesid=$request->pagesid;
-            $sectionContent=$request->sectionContent;
-            for ($i=0; $i <count($subtitle) ; $i++) { 
+            $sectionContent=$request->sectionContent1;
+            //dd($request->all());
+            if ($edited=='edited') {
                 # code...
-               // $pages=PageContent_model::where('id',$subtitle[$i]);
-                //$pages->page_id=$pagesid[$i];
-                if ($subtitle[$i]!==''){
-                    // # code...
-                    // $pages->page_sub_title=$subtitle[$i];
-                    // $pages->page_description=$sectionContent[$i];
-                    // //dd($subtitle,$sectionContent,$pages);
-                    // $pages->update();
-                    PageContent_model::where('id',$pagesid[$i])->update(array('page_sub_title' =>$subtitle[$i],'page_description' => $sectionContent[$i]));
-
+                for ($i=0; $i <count($subtitle) ; $i++) { 
+                    if ($subtitle[$i]!=='' && $pagesid[$i]!==''){
+                        PageContent_model::where('id',$pagesid[$i])->update(array('page_sub_title' =>$subtitle[$i],'page_description' => $sectionContent[$i]));
+                    }
                 }
+            }
+            for ($i=0; $i <count($newcontenttitle) ; $i++) { 
+               
+                    $newpages=new PageContent_model();
+                    $newpages->page_id=$request->textfr;
+                if ($newcontent[$i]!==''){
+                    # code...
+                    $newpages->page_sub_title=$newcontenttitle[$i];
+                    $newpages->page_description=$newcontent[$i];
+                    //dd($subtitle,$sectionContent,$pages);
+                    $newpages->save();
+                } 
                
             }
            
@@ -346,9 +356,8 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
         $parent = $page->getParent();
-
         $this->pageRepo->destroy($page);
-
+        PageContent_model::where('page_id',$page['id'])->delete();
         return redirect($parent->getUrl());
     }
 

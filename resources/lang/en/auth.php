@@ -27,7 +27,7 @@ return [
     // Login & Register
     'sign_up' => 'Submit',
     'register' => 'Sign Up',
-    'log_in' => 'Log in',
+    'log_in' => 'Login',
     'submit' => 'SUBMIT',
     'log_in_with' => 'Login with :socialDriver',
     'sign_up_with' => 'Sign up with :socialDriver',
@@ -38,7 +38,7 @@ return [
     'name' => 'Name',
     'username' => 'Username',
     'email' => 'Email',
-    'welcome' => 'Welcome Back',
+    'welcome' => 'Welcome Back!',
     'password' => 'Password',
     'password_confirm' => 'Confirm Password',
     'password_hint' => 'Must be at least 6 characters',

@@ -148,24 +148,24 @@ in Kenya
       </div>
        <!-- start of types of cancer management centers  -->
       <div class="row mission">
-      <!-- <div class="col-md-10"> -->
+      <div class="col-md-10">
       <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>Types of Cancer Management Centers</h4></div>
      
-     @foreach ($books as $book)
+     @foreach ($bookd as $books)
            <div class="col-md-4">
            <div class="card" >
        <div class="card-body">
      <!-- <a href="{{ url('/nci/mlevel/cancer/ceneter') }}"> -->
-     <a href="{{ $book->getUrl() }}" class="" data-entity-type="book" data-entity-id="{{$book->id}}">
+     <a href="{{ $books->getUrl() }}" class="" data-entity-type="book" data-entity-id="{{$books->id}}">
        <img class="images" src="{{ asset('/uploads/ccc.png') }}" alt="New york">
-         <h4 class="card-title management">{{ $book->name }}
+         <h4 class="card-title management">{{ $books->name }}
      </h4>
      </a>
        </div>
      </div>
            </div>
            @endforeach
-      <!-- </div> -->
+      </div>
       <!-- <div class="col-md-4">
       <div class="card" >
   <div class="card-body"> -->
@@ -177,7 +177,7 @@ in Kenya
   <!-- </div>
 </div>
       </div> -->
-      <!-- <div class="col-md-2" style="background-color: #FBF4F4;">
+      <div class="col-md-2" style="background-color: #FBF4F4;">
     <div class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
@@ -254,7 +254,7 @@ in Kenya
             @endif
         </div>
     </div>
-      </div> -->
+      </div>
       </div>
        <!-- end of cancer management centers start of downloadable contents  -->
       <div class="row mission">

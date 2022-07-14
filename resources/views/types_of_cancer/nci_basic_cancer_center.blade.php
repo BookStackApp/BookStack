@@ -4,6 +4,12 @@
 @include('common/nci_custom_styles')
 
 <div style="margin:5px">
+<div class="mb-m print-hidden" style="margin-right:20;margin-left:20%;">
+        @include('entities.breadcrumbs', ['crumbs' => [
+            $chapter->book,
+            $chapter,
+        ]])
+    </div>
           <!-- search for nci -->
           @include('common/nci_search')
           <!-- end of search -->
@@ -72,7 +78,7 @@
           <!-- end of Services offered in a basic cancer center-->
           <!--  Requirements for Establishing a Basic Cancer Management Center-->
           <div class="row mission" style="margin-top:40px;">
-          <div class="col-md-10">
+          <!-- <div class="col-md-10"> -->
           <div style="background-color:white;text-align:center;margin-top:-30px;"><h4>{{trans('auth.requiremnt')}}</h4></div>
           @foreach($pages as $page)
         <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
@@ -86,7 +92,7 @@
             </div>
           </div>
         </div> @endforeach
-          </div>
+          <!-- </div>
           <div class="col-md-2">
           <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
@@ -142,7 +148,7 @@
             @endif
         </div>
     </div>
-          </div>
+          </div> -->
         <!-- <div class="col-xl-2 col-lg-3 col-md-6 col-12 mb-4">
           <div class="card">
             <div class="card-body">

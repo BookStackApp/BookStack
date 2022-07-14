@@ -119,7 +119,7 @@
             </form>
   </div>
   <div class="signup-connect col-md-6">
-  <h1 class="list-heading">{{ Str::title(trans('auth.welcome')) }}</h1>
+  <h1 style="text-align: center"class="list-heading">{{ Str::title(trans('auth.welcome')) }}</h1>
   <div class="sidestyle">
   <img src="{{ asset('/uploads/welcome.png') }}" width="420" height="350">
     <h4 class="b-title">National Guidelines for
