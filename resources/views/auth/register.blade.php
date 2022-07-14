@@ -2,6 +2,12 @@
 
 @section('content')
 @include('common/nci_custom_styles')
+<style>
+    .row {
+    margin-right: 65px;
+    margin-left: 15px;
+}
+</style>
     <!-- <div class="container very-small">
 
         <div class="my-l">&nbsp;</div>
