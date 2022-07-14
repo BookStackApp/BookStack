@@ -6,7 +6,7 @@ WORKDIR /app
 # Install additional dependacnies and configure apache
 RUN apt-get update -y \
     && apt-get install -y git zip unzip libpng-dev libldap2-dev libzip-dev wait-for-it \
-    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
+    && docker-php-ext-configure ldap --with-libdir="lib/$(gcc -dumpmachine)" \
     && docker-php-ext-install pdo_mysql gd ldap zip \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
