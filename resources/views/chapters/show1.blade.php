@@ -2,7 +2,11 @@
 
 @section('body')
 @include('common/nci_custom_styles')
-
+<style>
+    .col-lg-3 {
+        width: 35%;
+}
+</style>
 <div style="margin:5px">
 <div class="mb-m print-hidden" style="margin-right:20;margin-left:20%;">
         @include('entities.breadcrumbs', ['crumbs' => [
