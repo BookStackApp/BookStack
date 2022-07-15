@@ -358,13 +358,13 @@ return [
 
     // Conversions
     'convert_to_shelf' => 'In Regal umwandeln',
-    'convert_to_shelf_contents_desc' => 'You can convert this book to a new shelf with the same contents. Chapters contained within this book will be converted to new books. If this book contains any pages, that are not in a chapter, this book will be renamed and contain such pages, and this book will become part of the new shelf.',
-    'convert_to_shelf_permissions_desc' => 'Any permissions set on this book will be copied to the new shelf and to all new child books that don\'t have their own permissions enforced. Note that permissions on shelves do not auto-cascade to content within, as they do for books.',
+    'convert_to_shelf_contents_desc' => 'Sie können dieses Buch in ein neues Regal mit dem gleichen Inhalt umwandeln. Kapitel in diesem Buch werden in neue Bücher umgewandelt. Wenn dieses Buch Seiten enthält, die nicht in einem Kapitel sind, wird dieses Buch entsprechend umbenannt und wird Teil des neuen Regals.',
+    'convert_to_shelf_permissions_desc' => 'Alle Berechtigungen dieses Buches werden in das neue Regal kopiert und in alle darin enthaltenen neuen Bücher, die keine eigenen Berechtigungen haben. Beachten Sie, dass die Berechtigungen für Regale nicht automatisch auf die enthaltenen Inhalte angewendet werden, wie es bei Büchern der Fall ist.',
     'convert_book' => 'Buch umwandeln',
     'convert_book_confirm' => 'Sind Sie sicher, dass Sie dieses Buch umwandeln möchten?',
     'convert_undo_warning' => 'Dies kann nicht so einfach rückgängig gemacht werden.',
     'convert_to_book' => 'In Buch umwandeln',
-    'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
+    'convert_to_book_desc' => 'Sie können dieses Kapitel zu einem neuen Buch mit dem gleichen Inhalt umwandeln. Alle Berechtigungen für dieses Kapitel werden in das neue Buch übernommen, aber alle vom ursprünglichen Buch vererbten Berechtigungen werden nicht übernommen, daher kann es zu Änderungen im Zugriff kommen.',
     'convert_chapter' => 'Kapitel umwandeln',
     'convert_chapter_confirm' => 'Sind Sie sicher, dass Sie dieses Kapitel umwandeln möchten?',
 ];
