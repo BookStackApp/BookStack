@@ -171,7 +171,7 @@ Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS all
          <?php $type++;$increment=$increment+(1/10);?>
          <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
-                <button style="height:5px" type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne{{$type}}">{{$increment.' '. $navItem['page_sub_title'] }}</button>									
+                <button style="height:5px" type="button" class="accordion-button collapsed " data-bs-toggle="collapse" data-bs-target="#collapseOne{{$type}}">{{$increment.' '. $navItem['page_sub_title'] }}</button>									
             </h2>
             <div id="collapseOne{{$type}}" class="accordion-collapse collapse" data-bs-parent="#myAccordion">
                 <div class="card-body">

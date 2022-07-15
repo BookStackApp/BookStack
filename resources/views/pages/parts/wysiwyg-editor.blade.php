@@ -39,7 +39,7 @@
         </a>
       </div>
     @foreach($pagedata as $page)
-    <input type="text" name="pagesid" id="sectionTitle" class="form-control" value="{{$page->id}}">
+    <input type="hidden" name="pagesid[]" id="sectionTitle" class="form-control" value="{{$page->id}}">
     <input type="hidden" name="edited" id="sectionTitle" class="form-control" value="edited">
 
     <div class="row fieldGroup">

@@ -231,13 +231,14 @@ class PageController extends Controller
      */
     public function update(Request $request, string $bookSlug, string $pageSlug)
     {
-        //dd($request->all());
+       // dd($request->all());
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
         ]);
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
         $pagedata=$this->pageRepo->update($page, $request->all());
+       
         if ($pagedata) {
             $subtitle=$request->sectionTitle1;
             $edited=$request->edited;
@@ -246,27 +247,29 @@ class PageController extends Controller
             $pagesid=$request->pagesid;
             $sectionContent=$request->sectionContent1;
             //dd($request->all());
-            if ($edited=='edited') {
+            if ($edited =='edited') {
                 # code...
+                //dd($pagedata);
                 for ($i=0; $i <count($subtitle) ; $i++) { 
                     if ($subtitle[$i]!=='' && $pagesid[$i]!==''){
                         PageContent_model::where('id',$pagesid[$i])->update(array('page_sub_title' =>$subtitle[$i],'page_description' => $sectionContent[$i]));
                     }
+                    
                 }
             }
             for ($i=0; $i <count($newcontenttitle) ; $i++) { 
-               
-                    $newpages=new PageContent_model();
-                    $newpages->page_id=$request->textfr;
-                if ($newcontent[$i]!==''){
-                    # code...
-                    $newpages->page_sub_title=$newcontenttitle[$i];
-                    $newpages->page_description=$newcontent[$i];
-                    //dd($subtitle,$sectionContent,$pages);
-                    $newpages->save();
-                } 
-               
-            }
+               // dd($newcontenttitle);
+            $newpages=new PageContent_model();
+            $newpages->page_id=$request->textfr;
+        if ($newcontent[$i]!==''){
+            # code...
+            $newpages->page_sub_title=$newcontenttitle[$i];
+            $newpages->page_description=$newcontent[$i];
+            //dd($subtitle,$sectionContent,$pages);
+            $newpages->save();
+        } 
+       
+    }
            
         }
         return redirect($page->getUrl());

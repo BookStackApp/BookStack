@@ -15,6 +15,8 @@ class AlterTablePageContentModelsChangePagecol extends Migration
     {
         Schema::table('page_content_models', function (Blueprint $table) {
             //
+            $table->longText('page_sub_title')->change();
+            $table->longText('page_description')->change();
         });
     }
 
@@ -27,8 +29,7 @@ class AlterTablePageContentModelsChangePagecol extends Migration
     {
         Schema::table('page_content_models', function (Blueprint $table) {
             //
-            $table->longText('page_sub_title')->change();
-            $table->longText('page_content_models')->change();
+            
         });
     }
 }
