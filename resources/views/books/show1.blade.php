@@ -3,7 +3,7 @@
 @section('body')
 @include('common/nci_custom_styles')
       <!-- <div class="container px-xl py-s">  -->
-      <div class="mb-s">
+      <div class="mb-s" style="margin-right:20;margin-left:20%;">
         @include('entities.breadcrumbs', ['crumbs' => [
             $book,
         ]])
@@ -120,12 +120,13 @@
       </div>
       </div>
       
-       footer start -->
+      
+
+</div>
+<!-- footer start -->
        @include('common/nci_footer')
       
        <!-- footer end  -->
-
-</div>
      <!-- </div>  -->
 
     

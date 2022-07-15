@@ -81,7 +81,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label"  for="designation">{{ trans('auth.designation') }}:</label>
                     <div class="col-sm-9">
-                    <select style="display: inline"class="form-select" id="inputGroupSelect01" name="designation">
+                    <select style="display: inline"class="form-select"  name="designation">
                     <option selected disabled>Choose...designation</option>
                     <option value="1">Admin</option>
                     <option value="2">Editor</option>
@@ -89,10 +89,11 @@
                 </select>
                     </div>
                 </div>
+               
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label"  for="designation">{{ trans('auth.county') }}:</label>
                     <div class="col-sm-9">
-                    <select class="form-control" id="inputGroupSelect01" name="country">
+                    <select style="display: inline"  name="country">
                     <option selected disabled>Choose...county</option>
                     @foreach ($countes as $county)
                     <option value="{{$county->id}}">{{$county->name}}</option>

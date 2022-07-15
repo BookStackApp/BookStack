@@ -42,6 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   position: relative;
   display: block;
+  margin-bottom: -10px;
   @include lightDark(color, #222, #BBB);
   .subheader {
     font-size: 0.5em;

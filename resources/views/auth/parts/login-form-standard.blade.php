@@ -32,7 +32,33 @@
 
 </form> -->
 
+<style>
+    @media screen and (max-width: 992px) {
+  .signup {
+    width: 100%;
+    margin-top: 0;
+  }
+}
 
+/* On screens that are 600px wide or less, the background color is olive */
+@media screen and (max-width: 600px) {
+  .signup-classic {
+    margin:5px;
+    width: 100%;
+    border: 13px solid #FBF4F4;
+  }
+  .signup-connect{
+    display: none;
+    width: 100%;
+  }
+}
+@media (min-width: 576px) {
+    .signup-classic {
+    margin:5px;
+    
+  }
+ }
+</style>
 <div class="signup row">
 <div class="signup-classic col-md-6" style="  border: 13px solid #FBF4F4;">
 <h1 class="list-heading">{{ Str::title(trans('auth.log_in')) }}</h1>

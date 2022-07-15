@@ -2,13 +2,14 @@
 
 @section('body')
 @include('common/nci_custom_styles')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <style>
 	/* Custom style */
     .accordion-button::after {
+        
       background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23333' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' d='M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z' clip-rule='evenodd'/%3e%3c/svg%3e");
-      transform: scale(.7) !important;
+      transform: scale(.8) !important;
+      float: left !important;
     }
     .accordion-button:not(.collapsed)::after {
       background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23333' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' d='M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z' clip-rule='evenodd'/%3e%3c/svg%3e");
@@ -16,9 +17,10 @@
     a, a:hover,a:visited, a:focus {
     text-decoration:none;
 }
-.card{
+.card {
     background-color: #FBF4F4;
     border: #FBF4F4;
+    display: none;
 }
 .accordion-button{
     background-color: #D9D9D9;
@@ -33,9 +35,15 @@
 </style>
 <div style="margin:5px">
           <!-- search for nci -->
-          @include('common/nci_search')
+          <div class="mb-m print-hidden" style="margin-right:20;margin-left:20%;">
+        @include('entities.breadcrumbs', ['crumbs' => [
+            $page->book,
+            $page->hasChapter() ? $page->chapter : null,
+            $page,
+        ]])
+    </div>
           <!-- end of search -->
-          <div class="m-4">
+          <!-- <div class="m-4"> -->
    
           <!-- start definition -->
           <!-- <div class="row mission" style="margin-top:40px;">
@@ -288,7 +296,7 @@ Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS all
     <!-- </div>
 </div> -->
 
-          </div>
+          <!-- </div> -->
 
           <!--  end Requirements for Establishing a Basic Cancer Management Center-->
           <!-- footer start -->
@@ -296,3 +304,5 @@ Essential Package of Health (KEPH).CSS stands for Cascading Style Sheet. CSS all
       <!-- footer end -->
 </div>
 @stop
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

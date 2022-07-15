@@ -107,6 +107,7 @@ text-align:center;
 }
 p,h4{
   font-size: 12px;
+  
 }
 }
 .card{
@@ -139,10 +140,14 @@ h6{
 .management{
     text-align:center;
 }
-.images{
-    width: 100%;
+.images {
+    /* width: 100%; */
     height: 195px;
-    /* object-fit: cover;  */
+    /* object-fit: cover; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* width: 50%; */
 }
 p{
   font-size: 12px;
@@ -154,7 +159,7 @@ input[type="radio"] {
 }
 .fa {
   padding: 10px;
-  font-size: 10px;
+  font-size: 20px;
   width: 10px;
   text-align: center;
   text-decoration: none;
@@ -184,8 +189,9 @@ input[type="radio"] {
   display:inline;
 }
 .social{
+  margin-top: 0%;
   background:white;
   border: 3px solid #FBF4F4;
-  height: 150px;
+  height: 180px;
 }
 </style>

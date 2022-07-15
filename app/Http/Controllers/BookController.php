@@ -45,11 +45,9 @@ class BookController extends Controller
         $recents = $this->isSignedIn() ? $this->bookRepo->getRecentlyViewed(4) : false;
         $popular = $this->bookRepo->getPopular(4);
         $new = $this->bookRepo->getRecentlyCreated(4);
-
         $this->entityContextManager->clearShelfContext();
-
         $this->setPageTitle(trans('entities.books'));
-        return view('books.index1', [
+        return view('books.index1',[
             'books'   => $books,
             'recents' => $recents,
             'popular' => $popular,
@@ -355,7 +353,7 @@ class BookController extends Controller
 
         if($request->has('q')){
             $search = $request->q;
-            $data =Counties_model::select("id","name")
+            $data =_model::select("id","name")
             		->where('name','LIKE',"%$search%")
             		->get();
         }

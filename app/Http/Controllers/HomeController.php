@@ -47,10 +47,10 @@ class HomeController extends Controller
 
         $books = $this->bookRepo->getAllPaginated(18, $sort, $order);
         //$books = $this->bookRepo->getAllPaginated(18, $sort, $order);
-        foreach ($books as $book) {
+        // foreach ($books as $book) {
             
-            $books = (new BookContents($book))->getTree(true);
-        }
+        //     $books = (new BookContents($book))->getTree(true);
+        // }
         $recents = $this->isSignedIn() ? $this->bookRepo->getRecentlyViewed(4) : false;
         $popular = $this->bookRepo->getPopular(4);
         $new = $this->bookRepo->getRecentlyCreated(4);
@@ -68,7 +68,15 @@ class HomeController extends Controller
         //     'sort'    => $sort,
         //     'order'   => $order,
         // ]);
-        return view('home.default',compact('books'));
+        return view('home.default',[
+            'books'   => $books,
+            'recents' => $recents,
+            'popular' => $popular,
+            'new'     => $new,
+            'view'    => $view,
+            'sort'    => $sort,
+            'order'   => $order,
+        ]);
     }
 
     /**

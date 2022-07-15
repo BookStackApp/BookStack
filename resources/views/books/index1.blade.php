@@ -27,7 +27,7 @@
            </div>
            @endforeach
       </div>
-      <div class="col-md-2" style="background-color: #FBF4F4;">
+      <div class="col-md-2" style="background-color: #FBF 4F4;">
       <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-primary">
@@ -48,12 +48,13 @@
     </div>
       </div>
       </div>
-       <!-- footer start -->
-       @include('common/nci_footer')
-      
-       <!-- footer end  -->
+       
 
 </div>
+<!-- footer start -->
+@include('common/nci_footer')
+      
+      <!-- footer end  -->
      <!-- </div>  -->
 
     

@@ -251,6 +251,8 @@ class PageController extends Controller
                 for ($i=0; $i <count($subtitle) ; $i++) { 
                     if ($subtitle[$i]!=='' && $pagesid[$i]!==''){
                         PageContent_model::where('id',$pagesid[$i])->update(array('page_sub_title' =>$subtitle[$i],'page_description' => $sectionContent[$i]));
+                    }else{
+                        
                     }
                 }
             }

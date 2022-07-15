@@ -87,7 +87,7 @@ class RegisterController extends Controller
     {
         $this->registrationService->ensureRegistrationAllowed();
         $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        $data =DB::table('counties')->select("id","name")
+        $data =DB::table('counties_models')->select("id","name")
             		->get();
         return view('auth.register', [
             'socialDrivers' => $socialDrivers,

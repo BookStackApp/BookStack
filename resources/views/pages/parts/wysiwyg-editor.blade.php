@@ -34,7 +34,7 @@
     
     @if(count($pagedata) > 0)
     <div class="col-md-2" style="float: right;margin-bottom:-30px">
-        <a href="javascript:void(0)" class="btn btn-success addMore">
+        <a href="javascript:void(0)" class="btn  addMore" style="background-color: #D820C5">
           <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Add Content
         </a>
       </div>
@@ -85,7 +85,7 @@
         </div>
       </div>
       <div class="col-md-2  ">
-        <a href="javascript:void(0)" class="btn btn-success addMore">
+        <a href="javascript:void(0)" class="btn addMore" style="background-color: #D820C5">
           <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Add Content
         </a>
       </div>
