@@ -13,6 +13,7 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 class Cloner
 {
@@ -38,19 +39,8 @@ class Cloner
         $copyPage = $this->pageRepo->getNewDraftPage($parent);
         $pageData = $this->entityToInputData($original);
 
-        // TODO do a thorough check to figure out if it makes sense to try to update the links
-        // we need to make sure we're not doing stupid things and generate wrong links that leads to nowhere
         if ($updateLinks) {
-            // todo search for relevant links in the html attribute content and replace with newer links
-            // search links using $oldParent and replace using $parent
-            $link = $oldParent->getUrl();
-            // if it has chapter in the url get rid of it
-
-            preg_match_all("$link", $original->html, $matched);
-
-            foreach ($matched as $match) {
-                var_dump($match);
-            }
+            $this->updateLinks($pageData['html'], $oldParent->getUrl(), $parent->getUrl());
         }
 
         // Update name & tags
@@ -73,6 +63,8 @@ class Cloner
         if (userCan('page-create', $copyChapter)) {
             /** @var Page $page */
             foreach ($original->getVisiblePages() as $page) {
+                // we should inform cloneChapter here if this page has links that needs to be updated
+                // If pages are not visible to the user we should not update the links since the target page won't be cloned
                 $this->clonePage($page, $copyChapter, $page->name, true, $original);
             }
         }
@@ -163,5 +155,33 @@ class Cloner
         }
 
         return $tags;
+    }
+
+    private function updateLinks(string &$html, string $parentLink, string $newParentLink)
+    {
+        // Do a quick check to see if we have some candidates that needs to be updated
+        if (!Str::contains($html, "href=\"$parentLink")) {
+            return;
+        }
+
+        // At this point we have candidates to update
+        // Find all the slugs that needs to be updated?
+        // if this is a simple link to update, e.g. link to parent only we will update the html here
+        // if this is more "complex" links, that is links to other pages, we don't have the informations here
+        // about the new links (because we need the new page slugs). So we'll just return the slugs that needs to be
+        // updated
+        //! We should take care to not consider pages that are not visible 
+
+
+
+        // todo search for relevant links in the html attribute content and replace with newer links
+        // search links using $oldParent and replace using $parent
+        // if it has chapter in the url get rid of it
+
+        preg_match_all("$link", $original->html, $matched);
+
+        foreach ($matched as $match) {
+            var_dump($match);
+        }
     }
 }
