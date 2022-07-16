@@ -148,7 +148,7 @@
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
-            @if(userCanOnAny('page-create'))
+            @if(userCanOnAny('create', \BookStack\Entities\Models\Book::class) || userCanOnAny('create', \BookStack\Entities\Models\Chapter::class) || userCan('page-create-all') || userCan('page-create-own'))
                 <a href="{{ $page->getUrl('/copy') }}" class="icon-list-item">
                     <span>@icon('copy')</span>
                     <span>{{ trans('common.copy') }}</span>

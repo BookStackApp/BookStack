@@ -11,37 +11,10 @@ use BookStack\Traits\HasCreatorAndUpdater;
 use BookStack\Traits\HasOwner;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use InvalidArgumentException;
 
 class PermissionApplicator
 {
-    /**
-     * @var ?array<int>
-     */
-    protected $userRoles = null;
-
-    /**
-     * @var ?User
-     */
-    protected $currentUserModel = null;
-
-    /**
-     * Get the roles for the current logged in user.
-     */
-    protected function getCurrentUserRoles(): array
-    {
-        if (!is_null($this->userRoles)) {
-            return $this->userRoles;
-        }
-
-        if (auth()->guest()) {
-            $this->userRoles = [Role::getSystemRole('public')->id];
-        } else {
-            $this->userRoles = $this->currentUser()->roles->pluck('id')->values()->all();
-        }
-
-        return $this->userRoles;
-    }
-
     /**
      * Checks if an entity has a restriction set upon it.
      *
@@ -74,7 +47,6 @@ class PermissionApplicator
 
         // TODO - Use a non-query based check
         $hasAccess = $this->entityRestrictionQuery($baseQuery, $action)->count() > 0;
-        $this->clean();
 
         return $hasAccess;
     }
@@ -83,25 +55,23 @@ class PermissionApplicator
      * Checks if a user has the given permission for any items in the system.
      * Can be passed an entity instance to filter on a specific type.
      */
-    public function checkUserHasPermissionOnAnything(string $permission, ?string $entityClass = null): bool
+    public function checkUserHasEntityPermissionOnAny(string $action, string $entityClass = ''): bool
     {
-        $userRoleIds = $this->currentUser()->roles()->select('id')->pluck('id')->toArray();
-        $userId = $this->currentUser()->id;
+        if (strpos($action, '-') !== false) {
+            throw new InvalidArgumentException("Action should be a simple entity permission action, not a role permission");
+        }
 
-        $permissionQuery = JointPermission::query()
-            ->where('action', '=', $permission)
-            ->whereIn('role_id', $userRoleIds)
-            ->where(function (Builder $query) use ($userId) {
-                $this->addJointHasPermissionCheck($query, $userId);
-            });
+        $permissionQuery = EntityPermission::query()
+            ->where('action', '=', $action)
+            ->whereIn('role_id', $this->getCurrentUserRoleIds());
 
-        if (!is_null($entityClass)) {
-            $entityInstance = app($entityClass);
-            $permissionQuery = $permissionQuery->where('entity_type', '=', $entityInstance->getMorphClass());
+        if (!empty($entityClass)) {
+            /** @var Entity $entityInstance */
+            $entityInstance = app()->make($entityClass);
+            $permissionQuery = $permissionQuery->where('restrictable_type', '=', $entityInstance->getMorphClass());
         }
 
         $hasPermission = $permissionQuery->count() > 0;
-        $this->clean();
 
         return $hasPermission;
     }
@@ -114,7 +84,8 @@ class PermissionApplicator
     {
         $q = $query->where(function ($parentQuery) use ($action) {
             $parentQuery->whereHas('jointPermissions', function ($permissionQuery) use ($action) {
-                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoles())
+                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
+                    // TODO - Delete line once only views
                     ->where('action', '=', $action)
                     ->where(function (Builder $query) {
                         $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
@@ -122,23 +93,20 @@ class PermissionApplicator
             });
         });
 
-        $this->clean();
-
         return $q;
     }
 
     /**
      * Limited the given entity query so that the query will only
-     * return items that the user has permission for the given ability.
+     * return items that the user has view permission for.
      */
-    public function restrictEntityQuery(Builder $query, string $ability = 'view'): Builder
+    public function restrictEntityQuery(Builder $query): Builder
     {
-        $this->clean();
-
-        return $query->where(function (Builder $parentQuery) use ($ability) {
-            $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) use ($ability) {
-                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoles())
-                    ->where('action', '=', $ability)
+        return $query->where(function (Builder $parentQuery) {
+            $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
+                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
+                    // TODO - Delete line once only views
+                    ->where('action', '=', 'view')
                     ->where(function (Builder $query) {
                         $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                     });
@@ -181,18 +149,18 @@ class PermissionApplicator
      *
      * @param Builder|QueryBuilder $query
      */
-    public function filterRestrictedEntityRelations($query, string $tableName, string $entityIdColumn, string $entityTypeColumn, string $action = 'view')
+    public function filterRestrictedEntityRelations($query, string $tableName, string $entityIdColumn, string $entityTypeColumn)
     {
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
         $pageMorphClass = (new Page())->getMorphClass();
 
-        $q = $query->whereExists(function ($permissionQuery) use (&$tableDetails, $action) {
+        $q = $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
             /** @var Builder $permissionQuery */
             $permissionQuery->select(['role_id'])->from('joint_permissions')
                 ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                 ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
-                ->where('joint_permissions.action', '=', $action)
-                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoles())
+                ->where('joint_permissions.action', '=', 'view')
+                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
                 ->where(function (QueryBuilder $query) {
                     $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                 });
@@ -206,8 +174,6 @@ class PermissionApplicator
                         ->where('pages.draft', '=', false);
                 });
         });
-
-        $this->clean();
 
         return $q;
     }
@@ -228,7 +194,7 @@ class PermissionApplicator
                 ->whereColumn('joint_permissions.entity_id', '=', $fullEntityIdColumn)
                 ->where('joint_permissions.entity_type', '=', $morphClass)
                 ->where('joint_permissions.action', '=', 'view')
-                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoles())
+                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
                 ->where(function (QueryBuilder $query) {
                     $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                 });
@@ -251,8 +217,6 @@ class PermissionApplicator
             });
         }
 
-        $this->clean();
-
         return $q;
     }
 
@@ -273,21 +237,22 @@ class PermissionApplicator
     /**
      * Get the current user.
      */
-    private function currentUser(): User
+    protected function currentUser(): User
     {
-        if (is_null($this->currentUserModel)) {
-            $this->currentUserModel = user();
-        }
-
-        return $this->currentUserModel;
+        return user();
     }
 
     /**
-     * Clean the cached user elements.
+     * Get the roles for the current logged-in user.
+     *
+     * @return int[]
      */
-    private function clean(): void
+    protected function getCurrentUserRoleIds(): array
     {
-        $this->currentUserModel = null;
-        $this->userRoles = null;
+        if (auth()->guest()) {
+            return [Role::getSystemRole('public')->id];
+        }
+
+        return $this->currentUser()->roles->pluck('id')->values()->all();
     }
 }

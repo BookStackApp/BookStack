@@ -44,7 +44,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Collection $tags
  *
  * @method static Entity|Builder visible()
- * @method static Entity|Builder hasPermission(string $permission)
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
@@ -69,15 +68,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function scopeVisible(Builder $query): Builder
     {
-        return $this->scopeHasPermission($query, 'view');
-    }
-
-    /**
-     * Scope the query to those entities that the current user has the given permission for.
-     */
-    public function scopeHasPermission(Builder $query, string $permission)
-    {
-        return app()->make(PermissionApplicator::class)->restrictEntityQuery($query, $permission);
+        return app()->make(PermissionApplicator::class)->restrictEntityQuery($query);
     }
 
     /**

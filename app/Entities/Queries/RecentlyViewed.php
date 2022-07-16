@@ -18,8 +18,7 @@ class RecentlyViewed extends EntityQuery
             View::query(),
             'views',
             'viewable_id',
-            'viewable_type',
-            'view'
+            'viewable_type'
         )
             ->orderBy('views.updated_at', 'desc')
             ->where('user_id', '=', user()->id);
