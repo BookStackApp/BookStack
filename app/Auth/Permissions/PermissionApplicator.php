@@ -4,6 +4,7 @@ namespace BookStack\Auth\Permissions;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
@@ -23,32 +24,59 @@ class PermissionApplicator
     public function checkOwnableUserAccess(Model $ownable, string $permission): bool
     {
         $explodedPermission = explode('-', $permission);
-
-        $baseQuery = $ownable->newQuery()->where('id', '=', $ownable->id);
-        $action = end($explodedPermission);
+        $action = $explodedPermission[1] ?? $explodedPermission[0];
         $user = $this->currentUser();
+        $userRoleIds = $this->getCurrentUserRoleIds();
 
+        $allRolePermission = $user->can($permission . '-all');
+        $ownRolePermission = $user->can($permission . '-own');
         $nonJointPermissions = ['restrictions', 'image', 'attachment', 'comment'];
+        $ownerField = ($ownable instanceof Entity) ? 'owned_by' : 'created_by';
+        $isOwner = $user->id === $ownable->getAttribute($ownerField);
+        $hasRolePermission = $allRolePermission || ($isOwner && $ownRolePermission);
 
         // Handle non entity specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {
-            $allPermission = $user && $user->can($permission . '-all');
-            $ownPermission = $user && $user->can($permission . '-own');
-            $ownerField = ($ownable instanceof Entity) ? 'owned_by' : 'created_by';
-            $isOwner = $user && $user->id === $ownable->$ownerField;
-
-            return $allPermission || ($isOwner && $ownPermission);
+            return $hasRolePermission;
         }
 
-        // Handle abnormal create jointPermissions
-        if ($action === 'create') {
-            $action = $permission;
+        $entityPermissions = $this->getApplicableEntityPermissions($ownable, $userRoleIds, $action);
+        if (is_null($entityPermissions)) {
+            return $hasRolePermission;
         }
 
-        // TODO - Use a non-query based check
-        $hasAccess = $this->entityRestrictionQuery($baseQuery, $action)->count() > 0;
+        return count($entityPermissions) > 0;
+    }
 
-        return $hasAccess;
+    /**
+     * Get the permissions that are applicable for the given entity item.
+     * Returns null when no entity permissions apply otherwise entity permissions
+     * are active, even if the returned array is empty.
+     *
+     * @returns EntityPermission[]
+     */
+    protected function getApplicableEntityPermissions(Entity $entity, array $userRoleIds, string $action): ?array
+    {
+        $chain = [$entity];
+        if ($entity instanceof Page && $entity->chapter_id) {
+            $chain[] = $entity->chapter;
+        }
+
+        if ($entity instanceof Page || $entity instanceof Chapter) {
+            $chain[] = $entity->book;
+        }
+
+        foreach ($chain as $currentEntity) {
+            if ($currentEntity->restricted) {
+                return $currentEntity->permissions()
+                    ->whereIn('role_id', $userRoleIds)
+                    ->where('action', '=', $action)
+                    ->get()
+                    ->all();
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -74,26 +102,6 @@ class PermissionApplicator
         $hasPermission = $permissionQuery->count() > 0;
 
         return $hasPermission;
-    }
-
-    /**
-     * The general query filter to remove all entities
-     * that the current user does not have access to.
-     */
-    protected function entityRestrictionQuery(Builder $query, string $action): Builder
-    {
-        $q = $query->where(function ($parentQuery) use ($action) {
-            $parentQuery->whereHas('jointPermissions', function ($permissionQuery) use ($action) {
-                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
-                    // TODO - Delete line once only views
-                    ->where('action', '=', $action)
-                    ->where(function (Builder $query) {
-                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                    });
-            });
-        });
-
-        return $q;
     }
 
     /**
@@ -139,7 +147,27 @@ class PermissionApplicator
             $this->enforceDraftVisibilityOnQuery($query);
         }
 
-        return $this->entityRestrictionQuery($query, 'view');
+        return $this->entityRestrictionQuery($query);
+    }
+
+    /**
+     * The general query filter to remove all entities
+     * that the current user does not have access to.
+     */
+    protected function entityRestrictionQuery(Builder $query): Builder
+    {
+        $q = $query->where(function ($parentQuery) {
+            $parentQuery->whereHas('jointPermissions', function ($permissionQuery) {
+                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
+                    // TODO - Delete line once only views
+                    ->where('action', '=', 'view')
+                    ->where(function (Builder $query) {
+                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
+                    });
+            });
+        });
+
+        return $q;
     }
 
     /**
