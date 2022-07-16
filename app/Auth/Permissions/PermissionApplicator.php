@@ -105,7 +105,7 @@ class PermissionApplicator
     }
 
     /**
-     * Limited the given entity query so that the query will only
+     * Limit the given entity query so that the query will only
      * return items that the user has view permission for.
      */
     public function restrictEntityQuery(Builder $query): Builder
@@ -126,7 +126,7 @@ class PermissionApplicator
      * Extend the given page query to ensure draft items are not visible
      * unless created by the given user.
      */
-    public function enforceDraftVisibilityOnQuery(Builder $query): Builder
+    public function restrictDraftsOnPageQuery(Builder $query): Builder
     {
         return $query->where(function (Builder $query) {
             $query->where('draft', '=', false)
@@ -138,46 +138,13 @@ class PermissionApplicator
     }
 
     /**
-     * Add restrictions for a generic entity.
-     */
-    public function enforceEntityRestrictions(Entity $entity, Builder $query): Builder
-    {
-        if ($entity instanceof Page) {
-            // Prevent drafts being visible to others.
-            $this->enforceDraftVisibilityOnQuery($query);
-        }
-
-        return $this->entityRestrictionQuery($query);
-    }
-
-    /**
-     * The general query filter to remove all entities
-     * that the current user does not have access to.
-     */
-    protected function entityRestrictionQuery(Builder $query): Builder
-    {
-        $q = $query->where(function ($parentQuery) {
-            $parentQuery->whereHas('jointPermissions', function ($permissionQuery) {
-                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
-                    // TODO - Delete line once only views
-                    ->where('action', '=', 'view')
-                    ->where(function (Builder $query) {
-                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                    });
-            });
-        });
-
-        return $q;
-    }
-
-    /**
      * Filter items that have entities set as a polymorphic relation.
      * For simplicity, this will not return results attached to draft pages.
      * Draft pages should never really have related items though.
      *
      * @param Builder|QueryBuilder $query
      */
-    public function filterRestrictedEntityRelations($query, string $tableName, string $entityIdColumn, string $entityTypeColumn)
+    public function restrictEntityRelationQuery($query, string $tableName, string $entityIdColumn, string $entityTypeColumn)
     {
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
         $pageMorphClass = (new Page())->getMorphClass();
@@ -207,19 +174,20 @@ class PermissionApplicator
     }
 
     /**
-     * Add conditions to a query to filter the selection to related entities
-     * where view permissions are granted.
+     * Add conditions to a query for a model that's a relation of a page, so only the model results
+     * on visible pages are returned by the query.
+     * Is effectively the same as "restrictEntityRelationQuery" but takes into account page drafts
+     * while not expecting a polymorphic relation, Just a simpler one-page-to-many-relations set-up.
      */
-    public function filterRelatedEntity(string $entityClass, Builder $query, string $tableName, string $entityIdColumn): Builder
+    public function restrictPageRelationQuery(Builder $query, string $tableName, string $pageIdColumn): Builder
     {
-        $fullEntityIdColumn = $tableName . '.' . $entityIdColumn;
-        $instance = new $entityClass();
-        $morphClass = $instance->getMorphClass();
+        $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
+        $morphClass = (new Page())->getMorphClass();
 
-        $existsQuery = function ($permissionQuery) use ($fullEntityIdColumn, $morphClass) {
+        $existsQuery = function ($permissionQuery) use ($fullPageIdColumn, $morphClass) {
             /** @var Builder $permissionQuery */
             $permissionQuery->select('joint_permissions.role_id')->from('joint_permissions')
-                ->whereColumn('joint_permissions.entity_id', '=', $fullEntityIdColumn)
+                ->whereColumn('joint_permissions.entity_id', '=', $fullPageIdColumn)
                 ->where('joint_permissions.entity_type', '=', $morphClass)
                 ->where('joint_permissions.action', '=', 'view')
                 ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
@@ -228,22 +196,20 @@ class PermissionApplicator
                 });
         };
 
-        $q = $query->where(function ($query) use ($existsQuery, $fullEntityIdColumn) {
+        $q = $query->where(function ($query) use ($existsQuery, $fullPageIdColumn) {
             $query->whereExists($existsQuery)
-                ->orWhere($fullEntityIdColumn, '=', 0);
+                ->orWhere($fullPageIdColumn, '=', 0);
         });
 
-        if ($instance instanceof Page) {
-            // Prevent visibility of non-owned draft pages
-            $q->whereExists(function (QueryBuilder $query) use ($fullEntityIdColumn) {
-                $query->select('id')->from('pages')
-                    ->whereColumn('pages.id', '=', $fullEntityIdColumn)
-                    ->where(function (QueryBuilder $query) {
-                        $query->where('pages.draft', '=', false)
-                            ->orWhere('pages.owned_by', '=', $this->currentUser()->id);
-                    });
-            });
-        }
+        // Prevent visibility of non-owned draft pages
+        $q->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
+            $query->select('id')->from('pages')
+                ->whereColumn('pages.id', '=', $fullPageIdColumn)
+                ->where(function (QueryBuilder $query) {
+                    $query->where('pages.draft', '=', false)
+                        ->orWhere('pages.owned_by', '=', $this->currentUser()->id);
+                });
+        });
 
         return $q;
     }

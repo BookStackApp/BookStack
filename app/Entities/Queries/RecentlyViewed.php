@@ -14,7 +14,7 @@ class RecentlyViewed extends EntityQuery
             return collect();
         }
 
-        $query = $this->permissionService()->filterRestrictedEntityRelations(
+        $query = $this->permissionService()->restrictEntityRelationQuery(
             View::query(),
             'views',
             'viewable_id',
