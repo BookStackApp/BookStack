@@ -161,7 +161,7 @@ class SearchRunner
      */
     protected function buildQuery(SearchOptions $searchOpts, Entity $entityModelInstance): EloquentBuilder
     {
-        $entityQuery = $entityModelInstance->newQuery();
+        $entityQuery = $entityModelInstance->newQuery()->scopes('visible');
 
         if ($entityModelInstance instanceof Page) {
             $entityQuery->select($entityModelInstance::$listAttributes);
@@ -193,7 +193,7 @@ class SearchRunner
             }
         }
 
-        return $this->permissions->enforceEntityRestrictions($entityModelInstance, $entityQuery);
+        return $entityQuery;
     }
 
     /**

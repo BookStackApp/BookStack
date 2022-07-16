@@ -26,7 +26,7 @@ class ActivityQueries
     public function latest(int $count = 20, int $page = 0): array
     {
         $activityList = $this->permissions
-            ->filterRestrictedEntityRelations(Activity::query(), 'activities', 'entity_id', 'entity_type')
+            ->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->with(['user', 'entity'])
             ->skip($count * $page)
@@ -79,7 +79,7 @@ class ActivityQueries
     public function userActivity(User $user, int $count = 20, int $page = 0): array
     {
         $activityList = $this->permissions
-            ->filterRestrictedEntityRelations(Activity::query(), 'activities', 'entity_id', 'entity_type')
+            ->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->where('user_id', '=', $user->id)
             ->skip($count * $page)

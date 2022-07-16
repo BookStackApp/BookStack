@@ -91,8 +91,7 @@ class Attachment extends Model
     {
         $permissions = app()->make(PermissionApplicator::class);
 
-        return $permissions->filterRelatedEntity(
-            Page::class,
+        return $permissions->restrictPageRelationQuery(
             self::query(),
             'attachments',
             'uploaded_to'

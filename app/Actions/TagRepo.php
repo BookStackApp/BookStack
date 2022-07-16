@@ -50,7 +50,7 @@ class TagRepo
             });
         }
 
-        return $this->permissions->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+        return $this->permissions->restrictEntityRelationQuery($query, 'tags', 'entity_id', 'entity_type');
     }
 
     /**
@@ -69,7 +69,7 @@ class TagRepo
             $query = $query->orderBy('count', 'desc')->take(50);
         }
 
-        $query = $this->permissions->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+        $query = $this->permissions->restrictEntityRelationQuery($query, 'tags', 'entity_id', 'entity_type');
 
         return $query->get(['name'])->pluck('name');
     }
@@ -95,7 +95,7 @@ class TagRepo
             $query = $query->where('name', '=', $tagName);
         }
 
-        $query = $this->permissions->filterRestrictedEntityRelations($query, 'tags', 'entity_id', 'entity_type');
+        $query = $this->permissions->restrictEntityRelationQuery($query, 'tags', 'entity_id', 'entity_type');
 
         return $query->get(['value'])->pluck('value');
     }

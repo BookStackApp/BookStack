@@ -51,7 +51,7 @@ class Page extends BookChild
      */
     public function scopeVisible(Builder $query): Builder
     {
-        $query = app()->make(PermissionApplicator::class)->enforceDraftVisibilityOnQuery($query);
+        $query = app()->make(PermissionApplicator::class)->restrictDraftsOnPageQuery($query);
 
         return parent::scopeVisible($query);
     }
