@@ -25,11 +25,13 @@ class PermissionApplicator
     {
         $explodedPermission = explode('-', $permission);
         $action = $explodedPermission[1] ?? $explodedPermission[0];
+        $fullPermission = count($explodedPermission) > 1 ? $permission : $ownable->getMorphClass() . '-' . $permission;
+
         $user = $this->currentUser();
         $userRoleIds = $this->getCurrentUserRoleIds();
 
-        $allRolePermission = $user->can($permission . '-all');
-        $ownRolePermission = $user->can($permission . '-own');
+        $allRolePermission = $user->can($fullPermission . '-all');
+        $ownRolePermission = $user->can($fullPermission . '-own');
         $nonJointPermissions = ['restrictions', 'image', 'attachment', 'comment'];
         $ownerField = ($ownable instanceof Entity) ? 'owned_by' : 'created_by';
         $isOwner = $user->id === $ownable->getAttribute($ownerField);
@@ -40,23 +42,22 @@ class PermissionApplicator
             return $hasRolePermission;
         }
 
-        $entityPermissions = $this->getApplicableEntityPermissions($ownable, $userRoleIds, $action);
-        if (is_null($entityPermissions)) {
-            return $hasRolePermission;
-        }
+        $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $userRoleIds, $action);
 
-        return count($entityPermissions) > 0;
+        return is_null($hasApplicableEntityPermissions) ? $hasRolePermission : $hasApplicableEntityPermissions;
     }
 
     /**
-     * Get the permissions that are applicable for the given entity item.
-     * Returns null when no entity permissions apply otherwise entity permissions
-     * are active, even if the returned array is empty.
-     *
-     * @returns EntityPermission[]
+     * Check if there are permissions that are applicable for the given entity item, action and roles.
+     * Returns null when no entity permissions are in force.
      */
-    protected function getApplicableEntityPermissions(Entity $entity, array $userRoleIds, string $action): ?array
+    protected function hasEntityPermission(Entity $entity, array $userRoleIds, string $action): ?bool
     {
+        $adminRoleId = Role::getSystemRole('admin')->id;
+        if (in_array($adminRoleId, $userRoleIds)) {
+            return true;
+        }
+
         $chain = [$entity];
         if ($entity instanceof Page && $entity->chapter_id) {
             $chain[] = $entity->chapter;
@@ -71,8 +72,7 @@ class PermissionApplicator
                 return $currentEntity->permissions()
                     ->whereIn('role_id', $userRoleIds)
                     ->where('action', '=', $action)
-                    ->get()
-                    ->all();
+                    ->count() > 0;
             }
         }
 

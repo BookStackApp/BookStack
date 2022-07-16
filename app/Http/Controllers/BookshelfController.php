@@ -104,7 +104,7 @@ class BookshelfController extends Controller
     public function show(ActivityQueries $activities, string $slug)
     {
         $shelf = $this->bookshelfRepo->getBySlug($slug);
-        $this->checkOwnablePermission('book-view', $shelf);
+        $this->checkOwnablePermission('bookshelf-view', $shelf);
 
         $sort = setting()->getForCurrentUser('shelf_books_sort', 'default');
         $order = setting()->getForCurrentUser('shelf_books_sort_order', 'asc');
