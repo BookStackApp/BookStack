@@ -113,8 +113,6 @@ class PermissionApplicator
         return $query->where(function (Builder $parentQuery) {
             $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
                 $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
-                    // TODO - Delete line once only views
-                    ->where('action', '=', 'view')
                     ->where(function (Builder $query) {
                         $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                     });
@@ -154,7 +152,6 @@ class PermissionApplicator
             $permissionQuery->select(['role_id'])->from('joint_permissions')
                 ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                 ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
-                ->where('joint_permissions.action', '=', 'view')
                 ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
                 ->where(function (QueryBuilder $query) {
                     $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
@@ -189,7 +186,6 @@ class PermissionApplicator
             $permissionQuery->select('joint_permissions.role_id')->from('joint_permissions')
                 ->whereColumn('joint_permissions.entity_id', '=', $fullPageIdColumn)
                 ->where('joint_permissions.entity_type', '=', $morphClass)
-                ->where('joint_permissions.action', '=', 'view')
                 ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
                 ->where(function (QueryBuilder $query) {
                     $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
