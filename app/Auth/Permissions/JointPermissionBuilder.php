@@ -13,6 +13,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Joint permissions provide a pre-query "cached" table of view permissions for all core entity
+ * types for all roles in the system. This class generates out that table for different scenarios.
+ */
 class JointPermissionBuilder
 {
     /**
@@ -80,6 +84,7 @@ class JointPermissionBuilder
     {
         $roles = [$role];
         $role->jointPermissions()->delete();
+        $role->load('permissions');
 
         // Chunk through all books
         $this->bookFetchQuery()->chunk(20, function ($books) use ($roles) {
@@ -247,7 +252,7 @@ class JointPermissionBuilder
         // Create a mapping of explicit entity permissions
         $permissionMap = [];
         foreach ($permissions as $permission) {
-            $key = $permission->restrictable_type . ':' . $permission->restrictable_id . ':' . $permission->role_id . ':' . $permission->action;
+            $key = $permission->restrictable_type . ':' . $permission->restrictable_id . ':' . $permission->role_id;
             $isRestricted = $entityRestrictedMap[$permission->restrictable_type . ':' . $permission->restrictable_id];
             $permissionMap[$key] = $isRestricted;
         }
@@ -263,16 +268,13 @@ class JointPermissionBuilder
         // Create Joint Permission Data
         foreach ($entities as $entity) {
             foreach ($roles as $role) {
-                foreach ($this->getActions($entity) as $action) {
-                    $jointPermissions[] = $this->createJointPermissionData(
-                        $entity,
-                        $role->getRawAttribute('id'),
-                        $action,
-                        $permissionMap,
-                        $rolePermissionMap,
-                        $role->system_name === 'admin'
-                    );
-                }
+                $jointPermissions[] = $this->createJointPermissionData(
+                    $entity,
+                    $role->getRawAttribute('id'),
+                    $permissionMap,
+                    $rolePermissionMap,
+                    $role->system_name === 'admin'
+                );
             }
         }
 
@@ -312,64 +314,46 @@ class JointPermissionBuilder
     protected function getEntityPermissionsForEntities(array $entities): array
     {
         $idsByType = $this->entitiesToTypeIdMap($entities);
-        $permissionFetch = EntityPermission::query();
-
-        foreach ($idsByType as $type => $ids) {
-            $permissionFetch->orWhere(function (Builder $query) use ($type, $ids) {
-                $query->where('restrictable_type', '=', $type)->whereIn('restrictable_id', $ids);
+        $permissionFetch = EntityPermission::query()
+            ->where('action', '=', 'view')
+            ->where(function(Builder $query) use ($idsByType) {
+                foreach ($idsByType as $type => $ids) {
+                    $query->orWhere(function (Builder $query) use ($type, $ids) {
+                        $query->where('restrictable_type', '=', $type)->whereIn('restrictable_id', $ids);
+                    });
+                }
             });
-        }
 
         return $permissionFetch->get()->all();
-    }
-
-    /**
-     * Get the actions related to an entity.
-     */
-    protected function getActions(SimpleEntityData $entity): array
-    {
-        $baseActions = ['view', 'update', 'delete'];
-
-        if ($entity->type === 'chapter' || $entity->type === 'book') {
-            $baseActions[] = 'page-create';
-        }
-
-        if ($entity->type === 'book') {
-            $baseActions[] = 'chapter-create';
-        }
-
-        return $baseActions;
     }
 
     /**
      * Create entity permission data for an entity and role
      * for a particular action.
      */
-    protected function createJointPermissionData(SimpleEntityData $entity, int $roleId, string $action, array $permissionMap, array $rolePermissionMap, bool $isAdminRole): array
+    protected function createJointPermissionData(SimpleEntityData $entity, int $roleId, array $permissionMap, array $rolePermissionMap, bool $isAdminRole): array
     {
-        $permissionPrefix = (strpos($action, '-') === false ? ($entity->type . '-') : '') . $action;
+        $permissionPrefix = $entity->type . '-view';
         $roleHasPermission = isset($rolePermissionMap[$roleId . ':' . $permissionPrefix . '-all']);
         $roleHasPermissionOwn = isset($rolePermissionMap[$roleId . ':' . $permissionPrefix . '-own']);
-        $explodedAction = explode('-', $action);
-        $restrictionAction = end($explodedAction);
 
         if ($isAdminRole) {
-            return $this->createJointPermissionDataArray($entity, $roleId, $action, true, true);
+            return $this->createJointPermissionDataArray($entity, $roleId, true, true);
         }
 
         if ($entity->restricted) {
-            $hasAccess = $this->mapHasActiveRestriction($permissionMap, $entity, $roleId, $restrictionAction);
+            $hasAccess = $this->mapHasActiveRestriction($permissionMap, $entity, $roleId);
 
-            return $this->createJointPermissionDataArray($entity, $roleId, $action, $hasAccess, $hasAccess);
+            return $this->createJointPermissionDataArray($entity, $roleId, $hasAccess, $hasAccess);
         }
 
         if ($entity->type === 'book' || $entity->type === 'bookshelf') {
-            return $this->createJointPermissionDataArray($entity, $roleId, $action, $roleHasPermission, $roleHasPermissionOwn);
+            return $this->createJointPermissionDataArray($entity, $roleId, $roleHasPermission, $roleHasPermissionOwn);
         }
 
         // For chapters and pages, Check if explicit permissions are set on the Book.
         $book = $this->getBook($entity->book_id);
-        $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $book, $roleId, $restrictionAction);
+        $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $book, $roleId);
         $hasPermissiveAccessToParents = !$book->restricted;
 
         // For pages with a chapter, Check if explicit permissions are set on the Chapter
@@ -377,14 +361,13 @@ class JointPermissionBuilder
             $chapter = $this->getChapter($entity->chapter_id);
             $hasPermissiveAccessToParents = $hasPermissiveAccessToParents && !$chapter->restricted;
             if ($chapter->restricted) {
-                $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $chapter, $roleId, $restrictionAction);
+                $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $chapter, $roleId);
             }
         }
 
         return $this->createJointPermissionDataArray(
             $entity,
             $roleId,
-            $action,
             ($hasExplicitAccessToParents || ($roleHasPermission && $hasPermissiveAccessToParents)),
             ($hasExplicitAccessToParents || ($roleHasPermissionOwn && $hasPermissiveAccessToParents))
         );
@@ -393,9 +376,9 @@ class JointPermissionBuilder
     /**
      * Check for an active restriction in an entity map.
      */
-    protected function mapHasActiveRestriction(array $entityMap, SimpleEntityData $entity, int $roleId, string $action): bool
+    protected function mapHasActiveRestriction(array $entityMap, SimpleEntityData $entity, int $roleId): bool
     {
-        $key = $entity->type . ':' . $entity->id . ':' . $roleId . ':' . $action;
+        $key = $entity->type . ':' . $entity->id . ':' . $roleId;
 
         return $entityMap[$key] ?? false;
     }
@@ -404,10 +387,9 @@ class JointPermissionBuilder
      * Create an array of data with the information of an entity jointPermissions.
      * Used to build data for bulk insertion.
      */
-    protected function createJointPermissionDataArray(SimpleEntityData $entity, int $roleId, string $action, bool $permissionAll, bool $permissionOwn): array
+    protected function createJointPermissionDataArray(SimpleEntityData $entity, int $roleId, bool $permissionAll, bool $permissionOwn): array
     {
         return [
-            'action'             => $action,
             'entity_id'          => $entity->id,
             'entity_type'        => $entity->type,
             'has_permission'     => $permissionAll,

@@ -90,6 +90,7 @@ class PublicActionTest extends TestCase
             $publicRole->attachPermission($perm);
         }
         $this->app->make(JointPermissionBuilder::class)->rebuildForRole($publicRole);
+        user()->clearPermissionCache();
 
         /** @var Chapter $chapter */
         $chapter = Chapter::query()->first();
