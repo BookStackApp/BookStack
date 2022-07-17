@@ -3,7 +3,6 @@
 namespace Tests;
 
 use BookStack\Auth\Permissions\JointPermissionBuilder;
-use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;

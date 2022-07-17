@@ -234,7 +234,7 @@ class EntitySearchTest extends TestCase
     {
         $page = Page::query()->first();
         $baseSelector = 'a[data-entity-type="page"][data-entity-id="' . $page->id . '"]';
-        $searchUrl = "/ajax/search/entities?permission=update&term=" . urlencode($page->name);
+        $searchUrl = '/ajax/search/entities?permission=update&term=' . urlencode($page->name);
 
         $resp = $this->asEditor()->get($searchUrl);
         $resp->assertElementContains($baseSelector, $page->name);

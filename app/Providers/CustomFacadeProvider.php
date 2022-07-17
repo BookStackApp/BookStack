@@ -3,9 +3,7 @@
 namespace BookStack\Providers;
 
 use BookStack\Actions\ActivityLogger;
-use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Theming\ThemeService;
-use BookStack\Uploads\ImageService;
 use Illuminate\Support\ServiceProvider;
 
 class CustomFacadeProvider extends ServiceProvider
