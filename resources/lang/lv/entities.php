@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':user atjauninājis pirms :timeLength',
     'meta_owned_name' => 'Īpašnieks :user',
     'entity_select' => 'Izvēlēties vienumu',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Attēli',
     'my_recent_drafts' => 'Mani melnraksti',
     'my_recently_viewed' => 'Mani nesen skatītie',
