@@ -24,7 +24,7 @@ return [
     'meta_updated_name' => 'Actualizado :timeLength por :user',
     'meta_owned_name' => 'Propiedad de :user',
     'entity_select' => 'Seleccione entidad',
-    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
+    'entity_select_lack_permission' => 'No tiene los permisos necesarios para seleccionar este elemento',
     'images' => 'Imágenes',
     'my_recent_drafts' => 'Mis borradores recientes',
     'my_recently_viewed' => 'Mis visualizaciones recientes',
