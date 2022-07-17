@@ -24,7 +24,7 @@ return [
     'meta_updated_name' => '由 :user 更新于 :timeLength',
     'meta_owned_name' => '拥有者 :user',
     'entity_select' => '选择项目',
-    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
+    'entity_select_lack_permission' => '您没有选择此项目所需的权限',
     'images' => '图片',
     'my_recent_drafts' => '我最近的草稿',
     'my_recently_viewed' => '我最近看过',
@@ -359,7 +359,7 @@ return [
 
     // Conversions
     'convert_to_shelf' => '转换为书架',
-    'convert_to_shelf_contents_desc' => '你可以将这本书转换为具有相同内容的新书架。本书中的章节将被转换为图书。如果这本书包含任何不在章节分类中的页面，那么将会有一本图书被重命名并包含这些页面，这本书也将成为新书架的一部分。',
+    'convert_to_shelf_contents_desc' => '你可以将这本书转换为具有相同内容的新书架。本书中的章节将被转换为图书。如果这本书包含有任何不在章节分类中的页面，那么将会有一本单独的图书包含这些页面，这本书也将成为新书架的一部分。',
     'convert_to_shelf_permissions_desc' => '在这本书上设置的任何权限都将复制到所有未强制执行权限的新书架和新子图书上。请注意，书架上的权限不会像图书那样继承到内容物上。',
     'convert_book' => '转换图书',
     'convert_book_confirm' => '您确定要转换此图书吗？',
