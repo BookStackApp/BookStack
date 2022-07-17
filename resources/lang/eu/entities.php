@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':timeLength aldatuta. Erabiltzailea :user',
     'meta_owned_name' => ':user da jabea',
     'entity_select' => 'Aukeratutako entitatea',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Irudiak',
     'my_recent_drafts' => 'Nire azken zirriborroak',
     'my_recently_viewed' => 'Nik Ikusitako azkenak',
