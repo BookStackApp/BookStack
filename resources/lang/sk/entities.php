@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Aktualizované :timeLength používateľom :user',
     'meta_owned_name' => 'Vlastník :user',
     'entity_select' => 'Entita vybraná',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Obrázky',
     'my_recent_drafts' => 'Moje nedávne koncepty',
     'my_recently_viewed' => 'Nedávno mnou zobrazené',
