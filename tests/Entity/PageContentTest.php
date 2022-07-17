@@ -527,7 +527,7 @@ class PageContentTest extends TestCase
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertElementExists('.page-content li.task-list-item input[type=checkbox]');
-        $pageView->assertElementExists('.page-content li.task-list-item input[type=checkbox][checked=checked]');
+        $pageView->assertElementExists('.page-content li.task-list-item input[type=checkbox][checked]');
     }
 
     public function test_page_markdown_strikethrough_rendering()
