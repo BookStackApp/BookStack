@@ -62,14 +62,12 @@ function file_picker_callback(callback, value, meta) {
 
 /**
  * @param {WysiwygConfigOptions} options
- * @return {string}
+ * @return {string[]}
  */
 function gatherPlugins(options) {
     const plugins = [
         "image",
-        "imagetools",
         "table",
-        "paste",
         "link",
         "autolink",
         "fullscreen",
@@ -98,7 +96,7 @@ function gatherPlugins(options) {
         plugins.push('drawio');
     }
 
-    return plugins.filter(plugin => Boolean(plugin)).join(' ');
+    return plugins.filter(plugin => Boolean(plugin));
 }
 
 /**
@@ -215,7 +213,7 @@ export function build(options) {
             window.baseUrl('/dist/styles.css'),
         ],
         branding: false,
-        skin: options.darkMode ? 'oxide-dark' : 'oxide',
+        skin: options.darkMode ? 'tinymce-5-dark' : 'tinymce-5',
         body_class: 'page-content',
         browser_spellcheck: true,
         relative_urls: false,
@@ -240,7 +238,6 @@ export function build(options) {
             "+doc-root[code-block]"
         ].join(','),
         plugins: gatherPlugins(options),
-        imagetools_toolbar: 'imageoptions',
         contextmenu: false,
         toolbar: getPrimaryToolbar(options),
         content_style: getContentStyle(options),
@@ -249,6 +246,8 @@ export function build(options) {
         media_alt_source: false,
         media_poster: false,
         formats,
+        table_style_by_css: false,
+        table_use_colgroups: false,
         file_picker_types: 'file image',
         file_picker_callback,
         paste_preprocess(plugin, args) {
