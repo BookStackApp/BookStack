@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Atnaujinta :timeLength naudotojo :user',
     'meta_owned_name' => 'Priklauso :user',
     'entity_select' => 'Pasirinkti subjektą',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Nuotraukos',
     'my_recent_drafts' => 'Naujausi išsaugoti juodraščiai',
     'my_recently_viewed' => 'Neseniai peržiūrėti',
