@@ -214,7 +214,7 @@ class EntitySearchTest extends TestCase
         $defaultListTest->assertDontSee($notVisitedPage->name);
     }
 
-    public function test_ajax_entity_serach_shows_breadcrumbs()
+    public function test_ajax_entity_search_shows_breadcrumbs()
     {
         $chapter = Chapter::first();
         $page = $chapter->pages->first();
@@ -228,6 +228,21 @@ class EntitySearchTest extends TestCase
         $chapterSearch = $this->get('/ajax/search/entities?term=' . urlencode($chapter->name));
         $chapterSearch->assertSee($chapter->name);
         $chapterSearch->assertSee($chapter->book->getShortName(42));
+    }
+
+    public function test_ajax_entity_search_reflects_items_without_permission()
+    {
+        $page = Page::query()->first();
+        $baseSelector = 'a[data-entity-type="page"][data-entity-id="' . $page->id . '"]';
+        $searchUrl = "/ajax/search/entities?permission=update&term=" . urlencode($page->name);
+
+        $resp = $this->asEditor()->get($searchUrl);
+        $resp->assertElementContains($baseSelector, $page->name);
+        $resp->assertElementNotContains($baseSelector, "You don't have the required permissions to select this item");
+
+        $resp = $this->actingAs($this->getViewer())->get($searchUrl);
+        $resp->assertElementContains($baseSelector, $page->name);
+        $resp->assertElementContains($baseSelector, "You don't have the required permissions to select this item");
     }
 
     public function test_sibling_search_for_pages()
