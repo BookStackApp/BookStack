@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Opdateret :timeLength af :user',
     'meta_owned_name' => 'Ejet af :user',
     'entity_select' => 'Vælg emne',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Billeder',
     'my_recent_drafts' => 'Mine seneste kladder',
     'my_recently_viewed' => 'Mine senest viste',
