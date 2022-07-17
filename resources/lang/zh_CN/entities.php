@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => '由 :user 更新于 :timeLength',
     'meta_owned_name' => '拥有者 :user',
     'entity_select' => '选择项目',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => '图片',
     'my_recent_drafts' => '我最近的草稿',
     'my_recently_viewed' => '我最近看过',
