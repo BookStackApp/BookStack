@@ -86,7 +86,7 @@ class PermissionApplicator
     public function checkUserHasEntityPermissionOnAny(string $action, string $entityClass = ''): bool
     {
         if (strpos($action, '-') !== false) {
-            throw new InvalidArgumentException("Action should be a simple entity permission action, not a role permission");
+            throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
         }
 
         $permissionQuery = EntityPermission::query()

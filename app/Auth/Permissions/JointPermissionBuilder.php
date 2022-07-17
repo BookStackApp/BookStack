@@ -148,7 +148,6 @@ class JointPermissionBuilder
             ]);
     }
 
-
     /**
      * Build joint permissions for the given book and role combinations.
      */
@@ -207,6 +206,7 @@ class JointPermissionBuilder
 
     /**
      * @param Entity[] $entities
+     *
      * @return SimpleEntityData[]
      */
     protected function entitiesToSimpleEntities(array $entities): array
@@ -288,7 +288,9 @@ class JointPermissionBuilder
     /**
      * From the given entity list, provide back a mapping of entity types to
      * the ids of that given type. The type used is the DB morph class.
+     *
      * @param SimpleEntityData[] $entities
+     *
      * @return array<string, int[]>
      */
     protected function entitiesToTypeIdMap(array $entities): array
@@ -307,8 +309,10 @@ class JointPermissionBuilder
     }
 
     /**
-     * Get the entity permissions for all the given entities
+     * Get the entity permissions for all the given entities.
+     *
      * @param SimpleEntityData[] $entities
+     *
      * @return EntityPermission[]
      */
     protected function getEntityPermissionsForEntities(array $entities): array
@@ -316,7 +320,7 @@ class JointPermissionBuilder
         $idsByType = $this->entitiesToTypeIdMap($entities);
         $permissionFetch = EntityPermission::query()
             ->where('action', '=', 'view')
-            ->where(function(Builder $query) use ($idsByType) {
+            ->where(function (Builder $query) use ($idsByType) {
                 foreach ($idsByType as $type => $ids) {
                     $query->orWhere(function (Builder $query) use ($type, $ids) {
                         $query->where('restrictable_type', '=', $type)->whereIn('restrictable_id', $ids);
@@ -398,5 +402,4 @@ class JointPermissionBuilder
             'role_id'            => $roleId,
         ];
     }
-
 }

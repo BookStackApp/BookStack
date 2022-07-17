@@ -21,7 +21,6 @@ use SplObjectStorage;
 
 class SearchRunner
 {
-
     protected EntityProvider $entityProvider;
     protected PermissionApplicator $permissions;
 
