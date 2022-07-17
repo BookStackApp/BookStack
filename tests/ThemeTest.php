@@ -6,6 +6,7 @@ use BookStack\Actions\ActivityType;
 use BookStack\Actions\DispatchWebhookJob;
 use BookStack\Actions\Webhook;
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Facades\Theme;
@@ -195,6 +196,24 @@ class ThemeTest extends TestCase
             return $request->isJson() && $request->data()['test'] === 'hello!';
         });
     }
+
+    public function test_event_activity_logged()
+    {
+        $book = Book::query()->first();
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+        };
+
+        Theme::listen(ThemeEvents::ACTIVITY_LOGGED, $callback);
+        $this->asEditor()->put($book->getUrl(), ['name' => 'My cool update book!']);
+
+        $this->assertCount(2, $args);
+        $this->assertEquals(ActivityType::BOOK_UPDATE, $args[0]);
+        $this->assertTrue($args[1] instanceof Book);
+        $this->assertEquals($book->id, $args[1]->id);
+    }
+
 
     public function test_add_social_driver()
     {
