@@ -24,30 +24,6 @@ class ThemeEvents
     const APP_BOOT = 'app_boot';
 
     /**
-     * Web before middleware action.
-     * Runs before the request is handled but after all other middleware apart from those
-     * that depend on the current session user (Localization for example).
-     * Provides the original request to use.
-     * Return values, if provided, will be used as a new response to use.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @returns \Illuminate\Http\Response|null
-     */
-    const WEB_MIDDLEWARE_BEFORE = 'web_middleware_before';
-
-    /**
-     * Web after middleware action.
-     * Runs after the request is handled but before the response is sent.
-     * Provides both the original request and the currently resolved response.
-     * Return values, if provided, will be used as a new response to use.
-     *
-     * @param \Illuminate\Http\Request                                                      $request
-     * @param \Illuminate\Http\Response|Symfony\Component\HttpFoundation\BinaryFileResponse $response
-     * @returns \Illuminate\Http\Response|null
-     */
-    const WEB_MIDDLEWARE_AFTER = 'web_middleware_after';
-
-    /**
      * Auth login event.
      * Runs right after a user is logged-in to the application by any authentication
      * system as a standard app user. This includes a user becoming logged in
@@ -72,13 +48,37 @@ class ThemeEvents
     /**
      * Commonmark environment configure.
      * Provides the commonmark library environment for customization
-     * before its used to render markdown content.
+     * before it's used to render markdown content.
      * If the listener returns a non-null value, that will be used as an environment instead.
      *
      * @param \League\CommonMark\ConfigurableEnvironmentInterface $environment
      * @returns \League\CommonMark\ConfigurableEnvironmentInterface|null
      */
     const COMMONMARK_ENVIRONMENT_CONFIGURE = 'commonmark_environment_configure';
+
+    /**
+     * Web before middleware action.
+     * Runs before the request is handled but after all other middleware apart from those
+     * that depend on the current session user (Localization for example).
+     * Provides the original request to use.
+     * Return values, if provided, will be used as a new response to use.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @returns \Illuminate\Http\Response|null
+     */
+    const WEB_MIDDLEWARE_BEFORE = 'web_middleware_before';
+
+    /**
+     * Web after middleware action.
+     * Runs after the request is handled but before the response is sent.
+     * Provides both the original request and the currently resolved response.
+     * Return values, if provided, will be used as a new response to use.
+     *
+     * @param \Illuminate\Http\Request                                                       $request
+     * @param \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\BinaryFileResponse $response
+     * @returns \Illuminate\Http\Response|null
+     */
+    const WEB_MIDDLEWARE_AFTER = 'web_middleware_after';
 
     /**
      * Webhook call before event.
