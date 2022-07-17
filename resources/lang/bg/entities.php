@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Актуализирано преди :timeLength от :user',
     'meta_owned_name' => 'Притежавано от :user',
     'entity_select' => 'Избор на обект',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Изображения',
     'my_recent_drafts' => 'Моите скорошни драфтове',
     'my_recently_viewed' => 'Моите скорошни преглеждания',
