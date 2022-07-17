@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Tools;
 
-use Barryvdh\DomPDF\Facade as DomPDF;
+use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 
 class PdfGenerator

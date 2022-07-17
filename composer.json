@@ -17,7 +17,7 @@
         "ext-mbstring": "*",
         "ext-xml": "*",
         "bacon/bacon-qr-code": "^2.0",
-        "barryvdh/laravel-dompdf": "^1.0",
+        "barryvdh/laravel-dompdf": "^2.0",
         "barryvdh/laravel-snappy": "^1.0",
         "doctrine/dbal": "^3.1",
         "filp/whoops": "^2.14",

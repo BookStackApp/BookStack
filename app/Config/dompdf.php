@@ -15,8 +15,8 @@ $dompdfPaperSizeMap = [
 return [
 
     'show_warnings' => false,   // Throw an Exception on warnings from dompdf
-    'orientation'   => 'portrait',
-    'defines'       => [
+
+    'options'       => [
         /**
          * The location of the DOMPDF font directory.
          *
@@ -77,15 +77,25 @@ return [
         'chroot' => realpath(public_path()),
 
         /**
-         * Whether to use Unicode fonts or not.
+         * Protocol whitelist
          *
-         * When set to true the PDF backend must be set to "CPDF" and fonts must be
-         * loaded via load_font.php.
+         * Protocols and PHP wrappers allowed in URIs, and the validation rules
+         * that determine if a resouce may be loaded. Full support is not guaranteed
+         * for the protocols/wrappers specified
+         * by this array.
          *
-         * When enabled, dompdf can support all Unicode glyphs. Any glyphs used in a
-         * document must be present in your fonts, however.
+         * @var array
          */
-        'unicode_enabled' => true,
+        'allowed_protocols' => [
+            "file://" => ["rules" => []],
+            "http://" => ["rules" => []],
+            "https://" => ["rules" => []]
+        ],
+
+        /**
+         * @var string
+         */
+        'log_output_file' => null,
 
         /**
          * Whether to enable font subsetting or not.
@@ -155,6 +165,15 @@ return [
          * @see CPDF_Adapter::PAPER_SIZES for valid sizes ('letter', 'legal', 'A4', etc.)
          */
         'default_paper_size' => $dompdfPaperSizeMap[env('EXPORT_PAGE_SIZE', 'a4')] ?? 'a4',
+
+        /**
+         * The default paper orientation.
+         *
+         * The orientation of the page (portrait or landscape).
+         *
+         * @var string
+         */
+        'default_paper_orientation' => "portrait",
 
         /**
          * The default font family.
@@ -258,10 +277,12 @@ return [
         'enable_css_float' => true,
 
         /**
-         * Use the more-than-experimental HTML5 Lib parser.
+         * Use the HTML5 Lib parser
+         *
+         * @deprecated This feature is now always on in dompdf 2.x
+         * @var bool
          */
-        'enable_html5parser' => true,
-
+        "enable_html5_parser" => true,
     ],
 
 ];
