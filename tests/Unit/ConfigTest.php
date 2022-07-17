@@ -78,15 +78,15 @@ class ConfigTest extends TestCase
 
     public function test_dompdf_remote_fetching_controlled_by_allow_untrusted_server_fetching_false()
     {
-        $this->checkEnvConfigResult('ALLOW_UNTRUSTED_SERVER_FETCHING', 'false', 'dompdf.defines.enable_remote', false);
-        $this->checkEnvConfigResult('ALLOW_UNTRUSTED_SERVER_FETCHING', 'true', 'dompdf.defines.enable_remote', true);
+        $this->checkEnvConfigResult('ALLOW_UNTRUSTED_SERVER_FETCHING', 'false', 'dompdf.options.enable_remote', false);
+        $this->checkEnvConfigResult('ALLOW_UNTRUSTED_SERVER_FETCHING', 'true', 'dompdf.options.enable_remote', true);
     }
 
     public function test_dompdf_paper_size_options_are_limited()
     {
-        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'cat', 'dompdf.defines.default_paper_size', 'a4');
-        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'letter', 'dompdf.defines.default_paper_size', 'letter');
-        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'a4', 'dompdf.defines.default_paper_size', 'a4');
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'cat', 'dompdf.options.default_paper_size', 'a4');
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'letter', 'dompdf.options.default_paper_size', 'letter');
+        $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'a4', 'dompdf.options.default_paper_size', 'a4');
     }
 
     public function test_snappy_paper_size_options_are_limited()
