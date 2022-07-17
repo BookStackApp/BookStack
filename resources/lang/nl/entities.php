@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Bijgewerkt: :timeLength door :user',
     'meta_owned_name' => 'Eigendom van :user',
     'entity_select' => 'Entiteit selecteren',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Afbeeldingen',
     'my_recent_drafts' => 'Mijn recente concepten',
     'my_recently_viewed' => 'Mijn recent bekeken',
