@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':user оновив :timeLength',
     'meta_owned_name' => 'Власник :user',
     'entity_select' => 'Вибір об\'єкта',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Зображення',
     'my_recent_drafts' => 'Мої останні чернетки',
     'my_recently_viewed' => 'Мої недавні перегляди',
