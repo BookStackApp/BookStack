@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => '수정함 :timeLength, :user',
     'meta_owned_name' => '소유함 :user',
     'entity_select' => '항목 선택',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => '이미지',
     'my_recent_drafts' => '내 최근의 초안 문서',
     'my_recently_viewed' => '내가 읽은 문서',
