@@ -4,7 +4,7 @@
 
     @if($locked ?? false)
         <div class="text-warn my-xxs bold">
-            @icon('lock')You don't have the required permissions to select this item.
+            @icon('lock'){{ trans('entities.entity_select_lack_permission') }}
         </div>
     @endif
 
