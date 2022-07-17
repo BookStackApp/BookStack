@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':user tomonidan :timeLength da yangilangan',
     'meta_owned_name' => 'Egasi :user',
     'entity_select' => 'Entity Select',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Rasmlar',
     'my_recent_drafts' => 'Mening oxirgi qoralamalarim',
     'my_recently_viewed' => 'Mening oxirgi ko\'rganlarim',
