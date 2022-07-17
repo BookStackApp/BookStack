@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => '更新: :timeLength (:user)',
     'meta_owned_name' => '所有者: :user',
     'entity_select' => 'エンティティ選択',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => '画像',
     'my_recent_drafts' => '最近の下書き',
     'my_recently_viewed' => '閲覧履歴',
