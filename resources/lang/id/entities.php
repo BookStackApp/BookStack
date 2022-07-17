@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Diperbaharui :timeLength oleh :user',
     'meta_owned_name' => 'Dimiliki oleh :user',
     'entity_select' => 'Pilihan Entitas',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Gambar-gambar',
     'my_recent_drafts' => 'Draf Terbaru Saya',
     'my_recently_viewed' => 'Baru saja saya lihat',
