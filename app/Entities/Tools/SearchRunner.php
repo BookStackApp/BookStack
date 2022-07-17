@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Tools;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\BookChild;
@@ -21,20 +21,13 @@ use SplObjectStorage;
 
 class SearchRunner
 {
-    /**
-     * @var EntityProvider
-     */
-    protected $entityProvider;
-
-    /**
-     * @var PermissionService
-     */
-    protected $permissionService;
+    protected EntityProvider $entityProvider;
+    protected PermissionApplicator $permissions;
 
     /**
      * Acceptable operators to be used in a query.
      *
-     * @var array
+     * @var string[]
      */
     protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
@@ -46,10 +39,10 @@ class SearchRunner
      */
     protected $termAdjustmentCache;
 
-    public function __construct(EntityProvider $entityProvider, PermissionService $permissionService)
+    public function __construct(EntityProvider $entityProvider, PermissionApplicator $permissions)
     {
         $this->entityProvider = $entityProvider;
-        $this->permissionService = $permissionService;
+        $this->permissions = $permissions;
         $this->termAdjustmentCache = new SplObjectStorage();
     }
 
@@ -60,7 +53,7 @@ class SearchRunner
      *
      * @return array{total: int, count: int, has_more: bool, results: Entity[]}
      */
-    public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20, string $action = 'view'): array
+    public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20): array
     {
         $entityTypes = array_keys($this->entityProvider->all());
         $entityTypesToSearch = $entityTypes;
@@ -81,7 +74,7 @@ class SearchRunner
             }
 
             $entityModelInstance = $this->entityProvider->get($entityType);
-            $searchQuery = $this->buildQuery($searchOpts, $entityModelInstance, $action);
+            $searchQuery = $this->buildQuery($searchOpts, $entityModelInstance);
             $entityTotal = $searchQuery->count();
             $searchResults = $this->getPageOfDataFromQuery($searchQuery, $entityModelInstance, $page, $count);
 
@@ -165,9 +158,9 @@ class SearchRunner
     /**
      * Create a search query for an entity.
      */
-    protected function buildQuery(SearchOptions $searchOpts, Entity $entityModelInstance, string $action = 'view'): EloquentBuilder
+    protected function buildQuery(SearchOptions $searchOpts, Entity $entityModelInstance): EloquentBuilder
     {
-        $entityQuery = $entityModelInstance->newQuery();
+        $entityQuery = $entityModelInstance->newQuery()->scopes('visible');
 
         if ($entityModelInstance instanceof Page) {
             $entityQuery->select($entityModelInstance::$listAttributes);
@@ -199,7 +192,7 @@ class SearchRunner
             }
         }
 
-        return $this->permissionService->enforceEntityRestrictions($entityModelInstance, $entityQuery, $action);
+        return $entityQuery;
     }
 
     /**

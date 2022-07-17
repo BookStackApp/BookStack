@@ -11,20 +11,15 @@ use Illuminate\Database\Eloquent\Collection;
 
 class PermissionsRepo
 {
-    protected $permission;
-    protected $role;
-    protected $permissionService;
-
+    protected JointPermissionBuilder $permissionBuilder;
     protected $systemRoles = ['admin', 'public'];
 
     /**
      * PermissionsRepo constructor.
      */
-    public function __construct(RolePermission $permission, Role $role, PermissionService $permissionService)
+    public function __construct(JointPermissionBuilder $permissionBuilder)
     {
-        $this->permission = $permission;
-        $this->role = $role;
-        $this->permissionService = $permissionService;
+        $this->permissionBuilder = $permissionBuilder;
     }
 
     /**
@@ -32,7 +27,7 @@ class PermissionsRepo
      */
     public function getAllRoles(): Collection
     {
-        return $this->role->all();
+        return Role::query()->get();
     }
 
     /**
@@ -40,7 +35,7 @@ class PermissionsRepo
      */
     public function getAllRolesExcept(Role $role): Collection
     {
-        return $this->role->where('id', '!=', $role->id)->get();
+        return Role::query()->where('id', '!=', $role->id)->get();
     }
 
     /**
@@ -48,7 +43,7 @@ class PermissionsRepo
      */
     public function getRoleById($id): Role
     {
-        return $this->role->newQuery()->findOrFail($id);
+        return Role::query()->findOrFail($id);
     }
 
     /**
@@ -56,13 +51,14 @@ class PermissionsRepo
      */
     public function saveNewRole(array $roleData): Role
     {
-        $role = $this->role->newInstance($roleData);
+        $role = new Role($roleData);
         $role->mfa_enforced = ($roleData['mfa_enforced'] ?? 'false') === 'true';
         $role->save();
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
-        $this->permissionService->buildJointPermissionForRole($role);
+        $this->permissionBuilder->rebuildForRole($role);
+
         Activity::add(ActivityType::ROLE_CREATE, $role);
 
         return $role;
@@ -74,8 +70,7 @@ class PermissionsRepo
      */
     public function updateRole($roleId, array $roleData)
     {
-        /** @var Role $role */
-        $role = $this->role->newQuery()->findOrFail($roleId);
+        $role = $this->getRoleById($roleId);
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         if ($role->system_name === 'admin') {
@@ -93,12 +88,13 @@ class PermissionsRepo
         $role->fill($roleData);
         $role->mfa_enforced = ($roleData['mfa_enforced'] ?? 'false') === 'true';
         $role->save();
-        $this->permissionService->buildJointPermissionForRole($role);
+        $this->permissionBuilder->rebuildForRole($role);
+
         Activity::add(ActivityType::ROLE_UPDATE, $role);
     }
 
     /**
-     * Assign an list of permission names to an role.
+     * Assign a list of permission names to a role.
      */
     protected function assignRolePermissions(Role $role, array $permissionNameArray = [])
     {
@@ -106,7 +102,7 @@ class PermissionsRepo
         $permissionNameArray = array_values($permissionNameArray);
 
         if ($permissionNameArray) {
-            $permissions = $this->permission->newQuery()
+            $permissions = RolePermission::query()
                 ->whereIn('name', $permissionNameArray)
                 ->pluck('id')
                 ->toArray();
@@ -126,8 +122,7 @@ class PermissionsRepo
      */
     public function deleteRole($roleId, $migrateRoleId)
     {
-        /** @var Role $role */
-        $role = $this->role->newQuery()->findOrFail($roleId);
+        $role = $this->getRoleById($roleId);
 
         // Prevent deleting admin role or default registration role.
         if ($role->system_name && in_array($role->system_name, $this->systemRoles)) {
@@ -137,14 +132,14 @@ class PermissionsRepo
         }
 
         if ($migrateRoleId) {
-            $newRole = $this->role->newQuery()->find($migrateRoleId);
+            $newRole = Role::query()->find($migrateRoleId);
             if ($newRole) {
                 $users = $role->users()->pluck('id')->toArray();
                 $newRole->users()->sync($users);
             }
         }
 
-        $this->permissionService->deleteJointPermissionsForRole($role);
+        $role->jointPermissions()->delete();
         Activity::add(ActivityType::ROLE_DELETE, $role);
         $role->delete();
     }

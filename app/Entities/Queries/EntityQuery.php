@@ -2,14 +2,14 @@
 
 namespace BookStack\Entities\Queries;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\EntityProvider;
 
 abstract class EntityQuery
 {
-    protected function permissionService(): PermissionService
+    protected function permissionService(): PermissionApplicator
     {
-        return app()->make(PermissionService::class);
+        return app()->make(PermissionApplicator::class);
     }
 
     protected function entityProvider(): EntityProvider
