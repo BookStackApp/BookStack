@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Posodobil :timeLength uporabnik :user',
     'meta_owned_name' => 'V lasti :user',
     'entity_select' => 'Izbira entitete',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Slike',
     'my_recent_drafts' => 'Moji nedavni osnutki',
     'my_recently_viewed' => 'Nedavno prikazano',
