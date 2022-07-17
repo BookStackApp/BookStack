@@ -2,8 +2,9 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\JointPermissionBuilder;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class RegeneratePermissions extends Command
 {
@@ -21,19 +22,14 @@ class RegeneratePermissions extends Command
      */
     protected $description = 'Regenerate all system permissions';
 
-    /**
-     * The service to handle the permission system.
-     *
-     * @var PermissionService
-     */
-    protected $permissionService;
+    protected JointPermissionBuilder $permissionBuilder;
 
     /**
      * Create a new command instance.
      */
-    public function __construct(PermissionService $permissionService)
+    public function __construct(JointPermissionBuilder $permissionBuilder)
     {
-        $this->permissionService = $permissionService;
+        $this->permissionBuilder = $permissionBuilder;
         parent::__construct();
     }
 
@@ -44,15 +40,15 @@ class RegeneratePermissions extends Command
      */
     public function handle()
     {
-        $connection = \DB::getDefaultConnection();
-        if ($this->option('database') !== null) {
-            \DB::setDefaultConnection($this->option('database'));
-            $this->permissionService->setConnection(\DB::connection($this->option('database')));
+        $connection = DB::getDefaultConnection();
+
+        if ($this->option('database')) {
+            DB::setDefaultConnection($this->option('database'));
         }
 
-        $this->permissionService->buildJointPermissions();
+        $this->permissionBuilder->rebuildForAll();
 
-        \DB::setDefaultConnection($connection);
+        DB::setDefaultConnection($connection);
         $this->comment('Permissions regenerated');
     }
 }

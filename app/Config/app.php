@@ -202,7 +202,6 @@ return [
 
         // Custom BookStack
         'Activity'    => BookStack\Facades\Activity::class,
-        'Permissions' => BookStack\Facades\Permissions::class,
         'Theme'       => BookStack\Facades\Theme::class,
     ],
 

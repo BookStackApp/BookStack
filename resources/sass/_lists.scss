@@ -443,6 +443,14 @@ ul.pagination {
   }
 }
 
+.entity-list-item.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.8;
+  user-select: none;
+  background: var(--bg-disabled);
+}
+
 .entity-list-item-path-sep {
   display: inline-block;
   vertical-align: top;

@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\JointPermissionBuilder;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
@@ -89,7 +89,8 @@ class PublicActionTest extends TestCase
         foreach (RolePermission::all() as $perm) {
             $publicRole->attachPermission($perm);
         }
-        $this->app[PermissionService::class]->buildJointPermissionForRole($publicRole);
+        $this->app->make(JointPermissionBuilder::class)->rebuildForRole($publicRole);
+        user()->clearPermissionCache();
 
         /** @var Chapter $chapter */
         $chapter = Chapter::query()->first();

@@ -14,12 +14,11 @@ class RecentlyViewed extends EntityQuery
             return collect();
         }
 
-        $query = $this->permissionService()->filterRestrictedEntityRelations(
+        $query = $this->permissionService()->restrictEntityRelationQuery(
             View::query(),
             'views',
             'viewable_id',
-            'viewable_type',
-            'view'
+            'viewable_type'
         )
             ->orderBy('views.updated_at', 'desc')
             ->where('user_id', '=', user()->id);
