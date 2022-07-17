@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'עודכן :timeLength על ידי :user',
     'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'בחר יישות',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'תמונות',
     'my_recent_drafts' => 'הטיוטות האחרונות שלי',
     'my_recently_viewed' => 'הנצפים לאחרונה שלי',
