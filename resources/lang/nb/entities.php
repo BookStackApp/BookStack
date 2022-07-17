@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Oppdatert :timeLength av :user',
     'meta_owned_name' => 'Eies av :user',
     'entity_select' => 'Velg entitet',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Mine nylige utkast',
     'my_recently_viewed' => 'Mine nylige visninger',
