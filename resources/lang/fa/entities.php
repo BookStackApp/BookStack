@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'توسط :user ایجاد شده‌است',
     'entity_select' => 'انتخاب موجودیت',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'عکس ها',
     'my_recent_drafts' => 'پیش نویس های اخیر من',
     'my_recently_viewed' => 'بازدیدهای اخیر من',
