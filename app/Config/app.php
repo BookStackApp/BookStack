@@ -197,8 +197,6 @@ return [
 
         // Third Party
         'ImageTool' => Intervention\Image\Facades\Image::class,
-        'DomPDF'    => Barryvdh\DomPDF\Facade::class,
-        'SnappyPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
 
         // Custom BookStack
         'Activity'    => BookStack\Facades\Activity::class,
