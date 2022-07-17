@@ -3,7 +3,9 @@
 namespace BookStack\Actions;
 
 use BookStack\Entities\Models\Entity;
+use BookStack\Facades\Theme;
 use BookStack\Interfaces\Loggable;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
@@ -27,8 +29,10 @@ class ActivityLogger
         }
 
         $activity->save();
+
         $this->setNotification($type);
         $this->dispatchWebhooks($type, $detail);
+        Theme::dispatch(ThemeEvents::ACTIVITY_LOGGED, $type, $detail);
     }
 
     /**

@@ -16,6 +16,19 @@ namespace BookStack\Theming;
 class ThemeEvents
 {
     /**
+     * Activity logged event.
+     * Runs right after an activity is logged by bookstack.
+     * These are the activities that can be seen in the audit log area of BookStack.
+     * Activity types can be seen listed in the \BookStack\Actions\ActivityType class.
+     * The provided $detail can be a string or a loggable type of model. You should check
+     * the type before making use of this parameter.
+     *
+     * @param string                                $type
+     * @param string|\BookStack\Interfaces\Loggable $detail
+     */
+    const ACTIVITY_LOGGED = 'activity_logged';
+
+    /**
      * Application boot-up.
      * After main services are registered.
      *
