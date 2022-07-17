@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'مُحدث :timeLength بواسطة :user',
     'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'اختيار الكيان',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'صور',
     'my_recent_drafts' => 'مسوداتي الحديثة',
     'my_recently_viewed' => 'ما عرضته مؤخراً',
