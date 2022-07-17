@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Muudetud :timeLength kasutaja :user poolt',
     'meta_owned_name' => 'Kuulub kasutajale :user',
     'entity_select' => 'Objekti valik',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Pildid',
     'my_recent_drafts' => 'Minu hiljutised mustandid',
     'my_recently_viewed' => 'Minu viimati vaadatud',
