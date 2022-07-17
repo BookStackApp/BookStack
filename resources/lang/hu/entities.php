@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':user frissítette :timeLength',
     'meta_owned_name' => ':user tulajdona',
     'entity_select' => 'Entitás kiválasztása',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Képek',
     'my_recent_drafts' => 'Legutóbbi vázlataim',
     'my_recently_viewed' => 'Általam legutóbb megtekintett',
