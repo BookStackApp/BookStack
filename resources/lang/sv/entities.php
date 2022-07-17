@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Uppdaterad :timeLength av :user',
     'meta_owned_name' => 'Ägs av :user',
     'entity_select' => 'Välj enhet',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Mina nyaste utkast',
     'my_recently_viewed' => 'Mina senast visade sidor',
