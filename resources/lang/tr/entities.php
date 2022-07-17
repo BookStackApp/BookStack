@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
     'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Öge Seçimi',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Görseller',
     'my_recent_drafts' => 'Son Taslaklarım',
     'my_recently_viewed' => 'Son Görüntülediklerim',
