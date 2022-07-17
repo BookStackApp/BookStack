@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Ažurirano :timeLength od :user',
     'meta_owned_name' => 'Vlasništvo :user',
     'entity_select' => 'Odaberi subjekt',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Slike',
     'my_recent_drafts' => 'Nedavne skice',
     'my_recently_viewed' => 'Nedavno viđeno',
