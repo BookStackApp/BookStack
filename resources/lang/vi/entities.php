@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Được cập nhật :timeLength bởi :user',
     'meta_owned_name' => 'Được sở hữu bởi :user',
     'entity_select' => 'Chọn thực thể',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Ảnh',
     'my_recent_drafts' => 'Bản nháp gần đây của tôi',
     'my_recently_viewed' => 'Xem gần đây',
