@@ -132,7 +132,7 @@ return [
     'cell_border_ridge' => '浮出',
     'cell_border_inset' => '陷入',
     'cell_border_outset' => '突出',
-    'cell_border_none' => '无边框',
+    'cell_border_none' => '无',
     'cell_border_hidden' => '隐藏边框',
 
     // Images, links, details/summary & embed
