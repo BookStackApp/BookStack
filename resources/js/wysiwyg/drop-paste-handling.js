@@ -132,9 +132,9 @@ function drop(editor, options, event) {
             const range = editor.selection.getRng();
             const selectedNodeRoot = selectedNode.closest('body > *');
             if (range.startOffset > (range.startContainer.length / 2)) {
-                editor.dom.select(selectedNodeRoot).after(draggedContentEditable);
+                selectedNodeRoot.after(draggedContentEditable);
             } else {
-                editor.dom.select(selectedNodeRoot).before(draggedContentEditable);
+                selectedNodeRoot.before(draggedContentEditable);
             }
         });
     }
