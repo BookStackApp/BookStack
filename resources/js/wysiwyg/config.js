@@ -121,7 +121,7 @@ function setupBrFilter(editor) {
     editor.serializer.addNodeFilter('br', function(nodes) {
         for (const node of nodes) {
             if (node.parent && node.parent.name === 'code') {
-                const newline = new tinymce.html.Node.create('#text');
+                const newline = tinymce.html.Node.create('#text');
                 newline.value = '\n';
                 node.replace(newline);
             }

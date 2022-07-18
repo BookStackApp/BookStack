@@ -135,9 +135,9 @@ export function getPlugin(providedOptions) {
             if (!drawings.length) return;
 
             editor.undoManager.transact(function () {
-                drawings.each((index, elem) => {
-                    elem.setAttribute('contenteditable', 'false');
-                });
+                for (const drawing of drawings) {
+                    drawing.setAttribute('contenteditable', 'false');
+                }
             });
         });
 

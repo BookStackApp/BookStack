@@ -64,13 +64,13 @@ function register(editor, url) {
         editor.insertContent(details.outerHTML);
         editor.focus();
 
-        const domDetails = editor.dom.select(`[data-id="${id}"]`);
-        if (!domDetails.length) {
-            const firstChild = domDetails.find('doc-root > *');
+        const domDetails = editor.dom.select(`[data-id="${id}"]`)[0] || null;
+        if (domDetails) {
+            const firstChild = domDetails.querySelector('doc-root > *');
             if (firstChild) {
-                firstChild[0].focus();
+                firstChild.focus();
             }
-            domDetails.removeAttr('data-id');
+            domDetails.removeAttribute('data-id');
         }
     });
 
