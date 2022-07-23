@@ -131,13 +131,13 @@ export function getPlugin(providedOptions) {
         });
 
         editor.on('SetContent', function () {
-            const drawings = editor.$('body > div[drawio-diagram]');
+            const drawings = editor.dom.select('body > div[drawio-diagram]');
             if (!drawings.length) return;
 
             editor.undoManager.transact(function () {
-                drawings.each((index, elem) => {
-                    elem.setAttribute('contenteditable', 'false');
-                });
+                for (const drawing of drawings) {
+                    drawing.setAttribute('contenteditable', 'false');
+                }
             });
         });
 

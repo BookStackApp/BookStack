@@ -35,6 +35,11 @@ body.page-content.mce-content-body  {
   padding-bottom: 5rem;
 }
 
+// Remove svg background line in toolbar items
+.tox .tox-pop__dialog .tox-toolbar {
+  background: transparent !important;
+}
+
 // Center toolbar items
 .tox-toolbar__primary {
   justify-content: center;
@@ -71,7 +76,7 @@ body.page-content.mce-content-body  {
 .dark-mode .tox .tox-dialog__footer,
 .dark-mode .tox .tox-pop__dialog,
 .dark-mode .tox.tox-tinymce-aux .tox-toolbar__overflow {
-    background-color: #333;
+    background-color: #333 !important;
 }
 .dark-mode .tox .tox-tbtn svg,
 .dark-mode .tox .tox-tbtn,
