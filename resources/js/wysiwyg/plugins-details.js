@@ -2,6 +2,7 @@
  * @param {Editor} editor
  * @param {String} url
  */
+import {blockElementTypes} from "./util";
 
 function register(editor, url) {
 
@@ -217,14 +218,26 @@ function ensureDetailsWrappedInEditable(detailsEl) {
     unwrapDetailsEditable(detailsEl);
 
     detailsEl.attr('contenteditable', 'false');
-    const wrap = tinymce.html.Node.create('doc-root', {contenteditable: 'true'});
+    const rootWrap = tinymce.html.Node.create('doc-root', {contenteditable: 'true'});
+    let previousBlockWrap = null;
+
     for (const child of detailsEl.children()) {
-        if (child.name !== 'summary') {
-            wrap.append(child);
+        if (child.name === 'summary') continue;
+        const isBlock = blockElementTypes.includes(child.name);
+
+        if (!isBlock) {
+            if (!previousBlockWrap) {
+                previousBlockWrap = tinymce.html.Node.create('p');
+                rootWrap.append(previousBlockWrap);
+            }
+            previousBlockWrap.append(child);
+        } else {
+            rootWrap.append(child);
+            previousBlockWrap = null;
         }
     }
 
-    detailsEl.append(wrap);
+    detailsEl.append(rootWrap);
 }
 
 /**
