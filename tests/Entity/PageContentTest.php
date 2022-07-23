@@ -149,8 +149,8 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $pageView->assertElementNotContains('.page-content', '<script>');
-            $pageView->assertElementNotContains('.page-content', '</script>');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', '<script>');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', '</script>');
         }
     }
 
@@ -185,13 +185,14 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $pageView->assertElementNotContains('.page-content', '<iframe>');
-            $pageView->assertElementNotContains('.page-content', '<img');
-            $pageView->assertElementNotContains('.page-content', '</iframe>');
-            $pageView->assertElementNotContains('.page-content', 'src=');
-            $pageView->assertElementNotContains('.page-content', 'javascript:');
-            $pageView->assertElementNotContains('.page-content', 'data:');
-            $pageView->assertElementNotContains('.page-content', 'base64');
+            $html = $this->withHtml($pageView);
+            $html->assertElementNotContains('.page-content', '<iframe>');
+            $html->assertElementNotContains('.page-content', '<img');
+            $html->assertElementNotContains('.page-content', '</iframe>');
+            $html->assertElementNotContains('.page-content', 'src=');
+            $html->assertElementNotContains('.page-content', 'javascript:');
+            $html->assertElementNotContains('.page-content', 'data:');
+            $html->assertElementNotContains('.page-content', 'base64');
         }
     }
 
@@ -213,8 +214,8 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $pageView->assertElementNotContains('.page-content', '<a id="xss"');
-            $pageView->assertElementNotContains('.page-content', 'href=javascript:');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', '<a id="xss"');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'href=javascript:');
         }
     }
 
@@ -237,11 +238,11 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $pageView->assertElementNotContains('.page-content', '<button id="xss"');
-            $pageView->assertElementNotContains('.page-content', '<input id="xss"');
-            $pageView->assertElementNotContains('.page-content', '<form id="xss"');
-            $pageView->assertElementNotContains('.page-content', 'action=javascript:');
-            $pageView->assertElementNotContains('.page-content', 'formaction=javascript:');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', '<button id="xss"');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', '<input id="xss"');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', '<form id="xss"');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'action=javascript:');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'formaction=javascript:');
         }
     }
 
@@ -262,10 +263,10 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $pageView->assertElementNotContains('.page-content', '<meta>');
-            $pageView->assertElementNotContains('.page-content', '</meta>');
-            $pageView->assertElementNotContains('.page-content', 'content=');
-            $pageView->assertElementNotContains('.page-content', 'external_url');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', '<meta>');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', '</meta>');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'content=');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'external_url');
         }
     }
 
@@ -305,7 +306,7 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $pageView->assertElementNotContains('.page-content', 'onclick');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'onclick');
         }
     }
 
@@ -340,9 +341,9 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $pageView->assertElementNotContains('.page-content', 'alert');
-            $pageView->assertElementNotContains('.page-content', 'xlink:href');
-            $pageView->assertElementNotContains('.page-content', 'application/xml');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'alert');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'xlink:href');
+            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'application/xml');
         }
     }
 
@@ -506,7 +507,7 @@ class PageContentTest extends TestCase
         $this->assertStringContainsString('</tbody>', $page->html);
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertElementExists('.page-content table tbody td');
+        $this->withHtml($pageView)->assertElementExists('.page-content table tbody td');
     }
 
     public function test_page_markdown_task_list_rendering()
@@ -526,8 +527,8 @@ class PageContentTest extends TestCase
         $this->assertStringContainsString('type="checkbox"', $page->html);
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertElementExists('.page-content li.task-list-item input[type=checkbox]');
-        $pageView->assertElementExists('.page-content li.task-list-item input[type=checkbox][checked]');
+        $this->withHtml($pageView)->assertElementExists('.page-content li.task-list-item input[type=checkbox]');
+        $this->withHtml($pageView)->assertElementExists('.page-content li.task-list-item input[type=checkbox][checked]');
     }
 
     public function test_page_markdown_strikethrough_rendering()
@@ -545,7 +546,7 @@ class PageContentTest extends TestCase
         $this->assertStringMatchesFormat('%A<s%A>some crossed out text</s>%A', $page->html);
 
         $pageView = $this->get($page->getUrl());
-        $pageView->assertElementExists('.page-content p > s');
+        $this->withHtml($pageView)->assertElementExists('.page-content p > s');
     }
 
     public function test_page_markdown_single_html_comment_saving()

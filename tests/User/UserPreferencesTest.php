@@ -81,8 +81,8 @@ class UserPreferencesTest extends TestCase
     public function test_toggle_dark_mode()
     {
         $home = $this->actingAs($this->getEditor())->get('/');
-        $home->assertElementNotExists('.dark-mode');
         $home->assertSee('Dark Mode');
+        $this->withHtml($home)->assertElementNotExists('.dark-mode');
 
         $this->assertEquals(false, setting()->getForCurrentUser('dark-mode-enabled', false));
         $prefChange = $this->patch('/settings/users/toggle-dark-mode');
@@ -90,7 +90,7 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals(true, setting()->getForCurrentUser('dark-mode-enabled'));
 
         $home = $this->actingAs($this->getEditor())->get('/');
-        $home->assertElementExists('.dark-mode');
+        $this->withHtml($home)->assertElementExists('.dark-mode');
         $home->assertDontSee('Dark Mode');
         $home->assertSee('Light Mode');
     }
@@ -100,12 +100,12 @@ class UserPreferencesTest extends TestCase
         config()->set('setting-defaults.user.dark-mode-enabled', false);
         $this->assertEquals(false, setting()->getForCurrentUser('dark-mode-enabled'));
         $home = $this->get('/login');
-        $home->assertElementNotExists('.dark-mode');
+        $this->withHtml($home)->assertElementNotExists('.dark-mode');
 
         config()->set('setting-defaults.user.dark-mode-enabled', true);
         $this->assertEquals(true, setting()->getForCurrentUser('dark-mode-enabled'));
         $home = $this->get('/login');
-        $home->assertElementExists('.dark-mode');
+        $this->withHtml($home)->assertElementExists('.dark-mode');
     }
 
     public function test_books_view_type_preferences_when_list()
@@ -113,7 +113,8 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         setting()->putUser($editor, 'books_view_type', 'list');
 
-        $this->actingAs($editor)->get('/books')
+        $resp = $this->actingAs($editor)->get('/books');
+        $this->withHtml($resp)
             ->assertElementNotExists('.featured-image-container')
             ->assertElementExists('.content-wrap .entity-list-item');
     }
@@ -123,8 +124,8 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         setting()->putUser($editor, 'books_view_type', 'grid');
 
-        $this->actingAs($editor)->get('/books')
-            ->assertElementExists('.featured-image-container');
+        $resp = $this->actingAs($editor)->get('/books');
+        $this->withHtml($resp)->assertElementExists('.featured-image-container');
     }
 
     public function test_shelf_view_type_change()
@@ -134,17 +135,20 @@ class UserPreferencesTest extends TestCase
         $shelf = Bookshelf::query()->first();
         setting()->putUser($editor, 'bookshelf_view_type', 'list');
 
-        $this->actingAs($editor)->get($shelf->getUrl())
+        $resp = $this->actingAs($editor)->get($shelf->getUrl())->assertSee('Grid View');
+        $this->withHtml($resp)
             ->assertElementNotExists('.featured-image-container')
-            ->assertElementExists('.content-wrap .entity-list-item')
-            ->assertSee('Grid View');
+            ->assertElementExists('.content-wrap .entity-list-item');
 
         $req = $this->patch("/settings/users/{$editor->id}/switch-shelf-view", ['view_type' => 'grid']);
         $req->assertRedirect($shelf->getUrl());
 
-        $this->actingAs($editor)->get($shelf->getUrl())
-            ->assertElementExists('.featured-image-container')
-            ->assertElementNotExists('.content-wrap .entity-list-item')
+        $resp = $this->actingAs($editor)->get($shelf->getUrl())
             ->assertSee('List View');
+
+        $this->withHtml($resp)
+            ->assertElementExists('.featured-image-container')
+            ->assertElementNotExists('.content-wrap .entity-list-item');
+
     }
 }

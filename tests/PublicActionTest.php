@@ -28,7 +28,8 @@ class PublicActionTest extends TestCase
     public function test_login_link_visible()
     {
         $this->setSettings(['app-public' => 'true']);
-        $this->get('/')->assertElementExists('a[href="' . url('/login') . '"]');
+        $resp = $this->get('/');
+        $this->withHtml($resp)->assertElementExists('a[href="' . url('/login') . '"]');
     }
 
     public function test_register_link_visible_when_enabled()
@@ -96,12 +97,12 @@ class PublicActionTest extends TestCase
         $chapter = Chapter::query()->first();
         $resp = $this->get($chapter->getUrl());
         $resp->assertSee('New Page');
-        $resp->assertElementExists('a[href="' . $chapter->getUrl('/create-page') . '"]');
+        $this->withHtml($resp)->assertElementExists('a[href="' . $chapter->getUrl('/create-page') . '"]');
 
         $resp = $this->get($chapter->getUrl('/create-page'));
         $resp->assertSee('Continue');
         $resp->assertSee('Page Name');
-        $resp->assertElementExists('form[action="' . $chapter->getUrl('/create-guest-page') . '"]');
+        $this->withHtml($resp)->assertElementExists('form[action="' . $chapter->getUrl('/create-guest-page') . '"]');
 
         $resp = $this->post($chapter->getUrl('/create-guest-page'), ['name' => 'My guest page']);
         $resp->assertRedirect($chapter->book->getUrl('/page/my-guest-page/edit'));

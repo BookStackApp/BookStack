@@ -49,7 +49,7 @@ class HomepageTest extends TestCase
 
         $homeVisit = $this->get('/');
         $homeVisit->assertSee($name);
-        $homeVisit->assertElementNotExists('#home-default');
+        $this->withHtml($homeVisit)->assertElementNotExists('#home-default');
 
         $pageDeleteReq = $this->delete($customPage->getUrl());
         $pageDeleteReq->assertStatus(302);
@@ -148,7 +148,7 @@ class HomepageTest extends TestCase
         $homeVisit->assertSee('Shelves');
         $homeVisit->assertSee('grid-card-content');
         $homeVisit->assertSee('featured-image-container');
-        $homeVisit->assertElementContains('.grid-card', $shelf->name);
+        $this->withHtml($homeVisit)->assertElementContains('.grid-card', $shelf->name);
 
         $this->setSettings(['app-homepage-type' => false]);
         $this->test_default_homepage_visible();
@@ -166,21 +166,21 @@ class HomepageTest extends TestCase
 
         // Ensure initially visible
         $homeVisit = $this->get('/');
-        $homeVisit->assertElementContains('.content-wrap', $shelf->name);
-        $homeVisit->assertElementContains('.content-wrap', $book->name);
+        $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $shelf->name);
+        $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $book->name);
 
         // Ensure book no longer visible without view permission
         $editor->roles()->detach();
         $this->giveUserPermissions($editor, ['bookshelf-view-all']);
         $homeVisit = $this->get('/');
-        $homeVisit->assertElementContains('.content-wrap', $shelf->name);
-        $homeVisit->assertElementNotContains('.content-wrap', $book->name);
+        $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $shelf->name);
+        $this->withHtml($homeVisit)->assertElementNotContains('.content-wrap', $book->name);
 
         // Ensure is visible again with entity-level view permission
         $this->setEntityRestrictions($book, ['view'], [$editor->roles()->first()]);
         $homeVisit = $this->get('/');
-        $homeVisit->assertElementContains('.content-wrap', $shelf->name);
-        $homeVisit->assertElementContains('.content-wrap', $book->name);
+        $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $shelf->name);
+        $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $book->name);
     }
 
     public function test_new_users_dont_have_any_recently_viewed()
@@ -190,6 +190,6 @@ class HomepageTest extends TestCase
         $user->attachRole($viewRole);
 
         $homeVisit = $this->actingAs($user)->get('/');
-        $homeVisit->assertElementContains('#recently-viewed', 'You have not viewed any pages');
+        $this->withHtml($homeVisit)->assertElementContains('#recently-viewed', 'You have not viewed any pages');
     }
 }

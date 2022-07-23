@@ -56,7 +56,7 @@ class Saml2Test extends TestCase
     {
         $req = $this->get('/login');
         $req->assertSeeText('SingleSignOn-Testing');
-        $req->assertElementExists('form[action$="/saml2/login"][method=POST] button');
+        $this->withHtml($req)->assertElementExists('form[action$="/saml2/login"][method=POST] button');
     }
 
     public function test_login()
@@ -157,7 +157,7 @@ class Saml2Test extends TestCase
         ]);
 
         $resp = $this->actingAs($this->getEditor())->get('/');
-        $resp->assertElementContains('form[action$="/saml2/logout"] button', 'Logout');
+        $this->withHtml($resp)->assertElementContains('form[action$="/saml2/logout"] button', 'Logout');
     }
 
     public function test_logout_sls_flow()

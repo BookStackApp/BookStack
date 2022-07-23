@@ -20,7 +20,7 @@ class ConvertTest extends TestCase
         $resp = $this->asEditor()->get($chapter->getUrl('/edit'));
         $resp->assertSee('Convert to Book');
         $resp->assertSee('Convert Chapter');
-        $resp->assertElementExists('form[action$="/convert-to-book"] button');
+        $this->withHtml($resp)->assertElementExists('form[action$="/convert-to-book"] button');
     }
 
     public function test_convert_chapter_to_book()
@@ -77,7 +77,7 @@ class ConvertTest extends TestCase
         $resp->assertSee('Convert to Shelf');
         $resp->assertSee('Convert Book');
         $resp->assertSee('Note that permissions on shelves do not auto-cascade to content');
-        $resp->assertElementExists('form[action$="/convert-to-shelf"] button');
+        $this->withHtml($resp)->assertElementExists('form[action$="/convert-to-shelf"] button');
     }
 
     public function test_book_convert_to_shelf()

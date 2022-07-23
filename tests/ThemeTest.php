@@ -37,7 +37,7 @@ class ThemeTest extends TestCase
             file_put_contents($translationPath . '/entities.php', $customTranslations);
 
             $homeRequest = $this->actingAs($this->getViewer())->get('/');
-            $homeRequest->assertElementContains('header nav', 'Sandwiches');
+            $this->withHtml($homeRequest)->assertElementContains('header nav', 'Sandwiches');
         });
     }
 

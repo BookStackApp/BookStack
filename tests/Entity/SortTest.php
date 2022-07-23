@@ -247,7 +247,7 @@ class SortTest extends TestCase
         $bookToSort = Book::query()->first();
 
         $resp = $this->asAdmin()->get($bookToSort->getUrl());
-        $resp->assertElementExists('a[href="' . $bookToSort->getUrl('/sort') . '"]');
+        $this->withHtml($resp)->assertElementExists('a[href="' . $bookToSort->getUrl('/sort') . '"]');
 
         $resp = $this->get($bookToSort->getUrl('/sort'));
         $resp->assertStatus(200);
@@ -456,14 +456,14 @@ class SortTest extends TestCase
         $book->pages()->whereNotIn('id', $pages->pluck('id'))->delete();
 
         $resp = $this->asEditor()->get($book->getUrl());
-        $resp->assertElementContains('.content-wrap a.page:nth-child(1)', $pages[0]->name);
-        $resp->assertElementContains('.content-wrap a.page:nth-child(2)', $pages[1]->name);
+        $this->withHtml($resp)->assertElementContains('.content-wrap a.page:nth-child(1)', $pages[0]->name);
+        $this->withHtml($resp)->assertElementContains('.content-wrap a.page:nth-child(2)', $pages[1]->name);
 
         $pages[0]->forceFill(['priority' => 10])->save();
         $pages[1]->forceFill(['priority' => 5])->save();
 
         $resp = $this->asEditor()->get($book->getUrl());
-        $resp->assertElementContains('.content-wrap a.page:nth-child(1)', $pages[1]->name);
-        $resp->assertElementContains('.content-wrap a.page:nth-child(2)', $pages[0]->name);
+        $this->withHtml($resp)->assertElementContains('.content-wrap a.page:nth-child(1)', $pages[1]->name);
+        $this->withHtml($resp)->assertElementContains('.content-wrap a.page:nth-child(2)', $pages[0]->name);
     }
 }

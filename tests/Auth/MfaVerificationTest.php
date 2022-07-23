@@ -23,7 +23,7 @@ class MfaVerificationTest extends TestCase
         $resp = $this->get('/mfa/verify');
         $resp->assertSee('Verify Access');
         $resp->assertSee('Enter the code, generated using your mobile app, below:');
-        $resp->assertElementExists('form[action$="/mfa/totp/verify"] input[name="code"][autofocus]');
+        $this->withHtml($resp)->assertElementExists('form[action$="/mfa/totp/verify"] input[name="code"][autofocus]');
 
         $google2fa = new Google2FA();
         $resp = $this->post('/mfa/totp/verify', [
@@ -66,7 +66,7 @@ class MfaVerificationTest extends TestCase
         $resp->assertSee('Verify Access');
         $resp->assertSee('Backup Code');
         $resp->assertSee('Enter one of your remaining backup codes below:');
-        $resp->assertElementExists('form[action$="/mfa/backup_codes/verify"] input[name="code"]');
+        $this->withHtml($resp)->assertElementExists('form[action$="/mfa/backup_codes/verify"] input[name="code"]');
 
         $resp = $this->post('/mfa/backup_codes/verify', [
             'code' => $codes[1],
@@ -154,13 +154,13 @@ class MfaVerificationTest extends TestCase
         ]);
 
         // Totp shown by default
-        $mfaView->assertElementExists('form[action$="/mfa/totp/verify"] input[name="code"]');
-        $mfaView->assertElementContains('a[href$="/mfa/verify?method=backup_codes"]', 'Verify using a backup code');
+        $this->withHtml($mfaView)->assertElementExists('form[action$="/mfa/totp/verify"] input[name="code"]');
+        $this->withHtml($mfaView)->assertElementContains('a[href$="/mfa/verify?method=backup_codes"]', 'Verify using a backup code');
 
         // Ensure can view backup_codes view
         $resp = $this->get('/mfa/verify?method=backup_codes');
-        $resp->assertElementExists('form[action$="/mfa/backup_codes/verify"] input[name="code"]');
-        $resp->assertElementContains('a[href$="/mfa/verify?method=totp"]', 'Verify using a mobile app');
+        $this->withHtml($resp)->assertElementExists('form[action$="/mfa/backup_codes/verify"] input[name="code"]');
+        $this->withHtml($resp)->assertElementContains('a[href$="/mfa/verify?method=totp"]', 'Verify using a mobile app');
     }
 
     public function test_mfa_required_with_no_methods_leads_to_setup()
@@ -184,7 +184,7 @@ class MfaVerificationTest extends TestCase
         ]);
 
         $resp->assertSeeText('No Methods Configured');
-        $resp->assertElementContains('a[href$="/mfa/setup"]', 'Configure');
+        $this->withHtml($resp)->assertElementContains('a[href$="/mfa/setup"]', 'Configure');
 
         $this->get('/mfa/backup_codes/generate');
         $resp = $this->post('/mfa/backup_codes/confirm');

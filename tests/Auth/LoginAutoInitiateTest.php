@@ -25,8 +25,8 @@ class LoginAutoInitiateTest extends TestCase
 
         $req = $this->get('/login');
         $req->assertSeeText('Attempting Login');
-        $req->assertElementExists('form[action$="/oidc/login"][method=POST][id="login-form"] button');
-        $req->assertElementExists('button[form="login-form"]');
+        $this->withHtml($req)->assertElementExists('form[action$="/oidc/login"][method=POST][id="login-form"] button');
+        $this->withHtml($req)->assertElementExists('button[form="login-form"]');
     }
 
     public function test_with_saml2()
@@ -37,8 +37,8 @@ class LoginAutoInitiateTest extends TestCase
 
         $req = $this->get('/login');
         $req->assertSeeText('Attempting Login');
-        $req->assertElementExists('form[action$="/saml2/login"][method=POST][id="login-form"] button');
-        $req->assertElementExists('button[form="login-form"]');
+        $this->withHtml($req)->assertElementExists('form[action$="/saml2/login"][method=POST][id="login-form"] button');
+        $this->withHtml($req)->assertElementExists('button[form="login-form"]');
     }
 
     public function test_it_does_not_run_if_social_provider_is_active()

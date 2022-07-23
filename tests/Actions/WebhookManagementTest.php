@@ -17,8 +17,8 @@ class WebhookManagementTest extends TestCase
 
         $resp = $this->asAdmin()->get('/settings/webhooks');
         $resp->assertOk();
-        $resp->assertElementContains('a[href$="/settings/webhooks/create"]', 'Create New Webhook');
-        $resp->assertElementExists('a[href="' . $webhook->getUrl() . '"]', $webhook->name);
+        $this->withHtml($resp)->assertElementContains('a[href$="/settings/webhooks/create"]', 'Create New Webhook');
+        $this->withHtml($resp)->assertElementContains('a[href="' . $webhook->getUrl() . '"]', $webhook->name);
         $resp->assertSee($webhook->endpoint);
         $resp->assertSee('All system events');
         $resp->assertSee('Active');
@@ -29,7 +29,7 @@ class WebhookManagementTest extends TestCase
         $resp = $this->asAdmin()->get('/settings/webhooks/create');
         $resp->assertOk();
         $resp->assertSee('Create New Webhook');
-        $resp->assertElementContains('form[action$="/settings/webhooks/create"] button', 'Save Webhook');
+        $this->withHtml($resp)->assertElementContains('form[action$="/settings/webhooks/create"] button', 'Save Webhook');
     }
 
     public function test_store()
@@ -70,9 +70,9 @@ class WebhookManagementTest extends TestCase
         $resp = $this->asAdmin()->get('/settings/webhooks/' . $webhook->id);
         $resp->assertOk();
         $resp->assertSee('Edit Webhook');
-        $resp->assertElementContains('form[action="' . $webhook->getUrl() . '"] button', 'Save Webhook');
-        $resp->assertElementContains('a[href="' . $webhook->getUrl('/delete') . '"]', 'Delete Webhook');
-        $resp->assertElementExists('input[type="checkbox"][value="all"][name="events[]"]');
+        $this->withHtml($resp)->assertElementContains('form[action="' . $webhook->getUrl() . '"] button', 'Save Webhook');
+        $this->withHtml($resp)->assertElementContains('a[href="' . $webhook->getUrl('/delete') . '"]', 'Delete Webhook');
+        $this->withHtml($resp)->assertElementExists('input[type="checkbox"][value="all"][name="events[]"]');
     }
 
     public function test_update()
@@ -114,7 +114,7 @@ class WebhookManagementTest extends TestCase
         $resp->assertOk();
         $resp->assertSee('Delete Webhook');
         $resp->assertSee('This will fully delete this webhook, with the name \'Webhook to delete\', from the system.');
-        $resp->assertElementContains('form[action$="/settings/webhooks/' . $webhook->id . '"]', 'Delete');
+        $this->withHtml($resp)->assertElementContains('form[action$="/settings/webhooks/' . $webhook->id . '"]', 'Delete');
     }
 
     public function test_destroy()

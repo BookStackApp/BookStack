@@ -20,8 +20,8 @@ class CommentSettingTest extends TestCase
         $this->setSettings(['app-disable-comments' => 'true']);
         $this->asAdmin();
 
-        $this->asAdmin()->get($this->page->getUrl())
-            ->assertElementNotExists('.comments-list');
+        $resp = $this->asAdmin()->get($this->page->getUrl());
+        $this->withHtml($resp)->assertElementNotExists('.comments-list');
     }
 
     public function test_comment_enable()
@@ -29,7 +29,7 @@ class CommentSettingTest extends TestCase
         $this->setSettings(['app-disable-comments' => 'false']);
         $this->asAdmin();
 
-        $this->asAdmin()->get($this->page->getUrl())
-            ->assertElementExists('.comments-list');
+        $resp = $this->asAdmin()->get($this->page->getUrl());
+        $this->withHtml($resp)->assertElementExists('.comments-list');
     }
 }

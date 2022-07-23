@@ -8,8 +8,8 @@ class HelpTest extends TestCase
     {
         $resp = $this->get('/help/wysiwyg');
         $resp->assertOk();
-        $resp->assertElementExists('a[href="https://www.tiny.cloud/"]');
-        $resp->assertElementExists('a[href="' . url('/libs/tinymce/license.txt') . '"]');
+        $this->withHtml($resp)->assertElementExists('a[href="https://www.tiny.cloud/"]');
+        $this->withHtml($resp)->assertElementExists('a[href="' . url('/libs/tinymce/license.txt') . '"]');
     }
 
     public function test_tiny_license_exists_where_expected()

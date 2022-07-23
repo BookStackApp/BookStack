@@ -28,8 +28,8 @@ class SettingsTest extends TestCase
 
         foreach ($categories as $category => $title) {
             $resp = $this->get("/settings/{$category}");
-            $resp->assertElementContains('h1', $title);
-            $resp->assertElementExists("form[action$=\"/settings/{$category}\"]");
+            $this->withHtml($resp)->assertElementContains('h1', $title);
+            $this->withHtml($resp)->assertElementExists("form[action$=\"/settings/{$category}\"]");
         }
     }
 

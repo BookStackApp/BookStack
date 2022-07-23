@@ -44,8 +44,11 @@ class FooterLinksTest extends TestCase
             ['label' => 'Another Link', 'url' => 'https://example.com/link-b'],
         ]]);
 
-        $this->get('/login')->assertElementContains('footer a[href="https://example.com/link-a"]', 'My custom link');
-        $this->asEditor()->get('/')->assertElementContains('footer a[href="https://example.com/link-b"]', 'Another link');
+        $resp = $this->get('/login');
+        $this->withHtml($resp)->assertElementContains('footer a[href="https://example.com/link-a"]', 'My custom link');
+
+        $resp = $this->asEditor()->get('/');
+        $this->withHtml($resp)->assertElementContains('footer a[href="https://example.com/link-b"]', 'Another link');
     }
 
     public function test_using_translation_system_for_labels()
@@ -56,7 +59,7 @@ class FooterLinksTest extends TestCase
         ]]);
 
         $resp = $this->get('/login');
-        $resp->assertElementContains('footer a[href="https://example.com/privacy"]', 'Privacy Policy');
-        $resp->assertElementContains('footer a[href="https://example.com/terms"]', 'Terms of Service');
+        $this->withHtml($resp)->assertElementContains('footer a[href="https://example.com/privacy"]', 'Privacy Policy');
+        $this->withHtml($resp)->assertElementContains('footer a[href="https://example.com/terms"]', 'Terms of Service');
     }
 }
