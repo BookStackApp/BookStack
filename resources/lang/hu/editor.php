@@ -157,7 +157,7 @@ return [
     'about' => 'About the editor',
     'about_title' => 'About the WYSIWYG Editor',
     'editor_license' => 'Editor License & Copyright',
-    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under an LGPL v2.1 license.',
+    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
     'editor_tiny_license_link' => 'The copyright and license details of TinyMCE can be found here.',
     'save_continue' => 'Mentés és Folytatás',
     'callouts_cycle' => '(Keep pressing to toggle through types)',
