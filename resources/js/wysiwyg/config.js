@@ -246,8 +246,8 @@ export function build(options) {
         media_alt_source: false,
         media_poster: false,
         formats,
-        table_style_by_css: false,
-        table_use_colgroups: false,
+        table_style_by_css: true,
+        table_use_colgroups: true,
         file_picker_types: 'file image',
         file_picker_callback,
         paste_preprocess(plugin, args) {
