@@ -24,7 +24,7 @@ class UserManagementTest extends TestCase
         $resp = $this->asAdmin()->get('/settings/users');
         $this->withHtml($resp)->assertElementContains('a[href="' . url('/settings/users/create') . '"]', 'Add New User');
 
-        $resp =$this->get('/settings/users/create');
+        $resp = $this->get('/settings/users/create');
         $this->withHtml($resp)->assertElementContains('form[action="' . url('/settings/users/create') . '"]', 'Save');
 
         $resp = $this->post('/settings/users/create', [

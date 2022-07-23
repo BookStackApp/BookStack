@@ -149,6 +149,5 @@ class UserPreferencesTest extends TestCase
         $this->withHtml($resp)
             ->assertElementExists('.featured-image-container')
             ->assertElementNotExists('.content-wrap .entity-list-item');
-
     }
 }

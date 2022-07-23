@@ -25,7 +25,7 @@ class IpFormatter
     protected function maskIpv4(): string
     {
         $exploded = $this->explodeAndExpandIp('.', 4);
-        $maskGroupCount = min( 4 - $this->precision, count($exploded));
+        $maskGroupCount = min(4 - $this->precision, count($exploded));
 
         for ($i = 0; $i < $maskGroupCount; $i++) {
             $exploded[3 - $i] = 'x';

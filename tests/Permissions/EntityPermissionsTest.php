@@ -543,7 +543,7 @@ class EntityPermissionsTest extends TestCase
         $this->get('/')->assertSee('You do not have permission');
         $this->get($bookUrl . '/create-page')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-         $resp = $this->get($bookUrl);
+        $resp = $this->get($bookUrl);
         $this->withHtml($resp)->assertElementNotContains('.actions', 'New Page')
             ->assertElementNotContains('.actions', 'New Chapter');
 

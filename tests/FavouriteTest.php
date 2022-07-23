@@ -76,7 +76,7 @@ class FavouriteTest extends TestCase
     public function test_header_contains_link_to_favourites_page_when_logged_in()
     {
         $this->setSettings(['app-public' => 'true']);
-         $resp = $this->get('/');
+        $resp = $this->get('/');
         $this->withHtml($resp)->assertElementNotContains('header', 'My Favourites');
         $resp = $this->actingAs($this->getViewer())->get('/');
         $this->withHtml($resp)->assertElementContains('header a', 'My Favourites');

@@ -357,7 +357,7 @@ class RolesTest extends TestCase
             $ownShelf->getUrl() => 'Edit',
         ]);
 
-         $resp = $this->get($otherShelf->getUrl());
+        $resp = $this->get($otherShelf->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'Edit');
         $this->get($otherShelf->getUrl('/edit'))->assertRedirect('/');
     }
@@ -388,7 +388,7 @@ class RolesTest extends TestCase
             $ownShelf->getUrl() => 'Delete',
         ]);
 
-         $resp = $this->get($otherShelf->getUrl());
+        $resp = $this->get($otherShelf->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'Delete');
         $this->get($otherShelf->getUrl('/delete'))->assertRedirect('/');
 
@@ -437,7 +437,7 @@ class RolesTest extends TestCase
             $ownBook->getUrl() => 'Edit',
         ]);
 
-         $resp = $this->get($otherBook->getUrl());
+        $resp = $this->get($otherBook->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'Edit');
         $this->get($otherBook->getUrl('/edit'))->assertRedirect('/');
     }
@@ -465,7 +465,7 @@ class RolesTest extends TestCase
             $ownBook->getUrl() => 'Delete',
         ]);
 
-         $resp = $this->get($otherBook->getUrl());
+        $resp = $this->get($otherBook->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'Delete');
         $this->get($otherBook->getUrl('/delete'))->assertRedirect('/');
         $this->get($ownBook->getUrl());
@@ -505,7 +505,7 @@ class RolesTest extends TestCase
             'description' => 'chapter desc',
         ])->assertRedirect($ownBook->getUrl('/chapter/test-chapter'));
 
-         $resp = $this->get($book->getUrl());
+        $resp = $this->get($book->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'New Chapter');
         $this->get($book->getUrl('/create-chapter'))->assertRedirect('/');
     }
@@ -537,7 +537,7 @@ class RolesTest extends TestCase
             $ownChapter->getUrl() => 'Edit',
         ]);
 
-         $resp = $this->get($otherChapter->getUrl());
+        $resp = $this->get($otherChapter->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'Edit');
         $this->get($otherChapter->getUrl('/edit'))->assertRedirect('/');
     }
@@ -566,12 +566,12 @@ class RolesTest extends TestCase
         ]);
 
         $bookUrl = $ownChapter->book->getUrl();
-         $resp = $this->get($otherChapter->getUrl());
+        $resp = $this->get($otherChapter->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'Delete');
         $this->get($otherChapter->getUrl('/delete'))->assertRedirect('/');
         $this->get($ownChapter->getUrl());
         $this->delete($ownChapter->getUrl())->assertRedirect($bookUrl);
-         $resp = $this->get($bookUrl);
+        $resp = $this->get($bookUrl);
         $this->withHtml($resp)->assertElementNotContains('.book-content', $ownChapter->name);
     }
 
@@ -589,7 +589,7 @@ class RolesTest extends TestCase
         $bookUrl = $otherChapter->book->getUrl();
         $this->get($otherChapter->getUrl());
         $this->delete($otherChapter->getUrl())->assertRedirect($bookUrl);
-         $resp = $this->get($bookUrl);
+        $resp = $this->get($bookUrl);
         $this->withHtml($resp)->assertElementNotContains('.book-content', $otherChapter->name);
     }
 
@@ -633,11 +633,11 @@ class RolesTest extends TestCase
             'html' => 'page desc',
         ])->assertRedirect($ownBook->getUrl('/page/test-page'));
 
-         $resp = $this->get($book->getUrl());
+        $resp = $this->get($book->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'New Page');
         $this->get($book->getUrl('/create-page'))->assertRedirect('/');
 
-         $resp = $this->get($chapter->getUrl());
+        $resp = $this->get($chapter->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'New Page');
         $this->get($chapter->getUrl('/create-page'))->assertRedirect('/');
     }
@@ -698,7 +698,7 @@ class RolesTest extends TestCase
             $ownPage->getUrl() => 'Edit',
         ]);
 
-         $resp = $this->get($otherPage->getUrl());
+        $resp = $this->get($otherPage->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'Edit');
         $this->get($otherPage->getUrl() . '/edit')->assertRedirect('/');
     }
@@ -727,12 +727,12 @@ class RolesTest extends TestCase
         ]);
 
         $parent = $ownPage->chapter ?? $ownPage->book;
-         $resp = $this->get($otherPage->getUrl());
+        $resp = $this->get($otherPage->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.action-buttons', 'Delete');
         $this->get($otherPage->getUrl('/delete'))->assertRedirect('/');
         $this->get($ownPage->getUrl());
         $this->delete($ownPage->getUrl())->assertRedirect($parent->getUrl());
-         $resp = $this->get($parent->getUrl());
+        $resp = $this->get($parent->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.book-content', $ownPage->name);
     }
 
