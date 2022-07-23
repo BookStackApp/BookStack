@@ -10,6 +10,8 @@
     <meta property="og:description" content="{{ Str::limit($chapter->description, 100, '...') }}">
 @endpush
 
+@include('entities.body-tag-classes', ['entity' => $chapter])
+
 @section('body')
 
     <div class="mb-m print-hidden">

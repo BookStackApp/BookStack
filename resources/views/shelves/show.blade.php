@@ -7,6 +7,8 @@
     @endif
 @endpush
 
+@include('entities.body-tag-classes', ['entity' => $shelf])
+
 @section('body')
 
     <div class="mb-s">

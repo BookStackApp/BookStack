@@ -4,6 +4,8 @@
     <meta property="og:description" content="{{ Str::limit($page->text, 100, '...') }}">
 @endpush
 
+@include('entities.body-tag-classes', ['entity' => $page])
+
 @section('body')
 
     <div class="mb-m print-hidden">

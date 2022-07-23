@@ -13,6 +13,8 @@
     @endif
 @endpush
 
+@include('entities.body-tag-classes', ['entity' => $book])
+
 @section('body')
 
     <div class="mb-s">

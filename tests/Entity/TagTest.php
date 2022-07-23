@@ -198,9 +198,28 @@ class TagTest extends TestCase
 
     public function test_tag_index_shows_message_on_no_results()
     {
-        /** @var Page $page */
         $resp = $this->asEditor()->get('/tags?search=testingval');
         $resp->assertSee('No items available');
         $resp->assertSee('Tags can be assigned via the page editor sidebar');
+    }
+
+    public function test_tag_classes_visible_on_entities()
+    {
+        $this->asEditor();
+
+        foreach ($this->getEachEntityType() as $entity) {
+            $entity->tags()->create(['name' => 'My Super Tag Name', 'value' => 'An-awesome-value']);
+            $html = $this->withHtml($this->get($entity->getUrl()));
+            $html->assertElementExists('body.tag-name-mysupertagname.tag-value-anawesomevalue.tag-pair-mysupertagname-anawesomevalue');
+        }
+    }
+
+    public function test_tag_classes_are_escaped()
+    {
+        $page = Page::query()->first();
+        $page->tags()->create(['name' => '<>']);
+        $resp = $this->asEditor()->get($page->getUrl());
+        $resp->assertDontSee('tag-name-<>', false);
+        $resp->assertSee('tag-name-&lt;&gt;', false);
     }
 }
