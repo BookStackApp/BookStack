@@ -218,4 +218,27 @@ class AuditLogTest extends TestCase
             'entity_id' => $page->id,
         ]);
     }
+
+    public function test_ip_address_respects_precision_setting()
+    {
+        config()->set('app.proxies', '*');
+        config()->set('app.ip_address_precision', 2);
+        $editor = $this->getEditor();
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $this->actingAs($editor)->put($page->getUrl(), [
+            'name' => 'Updated page',
+            'html' => '<p>Updated content</p>',
+        ], [
+            'X-Forwarded-For' => '192.123.45.1',
+        ])->assertRedirect($page->refresh()->getUrl());
+
+        $this->assertDatabaseHas('activities', [
+            'type'      => ActivityType::PAGE_UPDATE,
+            'ip'        => '192.123.x.x',
+            'user_id'   => $editor->id,
+            'entity_id' => $page->id,
+        ]);
+    }
 }

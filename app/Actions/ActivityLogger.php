@@ -40,12 +40,10 @@ class ActivityLogger
      */
     protected function newActivityForUser(string $type): Activity
     {
-        $ip = request()->ip() ?? '';
-
         return (new Activity())->forceFill([
             'type'     => strtolower($type),
             'user_id'  => user()->id,
-            'ip'       => config('app.env') === 'demo' ? '127.0.0.1' : $ip,
+            'ip'       => IpFormatter::fromCurrentRequest()->format(),
         ]);
     }
 
