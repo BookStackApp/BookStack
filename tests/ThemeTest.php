@@ -214,7 +214,6 @@ class ThemeTest extends TestCase
         $this->assertEquals($book->id, $args[1]->id);
     }
 
-
     public function test_add_social_driver()
     {
         Theme::addSocialDriver('catnet', [
