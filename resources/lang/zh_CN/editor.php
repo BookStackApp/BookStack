@@ -157,7 +157,7 @@ return [
     'about' => '关于编辑器',
     'about_title' => '关于所见即所得（WYSIWYG）编辑器',
     'editor_license' => '编辑器许可证与版权信息',
-    'editor_tiny_license' => '此编辑器是在 LGPL v2.1 许可证下使用 :tinyLink 构建的。',
+    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
     'editor_tiny_license_link' => 'TinyMCE 的版权和许可证详细信息可以在这里找到。',
     'save_continue' => '保存页面并继续',
     'callouts_cycle' => '(继续按下以切换类型)',
