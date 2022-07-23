@@ -18,6 +18,6 @@ class HelpTest extends TestCase
         $this->assertTrue(file_exists($expectedPath));
 
         $contents = file_get_contents($expectedPath);
-        $this->assertStringContainsString('GNU LESSER GENERAL PUBLIC LICENSE', $contents);
+        $this->assertStringContainsString('MIT License', $contents);
     }
 }
