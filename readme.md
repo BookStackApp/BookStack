@@ -63,9 +63,9 @@ Below is a high-level road map view for BookStack to provide a sense of directio
 
 - **Platform REST API** - *(Most actions implemented, maturing)*
     - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
-- **Editor Alignment & Review** - *(In Progress)*
+- **Editor Alignment & Review** - *(Done)*
     - *Review the page editors with goal of achieving increased interoperability & feature parity while also considering collaborative editing potential.*
-- **Permission System Review**
+- **Permission System Review** - *(In Progress)*
     - *Improvement in how permissions are applied and a review of the efficiency of the permission & roles system.*
 - **Installation & Deployment Process Revamp**
     - *Creation of a streamlined & secure process for users to deploy & update BookStack with reduced development requirements (No git or composer requirement).*

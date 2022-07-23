@@ -77,7 +77,7 @@ return [
         'chroot' => realpath(public_path()),
 
         /**
-         * Protocol whitelist
+         * Protocol whitelist.
          *
          * Protocols and PHP wrappers allowed in URIs, and the validation rules
          * that determine if a resouce may be loaded. Full support is not guaranteed
@@ -87,9 +87,9 @@ return [
          * @var array
          */
         'allowed_protocols' => [
-            "file://" => ["rules" => []],
-            "http://" => ["rules" => []],
-            "https://" => ["rules" => []]
+            'file://'  => ['rules' => []],
+            'http://'  => ['rules' => []],
+            'https://' => ['rules' => []],
         ],
 
         /**
@@ -173,7 +173,7 @@ return [
          *
          * @var string
          */
-        'default_paper_orientation' => "portrait",
+        'default_paper_orientation' => 'portrait',
 
         /**
          * The default font family.
@@ -277,12 +277,13 @@ return [
         'enable_css_float' => true,
 
         /**
-         * Use the HTML5 Lib parser
+         * Use the HTML5 Lib parser.
          *
          * @deprecated This feature is now always on in dompdf 2.x
+         *
          * @var bool
          */
-        "enable_html5_parser" => true,
+        'enable_html5_parser' => true,
     ],
 
 ];
