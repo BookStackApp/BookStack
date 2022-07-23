@@ -62,14 +62,12 @@ function file_picker_callback(callback, value, meta) {
 
 /**
  * @param {WysiwygConfigOptions} options
- * @return {string}
+ * @return {string[]}
  */
 function gatherPlugins(options) {
     const plugins = [
         "image",
-        "imagetools",
         "table",
-        "paste",
         "link",
         "autolink",
         "fullscreen",
@@ -98,7 +96,7 @@ function gatherPlugins(options) {
         plugins.push('drawio');
     }
 
-    return plugins.filter(plugin => Boolean(plugin)).join(' ');
+    return plugins.filter(plugin => Boolean(plugin));
 }
 
 /**
@@ -123,7 +121,7 @@ function setupBrFilter(editor) {
     editor.serializer.addNodeFilter('br', function(nodes) {
         for (const node of nodes) {
             if (node.parent && node.parent.name === 'code') {
-                const newline = new tinymce.html.Node.create('#text');
+                const newline = tinymce.html.Node.create('#text');
                 newline.value = '\n';
                 node.replace(newline);
             }
@@ -215,7 +213,7 @@ export function build(options) {
             window.baseUrl('/dist/styles.css'),
         ],
         branding: false,
-        skin: options.darkMode ? 'oxide-dark' : 'oxide',
+        skin: options.darkMode ? 'tinymce-5-dark' : 'tinymce-5',
         body_class: 'page-content',
         browser_spellcheck: true,
         relative_urls: false,
@@ -237,10 +235,9 @@ export function build(options) {
             "-doc-root[doc-root|#text]",
             "-li[details]",
             "+code-block[pre]",
-            "+doc-root[code-block]"
+            "+doc-root[p|h1|h2|h3|h4|h5|h6|blockquote|code-block|div]"
         ].join(','),
         plugins: gatherPlugins(options),
-        imagetools_toolbar: 'imageoptions',
         contextmenu: false,
         toolbar: getPrimaryToolbar(options),
         content_style: getContentStyle(options),
@@ -249,6 +246,8 @@ export function build(options) {
         media_alt_source: false,
         media_poster: false,
         formats,
+        table_style_by_css: true,
+        table_use_colgroups: true,
         file_picker_types: 'file image',
         file_picker_callback,
         paste_preprocess(plugin, args) {

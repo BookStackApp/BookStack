@@ -110,7 +110,6 @@ function defineCodeBlockCustomElement(editor) {
 
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
             const renderCodeMirror = (Code) => {
-                console.log({content});
                 this.cm = Code.wysiwygView(container, content, this.getLanguage());
                 Code.updateLayout(this.cm);
                 setTimeout(() => {
@@ -186,7 +185,7 @@ function register(editor, url) {
     editor.on('PreInit', () => {
         editor.parser.addNodeFilter('pre', function(elms) {
             for (const el of elms) {
-                const wrapper = new tinymce.html.Node.create('code-block', {
+                const wrapper = tinymce.html.Node.create('code-block', {
                     contenteditable: 'false',
                 });
 

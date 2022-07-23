@@ -26,7 +26,7 @@ function register(editor, url) {
             editor.on('NodeChange', event => {
                 const parentListEl = event.parents.find(el => el.nodeName === 'LI');
                 const inList = parentListEl && parentListEl.classList.contains('task-list-item');
-                api.setActive(inList);
+                api.setActive(Boolean(inList));
             });
         }
     });
@@ -39,7 +39,7 @@ function register(editor, url) {
             const parentList = event.parents.find(el => el.nodeName === 'LI');
             const inTaskList = parentList && parentList.classList.contains('task-list-item');
             const inUlList = parentList && parentList.parentNode.nodeName === 'UL';
-            api.setActive(inUlList && !inTaskList);
+            api.setActive(Boolean(inUlList && !inTaskList));
         });
     };
     existingBullListButton.onAction = function() {
@@ -157,7 +157,7 @@ function serializeTaskListNode(node) {
     }
 
     // Create & insert checkbox input element
-    const checkbox = new tinymce.html.Node.create('input', inputAttrs);
+    const checkbox = tinymce.html.Node.create('input', inputAttrs);
     checkbox.shortEnded = true;
     node.firstChild ? node.insert(checkbox, node.firstChild, true) : node.append(checkbox);
 }
