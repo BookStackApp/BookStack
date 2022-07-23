@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('body-class', 'tri-layout')
+@push('body-class', 'tri-layout ')
 @section('content-components', 'tri-layout')
 
 @section('content')

@@ -428,4 +428,17 @@ abstract class TestCase extends BaseTestCase
 
         $this->assertDatabaseHas('activities', $detailsToCheck);
     }
+
+    /**
+     * @return Entity[]
+     */
+    protected function getEachEntityType(): array
+    {
+        return [
+            'page' => Page::query()->first(),
+            'chapter' => Chapter::query()->first(),
+            'book' => Book::query()->first(),
+            'bookshelf' => Bookshelf::query()->first(),
+        ];
+    }
 }
