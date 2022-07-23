@@ -6,9 +6,9 @@ use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Testing\TestResponse;
 use Tests\Helpers\OidcJwtHelper;
 use Tests\TestCase;
-use Tests\TestResponse;
 
 class OidcTest extends TestCase
 {
@@ -52,7 +52,7 @@ class OidcTest extends TestCase
     {
         $req = $this->get('/login');
         $req->assertSeeText('SingleSignOn-Testing');
-        $req->assertElementExists('form[action$="/oidc/login"][method=POST] button');
+        $this->withHtml($req)->assertElementExists('form[action$="/oidc/login"][method=POST] button');
     }
 
     public function test_oidc_routes_are_only_active_if_oidc_enabled()

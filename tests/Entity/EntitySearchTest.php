@@ -237,12 +237,12 @@ class EntitySearchTest extends TestCase
         $searchUrl = '/ajax/search/entities?permission=update&term=' . urlencode($page->name);
 
         $resp = $this->asEditor()->get($searchUrl);
-        $resp->assertElementContains($baseSelector, $page->name);
-        $resp->assertElementNotContains($baseSelector, "You don't have the required permissions to select this item");
+        $this->withHtml($resp)->assertElementContains($baseSelector, $page->name);
+        $this->withHtml($resp)->assertElementNotContains($baseSelector, "You don't have the required permissions to select this item");
 
         $resp = $this->actingAs($this->getViewer())->get($searchUrl);
-        $resp->assertElementContains($baseSelector, $page->name);
-        $resp->assertElementContains($baseSelector, "You don't have the required permissions to select this item");
+        $this->withHtml($resp)->assertElementContains($baseSelector, $page->name);
+        $this->withHtml($resp)->assertElementContains($baseSelector, "You don't have the required permissions to select this item");
     }
 
     public function test_sibling_search_for_pages()
@@ -338,16 +338,16 @@ class EntitySearchTest extends TestCase
         $this->newPage(['name' => 'Test page B', 'html' => '<p>cat biscuit</p>']);
 
         $search = $this->asEditor()->get('/search?term=cat+dog+biscuit');
-        $search->assertElementContains('.entity-list > .page', 'Test page A', 1);
-        $search->assertElementContains('.entity-list > .page', 'Test page B', 2);
+        $this->withHtml($search)->assertElementContains('.entity-list > .page:nth-child(1)', 'Test page A');
+        $this->withHtml($search)->assertElementContains('.entity-list > .page:nth-child(2)', 'Test page B');
 
         for ($i = 0; $i < 2; $i++) {
             $this->newPage(['name' => 'Test page ' . $i, 'html' => '<p>dog</p>']);
         }
 
         $search = $this->asEditor()->get('/search?term=cat+dog+biscuit');
-        $search->assertElementContains('.entity-list > .page', 'Test page B', 1);
-        $search->assertElementContains('.entity-list > .page', 'Test page A', 2);
+        $this->withHtml($search)->assertElementContains('.entity-list > .page:nth-child(1)', 'Test page B');
+        $this->withHtml($search)->assertElementContains('.entity-list > .page:nth-child(2)', 'Test page A');
     }
 
     public function test_terms_in_headers_have_an_adjusted_index_score()
@@ -413,9 +413,9 @@ class EntitySearchTest extends TestCase
         // Content
         $search->assertSee('A <strong>superimportant</strong> page about <strong>meowie</strong>able animals', false);
         // Tag name
-        $search->assertElementContains('.tag-name.highlight', 'SuperImportant');
+        $this->withHtml($search)->assertElementContains('.tag-name.highlight', 'SuperImportant');
         // Tag value
-        $search->assertElementContains('.tag-value.highlight', 'MeowieCat');
+        $this->withHtml($search)->assertElementContains('.tag-value.highlight', 'MeowieCat');
     }
 
     public function test_match_highlighting_works_with_multibyte_content()
@@ -452,7 +452,7 @@ class EntitySearchTest extends TestCase
     public function test_searches_with_user_filters_adds_them_into_advanced_search_form()
     {
         $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:me} {created_by:dan}'));
-        $resp->assertElementExists('form input[type="hidden"][name="filters[updated_by]"][value="me"]');
-        $resp->assertElementExists('form input[type="hidden"][name="filters[created_by]"][value="dan"]');
+        $this->withHtml($resp)->assertElementExists('form input[type="hidden"][name="filters[updated_by]"][value="me"]');
+        $this->withHtml($resp)->assertElementExists('form input[type="hidden"][name="filters[created_by]"][value="dan"]');
     }
 }

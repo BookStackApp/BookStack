@@ -12,8 +12,8 @@ class TestEmailTest extends TestCase
     {
         $pageView = $this->asAdmin()->get('/settings/maintenance');
         $formCssSelector = 'form[action$="/settings/maintenance/send-test-email"]';
-        $pageView->assertElementExists($formCssSelector);
-        $pageView->assertElementContains($formCssSelector . ' button', 'Send Test Email');
+        $this->withHtml($pageView)->assertElementExists($formCssSelector);
+        $this->withHtml($pageView)->assertElementContains($formCssSelector . ' button', 'Send Test Email');
     }
 
     public function test_send_test_email_endpoint_sends_email_and_redirects_user_and_shows_notification()

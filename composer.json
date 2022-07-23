@@ -50,7 +50,7 @@
         "nunomaduro/collision": "^5.10",
         "nunomaduro/larastan": "^1.0",
         "phpunit/phpunit": "^9.5",
-        "symfony/dom-crawler": "^5.3"
+        "ssddanbrown/asserthtml": "^1.0"
     },
     "autoload": {
         "psr-4": {

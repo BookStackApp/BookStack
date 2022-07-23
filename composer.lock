@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23657e068ced89802ea578718478da3a",
+    "content-hash": "4ab21f732b2380ed1c3dd1a4eca2ef1a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -10727,6 +10727,62 @@
                 "source": "https://github.com/Seldaek/phar-utils/tree/1.2.0"
             },
             "time": "2021-12-10T11:20:11+00:00"
+        },
+        {
+            "name": "ssddanbrown/asserthtml",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ssddanbrown/htmlassert.git",
+                "reference": "f7d4352bb3d69347097b2841fd71934182821928"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ssddanbrown/htmlassert/zipball/f7d4352bb3d69347097b2841fd71934182821928",
+                "reference": "f7d4352bb3d69347097b2841fd71934182821928",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-json": "*",
+                "php": ">=7.4",
+                "phpunit/phpunit": "^9.0",
+                "symfony/css-selector": "^5.0|^6.0",
+                "symfony/dom-crawler": "^5.0|^6.0"
+            },
+            "require-dev": {
+                "vimeo/psalm": "^4.10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ssddanbrown\\AssertHtml\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dan Brown",
+                    "email": "ssddanbrown@googlemail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "HTML Content Assertions for PHPUnit",
+            "homepage": "https://github.com/ssddanbrown/asserthtml",
+            "support": {
+                "issues": "https://github.com/ssddanbrown/htmlassert/issues",
+                "source": "https://github.com/ssddanbrown/htmlassert/tree/v1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ssddanbrown",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-04-09T13:31:13+00:00"
         },
         {
             "name": "symfony/dom-crawler",

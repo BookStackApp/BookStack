@@ -19,10 +19,10 @@ class BookTest extends TestCase
         ]);
 
         $resp = $this->asEditor()->get('/books');
-        $resp->assertElementContains('a[href="' . url('/create-book') . '"]', 'Create New Book');
+        $this->withHtml($resp)->assertElementContains('a[href="' . url('/create-book') . '"]', 'Create New Book');
 
         $resp = $this->get('/create-book');
-        $resp->assertElementContains('form[action="' . url('/books') . '"][method="POST"]', 'Save Book');
+        $this->withHtml($resp)->assertElementContains('form[action="' . url('/books') . '"][method="POST"]', 'Save Book');
 
         $resp = $this->post('/books', $book->only('name', 'description'));
         $resp->assertRedirect('/books/my-first-book');
@@ -91,7 +91,7 @@ class BookTest extends TestCase
         $resp = $this->get($book->getUrl('/edit'));
         $resp->assertSee($book->name);
         $resp->assertSee($book->description);
-        $resp->assertElementContains('form[action="' . $book->getUrl() . '"]', 'Save Book');
+        $this->withHtml($resp)->assertElementContains('form[action="' . $book->getUrl() . '"]', 'Save Book');
 
         $resp = $this->put($book->getUrl(), ['name' => $newName, 'description' => $newDesc]);
         $resp->assertRedirect($book->getUrl() . '-updated');
@@ -155,13 +155,13 @@ class BookTest extends TestCase
         $this->assertTrue($book->deletions()->count() === 1);
 
         $redirectReq = $this->get($deleteReq->baseResponse->headers->get('location'));
-        $redirectReq->assertNotificationContains('Book Successfully Deleted');
+        $this->assertNotificationContains($redirectReq, 'Book Successfully Deleted');
     }
 
     public function test_cancel_on_create_page_leads_back_to_books_listing()
     {
         $resp = $this->asEditor()->get('/create-book');
-        $resp->assertElementContains('form a[href="' . url('/books') . '"]', 'Cancel');
+        $this->withHtml($resp)->assertElementContains('form a[href="' . url('/books') . '"]', 'Cancel');
     }
 
     public function test_cancel_on_edit_book_page_leads_back_to_book()
@@ -169,7 +169,7 @@ class BookTest extends TestCase
         /** @var Book $book */
         $book = Book::query()->first();
         $resp = $this->asEditor()->get($book->getUrl('/edit'));
-        $resp->assertElementContains('form a[href="' . $book->getUrl() . '"]', 'Cancel');
+        $this->withHtml($resp)->assertElementContains('form a[href="' . $book->getUrl() . '"]', 'Cancel');
     }
 
     public function test_next_previous_navigation_controls_show_within_book_content()
@@ -178,28 +178,28 @@ class BookTest extends TestCase
         $chapter = $book->chapters->first();
 
         $resp = $this->asEditor()->get($chapter->getUrl());
-        $resp->assertElementContains('#sibling-navigation', 'Next');
-        $resp->assertElementContains('#sibling-navigation', substr($chapter->pages[0]->name, 0, 20));
+        $this->withHtml($resp)->assertElementContains('#sibling-navigation', 'Next');
+        $this->withHtml($resp)->assertElementContains('#sibling-navigation', substr($chapter->pages[0]->name, 0, 20));
 
         $resp = $this->get($chapter->pages[0]->getUrl());
-        $resp->assertElementContains('#sibling-navigation', substr($chapter->pages[1]->name, 0, 20));
-        $resp->assertElementContains('#sibling-navigation', 'Previous');
-        $resp->assertElementContains('#sibling-navigation', substr($chapter->name, 0, 20));
+        $this->withHtml($resp)->assertElementContains('#sibling-navigation', substr($chapter->pages[1]->name, 0, 20));
+        $this->withHtml($resp)->assertElementContains('#sibling-navigation', 'Previous');
+        $this->withHtml($resp)->assertElementContains('#sibling-navigation', substr($chapter->name, 0, 20));
     }
 
     public function test_recently_viewed_books_updates_as_expected()
     {
         $books = Book::all()->take(2);
 
-        $this->asAdmin()->get('/books')
-            ->assertElementNotContains('#recents', $books[0]->name)
+        $resp = $this->asAdmin()->get('/books');
+        $this->withHtml($resp)->assertElementNotContains('#recents', $books[0]->name)
             ->assertElementNotContains('#recents', $books[1]->name);
 
         $this->get($books[0]->getUrl());
         $this->get($books[1]->getUrl());
 
-        $this->get('/books')
-            ->assertElementContains('#recents', $books[0]->name)
+        $resp = $this->get('/books');
+        $this->withHtml($resp)->assertElementContains('#recents', $books[0]->name)
             ->assertElementContains('#recents', $books[1]->name);
     }
 
@@ -207,16 +207,16 @@ class BookTest extends TestCase
     {
         $books = Book::all()->take(2);
 
-        $this->asAdmin()->get('/books')
-            ->assertElementNotContains('#popular', $books[0]->name)
+        $resp = $this->asAdmin()->get('/books');
+        $this->withHtml($resp)->assertElementNotContains('#popular', $books[0]->name)
             ->assertElementNotContains('#popular', $books[1]->name);
 
         $this->get($books[0]->getUrl());
         $this->get($books[1]->getUrl());
         $this->get($books[0]->getUrl());
 
-        $this->get('/books')
-            ->assertElementContains('#popular .book:nth-child(1)', $books[0]->name)
+        $resp = $this->get('/books');
+        $this->withHtml($resp)->assertElementContains('#popular .book:nth-child(1)', $books[0]->name)
             ->assertElementContains('#popular .book:nth-child(2)', $books[1]->name);
     }
 
@@ -227,16 +227,16 @@ class BookTest extends TestCase
         setting()->putUser($editor, 'books_view_type', 'list');
 
         $resp = $this->actingAs($editor)->get('/books');
-        $resp->assertElementContains('form[action$="/settings/users/' . $editor->id . '/switch-books-view"]', 'Grid View');
-        $resp->assertElementExists('input[name="view_type"][value="grid"]');
+        $this->withHtml($resp)->assertElementContains('form[action$="/settings/users/' . $editor->id . '/switch-books-view"]', 'Grid View');
+        $this->withHtml($resp)->assertElementExists('input[name="view_type"][value="grid"]');
 
         $resp = $this->patch("/settings/users/{$editor->id}/switch-books-view", ['view_type' => 'grid']);
         $resp->assertRedirect();
         $this->assertEquals('grid', setting()->getUser($editor, 'books_view_type'));
 
         $resp = $this->actingAs($editor)->get('/books');
-        $resp->assertElementContains('form[action$="/settings/users/' . $editor->id . '/switch-books-view"]', 'List View');
-        $resp->assertElementExists('input[name="view_type"][value="list"]');
+        $this->withHtml($resp)->assertElementContains('form[action$="/settings/users/' . $editor->id . '/switch-books-view"]', 'List View');
+        $this->withHtml($resp)->assertElementExists('input[name="view_type"][value="list"]');
 
         $resp = $this->patch("/settings/users/{$editor->id}/switch-books-view", ['view_type' => 'list']);
         $resp->assertRedirect();
@@ -273,7 +273,7 @@ class BookTest extends TestCase
         $book = Book::query()->first();
         $resp = $this->asEditor()->get($book->getUrl());
 
-        $resp->assertElementContains("a[href=\"{$book->getUrl('/copy')}\"]", 'Copy');
+        $this->withHtml($resp)->assertElementContains("a[href=\"{$book->getUrl('/copy')}\"]", 'Copy');
     }
 
     public function test_copy_view()
@@ -284,7 +284,7 @@ class BookTest extends TestCase
 
         $resp->assertOk();
         $resp->assertSee('Copy Book');
-        $resp->assertElementExists("input[name=\"name\"][value=\"{$book->name}\"]");
+        $this->withHtml($resp)->assertElementExists("input[name=\"name\"][value=\"{$book->name}\"]");
     }
 
     public function test_copy()

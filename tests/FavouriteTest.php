@@ -15,8 +15,8 @@ class FavouriteTest extends TestCase
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl());
-        $resp->assertElementContains('button', 'Favourite');
-        $resp->assertElementExists('form[method="POST"][action$="/favourites/add"]');
+        $this->withHtml($resp)->assertElementContains('button', 'Favourite');
+        $this->withHtml($resp)->assertElementExists('form[method="POST"][action$="/favourites/add"]');
 
         $resp = $this->post('/favourites/add', [
             'type' => get_class($page),
@@ -43,8 +43,8 @@ class FavouriteTest extends TestCase
         ]);
 
         $resp = $this->actingAs($editor)->get($page->getUrl());
-        $resp->assertElementContains('button', 'Unfavourite');
-        $resp->assertElementExists('form[method="POST"][action$="/favourites/remove"]');
+        $this->withHtml($resp)->assertElementContains('button', 'Unfavourite');
+        $this->withHtml($resp)->assertElementExists('form[method="POST"][action$="/favourites/remove"]');
 
         $resp = $this->post('/favourites/remove', [
             'type' => get_class($page),
@@ -69,15 +69,17 @@ class FavouriteTest extends TestCase
 
         foreach ($entities as $entity) {
             $resp = $this->get($entity->getUrl());
-            $resp->assertElementExists('form[method="POST"][action$="/favourites/add"]');
+            $this->withHtml($resp)->assertElementExists('form[method="POST"][action$="/favourites/add"]');
         }
     }
 
     public function test_header_contains_link_to_favourites_page_when_logged_in()
     {
         $this->setSettings(['app-public' => 'true']);
-        $this->get('/')->assertElementNotContains('header', 'My Favourites');
-        $this->actingAs($this->getViewer())->get('/')->assertElementContains('header a', 'My Favourites');
+         $resp = $this->get('/');
+        $this->withHtml($resp)->assertElementNotContains('header', 'My Favourites');
+        $resp = $this->actingAs($this->getViewer())->get('/');
+        $this->withHtml($resp)->assertElementContains('header a', 'My Favourites');
     }
 
     public function test_favourites_shown_on_homepage()
@@ -85,15 +87,15 @@ class FavouriteTest extends TestCase
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get('/');
-        $resp->assertElementNotExists('#top-favourites');
+        $this->withHtml($resp)->assertElementNotExists('#top-favourites');
 
         /** @var Page $page */
         $page = Page::query()->first();
         $page->favourites()->save((new Favourite())->forceFill(['user_id' => $editor->id]));
 
         $resp = $this->get('/');
-        $resp->assertElementExists('#top-favourites');
-        $resp->assertElementContains('#top-favourites', $page->name);
+        $this->withHtml($resp)->assertElementExists('#top-favourites');
+        $this->withHtml($resp)->assertElementContains('#top-favourites', $page->name);
     }
 
     public function test_favourites_list_page_shows_favourites_and_has_working_pagination()

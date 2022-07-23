@@ -93,10 +93,10 @@ class UserApiTokenTest extends TestCase
         $token = ApiToken::query()->latest()->first();
 
         $resp = $this->get($editor->getEditUrl());
-        $resp->assertElementExists('#api_tokens');
-        $resp->assertElementContains('#api_tokens', $token->name);
-        $resp->assertElementContains('#api_tokens', $token->token_id);
-        $resp->assertElementContains('#api_tokens', $token->expires_at->format('Y-m-d'));
+        $this->withHtml($resp)->assertElementExists('#api_tokens');
+        $this->withHtml($resp)->assertElementContains('#api_tokens', $token->name);
+        $this->withHtml($resp)->assertElementContains('#api_tokens', $token->token_id);
+        $this->withHtml($resp)->assertElementContains('#api_tokens', $token->expires_at->format('Y-m-d'));
     }
 
     public function test_secret_shown_once_after_creation()
@@ -161,7 +161,7 @@ class UserApiTokenTest extends TestCase
         $resp = $this->get($tokenUrl . '/delete');
         $resp->assertSeeText('Delete Token');
         $resp->assertSeeText($token->name);
-        $resp->assertElementExists('form[action="' . $tokenUrl . '"]');
+        $this->withHtml($resp)->assertElementExists('form[action="' . $tokenUrl . '"]');
 
         $resp = $this->delete($tokenUrl);
         $resp->assertRedirect($editor->getEditUrl('#api_tokens'));

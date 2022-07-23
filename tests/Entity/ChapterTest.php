@@ -19,10 +19,10 @@ class ChapterTest extends TestCase
         ]);
 
         $resp = $this->asEditor()->get($book->getUrl());
-        $resp->assertElementContains('a[href="' . $book->getUrl('/create-chapter') . '"]', 'New Chapter');
+        $this->withHtml($resp)->assertElementContains('a[href="' . $book->getUrl('/create-chapter') . '"]', 'New Chapter');
 
         $resp = $this->get($book->getUrl('/create-chapter'));
-        $resp->assertElementContains('form[action="' . $book->getUrl('/create-chapter') . '"][method="POST"]', 'Save Chapter');
+        $this->withHtml($resp)->assertElementContains('form[action="' . $book->getUrl('/create-chapter') . '"][method="POST"]', 'Save Chapter');
 
         $resp = $this->post($book->getUrl('/create-chapter'), $chapter->only('name', 'description'));
         $resp->assertRedirect($book->getUrl('/chapter/my-first-chapter'));
@@ -53,7 +53,7 @@ class ChapterTest extends TestCase
         $this->assertTrue($chapter->deletions()->count() === 1);
 
         $redirectReq = $this->get($deleteReq->baseResponse->headers->get('location'));
-        $redirectReq->assertNotificationContains('Chapter Successfully Deleted');
+        $this->assertNotificationContains($redirectReq, 'Chapter Successfully Deleted');
     }
 
     public function test_show_view_has_copy_button()
@@ -62,7 +62,7 @@ class ChapterTest extends TestCase
         $chapter = Chapter::query()->first();
 
         $resp = $this->asEditor()->get($chapter->getUrl());
-        $resp->assertElementContains("a[href$=\"{$chapter->getUrl('/copy')}\"]", 'Copy');
+        $this->withHtml($resp)->assertElementContains("a[href$=\"{$chapter->getUrl('/copy')}\"]", 'Copy');
     }
 
     public function test_copy_view()
@@ -73,8 +73,8 @@ class ChapterTest extends TestCase
         $resp = $this->asEditor()->get($chapter->getUrl('/copy'));
         $resp->assertOk();
         $resp->assertSee('Copy Chapter');
-        $resp->assertElementExists("input[name=\"name\"][value=\"{$chapter->name}\"]");
-        $resp->assertElementExists('input[name="entity_selection"]');
+        $this->withHtml($resp)->assertElementExists("input[name=\"name\"][value=\"{$chapter->name}\"]");
+        $this->withHtml($resp)->assertElementExists('input[name="entity_selection"]');
     }
 
     public function test_copy()
