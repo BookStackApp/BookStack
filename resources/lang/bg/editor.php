@@ -157,7 +157,7 @@ return [
     'about' => 'About the editor',
     'about_title' => 'Относно визуалния редактор',
     'editor_license' => 'Лиценз, авторски и сходни права на редактора',
-    'editor_tiny_license' => 'Този редактор е създаден с :tinyLink, който е предоставен с лиценз LGPL v2.1.',
+    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
     'editor_tiny_license_link' => 'Авторското и сходните му права, както и лицензът на TinyMCE, могат да бъдат намерени тук.',
     'save_continue' => 'Запази страницата и продължи',
     'callouts_cycle' => '(Продължавай да натискаш, за да превключваш типовете)',
