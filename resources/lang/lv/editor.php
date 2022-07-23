@@ -157,7 +157,7 @@ return [
     'about' => 'Par redaktoru',
     'about_title' => 'Par WYSIWYG redaktoru',
     'editor_license' => 'Redaktora licence un autortiesības',
-    'editor_tiny_license' => 'Šis redaktors ir izveidots, izmantojot :tinyLink, kas ir publicēts ar LGPL v2.1 licenci.',
+    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
     'editor_tiny_license_link' => 'TinyMCE autortiesības un licences detaļas var atrast šeit.',
     'save_continue' => 'Saglabāt lapu un turpināt',
     'callouts_cycle' => '(Turpiniet spiest, lai pārslēgtu tipus)',
