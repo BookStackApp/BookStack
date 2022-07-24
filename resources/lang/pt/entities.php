@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Guardar Estante',
     'shelves_books' => 'Livros nesta estante',
     'shelves_add_books' => 'Adicionar livros a esta estante',
-    'shelves_drag_books' => 'Arraste livros aqui para adicioná-los a esta estante',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Esta estante não tem livros atribuídos',
     'shelves_edit_and_assign' => 'Editar estante para atribuir livros',
     'shelves_edit_named' => 'Editar Estante de Livros :name',
