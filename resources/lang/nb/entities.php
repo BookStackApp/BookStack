@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Lagre hylle',
     'shelves_books' => 'Bøker på denne hyllen',
     'shelves_add_books' => 'Legg til bøker på denne hyllen',
-    'shelves_drag_books' => 'Dra bøker hit for å stable dem i denne hylla',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'INgen bøker er stablet i denne hylla',
     'shelves_edit_and_assign' => 'Endre hylla for å legge til bøker',
     'shelves_edit_named' => 'Endre hyllen :name',
