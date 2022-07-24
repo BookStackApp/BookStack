@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Save Shelf',
     'shelves_books' => 'Books on this shelf',
     'shelves_add_books' => 'Add books to this shelf',
-    'shelves_drag_books' => 'Drag books here to add them to this shelf',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'This shelf has no books assigned to it',
     'shelves_edit_and_assign' => 'Edit shelf to assign books',
     'shelves_edit_named' => 'Edit Bookshelf :name',
