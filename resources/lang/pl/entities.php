@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Zapisz półkę',
     'shelves_books' => 'Książki na tej półce',
     'shelves_add_books' => 'Dodaj książkę do tej półki',
-    'shelves_drag_books' => 'Przeciągnij książki tutaj aby dodać je do półki',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Ta półka nie ma przypisanych żadnych książek',
     'shelves_edit_and_assign' => 'Edytuj półkę aby przypisać książki',
     'shelves_edit_named' => 'Edytuj półkę :name',
