@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Salva Libreria',
     'shelves_books' => 'Libri in questa libreria',
     'shelves_add_books' => 'Aggiungi libri a questa libreria',
-    'shelves_drag_books' => 'Trascina i libri qui per aggiungerli a questa libreria',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Questa libreria non ha libri assegnati',
     'shelves_edit_and_assign' => 'Modifica la libreria per assegnare i libri',
     'shelves_edit_named' => 'Modifica Libreria :name',
