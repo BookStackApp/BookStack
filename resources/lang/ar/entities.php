@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'حفظ الرف',
     'shelves_books' => 'كتب على هذا الرف',
     'shelves_add_books' => 'إضافة كتب لهذا الرف',
-    'shelves_drag_books' => 'اسحب الكتب هنا لإضافتها في هذا الرف',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'لا توجد كتب مخصصة لهذا الرف',
     'shelves_edit_and_assign' => 'تحرير الرف لإدراج كتب',
     'shelves_edit_named' => 'تحرير رف الكتب :name',
