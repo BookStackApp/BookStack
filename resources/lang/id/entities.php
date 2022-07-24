@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Simpan Rak',
     'shelves_books' => 'Buku di rak ini',
     'shelves_add_books' => 'Tambahkan buku ke rak ini',
-    'shelves_drag_books' => 'Tarik buku ke sini untuk menambahkannya ke rak ini',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Rak ini tidak memiliki buku yang ditugaskan padanya',
     'shelves_edit_and_assign' => 'Edit rak untuk menetapkan buku',
     'shelves_edit_named' => 'Edit Rak Buku :name',
