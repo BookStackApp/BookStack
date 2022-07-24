@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Uložiť policu',
     'shelves_books' => 'Knihy na tejto polici',
     'shelves_add_books' => 'Pridať knihy do tejto police',
-    'shelves_drag_books' => 'Potiahnite knihy sem a pridajte ich do tejto police',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Táto polica nemá priradené žiadne knihy',
     'shelves_edit_and_assign' => 'Uprav policu a priraď knihy',
     'shelves_edit_named' => 'Upraviť poličku::name',
