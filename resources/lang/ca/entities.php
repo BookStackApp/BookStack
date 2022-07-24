@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Desa el prestatge',
     'shelves_books' => 'Llibres en aquest prestatge',
     'shelves_add_books' => 'Afegeix llibres a aquest prestatge',
-    'shelves_drag_books' => 'Arrossegueu llibres aquí per a afegir-los a aquest prestatge',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Aquest prestatge no té cap llibre assignat',
     'shelves_edit_and_assign' => 'Editeu el prestatge per a assignar-hi llibres',
     'shelves_edit_named' => 'Edita el prestatge :name',
