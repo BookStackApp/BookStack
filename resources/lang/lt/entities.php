@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Išsaugoti lenyną',
     'shelves_books' => 'Knygos šioje lentynoje',
     'shelves_add_books' => 'Pridėti knygas į šią lentyną',
-    'shelves_drag_books' => 'Vilkite knygas čia, kad pridėtumėte jas į šią lentyną',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Ši lentyną neturi jokių pridėtų knygų',
     'shelves_edit_and_assign' => 'Redaguoti lentyną, kad pridėti knygų',
     'shelves_edit_named' => 'Redaguoti knygų lentyną :name',
