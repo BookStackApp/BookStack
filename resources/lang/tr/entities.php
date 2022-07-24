@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Kitaplığı Kaydet',
     'shelves_books' => 'Bu kitaplıktaki kitaplar',
     'shelves_add_books' => 'Bu kitaplığa kitap ekle',
-    'shelves_drag_books' => 'Bu kitaplığa eklemek istediğin kitapları buraya sürükle',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Bu kitaplıkta hiç kitap bulunamadı',
     'shelves_edit_and_assign' => 'Kitap eklemek için kitaplığı düzenleyin',
     'shelves_edit_named' => ':name Kitaplığını Düzenle',
