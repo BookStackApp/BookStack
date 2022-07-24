@@ -88,7 +88,7 @@ return [
     'shelves_save' => '저장',
     'shelves_books' => '이 책꽂이에 있는 책들',
     'shelves_add_books' => '이 책꽂이에 책 추가',
-    'shelves_drag_books' => '여기에 책을 드롭하세요.',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => '이 책꽂이에 책이 없습니다.',
     'shelves_edit_and_assign' => '책꽂이 바꾸기로 책을 추가하세요.',
     'shelves_edit_named' => ':name 바꾸기',
