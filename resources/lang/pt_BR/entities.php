@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Salvar Prateleira',
     'shelves_books' => 'Livros nesta prateleira',
     'shelves_add_books' => 'Adicionar livros a esta prateleira',
-    'shelves_drag_books' => 'Arraste livros aqui para adicioná-los a esta prateleira',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Esta prateleira não possui livros atribuídos a ela',
     'shelves_edit_and_assign' => 'Editar prateleira para atribuir livros',
     'shelves_edit_named' => 'Editar Prateleira de Livros :name',
