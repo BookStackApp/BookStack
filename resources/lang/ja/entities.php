@@ -88,7 +88,7 @@ return [
     'shelves_save' => '本棚を保存',
     'shelves_books' => 'この本棚のブック',
     'shelves_add_books' => 'この本棚にブックを追加',
-    'shelves_drag_books' => 'ブックをここにドラッグすると本棚に追加されます',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'この本棚にはブックが割り当てられていません。',
     'shelves_edit_and_assign' => '本棚を編集してブックを割り当てる',
     'shelves_edit_named' => '本棚「:name」を編集',
