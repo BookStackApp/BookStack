@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Uložit knihovnu',
     'shelves_books' => 'Knihy v této knihovně',
     'shelves_add_books' => 'Přidat knihy do knihovny',
-    'shelves_drag_books' => 'Knihu přidáte jejím přetažením sem',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Tato knihovna neobsahuje žádné knihy',
     'shelves_edit_and_assign' => 'Upravit knihovnu a přiřadit knihy',
     'shelves_edit_named' => 'Upravit knihovnu :name',
