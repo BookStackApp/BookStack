@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Shrani polico',
     'shelves_books' => 'Knjige na tej polici',
     'shelves_add_books' => 'Dodaj knjige na to polico',
-    'shelves_drag_books' => 'Povlecite knjige sem, da jih dodate na to polico',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Na tej polici ni nobene knjige',
     'shelves_edit_and_assign' => 'Uredi knjižno polico za dodajanje knjig',
     'shelves_edit_named' => 'Uredi knjižno polico :name',
