@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Boekenplank opslaan',
     'shelves_books' => 'Boeken op deze plank',
     'shelves_add_books' => 'Voeg boeken toe aan deze plank',
-    'shelves_drag_books' => 'Sleep boeken hiernaartoe om deze toe te voegen aan deze plank',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Aan deze plank zijn geen boeken toegewezen',
     'shelves_edit_and_assign' => 'Bewerk boekenplank om boeken toe te wijzen',
     'shelves_edit_named' => 'Bewerk boekenplank :name',
