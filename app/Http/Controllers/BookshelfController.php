@@ -10,22 +10,19 @@ use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class BookshelfController extends Controller
 {
-    protected $bookshelfRepo;
-    protected $entityContextManager;
-    protected $imageRepo;
+    protected BookshelfRepo $shelfRepo;
+    protected ShelfContext $shelfContext;
 
-    public function __construct(BookshelfRepo $bookshelfRepo, ShelfContext $entityContextManager, ImageRepo $imageRepo)
+    public function __construct(BookshelfRepo $shelfRepo, ShelfContext $shelfContext)
     {
-        $this->bookshelfRepo = $bookshelfRepo;
-        $this->entityContextManager = $entityContextManager;
-        $this->imageRepo = $imageRepo;
+        $this->shelfRepo = $shelfRepo;
+        $this->shelfContext = $shelfContext;
     }
 
     /**
@@ -42,12 +39,12 @@ class BookshelfController extends Controller
             'updated_at' => trans('common.sort_updated_at'),
         ];
 
-        $shelves = $this->bookshelfRepo->getAllPaginated(18, $sort, $order);
-        $recents = $this->isSignedIn() ? $this->bookshelfRepo->getRecentlyViewed(4) : false;
-        $popular = $this->bookshelfRepo->getPopular(4);
-        $new = $this->bookshelfRepo->getRecentlyCreated(4);
+        $shelves = $this->shelfRepo->getAllPaginated(18, $sort, $order);
+        $recents = $this->isSignedIn() ? $this->shelfRepo->getRecentlyViewed(4) : false;
+        $popular = $this->shelfRepo->getPopular(4);
+        $new = $this->shelfRepo->getRecentlyCreated(4);
 
-        $this->entityContextManager->clearShelfContext();
+        $this->shelfContext->clearShelfContext();
         $this->setPageTitle(trans('entities.shelves'));
 
         return view('shelves.index', [
@@ -68,7 +65,7 @@ class BookshelfController extends Controller
     public function create()
     {
         $this->checkPermission('bookshelf-create-all');
-        $books = Book::visible()->get();
+        $books = Book::visible()->orderBy('name')->get(['name', 'id', 'slug']);
         $this->setPageTitle(trans('entities.shelves_create'));
 
         return view('shelves.create', ['books' => $books]);
@@ -91,7 +88,7 @@ class BookshelfController extends Controller
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));
-        $shelf = $this->bookshelfRepo->create($validated, $bookIds);
+        $shelf = $this->shelfRepo->create($validated, $bookIds);
 
         return redirect($shelf->getUrl());
     }
@@ -103,7 +100,7 @@ class BookshelfController extends Controller
      */
     public function show(ActivityQueries $activities, string $slug)
     {
-        $shelf = $this->bookshelfRepo->getBySlug($slug);
+        $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-view', $shelf);
 
         $sort = setting()->getForCurrentUser('shelf_books_sort', 'default');
@@ -115,7 +112,7 @@ class BookshelfController extends Controller
             ->all();
 
         View::incrementFor($shelf);
-        $this->entityContextManager->setShelfContext($shelf->id);
+        $this->shelfContext->setShelfContext($shelf->id);
         $view = setting()->getForCurrentUser('bookshelf_view_type');
 
         $this->setPageTitle($shelf->getShortName());
@@ -135,11 +132,11 @@ class BookshelfController extends Controller
      */
     public function edit(string $slug)
     {
-        $shelf = $this->bookshelfRepo->getBySlug($slug);
+        $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $shelfBookIds = $shelf->books()->get(['id'])->pluck('id');
-        $books = Book::visible()->whereNotIn('id', $shelfBookIds)->get();
+        $books = Book::visible()->whereNotIn('id', $shelfBookIds)->orderBy('name')->get(['name', 'id', 'slug']);
 
         $this->setPageTitle(trans('entities.shelves_edit_named', ['name' => $shelf->getShortName()]));
 
@@ -158,7 +155,7 @@ class BookshelfController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        $shelf = $this->bookshelfRepo->getBySlug($slug);
+        $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $validated = $this->validate($request, [
             'name'        => ['required', 'string', 'max:255'],
@@ -174,7 +171,7 @@ class BookshelfController extends Controller
         }
 
         $bookIds = explode(',', $request->get('books', ''));
-        $shelf = $this->bookshelfRepo->update($shelf, $validated, $bookIds);
+        $shelf = $this->shelfRepo->update($shelf, $validated, $bookIds);
 
         return redirect($shelf->getUrl());
     }
@@ -184,7 +181,7 @@ class BookshelfController extends Controller
      */
     public function showDelete(string $slug)
     {
-        $shelf = $this->bookshelfRepo->getBySlug($slug);
+        $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->setPageTitle(trans('entities.shelves_delete_named', ['name' => $shelf->getShortName()]));
@@ -199,10 +196,10 @@ class BookshelfController extends Controller
      */
     public function destroy(string $slug)
     {
-        $shelf = $this->bookshelfRepo->getBySlug($slug);
+        $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
-        $this->bookshelfRepo->destroy($shelf);
+        $this->shelfRepo->destroy($shelf);
 
         return redirect('/shelves');
     }
@@ -212,7 +209,7 @@ class BookshelfController extends Controller
      */
     public function showPermissions(string $slug)
     {
-        $shelf = $this->bookshelfRepo->getBySlug($slug);
+        $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
         return view('shelves.permissions', [
@@ -225,7 +222,7 @@ class BookshelfController extends Controller
      */
     public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $slug)
     {
-        $shelf = $this->bookshelfRepo->getBySlug($slug);
+        $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
         $permissionsUpdater->updateFromPermissionsForm($shelf, $request);
@@ -240,10 +237,10 @@ class BookshelfController extends Controller
      */
     public function copyPermissions(string $slug)
     {
-        $shelf = $this->bookshelfRepo->getBySlug($slug);
+        $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
-        $updateCount = $this->bookshelfRepo->copyDownPermissions($shelf);
+        $updateCount = $this->shelfRepo->copyDownPermissions($shelf);
         $this->showSuccessNotification(trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
 
         return redirect($shelf->getUrl());
