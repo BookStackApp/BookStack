@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Polc mentése',
     'shelves_books' => 'Könyvek ezen a polcon',
     'shelves_add_books' => 'Könyvek hozzáadása ehhez a polchoz',
-    'shelves_drag_books' => 'Könyveket áthúzással lehet elhelyezni ezen a polcon',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Ehhez a polchoz nincsenek könyvek rendelve',
     'shelves_edit_and_assign' => 'Polc szerkesztése könyvek hozzárendeléséhez',
     'shelves_edit_named' => ':name könyvespolc szerkesztése',
