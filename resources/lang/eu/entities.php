@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Gorde apalategia',
     'shelves_books' => 'Apalategi honetako liburuak',
     'shelves_add_books' => 'Gehitu liburuak apalategi honetara',
-    'shelves_drag_books' => 'Bota hona liburuak apalategi honetara gehitzeko',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Apalategi honek ez dauka libururik',
     'shelves_edit_and_assign' => 'Apalategia editatu liburuak gehitzeko',
     'shelves_edit_named' => ':name liburu-apalategia editatu',
