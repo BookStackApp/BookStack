@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Запази рафт',
     'shelves_books' => 'Книги на този рафт',
     'shelves_add_books' => 'Добави книги към този рафт',
-    'shelves_drag_books' => 'Издърпай книги тук, за да ги добавиш към рафта',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Този рафт няма добавени книги',
     'shelves_edit_and_assign' => 'Редактирай рафта за да добавиш книги',
     'shelves_edit_named' => 'Редактирай рафт с книги :name',
