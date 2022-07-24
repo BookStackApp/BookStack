@@ -317,7 +317,8 @@ input[type=color] {
 
 .form-group[collapsible] {
   padding: 0 $-m;
-  border: 1px solid #DDD;
+  border: 1px solid;
+  @include lightDark(border-color, #DDD, #000);
   border-radius: 4px;
   .collapse-title {
     margin-inline-start: -$-m;
