@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Зберегти полицю',
     'shelves_books' => 'Книги на цій полиці',
     'shelves_add_books' => 'Додати книги до цієї полиці',
-    'shelves_drag_books' => 'Перетягніть книги сюди, щоб додати їх до цієї полиці',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Ця полиця не має призначених їй книг',
     'shelves_edit_and_assign' => 'Редагувати полицю для присвоєння книг',
     'shelves_edit_named' => 'Редагувати книжкову полицю :name',
