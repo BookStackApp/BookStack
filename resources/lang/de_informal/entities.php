@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Regal speichern',
     'shelves_books' => 'Bücher in diesem Regal',
     'shelves_add_books' => 'Buch zu diesem Regal hinzufügen',
-    'shelves_drag_books' => 'Bücher hier hin ziehen um sie dem Regal hinzuzufügen',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Diesem Regal sind keine Bücher zugewiesen',
     'shelves_edit_and_assign' => 'Regal bearbeiten um Bücher hinzuzufügen',
     'shelves_edit_named' => 'Bücherregal :name bearbeiten',
