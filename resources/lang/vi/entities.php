@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Lưu Giá',
     'shelves_books' => 'Sách trên Giá này',
     'shelves_add_books' => 'Thêm sách vào Giá này',
-    'shelves_drag_books' => 'Kéo sách vào đây để thêm vào giá',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Giá này không có sách nào',
     'shelves_edit_and_assign' => 'Chỉnh sửa kệ để gán sách',
     'shelves_edit_named' => 'Chỉnh sửa kệ sách :name',
