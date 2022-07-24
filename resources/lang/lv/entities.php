@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Saglabāt plauktu',
     'shelves_books' => 'Grāmatas šajā plauktā',
     'shelves_add_books' => 'Pievienot grāmatas šim plauktam',
-    'shelves_drag_books' => 'Ievelciet grāmatas šeit, lai novietotu tās šajā plauktā',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Šim gŗamatplauktam nav pievienotu grāmatu',
     'shelves_edit_and_assign' => 'Labot plauktu, lai tam pievienotu grāmatas',
     'shelves_edit_named' => 'Labot grāmatplauktu :name',
