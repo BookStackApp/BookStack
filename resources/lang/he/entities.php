@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'שמור מדף',
     'shelves_books' => 'ספרים במדף זה',
     'shelves_add_books' => 'הוסף ספרים למדף זה',
-    'shelves_drag_books' => 'גרור ספרים לכאן על מנת להוסיף אותם למדף',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'במדף זה לא קיימים ספרים',
     'shelves_edit_and_assign' => 'עריכת מדף להוספת ספרים',
     'shelves_edit_named' => 'עריכת מדף :name',
