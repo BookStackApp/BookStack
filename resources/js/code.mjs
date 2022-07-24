@@ -39,6 +39,7 @@ import 'codemirror/addon/scroll/scrollpastend';
 // Value can be a mode string or a function that will receive the code content & return the mode string.
 // The function option is used in the event the exact mode could be dynamic depending on the code.
 const modeMap = {
+    bash: 'shell',
     css: 'css',
     c: 'text/x-csrc',
     java: 'text/x-java',
@@ -88,7 +89,6 @@ const modeMap = {
     shell: 'shell',
     sh: 'shell',
     stext: 'text/x-stex',
-    bash: 'shell',
     toml: 'toml',
     ts: 'text/typescript',
     typescript: 'text/typescript',

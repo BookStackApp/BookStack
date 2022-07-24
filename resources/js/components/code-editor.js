@@ -94,15 +94,13 @@ class CodeEditor {
     languageInputChange(language) {
         this.updateEditorMode(language);
         const inputLang = language.toLowerCase();
-        let matched = false;
 
         for (const link of this.languageLinks) {
             const lang = link.dataset.lang.toLowerCase().trim();
-            const isMatch = inputLang && lang.startsWith(inputLang);
+            const isMatch = inputLang === lang;
             link.classList.toggle('active', isMatch);
-            if (isMatch && !matched) {
+            if (isMatch) {
                 link.scrollIntoView({block: "center", behavior: "smooth"});
-                matched = true;
             }
         }
     }
