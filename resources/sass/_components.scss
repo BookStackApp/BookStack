@@ -666,9 +666,26 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   text-align: left;
   font-family: $mono;
   font-size: 0.7rem;
+  padding-right: 24px + $-m;
   &:hover, &.active {
     background-color: var(--color-primary-light);
     color: var(--color-primary);
+  }
+}
+
+.code-editor button.lang-option-favorite-toggle {
+  position: absolute;
+  right: 0;
+  width: 28px;
+  font-size: 1rem;
+  border: 0;
+  line-height: 1;
+  padding: 2px;
+  z-index: 2;
+  height: 100%;
+  text-align: center;
+  svg {
+    margin: 0;
   }
 }
 
