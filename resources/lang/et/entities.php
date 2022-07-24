@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Salvesta riiul',
     'shelves_books' => 'Raamatud sellel riiulil',
     'shelves_add_books' => 'Lisa sellele riiulile raamatuid',
-    'shelves_drag_books' => 'Lohista raamatuid siia, et neid sellele riiulile lisada',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Sellel riiulil ei ole ühtegi raamatut',
     'shelves_edit_and_assign' => 'Muuda riiulit, et siia raamatuid lisada',
     'shelves_edit_named' => 'Muuda riiulit :name',
