@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Сохранить полку',
     'shelves_books' => 'Книги из этой полки',
     'shelves_add_books' => 'Добавить книгу в эту полку',
-    'shelves_drag_books' => 'Перетащите книги сюда, чтобы добавить их на эту полку',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'На этой полке нет книг',
     'shelves_edit_and_assign' => 'Изменить полку для привязки книг',
     'shelves_edit_named' => 'Редактировать полку :name',
