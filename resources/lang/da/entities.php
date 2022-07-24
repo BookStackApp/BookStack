@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Gem reol',
     'shelves_books' => 'Bøger på denne reol',
     'shelves_add_books' => 'Tilføj bøger til denne reol',
-    'shelves_drag_books' => 'Træk bog her for at tilføje dem til denne reol',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Denne reol har ingen bøger tilknyttet til den',
     'shelves_edit_and_assign' => 'Rediger reol for at tilføje bøger',
     'shelves_edit_named' => 'Rediger reol :name',
