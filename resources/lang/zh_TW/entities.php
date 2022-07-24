@@ -88,7 +88,7 @@ return [
     'shelves_save' => '儲存書架',
     'shelves_books' => '此書架上的書本',
     'shelves_add_books' => '新增書本至此書架',
-    'shelves_drag_books' => '將書本拖曳到此處來將其新增到此書架',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => '此書架沒有分配任何書本',
     'shelves_edit_and_assign' => '編輯書架以分配書本',
     'shelves_edit_named' => '編輯書架 :name',
