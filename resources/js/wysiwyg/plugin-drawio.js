@@ -106,6 +106,8 @@ export function getPlugin(providedOptions) {
             icon: 'diagram',
             onAction() {
                 editor.execCommand('drawio');
+                // Hack to de-focus the tinymce editor toolbar
+                window.document.body.dispatchEvent(new Event('mousedown', {bubbles: true}));
             },
             fetch(callback) {
                 callback([
