@@ -1,5 +1,7 @@
 <div>
-    <div components="popup code-editor" class="popup-background code-editor">
+    <div components="popup code-editor"
+         option:code-editor:favourites="{{ setting()->getForCurrentUser('code-language-favourites', '') }}"
+         class="popup-background code-editor">
         <div refs="code-editor@container" class="popup-body" tabindex="-1">
 
             <div class="popup-header flex-container-row primary-background">
@@ -30,11 +32,9 @@
 
                         @foreach($languages as $language)
                             <div class="relative">
-                                <button type="button" refs="code-editor@languageLink" data-lang="{{ strtolower($language) }}">{{ $language }}</button>
-                                <button class="lang-option-favorite-toggle" title="{{ trans('common.favourite') }}" data-alt-title="{{ trans('common.unfavourite') }}">
-                                    <div class="pre-favorite">@icon('star-outline')</div>
-                                    <div class="post-favorite" style="display: none;">@icon('star')</div>
-                                </button>
+                                <button type="button" refs="code-editor@languageLink" data-favourite="false" data-lang="{{ strtolower($language) }}">{{ $language }}</button>
+                                <button class="lang-option-favorite-toggle action-favourite" data-title="{{ trans('common.favourite') }}">@icon('star-outline')</button>
+                                <button class="lang-option-favorite-toggle action-unfavourite" data-title="{{ trans('common.unfavourite') }}">@icon('star')</button>
                             </div>
                         @endforeach
                     </div>

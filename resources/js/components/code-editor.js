@@ -15,12 +15,14 @@ class CodeEditor {
         this.languageInput = this.$refs.languageInput;
         this.historyDropDown = this.$refs.historyDropDown;
         this.historyList = this.$refs.historyList;
+        this.favourites = new Set(this.$opts.favourites.split(','));
 
         this.callback = null;
         this.editor = null;
         this.history = {};
         this.historyKey = 'code_history';
         this.setupListeners();
+        this.setupFavourites();
     }
 
     setupListeners() {
@@ -47,6 +49,43 @@ class CodeEditor {
                 this.editor.setValue(this.history[historyTime]);
             }
         });
+    }
+
+    setupFavourites() {
+        for (const button of this.languageLinks) {
+            this.setupFavouritesForButton(button);
+        }
+
+        this.sortLanguageList();
+    }
+
+    /**
+     * @param {HTMLButtonElement} button
+     */
+    setupFavouritesForButton(button) {
+        const language = button.dataset.lang;
+        let isFavorite = this.favourites.has(language);
+        button.setAttribute('data-favourite', isFavorite ? 'true' : 'false');
+
+        onChildEvent(button.parentElement, '.lang-option-favorite-toggle', 'click', () => {
+            isFavorite = !isFavorite;
+            isFavorite ? this.favourites.add(language) : this.favourites.delete(language);
+            button.setAttribute('data-favourite', isFavorite ? 'true' : 'false');
+
+            window.$http.patch('/settings/users/update-code-language-favourite', {
+                language: language,
+                active: isFavorite
+            });
+
+            this.sortLanguageList();
+            if (isFavorite) {
+                button.scrollIntoView({block: "center", behavior: "smooth"});
+            }
+        });
+    }
+
+    sortLanguageList() {
+        // TODO
     }
 
     save() {

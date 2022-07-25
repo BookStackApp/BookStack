@@ -666,7 +666,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   text-align: left;
   font-family: $mono;
   font-size: 0.7rem;
-  padding-right: 24px + $-m;
+  padding-left: 24px + $-s;
   &:hover, &.active {
     background-color: var(--color-primary-light);
     color: var(--color-primary);
@@ -675,7 +675,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .code-editor button.lang-option-favorite-toggle {
   position: absolute;
-  right: 0;
+  top: 0;
+  left: 0;
   width: 28px;
   font-size: 1rem;
   border: 0;
@@ -684,9 +685,15 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   z-index: 2;
   height: 100%;
   text-align: center;
+  color: var(--color-primary);
   svg {
     margin: 0;
   }
+}
+
+.code-editor button[data-favourite="true"] ~ .action-favourite,
+.code-editor button[data-favourite="false"] ~ .action-unfavourite {
+  display: none;
 }
 
 .code-editor label {
