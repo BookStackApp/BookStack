@@ -3,6 +3,7 @@
 namespace Tests\User;
 
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
@@ -149,5 +150,24 @@ class UserPreferencesTest extends TestCase
         $this->withHtml($resp)
             ->assertElementExists('.featured-image-container')
             ->assertElementNotExists('.content-wrap .entity-list-item');
+    }
+
+    public function test_update_code_language_favourite()
+    {
+        $editor = $this->getEditor();
+        $page = Page::query()->first();
+        $this->actingAs($editor);
+
+        $this->patch('/settings/users/update-code-language-favourite', ['language' => 'php', 'active' => true]);
+        $this->patch('/settings/users/update-code-language-favourite', ['language' => 'javascript', 'active' => true]);
+
+        $resp = $this->get($page->getUrl('/edit'));
+        $resp->assertSee('option:code-editor:favourites="php,javascript"', false);
+
+        $this->patch('/settings/users/update-code-language-favourite', ['language' => 'ruby', 'active' => true]);
+        $this->patch('/settings/users/update-code-language-favourite', ['language' => 'php', 'active' => false]);
+
+        $resp = $this->get($page->getUrl('/edit'));
+        $resp->assertSee('option:code-editor:favourites="javascript,ruby"', false);
     }
 }
