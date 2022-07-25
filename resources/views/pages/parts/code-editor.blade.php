@@ -1,5 +1,7 @@
 <div>
-    <div components="popup code-editor" class="popup-background code-editor">
+    <div components="popup code-editor"
+         option:code-editor:favourites="{{ setting()->getForCurrentUser('code-language-favourites', '') }}"
+         class="popup-background code-editor">
         <div refs="code-editor@container" class="popup-body" tabindex="-1">
 
             <div class="popup-header flex-container-row primary-background">
@@ -18,42 +20,23 @@
                 <div class="code-editor-language-list flex-container-column flex-fill">
                     <label for="code-editor-language">{{ trans('components.code_language') }}</label>
                     <input refs="code-editor@languageInput" id="code-editor-language" type="text">
-                    <div class="lang-options">
-                        <button type="button" refs="code-editor@languageLink" data-lang="CSS">CSS</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="C">C</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="C++">C++</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="C#">C#</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="diff">Diff</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Fortran">Fortran</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="F#">F#</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Go">Go</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Haskell">Haskell</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="HTML">HTML</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="INI">INI</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Java">Java</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="JavaScript">JavaScript</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="JSON">JSON</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Julia">Julia</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="kotlin">Kotlin</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="LaTeX">LaTeX</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Lua">Lua</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="MarkDown">MarkDown</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Nginx">Nginx</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="ocaml">OCaml</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="PASCAL">Pascal</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Perl">Perl</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="PHP">PHP</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Powershell">Powershell</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Python">Python</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="Ruby">Ruby</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="rust">Rust</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="shell">Shell/Bash</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="SQL">SQL</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="typescript">TypeScript</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="VBScript">VBScript</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="VB.NET">VB.NET</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="XML">XML</button>
-                        <button type="button" refs="code-editor@languageLink" data-lang="YAML">YAML</button>
+                    <div refs="code-editor@language-options-container" class="lang-options">
+                        @php
+                            $languages = [
+                                'Bash', 'CSS', 'C', 'C++', 'C#', 'Diff', 'Fortran', 'F#', 'Go', 'Haskell', 'HTML', 'INI',
+                                'Java', 'JavaScript', 'JSON', 'Julia', 'Kotlin', 'LaTeX', 'Lua', 'MarkDown', 'Nginx', 'OCaml',
+                                'Pascal', 'Perl', 'PHP', 'Powershell', 'Python', 'Ruby', 'Rust', 'Shell', 'SQL', 'TypeScript',
+                                'VBScript', 'VB.NET', 'XML', 'YAML',
+                            ];
+                        @endphp
+
+                        @foreach($languages as $language)
+                            <div class="relative">
+                                <button type="button" refs="code-editor@language-button" data-favourite="false" data-lang="{{ strtolower($language) }}">{{ $language }}</button>
+                                <button class="lang-option-favorite-toggle action-favourite" data-title="{{ trans('common.favourite') }}">@icon('star-outline')</button>
+                                <button class="lang-option-favorite-toggle action-unfavourite" data-title="{{ trans('common.unfavourite') }}">@icon('star')</button>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 

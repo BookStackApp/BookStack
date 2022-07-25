@@ -10,17 +10,20 @@ class CodeEditor {
         this.container = this.$refs.container;
         this.popup = this.$el;
         this.editorInput = this.$refs.editor;
-        this.languageLinks = this.$manyRefs.languageLink;
+        this.languageButtons = this.$manyRefs.languageButton;
+        this.languageOptionsContainer = this.$refs.languageOptionsContainer;
         this.saveButton = this.$refs.saveButton;
         this.languageInput = this.$refs.languageInput;
         this.historyDropDown = this.$refs.historyDropDown;
         this.historyList = this.$refs.historyList;
+        this.favourites = new Set(this.$opts.favourites.split(','));
 
         this.callback = null;
         this.editor = null;
         this.history = {};
         this.historyKey = 'code_history';
         this.setupListeners();
+        this.setupFavourites();
     }
 
     setupListeners() {
@@ -30,7 +33,7 @@ class CodeEditor {
             }
         });
 
-        onSelect(this.languageLinks, event => {
+        onSelect(this.languageButtons, event => {
             const language = event.target.dataset.lang;
             this.languageInput.value = language;
             this.languageInputChange(language);
@@ -47,6 +50,58 @@ class CodeEditor {
                 this.editor.setValue(this.history[historyTime]);
             }
         });
+    }
+
+    setupFavourites() {
+        for (const button of this.languageButtons) {
+            this.setupFavouritesForButton(button);
+        }
+
+        this.sortLanguageList();
+    }
+
+    /**
+     * @param {HTMLButtonElement} button
+     */
+    setupFavouritesForButton(button) {
+        const language = button.dataset.lang;
+        let isFavorite = this.favourites.has(language);
+        button.setAttribute('data-favourite', isFavorite ? 'true' : 'false');
+
+        onChildEvent(button.parentElement, '.lang-option-favorite-toggle', 'click', () => {
+            isFavorite = !isFavorite;
+            isFavorite ? this.favourites.add(language) : this.favourites.delete(language);
+            button.setAttribute('data-favourite', isFavorite ? 'true' : 'false');
+
+            window.$http.patch('/settings/users/update-code-language-favourite', {
+                language: language,
+                active: isFavorite
+            });
+
+            this.sortLanguageList();
+            if (isFavorite) {
+                button.scrollIntoView({block: "center", behavior: "smooth"});
+            }
+        });
+    }
+
+    sortLanguageList() {
+        const sortedParents = this.languageButtons.sort((a, b) => {
+            const aFav = a.dataset.favourite === 'true';
+            const bFav = b.dataset.favourite === 'true';
+
+            if (aFav && !bFav) {
+                return -1;
+            } else if (bFav && !aFav) {
+                return 1;
+            }
+
+            return a.dataset.lang > b.dataset.lang ? 1 : -1;
+        }).map(button => button.parentElement);
+
+        for (const parent of sortedParents) {
+            this.languageOptionsContainer.append(parent);
+        }
     }
 
     save() {
@@ -94,15 +149,13 @@ class CodeEditor {
     languageInputChange(language) {
         this.updateEditorMode(language);
         const inputLang = language.toLowerCase();
-        let matched = false;
 
-        for (const link of this.languageLinks) {
+        for (const link of this.languageButtons) {
             const lang = link.dataset.lang.toLowerCase().trim();
-            const isMatch = inputLang && lang.startsWith(inputLang);
+            const isMatch = inputLang === lang;
             link.classList.toggle('active', isMatch);
-            if (isMatch && !matched) {
+            if (isMatch) {
                 link.scrollIntoView({block: "center", behavior: "smooth"});
-                matched = true;
             }
         }
     }
