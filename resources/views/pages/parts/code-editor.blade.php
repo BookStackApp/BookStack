@@ -20,7 +20,7 @@
                 <div class="code-editor-language-list flex-container-column flex-fill">
                     <label for="code-editor-language">{{ trans('components.code_language') }}</label>
                     <input refs="code-editor@languageInput" id="code-editor-language" type="text">
-                    <div class="lang-options">
+                    <div refs="code-editor@language-options-container" class="lang-options">
                         @php
                             $languages = [
                                 'Bash', 'CSS', 'C', 'C++', 'C#', 'Diff', 'Fortran', 'F#', 'Go', 'Haskell', 'HTML', 'INI',
@@ -32,7 +32,7 @@
 
                         @foreach($languages as $language)
                             <div class="relative">
-                                <button type="button" refs="code-editor@languageLink" data-favourite="false" data-lang="{{ strtolower($language) }}">{{ $language }}</button>
+                                <button type="button" refs="code-editor@language-button" data-favourite="false" data-lang="{{ strtolower($language) }}">{{ $language }}</button>
                                 <button class="lang-option-favorite-toggle action-favourite" data-title="{{ trans('common.favourite') }}">@icon('star-outline')</button>
                                 <button class="lang-option-favorite-toggle action-unfavourite" data-title="{{ trans('common.unfavourite') }}">@icon('star')</button>
                             </div>
