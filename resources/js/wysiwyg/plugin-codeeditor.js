@@ -165,7 +165,6 @@ function register(editor, url) {
             showPopup(editor, textContent, '', (newCode, newLang) => {
                 const pre = doc.createElement('pre');
                 const code = doc.createElement('code');
-                console.log(newCode);
                 code.classList.add(`language-${newLang}`);
                 code.innerText = newCode;
                 pre.append(code);
