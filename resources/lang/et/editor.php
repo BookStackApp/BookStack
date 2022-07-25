@@ -157,7 +157,7 @@ return [
     'about' => 'Redaktori info',
     'about_title' => 'Info WYSIWYG redaktori kohta',
     'editor_license' => 'Redaktori litsents ja autoriõigused',
-    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
+    'editor_tiny_license' => 'See redaktor on loodud :tinyLink abil, mis on saadaval MIT litsentsi alusel.',
     'editor_tiny_license_link' => 'TinyMCE autoriõigused ja litsents on saadaval siin.',
     'save_continue' => 'Salvesta leht ja jätka',
     'callouts_cycle' => '(Vajuta, et tüüpide vahel valida)',
