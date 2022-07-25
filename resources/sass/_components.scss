@@ -666,17 +666,48 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   text-align: left;
   font-family: $mono;
   font-size: 0.7rem;
+  padding-left: 24px + $-xs;
   &:hover, &.active {
     background-color: var(--color-primary-light);
     color: var(--color-primary);
   }
 }
 
+.code-editor button.lang-option-favorite-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  font-size: 1rem;
+  border: 0;
+  line-height: 1;
+  padding: 2px;
+  z-index: 2;
+  height: 100%;
+  text-align: center;
+  color: var(--color-primary);
+  svg {
+    margin: 0;
+  }
+}
+
+.code-editor button[data-favourite="true"] ~ .action-favourite,
+.code-editor button[data-favourite="false"] ~ .action-unfavourite {
+  display: none;
+}
+
+.code-editor .action-favourite {
+  opacity: 0.5;
+}
+.code-editor button:hover ~ .action-favourite {
+  opacity: 1;
+}
+
 .code-editor label {
   background-color: var(--color-primary-light);
   width: 100%;
   color: var(--color-primary);
-  padding: $-xxs $-m;
+  padding: $-xxs $-s;
   margin-bottom: 0;
 }
 
@@ -691,7 +722,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border-radius: 0;
   border: 0;
   border-bottom: 1px solid #DDD;
-  padding: $-xs $-m;
+  padding: $-xs $-s;
+  height: auto;
 }
 
 .code-editor-main {
@@ -703,6 +735,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     max-width: 100%;
     width: 100%;
   }
+}
+
+.code-editor-body-wrap {
+  height: 80vh;
 }
 
 @include smaller-than($s) {

@@ -289,6 +289,27 @@ class UserController extends Controller
         return response('', 204);
     }
 
+    public function updateCodeLanguageFavourite(Request $request)
+    {
+        $validated = $this->validate($request, [
+            'language' => ['required', 'string', 'max:20'],
+            'active' => ['required', 'bool'],
+        ]);
+
+        $currentFavoritesStr = setting()->getForCurrentUser('code-language-favourites', '');
+        $currentFavorites = array_filter(explode(',', $currentFavoritesStr));
+
+        $isFav = in_array($validated['language'], $currentFavorites);
+        if (!$isFav && $validated['active']) {
+            $currentFavorites[] = $validated['language'];
+        } else if ($isFav && !$validated['active']) {
+            $index = array_search($validated['language'], $currentFavorites);
+            array_splice($currentFavorites, $index, 1);
+        }
+
+        setting()->putUser(user(), 'code-language-favourites', implode(',', $currentFavorites));
+    }
+
     /**
      * Changed the stored preference for a list sort order.
      */
