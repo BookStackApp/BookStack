@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Fejezet jogosultságok aktívak',
     'chapters_permissions_success' => 'Fejezet jogosultságok frissítve',
     'chapters_search_this' => 'Keresés ebben a fejezetben',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Oldal',
