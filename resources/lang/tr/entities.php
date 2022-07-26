@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Bölüm İzinleri Aktif',
     'chapters_permissions_success' => 'Bölüm İzinleri Güncellendi',
     'chapters_search_this' => 'Bu bölümde ara',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Sayfa',
