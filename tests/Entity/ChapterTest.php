@@ -146,4 +146,16 @@ class ChapterTest extends TestCase
         $newChapter2 = Chapter::query()->where('name', '=', 'My copied again chapter')->first();
         $this->assertEquals($chapter->pages()->count(), $newChapter2->pages()->count());
     }
+
+    public function test_sort_book_action_visible_if_permissions_allow()
+    {
+        /** @var Chapter $chapter */
+        $chapter = Chapter::query()->first();
+
+        $resp = $this->actingAs($this->getViewer())->get($chapter->getUrl());
+        $this->withHtml($resp)->assertLinkNotExists($chapter->book->getUrl('sort'));
+
+        $resp = $this->asEditor()->get($chapter->getUrl());
+        $this->withHtml($resp)->assertLinkExists($chapter->book->getUrl('sort'));
+    }
 }
