@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Anpassade rättigheter är i bruk',
     'chapters_permissions_success' => 'Rättigheterna för kapitlet har uppdaterats',
     'chapters_search_this' => 'Sök i detta kapitel',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Sida',
