@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'チャプターの権限は有効です',
     'chapters_permissions_success' => 'チャプターの権限を更新しました',
     'chapters_search_this' => 'このチャプターを検索',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'ページ',
