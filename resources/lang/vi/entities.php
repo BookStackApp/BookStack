@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Đang bật các quyền hạn từ Chương',
     'chapters_permissions_success' => 'Quyền hạn Chương được cập nhật',
     'chapters_search_this' => 'Tìm kiếm trong Chương này',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Trang',
