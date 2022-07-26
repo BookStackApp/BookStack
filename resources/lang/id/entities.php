@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Izin Bab Aktif',
     'chapters_permissions_success' => 'Izin Bab Diperbarui',
     'chapters_search_this' => 'Cari bab ini',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Halaman',
