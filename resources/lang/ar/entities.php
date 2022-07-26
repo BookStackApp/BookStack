@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'أذونات الفصل مفعلة',
     'chapters_permissions_success' => 'تم تحديث أذونات الفصل',
     'chapters_search_this' => 'البحث في هذا الفصل',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'صفحة',
