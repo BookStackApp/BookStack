@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Aktive kapiteltilladelser',
     'chapters_permissions_success' => 'Kapiteltilladelser opdateret',
     'chapters_search_this' => 'Søg i dette kapitel',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Side',
