@@ -6,6 +6,7 @@ use BookStack\Auth\User;
 use BookStack\Exceptions\HttpFetchException;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class UserAvatars
 {
@@ -93,7 +94,7 @@ class UserAvatars
      */
     protected function createAvatarImageFromData(User $user, string $imageData, string $extension): Image
     {
-        $imageName = str_replace(' ', '-', $user->id . '-avatar.' . $extension);
+        $imageName = Str::random(10) . '-avatar.' . $extension;
 
         $image = $this->imageService->saveNew($imageName, $imageData, 'user', $user->id);
         $image->created_by = $user->id;
@@ -134,7 +135,12 @@ class UserAvatars
      */
     protected function getAvatarUrl(): string
     {
-        $url = trim(config('services.avatar_url'));
+        $configOption = config('services.avatar_url');
+        if ($configOption === false) {
+            return '';
+        }
+
+        $url = trim($configOption);
 
         if (empty($url) && !config('services.disable_services')) {
             $url = 'https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon';
