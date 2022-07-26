@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Действующие разрешения главы',
     'chapters_permissions_success' => 'Разрешения главы обновлены',
     'chapters_search_this' => 'Искать в этой главе',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Страница',
