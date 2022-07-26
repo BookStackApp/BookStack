@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Oprávnění kapitoly byla aktivována',
     'chapters_permissions_success' => 'Oprávnění kapitoly byla aktualizována',
     'chapters_search_this' => 'Prohledat tuto kapitolu',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Stránka',
