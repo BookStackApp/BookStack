@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Nodaļas atļaujas ir aktīvas',
     'chapters_permissions_success' => 'Nodaļas atļaujas ir atjauninātas',
     'chapters_search_this' => 'Meklēt šajā nodaļā',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Lapa',
