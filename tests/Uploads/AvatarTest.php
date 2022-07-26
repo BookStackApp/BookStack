@@ -82,6 +82,21 @@ class AvatarTest extends TestCase
         $this->createUserRequest($user);
     }
 
+    public function test_avatar_not_fetched_if_avatar_url_option_set_to_false()
+    {
+        config()->set([
+            'services.disable_services' => false,
+            'services.avatar_url' => false,
+        ]);
+
+        $user = User::factory()->make();
+
+        $http = $this->mock(HttpFetcher::class);
+        $http->shouldNotReceive('fetch');
+
+        $this->createUserRequest($user);
+    }
+
     public function test_no_failure_but_error_logged_on_failed_avatar_fetch()
     {
         config()->set([
