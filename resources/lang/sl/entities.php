@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Dovoljenja poglavij so aktivirana',
     'chapters_permissions_success' => 'Posodobljena dovoljenja poglavij',
     'chapters_search_this' => 'Išči v tem poglavju',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Stran',
