@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Liburu baimenak altan',
     'chapters_permissions_success' => 'Liburu baimenak eguneratuta',
     'chapters_search_this' => 'Kapitulu hau bilatu',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Orria',
