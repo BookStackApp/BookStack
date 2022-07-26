@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'S\'han activat els permisos del capítol',
     'chapters_permissions_success' => 'S\'han actualitzat els permisos del capítol',
     'chapters_search_this' => 'Cerca en aquest capítol',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Pàgina',
