@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'مجوزهای فصل فعال است',
     'chapters_permissions_success' => 'مجوزهای فصل به روز شد',
     'chapters_search_this' => 'این فصل را جستجو کنید',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'صفحه',
