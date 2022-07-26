@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => '章節權限已啟用',
     'chapters_permissions_success' => '章節權限已更新',
     'chapters_search_this' => '搜尋此章節',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => '頁面',
