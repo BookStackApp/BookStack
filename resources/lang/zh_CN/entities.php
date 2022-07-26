@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => '有效的章节权限',
     'chapters_permissions_success' => '章节权限已更新',
     'chapters_search_this' => '从本章节搜索',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => '页面',
