@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Uprawnienia rozdziału są aktywne',
     'chapters_permissions_success' => 'Zaktualizowano uprawnienia rozdziału',
     'chapters_search_this' => 'Przeszukaj ten rozdział',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Strona',
