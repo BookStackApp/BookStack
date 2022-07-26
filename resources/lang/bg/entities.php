@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Настройките за достъп до глава са активни',
     'chapters_permissions_success' => 'Настройките за достъп до главата бяха обновени',
     'chapters_search_this' => 'Търси в тази глава',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Страница',
