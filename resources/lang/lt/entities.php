@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Skyriaus leidimai aktyvūs',
     'chapters_permissions_success' => 'Skyriaus leidimai atnaujinti',
     'chapters_search_this' => 'Ieškoti šio skyriaus',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Puslapis',
