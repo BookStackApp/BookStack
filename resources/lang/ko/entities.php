@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => '문서 권한 허용함',
     'chapters_permissions_success' => '권한 저장함',
     'chapters_search_this' => '이 챕터에서 검색',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => '문서',
