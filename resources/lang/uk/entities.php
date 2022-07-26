@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Діючі дозволи на розділ',
     'chapters_permissions_success' => 'Дозволи на розділ оновлено',
     'chapters_search_this' => 'Шукати в цьому розділі',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Сторінка',
