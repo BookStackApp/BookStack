@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'הרשאות פרק פעילות',
     'chapters_permissions_success' => 'הרשאות פרק עודכנו',
     'chapters_search_this' => 'חפש בפרק זה',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'דף',
