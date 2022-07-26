@@ -171,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Permissões de Capítulo Ativas',
     'chapters_permissions_success' => 'Permissões de Capítulo Atualizadas',
     'chapters_search_this' => 'Pesquisar neste Capítulo',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Página',
