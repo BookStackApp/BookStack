@@ -39,6 +39,35 @@ const formats = {
     calloutdanger: {block: 'p', exact: true, attributes: {class: 'callout danger'}}
 };
 
+const color_map = [
+    '#BFEDD2', '',
+    '#FBEEB8', '',
+    '#F8CAC6', '',
+    '#ECCAFA', '',
+    '#C2E0F4', '',
+
+    '#2DC26B', '',
+    '#F1C40F', '',
+    '#E03E2D', '',
+    '#B96AD9', '',
+    '#3598DB', '',
+
+    '#169179', '',
+    '#E67E23', '',
+    '#BA372A', '',
+    '#843FA1', '',
+    '#236FA1', '',
+
+    '#ECF0F1', '',
+    '#CED4D9', '',
+    '#95A5A6', '',
+    '#7E8C8D', '',
+    '#34495E', '',
+
+    '#000000', '',
+    '#ffffff', ''
+];
+
 function file_picker_callback(callback, value, meta) {
 
     // field_name, url, type, win
@@ -249,6 +278,7 @@ export function build(options) {
         table_style_by_css: true,
         table_use_colgroups: true,
         file_picker_types: 'file image',
+        color_map,
         file_picker_callback,
         paste_preprocess(plugin, args) {
             const content = args.content;
