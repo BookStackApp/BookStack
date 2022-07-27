@@ -331,7 +331,7 @@ return [
     'comments' => '评论',
     'comment_add' => '添加评论',
     'comment_placeholder' => '在这里评论',
-    'comment_count' => '{0} 无评论|[1,*] :count条评论',
+    'comment_count' => '{0} 无评论|{1} 1 条评论|[2,*] :count 条评论',
     'comment_save' => '保存评论',
     'comment_saving' => '正在保存评论...',
     'comment_deleting' => '正在删除评论...',
