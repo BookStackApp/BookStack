@@ -18,10 +18,10 @@ return [
 
     'name' => 'Ime',
     'username' => 'Korisničko ime',
-    'email' => 'Email',
+    'email' => 'E-pošta',
     'password' => 'Lozinka',
     'password_confirm' => 'Potvrdite lozinku',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'Mora biti najmanje 8 znakova',
     'forgot_password' => 'Zaboravili ste lozinku?',
     'remember_me' => 'Zapamti me',
     'ldap_email_hint' => 'Molimo upišite mail korišten za ovaj račun.',

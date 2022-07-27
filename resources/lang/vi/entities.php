@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Được cập nhật :timeLength bởi :user',
     'meta_owned_name' => 'Được sở hữu bởi :user',
     'entity_select' => 'Chọn thực thể',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Ảnh',
     'my_recent_drafts' => 'Bản nháp gần đây của tôi',
     'my_recently_viewed' => 'Xem gần đây',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Lưu Giá',
     'shelves_books' => 'Sách trên Giá này',
     'shelves_add_books' => 'Thêm sách vào Giá này',
-    'shelves_drag_books' => 'Kéo sách vào đây để thêm vào giá',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Giá này không có sách nào',
     'shelves_edit_and_assign' => 'Chỉnh sửa kệ để gán sách',
     'shelves_edit_named' => 'Chỉnh sửa kệ sách :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Đang bật các quyền hạn từ Chương',
     'chapters_permissions_success' => 'Quyền hạn Chương được cập nhật',
     'chapters_search_this' => 'Tìm kiếm trong Chương này',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Trang',

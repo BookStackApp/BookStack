@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Posodobil :timeLength uporabnik :user',
     'meta_owned_name' => 'V lasti :user',
     'entity_select' => 'Izbira entitete',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Slike',
     'my_recent_drafts' => 'Moji nedavni osnutki',
     'my_recently_viewed' => 'Nedavno prikazano',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Shrani polico',
     'shelves_books' => 'Knjige na tej polici',
     'shelves_add_books' => 'Dodaj knjige na to polico',
-    'shelves_drag_books' => 'Povlecite knjige sem, da jih dodate na to polico',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Na tej polici ni nobene knjige',
     'shelves_edit_and_assign' => 'Uredi knjižno polico za dodajanje knjig',
     'shelves_edit_named' => 'Uredi knjižno polico :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Dovoljenja poglavij so aktivirana',
     'chapters_permissions_success' => 'Posodobljena dovoljenja poglavij',
     'chapters_search_this' => 'Išči v tem poglavju',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Stran',

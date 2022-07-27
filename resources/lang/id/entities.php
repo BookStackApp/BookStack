@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Diperbaharui :timeLength oleh :user',
     'meta_owned_name' => 'Dimiliki oleh :user',
     'entity_select' => 'Pilihan Entitas',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Gambar-gambar',
     'my_recent_drafts' => 'Draf Terbaru Saya',
     'my_recently_viewed' => 'Baru saja saya lihat',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Simpan Rak',
     'shelves_books' => 'Buku di rak ini',
     'shelves_add_books' => 'Tambahkan buku ke rak ini',
-    'shelves_drag_books' => 'Tarik buku ke sini untuk menambahkannya ke rak ini',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Rak ini tidak memiliki buku yang ditugaskan padanya',
     'shelves_edit_and_assign' => 'Edit rak untuk menetapkan buku',
     'shelves_edit_named' => 'Edit Rak Buku :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Izin Bab Aktif',
     'chapters_permissions_success' => 'Izin Bab Diperbarui',
     'chapters_search_this' => 'Cari bab ini',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Halaman',

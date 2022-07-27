@@ -39,9 +39,9 @@ return [
     'register_success' => 'Vielen Dank für Ihre Registrierung! Die Daten sind gespeichert und Sie sind angemeldet.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Anmeldeversuche',
+    'auto_init_starting_desc' => 'Wir verbinden und mit Ihrem Authentifizierungssystem um den Anmeldeprozess zu starten. Sollte es nach 5 Sekunden nicht weitergehen, klicken Sie bitte auf den unten stehenden Link.',
+    'auto_init_start_link' => 'Mit Authentifizierung fortfahren',
 
     // Password Reset
     'reset_password' => 'Passwort vergessen',
