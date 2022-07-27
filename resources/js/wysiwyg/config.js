@@ -166,13 +166,13 @@ function getSetupCallback(options) {
     return function(editor) {
         editor.on('ExecCommand change input NodeChange ObjectResized', editorChange);
         listenForCommonEvents(editor);
-        registerShortcuts(editor);
         listenForDragAndPaste(editor, options);
 
         editor.on('init', () => {
             editorChange();
             scrollToQueryString(editor);
             window.editor = editor;
+            registerShortcuts(editor);
         });
 
         editor.on('PreInit', () => {
