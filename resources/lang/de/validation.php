@@ -99,7 +99,7 @@ return [
         'array'   => ':attribute muss :size Elemente enthalten.',
     ],
     'string'               => ':attribute muss eine Zeichenkette sein.',
-    'timezone'             => ':attribute muss eine valide zeitzone sein.',
+    'timezone'             => ':attribute muss eine valide Zeitzone sein.',
     'totp'                 => 'Der angegebene Code ist ungültig oder abgelaufen.',
     'unique'               => ':attribute wird bereits verwendet.',
     'url'                  => ':attribute ist kein valides Format.',
