@@ -1,10 +1,10 @@
 @extends('layouts.plain')
-@section('document-class', setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : '')
+@section('document-class', 'bg-white ' .  (setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : ''))
 
 @section('content')
-    <div class="px-l pb-m m-s card">
+    <div class="p-m">
 
-        <h4>{{ trans('editor.editor_license') }}</h4>
+        <h4 class="mt-s">{{ trans('editor.editor_license') }}</h4>
         <p>
             {!! trans('editor.editor_tiny_license', ['tinyLink' => '<a href="https://www.tiny.cloud/" target="_blank" rel="noopener noreferrer">TinyMCE</a>']) !!}
             <br>
@@ -112,7 +112,21 @@
                 <td><code>Cmd</code>+<code>9</code></td>
                 <td>
                     {{ trans('editor.callouts') }} <br>
-                    {{ trans('editor.callouts_cycle') }}
+                    <small>{{ trans('editor.callouts_cycle') }}</small>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <code>Ctrl</code>+<code>O</code> <br>
+                    <code>Ctrl</code>+<code>P</code>
+                </td>
+                <td>
+                    <code>Cmd</code>+<code>O</code> <br>
+                    <code>Cmd</code>+<code>P</code>
+                </td>
+                <td>
+                    {{ trans('editor.list_numbered') }} <br>
+                    {{ trans('editor.list_bullet') }}
                 </td>
             </tr>
             <tr>
