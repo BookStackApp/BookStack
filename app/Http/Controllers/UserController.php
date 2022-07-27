@@ -293,7 +293,7 @@ class UserController extends Controller
     {
         $validated = $this->validate($request, [
             'language' => ['required', 'string', 'max:20'],
-            'active' => ['required', 'bool'],
+            'active'   => ['required', 'bool'],
         ]);
 
         $currentFavoritesStr = setting()->getForCurrentUser('code-language-favourites', '');
@@ -302,7 +302,7 @@ class UserController extends Controller
         $isFav = in_array($validated['language'], $currentFavorites);
         if (!$isFav && $validated['active']) {
             $currentFavorites[] = $validated['language'];
-        } else if ($isFav && !$validated['active']) {
+        } elseif ($isFav && !$validated['active']) {
             $index = array_search($validated['language'], $currentFavorites);
             array_splice($currentFavorites, $index, 1);
         }
