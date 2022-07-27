@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'توسط :user ایجاد شده‌است',
     'entity_select' => 'انتخاب موجودیت',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'عکس ها',
     'my_recent_drafts' => 'پیش نویس های اخیر من',
     'my_recently_viewed' => 'بازدیدهای اخیر من',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'ذخیره قفسه',
     'shelves_books' => 'کتاب های موجود در این قفسه',
     'shelves_add_books' => 'کتاب ها را به این قفسه اضافه کنید',
-    'shelves_drag_books' => 'کتاب‌ها را به اینجا بکشید تا به این قفسه اضافه شوند',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'این قفسه هیچ کتابی به آن اختصاص داده نشده است',
     'shelves_edit_and_assign' => 'برای اختصاص کتاب‌ها، قفسه را ویرایش کنید',
     'shelves_edit_named' => 'ویرایش قفسه کتاب :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'مجوزهای فصل فعال است',
     'chapters_permissions_success' => 'مجوزهای فصل به روز شد',
     'chapters_search_this' => 'این فصل را جستجو کنید',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'صفحه',

@@ -35,7 +35,7 @@ return [
     'book_delete'                 => 'usunął książkę',
     'book_delete_notification'    => 'Książka usunięta pomyślnie',
     'book_sort'                   => 'posortował książkę',
-    'book_sort_notification'      => 'Książka przywrócona pomyślnie',
+    'book_sort_notification'      => 'Książka posortowana pomyślnie',
 
     // Bookshelves
     'bookshelf_create'            => 'utworzył półkę',

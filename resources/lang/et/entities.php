@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Muudetud :timeLength kasutaja :user poolt',
     'meta_owned_name' => 'Kuulub kasutajale :user',
     'entity_select' => 'Objekti valik',
+    'entity_select_lack_permission' => 'Sul pole õiguseid selle objekti valimiseks',
     'images' => 'Pildid',
     'my_recent_drafts' => 'Minu hiljutised mustandid',
     'my_recently_viewed' => 'Minu viimati vaadatud',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Peatüki õigused on aktiivsed',
     'chapters_permissions_success' => 'Peatüki õigused muudetud',
     'chapters_search_this' => 'Otsi sellest peatükist',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Leht',

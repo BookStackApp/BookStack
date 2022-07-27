@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'مُحدث :timeLength بواسطة :user',
     'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'اختيار الكيان',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'صور',
     'my_recent_drafts' => 'مسوداتي الحديثة',
     'my_recently_viewed' => 'ما عرضته مؤخراً',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'حفظ الرف',
     'shelves_books' => 'كتب على هذا الرف',
     'shelves_add_books' => 'إضافة كتب لهذا الرف',
-    'shelves_drag_books' => 'اسحب الكتب هنا لإضافتها في هذا الرف',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'لا توجد كتب مخصصة لهذا الرف',
     'shelves_edit_and_assign' => 'تحرير الرف لإدراج كتب',
     'shelves_edit_named' => 'تحرير رف الكتب :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'أذونات الفصل مفعلة',
     'chapters_permissions_success' => 'تم تحديث أذونات الفصل',
     'chapters_search_this' => 'البحث في هذا الفصل',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'صفحة',

@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Actualitzat :timeLength per :user',
     'meta_owned_name' => 'Propietat de :user',
     'entity_select' => 'Selecciona una entitat',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Imatges',
     'my_recent_drafts' => 'Els vostres esborranys recents',
     'my_recently_viewed' => 'Les vostres visualitzacions recents',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Desa el prestatge',
     'shelves_books' => 'Llibres en aquest prestatge',
     'shelves_add_books' => 'Afegeix llibres a aquest prestatge',
-    'shelves_drag_books' => 'Arrossegueu llibres aquí per a afegir-los a aquest prestatge',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Aquest prestatge no té cap llibre assignat',
     'shelves_edit_and_assign' => 'Editeu el prestatge per a assignar-hi llibres',
     'shelves_edit_named' => 'Edita el prestatge :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'S\'han activat els permisos del capítol',
     'chapters_permissions_success' => 'S\'han actualitzat els permisos del capítol',
     'chapters_search_this' => 'Cerca en aquest capítol',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Pàgina',

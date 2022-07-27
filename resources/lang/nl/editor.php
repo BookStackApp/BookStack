@@ -157,7 +157,7 @@ return [
     'about' => 'Over de bewerker',
     'about_title' => 'Over de WYSIWYG Bewerker',
     'editor_license' => 'Bewerker Licentie & Copyright',
-    'editor_tiny_license' => 'Deze bewerker is gebouwd met :tinyLink, dat aangeboden wordt via een LGPL v2.1 licentie.',
+    'editor_tiny_license' => 'Deze editor is gemaakt met behulp van :tinyLink welke is verstrekt onder de MIT-licentie.',
     'editor_tiny_license_link' => 'De copyright- en licentiegegevens van TinyMCE vindt u hier.',
     'save_continue' => 'Pagina opslaan en verdergaan',
     'callouts_cycle' => '(Blijf drukken om door de types te wisselen)',

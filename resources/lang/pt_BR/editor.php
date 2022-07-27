@@ -157,7 +157,7 @@ return [
     'about' => 'Sobre o editor',
     'about_title' => 'Sobre o Editor WYSIWYG',
     'editor_license' => 'Licença do Editor e Direitos Autorais',
-    'editor_tiny_license' => 'Este editor é criado utilizando :tinyLink que é fornecido sob uma licença LGPL v2.1.',
+    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
     'editor_tiny_license_link' => 'Os dados relativos aos direitos de autor e à licença do TinyMCE podem ser encontrados aqui.',
     'save_continue' => 'Salvar e continuar',
     'callouts_cycle' => '(Continue pressionando para alternar através de tipos)',

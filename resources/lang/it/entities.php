@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Aggiornato :timeLength da :user',
     'meta_owned_name' => 'Creati da :user',
     'entity_select' => 'Selezione Entità',
+    'entity_select_lack_permission' => 'Non hai i permessi necessari per selezionare questo elemento',
     'images' => 'Immagini',
     'my_recent_drafts' => 'Bozze Recenti',
     'my_recently_viewed' => 'Visti di recente',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Salva Libreria',
     'shelves_books' => 'Libri in questa libreria',
     'shelves_add_books' => 'Aggiungi libri a questa libreria',
-    'shelves_drag_books' => 'Trascina i libri qui per aggiungerli a questa libreria',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Questa libreria non ha libri assegnati',
     'shelves_edit_and_assign' => 'Modifica la libreria per assegnare i libri',
     'shelves_edit_named' => 'Modifica Libreria :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Permessi Capitolo Attivi',
     'chapters_permissions_success' => 'Permessi Capitolo Aggiornati',
     'chapters_search_this' => 'Cerca in questo capitolo',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Pagina',

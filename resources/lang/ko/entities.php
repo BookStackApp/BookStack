@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => '수정함 :timeLength, :user',
     'meta_owned_name' => '소유함 :user',
     'entity_select' => '항목 선택',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => '이미지',
     'my_recent_drafts' => '내 최근의 초안 문서',
     'my_recently_viewed' => '내가 읽은 문서',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => '저장',
     'shelves_books' => '이 책꽂이에 있는 책들',
     'shelves_add_books' => '이 책꽂이에 책 추가',
-    'shelves_drag_books' => '여기에 책을 드롭하세요.',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => '이 책꽂이에 책이 없습니다.',
     'shelves_edit_and_assign' => '책꽂이 바꾸기로 책을 추가하세요.',
     'shelves_edit_named' => ':name 바꾸기',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => '문서 권한 허용함',
     'chapters_permissions_success' => '권한 저장함',
     'chapters_search_this' => '이 챕터에서 검색',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => '문서',

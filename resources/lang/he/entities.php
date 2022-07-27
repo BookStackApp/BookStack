@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'עודכן :timeLength על ידי :user',
     'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'בחר יישות',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'תמונות',
     'my_recent_drafts' => 'הטיוטות האחרונות שלי',
     'my_recently_viewed' => 'הנצפים לאחרונה שלי',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'שמור מדף',
     'shelves_books' => 'ספרים במדף זה',
     'shelves_add_books' => 'הוסף ספרים למדף זה',
-    'shelves_drag_books' => 'גרור ספרים לכאן על מנת להוסיף אותם למדף',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'במדף זה לא קיימים ספרים',
     'shelves_edit_and_assign' => 'עריכת מדף להוספת ספרים',
     'shelves_edit_named' => 'עריכת מדף :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'הרשאות פרק פעילות',
     'chapters_permissions_success' => 'הרשאות פרק עודכנו',
     'chapters_search_this' => 'חפש בפרק זה',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'דף',

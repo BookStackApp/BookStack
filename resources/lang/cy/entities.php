@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Updated :timeLength by :user',
     'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Entity Select',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Images',
     'my_recent_drafts' => 'My Recent Drafts',
     'my_recently_viewed' => 'My Recently Viewed',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Save Shelf',
     'shelves_books' => 'Books on this shelf',
     'shelves_add_books' => 'Add books to this shelf',
-    'shelves_drag_books' => 'Drag books here to add them to this shelf',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'This shelf has no books assigned to it',
     'shelves_edit_and_assign' => 'Edit shelf to assign books',
     'shelves_edit_named' => 'Edit Bookshelf :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Chapter Permissions Active',
     'chapters_permissions_success' => 'Chapter Permissions Updated',
     'chapters_search_this' => 'Search this chapter',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Page',

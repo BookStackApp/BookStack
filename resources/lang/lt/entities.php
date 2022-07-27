@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Atnaujinta :timeLength naudotojo :user',
     'meta_owned_name' => 'Priklauso :user',
     'entity_select' => 'Pasirinkti subjektą',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Nuotraukos',
     'my_recent_drafts' => 'Naujausi išsaugoti juodraščiai',
     'my_recently_viewed' => 'Neseniai peržiūrėti',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Išsaugoti lenyną',
     'shelves_books' => 'Knygos šioje lentynoje',
     'shelves_add_books' => 'Pridėti knygas į šią lentyną',
-    'shelves_drag_books' => 'Vilkite knygas čia, kad pridėtumėte jas į šią lentyną',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Ši lentyną neturi jokių pridėtų knygų',
     'shelves_edit_and_assign' => 'Redaguoti lentyną, kad pridėti knygų',
     'shelves_edit_named' => 'Redaguoti knygų lentyną :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Skyriaus leidimai aktyvūs',
     'chapters_permissions_success' => 'Skyriaus leidimai atnaujinti',
     'chapters_search_this' => 'Ieškoti šio skyriaus',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Puslapis',

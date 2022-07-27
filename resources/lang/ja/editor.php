@@ -157,7 +157,7 @@ return [
     'about' => 'エディタについて',
     'about_title' => 'WYSIWYGエディタについて',
     'editor_license' => 'エディタのライセンスと著作権',
-    'editor_tiny_license' => 'このエディタはLGPL v2.1ライセンスの下で提供される:tinyLinkを利用して構築されています。',
+    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
     'editor_tiny_license_link' => 'TinyMCEの著作権およびライセンスの詳細は、こちらをご覧ください。',
     'save_continue' => 'ページを保存して続行',
     'callouts_cycle' => '(押し続けて種類を切り替え)',

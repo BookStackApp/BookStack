@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':user frissítette :timeLength',
     'meta_owned_name' => ':user tulajdona',
     'entity_select' => 'Entitás kiválasztása',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Képek',
     'my_recent_drafts' => 'Legutóbbi vázlataim',
     'my_recently_viewed' => 'Általam legutóbb megtekintett',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Polc mentése',
     'shelves_books' => 'Könyvek ezen a polcon',
     'shelves_add_books' => 'Könyvek hozzáadása ehhez a polchoz',
-    'shelves_drag_books' => 'Könyveket áthúzással lehet elhelyezni ezen a polcon',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Ehhez a polchoz nincsenek könyvek rendelve',
     'shelves_edit_and_assign' => 'Polc szerkesztése könyvek hozzárendeléséhez',
     'shelves_edit_named' => ':name könyvespolc szerkesztése',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Fejezet jogosultságok aktívak',
     'chapters_permissions_success' => 'Fejezet jogosultságok frissítve',
     'chapters_search_this' => 'Keresés ebben a fejezetben',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Oldal',

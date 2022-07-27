@@ -40,8 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'boekenplank aangemaakt',
     'bookshelf_create_notification'    => 'Boekenplank succesvol aangemaakt',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
+    'bookshelf_create_from_book'    => 'Boek is geconverteerd naar boekenplank',
+    'bookshelf_create_from_book_notification'    => 'Boek is succesvol geconverteerd naar boekenplank',
     'bookshelf_update'                 => 'wijzigde boekenplank',
     'bookshelf_update_notification'    => 'Boekenplank succesvol bijgewerkt',
     'bookshelf_delete'                 => 'verwijderde boekenplank',
