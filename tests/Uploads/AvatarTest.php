@@ -86,7 +86,7 @@ class AvatarTest extends TestCase
     {
         config()->set([
             'services.disable_services' => false,
-            'services.avatar_url' => false,
+            'services.avatar_url'       => false,
         ]);
 
         $user = User::factory()->make();

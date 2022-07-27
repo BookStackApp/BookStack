@@ -435,9 +435,9 @@ abstract class TestCase extends BaseTestCase
     protected function getEachEntityType(): array
     {
         return [
-            'page' => Page::query()->first(),
-            'chapter' => Chapter::query()->first(),
-            'book' => Book::query()->first(),
+            'page'      => Page::query()->first(),
+            'chapter'   => Chapter::query()->first(),
+            'book'      => Book::query()->first(),
             'bookshelf' => Bookshelf::query()->first(),
         ];
     }

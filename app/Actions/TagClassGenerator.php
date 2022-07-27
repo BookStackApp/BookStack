@@ -4,7 +4,6 @@ namespace BookStack\Actions;
 
 class TagClassGenerator
 {
-
     protected array $tags;
 
     /**
@@ -44,7 +43,7 @@ class TagClassGenerator
     {
         $value = str_replace(' ', '', strtolower($value));
         $value = str_replace('-', '', strtolower($value));
+
         return $value;
     }
-
 }
