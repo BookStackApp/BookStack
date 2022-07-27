@@ -37,7 +37,7 @@ return [
     'export_html' => 'HTML-Datei',
     'export_pdf' => 'PDF-Datei',
     'export_text' => 'Textdatei',
-    'export_md' => 'Markdown-Dateir',
+    'export_md' => 'Markdown-Datei',
 
     // Permissions and restrictions
     'permissions' => 'Berechtigungen',
@@ -169,7 +169,7 @@ return [
     'chapters_permissions' => 'Kapitel-Berechtigungen',
     'chapters_empty' => 'Aktuell sind keine Kapitel diesem Buch hinzugefügt worden.',
     'chapters_permissions_active' => 'Kapitel-Berechtigungen aktiv',
-    'chapters_permissions_success' => 'Kapitel-Berechtigungenen aktualisisert',
+    'chapters_permissions_success' => 'Kapitel-Berechtigungen aktualisiert',
     'chapters_search_this' => 'Dieses Kapitel durchsuchen',
     'chapter_sort_book' => 'Sort Book',
 
@@ -249,7 +249,7 @@ return [
     'pages_permissions_active' => 'Seiten-Berechtigungen aktiv',
     'pages_initial_revision' => 'Erste Veröffentlichung',
     'pages_initial_name' => 'Neue Seite',
-    'pages_editing_draft_notification' => 'Du bearbeitest momenten einen Entwurf, der zuletzt :timeDiff gespeichert wurde.',
+    'pages_editing_draft_notification' => 'Du bearbeitest momentan einen Entwurf, der zuletzt :timeDiff gespeichert wurde.',
     'pages_draft_edited_notification' => 'Diese Seite wurde seit diesem Zeitpunkt verändert. Wir empfehlen Ihnen, diesen Entwurf zu verwerfen.',
     'pages_draft_page_changed_since_creation' => 'Diese Seite wurde seit der Erstellung dieses Entwurfs aktualisiert. Es wird empfohlen, diesen Entwurf zu verwerfen oder darauf zu achten, dass keine Seitenänderungen überschrieben werden.',
     'pages_draft_edit_active' => [
@@ -341,7 +341,7 @@ return [
     'comment_deleted_success' => 'Kommentar gelöscht',
     'comment_created_success' => 'Kommentar hinzugefügt',
     'comment_updated_success' => 'Kommentar aktualisiert',
-    'comment_delete_confirm' => 'Möchtst Du diesen Kommentar wirklich löschen?',
+    'comment_delete_confirm' => 'Möchtest Du diesen Kommentar wirklich löschen?',
     'comment_in_reply_to' => 'Antwort auf :commentId',
 
     // Revision
