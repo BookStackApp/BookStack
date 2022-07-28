@@ -55,6 +55,7 @@ Name :: Languages
 @Baptistou :: French
 @arcoai :: Spanish
 @Jokuna :: Korean
+@smartshogu :: German; German Informal
 cipi1965 :: Italian
 Mykola Ronik (Mantikor) :: Ukrainian
 furkanoyk :: Turkish
