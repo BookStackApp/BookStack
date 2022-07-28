@@ -55,6 +55,7 @@ Name :: Languages
 @Baptistou :: French
 @arcoai :: Spanish
 @Jokuna :: Korean
+@smartshogu :: German; German Informal
 cipi1965 :: Italian
 Mykola Ronik (Mantikor) :: Ukrainian
 furkanoyk :: Turkish
@@ -174,7 +175,7 @@ Alexander Predl (Harveyhase68) :: German
 Rem (Rem9000) :: Dutch
 Michał Stelmach (stelmach-web) :: Polish
 arniom :: French
-REMOVED_USER :: Turkish
+REMOVED_USER :: Dutch; Turkish
 林祖年 (contagion) :: Chinese Traditional
 Siamak Guodarzi (siamakgoudarzi88) :: Persian
 Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
@@ -258,3 +259,11 @@ Atmis :: French
 redjack666 :: Chinese Traditional
 Ashita007 :: Russian
 lihaorr :: Chinese Simplified
+Marcus Silber (marcus.silber82) :: German
+PellNet :: Croatian
+Winetradr :: German
+Sebastian Klaus (sebklaus) :: German
+Filip Antala (AntalaFilip) :: Slovak
+mcgong (GongMingCai) :: Chinese Simplified; Chinese Traditional
+Nanang Setia Budi (sefidananang) :: Indonesian
+Андрей Павлов (andrei.pavlov) :: Russian

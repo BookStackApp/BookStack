@@ -47,8 +47,8 @@ return [
     'previous' => 'Назад',
     'filter_active' => 'Активний фільтр:',
     'filter_clear' => 'Очистити фільтр',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => 'Завантажити',
+    'open_in_tab' => 'Відкрити в новій вкладці',
 
     // Sort Options
     'sort_options' => 'Параметри сортування',

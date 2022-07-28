@@ -106,6 +106,8 @@ export function getPlugin(providedOptions) {
             icon: 'diagram',
             onAction() {
                 editor.execCommand('drawio');
+                // Hack to de-focus the tinymce editor toolbar
+                window.document.body.dispatchEvent(new Event('mousedown', {bubbles: true}));
             },
             fetch(callback) {
                 callback([
@@ -131,13 +133,13 @@ export function getPlugin(providedOptions) {
         });
 
         editor.on('SetContent', function () {
-            const drawings = editor.$('body > div[drawio-diagram]');
+            const drawings = editor.dom.select('body > div[drawio-diagram]');
             if (!drawings.length) return;
 
             editor.undoManager.transact(function () {
-                drawings.each((index, elem) => {
-                    elem.setAttribute('contenteditable', 'false');
-                });
+                for (const drawing of drawings) {
+                    drawing.setAttribute('contenteditable', 'false');
+                }
             });
         });
 

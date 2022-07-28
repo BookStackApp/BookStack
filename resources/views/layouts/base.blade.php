@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.lang') }}"
       dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
-      class="{{ setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : '' }}@yield('body-class')">
+      class="{{ setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : '' }}">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
 
@@ -31,7 +31,7 @@
     <!-- Translations for JS -->
     @stack('translations')
 </head>
-<body class="@yield('body-class')">
+<body class="@stack('body-class')">
 
     @include('layouts.parts.base-body-start')
     @include('common.skip-to-content')

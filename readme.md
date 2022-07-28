@@ -63,9 +63,9 @@ Below is a high-level road map view for BookStack to provide a sense of directio
 
 - **Platform REST API** - *(Most actions implemented, maturing)*
     - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
-- **Editor Alignment & Review** - *(In Progress)*
+- **Editor Alignment & Review** - *(Done)*
     - *Review the page editors with goal of achieving increased interoperability & feature parity while also considering collaborative editing potential.*
-- **Permission System Review**
+- **Permission System Review** - *(In Progress)*
     - *Improvement in how permissions are applied and a review of the efficiency of the permission & roles system.*
 - **Installation & Deployment Process Revamp**
     - *Creation of a streamlined & secure process for users to deploy & update BookStack with reduced development requirements (No git or composer requirement).*
@@ -219,7 +219,7 @@ Below are the great open-source projects used to help build BookStack.
 Note: This is not an exhaustive list of all libraries and projects that would be used in an active BookStack instance.
 
 * [Laravel](http://laravel.com/) - _[MIT](https://github.com/laravel/framework/blob/v8.82.0/LICENSE.md)_
-* [TinyMCE](https://www.tinymce.com/) - _[LGPL v2.1](https://github.com/tinymce/tinymce/blob/develop/LICENSE.TXT)_
+* [TinyMCE](https://www.tinymce.com/) - _[MIT](https://github.com/tinymce/tinymce/blob/develop/LICENSE.TXT)_
 * [CodeMirror](https://codemirror.net) - _[MIT](https://github.com/codemirror/CodeMirror/blob/master/LICENSE)_
 * [Sortable](https://github.com/SortableJS/Sortable) - _[MIT](https://github.com/SortableJS/Sortable/blob/master/LICENSE)_
 * [Google Material Icons](https://github.com/google/material-design-icons) - _[Apache-2.0](https://github.com/google/material-design-icons/blob/master/LICENSE)_

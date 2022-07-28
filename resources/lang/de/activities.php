@@ -6,18 +6,18 @@
 return [
 
     // Pages
-    'page_create'                 => 'hat die Seite erstellt',
-    'page_create_notification'    => 'Die Seite wurde erfolgreich erstellt',
+    'page_create'                 => 'erstellte Seite',
+    'page_create_notification'    => 'Seite erfolgreich erstellt',
     'page_update'                 => 'hat die Seite aktualisiert',
-    'page_update_notification'    => 'Die Seite wurde erfolgreich aktualisiert',
-    'page_delete'                 => 'hat die Seite gelöscht',
-    'page_delete_notification'    => 'Die Seite wurde erfolgreich gelöscht',
-    'page_restore'                => 'hat die Seite wiederhergestellt',
-    'page_restore_notification'   => 'Die Seite wurde erfolgreich wiederhergestellt',
-    'page_move'                   => 'hat die Seite verschoben',
+    'page_update_notification'    => 'Seite erfolgreich aktualisiert',
+    'page_delete'                 => 'gelöschte Seite',
+    'page_delete_notification'    => 'Seite erfolgreich gelöscht',
+    'page_restore'                => 'wiederhergestellte Seite',
+    'page_restore_notification'   => 'Seite erfolgreich wiederhergestellt',
+    'page_move'                   => 'Seite verschoben',
 
     // Chapters
-    'chapter_create'              => 'hat das Kapitel erstellt',
+    'chapter_create'              => 'erstellte Kapitel',
     'chapter_create_notification' => 'Das Kapitel wurde erfolgreich erstellt',
     'chapter_update'              => 'hat das Kapitel geändert',
     'chapter_update_notification' => 'Das Kapitel wurde erfolgreich aktualisiert',
@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => 'hat das Buch erstellt',
     'book_create_notification'    => 'Das Buch wurde erfolgreich erstellt',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'umgewandeltes Kapitel zum Buch',
+    'book_create_from_chapter_notification' => 'Kapitel erfolgreich in ein Buch konvertiert',
     'book_update'                 => 'hat das Buch aktualisiert',
     'book_update_notification'    => 'Das Buch wurde erfolgreich aktualisiert',
     'book_delete'                 => 'hat das Buch gelöscht',
@@ -40,8 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'erstelltes Bücherregal',
     'bookshelf_create_notification'    => 'Das Bücherregal wurde erfolgreich erstellt',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
+    'bookshelf_create_from_book'    => 'umgewandeltes Buch zum Regal',
+    'bookshelf_create_from_book_notification'    => 'Buch erfolgreich in ein Regal konvertiert',
     'bookshelf_update'                 => 'hat das Bücherregal geändert',
     'bookshelf_update_notification'    => 'Das Bücherregal wurde erfolgreich geändert',
     'bookshelf_delete'                 => 'hat das Bücherregal gelöscht',

@@ -3,6 +3,7 @@
 namespace Tests;
 
 use BookStack\Util\CspService;
+use Illuminate\Testing\TestResponse;
 
 class SecurityHeaderTest extends TestCase
 {

@@ -44,17 +44,17 @@ class UserProfileTest extends TestCase
     {
         $newUser = User::factory()->create();
 
-        $this->asAdmin()->get('/user/' . $newUser->slug)
-            ->assertSee($newUser->name)
-            ->assertElementContains('#content-counts', '0 Books')
+        $resp = $this->asAdmin()->get('/user/' . $newUser->slug)
+            ->assertSee($newUser->name);
+        $this->withHtml($resp)->assertElementContains('#content-counts', '0 Books')
             ->assertElementContains('#content-counts', '0 Chapters')
             ->assertElementContains('#content-counts', '0 Pages');
 
         $this->createEntityChainBelongingToUser($newUser, $newUser);
 
-        $this->asAdmin()->get('/user/' . $newUser->slug)
-            ->assertSee($newUser->name)
-            ->assertElementContains('#content-counts', '1 Book')
+        $resp = $this->asAdmin()->get('/user/' . $newUser->slug)
+            ->assertSee($newUser->name);
+        $this->withHtml($resp)->assertElementContains('#content-counts', '1 Book')
             ->assertElementContains('#content-counts', '1 Chapter')
             ->assertElementContains('#content-counts', '1 Page');
     }
@@ -67,8 +67,8 @@ class UserProfileTest extends TestCase
         Activity::add(ActivityType::BOOK_UPDATE, $entities['book']);
         Activity::add(ActivityType::PAGE_CREATE, $entities['page']);
 
-        $this->asAdmin()->get('/user/' . $newUser->slug)
-            ->assertElementContains('#recent-user-activity', 'updated book')
+        $resp = $this->asAdmin()->get('/user/' . $newUser->slug);
+        $this->withHtml($resp)->assertElementContains('#recent-user-activity', 'updated book')
             ->assertElementContains('#recent-user-activity', 'created page')
             ->assertElementContains('#recent-user-activity', $entities['page']->name);
     }
@@ -82,8 +82,8 @@ class UserProfileTest extends TestCase
         Activity::add(ActivityType::PAGE_CREATE, $entities['page']);
 
         $linkSelector = '#recent-activity a[href$="/user/' . $newUser->slug . '"]';
-        $this->asAdmin()->get('/')
-            ->assertElementContains($linkSelector, $newUser->name);
+        $resp = $this->asAdmin()->get('/');
+        $this->withHtml($resp)->assertElementContains($linkSelector, $newUser->name);
     }
 
     public function test_profile_has_search_links_in_created_entity_lists()
@@ -99,7 +99,7 @@ class UserProfileTest extends TestCase
         ];
 
         foreach ($expectedLinks as $link) {
-            $resp->assertElementContains('[href$="' . $link . '"]', 'View All');
+            $this->withHtml($resp)->assertElementContains('[href$="' . $link . '"]', 'View All');
         }
     }
 }

@@ -9,6 +9,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BaseRepo;
 use BookStack\Entities\Repos\BookRepo;
 use Illuminate\Support\Str;
+use Illuminate\Testing\TestResponse;
 use Tests\Uploads\UsesImages;
 
 class OpenGraphTest extends TestCase

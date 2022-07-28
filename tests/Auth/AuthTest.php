@@ -10,8 +10,8 @@ use BookStack\Notifications\ConfirmEmail;
 use BookStack\Notifications\ResetPassword;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
-use Tests\TestResponse;
 
 class AuthTest extends TestCase
 {
@@ -37,8 +37,8 @@ class AuthTest extends TestCase
     {
         // Ensure registration form is showing
         $this->setSettings(['registration-enabled' => 'true']);
-        $this->get('/login')
-            ->assertElementContains('a[href="' . url('/register') . '"]', 'Sign up');
+        $resp = $this->get('/login');
+        $this->withHtml($resp)->assertElementContains('a[href="' . url('/register') . '"]', 'Sign up');
     }
 
     public function test_normal_registration()
@@ -51,9 +51,9 @@ class AuthTest extends TestCase
         $user = User::factory()->make();
 
         // Test form and ensure user is created
-        $this->get('/register')
-            ->assertSee('Sign Up')
-            ->assertElementContains('form[action="' . url('/register') . '"]', 'Create Account');
+        $resp = $this->get('/register')
+            ->assertSee('Sign Up');
+        $this->withHtml($resp)->assertElementContains('form[action="' . url('/register') . '"]', 'Create Account');
 
         $resp = $this->post('/register', $user->only('password', 'name', 'email'));
         $resp->assertRedirect('/');
@@ -128,7 +128,7 @@ class AuthTest extends TestCase
         $resp->assertRedirect('/register/confirm/awaiting');
 
         $resp = $this->get('/register/confirm/awaiting');
-        $resp->assertElementContains('form[action="' . url('/register/confirm/resend') . '"]', 'Resend');
+        $this->withHtml($resp)->assertElementContains('form[action="' . url('/register/confirm/resend') . '"]', 'Resend');
 
         $this->get('/books')->assertRedirect('/login');
         $this->post('/register/confirm/resend', $user->only('email'));
@@ -203,7 +203,7 @@ class AuthTest extends TestCase
         $this->assertFalse(setting('registration-role'));
 
         $resp = $this->asAdmin()->get('/settings/registration');
-        $resp->assertElementContains('select[name="setting-registration-role"] option[value="0"][selected]', '-- None --');
+        $this->withHtml($resp)->assertElementContains('select[name="setting-registration-role"] option[value="0"][selected]', '-- None --');
     }
 
     public function test_logout()
@@ -229,11 +229,11 @@ class AuthTest extends TestCase
     {
         Notification::fake();
 
-        $this->get('/login')
-            ->assertElementContains('a[href="' . url('/password/email') . '"]', 'Forgot Password?');
+        $resp = $this->get('/login');
+        $this->withHtml($resp)->assertElementContains('a[href="' . url('/password/email') . '"]', 'Forgot Password?');
 
-        $this->get('/password/email')
-            ->assertElementContains('form[action="' . url('/password/email') . '"]', 'Send Reset Link');
+        $resp = $this->get('/password/email');
+        $this->withHtml($resp)->assertElementContains('form[action="' . url('/password/email') . '"]', 'Send Reset Link');
 
         $resp = $this->post('/password/email', [
             'email' => 'admin@admin.com',
@@ -294,8 +294,8 @@ class AuthTest extends TestCase
     public function test_reset_password_page_shows_sign_links()
     {
         $this->setSettings(['registration-enabled' => 'true']);
-        $this->get('/password/email')
-            ->assertElementContains('a', 'Log in')
+        $resp = $this->get('/password/email');
+        $this->withHtml($resp)->assertElementContains('a', 'Log in')
             ->assertElementContains('a', 'Sign up');
     }
 

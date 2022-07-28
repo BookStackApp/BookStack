@@ -7,7 +7,7 @@ return [
 
     // Pages
     'page_create'                 => 'telah membuat halaman',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Jenis Halaman berhasil dibuat',
     'page_update'                 => 'halaman telah diperbaharui',
     'page_update_notification'    => 'Page successfully updated',
     'page_delete'                 => 'halaman dihapus',

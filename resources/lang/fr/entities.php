@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Mis à jour :timeLength par :user',
     'meta_owned_name' => 'Appartient à :user',
     'entity_select' => 'Sélectionner l\'entité',
+    'entity_select_lack_permission' => 'Vous n\'avez pas les permissions requises pour sélectionner cet élément',
     'images' => 'Images',
     'my_recent_drafts' => 'Mes brouillons récents',
     'my_recently_viewed' => 'Vus récemment',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Enregistrer l\'étagère',
     'shelves_books' => 'Livres sur cette étagère',
     'shelves_add_books' => 'Ajouter des livres sur cette étagère',
-    'shelves_drag_books' => 'Déposez des livres ici pour les ajouter a cette étagère',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Aucun livre n\'a été assigné à cette étagère',
     'shelves_edit_and_assign' => 'Modifier cette étagère pour y ajouter des livres',
     'shelves_edit_named' => 'Modifier l\'étagère :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Permissions du chapitre activées',
     'chapters_permissions_success' => 'Permissions du chapitre mises à jour',
     'chapters_search_this' => 'Rechercher dans ce chapitre',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Page',

@@ -20,6 +20,7 @@ class ShelfContext
             return null;
         }
 
+        /** @var Bookshelf $shelf */
         $shelf = Bookshelf::visible()->find($contextBookshelfId);
         $shelfContainsBook = $shelf && $shelf->contains($book);
 

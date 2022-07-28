@@ -2,21 +2,15 @@
 
 namespace BookStack\Actions;
 
-use BookStack\Auth\Permissions\PermissionService;
 use BookStack\Entities\Models\Entity;
+use BookStack\Facades\Theme;
 use BookStack\Interfaces\Loggable;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
 class ActivityLogger
 {
-    protected $permissionService;
-
-    public function __construct(PermissionService $permissionService)
-    {
-        $this->permissionService = $permissionService;
-    }
-
     /**
      * Add a generic activity event to the database.
      *
@@ -35,8 +29,10 @@ class ActivityLogger
         }
 
         $activity->save();
+
         $this->setNotification($type);
         $this->dispatchWebhooks($type, $detail);
+        Theme::dispatch(ThemeEvents::ACTIVITY_LOGGED, $type, $detail);
     }
 
     /**
@@ -44,12 +40,10 @@ class ActivityLogger
      */
     protected function newActivityForUser(string $type): Activity
     {
-        $ip = request()->ip() ?? '';
-
         return (new Activity())->forceFill([
             'type'     => strtolower($type),
             'user_id'  => user()->id,
-            'ip'       => config('app.env') === 'demo' ? '127.0.0.1' : $ip,
+            'ip'       => IpFormatter::fromCurrentRequest()->format(),
         ]);
     }
 

@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Uppdaterad :timeLength av :user',
     'meta_owned_name' => 'Ägs av :user',
     'entity_select' => 'Välj enhet',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Mina nyaste utkast',
     'my_recently_viewed' => 'Mina senast visade sidor',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Spara hylla',
     'shelves_books' => 'Böcker i denna hylla',
     'shelves_add_books' => 'Lägg till böcker till hyllan',
-    'shelves_drag_books' => 'Dra böcker hit för att lägga dem på hyllan',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Denna hylla har inga böcker än',
     'shelves_edit_and_assign' => 'Redigera hyllan för att lägga till böcker',
     'shelves_edit_named' => 'Ändra hyllan :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Anpassade rättigheter är i bruk',
     'chapters_permissions_success' => 'Rättigheterna för kapitlet har uppdaterats',
     'chapters_search_this' => 'Sök i detta kapitel',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Sida',

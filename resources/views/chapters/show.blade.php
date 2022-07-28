@@ -10,6 +10,8 @@
     <meta property="og:description" content="{{ Str::limit($chapter->description, 100, '...') }}">
 @endpush
 
+@include('entities.body-tag-classes', ['entity' => $chapter])
+
 @section('body')
 
     <div class="mb-m print-hidden">
@@ -120,7 +122,7 @@
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
-            @if(userCanOnAny('chapter-create'))
+            @if(userCanOnAny('create', \BookStack\Entities\Models\Book::class) || userCan('chapter-create-all') || userCan('chapter-create-own'))
                 <a href="{{ $chapter->getUrl('/copy') }}" class="icon-list-item">
                     <span>@icon('copy')</span>
                     <span>{{ trans('common.copy') }}</span>
@@ -142,6 +144,14 @@
                 <a href="{{ $chapter->getUrl('/delete') }}" class="icon-list-item">
                     <span>@icon('delete')</span>
                     <span>{{ trans('common.delete') }}</span>
+                </a>
+            @endif
+
+            @if($chapter->book && userCan('book-update', $chapter->book))
+                <hr class="primary-background"/>
+                <a href="{{ $chapter->book->getUrl('/sort') }}" class="icon-list-item">
+                    <span>@icon('sort')</span>
+                    <span>{{ trans('entities.chapter_sort_book') }}</span>
                 </a>
             @endif
 

@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':timeLength aldatuta. Erabiltzailea :user',
     'meta_owned_name' => ':user da jabea',
     'entity_select' => 'Aukeratutako entitatea',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Irudiak',
     'my_recent_drafts' => 'Nire azken zirriborroak',
     'my_recently_viewed' => 'Nik Ikusitako azkenak',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Gorde apalategia',
     'shelves_books' => 'Apalategi honetako liburuak',
     'shelves_add_books' => 'Gehitu liburuak apalategi honetara',
-    'shelves_drag_books' => 'Bota hona liburuak apalategi honetara gehitzeko',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Apalategi honek ez dauka libururik',
     'shelves_edit_and_assign' => 'Apalategia editatu liburuak gehitzeko',
     'shelves_edit_named' => ':name liburu-apalategia editatu',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Liburu baimenak altan',
     'chapters_permissions_success' => 'Liburu baimenak eguneratuta',
     'chapters_search_this' => 'Kapitulu hau bilatu',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Orria',

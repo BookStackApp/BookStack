@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Oppdatert :timeLength av :user',
     'meta_owned_name' => 'Eies av :user',
     'entity_select' => 'Velg entitet',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Mine nylige utkast',
     'my_recently_viewed' => 'Mine nylige visninger',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Lagre hylle',
     'shelves_books' => 'Bøker på denne hyllen',
     'shelves_add_books' => 'Legg til bøker på denne hyllen',
-    'shelves_drag_books' => 'Dra bøker hit for å stable dem i denne hylla',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'INgen bøker er stablet i denne hylla',
     'shelves_edit_and_assign' => 'Endre hylla for å legge til bøker',
     'shelves_edit_named' => 'Endre hyllen :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Kapitteltilganger er aktivert',
     'chapters_permissions_success' => 'Kapitteltilgager er oppdatert',
     'chapters_search_this' => 'Søk i dette kapittelet',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Side',

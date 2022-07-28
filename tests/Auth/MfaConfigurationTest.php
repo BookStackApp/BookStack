@@ -18,15 +18,15 @@ class MfaConfigurationTest extends TestCase
 
         // Setup page state
         $resp = $this->actingAs($editor)->get('/mfa/setup');
-        $resp->assertElementContains('a[href$="/mfa/totp/generate"]', 'Setup');
+        $this->withHtml($resp)->assertElementContains('a[href$="/mfa/totp/generate"]', 'Setup');
 
         // Generate page access
         $resp = $this->get('/mfa/totp/generate');
         $resp->assertSee('Mobile App Setup');
         $resp->assertSee('Verify Setup');
-        $resp->assertElementExists('form[action$="/mfa/totp/confirm"] button');
+        $this->withHtml($resp)->assertElementExists('form[action$="/mfa/totp/confirm"] button');
         $this->assertSessionHas('mfa-setup-totp-secret');
-        $svg = $resp->getElementHtml('#main-content .card svg');
+        $svg = $this->withHtml($resp)->getOuterHtml('#main-content .card svg');
 
         // Validation error, code should remain the same
         $resp = $this->post('/mfa/totp/confirm', [
@@ -35,7 +35,7 @@ class MfaConfigurationTest extends TestCase
         $resp->assertRedirect('/mfa/totp/generate');
         $resp = $this->followRedirects($resp);
         $resp->assertSee('The provided code is not valid or has expired.');
-        $revisitSvg = $resp->getElementHtml('#main-content .card svg');
+        $revisitSvg = $this->withHtml($resp)->getOuterHtml('#main-content .card svg');
         $this->assertTrue($svg === $revisitSvg);
         $secret = decrypt(session()->get('mfa-setup-totp-secret'));
 
@@ -52,7 +52,7 @@ class MfaConfigurationTest extends TestCase
         // Confirmation of setup
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Multi-factor method successfully configured');
-        $resp->assertElementContains('a[href$="/mfa/totp/generate"]', 'Reconfigure');
+        $this->withHtml($resp)->assertElementContains('a[href$="/mfa/totp/generate"]', 'Reconfigure');
 
         $this->assertDatabaseHas('mfa_values', [
             'user_id' => $editor->id,
@@ -71,12 +71,12 @@ class MfaConfigurationTest extends TestCase
 
         // Setup page state
         $resp = $this->actingAs($editor)->get('/mfa/setup');
-        $resp->assertElementContains('a[href$="/mfa/backup_codes/generate"]', 'Setup');
+        $this->withHtml($resp)->assertElementContains('a[href$="/mfa/backup_codes/generate"]', 'Setup');
 
         // Generate page access
         $resp = $this->get('/mfa/backup_codes/generate');
         $resp->assertSee('Backup Codes');
-        $resp->assertElementContains('form[action$="/mfa/backup_codes/confirm"]', 'Confirm and Enable');
+        $this->withHtml($resp)->assertElementContains('form[action$="/mfa/backup_codes/confirm"]', 'Confirm and Enable');
         $this->assertSessionHas('mfa-setup-backup-codes');
         $codes = decrypt(session()->get('mfa-setup-backup-codes'));
         // Check code format
@@ -92,7 +92,7 @@ class MfaConfigurationTest extends TestCase
         // Confirmation of setup
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Multi-factor method successfully configured');
-        $resp->assertElementContains('a[href$="/mfa/backup_codes/generate"]', 'Reconfigure');
+        $this->withHtml($resp)->assertElementContains('a[href$="/mfa/backup_codes/generate"]', 'Reconfigure');
 
         $this->assertDatabaseHas('mfa_values', [
             'user_id' => $editor->id,
@@ -129,10 +129,10 @@ class MfaConfigurationTest extends TestCase
     {
         $admin = $this->getAdmin();
         $resp = $this->actingAs($admin)->get($admin->getEditUrl());
-        $resp->assertElementExists('a[href$="/mfa/setup"]');
+        $this->withHtml($resp)->assertElementExists('a[href$="/mfa/setup"]');
 
         $resp = $this->actingAs($admin)->get($this->getEditor()->getEditUrl());
-        $resp->assertElementNotExists('a[href$="/mfa/setup"]');
+        $this->withHtml($resp)->assertElementNotExists('a[href$="/mfa/setup"]');
     }
 
     public function test_mfa_indicator_shows_in_user_list()
@@ -141,11 +141,11 @@ class MfaConfigurationTest extends TestCase
         User::query()->where('id', '!=', $admin->id)->delete();
 
         $resp = $this->actingAs($admin)->get('/settings/users');
-        $resp->assertElementNotExists('[title="MFA Configured"] svg');
+        $this->withHtml($resp)->assertElementNotExists('[title="MFA Configured"] svg');
 
         MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
         $resp = $this->actingAs($admin)->get('/settings/users');
-        $resp->assertElementExists('[title="MFA Configured"] svg');
+        $this->withHtml($resp)->assertElementExists('[title="MFA Configured"] svg');
     }
 
     public function test_remove_mfa_method()
@@ -155,7 +155,7 @@ class MfaConfigurationTest extends TestCase
         MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
         $this->assertEquals(1, $admin->mfaValues()->count());
         $resp = $this->actingAs($admin)->get('/mfa/setup');
-        $resp->assertElementExists('form[action$="/mfa/totp/remove"]');
+        $this->withHtml($resp)->assertElementExists('form[action$="/mfa/totp/remove"]');
 
         $resp = $this->delete('/mfa/totp/remove');
         $resp->assertRedirect('/mfa/setup');

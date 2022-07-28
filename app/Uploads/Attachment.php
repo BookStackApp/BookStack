@@ -2,7 +2,7 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Auth\Permissions\PermissionService;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
@@ -89,10 +89,9 @@ class Attachment extends Model
      */
     public function scopeVisible(): Builder
     {
-        $permissionService = app()->make(PermissionService::class);
+        $permissions = app()->make(PermissionApplicator::class);
 
-        return $permissionService->filterRelatedEntity(
-            Page::class,
+        return $permissions->restrictPageRelationQuery(
             self::query(),
             'attachments',
             'uploaded_to'

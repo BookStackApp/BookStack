@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
     'meta_owned_name' => 'Owned by :user',
     'entity_select' => 'Öge Seçimi',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Görseller',
     'my_recent_drafts' => 'Son Taslaklarım',
     'my_recently_viewed' => 'Son Görüntülediklerim',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Kitaplığı Kaydet',
     'shelves_books' => 'Bu kitaplıktaki kitaplar',
     'shelves_add_books' => 'Bu kitaplığa kitap ekle',
-    'shelves_drag_books' => 'Bu kitaplığa eklemek istediğin kitapları buraya sürükle',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Bu kitaplıkta hiç kitap bulunamadı',
     'shelves_edit_and_assign' => 'Kitap eklemek için kitaplığı düzenleyin',
     'shelves_edit_named' => ':name Kitaplığını Düzenle',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Bölüm İzinleri Aktif',
     'chapters_permissions_success' => 'Bölüm İzinleri Güncellendi',
     'chapters_search_this' => 'Bu bölümde ara',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Sayfa',

@@ -163,7 +163,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Get all permissions belonging to a the current user.
+     * Get all permissions belonging to the current user.
      */
     protected function permissions(): Collection
     {

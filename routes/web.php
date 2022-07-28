@@ -235,6 +235,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/settings/users/{id}/change-sort/{type}', [UserController::class, 'changeSort']);
     Route::patch('/settings/users/{id}/update-expansion-preference/{key}', [UserController::class, 'updateExpansionPreference']);
     Route::patch('/settings/users/toggle-dark-mode', [UserController::class, 'toggleDarkMode']);
+    Route::patch('/settings/users/update-code-language-favourite', [UserController::class, 'updateCodeLanguageFavourite']);
     Route::post('/settings/users/create', [UserController::class, 'store']);
     Route::get('/settings/users/{id}', [UserController::class, 'edit']);
     Route::put('/settings/users/{id}', [UserController::class, 'update']);

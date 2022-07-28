@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Aktualizováno :timeLength uživatelem :user',
     'meta_owned_name' => 'Vlastník :user',
     'entity_select' => 'Výběr entity',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Obrázky',
     'my_recent_drafts' => 'Mé nedávné koncepty',
     'my_recently_viewed' => 'Mé nedávno zobrazené',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Uložit knihovnu',
     'shelves_books' => 'Knihy v této knihovně',
     'shelves_add_books' => 'Přidat knihy do knihovny',
-    'shelves_drag_books' => 'Knihu přidáte jejím přetažením sem',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Tato knihovna neobsahuje žádné knihy',
     'shelves_edit_and_assign' => 'Upravit knihovnu a přiřadit knihy',
     'shelves_edit_named' => 'Upravit knihovnu :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Oprávnění kapitoly byla aktivována',
     'chapters_permissions_success' => 'Oprávnění kapitoly byla aktualizována',
     'chapters_search_this' => 'Prohledat tuto kapitolu',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Stránka',

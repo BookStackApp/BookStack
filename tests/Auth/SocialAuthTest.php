@@ -61,7 +61,7 @@ class SocialAuthTest extends TestCase
 
         // Test login routes
         $resp = $this->get('/login');
-        $resp->assertElementExists('a#social-login-google[href$="/login/service/google"]');
+        $this->withHtml($resp)->assertElementExists('a#social-login-google[href$="/login/service/google"]');
         $resp = $this->followingRedirects()->get('/login/service/google');
         $resp->assertSee('login-form');
 
@@ -71,7 +71,7 @@ class SocialAuthTest extends TestCase
         $resp->assertSee(trans('errors.social_account_not_used', ['socialAccount' => 'Google']));
 
         $resp = $this->get('/login');
-        $resp->assertElementExists('a#social-login-github[href$="/login/service/github"]');
+        $this->withHtml($resp)->assertElementExists('a#social-login-github[href$="/login/service/github"]');
         $resp = $this->followingRedirects()->get('/login/service/github');
         $resp->assertSee('login-form');
 
@@ -101,7 +101,7 @@ class SocialAuthTest extends TestCase
         ]);
 
         $resp = $this->actingAs($editor)->get($editor->getEditUrl());
-        $resp->assertElementContains('form[action$="/login/service/github/detach"]', 'Disconnect Account');
+        $this->withHtml($resp)->assertElementContains('form[action$="/login/service/github/detach"]', 'Disconnect Account');
 
         $resp = $this->post('/login/service/github/detach');
         $resp->assertRedirect($editor->getEditUrl());

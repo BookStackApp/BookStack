@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Актуализирано преди :timeLength от :user',
     'meta_owned_name' => 'Притежавано от :user',
     'entity_select' => 'Избор на обект',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Изображения',
     'my_recent_drafts' => 'Моите скорошни драфтове',
     'my_recently_viewed' => 'Моите скорошни преглеждания',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Запази рафт',
     'shelves_books' => 'Книги на този рафт',
     'shelves_add_books' => 'Добави книги към този рафт',
-    'shelves_drag_books' => 'Издърпай книги тук, за да ги добавиш към рафта',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Този рафт няма добавени книги',
     'shelves_edit_and_assign' => 'Редактирай рафта за да добавиш книги',
     'shelves_edit_named' => 'Редактирай рафт с книги :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Настройките за достъп до глава са активни',
     'chapters_permissions_success' => 'Настройките за достъп до главата бяха обновени',
     'chapters_search_this' => 'Търси в тази глава',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Страница',

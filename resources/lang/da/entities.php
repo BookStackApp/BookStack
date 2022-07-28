@@ -24,6 +24,7 @@ return [
     'meta_updated_name' => 'Opdateret :timeLength af :user',
     'meta_owned_name' => 'Ejet af :user',
     'entity_select' => 'Vælg emne',
+    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Billeder',
     'my_recent_drafts' => 'Mine seneste kladder',
     'my_recently_viewed' => 'Mine senest viste',
@@ -87,7 +88,7 @@ return [
     'shelves_save' => 'Gem reol',
     'shelves_books' => 'Bøger på denne reol',
     'shelves_add_books' => 'Tilføj bøger til denne reol',
-    'shelves_drag_books' => 'Træk bog her for at tilføje dem til denne reol',
+    'shelves_drag_books' => 'Drag books below to add them to this shelf',
     'shelves_empty_contents' => 'Denne reol har ingen bøger tilknyttet til den',
     'shelves_edit_and_assign' => 'Rediger reol for at tilføje bøger',
     'shelves_edit_named' => 'Rediger reol :name',
@@ -170,6 +171,7 @@ return [
     'chapters_permissions_active' => 'Aktive kapiteltilladelser',
     'chapters_permissions_success' => 'Kapiteltilladelser opdateret',
     'chapters_search_this' => 'Søg i dette kapitel',
+    'chapter_sort_book' => 'Sort Book',
 
     // Pages
     'page' => 'Side',

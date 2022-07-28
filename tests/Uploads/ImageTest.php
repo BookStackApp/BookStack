@@ -104,11 +104,13 @@ class ImageTest extends TestCase
 
         $pageId = $imgDetails['page']->id;
         $firstPageRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}");
-        $firstPageRequest->assertSuccessful()->assertElementExists('div');
+        $firstPageRequest->assertSuccessful();
+        $this->withHtml($firstPageRequest)->assertElementExists('div');
         $firstPageRequest->assertSuccessful()->assertSeeText($image->name);
 
         $secondPageRequest = $this->get("/images/gallery?page=2&uploaded_to={$pageId}");
-        $secondPageRequest->assertSuccessful()->assertElementNotExists('div');
+        $secondPageRequest->assertSuccessful();
+        $this->withHtml($secondPageRequest)->assertElementNotExists('div');
 
         $namePartial = substr($imgDetails['name'], 0, 3);
         $searchHitRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
@@ -117,7 +119,8 @@ class ImageTest extends TestCase
         $namePartial = Str::random(16);
         $searchFailRequest = $this->get("/images/gallery?page=1&uploaded_to={$pageId}&search={$namePartial}");
         $searchFailRequest->assertSuccessful()->assertDontSee($imgDetails['name']);
-        $searchFailRequest->assertSuccessful()->assertElementNotExists('div');
+        $searchFailRequest->assertSuccessful();
+        $this->withHtml($searchFailRequest)->assertElementNotExists('div');
     }
 
     public function test_image_usage()

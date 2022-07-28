@@ -211,11 +211,11 @@ class PageRevisionTest extends TestCase
         $this->asAdmin()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html']);
 
         $resp = $this->get($page->refresh()->getUrl('/revisions'));
-        $resp->assertElementContains('td', '(WYSIWYG)');
-        $resp->assertElementNotContains('td', '(Markdown)');
+        $this->withHtml($resp)->assertElementContains('td', '(WYSIWYG)');
+        $this->withHtml($resp)->assertElementNotContains('td', '(Markdown)');
 
         $this->asAdmin()->put($page->getUrl(), ['name' => 'Updated page', 'markdown' => '# Some markdown content']);
         $resp = $this->get($page->refresh()->getUrl('/revisions'));
-        $resp->assertElementContains('td', '(Markdown)');
+        $this->withHtml($resp)->assertElementContains('td', '(Markdown)');
     }
 }

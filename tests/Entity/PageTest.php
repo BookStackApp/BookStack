@@ -19,7 +19,7 @@ class PageTest extends TestCase
         ]);
 
         $resp = $this->asEditor()->get($chapter->getUrl());
-        $resp->assertElementContains('a[href="' . $chapter->getUrl('/create-page') . '"]', 'New Page');
+        $this->withHtml($resp)->assertElementContains('a[href="' . $chapter->getUrl('/create-page') . '"]', 'New Page');
 
         $resp = $this->get($chapter->getUrl('/create-page'));
         /** @var Page $draftPage */
@@ -30,7 +30,7 @@ class PageTest extends TestCase
         $resp->assertRedirect($draftPage->getUrl());
 
         $resp = $this->get($draftPage->getUrl());
-        $resp->assertElementContains('form[action="' . $draftPage->getUrl() . '"][method="POST"]', 'Save Page');
+        $this->withHtml($resp)->assertElementContains('form[action="' . $draftPage->getUrl() . '"][method="POST"]', 'Save Page');
 
         $resp = $this->post($draftPage->getUrl(), $draftPage->only('name', 'html'));
         $draftPage->refresh();
@@ -98,7 +98,7 @@ class PageTest extends TestCase
         $this->assertTrue($page->deletions()->count() === 1);
 
         $redirectReq = $this->get($deleteReq->baseResponse->headers->get('location'));
-        $redirectReq->assertNotificationContains('Page Successfully Deleted');
+        $this->assertNotificationContains($redirectReq, 'Page Successfully Deleted');
     }
 
     public function test_page_full_delete_removes_all_revisions()
@@ -257,8 +257,8 @@ class PageTest extends TestCase
         $user = $this->getEditor();
         $content = $this->createEntityChainBelongingToUser($user);
 
-        $this->asAdmin()->get('/pages/recently-updated')
-            ->assertElementContains('.entity-list .page:nth-child(1)', $content['page']->name);
+        $resp = $this->asAdmin()->get('/pages/recently-updated');
+        $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', $content['page']->name);
     }
 
     public function test_recently_updated_pages_view_shows_updated_by_details()
@@ -273,7 +273,7 @@ class PageTest extends TestCase
         ]);
 
         $resp = $this->asAdmin()->get('/pages/recently-updated');
-        $resp->assertElementContains('.entity-list .page:nth-child(1)', 'Updated 1 second ago by ' . $user->name);
+        $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', 'Updated 1 second ago by ' . $user->name);
     }
 
     public function test_recently_updated_pages_view_shows_parent_chain()
@@ -288,8 +288,8 @@ class PageTest extends TestCase
         ]);
 
         $resp = $this->asAdmin()->get('/pages/recently-updated');
-        $resp->assertElementContains('.entity-list .page:nth-child(1)', $page->chapter->getShortName(42));
-        $resp->assertElementContains('.entity-list .page:nth-child(1)', $page->book->getShortName(42));
+        $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', $page->chapter->getShortName(42));
+        $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', $page->book->getShortName(42));
     }
 
     public function test_recently_updated_pages_view_does_not_show_parent_if_not_visible()
@@ -309,7 +309,7 @@ class PageTest extends TestCase
         $resp = $this->get('/pages/recently-updated');
         $resp->assertDontSee($page->book->getShortName(42));
         $resp->assertDontSee($page->chapter->getShortName(42));
-        $resp->assertElementContains('.entity-list .page:nth-child(1)', 'Updated title');
+        $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', 'Updated title');
     }
 
     public function test_recently_updated_pages_on_home()
@@ -320,15 +320,15 @@ class PageTest extends TestCase
             'updated_at' => Carbon::now()->subSecond(1),
         ]);
 
-        $this->asAdmin()->get('/')
-            ->assertElementNotContains('#recently-updated-pages', $page->name);
+        $resp = $this->asAdmin()->get('/');
+        $this->withHtml($resp)->assertElementNotContains('#recently-updated-pages', $page->name);
 
         $this->put($page->getUrl(), [
             'name' => $page->name,
             'html' => $page->html,
         ]);
 
-        $this->get('/')
-            ->assertElementContains('#recently-updated-pages', $page->name);
+        $resp = $this->get('/');
+        $this->withHtml($resp)->assertElementContains('#recently-updated-pages', $page->name);
     }
 }

@@ -16,36 +16,25 @@ namespace BookStack\Theming;
 class ThemeEvents
 {
     /**
+     * Activity logged event.
+     * Runs right after an activity is logged by bookstack.
+     * These are the activities that can be seen in the audit log area of BookStack.
+     * Activity types can be seen listed in the \BookStack\Actions\ActivityType class.
+     * The provided $detail can be a string or a loggable type of model. You should check
+     * the type before making use of this parameter.
+     *
+     * @param string                                $type
+     * @param string|\BookStack\Interfaces\Loggable $detail
+     */
+    const ACTIVITY_LOGGED = 'activity_logged';
+
+    /**
      * Application boot-up.
      * After main services are registered.
      *
      * @param \BookStack\Application $app
      */
     const APP_BOOT = 'app_boot';
-
-    /**
-     * Web before middleware action.
-     * Runs before the request is handled but after all other middleware apart from those
-     * that depend on the current session user (Localization for example).
-     * Provides the original request to use.
-     * Return values, if provided, will be used as a new response to use.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @returns \Illuminate\Http\Response|null
-     */
-    const WEB_MIDDLEWARE_BEFORE = 'web_middleware_before';
-
-    /**
-     * Web after middleware action.
-     * Runs after the request is handled but before the response is sent.
-     * Provides both the original request and the currently resolved response.
-     * Return values, if provided, will be used as a new response to use.
-     *
-     * @param \Illuminate\Http\Request                                                      $request
-     * @param \Illuminate\Http\Response|Symfony\Component\HttpFoundation\BinaryFileResponse $response
-     * @returns \Illuminate\Http\Response|null
-     */
-    const WEB_MIDDLEWARE_AFTER = 'web_middleware_after';
 
     /**
      * Auth login event.
@@ -72,13 +61,37 @@ class ThemeEvents
     /**
      * Commonmark environment configure.
      * Provides the commonmark library environment for customization
-     * before its used to render markdown content.
+     * before it's used to render markdown content.
      * If the listener returns a non-null value, that will be used as an environment instead.
      *
      * @param \League\CommonMark\ConfigurableEnvironmentInterface $environment
      * @returns \League\CommonMark\ConfigurableEnvironmentInterface|null
      */
     const COMMONMARK_ENVIRONMENT_CONFIGURE = 'commonmark_environment_configure';
+
+    /**
+     * Web before middleware action.
+     * Runs before the request is handled but after all other middleware apart from those
+     * that depend on the current session user (Localization for example).
+     * Provides the original request to use.
+     * Return values, if provided, will be used as a new response to use.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @returns \Illuminate\Http\Response|null
+     */
+    const WEB_MIDDLEWARE_BEFORE = 'web_middleware_before';
+
+    /**
+     * Web after middleware action.
+     * Runs after the request is handled but before the response is sent.
+     * Provides both the original request and the currently resolved response.
+     * Return values, if provided, will be used as a new response to use.
+     *
+     * @param \Illuminate\Http\Request                                                       $request
+     * @param \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\BinaryFileResponse $response
+     * @returns \Illuminate\Http\Response|null
+     */
+    const WEB_MIDDLEWARE_AFTER = 'web_middleware_after';
 
     /**
      * Webhook call before event.

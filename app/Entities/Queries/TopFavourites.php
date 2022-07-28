@@ -15,7 +15,7 @@ class TopFavourites extends EntityQuery
         }
 
         $query = $this->permissionService()
-            ->filterRestrictedEntityRelations(Favourite::query(), 'favourites', 'favouritable_id', 'favouritable_type', 'view')
+            ->restrictEntityRelationQuery(Favourite::query(), 'favourites', 'favouritable_id', 'favouritable_type')
             ->select('favourites.*')
             ->leftJoin('views', function (JoinClause $join) {
                 $join->on('favourites.favouritable_id', '=', 'views.viewable_id');
