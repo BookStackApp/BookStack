@@ -77,7 +77,7 @@ return [
     'status_active' => 'Aktywny',
     'status_inactive' => 'Nieaktywny',
     'never' => 'Nigdy',
-    'none' => 'Żaden',
+    'none' => 'Brak',
 
     // Header
     'header_menu_expand' => 'Rozwiń menu nagłówka',
