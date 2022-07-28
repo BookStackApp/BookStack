@@ -33,15 +33,15 @@ return [
     'social_registration_text' => 'Mit einer dieser Dienste registrieren oder anmelden',
 
     'register_thanks' => 'Vielen Dank für deine Registrierung!',
-    'register_confirm' => 'Bitte prüfe Deinen Posteingang und bestätige die Registrierung.',
+    'register_confirm' => 'Bitte prüfe Deinen Posteingang und bestätig die Registrierung.',
     'registrations_disabled' => 'Eine Registrierung ist momentan nicht möglich',
     'registration_email_domain_invalid' => 'Du kannst dich mit dieser E-Mail nicht registrieren.',
     'register_success' => 'Vielen Dank für deine Registrierung! Du bist jetzt registriert und eingeloggt.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Anmeldeversuche',
+    'auto_init_starting_desc' => 'Wir verbinden und mit Ihrem Authentifizierungssystem um den Anmeldeprozess zu starten. Sollte es nach 5 Sekunden nicht weitergehen, klicken Sie bitte auf den unten stehenden Link.',
+    'auto_init_start_link' => 'Mit Authentifizierung fortfahren',
 
     // Password Reset
     'reset_password' => 'Passwort vergessen',
@@ -85,11 +85,11 @@ return [
     'mfa_setup_reconfigure' => 'Umkonfigurieren',
     'mfa_setup_remove_confirmation' => 'Sind Sie sicher, dass Sie diese Multi-Faktor-Authentifizierungsmethode entfernen möchten?',
     'mfa_setup_action' => 'Einrichtung',
-    'mfa_backup_codes_usage_limit_warning' => 'Sie haben weniger als 5 Backup-Codes übrig, Bitte erstellen und speichern Sie ein neues set bevor Sie keine codes mehr haben, um zu verhindern, dass Sie von Ihrem Konto gesperrt werden.',
+    'mfa_backup_codes_usage_limit_warning' => 'Sie haben weniger als 5 Backup-Codes übrig, Bitte erstellen und speichern Sie ein neues set bevor Sie keine codes mehr haben, um zu verhindern, dass Sie von Ihrem konto gesperrt werden.',
     'mfa_option_totp_title' => 'Mobile App',
     'mfa_option_totp_desc' => 'Um Mehrfach-Faktor-Authentifizierung nutzen zu können, benötigen Sie eine mobile Anwendung, die TOTP unterstützt, wie Google Authenticator, Authy oder Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Backup Code',
-    'mfa_option_backup_codes_desc' => 'Speichern Sie sicher eine reihe von einmaligen Backup-Codes, die Sie eingeben können, um ihre Identität zu überprüfen.',
+    'mfa_option_backup_codes_desc' => 'Speichern Sie sicher eine reihe von einmaligen Backup-Codes, die Sie eingeben können, um ihre identität zu überprüfen.',
     'mfa_gen_confirm_and_enable' => 'Bestätigen und aktivieren',
     'mfa_gen_backup_codes_title' => 'Backup-Codes einrichten',
     'mfa_gen_backup_codes_desc' => 'Speichern Sie die folgende Liste der Codes an einem sicheren Ort. Wenn Sie auf das System zugreifen, können Sie einen der Codes als zweiten Authentifizierungsmechanismus verwenden.',

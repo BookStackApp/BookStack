@@ -171,7 +171,7 @@ return [
     'chapters_permissions_active' => 'Peatüki õigused on aktiivsed',
     'chapters_permissions_success' => 'Peatüki õigused muudetud',
     'chapters_search_this' => 'Otsi sellest peatükist',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => 'Sorteeri raamat',
 
     // Pages
     'page' => 'Leht',
