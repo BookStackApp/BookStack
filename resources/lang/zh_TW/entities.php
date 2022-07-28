@@ -331,7 +331,7 @@ return [
     'comments' => '評論',
     'comment_add' => '新增評論',
     'comment_placeholder' => '在這裡評論',
-    'comment_count' => '{0} 無評論|{1} 1 則評論|[2,*] :count 則評論',
+    'comment_count' => '{0} 無評論 |{1} :count 則評論 | [2,*] :count 則評論',
     'comment_save' => '儲存評論',
     'comment_saving' => '正在儲存評論……',
     'comment_deleting' => '正在刪除評論……',
