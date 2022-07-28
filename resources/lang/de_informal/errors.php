@@ -14,7 +14,7 @@ return [
     'email_confirmation_invalid' => 'Der Bestätigungslink ist nicht gültig oder wurde bereits verwendet. Bitte registriere dich erneut.',
     'email_confirmation_expired' => 'Der Bestätigungslink ist abgelaufen. Es wurde eine neue Bestätigungs-E-Mail gesendet.',
     'email_confirmation_awaiting' => 'Die E-Mail-Adresse für das verwendete Konto muss bestätigt werden',
-    'ldap_fail_anonymous' => 'Anonymer LDAP-Zugriff ist fehlgeschlagen',
+    'ldap_fail_anonymous' => 'Anonymer LDAP-Zugriff ist fehlgeschlafgen',
     'ldap_fail_authed' => 'LDAP-Zugriff mit DN und Passwort ist fehlgeschlagen',
     'ldap_extension_not_installed' => 'LDAP-PHP-Erweiterung ist nicht installiert',
     'ldap_cannot_connect' => 'Die Verbindung zum LDAP-Server ist fehlgeschlagen. Beim initialen Verbindungsaufbau trat ein Fehler auf',
@@ -67,11 +67,11 @@ return [
     'guests_cannot_save_drafts' => 'Gäste können keine Entwürfe speichern',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Du kannst den einzigen Administrator nicht löschen',
+    'users_cannot_delete_only_admin' => 'Du kannst den einzigen Administrator nicht löschen.',
     'users_cannot_delete_guest' => 'Du kannst den Gast-Benutzer nicht löschen',
 
     // Roles
-    'role_cannot_be_edited' => 'Diese Rolle kann nicht bearbeitet werden',
+    'role_cannot_be_edited' => 'Diese Rolle kann nicht bearbeitet werden.',
     'role_system_cannot_be_deleted' => 'Dies ist eine Systemrolle und kann nicht gelöscht werden',
     'role_registration_default_cannot_delete' => 'Diese Rolle kann nicht gelöscht werden, solange sie als Standardrolle für neue Registrierungen gesetzt ist',
     'role_cannot_remove_only_admin' => 'Dieser Benutzer ist der einzige Benutzer, welchem die Administratorrolle zugeordnet ist. Ordnen Sie die Administratorrolle einem anderen Benutzer zu, bevor Sie versuchen, sie hier zu entfernen.',
@@ -81,7 +81,7 @@ return [
     'cannot_add_comment_to_draft' => 'Du kannst keine Kommentare zu einem Entwurf hinzufügen.',
     'comment_add' => 'Beim Hinzufügen des Kommentars ist ein Fehler aufgetreten.',
     'comment_delete' => 'Beim Löschen des Kommentars ist ein Fehler aufgetreten.',
-    'empty_comment' => 'Kann keinen leeren Kommentar hinzufügen.',
+    'empty_comment' => 'Kann keinen leeren Kommentar hinzufügen',
 
     // Error pages
     '404_page_not_found' => 'Seite nicht gefunden',

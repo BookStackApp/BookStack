@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Salva Libreria',
     'shelves_books' => 'Libri in questa libreria',
     'shelves_add_books' => 'Aggiungi libri a questa libreria',
-    'shelves_drag_books' => 'Drag books below to add them to this shelf',
+    'shelves_drag_books' => 'Trascina i libri qui sotto per aggiungerli a questa libreria',
     'shelves_empty_contents' => 'Questa libreria non ha libri assegnati',
     'shelves_edit_and_assign' => 'Modifica la libreria per assegnare i libri',
     'shelves_edit_named' => 'Modifica Libreria :name',
@@ -171,7 +171,7 @@ return [
     'chapters_permissions_active' => 'Permessi Capitolo Attivi',
     'chapters_permissions_success' => 'Permessi Capitolo Aggiornati',
     'chapters_search_this' => 'Cerca in questo capitolo',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => 'Ordina Libro',
 
     // Pages
     'page' => 'Pagina',

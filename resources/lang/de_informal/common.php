@@ -63,7 +63,7 @@ return [
     // Misc
     'deleted_user' => 'Gelöschter Benutzer',
     'no_activity' => 'Keine Aktivitäten zum Anzeigen',
-    'no_items' => 'Keine Einträge gefunden',
+    'no_items' => 'Keine Einträge gefunden.',
     'back_to_top' => 'nach oben',
     'skip_to_main_content' => 'Direkt zum Hauptinhalt',
     'toggle_details' => 'Details zeigen/verstecken',
