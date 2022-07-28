@@ -62,7 +62,7 @@ return [
     'book_not_found' => 'Buch nicht gefunden',
     'page_not_found' => 'Seite nicht gefunden',
     'chapter_not_found' => 'Kapitel nicht gefunden',
-    'selected_book_not_found' => 'Das gewählte Buch wurde nicht gefunden.',
+    'selected_book_not_found' => 'Das gewählte Buch wurde nicht gefunden',
     'selected_book_chapter_not_found' => 'Das gewählte Buch oder Kapitel wurde nicht gefunden.',
     'guests_cannot_save_drafts' => 'Gäste können keine Entwürfe speichern',
 
@@ -74,7 +74,7 @@ return [
     'role_cannot_be_edited' => 'Diese Rolle kann nicht bearbeitet werden',
     'role_system_cannot_be_deleted' => 'Dies ist eine Systemrolle und kann nicht gelöscht werden',
     'role_registration_default_cannot_delete' => 'Diese Rolle kann nicht gelöscht werden, solange sie als Standardrolle für neue Registrierungen gesetzt ist',
-    'role_cannot_remove_only_admin' => 'Dieser Benutzer ist der einzige Benutzer, welchem die Administratorrolle zugeordnet ist. Ordnen Sie die Administratorrolle einem anderen Benutzer zu, bevor Sie versuchen, sie hier zu entfernen.',
+    'role_cannot_remove_only_admin' => 'Dieser Benutzer ist der einzige Benutzer, welchem die Administratorrolle zugeordnet ist. Ordnen Sie die Administratorrolle einem anderen Benutzer zu bevor Sie versuchen sie hier zu entfernen.',
 
     // Comments
     'comment_list' => 'Beim Abrufen der Kommentare ist ein Fehler aufgetreten.',
@@ -92,7 +92,7 @@ return [
     'image_not_found_details' => 'Wenn Sie erwartet haben, dass dieses Bild existiert, könnte es gelöscht worden sein.',
     'return_home' => 'Zurück zur Startseite',
     'error_occurred' => 'Es ist ein Fehler aufgetreten',
-    'app_down' => ':appName befindet sich aktuell im Wartungsmodus.',
+    'app_down' => ':appName befindet sich aktuell im Wartungsmodus',
     'back_soon' => 'Wir werden so schnell wie möglich wieder online sein.',
 
     // API errors
