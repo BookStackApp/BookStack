@@ -47,7 +47,7 @@ return [
 
     // Search
     'search_results' => 'نتایج جستجو',
-    'search_total_results_found' => ':count result found|:count total results found',
+    'search_total_results_found' => 'نتیجه یافت شد :count | نتایج یافت شده :count',
     'search_clear' => 'پاک کردن جستجو',
     'search_no_pages' => 'هیچ صفحه ای با این جستجو مطابقت ندارد',
     'search_for_term' => 'جستجو برای :term',
@@ -78,7 +78,7 @@ return [
     'x_shelves' => ':count تاقچه|:count تاقچه',
     'shelves_long' => 'قفسه کتاب',
     'shelves_empty' => 'هیچ قفسه ای ایجاد نشده است',
-    'shelves_create' => 'Create New Shelf',
+    'shelves_create' => 'ایجاد قفسه جدید',
     'shelves_popular' => 'قفسه های محبوب',
     'shelves_new' => 'قفسه های جدید',
     'shelves_new_action' => 'قفسه جدید',
@@ -103,7 +103,7 @@ return [
     'shelves_copy_permissions_to_books' => 'کپی مجوزها در کتابها',
     'shelves_copy_permissions' => 'مجوزهای کپی',
     'shelves_copy_permissions_explain' => 'با این کار تنظیمات مجوز فعلی این قفسه کتاب برای همه کتاب‌های موجود در آن اعمال می‌شود. قبل از فعال کردن، مطمئن شوید که هر گونه تغییر در مجوزهای این قفسه کتاب ذخیره شده است.',
-    'shelves_copy_permission_success' => 'مجوزهای قفسه کتاب در :count books کپی شد',
+    'shelves_copy_permission_success' => 'مجوزهای قفسه کتاب در :count کتاب کپی شد',
 
     // Books
     'book' => 'کتاب',
@@ -357,14 +357,14 @@ return [
     'copy_consider_access' => 'تغییر مکان، مالک یا مجوزها ممکن است منجر به دسترسی به این محتوا برای افرادی شود که قبلاً به آنها دسترسی نداشتند.',
 
     // Conversions
-    'convert_to_shelf' => 'Convert to Shelf',
-    'convert_to_shelf_contents_desc' => 'You can convert this book to a new shelf with the same contents. Chapters contained within this book will be converted to new books. If this book contains any pages, that are not in a chapter, this book will be renamed and contain such pages, and this book will become part of the new shelf.',
-    'convert_to_shelf_permissions_desc' => 'Any permissions set on this book will be copied to the new shelf and to all new child books that don\'t have their own permissions enforced. Note that permissions on shelves do not auto-cascade to content within, as they do for books.',
-    'convert_book' => 'Convert Book',
-    'convert_book_confirm' => 'Are you sure you want to convert this book?',
-    'convert_undo_warning' => 'This cannot be as easily undone.',
-    'convert_to_book' => 'Convert to Book',
-    'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
-    'convert_chapter' => 'Convert Chapter',
-    'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+    'convert_to_shelf' => 'تبدیل به قفسه',
+    'convert_to_shelf_contents_desc' => 'شما می توانید این کتاب را به یک قفسه جدید با همان مطالب تبدیل کنید. فصل های موجود در این کتاب به کتاب های جدید تبدیل می شوند. اگر این کتاب حاوی صفحاتی باشد که در یک فصل نیستند، این کتاب تغییر نام داده و حاوی چنین صفحاتی است و این کتاب بخشی از قفسه جدید خواهد شد.',
+    'convert_to_shelf_permissions_desc' => 'هر گونه مجوز تنظیم شده در این کتاب در قفسه جدید و همه کتاب‌های فرزند جدید که مجوزهای خود را ندارند کپی می‌شود. توجه داشته باشید که مجوزهای موجود در قفسه‌ها مانند کتاب‌ها به طور خودکار به محتوای درون آن ها شامل نمی شود.',
+    'convert_book' => 'تبدیل کتاب',
+    'convert_book_confirm' => 'آیا از تبدیل این کتاب مطمئن هستید؟',
+    'convert_undo_warning' => 'برگشت دادن این فرایند به آسانی نخواهد بود.',
+    'convert_to_book' => 'تبدیل به کتاب',
+    'convert_to_book_desc' => 'می توانید این فصل را به یک کتاب جدید با همین مطالب تبدیل کنید. هر مجوزی که در این فصل تنظیم شده است در کتاب جدید کپی می شود، اما هر گونه مجوز ارثی، از کتاب والد، کپی نمی شود که می تواند منجر به تغییر کنترل دسترسی شود.',
+    'convert_chapter' => 'تبدیل فصل',
+    'convert_chapter_confirm' => 'آیا از تبدیل این فصل مطمئن هستید؟',
 ];
