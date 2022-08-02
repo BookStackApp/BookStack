@@ -24,7 +24,7 @@ return [
     'meta_updated_name' => 'Zaktualizowano :timeLength przez :user',
     'meta_owned_name' => 'Właściciel: :user',
     'entity_select' => 'Wybór obiektu',
-    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
+    'entity_select_lack_permission' => 'Nie masz wymaganych uprawnień do wybrania tej pozycji',
     'images' => 'Obrazki',
     'my_recent_drafts' => 'Moje ostatnie wersje robocze',
     'my_recently_viewed' => 'Moje ostatnio wyświetlane',
@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Zapisz półkę',
     'shelves_books' => 'Książki na tej półce',
     'shelves_add_books' => 'Dodaj książkę do tej półki',
-    'shelves_drag_books' => 'Drag books below to add them to this shelf',
+    'shelves_drag_books' => 'Przeciągnij książki poniżej, aby dodać je do tej półki',
     'shelves_empty_contents' => 'Ta półka nie ma przypisanych żadnych książek',
     'shelves_edit_and_assign' => 'Edytuj półkę aby przypisać książki',
     'shelves_edit_named' => 'Edytuj półkę :name',
@@ -171,7 +171,7 @@ return [
     'chapters_permissions_active' => 'Uprawnienia rozdziału są aktywne',
     'chapters_permissions_success' => 'Zaktualizowano uprawnienia rozdziału',
     'chapters_search_this' => 'Przeszukaj ten rozdział',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => 'Sortuj książkę',
 
     // Pages
     'page' => 'Strona',
