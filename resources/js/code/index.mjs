@@ -1,106 +1,10 @@
-import CodeMirror from "codemirror";
+import {EditorView} from "@codemirror/view"
+// import {EditorState} from "@codemirror/state"
 import Clipboard from "clipboard/dist/clipboard.min";
 
 // Modes
-import 'codemirror/mode/css/css';
-import 'codemirror/mode/clike/clike';
-import 'codemirror/mode/diff/diff';
-import 'codemirror/mode/fortran/fortran';
-import 'codemirror/mode/go/go';
-import 'codemirror/mode/haskell/haskell';
-import 'codemirror/mode/htmlmixed/htmlmixed';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/mode/julia/julia';
-import 'codemirror/mode/lua/lua';
-import 'codemirror/mode/markdown/markdown';
-import 'codemirror/mode/mllike/mllike';
-import 'codemirror/mode/nginx/nginx';
-import 'codemirror/mode/perl/perl';
-import 'codemirror/mode/pascal/pascal';
-import 'codemirror/mode/php/php';
-import 'codemirror/mode/powershell/powershell';
-import 'codemirror/mode/properties/properties';
-import 'codemirror/mode/python/python';
-import 'codemirror/mode/ruby/ruby';
-import 'codemirror/mode/rust/rust';
-import 'codemirror/mode/shell/shell';
-import 'codemirror/mode/sql/sql';
-import 'codemirror/mode/stex/stex';
-import 'codemirror/mode/toml/toml';
-import 'codemirror/mode/vb/vb';
-import 'codemirror/mode/vbscript/vbscript';
-import 'codemirror/mode/xml/xml';
-import 'codemirror/mode/yaml/yaml';
-
-// Addons
-import 'codemirror/addon/scroll/scrollpastend';
-
-// Mapping of possible languages or formats from user input to their codemirror modes.
-// Value can be a mode string or a function that will receive the code content & return the mode string.
-// The function option is used in the event the exact mode could be dynamic depending on the code.
-const modeMap = {
-    bash: 'shell',
-    css: 'css',
-    c: 'text/x-csrc',
-    java: 'text/x-java',
-    scala: 'text/x-scala',
-    kotlin: 'text/x-kotlin',
-    'c++': 'text/x-c++src',
-    'c#': 'text/x-csharp',
-    csharp: 'text/x-csharp',
-    diff: 'diff',
-    for: 'fortran',
-    fortran: 'fortran',
-    'f#': 'text/x-fsharp',
-    fsharp: 'text/x-fsharp',
-    go: 'go',
-    haskell: 'haskell',
-    hs: 'haskell',
-    html: 'htmlmixed',
-    ini: 'properties',
-    javascript: 'text/javascript',
-    json: 'application/json',
-    js: 'text/javascript',
-    jl: 'text/x-julia',
-    julia: 'text/x-julia',
-    latex: 'text/x-stex',
-    lua: 'lua',
-    md: 'markdown',
-    mdown: 'markdown',
-    markdown: 'markdown',
-    ml: 'mllike',
-    nginx: 'nginx',
-    perl: 'perl',
-    pl: 'perl',
-    powershell: 'powershell',
-    properties: 'properties',
-    ocaml: 'text/x-ocaml',
-    pascal: 'text/x-pascal',
-    pas: 'text/x-pascal',
-    php: (content) => {
-        return content.includes('<?php') ? 'php' : 'text/x-php';
-    },
-    py: 'python',
-    python: 'python',
-    ruby: 'ruby',
-    rust: 'rust',
-    rb: 'ruby',
-    rs: 'rust',
-    shell: 'shell',
-    sh: 'shell',
-    stext: 'text/x-stex',
-    toml: 'toml',
-    ts: 'text/typescript',
-    typescript: 'text/typescript',
-    sql: 'text/x-sql',
-    vbs: 'vbscript',
-    vbscript: 'vbscript',
-    'vb.net': 'text/x-vb',
-    vbnet: 'text/x-vb',
-    xml: 'xml',
-    yaml: 'yaml',
-    yml: 'yaml',
-};
+import {modes, modeMap, modesAsStreamLanguages} from "./modes";
+import {viewer} from "./setups.js";
 
 /**
  * Highlight pre elements on a page
@@ -138,17 +42,19 @@ function highlightElem(elem) {
         mode = getMode(langName, content);
     }
 
-    const cm = CodeMirror(function(elt) {
-        elem.parentNode.replaceChild(elt, elem);
-    }, {
-        value: content,
-        mode:  mode,
-        lineNumbers: true,
-        lineWrapping: false,
-        theme: getTheme(),
-        readOnly: true
+    const wrapper = document.createElement('div');
+    elem.parentNode.insertBefore(wrapper, elem);
+
+    const cm = new EditorView({
+        parent: wrapper,
+        doc: content,
+        extensions: viewer(),
     });
 
+    elem.remove();
+
+    // TODO - theme: getTheme(),
+    // TODO - mode,
     addCopyIcon(cm);
 }
 
@@ -157,24 +63,25 @@ function highlightElem(elem) {
  * @param cmInstance
  */
 function addCopyIcon(cmInstance) {
-    const copyIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
-    const copyButton = document.createElement('div');
-    copyButton.classList.add('CodeMirror-copy');
-    copyButton.innerHTML = copyIcon;
-    cmInstance.display.wrapper.appendChild(copyButton);
-
-    const clipboard = new Clipboard(copyButton, {
-        text: function(trigger) {
-            return cmInstance.getValue()
-        }
-    });
-
-    clipboard.on('success', event => {
-        copyButton.classList.add('success');
-        setTimeout(() => {
-            copyButton.classList.remove('success');
-        }, 240);
-    });
+    // TODO
+    // const copyIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+    // const copyButton = document.createElement('div');
+    // copyButton.classList.add('CodeMirror-copy');
+    // copyButton.innerHTML = copyIcon;
+    // cmInstance.display.wrapper.appendChild(copyButton);
+    //
+    // const clipboard = new Clipboard(copyButton, {
+    //     text: function(trigger) {
+    //         return cmInstance.getValue()
+    //     }
+    // });
+    //
+    // clipboard.on('success', event => {
+    //     copyButton.classList.add('success');
+    //     setTimeout(() => {
+    //         copyButton.classList.remove('success');
+    //     }, 240);
+    // });
 }
 
 /**
