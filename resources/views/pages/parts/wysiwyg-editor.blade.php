@@ -1,5 +1,5 @@
 @push('head')
-    <script src="{{ url('/libs/tinymce/tinymce.min.js?ver=5.10.2') }}" nonce="{{ $cspNonce }}"></script>
+    <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}"></script>
 @endpush
 
 <div component="wysiwyg-editor"
