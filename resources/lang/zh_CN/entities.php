@@ -88,7 +88,7 @@ return [
     'shelves_save' => '保存书架',
     'shelves_books' => '书籍已在此书架里',
     'shelves_add_books' => '将书籍加入此书架',
-    'shelves_drag_books' => 'Drag books below to add them to this shelf',
+    'shelves_drag_books' => '拖动下面的图书将其添加到此书架',
     'shelves_empty_contents' => '这个书架没有分配图书',
     'shelves_edit_and_assign' => '编辑书架以分配图书',
     'shelves_edit_named' => '编辑书架 :name',
@@ -171,7 +171,7 @@ return [
     'chapters_permissions_active' => '有效的章节权限',
     'chapters_permissions_success' => '章节权限已更新',
     'chapters_search_this' => '从本章节搜索',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => '排序图书',
 
     // Pages
     'page' => '页面',

@@ -24,7 +24,7 @@ return [
     'meta_updated_name' => ':user обновил :timeLength',
     'meta_owned_name' => 'Владелец :user',
     'entity_select' => 'Выбор объекта',
-    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
+    'entity_select_lack_permission' => 'У вас нет разрешения на выбор этого элемента',
     'images' => 'Изображения',
     'my_recent_drafts' => 'Мои последние черновики',
     'my_recently_viewed' => 'Мои недавние просмотры',
@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Сохранить полку',
     'shelves_books' => 'Книги из этой полки',
     'shelves_add_books' => 'Добавить книгу в эту полку',
-    'shelves_drag_books' => 'Drag books below to add them to this shelf',
+    'shelves_drag_books' => 'Перетащите книги ниже, чтобы добавить их на эту полку',
     'shelves_empty_contents' => 'На этой полке нет книг',
     'shelves_edit_and_assign' => 'Изменить полку для привязки книг',
     'shelves_edit_named' => 'Редактировать полку :name',
@@ -171,7 +171,7 @@ return [
     'chapters_permissions_active' => 'Действующие разрешения главы',
     'chapters_permissions_success' => 'Разрешения главы обновлены',
     'chapters_search_this' => 'Искать в этой главе',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => 'Сортировать книгу',
 
     // Pages
     'page' => 'Страница',
