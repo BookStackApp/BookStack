@@ -16,19 +16,24 @@
   },
   "devDependencies": {
     "chokidar-cli": "^3.0",
-    "esbuild": "0.14.42",
+    "esbuild": "0.14.51",
     "livereload": "^0.9.3",
     "npm-run-all": "^4.1.5",
     "punycode": "^2.1.1",
-    "sass": "^1.52.1"
+    "sass": "^1.54.0"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.0.1",
+    "@codemirror/language": "^6.2.1",
+    "@codemirror/legacy-modes": "^6.1.0",
+    "@codemirror/state": "^6.1.0",
+    "@codemirror/view": "^6.1.2",
     "clipboard": "^2.0.11",
-    "codemirror": "^5.65.5",
+    "codemirror": "^6.0.1",
     "dropzone": "^5.9.3",
     "markdown-it": "^13.0.1",
     "markdown-it-task-lists": "^2.1.1",
-    "snabbdom": "^3.5.0",
+    "snabbdom": "^3.5.1",
     "sortablejs": "^1.15.0"
   }
 }
