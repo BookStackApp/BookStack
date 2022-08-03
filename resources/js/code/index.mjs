@@ -1,10 +1,9 @@
 import {EditorView} from "@codemirror/view"
-// import {EditorState} from "@codemirror/state"
 import Clipboard from "clipboard/dist/clipboard.min";
 
 // Modes
-import {modes, modeMap, modesAsStreamLanguages} from "./modes";
 import {viewer} from "./setups.js";
+import {createView, updateViewLanguage} from "./views.js";
 
 /**
  * Highlight pre elements on a page
@@ -36,26 +35,24 @@ function highlightElem(elem) {
     elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
     const content = elem.textContent.trimEnd();
 
-    let mode = '';
+    let langName = '';
     if (innerCodeElem !== null) {
-        const langName = innerCodeElem.className.replace('language-', '');
-        mode = getMode(langName, content);
+        langName = innerCodeElem.className.replace('language-', '');
     }
 
     const wrapper = document.createElement('div');
     elem.parentNode.insertBefore(wrapper, elem);
 
-    const cm = new EditorView({
+    const ev = createView({
         parent: wrapper,
         doc: content,
         extensions: viewer(),
     });
+    setMode(ev, langName, content);
 
     elem.remove();
 
-    // TODO - theme: getTheme(),
-    // TODO - mode,
-    addCopyIcon(cm);
+    addCopyIcon(ev);
 }
 
 /**
@@ -82,28 +79,6 @@ function addCopyIcon(cmInstance) {
     //         copyButton.classList.remove('success');
     //     }, 240);
     // });
-}
-
-/**
- * Search for a codemirror code based off a user suggestion
- * @param {String} suggestion
- * @param {String} content
- * @returns {string}
- */
-function getMode(suggestion, content) {
-    suggestion = suggestion.trim().replace(/^\./g, '').toLowerCase();
-
-    const modeMapType = typeof modeMap[suggestion];
-
-    if (modeMapType === 'undefined') {
-        return '';
-    }
-
-    if (modeMapType === 'function') {
-        return modeMap[suggestion](content);
-    }
-
-    return modeMap[suggestion];
 }
 
 /**
@@ -172,12 +147,14 @@ export function inlineEditor(textArea, mode) {
 }
 
 /**
- * Set the mode of a codemirror instance.
- * @param cmInstance
- * @param modeSuggestion
+ * Set the language mode of a codemirror EditorView.
+ *
+ * @param {EditorView} ev
+ * @param {string} modeSuggestion
+ * @param {string} content
  */
-export function setMode(cmInstance, modeSuggestion, content) {
-      cmInstance.setOption('mode', getMode(modeSuggestion, content));
+export function setMode(ev, modeSuggestion, content) {
+    updateViewLanguage(ev, modeSuggestion, content);
 }
 
 /**
