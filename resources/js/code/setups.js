@@ -6,9 +6,6 @@ import {defaultHighlightStyle, syntaxHighlighting, bracketMatching,
 import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
 import {EditorState} from "@codemirror/state"
 
-import {modesAsStreamLanguages} from "./modes";
-
-
 export function viewer() {
     return [
         lineNumbers(),
@@ -27,6 +24,5 @@ export function viewer() {
             ...foldKeymap,
         ]),
         EditorState.readOnly.of(true),
-        ...modesAsStreamLanguages(),
     ];
 }

@@ -24,6 +24,11 @@
   },
   "dependencies": {
     "@codemirror/commands": "^6.0.1",
+    "@codemirror/lang-html": "^6.1.0",
+    "@codemirror/lang-javascript": "^6.0.2",
+    "@codemirror/lang-json": "^6.0.0",
+    "@codemirror/lang-markdown": "^6.0.1",
+    "@codemirror/lang-php": "^6.0.0",
     "@codemirror/language": "^6.2.1",
     "@codemirror/legacy-modes": "^6.1.0",
     "@codemirror/state": "^6.1.0",
