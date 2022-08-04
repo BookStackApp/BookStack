@@ -234,4 +234,28 @@ class UserManagementTest extends TestCase
 
         $this->assertDatabaseMissing('activities', ['type' => 'USER_CREATE']);
     }
+
+    public function test_user_create_update_fails_if_locale_is_invalid()
+    {
+        $user = $this->getEditor();
+
+        // Too long
+        $resp = $this->asAdmin()->put($user->getEditUrl(), ['language' => 'this_is_too_long']);
+        $resp->assertSessionHasErrors(['language' => 'The language may not be greater than 15 characters.']);
+        session()->flush();
+
+        // Invalid characters
+        $resp = $this->put($user->getEditUrl(), ['language' => 'en<GB']);
+        $resp->assertSessionHasErrors(['language' => 'The language may only contain letters, numbers, dashes and underscores.']);
+        session()->flush();
+
+        // Both on create
+        $resp = $this->post('/settings/users/create', [
+            'language' => 'en<GB_and_this_is_longer',
+            'name' => 'My name',
+            'email' => 'jimmy@example.com',
+        ]);
+        $resp->assertSessionHasErrors(['language' => 'The language may not be greater than 15 characters.']);
+        $resp->assertSessionHasErrors(['language' => 'The language may only contain letters, numbers, dashes and underscores.']);
+    }
 }

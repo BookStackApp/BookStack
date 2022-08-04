@@ -83,7 +83,7 @@ class UserController extends Controller
         $validationRules = [
             'name'             => ['required'],
             'email'            => ['required', 'email', 'unique:users,email'],
-            'language'         => ['string'],
+            'language'         => ['string', 'max:15', 'alpha_dash'],
             'roles'            => ['array'],
             'roles.*'          => ['integer'],
             'password'         => $passwordRequired ? ['required', Password::default()] : null,
@@ -143,7 +143,7 @@ class UserController extends Controller
             'email'            => ['min:2', 'email', 'unique:users,email,' . $id],
             'password'         => ['required_with:password_confirm', Password::default()],
             'password-confirm' => ['same:password', 'required_with:password'],
-            'language'         => ['string'],
+            'language'         => ['string', 'max:15', 'alpha_dash'],
             'roles'            => ['array'],
             'roles.*'          => ['integer'],
             'external_auth_id' => ['string'],
