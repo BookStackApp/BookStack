@@ -1,24 +1,43 @@
-import {getLanguageExtension} from "./languages";
+import {getLanguageExtension} from "./languages"
 import {Compartment} from "@codemirror/state"
 import {EditorView} from "@codemirror/view"
+import {oneDark} from "@codemirror/theme-one-dark"
 
 const viewLangCompartments = new WeakMap();
 
 /**
  * Create a new editor view.
  *
- * @param {Object} config
+ * @param {{parent: Element, doc: String, extensions: Array}} config
  * @returns {EditorView}
  */
 export function createView(config) {
     const langCompartment = new Compartment();
     config.extensions.push(langCompartment.of([]));
+    config.extensions.push(getTheme(config.parent));
 
     const ev = new EditorView(config);
 
     viewLangCompartments.set(ev, langCompartment);
 
     return ev;
+}
+
+/**
+ * Ge the theme extension to use for editor view instance.
+ * @returns {Extension}
+ */
+function getTheme(viewParentEl) {
+    const darkMode = document.documentElement.classList.contains('dark-mode');
+
+    const eventData = {
+        darkMode: darkMode,
+        theme: null,
+    };
+
+    window.$events.emitPublic(viewParentEl, 'library-cm6::configure-theme', eventData);
+
+    return eventData.theme || (darkMode ? oneDark : []);
 }
 
 /**

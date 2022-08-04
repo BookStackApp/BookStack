@@ -39,6 +39,7 @@
     "@codemirror/language": "^6.2.1",
     "@codemirror/legacy-modes": "^6.1.0",
     "@codemirror/state": "^6.1.0",
+    "@codemirror/theme-one-dark": "^6.0.0",
     "@codemirror/view": "^6.1.2",
     "clipboard": "^2.0.11",
     "codemirror": "^6.0.1",
