@@ -1,12 +1,14 @@
 import {StreamLanguage} from "@codemirror/language"
 
-import {css} from '@codemirror/legacy-modes/mode/css';
-import {c, java, cpp, csharp, kotlin, scala} from '@codemirror/legacy-modes/mode/clike';
+import {css} from '@codemirror/lang-css';
+import {c, csharp, kotlin, scala} from '@codemirror/legacy-modes/mode/clike';
+import {cpp} from '@codemirror/lang-cpp';
 import {diff} from '@codemirror/legacy-modes/mode/diff';
 import {fortran} from '@codemirror/legacy-modes/mode/fortran';
 import {go} from '@codemirror/legacy-modes/mode/go';
 import {haskell} from '@codemirror/legacy-modes/mode/haskell';
 import {html} from '@codemirror/lang-html';
+import {java} from '@codemirror/lang-java';
 import {javascript} from '@codemirror/lang-javascript';
 import {json} from '@codemirror/lang-json';
 import {julia} from '@codemirror/legacy-modes/mode/julia';
@@ -19,16 +21,16 @@ import {pascal} from '@codemirror/legacy-modes/mode/pascal';
 import {php} from '@codemirror/lang-php';
 import {powerShell} from '@codemirror/legacy-modes/mode/powershell';
 import {properties} from '@codemirror/legacy-modes/mode/properties';
-import {python} from '@codemirror/legacy-modes/mode/python';
+import {python} from '@codemirror/lang-python';
 import {ruby} from '@codemirror/legacy-modes/mode/ruby';
-import {rust} from '@codemirror/legacy-modes/mode/rust';
+import {rust} from '@codemirror/lang-rust';
 import {shell} from '@codemirror/legacy-modes/mode/shell';
-import {sql} from '@codemirror/legacy-modes/mode/sql';
+import {sql} from '@codemirror/lang-sql';
 import {stex} from '@codemirror/legacy-modes/mode/stex';
 import {toml} from '@codemirror/legacy-modes/mode/toml';
 import {vb} from '@codemirror/legacy-modes/mode/vb';
 import {vbScript} from '@codemirror/legacy-modes/mode/vbscript';
-import {xml} from '@codemirror/legacy-modes/mode/xml';
+import {xml} from '@codemirror/lang-xml';
 import {yaml} from '@codemirror/legacy-modes/mode/yaml';
 
 
@@ -37,12 +39,9 @@ import {yaml} from '@codemirror/legacy-modes/mode/yaml';
 // The function option is used in the event the exact mode could be dynamic depending on the code.
 const modeMap = {
     bash: () => StreamLanguage.define(shell),
-    css: () => StreamLanguage.define(css),
     c: () => StreamLanguage.define(c),
-    java: () => StreamLanguage.define(java),
-    scala: () => StreamLanguage.define(scala),
-    kotlin: () => StreamLanguage.define(kotlin),
-    'c++': () => StreamLanguage.define(cpp),
+    css: () => css(),
+    'c++': () => cpp(),
     'c#': () => StreamLanguage.define(csharp),
     csharp: () => StreamLanguage.define(csharp),
     diff: () => StreamLanguage.define(diff),
@@ -55,47 +54,50 @@ const modeMap = {
     hs: () => StreamLanguage.define(haskell),
     html: () => html(),
     ini: () => StreamLanguage.define(properties),
+    java: () => java(),
     javascript: () => javascript(),
     json: () => json(),
     js: () => javascript(),
     jl: () => StreamLanguage.define(julia),
     julia: () => StreamLanguage.define(julia),
+    kotlin: () => StreamLanguage.define(kotlin),
     latex: () => StreamLanguage.define(stex),
     lua: () => StreamLanguage.define(lua),
-    md: () => StreamLanguage.define(markdown),
-    mdown: () => StreamLanguage.define(markdown),
-    markdown: () => StreamLanguage.define(markdown),
+    markdown: () => markdown(),
+    md: () => markdown(),
+    mdown: () => markdown(),
     ml: () => StreamLanguage.define(sml),
     nginx: () => StreamLanguage.define(nginx),
-    perl: () => StreamLanguage.define(perl),
-    pl: () => StreamLanguage.define(perl),
-    powershell: () => StreamLanguage.define(powerShell),
-    properties: () => StreamLanguage.define(properties),
-    ocaml: () => StreamLanguage.define(oCaml),
-    pascal: () => StreamLanguage.define(pascal),
     pas: () => StreamLanguage.define(pascal),
+    pascal: () => StreamLanguage.define(pascal),
+    perl: () => StreamLanguage.define(perl),
     php: (code) => {
         const hasTags = code.includes('<?php');
         return php({plain: !hasTags});
     },
-    py: () => StreamLanguage.define(python),
-    python: () => StreamLanguage.define(python),
-    ruby: () => StreamLanguage.define(ruby),
-    rust: () => StreamLanguage.define(rust),
+    pl: () => StreamLanguage.define(perl),
+    powershell: () => StreamLanguage.define(powerShell),
+    properties: () => StreamLanguage.define(properties),
+    ocaml: () => StreamLanguage.define(oCaml),
+    py: () => python(),
+    python: () => python(),
     rb: () => StreamLanguage.define(ruby),
-    rs: () => StreamLanguage.define(rust),
+    rs: () => rust(),
+    ruby: () => StreamLanguage.define(ruby),
+    rust: () => rust(),
+    scala: () => StreamLanguage.define(scala),
     shell: () => StreamLanguage.define(shell),
     sh: () => StreamLanguage.define(shell),
     stext: () => StreamLanguage.define(stex),
     toml: () => StreamLanguage.define(toml),
     ts: () => javascript({typescript: true}),
     typescript: () => javascript({typescript: true}),
-    sql: () => StreamLanguage.define(sql),
+    sql: () => sql(),
     vbs: () => StreamLanguage.define(vbScript),
     vbscript: () => StreamLanguage.define(vbScript),
     'vb.net': () => StreamLanguage.define(vb),
     vbnet: () => StreamLanguage.define(vb),
-    xml: () => StreamLanguage.define(xml),
+    xml: () => xml(),
     yaml: () => StreamLanguage.define(yaml),
     yml: () => StreamLanguage.define(yaml),
 };
