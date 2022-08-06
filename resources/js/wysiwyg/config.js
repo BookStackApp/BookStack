@@ -110,6 +110,7 @@ function gatherPlugins(options) {
         "about",
         "details",
         "tasklist",
+        "colorpicker",
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
