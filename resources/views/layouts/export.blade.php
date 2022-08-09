@@ -12,8 +12,10 @@
     @include('exports.parts.custom-head')
 </head>
 <body class="export export-format-{{ $format }} export-engine-{{ $engine ?? 'none' }}">
+@include('layouts.parts.export-body-start')
 <div class="page-content">
     @yield('content')
 </div>
+@include('layouts.parts.export-body-end')
 </body>
 </html>
