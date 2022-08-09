@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Auth\User;
+use BookStack\Interfaces\Loggable;
 use BookStack\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Page   $page
  * @property-read ?User $createdBy
  */
-class PageRevision extends Model
+class PageRevision extends Model implements Loggable
 {
     protected $fillable = ['name', 'text', 'summary'];
     protected $hidden = ['html', 'markdown', 'restricted', 'text'];
@@ -82,5 +83,10 @@ class PageRevision extends Model
     public static function isA(string $type): bool
     {
         return $type === 'revision';
+    }
+
+    public function logDescriptor(): string
+    {
+        return "Revision #{$this->revision_number} (ID: {$this->id}) for page ID {$this->page_id}";
     }
 }

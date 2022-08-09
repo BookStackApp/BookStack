@@ -13,7 +13,12 @@
 
             <div component="dropdown" class="list-sort-type dropdown-container">
                 <label for="">{{ trans('settings.audit_event_filter') }}</label>
-                <button refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('common.sort_options') }}" class="input-base text-left">{{ $listDetails['event'] ?: trans('settings.audit_event_filter_no_filter') }}</button>
+                <button refs="dropdown@toggle"
+                        type="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-label="{{ trans('common.sort_options') }}"
+                        class="input-base text-left">{{ $listDetails['event'] ?: trans('settings.audit_event_filter_no_filter') }}</button>
                 <ul refs="dropdown@menu" class="dropdown-menu">
                     <li @if($listDetails['event'] === '') class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => '']) }}" class="text-item">{{ trans('settings.audit_event_filter_no_filter') }}</a></li>
                     @foreach($activityTypes as $type)
