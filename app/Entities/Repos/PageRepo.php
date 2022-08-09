@@ -337,6 +337,7 @@ class PageRepo
         $this->savePageRevision($page, $summary);
 
         Activity::add(ActivityType::PAGE_RESTORE, $page);
+        Activity::add(ActivityType::REVISION_RESTORE, $revision);
 
         return $page;
     }

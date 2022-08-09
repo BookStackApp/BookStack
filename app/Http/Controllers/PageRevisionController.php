@@ -2,9 +2,11 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Facades\Activity;
 use Ssddanbrown\HtmlDiff\Diff;
 
 class PageRevisionController extends Controller
@@ -132,6 +134,7 @@ class PageRevisionController extends Controller
         }
 
         $revision->delete();
+        Activity::add(ActivityType::REVISION_DELETE, $revision);
         $this->showSuccessNotification(trans('entities.revision_delete_success'));
 
         return redirect($page->getUrl('/revisions'));

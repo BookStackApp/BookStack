@@ -29,6 +29,9 @@ class ActivityType
     const COMMENTED_ON = 'commented_on';
     const PERMISSIONS_UPDATE = 'permissions_update';
 
+    const REVISION_RESTORE = 'revision_restore';
+    const REVISION_DELETE = 'revision_delete';
+
     const SETTINGS_UPDATE = 'settings_update';
     const MAINTENANCE_ACTION_RUN = 'maintenance_action_run';
 

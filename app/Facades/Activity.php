@@ -5,7 +5,7 @@ namespace BookStack\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \BookStack\Actions\ActivityLogger
+ * @mixin \BookStack\Actions\ActivityLogger
  */
 class Activity extends Facade
 {
