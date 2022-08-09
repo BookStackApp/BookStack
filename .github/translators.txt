@@ -267,3 +267,4 @@ Filip Antala (AntalaFilip) :: Slovak
 mcgong (GongMingCai) :: Chinese Simplified; Chinese Traditional
 Nanang Setia Budi (sefidananang) :: Indonesian
 Андрей Павлов (andrei.pavlov) :: Russian
+Alex Navarro (alex.n.navarro) :: Portuguese, Brazilian
