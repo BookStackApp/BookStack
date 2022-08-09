@@ -252,8 +252,8 @@ class UserManagementTest extends TestCase
         // Both on create
         $resp = $this->post('/settings/users/create', [
             'language' => 'en<GB_and_this_is_longer',
-            'name' => 'My name',
-            'email' => 'jimmy@example.com',
+            'name'     => 'My name',
+            'email'    => 'jimmy@example.com',
         ]);
         $resp->assertSessionHasErrors(['language' => 'The language may not be greater than 15 characters.']);
         $resp->assertSessionHasErrors(['language' => 'The language may only contain letters, numbers, dashes and underscores.']);
