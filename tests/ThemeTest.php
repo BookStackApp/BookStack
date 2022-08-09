@@ -272,7 +272,7 @@ class ThemeTest extends TestCase
         $this->assertStringContainsString('Command ran!', $output);
     }
 
-    public function test_body_start_and_end_template_files_can_be_used()
+    public function test_base_body_start_and_end_template_files_can_be_used()
     {
         $bodyStartStr = 'barry-fought-against-the-panther';
         $bodyEndStr = 'barry-lost-his-fight-with-grace';
@@ -284,6 +284,25 @@ class ThemeTest extends TestCase
             file_put_contents($viewDir . '/base-body-end.blade.php', $bodyEndStr);
 
             $resp = $this->asEditor()->get('/');
+            $resp->assertSee($bodyStartStr);
+            $resp->assertSee($bodyEndStr);
+        });
+    }
+
+    public function test_export_body_start_and_end_template_files_can_be_used()
+    {
+        $bodyStartStr = 'barry-fought-against-the-panther';
+        $bodyEndStr = 'barry-lost-his-fight-with-grace';
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $this->usingThemeFolder(function (string $folder) use ($bodyStartStr, $bodyEndStr, $page) {
+            $viewDir = theme_path('layouts/parts');
+            mkdir($viewDir, 0777, true);
+            file_put_contents($viewDir . '/export-body-start.blade.php', $bodyStartStr);
+            file_put_contents($viewDir . '/export-body-end.blade.php', $bodyEndStr);
+
+            $resp = $this->asEditor()->get($page->getUrl('/export/html'));
             $resp->assertSee($bodyStartStr);
             $resp->assertSee($bodyEndStr);
         });
