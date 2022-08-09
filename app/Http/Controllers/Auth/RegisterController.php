@@ -30,9 +30,9 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    protected $socialAuthService;
-    protected $registrationService;
-    protected $loginService;
+    protected SocialAuthService $socialAuthService;
+    protected RegistrationService $registrationService;
+    protected LoginService $loginService;
 
     /**
      * Where to redirect users after login / registration.
@@ -69,7 +69,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => ['required', 'min:2', 'max:255'],
+            'name'     => ['required', 'min:2', 'max:100'],
             'email'    => ['required', 'email', 'max:255', 'unique:users'],
             'password' => ['required', Password::default()],
         ]);

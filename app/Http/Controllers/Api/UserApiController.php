@@ -36,7 +36,7 @@ class UserApiController extends ApiController
     {
         return [
             'create' => [
-                'name'  => ['required', 'min:2'],
+                'name'  => ['required', 'min:2', 'max:100'],
                 'email' => [
                     'required', 'min:2', 'email', new Unique('users', 'email'),
                 ],
@@ -48,7 +48,7 @@ class UserApiController extends ApiController
                 'send_invite'      => ['boolean'],
             ],
             'update' => [
-                'name'  => ['min:2'],
+                'name'  => ['min:2', 'max:100'],
                 'email' => [
                     'min:2',
                     'email',
