@@ -14,6 +14,7 @@ use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Throwable;
 
 class Cloner
 {
@@ -160,9 +161,12 @@ class Cloner
     private function updateLinks(string &$html, string $parentLink, string $newParentLink)
     {
         // Do a quick check to see if we have some candidates that needs to be updated
+        // todo handle single quote
         if (!Str::contains($html, "href=\"$parentLink")) {
-            return;
+            return false;
         }
+
+        $html = Str::replace("href=\"$parentLink\"", "href=\"$newParentLink\"", $html);
 
         // At this point we have candidates to update
         // Find all the slugs that needs to be updated?
@@ -178,10 +182,17 @@ class Cloner
         // search links using $oldParent and replace using $parent
         // if it has chapter in the url get rid of it
 
-        preg_match_all("$link", $original->html, $matched);
+        $pattern = "href=\"$parentLink/page/([^\"]+)";
+        
+        $replacement = 'href=' . $newParentLink .' /page/${1}';
 
-        foreach ($matched as $match) {
-            var_dump($match);
+        // preg_match_all("#$pattern#", $html, $matches);
+        try  {
+            $html = preg_replace("#$pattern#", $replacement, $html);
+        } catch (Throwable $e) {
+            print($e);
         }
+
+        return true;
     }
 }
