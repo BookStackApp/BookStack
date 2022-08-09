@@ -171,7 +171,7 @@ return [
     'chapters_permissions_active' => 'Hoofdstuk Machtigingen Actief',
     'chapters_permissions_success' => 'Hoofdstuk Machtigingen Bijgewerkt',
     'chapters_search_this' => 'Doorzoek dit hoofdstuk',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => 'Sorteer Boek',
 
     // Pages
     'page' => 'Pagina',
