@@ -35,12 +35,13 @@ class Cloner
      * Clone the given page into the given parent using the provided name.
      * $oldParent should be provided if $updateLinks is set to true
      */
-    public function clonePage(Page $original, Entity $parent, string $newName, bool $updateLinks, Entity $oldParent = null): Page
+    public function clonePage(Page $original, Entity $parent, string $newName, bool $updateLinks = false, Entity $oldParent = null): Page
     {
         $copyPage = $this->pageRepo->getNewDraftPage($parent);
         $pageData = $this->entityToInputData($original);
 
         if ($updateLinks) {
+            // Replace the links immediatly
             $this->updateLinks($pageData['html'], $oldParent->getUrl(), $parent->getUrl());
         }
 
@@ -61,13 +62,29 @@ class Cloner
 
         $copyChapter = $this->chapterRepo->create($chapterDetails, $parent);
 
+        // Find links that needs to be updated
+        // If pages are not visible to the user we should not update the links since the target page won't be cloned
+        $originalVisiblePages = $original->getVisiblePages();
+
+        /** @var Page[] */
+        $clonedPages = [];
+
         if (userCan('page-create', $copyChapter)) {
             /** @var Page $page */
-            foreach ($original->getVisiblePages() as $page) {
-                // we should inform cloneChapter here if this page has links that needs to be updated
-                // If pages are not visible to the user we should not update the links since the target page won't be cloned
-                $this->clonePage($page, $copyChapter, $page->name, true, $original);
+            foreach ($originalVisiblePages as $page) {
+                $clonedPages[] = $this->clonePage($page, $copyChapter, $page->name);
             }
+        }
+
+        $replacedHtmls = str_replace(
+            $originalVisiblePages->map(fn ($page) => $page->getUrl())->values()->all(),
+            array_map(fn ($page) => $page->getUrl(), $clonedPages),
+            array_map(fn ($page) => $page->html, $clonedPages)
+        );
+
+        foreach ($replacedHtmls as $idx => $replacedHtml) {
+            $clonedPages[$idx]->html = $replacedHtml;
+            $clonedPages[$idx]->save();
         }
 
         return $copyChapter;
@@ -91,6 +108,7 @@ class Cloner
             }
 
             if ($child instanceof Page && !$child->draft && userCan('page-create', $copyBook)) {
+                // We're cloning a book, so we already know the new links to be applied
                 $this->clonePage($child, $copyBook, $child->name, true, $original);
             }
         }
@@ -161,7 +179,6 @@ class Cloner
     private function updateLinks(string &$html, string $parentLink, string $newParentLink)
     {
         // Do a quick check to see if we have some candidates that needs to be updated
-        // todo handle single quote
         if (!Str::contains($html, "href=\"$parentLink")) {
             return false;
         }
@@ -175,23 +192,13 @@ class Cloner
         // about the new links (because we need the new page slugs). So we'll just return the slugs that needs to be
         // updated
         //! We should take care to not consider pages that are not visible 
-
-
-
-        // todo search for relevant links in the html attribute content and replace with newer links
-        // search links using $oldParent and replace using $parent
         // if it has chapter in the url get rid of it
 
         $pattern = "href=\"$parentLink/page/([^\"]+)";
         
-        $replacement = 'href=' . $newParentLink .' /page/${1}';
+        $replacement = 'href="' . $newParentLink . '/page/${1}';
 
-        // preg_match_all("#$pattern#", $html, $matches);
-        try  {
-            $html = preg_replace("#$pattern#", $replacement, $html);
-        } catch (Throwable $e) {
-            print($e);
-        }
+        $html = preg_replace("#$pattern#", $replacement, $html);
 
         return true;
     }
