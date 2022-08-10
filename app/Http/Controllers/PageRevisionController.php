@@ -11,11 +11,8 @@ use Ssddanbrown\HtmlDiff\Diff;
 
 class PageRevisionController extends Controller
 {
-    protected $pageRepo;
+    protected PageRepo $pageRepo;
 
-    /**
-     * PageRevisionController constructor.
-     */
     public function __construct(PageRepo $pageRepo)
     {
         $this->pageRepo = $pageRepo;
@@ -29,11 +26,19 @@ class PageRevisionController extends Controller
     public function index(string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName'=>$page->getShortName()]));
+        $revisions = $page->revisions()->select([
+                'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at',
+                'type', 'revision_number', 'summary',
+            ])
+            ->selectRaw("IF(markdown = '', false, true) as is_markdown")
+            ->with(['page.book', 'createdBy'])
+            ->get();
+
+        $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName' => $page->getShortName()]));
 
         return view('pages.revisions', [
+            'revisions' => $revisions,
             'page'    => $page,
-            'current' => $page,
         ]);
     }
 
