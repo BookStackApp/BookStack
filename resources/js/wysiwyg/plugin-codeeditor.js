@@ -111,10 +111,8 @@ function defineCodeBlockCustomElement(editor) {
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
             const renderCodeMirror = (Code) => {
                 this.cm = Code.wysiwygView(container, content, this.getLanguage());
-                Code.updateLayout(this.cm);
-                setTimeout(() => {
-                    this.style.height = null;
-                }, 1);
+                setTimeout(() => Code.updateLayout(this.cm), 10);
+                setTimeout(() => this.style.height = null, 12);
             };
 
             window.importVersioned('code').then((Code) => {
