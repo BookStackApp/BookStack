@@ -87,7 +87,7 @@ class FavouriteController extends Controller
 
         $modelInstance = $model->newQuery()
             ->where('id', '=', $modelInfo['id'])
-            ->first(['id', 'name']);
+            ->first(['id', 'name', 'restricted', 'owned_by']);
 
         $inaccessibleEntity = ($modelInstance instanceof Entity && !userCan('view', $modelInstance));
         if (is_null($modelInstance) || $inaccessibleEntity) {
