@@ -38,6 +38,7 @@ class BaseRepo
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
         }
 
+        $entity->refresh();
         $entity->rebuildPermissions();
         $entity->indexForSearch();
     }
