@@ -34,7 +34,13 @@ class PermissionApplicator
         $ownRolePermission = $user->can($fullPermission . '-own');
         $nonJointPermissions = ['restrictions', 'image', 'attachment', 'comment'];
         $ownerField = ($ownable instanceof Entity) ? 'owned_by' : 'created_by';
-        $isOwner = $user->id === $ownable->getAttribute($ownerField);
+        $ownableFieldVal = $ownable->getAttribute($ownerField);
+
+        if (is_null($ownableFieldVal)) {
+            throw new InvalidArgumentException("{$ownerField} field used but has not been loaded");
+        }
+
+        $isOwner = $user->id === $ownableFieldVal;
         $hasRolePermission = $allRolePermission || ($isOwner && $ownRolePermission);
 
         // Handle non entity specific jointPermissions
@@ -68,6 +74,11 @@ class PermissionApplicator
         }
 
         foreach ($chain as $currentEntity) {
+
+            if (is_null($currentEntity->restricted)) {
+                throw new InvalidArgumentException("Entity restricted field used but has not been loaded");
+            }
+
             if ($currentEntity->restricted) {
                 return $currentEntity->permissions()
                     ->whereIn('role_id', $userRoleIds)

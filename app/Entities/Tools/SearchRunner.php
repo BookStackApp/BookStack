@@ -163,7 +163,7 @@ class SearchRunner
         $entityQuery = $entityModelInstance->newQuery()->scopes('visible');
 
         if ($entityModelInstance instanceof Page) {
-            $entityQuery->select($entityModelInstance::$listAttributes);
+            $entityQuery->select(array_merge($entityModelInstance::$listAttributes, ['restricted', 'owned_by']));
         } else {
             $entityQuery->select(['*']);
         }

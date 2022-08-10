@@ -1,11 +1,11 @@
-<?php
+<?php namespace Tests;
 
 use BookStack\Actions\Favourite;
+use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use Tests\TestCase;
 
 class FavouriteTest extends TestCase
 {
@@ -55,6 +55,30 @@ class FavouriteTest extends TestCase
 
         $this->assertDatabaseMissing('favourites', [
             'user_id' => $editor->id,
+        ]);
+    }
+
+    public function test_favourite_flow_with_own_permissions()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $user = User::factory()->create();
+        $book->owned_by = $user->id;
+        $book->save();
+
+        $this->giveUserPermissions($user, ['book-view-own']);
+
+        $this->actingAs($user)->get($book->getUrl());
+        $resp = $this->post('/favourites/add', [
+            'type' => get_class($book),
+            'id'   => $book->id,
+        ]);
+        $resp->assertRedirect($book->getUrl());
+
+        $this->assertDatabaseHas('favourites', [
+            'user_id'           => $user->id,
+            'favouritable_type' => $book->getMorphClass(),
+            'favouritable_id'   => $book->id,
         ]);
     }
 
