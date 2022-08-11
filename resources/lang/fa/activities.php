@@ -38,8 +38,8 @@ return [
     'book_sort_notification'      => 'کتاب با موفقیت مرتب سازی شد',
 
     // Bookshelves
-    'bookshelf_create'              => 'ایجاد قفسه کتاب',
-    'bookshelf_create_notification' => 'قفسه کتاب با موفقیت ایجاد شد',
+    'bookshelf_create'            => 'ایجاد قفسه کتاب',
+    'bookshelf_create_notification'    => 'قفسه کتاب با موفقیت ایجاد شد',
     'bookshelf_create_from_book'    => 'تبدیل کتاب به قفسه',
     'bookshelf_create_from_book_notification'    => 'کتاب با موفقیت به یک قفسه تبدیل شد',
     'bookshelf_update'                 => 'به روزرسانی قفسه کتاب',
