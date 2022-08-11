@@ -86,6 +86,9 @@ class PageApiController extends ApiController
      *
      * Pages will always have HTML content. They may have markdown content
      * if the markdown editor was used to last update the page.
+     *
+     * See the "Content Security" section of these docs for security considerations when using
+     * the page content returned from this endpoint.
      */
     public function read(string $id)
     {

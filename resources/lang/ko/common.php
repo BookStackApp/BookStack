@@ -19,7 +19,7 @@ return [
     'description' => '설명',
     'role' => '권한',
     'cover_image' => '대표 이미지',
-    'cover_image_description' => '이미지 규격은 440x250px 내외입니다.',
+    'cover_image_description' => '이미지 크기는 440x250px 내외입니다.',
 
     // Actions
     'actions' => '활동',
@@ -47,8 +47,8 @@ return [
     'previous' => '이전',
     'filter_active' => '적용 중:',
     'filter_clear' => '모든 필터 해제',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => '내려받기',
+    'open_in_tab' => '탭에서 열기',
 
     // Sort Options
     'sort_options' => '정렬 기준',
