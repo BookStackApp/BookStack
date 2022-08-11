@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => '책자 만들기',
     'book_create_notification'    => '책 생성함',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => '챕터를 책으로 변환',
+    'book_create_from_chapter_notification' => '챕터를 책으로 변환했습니다.',
     'book_update'                 => '책 수정',
     'book_update_notification'    => '책 수정함',
     'book_delete'                 => '책 지우기',
@@ -40,8 +40,8 @@ return [
     // Bookshelves
     'bookshelf_create'            => '책꽂이 만들기',
     'bookshelf_create_notification'    => '책꽂이 생성함',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
+    'bookshelf_create_from_book'    => '책을 책꽂이로 변환',
+    'bookshelf_create_from_book_notification'    => '책을 책꽂이로 변환했습니다.',
     'bookshelf_update'                 => '책꽂이 수정',
     'bookshelf_update_notification'    => '책꽂이 수정함',
     'bookshelf_delete'                 => '책꽂이 지우기',
@@ -64,8 +64,8 @@ return [
     'webhook_delete_notification' => '웹 훅 삭제함',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => '사용자가 업데이트되었습니다',
+    'user_delete_notification' => '사용자가 삭제되었습니다',
 
     // Other
     'commented_on'                => '댓글 쓰기',
