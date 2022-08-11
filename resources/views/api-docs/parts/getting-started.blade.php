@@ -180,3 +180,19 @@ API_REQUESTS_PER_MIN=180</code></pre>
     affecting normal use of the system caused by over-consuming system resources.
     Keep in mind there may be other rate-limiting factors such as web-server & firewall controls.
 </p>
+
+<hr>
+
+<h5 id="content-security" class="text-mono mb-m">Content Security</h5>
+<p>
+    Many of the available endpoints will return content that has been provided by user input.
+    Some of this content may be provided in a certain data-format (Such as HTML or Markdown for page content).
+    Such content is not guaranteed to be safe so keep security in mind when dealing with such user-input.
+    In some cases, the system will apply some filtering to content in an attempt to prevent certain vulnerabilities, but
+    this is not assured to be a bullet-proof defence.
+</p>
+<p>
+    Within its own interfaces, unless disabled, the system makes use of Content Security Policy (CSP) rules to heavily negate
+    cross-site scripting vulnerabilities from user content. If displaying user content externally, it's advised you
+    also use defences such as CSP or the disabling of JavaScript completely.
+</p>

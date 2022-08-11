@@ -325,11 +325,14 @@ class PageContentTest extends TestCase
         $pageView->assertDontSee('abc123abc123');
     }
 
-    public function test_svg_xlink_hrefs_are_removed()
+    public function test_svg_script_usage_is_removed()
     {
         $checks = [
             '<svg id="test" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100"><a xlink:href="javascript:alert(document.domain)"><rect x="0" y="0" width="100" height="100" /></a></svg>',
             '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="data:application/xml;base64 ,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KPGRlZnM+CjxjaXJjbGUgaWQ9InRlc3QiIHI9IjAiIGN4PSIwIiBjeT0iMCIgc3R5bGU9ImZpbGw6ICNGMDAiPgo8c2V0IGF0dHJpYnV0ZU5hbWU9ImZpbGwiIGF0dHJpYnV0ZVR5cGU9IkNTUyIgb25iZWdpbj0nYWxlcnQoZG9jdW1lbnQuZG9tYWluKScKb25lbmQ9J2FsZXJ0KCJvbmVuZCIpJyB0bz0iIzAwRiIgYmVnaW49IjBzIiBkdXI9Ijk5OXMiIC8+CjwvY2lyY2xlPgo8L2RlZnM+Cjx1c2UgeGxpbms6aHJlZj0iI3Rlc3QiLz4KPC9zdmc+#test"/></svg>',
+            '<svg><animate href=#xss attributeName=href values=javascript:alert(1) /></svg>',
+            '<svg><animate href="#xss" attributeName="href" values="a;javascript:alert(1)" /></svg>',
+            '<svg><animate href="#xss" attributeName="href" values="a;data:alert(1)" /></svg>',
         ];
 
         $this->asEditor();
@@ -341,9 +344,11 @@ class PageContentTest extends TestCase
 
             $pageView = $this->get($page->getUrl());
             $pageView->assertStatus(200);
-            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'alert');
-            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'xlink:href');
-            $this->withHtml($pageView)->assertElementNotContains('.page-content', 'application/xml');
+            $html = $this->withHtml($pageView);
+            $html->assertElementNotContains('.page-content', 'alert');
+            $html->assertElementNotContains('.page-content', 'xlink:href');
+            $html->assertElementNotContains('.page-content', 'application/xml');
+            $html->assertElementNotContains('.page-content', 'javascript');
         }
     }
 
