@@ -87,7 +87,7 @@ return [
     '404_page_not_found' => '404 Not Found',
     'sorry_page_not_found' => '문서를 못 찾았습니다.',
     'sorry_page_not_found_permission_warning' => '문서를 볼 권한이 없습니다.',
-    'image_not_found' => 'Image Not Found',
+    'image_not_found' => '이미지를 찾을 수 없습니다',
     'image_not_found_subtitle' => '이미지를 못 찾았습니다.',
     'image_not_found_details' => '이미지가 지워졌을 수 있습니다.',
     'return_home' => '처음으로 돌아가기',

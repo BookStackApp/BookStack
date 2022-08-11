@@ -39,9 +39,9 @@ return [
     'register_success' => '가입했습니다! 이제 로그인할 수 있습니다.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => '로그인 시도 중',
+    'auto_init_starting_desc' => '로그인을 시작하기 위해 인증 시스템에 접근 중입니다. 5초 후에도 아무런 반응이 없다면 아래 링크를 클릭하세요.',
+    'auto_init_start_link' => '인증 진행',
 
     // Password Reset
     'reset_password' => '패스워드 바꾸기',
