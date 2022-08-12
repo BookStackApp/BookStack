@@ -24,7 +24,7 @@ return [
     'meta_updated_name' => 'Zuletzt aktualisiert: :timeLength von :user',
     'meta_owned_name' => 'Im Besitz von :user',
     'entity_select' => 'Eintrag auswählen',
-    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
+    'entity_select_lack_permission' => 'Du hast nicht die benötigte Berechtigung, um dieses Element auszuwählen',
     'images' => 'Bilder',
     'my_recent_drafts' => 'Meine kürzlichen Entwürfe',
     'my_recently_viewed' => 'Kürzlich von mir angesehen',
@@ -88,7 +88,7 @@ return [
     'shelves_save' => 'Regal speichern',
     'shelves_books' => 'Bücher in diesem Regal',
     'shelves_add_books' => 'Buch zu diesem Regal hinzufügen',
-    'shelves_drag_books' => 'Drag books below to add them to this shelf',
+    'shelves_drag_books' => 'Ziehe Bücher nach unten, um sie diesem Regal hinzuzufügen',
     'shelves_empty_contents' => 'Diesem Regal sind keine Bücher zugewiesen',
     'shelves_edit_and_assign' => 'Regal bearbeiten um Bücher hinzuzufügen',
     'shelves_edit_named' => 'Bücherregal :name bearbeiten',
@@ -171,7 +171,7 @@ return [
     'chapters_permissions_active' => 'Kapitel-Berechtigungen aktiv',
     'chapters_permissions_success' => 'Kapitel-Berechtigungenen aktualisisert',
     'chapters_search_this' => 'Dieses Kapitel durchsuchen',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => 'Buch sortieren',
 
     // Pages
     'page' => 'Seite',
