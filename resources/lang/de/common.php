@@ -9,7 +9,7 @@ return [
     'confirm' => 'Bestätigen',
     'back' => 'Zurück',
     'save' => 'Speichern',
-    'continue' => 'Weiter',
+    'continue' => 'Fortfahren',
     'select' => 'Auswählen',
     'toggle_all' => 'Alle umschalten',
     'more' => 'Mehr',
