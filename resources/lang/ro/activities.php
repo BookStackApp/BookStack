@@ -33,39 +33,39 @@ return [
     'book_update'                 => 'carte actualizată',
     'book_update_notification'    => 'Carte actualizată cu succes',
     'book_delete'                 => 'carte ștearsă',
-    'book_delete_notification'    => 'Book successfully deleted',
-    'book_sort'                   => 'sorted book',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_delete_notification'    => 'Carte ștearsă cu succes',
+    'book_sort'                   => 'carte sortată',
+    'book_sort_notification'      => 'Carte resortată cu succes',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated bookshelf',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
-    'bookshelf_delete'                 => 'deleted bookshelf',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_create'            => 'raft creat',
+    'bookshelf_create_notification'    => 'Raftul de cărți a fost creat cu succes',
+    'bookshelf_create_from_book'    => 'carte convertită în raft de cărți',
+    'bookshelf_create_from_book_notification'    => 'Carte transformată cu succes într-un raft',
+    'bookshelf_update'                 => 'raft de cărți actualizat',
+    'bookshelf_update_notification'    => 'Raftul de cărți a fost actualizat',
+    'bookshelf_delete'                 => 'raft de cărți șters',
+    'bookshelf_delete_notification'    => 'Raftul de cărți a fost șters',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" a fost adăugat la favorite',
+    'favourite_remove_notification' => '":name" a fost eliminat din favorite',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Metoda multi-factor a fost configurată cu succes',
+    'mfa_remove_method_notification' => 'Metoda multi-factor a fost configurată cu succes',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'webhook creat',
+    'webhook_create_notification' => 'Webhook creat cu succes',
+    'webhook_update' => 'webhook actualizat',
+    'webhook_update_notification' => 'Webhook actualizat cu succes',
+    'webhook_delete' => 'webhook șters',
+    'webhook_delete_notification' => 'Webhook șters cu succes',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Utilizator actualizat cu succes',
+    'user_delete_notification' => 'Utilizator eliminat cu succes',
 
     // Other
     'commented_on'                => 'commented on',
