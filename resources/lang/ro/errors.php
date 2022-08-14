@@ -67,28 +67,28 @@ return [
     'guests_cannot_save_drafts' => 'Vizitatorii nu pot salva ciorne',
 
     // Users
-    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
-    'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    'users_cannot_delete_only_admin' => 'Nu poți șterge singurul administrator',
+    'users_cannot_delete_guest' => 'Nu se poate șterge utilizatorul invitat',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
-    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
-    'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
-    'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
+    'role_cannot_be_edited' => 'Acest rol nu poate fi editat',
+    'role_system_cannot_be_deleted' => 'Acest rol este un rol de sistem și nu poate fi șters',
+    'role_registration_default_cannot_delete' => 'Acest rol nu poate fi șters când este setat ca rol implicit de înregistrare',
+    'role_cannot_remove_only_admin' => 'Acest utilizator este singurul utilizator atribuit rolului de administrator. Atribuiți rolul de administrator unui alt utilizator înainte de a-l elimina aici.',
 
     // Comments
-    'comment_list' => 'An error occurred while fetching the comments.',
-    'cannot_add_comment_to_draft' => 'You cannot add comments to a draft.',
-    'comment_add' => 'An error occurred while adding / updating the comment.',
-    'comment_delete' => 'An error occurred while deleting the comment.',
-    'empty_comment' => 'Cannot add an empty comment.',
+    'comment_list' => 'A apărut o eroare la preluarea comentariilor.',
+    'cannot_add_comment_to_draft' => 'Nu poți adăuga comentarii la o ciornă.',
+    'comment_add' => 'A apărut o eroare la adăugarea / actualizarea comentariului.',
+    'comment_delete' => 'A apărut o eroare la ștergerea comentariului.',
+    'empty_comment' => 'Nu se poate adăuga un comentariu gol.',
 
     // Error pages
-    '404_page_not_found' => 'Page Not Found',
-    'sorry_page_not_found' => 'Sorry, The page you were looking for could not be found.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
-    'image_not_found' => 'Image Not Found',
-    'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
+    '404_page_not_found' => 'Pagina nu a fost găsită',
+    'sorry_page_not_found' => 'Ne pare rău, pagina pe care o cauți nu a putut fi găsită.',
+    'sorry_page_not_found_permission_warning' => 'Dacă te aștepți ca această pagină să existe, s-ar putea să nu ai permisiunea de a o vizualiza.',
+    'image_not_found' => 'Imagine negăsită',
+    'image_not_found_subtitle' => 'Ne pare rău, fișierul de imagine pe care îl cauți nu a putut fi găsit.',
     'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
     'return_home' => 'Return to home',
     'error_occurred' => 'An Error Occurred',
