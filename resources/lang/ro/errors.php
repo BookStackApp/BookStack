@@ -68,7 +68,7 @@ return [
 
     // Users
     'users_cannot_delete_only_admin' => 'Nu poți șterge singurul administrator',
-    'users_cannot_delete_guest' => 'Nu se poate șterge utilizatorul invitat',
+    'users_cannot_delete_guest' => 'Nu se poate șterge utilizatorul "Vizitator"',
 
     // Roles
     'role_cannot_be_edited' => 'Acest rol nu poate fi editat',
@@ -89,21 +89,21 @@ return [
     'sorry_page_not_found_permission_warning' => 'Dacă te aștepți ca această pagină să existe, s-ar putea să nu ai permisiunea de a o vizualiza.',
     'image_not_found' => 'Imagine negăsită',
     'image_not_found_subtitle' => 'Ne pare rău, fișierul de imagine pe care îl cauți nu a putut fi găsit.',
-    'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
-    'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
-    'app_down' => ':appName is down right now',
-    'back_soon' => 'It will be back up soon.',
+    'image_not_found_details' => 'Dacă te aștepți ca această imagine să existe, e posibil să fie ștearsă.',
+    'return_home' => 'Întoarce-te acasă',
+    'error_occurred' => 'A apărut o eroare',
+    'app_down' => ':appName nu funcționează acum',
+    'back_soon' => 'Va reveni în curând.',
 
     // API errors
-    'api_no_authorization_found' => 'No authorization token found on the request',
-    'api_bad_authorization_format' => 'An authorization token was found on the request but the format appeared incorrect',
-    'api_user_token_not_found' => 'No matching API token was found for the provided authorization token',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
-    'api_user_no_api_permission' => 'The owner of the used API token does not have permission to make API calls',
-    'api_user_token_expired' => 'The authorization token used has expired',
+    'api_no_authorization_found' => 'Nu s-a găsit niciun token de autorizare la cerere',
+    'api_bad_authorization_format' => 'A fost găsit un token de autorizare, dar formatul este incorect',
+    'api_user_token_not_found' => 'Nu a fost găsit niciun token API potrivit pentru codul de autorizare furnizat',
+    'api_incorrect_token_secret' => 'Secretul furnizat pentru token-ul API folosit este incorect',
+    'api_user_no_api_permission' => 'Proprietarul token-ului API folosit nu are permisiunea de a efectua apeluri API',
+    'api_user_token_expired' => 'Token-ul de autorizare utilizat a expirat',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Error thrown when sending a test email:',
+    'maintenance_test_email_failure' => 'Eroare la trimiterea unui e-mail de test:',
 
 ];
