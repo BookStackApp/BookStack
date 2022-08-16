@@ -27,9 +27,9 @@ class PageRevisionController extends Controller
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $revisions = $page->revisions()->select([
-                'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at',
-                'type', 'revision_number', 'summary',
-            ])
+            'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at',
+            'type', 'revision_number', 'summary',
+        ])
             ->selectRaw("IF(markdown = '', false, true) as is_markdown")
             ->with(['page.book', 'createdBy'])
             ->get();
@@ -38,7 +38,7 @@ class PageRevisionController extends Controller
 
         return view('pages.revisions', [
             'revisions' => $revisions,
-            'page'    => $page,
+            'page'      => $page,
         ]);
     }
 

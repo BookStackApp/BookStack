@@ -1,30 +1,15 @@
 <?php
 
-namespace BookStack\Entities\Tools;
+namespace BookStack\Search;
 
 use Illuminate\Http\Request;
 
 class SearchOptions
 {
-    /**
-     * @var array
-     */
-    public $searches = [];
-
-    /**
-     * @var array
-     */
-    public $exacts = [];
-
-    /**
-     * @var array
-     */
-    public $tags = [];
-
-    /**
-     * @var array
-     */
-    public $filters = [];
+    public array $searches = [];
+    public array $exacts = [];
+    public array $tags = [];
+    public array $filters = [];
 
     /**
      * Create a new instance from a search string.

@@ -1,12 +1,11 @@
 <?php
 
-namespace BookStack\Entities\Tools;
+namespace BookStack\Search;
 
 use BookStack\Actions\Tag;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Models\SearchTerm;
 use DOMDocument;
 use DOMNode;
 use Illuminate\Database\Eloquent\Builder;

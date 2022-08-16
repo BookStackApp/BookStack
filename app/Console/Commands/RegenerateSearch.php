@@ -3,7 +3,7 @@
 namespace BookStack\Console\Commands;
 
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Tools\SearchIndex;
+use BookStack\Search\SearchIndex;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 

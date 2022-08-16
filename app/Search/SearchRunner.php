@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Entities\Tools;
+namespace BookStack\Search;
 
 use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\User;
@@ -8,7 +8,6 @@ use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Models\SearchTerm;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
@@ -29,7 +28,7 @@ class SearchRunner
      *
      * @var string[]
      */
-    protected $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
+    protected array $queryOperators = ['<=', '>=', '=', '<', '>', 'like', '!='];
 
     /**
      * Retain a cache of score adjusted terms for specific search options.

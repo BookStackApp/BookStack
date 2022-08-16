@@ -3,10 +3,10 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Entities\Queries\Popular;
-use BookStack\Entities\Tools\SearchOptions;
-use BookStack\Entities\Tools\SearchResultsFormatter;
-use BookStack\Entities\Tools\SearchRunner;
 use BookStack\Entities\Tools\SiblingFetcher;
+use BookStack\Search\SearchOptions;
+use BookStack\Search\SearchResultsFormatter;
+use BookStack\Search\SearchRunner;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller

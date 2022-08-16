@@ -10,7 +10,7 @@ use BookStack\Auth\User;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Tools\SearchIndex;
+use BookStack\Search\SearchIndex;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
