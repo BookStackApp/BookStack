@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Entities\Tools;
+namespace BookStack\Search;
 
 use BookStack\Actions\Tag;
 use BookStack\Entities\Models\Entity;

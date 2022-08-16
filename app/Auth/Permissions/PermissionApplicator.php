@@ -74,9 +74,8 @@ class PermissionApplicator
         }
 
         foreach ($chain as $currentEntity) {
-
             if (is_null($currentEntity->restricted)) {
-                throw new InvalidArgumentException("Entity restricted field used but has not been loaded");
+                throw new InvalidArgumentException('Entity restricted field used but has not been loaded');
             }
 
             if ($currentEntity->restricted) {

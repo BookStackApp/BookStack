@@ -249,6 +249,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
 
         $this->avatarUrl = $avatar;
+
         return $avatar;
     }
 

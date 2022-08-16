@@ -3,9 +3,9 @@
 namespace BookStack\Http\Controllers\Api;
 
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Tools\SearchOptions;
-use BookStack\Entities\Tools\SearchResultsFormatter;
-use BookStack\Entities\Tools\SearchRunner;
+use BookStack\Search\SearchOptions;
+use BookStack\Search\SearchResultsFormatter;
+use BookStack\Search\SearchRunner;
 use Illuminate\Http\Request;
 
 class SearchApiController extends ApiController
