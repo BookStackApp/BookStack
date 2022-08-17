@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Reference extends Model
 {
+    public $timestamps = false;
+
     public function from(): MorphTo
     {
         return $this->morphTo('from');

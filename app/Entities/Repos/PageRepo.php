@@ -16,20 +16,23 @@ use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
+use BookStack\References\ReferenceService;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class PageRepo
 {
-    protected $baseRepo;
+    protected BaseRepo $baseRepo;
+    protected ReferenceService $references;
 
     /**
      * PageRepo constructor.
      */
-    public function __construct(BaseRepo $baseRepo)
+    public function __construct(BaseRepo $baseRepo, ReferenceService $references)
     {
         $this->baseRepo = $baseRepo;
+        $this->references = $references;
     }
 
     /**
@@ -112,7 +115,7 @@ class PageRepo
     public function getParentFromSlugs(string $bookSlug, string $chapterSlug = null): Entity
     {
         if ($chapterSlug !== null) {
-            return $chapter = Chapter::visible()->whereSlugs($bookSlug, $chapterSlug)->firstOrFail();
+            return Chapter::visible()->whereSlugs($bookSlug, $chapterSlug)->firstOrFail();
         }
 
         return Book::visible()->where('slug', '=', $bookSlug)->firstOrFail();
@@ -170,6 +173,7 @@ class PageRepo
 
         $this->savePageRevision($draft, trans('entities.pages_initial_revision'));
         $draft->indexForSearch();
+        $this->references->updateForPage($draft);
         $draft->refresh();
 
         Activity::add(ActivityType::PAGE_CREATE, $draft);
@@ -189,6 +193,7 @@ class PageRepo
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
+        $this->references->updateForPage($page);
 
         // Update with new details
         $page->revision_count++;
@@ -332,6 +337,7 @@ class PageRepo
         $page->refreshSlug();
         $page->save();
         $page->indexForSearch();
+        $this->references->updateForPage($page);
 
         $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
         $this->savePageRevision($page, $summary);
@@ -430,6 +436,7 @@ class PageRepo
             ->skip(intval($revisionLimit))
             ->take(10)
             ->get(['id']);
+
         if ($revisionsToDelete->count() > 0) {
             PageRevision::query()->whereIn('id', $revisionsToDelete->pluck('id'))->delete();
         }
