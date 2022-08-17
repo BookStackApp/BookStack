@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Util\CrossLinking\ModelResolvers;
+namespace BookStack\References\ModelResolvers;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
@@ -9,7 +9,7 @@ class PageLinkModelResolver implements CrossLinkModelResolver
 {
     public function resolve(string $link): ?Model
     {
-        $pattern = '/^' . preg_quote(url('/books'), '/') . '\/([\w-]+)' . '\/page\/' . '([\w-]+)' . '[#?\/$]/';
+        $pattern = '/^' . preg_quote(url('/books'), '/') . '\/([\w-]+)' . '\/page\/' . '([\w-]+)' . '([#?\/]|$)/';
         $matches = [];
         $match = preg_match($pattern, $link, $matches);
         if (!$match) {

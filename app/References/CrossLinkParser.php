@@ -1,14 +1,14 @@
 <?php
 
-namespace BookStack\Util\CrossLinking;
+namespace BookStack\References;
 
 use BookStack\Model;
-use BookStack\Util\CrossLinking\ModelResolvers\BookLinkModelResolver;
-use BookStack\Util\CrossLinking\ModelResolvers\BookshelfLinkModelResolver;
-use BookStack\Util\CrossLinking\ModelResolvers\ChapterLinkModelResolver;
-use BookStack\Util\CrossLinking\ModelResolvers\CrossLinkModelResolver;
-use BookStack\Util\CrossLinking\ModelResolvers\PageLinkModelResolver;
-use BookStack\Util\CrossLinking\ModelResolvers\PagePermalinkModelResolver;
+use BookStack\References\ModelResolvers\BookLinkModelResolver;
+use BookStack\References\ModelResolvers\BookshelfLinkModelResolver;
+use BookStack\References\ModelResolvers\ChapterLinkModelResolver;
+use BookStack\References\ModelResolvers\CrossLinkModelResolver;
+use BookStack\References\ModelResolvers\PageLinkModelResolver;
+use BookStack\References\ModelResolvers\PagePermalinkModelResolver;
 use DOMDocument;
 use DOMXPath;
 
@@ -27,7 +27,7 @@ class CrossLinkParser
     /**
      * Extract any found models within the given HTML content.
      *
-     * @returns Model[]
+     * @return Model[]
      */
     public function extractLinkedModels(string $html): array
     {

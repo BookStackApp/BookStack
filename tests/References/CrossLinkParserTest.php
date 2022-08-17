@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Util;
+namespace Tests\References;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
-use BookStack\Util\CrossLinking\CrossLinkParser;
+use BookStack\References\CrossLinkParser;
 use Tests\TestCase;
 
 class CrossLinkParserTest extends TestCase
@@ -37,5 +38,25 @@ class CrossLinkParserTest extends TestCase
         $this->assertEquals($entities['book']->id, $results[3]->id);
         $this->assertEquals(get_class($entities['bookshelf']), get_class($results[4]));
         $this->assertEquals($entities['bookshelf']->id, $results[4]->id);
+    }
+
+    public function test_similar_page_and_book_reference_links_dont_conflict()
+    {
+        $page = Page::query()->first();
+        $book = $page->book;
+
+        $html = '
+<a href="' . $page->getUrl() . '">Page Link</a>
+<a href="' . $book->getUrl() . '">Book Link</a>
+        ';
+
+        $parser = CrossLinkParser::createWithEntityResolvers();
+        $results = $parser->extractLinkedModels($html);
+
+        $this->assertCount(2, $results);
+        $this->assertEquals(get_class($page), get_class($results[0]));
+        $this->assertEquals($page->id, $results[0]->id);
+        $this->assertEquals(get_class($book), get_class($results[1]));
+        $this->assertEquals($book->id, $results[1]->id);
     }
 }
