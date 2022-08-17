@@ -18,7 +18,7 @@ class PagePermalinkModelResolver implements CrossLinkModelResolver
 
         $id = intval($matches[1]);
         /** @var ?Page $model */
-        $model = Page::query()->find($id);
+        $model = Page::query()->find($id, ['id']);
 
         return $model;
     }

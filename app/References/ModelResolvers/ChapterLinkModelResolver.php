@@ -20,7 +20,7 @@ class ChapterLinkModelResolver implements CrossLinkModelResolver
         $chapterSlug = $matches[2];
 
         /** @var ?Chapter $model */
-        $model = Chapter::query()->whereSlugs($bookSlug, $chapterSlug)->first();
+        $model = Chapter::query()->whereSlugs($bookSlug, $chapterSlug)->first(['id']);
 
         return $model;
     }
