@@ -23,7 +23,7 @@ class ReferenceService
     {
         Reference::query()
             ->where('from_type', '=', (new Page())->getMorphClass())
-            ->truncate();
+            ->delete();
 
         Page::query()->select(['id', 'html'])->chunk(100, function(Collection $pages) {
             $this->updateForPages($pages->all());

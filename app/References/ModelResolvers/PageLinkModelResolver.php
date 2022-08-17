@@ -20,7 +20,7 @@ class PageLinkModelResolver implements CrossLinkModelResolver
         $pageSlug = $matches[2];
 
         /** @var ?Page $model */
-        $model = Page::query()->whereSlugs($bookSlug, $pageSlug)->first();
+        $model = Page::query()->whereSlugs($bookSlug, $pageSlug)->first(['id']);
 
         return $model;
     }
