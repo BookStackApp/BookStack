@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Util\CrossLinking\ModelResolvers;
+namespace BookStack\References\ModelResolvers;
 
 use BookStack\Model;
 
