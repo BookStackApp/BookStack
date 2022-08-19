@@ -20,6 +20,7 @@ use BookStack\Http\Controllers\PageExportController;
 use BookStack\Http\Controllers\PageRevisionController;
 use BookStack\Http\Controllers\PageTemplateController;
 use BookStack\Http\Controllers\RecycleBinController;
+use BookStack\Http\Controllers\ReferenceController;
 use BookStack\Http\Controllers\RoleController;
 use BookStack\Http\Controllers\SearchController;
 use BookStack\Http\Controllers\SettingController;
@@ -110,6 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/draft/{pageId}/delete', [PageController::class, 'showDeleteDraft']);
     Route::get('/books/{bookSlug}/page/{pageSlug}/permissions', [PageController::class, 'showPermissions']);
     Route::put('/books/{bookSlug}/page/{pageSlug}/permissions', [PageController::class, 'permissions']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/references', [ReferenceController::class, 'page']);
     Route::put('/books/{bookSlug}/page/{pageSlug}', [PageController::class, 'update']);
     Route::delete('/books/{bookSlug}/page/{pageSlug}', [PageController::class, 'destroy']);
     Route::delete('/books/{bookSlug}/draft/{pageId}', [PageController::class, 'destroyDraft']);
