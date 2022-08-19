@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/shelves/{slug}/permissions', [BookshelfController::class, 'showPermissions']);
     Route::put('/shelves/{slug}/permissions', [BookshelfController::class, 'permissions']);
     Route::post('/shelves/{slug}/copy-permissions', [BookshelfController::class, 'copyPermissions']);
+    Route::get('/shelves/{slug}/references', [ReferenceController::class, 'shelf']);
 
     // Book Creation
     Route::get('/shelves/{shelfSlug}/create-book', [BookController::class, 'create']);
@@ -86,6 +87,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/books/{bookSlug}/convert-to-shelf', [BookController::class, 'convertToShelf']);
     Route::get('/books/{bookSlug}/sort', [BookSortController::class, 'show']);
     Route::put('/books/{bookSlug}/sort', [BookSortController::class, 'update']);
+    Route::get('/books/{slug}/references', [ReferenceController::class, 'book']);
     Route::get('/books/{bookSlug}/export/html', [BookExportController::class, 'html']);
     Route::get('/books/{bookSlug}/export/pdf', [BookExportController::class, 'pdf']);
     Route::get('/books/{bookSlug}/export/markdown', [BookExportController::class, 'markdown']);
@@ -142,6 +144,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/markdown', [ChapterExportController::class, 'markdown']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/plaintext', [ChapterExportController::class, 'plainText']);
     Route::put('/books/{bookSlug}/chapter/{chapterSlug}/permissions', [ChapterController::class, 'permissions']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/references', [ReferenceController::class, 'chapter']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/delete', [ChapterController::class, 'showDelete']);
     Route::delete('/books/{bookSlug}/chapter/{chapterSlug}', [ChapterController::class, 'destroy']);
 

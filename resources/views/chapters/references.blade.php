@@ -6,10 +6,9 @@
 
         <div class="my-s">
             @include('entities.breadcrumbs', ['crumbs' => [
-                $page->book,
-                $page->chapter,
-                $page,
-                $page->getUrl('/references') => [
+                $chapter->book,
+                $chapter,
+                $chapter->getUrl('/references') => [
                     'text' => trans('entities.references'),
                     'icon' => 'reference',
                 ]
