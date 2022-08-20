@@ -16,7 +16,7 @@ use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
-use BookStack\References\ReferenceService;
+use BookStack\References\ReferenceStore;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -24,12 +24,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class PageRepo
 {
     protected BaseRepo $baseRepo;
-    protected ReferenceService $references;
+    protected ReferenceStore $references;
 
     /**
      * PageRepo constructor.
      */
-    public function __construct(BaseRepo $baseRepo, ReferenceService $references)
+    public function __construct(BaseRepo $baseRepo, ReferenceStore $references)
     {
         $this->baseRepo = $baseRepo;
         $this->references = $references;

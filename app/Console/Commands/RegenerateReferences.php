@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\References\ReferenceService;
+use BookStack\References\ReferenceStore;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -22,14 +22,14 @@ class RegenerateReferences extends Command
      */
     protected $description = 'Regenerate all the cross-item model reference index';
 
-    protected ReferenceService $references;
+    protected ReferenceStore $references;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(ReferenceService $references)
+    public function __construct(ReferenceStore $references)
     {
         $this->references = $references;
         parent::__construct();

@@ -54,6 +54,28 @@ class ReferencesTest extends TestCase
         $this->assertDatabaseMissing('references', ['to_id' => $pageA->id, 'to_type' => $pageA->getMorphClass()]);
     }
 
+    public function test_references_to_count_visible_on_entity_show_view()
+    {
+        $entities = $this->getEachEntityType();
+        /** @var Page $otherPage */
+        $otherPage = Page::query()->where('id', '!=', $entities['page']->id)->first();
+
+        $this->asEditor();
+        foreach ($entities as $entity) {
+            $this->createReference($entities['page'], $entity);
+        }
+
+        foreach ($entities as $entity) {
+            $resp = $this->get($entity->getUrl());
+            $resp->assertSee('Referenced on 1 page');
+            $resp->assertDontSee('Referenced on 1 pages');
+        }
+
+        $this->createReference($otherPage, $entities['page']);
+        $resp = $this->get($entities['page']->getUrl());
+        $resp->assertSee('Referenced on 2 pages');
+    }
+
     public function test_references_to_visible_on_references_page()
     {
         $entities = $this->getEachEntityType();
