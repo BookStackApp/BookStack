@@ -2,23 +2,19 @@
 
 namespace BookStack\Http\Controllers;
 
-use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use BookStack\References\ReferenceFetcher;
 
 class ReferenceController extends Controller
 {
+    protected ReferenceFetcher $referenceFetcher;
 
-    protected PermissionApplicator $permissions;
-
-    public function __construct(PermissionApplicator $permissions)
+    public function __construct(ReferenceFetcher $referenceFetcher)
     {
-        $this->permissions = $permissions;
+        $this->referenceFetcher = $referenceFetcher;
     }
 
     /**
@@ -28,7 +24,7 @@ class ReferenceController extends Controller
     {
         /** @var Page $page */
         $page = Page::visible()->whereSlugs($bookSlug, $pageSlug)->firstOrFail();
-        $references = $this->getEntityReferences($page);
+        $references = $this->referenceFetcher->getPageReferencesToEntity($page);
 
         return view('pages.references', [
             'page' => $page,
@@ -43,7 +39,7 @@ class ReferenceController extends Controller
     {
         /** @var Chapter $chapter */
         $chapter = Chapter::visible()->whereSlugs($bookSlug, $chapterSlug)->firstOrFail();
-        $references = $this->getEntityReferences($chapter);
+        $references = $this->referenceFetcher->getPageReferencesToEntity($chapter);
 
         return view('chapters.references', [
             'chapter' => $chapter,
@@ -57,7 +53,7 @@ class ReferenceController extends Controller
     public function book(string $slug)
     {
         $book = Book::visible()->where('slug', '=', $slug)->firstOrFail();
-        $references = $this->getEntityReferences($book);
+        $references = $this->referenceFetcher->getPageReferencesToEntity($book);
 
         return view('books.references', [
             'book' => $book,
@@ -71,35 +67,11 @@ class ReferenceController extends Controller
     public function shelf(string $slug)
     {
         $shelf = Bookshelf::visible()->where('slug', '=', $slug)->firstOrFail();
-        $references = $this->getEntityReferences($shelf);
+        $references = $this->referenceFetcher->getPageReferencesToEntity($shelf);
 
         return view('shelves.references', [
             'shelf' => $shelf,
             'references' => $references,
         ]);
-    }
-
-    /**
-     * Query the references for the given entities.
-     * Loads the commonly required relations while taking permissions into account.
-     */
-    protected function getEntityReferences(Entity $entity): Collection
-    {
-        $baseQuery = $entity->referencesTo()
-            ->where('from_type', '=', (new Page())->getMorphClass())
-            ->with([
-                'from' => fn(Relation $query) => $query->select(Page::$listAttributes),
-                'from.book' => fn(Relation $query) => $query->scopes('visible'),
-                'from.chapter' => fn(Relation $query) => $query->scopes('visible')
-            ]);
-
-        $references = $this->permissions->restrictEntityRelationQuery(
-            $baseQuery,
-            'references',
-            'from_id',
-            'from_type'
-        )->get();
-
-        return $references;
     }
 }

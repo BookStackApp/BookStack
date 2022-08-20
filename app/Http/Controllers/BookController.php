@@ -15,19 +15,22 @@ use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
+use BookStack\References\ReferenceFetcher;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class BookController extends Controller
 {
-    protected $bookRepo;
-    protected $entityContextManager;
+    protected BookRepo $bookRepo;
+    protected ShelfContext $shelfContext;
+    protected ReferenceFetcher $referenceFetcher;
 
-    public function __construct(ShelfContext $entityContextManager, BookRepo $bookRepo)
+    public function __construct(ShelfContext $entityContextManager, BookRepo $bookRepo, ReferenceFetcher $referenceFetcher)
     {
         $this->bookRepo = $bookRepo;
-        $this->entityContextManager = $entityContextManager;
+        $this->shelfContext = $entityContextManager;
+        $this->referenceFetcher = $referenceFetcher;
     }
 
     /**
@@ -44,7 +47,7 @@ class BookController extends Controller
         $popular = $this->bookRepo->getPopular(4);
         $new = $this->bookRepo->getRecentlyCreated(4);
 
-        $this->entityContextManager->clearShelfContext();
+        $this->shelfContext->clearShelfContext();
 
         $this->setPageTitle(trans('entities.books'));
 
@@ -122,7 +125,7 @@ class BookController extends Controller
 
         View::incrementFor($book);
         if ($request->has('shelf')) {
-            $this->entityContextManager->setShelfContext(intval($request->get('shelf')));
+            $this->shelfContext->setShelfContext(intval($request->get('shelf')));
         }
 
         $this->setPageTitle($book->getShortName());
@@ -133,6 +136,7 @@ class BookController extends Controller
             'bookChildren'      => $bookChildren,
             'bookParentShelves' => $bookParentShelves,
             'activity'          => $activities->entityActivity($book, 20, 1),
+            'referenceCount'    => $this->referenceFetcher->getPageReferenceCountToEntity($book),
         ]);
     }
 

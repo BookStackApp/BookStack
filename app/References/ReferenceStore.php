@@ -5,7 +5,7 @@ namespace BookStack\References;
 use BookStack\Entities\Models\Page;
 use Illuminate\Database\Eloquent\Collection;
 
-class ReferenceService
+class ReferenceStore
 {
 
     /**
