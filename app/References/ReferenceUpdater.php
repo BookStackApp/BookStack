@@ -8,7 +8,7 @@ use BookStack\Entities\Repos\RevisionRepo;
 use DOMDocument;
 use DOMXPath;
 
-class CrossLinkReplacer
+class ReferenceUpdater
 {
     protected ReferenceFetcher $referenceFetcher;
     protected RevisionRepo $revisionRepo;
@@ -53,10 +53,10 @@ class CrossLinkReplacer
             return $markdown;
         }
 
-        $commonLinkRegex = '/(\[.*?\]\()' . preg_quote($oldLink) . '(.*?\))/i';
+        $commonLinkRegex = '/(\[.*?\]\()' . preg_quote($oldLink, '/') . '(.*?\))/i';
         $markdown = preg_replace($commonLinkRegex, '$1' . $newLink . '$2', $markdown);
 
-        $referenceLinkRegex = '/(\[.*?\]:\s?)' . preg_quote($oldLink) . '(.*?)($|\s)/i';
+        $referenceLinkRegex = '/(\[.*?\]:\s?)' . preg_quote($oldLink, '/') . '(.*?)($|\s)/i';
         $markdown = preg_replace($referenceLinkRegex, '$1' . $newLink . '$2$3', $markdown);
 
         return $markdown;

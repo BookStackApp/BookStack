@@ -17,6 +17,7 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
 use BookStack\References\ReferenceStore;
+use BookStack\References\ReferenceUpdater;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -24,16 +25,23 @@ class PageRepo
 {
     protected BaseRepo $baseRepo;
     protected RevisionRepo $revisionRepo;
-    protected ReferenceStore $references;
+    protected ReferenceStore $referenceStore;
+    protected ReferenceUpdater $referenceUpdater;
 
     /**
      * PageRepo constructor.
      */
-    public function __construct(BaseRepo $baseRepo, RevisionRepo $revisionRepo, ReferenceStore $references)
+    public function __construct(
+        BaseRepo         $baseRepo,
+        RevisionRepo     $revisionRepo,
+        ReferenceStore   $referenceStore,
+        ReferenceUpdater $referenceUpdater
+    )
     {
         $this->baseRepo = $baseRepo;
         $this->revisionRepo = $revisionRepo;
-        $this->references = $references;
+        $this->referenceStore = $referenceStore;
+        $this->referenceUpdater = $referenceUpdater;
     }
 
     /**
@@ -127,11 +135,11 @@ class PageRepo
     public function getNewDraftPage(Entity $parent)
     {
         $page = (new Page())->forceFill([
-            'name'       => trans('entities.pages_initial_name'),
+            'name' => trans('entities.pages_initial_name'),
             'created_by' => user()->id,
-            'owned_by'   => user()->id,
+            'owned_by' => user()->id,
             'updated_by' => user()->id,
-            'draft'      => true,
+            'draft' => true,
         ]);
 
         if ($parent instanceof Chapter) {
@@ -158,12 +166,10 @@ class PageRepo
         $draft->draft = false;
         $draft->revision_count = 1;
         $draft->priority = $this->getNewPriority($draft);
-        $draft->refreshSlug();
         $draft->save();
 
         $this->revisionRepo->storeNewForPage($draft, trans('entities.pages_initial_revision'));
-        $draft->indexForSearch();
-        $this->references->updateForPage($draft);
+        $this->referenceStore->updateForPage($draft);
         $draft->refresh();
 
         Activity::add(ActivityType::PAGE_CREATE, $draft);
@@ -183,7 +189,7 @@ class PageRepo
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
-        $this->references->updateForPage($page);
+        $this->referenceStore->updateForPage($page);
 
         // Update with new details
         $page->revision_count++;
@@ -283,6 +289,7 @@ class PageRepo
      */
     public function restoreRevision(Page $page, int $revisionId): Page
     {
+        $oldUrl = $page->getUrl();
         $page->revision_count++;
 
         /** @var PageRevision $revision */
@@ -301,10 +308,14 @@ class PageRepo
         $page->refreshSlug();
         $page->save();
         $page->indexForSearch();
-        $this->references->updateForPage($page);
+        $this->referenceStore->updateForPage($page);
 
         $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
         $this->revisionRepo->storeNewForPage($page, $summary);
+
+        if ($oldUrl !== $page->getUrl()) {
+            $this->referenceUpdater->updateEntityPageReferences($page, $oldUrl);
+        }
 
         Activity::add(ActivityType::PAGE_RESTORE, $page);
         Activity::add(ActivityType::REVISION_RESTORE, $revision);
