@@ -5,6 +5,8 @@ namespace BookStack\References;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
+use DOMDocument;
+use DOMXPath;
 
 class CrossLinkReplacer
 {
@@ -33,15 +35,60 @@ class CrossLinkReplacer
     protected function updateReferencesWithinPage(Page $page, string $oldLink, string $newLink)
     {
         $page = (clone $page)->refresh();
-        $html = '';// TODO - Update HTML content
-        $markdown = '';// TODO - Update markdown content
+        $html = $this->updateLinksInHtml($page->html, $oldLink, $newLink);
+        $markdown = $this->updateLinksInMarkdown($page->markdown, $oldLink, $newLink);
 
         $page->html = $html;
         $page->markdown = $markdown;
         $page->revision_count++;
         $page->save();
 
-        $summary = ''; // TODO - Get default summary from translations
+        $summary = trans('entities.pages_references_update_revision');
         $this->revisionRepo->storeNewForPage($page, $summary);
+    }
+
+    protected function updateLinksInMarkdown(string $markdown, string $oldLink, string $newLink): string
+    {
+        if (empty($markdown)) {
+            return $markdown;
+        }
+
+        $commonLinkRegex = '/(\[.*?\]\()' . preg_quote($oldLink) . '(.*?\))/i';
+        $markdown = preg_replace($commonLinkRegex, '$1' . $newLink . '$2', $markdown);
+
+        $referenceLinkRegex = '/(\[.*?\]:\s?)' . preg_quote($oldLink) . '(.*?)($|\s)/i';
+        $markdown = preg_replace($referenceLinkRegex, '$1' . $newLink . '$2$3', $markdown);
+
+        return $markdown;
+    }
+
+    protected function updateLinksInHtml(string $html, string $oldLink, string $newLink): string
+    {
+        if (empty($html)) {
+            return $html;
+        }
+
+        $html = '<body>' . $html . '</body>';
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument();
+        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+
+        $xPath = new DOMXPath($doc);
+        $anchors = $xPath->query('//a[@href]');
+
+        /** @var \DOMElement $anchor */
+        foreach ($anchors as $anchor) {
+            $link = $anchor->getAttribute('href');
+            $updated = str_ireplace($oldLink, $newLink, $link);
+            $anchor->setAttribute('href', $updated);
+        }
+
+        $html = '';
+        $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
+        foreach ($topElems as $child) {
+            $html .= $doc->saveHTML($child);
+        }
+
+        return $html;
     }
 }
