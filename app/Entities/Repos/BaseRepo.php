@@ -6,6 +6,7 @@ use BookStack\Actions\TagRepo;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\References\ReferenceUpdater;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\UploadedFile;
 
@@ -13,11 +14,13 @@ class BaseRepo
 {
     protected TagRepo $tagRepo;
     protected ImageRepo $imageRepo;
+    protected ReferenceUpdater $referenceUpdater;
 
-    public function __construct(TagRepo $tagRepo, ImageRepo $imageRepo)
+    public function __construct(TagRepo $tagRepo, ImageRepo $imageRepo, ReferenceUpdater $referenceUpdater)
     {
         $this->tagRepo = $tagRepo;
         $this->imageRepo = $imageRepo;
+        $this->referenceUpdater = $referenceUpdater;
     }
 
     /**
@@ -48,6 +51,8 @@ class BaseRepo
      */
     public function update(Entity $entity, array $input)
     {
+        $oldUrl = $entity->getUrl();
+
         $entity->fill($input);
         $entity->updated_by = user()->id;
 
@@ -64,6 +69,10 @@ class BaseRepo
 
         $entity->rebuildPermissions();
         $entity->indexForSearch();
+
+        if ($oldUrl !== $entity->getUrl()) {
+            $this->referenceUpdater->updateEntityPageReferences($entity, $oldUrl);
+        }
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Tests\References;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
@@ -114,6 +115,64 @@ class ReferencesTest extends TestCase
         $this->asEditor()
             ->get($page->getUrl('/references'))
             ->assertSee('There are no tracked references');
+    }
+
+    public function test_pages_leading_to_entity_updated_on_url_change()
+    {
+        /** @var Page $pageA */
+        /** @var Page $pageB */
+        /** @var Book $book */
+        $pageA = Page::query()->first();
+        $pageB = Page::query()->where('id', '!=', $pageA->id)->first();
+        $book = Book::query()->first();
+
+        foreach ([$pageA, $pageB] as $page) {
+            $page->html = '<a href="' . $book->getUrl() . '">Link</a>';
+            $page->save();
+            $this->createReference($page, $book);
+        }
+
+        $this->asEditor()->put($book->getUrl(), [
+            'name' => 'my updated book slugaroo',
+        ]);
+
+        foreach ([$pageA, $pageB] as $page) {
+            $page->refresh();
+            $this->assertStringContainsString('href="http://localhost/books/my-updated-book-slugaroo"', $page->html);
+            $this->assertDatabaseHas('page_revisions', [
+                'page_id' => $page->id,
+                'summary' => 'System auto-update of internal links'
+            ]);
+        }
+    }
+
+    public function test_markdown_links_leading_to_entity_updated_on_url_change()
+    {
+        /** @var Page $page */
+        /** @var Book $book */
+        $page = Page::query()->first();
+        $book = Book::query()->first();
+
+        $bookUrl = $book->getUrl();
+        $markdown = '
+        [An awesome link](' . $bookUrl . ')
+        [An awesome link with query & hash](' . $bookUrl . '?test=yes#cats)
+        [An awesome link with path](' . $bookUrl . '/an/extra/trail)
+        [An awesome link with title](' . $bookUrl . ' "title")
+        [ref]: ' . $bookUrl . '?test=yes#dogs
+        [ref_without_space]:' . $bookUrl . '
+        [ref_with_title]: ' . $bookUrl . ' "title"';
+        $page->markdown = $markdown;
+        $page->save();
+        $this->createReference($page, $book);
+
+        $this->asEditor()->put($book->getUrl(), [
+            'name' => 'my updated book slugadoo',
+        ]);
+
+        $page->refresh();
+        $expected = str_replace($bookUrl, 'http://localhost/books/my-updated-book-slugadoo', $markdown);
+        $this->assertEquals($expected, $page->markdown);
     }
 
     protected function createReference(Model $from, Model $to)
