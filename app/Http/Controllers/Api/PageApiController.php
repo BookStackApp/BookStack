@@ -15,6 +15,9 @@ class PageApiController extends ApiController
     protected PageRepo $pageRepo;
 
     protected $rules = [
+        'list' => [
+            'slug' => [ 'string' ]
+        ],
         'create' => [
             'book_id'    => ['required_without:chapter_id', 'integer'],
             'chapter_id' => ['required_without:book_id', 'integer'],
@@ -41,9 +44,13 @@ class PageApiController extends ApiController
     /**
      * Get a listing of pages visible to the user.
      */
-    public function list()
+    public function list(Request $request)
     {
         $pages = Page::visible();
+
+        if($request->has('slug')) {
+            $pages->where('slug', '=', $request->get('slug'));
+        }
 
         return $this->apiListingResponse($pages, [
             'id', 'book_id', 'chapter_id', 'name', 'slug', 'priority',

@@ -1,0 +1,2 @@
+GET /api/pages/list
+GET /api/pages/list?slug=a-chapter-for-cats
