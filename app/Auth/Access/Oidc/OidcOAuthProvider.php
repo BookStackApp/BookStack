@@ -31,6 +31,11 @@ class OidcOAuthProvider extends AbstractProvider
     protected $tokenEndpoint;
 
     /**
+     * Scopes to use for the OIDC authorization call
+     */
+    protected array $scopes = ['openid', 'profile', 'email'];
+
+    /**
      * Returns the base URL for authorizing a client.
      */
     public function getBaseAuthorizationUrl(): string
@@ -55,6 +60,15 @@ class OidcOAuthProvider extends AbstractProvider
     }
 
     /**
+     * Add an additional scope to this provider upon the default.
+     */
+    public function addScope(string $scope): void
+    {
+        $this->scopes[] = $scope;
+        $this->scopes = array_unique($this->scopes);
+    }
+
+    /**
      * Returns the default scopes used by this provider.
      *
      * This should only be the scopes that are required to request the details
@@ -62,7 +76,7 @@ class OidcOAuthProvider extends AbstractProvider
      */
     protected function getDefaultScopes(): array
     {
-        return ['openid', 'profile', 'email'];
+        return $this->scopes;
     }
 
     /**
