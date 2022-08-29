@@ -23,6 +23,7 @@ return [
     'meta_updated' => '更新于 :timeLength',
     'meta_updated_name' => '由 :user 更新于 :timeLength',
     'meta_owned_name' => '拥有者 :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => '选择项目',
     'entity_select_lack_permission' => '您没有选择此项目所需的权限',
     'images' => '图片',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => '编辑内容',
     'pages_permissions_active' => '有效的页面权限',
     'pages_initial_revision' => '初始发布',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => '新页面',
     'pages_editing_draft_notification' => '您正在编辑在 :timeDiff 内保存的草稿.',
     'pages_draft_edited_notification' => '此后，此页面已经被更新，建议您放弃此草稿。',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => '您可以将此章节转换为具有相同内容的新图书。此章节中设置的任何权限都将复制到新图书上，但从父图书继承的任何权限都不会被复制，这可能会导致访问控制发生变化。',
     'convert_chapter' => '转换章节',
     'convert_chapter_confirm' => '您确定要转换此章节吗？',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
