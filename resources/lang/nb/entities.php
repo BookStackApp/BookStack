@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Oppdatert :timeLength',
     'meta_updated_name' => 'Oppdatert :timeLength av :user',
     'meta_owned_name' => 'Eies av :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Velg entitet',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Bilder',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Endre innhold',
     'pages_permissions_active' => 'Sidetilganger er aktive',
     'pages_initial_revision' => 'Første publisering',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Ny side',
     'pages_editing_draft_notification' => 'Du skriver på et utkast som sist ble lagret :timeDiff.',
     'pages_draft_edited_notification' => 'Siden har blitt endret siden du startet. Det anbefales at du forkaster dine endringer.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Convert Chapter',
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
