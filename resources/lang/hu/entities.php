@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Frissítve :timeLength',
     'meta_updated_name' => ':user frissítette :timeLength',
     'meta_owned_name' => ':user tulajdona',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Entitás kiválasztása',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Képek',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Tartalom szerkesztése',
     'pages_permissions_active' => 'Oldal jogosultságok aktívak',
     'pages_initial_revision' => 'Kezdeti közzététel',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Új oldal',
     'pages_editing_draft_notification' => 'A jelenleg szerkesztett vázlat legutóbb ekkor volt elmentve: :timeDiff.',
     'pages_draft_edited_notification' => 'Ezt az oldalt azóta már frissítették. Javasolt ennek a vázlatnak az elvetése.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Convert Chapter',
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
