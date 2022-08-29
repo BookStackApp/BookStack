@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Zaktualizowano :timeLength',
     'meta_updated_name' => 'Zaktualizowano :timeLength przez :user',
     'meta_owned_name' => 'Właściciel: :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Wybór obiektu',
     'entity_select_lack_permission' => 'Nie masz wymaganych uprawnień do wybrania tej pozycji',
     'images' => 'Obrazki',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Edytuj zawartość',
     'pages_permissions_active' => 'Uprawnienia strony są aktywne',
     'pages_initial_revision' => 'Pierwsze wydanie',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Nowa strona',
     'pages_editing_draft_notification' => 'Edytujesz obecnie wersję roboczą, która była ostatnio zapisana :timeDiff.',
     'pages_draft_edited_notification' => 'Od tego czasu ta strona była zmieniana. Zalecane jest odrzucenie tej wersji roboczej.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'Możesz skonwertować ten rozdział do nowej książki o tej samej treści. Wszelkie uprawnienia ustawione w tym rozdziale zostaną skopiowane do nowej książki, ale wszelkie dziedziczone uprawnienia z poprzedniej nadrzędnej książki nie będą skopiowane, co może doprowadzić do zmiany w kontroli dostępu.',
     'convert_chapter' => 'Konwertuj rozdział',
     'convert_chapter_confirm' => 'Czy na pewno chcesz skonwertować ten rozdział?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
