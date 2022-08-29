@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Felicitări! Deoarece ai primit această notificare prin e-mail, setările de e-mail par să fie configurate corespunzător.',
     'maint_recycle_bin_desc' => 'Rafturile, cărțile, capitole și paginile șterse se trimit la coșul de gunoi pentru a putea fi restaurate sau șterse definitiv. Elementele mai vechi din coșul de gunoi pot fi eliminate automat după o vreme, în funcție de configurația sistemului.',
     'maint_recycle_bin_open' => 'Deschide coșul de gunoi',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Coș de gunoi',
