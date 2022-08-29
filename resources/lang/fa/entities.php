@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'توسط :user ایجاد شده‌است',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'عکس ها',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'ویرایش محتوا',
     'pages_permissions_active' => 'مجوزهای صفحه فعال است',
     'pages_initial_revision' => 'انتشار اولیه',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'برگهٔ تازه',
     'pages_editing_draft_notification' => 'شما در حال ویرایش پیش نویسی هستید که آخرین بار در :timeDiff ذخیره شده است.',
     'pages_draft_edited_notification' => 'این صفحه از همان زمان به روز شده است. توصیه می شود از این پیش نویس صرف نظر کنید.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'می توانید این فصل را به یک کتاب جدید با همین مطالب تبدیل کنید. هر مجوزی که در این فصل تنظیم شده است در کتاب جدید کپی می شود، اما هر گونه مجوز ارثی، از کتاب والد، کپی نمی شود که می تواند منجر به تغییر کنترل دسترسی شود.',
     'convert_chapter' => 'تبدیل فصل',
     'convert_chapter_confirm' => 'آیا از تبدیل این فصل مطمئن هستید؟',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
