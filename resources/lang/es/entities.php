@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Actualizado :timeLength',
     'meta_updated_name' => 'Actualizado :timeLength por :user',
     'meta_owned_name' => 'Propiedad de :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenciado en 1 página|Referenciado en :count páginas',
     'entity_select' => 'Seleccione entidad',
     'entity_select_lack_permission' => 'No tiene los permisos necesarios para seleccionar este elemento',
     'images' => 'Imágenes',
@@ -249,7 +249,7 @@ return [
     'pages_edit_content_link' => 'Contenido editado',
     'pages_permissions_active' => 'Permisos de página activos',
     'pages_initial_revision' => 'Publicación inicial',
-    'pages_references_update_revision' => 'System auto-update of internal links',
+    'pages_references_update_revision' => 'Actualización automática de enlaces internos',
     'pages_initial_name' => 'Página nueva',
     'pages_editing_draft_notification' => 'Está actualmente editando un borrador que fue guardado por última vez el :timeDiff.',
     'pages_draft_edited_notification' => 'Esta página ha sido actualizada desde ese momento. Se recomienda que cancele este borrador.',
@@ -373,7 +373,7 @@ return [
     'convert_chapter_confirm' => '¿Estás seguro de que quieres convertir este capítulo?',
 
     // References
-    'references' => 'References',
-    'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references' => 'Referencias',
+    'references_none' => 'No hay referencias a este elemento.',
+    'references_to_desc' => 'A continuación se muestran todas las páginas en el sistema que enlazan a este elemento.',
 ];
