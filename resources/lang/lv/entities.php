@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Atjaunināts :timeLength',
     'meta_updated_name' => ':user atjauninājis pirms :timeLength',
     'meta_owned_name' => 'Īpašnieks :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Izvēlēties vienumu',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Attēli',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Labot saturu',
     'pages_permissions_active' => 'Lapas atļaujas ir aktīvas',
     'pages_initial_revision' => 'Sākotnējā publikācija',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Jauna lapa',
     'pages_editing_draft_notification' => 'Jūs pašlaik veicat izmaiņas melnrakstā, kurš pēdējo reizi ir saglabāts :timeDiff.',
     'pages_draft_edited_notification' => 'Šī lapa ir tikusi atjaunināta. Šo melnrakstu ieteicams atmest.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Convert Chapter',
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
