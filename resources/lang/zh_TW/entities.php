@@ -23,6 +23,7 @@ return [
     'meta_updated' => '更新於 :timeLength',
     'meta_updated_name' => '由 :user 更新於 :timeLength',
     'meta_owned_name' => ':user 所擁有',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => '選取項目',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => '圖片',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => '編輯內容',
     'pages_permissions_active' => '頁面權限已啟用',
     'pages_initial_revision' => '初次發布',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => '新頁面',
     'pages_editing_draft_notification' => '您正在編輯最後儲存為 :timeDiff 的草稿。',
     'pages_draft_edited_notification' => '此頁面已經被更新過。建議您放棄此草稿。',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Convert Chapter',
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
