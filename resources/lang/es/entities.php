@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Actualizado :timeLength',
     'meta_updated_name' => 'Actualizado :timeLength por :user',
     'meta_owned_name' => 'Propiedad de :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Seleccione entidad',
     'entity_select_lack_permission' => 'No tiene los permisos necesarios para seleccionar este elemento',
     'images' => 'Imágenes',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Contenido editado',
     'pages_permissions_active' => 'Permisos de página activos',
     'pages_initial_revision' => 'Publicación inicial',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Página nueva',
     'pages_editing_draft_notification' => 'Está actualmente editando un borrador que fue guardado por última vez el :timeDiff.',
     'pages_draft_edited_notification' => 'Esta página ha sido actualizada desde ese momento. Se recomienda que cancele este borrador.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'Puede convertir este capítulo en un nuevo libro con el mismo contenido. Cualquier permiso establecido en este capítulo será copiado al nuevo libro pero cualquier permiso heredado, del libro padre, no se copiará lo que podría conducir a un cambio de control de acceso.',
     'convert_chapter' => 'Convertir Capítulo',
     'convert_chapter_confirm' => '¿Estás seguro de que quieres convertir este capítulo?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
