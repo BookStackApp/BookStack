@@ -23,10 +23,10 @@ class RegenerateReferencesCommandTest extends TestCase
             ->assertExitCode(0);
 
         $this->assertDatabaseHas('references', [
-            'from_id' => $page->id,
+            'from_id'   => $page->id,
             'from_type' => $page->getMorphClass(),
-            'to_id' => $book->id,
-            'to_type' => $book->getMorphClass(),
+            'to_id'     => $book->id,
+            'to_type'   => $book->getMorphClass(),
         ]);
     }
 }

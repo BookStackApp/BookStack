@@ -374,7 +374,7 @@ class OidcTest extends TestCase
         $resp = $this->runLogin([
             'email'  => 'benny@example.com',
             'sub'    => 'benny1010101',
-            'groups' => ['Wizards', 'Zookeepers']
+            'groups' => ['Wizards', 'Zookeepers'],
         ]);
         $resp->assertRedirect('/');
 
@@ -398,13 +398,13 @@ class OidcTest extends TestCase
         $resp = $this->runLogin([
             'email'  => 'benny@example.com',
             'sub'    => 'benny1010101',
-            'my' => [
+            'my'     => [
                 'custom' => [
                     'groups' => [
-                        'attr' => ['Wizards']
-                    ]
-                ]
-            ]
+                        'attr' => ['Wizards'],
+                    ],
+                ],
+            ],
         ]);
         $resp->assertRedirect('/');
 

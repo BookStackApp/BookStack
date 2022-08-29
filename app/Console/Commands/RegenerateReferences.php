@@ -53,6 +53,7 @@ class RegenerateReferences extends Command
         DB::setDefaultConnection($connection);
 
         $this->comment('References have been regenerated');
+
         return 0;
     }
 }

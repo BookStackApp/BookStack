@@ -23,7 +23,6 @@ class ChapterController extends Controller
     protected ChapterRepo $chapterRepo;
     protected ReferenceFetcher $referenceFetcher;
 
-
     public function __construct(ChapterRepo $chapterRepo, ReferenceFetcher $referenceFetcher)
     {
         $this->chapterRepo = $chapterRepo;

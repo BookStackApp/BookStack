@@ -99,5 +99,4 @@ class CrossLinkParser
             new BookshelfLinkModelResolver(),
         ]);
     }
-
 }

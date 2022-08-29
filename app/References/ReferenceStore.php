@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ReferenceStore
 {
-
     /**
      * Update the outgoing references for the given page.
      */
@@ -25,7 +24,7 @@ class ReferenceStore
             ->where('from_type', '=', (new Page())->getMorphClass())
             ->delete();
 
-        Page::query()->select(['id', 'html'])->chunk(100, function(Collection $pages) {
+        Page::query()->select(['id', 'html'])->chunk(100, function (Collection $pages) {
             $this->updateForPages($pages->all());
         });
     }
@@ -44,7 +43,7 @@ class ReferenceStore
         $parser = CrossLinkParser::createWithEntityResolvers();
         $references = [];
 
-        $pageIds = array_map(fn(Page $page) => $page->id, $pages);
+        $pageIds = array_map(fn (Page $page) => $page->id, $pages);
         Reference::query()
             ->where('from_type', '=', $pages[0]->getMorphClass())
             ->whereIn('from_id', $pageIds)
@@ -55,10 +54,10 @@ class ReferenceStore
 
             foreach ($models as $model) {
                 $references[] = [
-                    'from_id' => $page->id,
+                    'from_id'   => $page->id,
                     'from_type' => $page->getMorphClass(),
-                    'to_id' => $model->id,
-                    'to_type' => $model->getMorphClass(),
+                    'to_id'     => $model->id,
+                    'to_type'   => $model->getMorphClass(),
                 ];
             }
         }
@@ -67,5 +66,4 @@ class ReferenceStore
             Reference::query()->insert($referenceDataChunk);
         }
     }
-
 }

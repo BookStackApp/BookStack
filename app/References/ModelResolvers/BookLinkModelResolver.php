@@ -19,7 +19,7 @@ class BookLinkModelResolver implements CrossLinkModelResolver
         $bookSlug = $matches[1];
 
         /** @var ?Book $model */
-        $model = Book::query()->where('slug', '=',  $bookSlug)->first(['id']);
+        $model = Book::query()->where('slug', '=', $bookSlug)->first(['id']);
 
         return $model;
     }
