@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Félicitations ! Comme vous avez bien reçu cette notification, vos paramètres d\'e-mail semblent être configurés correctement.',
     'maint_recycle_bin_desc' => 'Les étagères, livres, chapitres et pages supprimés sont envoyés dans la corbeille afin qu\'ils puissent être restaurés ou supprimés définitivement. Les éléments plus anciens de la corbeille peuvent être supprimés automatiquement après un certain temps selon la configuration du système.',
     'maint_recycle_bin_open' => 'Ouvrir la corbeille',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Corbeille',
