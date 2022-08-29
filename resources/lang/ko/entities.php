@@ -23,6 +23,7 @@ return [
     'meta_updated' => '수정함 :timeLength',
     'meta_updated_name' => '수정함 :timeLength, :user',
     'meta_owned_name' => '소유함 :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => '항목 선택',
     'entity_select_lack_permission' => '이 항목을 선택하기 위해 필요한 권한이 없습니다',
     'images' => '이미지',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => '수정',
     'pages_permissions_active' => '문서 권한 허용함',
     'pages_initial_revision' => '처음 판본',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => '제목 없음',
     'pages_editing_draft_notification' => ':timeDiff에 초안 문서입니다.',
     'pages_draft_edited_notification' => '최근에 수정한 문서이기 때문에 초안 문서를 폐기하는 편이 좋습니다.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => '챕터 변환',
     'convert_chapter_confirm' => '이 챕터를 변환하시겠어요?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
