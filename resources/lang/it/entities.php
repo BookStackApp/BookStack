@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Aggiornato :timeLength',
     'meta_updated_name' => 'Aggiornato :timeLength da :user',
     'meta_owned_name' => 'Creati da :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Selezione Entità',
     'entity_select_lack_permission' => 'Non hai i permessi necessari per selezionare questo elemento',
     'images' => 'Immagini',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Modifica contenuto',
     'pages_permissions_active' => 'Permessi Pagina Attivi',
     'pages_initial_revision' => 'Pubblicazione iniziale',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Nuova Pagina',
     'pages_editing_draft_notification' => 'Stai modificando una bozza che è stata salvata il :timeDiff.',
     'pages_draft_edited_notification' => 'Questa pagina è stata aggiornata. È consigliabile scartare questa bozza.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'È possibile convertire questo capitolo in un nuovo libro con gli stessi contenuti. Tutti i permessi impostati su questo capitolo saranno copiati nel nuovo libro, ma i permessi ereditati dal libro principale non saranno copiati, il che potrebbe portare a una modifica del controllo degli accessi.',
     'convert_chapter' => 'Converti Capitolo',
     'convert_chapter_confirm' => 'Sei sicuro di voler convertire questo capitolo?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
