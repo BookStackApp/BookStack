@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => '恭喜！您收到了此邮件通知，您的电子邮件设置看起来已配置正确。',
     'maint_recycle_bin_desc' => '被删除的书架、书籍、章节和页面会被存入回收站，您可以还原或永久删除它们。回收站中较旧的项目可能会在系统设置的一段时间后被自动删除。',
     'maint_recycle_bin_open' => '打开回收站',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => '回收站',
