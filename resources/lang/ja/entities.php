@@ -23,6 +23,7 @@ return [
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
     'meta_owned_name' => '所有者: :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'エンティティ選択',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => '画像',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'コンテンツの編集',
     'pages_permissions_active' => 'ページの権限は有効です',
     'pages_initial_revision' => '初回の公開',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => '新規ページ',
     'pages_editing_draft_notification' => ':timeDiffに保存された下書きを編集しています。',
     'pages_draft_edited_notification' => 'このページは更新されています。下書きを破棄することを推奨します。',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'このチャプターを同じ内容の新しいブックに変換できます。このチャプターで設定された権限は新しいブックにコピーされますが、親ブックから継承された権限はコピーされないため、アクセス制御が変更される可能性があります。',
     'convert_chapter' => 'チャプターを変換',
     'convert_chapter_confirm' => 'このチャプターを変換してもよろしいですか？',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
