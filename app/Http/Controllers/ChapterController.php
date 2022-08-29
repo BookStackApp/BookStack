@@ -13,20 +13,21 @@ use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
+use BookStack\References\ReferenceFetcher;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class ChapterController extends Controller
 {
-    protected $chapterRepo;
+    protected ChapterRepo $chapterRepo;
+    protected ReferenceFetcher $referenceFetcher;
 
-    /**
-     * ChapterController constructor.
-     */
-    public function __construct(ChapterRepo $chapterRepo)
+
+    public function __construct(ChapterRepo $chapterRepo, ReferenceFetcher $referenceFetcher)
     {
         $this->chapterRepo = $chapterRepo;
+        $this->referenceFetcher = $referenceFetcher;
     }
 
     /**
@@ -77,13 +78,14 @@ class ChapterController extends Controller
         $this->setPageTitle($chapter->getShortName());
 
         return view('chapters.show', [
-            'book'        => $chapter->book,
-            'chapter'     => $chapter,
-            'current'     => $chapter,
-            'sidebarTree' => $sidebarTree,
-            'pages'       => $pages,
-            'next'        => $nextPreviousLocator->getNext(),
-            'previous'    => $nextPreviousLocator->getPrevious(),
+            'book'           => $chapter->book,
+            'chapter'        => $chapter,
+            'current'        => $chapter,
+            'sidebarTree'    => $sidebarTree,
+            'pages'          => $pages,
+            'next'           => $nextPreviousLocator->getNext(),
+            'previous'       => $nextPreviousLocator->getPrevious(),
+            'referenceCount' => $this->referenceFetcher->getPageReferenceCountToEntity($chapter),
         ]);
     }
 

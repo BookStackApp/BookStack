@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests;
+namespace Tests\Settings;
 
 use BookStack\Notifications\TestEmail;
 use Illuminate\Contracts\Notifications\Dispatcher;
 use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
 
 class TestEmailTest extends TestCase
 {

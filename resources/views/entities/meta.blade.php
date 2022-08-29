@@ -59,4 +59,13 @@
             <span title="{{ $entity->updated_at->toDayDateTimeString() }}">{{ trans('entities.meta_updated', ['timeLength' => $entity->updated_at->diffForHumans()]) }}</span>
         </div>
     @endif
+
+    @if($referenceCount ?? 0)
+        <a href="{{ $entity->getUrl('/references') }}" class="entity-meta-item">
+            @icon('reference')
+            <div>
+                {!! trans_choice('entities.meta_reference_page_count', $referenceCount, ['count' => $referenceCount]) !!}
+            </div>
+        </a>
+    @endif
 </div>

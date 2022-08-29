@@ -25,9 +25,10 @@
 
     <div id="image-cleanup" class="card content-wrap auto-height">
         <h2 class="list-heading">{{ trans('settings.maint_image_cleanup') }}</h2>
-        <div class="grid half gap-xl">
+        <div class="grid left-focus gap-xl">
             <div>
                 <p class="small text-muted">{{ trans('settings.maint_image_cleanup_desc') }}</p>
+                <p class="small text-muted italic">{{ trans('settings.maint_timeout_command_note') }}</p>
             </div>
             <div>
                 <form method="POST" action="{{ url('/settings/maintenance/cleanup-images') }}">
@@ -55,7 +56,7 @@
 
     <div id="send-test-email" class="card content-wrap auto-height">
         <h2 class="list-heading">{{ trans('settings.maint_send_test_email') }}</h2>
-        <div class="grid half gap-xl">
+        <div class="grid left-focus gap-xl">
             <div>
                 <p class="small text-muted">{{ trans('settings.maint_send_test_email_desc') }}</p>
             </div>
@@ -63,6 +64,22 @@
                 <form method="POST" action="{{ url('/settings/maintenance/send-test-email') }}">
                     {!! csrf_field()  !!}
                     <button class="button outline">{{ trans('settings.maint_send_test_email_run') }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="regenerate-references" class="card content-wrap auto-height">
+        <h2 class="list-heading">{{ trans('settings.maint_regen_references') }}</h2>
+        <div class="grid left-focus gap-xl">
+            <div>
+                <p class="small text-muted">{{ trans('settings.maint_regen_references_desc') }}</p>
+                <p class="small text-muted italic">{{ trans('settings.maint_timeout_command_note') }}</p>
+            </div>
+            <div>
+                <form method="POST" action="{{ url('/settings/maintenance/regenerate-references') }}">
+                    {!! csrf_field()  !!}
+                    <button class="button outline">{{ trans('settings.maint_regen_references') }}</button>
                 </form>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Settings;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -10,6 +10,7 @@ use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class RecycleBinTest extends TestCase
 {

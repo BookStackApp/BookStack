@@ -22,7 +22,7 @@ return [
     // The number of revisions to keep in the database.
     // Once this limit is reached older revisions will be deleted.
     // If set to false then a limit will not be enforced.
-    'revision_limit' => env('REVISION_LIMIT', 50),
+    'revision_limit' => env('REVISION_LIMIT',  100),
 
     // The number of days that content will remain in the recycle bin before
     // being considered for auto-removal. It is not a guarantee that content will

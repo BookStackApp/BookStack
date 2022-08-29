@@ -14,6 +14,7 @@ use BookStack\Entities\Tools\PageEditorData;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
+use BookStack\References\ReferenceFetcher;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
@@ -23,13 +24,15 @@ use Throwable;
 class PageController extends Controller
 {
     protected PageRepo $pageRepo;
+    protected ReferenceFetcher $referenceFetcher;
 
     /**
      * PageController constructor.
      */
-    public function __construct(PageRepo $pageRepo)
+    public function __construct(PageRepo $pageRepo, ReferenceFetcher $referenceFetcher)
     {
         $this->pageRepo = $pageRepo;
+        $this->referenceFetcher = $referenceFetcher;
     }
 
     /**
@@ -160,6 +163,7 @@ class PageController extends Controller
             'pageNav'         => $pageNav,
             'next'            => $nextPreviousLocator->getNext(),
             'previous'        => $nextPreviousLocator->getPrevious(),
+            'referenceCount'  => $this->referenceFetcher->getPageReferenceCountToEntity($page),
         ]);
     }
 
