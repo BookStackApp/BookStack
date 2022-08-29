@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Оновлено :timeLength',
     'meta_updated_name' => ':user оновив :timeLength',
     'meta_owned_name' => 'Власник :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Вибір об\'єкта',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Зображення',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Редагувати вміст',
     'pages_permissions_active' => 'Активні дозволи сторінки',
     'pages_initial_revision' => 'Початкова публікація',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Нова сторінка',
     'pages_editing_draft_notification' => 'Ви наразі редагуєте чернетку, що була збережена останньою :timeDiff.',
     'pages_draft_edited_notification' => 'З того часу ця сторінка була оновлена. Рекомендуємо відмовитися від цього проекту.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'Ви можете конвертувати цей розділ в нову книгу з одним контентом. Будь-які дозволи, встановлені на цьому розділі, будуть скопійовані в нову книгу, але будь-які успадковані дозволи, з батьківської книги не буде скопійований, що може призвести до зміни контролю доступу.',
     'convert_chapter' => 'Перетворити розділ',
     'convert_chapter_confirm' => 'Ви впевнені, що хочете конвертувати цей розділ?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
