@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Čestitamo! Ako ste primili ovaj e mail znači da ćete ga moći koristiti.',
     'maint_recycle_bin_desc' => 'Izbrisane police, knjige, poglavlja i stranice poslane su u Recycle bin i mogu biti vraćene ili trajno izbrisane. Starije stavke bit će automatski izbrisane nakon nekog vremena što ovisi o konfiguraciji sustava.',
     'maint_recycle_bin_open' => 'Otvori Recycle Bin',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Recycle Bin',
