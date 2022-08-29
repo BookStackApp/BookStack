@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Atnaujintas :timeLength',
     'meta_updated_name' => 'Atnaujinta :timeLength naudotojo :user',
     'meta_owned_name' => 'Priklauso :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Pasirinkti subjektą',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Nuotraukos',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Redaguoti turinį',
     'pages_permissions_active' => 'Puslapio leidimai aktyvūs',
     'pages_initial_revision' => 'Pradinis skelbimas',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Naujas puslapis',
     'pages_editing_draft_notification' => 'Dabar jūs redaguojate juodraštį, kuris paskutinį kartą buvo išsaugotas :timeDiff',
     'pages_draft_edited_notification' => 'Šis puslapis buvo redaguotas iki to laiko. Rekomenduojame jums išmesti šį juodraštį.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Convert Chapter',
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
