@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'עודכן :timeLength',
     'meta_updated_name' => 'עודכן :timeLength על ידי :user',
     'meta_owned_name' => 'Owned by :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'בחר יישות',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'תמונות',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'ערוך תוכן',
     'pages_permissions_active' => 'הרשאות דף פעילות',
     'pages_initial_revision' => 'פרסום ראשוני',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'דף חדש',
     'pages_editing_draft_notification' => 'הינך עורך טיוטה אשר נשמרה לאחרונה ב :timeDiff',
     'pages_draft_edited_notification' => 'דף זה עודכן מאז, מומלץ להתעלם מהטיוטה הזו.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Convert Chapter',
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
