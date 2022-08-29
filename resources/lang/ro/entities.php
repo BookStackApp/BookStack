@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Actualizat :timeLungime',
     'meta_updated_name' => 'Actualizat :timeLength de :user',
     'meta_owned_name' => 'Deținut de :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Selectare entitate',
     'entity_select_lack_permission' => 'Nu ai drepturile necesare pentru a selecta acest element',
     'images' => 'Imagini',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Editare conținut',
     'pages_permissions_active' => 'Permisiuni carte active',
     'pages_initial_revision' => 'Publicare inițiala',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Pagină nouă',
     'pages_editing_draft_notification' => 'Momentan editezi o schiță care a fost salvată ultima dată :timeDiff.',
     'pages_draft_edited_notification' => 'Această pagină a fost actualizată de atunci. Este recomandat să aruncați această ciornă.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'Poți converti acest capitol într-o nouă carte cu același conținut. Orice permisiuni stabilite pe acest capitol vor fi copiate în noua carte, dar orice permisiuni moștenite, din cartea părinte nu vor fi copiate, ceea ce ar putea duce la o schimbare a controlului de acces.',
     'convert_chapter' => 'Convertește capitolul',
     'convert_chapter_confirm' => 'Ești sigur că dorești să convertești acest capitol?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
