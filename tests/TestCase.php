@@ -430,7 +430,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @return Entity[]
+     * @return array{page: Page, chapter: Chapter, book: Book, bookshelf: Bookshelf}
      */
     protected function getEachEntityType(): array
     {

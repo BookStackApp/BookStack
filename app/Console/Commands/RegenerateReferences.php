@@ -2,41 +2,43 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Auth\Permissions\JointPermissionBuilder;
+use BookStack\References\ReferenceStore;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class RegeneratePermissions extends Command
+class RegenerateReferences extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'bookstack:regenerate-permissions {--database= : The database connection to use.}';
+    protected $signature = 'bookstack:regenerate-references {--database= : The database connection to use.}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Regenerate all system permissions';
+    protected $description = 'Regenerate all the cross-item model reference index';
 
-    protected JointPermissionBuilder $permissionBuilder;
+    protected ReferenceStore $references;
 
     /**
      * Create a new command instance.
+     *
+     * @return void
      */
-    public function __construct(JointPermissionBuilder $permissionBuilder)
+    public function __construct(ReferenceStore $references)
     {
-        $this->permissionBuilder = $permissionBuilder;
+        $this->references = $references;
         parent::__construct();
     }
 
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
      */
     public function handle()
     {
@@ -46,10 +48,11 @@ class RegeneratePermissions extends Command
             DB::setDefaultConnection($this->option('database'));
         }
 
-        $this->permissionBuilder->rebuildForAll();
+        $this->references->updateForAllPages();
 
         DB::setDefaultConnection($connection);
-        $this->comment('Permissions regenerated');
+
+        $this->comment('References have been regenerated');
         return 0;
     }
 }
