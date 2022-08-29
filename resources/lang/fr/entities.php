@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Mis à jour :timeLength',
     'meta_updated_name' => 'Mis à jour :timeLength par :user',
     'meta_owned_name' => 'Appartient à :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Sélectionner l\'entité',
     'entity_select_lack_permission' => 'Vous n\'avez pas les permissions requises pour sélectionner cet élément',
     'images' => 'Images',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Modifier le contenu',
     'pages_permissions_active' => 'Permissions de page actives',
     'pages_initial_revision' => 'Publication initiale',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Nouvelle page',
     'pages_editing_draft_notification' => 'Vous éditez actuellement un brouillon qui a été enregistré :timeDiff.',
     'pages_draft_edited_notification' => 'La page a été mise à jour depuis votre dernière visite. Vous devriez jeter ce brouillon.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'Vous pouvez convertir ce chapitre en un nouveau livre avec le même contenu. Toutes les permissions définies dans ce chapitre seront copiées dans le nouveau livre mais toutes les permissions héritées du livre parent ne seront pas copiés, ce qui pourrait conduire à un changement de contrôle d\'accès.',
     'convert_chapter' => 'Convertir le chapitre',
     'convert_chapter_confirm' => 'Êtes-vous sûr(e) de vouloir convertir ce chapitre ?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
