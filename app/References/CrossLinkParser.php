@@ -91,7 +91,7 @@ class CrossLinkParser
      */
     public static function createWithEntityResolvers(): self
     {
-        return new static([
+        return new self([
             new PagePermalinkModelResolver(),
             new PageLinkModelResolver(),
             new ChapterLinkModelResolver(),
