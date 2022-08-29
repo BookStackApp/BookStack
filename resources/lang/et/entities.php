@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Muudetud :timeLength',
     'meta_updated_name' => 'Muudetud :timeLength kasutaja :user poolt',
     'meta_owned_name' => 'Kuulub kasutajale :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Objekti valik',
     'entity_select_lack_permission' => 'Sul pole õiguseid selle objekti valimiseks',
     'images' => 'Pildid',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Muuda sisu',
     'pages_permissions_active' => 'Lehe õigused on aktiivsed',
     'pages_initial_revision' => 'Esimene redaktsioon',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Uus leht',
     'pages_editing_draft_notification' => 'Sa muudad mustandit, mis salvestati viimati :timeDiff.',
     'pages_draft_edited_notification' => 'Seda lehte on sellest ajast saadid uuendatud. Soovitame mustandist loobuda.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'Saad muuta selle peatüki uueks, sama sisuga raamatuks. Peatükile määratud õigused kopeeritakse uuele raamatule, aga olemasolevalt raamatult pärit õiguseid ei kopeerita, mis võib põhjustada muudatusi ligipääsudes.',
     'convert_chapter' => 'Muud peatükk',
     'convert_chapter_confirm' => 'Kas oled kindel, et soovid selle peatüki muuta?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
