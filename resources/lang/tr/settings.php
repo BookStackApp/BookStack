@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Tebrikler! Eğer bu e-posta bildirimini alıyorsanız, e-posta ayarlarınız doğru bir şekilde ayarlanmış demektir.',
     'maint_recycle_bin_desc' => 'Silinen raflar, kitaplar, bölümler ve sayfalar geri dönüşüm kutusuna gönderilir, böylece geri yüklenebilir veya kalıcı olarak silinebilir. Geri dönüşüm kutusundaki daha eski öğeler, sistem yapılandırmasına bağlı olarak bir süre sonra otomatik olarak kaldırılabilir.',
     'maint_recycle_bin_open' => 'Geri Dönüşüm Kutusunu Aç',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Geri Dönüşüm Kutusu',
