@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Atualizado :timeLength',
     'meta_updated_name' => 'Atualizado :timeLength por :user',
     'meta_owned_name' => 'Propriedade de :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Seleção de Entidade',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Imagens',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Editar Conteúdo',
     'pages_permissions_active' => 'Permissões de Página Ativas',
     'pages_initial_revision' => 'Publicação Inicial',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Nova Página',
     'pages_editing_draft_notification' => 'Você está atualmente a editar um rascunho que foi guardado pela última vez a :timeDiff.',
     'pages_draft_edited_notification' => 'Esta página entretanto já foi atualizada. É recomendado que você descarte este rascunho.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Converter Capítulo',
     'convert_chapter_confirm' => 'Tem certeza de que deseja converter este capítulo?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
