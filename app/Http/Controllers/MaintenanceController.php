@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers;
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Notifications\TestEmail;
+use BookStack\References\ReferenceStore;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
 
@@ -74,6 +75,24 @@ class MaintenanceController extends Controller
             $this->showErrorNotification($errorMessage);
         }
 
-        return redirect('/settings/maintenance#image-cleanup')->withInput();
+        return redirect('/settings/maintenance#image-cleanup');
+    }
+
+    /**
+     * Action to regenerate the reference index in the system.
+     */
+    public function regenerateReferences(ReferenceStore $referenceStore)
+    {
+        $this->checkPermission('settings-manage');
+        $this->logActivity(ActivityType::MAINTENANCE_ACTION_RUN, 'regenerate-references');
+
+        try {
+            $referenceStore->updateForAllPages();
+            $this->showSuccessNotification(trans('settings.maint_regen_references_success'));
+        } catch (\Exception $exception) {
+            $this->showErrorNotification($exception->getMessage());
+        }
+
+        return redirect('/settings/maintenance#regenerate-references');
     }
 }

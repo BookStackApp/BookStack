@@ -218,6 +218,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/maintenance', [MaintenanceController::class, 'index']);
     Route::delete('/settings/maintenance/cleanup-images', [MaintenanceController::class, 'cleanupImages']);
     Route::post('/settings/maintenance/send-test-email', [MaintenanceController::class, 'sendTestEmail']);
+    Route::post('/settings/maintenance/regenerate-references', [MaintenanceController::class, 'regenerateReferences']);
 
     // Recycle Bin
     Route::get('/settings/recycle-bin', [RecycleBinController::class, 'index']);
