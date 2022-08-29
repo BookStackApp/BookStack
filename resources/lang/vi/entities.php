@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Được cập nhật :timeLength',
     'meta_updated_name' => 'Được cập nhật :timeLength bởi :user',
     'meta_owned_name' => 'Được sở hữu bởi :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Chọn thực thể',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Ảnh',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Soạn thảo Nội dung',
     'pages_permissions_active' => 'Đang bật các quyền hạn từ Trang',
     'pages_initial_revision' => 'Đăng bài mở đầu',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Trang mới',
     'pages_editing_draft_notification' => 'Bạn hiện đang chỉnh sửa một bản nháp được lưu cách đây :timeDiff.',
     'pages_draft_edited_notification' => 'Trang này đã được cập nhật từ lúc đó. Bạn nên loại bỏ bản nháp này.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Convert Chapter',
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
