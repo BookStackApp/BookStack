@@ -31,7 +31,7 @@ class OidcOAuthProvider extends AbstractProvider
     protected $tokenEndpoint;
 
     /**
-     * Scopes to use for the OIDC authorization call
+     * Scopes to use for the OIDC authorization call.
      */
     protected array $scopes = ['openid', 'profile', 'email'];
 

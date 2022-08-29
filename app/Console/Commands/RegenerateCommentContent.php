@@ -58,6 +58,7 @@ class RegenerateCommentContent extends Command
 
         DB::setDefaultConnection($connection);
         $this->comment('Comment HTML content has been regenerated');
+
         return 0;
     }
 }

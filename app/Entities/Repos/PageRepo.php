@@ -32,12 +32,11 @@ class PageRepo
      * PageRepo constructor.
      */
     public function __construct(
-        BaseRepo         $baseRepo,
-        RevisionRepo     $revisionRepo,
-        ReferenceStore   $referenceStore,
+        BaseRepo $baseRepo,
+        RevisionRepo $revisionRepo,
+        ReferenceStore $referenceStore,
         ReferenceUpdater $referenceUpdater
-    )
-    {
+    ) {
         $this->baseRepo = $baseRepo;
         $this->revisionRepo = $revisionRepo;
         $this->referenceStore = $referenceStore;
@@ -135,11 +134,11 @@ class PageRepo
     public function getNewDraftPage(Entity $parent)
     {
         $page = (new Page())->forceFill([
-            'name' => trans('entities.pages_initial_name'),
+            'name'       => trans('entities.pages_initial_name'),
             'created_by' => user()->id,
-            'owned_by' => user()->id,
+            'owned_by'   => user()->id,
             'updated_by' => user()->id,
-            'draft' => true,
+            'draft'      => true,
         ]);
 
         if ($parent instanceof Chapter) {

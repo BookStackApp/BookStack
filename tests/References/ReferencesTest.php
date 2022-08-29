@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class ReferencesTest extends TestCase
 {
-
     public function test_references_created_on_page_update()
     {
         /** @var Page $pageA */
@@ -24,14 +23,14 @@ class ReferencesTest extends TestCase
 
         $this->asEditor()->put($pageA->getUrl(), [
             'name' => 'Reference test',
-            'html' => '<a href="' . $pageB->getUrl() . '">Testing</a>'
+            'html' => '<a href="' . $pageB->getUrl() . '">Testing</a>',
         ]);
 
         $this->assertDatabaseHas('references', [
-            'from_id' => $pageA->id,
+            'from_id'   => $pageA->id,
             'from_type' => $pageA->getMorphClass(),
-            'to_id' => $pageB->id,
-            'to_type' => $pageB->getMorphClass(),
+            'to_id'     => $pageB->id,
+            'to_type'   => $pageB->getMorphClass(),
         ]);
     }
 
@@ -141,7 +140,7 @@ class ReferencesTest extends TestCase
             $this->assertStringContainsString('href="http://localhost/books/my-updated-book-slugaroo"', $page->html);
             $this->assertDatabaseHas('page_revisions', [
                 'page_id' => $page->id,
-                'summary' => 'System auto-update of internal links'
+                'summary' => 'System auto-update of internal links',
             ]);
         }
     }
@@ -179,10 +178,9 @@ class ReferencesTest extends TestCase
     {
         (new Reference())->forceFill([
             'from_type' => $from->getMorphClass(),
-            'from_id' => $from->id,
-            'to_type' => $to->getMorphClass(),
-            'to_id' => $to->id,
+            'from_id'   => $from->id,
+            'to_type'   => $to->getMorphClass(),
+            'to_id'     => $to->id,
         ])->save();
     }
-
 }

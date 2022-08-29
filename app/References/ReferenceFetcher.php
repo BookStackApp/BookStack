@@ -26,9 +26,9 @@ class ReferenceFetcher
         $baseQuery = $entity->referencesTo()
             ->where('from_type', '=', (new Page())->getMorphClass())
             ->with([
-                'from' => fn(Relation $query) => $query->select(Page::$listAttributes),
-                'from.book' => fn(Relation $query) => $query->scopes('visible'),
-                'from.chapter' => fn(Relation $query) => $query->scopes('visible')
+                'from'         => fn (Relation $query) => $query->select(Page::$listAttributes),
+                'from.book'    => fn (Relation $query) => $query->scopes('visible'),
+                'from.chapter' => fn (Relation $query) => $query->scopes('visible'),
             ]);
 
         $references = $this->permissions->restrictEntityRelationQuery(

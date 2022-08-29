@@ -50,6 +50,7 @@ class RegeneratePermissions extends Command
 
         DB::setDefaultConnection($connection);
         $this->comment('Permissions regenerated');
+
         return 0;
     }
 }

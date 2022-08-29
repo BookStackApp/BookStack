@@ -27,7 +27,7 @@ class ReferenceController extends Controller
         $references = $this->referenceFetcher->getPageReferencesToEntity($page);
 
         return view('pages.references', [
-            'page' => $page,
+            'page'       => $page,
             'references' => $references,
         ]);
     }
@@ -42,7 +42,7 @@ class ReferenceController extends Controller
         $references = $this->referenceFetcher->getPageReferencesToEntity($chapter);
 
         return view('chapters.references', [
-            'chapter' => $chapter,
+            'chapter'    => $chapter,
             'references' => $references,
         ]);
     }
@@ -56,7 +56,7 @@ class ReferenceController extends Controller
         $references = $this->referenceFetcher->getPageReferencesToEntity($book);
 
         return view('books.references', [
-            'book' => $book,
+            'book'       => $book,
             'references' => $references,
         ]);
     }
@@ -70,7 +70,7 @@ class ReferenceController extends Controller
         $references = $this->referenceFetcher->getPageReferencesToEntity($shelf);
 
         return view('shelves.references', [
-            'shelf' => $shelf,
+            'shelf'      => $shelf,
             'references' => $references,
         ]);
     }

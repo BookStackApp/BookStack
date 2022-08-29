@@ -19,7 +19,7 @@ class BookshelfLinkModelResolver implements CrossLinkModelResolver
         $shelfSlug = $matches[1];
 
         /** @var ?Bookshelf $model */
-        $model = Bookshelf::query()->where('slug', '=',  $shelfSlug)->first(['id']);
+        $model = Bookshelf::query()->where('slug', '=', $shelfSlug)->first(['id']);
 
         return $model;
     }
