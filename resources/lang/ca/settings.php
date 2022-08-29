@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Enhorabona! Com que heu rebut aquesta notificació per correu electrònic, la vostra configuració del correu electrònic sembla que està ben configurada.',
     'maint_recycle_bin_desc' => 'Els prestatges, llibres, capítols i pàgines eliminats s\'envien a la paperera de reciclatge perquè es puguin restaurar o suprimir de manera permanent. Pot ser que els elements més antics de la paperera de reciclatge se suprimeixin automàticament després d\'un temps, depenent de la configuració del sistema.',
     'maint_recycle_bin_open' => 'Obre la paperera de reciclatge',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Paperera de reciclatge',
