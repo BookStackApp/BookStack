@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Поздравления! След като получихте този имейл, Вашите имейл настройки са конфигурирани правилно.',
     'maint_recycle_bin_desc' => 'Изтрити рафти, книги, глави и страници се преместват в кошчето, откъдето можете да ги възстановите или изтриете завинаги. Стари съдържания в кошчето ще бъдат изтрити автоматично след време, в зависимост от настройките на системата.',
     'maint_recycle_bin_open' => 'Отвори Кошчето',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Кошче',
