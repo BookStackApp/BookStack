@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Ažurirana :timeLength',
     'meta_updated_name' => 'Ažurirana :timeLength od :user',
     'meta_owned_name' => 'Vlasnik je :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Odaberi entitet',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Slike',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Uredi sadržaj',
     'pages_permissions_active' => 'Dozvole za stranicu su aktivne',
     'pages_initial_revision' => 'Prvo izdavanje',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Nova stranica',
     'pages_editing_draft_notification' => 'Trenutno uređujete skicu koja je posljednji put snimljena :timeDiff.',
     'pages_draft_edited_notification' => 'Ova stranica je ažurirana nakon tog vremena. Preporučujemo da odbacite ovu skicu.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
     'convert_chapter' => 'Convert Chapter',
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
