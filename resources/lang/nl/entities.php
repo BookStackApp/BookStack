@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Bijgewerkt: :timeLength',
     'meta_updated_name' => 'Bijgewerkt: :timeLength door :user',
     'meta_owned_name' => 'Eigendom van :user',
+    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'Entiteit selecteren',
     'entity_select_lack_permission' => 'Je hebt niet de vereiste machtiging om dit item te selecteren',
     'images' => 'Afbeeldingen',
@@ -248,6 +249,7 @@ return [
     'pages_edit_content_link' => 'Bewerk inhoud',
     'pages_permissions_active' => 'Pagina Machtigingen Actief',
     'pages_initial_revision' => 'Eerste publicatie',
+    'pages_references_update_revision' => 'System auto-update of internal links',
     'pages_initial_name' => 'Nieuwe pagina',
     'pages_editing_draft_notification' => 'U bewerkt momenteel een concept dat voor het laatst is opgeslagen op :timeDiff.',
     'pages_draft_edited_notification' => 'Deze pagina is sindsdien bijgewerkt. Het wordt aanbevolen dat u dit concept verwijderd.',
@@ -369,4 +371,9 @@ return [
     'convert_to_book_desc' => 'Je kan dit hoofdstuk converteren naar een nieuw boek met dezelfde inhoud. Alle machtigingen ingesteld op dit hoofdstuk zullen worden gekopieerd naar het nieuwe boek, maar alle geërfde machtigingen, van het bovenliggende boek, zullen niet worden gekopieerd, wat kan leiden tot een wijziging van de toegangscontrole.',
     'convert_chapter' => 'Converteer Hoofdstuk',
     'convert_chapter_confirm' => 'Weet je zeker dat je dit hoofdstuk wil converteren?',
+
+    // References
+    'references' => 'References',
+    'references_none' => 'There are no tracked references to this item.',
+    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
