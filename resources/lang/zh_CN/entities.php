@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新于 :timeLength',
     'meta_updated_name' => '由 :user 更新于 :timeLength',
     'meta_owned_name' => '拥有者 :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => '被 1 个页面引用|被 :count 个页面引用',
     'entity_select' => '选择项目',
     'entity_select_lack_permission' => '您没有选择此项目所需的权限',
     'images' => '图片',
@@ -249,7 +249,7 @@ return [
     'pages_edit_content_link' => '编辑内容',
     'pages_permissions_active' => '有效的页面权限',
     'pages_initial_revision' => '初始发布',
-    'pages_references_update_revision' => 'System auto-update of internal links',
+    'pages_references_update_revision' => '系统自动更新的内部链接',
     'pages_initial_name' => '新页面',
     'pages_editing_draft_notification' => '您正在编辑在 :timeDiff 内保存的草稿.',
     'pages_draft_edited_notification' => '此后，此页面已经被更新，建议您放弃此草稿。',
@@ -373,7 +373,7 @@ return [
     'convert_chapter_confirm' => '您确定要转换此章节吗？',
 
     // References
-    'references' => 'References',
-    'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references' => '引用',
+    'references_none' => '没有跟踪到对此项目的引用。',
+    'references_to_desc' => '下面显示的是系统中所有已知链接到这个项目的页面。',
 ];
