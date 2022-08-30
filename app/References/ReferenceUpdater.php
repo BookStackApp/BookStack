@@ -2,6 +2,7 @@
 
 namespace BookStack\References;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
@@ -21,7 +22,7 @@ class ReferenceUpdater
 
     public function updateEntityPageReferences(Entity $entity, string $oldLink)
     {
-        $references = $this->referenceFetcher->getPageReferencesToEntity($entity);
+        $references = $this->getReferencesToUpdate($entity);
         $newLink = $entity->getUrl();
 
         /** @var Reference $reference */
@@ -30,6 +31,33 @@ class ReferenceUpdater
             $page = $reference->from;
             $this->updateReferencesWithinPage($page, $oldLink, $newLink);
         }
+    }
+
+    /**
+     * @return Reference[]
+     */
+    protected function getReferencesToUpdate(Entity $entity): array
+    {
+        /** @var Reference[] $references */
+        $references = $this->referenceFetcher->getPageReferencesToEntity($entity)->values()->all();
+
+        if ($entity instanceof Book) {
+            $pages = $entity->pages()->get(['id']);
+            $chapters = $entity->chapters()->get(['id']);
+            $children = $pages->concat($chapters);
+            foreach ($children as $bookChild) {
+                $childRefs = $this->referenceFetcher->getPageReferencesToEntity($bookChild)->values()->all();
+                array_push($references, ...$childRefs);
+            }
+        }
+
+        $deduped = [];
+        foreach ($references as $reference) {
+            $key = $reference->from_id . ':' . $reference->from_type;
+            $deduped[$key] = $reference;
+        }
+
+        return array_values($deduped);
     }
 
     protected function updateReferencesWithinPage(Page $page, string $oldLink, string $newLink)

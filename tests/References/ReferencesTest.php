@@ -3,6 +3,7 @@
 namespace Tests\References;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
@@ -143,6 +144,56 @@ class ReferencesTest extends TestCase
                 'summary' => 'System auto-update of internal links',
             ]);
         }
+    }
+
+    public function test_pages_linking_to_other_page_updated_on_parent_book_url_change()
+    {
+        /** @var Page $bookPage */
+        /** @var Page $otherPage */
+        /** @var Book $book */
+        $bookPage = Page::query()->first();
+        $otherPage = Page::query()->where('id', '!=', $bookPage->id)->first();
+        $book = $bookPage->book;
+
+        $otherPage->html = '<a href="' . $bookPage->getUrl() . '">Link</a>';
+        $otherPage->save();
+        $this->createReference($otherPage, $bookPage);
+
+        $this->asEditor()->put($book->getUrl(), [
+            'name' => 'my updated book slugaroo',
+        ]);
+
+        $otherPage->refresh();
+        $this->assertStringContainsString('href="http://localhost/books/my-updated-book-slugaroo/page/' . $bookPage->slug . '"', $otherPage->html);
+        $this->assertDatabaseHas('page_revisions', [
+            'page_id' => $otherPage->id,
+            'summary' => 'System auto-update of internal links',
+        ]);
+    }
+
+    public function test_pages_linking_to_chapter_updated_on_parent_book_url_change()
+    {
+        /** @var Chapter $bookChapter */
+        /** @var Page $otherPage */
+        /** @var Book $book */
+        $bookChapter = Chapter::query()->first();
+        $otherPage = Page::query()->first();
+        $book = $bookChapter->book;
+
+        $otherPage->html = '<a href="' . $bookChapter->getUrl() . '">Link</a>';
+        $otherPage->save();
+        $this->createReference($otherPage, $bookChapter);
+
+        $this->asEditor()->put($book->getUrl(), [
+            'name' => 'my updated book slugaroo',
+        ]);
+
+        $otherPage->refresh();
+        $this->assertStringContainsString('href="http://localhost/books/my-updated-book-slugaroo/chapter/' . $bookChapter->slug . '"', $otherPage->html);
+        $this->assertDatabaseHas('page_revisions', [
+            'page_id' => $otherPage->id,
+            'summary' => 'System auto-update of internal links',
+        ]);
     }
 
     public function test_markdown_links_leading_to_entity_updated_on_url_change()
