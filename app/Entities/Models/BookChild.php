@@ -62,12 +62,11 @@ abstract class BookChild extends Entity
         $this->book_id = $newBookId;
         $this->refreshSlug();
         $this->save();
+        $this->refresh();
 
         if ($oldUrl !== $this->getUrl()) {
             app()->make(ReferenceUpdater::class)->updateEntityPageReferences($this, $oldUrl);
         }
-
-        $this->refresh();
 
         // Update all child pages if a chapter
         if ($this instanceof Chapter) {
