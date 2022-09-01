@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Kitob muvaffaqiyatli qayta tartiblandi',
 
     // Bookshelves
-    'bookshelf_create'            => 'yaratilgan kitobjavon',
-    'bookshelf_create_notification'    => 'Kitobjavon muvaffaqiyatli yaratildi',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'yangilangan kitobjavob',
-    'bookshelf_update_notification'    => 'Kitobjavon muvaffaqiyatli yangilandi',
-    'bookshelf_delete'                 => 'o\'chirilgan kitobjavon',
-    'bookshelf_delete_notification'    => 'Kitobjavon muvaffaqiyatli o\'chirildi',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" sevimlilaringizga qo\'shildi',
