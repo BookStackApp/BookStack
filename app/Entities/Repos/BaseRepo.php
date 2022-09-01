@@ -56,7 +56,7 @@ class BaseRepo
         $entity->fill($input);
         $entity->updated_by = user()->id;
 
-        if ($entity->isDirty('name')) {
+        if ($entity->isDirty('name') || empty($entity->slug)) {
             $entity->refreshSlug();
         }
 

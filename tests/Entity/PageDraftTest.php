@@ -204,4 +204,32 @@ class PageDraftTest extends TestCase
         $draft->refresh();
         $this->assertStringContainsString('href="https://example.com"', $draft->html);
     }
+
+    public function test_slug_generated_on_draft_publish_to_page_when_no_name_change()
+    {
+        /** @var Book $book */
+        $book = Book::query()->first();
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        /** @var Page $draft */
+        $draft = Page::query()->where('draft', '=', true)->where('book_id', '=', $book->id)->firstOrFail();
+
+        $this->put('/ajax/page/' . $draft->id . '/save-draft', [
+            'name'     => 'My page',
+            'markdown' => "Update test",
+        ])->assertOk();
+
+        $draft->refresh();
+        $this->assertEmpty($draft->slug);
+
+        $this->post($draft->getUrl(), [
+            'name'     => 'My page',
+            'markdown' => "# My markdown page"
+        ]);
+
+        $this->assertDatabaseHas('pages', [
+            'id'    => $draft->id,
+            'draft' => false,
+            'slug'  => 'my-page',
+        ]);
+    }
 }
