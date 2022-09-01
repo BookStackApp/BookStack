@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entitate negăsită',
-    'bookshelf_not_found' => 'Raft negăsit',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Carte negăsită',
     'page_not_found' => 'Pagină negăsită',
     'chapter_not_found' => 'Capitol negăsit',
