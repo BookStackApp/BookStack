@@ -41,7 +41,7 @@ class AttachmentService
 
         // Change to our secure-attachment disk if any of the local options
         // are used to prevent escaping that location.
-        if ($storageType === 'local' || $storageType === 'local_secure') {
+        if ($storageType === 'local' || $storageType === 'local_secure' || $storageType === 'local_secure_with_permissions') {
             $storageType = 'local_secure_attachments';
         }
 
