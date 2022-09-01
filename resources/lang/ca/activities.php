@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Book successfully re-sorted',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Bookshelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'ha actualitzat el prestatge',
-    'bookshelf_update_notification'    => 'Bookshelf successfully updated',
-    'bookshelf_delete'                 => 'ha suprimit un prestatge',
-    'bookshelf_delete_notification'    => 'Bookshelf successfully deleted',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',
