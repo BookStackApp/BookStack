@@ -2,6 +2,9 @@
 
 namespace BookStack\Uploads;
 
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ImageUploadException;
 use ErrorException;
 use Exception;
@@ -24,20 +27,15 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ImageService
 {
-    protected $imageTool;
-    protected $cache;
+    protected ImageManager $imageTool;
+    protected Cache $cache;
     protected $storageUrl;
-    protected $image;
-    protected $fileSystem;
+    protected FilesystemManager $fileSystem;
 
     protected static $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-    /**
-     * ImageService constructor.
-     */
-    public function __construct(Image $image, ImageManager $imageTool, FilesystemManager $fileSystem, Cache $cache)
+    public function __construct(ImageManager $imageTool, FilesystemManager $fileSystem, Cache $cache)
     {
-        $this->image = $image;
         $this->imageTool = $imageTool;
         $this->fileSystem = $fileSystem;
         $this->cache = $cache;
@@ -55,9 +53,18 @@ class ImageService
      * Check if local secure image storage (Fetched behind authentication)
      * is currently active in the instance.
      */
-    protected function usingSecureImages(): bool
+    protected function usingSecureImages(string $imageType = 'gallery'): bool
     {
-        return $this->getStorageDiskName('gallery') === 'local_secure_images';
+        return $this->getStorageDiskName($imageType) === 'local_secure_images';
+    }
+
+    /**
+     * Check if "local secure restricted" (Fetched behind auth, with permissions enforced)
+     * is currently active in the instance.
+     */
+    protected function usingSecureRestrictedImages()
+    {
+        return config('filesystems.images') === 'local_secure_restricted';
     }
 
     /**
@@ -68,7 +75,7 @@ class ImageService
     {
         $path = Util::normalizePath(str_replace('uploads/images/', '', $path));
 
-        if ($this->getStorageDiskName($imageType) === 'local_secure_images') {
+        if ($this->usingSecureImages($imageType)) {
             return $path;
         }
 
@@ -87,7 +94,9 @@ class ImageService
             $storageType = 'local';
         }
 
-        if ($storageType === 'local_secure') {
+        // Rename local_secure options to get our image specific storage driver which
+        // is scoped to the relevant image directories.
+        if ($storageType === 'local_secure' || $storageType === 'local_secure_restricted') {
             $storageType = 'local_secure_images';
         }
 
@@ -179,8 +188,8 @@ class ImageService
             $imageDetails['updated_by'] = $userId;
         }
 
-        $image = $this->image->newInstance();
-        $image->forceFill($imageDetails)->save();
+        $image = (new Image())->forceFill($imageDetails);
+        $image->save();
 
         return $image;
     }
@@ -451,7 +460,7 @@ class ImageService
         $types = ['gallery', 'drawio'];
         $deletedPaths = [];
 
-        $this->image->newQuery()->whereIn('type', $types)
+        Image::query()->whereIn('type', $types)
             ->chunk(1000, function ($images) use ($checkRevisions, &$deletedPaths, $dryRun) {
                 foreach ($images as $image) {
                     $searchQuery = '%' . basename($image->path) . '%';
@@ -511,13 +520,18 @@ class ImageService
     }
 
     /**
-     * Check if the given path exists in the local secure image system.
-     * Returns false if local_secure is not in use.
+     * Check if the given path exists and is accessible in the local secure image system.
+     * Returns false if local_secure is not in use, if the file does not exist, if the
+     * file is likely not a valid image, or if permission does not allow access.
      */
-    public function pathExistsInLocalSecure(string $imagePath): bool
+    public function pathAccessibleInLocalSecure(string $imagePath): bool
     {
         /** @var FilesystemAdapter $disk */
         $disk = $this->getStorageDisk('gallery');
+
+        if ($this->usingSecureRestrictedImages() && !$this->checkUserHasAccessToRelationOfImageAtPath($imagePath)) {
+            return false;
+        }
 
         // Check local_secure is active
         return $this->usingSecureImages()
@@ -526,6 +540,50 @@ class ImageService
             && $disk->exists($imagePath)
             // Check the file is likely an image file
             && strpos($disk->getMimetype($imagePath), 'image/') === 0;
+    }
+
+    /**
+     * Check that the current user has access to the relation
+     * of the image at the given path.
+     */
+    protected function checkUserHasAccessToRelationOfImageAtPath(string $path): bool
+    {
+        // Strip thumbnail element from path if existing
+        $originalPathSplit = array_filter(explode('/', $path), function(string $part) {
+            $resizedDir = (strpos($part, 'thumbs-') === 0 || strpos($part, 'scaled-') === 0);
+            $missingExtension = strpos($part, '.') === false;
+            return !($resizedDir && $missingExtension);
+        });
+
+        // Build a database-format image path and search for the image entry
+        $fullPath = '/uploads/images/' . ltrim(implode('/', $originalPathSplit), '/');
+        $image = Image::query()->where('path', '=', $fullPath)->first();
+
+        if (is_null($image)) {
+            return false;
+        }
+
+        $imageType = $image->type;
+
+        // Allow user or system (logo) images
+        // (No specific relation control but may still have access controlled by auth)
+        if ($imageType === 'user' || $imageType === 'system') {
+            return true;
+        }
+
+        if ($imageType === 'gallery' || $imageType === 'drawio') {
+            return Page::visible()->where('id', '=', $image->uploaded_to)->exists();
+        }
+
+        if ($imageType === 'cover_book') {
+            return Book::visible()->where('id', '=', $image->uploaded_to)->exists();
+        }
+
+        if ($imageType === 'cover_bookshelf') {
+            return Bookshelf::visible()->where('id', '=', $image->uploaded_to)->exists();
+        }
+
+        return false;
     }
 
     /**
