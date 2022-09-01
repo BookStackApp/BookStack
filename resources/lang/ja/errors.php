@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'エンティティが見つかりません',
-    'bookshelf_not_found' => '本棚が見つかりません',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'ブックが見つかりません',
     'page_not_found' => 'ページが見つかりません',
     'chapter_not_found' => 'チャプターが見つかりません',
