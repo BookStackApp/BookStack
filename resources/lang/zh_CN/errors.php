@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => '未找到项目',
-    'bookshelf_not_found' => '未找到书架',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => '未找到图书',
     'page_not_found' => '未找到页面',
     'chapter_not_found' => '未找到章节',
