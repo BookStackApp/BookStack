@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => '图书已成功重新排序',
 
     // Bookshelves
-    'bookshelf_create'            => '创建了书架',
-    'bookshelf_create_notification'    => '书架已成功创建',
-    'bookshelf_create_from_book'    => '将图书转换为书架',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => '图书已成功转换为书架',
-    'bookshelf_update'                 => '更新了书架',
-    'bookshelf_update_notification'    => '书架已成功更新',
-    'bookshelf_delete'                 => '删除了书架',
-    'bookshelf_delete_notification'    => '书架已成功删除',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" 已添加到您的收藏',
