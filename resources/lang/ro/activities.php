@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Carte reordonată cu succes',
 
     // Bookshelves
-    'bookshelf_create'            => 'a creat raftul',
-    'bookshelf_create_notification'    => 'Raftul de cărți a fost creat cu succes',
-    'bookshelf_create_from_book'    => 'a convertit cartea în raft de cărți',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Carte transformată cu succes într-un raft',
-    'bookshelf_update'                 => 'a actualizat raftul de cărți',
-    'bookshelf_update_notification'    => 'Raftul de cărți a fost actualizat',
-    'bookshelf_delete'                 => 'a șters raftul',
-    'bookshelf_delete_notification'    => 'Raftul de cărți a fost șters',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" a fost adăugat la favorite',
