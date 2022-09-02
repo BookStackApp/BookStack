@@ -501,6 +501,14 @@ class ImageService
         }
 
         $storagePath = $this->adjustPathForStorageDisk($storagePath);
+
+        // Apply access control when local_secure_restricted images are active
+        if ($this->usingSecureRestrictedImages()) {
+            if (!$this->checkUserHasAccessToRelationOfImageAtPath($storagePath)) {
+                return null;
+            }
+        }
+
         $storage = $this->getStorageDisk();
         $imageData = null;
         if ($storage->exists($storagePath)) {
@@ -548,6 +556,10 @@ class ImageService
      */
     protected function checkUserHasAccessToRelationOfImageAtPath(string $path): bool
     {
+        if (strpos($path, '/uploads/images/') === 0) {
+            $path = substr($path, 15);
+        }
+
         // Strip thumbnail element from path if existing
         $originalPathSplit = array_filter(explode('/', $path), function(string $part) {
             $resizedDir = (strpos($part, 'thumbs-') === 0 || strpos($part, 'scaled-') === 0);
