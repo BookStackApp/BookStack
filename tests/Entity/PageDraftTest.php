@@ -215,7 +215,7 @@ class PageDraftTest extends TestCase
 
         $this->put('/ajax/page/' . $draft->id . '/save-draft', [
             'name'     => 'My page',
-            'markdown' => "Update test",
+            'markdown' => 'Update test',
         ])->assertOk();
 
         $draft->refresh();
@@ -223,7 +223,7 @@ class PageDraftTest extends TestCase
 
         $this->post($draft->getUrl(), [
             'name'     => 'My page',
-            'markdown' => "# My markdown page"
+            'markdown' => '# My markdown page',
         ]);
 
         $this->assertDatabaseHas('pages', [

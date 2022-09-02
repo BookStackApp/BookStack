@@ -561,9 +561,10 @@ class ImageService
         }
 
         // Strip thumbnail element from path if existing
-        $originalPathSplit = array_filter(explode('/', $path), function(string $part) {
+        $originalPathSplit = array_filter(explode('/', $path), function (string $part) {
             $resizedDir = (strpos($part, 'thumbs-') === 0 || strpos($part, 'scaled-') === 0);
             $missingExtension = strpos($part, '.') === false;
+
             return !($resizedDir && $missingExtension);
         });
 

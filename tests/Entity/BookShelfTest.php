@@ -203,7 +203,7 @@ class BookShelfTest extends TestCase
     {
         $shelf = Bookshelf::first();
         $resp = $this->asEditor()->get($shelf->getUrl('/edit'));
-        $resp->assertSeeText('Edit Bookshelf');
+        $resp->assertSeeText('Edit Shelf');
 
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
@@ -270,7 +270,7 @@ class BookShelfTest extends TestCase
         $bookCount = $shelf->books()->count();
 
         $deleteViewReq = $this->asEditor()->get($shelf->getUrl('/delete'));
-        $deleteViewReq->assertSeeText('Are you sure you want to delete this bookshelf?');
+        $deleteViewReq->assertSeeText('Are you sure you want to delete this shelf?');
 
         $deleteReq = $this->delete($shelf->getUrl());
         $deleteReq->assertRedirect(url('/shelves'));
@@ -283,7 +283,7 @@ class BookShelfTest extends TestCase
         $this->assertTrue($shelf->deletions()->count() === 1);
 
         $redirectReq = $this->get($deleteReq->baseResponse->headers->get('location'));
-        $this->assertNotificationContains($redirectReq, 'Bookshelf Successfully Deleted');
+        $this->assertNotificationContains($redirectReq, 'Shelf Successfully Deleted');
     }
 
     public function test_shelf_copy_permissions()
@@ -313,7 +313,7 @@ class BookShelfTest extends TestCase
     {
         $shelf = Bookshelf::first();
         $resp = $this->asAdmin()->get($shelf->getUrl('/permissions'));
-        $resp->assertSeeText('Permissions on bookshelves do not automatically cascade to contained books.');
+        $resp->assertSeeText('Permissions on shelves do not automatically cascade to contained books.');
     }
 
     public function test_bookshelves_show_in_breadcrumbs_if_in_context()
