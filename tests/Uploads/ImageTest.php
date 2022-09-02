@@ -327,6 +327,56 @@ class ImageTest extends TestCase
         }
     }
 
+    public function test_secure_restricted_images_inaccessible_without_relation_permission()
+    {
+        config()->set('filesystems.images', 'local_secure_restricted');
+        $this->asEditor();
+        $galleryFile = $this->getTestImage('my-secure-restricted-test-upload.png');
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+        $upload->assertStatus(200);
+        $expectedUrl = url('uploads/images/gallery/' . date('Y-m') . '/my-secure-restricted-test-upload.png');
+        $expectedPath = storage_path('uploads/images/gallery/' . date('Y-m') . '/my-secure-restricted-test-upload.png');
+
+        $this->get($expectedUrl)->assertOk();
+
+        $this->setEntityRestrictions($page, [], []);
+
+        $resp = $this->get($expectedUrl);
+        $resp->assertNotFound();
+
+        if (file_exists($expectedPath)) {
+            unlink($expectedPath);
+        }
+    }
+
+    public function test_thumbnail_path_handled_by_secure_restricted_images()
+    {
+        config()->set('filesystems.images', 'local_secure_restricted');
+        $this->asEditor();
+        $galleryFile = $this->getTestImage('my-secure-restricted-thumb-test-test.png');
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $upload = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $galleryFile], []);
+        $upload->assertStatus(200);
+        $expectedUrl = url('uploads/images/gallery/' . date('Y-m') . '/thumbs-150-150/my-secure-restricted-thumb-test-test.png');
+        $expectedPath = storage_path('uploads/images/gallery/' . date('Y-m') . '/my-secure-restricted-thumb-test-test.png');
+
+        $this->get($expectedUrl)->assertOk();
+
+        $this->setEntityRestrictions($page, [], []);
+
+        $resp = $this->get($expectedUrl);
+        $resp->assertNotFound();
+
+        if (file_exists($expectedPath)) {
+            unlink($expectedPath);
+        }
+    }
+
     public function test_image_delete()
     {
         $page = Page::query()->first();
