@@ -33,7 +33,7 @@ class ImageController extends Controller
      */
     public function showImage(string $path)
     {
-        if (!$this->imageService->pathExistsInLocalSecure($path)) {
+        if (!$this->imageService->pathAccessibleInLocalSecure($path)) {
             throw (new NotFoundException(trans('errors.image_not_found')))
                 ->setSubtitle(trans('errors.image_not_found_subtitle'))
                 ->setDetails(trans('errors.image_not_found_details'));

@@ -86,8 +86,9 @@ class BaseRepo
     public function updateCoverImage($entity, ?UploadedFile $coverImage, bool $removeImage = false)
     {
         if ($coverImage) {
+            $imageType = $entity->coverImageTypeKey();
             $this->imageRepo->destroyImage($entity->cover);
-            $image = $this->imageRepo->saveNew($coverImage, 'cover_book', $entity->id, 512, 512, true);
+            $image = $this->imageRepo->saveNew($coverImage, $imageType, $entity->id, 512, 512, true);
             $entity->cover()->associate($image);
             $entity->save();
         }
