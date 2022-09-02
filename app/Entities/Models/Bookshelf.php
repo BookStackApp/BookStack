@@ -86,7 +86,7 @@ class Bookshelf extends Entity implements HasCoverImage
      */
     public function coverImageTypeKey(): string
     {
-        return 'cover_shelf';
+        return 'cover_bookshelf';
     }
 
     /**

@@ -125,6 +125,7 @@ class BookShelfTest extends TestCase
             'image_id' => $lastImage->id,
         ]);
         $this->assertEquals($lastImage->id, $shelf->cover->id);
+        $this->assertEquals('cover_bookshelf', $lastImage->type);
     }
 
     public function test_shelf_view()
