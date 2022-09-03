@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entiteit niet gevonden',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Boekenplank niet gevonden',
     'book_not_found' => 'Boek niet gevonden',
     'page_not_found' => 'Pagina niet gevonden',
     'chapter_not_found' => 'Hoofdstuk niet gevonden',
