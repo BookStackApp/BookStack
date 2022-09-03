@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Boek succesvol opnieuw gesorteerd',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create'            => 'heeft boekenplank aangemaakt',
+    'bookshelf_create_notification'    => 'Boekenplank is succesvol aangemaakt',
+    'bookshelf_create_from_book'    => 'heeft boek geconverteerd naar boekenplank',
     'bookshelf_create_from_book_notification'    => 'Boek is succesvol geconverteerd naar boekenplank',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'heeft boekenplank bijgewerkt',
+    'bookshelf_update_notification'    => 'Boekenplank is succesvol bijgewerkt',
+    'bookshelf_delete'                 => 'heeft boekenplank verwijderd',
+    'bookshelf_delete_notification'    => 'Boekenplank is succesvol verwijderd',
 
     // Favourites
     'favourite_add_notification' => '":name" is toegevoegd aan je favorieten',
