@@ -163,11 +163,11 @@
 	                    <span>{{ trans('common.move') }}</span>
 	                </a>
                 @endif
-                <a href="{{ $page->getUrl('/revisions') }}" class="icon-list-item">
-                    <span>@icon('history')</span>
-                    <span>{{ trans('entities.revisions') }}</span>
-                </a>
             @endif
+            <a href="{{ $page->getUrl('/revisions') }}" class="icon-list-item">
+                <span>@icon('history')</span>
+                <span>{{ trans('entities.revisions') }}</span>
+            </a>
             @if(userCan('restrictions-manage', $page))
                 <a href="{{ $page->getUrl('/permissions') }}" class="icon-list-item">
                     <span>@icon('lock')</span>

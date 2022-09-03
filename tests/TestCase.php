@@ -90,6 +90,14 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
+     * Set the current user context to be a viewer.
+     */
+    public function asViewer()
+    {
+        return $this->actingAs($this->getViewer());
+    }
+
+    /**
      * Get an instance of a user with 'viewer' permissions.
      */
     protected function getViewer(array $attributes = []): User

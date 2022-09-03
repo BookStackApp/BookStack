@@ -9,6 +9,18 @@ use Tests\TestCase;
 
 class PageRevisionTest extends TestCase
 {
+
+    public function test_revision_links_visible_to_viewer()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+
+        $html = $this->withHtml($this->asViewer()->get($page->getUrl()));
+        $html->assertLinkExists($page->getUrl('/revisions'));
+        $html->assertElementContains('a', 'Revisions');
+        $html->assertElementContains('a', 'Revision #1');
+    }
+
     public function test_page_revision_views_viewable()
     {
         $this->asEditor();
