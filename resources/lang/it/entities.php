@@ -372,7 +372,7 @@ return [
     'convert_chapter_confirm' => 'Sei sicuro di voler convertire questo capitolo?',
 
     // References
-    'references' => 'References',
+    'references' => 'Riferimenti',
     'references_none' => 'There are no tracked references to this item.',
     'references_to_desc' => 'Di seguito sono riportate tutte le pagine conosciute nel sistema che collegano a questo elemento.',
 ];
