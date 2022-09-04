@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aggiornato :timeLength',
     'meta_updated_name' => 'Aggiornato :timeLength da :user',
     'meta_owned_name' => 'Creati da :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenziato su 1 pagina|Referenziato su :count pagine',
     'entity_select' => 'Selezione Entità',
     'entity_select_lack_permission' => 'Non hai i permessi necessari per selezionare questo elemento',
     'images' => 'Immagini',
@@ -373,6 +373,6 @@ return [
 
     // References
     'references' => 'Riferimenti',
-    'references_none' => 'There are no tracked references to this item.',
+    'references_none' => 'Non ci sono riferimenti tracciati a questa voce.',
     'references_to_desc' => 'Di seguito sono riportate tutte le pagine conosciute nel sistema che collegano a questo elemento.',
 ];
