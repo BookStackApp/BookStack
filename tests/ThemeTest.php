@@ -214,6 +214,36 @@ class ThemeTest extends TestCase
         $this->assertEquals($book->id, $args[1]->id);
     }
 
+    public function test_event_page_include_parse()
+    {
+        /** @var Page $page */
+        /** @var Page $otherPage */
+        $page = Page::query()->first();
+        $otherPage = Page::query()->where('id', '!=', $page->id)->first();
+        $otherPage->html = '<p id="bkmrk-cool">This is a really cool section</p>';
+        $page->html = "<p>{{@{$otherPage->id}#bkmrk-cool}}</p>";
+        $page->save();
+        $otherPage->save();
+
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+            return '<strong>Big &amp; content replace surprise!</strong>';
+        };
+
+        Theme::listen(ThemeEvents::PAGE_INCLUDE_PARSE, $callback);
+        $resp = $this->asEditor()->get($page->getUrl());
+        $this->withHtml($resp)->assertElementContains('.page-content strong', 'Big & content replace surprise!');
+
+        $this->assertCount(4, $args);
+        $this->assertEquals($otherPage->id . '#bkmrk-cool', $args[0]);
+        $this->assertEquals('This is a really cool section', $args[1]);
+        $this->assertTrue($args[2] instanceof Page);
+        $this->assertTrue($args[3] instanceof Page);
+        $this->assertEquals($page->id, $args[2]->id);
+        $this->assertEquals($otherPage->id, $args[3]->id);
+    }
+
     public function test_add_social_driver()
     {
         Theme::addSocialDriver('catnet', [
