@@ -2,6 +2,8 @@
 
 namespace BookStack\Theming;
 
+use BookStack\Entities\Models\Page;
+
 /**
  * The ThemeEvents used within BookStack.
  *
@@ -60,14 +62,28 @@ class ThemeEvents
 
     /**
      * Commonmark environment configure.
-     * Provides the commonmark library environment for customization
-     * before it's used to render markdown content.
+     * Provides the commonmark library environment for customization before it's used to render markdown content.
      * If the listener returns a non-null value, that will be used as an environment instead.
      *
      * @param \League\CommonMark\ConfigurableEnvironmentInterface $environment
      * @returns \League\CommonMark\ConfigurableEnvironmentInterface|null
      */
     const COMMONMARK_ENVIRONMENT_CONFIGURE = 'commonmark_environment_configure';
+
+    /**
+     * Page include parse event.
+     * Runs when a page include tag is being parsed, typically when page content is being processed for viewing.
+     * Provides the "include tag" reference string, the default BookStack replacement content for the tag,
+     * the current page being processed, and the page that's being referenced by the include tag.
+     * The referenced page may be null where the page does not exist or where permissions prevent visibility.
+     * If the listener returns a non-null value, that will be used as the replacement HTML content instead.
+     *
+     * @param string $tagReference
+     * @param string $replacementHTML
+     * @param Page   $currentPage
+     * @param ?Page  $referencedPage
+     */
+    const PAGE_INCLUDE_PARSE = 'page_include_parse';
 
     /**
      * Web before middleware action.
