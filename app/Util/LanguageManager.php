@@ -113,7 +113,7 @@ class LanguageManager
      * Set the system date locale for localized date formatting.
      * Will try both the standard locale name and the UTF8 variant.
      */
-    public function setPhpDateTimeLocale(string $language)
+    public function setPhpDateTimeLocale(string $language): void
     {
         $isoLang = $this->localeMap[$language]['iso'] ?? false;
 
@@ -125,6 +125,8 @@ class LanguageManager
             $language,
         ]);
 
-        setlocale(LC_TIME, ...$locales);
+        if (!empty($locales)) {
+            setlocale(LC_TIME, ...$locales);
+        }
     }
 }
