@@ -18,11 +18,13 @@ function showDrawingManager(mceEditor, selectedNode = null) {
     // Show image manager
     window.ImageManager.show(function (image) {
         if (selectedNode) {
-            let imgElem = selectedNode.querySelector('img');
-            pageEditor.dom.setAttrib(imgElem, 'src', image.url);
-            pageEditor.dom.setAttrib(selectedNode, 'drawio-diagram', image.id);
+            const imgElem = selectedNode.querySelector('img');
+            pageEditor.undoManager.transact(function () {
+                pageEditor.dom.setAttrib(imgElem, 'src', image.url);
+                pageEditor.dom.setAttrib(selectedNode, 'drawio-diagram', image.id);
+            });
         } else {
-            let imgHTML = `<div drawio-diagram="${image.id}" contenteditable="false"><img src="${image.url}"></div>`;
+            const imgHTML = `<div drawio-diagram="${image.id}" contenteditable="false"><img src="${image.url}"></div>`;
             pageEditor.insertContent(imgHTML);
         }
     }, 'drawio');
@@ -53,8 +55,10 @@ async function updateContent(pngData) {
         let imgElem = currentNode.querySelector('img');
         try {
             const img = await DrawIO.upload(pngData, options.pageId);
-            pageEditor.dom.setAttrib(imgElem, 'src', img.url);
-            pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', img.id);
+            pageEditor.undoManager.transact(function () {
+                pageEditor.dom.setAttrib(imgElem, 'src', img.url);
+                pageEditor.dom.setAttrib(currentNode, 'drawio-diagram', img.id);
+            });
         } catch (err) {
             handleUploadError(err);
         }
@@ -66,8 +70,10 @@ async function updateContent(pngData) {
         DrawIO.close();
         try {
             const img = await DrawIO.upload(pngData, options.pageId);
-            pageEditor.dom.setAttrib(id, 'src', img.url);
-            pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
+            pageEditor.undoManager.transact(function () {
+                pageEditor.dom.setAttrib(id, 'src', img.url);
+                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
+            });
         } catch (err) {
             pageEditor.dom.remove(id);
             handleUploadError(err);
