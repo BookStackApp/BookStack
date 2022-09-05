@@ -14,12 +14,9 @@ use Illuminate\Validation\ValidationException;
 
 class ImageController extends Controller
 {
-    protected $imageRepo;
-    protected $imageService;
-
-    /**
-     * ImageController constructor.
-     */
+    protected ImageRepo $imageRepo;
+    protected ImageService $imageService;
+    
     public function __construct(ImageRepo $imageRepo, ImageService $imageService)
     {
         $this->imageRepo = $imageRepo;

@@ -457,6 +457,32 @@ class ImageTest extends TestCase
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image has not been deleted as expected');
     }
 
+    public function test_image_manager_delete_button_only_shows_with_permission()
+    {
+        $page = Page::query()->first();
+        $this->asAdmin();
+        $imageName = 'first-image.png';
+        $relPath = $this->getTestImagePath('gallery', $imageName);
+        $this->deleteImage($relPath);
+        $viewer = $this->getViewer();
+
+        $this->uploadImage($imageName, $page->id);
+        $image = Image::first();
+
+        $resp = $this->get("/images/edit/{$image->id}");
+        $this->withHtml($resp)->assertElementExists('button#image-manager-delete[title="Delete"]');
+
+        $resp = $this->actingAs($viewer)->get("/images/edit/{$image->id}");
+        $this->withHtml($resp)->assertElementNotExists('button#image-manager-delete[title="Delete"]');
+
+        $this->giveUserPermissions($viewer, ['image-delete-all']);
+
+        $resp = $this->actingAs($viewer)->get("/images/edit/{$image->id}");
+        $this->withHtml($resp)->assertElementExists('button#image-manager-delete[title="Delete"]');
+
+        $this->deleteImage($relPath);
+    }
+
     protected function getTestProfileImage()
     {
         $imageName = 'profile.png';

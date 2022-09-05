@@ -20,10 +20,12 @@
         </div>
         <div class="grid half">
             <div>
-                <button type="button"
+                @if(userCan('image-delete', $image))
+                    <button type="button"
                         id="image-manager-delete"
                         title="{{ trans('common.delete') }}"
                         class="button icon outline">@icon('delete')</button>
+                @endif
             </div>
             <div class="text-right">
                 <button type="submit"
