@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Livro reordenado com sucesso',
 
     // Bookshelves
-    'bookshelf_create'            => 'prateleira criada',
-    'bookshelf_create_notification'    => 'Prateleira criada com sucesso',
-    'bookshelf_create_from_book'    => 'livro convertido em estante',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Capítulo convertido com sucesso em um livro',
-    'bookshelf_update'                 => 'atualizou a prateleira',
-    'bookshelf_update_notification'    => 'Prateleira atualizada com sucesso',
-    'bookshelf_delete'                 => 'excluiu a prateleira',
-    'bookshelf_delete_notification'    => 'Prateleira excluída com sucesso',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" foi adicionada aos seus favoritos',

@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Congratulazioni! Siccome hai ricevuto questa notifica email, le tue impostazioni sembrano essere configurate correttamente.',
     'maint_recycle_bin_desc' => 'Le librerie, i libri, i capitoli e le pagine cancellati vengono inviati al cestino in modo che possano essere ripristinati o eliminati definitivamente. Gli elementi più vecchi nel cestino possono essere automaticamente rimossi dopo un certo periodo, a seconda della configurazione del sistema.',
     'maint_recycle_bin_open' => 'Apri il Cestino',
+    'maint_regen_references' => 'Rigenera Riferimenti',
+    'maint_regen_references_desc' => 'Questa azione ricostruirà l\'indice di dei riferimenti incrociati all\'interno del database. Di solito questa operazione è gestita automaticamente, ma può essere utile per indicizzare contenuti vecchi o aggiunti con metodi non ufficiali.',
+    'maint_regen_references_success' => 'L\'indice di riferimento è stato rigenerato!',
+    'maint_timeout_command_note' => 'Nota: Questa azione può richiedere del tempo per essere eseguita e può causare problemi di timeout in alcuni ambienti Web. In alternativa, questa azione può essere eseguita usando un comando da terminale.',
 
     // Recycle Bin
     'recycle_bin' => 'Cestino',

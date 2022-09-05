@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Sách đã được sắp xếp lại thành công',
 
     // Bookshelves
-    'bookshelf_create'            => 'đã tạo giá sách',
-    'bookshelf_create_notification'    => 'Giá sách đã được tạo thành công',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'cập nhật giá sách',
-    'bookshelf_update_notification'    => 'Giá sách đã được cập nhật thành công',
-    'bookshelf_delete'                 => 'đã xóa giá sách',
-    'bookshelf_delete_notification'    => 'Giá sách đã được xóa thành công',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" đã được thêm vào danh sách yêu thích của bạn',

@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => '¡Enhorabuena! Al recibir esta notificación de correo electrónico, tu configuración de correo electrónico parece estar ajustada correctamente.',
     'maint_recycle_bin_desc' => 'Los estantes, libros, capítulos y páginas eliminados se envían a la papelera de reciclaje para que puedan ser restauradas o eliminadas permanentemente. Los elementos más antiguos en la papelera de reciclaje pueden ser eliminados automáticamente después de un tiempo dependiendo de la configuración del sistema.',
     'maint_recycle_bin_open' => 'Abrir papelera de reciclaje',
+    'maint_regen_references' => 'Regenerar Referencias',
+    'maint_regen_references_desc' => 'Esta acción reconstruirá el índice de referencia de elementos cruzados dentro de la base de datos. Normalmente se gestiona automáticamente, pero esta acción puede ser útil para indexar el contenido antiguo o añadido mediante métodos no oficiales.',
+    'maint_regen_references_success' => '¡El índice de referencias ha sido regenerado!',
+    'maint_timeout_command_note' => 'Nota: Esta acción puede tardar en ejecutarse, lo que puede llevar a problemas de tiempo de espera en algunos entornos web. Como alternativa, esta acción se puede realizar desde una terminal.',
 
     // Recycle Bin
     'recycle_bin' => 'Papelera de Reciclaje',

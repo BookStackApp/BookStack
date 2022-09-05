@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => '恭喜！您收到這封電子郵件通知時，代表您的電子郵件設定已正確設定。',
     'maint_recycle_bin_desc' => '刪除的書架、書本、章節與頁面將會被傳送到回收桶，這樣仍可以還原或永久刪除。回收桶中較舊的項目可能會在一段時間後自動移除，取決於您的系統設定。',
     'maint_recycle_bin_open' => '開啟回收桶',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => '資源回收桶',

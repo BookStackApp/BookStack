@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'ברכות! מאחר וקיבלת התראת דוא"ל זו, נראה שהגדרות הדוא"ל שלך הוגדרו כמו שצריך.',
     'maint_recycle_bin_desc' => 'מדפים, ספרים, פרקים חדשים שנמחקו נשלחים לסל המיחזור, כדי שתוכלו לאחזר אותם או למחוק אותם לצמיתות. ייתכן שפריטים ישנים יותר בסל המיחזור יימחקו באופן אוטומטי לאחר זמן-מה, בהסתמך על הגדרות המערכת.',
     'maint_recycle_bin_open' => 'פתח את סל המיחזור',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'סל המיחזור',

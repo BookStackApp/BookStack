@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Grāmata veiksmīgi pārkārtota',
 
     // Bookshelves
-    'bookshelf_create'            => 'izveidoja plautku',
-    'bookshelf_create_notification'    => 'Plaukts veiksmīgi izveidots',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'atjaunoja plauktu',
-    'bookshelf_update_notification'    => 'Plaukts veiksmīgi atjaunināts',
-    'bookshelf_delete'                 => 'izdzēsa plauktu',
-    'bookshelf_delete_notification'    => 'Plaukts veiksmīgi dzēsts',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" ir pievienots jūsu favorītiem',

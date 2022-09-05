@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entity not found',
-    'bookshelf_not_found' => 'Bookshelf not found',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Book not found',
     'page_not_found' => 'Page not found',
     'chapter_not_found' => 'Chapter not found',

@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entitas tidak ditemukan',
-    'bookshelf_not_found' => 'Rak buku tidak ditemukan',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Buku tidak ditemukan',
     'page_not_found' => 'Halaman tidak ditemukan',
     'chapter_not_found' => 'Bab tidak ditemukan',

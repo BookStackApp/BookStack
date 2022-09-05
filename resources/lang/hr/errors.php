@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Nije pronađeno',
-    'bookshelf_not_found' => 'Polica nije pronađena',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Knjiga nije pronađena',
     'page_not_found' => 'Stranica nije pronađena',
     'chapter_not_found' => 'Poglavlje nije pronađeno',

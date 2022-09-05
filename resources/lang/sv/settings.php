@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Grattis! Eftersom du fick detta e-postmeddelande verkar dina e-postinställningar vara korrekt konfigurerade.',
     'maint_recycle_bin_desc' => 'Borttagna hyllor, böcker, kapitel & sidor skickas till papperskorgen så att de kan återställas eller raderas permanent. Äldre objekt i papperskorgen kan automatiskt tas bort efter ett tag beroende på systemkonfiguration.',
     'maint_recycle_bin_open' => 'Öppna papperskorgen',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Papperskorgen',

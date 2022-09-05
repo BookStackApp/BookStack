@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'تهانينا! كما تلقيت إشعار هذا البريد الإلكتروني، يبدو أن إعدادات البريد الإلكتروني الخاص بك قد تم تكوينها بشكل صحيح.',
     'maint_recycle_bin_desc' => 'تُرسل الأرفف والكتب والفصول والصفحات المحذوفة إلى سلة المحذوفات حتى يمكن استعادتها أو حذفها نهائيًا. قد يتم إزالة العناصر الأقدم في سلة المحذوفات تلقائيًا بعد فترة اعتمادًا على تكوين النظام.',
     'maint_recycle_bin_open' => 'افتح سلة المحذوفات',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'سلة المحذوفات',

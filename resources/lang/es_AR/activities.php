@@ -40,11 +40,11 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'estante creado',
     'bookshelf_create_notification'    => 'Estante creado correctamente',
-    'bookshelf_create_from_book'    => 'libro convertido en estante',
+    'bookshelf_create_from_book'    => 'libro convertido a estante',
     'bookshelf_create_from_book_notification'    => 'Libro convertido en estante con éxito',
-    'bookshelf_update'                 => 'Estante actualizado',
+    'bookshelf_update'                 => 'estante actualizado',
     'bookshelf_update_notification'    => 'Estante actualizado correctamente',
-    'bookshelf_delete'                 => 'Estante borrado',
+    'bookshelf_delete'                 => 'estante eliminado',
     'bookshelf_delete_notification'    => 'Estante eliminado correctamente',
 
     // Favourites

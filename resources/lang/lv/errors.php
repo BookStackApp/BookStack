@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Vienība nav atrasta',
-    'bookshelf_not_found' => 'Grāmatplaukts nav atrasts',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Grāmata nav atrasta',
     'page_not_found' => 'Lapa nav atrasta',
     'chapter_not_found' => 'Nodaļa nav atrasta',

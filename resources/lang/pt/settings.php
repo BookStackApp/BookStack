@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Parabéns! Já que recebeu esta notificação, as suas opções de e-mail parecem estar configuradas corretamente.',
     'maint_recycle_bin_desc' => 'Estantes, livros, capítulos e páginas eliminados são mandados para a reciclagem podendo assim ser restaurados ou excluídos permanentemente. Itens mais antigos da podem vir a ser automaticamente removidos da reciclagem após um tempo, dependendo da configuração do sistema.',
     'maint_recycle_bin_open' => 'Abrir Reciclagem',
+    'maint_regen_references' => 'Regerar Referências',
+    'maint_regen_references_desc' => 'Esta ação irá reconstruir o índice de referência no banco de dados. Isto geralmente é tratado automaticamente, mas esta ação pode ser útil para indexar conteúdo antigo ou conteúdo adicionado através de métodos não oficiais.',
+    'maint_regen_references_success' => 'Índice de referência foi regenerado!',
+    'maint_timeout_command_note' => 'Nota: Esta ação pode levar algum tempo para executar, retornando \'timeout\' em alguns ambientes web. Como alternativa, esta ação pode ser executada via terminal.',
 
     // Recycle Bin
     'recycle_bin' => 'Reciclagem',
