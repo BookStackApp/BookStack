@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class LanguageManager
 {
     /**
-     * Array of right-to-left language options
+     * Array of right-to-left language options.
      */
     protected array $rtlLanguages = ['ar', 'fa', 'he'];
 
@@ -15,7 +15,7 @@ class LanguageManager
      * Map of BookStack language names to best-estimate ISO and windows locale names.
      * Locales can often be found by running `locale -a` on a linux system.
      * Windows locales can be found at:
-     * https://docs.microsoft.com/en-us/cpp/c-runtime-library/language-strings?view=msvc-170
+     * https://docs.microsoft.com/en-us/cpp/c-runtime-library/language-strings?view=msvc-170.
      *
      * @var array<string, array{iso: string, windows: string}>
      */
@@ -121,7 +121,7 @@ class LanguageManager
             $isoLang ? $isoLang . '.utf8' : false,
             $isoLang ?: false,
             $isoLang ? str_replace('_', '-', $isoLang) : false,
-                $this->localeMap[$language]['windows'] ?? false,
+            $this->localeMap[$language]['windows'] ?? false,
             $language,
         ]);
 
