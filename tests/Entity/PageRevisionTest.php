@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class PageRevisionTest extends TestCase
 {
-
     public function test_revision_links_visible_to_viewer()
     {
         /** @var Page $page */
