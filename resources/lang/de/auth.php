@@ -25,12 +25,12 @@ return [
     'forgot_password' => 'Passwort vergessen?',
     'remember_me' => 'Angemeldet bleiben',
     'ldap_email_hint' => 'Bitte geben Sie eine E-Mail-Adresse ein, um diese mit dem Account zu nutzen.',
-    'create_account' => 'Account registrieren',
-    'already_have_account' => 'Bereits ein Konto erstellt?',
-    'dont_have_account' => 'Noch kein Konto erstellt?',
+    'create_account' => 'Account erstellen',
+    'already_have_account' => 'Sie haben bereits einen Account?',
+    'dont_have_account' => 'Sie haben noch keinen Account?',
     'social_login' => 'Mit Sozialem Netzwerk anmelden',
     'social_registration' => 'Mit Sozialem Netzwerk registrieren',
-    'social_registration_text' => 'Mit einer dieser Dienste registrieren oder anmelden',
+    'social_registration_text' => 'Mit einem anderen Dienst registrieren oder anmelden.',
 
     'register_thanks' => 'Vielen Dank für Ihre Registrierung!',
     'register_confirm' => 'Bitte prüfen Sie Ihren Posteingang und bestätigen Sie die Registrierung.',
@@ -75,7 +75,7 @@ return [
     'user_invite_email_action' => 'Account-Passwort festlegen',
     'user_invite_page_welcome' => 'Willkommen bei :appName!',
     'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft zum Einloggen benötigt.',
-    'user_invite_page_confirm_button' => 'Passwort wiederholen',
+    'user_invite_page_confirm_button' => 'Passwort bestätigen',
     'user_invite_success_login' => 'Passwort gesetzt, Sie sollten nun in der Lage sein, sich mit Ihrem Passwort an :appName anzumelden!',
 
     // Multi-factor Authentication

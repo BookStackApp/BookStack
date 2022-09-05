@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Knjiga je uspješno razvrstana',
 
     // Bookshelves
-    'bookshelf_create'            => 'stvorena polica za knjige',
-    'bookshelf_create_notification'    => 'Polica za knjige je uspješno stvorena',
-    'bookshelf_create_from_book'    => 'prebaci knjigu na policu',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Poglavlje je uspješno pretvoreno u knjigu',
-    'bookshelf_update'                 => 'ažurirana polica za knjige',
-    'bookshelf_update_notification'    => 'Polica za knjige je uspješno ažurirana',
-    'bookshelf_delete'                 => 'izbrisana polica za knjige',
-    'bookshelf_delete_notification'    => 'Polica za knjige je uspješno izbrisana',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '".ime" će biti dodano u tvoje favorite',

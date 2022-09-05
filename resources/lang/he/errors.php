@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'פריט לא נמצא',
-    'bookshelf_not_found' => 'מדף הספרים לא נמצא',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'ספר לא נמצא',
     'page_not_found' => 'דף לא נמצא',
     'chapter_not_found' => 'פרק לא נמצא',

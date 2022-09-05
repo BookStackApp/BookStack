@@ -92,6 +92,10 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'maint_send_test_email_mail_text' => 'Glückwunsch! Da Sie diese E-Mail Benachrichtigung erhalten haben, scheinen Ihre E-Mail-Einstellungen korrekt konfiguriert zu sein.',
     'maint_recycle_bin_desc' => 'Gelöschte Regale, Bücher, Kapitel & Seiten werden in den Papierkorb verschoben, so dass sie wiederhergestellt oder dauerhaft gelöscht werden können. Ältere Gegenstände im Papierkorb können, in Abhängigkeit von der Systemkonfiguration, nach einer Weile automatisch entfernt werden.',
     'maint_recycle_bin_open' => 'Papierkorb öffnen',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Papierkorb',

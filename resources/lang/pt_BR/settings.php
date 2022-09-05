@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Parabéns! Já que você recebeu esta notificação, suas opções de e-mail parecem estar configuradas corretamente.',
     'maint_recycle_bin_desc' => 'Prateleiras, livros, capítulos e páginas deletados são mandados para a lixeira podendo assim ser restaurados ou excluídos permanentemente. Itens mais antigos da lixeira podem vir a ser automaticamente removidos da lixeira após um tempo dependendo da configuração do sistema.',
     'maint_recycle_bin_open' => 'Abrir Lixeira',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Lixeira',

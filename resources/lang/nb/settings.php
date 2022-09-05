@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Gratulerer! Da du mottok dette e-postvarselet, ser det ut til at e-postinnstillingene dine er konfigurert riktig.',
     'maint_recycle_bin_desc' => 'Slettede hyller, bøker, kapitler og sider kastes i papirkurven så de kan bli gjenopprettet eller slettet permanent. Eldre utgaver i papirkurven kan slettes automatisk etter en stund, avhengig av systemkonfigurasjonen.',
     'maint_recycle_bin_open' => 'Åpne papirkurven',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Papirkurven',

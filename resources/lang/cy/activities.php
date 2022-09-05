@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Ail-archebwyd y llyfr yn llwyddiannus',
 
     // Bookshelves
-    'bookshelf_create'            => 'creu silff lyfrau',
-    'bookshelf_create_notification'    => 'Silff lyfrau wedi\'i chreu\'n llwyddiannus',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'silff lyfrau wedi\'i diweddaru',
-    'bookshelf_update_notification'    => 'Diweddarwyd y silff lyfrau yn llwyddiannus',
-    'bookshelf_delete'                 => 'silff lyfrau wedi\'i dileu',
-    'bookshelf_delete_notification'    => 'Silff lyfrau wedi\'i dileu\'n llwyddiannus',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => 'Mae ":name" wedi\'i ychwanegu at eich ffefrynnau',

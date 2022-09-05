@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Обектът не е намерен',
-    'bookshelf_not_found' => 'Рафтът не е намерен',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Книгата не е намерена',
     'page_not_found' => 'Страницата не е намерена',
     'chapter_not_found' => 'Главата не е намерена',

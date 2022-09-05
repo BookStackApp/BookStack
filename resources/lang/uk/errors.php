@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Об\'єкт не знайдено',
-    'bookshelf_not_found' => 'Книжкова полиця не знайдена',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Книга не знайдена',
     'page_not_found' => 'Сторінку не знайдено',
     'chapter_not_found' => 'Розділ не знайдено',

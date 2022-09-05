@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'No s\'ha trobat l\'entitat',
-    'bookshelf_not_found' => 'No s\'ha trobat el prestatge',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'No s\'ha trobat el llibre',
     'page_not_found' => 'No s\'ha trobat la pàgina',
     'chapter_not_found' => 'No s\'ha trobat el capítol',

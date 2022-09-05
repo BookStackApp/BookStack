@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Bogen blev re-sorteret',
 
     // Bookshelves
-    'bookshelf_create'            => 'oprettede bogreol',
-    'bookshelf_create_notification'    => 'Bogreolen blev oprettet',
-    'bookshelf_create_from_book'    => 'omdannede bog til bogreol',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Bogen blev omdannet til en bogreal',
-    'bookshelf_update'                 => 'opdaterede bogreolen',
-    'bookshelf_update_notification'    => 'Bogreolen blev opdateret',
-    'bookshelf_delete'                 => 'slettede bogreol',
-    'bookshelf_delete_notification'    => 'Bogreolen blev slettet',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" er blevet tilføjet til dine favoritter',

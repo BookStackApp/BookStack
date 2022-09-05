@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => '항목이 없습니다.',
-    'bookshelf_not_found' => '책꽂이가 없습니다.',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => '책이 없습니다.',
     'page_not_found' => '문서가 없습니다.',
     'chapter_not_found' => '챕터가 없습니다.',

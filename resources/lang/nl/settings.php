@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Gefeliciteerd! Nu je deze e-mailmelding hebt ontvangen, lijken je e-mailinstellingen correct te zijn geconfigureerd.',
     'maint_recycle_bin_desc' => 'Verwijderde boekenplanken, boeken, hoofdstukken en pagina\'s worden naar de prullenbak gestuurd waar ze hersteld of definitief verwijderd kunnen worden. Oudere items in de prullenbak kunnen automatisch worden verwijderd, afhankelijk van de systeemconfiguratie.',
     'maint_recycle_bin_open' => 'Prullenbak openen',
+    'maint_regen_references' => 'Verwijzingen opnieuw genereren',
+    'maint_regen_references_desc' => 'Deze actie zal de kruisverwijzingen index binnen de database opnieuw opbouwen. Dit wordt doorgaans automatisch gedaan, maar deze actie kan nuttig zijn om oude inhoud of inhoud die via onofficiële methoden is toegevoegd te indexeren.',
+    'maint_regen_references_success' => 'Verwijzingen index is opnieuw gegenereerd!',
+    'maint_timeout_command_note' => 'Opmerking: Het uitvoeren van deze actie kan enige tijd in beslag nemen, wat in sommige webomgevingen kan leiden tot time-outs. Als alternatief kan deze actie ook worden uitgevoerd met een terminal commando.',
 
     // Recycle Bin
     'recycle_bin' => 'Prullenbak',

@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Hea töö! Kui sa selle e-kirja kätte said, on su e-posti seaded õigesti määratud.',
     'maint_recycle_bin_desc' => 'Kustutatud riiulid, raamatud, peatükid ja lehed saadetakse prügikasti, et neid saaks taastada või lõplikult kustutada. Vanemad objektid võidakse teatud aja järel automaatselt prügikastist kustutada.',
     'maint_recycle_bin_open' => 'Ava prügikast',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Prügikast',

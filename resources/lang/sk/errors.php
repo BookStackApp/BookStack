@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entita nenájdená',
-    'bookshelf_not_found' => 'Polička nenájdená',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Kniha nenájdená',
     'page_not_found' => 'Stránka nenájdená',
     'chapter_not_found' => 'Kapitola nenájdená',

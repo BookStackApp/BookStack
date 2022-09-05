@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Endid heb ei ganfod',
-    'bookshelf_not_found' => 'Heb ddod o hyd i\'r silff lyfrau',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Ni chanfuwyd y llyfr',
     'page_not_found' => 'Heb ganfod y dudalen',
     'chapter_not_found' => 'Pennod heb ei chanfod',

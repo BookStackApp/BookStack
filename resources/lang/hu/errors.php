@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entitás nem található',
-    'bookshelf_not_found' => 'Könyvespolc nem található',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Könyv nem található',
     'page_not_found' => 'Oldal nem található',
     'chapter_not_found' => 'Fejezet nem található',

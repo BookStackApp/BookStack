@@ -31,7 +31,7 @@ return [
     'digits'               => ':attribute باید :digits رقم باشد.',
     'digits_between'       => ':attribute باید بین :min و :max رقم باشد.',
     'email'                => ':attribute باید یک ایمیل معتبر باشد.',
-    'ends_with'            => ':attribute باید با یکی از مقادیر زیر خاتمه یابد: :values',
+    'ends_with' => ':attribute باید با یکی از مقادیر زیر خاتمه یابد: :values',
     'file'                 => ':attribute باید به عنوان یک فایل معتبر شناخته شود.',
     'filled'               => ':attribute باید مقدار داشته باشد.',
     'gt'                   => [

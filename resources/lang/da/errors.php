@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Emne ikke fundet',
-    'bookshelf_not_found' => 'Bogreol ikke fundet',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Bog ikke fundet',
     'page_not_found' => 'Side ikke fundet',
     'chapter_not_found' => 'Kapitel ikke fundet',

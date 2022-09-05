@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Không tìm thấy thực thể',
-    'bookshelf_not_found' => 'Không tìm thấy giá sách',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Không tìm thấy sách',
     'page_not_found' => 'Không tìm thấy trang',
     'chapter_not_found' => 'Không tìm thấy chương',

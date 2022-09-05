@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Chúc mừng! Khi bạn nhận được email thông báo này, cài đặt email của bạn có vẻ đã được cấu hình đúng.',
     'maint_recycle_bin_desc' => 'Deleted shelves, books, chapters & pages are sent to the recycle bin so they can be restored or permanently deleted. Older items in the recycle bin may be automatically removed after a while depending on system configuration.',
     'maint_recycle_bin_open' => 'Mở Thùng Rác',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Thùng Rác',

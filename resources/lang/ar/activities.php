@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'تم إعادة فرز الكتاب بنجاح',
 
     // Bookshelves
-    'bookshelf_create'            => 'تم إنشاء رف كتب',
-    'bookshelf_create_notification'    => 'تم إنشاء الرف بنجاح',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'تم تحديث الرف',
-    'bookshelf_update_notification'    => 'تم تحديث الرف بنجاح',
-    'bookshelf_delete'                 => 'تم تحديث الرف',
-    'bookshelf_delete_notification'    => 'تم حذف الرف بنجاح',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => 'تم إضافة ":name" إلى المفضلة لديك',
