@@ -41,7 +41,7 @@ return [
     // Enable syncing, upon login, of OIDC groups to BookStack roles
     'user_to_groups' => env('OIDC_USER_TO_GROUPS', false),
     // Attribute, within a OIDC ID token, to find group names within
-    'group_attribute' => env('OIDC_GROUP_ATTRIBUTE', 'groups'),
+    'groups_claim' => env('OIDC_GROUPS_CLAIM', 'groups'),
     // When syncing groups, remove any groups that no longer match. Otherwise sync only adds new groups.
     'remove_from_groups' => env('OIDC_REMOVE_FROM_GROUPS', false),
 ];

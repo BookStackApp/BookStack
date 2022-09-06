@@ -181,7 +181,7 @@ class OidcService
      */
     protected function getUserGroups(OidcIdToken $token): array
     {
-        $groupsAttr = $this->config()['group_attribute'];
+        $groupsAttr = $this->config()['groups_claim'];
         if (empty($groupsAttr)) {
             return [];
         }
