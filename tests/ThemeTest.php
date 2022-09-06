@@ -228,6 +228,7 @@ class ThemeTest extends TestCase
         $args = [];
         $callback = function (...$eventArgs) use (&$args) {
             $args = $eventArgs;
+
             return '<strong>Big &amp; content replace surprise!</strong>';
         };
 

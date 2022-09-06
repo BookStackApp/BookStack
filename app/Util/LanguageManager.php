@@ -48,6 +48,7 @@ class LanguageManager
         'pl'          => ['iso' => 'pl_PL', 'windows' => 'Polish'],
         'pt'          => ['iso' => 'pt_PT', 'windows' => 'Portuguese'],
         'pt_BR'       => ['iso' => 'pt_BR', 'windows' => 'Portuguese'],
+        'ro'          => ['iso' => 'ro_RO', 'windows' => 'Romanian'],
         'ru'          => ['iso' => 'ru', 'windows' => 'Russian'],
         'sk'          => ['iso' => 'sk_SK', 'windows' => 'Slovak'],
         'sl'          => ['iso' => 'sl_SI', 'windows' => 'Slovenian'],

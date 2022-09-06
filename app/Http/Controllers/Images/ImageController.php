@@ -16,7 +16,7 @@ class ImageController extends Controller
 {
     protected ImageRepo $imageRepo;
     protected ImageService $imageService;
-    
+
     public function __construct(ImageRepo $imageRepo, ImageService $imageService)
     {
         $this->imageRepo = $imageRepo;
