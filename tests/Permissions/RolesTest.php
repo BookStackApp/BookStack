@@ -163,6 +163,14 @@ class RolesTest extends TestCase
         $this->assertEquals($this->user->id, $roleA->users()->first()->id);
     }
 
+    public function test_image_view_notice_shown_on_role_form()
+    {
+        /** @var Role $role */
+        $role = Role::query()->first();
+        $this->asAdmin()->get("/settings/roles/{$role->id}")
+            ->assertSee('Actual access of uploaded image files will be dependant upon system image storage option');
+    }
+
     public function test_copy_role_button_shown()
     {
         /** @var Role $role */

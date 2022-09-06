@@ -161,6 +161,7 @@ return [
     'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',
     'role_asset_admins' => 'Admins are automatically given access to all content but these options may show or hide UI options.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'All',
     'role_own' => 'Own',
     'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',
