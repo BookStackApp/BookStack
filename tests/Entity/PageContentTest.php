@@ -333,6 +333,9 @@ class PageContentTest extends TestCase
             '<svg><animate href=#xss attributeName=href values=javascript:alert(1) /></svg>',
             '<svg><animate href="#xss" attributeName="href" values="a;javascript:alert(1)" /></svg>',
             '<svg><animate href="#xss" attributeName="href" values="a;data:alert(1)" /></svg>',
+            '<svg><animate href=#xss attributeName=href from=javascript:alert(1) to=1 /><a id=xss><text x=20 y=20>XSS</text></a>',
+            '<svg><set href=#xss attributeName=href from=? to=javascript:alert(1) /><a id=xss><text x=20 y=20>XSS</text></a>',
+            '<svg><g><g><g><animate href=#xss attributeName=href values=javascript:alert(1) /></g></g></g></svg>',
         ];
 
         $this->asEditor();
