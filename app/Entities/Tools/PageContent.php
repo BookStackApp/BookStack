@@ -382,7 +382,7 @@ class PageContent
             if ($matchedPage && count($splitInclude) === 1) {
                 // If we only have page id, just insert all page html and continue.
                 $replacement = $matchedPage->html;
-            } else if ($matchedPage && count($splitInclude) > 1) {
+            } elseif ($matchedPage && count($splitInclude) > 1) {
                 // Otherwise, if our include tag defines a section, load that specific content
                 $innerContent = $this->fetchSectionOfPage($matchedPage, $splitInclude[1]);
                 $replacement = trim($innerContent);

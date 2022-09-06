@@ -364,7 +364,7 @@ class OidcTest extends TestCase
     {
         config()->set([
             'oidc.user_to_groups'     => true,
-            'oidc.groups_claim'    => 'groups',
+            'oidc.groups_claim'       => 'groups',
             'oidc.remove_from_groups' => false,
         ]);
         $roleA = Role::factory()->create(['display_name' => 'Wizards']);
@@ -390,7 +390,7 @@ class OidcTest extends TestCase
     {
         config()->set([
             'oidc.user_to_groups'     => true,
-            'oidc.groups_claim'    => 'my.custom.groups.attr',
+            'oidc.groups_claim'       => 'my.custom.groups.attr',
             'oidc.remove_from_groups' => false,
         ]);
         $roleA = Role::factory()->create(['display_name' => 'Wizards']);
