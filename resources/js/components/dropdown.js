@@ -37,12 +37,8 @@ class DropDown {
         if (this.moveMenu) {
             this.body.appendChild(this.menu);
             this.menu.style.position = 'fixed';
-            if (this.direction === 'right') {
-                this.menu.style.right = `${(menuOriginalRect.right - menuOriginalRect.width)}px`;
-            } else {
-                this.menu.style.left = `${menuOriginalRect.left}px`;
-            }
             this.menu.style.width = `${menuOriginalRect.width}px`;
+            this.menu.style.left = `${menuOriginalRect.left}px`;
             heightOffset = dropUpwards ? (window.innerHeight - menuOriginalRect.top  - toggleHeight / 2) : menuOriginalRect.top;
         }
 
@@ -94,6 +90,7 @@ class DropDown {
             this.menu.style.position = '';
             this.menu.style[this.direction] = '';
             this.menu.style.width = '';
+            this.menu.style.left = '';
             this.container.appendChild(this.menu);
         }
 
