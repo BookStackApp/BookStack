@@ -45,7 +45,7 @@ return [
     'bookshelf_update'                 => 'updated shelf',
     'bookshelf_update_notification'    => 'Shelf successfully updated',
     'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_delete_notification'    => 'قفسه کتاب با موفقیت حذف شد',
 
     // Favourites
     'favourite_add_notification' => '":name" به علاقه مندی های شما اضافه شد',
