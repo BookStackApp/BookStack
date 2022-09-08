@@ -39,13 +39,13 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_notification'    => 'قفسه کتاب با موفقیت ایجاد شد',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'کتاب با موفقیت به یک قفسه تبدیل شد',
     'bookshelf_update'                 => 'updated shelf',
     'bookshelf_update_notification'    => 'Shelf successfully updated',
     'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_delete_notification'    => 'قفسه کتاب با موفقیت حذف شد',
 
     // Favourites
     'favourite_add_notification' => '":name" به علاقه مندی های شما اضافه شد',
