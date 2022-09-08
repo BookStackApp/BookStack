@@ -22,10 +22,12 @@ class FixShelfCoverImageTypes extends Migration
             ->pluck('image_id')
             ->values()->all();
 
-        DB::table('images')
-            ->where('type', '=', 'cover_book')
-            ->whereIn('id', $shelfImageIds)
-            ->update(['type' => 'cover_bookshelf']);
+        if (count($shelfImageIds) > 0) {
+            DB::table('images')
+                ->where('type', '=', 'cover_book')
+                ->whereIn('id', $shelfImageIds)
+                ->update(['type' => 'cover_bookshelf']);
+        }
     }
 
     /**
