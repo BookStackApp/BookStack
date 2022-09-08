@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Apsveicam! Tā kā jūs saņēmāt šo epasta paziņojumu, jūsu epasta uzstādījumi šķiet pareizi.',
     'maint_recycle_bin_desc' => 'Dzēstie plaukti, grāmatas, nodaļas un lapas ir pārceltas uz miskasti, lai tos varētu atjaunot vai izdzēst pilnībā. Vecākas vienības miskastē var tikt automātiski dzēstas pēc kāda laika atkarībā no sistēmas uzstādījumiem.',
     'maint_recycle_bin_open' => 'Atvērt miskasti',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Miskaste',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Jebkuras no trīs augstāk redzamajām atļaujām dod iespēju lietotājam mainīt savas un citu lietotāju sistēmas atļaujas. Pievieno šīs grupu atļaujas tikai tiem lietotājiem, kuriem uzticies.',
     'role_asset_desc' => 'Šīs piekļuves tiesības kontrolē noklusēto piekļuvi sistēmas resursiem. Grāmatām, nodaļām un lapām norādītās tiesības būs pārākas par šīm.',
     'role_asset_admins' => 'Administratoriem automātiski ir piekļuve visam saturam, bet šie uzstādījumi var noslēpt vai parādīt lietotāja saskarnes iespējas.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Visi',
     'role_own' => 'Savi',
     'role_controlled_by_asset' => 'Kontrolē resurss, uz ko tie ir augšupielādēti',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

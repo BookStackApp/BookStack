@@ -197,7 +197,7 @@
   .chapter-contents-toggle {
     display: block;
     width: 100%;
-    text-align: left;
+    text-align: start;
     padding: $-xxs $-s ($-xxs * 2) $-s;
     border-radius: 0 3px 3px 0;
     line-height: 1;
@@ -630,7 +630,7 @@ ul.pagination {
   z-index: 999;
   top: 0;
   list-style: none;
-  right: 0;
+  inset-inline-end: 0;
   margin: $-m 0;
   @include lightDark(background-color, #fff, #333);
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.18);
@@ -715,7 +715,7 @@ ul.pagination {
 // being cut by scrollable container.
 .tri-layout-right .dropdown-menu,
 .tri-layout-left .dropdown-menu {
-  right: $-xs;
+  inset-inline-end: $-xs;
 }
 
 // Books grid view

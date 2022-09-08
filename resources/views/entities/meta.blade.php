@@ -10,9 +10,9 @@
     @endif
 
     @if ($entity->isA('page'))
-        @if (userCan('page-update', $entity)) <a href="{{ $entity->getUrl('/revisions') }}" class="entity-meta-item"> @else <div class="entity-meta-item"> @endif
-        @icon('history'){{ trans('entities.meta_revision', ['revisionCount' => $entity->revision_count]) }}
-        @if (userCan('page-update', $entity))</a> @else </div> @endif
+        <a href="{{ $entity->getUrl('/revisions') }}" class="entity-meta-item">
+            @icon('history'){{ trans('entities.meta_revision', ['revisionCount' => $entity->revision_count]) }}
+        </a>
     @endif
 
     @if ($entity->ownedBy && $entity->owned_by !== $entity->created_by)
@@ -58,5 +58,14 @@
             @icon('edit')
             <span title="{{ $entity->updated_at->toDayDateTimeString() }}">{{ trans('entities.meta_updated', ['timeLength' => $entity->updated_at->diffForHumans()]) }}</span>
         </div>
+    @endif
+
+    @if($referenceCount ?? 0)
+        <a href="{{ $entity->getUrl('/references') }}" class="entity-meta-item">
+            @icon('reference')
+            <div>
+                {!! trans_choice('entities.meta_reference_page_count', $referenceCount, ['count' => $referenceCount]) !!}
+            </div>
+        </a>
     @endif
 </div>

@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Вітаємо! Оскільки ви отримали цього листа, поштова скринька налаштована правильно.',
     'maint_recycle_bin_desc' => 'Видалені полиці, книги, розділи та сторінки попадають кошик, щоб їх можна було відновити або видалити остаточно. Старіші елементи з кошика можна автоматично видаляти через деякий час, залежно від налаштувань системи.',
     'maint_recycle_bin_open' => 'Відкрити кошик',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Кошик',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Майте на увазі, що доступ до будь-якого з вищезазначених трьох дозволів може дозволити користувачеві змінювати власні привілеї або привілеї інших в системі. Ролі з цими дозволами призначайте лише довіреним користувачам.',
     'role_asset_desc' => 'Ці дозволи контролюють стандартні доступи всередині системи. Права на книги, розділи та сторінки перевизначать ці дозволи.',
     'role_asset_admins' => 'Адміністратори автоматично отримують доступ до всього вмісту, але ці параметри можуть відображати або приховувати параметри інтерфейсу користувача.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Все',
     'role_own' => 'Власне',
     'role_controlled_by_asset' => 'Контролюється за об\'єктом, до якого вони завантажуються',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

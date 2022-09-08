@@ -2,6 +2,9 @@
 
 <p class="mb-none">
     This documentation covers use of the REST API. <br>
+    Examples of API usage, in a variety of programming languages, can be found in the <a href="https://github.com/BookStackApp/api-scripts" target="_blank" rel="noopener noreferrer">BookStack api-scripts repo on GitHub</a>.
+
+    <br> <br>
     Some alternative options for extension and customization can be found below:
 </p>
 
@@ -38,8 +41,53 @@
 <hr>
 
 <h5 id="request-format" class="text-mono mb-m">Request Format</h5>
-<p>The API is primarily design to be interfaced using JSON so the majority of API endpoints, that accept data, will read JSON request data although <code>application/x-www-form-urlencoded</code> request data is also accepted. Endpoints that receive file data will need data sent in a <code>multipart/form-data</code> format although this will be highlighted in the documentation for such endpoints.</p>
-<p>For endpoints in this documentation that accept data, a "Body Parameters" table will be available showing the parameters that will accepted in the request. Any rules for the values of such parameters, such as the data-type or if they're required, will be shown alongside the parameter name.</p>
+
+<p>
+    For endpoints in this documentation that accept data a "Body Parameters" table will be available to show the parameters that are accepted in the request.
+    Any rules for the values of such parameters, such as the data-type or if they're required, will be shown alongside the parameter name.
+</p>
+
+<p>
+    The API can accept request data in the following <code>Content-Type</code> formats:
+</p>
+
+<ul>
+    <li>application/json</li>
+    <li>application/x-www-form-urlencoded</li>
+    <li>multipart/form-data</li>
+</ul>
+
+<p>
+    Regardless of format chosen, ensure you set a <code>Content-Type</code> header on requests so that the system can correctly parse your request data.
+    The API is primarily designed to be interfaced using JSON, since responses are always in JSON format, hence examples in this documentation will be shown as JSON.
+    Some endpoints, such as those that receive file data, may require the use of <code>multipart/form-data</code>. This will be mentioned within the description for such endpoints.
+</p>
+
+<p>
+    Some data may be expected in a more complex nested structure such as a nested object or array.
+    These can be sent in non-JSON request formats using square brackets to denote index keys or property names.
+    Below is an example of a JSON request body data and it's equivalent x-www-form-urlencoded representation.
+</p>
+
+<p><strong>JSON</strong></p>
+
+<pre><code class="language-json">{
+  "name": "My new item",
+  "books": [105, 263],
+  "tags": [{"name": "Tag Name", "value": "Tag Value"}],
+}</code></pre>
+
+<p><strong>x-www-form-urlencoded</strong></p>
+
+<pre><code class="language-text">name=My%20new%20item&books%5B0%5D=105&books%5B1%5D=263&tags%5B0%5D%5Bname%5D=Tag%20Name&tags%5B0%5D%5Bvalue%5D=Tag%20Value</code></pre>
+
+<p><strong>x-www-form-urlencoded (Decoded for readability)</strong></p>
+
+<pre><code class="language-text">name=My new item
+books[0]=105
+books[1]=263
+tags[0][name]=Tag Name
+tags[0][value]=Tag Value</code></pre>
 
 <hr>
 

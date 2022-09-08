@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Raamat on sorteeritud',
 
     // Bookshelves
-    'bookshelf_create'            => 'lisas riiuli',
-    'bookshelf_create_notification'    => 'Riiul on lisatud',
-    'bookshelf_create_from_book'    => 'muutis raamatu riiuliks',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Raamat on muudetud riiuliks',
-    'bookshelf_update'                 => 'muutis riiulit',
-    'bookshelf_update_notification'    => 'Riiul on muudetud',
-    'bookshelf_delete'                 => 'kustutas riiuli',
-    'bookshelf_delete_notification'    => 'Riiul on kustutatud',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" lisati su lemmikute hulka',

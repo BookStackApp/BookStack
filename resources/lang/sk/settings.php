@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Gratulujeme! Keď ste dostali toto e-mailové upozornenie, zdá sa, že vaše nastavenia e-mailu sú nakonfigurované správne.',
     'maint_recycle_bin_desc' => 'Vymazané police, knihy, kapitoly a strany sa odošlú do koša, aby sa dali obnoviť alebo natrvalo odstrániť. Staršie položky z koša môžu byť po chvíli automaticky odstránené v závislosti od konfigurácie systému.',
     'maint_recycle_bin_open' => 'Otvoriť kôš',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Kôš',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Uvedomte si, že prístup ku ktorémukoľvek z vyššie uvedených troch povolení môže používateľovi umožniť zmeniť svoje vlastné privilégiá alebo privilégiá ostatných v systéme. Roly s týmito povoleniami priraďujte iba dôveryhodným používateľom.',
     'role_asset_desc' => 'Tieto oprávnenia regulujú prednastavený prístup k zdroju v systéme. Oprávnenia pre knihy, kapitoly a stránky majú vyššiu prioritu.',
     'role_asset_admins' => 'Správcovia majú automaticky prístup ku všetkému obsahu, ale tieto možnosti môžu zobraziť alebo skryť možnosti používateľského rozhrania.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Všetko',
     'role_own' => 'Vlastné',
     'role_controlled_by_asset' => 'Regulované zdrojom, do ktorého sú nahrané',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

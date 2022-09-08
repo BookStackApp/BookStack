@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => '恭喜！您收到這封電子郵件通知時，代表您的電子郵件設定已正確設定。',
     'maint_recycle_bin_desc' => '刪除的書架、書本、章節與頁面將會被傳送到回收桶，這樣仍可以還原或永久刪除。回收桶中較舊的項目可能會在一段時間後自動移除，取決於您的系統設定。',
     'maint_recycle_bin_open' => '開啟回收桶',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => '資源回收桶',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => '請注意，有上述三項權限中的任一項的使用者都可以更改自己或系統中其他人的權限。有這些權限的角色只應分配給受信任的使用者。',
     'role_asset_desc' => '對系統內資源的預設權限將由這裡的權限控制。若有單獨設定在書本、章節和頁面上的權限，將會覆寫這裡的權限設定。',
     'role_asset_admins' => '管理員會自動取得對所有內容的存取權，但這些選項可能會顯示或隱藏使用者介面的選項。',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => '全部',
     'role_own' => '擁有',
     'role_controlled_by_asset' => '依據隸屬的資源來決定',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

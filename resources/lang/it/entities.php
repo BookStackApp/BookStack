@@ -23,6 +23,7 @@ return [
     'meta_updated' => 'Aggiornato :timeLength',
     'meta_updated_name' => 'Aggiornato :timeLength da :user',
     'meta_owned_name' => 'Creati da :user',
+    'meta_reference_page_count' => 'Referenziato su 1 pagina|Referenziato su :count pagine',
     'entity_select' => 'Selezione Entità',
     'entity_select_lack_permission' => 'Non hai i permessi necessari per selezionare questo elemento',
     'images' => 'Immagini',
@@ -77,7 +78,6 @@ return [
     'shelf' => 'Libreria',
     'shelves' => 'Librerie',
     'x_shelves' => ':count Libreria|:count Librerie',
-    'shelves_long' => 'Librerie',
     'shelves_empty' => 'Nessuna libreria è stata creata',
     'shelves_create' => 'Crea Nuova Libreria',
     'shelves_popular' => 'Librerie Popolari',
@@ -95,15 +95,15 @@ return [
     'shelves_edit' => 'Modifica Libreria',
     'shelves_delete' => 'Elimina Libreria',
     'shelves_delete_named' => 'Elimina Libreria :name',
-    'shelves_delete_explain' => "La libreria ':name' verrà eliminata. I libri contenuti non verranno eliminati.",
+    'shelves_delete_explain' => "La libreria ':name' verrà eliminata. I libri al suo interno non verranno eliminati.",
     'shelves_delete_confirmation' => 'Sei sicuro di voler eliminare questa libreria?',
     'shelves_permissions' => 'Permessi Libreria',
     'shelves_permissions_updated' => 'Permessi Libreria Aggiornati',
-    'shelves_permissions_active' => 'Permessi Attivi Libreria',
-    'shelves_permissions_cascade_warning' => 'I permessi sugli scaffali non si estendono automaticamente ai libri contenuti. Questo avviene in quanto un libro può essere presente su più scaffali. I permessi possono comunque essere copiati ai libri contenuti usando l\'opzione qui sotto.',
+    'shelves_permissions_active' => 'Permessi Libreria Attivi',
+    'shelves_permissions_cascade_warning' => 'I permessi delle librerie non si estendono automaticamente ai libri contenuti. Questo perché un libro può essere presente su più scaffali. I permessi possono comunque essere copiati ai libri al suo interno usando l\'opzione sottostante.',
     'shelves_copy_permissions_to_books' => 'Copia Permessi ai Libri',
     'shelves_copy_permissions' => 'Copia Permessi',
-    'shelves_copy_permissions_explain' => 'Verranno applicati tutti i permessi della libreria ai libri contenuti. Prima di attivarlo, assicurati che ogni permesso di questa libreria sia salvato.',
+    'shelves_copy_permissions_explain' => 'Verranno applicati tutti i permessi della libreria ai libri al suo interno. Prima dell\'attivazione, assicurati che ogni permesso di questa libreria sia salvato.',
     'shelves_copy_permission_success' => 'Permessi della libreria copiati in :count libri',
 
     // Books
@@ -248,6 +248,7 @@ return [
     'pages_edit_content_link' => 'Modifica contenuto',
     'pages_permissions_active' => 'Permessi Pagina Attivi',
     'pages_initial_revision' => 'Pubblicazione iniziale',
+    'pages_references_update_revision' => 'Aggiornamento automatico di sistema dei collegamenti interni',
     'pages_initial_name' => 'Nuova Pagina',
     'pages_editing_draft_notification' => 'Stai modificando una bozza che è stata salvata il :timeDiff.',
     'pages_draft_edited_notification' => 'Questa pagina è stata aggiornata. È consigliabile scartare questa bozza.',
@@ -369,4 +370,9 @@ return [
     'convert_to_book_desc' => 'È possibile convertire questo capitolo in un nuovo libro con gli stessi contenuti. Tutti i permessi impostati su questo capitolo saranno copiati nel nuovo libro, ma i permessi ereditati dal libro principale non saranno copiati, il che potrebbe portare a una modifica del controllo degli accessi.',
     'convert_chapter' => 'Converti Capitolo',
     'convert_chapter_confirm' => 'Sei sicuro di voler convertire questo capitolo?',
+
+    // References
+    'references' => 'Riferimenti',
+    'references_none' => 'Non ci sono riferimenti tracciati a questa voce.',
+    'references_to_desc' => 'Di seguito sono riportate tutte le pagine conosciute nel sistema che collegano a questo elemento.',
 ];

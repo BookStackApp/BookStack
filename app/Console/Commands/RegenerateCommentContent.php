@@ -5,6 +5,7 @@ namespace BookStack\Console\Commands;
 use BookStack\Actions\Comment;
 use BookStack\Actions\CommentRepo;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class RegenerateCommentContent extends Command
 {
@@ -43,9 +44,9 @@ class RegenerateCommentContent extends Command
      */
     public function handle()
     {
-        $connection = \DB::getDefaultConnection();
+        $connection = DB::getDefaultConnection();
         if ($this->option('database') !== null) {
-            \DB::setDefaultConnection($this->option('database'));
+            DB::setDefaultConnection($this->option('database'));
         }
 
         Comment::query()->chunk(100, function ($comments) {
@@ -55,7 +56,9 @@ class RegenerateCommentContent extends Command
             }
         });
 
-        \DB::setDefaultConnection($connection);
+        DB::setDefaultConnection($connection);
         $this->comment('Comment HTML content has been regenerated');
+
+        return 0;
     }
 }

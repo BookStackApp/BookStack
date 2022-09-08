@@ -14,12 +14,9 @@ use Illuminate\Validation\ValidationException;
 
 class ImageController extends Controller
 {
-    protected $imageRepo;
-    protected $imageService;
+    protected ImageRepo $imageRepo;
+    protected ImageService $imageService;
 
-    /**
-     * ImageController constructor.
-     */
     public function __construct(ImageRepo $imageRepo, ImageService $imageService)
     {
         $this->imageRepo = $imageRepo;
@@ -33,7 +30,7 @@ class ImageController extends Controller
      */
     public function showImage(string $path)
     {
-        if (!$this->imageService->pathExistsInLocalSecure($path)) {
+        if (!$this->imageService->pathAccessibleInLocalSecure($path)) {
             throw (new NotFoundException(trans('errors.image_not_found')))
                 ->setSubtitle(trans('errors.image_not_found_subtitle'))
                 ->setDetails(trans('errors.image_not_found_details'));

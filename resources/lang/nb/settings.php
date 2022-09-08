@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Gratulerer! Da du mottok dette e-postvarselet, ser det ut til at e-postinnstillingene dine er konfigurert riktig.',
     'maint_recycle_bin_desc' => 'Slettede hyller, bøker, kapitler og sider kastes i papirkurven så de kan bli gjenopprettet eller slettet permanent. Eldre utgaver i papirkurven kan slettes automatisk etter en stund, avhengig av systemkonfigurasjonen.',
     'maint_recycle_bin_open' => 'Åpne papirkurven',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Papirkurven',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Vær oppmerksom på at tilgang til noen av de ovennevnte tre tillatelsene kan tillate en bruker å endre sine egne rettigheter eller rettighetene til andre i systemet. Bare tildel roller med disse tillatelsene til pålitelige brukere.',
     'role_asset_desc' => 'Disse tillatelsene kontrollerer standard tilgang til eiendelene i systemet. Tillatelser til bøker, kapitler og sider overstyrer disse tillatelsene.',
     'role_asset_admins' => 'Administratorer får automatisk tilgang til alt innhold, men disse alternativene kan vise eller skjule UI-alternativer.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Alle',
     'role_own' => 'Egne',
     'role_controlled_by_asset' => 'Kontrollert av eiendelen de er lastet opp til',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Tebrikler! Eğer bu e-posta bildirimini alıyorsanız, e-posta ayarlarınız doğru bir şekilde ayarlanmış demektir.',
     'maint_recycle_bin_desc' => 'Silinen raflar, kitaplar, bölümler ve sayfalar geri dönüşüm kutusuna gönderilir, böylece geri yüklenebilir veya kalıcı olarak silinebilir. Geri dönüşüm kutusundaki daha eski öğeler, sistem yapılandırmasına bağlı olarak bir süre sonra otomatik olarak kaldırılabilir.',
     'maint_recycle_bin_open' => 'Geri Dönüşüm Kutusunu Aç',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Geri Dönüşüm Kutusu',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Yukarıdaki üç izinden herhangi birine erişimin, kullanıcının kendi ayrıcalıklarını veya sistemdeki diğerlerinin ayrıcalıklarını değiştirmesine izin verebileceğini unutmayın. Yalnızca bu izinlere sahip rolleri güvenilir kullanıcılara atayın.',
     'role_asset_desc' => 'Bu izinler, sistem içindeki varlıklara varsayılan erişim izinlerini ayarlar. Kitaplar, bölümler ve sayfalar üzerindeki izinler, buradaki izinleri geçersiz kılar.',
     'role_asset_admins' => 'Yöneticilere otomatik olarak bütün içeriğe erişim yetkisi verilir ancak bu seçenekler, kullanıcı arayüzündeki bazı seçeneklerin gösterilmesine veya gizlenmesine neden olabilir.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Hepsi',
     'role_own' => 'Kendine Ait',
     'role_controlled_by_asset' => 'Yüklendikleri varlık tarafından kontrol ediliyor',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovence',

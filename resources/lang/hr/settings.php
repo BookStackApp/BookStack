@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Čestitamo! Ako ste primili ovaj e mail znači da ćete ga moći koristiti.',
     'maint_recycle_bin_desc' => 'Izbrisane police, knjige, poglavlja i stranice poslane su u Recycle bin i mogu biti vraćene ili trajno izbrisane. Starije stavke bit će automatski izbrisane nakon nekog vremena što ovisi o konfiguraciji sustava.',
     'maint_recycle_bin_open' => 'Otvori Recycle Bin',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Recycle Bin',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Uzmite u obzir da pristup bilo kojem od ovih dopuštenja dozvoljavate korisniku upravljanje dopuštenjima ostalih u sustavu. Ova dopuštenja dodijelite pouzdanim korisnicima.',
     'role_asset_desc' => 'Ova dopuštenja kontroliraju zadane pristupe. Dopuštenja za knjige, poglavlja i stranice ih poništavaju.',
     'role_asset_admins' => 'Administratori automatski imaju pristup svim sadržajima, ali ove opcije mogu prikazati ili sakriti korisnička sučelja.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Sve',
     'role_own' => 'Vlastito',
     'role_controlled_by_asset' => 'Kontrolirano od strane vlasnika',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

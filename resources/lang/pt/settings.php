@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Parabéns! Já que recebeu esta notificação, as suas opções de e-mail parecem estar configuradas corretamente.',
     'maint_recycle_bin_desc' => 'Estantes, livros, capítulos e páginas eliminados são mandados para a reciclagem podendo assim ser restaurados ou excluídos permanentemente. Itens mais antigos da podem vir a ser automaticamente removidos da reciclagem após um tempo, dependendo da configuração do sistema.',
     'maint_recycle_bin_open' => 'Abrir Reciclagem',
+    'maint_regen_references' => 'Regerar Referências',
+    'maint_regen_references_desc' => 'Esta ação irá reconstruir o índice de referência no banco de dados. Isto geralmente é tratado automaticamente, mas esta ação pode ser útil para indexar conteúdo antigo ou conteúdo adicionado através de métodos não oficiais.',
+    'maint_regen_references_success' => 'Índice de referência foi regenerado!',
+    'maint_timeout_command_note' => 'Nota: Esta ação pode levar algum tempo para executar, retornando \'timeout\' em alguns ambientes web. Como alternativa, esta ação pode ser executada via terminal.',
 
     // Recycle Bin
     'recycle_bin' => 'Reciclagem',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Esteja ciente de que o acesso a qualquer uma das três permissões acima pode permitir que um utilizador altere os seus próprios privilégios ou privilégios de outros no sistema. Apenas atribua cargos com essas permissões a utilizadores de confiança.',
     'role_asset_desc' => 'Estas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por estas permissões.',
     'role_asset_admins' => 'Os administradores recebem automaticamente acesso a todo o conteúdo, mas estas opções podem mostrar ou ocultar as opções da Interface de Usuário.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
     'role_controlled_by_asset' => 'Controlado pelo ativo para o qual eles são enviados',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Könyv sikeresen újrarendezve',
 
     // Bookshelves
-    'bookshelf_create'            => 'created bookshelf',
-    'bookshelf_create_notification'    => 'Könyvespolc sikeresen létrehozva',
-    'bookshelf_create_from_book'    => 'converted book to bookshelf',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'frissítette a könyvespolcot:',
-    'bookshelf_update_notification'    => 'Könyvespolc sikeresen frissítve',
-    'bookshelf_delete'                 => 'törölte a könyvespolcot:',
-    'bookshelf_delete_notification'    => 'Könyvespolc sikeresen törölve',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',

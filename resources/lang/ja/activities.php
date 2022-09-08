@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'ブックが再度並び変えられました',
 
     // Bookshelves
-    'bookshelf_create'            => 'が本棚を作成:',
-    'bookshelf_create_notification'    => '本棚を作成しました',
-    'bookshelf_create_from_book'    => 'がブックを本棚に変換:',
+    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'ブックが本棚へ正常に変換されました',
-    'bookshelf_update'                 => 'が本棚を更新:',
-    'bookshelf_update_notification'    => '本棚を更新しました',
-    'bookshelf_delete'                 => 'が本棚を削除:',
-    'bookshelf_delete_notification'    => '本棚を削除しました',
+    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
     // Favourites
     'favourite_add_notification' => '":name"がお気に入りに追加されました',

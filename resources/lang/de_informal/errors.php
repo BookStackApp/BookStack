@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Eintrag nicht gefunden',
-    'bookshelf_not_found' => 'Regal nicht gefunden',
+    'bookshelf_not_found' => 'Shelf not found',
     'book_not_found' => 'Buch nicht gefunden',
     'page_not_found' => 'Seite nicht gefunden',
     'chapter_not_found' => 'Kapitel nicht gefunden',
@@ -88,8 +88,8 @@ return [
     'sorry_page_not_found' => 'Entschuldigung. Die Seite, die Du angefordert hast, wurde nicht gefunden.',
     'sorry_page_not_found_permission_warning' => 'Wenn du erwartet hast, dass diese Seite existiert, hast du möglicherweise nicht die Berechtigung, sie anzuzeigen.',
     'image_not_found' => 'Bild nicht gefunden',
-    'image_not_found_subtitle' => 'Entschuldigung. Das angeforderte Bild wurde nicht gefunden.',
-    'image_not_found_details' => 'Wenn Sie erwartet haben, dass dieses Bild existiert, könnte es gelöscht worden sein.',
+    'image_not_found_subtitle' => 'Sorry. Die Bilddatei, nach der du suchst, konnte nicht gefunden werden.',
+    'image_not_found_details' => 'Wenn du erwartet hast, dass dieses Bild existiert, wurde es möglicherweise gelöscht.',
     'return_home' => 'Zurück zur Startseite',
     'error_occurred' => 'Es ist ein Fehler aufgetreten',
     'app_down' => ':appName befindet sich aktuell im Wartungsmodus.',

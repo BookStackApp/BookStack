@@ -3,6 +3,7 @@
 namespace BookStack\Auth\Access\Oidc;
 
 use function auth;
+use BookStack\Auth\Access\GroupSyncService;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
@@ -10,6 +11,7 @@ use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use function config;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
@@ -26,15 +28,21 @@ class OidcService
     protected RegistrationService $registrationService;
     protected LoginService $loginService;
     protected HttpClient $httpClient;
+    protected GroupSyncService $groupService;
 
     /**
      * OpenIdService constructor.
      */
-    public function __construct(RegistrationService $registrationService, LoginService $loginService, HttpClient $httpClient)
-    {
+    public function __construct(
+        RegistrationService $registrationService,
+        LoginService $loginService,
+        HttpClient $httpClient,
+        GroupSyncService $groupService
+    ) {
         $this->registrationService = $registrationService;
         $this->loginService = $loginService;
         $this->httpClient = $httpClient;
+        $this->groupService = $groupService;
     }
 
     /**
@@ -117,10 +125,31 @@ class OidcService
      */
     protected function getProvider(OidcProviderSettings $settings): OidcOAuthProvider
     {
-        return new OidcOAuthProvider($settings->arrayForProvider(), [
+        $provider = new OidcOAuthProvider($settings->arrayForProvider(), [
             'httpClient'     => $this->httpClient,
             'optionProvider' => new HttpBasicAuthOptionProvider(),
         ]);
+
+        foreach ($this->getAdditionalScopes() as $scope) {
+            $provider->addScope($scope);
+        }
+
+        return $provider;
+    }
+
+    /**
+     * Get any user-defined addition/custom scopes to apply to the authentication request.
+     *
+     * @return string[]
+     */
+    protected function getAdditionalScopes(): array
+    {
+        $scopeConfig = $this->config()['additional_scopes'] ?: '';
+
+        $scopeArr = explode(',', $scopeConfig);
+        $scopeArr = array_map(fn (string $scope) => trim($scope), $scopeArr);
+
+        return array_filter($scopeArr);
     }
 
     /**
@@ -146,9 +175,31 @@ class OidcService
     }
 
     /**
+     * Extract the assigned groups from the id token.
+     *
+     * @return string[]
+     */
+    protected function getUserGroups(OidcIdToken $token): array
+    {
+        $groupsAttr = $this->config()['groups_claim'];
+        if (empty($groupsAttr)) {
+            return [];
+        }
+
+        $groupsList = Arr::get($token->getAllClaims(), $groupsAttr);
+        if (!is_array($groupsList)) {
+            return [];
+        }
+
+        return array_values(array_filter($groupsList, function ($val) {
+            return is_string($val);
+        }));
+    }
+
+    /**
      * Extract the details of a user from an ID token.
      *
-     * @return array{name: string, email: string, external_id: string}
+     * @return array{name: string, email: string, external_id: string, groups: string[]}
      */
     protected function getUserDetails(OidcIdToken $token): array
     {
@@ -158,6 +209,7 @@ class OidcService
             'external_id' => $id,
             'email'       => $token->getClaim('email'),
             'name'        => $this->getUserDisplayName($token, $id),
+            'groups'      => $this->getUserGroups($token),
         ];
     }
 
@@ -209,6 +261,12 @@ class OidcService
             throw new OidcException($exception->getMessage());
         }
 
+        if ($this->shouldSyncGroups()) {
+            $groups = $userDetails['groups'];
+            $detachExisting = $this->config()['remove_from_groups'];
+            $this->groupService->syncUserWithFoundGroups($user, $groups, $detachExisting);
+        }
+
         $this->loginService->login($user, 'oidc');
 
         return $user;
@@ -220,5 +278,13 @@ class OidcService
     protected function config(): array
     {
         return config('oidc');
+    }
+
+    /**
+     * Check if groups should be synced.
+     */
+    protected function shouldSyncGroups(): bool
+    {
+        return $this->config()['user_to_groups'] !== false;
     }
 }

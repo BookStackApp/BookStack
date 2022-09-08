@@ -68,7 +68,7 @@
             </tr>
             <tr>
                 <td>
-                    <div>{{ trans('entities.shelves_long') }}</div>
+                    <div>{{ trans('entities.shelves') }}</div>
                     <a href="#" permissions-table-toggle-all-in-row class="text-small text-primary">{{ trans('common.toggle_all') }}</a>
                 </td>
                 <td>
@@ -172,7 +172,7 @@
                     <a href="#" permissions-table-toggle-all-in-row class="text-small text-primary">{{ trans('common.toggle_all') }}</a>
                 </td>
                 <td>@include('settings.roles.parts.checkbox', ['permission' => 'image-create-all', 'label' => ''])</td>
-                <td style="line-height:1.2;"><small class="faded">{{ trans('settings.role_controlled_by_asset') }}</small></td>
+                <td style="line-height:1.2;"><small class="faded">{{ trans('settings.role_controlled_by_asset') }}<sup>1</sup></small></td>
                 <td>
                     @include('settings.roles.parts.checkbox', ['permission' => 'image-update-own', 'label' => trans('settings.role_own')])
                     <br>
@@ -221,5 +221,11 @@
                 </td>
             </tr>
         </table>
+
+        <div>
+            <p class="text-muted text-small px-m">
+                <sup>1</sup> {{ trans('settings.role_asset_image_view_note') }}
+            </p>
+        </div>
     </div>
 </div>

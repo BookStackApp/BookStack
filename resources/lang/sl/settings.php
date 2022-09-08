@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Čestitke! Če ste prejeli e-poštno obvestilo so bile vaše e-poštne nastavitve pravilno konfigurirane.',
     'maint_recycle_bin_desc' => 'Izbrisane police, knjige, poglavja in strani se pošljejo v koš, da jih je mogoče obnoviti ali trajno izbrisati. Starejše predmete v košu lahko čez nekaj časa samodejno odstranite, odvisno od konfiguracije sistema.',
     'maint_recycle_bin_open' => 'Odpri koš',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Koš',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Zavedajte se, da lahko dostop do kateregakoli od zgornjih treh dovoljenj uporabniku omogoči, da spremeni lastne privilegije ali privilegije drugih v sistemu. Vloge s temi dovoljenji dodelite samo zaupanja vrednim uporabnikom.',
     'role_asset_desc' => 'Ta dovoljenja nadzorujejo privzeti dostop do sredstev v sistemu. Dovoljenja za knjige, poglavja in strani bodo razveljavila ta dovoljenja.',
     'role_asset_admins' => 'Skrbniki samodejno pridobijo dostop do vseh vsebin, vendar lahko te možnosti prikažejo ali pa skrijejo možnosti uporabniškega vmesnika.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Vse',
     'role_own' => 'Lasten',
     'role_controlled_by_asset' => 'Nadzira ga sredstvo, v katerega so naloženi',
@@ -296,6 +301,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'slovenščina',

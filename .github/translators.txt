@@ -138,7 +138,7 @@ Xiphoseer :: German
 MerlinSVK (merlinsvk) :: Slovak
 Kauê Sena (kaue.sena.ks) :: Portuguese, Brazilian
 MatthieuParis :: French
-Douradinho :: Portuguese, Brazilian
+Douradinho :: Portuguese, Brazilian; Portuguese
 Gaku Yaguchi (tama11) :: Japanese
 johnroyer :: Chinese Traditional
 jackaaa :: Chinese Traditional
@@ -270,3 +270,7 @@ Nanang Setia Budi (sefidananang) :: Indonesian
 Андрей Павлов (andrei.pavlov) :: Russian
 Alex Navarro (alex.n.navarro) :: Portuguese, Brazilian
 Ji-Hyeon Gim (PotatoGim) :: Korean
+Mihai Ochian (soulstorm19) :: Romanian
+HeartCore :: German Informal; German
+simon.pct :: French
+okaeiz :: Persian

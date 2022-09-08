@@ -86,7 +86,7 @@ return [
     // Error pages
     '404_page_not_found' => '无法找到页面',
     'sorry_page_not_found' => '对不起，无法找到您想访问的页面。',
-    'sorry_page_not_found_permission_warning' => '您可能没有查看权限。',
+    'sorry_page_not_found_permission_warning' => '如果您确认这个页面存在，则代表您可能没有查看权限。',
     'image_not_found' => '未找到图片',
     'image_not_found_subtitle' => '对不起，无法找到您想访问的图片。',
     'image_not_found_details' => '原本放在这里的图片已被删除。',
@@ -98,7 +98,7 @@ return [
     // API errors
     'api_no_authorization_found' => '未在请求中找到授权令牌',
     'api_bad_authorization_format' => '已在请求中找到授权令牌，但格式貌似不正确',
-    'api_user_token_not_found' => '未能找到所匹配的API提供的授权令牌',
+    'api_user_token_not_found' => '未找到与提供的授权令牌匹配的 API 令牌',
     'api_incorrect_token_secret' => '给已给出的API所提供的密钥不正确',
     'api_user_no_api_permission' => '使用过的 API 令牌的所有者没有进行API 调用的权限',
     'api_user_token_expired' => '所使用的身份令牌已过期',

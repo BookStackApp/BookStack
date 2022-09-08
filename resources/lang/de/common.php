@@ -9,7 +9,7 @@ return [
     'confirm' => 'Bestätigen',
     'back' => 'Zurück',
     'save' => 'Speichern',
-    'continue' => 'Weiter',
+    'continue' => 'Fortfahren',
     'select' => 'Auswählen',
     'toggle_all' => 'Alle umschalten',
     'more' => 'Mehr',
@@ -25,7 +25,7 @@ return [
     'actions' => 'Aktionen',
     'view' => 'Anzeigen',
     'view_all' => 'Alle anzeigen',
-    'create' => 'Anlegen',
+    'create' => 'Erstellen',
     'update' => 'Aktualisieren',
     'edit' => 'Bearbeiten',
     'sort' => 'Sortieren',
@@ -48,7 +48,7 @@ return [
     'filter_active' => 'Gesetzte Filter:',
     'filter_clear' => 'Filter löschen',
     'download' => 'Herunterladen',
-    'open_in_tab' => 'In Neuem Tab öffnen',
+    'open_in_tab' => 'In neuem Tab öffnen',
 
     // Sort Options
     'sort_options' => 'Sortieroptionen',

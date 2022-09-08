@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => '메일을 정상적으로 수신했습니다.',
     'maint_recycle_bin_desc' => '지워진 콘텐츠는 휴지통에 들어가 복원하거나 영구 삭제할 수 있습니다. 오래된 항목은 자동으로 지워집니다.',
     'maint_recycle_bin_open' => '휴지통 열기',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => '휴지통',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => '위 세 권한은 자신의 권한이나 다른 유저의 권한을 바꿀 수 있습니다.',
     'role_asset_desc' => '책, 챕터, 문서별 권한은 이 설정에 우선합니다.',
     'role_asset_admins' => 'Admin 권한은 어디든 접근할 수 있지만 이 설정은 사용자 인터페이스에서 해당 활동을 표시할지 결정합니다.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => '모든 항목',
     'role_own' => '직접 만든 항목',
     'role_controlled_by_asset' => '저마다 다름',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

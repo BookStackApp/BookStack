@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Sveikiname! Kadangi gavote šį elektroninio pašto pranešimą, jūsų elektroninio pašto nustatymai buvo sukonfigūruoti teisingai.',
     'maint_recycle_bin_desc' => 'Ištrintos lentynos, knygos, skyriai ir puslapiai yra perkeliami į šiukšliadėžę tam, kad jie galėtų būti atkurti arba ištrinti visam laikui. Senesni elementai, esantys šiukšliadėžėje, gali būti automatiškai panaikinti po tam tikro laiko priklausomai nuo sistemos konfigūracijos.',
     'maint_recycle_bin_open' => 'Atidaryti šiukšliadėžę',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Šiukšliadėžė',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Būkite sąmoningi, kad prieiga prie bet kurio iš trijų leidimų viršuje gali leisti naudotojui pakeisti jų pačių privilegijas arba kitų privilegijas sistemoje. Paskirkite vaidmenis su šiais leidimais tik patikimiems naudotojams.',
     'role_asset_desc' => 'Šie leidimai kontroliuoja numatytą prieigą į nuosavybę, esančią sistemoje. Knygų, skyrių ir puslapių leidimai nepaisys šių leidimų.',
     'role_asset_admins' => 'Administratoriams automatiškai yra suteikiama prieiga prie viso turinio, tačiau šie pasirinkimai gali rodyti arba slėpti vartotojo sąsajos parinktis.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Visi',
     'role_own' => 'Nuosavi',
     'role_controlled_by_asset' => 'Kontroliuojami nuosavybės, į kurią yra įkelti',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

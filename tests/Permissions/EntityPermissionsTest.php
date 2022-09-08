@@ -51,7 +51,7 @@ class EntityPermissionsTest extends TestCase
         $this->setRestrictionsForTestRoles($shelf, []);
 
         $this->followingRedirects()->get($shelf->getUrl())
-            ->assertSee('Bookshelf not found');
+            ->assertSee('Shelf not found');
 
         $this->setRestrictionsForTestRoles($shelf, ['view']);
 
@@ -66,7 +66,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->actingAs($this->user)
             ->get($shelf->getUrl('/edit'))
-            ->assertSee('Edit Book');
+            ->assertSee('Edit Shelf');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
@@ -87,7 +87,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->actingAs($this->user)
             ->get($shelf->getUrl('/delete'))
-            ->assertSee('Delete Book');
+            ->assertSee('Delete Shelf');
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'update']);
 
@@ -98,7 +98,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->get($shelf->getUrl('/delete'))
             ->assertOk()
-            ->assertSee('Delete Book');
+            ->assertSee('Delete Shelf');
     }
 
     public function test_book_view_restriction()
@@ -416,7 +416,7 @@ class EntityPermissionsTest extends TestCase
 
     public function test_bookshelf_restriction_form()
     {
-        $this->entityRestrictionFormTest(Bookshelf::class, 'Bookshelf Permissions', 'view', '2');
+        $this->entityRestrictionFormTest(Bookshelf::class, 'Shelf Permissions', 'view', '2');
     }
 
     public function test_book_restriction_form()
@@ -524,7 +524,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->setRestrictionsForTestRoles($shelf, ['view', 'delete']);
 
-        $this->get($shelf->getUrl('/delete'))->assertOk()->assertSee('Delete Book');
+        $this->get($shelf->getUrl('/delete'))->assertOk()->assertSee('Delete Shelf');
     }
 
     public function test_book_create_restriction_override()

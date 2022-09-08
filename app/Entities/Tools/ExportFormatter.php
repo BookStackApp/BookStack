@@ -235,7 +235,7 @@ class ExportFormatter
         $linksOutput = [];
         preg_match_all("/\<a.*href\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $linksOutput);
 
-        // Replace image src with base64 encoded image strings
+        // Update relative links to be absolute, with instance url
         if (isset($linksOutput[0]) && count($linksOutput[0]) > 0) {
             foreach ($linksOutput[0] as $index => $linkMatch) {
                 $oldLinkString = $linkMatch;
@@ -248,7 +248,6 @@ class ExportFormatter
             }
         }
 
-        // Replace any relative links with system domain
         return $htmlContent;
     }
 

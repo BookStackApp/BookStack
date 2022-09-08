@@ -210,6 +210,10 @@ select {
   background-size: 12px;
   background-position: calc(100% - 20px) 70%;
   background-repeat: no-repeat;
+
+  @include rtl {
+    background-position: 20px 70%;
+  }
 }
 
 input[type=date] {

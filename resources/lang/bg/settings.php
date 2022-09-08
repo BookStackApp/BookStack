@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Поздравления! След като получихте този имейл, Вашите имейл настройки са конфигурирани правилно.',
     'maint_recycle_bin_desc' => 'Изтрити рафти, книги, глави и страници се преместват в кошчето, откъдето можете да ги възстановите или изтриете завинаги. Стари съдържания в кошчето ще бъдат изтрити автоматично след време, в зависимост от настройките на системата.',
     'maint_recycle_bin_open' => 'Отвори Кошчето',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Кошче',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Важно: Добавянето на потребител в някое от горните три роли може да му позволи да промени собствените си права или правата на другите в системата. Възлагайте тези роли само на доверени потребители.',
     'role_asset_desc' => 'Тези настройки за достъп контролират достъпа по подразбиране до активите в системата. Настройките за достъп до книги, глави и страници ще отменят тези настройки.',
     'role_asset_admins' => 'Администраторите автоматично получават достъп до цялото съдържание, но тези опции могат да показват или скриват опциите за потребителския интерфейс.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Всички',
     'role_own' => 'Собствени',
     'role_controlled_by_asset' => 'Контролирани от актива, към който са качени',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

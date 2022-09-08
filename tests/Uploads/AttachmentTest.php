@@ -341,4 +341,19 @@ class AttachmentTest extends TestCase
 
         $this->deleteUploads();
     }
+
+    public function test_file_upload_works_when_local_secure_restricted_is_in_use()
+    {
+        config()->set('filesystems.attachments', 'local_secure_restricted');
+
+        $page = Page::query()->first();
+        $fileName = 'upload_test_file.txt';
+
+        $upload = $this->asAdmin()->uploadFile($fileName, $page->id);
+        $upload->assertStatus(200);
+
+        $attachment = Attachment::query()->orderBy('id', 'desc')->where('uploaded_to', '=', $page->id)->first();
+        $this->assertFileExists(storage_path($attachment->path));
+        $this->deleteUploads();
+    }
 }

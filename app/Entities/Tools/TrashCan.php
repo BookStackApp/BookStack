@@ -376,6 +376,8 @@ class TrashCan
         $entity->searchTerms()->delete();
         $entity->deletions()->delete();
         $entity->favourites()->delete();
+        $entity->referencesTo()->delete();
+        $entity->referencesFrom()->delete();
 
         if ($entity instanceof HasCoverImage && $entity->cover()->exists()) {
             $imageService = app()->make(ImageService::class);

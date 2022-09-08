@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'تبریک می گویم! با دریافت این اعلان ایمیل، به نظر می رسد تنظیمات ایمیل شما به درستی پیکربندی شده است.',
     'maint_recycle_bin_desc' => 'قفسه‌ها، کتاب‌ها، فصل‌ها و صفحات حذف‌شده به سطل بازیافت فرستاده می‌شوند تا بتوان آن‌ها را بازیابی کرد یا برای همیشه حذف کرد. بسته به پیکربندی سیستم، اقلام قدیمی در سطل بازیافت ممکن است پس از مدتی به طور خودکار حذف شوند.',
     'maint_recycle_bin_open' => 'سطل بازیافت را باز کنید',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'سطل زباله',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'توجه داشته باشید که دسترسی به هر یک از سه مجوز فوق می‌تواند به کاربر اجازه دهد تا امتیازات خود یا امتیازات دیگران را در سیستم تغییر دهد. فقط نقش هایی را با این مجوزها به کاربران مورد اعتماد اختصاص دهید.',
     'role_asset_desc' => 'این مجوزها دسترسی پیش‌فرض به دارایی‌های درون سیستم را کنترل می‌کنند. مجوزهای مربوط به کتاب‌ها، فصل‌ها و صفحات این مجوزها را لغو می‌کنند.',
     'role_asset_admins' => 'به ادمین‌ها به‌طور خودکار به همه محتوا دسترسی داده می‌شود، اما این گزینه‌ها ممکن است گزینه‌های UI را نشان داده یا پنهان کنند.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'همه',
     'role_own' => 'صاحب',
     'role_controlled_by_asset' => 'توسط دارایی که در آن آپلود می شود کنترل می شود',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

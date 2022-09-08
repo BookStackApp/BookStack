@@ -89,6 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Enhorabona! Com que heu rebut aquesta notificació per correu electrònic, la vostra configuració del correu electrònic sembla que està ben configurada.',
     'maint_recycle_bin_desc' => 'Els prestatges, llibres, capítols i pàgines eliminats s\'envien a la paperera de reciclatge perquè es puguin restaurar o suprimir de manera permanent. Pot ser que els elements més antics de la paperera de reciclatge se suprimeixin automàticament després d\'un temps, depenent de la configuració del sistema.',
     'maint_recycle_bin_open' => 'Obre la paperera de reciclatge',
+    'maint_regen_references' => 'Regenerate References',
+    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_success' => 'Reference index has been regenerated!',
+    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
     'recycle_bin' => 'Paperera de reciclatge',
@@ -157,6 +161,7 @@ return [
     'roles_system_warning' => 'Tingueu en compte que l\'accés a qualsevol dels tres permisos de dalt pot permetre que un usuari alteri els seus propis permisos o els privilegis d\'altres usuaris del sistema. Assigneu rols amb aquests permisos només a usuaris de confiança.',
     'role_asset_desc' => 'Aquests permisos controlen l\'accés per defecte als recursos del sistema. Els permisos de llibres, capítols i pàgines tindran més importància que aquests permisos.',
     'role_asset_admins' => 'Els administradors tenen accés automàticament a tot el contingut, però aquestes opcions poden mostrar o amagar opcions de la interfície d\'usuari.',
+    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
     'role_all' => 'Tot',
     'role_own' => 'Propi',
     'role_controlled_by_asset' => 'Controlat pel recurs en què es pugen',
@@ -295,6 +300,7 @@ return [
         'pl' => 'Polski',
         'pt' => 'Português',
         'pt_BR' => 'Português do Brasil',
+        'ro' => 'Română',
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',

@@ -10,6 +10,7 @@ use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\References\ReferenceFetcher;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -18,11 +19,13 @@ class BookshelfController extends Controller
 {
     protected BookshelfRepo $shelfRepo;
     protected ShelfContext $shelfContext;
+    protected ReferenceFetcher $referenceFetcher;
 
-    public function __construct(BookshelfRepo $shelfRepo, ShelfContext $shelfContext)
+    public function __construct(BookshelfRepo $shelfRepo, ShelfContext $shelfContext, ReferenceFetcher $referenceFetcher)
     {
         $this->shelfRepo = $shelfRepo;
         $this->shelfContext = $shelfContext;
+        $this->referenceFetcher = $referenceFetcher;
     }
 
     /**
@@ -124,6 +127,7 @@ class BookshelfController extends Controller
             'activity'                => $activities->entityActivity($shelf, 20, 1),
             'order'                   => $order,
             'sort'                    => $sort,
+            'referenceCount'          => $this->referenceFetcher->getPageReferenceCountToEntity($shelf),
         ]);
     }
 
