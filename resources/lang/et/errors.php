@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Objekti ei leitud',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Riiulit ei leitud',
     'book_not_found' => 'Raamatut ei leitud',
     'page_not_found' => 'Lehte ei leitud',
     'chapter_not_found' => 'Peatükki ei leitud',
