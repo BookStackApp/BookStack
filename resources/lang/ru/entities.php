@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Обновлено :timeLength',
     'meta_updated_name' => ':user обновил :timeLength',
     'meta_owned_name' => 'Владелец :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Ссылается на 1 страницу|Ссылается на :count страниц',
     'entity_select' => 'Выбор объекта',
     'entity_select_lack_permission' => 'У вас нет разрешения на выбор этого элемента',
     'images' => 'Изображения',
@@ -248,7 +248,7 @@ return [
     'pages_edit_content_link' => 'Изменить содержание',
     'pages_permissions_active' => 'Действующие разрешения на страницу',
     'pages_initial_revision' => 'Первоначальное издание',
-    'pages_references_update_revision' => 'System auto-update of internal links',
+    'pages_references_update_revision' => 'Система автоматически обновила внутренние ссылки',
     'pages_initial_name' => 'Новая страница',
     'pages_editing_draft_notification' => 'В настоящее время вы редактируете черновик, который был сохранён :timeDiff.',
     'pages_draft_edited_notification' => 'Эта страница была обновлена до этого момента. Рекомендуется отменить этот черновик.',
@@ -372,7 +372,7 @@ return [
     'convert_chapter_confirm' => 'Вы уверены, что хотите преобразовать эту главу?',
 
     // References
-    'references' => 'References',
-    'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references' => 'Ссылки',
+    'references_none' => 'Нет отслеживаемых ссылок на этот элемент.',
+    'references_to_desc' => 'Ниже показаны все известные страницы в системе, которые ссылаются на этот элемент.',
 ];
