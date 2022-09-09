@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Книга успешно отсортирована',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create'            => 'создал полку',
+    'bookshelf_create_notification'    => 'Полка успешно создана',
+    'bookshelf_create_from_book'    => 'преобразовал книгу в полку',
     'bookshelf_create_from_book_notification'    => 'Книга успешно преобразована в полку',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'обновил полку',
+    'bookshelf_update_notification'    => 'Полка успешно обновлена',
+    'bookshelf_delete'                 => 'удалил полку',
+    'bookshelf_delete_notification'    => 'Полка успешно удалена',
 
     // Favourites
     'favourite_add_notification' => '":name" добавлено в избранное',
