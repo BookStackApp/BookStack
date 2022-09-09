@@ -82,7 +82,7 @@ return [
     'maint_image_cleanup_nothing_found' => 'Не найдено ни одного бесполезного изображения!',
     'maint_send_test_email' => 'Отправить тестовое письмо',
     'maint_send_test_email_desc' => 'Отправить тестовое письмо на адрес электронной почты, указанный в профиле.',
-    'maint_send_test_email_run' => 'Отправить проверочное письмо',
+    'maint_send_test_email_run' => 'Отправить письмо',
     'maint_send_test_email_success' => 'На адрес :address отравлено письмо',
     'maint_send_test_email_mail_subject' => 'Проверка электронной почты',
     'maint_send_test_email_mail_greeting' => 'Доставка электронной почты работает!',
