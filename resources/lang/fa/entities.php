@@ -26,7 +26,7 @@ return [
     'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
-    'images' => 'عکس ها',
+    'images' => 'عکس‌ها',
     'my_recent_drafts' => 'پیش نویس های اخیر من',
     'my_recently_viewed' => 'بازدیدهای اخیر من',
     'my_most_viewed_favourites' => 'محبوب ترین موارد مورد علاقه من',
