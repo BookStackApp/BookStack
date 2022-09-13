@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'توسط :user ایجاد شده‌است',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'در 1 صفحه به آن ارجاع داده شده|در :count صفحه به آن ارجاع داده شده',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'عکس‌ها',
@@ -75,9 +75,9 @@ return [
     'search_update' => 'جستجو را به روز کنید',
 
     // Shelves
-    'shelf' => 'تاقچه',
+    'shelf' => 'قفسه',
     'shelves' => 'قفسه ها',
-    'x_shelves' => ':count تاقچه|:count تاقچه',
+    'x_shelves' => ':count قفسه|:count قفسه‌ها',
     'shelves_empty' => 'هیچ قفسه ای ایجاد نشده است',
     'shelves_create' => 'ایجاد قفسه جدید',
     'shelves_popular' => 'قفسه های محبوب',
@@ -265,7 +265,7 @@ return [
     'pages_is_template' => 'الگوی صفحه',
 
     // Editor Sidebar
-    'page_tags' => 'تگ های صفحه',
+    'page_tags' => 'برچسب‌های صفحه',
     'chapter_tags' => 'برچسب های فصل',
     'book_tags' => 'برچسب های کتاب',
     'shelf_tags' => 'برچسب های قفسه',
@@ -273,9 +273,9 @@ return [
     'tags' =>  'برچسب ها',
     'tag_name' =>  'نام برچسب',
     'tag_value' => 'مقدار برچسب (اختیاری)',
-    'tags_explain' => "برای دسته بندی بهتر مطالب خود چند تگ اضافه کنید.\n می توانید برای سازماندهی عمیق تر، یک مقدار به یک برچسب اختصاص دهید.",
+    'tags_explain' => "برای دسته بندی بهتر مطالب خود چند برچسب اضافه کنید.\nمی توانید برای سازماندهی عمیق‌تر، یک مقدار به یک برچسب اختصاص دهید.",
     'tags_add' => 'یک برچسب دیگر اضافه کنید',
-    'tags_remove' => 'این تگ را حذف کنید',
+    'tags_remove' => 'این برچسب را حذف کنید',
     'tags_usages' => 'مجموع استفاده از برچسب',
     'tags_assigned_pages' => 'به صفحات اختصاص داده شده است',
     'tags_assigned_chapters' => 'اختصاص به فصل',
@@ -284,7 +284,7 @@ return [
     'tags_x_unique_values' => ':count مقادیر منحصر به فرد',
     'tags_all_values' => 'همه ارزش ها',
     'tags_view_tags' => 'مشاهده برچسب ها',
-    'tags_view_existing_tags' => 'مشاهده تگ های موجود',
+    'tags_view_existing_tags' => 'مشاهده برچسب‌های موجود',
     'tags_list_empty_hint' => 'برچسب ها را می توان از طریق نوار کناری ویرایشگر صفحه یا هنگام ویرایش جزئیات یک کتاب، فصل یا قفسه اختصاص داد.',
     'attachments' => 'پیوست ها',
     'attachments_explain' => 'چند فایل را آپلود کنید یا چند پیوند را برای نمایش در صفحه خود ضمیمه کنید. اینها در نوار کناری صفحه قابل مشاهده هستند.',
@@ -372,7 +372,7 @@ return [
     'convert_chapter_confirm' => 'آیا از تبدیل این فصل مطمئن هستید؟',
 
     // References
-    'references' => 'References',
+    'references' => 'مراجع',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'در زیر تمام صفحات شناخته شده در سیستم که به این مورد پیوند دارند، نشان داده شده است.',
 ];
