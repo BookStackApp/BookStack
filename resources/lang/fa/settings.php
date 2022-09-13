@@ -240,7 +240,7 @@ return [
     'user_api_token_delete_success' => 'توکن API با موفقیت حذف شد',
 
     // Webhooks
-    'webhooks' => 'وب هوک ها',
+    'webhooks' => 'وب‌هوک‌ها',
     'webhooks_create' => 'ایجاد وب هوک جدید',
     'webhooks_none_created' => 'هنوز هیچ وب هوکی ایجاد نشده است.',
     'webhooks_edit' => 'ویرایش وب هوک',
