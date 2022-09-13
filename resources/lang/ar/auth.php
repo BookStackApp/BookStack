@@ -21,7 +21,7 @@ return [
     'email' => 'البريد الإلكتروني',
     'password' => 'كلمة المرور',
     'password_confirm' => 'تأكيد كلمة المرور',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'يجب أن تحتوي كلمة المرور على 8 خانات على الأقل',
     'forgot_password' => 'نسيت كلمة المرور؟',
     'remember_me' => 'تذكرني',
     'ldap_email_hint' => 'الرجاء إدخال عنوان بريد إلكتروني لاستخدامه مع الحساب.',
@@ -41,7 +41,7 @@ return [
     // Login auto-initiation
     'auto_init_starting' => 'Attempting Login',
     'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_start_link' => 'المتابعة مع المصادقة',
 
     // Password Reset
     'reset_password' => 'استعادة كلمة المرور',
