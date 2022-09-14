@@ -97,14 +97,14 @@ return [
     'shelves_delete_named' => 'Видалити полицю :name',
     'shelves_delete_explain' => "Це видалить полицю з ім'ям ':name'. Якщо містить книги, не буде видалено.",
     'shelves_delete_confirmation' => 'Ви упевнені, що хочете видалити цю полицю?',
-    'shelves_permissions' => 'Shelf Permissions',
-    'shelves_permissions_updated' => 'Shelf Permissions Updated',
-    'shelves_permissions_active' => 'Shelf Permissions Active',
-    'shelves_permissions_cascade_warning' => 'Permissions on shelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions' => 'Дозволи полиці',
+    'shelves_permissions_updated' => 'Дозволи полиці оновлено',
+    'shelves_permissions_active' => 'Дозволи полиці активні',
+    'shelves_permissions_cascade_warning' => 'Дозволи на полицях не каскадують автоматично до вміщених книг. Це тому, що книга може стояти на кількох полицях. Однак дозволи можна скопіювати до дочірніх книг за допомогою наведеної нижче опції.',
     'shelves_copy_permissions_to_books' => 'Копіювати дозволи на книги',
     'shelves_copy_permissions' => 'Копіювати дозволи',
-    'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this shelf to all books contained within. Before activating, ensure any changes to the permissions of this shelf have been saved.',
-    'shelves_copy_permission_success' => 'Shelf permissions copied to :count books',
+    'shelves_copy_permissions_explain' => 'Це застосує поточні налаштування дозволів цієї полиці до всіх книг, які містяться в ній. Перед активацією переконайтеся, що будь-які зміни в дозволах цієї полиці збережено.',
+    'shelves_copy_permission_success' => 'Права полиці скопійовано до :count книг',
 
     // Books
     'book' => 'Книга',
@@ -171,7 +171,7 @@ return [
     'chapters_permissions_active' => 'Діючі дозволи на розділ',
     'chapters_permissions_success' => 'Дозволи на розділ оновлено',
     'chapters_search_this' => 'Шукати в цьому розділі',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => 'Сортувати книгу',
 
     // Pages
     'page' => 'Сторінка',
@@ -248,7 +248,7 @@ return [
     'pages_edit_content_link' => 'Редагувати вміст',
     'pages_permissions_active' => 'Активні дозволи сторінки',
     'pages_initial_revision' => 'Початкова публікація',
-    'pages_references_update_revision' => 'System auto-update of internal links',
+    'pages_references_update_revision' => 'Автоматичне оновлення системних посилань',
     'pages_initial_name' => 'Нова сторінка',
     'pages_editing_draft_notification' => 'Ви наразі редагуєте чернетку, що була збережена останньою :timeDiff.',
     'pages_draft_edited_notification' => 'З того часу ця сторінка була оновлена. Рекомендуємо відмовитися від цього проекту.',
@@ -372,7 +372,7 @@ return [
     'convert_chapter_confirm' => 'Ви впевнені, що хочете конвертувати цей розділ?',
 
     // References
-    'references' => 'References',
-    'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references' => 'Посилання',
+    'references_none' => 'Немає відслідковуваних посилань для цього елемента.',
+    'references_to_desc' => 'Показані нижче всі відомі сторінки в системі, що посилаються на цей елемент.',
 ];
