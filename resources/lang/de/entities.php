@@ -92,19 +92,19 @@ return [
     'shelves_empty_contents' => 'Diesem Regal sind keine Bücher zugewiesen',
     'shelves_edit_and_assign' => 'Regal bearbeiten um Bücher hinzuzufügen',
     'shelves_edit_named' => 'Edit Shelf :name',
-    'shelves_edit' => 'Edit Shelf',
-    'shelves_delete' => 'Delete Shelf',
+    'shelves_edit' => 'Regal bearbeiten',
+    'shelves_delete' => 'Regal löschen',
     'shelves_delete_named' => 'Delete Shelf :name',
     'shelves_delete_explain' => "This will delete the shelf with the name ':name'. Contained books will not be deleted.",
     'shelves_delete_confirmation' => 'Are you sure you want to delete this shelf?',
-    'shelves_permissions' => 'Shelf Permissions',
-    'shelves_permissions_updated' => 'Shelf Permissions Updated',
-    'shelves_permissions_active' => 'Shelf Permissions Active',
+    'shelves_permissions' => 'Regalberechtigungen',
+    'shelves_permissions_updated' => 'Regalberechtigungen aktualisiert',
+    'shelves_permissions_active' => 'Regalberechtigungen aktiv',
     'shelves_permissions_cascade_warning' => 'Permissions on shelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'Kopiere die Berechtigungen zum Buch',
     'shelves_copy_permissions' => 'Berechtigungen kopieren',
     'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this shelf to all books contained within. Before activating, ensure any changes to the permissions of this shelf have been saved.',
-    'shelves_copy_permission_success' => 'Shelf permissions copied to :count books',
+    'shelves_copy_permission_success' => 'Regalberechtigungen auf :count Bücher kopiert',
 
     // Books
     'book' => 'Buch',
@@ -372,7 +372,7 @@ return [
     'convert_chapter_confirm' => 'Sind Sie sicher, dass Sie dieses Kapitel umwandeln möchten?',
 
     // References
-    'references' => 'References',
+    'references' => 'Verweise',
     'references_none' => 'There are no tracked references to this item.',
     'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
 ];
