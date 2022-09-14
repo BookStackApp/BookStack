@@ -164,7 +164,7 @@ return [
     'link_selector' => 'Inhalt verlinken',
     'shortcuts' => 'Verknüpfungen',
     'shortcut' => 'Verknüpfung',
-    'shortcuts_intro' => 'Die folgenden Verknüpfungen sind im Editor verfügbar:',
+    'shortcuts_intro' => 'Die folgenden Kürzel sind im Editor verfügbar:',
     'windows_linux' => '(Windows/Linux)',
     'mac' => '(Mac)',
     'description' => 'Beschreibung',
