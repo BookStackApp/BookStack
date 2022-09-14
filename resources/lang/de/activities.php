@@ -39,13 +39,13 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_notification'    => 'Regal erfolgreich erstellt',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Buch erfolgreich in ein Regal konvertiert',
     'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_update_notification'    => 'Regal erfolgreich aktualisiert',
     'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Regal erfolgreich gelöscht',
 
     // Favourites
     'favourite_add_notification' => '":name" wurde zu deinen Favoriten hinzugefügt',
