@@ -147,7 +147,7 @@ return [
     'open_link_current' => 'Aktuellem Fenster',
     'open_link_new' => 'Neuem Fenster',
     'insert_collapsible' => 'Einklappbaren Block einfügen',
-    'collapsible_unwrap' => 'Auspacken',
+    'collapsible_unwrap' => 'Entfernen',
     'edit_label' => 'Beschriftung bearbeiten',
     'toggle_open_closed' => 'Öffnen/Schließen',
     'collapsible_edit' => 'Einklappbaren Block bearbeiten',
