@@ -38,13 +38,13 @@ return [
     'book_sort_notification'      => 'Das Buch wurde erfolgreich umsortiert',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create'            => 'erstelltes Regal',
     'bookshelf_create_notification'    => 'Regal erfolgreich erstellt',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create_from_book'    => 'zu Regal konvertiertes Buch',
     'bookshelf_create_from_book_notification'    => 'Buch erfolgreich in ein Regal konvertiert',
-    'bookshelf_update'                 => 'updated shelf',
+    'bookshelf_update'                 => 'aktualisiertes Regal',
     'bookshelf_update_notification'    => 'Regal erfolgreich aktualisiert',
-    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete'                 => 'gelöschtes Regal',
     'bookshelf_delete_notification'    => 'Regal erfolgreich gelöscht',
 
     // Favourites
