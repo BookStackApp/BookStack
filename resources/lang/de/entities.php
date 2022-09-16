@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Zuletzt aktualisiert: :timeLength',
     'meta_updated_name' => 'Zuletzt aktualisiert: :timeLength von :user',
     'meta_owned_name' => 'Im Besitz von :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Verwiesen auf 1 Seite|Verwiesen auf :count Seiten',
     'entity_select' => 'Eintrag auswählen',
     'entity_select_lack_permission' => 'Sie haben nicht die benötigte Berechtigung, um dieses Element auszuwählen',
     'images' => 'Bilder',
@@ -91,10 +91,10 @@ return [
     'shelves_drag_books' => 'Ziehen Sie Bücher nach unten, um sie diesem Regal hinzuzufügen',
     'shelves_empty_contents' => 'Diesem Regal sind keine Bücher zugewiesen',
     'shelves_edit_and_assign' => 'Regal bearbeiten um Bücher hinzuzufügen',
-    'shelves_edit_named' => 'Edit Shelf :name',
+    'shelves_edit_named' => 'Regal :name bearbeiten',
     'shelves_edit' => 'Regal bearbeiten',
     'shelves_delete' => 'Regal löschen',
-    'shelves_delete_named' => 'Delete Shelf :name',
+    'shelves_delete_named' => 'Regal :name löschen',
     'shelves_delete_explain' => "Dadurch wird das Regal mit dem Namen ':name' gelöscht. Die darin enthaltenen Bücher werden nicht gelöscht.",
     'shelves_delete_confirmation' => 'Sind Sie sicher, dass Sie dieses Regal löschen möchten?',
     'shelves_permissions' => 'Regalberechtigungen',
@@ -248,7 +248,7 @@ return [
     'pages_edit_content_link' => 'Inhalt bearbeiten',
     'pages_permissions_active' => 'Seiten-Berechtigungen aktiv',
     'pages_initial_revision' => 'Erste Veröffentlichung',
-    'pages_references_update_revision' => 'System auto-update of internal links',
+    'pages_references_update_revision' => 'Automatische Systemaktualisierung interner Links',
     'pages_initial_name' => 'Neue Seite',
     'pages_editing_draft_notification' => 'Sie bearbeiten momenten einen Entwurf, der zuletzt :timeDiff gespeichert wurde.',
     'pages_draft_edited_notification' => 'Diese Seite wurde seit diesem Zeitpunkt verändert. Wir empfehlen Ihnen, diesen Entwurf zu verwerfen.',
@@ -373,6 +373,6 @@ return [
 
     // References
     'references' => 'Verweise',
-    'references_none' => 'There are no tracked references to this item.',
+    'references_none' => 'Es gibt keine nachverfolgten Referenzen zu diesem Element.',
     'references_to_desc' => 'Nachfolgend sind alle bekannten Seiten im System aufgeführt, die auf diesen Artikel verweisen.',
 ];
