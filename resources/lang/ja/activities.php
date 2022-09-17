@@ -29,7 +29,7 @@ return [
     'book_create'                 => 'がブックを作成:',
     'book_create_notification'    => 'ブックを作成しました',
     'book_create_from_chapter'              => 'がチャプターをブックに変換:',
-    'book_create_from_chapter_notification' => 'チャプターがブックへ正常に変換されました',
+    'book_create_from_chapter_notification' => 'チャプターをブックに変換しました',
     'book_update'                 => 'がブックを更新:',
     'book_update_notification'    => 'ブックを更新しました',
     'book_delete'                 => 'がブックを削除:',
@@ -41,7 +41,7 @@ return [
     'bookshelf_create'            => 'が本棚を作成:',
     'bookshelf_create_notification'    => '本棚を作成しました',
     'bookshelf_create_from_book'    => 'がブックを本棚に変換:',
-    'bookshelf_create_from_book_notification'    => 'ブックが本棚へ正常に変換されました',
+    'bookshelf_create_from_book_notification'    => 'ブックを本棚に変換しました',
     'bookshelf_update'                 => 'が本棚を更新:',
     'bookshelf_update_notification'    => '本棚を更新しました',
     'bookshelf_delete'                 => 'が本棚を削除:',
@@ -52,20 +52,20 @@ return [
     'favourite_remove_notification' => '":name"がお気に入りから削除されました',
 
     // MFA
-    'mfa_setup_method_notification' => '多要素認証が正常に設定されました',
-    'mfa_remove_method_notification' => '多要素認証が正常に解除されました',
+    'mfa_setup_method_notification' => '多要素認証を設定しました',
+    'mfa_remove_method_notification' => '多要素認証を解除しました',
 
     // Webhooks
     'webhook_create' => 'がWebhookを作成:',
-    'webhook_create_notification' => 'Webhookが正常に作成されました',
+    'webhook_create_notification' => 'Webhookを作成しました',
     'webhook_update' => 'がWebhookを更新:',
-    'webhook_update_notification' => 'Webhookが正常に更新されました',
+    'webhook_update_notification' => 'Webhookを更新しました',
     'webhook_delete' => 'がWebhookを削除:',
-    'webhook_delete_notification' => 'Webhookが正常に削除されました',
+    'webhook_delete_notification' => 'Webhookを削除しました',
 
     // Users
-    'user_update_notification' => 'ユーザーが正常に更新されました',
-    'user_delete_notification' => 'ユーザーが正常に削除されました',
+    'user_update_notification' => 'ユーザーを更新しました',
+    'user_delete_notification' => 'ユーザーを削除しました',
 
     // Other
     'commented_on'                => 'がコメント:',
