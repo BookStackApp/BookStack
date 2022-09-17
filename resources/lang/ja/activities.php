@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'ブックが再度並び変えられました',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create'            => 'が本棚を作成:',
+    'bookshelf_create_notification'    => '本棚を作成しました',
+    'bookshelf_create_from_book'    => 'がブックを本棚に変換:',
     'bookshelf_create_from_book_notification'    => 'ブックが本棚へ正常に変換されました',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'が本棚を更新:',
+    'bookshelf_update_notification'    => '本棚を更新しました',
+    'bookshelf_delete'                 => 'が本棚を削除:',
+    'bookshelf_delete_notification'    => '本棚を削除しました',
 
     // Favourites
     'favourite_add_notification' => '":name"がお気に入りに追加されました',
@@ -56,11 +56,11 @@ return [
     'mfa_remove_method_notification' => '多要素認証が正常に解除されました',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
+    'webhook_create' => 'がWebhookを作成:',
     'webhook_create_notification' => 'Webhookが正常に作成されました',
-    'webhook_update' => 'updated webhook',
+    'webhook_update' => 'がWebhookを更新:',
     'webhook_update_notification' => 'Webhookが正常に更新されました',
-    'webhook_delete' => 'deleted webhook',
+    'webhook_delete' => 'がWebhookを削除:',
     'webhook_delete_notification' => 'Webhookが正常に削除されました',
 
     // Users
