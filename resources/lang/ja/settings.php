@@ -89,10 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'おめでとうございます！この通知メールが届いたということは、あなたのメール設定は適切であると思われます。',
     'maint_recycle_bin_desc' => '削除された本棚・ブック・チャプター・ページはごみ箱に送られるため、復元したり完全に削除したりできます。システムの設定によっては、ごみ箱の古いアイテムがしばらくすると自動的に削除される場合があります。',
     'maint_recycle_bin_open' => 'ごみ箱を開く',
-    'maint_regen_references' => 'Regenerate References',
-    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
-    'maint_regen_references_success' => 'Reference index has been regenerated!',
-    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
+    'maint_regen_references' => '参照を再生成',
+    'maint_regen_references_desc' => 'この操作により、データベース内の項目間参照インデックスが再構築されます。これは通常自動的に処理されますが、この操作は古いコンテンツや非公式の方法で追加されたコンテンツのインデックス作成に役立ちます。',
+    'maint_regen_references_success' => '参照インデックスが再生成されました！',
+    'maint_timeout_command_note' => '注意: この操作の実行には時間がかかる場合があり、一部のWeb環境ではタイムアウトの問題が発生する可能性があります。別の方法として、ターミナルコマンドを利用してこの操作を実行することもできます。',
 
     // Recycle Bin
     'recycle_bin' => 'ごみ箱',
@@ -161,7 +161,7 @@ return [
     'roles_system_warning' => '上記の3つの権限のいずれかを付与することは、ユーザーが自分の特権またはシステム内の他のユーザーの特権を変更できる可能性があることに注意してください。これらの権限は信頼できるユーザーにのみ割り当ててください。',
     'role_asset_desc' => '各アセットに対するデフォルトの権限を設定します。ここで設定した権限が優先されます。',
     'role_asset_admins' => '管理者にはすべてのコンテンツへのアクセス権が自動的に付与されますが、これらのオプションはUIオプションを表示または非表示にする場合があります。',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'これは画像マネージャー内の可視性に関連しています。アップロードされた画像ファイルへの実際のアクセスは、システムの画像保存オプションに依存します。',
     'role_all' => '全て',
     'role_own' => '自身',
     'role_controlled_by_asset' => 'このアセットに対し、右記の操作を許可:',
