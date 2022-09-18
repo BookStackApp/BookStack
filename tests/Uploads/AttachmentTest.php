@@ -80,7 +80,7 @@ class AttachmentTest extends TestCase
 
         $expectedResp = [
             'name'       => $fileName,
-            'uploaded_to'=> $page->id,
+            'uploaded_to' => $page->id,
             'extension'  => 'txt',
             'order'      => 1,
             'created_by' => $admin->id,

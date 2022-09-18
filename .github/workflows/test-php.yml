@@ -1,11 +1,11 @@
-name: phpunit
+name: test-php
 
 on: [push, pull_request]
 
 jobs:
   build:
     if: ${{ github.ref != 'refs/heads/l10n_development' }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         php: ['7.4', '8.0', '8.1']
@@ -24,10 +24,11 @@ jobs:
         echo "::set-output name=dir::$(composer config cache-files-dir)"
 
     - name: Cache composer packages
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ matrix.php }}
+        restore-keys: ${{ runner.os }}-composer-
 
     - name: Start Database
       run: |
@@ -48,5 +49,5 @@ jobs:
         php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
         php${{ matrix.php }} artisan db:seed --force -n --class=DummyContentSeeder --database=mysql_testing
 
-    - name: phpunit
+    - name: Run PHP tests
       run: php${{ matrix.php }} ./vendor/bin/phpunit

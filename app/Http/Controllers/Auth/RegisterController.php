@@ -27,7 +27,6 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
     use RegistersUsers;
 
     protected SocialAuthService $socialAuthService;

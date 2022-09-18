@@ -315,7 +315,7 @@ class ImageService
     {
         try {
             $thumb = $this->imageTool->make($imageData);
-        } catch (ErrorException|NotSupportedException $e) {
+        } catch (ErrorException | NotSupportedException $e) {
             throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
         }
 
