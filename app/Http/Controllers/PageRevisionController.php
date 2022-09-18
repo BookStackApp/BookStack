@@ -91,7 +91,7 @@ class PageRevisionController extends Controller
         // TODO - Refactor PageContent so we don't need to juggle this
         $page->html = $revision->html;
         $page->html = (new PageContent($page))->render();
-        $this->setPageTitle(trans('entities.pages_revision_named', ['pageName'=>$page->getShortName()]));
+        $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));
 
         return view('pages.revision', [
             'page'     => $page,

@@ -147,7 +147,7 @@ class BookController extends Controller
     {
         $book = $this->bookRepo->getBySlug($slug);
         $this->checkOwnablePermission('book-update', $book);
-        $this->setPageTitle(trans('entities.books_edit_named', ['bookName'=>$book->getShortName()]));
+        $this->setPageTitle(trans('entities.books_edit_named', ['bookName' => $book->getShortName()]));
 
         return view('books.edit', ['book' => $book, 'current' => $book]);
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
+    <description>The coding standard for BookStack</description>
+
+    <file>app</file>
+    <file>bootstrap/app.php</file>
+    <file>database</file>
+    <file>public/index.php</file>
+    <file>routes</file>
+    <file>tests</file>
+
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="parallel" value="75"/>
+    <arg value="np"/>
+
+    <rule  ref="PSR12"/>
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName">
+        <exclude-pattern>./tests/*</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+        <exclude-pattern>./tests/*</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>./database/*</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR12.Files.FileHeader.IncorrectOrder">
+        <exclude-pattern>./app/Config/*</exclude-pattern>
+    </rule>
+
+</ruleset>
