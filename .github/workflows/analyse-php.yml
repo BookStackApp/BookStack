@@ -1,21 +1,18 @@
-name: phpstan
+name: analyse-php
 
 on: [push, pull_request]
 
 jobs:
   build:
     if: ${{ github.ref != 'refs/heads/l10n_development' }}
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        php: ['7.4']
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v1
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: ${{ matrix.php }}
+        php-version: 8.1
         extensions: gd, mbstring, json, curl, xml, mysql, ldap
 
     - name: Get Composer Cache Directory
@@ -24,13 +21,14 @@ jobs:
         echo "::set-output name=dir::$(composer config cache-files-dir)"
 
     - name: Cache composer packages
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ matrix.php }}
+        key: ${{ runner.os }}-composer-8.1
+        restore-keys: ${{ runner.os }}-composer-
 
     - name: Install composer dependencies
       run: composer install --prefer-dist --no-interaction --ansi
 
-    - name: Run PHPStan
-      run: php${{ matrix.php }} ./vendor/bin/phpstan analyse --memory-limit=2G
+    - name: Run static analysis check
+      run: composer check-static

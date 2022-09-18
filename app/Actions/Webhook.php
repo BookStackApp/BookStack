@@ -22,9 +22,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Webhook extends Model implements Loggable
 {
-    protected $fillable = ['name', 'endpoint', 'timeout'];
-
     use HasFactory;
+
+    protected $fillable = ['name', 'endpoint', 'timeout'];
 
     protected $casts = [
         'last_called_at'  => 'datetime',

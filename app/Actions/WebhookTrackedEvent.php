@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class WebhookTrackedEvent extends Model
 {
-    protected $fillable = ['event'];
-
     use HasFactory;
+
+    protected $fillable = ['event'];
 }
