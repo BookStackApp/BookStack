@@ -42,7 +42,7 @@ class PageEditActivity
             $userMessage = trans('entities.pages_draft_edit_active.start_b', ['userName' => $firstDraft->createdBy->name ?? '']);
         }
 
-        $timeMessage = trans('entities.pages_draft_edit_active.time_b', ['minCount'=> 60]);
+        $timeMessage = trans('entities.pages_draft_edit_active.time_b', ['minCount' => 60]);
 
         return trans('entities.pages_draft_edit_active.message', ['start' => $userMessage, 'time' => $timeMessage]);
     }

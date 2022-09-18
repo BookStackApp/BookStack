@@ -50,6 +50,7 @@
         "nunomaduro/collision": "^5.10",
         "nunomaduro/larastan": "^1.0",
         "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.7",
         "ssddanbrown/asserthtml": "^1.0"
     },
     "autoload": {

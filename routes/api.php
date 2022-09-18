@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Routes for the BookStack API.
+ * Routes have a uri prefix of /api/.
+ * Controllers are all within app/Http/Controllers/Api.
+ */
+
 use BookStack\Http\Controllers\Api\ApiDocsController;
 use BookStack\Http\Controllers\Api\AttachmentApiController;
 use BookStack\Http\Controllers\Api\BookApiController;
@@ -14,11 +20,6 @@ use BookStack\Http\Controllers\Api\SearchApiController;
 use BookStack\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
 
-/**
- * Routes for the BookStack API.
- * Routes have a uri prefix of /api/.
- * Controllers are all within app/Http/Controllers/Api.
- */
 Route::get('docs.json', [ApiDocsController::class, 'json']);
 
 Route::get('attachments', [AttachmentApiController::class, 'list']);
