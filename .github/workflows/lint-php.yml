@@ -1,0 +1,19 @@
+name: lint-php
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    if: ${{ github.ref != 'refs/heads/l10n_development' }}
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.1
+        tools: phpcs
+
+    - name: Run formatting check
+      run: composer lint
