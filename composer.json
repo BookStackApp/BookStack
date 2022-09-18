@@ -69,6 +69,7 @@
         }
     },
     "scripts": {
+        "check-static": "phpstan --memory-limit=2g",
         "format": "phpcbf",
         "lint": "phpcs",
         "test": "phpunit",
