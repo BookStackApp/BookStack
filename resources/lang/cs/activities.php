@@ -29,7 +29,7 @@ return [
     'book_create'                 => 'vytvořil/a knihu',
     'book_create_notification'    => 'Kniha byla úspěšně vytvořena',
     'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter_notification' => 'Kapitola byla úspěšně převedena na knihu',
     'book_update'                 => 'aktualizoval/a knihu',
     'book_update_notification'    => 'Kniha byla úspěšně aktualizována',
     'book_delete'                 => 'odstranil/a knihu',
