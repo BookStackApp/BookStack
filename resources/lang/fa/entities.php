@@ -103,7 +103,7 @@ return [
     'shelves_permissions_cascade_warning' => 'Permissions on shelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
     'shelves_copy_permissions_to_books' => 'کپی مجوزها در کتابها',
     'shelves_copy_permissions' => 'مجوزهای کپی',
-    'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this shelf to all books contained within. Before activating, ensure any changes to the permissions of this shelf have been saved.',
+    'shelves_copy_permissions_explain' => 'با این کار تنظیمات مجوز فعلی این قفسه برای همه کتاب‌های موجود در آن اعمال می‌شود. قبل از فعال کردن، مطمئن شوید که هر گونه تغییر در مجوزهای این قفسه، ذخیره شده است.',
     'shelves_copy_permission_success' => 'Shelf permissions copied to :count books',
 
     // Books
