@@ -109,9 +109,10 @@ class Saml2Service
         $errors = $toolkit->getErrors();
 
         if (!empty($errors)) {
-            throw new Error(
-                'Invalid ACS Response: ' . implode(', ', $errors)
-            );
+            $reason = $toolkit->getLastErrorReason();
+            $message = 'Invalid ACS Response; Errors: ' . implode(', ', $errors);
+            $message .= $reason ? "; Reason: {$reason}" : '';
+            throw new Error($message);
         }
 
         if (!$toolkit->isAuthenticated()) {
