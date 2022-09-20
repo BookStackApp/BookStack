@@ -6,7 +6,7 @@ return [
 
     // Permissions
     'permission' => 'Sie haben keine Zugriffsberechtigung auf die angeforderte Seite.',
-    'permissionJson' => 'Sie haben keine Berechtigung, die angeforderte Aktion auszuführen.',
+    'permissionJson' => 'Sie haben keine Berechtigung die angeforderte Aktion auszuführen.',
 
     // Auth
     'error_user_exists_different_creds' => 'Ein Benutzer mit der E-Mail-Adresse :email ist bereits mit anderen Anmeldedaten registriert.',
@@ -19,9 +19,9 @@ return [
     'ldap_extension_not_installed' => 'LDAP-PHP-Erweiterung ist nicht installiert.',
     'ldap_cannot_connect' => 'Die Verbindung zum LDAP-Server ist fehlgeschlagen. Beim initialen Verbindungsaufbau trat ein Fehler auf.',
     'saml_already_logged_in' => 'Sie sind bereits angemeldet',
-    'saml_user_not_registered' => 'Kein Benutzer mit ID :name registriert und die automatische Registrierung ist deaktiviert',
+    'saml_user_not_registered' => 'Es ist kein Benutzer mit ID :name registriert und die automatische Registrierung ist deaktiviert',
     'saml_no_email_address' => 'Es konnte keine E-Mail-Adresse für diesen Benutzer in den vom externen Authentifizierungssystem zur Verfügung gestellten Daten gefunden werden',
-    'saml_invalid_response_id' => 'Die Anfrage vom externen Authentifizierungssystem wird von einem von dieser Anwendung gestarteten Prozess nicht erkannt. Das Zurückgehen nach einem Login könnte dieses Problem verursachen.',
+    'saml_invalid_response_id' => 'Die Anfrage vom externen Authentifizierungssystem wird von einem von dieser Anwendung gestarteten Prozess nicht erkannt. Das Zurückgehen nach einer Anmeldung könnte dieses Problem verursachen.',
     'saml_fail_authed' => 'Anmeldung mit :system fehlgeschlagen, System konnte keine erfolgreiche Autorisierung bereitstellen',
     'oidc_already_logged_in' => 'Bereits angemeldet',
     'oidc_user_not_registered' => 'Der Benutzer :name ist nicht registriert und die automatische Registrierung ist deaktiviert',
@@ -33,11 +33,11 @@ return [
     'social_account_email_in_use' => 'Die E-Mail-Adresse ":email" ist bereits registriert. Wenn Sie bereits registriert sind, können Sie Ihr :socialAccount-Konto in Ihren Profil-Einstellungen verknüpfen.',
     'social_account_existing' => 'Dieses :socialAccount-Konto ist bereits mit Ihrem Profil verknüpft.',
     'social_account_already_used_existing' => 'Dieses :socialAccount-Konto wird bereits von einem anderen Benutzer verwendet.',
-    'social_account_not_used' => 'Dieses :socialAccount-Konto ist bisher keinem Benutzer zugeordnet. Sie können es in Ihren Profil-Einstellung.',
+    'social_account_not_used' => 'Dieses :socialAccount-Konto ist bisher keinem Benutzer zugeordnet. Sie können es in Ihren Profil-Einstellungen zuordnen. ',
     'social_account_register_instructions' => 'Wenn Sie bisher keinen Social-Media Konto besitzen, können Sie ein solches Konto mit der :socialAccount Option anlegen.',
     'social_driver_not_found' => 'Treiber für Social-Media-Konten nicht gefunden',
     'social_driver_not_configured' => 'Ihr :socialAccount-Konto ist nicht korrekt konfiguriert.',
-    'invite_token_expired' => 'Dieser Einladungslink ist abgelaufen. Sie können stattdessen versuchen, Ihr Passwort zurückzusetzen.',
+    'invite_token_expired' => 'Dieser Einladungslink ist abgelaufen. Sie können stattdessen versuchen Ihr Passwort zurückzusetzen.',
 
     // System
     'path_not_writable' => 'Die Datei kann nicht in den angegebenen Pfad :filePath hochgeladen werden. Stellen Sie sicher, dass dieser Ordner auf dem Server beschreibbar ist.',
@@ -78,7 +78,7 @@ return [
 
     // Comments
     'comment_list' => 'Beim Abrufen der Kommentare ist ein Fehler aufgetreten.',
-    'cannot_add_comment_to_draft' => 'Du kannst keine Kommentare zu einem Entwurf hinzufügen.',
+    'cannot_add_comment_to_draft' => 'Sie können keine Kommentare zu einem Entwurf hinzufügen.',
     'comment_add' => 'Beim Hinzufügen des Kommentars ist ein Fehler aufgetreten.',
     'comment_delete' => 'Beim Löschen des Kommentars ist ein Fehler aufgetreten.',
     'empty_comment' => 'Kann keinen leeren Kommentar hinzufügen.',
