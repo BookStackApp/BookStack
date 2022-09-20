@@ -44,7 +44,7 @@ return [
     'bookshelf_create_from_book_notification'    => 'کتاب با موفقیت به یک قفسه تبدیل شد',
     'bookshelf_update'                 => 'به روزرسانی قفسه',
     'bookshelf_update_notification'    => 'قفسه با موفقیت به روزرسانی شد',
-    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_delete'                 => 'قفسه حذف شده',
     'bookshelf_delete_notification'    => 'قفسه کتاب با موفقیت حذف شد',
 
     // Favourites
