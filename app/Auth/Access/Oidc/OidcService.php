@@ -2,7 +2,6 @@
 
 namespace BookStack\Auth\Access\Oidc;
 
-use function auth;
 use BookStack\Auth\Access\GroupSyncService;
 use BookStack\Auth\Access\LoginService;
 use BookStack\Auth\Access\RegistrationService;
@@ -10,14 +9,11 @@ use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
-use function config;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Client\ClientInterface as HttpClient;
-use function trans;
-use function url;
 
 /**
  * Class OpenIdConnectService

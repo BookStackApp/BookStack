@@ -8,7 +8,7 @@ return [
     // Pages
     'page_create'                 => 'صفحه ایجاد شده',
     'page_create_notification'    => 'صفحه با موفقیت ایجاد شد',
-    'page_update'                 => 'صفحه بروز شده',
+    'page_update'                 => 'به روزرسانی صفحه',
     'page_update_notification'    => 'صفحه با موفقیت به روزرسانی شد',
     'page_delete'                 => 'حذف صفحه',
     'page_delete_notification'    => 'صفحه با موفقیت حذف شد',
@@ -42,9 +42,9 @@ return [
     'bookshelf_create_notification'    => 'قفسه کتاب با موفقیت ایجاد شد',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'کتاب با موفقیت به یک قفسه تبدیل شد',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
+    'bookshelf_update'                 => 'به روزرسانی قفسه',
+    'bookshelf_update_notification'    => 'قفسه با موفقیت به روزرسانی شد',
+    'bookshelf_delete'                 => 'قفسه حذف شده',
     'bookshelf_delete_notification'    => 'قفسه کتاب با موفقیت حذف شد',
 
     // Favourites

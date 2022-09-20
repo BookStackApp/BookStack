@@ -105,7 +105,7 @@ class LdapService
             'name'  => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
             'dn'    => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
-            'avatar'=> $thumbnailAttr ? $this->getUserResponseProperty($user, $thumbnailAttr, null) : null,
+            'avatar' => $thumbnailAttr ? $this->getUserResponseProperty($user, $thumbnailAttr, null) : null,
         ];
 
         if ($this->config['dump_user_details']) {

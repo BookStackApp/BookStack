@@ -25,8 +25,8 @@ return [
     'saml_fail_authed' => 'Anmeldung mit :system fehlgeschlagen, System konnte keine erfolgreiche Autorisierung bereitstellen',
     'oidc_already_logged_in' => 'Bereits angemeldet',
     'oidc_user_not_registered' => 'Der Benutzer :name ist nicht registriert und die automatische Registrierung ist deaktiviert',
-    'oidc_no_email_address' => 'Es konnte keine E-Mail-Adresse für diesen Benutzer in den vom externen Authentifizierungssystem zur Verfügung gestellten Daten gefunden werden',
-    'oidc_fail_authed' => 'Anmeldung mit :system fehlgeschlagen, System konnte keine erfolgreiche Autorisierung bereitstellen',
+    'oidc_no_email_address' => 'Es konnte keine E-Mail-Adresse für diesen Benutzer in den vom externen Authentifizierungssystem bereitgestellten Daten gefunden werden',
+    'oidc_fail_authed' => 'Anmeldung mit :system fehlgeschlagen, System hat keine erfolgreiche Autorisierung geliefert',
     'social_no_action_defined' => 'Es ist keine Aktion definiert',
     'social_login_bad_response' => "Fehler bei :socialAccount Login: \n:error",
     'social_account_in_use' => 'Dieses :socialAccount-Konto wird bereits verwendet. Bitte melde dich mit dem :socialAccount-Konto an.',
@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Eintrag nicht gefunden',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Regal nicht gefunden',
     'book_not_found' => 'Buch nicht gefunden',
     'page_not_found' => 'Seite nicht gefunden',
     'chapter_not_found' => 'Kapitel nicht gefunden',

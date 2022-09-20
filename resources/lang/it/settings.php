@@ -90,7 +90,7 @@ return [
     'maint_recycle_bin_desc' => 'Le librerie, i libri, i capitoli e le pagine cancellati vengono inviati al cestino in modo che possano essere ripristinati o eliminati definitivamente. Gli elementi più vecchi nel cestino possono essere automaticamente rimossi dopo un certo periodo, a seconda della configurazione del sistema.',
     'maint_recycle_bin_open' => 'Apri il Cestino',
     'maint_regen_references' => 'Rigenera Riferimenti',
-    'maint_regen_references_desc' => 'Questa azione ricostruirà l\'indice di dei riferimenti incrociati all\'interno del database. Di solito questa operazione è gestita automaticamente, ma può essere utile per indicizzare contenuti vecchi o aggiunti con metodi non ufficiali.',
+    'maint_regen_references_desc' => 'Questa azione ricostruirà l\'indice dei riferimenti incrociati all\'interno del database. Di solito questa operazione è gestita automaticamente, ma può essere utile per indicizzare contenuti vecchi o aggiunti con metodi non ufficiali.',
     'maint_regen_references_success' => 'L\'indice di riferimento è stato rigenerato!',
     'maint_timeout_command_note' => 'Nota: Questa azione può richiedere del tempo per essere eseguita e può causare problemi di timeout in alcuni ambienti Web. In alternativa, questa azione può essere eseguita usando un comando da terminale.',
 
@@ -161,7 +161,7 @@ return [
     'roles_system_warning' => 'Siate consapevoli che l\'accesso a uno dei tre permessi qui sopra, può consentire a un utente di modificare i propri privilegi o i privilegi di altri nel sistema. Assegna ruoli con questi permessi solo ad utenti fidati.',
     'role_asset_desc' => 'Questi permessi controllano l\'accesso di default alle entità. I permessi nei Libri, Capitoli e Pagine sovrascriveranno questi.',
     'role_asset_admins' => 'Gli amministratori hanno automaticamente accesso a tutti i contenuti ma queste opzioni possono mostrare o nascondere le opzioni della UI.',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'Questo si riferisce alla visibilità all\'interno del gestore di immagini. L\'accesso effettivo ai file di immagine caricati dipenderà dall\'opzione di archiviazione delle immagini di sistema.',
     'role_all' => 'Tutti',
     'role_own' => 'Propri',
     'role_controlled_by_asset' => 'Controllato dall\'entità in cui sono caricati',

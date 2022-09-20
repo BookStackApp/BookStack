@@ -18,34 +18,34 @@ return [
 
     // Chapters
     'chapter_create'              => 'erstellte Kapitel',
-    'chapter_create_notification' => 'Das Kapitel wurde erfolgreich erstellt',
+    'chapter_create_notification' => 'Kapitel erfolgreich erstellt',
     'chapter_update'              => 'hat das Kapitel geändert',
-    'chapter_update_notification' => 'Das Kapitel wurde erfolgreich aktualisiert',
+    'chapter_update_notification' => 'Kapitel erfolgreich aktualisiert',
     'chapter_delete'              => 'hat das Kapitel gelöscht',
-    'chapter_delete_notification' => 'Das Kapitel wurde erfolgreich gelöscht',
+    'chapter_delete_notification' => 'Kapitel erfolgreich gelöscht',
     'chapter_move'                => 'hat das Kapitel verschoben',
 
     // Books
     'book_create'                 => 'hat das Buch erstellt',
-    'book_create_notification'    => 'Das Buch wurde erfolgreich erstellt',
+    'book_create_notification'    => 'Buch erfolgreich erstellt',
     'book_create_from_chapter'              => 'umgewandeltes Kapitel zum Buch',
-    'book_create_from_chapter_notification' => 'Kapitel erfolgreich in ein Buch konvertiert',
+    'book_create_from_chapter_notification' => 'Kapitel erfolgreich in ein Buch umgewandelt',
     'book_update'                 => 'hat das Buch aktualisiert',
-    'book_update_notification'    => 'Das Buch wurde erfolgreich aktualisiert',
+    'book_update_notification'    => 'Buch erfolgreich aktualisiert',
     'book_delete'                 => 'hat das Buch gelöscht',
-    'book_delete_notification'    => 'Das Buch wurde erfolgreich gelöscht',
+    'book_delete_notification'    => 'Buch erfolgreich gelöscht',
     'book_sort'                   => 'hat die Buch-Sortierung geändert',
     'book_sort_notification'      => 'Das Buch wurde erfolgreich umsortiert',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create'            => 'erstelltes Regal',
+    'bookshelf_create_notification'    => 'Regal erfolgreich erstellt',
+    'bookshelf_create_from_book'    => 'zu Regal konvertiertes Buch',
     'bookshelf_create_from_book_notification'    => 'Buch erfolgreich in ein Regal konvertiert',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'aktualisiertes Regal',
+    'bookshelf_update_notification'    => 'Regal erfolgreich aktualisiert',
+    'bookshelf_delete'                 => 'gelöschtes Regal',
+    'bookshelf_delete_notification'    => 'Regal erfolgreich gelöscht',
 
     // Favourites
     'favourite_add_notification' => '":name" wurde zu deinen Favoriten hinzugefügt',
@@ -61,7 +61,7 @@ return [
     'webhook_update' => 'aktualisierter Webhook',
     'webhook_update_notification' => 'Webhook wurde erfolgreich aktualisiert',
     'webhook_delete' => 'gelöschter Webhook',
-    'webhook_delete_notification' => 'Webhook wurde erfolgreich gelöscht',
+    'webhook_delete_notification' => 'Webhook erfolgreich gelöscht',
 
     // Users
     'user_update_notification' => 'Benutzer erfolgreich aktualisiert',

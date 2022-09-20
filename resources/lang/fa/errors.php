@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'موجودیت یافت نشد',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'قفسه پیدا نشد',
     'book_not_found' => 'کتاب پیدا نشد',
     'page_not_found' => 'صفحه یافت نشد',
     'chapter_not_found' => 'فصل پیدا نشد',
