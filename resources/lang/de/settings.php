@@ -25,7 +25,7 @@ return [
     'app_public_access_toggle' => 'Öffentlichen Zugriff erlauben',
     'app_public_viewing' => 'Öffentliche Ansicht erlauben?',
     'app_secure_images' => 'Erhöhte Sicherheit für hochgeladene Bilder aktivieren?',
-    'app_secure_images_toggle' => 'Aktiviere Bild-Upload höherer Sicherheit',
+    'app_secure_images_toggle' => 'Aktiviere höhere Sicherheit für Bild-Uploads',
     'app_secure_images_desc' => 'Aus Leistungsgründen sind alle Bilder öffentlich sichtbar. Diese Option fügt zufällige, schwer zu eratene, Zeichenketten zu Bild-URLs hinzu. Stellen sie sicher, dass Verzeichnisindizes deaktiviert sind, um einen einfachen Zugriff zu verhindern.',
     'app_default_editor' => 'Standard-Seiten-Editor',
     'app_default_editor_desc' => 'Wählen Sie aus, welcher Editor standardmäßig beim Bearbeiten neuer Seiten verwendet wird. Dies kann auf einer Seitenebene überschrieben werden, wenn es die Berechtigungen erlauben.',
