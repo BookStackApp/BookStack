@@ -116,12 +116,14 @@ class LanguageManager
      */
     public function setPhpDateTimeLocale(string $language): void
     {
-        $isoLang = $this->localeMap[$language]['iso'] ?? false;
+        $isoLang = $this->localeMap[$language]['iso'] ?? '';
+        $isoLangPrefix = explode('_', $isoLang)[0];
 
         $locales = array_filter([
             $isoLang ? $isoLang . '.utf8' : false,
             $isoLang ?: false,
             $isoLang ? str_replace('_', '-', $isoLang) : false,
+            $isoLang ? $isoLangPrefix . '.UTF-8' : false,
             $this->localeMap[$language]['windows'] ?? false,
             $language,
         ]);
