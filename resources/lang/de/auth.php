@@ -44,9 +44,9 @@ return [
     'auto_init_start_link' => 'Mit Authentifizierung fortfahren',
 
     // Password Reset
-    'reset_password' => 'Passwort vergessen',
+    'reset_password' => 'Passwort zurücksetzen',
     'reset_password_send_instructions' => 'Bitte geben Sie Ihre E-Mail-Adresse ein. Danach erhalten Sie eine E-Mail mit einem Link zum Zurücksetzen Ihres Passwortes.',
-    'reset_password_send_button' => 'Passwort zurücksetzen',
+    'reset_password_send_button' => 'Link zum Zurücksetzen senden',
     'reset_password_sent' => 'Ein Link zum Zurücksetzen des Passworts wird an :email gesendet, wenn diese E-Mail-Adresse im System gefunden wird.',
     'reset_password_success' => 'Ihr Passwort wurde erfolgreich zurückgesetzt.',
     'email_reset_subject' => 'Passwort zurücksetzen für :appName',

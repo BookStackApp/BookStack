@@ -89,10 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Félicitations ! Comme vous avez bien reçu cette notification, vos paramètres d\'e-mail semblent être configurés correctement.',
     'maint_recycle_bin_desc' => 'Les étagères, livres, chapitres et pages supprimés sont envoyés dans la corbeille afin qu\'ils puissent être restaurés ou supprimés définitivement. Les éléments plus anciens de la corbeille peuvent être supprimés automatiquement après un certain temps selon la configuration du système.',
     'maint_recycle_bin_open' => 'Ouvrir la corbeille',
-    'maint_regen_references' => 'Regenerate References',
-    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
-    'maint_regen_references_success' => 'Reference index has been regenerated!',
-    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
+    'maint_regen_references' => 'Régénérer les références',
+    'maint_regen_references_desc' => 'Cette action reconstruira l\'index des références croisées dans la base de données. Ceci est généralement géré automatiquement, mais cette action peut être utile pour indexer les anciens contenus ou contenus ajoutés par des méthodes non officielles.',
+    'maint_regen_references_success' => 'L\'index de référence a été régénéré !',
+    'maint_timeout_command_note' => 'Note : Cette action peut prendre du temps pour s\'exécuter, ce qui peut conduire à des problèmes d\'expiration dans certains environnements Web. En tant qu\'alternative, cette action est effectuée à l\'aide d\'une commande de terminal.',
 
     // Recycle Bin
     'recycle_bin' => 'Corbeille',
@@ -161,7 +161,7 @@ return [
     'roles_system_warning' => 'Sachez que l\'accès à l\'une des trois permissions ci-dessus peut permettre à un utilisateur de modifier ses propres privilèges ou les privilèges des autres utilisateurs du système. N\'attribuez uniquement des rôles avec ces permissions qu\'à des utilisateurs de confiance.',
     'role_asset_desc' => 'Ces permissions contrôlent l\'accès par défaut des ressources dans le système. Les permissions dans les livres, les chapitres et les pages ignoreront ces permissions',
     'role_asset_admins' => 'Les administrateurs ont automatiquement accès à tous les contenus mais les options suivantes peuvent afficher ou masquer certaines options de l\'interface.',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'Cela concerne la visibilité dans le gestionnaire d\'images. L\'accès réel des fichiers d\'image téléchargés dépendra de l\'option de stockage d\'images du système.',
     'role_all' => 'Tous',
     'role_own' => 'Propres',
     'role_controlled_by_asset' => 'Contrôlé par les ressources les ayant envoyés',

@@ -90,9 +90,9 @@ return [
     'maint_recycle_bin_desc' => 'Los estantes, libros, capítulos y páginas eliminados se envían a la papelera de reciclaje para que puedan ser restauradas o eliminadas permanentemente. Los elementos más antiguos en la papelera de reciclaje pueden ser eliminados automáticamente después de un tiempo dependiendo de la configuración del sistema.',
     'maint_recycle_bin_open' => 'Abrir papelera de reciclaje',
     'maint_regen_references' => 'Regenerar Referencias',
-    'maint_regen_references_desc' => 'Esta acción reconstruirá el índice de referencia de elementos cruzados dentro de la base de datos. Normalmente se gestiona automáticamente, pero esta acción puede ser útil para indexar el contenido antiguo o añadido mediante métodos no oficiales.',
-    'maint_regen_references_success' => '¡El índice de referencias ha sido regenerado!',
-    'maint_timeout_command_note' => 'Nota: Esta acción puede tardar en ejecutarse, lo que puede llevar a problemas de tiempo de espera en algunos entornos web. Como alternativa, esta acción se puede realizar desde una terminal.',
+    'maint_regen_references_desc' => 'Esta acción reconstruirá el índice de referencia de elementos cruzados dentro de la base de datos. Normalmente se gestiona automáticamente, pero esta acción puede ser útil para indexar el contenido viejo o añadido mediante métodos no oficiales.',
+    'maint_regen_references_success' => '¡El índice de referencias fue regenerado!',
+    'maint_timeout_command_note' => 'Nota: Esta acción puede tardar en ejecutarse, lo que puede derivar en problemas de tiempo de espera en algunos entornos web. Como alternativa, esta acción se puede realizar usando un comando de terminal.',
 
     // Recycle Bin
     'recycle_bin' => 'Papelera de Reciclaje',
@@ -162,7 +162,7 @@ return [
     'roles_system_warning' => 'Tenga en cuenta que el acceso a cualquiera de los tres permisos anteriores puede permitir a un usuario modificar sus propios privilegios o los privilegios de otros usuarios en el sistema. Asignar roles con estos permisos sólo a usuarios de comfianza.',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los activos del sistema. Permisos definidos en Libros, Capítulos y Páginas ignorarán estos permisos.',
     'role_asset_admins' => 'Los administradores reciben automáticamente acceso a todo el contenido pero estas opciones pueden mostrar u ocultar opciones de UI.',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'Esto se refiere a la visibilidad dentro del gestor de imágenes. El acceso real a los archivos de imágenes subidos, dependerá de la opción de almacenamiento de imágenes del sistema.',
     'role_all' => 'Todo',
     'role_own' => 'Propio',
     'role_controlled_by_asset' => 'Controlado por el activo al que ha sido subido',

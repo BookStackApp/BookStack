@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => 'تم إنشاء كتاب',
     'book_create_notification'    => 'تم إنشاء الكتاب بنجاح',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'تم تحويل الفصل إلى كتاب',
+    'book_create_from_chapter_notification' => 'تم تحويل الفصل إلى كتاب بنجاح',
     'book_update'                 => 'تم تحديث الكتاب',
     'book_update_notification'    => 'تم تحديث الكتاب بنجاح',
     'book_delete'                 => 'تم حذف الكتاب',
@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'تم إعادة فرز الكتاب بنجاح',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create'            => 'تم إنشاء رف',
+    'bookshelf_create_notification'    => 'تم إنشاء رف بنجاح',
+    'bookshelf_create_from_book'    => 'تم تحويل الكتاب إلى رف',
+    'bookshelf_create_from_book_notification'    => 'تم تحويل الكتاب إلى رف بنجاح',
+    'bookshelf_update'                 => 'تم تحديث الرف',
+    'bookshelf_update_notification'    => 'تم تحديث الرف بنجاح',
+    'bookshelf_delete'                 => 'تم حذف الرف',
+    'bookshelf_delete_notification'    => 'تم حذف الرف بنجاح',
 
     // Favourites
     'favourite_add_notification' => 'تم إضافة ":name" إلى المفضلة لديك',
