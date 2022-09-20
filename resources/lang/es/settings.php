@@ -161,7 +161,7 @@ return [
     'roles_system_warning' => 'Tenga en cuenta que el acceso a cualquiera de los tres permisos anteriores puede permitir a un usuario alterar sus propios privilegios o los privilegios de otros en el sistema. Sólo asignar roles con estos permisos a usuarios de confianza.',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los contenidos del sistema. Los permisos de Libros, Capítulos y Páginas sobreescribiran estos permisos.',
     'role_asset_admins' => 'A los administradores se les asigna automáticamente permisos para acceder a todo el contenido pero estas opciones podrían mostrar u ocultar opciones de la interfaz.',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'Esto se refiere a la visibilidad dentro del gestor de imágenes. El acceso a los archivos de imagen subidos dependerá de la opción de almacenamiento de imágenes del sistema.',
     'role_all' => 'Todo',
     'role_own' => 'Propio',
     'role_controlled_by_asset' => 'Controlado por el contenido al que ha sido subido',

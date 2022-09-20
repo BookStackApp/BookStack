@@ -157,7 +157,7 @@ return [
     'about' => 'Про редактор',
     'about_title' => 'Про WYSIWYG редактор',
     'editor_license' => 'Ліцензія редактора і авторські права',
-    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
+    'editor_tiny_license' => 'Цей редактор побудований за допомогою :tinylink, яке надається за ліцензією MIT.',
     'editor_tiny_license_link' => 'Тут можна знайти авторські та умови ліцензії.',
     'save_continue' => 'Зберегти і продовжити',
     'callouts_cycle' => '(Тримайте натискання для перемикання між типами)',
