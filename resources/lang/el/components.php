@@ -23,12 +23,12 @@ return [
     'image_upload_success' => 'Η εικόνα μεταφορτώθηκε με επιτυχία',
     'image_update_success' => 'Τα στοιχεία της εικόνας ενημερώθηκαν με επιτυχία',
     'image_delete_success' => 'Η εικόνα διαγράφηκε επιτυχώς',
-    'image_upload_remove' => 'Remove',
+    'image_upload_remove' => 'Αφαίρεση',
 
     // Code Editor
     'code_editor' => 'Επεξεργασία κώδικα',
     'code_language' => 'Γλώσσα κώδικα',
     'code_content' => 'Περιεχόμενο κώδικα',
     'code_session_history' => 'Ιστορικό συνεδρίας',
-    'code_save' => 'Save Code',
+    'code_save' => 'Αποθήκευση Κώδικα',
 ];
