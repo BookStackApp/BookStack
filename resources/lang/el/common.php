@@ -72,7 +72,7 @@ return [
     'grid_view' => 'Προβολή σε πλέγμα',
     'list_view' => 'Προβολή σε λίστα',
     'default' => 'Προκαθορισμένο',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Μπάρα πλοήγησης',
     'status' => 'Κατάσταση',
     'status_active' => 'Ενεργός',
     'status_inactive' => 'Αδρανής',
