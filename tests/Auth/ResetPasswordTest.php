@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class ResetPasswordTest extends TestCase
 {
-    public function test_reset_password_flow()
+    public function test_reset_flow()
     {
         Notification::fake();
 
@@ -52,7 +52,7 @@ class ResetPasswordTest extends TestCase
         $this->get('/')->assertSee('Your password has been successfully reset');
     }
 
-    public function test_reset_password_flow_shows_success_message_even_if_wrong_password_to_prevent_user_discovery()
+    public function test_reset_flow_shows_success_message_even_if_wrong_password_to_prevent_user_discovery()
     {
         $this->get('/password/email');
         $resp = $this->followingRedirects()->post('/password/email', [
@@ -75,7 +75,7 @@ class ResetPasswordTest extends TestCase
             ->assertSee('The password reset token is invalid for this email address.');
     }
 
-    public function test_reset_password_page_shows_sign_links()
+    public function test_reset_page_shows_sign_links()
     {
         $this->setSettings(['registration-enabled' => 'true']);
         $resp = $this->get('/password/email');
@@ -83,7 +83,7 @@ class ResetPasswordTest extends TestCase
             ->assertElementContains('a', 'Sign up');
     }
 
-    public function test_reset_password_request_is_throttled()
+    public function test_reset_request_is_throttled()
     {
         $editor = $this->getEditor();
         Notification::fake();
