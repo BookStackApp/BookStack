@@ -15,8 +15,8 @@ use Illuminate\Validation\Rules\Password;
 
 class UserInviteController extends Controller
 {
-    protected $inviteService;
-    protected $userRepo;
+    protected UserInviteService $inviteService;
+    protected UserRepo $userRepo;
 
     /**
      * Create a new controller instance.

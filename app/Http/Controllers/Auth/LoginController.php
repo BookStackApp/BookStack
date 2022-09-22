@@ -31,8 +31,8 @@ class LoginController extends Controller
     /**
      * Redirection paths.
      */
-    protected $redirectTo = '/';
-    protected $redirectPath = '/';
+    protected string $redirectTo = '/';
+    protected string $redirectPath = '/';
 
     protected SocialAuthService $socialAuthService;
     protected LoginService $loginService;

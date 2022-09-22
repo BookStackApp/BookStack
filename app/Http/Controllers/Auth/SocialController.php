@@ -16,9 +16,9 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialController extends Controller
 {
-    protected $socialAuthService;
-    protected $registrationService;
-    protected $loginService;
+    protected SocialAuthService $socialAuthService;
+    protected RegistrationService $registrationService;
+    protected LoginService $loginService;
 
     /**
      * SocialController constructor.

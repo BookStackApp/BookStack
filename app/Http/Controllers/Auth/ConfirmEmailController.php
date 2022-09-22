@@ -14,9 +14,9 @@ use Illuminate\Http\Request;
 
 class ConfirmEmailController extends Controller
 {
-    protected $emailConfirmationService;
-    protected $loginService;
-    protected $userRepo;
+    protected EmailConfirmationService $emailConfirmationService;
+    protected LoginService $loginService;
+    protected UserRepo $userRepo;
 
     /**
      * Create a new controller instance.
