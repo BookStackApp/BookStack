@@ -26,7 +26,6 @@
         "laravel/framework": "^8.68",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.6",
-        "laravel/ui": "^3.3",
         "league/commonmark": "^1.6",
         "league/flysystem-aws-s3-v3": "^1.0.29",
         "league/html-to-markdown": "^5.0.0",

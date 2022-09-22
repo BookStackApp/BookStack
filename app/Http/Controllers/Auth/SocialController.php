@@ -28,7 +28,7 @@ class SocialController extends Controller
         RegistrationService $registrationService,
         LoginService $loginService
     ) {
-        $this->middleware('guest')->only(['getRegister', 'postRegister']);
+        $this->middleware('guest')->only(['register']);
         $this->socialAuthService = $socialAuthService;
         $this->registrationService = $registrationService;
         $this->loginService = $loginService;

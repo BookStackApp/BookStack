@@ -10,6 +10,7 @@ use BookStack\Exceptions\UserUpdateException;
 use BookStack\Facades\Activity;
 use BookStack\Uploads\UserAvatars;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -61,7 +62,7 @@ class UserRepo
         $user = new User();
         $user->name = $data['name'];
         $user->email = $data['email'];
-        $user->password = bcrypt(empty($data['password']) ? Str::random(32) : $data['password']);
+        $user->password = Hash::make(empty($data['password']) ? Str::random(32) : $data['password']);
         $user->email_confirmed = $emailConfirmed;
         $user->external_auth_id = $data['external_auth_id'] ?? '';
 
@@ -126,7 +127,7 @@ class UserRepo
         }
 
         if (!empty($data['password'])) {
-            $user->password = bcrypt($data['password']);
+            $user->password = Hash::make($data['password']);
         }
 
         if (!empty($data['language'])) {

@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class UserInviteController extends Controller
@@ -66,7 +67,7 @@ class UserInviteController extends Controller
         }
 
         $user = $this->userRepo->getById($userId);
-        $user->password = bcrypt($request->get('password'));
+        $user->password = Hash::make($request->get('password'));
         $user->email_confirmed = true;
         $user->save();
 
