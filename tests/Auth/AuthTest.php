@@ -133,6 +133,19 @@ class AuthTest extends TestCase
         $this->assertFalse(auth()->check());
     }
 
+    public function test_login_attempts_are_rate_limited()
+    {
+        for ($i = 0; $i < 5; $i++) {
+            $resp = $this->login('bennynotexisting@example.com', 'pw123');
+        }
+        $resp = $this->followRedirects($resp);
+        $resp->assertSee('These credentials do not match our records.');
+
+        // Check the fifth attempt provides a lockout response
+        $resp = $this->followRedirects($this->login('bennynotexisting@example.com', 'pw123'));
+        $resp->assertSee('Too many login attempts. Please try again in');
+    }
+
     /**
      * Perform a login.
      */
