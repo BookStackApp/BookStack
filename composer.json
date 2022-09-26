@@ -44,6 +44,7 @@
         "ssddanbrown/htmldiff": "^1.0.2"
     },
     "require-dev": {
+        "brianium/paratest": "^6.6",
         "fakerphp/faker": "^1.16",
         "itsgoingd/clockwork": "^5.1",
         "mockery/mockery": "^1.4",
