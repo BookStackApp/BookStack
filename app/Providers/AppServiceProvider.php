@@ -17,7 +17,9 @@ use GuzzleHttp\Client;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\ParallelTesting;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
@@ -64,6 +66,11 @@ class AppServiceProvider extends ServiceProvider
 
         // Set paginator to use bootstrap-style pagination
         Paginator::useBootstrap();
+
+        // Setup database upon parallel testing database creation
+        ParallelTesting::setUpTestDatabase(function ($database, $token) {
+            Artisan::call('db:seed --class=DummyContentSeeder');
+        });
     }
 
     /**

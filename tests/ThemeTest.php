@@ -322,8 +322,8 @@ class ThemeTest extends TestCase
 
     public function test_export_body_start_and_end_template_files_can_be_used()
     {
-        $bodyStartStr = 'barry-fought-against-the-panther';
-        $bodyEndStr = 'barry-lost-his-fight-with-grace';
+        $bodyStartStr = 'garry-fought-against-the-panther';
+        $bodyEndStr = 'garry-lost-his-fight-with-grace';
         /** @var Page $page */
         $page = Page::query()->first();
 
@@ -342,18 +342,18 @@ class ThemeTest extends TestCase
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
-        $themeFolderName = 'testing_theme_' . rtrim(base64_encode(time()), '=');
+        $themeFolderName = 'testing_theme_' . str_shuffle(rtrim(base64_encode(time()), '='));
         config()->set('view.theme', $themeFolderName);
         $themeFolderPath = theme_path('');
+
+        // Create theme folder and clean it up on application tear-down
         File::makeDirectory($themeFolderPath);
+        $this->beforeApplicationDestroyed(fn() => File::deleteDirectory($themeFolderPath));
 
         // Run provided callback with theme env option set
         $this->runWithEnv('APP_THEME', $themeFolderName, function () use ($callback, $themeFolderName) {
             call_user_func($callback, $themeFolderName);
         });
-
-        // Cleanup the custom theme folder we created
-        File::deleteDirectory($themeFolderPath);
     }
 }
 
