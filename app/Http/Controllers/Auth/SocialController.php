@@ -16,9 +16,9 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialController extends Controller
 {
-    protected $socialAuthService;
-    protected $registrationService;
-    protected $loginService;
+    protected SocialAuthService $socialAuthService;
+    protected RegistrationService $registrationService;
+    protected LoginService $loginService;
 
     /**
      * SocialController constructor.
@@ -28,7 +28,7 @@ class SocialController extends Controller
         RegistrationService $registrationService,
         LoginService $loginService
     ) {
-        $this->middleware('guest')->only(['getRegister', 'postRegister']);
+        $this->middleware('guest')->only(['register']);
         $this->socialAuthService = $socialAuthService;
         $this->registrationService = $registrationService;
         $this->loginService = $loginService;
