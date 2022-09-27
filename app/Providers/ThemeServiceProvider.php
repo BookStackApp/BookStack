@@ -15,9 +15,8 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(ThemeService::class, function ($app) {
-            return new ThemeService();
-        });
+        // Register the ThemeService as a singleton
+        $this->app->singleton(ThemeService::class, fn ($app) => new ThemeService());
     }
 
     /**
@@ -27,6 +26,7 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Boot up the theme system
         $themeService = $this->app->make(ThemeService::class);
         $themeService->readThemeActions();
         $themeService->dispatch(ThemeEvents::APP_BOOT, $this->app);

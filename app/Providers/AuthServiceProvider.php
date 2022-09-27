@@ -24,9 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         // Password Configuration
         // Changes here must be reflected in ApiDocsGenerate@getValidationAsString.
-        Password::defaults(function () {
-            return Password::min(8);
-        });
+        Password::defaults(fn () => Password::min(8));
 
         // Custom guards
         Auth::extend('api-token', function ($app, $name, array $config) {
