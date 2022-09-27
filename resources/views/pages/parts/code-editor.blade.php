@@ -24,8 +24,8 @@
                         @php
                             $languages = [
                                 'Bash', 'CSS', 'C', 'C++', 'C#', 'Diff', 'Fortran', 'F#', 'Go', 'Haskell', 'HTML', 'INI',
-                                'Java', 'JavaScript', 'JSON', 'Julia', 'Kotlin', 'LaTeX', 'Lua', 'MarkDown', 'Nginx', 'OCaml',
-                                'Pascal', 'Perl', 'PHP', 'Powershell', 'Python', 'Ruby', 'Rust', 'Shell', 'SQL', 'TypeScript',
+                                'Java', 'JavaScript', 'JSON', 'Julia', 'Kotlin', 'LaTeX', 'Lua', 'MarkDown', 'MATLAB', 'Nginx', 'OCaml',
+                                'Octave', 'Pascal', 'Perl', 'PHP', 'Powershell', 'Python', 'Ruby', 'Rust', 'Shell', 'SQL', 'TypeScript',
                                 'VBScript', 'VB.NET', 'XML', 'YAML',
                             ];
                         @endphp
