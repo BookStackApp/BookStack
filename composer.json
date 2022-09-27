@@ -74,6 +74,8 @@
         "format": "phpcbf",
         "lint": "phpcs",
         "test": "phpunit",
+        "t": "@php artisan test --parallel",
+        "t-reset": "@php artisan test --recreate-databases",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
