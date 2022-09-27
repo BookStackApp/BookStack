@@ -15,6 +15,7 @@ import 'codemirror/mode/lua/lua';
 import 'codemirror/mode/markdown/markdown';
 import 'codemirror/mode/mllike/mllike';
 import 'codemirror/mode/nginx/nginx';
+import 'codemirror/mode/octave/octave';
 import 'codemirror/mode/perl/perl';
 import 'codemirror/mode/pascal/pascal';
 import 'codemirror/mode/php/php';
@@ -65,11 +66,13 @@ const modeMap = {
     julia: 'text/x-julia',
     latex: 'text/x-stex',
     lua: 'lua',
+    matlab: 'text/x-octave',
     md: 'markdown',
     mdown: 'markdown',
     markdown: 'markdown',
     ml: 'mllike',
     nginx: 'nginx',
+    octave: 'text/x-octave',
     perl: 'perl',
     pl: 'perl',
     powershell: 'powershell',
