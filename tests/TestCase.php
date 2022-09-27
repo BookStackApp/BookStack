@@ -22,10 +22,12 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Env;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
 use Monolog\Handler\TestHandler;
@@ -46,6 +48,21 @@ abstract class TestCase extends BaseTestCase
      * The base URL to use while testing the application.
      */
     protected string $baseUrl = 'http://localhost';
+
+    /**
+     * Creates the application.
+     *
+     * @return \Illuminate\Foundation\Application
+     */
+    public function createApplication()
+    {
+        /** @var \Illuminate\Foundation\Application  $app */
+        $app = require __DIR__ . '/../bootstrap/app.php';
+        $app->register(TestServiceProvider::class);
+        $app->make(Kernel::class)->bootstrap();
+
+        return $app;
+    }
 
     /**
      * Set the current user context to be an admin.
@@ -299,6 +316,8 @@ abstract class TestCase extends BaseTestCase
     /**
      * Run a set test with the given env variable.
      * Remembers the original and resets the value after test.
+     * Database config is juggled so the value can be restored when
+     * parallel testing are used, where multiple databases exist.
      */
     protected function runWithEnv(string $name, $value, callable $callback)
     {
@@ -311,7 +330,12 @@ abstract class TestCase extends BaseTestCase
             $_SERVER[$name] = $value;
         }
 
+        $database = config('database.connections.mysql_testing.database');
         $this->refreshApplication();
+
+        DB::purge();
+        config()->set('database.connections.mysql_testing.database', $database);
+
         $callback();
 
         if (is_null($originalVal)) {
