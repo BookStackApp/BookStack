@@ -216,16 +216,14 @@ The website which contains the project docs & Blog can be found in the [BookStac
 
 ## ⚖️ License
 
-The BookStack source is provided under the MIT License. 
+The BookStack source is provided under the [MIT License](https://github.com/BookStackApp/BookStack/blob/development/LICENSE). 
 
 The libraries used by, and included with, BookStack are provided under their own licenses and copyright.
 The licenses for many of our core dependencies can be found in the attribution list below but this is not an exhaustive list of all projects used within BookStack. 
 
 ## 👪 Attribution
 
-The great people that have worked to build and improve BookStack can [be seen here](https://github.com/BookStackApp/BookStack/graphs/contributors).
-
-The wonderful people that have provided translations, either through GitHub or via Crowdin [can be seen here](https://github.com/BookStackApp/BookStack/blob/development/.github/translators.txt).
+The great people that have worked to build and improve BookStack can [be seen here](https://github.com/BookStackApp/BookStack/graphs/contributors). The wonderful people that have provided translations, either through GitHub or via Crowdin [can be seen here](https://github.com/BookStackApp/BookStack/blob/development/.github/translators.txt).
 
 Below are the great open-source projects used to help build BookStack. 
 Note: This is not an exhaustive list of all libraries and projects that would be used in an active BookStack instance.
