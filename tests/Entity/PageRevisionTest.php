@@ -4,7 +4,6 @@ namespace Tests\Entity;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Repos\PageRepo;
 use Tests\TestCase;
 
 class PageRevisionTest extends TestCase
@@ -23,30 +22,26 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_views_viewable()
     {
         $this->asEditor();
-
-        $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>new content</p>']);
         $pageRevision = $page->revisions->last();
 
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
-        $revisionView->assertStatus(200);
-        $revisionView->assertSee('new content');
+        $resp = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $resp->assertStatus(200);
+        $resp->assertSee('new content');
 
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id . '/changes');
-        $revisionView->assertStatus(200);
-        $revisionView->assertSee('new content');
+        $resp = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id . '/changes');
+        $resp->assertStatus(200);
+        $resp->assertSee('new content');
     }
 
     public function test_page_revision_preview_shows_content_of_revision()
     {
         $this->asEditor();
-
-        $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new revision content</p>', 'summary' => 'page revision testing']);
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>new revision content</p>']);
         $pageRevision = $page->revisions->last();
-        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>Updated content</p>', 'summary' => 'page revision testing 2']);
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>Updated content</p>']);
 
         $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
         $revisionView->assertStatus(200);
@@ -56,11 +51,9 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_restore_updates_content()
     {
         $this->asEditor();
-
-        $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $pageRepo->update($page, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'initial page revision testing']);
-        $pageRepo->update($page, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
+        $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>']);
+        $this->createRevisions($page, 1, ['name' => 'updated page again', 'html' => '<p>new content</p>']);
         $page = Page::find($page->id);
 
         $pageView = $this->get($page->getUrl());
@@ -82,11 +75,9 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_restore_with_markdown_retains_markdown_content()
     {
         $this->asEditor();
-
-        $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $pageRepo->update($page, ['name' => 'updated page abc123', 'markdown' => '## New Content def456', 'summary' => 'initial page revision testing']);
-        $pageRepo->update($page, ['name' => 'updated page again', 'markdown' => '## New Content Updated', 'summary' => 'page revision testing']);
+        $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'markdown' => '## New Content def456']);
+        $this->createRevisions($page, 1, ['name' => 'updated page again', 'markdown' => '## New Content Updated']);
         $page = Page::find($page->id);
 
         $pageView = $this->get($page->getUrl());
@@ -112,11 +103,9 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_restore_sets_new_revision_with_summary()
     {
         $this->asEditor();
-
-        $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $pageRepo->update($page, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'My first update']);
-        $pageRepo->update($page, ['name' => 'updated page again', 'html' => '<p>new content</p>', 'summary' => '']);
+        $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'My first update']);
+        $this->createRevisions($page, 1, ['html' => '<p>new content</p>']);
         $page->refresh();
 
         $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
@@ -138,8 +127,7 @@ class PageRevisionTest extends TestCase
     {
         $page = Page::first();
         $startCount = $page->revision_count;
-        $resp = $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        $resp->assertStatus(302);
+        $this->createRevisions($page, 1);
 
         $this->assertTrue(Page::find($page->id)->revision_count === $startCount + 1);
     }
@@ -147,12 +135,8 @@ class PageRevisionTest extends TestCase
     public function test_revision_count_shown_in_page_meta()
     {
         $page = Page::first();
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
+        $this->createRevisions($page, 2);
 
-        $page = Page::find($page->id);
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-
-        $page = Page::find($page->id);
         $pageView = $this->get($page->getUrl());
         $pageView->assertSee('Revision #' . $page->revision_count);
     }
@@ -161,12 +145,7 @@ class PageRevisionTest extends TestCase
     {
         /** @var Page $page */
         $page = Page::query()->first();
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-
-        $page->refresh();
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-
-        $page->refresh();
+        $this->createRevisions($page, 2);
         $beforeRevisionCount = $page->revisions->count();
 
         // Delete the first revision
@@ -196,12 +175,7 @@ class PageRevisionTest extends TestCase
     {
         config()->set('app.revision_limit', 2);
         $page = Page::first();
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        $page = Page::find($page->id);
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        for ($i = 0; $i < 10; $i++) {
-            $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        }
+        $this->createRevisions($page, 12);
 
         $revisionCount = $page->revisions()->count();
         $this->assertEquals(2, $revisionCount);
@@ -211,12 +185,7 @@ class PageRevisionTest extends TestCase
     {
         config()->set('app.revision_limit', false);
         $page = Page::first();
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        $page = Page::find($page->id);
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        for ($i = 0; $i < 10; $i++) {
-            $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
-        }
+        $this->createRevisions($page, 12);
 
         $revisionCount = $page->revisions()->count();
         $this->assertEquals(12, $revisionCount);
@@ -226,14 +195,68 @@ class PageRevisionTest extends TestCase
     {
         /** @var Page $page */
         $page = Page::first();
-        $this->asAdmin()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html']);
+        $this->createRevisions($page, 1, ['html' => 'new page html']);
 
-        $resp = $this->get($page->refresh()->getUrl('/revisions'));
+        $resp = $this->asAdmin()->get($page->refresh()->getUrl('/revisions'));
         $this->withHtml($resp)->assertElementContains('td', '(WYSIWYG)');
         $this->withHtml($resp)->assertElementNotContains('td', '(Markdown)');
 
-        $this->asAdmin()->put($page->getUrl(), ['name' => 'Updated page', 'markdown' => '# Some markdown content']);
+        $this->createRevisions($page, 1, ['markdown' => '# Some markdown content']);
         $resp = $this->get($page->refresh()->getUrl('/revisions'));
         $this->withHtml($resp)->assertElementContains('td', '(Markdown)');
+    }
+
+    public function test_revision_restore_action_only_visible_with_permission()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $this->createRevisions($page, 2);
+
+        $viewer = $this->getViewer();
+        $this->actingAs($viewer);
+        $respHtml = $this->withHtml($this->get($page->getUrl('/revisions')));
+        $respHtml->assertElementNotContains('.actions a', 'Restore');
+        $respHtml->assertElementNotExists('form[action$="/restore"]');
+
+        $this->giveUserPermissions($viewer, ['page-update-all']);
+
+        $respHtml = $this->withHtml($this->get($page->getUrl('/revisions')));
+        $respHtml->assertElementContains('.actions a', 'Restore');
+        $respHtml->assertElementExists('form[action$="/restore"]');
+    }
+
+    public function test_revision_delete_action_only_visible_with_permission()
+    {
+        /** @var Page $page */
+        $page = Page::query()->first();
+        $this->createRevisions($page, 2);
+
+        $viewer = $this->getViewer();
+        $this->actingAs($viewer);
+        $respHtml = $this->withHtml($this->get($page->getUrl('/revisions')));
+        $respHtml->assertElementNotContains('.actions a', 'Delete');
+        $respHtml->assertElementNotExists('form[action$="/delete"]');
+
+        $this->giveUserPermissions($viewer, ['page-delete-all']);
+
+        $respHtml = $this->withHtml($this->get($page->getUrl('/revisions')));
+        $respHtml->assertElementContains('.actions a', 'Delete');
+        $respHtml->assertElementExists('form[action$="/delete"]');
+    }
+
+    protected function createRevisions(Page $page, int $times, array $attrs = [])
+    {
+        $user = user();
+
+        for ($i = 0; $i < $times; $i++) {
+            $data = ['name' => 'Page update' . $i, 'summary' => 'Update entry' . $i];
+            if (!isset($attrs['markdown'])) {
+                $data['html'] = '<p>My update page</p>';
+            }
+            $this->asAdmin()->put($page->getUrl(), array_merge($data, $attrs));
+            $page->refresh();
+        }
+
+        $this->actingAs($user);
     }
 }
