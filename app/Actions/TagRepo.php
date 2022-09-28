@@ -57,21 +57,21 @@ class TagRepo
      * Get tag name suggestions from scanning existing tag names.
      * If no search term is given the 50 most popular tag names are provided.
      */
-    public function getNameSuggestions(?string $searchTerm): Collection
+    public function getNameSuggestions(string $searchTerm): Collection
     {
         $query = Tag::query()
             ->select('*', DB::raw('count(*) as count'))
             ->groupBy('name');
 
         if ($searchTerm) {
-            $query = $query->where('name', 'LIKE', $searchTerm . '%')->orderBy('name', 'desc');
+            $query = $query->where('name', 'LIKE', $searchTerm . '%')->orderBy('name', 'asc');
         } else {
             $query = $query->orderBy('count', 'desc')->take(50);
         }
 
         $query = $this->permissions->restrictEntityRelationQuery($query, 'tags', 'entity_id', 'entity_type');
 
-        return $query->get(['name'])->pluck('name');
+        return $query->pluck('name');
     }
 
     /**
@@ -79,7 +79,7 @@ class TagRepo
      * If no search is given the 50 most popular values are provided.
      * Passing a tagName will only find values for a tags with a particular name.
      */
-    public function getValueSuggestions(?string $searchTerm, ?string $tagName): Collection
+    public function getValueSuggestions(string $searchTerm, string $tagName): Collection
     {
         $query = Tag::query()
             ->select('*', DB::raw('count(*) as count'))
@@ -97,7 +97,7 @@ class TagRepo
 
         $query = $this->permissions->restrictEntityRelationQuery($query, 'tags', 'entity_id', 'entity_type');
 
-        return $query->get(['value'])->pluck('value');
+        return $query->pluck('value');
     }
 
     /**
