@@ -4,6 +4,7 @@ namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Repos\BookRepo;
 use Tests\TestCase;
 use Tests\Uploads\UsesImages;
@@ -344,11 +345,34 @@ class BookTest extends TestCase
         $bookRepo->updateCoverImage($book, $coverImageFile);
 
         $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
-
         /** @var Book $copy */
         $copy = Book::query()->where('name', '=', 'My copy book')->first();
 
         $this->assertNotNull($copy->cover);
         $this->assertNotEquals($book->cover->id, $copy->cover->id);
+    }
+
+    public function test_copy_adds_book_to_shelves_if_edit_permissions_allows()
+    {
+        /** @var Bookshelf $shelfA */
+        /** @var Bookshelf $shelfB */
+        [$shelfA, $shelfB] = Bookshelf::query()->take(2)->get();
+        /** @var Book $book */
+        $book = Book::query()->first();
+
+        $shelfA->appendBook($book);
+        $shelfB->appendBook($book);
+
+        $viewer = $this->getViewer();
+        $this->giveUserPermissions($viewer, ['book-update-all', 'book-create-all', 'bookshelf-update-all']);
+        $this->setEntityRestrictions($shelfB);
+
+
+        $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
+        /** @var Book $copy */
+        $copy = Book::query()->where('name', '=', 'My copy book')->first();
+
+        $this->assertTrue($copy->shelves()->where('id', '=', $shelfA->id)->exists());
+        $this->assertFalse($copy->shelves()->where('id', '=', $shelfB->id)->exists());
     }
 }
