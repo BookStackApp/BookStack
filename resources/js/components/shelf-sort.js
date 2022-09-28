@@ -19,6 +19,7 @@ class ShelfSort {
             new Sortable(scrollBox, {
                 group: 'shelf-books',
                 ghostClass: 'primary-background-light',
+                handle: '.handle',
                 animation: 150,
                 onSort: this.onChange.bind(this),
             });
