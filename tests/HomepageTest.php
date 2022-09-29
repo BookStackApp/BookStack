@@ -81,8 +81,7 @@ class HomepageTest extends TestCase
 
     public function test_custom_homepage_cannot_be_deleted_from_parent_deletion()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->setSettings([
             'app-homepage'      => $page->id,
             'app-homepage-type' => 'page',
@@ -161,7 +160,7 @@ class HomepageTest extends TestCase
         $this->setSettings(['app-homepage-type' => 'bookshelves']);
         $this->asEditor();
 
-        $shelf = Bookshelf::query()->first();
+        $shelf = $this->entities->shelf();
         $book = $shelf->books()->first();
 
         // Ensure initially visible

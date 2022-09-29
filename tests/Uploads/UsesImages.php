@@ -91,7 +91,7 @@ trait UsesImages
     protected function uploadGalleryImage(Page $page = null, ?string $testDataFileName = null)
     {
         if ($page === null) {
-            $page = Page::query()->first();
+            $page = $this->entities->page();
         }
 
         $imageName = $testDataFileName ?? 'first-image.png';

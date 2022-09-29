@@ -27,7 +27,7 @@ class ErrorTest extends TestCase
     {
         $this->actingAs($this->getViewer());
         $handler = $this->withTestLogger();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         // Ensure we're seeing errors
         Log::error('cat');

@@ -35,7 +35,7 @@ class PagesApiTest extends TestCase
     public function test_create_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $details = [
             'name'    => 'My API page',
             'book_id' => $book->id,
@@ -67,7 +67,7 @@ class PagesApiTest extends TestCase
     public function test_page_name_needed_to_create()
     {
         $this->actingAsApiEditor();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $details = [
             'book_id' => $book->id,
             'html'    => '<p>A page created via the API</p>',

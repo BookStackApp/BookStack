@@ -13,7 +13,7 @@ class FavouriteTest extends TestCase
 {
     public function test_page_add_favourite_flow()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl());
@@ -36,7 +36,7 @@ class FavouriteTest extends TestCase
 
     public function test_page_remove_favourite_flow()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
         Favourite::query()->forceCreate([
             'user_id'           => $editor->id,
@@ -62,8 +62,7 @@ class FavouriteTest extends TestCase
 
     public function test_favourite_flow_with_own_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $user = User::factory()->create();
         $book->owned_by = $user->id;
         $book->save();
@@ -115,8 +114,7 @@ class FavouriteTest extends TestCase
         $resp = $this->actingAs($editor)->get('/');
         $this->withHtml($resp)->assertElementNotExists('#top-favourites');
 
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->favourites()->save((new Favourite())->forceFill(['user_id' => $editor->id]));
 
         $resp = $this->get('/');
@@ -126,8 +124,7 @@ class FavouriteTest extends TestCase
 
     public function test_favourites_list_page_shows_favourites_and_has_working_pagination()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get('/favourites');

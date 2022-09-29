@@ -132,8 +132,7 @@ class UserPreferencesTest extends TestCase
     public function test_shelf_view_type_change()
     {
         $editor = $this->getEditor();
-        /** @var Bookshelf $shelf */
-        $shelf = Bookshelf::query()->first();
+        $shelf = $this->entities->shelf();
         setting()->putUser($editor, 'bookshelf_view_type', 'list');
 
         $resp = $this->actingAs($editor)->get($shelf->getUrl())->assertSee('Grid View');
@@ -155,7 +154,7 @@ class UserPreferencesTest extends TestCase
     public function test_update_code_language_favourite()
     {
         $editor = $this->getEditor();
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->actingAs($editor);
 
         $this->patch('/settings/users/update-code-language-favourite', ['language' => 'php', 'active' => true]);

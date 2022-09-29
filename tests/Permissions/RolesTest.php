@@ -520,8 +520,7 @@ class RolesTest extends TestCase
 
     public function test_chapter_create_all_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $this->checkAccessPermission('chapter-create-all', [
             $book->getUrl('/create-chapter'),
         ], [
@@ -603,10 +602,8 @@ class RolesTest extends TestCase
 
     public function test_page_create_own_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $book = $this->entities->book();
+        $chapter = $this->entities->chapter();
 
         $entities = $this->entities->createChainBelongingToUser($this->user);
         $ownBook = $entities['book'];
@@ -652,10 +649,8 @@ class RolesTest extends TestCase
 
     public function test_page_create_all_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $book = $this->entities->book();
+        $chapter = $this->entities->chapter();
         $createUrl = $book->getUrl('/create-page');
 
         $createUrlChapter = $chapter->getUrl('/create-page');
@@ -806,8 +801,7 @@ class RolesTest extends TestCase
     public function test_image_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $image = Image::factory()->create([
             'uploaded_to' => $page->id,
             'created_by'  => $this->user->id,
@@ -826,8 +820,7 @@ class RolesTest extends TestCase
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
         $admin = $this->getAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $image = Image::factory()->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);
 
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertStatus(403);
@@ -845,8 +838,7 @@ class RolesTest extends TestCase
     public function test_role_permission_removal()
     {
         // To cover issue fixed in f99c8ff99aee9beb8c692f36d4b84dc6e651e50a.
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $viewerRole = Role::getRole('viewer');
         $viewer = $this->getViewer();
         $this->actingAs($viewer)->get($page->getUrl())->assertOk();

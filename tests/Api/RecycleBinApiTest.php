@@ -50,8 +50,8 @@ class RecycleBinApiTest extends TestCase
     {
         $admin = $this->getAdmin();
 
-        $page = Page::query()->first();
-        $book = Book::query()->first();
+        $page = $this->entities->page();
+        $book = $this->entities->book();
         $this->actingAs($admin)->delete($page->getUrl());
         $this->delete($book->getUrl());
 
@@ -139,7 +139,7 @@ class RecycleBinApiTest extends TestCase
 
     public function test_restore_endpoint()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->asAdmin()->delete($page->getUrl());
         $page->refresh();
 
@@ -163,7 +163,7 @@ class RecycleBinApiTest extends TestCase
 
     public function test_destroy_endpoint()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->asAdmin()->delete($page->getUrl());
         $page->refresh();
 

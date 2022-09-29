@@ -62,7 +62,7 @@ class BookShelfTest extends TestCase
         config()->set([
             'setting-defaults.user.bookshelves_view_type' => 'list',
         ]);
-        $shelf = Bookshelf::query()->first();
+        $shelf = $this->entities->shelf();
         $book = $shelf->books()->first();
 
         $resp = $this->asEditor()->get('/shelves');
@@ -160,7 +160,7 @@ class BookShelfTest extends TestCase
 
     public function test_shelf_view_has_sort_control_that_defaults_to_default()
     {
-        $shelf = Bookshelf::query()->first();
+        $shelf = $this->entities->shelf();
         $resp = $this->asAdmin()->get($shelf->getUrl());
         $this->withHtml($resp)->assertElementExists('form[action$="change-sort/shelf_books"]');
         $this->withHtml($resp)->assertElementContains('form[action$="change-sort/shelf_books"] [aria-haspopup="true"]', 'Default');
@@ -373,8 +373,7 @@ class BookShelfTest extends TestCase
 
     public function test_cancel_on_child_book_creation_returns_to_original_shelf()
     {
-        /** @var Bookshelf $shelf */
-        $shelf = Bookshelf::query()->first();
+        $shelf = $this->entities->shelf();
         $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
         $this->withHtml($resp)->assertElementContains('form a[href="' . $shelf->getUrl() . '"]', 'Cancel');
     }

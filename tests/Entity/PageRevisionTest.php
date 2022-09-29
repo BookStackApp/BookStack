@@ -10,8 +10,7 @@ class PageRevisionTest extends TestCase
 {
     public function test_revision_links_visible_to_viewer()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $html = $this->withHtml($this->asViewer()->get($page->getUrl()));
         $html->assertLinkExists($page->getUrl('/revisions'));
@@ -143,8 +142,7 @@ class PageRevisionTest extends TestCase
 
     public function test_revision_deletion()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 2);
         $beforeRevisionCount = $page->revisions->count();
 
@@ -208,8 +206,7 @@ class PageRevisionTest extends TestCase
 
     public function test_revision_restore_action_only_visible_with_permission()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 2);
 
         $viewer = $this->getViewer();
@@ -227,8 +224,7 @@ class PageRevisionTest extends TestCase
 
     public function test_revision_delete_action_only_visible_with_permission()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 2);
 
         $viewer = $this->getViewer();

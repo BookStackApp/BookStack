@@ -17,11 +17,11 @@ class PublicActionTest extends TestCase
     public function test_app_not_public()
     {
         $this->setSettings(['app-public' => 'false']);
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $this->get('/books')->assertRedirect('/login');
         $this->get($book->getUrl())->assertRedirect('/login');
 
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->get($page->getUrl())->assertRedirect('/login');
     }
 
@@ -93,8 +93,7 @@ class PublicActionTest extends TestCase
         $this->app->make(JointPermissionBuilder::class)->rebuildForRole($publicRole);
         user()->clearPermissionCache();
 
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $resp = $this->get($chapter->getUrl());
         $resp->assertSee('New Page');
         $this->withHtml($resp)->assertElementExists('a[href="' . $chapter->getUrl('/create-page') . '"]');
@@ -118,7 +117,7 @@ class PublicActionTest extends TestCase
 
     public function test_content_not_listed_on_404_for_public_users()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->fill(['name' => 'my testing random unique page name'])->save();
         $this->asAdmin()->get($page->getUrl()); // Fake visit to show on recents
         $resp = $this->get('/cats/dogs/hippos');
@@ -162,8 +161,7 @@ class PublicActionTest extends TestCase
     public function test_public_view_then_login_redirects_to_previous_content()
     {
         $this->setSettings(['app-public' => 'true']);
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $resp = $this->get($book->getUrl());
         $resp->assertSee($book->name);
 
@@ -175,8 +173,7 @@ class PublicActionTest extends TestCase
     public function test_access_hidden_content_then_login_redirects_to_intended_content()
     {
         $this->setSettings(['app-public' => 'true']);
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $this->entities->setPermissions($book);
 
         $resp = $this->get($book->getUrl());

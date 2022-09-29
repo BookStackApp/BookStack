@@ -12,8 +12,7 @@ class PageTest extends TestCase
 {
     public function test_create()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $page = Page::factory()->make([
             'name' => 'My First Page',
         ]);
@@ -39,7 +38,7 @@ class PageTest extends TestCase
 
     public function test_page_view_when_creator_is_deleted_but_owner_exists()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $user = $this->getViewer();
         $owner = $this->getEditor();
         $page->created_by = $user->id;
@@ -55,7 +54,7 @@ class PageTest extends TestCase
     public function test_page_creation_with_markdown_content()
     {
         $this->setSettings(['app-editor' => 'markdown']);
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         $this->asEditor()->get($book->getUrl('/create-page'));
         $draft = Page::query()->where('book_id', '=', $book->id)
@@ -83,7 +82,7 @@ class PageTest extends TestCase
 
     public function test_page_delete()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->assertNull($page->deleted_at);
 
         $deleteViewReq = $this->asEditor()->get($page->getUrl('/delete'));
@@ -103,8 +102,7 @@ class PageTest extends TestCase
 
     public function test_page_full_delete_removes_all_revisions()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->revisions()->create([
             'html' => '<p>ducks</p>',
             'name' => 'my page revision',
@@ -221,8 +219,7 @@ class PageTest extends TestCase
 
     public function test_old_page_slugs_redirect_to_new_pages()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         // Need to save twice since revisions are not generated in seeder.
         $this->asAdmin()->put($page->getUrl(), [
@@ -244,8 +241,7 @@ class PageTest extends TestCase
 
     public function test_page_within_chapter_deletion_returns_to_chapter()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $page = $chapter->pages()->first();
 
         $this->asEditor()->delete($page->getUrl())
@@ -264,8 +260,7 @@ class PageTest extends TestCase
     public function test_recently_updated_pages_view_shows_updated_by_details()
     {
         $user = $this->getEditor();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->actingAs($user)->put($page->getUrl(), [
             'name' => 'Updated title',

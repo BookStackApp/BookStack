@@ -10,7 +10,7 @@ class UpdateUrlCommandTest extends TestCase
 {
     public function test_command_updates_page_content()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<a href="https://example.com/donkeys"></a>';
         $page->save();
 

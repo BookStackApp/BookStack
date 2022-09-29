@@ -23,8 +23,7 @@ class EntitySearchTest extends TestCase
 
     public function test_bookshelf_search()
     {
-        /** @var Bookshelf $shelf */
-        $shelf = Bookshelf::query()->first();
+        $shelf = $this->entities->shelf();
 
         $search = $this->asEditor()->get('/search?term=' . urlencode($shelf->name) . '  {type:bookshelf}');
         $search->assertSee('Search Results');
@@ -232,7 +231,7 @@ class EntitySearchTest extends TestCase
 
     public function test_ajax_entity_search_reflects_items_without_permission()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $baseSelector = 'a[data-entity-type="page"][data-entity-id="' . $page->id . '"]';
         $searchUrl = '/ajax/search/entities?permission=update&term=' . urlencode($page->name);
 
@@ -318,7 +317,7 @@ class EntitySearchTest extends TestCase
 
     public function test_search_works_on_updated_page_content()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->asEditor();
 
         $update = $this->put($page->getUrl(), [
