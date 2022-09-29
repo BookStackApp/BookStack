@@ -177,7 +177,7 @@ class PublicActionTest extends TestCase
         $this->setSettings(['app-public' => 'true']);
         /** @var Book $book */
         $book = Book::query()->first();
-        $this->setEntityRestrictions($book);
+        $this->entities->setPermissions($book);
 
         $resp = $this->get($book->getUrl());
         $resp->assertSee('Book not found');

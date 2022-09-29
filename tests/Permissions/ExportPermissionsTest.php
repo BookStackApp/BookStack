@@ -27,7 +27,7 @@ class ExportPermissionsTest extends TestCase
             $resp->assertSee($pageContent);
         }
 
-        $this->setEntityRestrictions($page, []);
+        $this->entities->setPermissions($page, []);
 
         foreach ($formats as $format) {
             $resp = $this->get($chapter->getUrl("export/{$format}"));
@@ -55,7 +55,7 @@ class ExportPermissionsTest extends TestCase
             $resp->assertSee($pageContent);
         }
 
-        $this->setEntityRestrictions($page, []);
+        $this->entities->setPermissions($page, []);
 
         foreach ($formats as $format) {
             $resp = $this->get($book->getUrl("export/{$format}"));

@@ -201,7 +201,7 @@ class PageTest extends TestCase
         $newBook->owned_by = $viewer->id;
         $newBook->save();
         $this->giveUserPermissions($viewer, ['page-create-own']);
-        $this->regenEntityPermissions($newBook);
+        $this->entities->regenPermissions($newBook);
 
         $resp = $this->actingAs($viewer)->get($page->getUrl());
         $resp->assertSee($page->getUrl('/copy'));
@@ -255,7 +255,7 @@ class PageTest extends TestCase
     public function test_recently_updated_pages_view()
     {
         $user = $this->getEditor();
-        $content = $this->createEntityChainBelongingToUser($user);
+        $content = $this->entities->createChainBelongingToUser($user);
 
         $resp = $this->asAdmin()->get('/pages/recently-updated');
         $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', $content['page']->name);
@@ -303,8 +303,8 @@ class PageTest extends TestCase
             'html' => '<p>Updated content</p>',
         ]);
 
-        $this->setEntityRestrictions($page->book);
-        $this->setEntityRestrictions($page, ['view'], [$user->roles->first()]);
+        $this->entities->setPermissions($page->book);
+        $this->entities->setPermissions($page, ['view'], [$user->roles->first()]);
 
         $resp = $this->get('/pages/recently-updated');
         $resp->assertDontSee($page->book->getShortName(42));

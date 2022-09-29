@@ -53,7 +53,7 @@ class AttachmentsApiTest extends TestCase
 
         $page->restricted = true;
         $page->save();
-        $this->regenEntityPermissions($page);
+        $this->entities->regenPermissions($page);
 
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJsonMissing(['data' => [
@@ -264,7 +264,7 @@ class AttachmentsApiTest extends TestCase
         $page->draft = true;
         $page->owned_by = $editor->id;
         $page->save();
-        $this->regenEntityPermissions($page);
+        $this->entities->regenPermissions($page);
 
         $attachment = $this->createAttachmentForPage($page, [
             'name'  => 'my attachment',

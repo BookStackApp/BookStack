@@ -107,7 +107,7 @@ class ChapterTest extends TestCase
         foreach ($chapter->pages as $page) {
             $page->restricted = true;
             $page->save();
-            $this->regenEntityPermissions($page);
+            $this->entities->regenPermissions($page);
         }
 
         $this->asEditor()->post($chapter->getUrl('/copy'), [

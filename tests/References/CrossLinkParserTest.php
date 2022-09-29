@@ -10,7 +10,7 @@ class CrossLinkParserTest extends TestCase
 {
     public function test_instance_with_entity_resolvers_matches_entity_links()
     {
-        $entities = $this->getEachEntityType();
+        $entities = $this->entities->all();
         $otherPage = Page::query()->where('id', '!=', $entities['page']->id)->first();
 
         $html = '

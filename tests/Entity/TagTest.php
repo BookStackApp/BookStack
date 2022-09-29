@@ -188,7 +188,7 @@ class TagTest extends TestCase
         $resp->assertSee('GreatTestContent');
 
         $page->restricted = true;
-        $this->regenEntityPermissions($page);
+        $this->entities->regenPermissions($page);
 
         $resp = $this->asEditor()->get('/tags');
         $resp->assertDontSee('SuperCategory');
@@ -207,7 +207,7 @@ class TagTest extends TestCase
     {
         $this->asEditor();
 
-        foreach ($this->getEachEntityType() as $entity) {
+        foreach ($this->entities->all() as $entity) {
             $entity->tags()->create(['name' => 'My Super Tag Name', 'value' => 'An-awesome-value']);
             $html = $this->withHtml($this->get($entity->getUrl()));
             $html->assertElementExists('body.tag-name-mysupertagname.tag-value-anawesomevalue.tag-pair-mysupertagname-anawesomevalue');

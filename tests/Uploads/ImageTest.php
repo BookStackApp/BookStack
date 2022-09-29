@@ -342,7 +342,7 @@ class ImageTest extends TestCase
 
         $this->get($expectedUrl)->assertOk();
 
-        $this->setEntityRestrictions($page, [], []);
+        $this->entities->setPermissions($page, [], []);
 
         $resp = $this->get($expectedUrl);
         $resp->assertNotFound();
@@ -367,7 +367,7 @@ class ImageTest extends TestCase
 
         $this->get($expectedUrl)->assertOk();
 
-        $this->setEntityRestrictions($page, [], []);
+        $this->entities->setPermissions($page, [], []);
 
         $resp = $this->get($expectedUrl);
         $resp->assertNotFound();
@@ -400,7 +400,7 @@ class ImageTest extends TestCase
         $export = $this->get($pageB->getUrl('/export/html'));
         $this->assertStringContainsString($encodedImageContent, $export->getContent());
 
-        $this->setEntityRestrictions($pageA, [], []);
+        $this->entities->setPermissions($pageA, [], []);
 
         $export = $this->get($pageB->getUrl('/export/html'));
         $this->assertStringNotContainsString($encodedImageContent, $export->getContent());
