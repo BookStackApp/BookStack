@@ -9,7 +9,7 @@ class PageTemplateTest extends TestCase
 {
     public function test_active_templates_visible_on_page_view()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
 
         $this->asEditor();
         $templateView = $this->get($page->getUrl());
@@ -24,7 +24,7 @@ class PageTemplateTest extends TestCase
 
     public function test_manage_templates_permission_required_to_change_page_template_status()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
@@ -52,7 +52,7 @@ class PageTemplateTest extends TestCase
     public function test_templates_content_should_be_fetchable_only_if_page_marked_as_template()
     {
         $content = '<div>my_custom_template_content</div>';
-        $page = Page::first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
         $this->actingAs($editor);
 

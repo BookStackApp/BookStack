@@ -311,7 +311,7 @@ class ExportTest extends TestCase
 
     public function test_page_pdf_export_opens_details_blocks()
     {
-        $page = Page::query()->first()->forceFill([
+        $page = $this->entities->page()->forceFill([
             'html'     => '<details><summary>Hello</summary><p>Content!</p></details>',
         ]);
         $page->save();
@@ -339,7 +339,7 @@ class ExportTest extends TestCase
 
     public function test_page_markdown_export_uses_existing_markdown_if_apparent()
     {
-        $page = Page::query()->first()->forceFill([
+        $page = $this->entities->page()->forceFill([
             'markdown' => '# A header',
             'html'     => '<h1>Dogcat</h1>',
         ]);
@@ -352,7 +352,7 @@ class ExportTest extends TestCase
 
     public function test_page_markdown_export_converts_html_where_no_markdown()
     {
-        $page = Page::query()->first()->forceFill([
+        $page = $this->entities->page()->forceFill([
             'markdown' => '',
             'html'     => '<h1>Dogcat</h1><p>Some <strong>bold</strong> text</p>',
         ]);
@@ -446,9 +446,9 @@ class ExportTest extends TestCase
     public function test_html_exports_contain_csp_meta_tag()
     {
         $entities = [
-            Page::query()->first(),
-            Book::query()->first(),
-            Chapter::query()->first(),
+            $this->entities->page(),
+            $this->entities->book(),
+            $this->entities->chapter(),
         ];
 
         foreach ($entities as $entity) {

@@ -5,15 +5,13 @@ namespace Tests\Entity;
 use BookStack\Actions\Tag;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
 class EntitySearchTest extends TestCase
 {
     public function test_page_search()
     {
-        $book = Book::all()->first();
+        $book = $this->entities->book();
         $page = $book->pages->first();
 
         $search = $this->asEditor()->get('/search?term=' . urlencode($page->name));
@@ -71,7 +69,7 @@ class EntitySearchTest extends TestCase
 
     public function test_chapter_search()
     {
-        $chapter = Chapter::has('pages')->first();
+        $chapter = $this->entities->chapterHasPages();
         $page = $chapter->pages[0];
 
         $pageTestResp = $this->asEditor()->get('/search/chapter/' . $chapter->id . '?term=' . urlencode($page->name));
@@ -91,10 +89,10 @@ class EntitySearchTest extends TestCase
             ]),
         ];
 
-        $pageA = Page::first();
+        $pageA = $this->entities->page();
         $pageA->tags()->saveMany($newTags);
 
-        $pageB = Page::all()->last();
+        $pageB = $this->entities->page();
         $pageB->tags()->create(['name' => 'animal', 'value' => 'dog']);
 
         $this->asEditor();
@@ -197,7 +195,7 @@ class EntitySearchTest extends TestCase
     public function test_ajax_entity_search()
     {
         $page = $this->entities->newPage(['name' => 'my ajax search test', 'html' => 'ajax test']);
-        $notVisitedPage = Page::first();
+        $notVisitedPage = $this->entities->page();
 
         // Visit the page to make popular
         $this->asEditor()->get($page->getUrl());
@@ -215,7 +213,7 @@ class EntitySearchTest extends TestCase
 
     public function test_ajax_entity_search_shows_breadcrumbs()
     {
-        $chapter = Chapter::first();
+        $chapter = $this->entities->chapter();
         $page = $chapter->pages->first();
         $this->asEditor();
 
@@ -246,7 +244,7 @@ class EntitySearchTest extends TestCase
 
     public function test_sibling_search_for_pages()
     {
-        $chapter = Chapter::query()->with('pages')->first();
+        $chapter = $this->entities->chapterHasPages();
         $this->assertGreaterThan(2, count($chapter->pages), 'Ensure we\'re testing with at least 1 sibling');
         $page = $chapter->pages->first();
 
@@ -261,7 +259,7 @@ class EntitySearchTest extends TestCase
 
     public function test_sibling_search_for_pages_without_chapter()
     {
-        $page = Page::query()->where('chapter_id', '=', 0)->firstOrFail();
+        $page = $this->entities->pageNotWithinChapter();
         $bookChildren = $page->book->getDirectChildren();
         $this->assertGreaterThan(2, count($bookChildren), 'Ensure we\'re testing with at least 1 sibling');
 
@@ -276,7 +274,7 @@ class EntitySearchTest extends TestCase
 
     public function test_sibling_search_for_chapters()
     {
-        $chapter = Chapter::query()->firstOrFail();
+        $chapter = $this->entities->chapter();
         $bookChildren = $chapter->book->getDirectChildren();
         $this->assertGreaterThan(2, count($bookChildren), 'Ensure we\'re testing with at least 1 sibling');
 

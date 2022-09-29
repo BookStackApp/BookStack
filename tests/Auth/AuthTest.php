@@ -3,7 +3,6 @@
 namespace Tests\Auth;
 
 use BookStack\Auth\Access\Mfa\MfaSession;
-use BookStack\Entities\Models\Page;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 

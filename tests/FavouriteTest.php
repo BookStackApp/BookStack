@@ -4,10 +4,6 @@ namespace Tests;
 
 use BookStack\Actions\Favourite;
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 
 class FavouriteTest extends TestCase
 {
@@ -83,16 +79,11 @@ class FavouriteTest extends TestCase
         ]);
     }
 
-    public function test_book_chapter_shelf_pages_contain_favourite_button()
+    public function test_each_entity_type_shows_favourite_button()
     {
-        $entities = [
-            Bookshelf::query()->first(),
-            Book::query()->first(),
-            Chapter::query()->first(),
-        ];
         $this->actingAs($this->getEditor());
 
-        foreach ($entities as $entity) {
+        foreach ($this->entities->all() as $entity) {
             $resp = $this->get($entity->getUrl());
             $this->withHtml($resp)->assertElementExists('form[method="POST"][action$="/favourites/add"]');
         }

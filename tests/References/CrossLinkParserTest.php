@@ -2,7 +2,6 @@
 
 namespace Tests\References;
 
-use BookStack\Entities\Models\Page;
 use BookStack\References\CrossLinkParser;
 use Tests\TestCase;
 
@@ -11,7 +10,7 @@ class CrossLinkParserTest extends TestCase
     public function test_instance_with_entity_resolvers_matches_entity_links()
     {
         $entities = $this->entities->all();
-        $otherPage = Page::query()->where('id', '!=', $entities['page']->id)->first();
+        $otherPage = $this->entities->page();
 
         $html = '
 <a href="' . url('/link/' . $otherPage->id) . '#cat">Page Permalink</a>

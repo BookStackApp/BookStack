@@ -21,7 +21,7 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_views_viewable()
     {
         $this->asEditor();
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>new content</p>']);
         $pageRevision = $page->revisions->last();
 
@@ -37,7 +37,7 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_preview_shows_content_of_revision()
     {
         $this->asEditor();
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>new revision content</p>']);
         $pageRevision = $page->revisions->last();
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>Updated content</p>']);
@@ -50,7 +50,7 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_restore_updates_content()
     {
         $this->asEditor();
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>']);
         $this->createRevisions($page, 1, ['name' => 'updated page again', 'html' => '<p>new content</p>']);
         $page = Page::find($page->id);
@@ -74,7 +74,7 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_restore_with_markdown_retains_markdown_content()
     {
         $this->asEditor();
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'markdown' => '## New Content def456']);
         $this->createRevisions($page, 1, ['name' => 'updated page again', 'markdown' => '## New Content Updated']);
         $page = Page::find($page->id);
@@ -102,7 +102,7 @@ class PageRevisionTest extends TestCase
     public function test_page_revision_restore_sets_new_revision_with_summary()
     {
         $this->asEditor();
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'My first update']);
         $this->createRevisions($page, 1, ['html' => '<p>new content</p>']);
         $page->refresh();
@@ -124,7 +124,7 @@ class PageRevisionTest extends TestCase
 
     public function test_page_revision_count_increments_on_update()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $startCount = $page->revision_count;
         $this->createRevisions($page, 1);
 
@@ -133,7 +133,7 @@ class PageRevisionTest extends TestCase
 
     public function test_revision_count_shown_in_page_meta()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 2);
 
         $pageView = $this->get($page->getUrl());
@@ -172,7 +172,7 @@ class PageRevisionTest extends TestCase
     public function test_revision_limit_enforced()
     {
         config()->set('app.revision_limit', 2);
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 12);
 
         $revisionCount = $page->revisions()->count();
@@ -182,7 +182,7 @@ class PageRevisionTest extends TestCase
     public function test_false_revision_limit_allows_many_revisions()
     {
         config()->set('app.revision_limit', false);
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 12);
 
         $revisionCount = $page->revisions()->count();
@@ -191,8 +191,7 @@ class PageRevisionTest extends TestCase
 
     public function test_revision_list_shows_editor_type()
     {
-        /** @var Page $page */
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->createRevisions($page, 1, ['html' => 'new page html']);
 
         $resp = $this->asAdmin()->get($page->refresh()->getUrl('/revisions'));

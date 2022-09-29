@@ -7,7 +7,6 @@ use BookStack\Actions\ActivityType;
 use BookStack\Actions\DispatchWebhookJob;
 use BookStack\Actions\Webhook;
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Page;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Http;

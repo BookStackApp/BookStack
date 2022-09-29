@@ -4,8 +4,6 @@ namespace Tests;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Page;
 
 class HomepageTest extends TestCase
 {
@@ -99,8 +97,7 @@ class HomepageTest extends TestCase
     public function test_custom_homepage_renders_includes()
     {
         $this->asEditor();
-        /** @var Page $included */
-        $included = Page::query()->first();
+        $included = $this->entities->page();
         $content = str_repeat('This is the body content of my custom homepage.', 20);
         $included->html = $content;
         $included->save();
@@ -138,7 +135,7 @@ class HomepageTest extends TestCase
     {
         $editor = $this->getEditor();
         setting()->putUser($editor, 'bookshelves_view_type', 'grid');
-        $shelf = Bookshelf::query()->firstOrFail();
+        $shelf = $this->entities->shelf();
 
         $this->setSettings(['app-homepage-type' => 'bookshelves']);
 

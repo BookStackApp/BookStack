@@ -24,8 +24,7 @@ class ConvertTest extends TestCase
 
     public function test_convert_chapter_to_book()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->whereHas('pages')->first();
+        $chapter = $this->entities->chapterHasPages();
         $chapter->tags()->save(new Tag(['name' => 'Category', 'value' => 'Penguins']));
         /** @var Page $childPage */
         $childPage = $chapter->pages()->first();
