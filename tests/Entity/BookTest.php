@@ -80,8 +80,7 @@ class BookTest extends TestCase
 
     public function test_update()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         // Cheeky initial update to refresh slug
         $this->asEditor()->put($book->getUrl(), ['name' => $book->name . '5', 'description' => $book->description]);
         $book->refresh();
@@ -104,8 +103,7 @@ class BookTest extends TestCase
 
     public function test_update_sets_tags()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         $this->assertEquals(0, $book->tags()->count());
 
@@ -167,15 +165,14 @@ class BookTest extends TestCase
 
     public function test_cancel_on_edit_book_page_leads_back_to_book()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $resp = $this->asEditor()->get($book->getUrl('/edit'));
         $this->withHtml($resp)->assertElementContains('form a[href="' . $book->getUrl() . '"]', 'Cancel');
     }
 
     public function test_next_previous_navigation_controls_show_within_book_content()
     {
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $chapter = $book->chapters->first();
 
         $resp = $this->asEditor()->get($chapter->getUrl());
@@ -246,13 +243,13 @@ class BookTest extends TestCase
 
     public function test_slug_multi_byte_url_safe()
     {
-        $book = $this->newBook([
+        $book = $this->entities->newBook([
             'name' => 'информация',
         ]);
 
         $this->assertEquals('informaciya', $book->slug);
 
-        $book = $this->newBook([
+        $book = $this->entities->newBook([
             'name' => '¿Qué?',
         ]);
 
@@ -261,7 +258,7 @@ class BookTest extends TestCase
 
     public function test_slug_format()
     {
-        $book = $this->newBook([
+        $book = $this->entities->newBook([
             'name' => 'PartA / PartB / PartC',
         ]);
 
@@ -270,8 +267,7 @@ class BookTest extends TestCase
 
     public function test_show_view_has_copy_button()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $resp = $this->asEditor()->get($book->getUrl());
 
         $this->withHtml($resp)->assertElementContains("a[href=\"{$book->getUrl('/copy')}\"]", 'Copy');
@@ -279,8 +275,7 @@ class BookTest extends TestCase
 
     public function test_copy_view()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $resp = $this->asEditor()->get($book->getUrl('/copy'));
 
         $resp->assertOk();
@@ -311,7 +306,7 @@ class BookTest extends TestCase
         foreach ($book->getDirectChildren() as $child) {
             $child->restricted = true;
             $child->save();
-            $this->regenEntityPermissions($child);
+            $this->entities->regenPermissions($child);
         }
 
         $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
@@ -338,8 +333,7 @@ class BookTest extends TestCase
 
     public function test_copy_clones_cover_image_if_existing()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $bookRepo = $this->app->make(BookRepo::class);
         $coverImageFile = $this->getTestImage('cover.png');
         $bookRepo->updateCoverImage($book, $coverImageFile);
@@ -357,15 +351,14 @@ class BookTest extends TestCase
         /** @var Bookshelf $shelfA */
         /** @var Bookshelf $shelfB */
         [$shelfA, $shelfB] = Bookshelf::query()->take(2)->get();
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         $shelfA->appendBook($book);
         $shelfB->appendBook($book);
 
         $viewer = $this->getViewer();
         $this->giveUserPermissions($viewer, ['book-update-all', 'book-create-all', 'bookshelf-update-all']);
-        $this->setEntityRestrictions($shelfB);
+        $this->entities->setPermissions($shelfB);
 
 
         $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);

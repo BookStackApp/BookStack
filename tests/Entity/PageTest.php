@@ -3,7 +3,6 @@
 namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -12,8 +11,7 @@ class PageTest extends TestCase
 {
     public function test_create()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $page = Page::factory()->make([
             'name' => 'My First Page',
         ]);
@@ -39,7 +37,7 @@ class PageTest extends TestCase
 
     public function test_page_view_when_creator_is_deleted_but_owner_exists()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $user = $this->getViewer();
         $owner = $this->getEditor();
         $page->created_by = $user->id;
@@ -55,7 +53,7 @@ class PageTest extends TestCase
     public function test_page_creation_with_markdown_content()
     {
         $this->setSettings(['app-editor' => 'markdown']);
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         $this->asEditor()->get($book->getUrl('/create-page'));
         $draft = Page::query()->where('book_id', '=', $book->id)
@@ -83,7 +81,7 @@ class PageTest extends TestCase
 
     public function test_page_delete()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->assertNull($page->deleted_at);
 
         $deleteViewReq = $this->asEditor()->get($page->getUrl('/delete'));
@@ -103,8 +101,7 @@ class PageTest extends TestCase
 
     public function test_page_full_delete_removes_all_revisions()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->revisions()->create([
             'html' => '<p>ducks</p>',
             'name' => 'my page revision',
@@ -130,7 +127,7 @@ class PageTest extends TestCase
 
     public function test_page_copy()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $page->html = '<p>This is some test content</p>';
         $page->save();
 
@@ -153,7 +150,7 @@ class PageTest extends TestCase
 
     public function test_page_copy_with_markdown_has_both_html_and_markdown()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $page->html = '<h1>This is some test content</h1>';
         $page->markdown = '# This is some test content';
         $page->save();
@@ -171,7 +168,7 @@ class PageTest extends TestCase
 
     public function test_page_copy_with_no_destination()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $currentBook = $page->book;
 
         $resp = $this->asEditor()->get($page->getUrl('/copy'));
@@ -190,7 +187,7 @@ class PageTest extends TestCase
 
     public function test_page_can_be_copied_without_edit_permission()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $currentBook = $page->book;
         $newBook = Book::where('id', '!=', $currentBook->id)->first();
         $viewer = $this->getViewer();
@@ -201,7 +198,7 @@ class PageTest extends TestCase
         $newBook->owned_by = $viewer->id;
         $newBook->save();
         $this->giveUserPermissions($viewer, ['page-create-own']);
-        $this->regenEntityPermissions($newBook);
+        $this->entities->regenPermissions($newBook);
 
         $resp = $this->actingAs($viewer)->get($page->getUrl());
         $resp->assertSee($page->getUrl('/copy'));
@@ -221,8 +218,7 @@ class PageTest extends TestCase
 
     public function test_old_page_slugs_redirect_to_new_pages()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         // Need to save twice since revisions are not generated in seeder.
         $this->asAdmin()->put($page->getUrl(), [
@@ -244,8 +240,7 @@ class PageTest extends TestCase
 
     public function test_page_within_chapter_deletion_returns_to_chapter()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $page = $chapter->pages()->first();
 
         $this->asEditor()->delete($page->getUrl())
@@ -255,7 +250,7 @@ class PageTest extends TestCase
     public function test_recently_updated_pages_view()
     {
         $user = $this->getEditor();
-        $content = $this->createEntityChainBelongingToUser($user);
+        $content = $this->entities->createChainBelongingToUser($user);
 
         $resp = $this->asAdmin()->get('/pages/recently-updated');
         $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', $content['page']->name);
@@ -264,8 +259,7 @@ class PageTest extends TestCase
     public function test_recently_updated_pages_view_shows_updated_by_details()
     {
         $user = $this->getEditor();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->actingAs($user)->put($page->getUrl(), [
             'name' => 'Updated title',
@@ -279,8 +273,7 @@ class PageTest extends TestCase
     public function test_recently_updated_pages_view_shows_parent_chain()
     {
         $user = $this->getEditor();
-        /** @var Page $page */
-        $page = Page::query()->whereNotNull('chapter_id')->first();
+        $page = $this->entities->pageWithinChapter();
 
         $this->actingAs($user)->put($page->getUrl(), [
             'name' => 'Updated title',
@@ -295,16 +288,15 @@ class PageTest extends TestCase
     public function test_recently_updated_pages_view_does_not_show_parent_if_not_visible()
     {
         $user = $this->getEditor();
-        /** @var Page $page */
-        $page = Page::query()->whereNotNull('chapter_id')->first();
+        $page = $this->entities->pageWithinChapter();
 
         $this->actingAs($user)->put($page->getUrl(), [
             'name' => 'Updated title',
             'html' => '<p>Updated content</p>',
         ]);
 
-        $this->setEntityRestrictions($page->book);
-        $this->setEntityRestrictions($page, ['view'], [$user->roles->first()]);
+        $this->entities->setPermissions($page->book);
+        $this->entities->setPermissions($page, ['view'], [$user->roles->first()]);
 
         $resp = $this->get('/pages/recently-updated');
         $resp->assertDontSee($page->book->getShortName(42));

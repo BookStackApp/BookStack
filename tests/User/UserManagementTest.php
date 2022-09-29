@@ -6,7 +6,6 @@ use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Page;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
@@ -150,7 +149,7 @@ class UserManagementTest extends TestCase
 
     public function test_delete_with_new_owner_id_changes_ownership()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $owner = $page->ownedBy;
         $newOwner = User::query()->where('id', '!=', $owner->id)->first();
 

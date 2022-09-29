@@ -11,7 +11,7 @@ class CommentTest extends TestCase
     public function test_add_comment()
     {
         $this->asAdmin();
-        $page = Page::first();
+        $page = $this->entities->page();
 
         $comment = Comment::factory()->make(['parent_id' => 2]);
         $resp = $this->postJson("/comment/$page->id", $comment->getAttributes());
@@ -34,7 +34,7 @@ class CommentTest extends TestCase
     public function test_comment_edit()
     {
         $this->asAdmin();
-        $page = Page::first();
+        $page = $this->entities->page();
 
         $comment = Comment::factory()->make();
         $this->postJson("/comment/$page->id", $comment->getAttributes());
@@ -58,7 +58,7 @@ class CommentTest extends TestCase
     public function test_comment_delete()
     {
         $this->asAdmin();
-        $page = Page::first();
+        $page = $this->entities->page();
 
         $comment = Comment::factory()->make();
         $this->postJson("/comment/$page->id", $comment->getAttributes());
@@ -75,7 +75,7 @@ class CommentTest extends TestCase
 
     public function test_comments_converts_markdown_input_to_html()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->asAdmin()->postJson("/comment/$page->id", [
             'text' => '# My Title',
         ]);
@@ -94,7 +94,7 @@ class CommentTest extends TestCase
     public function test_html_cannot_be_injected_via_comment_content()
     {
         $this->asAdmin();
-        $page = Page::first();
+        $page = $this->entities->page();
 
         $script = '<script>const a = "script";</script>\n\n# sometextinthecomment';
         $this->postJson("/comment/$page->id", [

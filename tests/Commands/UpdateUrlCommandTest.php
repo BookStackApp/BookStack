@@ -2,7 +2,6 @@
 
 namespace Tests\Commands;
 
-use BookStack\Entities\Models\Page;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Tests\TestCase;
 
@@ -10,7 +9,7 @@ class UpdateUrlCommandTest extends TestCase
 {
     public function test_command_updates_page_content()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<a href="https://example.com/donkeys"></a>';
         $page->save();
 

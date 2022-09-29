@@ -29,7 +29,7 @@ class UserProfileTest extends TestCase
 
     public function test_profile_page_shows_recent_entities()
     {
-        $content = $this->createEntityChainBelongingToUser($this->user, $this->user);
+        $content = $this->entities->createChainBelongingToUser($this->user, $this->user);
 
         $resp = $this->asAdmin()->get('/user/' . $this->user->slug);
         // Check the recently created page is shown
@@ -50,7 +50,7 @@ class UserProfileTest extends TestCase
             ->assertElementContains('#content-counts', '0 Chapters')
             ->assertElementContains('#content-counts', '0 Pages');
 
-        $this->createEntityChainBelongingToUser($newUser, $newUser);
+        $this->entities->createChainBelongingToUser($newUser, $newUser);
 
         $resp = $this->asAdmin()->get('/user/' . $newUser->slug)
             ->assertSee($newUser->name);
@@ -63,7 +63,7 @@ class UserProfileTest extends TestCase
     {
         $newUser = User::factory()->create();
         $this->actingAs($newUser);
-        $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
+        $entities = $this->entities->createChainBelongingToUser($newUser, $newUser);
         Activity::add(ActivityType::BOOK_UPDATE, $entities['book']);
         Activity::add(ActivityType::PAGE_CREATE, $entities['page']);
 
@@ -77,7 +77,7 @@ class UserProfileTest extends TestCase
     {
         $newUser = User::factory()->create();
         $this->actingAs($newUser);
-        $entities = $this->createEntityChainBelongingToUser($newUser, $newUser);
+        $entities = $this->entities->createChainBelongingToUser($newUser, $newUser);
         Activity::add(ActivityType::BOOK_UPDATE, $entities['book']);
         Activity::add(ActivityType::PAGE_CREATE, $entities['page']);
 

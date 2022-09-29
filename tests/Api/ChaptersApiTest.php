@@ -2,7 +2,6 @@
 
 namespace Tests\Api;
 
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +33,7 @@ class ChaptersApiTest extends TestCase
     public function test_create_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $details = [
             'name'        => 'My API chapter',
             'description' => 'A chapter created via the API',
@@ -64,7 +63,7 @@ class ChaptersApiTest extends TestCase
     public function test_chapter_name_needed_to_create()
     {
         $this->actingAsApiEditor();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $details = [
             'book_id'     => $book->id,
             'description' => 'A chapter created via the API',
@@ -95,7 +94,7 @@ class ChaptersApiTest extends TestCase
     public function test_read_endpoint()
     {
         $this->actingAsApiEditor();
-        $chapter = Chapter::visible()->first();
+        $chapter = $this->entities->chapter();
         $page = $chapter->pages()->first();
 
         $resp = $this->getJson($this->baseEndpoint . "/{$chapter->id}");
@@ -127,7 +126,7 @@ class ChaptersApiTest extends TestCase
     public function test_update_endpoint()
     {
         $this->actingAsApiEditor();
-        $chapter = Chapter::visible()->first();
+        $chapter = $this->entities->chapter();
         $details = [
             'name'        => 'My updated API chapter',
             'description' => 'A chapter created via the API',
@@ -152,7 +151,7 @@ class ChaptersApiTest extends TestCase
     public function test_update_increments_updated_date_if_only_tags_are_sent()
     {
         $this->actingAsApiEditor();
-        $chapter = Chapter::visible()->first();
+        $chapter = $this->entities->chapter();
         DB::table('chapters')->where('id', '=', $chapter->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
@@ -167,7 +166,7 @@ class ChaptersApiTest extends TestCase
     public function test_delete_endpoint()
     {
         $this->actingAsApiEditor();
-        $chapter = Chapter::visible()->first();
+        $chapter = $this->entities->chapter();
         $resp = $this->deleteJson($this->baseEndpoint . "/{$chapter->id}");
 
         $resp->assertStatus(204);
@@ -177,7 +176,7 @@ class ChaptersApiTest extends TestCase
     public function test_export_html_endpoint()
     {
         $this->actingAsApiEditor();
-        $chapter = Chapter::visible()->first();
+        $chapter = $this->entities->chapter();
 
         $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/html");
         $resp->assertStatus(200);
@@ -188,7 +187,7 @@ class ChaptersApiTest extends TestCase
     public function test_export_plain_text_endpoint()
     {
         $this->actingAsApiEditor();
-        $chapter = Chapter::visible()->first();
+        $chapter = $this->entities->chapter();
 
         $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/plaintext");
         $resp->assertStatus(200);
@@ -199,7 +198,7 @@ class ChaptersApiTest extends TestCase
     public function test_export_pdf_endpoint()
     {
         $this->actingAsApiEditor();
-        $chapter = Chapter::visible()->first();
+        $chapter = $this->entities->chapter();
 
         $resp = $this->get($this->baseEndpoint . "/{$chapter->id}/export/pdf");
         $resp->assertStatus(200);

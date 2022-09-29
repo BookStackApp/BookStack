@@ -17,7 +17,7 @@ class AttachmentsApiTest extends TestCase
     public function test_index_endpoint_returns_expected_book()
     {
         $this->actingAsApiEditor();
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $attachment = $this->createAttachmentForPage($page, [
             'name'     => 'My test attachment',
             'external' => true,
@@ -37,8 +37,7 @@ class AttachmentsApiTest extends TestCase
     public function test_attachments_listing_based_upon_page_visibility()
     {
         $this->actingAsApiEditor();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $attachment = $this->createAttachmentForPage($page, [
             'name'     => 'My test attachment',
             'external' => true,
@@ -53,7 +52,7 @@ class AttachmentsApiTest extends TestCase
 
         $page->restricted = true;
         $page->save();
-        $this->regenEntityPermissions($page);
+        $this->entities->regenPermissions($page);
 
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJsonMissing(['data' => [
@@ -66,8 +65,7 @@ class AttachmentsApiTest extends TestCase
     public function test_create_endpoint_for_link_attachment()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $details = [
             'name'        => 'My attachment',
@@ -85,8 +83,7 @@ class AttachmentsApiTest extends TestCase
     public function test_create_endpoint_for_upload_attachment()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $file = $this->getTestFile('textfile.txt');
 
         $details = [
@@ -106,8 +103,7 @@ class AttachmentsApiTest extends TestCase
     public function test_upload_limit_restricts_attachment_uploads()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         config()->set('app.upload_limit', 1);
 
@@ -130,8 +126,7 @@ class AttachmentsApiTest extends TestCase
     public function test_name_needed_to_create()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $details = [
             'uploaded_to' => $page->id,
@@ -146,8 +141,7 @@ class AttachmentsApiTest extends TestCase
     public function test_link_or_file_needed_to_create()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $details = [
             'name'        => 'my attachment',
@@ -165,8 +159,7 @@ class AttachmentsApiTest extends TestCase
     public function test_message_shown_if_file_is_not_a_valid_file()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $details = [
             'name'        => 'my attachment',
@@ -182,8 +175,7 @@ class AttachmentsApiTest extends TestCase
     public function test_read_endpoint_for_link_attachment()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $attachment = $this->createAttachmentForPage($page, [
             'name'  => 'my attachment',
@@ -216,8 +208,7 @@ class AttachmentsApiTest extends TestCase
     public function test_read_endpoint_for_file_attachment()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $file = $this->getTestFile('textfile.txt');
 
         $details = [
@@ -259,12 +250,11 @@ class AttachmentsApiTest extends TestCase
         $this->actingAsApiAdmin();
         $editor = $this->getEditor();
 
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->draft = true;
         $page->owned_by = $editor->id;
         $page->save();
-        $this->regenEntityPermissions($page);
+        $this->entities->regenPermissions($page);
 
         $attachment = $this->createAttachmentForPage($page, [
             'name'  => 'my attachment',
@@ -280,8 +270,7 @@ class AttachmentsApiTest extends TestCase
     public function test_update_endpoint()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $attachment = $this->createAttachmentForPage($page);
 
         $details = [
@@ -298,8 +287,7 @@ class AttachmentsApiTest extends TestCase
     public function test_update_link_attachment_to_file()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $attachment = $this->createAttachmentForPage($page);
         $file = $this->getTestFile('textfile.txt');
 
@@ -318,8 +306,7 @@ class AttachmentsApiTest extends TestCase
     public function test_update_file_attachment_to_link()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $file = $this->getTestFile('textfile.txt');
         $this->call('POST', $this->baseEndpoint, ['name' => 'My file attachment', 'uploaded_to' => $page->id], [], ['file' => $file]);
         /** @var Attachment $attachment */
@@ -346,8 +333,7 @@ class AttachmentsApiTest extends TestCase
     public function test_delete_endpoint()
     {
         $this->actingAsApiAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $attachment = $this->createAttachmentForPage($page);
 
         $resp = $this->deleteJson("{$this->baseEndpoint}/{$attachment->id}");

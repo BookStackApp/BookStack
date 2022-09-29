@@ -11,8 +11,7 @@ class ChapterTest extends TestCase
 {
     public function test_create()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         $chapter = Chapter::factory()->make([
             'name' => 'My First Chapter',
@@ -58,8 +57,7 @@ class ChapterTest extends TestCase
 
     public function test_show_view_has_copy_button()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
 
         $resp = $this->asEditor()->get($chapter->getUrl());
         $this->withHtml($resp)->assertElementContains("a[href$=\"{$chapter->getUrl('/copy')}\"]", 'Copy');
@@ -67,8 +65,7 @@ class ChapterTest extends TestCase
 
     public function test_copy_view()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
 
         $resp = $this->asEditor()->get($chapter->getUrl('/copy'));
         $resp->assertOk();
@@ -99,15 +96,14 @@ class ChapterTest extends TestCase
 
     public function test_copy_does_not_copy_non_visible_pages()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->whereHas('pages')->first();
+        $chapter = $this->entities->chapterHasPages();
 
         // Hide pages to all non-admin roles
         /** @var Page $page */
         foreach ($chapter->pages as $page) {
             $page->restricted = true;
             $page->save();
-            $this->regenEntityPermissions($page);
+            $this->entities->regenPermissions($page);
         }
 
         $this->asEditor()->post($chapter->getUrl('/copy'), [
@@ -121,8 +117,7 @@ class ChapterTest extends TestCase
 
     public function test_copy_does_not_copy_pages_if_user_cant_page_create()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->whereHas('pages')->first();
+        $chapter = $this->entities->chapterHasPages();
         $viewer = $this->getViewer();
         $this->giveUserPermissions($viewer, ['chapter-create-all']);
 
@@ -149,8 +144,7 @@ class ChapterTest extends TestCase
 
     public function test_sort_book_action_visible_if_permissions_allow()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
 
         $resp = $this->actingAs($this->getViewer())->get($chapter->getUrl());
         $this->withHtml($resp)->assertLinkNotExists($chapter->book->getUrl('sort'));

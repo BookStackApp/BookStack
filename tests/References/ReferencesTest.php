@@ -2,9 +2,6 @@
 
 namespace Tests\References;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Model;
@@ -15,10 +12,8 @@ class ReferencesTest extends TestCase
 {
     public function test_references_created_on_page_update()
     {
-        /** @var Page $pageA */
-        /** @var Page $pageB */
-        $pageA = Page::query()->first();
-        $pageB = Page::query()->where('id', '!=', $pageA->id)->first();
+        $pageA = $this->entities->page();
+        $pageB = $this->entities->page();
 
         $this->assertDatabaseMissing('references', ['from_id' => $pageA->id, 'from_type' => $pageA->getMorphClass()]);
 
@@ -37,10 +32,8 @@ class ReferencesTest extends TestCase
 
     public function test_references_deleted_on_entity_delete()
     {
-        /** @var Page $pageA */
-        /** @var Page $pageB */
-        $pageA = Page::query()->first();
-        $pageB = Page::query()->where('id', '!=', $pageA->id)->first();
+        $pageA = $this->entities->page();
+        $pageB = $this->entities->page();
 
         $this->createReference($pageA, $pageB);
         $this->createReference($pageB, $pageA);
@@ -57,9 +50,8 @@ class ReferencesTest extends TestCase
 
     public function test_references_to_count_visible_on_entity_show_view()
     {
-        $entities = $this->getEachEntityType();
-        /** @var Page $otherPage */
-        $otherPage = Page::query()->where('id', '!=', $entities['page']->id)->first();
+        $entities = $this->entities->all();
+        $otherPage = $this->entities->page();
 
         $this->asEditor();
         foreach ($entities as $entity) {
@@ -79,7 +71,7 @@ class ReferencesTest extends TestCase
 
     public function test_references_to_visible_on_references_page()
     {
-        $entities = $this->getEachEntityType();
+        $entities = $this->entities->all();
         $this->asEditor();
         foreach ($entities as $entity) {
             $this->createReference($entities['page'], $entity);
@@ -95,13 +87,11 @@ class ReferencesTest extends TestCase
 
     public function test_reference_not_visible_if_view_permission_does_not_permit()
     {
-        /** @var Page $page */
-        /** @var Page $pageB */
-        $page = Page::query()->first();
-        $pageB = Page::query()->where('id', '!=', $page->id)->first();
+        $page = $this->entities->page();
+        $pageB = $this->entities->page();
         $this->createReference($pageB, $page);
 
-        $this->setEntityRestrictions($pageB);
+        $this->entities->setPermissions($pageB);
 
         $this->asEditor()->get($page->getUrl('/references'))->assertDontSee($pageB->name);
         $this->asAdmin()->get($page->getUrl('/references'))->assertSee($pageB->name);
@@ -109,8 +99,7 @@ class ReferencesTest extends TestCase
 
     public function test_reference_page_shows_empty_state_with_no_references()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->asEditor()
             ->get($page->getUrl('/references'))
@@ -119,12 +108,9 @@ class ReferencesTest extends TestCase
 
     public function test_pages_leading_to_entity_updated_on_url_change()
     {
-        /** @var Page $pageA */
-        /** @var Page $pageB */
-        /** @var Book $book */
-        $pageA = Page::query()->first();
-        $pageB = Page::query()->where('id', '!=', $pageA->id)->first();
-        $book = Book::query()->first();
+        $pageA = $this->entities->page();
+        $pageB = $this->entities->page();
+        $book = $this->entities->book();
 
         foreach ([$pageA, $pageB] as $page) {
             $page->html = '<a href="' . $book->getUrl() . '">Link</a>';
@@ -148,11 +134,8 @@ class ReferencesTest extends TestCase
 
     public function test_pages_linking_to_other_page_updated_on_parent_book_url_change()
     {
-        /** @var Page $bookPage */
-        /** @var Page $otherPage */
-        /** @var Book $book */
-        $bookPage = Page::query()->first();
-        $otherPage = Page::query()->where('id', '!=', $bookPage->id)->first();
+        $bookPage = $this->entities->page();
+        $otherPage = $this->entities->page();
         $book = $bookPage->book;
 
         $otherPage->html = '<a href="' . $bookPage->getUrl() . '">Link</a>';
@@ -173,11 +156,8 @@ class ReferencesTest extends TestCase
 
     public function test_pages_linking_to_chapter_updated_on_parent_book_url_change()
     {
-        /** @var Chapter $bookChapter */
-        /** @var Page $otherPage */
-        /** @var Book $book */
-        $bookChapter = Chapter::query()->first();
-        $otherPage = Page::query()->first();
+        $bookChapter = $this->entities->chapter();
+        $otherPage = $this->entities->page();
         $book = $bookChapter->book;
 
         $otherPage->html = '<a href="' . $bookChapter->getUrl() . '">Link</a>';
@@ -198,10 +178,8 @@ class ReferencesTest extends TestCase
 
     public function test_markdown_links_leading_to_entity_updated_on_url_change()
     {
-        /** @var Page $page */
-        /** @var Book $book */
-        $page = Page::query()->first();
-        $book = Book::query()->first();
+        $page = $this->entities->page();
+        $book = $this->entities->book();
 
         $bookUrl = $book->getUrl();
         $markdown = '

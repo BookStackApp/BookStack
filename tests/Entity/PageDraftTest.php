@@ -2,7 +2,6 @@
 
 namespace Tests\Entity;
 
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Repos\PageRepo;
@@ -10,20 +9,13 @@ use Tests\TestCase;
 
 class PageDraftTest extends TestCase
 {
-    /**
-     * @var Page
-     */
-    protected $page;
-
-    /**
-     * @var PageRepo
-     */
-    protected $pageRepo;
+    protected Page $page;
+    protected PageRepo $pageRepo;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->page = Page::query()->first();
+        $this->page = $this->entities->page();
         $this->pageRepo = app()->make(PageRepo::class);
     }
 
@@ -85,8 +77,7 @@ class PageDraftTest extends TestCase
     {
         $admin = $this->getAdmin();
         $editor = $this->getEditor();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->actingAs($editor)->put('/ajax/page/' . $page->id . '/save-draft', [
             'name' => $page->name,
@@ -120,8 +111,7 @@ class PageDraftTest extends TestCase
     {
         $admin = $this->getAdmin();
         $editor = $this->getEditor();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->actingAs($admin)->put('/ajax/page/' . $page->id . '/save-draft', [
             'name' => $page->name,
@@ -140,8 +130,7 @@ class PageDraftTest extends TestCase
 
     public function test_draft_pages_show_on_homepage()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $resp = $this->asAdmin()->get('/');
         $this->withHtml($resp)->assertElementNotContains('#recent-drafts', 'New Page');
 
@@ -152,8 +141,7 @@ class PageDraftTest extends TestCase
 
     public function test_draft_pages_not_visible_by_others()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $chapter = $book->chapters->first();
         $newUser = $this->getEditor();
 
@@ -171,8 +159,7 @@ class PageDraftTest extends TestCase
     public function test_page_html_in_ajax_fetch_response()
     {
         $this->asAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->getJson('/ajax/page/' . $page->id)->assertJson([
             'html' => $page->html,
@@ -181,8 +168,7 @@ class PageDraftTest extends TestCase
 
     public function test_updating_page_draft_with_markdown_retains_markdown_content()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $this->asEditor()->get($book->getUrl('/create-page'));
         /** @var Page $draft */
         $draft = Page::query()->where('draft', '=', true)->where('book_id', '=', $book->id)->firstOrFail();
@@ -207,8 +193,7 @@ class PageDraftTest extends TestCase
 
     public function test_slug_generated_on_draft_publish_to_page_when_no_name_change()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $this->asEditor()->get($book->getUrl('/create-page'));
         /** @var Page $draft */
         $draft = Page::query()->where('draft', '=', true)->where('book_id', '=', $book->id)->firstOrFail();

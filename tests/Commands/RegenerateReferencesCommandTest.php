@@ -2,7 +2,6 @@
 
 namespace Tests\Commands;
 
-use BookStack\Entities\Models\Page;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -10,8 +9,7 @@ class RegenerateReferencesCommandTest extends TestCase
 {
     public function test_regenerate_references_command()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = $page->book;
 
         $page->html = '<a href="' . $book->getUrl() . '">Book Link</a>';

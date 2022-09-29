@@ -15,7 +15,7 @@ class ExportTest extends TestCase
 {
     public function test_page_text_export()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->asEditor();
 
         $resp = $this->get($page->getUrl('/export/plaintext'));
@@ -26,7 +26,7 @@ class ExportTest extends TestCase
 
     public function test_page_pdf_export()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->asEditor();
 
         $resp = $this->get($page->getUrl('/export/pdf'));
@@ -36,7 +36,7 @@ class ExportTest extends TestCase
 
     public function test_page_html_export()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->asEditor();
 
         $resp = $this->get($page->getUrl('/export/html'));
@@ -47,7 +47,7 @@ class ExportTest extends TestCase
 
     public function test_book_text_export()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = $page->book;
         $this->asEditor();
 
@@ -60,7 +60,7 @@ class ExportTest extends TestCase
 
     public function test_book_pdf_export()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = $page->book;
         $this->asEditor();
 
@@ -71,7 +71,7 @@ class ExportTest extends TestCase
 
     public function test_book_html_export()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = $page->book;
         $this->asEditor();
 
@@ -85,7 +85,7 @@ class ExportTest extends TestCase
     public function test_book_html_export_shows_chapter_descriptions()
     {
         $chapterDesc = 'My custom test chapter description ' . Str::random(12);
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $chapter->description = $chapterDesc;
         $chapter->save();
 
@@ -98,7 +98,7 @@ class ExportTest extends TestCase
 
     public function test_chapter_text_export()
     {
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $page = $chapter->pages[0];
         $this->asEditor();
 
@@ -111,7 +111,7 @@ class ExportTest extends TestCase
 
     public function test_chapter_pdf_export()
     {
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $this->asEditor();
 
         $resp = $this->get($chapter->getUrl('/export/pdf'));
@@ -121,7 +121,7 @@ class ExportTest extends TestCase
 
     public function test_chapter_html_export()
     {
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $page = $chapter->pages[0];
         $this->asEditor();
 
@@ -134,7 +134,7 @@ class ExportTest extends TestCase
 
     public function test_page_html_export_contains_custom_head_if_set()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $customHeadContent = '<style>p{color: red;}</style>';
         $this->setSettings(['app-custom-head' => $customHeadContent]);
@@ -145,7 +145,7 @@ class ExportTest extends TestCase
 
     public function test_page_html_export_does_not_break_with_only_comments_in_custom_head()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $customHeadContent = '<!-- A comment -->';
         $this->setSettings(['app-custom-head' => $customHeadContent]);
@@ -157,7 +157,7 @@ class ExportTest extends TestCase
 
     public function test_page_html_export_use_absolute_dates()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
         $resp->assertSee($page->created_at->formatLocalized('%e %B %Y %H:%M:%S'));
@@ -168,7 +168,7 @@ class ExportTest extends TestCase
 
     public function test_page_export_does_not_include_user_or_revision_links()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
         $resp->assertDontSee($page->getUrl('/revisions'));
@@ -178,7 +178,7 @@ class ExportTest extends TestCase
 
     public function test_page_export_sets_right_data_type_for_svg_embeds()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         Storage::disk('local')->makeDirectory('uploads/images/gallery');
         Storage::disk('local')->put('uploads/images/gallery/svg_test.svg', '<svg></svg>');
         $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg">';
@@ -194,7 +194,7 @@ class ExportTest extends TestCase
 
     public function test_page_image_containment_works_on_multiple_images_within_a_single_line()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         Storage::disk('local')->makeDirectory('uploads/images/gallery');
         Storage::disk('local')->put('uploads/images/gallery/svg_test.svg', '<svg></svg>');
         Storage::disk('local')->put('uploads/images/gallery/svg_test2.svg', '<svg></svg>');
@@ -210,7 +210,7 @@ class ExportTest extends TestCase
 
     public function test_page_export_contained_html_image_fetches_only_run_when_url_points_to_image_upload_folder()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<img src="http://localhost/uploads/images/gallery/svg_test.svg"/>'
             . '<img src="http://localhost/uploads/svg_test.svg"/>'
             . '<img src="/uploads/svg_test.svg"/>';
@@ -235,7 +235,7 @@ class ExportTest extends TestCase
         $contents = file_get_contents(public_path('.htaccess'));
         config()->set('filesystems.images', 'local');
 
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<img src="http://localhost/uploads/images/../../.htaccess"/>';
         $page->save();
 
@@ -249,7 +249,7 @@ class ExportTest extends TestCase
         config()->set('filesystems.images', 'local_secure');
         file_put_contents($testFilePath, 'I am a cat');
 
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<img src="http://localhost/uploads/images/../../logs/test.txt"/>';
         $page->save();
 
@@ -276,7 +276,7 @@ class ExportTest extends TestCase
     public function test_page_export_with_deleted_creator_and_updater()
     {
         $user = $this->getViewer(['name' => 'ExportWizardTheFifth']);
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->created_by = $user->id;
         $page->updated_by = $user->id;
         $page->save();
@@ -311,7 +311,7 @@ class ExportTest extends TestCase
 
     public function test_page_pdf_export_opens_details_blocks()
     {
-        $page = Page::query()->first()->forceFill([
+        $page = $this->entities->page()->forceFill([
             'html'     => '<details><summary>Hello</summary><p>Content!</p></details>',
         ]);
         $page->save();
@@ -329,7 +329,7 @@ class ExportTest extends TestCase
 
     public function test_page_markdown_export()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
         $resp->assertStatus(200);
@@ -339,7 +339,7 @@ class ExportTest extends TestCase
 
     public function test_page_markdown_export_uses_existing_markdown_if_apparent()
     {
-        $page = Page::query()->first()->forceFill([
+        $page = $this->entities->page()->forceFill([
             'markdown' => '# A header',
             'html'     => '<h1>Dogcat</h1>',
         ]);
@@ -352,7 +352,7 @@ class ExportTest extends TestCase
 
     public function test_page_markdown_export_converts_html_where_no_markdown()
     {
-        $page = Page::query()->first()->forceFill([
+        $page = $this->entities->page()->forceFill([
             'markdown' => '',
             'html'     => '<h1>Dogcat</h1><p>Some <strong>bold</strong> text</p>',
         ]);
@@ -364,7 +364,7 @@ class ExportTest extends TestCase
 
     public function test_chapter_markdown_export()
     {
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $page = $chapter->pages()->first();
         $resp = $this->asEditor()->get($chapter->getUrl('/export/markdown'));
 
@@ -430,8 +430,7 @@ class ExportTest extends TestCase
 
     public function test_wkhtmltopdf_only_used_when_allow_untrusted_is_true()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         config()->set('snappy.pdf.binary', '/abc123');
         config()->set('app.allow_untrusted_server_fetching', false);
@@ -447,9 +446,9 @@ class ExportTest extends TestCase
     public function test_html_exports_contain_csp_meta_tag()
     {
         $entities = [
-            Page::query()->first(),
-            Book::query()->first(),
-            Chapter::query()->first(),
+            $this->entities->page(),
+            $this->entities->book(),
+            $this->entities->chapter(),
         ];
 
         foreach ($entities as $entity) {
@@ -460,7 +459,7 @@ class ExportTest extends TestCase
 
     public function test_html_exports_contain_body_classes_for_export_identification()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
         $this->withHtml($resp)->assertElementExists('body.export.export-format-html.export-engine-none');

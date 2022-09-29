@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use BookStack\Entities\Models\Book;
 use Illuminate\Support\Facades\Log;
 
 class ErrorTest extends TestCase
@@ -27,7 +26,7 @@ class ErrorTest extends TestCase
     {
         $this->actingAs($this->getViewer());
         $handler = $this->withTestLogger();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         // Ensure we're seeing errors
         Log::error('cat');
