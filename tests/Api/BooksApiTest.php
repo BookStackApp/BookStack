@@ -68,7 +68,7 @@ class BooksApiTest extends TestCase
     public function test_read_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
 
         $resp = $this->getJson($this->baseEndpoint . "/{$book->id}");
 
@@ -91,8 +91,7 @@ class BooksApiTest extends TestCase
     public function test_read_endpoint_includes_chapter_and_page_contents()
     {
         $this->actingAsApiEditor();
-        /** @var Book $book */
-        $book = Book::visible()->has('chapters')->has('pages')->first();
+        $book = $this->entities->bookHasChaptersAndPages();
         $chapter = $book->chapters()->first();
         $chapterPage = $chapter->pages()->first();
 
@@ -123,7 +122,7 @@ class BooksApiTest extends TestCase
     public function test_update_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
         $details = [
             'name'        => 'My updated API book',
             'description' => 'A book created via the API',
@@ -140,7 +139,7 @@ class BooksApiTest extends TestCase
     public function test_update_increments_updated_date_if_only_tags_are_sent()
     {
         $this->actingAsApiEditor();
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
         DB::table('books')->where('id', '=', $book->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
@@ -156,7 +155,7 @@ class BooksApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         /** @var Book $book */
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
         $this->assertNull($book->cover);
         $file = $this->getTestImage('image.png');
 
@@ -191,7 +190,7 @@ class BooksApiTest extends TestCase
     public function test_delete_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
         $resp = $this->deleteJson($this->baseEndpoint . "/{$book->id}");
 
         $resp->assertStatus(204);
@@ -201,7 +200,7 @@ class BooksApiTest extends TestCase
     public function test_export_html_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
 
         $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/html");
         $resp->assertStatus(200);
@@ -212,7 +211,7 @@ class BooksApiTest extends TestCase
     public function test_export_plain_text_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
 
         $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/plaintext");
         $resp->assertStatus(200);
@@ -223,7 +222,7 @@ class BooksApiTest extends TestCase
     public function test_export_pdf_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
 
         $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/pdf");
         $resp->assertStatus(200);
@@ -249,7 +248,7 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $this->removePermissionFromUser($this->getEditor(), 'content-export');
 
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
         foreach ($types as $type) {
             $resp = $this->get($this->baseEndpoint . "/{$book->id}/export/{$type}");
             $this->assertPermissionError($resp);

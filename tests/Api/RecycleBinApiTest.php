@@ -4,7 +4,6 @@ namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Deletion;
-use BookStack\Entities\Models\Page;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
 
@@ -50,8 +49,8 @@ class RecycleBinApiTest extends TestCase
     {
         $admin = $this->getAdmin();
 
-        $page = Page::query()->first();
-        $book = Book::query()->first();
+        $page = $this->entities->page();
+        $book = $this->entities->book();
         $this->actingAs($admin)->delete($page->getUrl());
         $this->delete($book->getUrl());
 
@@ -111,7 +110,7 @@ class RecycleBinApiTest extends TestCase
     public function test_index_endpoint_returns_parent()
     {
         $admin = $this->getAdmin();
-        $page = Page::query()->whereHas('chapter')->with('chapter')->first();
+        $page = $this->entities->pageWithinChapter();
 
         $this->actingAs($admin)->delete($page->getUrl());
         $deletion = Deletion::query()->orderBy('id')->first();
@@ -139,7 +138,7 @@ class RecycleBinApiTest extends TestCase
 
     public function test_restore_endpoint()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->asAdmin()->delete($page->getUrl());
         $page->refresh();
 
@@ -163,7 +162,7 @@ class RecycleBinApiTest extends TestCase
 
     public function test_destroy_endpoint()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $this->asAdmin()->delete($page->getUrl());
         $page->refresh();
 

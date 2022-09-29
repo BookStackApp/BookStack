@@ -239,7 +239,7 @@ class UsersApiTest extends TestCase
         $user = User::query()->where('id', '!=', $this->getAdmin()->id)
             ->whereNull('system_name')
             ->first();
-        $entityChain = $this->createEntityChainBelongingToUser($user);
+        $entityChain = $this->entities->createChainBelongingToUser($user);
         /** @var User $newOwner */
         $newOwner = User::query()->where('id', '!=', $user->id)->first();
 

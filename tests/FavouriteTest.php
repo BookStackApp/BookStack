@@ -4,16 +4,12 @@ namespace Tests;
 
 use BookStack\Actions\Favourite;
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 
 class FavouriteTest extends TestCase
 {
     public function test_page_add_favourite_flow()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl());
@@ -36,7 +32,7 @@ class FavouriteTest extends TestCase
 
     public function test_page_remove_favourite_flow()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
         Favourite::query()->forceCreate([
             'user_id'           => $editor->id,
@@ -62,8 +58,7 @@ class FavouriteTest extends TestCase
 
     public function test_favourite_flow_with_own_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $user = User::factory()->create();
         $book->owned_by = $user->id;
         $book->save();
@@ -84,16 +79,11 @@ class FavouriteTest extends TestCase
         ]);
     }
 
-    public function test_book_chapter_shelf_pages_contain_favourite_button()
+    public function test_each_entity_type_shows_favourite_button()
     {
-        $entities = [
-            Bookshelf::query()->first(),
-            Book::query()->first(),
-            Chapter::query()->first(),
-        ];
         $this->actingAs($this->getEditor());
 
-        foreach ($entities as $entity) {
+        foreach ($this->entities->all() as $entity) {
             $resp = $this->get($entity->getUrl());
             $this->withHtml($resp)->assertElementExists('form[method="POST"][action$="/favourites/add"]');
         }
@@ -115,8 +105,7 @@ class FavouriteTest extends TestCase
         $resp = $this->actingAs($editor)->get('/');
         $this->withHtml($resp)->assertElementNotExists('#top-favourites');
 
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->favourites()->save((new Favourite())->forceFill(['user_id' => $editor->id]));
 
         $resp = $this->get('/');
@@ -126,8 +115,7 @@ class FavouriteTest extends TestCase
 
     public function test_favourites_list_page_shows_favourites_and_has_working_pagination()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
 
         $resp = $this->actingAs($editor)->get('/favourites');
