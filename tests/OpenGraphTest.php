@@ -2,10 +2,6 @@
 
 namespace Tests;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BaseRepo;
 use BookStack\Entities\Repos\BookRepo;
 use Illuminate\Support\Str;

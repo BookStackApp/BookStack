@@ -3,7 +3,6 @@
 namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -128,7 +127,7 @@ class PageTest extends TestCase
 
     public function test_page_copy()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $page->html = '<p>This is some test content</p>';
         $page->save();
 
@@ -151,7 +150,7 @@ class PageTest extends TestCase
 
     public function test_page_copy_with_markdown_has_both_html_and_markdown()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $page->html = '<h1>This is some test content</h1>';
         $page->markdown = '# This is some test content';
         $page->save();
@@ -169,7 +168,7 @@ class PageTest extends TestCase
 
     public function test_page_copy_with_no_destination()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $currentBook = $page->book;
 
         $resp = $this->asEditor()->get($page->getUrl('/copy'));
@@ -188,7 +187,7 @@ class PageTest extends TestCase
 
     public function test_page_can_be_copied_without_edit_permission()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $currentBook = $page->book;
         $newBook = Book::where('id', '!=', $currentBook->id)->first();
         $viewer = $this->getViewer();
@@ -274,8 +273,7 @@ class PageTest extends TestCase
     public function test_recently_updated_pages_view_shows_parent_chain()
     {
         $user = $this->getEditor();
-        /** @var Page $page */
-        $page = Page::query()->whereNotNull('chapter_id')->first();
+        $page = $this->entities->pageWithinChapter();
 
         $this->actingAs($user)->put($page->getUrl(), [
             'name' => 'Updated title',
@@ -290,8 +288,7 @@ class PageTest extends TestCase
     public function test_recently_updated_pages_view_does_not_show_parent_if_not_visible()
     {
         $user = $this->getEditor();
-        /** @var Page $page */
-        $page = Page::query()->whereNotNull('chapter_id')->first();
+        $page = $this->entities->pageWithinChapter();
 
         $this->actingAs($user)->put($page->getUrl(), [
             'name' => 'Updated title',

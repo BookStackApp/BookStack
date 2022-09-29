@@ -96,8 +96,7 @@ class ChapterTest extends TestCase
 
     public function test_copy_does_not_copy_non_visible_pages()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->whereHas('pages')->first();
+        $chapter = $this->entities->chapterHasPages();
 
         // Hide pages to all non-admin roles
         /** @var Page $page */
@@ -118,8 +117,7 @@ class ChapterTest extends TestCase
 
     public function test_copy_does_not_copy_pages_if_user_cant_page_create()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->whereHas('pages')->first();
+        $chapter = $this->entities->chapterHasPages();
         $viewer = $this->getViewer();
         $this->giveUserPermissions($viewer, ['chapter-create-all']);
 

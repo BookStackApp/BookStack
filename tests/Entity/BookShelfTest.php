@@ -39,7 +39,7 @@ class BookShelfTest extends TestCase
     {
         $user = User::factory()->create();
         $this->giveUserPermissions($user, ['image-create-all']);
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $userRole = $user->roles()->first();
 
         $resp = $this->actingAs($user)->get('/');
@@ -130,7 +130,7 @@ class BookShelfTest extends TestCase
 
     public function test_shelf_view()
     {
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $resp = $this->asEditor()->get($shelf->getUrl());
         $resp->assertStatus(200);
         $resp->assertSeeText($shelf->name);
@@ -143,7 +143,7 @@ class BookShelfTest extends TestCase
 
     public function test_shelf_view_shows_action_buttons()
     {
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $resp = $this->asAdmin()->get($shelf->getUrl());
         $resp->assertSee($shelf->getUrl('/create-book'));
         $resp->assertSee($shelf->getUrl('/edit'));
@@ -201,7 +201,7 @@ class BookShelfTest extends TestCase
 
     public function test_shelf_edit()
     {
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $resp = $this->asEditor()->get($shelf->getUrl('/edit'));
         $resp->assertSeeText('Edit Shelf');
 
@@ -239,7 +239,7 @@ class BookShelfTest extends TestCase
 
     public function test_shelf_create_new_book()
     {
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
 
         $resp->assertSee('Create New Book');
@@ -288,7 +288,7 @@ class BookShelfTest extends TestCase
 
     public function test_shelf_copy_permissions()
     {
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $resp = $this->asAdmin()->get($shelf->getUrl('/permissions'));
         $resp->assertSeeText('Copy Permissions');
         $resp->assertSee("action=\"{$shelf->getUrl('/copy-permissions')}\"", false);
@@ -311,14 +311,14 @@ class BookShelfTest extends TestCase
 
     public function test_permission_page_has_a_warning_about_no_cascading()
     {
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $resp = $this->asAdmin()->get($shelf->getUrl('/permissions'));
         $resp->assertSeeText('Permissions on shelves do not automatically cascade to contained books.');
     }
 
     public function test_bookshelves_show_in_breadcrumbs_if_in_context()
     {
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $shelfBook = $shelf->books()->first();
         $shelfPage = $shelfBook->pages()->first();
         $this->asAdmin();

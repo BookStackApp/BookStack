@@ -2,7 +2,6 @@
 
 namespace Tests\Entity;
 
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Repos\PageRepo;
@@ -10,20 +9,13 @@ use Tests\TestCase;
 
 class PageDraftTest extends TestCase
 {
-    /**
-     * @var Page
-     */
-    protected $page;
-
-    /**
-     * @var PageRepo
-     */
-    protected $pageRepo;
+    protected Page $page;
+    protected PageRepo $pageRepo;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->page = Page::query()->first();
+        $this->page = $this->entities->page();
         $this->pageRepo = app()->make(PageRepo::class);
     }
 

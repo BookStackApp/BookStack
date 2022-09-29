@@ -5,9 +5,6 @@ namespace Tests\Actions;
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\Webhook;
 use BookStack\Actions\WebhookFormatter;
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
 
@@ -16,9 +13,9 @@ class WebhookFormatTesting extends TestCase
     public function test_entity_events_show_related_user_info()
     {
         $events = [
-            ActivityType::BOOK_UPDATE    => Book::query()->first(),
-            ActivityType::CHAPTER_CREATE => Chapter::query()->first(),
-            ActivityType::PAGE_MOVE      => Page::query()->first(),
+            ActivityType::BOOK_UPDATE    => $this->entities->book(),
+            ActivityType::CHAPTER_CREATE => $this->entities->chapter(),
+            ActivityType::PAGE_MOVE      => $this->entities->page(),
         ];
 
         foreach ($events as $event => $entity) {

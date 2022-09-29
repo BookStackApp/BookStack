@@ -2,7 +2,6 @@
 
 namespace Tests\Api;
 
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Carbon\Carbon;
@@ -95,11 +94,11 @@ class PagesApiTest extends TestCase
             'chapter_id' => ['The chapter id field is required when book id is not present.'],
         ]));
 
-        $chapter = Chapter::visible()->first();
+        $chapter = $this->entities->chapter();
         $resp = $this->postJson($this->baseEndpoint, array_merge($details, ['chapter_id' => $chapter->id]));
         $resp->assertStatus(200);
 
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
         $resp = $this->postJson($this->baseEndpoint, array_merge($details, ['book_id' => $book->id]));
         $resp->assertStatus(200);
     }
@@ -107,7 +106,7 @@ class PagesApiTest extends TestCase
     public function test_markdown_can_be_provided_for_create()
     {
         $this->actingAsApiEditor();
-        $book = Book::visible()->first();
+        $book = $this->entities->book();
         $details = [
             'book_id'  => $book->id,
             'name'     => 'My api page',
@@ -126,7 +125,7 @@ class PagesApiTest extends TestCase
     public function test_read_endpoint()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
 
         $resp = $this->getJson($this->baseEndpoint . "/{$page->id}");
         $resp->assertStatus(200);
@@ -149,7 +148,7 @@ class PagesApiTest extends TestCase
     public function test_read_endpoint_provides_rendered_html()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
         $page->html = "<p>testing</p><script>alert('danger')</script><h1>Hello</h1>";
         $page->save();
 
@@ -163,7 +162,7 @@ class PagesApiTest extends TestCase
     public function test_update_endpoint()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
         $details = [
             'name' => 'My updated API page',
             'html' => '<p>A page created via the API</p>',
@@ -189,7 +188,7 @@ class PagesApiTest extends TestCase
     public function test_providing_new_chapter_id_on_update_will_move_page()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
         $chapter = Chapter::visible()->where('book_id', '!=', $page->book_id)->first();
         $details = [
             'name'       => 'My updated API page',
@@ -208,7 +207,7 @@ class PagesApiTest extends TestCase
     public function test_providing_move_via_update_requires_page_create_permission_on_new_parent()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
         $chapter = Chapter::visible()->where('book_id', '!=', $page->book_id)->first();
         $this->entities->setPermissions($chapter, ['view'], [$this->getEditor()->roles()->first()]);
         $details = [
@@ -224,7 +223,7 @@ class PagesApiTest extends TestCase
     public function test_update_endpoint_does_not_wipe_content_if_no_html_or_md_provided()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
         $originalContent = $page->html;
         $details = [
             'name' => 'My updated API page',
@@ -245,7 +244,7 @@ class PagesApiTest extends TestCase
     public function test_update_increments_updated_date_if_only_tags_are_sent()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
         DB::table('pages')->where('id', '=', $page->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
@@ -262,7 +261,7 @@ class PagesApiTest extends TestCase
     public function test_delete_endpoint()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
         $resp = $this->deleteJson($this->baseEndpoint . "/{$page->id}");
 
         $resp->assertStatus(204);
@@ -272,7 +271,7 @@ class PagesApiTest extends TestCase
     public function test_export_html_endpoint()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
 
         $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/html");
         $resp->assertStatus(200);
@@ -283,7 +282,7 @@ class PagesApiTest extends TestCase
     public function test_export_plain_text_endpoint()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
 
         $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/plaintext");
         $resp->assertStatus(200);
@@ -294,7 +293,7 @@ class PagesApiTest extends TestCase
     public function test_export_pdf_endpoint()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
 
         $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/pdf");
         $resp->assertStatus(200);
@@ -304,7 +303,7 @@ class PagesApiTest extends TestCase
     public function test_export_markdown_endpoint()
     {
         $this->actingAsApiEditor();
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
 
         $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/markdown");
         $resp->assertStatus(200);
@@ -318,7 +317,7 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $this->removePermissionFromUser($this->getEditor(), 'content-export');
 
-        $page = Page::visible()->first();
+        $page = $this->entities->page();
         foreach ($types as $type) {
             $resp = $this->get($this->baseEndpoint . "/{$page->id}/export/{$type}");
             $this->assertPermissionError($resp);

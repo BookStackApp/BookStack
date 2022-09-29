@@ -2,20 +2,18 @@
 
 namespace Tests\Entity;
 
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
 class PageEditorTest extends TestCase
 {
-    /** @var Page */
-    protected $page;
+    protected Page $page;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->page = Page::query()->first();
+        $this->page = $this->entities->page();
     }
 
     public function test_default_editor_is_wysiwyg_for_new_pages()
@@ -80,8 +78,7 @@ class PageEditorTest extends TestCase
 
     public function test_back_link_in_editor_has_correct_url()
     {
-        /** @var Book $book */
-        $book = Book::query()->whereHas('pages')->whereHas('chapters')->firstOrFail();
+        $book = $this->entities->bookHasChaptersAndPages();
         $this->asEditor()->get($book->getUrl('/create-page'));
         /** @var Chapter $chapter */
         $chapter = $book->chapters()->firstOrFail();

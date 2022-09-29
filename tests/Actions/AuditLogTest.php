@@ -6,8 +6,6 @@ use BookStack\Actions\Activity;
 use BookStack\Actions\ActivityLogger;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\UserRepo;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
 use Carbon\Carbon;
@@ -15,8 +13,7 @@ use Tests\TestCase;
 
 class AuditLogTest extends TestCase
 {
-    /** @var ActivityLogger */
-    protected $activityService;
+    protected ActivityLogger $activityService;
 
     protected function setUp(): void
     {

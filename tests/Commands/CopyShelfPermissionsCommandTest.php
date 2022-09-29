@@ -16,7 +16,7 @@ class CopyShelfPermissionsCommandTest extends TestCase
 
     public function test_copy_shelf_permissions_command_using_slug()
     {
-        $shelf = Bookshelf::first();
+        $shelf = $this->entities->shelf();
         $child = $shelf->books()->first();
         $editorRole = $this->getEditor()->roles()->first();
         $this->assertFalse(boolval($child->restricted), 'Child book should not be restricted by default');

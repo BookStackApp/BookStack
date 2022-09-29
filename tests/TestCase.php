@@ -27,6 +27,7 @@ use Monolog\Logger;
 use Psr\Http\Client\ClientInterface;
 use Ssddanbrown\AssertHtml\TestsHtml;
 use Tests\Helpers\EntityProvider;
+use Tests\Helpers\TestServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {

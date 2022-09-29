@@ -8,7 +8,6 @@ use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 

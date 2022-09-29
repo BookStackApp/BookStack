@@ -3,7 +3,6 @@
 namespace Tests\Commands;
 
 use BookStack\Actions\ActivityType;
-use BookStack\Entities\Models\Page;
 use BookStack\Facades\Activity;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;

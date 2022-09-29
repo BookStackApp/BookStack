@@ -3,7 +3,6 @@
 namespace Tests\Entity;
 
 use BookStack\Actions\Tag;
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Helpers;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\ParallelTesting;

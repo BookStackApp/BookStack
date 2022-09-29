@@ -16,7 +16,7 @@ class PageContentTest extends TestCase
     public function test_page_includes()
     {
         $page = $this->entities->page();
-        $secondPage = Page::query()->where('id', '!=', $page->id)->first();
+        $secondPage = $this->entities->page();
 
         $secondPage->html = "<p id='section1'>Hello, This is a test</p><p id='section2'>This is a second block of content</p>";
         $secondPage->save();
@@ -45,7 +45,7 @@ class PageContentTest extends TestCase
     public function test_saving_page_with_includes()
     {
         $page = $this->entities->page();
-        $secondPage = Page::query()->where('id', '!=', $page->id)->first();
+        $secondPage = $this->entities->page();
 
         $this->asEditor();
         $includeTag = '{{@' . $secondPage->id . '}}';

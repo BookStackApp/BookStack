@@ -13,7 +13,13 @@ use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
+use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Class to provider and action entity models for common test case
+ * operations. Tracks handled models and only returns fresh models.
+ * Does not dedupe against nested/child/parent models.
+ */
 class EntityProvider
 {
     /**
@@ -29,43 +35,68 @@ class EntityProvider
     /**
      * Get an un-fetched page from the system.
      */
-    public function page(): Page
+    public function page(callable $queryFilter = null): Page
     {
         /** @var Page $page */
-        $page = Page::query()->whereNotIn('id', $this->fetchCache['page'])->first();
+        $page = Page::query()->when($queryFilter, $queryFilter)->whereNotIn('id', $this->fetchCache['page'])->first();
         $this->addToCache($page);
         return $page;
+    }
+
+    public function pageWithinChapter(): Page
+    {
+        return $this->page(fn(Builder $query) => $query->whereHas('chapter')->with('chapter'));
+    }
+
+    public function pageNotWithinChapter(): Page
+    {
+        return $this->page(fn(Builder $query) => $query->where('chapter_id', '=', 0));
     }
 
     /**
      * Get an un-fetched chapter from the system.
      */
-    public function chapter(): Chapter
+    public function chapter(callable $queryFilter = null): Chapter
     {
         /** @var Chapter $chapter */
-        $chapter = Chapter::query()->whereNotIn('id', $this->fetchCache['chapter'])->first();
+        $chapter = Chapter::query()->when($queryFilter, $queryFilter)->whereNotIn('id', $this->fetchCache['chapter'])->first();
         $this->addToCache($chapter);
         return $chapter;
+    }
+
+    public function chapterHasPages(): Chapter
+    {
+        return $this->chapter(fn(Builder $query) => $query->whereHas('pages'));
     }
 
     /**
      * Get an un-fetched book from the system.
      */
-    public function book(): Book
+    public function book(callable $queryFilter = null): Book
     {
         /** @var Book $book */
-        $book = Book::query()->whereNotIn('id', $this->fetchCache['book'])->first();
+        $book = Book::query()->when($queryFilter, $queryFilter)->whereNotIn('id', $this->fetchCache['book'])->first();
         $this->addToCache($book);
         return $book;
     }
 
     /**
+     * Get a book that has chapters and pages assigned.
+     */
+    public function bookHasChaptersAndPages(): Book
+    {
+        return $this->book(function (Builder $query) {
+            $query->has('chapters')->has('pages')->with(['chapters', 'pages']);
+        });
+    }
+
+    /**
      * Get an un-fetched shelf from the system.
      */
-    public function shelf(): Bookshelf
+    public function shelf(callable $queryFilter = null): Bookshelf
     {
         /** @var Bookshelf $shelf */
-        $shelf = Bookshelf::query()->whereNotIn('id', $this->fetchCache['bookshelf'])->first();
+        $shelf = Bookshelf::query()->when($queryFilter, $queryFilter)->whereNotIn('id', $this->fetchCache['bookshelf'])->first();
         $this->addToCache($shelf);
         return $shelf;
     }
@@ -82,6 +113,12 @@ class EntityProvider
             'book'      => $this->book(),
             'bookshelf' => $this->shelf(),
         ];
+    }
+
+    public function updatePage(Page $page, array $data): Page
+    {
+        $this->addToCache($page);
+        return app()->make(PageRepo::class)->update($page, $data);
     }
 
     /**

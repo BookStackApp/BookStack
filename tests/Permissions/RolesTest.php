@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 class RolesTest extends TestCase
 {
-    protected $user;
+    protected User $user;
 
     protected function setUp(): void
     {

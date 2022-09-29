@@ -13,15 +13,8 @@ use Tests\TestCase;
 
 class EntityPermissionsTest extends TestCase
 {
-    /**
-     * @var User
-     */
-    protected $user;
-
-    /**
-     * @var User
-     */
-    protected $viewer;
+    protected User $user;
+    protected User $viewer;
 
     protected function setUp(): void
     {

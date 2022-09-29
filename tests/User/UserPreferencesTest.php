@@ -2,8 +2,6 @@
 
 namespace Tests\User;
 
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase

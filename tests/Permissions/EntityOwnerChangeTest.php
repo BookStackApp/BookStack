@@ -3,10 +3,6 @@
 namespace Tests\Permissions;
 
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
 class EntityOwnerChangeTest extends TestCase
