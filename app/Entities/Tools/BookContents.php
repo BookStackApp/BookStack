@@ -11,22 +11,15 @@ use Illuminate\Support\Collection;
 
 class BookContents
 {
-    /**
-     * @var Book
-     */
-    protected $book;
+    protected Book $book;
 
-    /**
-     * BookContents constructor.
-     */
     public function __construct(Book $book)
     {
         $this->book = $book;
     }
 
     /**
-     * Get the current priority of the last item
-     * at the top-level of the book.
+     * Get the current priority of the last item at the top-level of the book.
      */
     public function getLastPriority(): int
     {

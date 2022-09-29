@@ -88,6 +88,38 @@ class BooksApiTest extends TestCase
         ]);
     }
 
+    public function test_read_endpoint_includes_chapter_and_page_contents()
+    {
+        $this->actingAsApiEditor();
+        /** @var Book $book */
+        $book = Book::visible()->has('chapters')->has('pages')->first();
+        $chapter = $book->chapters()->first();
+        $chapterPage = $chapter->pages()->first();
+
+        $resp = $this->getJson($this->baseEndpoint . "/{$book->id}");
+
+        $directChildCount = $book->directPages()->count() + $book->chapters()->count();
+        $resp->assertStatus(200);
+        $resp->assertJsonCount($directChildCount, 'contents');
+        $resp->assertJson([
+            'contents' => [
+                [
+                    'type' => 'chapter',
+                    'id' => $chapter->id,
+                    'name' => $chapter->name,
+                    'slug' => $chapter->slug,
+                    'pages' => [
+                        [
+                            'id' => $chapterPage->id,
+                            'name' => $chapterPage->name,
+                            'slug' => $chapterPage->slug,
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+    }
+
     public function test_update_endpoint()
     {
         $this->actingAsApiEditor();
