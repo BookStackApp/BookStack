@@ -34,7 +34,7 @@ class ChaptersApiTest extends TestCase
     public function test_create_endpoint()
     {
         $this->actingAsApiEditor();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $details = [
             'name'        => 'My API chapter',
             'description' => 'A chapter created via the API',
@@ -64,7 +64,7 @@ class ChaptersApiTest extends TestCase
     public function test_chapter_name_needed_to_create()
     {
         $this->actingAsApiEditor();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $details = [
             'book_id'     => $book->id,
             'description' => 'A chapter created via the API',

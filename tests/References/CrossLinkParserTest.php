@@ -40,7 +40,7 @@ class CrossLinkParserTest extends TestCase
 
     public function test_similar_page_and_book_reference_links_dont_conflict()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = $page->book;
 
         $html = '

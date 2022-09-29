@@ -102,8 +102,7 @@ class TagTest extends TestCase
 
     public function test_tags_index_shows_tag_name_as_expected_with_right_counts()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
         $page->tags()->create(['name' => 'Category', 'value' => 'OtherTestContent']);
 
@@ -120,8 +119,7 @@ class TagTest extends TestCase
         $html->assertElementContains('a[title="Assigned to Shelves"]', '0');
         $html->assertElementContains('a[href$="/tags?name=Category"]', '2 unique values');
 
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $book->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
         $resp = $this->asEditor()->get('/tags');
         $this->withHtml($resp)->assertElementContains('a[title="Total tag usages"]', '3');
@@ -131,8 +129,7 @@ class TagTest extends TestCase
 
     public function test_tag_index_can_be_searched()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
 
         $resp = $this->asEditor()->get('/tags?search=cat');
@@ -148,8 +145,7 @@ class TagTest extends TestCase
 
     public function test_tag_index_search_will_show_mulitple_values_of_a_single_tag_name()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'Animal', 'value' => 'Catfish']);
         $page->tags()->create(['name' => 'Animal', 'value' => 'Catdog']);
 
@@ -160,8 +156,7 @@ class TagTest extends TestCase
 
     public function test_tag_index_can_be_scoped_to_specific_tag_name()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
         $page->tags()->create(['name' => 'Category', 'value' => 'OtherTestContent']);
         $page->tags()->create(['name' => 'OtherTagName', 'value' => 'OtherValue']);
@@ -178,8 +173,7 @@ class TagTest extends TestCase
 
     public function test_tags_index_adheres_to_page_permissions()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'SuperCategory', 'value' => 'GreatTestContent']);
 
         $resp = $this->asEditor()->get('/tags');
@@ -216,7 +210,7 @@ class TagTest extends TestCase
 
     public function test_tag_classes_are_escaped()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => '<>']);
         $resp = $this->asEditor()->get($page->getUrl());
         $resp->assertDontSee('tag-name-<>', false);

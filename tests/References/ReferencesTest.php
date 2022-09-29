@@ -97,7 +97,7 @@ class ReferencesTest extends TestCase
     {
         /** @var Page $page */
         /** @var Page $pageB */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $pageB = Page::query()->where('id', '!=', $page->id)->first();
         $this->createReference($pageB, $page);
 
@@ -109,8 +109,7 @@ class ReferencesTest extends TestCase
 
     public function test_reference_page_shows_empty_state_with_no_references()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->asEditor()
             ->get($page->getUrl('/references'))
@@ -124,7 +123,7 @@ class ReferencesTest extends TestCase
         /** @var Book $book */
         $pageA = Page::query()->first();
         $pageB = Page::query()->where('id', '!=', $pageA->id)->first();
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         foreach ([$pageA, $pageB] as $page) {
             $page->html = '<a href="' . $book->getUrl() . '">Link</a>';
@@ -200,8 +199,8 @@ class ReferencesTest extends TestCase
     {
         /** @var Page $page */
         /** @var Book $book */
-        $page = Page::query()->first();
-        $book = Book::query()->first();
+        $page = $this->entities->page();
+        $book = $this->entities->book();
 
         $bookUrl = $book->getUrl();
         $markdown = '

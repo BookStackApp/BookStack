@@ -33,7 +33,7 @@ class SortTest extends TestCase
 
     public function test_page_move_into_book()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $currentBook = $page->book;
         $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
 
@@ -55,7 +55,7 @@ class SortTest extends TestCase
 
     public function test_page_move_into_chapter()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $currentBook = $page->book;
         $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
         $newChapter = $newBook->chapters()->first();
@@ -93,7 +93,7 @@ class SortTest extends TestCase
 
     public function test_page_move_requires_create_permissions_on_parent()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $currentBook = $page->book;
         $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
         $editor = $this->getEditor();
@@ -118,7 +118,7 @@ class SortTest extends TestCase
 
     public function test_page_move_requires_delete_permissions()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $currentBook = $page->book;
         $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
         $editor = $this->getEditor();
@@ -145,7 +145,7 @@ class SortTest extends TestCase
 
     public function test_chapter_move()
     {
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $currentBook = $chapter->book;
         $pageToCheck = $chapter->pages->first();
         $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
@@ -173,7 +173,7 @@ class SortTest extends TestCase
 
     public function test_chapter_move_requires_delete_permissions()
     {
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $currentBook = $chapter->book;
         $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
         $editor = $this->getEditor();
@@ -200,7 +200,7 @@ class SortTest extends TestCase
 
     public function test_chapter_move_requires_create_permissions_in_new_book()
     {
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $currentBook = $chapter->book;
         $newBook = Book::query()->where('id', '!=', $currentBook->id)->first();
         $editor = $this->getEditor();

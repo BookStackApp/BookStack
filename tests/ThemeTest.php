@@ -64,7 +64,7 @@ class ThemeTest extends TestCase
         };
         Theme::listen(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $callback);
 
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $content = new PageContent($page);
         $content->setNewMarkdown('# test');
 
@@ -199,7 +199,7 @@ class ThemeTest extends TestCase
 
     public function test_event_activity_logged()
     {
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $args = [];
         $callback = function (...$eventArgs) use (&$args) {
             $args = $eventArgs;
@@ -218,7 +218,7 @@ class ThemeTest extends TestCase
     {
         /** @var Page $page */
         /** @var Page $otherPage */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $otherPage = Page::query()->where('id', '!=', $page->id)->first();
         $otherPage->html = '<p id="bkmrk-cool">This is a really cool section</p>';
         $page->html = "<p>{{@{$otherPage->id}#bkmrk-cool}}</p>";
@@ -324,8 +324,7 @@ class ThemeTest extends TestCase
     {
         $bodyStartStr = 'garry-fought-against-the-panther';
         $bodyEndStr = 'garry-lost-his-fight-with-grace';
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->usingThemeFolder(function (string $folder) use ($bodyStartStr, $bodyEndStr, $page) {
             $viewDir = theme_path('layouts/parts');

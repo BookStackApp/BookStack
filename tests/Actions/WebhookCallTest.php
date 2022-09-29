@@ -88,8 +88,7 @@ class WebhookCallTest extends TestCase
             '*' => Http::response('', 200),
         ]);
         $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
 
         $this->runEvent(ActivityType::PAGE_UPDATE, $page, $editor);

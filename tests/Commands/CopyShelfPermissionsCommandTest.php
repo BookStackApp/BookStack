@@ -36,7 +36,7 @@ class CopyShelfPermissionsCommandTest extends TestCase
 
     public function test_copy_shelf_permissions_command_using_all()
     {
-        $shelf = Bookshelf::query()->first();
+        $shelf = $this->entities->shelf();
         Bookshelf::query()->where('id', '!=', $shelf->id)->delete();
         $child = $shelf->books()->first();
         $editorRole = $this->getEditor()->roles()->first();

@@ -58,8 +58,7 @@ class AuthTest extends TestCase
     public function test_login_redirects_to_initially_requested_url_correctly()
     {
         config()->set('app.url', 'http://localhost');
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
 
         $this->get($page->getUrl())->assertRedirect(url('/login'));
         $this->login('admin@admin.com', 'password')

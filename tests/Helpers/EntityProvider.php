@@ -141,7 +141,7 @@ class EntityProvider
      */
     public function newPage(array $input = ['name' => 'test page', 'html' => 'My new test page']): Page
     {
-        $book = Book::query()->first();
+        $book = $this->book();
         $pageRepo = app(PageRepo::class);
         $draftPage = $pageRepo->getNewDraftPage($book);
         $this->addToCache($draftPage);

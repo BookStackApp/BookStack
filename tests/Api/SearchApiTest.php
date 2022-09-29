@@ -38,8 +38,7 @@ class SearchApiTest extends TestCase
 
     public function test_all_endpoint_returns_entity_url()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->update(['name' => 'name with superuniquevalue within']);
         $page->indexForSearch();
 
@@ -52,8 +51,7 @@ class SearchApiTest extends TestCase
 
     public function test_all_endpoint_returns_items_with_preview_html()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $book->update(['name' => 'name with superuniquevalue within', 'description' => 'Description with superuniquevalue within']);
         $book->indexForSearch();
 

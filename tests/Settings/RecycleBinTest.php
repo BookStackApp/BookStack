@@ -16,7 +16,7 @@ class RecycleBinTest extends TestCase
 {
     public function test_recycle_bin_routes_permissions()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
         $deletion = Deletion::query()->firstOrFail();
@@ -57,7 +57,7 @@ class RecycleBinTest extends TestCase
 
     public function test_recycle_bin_view()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = Book::query()->whereHas('pages')->whereHas('chapters')->withCount(['pages', 'chapters'])->first();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
@@ -74,7 +74,7 @@ class RecycleBinTest extends TestCase
 
     public function test_recycle_bin_empty()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = Book::query()->where('id', '!=', $page->book_id)->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
