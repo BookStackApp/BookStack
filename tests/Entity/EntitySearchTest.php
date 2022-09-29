@@ -47,7 +47,7 @@ class EntitySearchTest extends TestCase
 
     public function test_searching_accents_and_small_terms()
     {
-        $page = $this->newPage(['name' => 'My new test quaffleachits', 'html' => 'some áéííúü¿¡ test content a2 orange dog']);
+        $page = $this->entities->newPage(['name' => 'My new test quaffleachits', 'html' => 'some áéííúü¿¡ test content a2 orange dog']);
         $this->asEditor();
 
         $accentSearch = $this->get('/search?term=' . urlencode('áéíí'));
@@ -111,7 +111,7 @@ class EntitySearchTest extends TestCase
 
     public function test_exact_searches()
     {
-        $page = $this->newPage(['name' => 'My new test page', 'html' => 'this is a story about an orange donkey']);
+        $page = $this->entities->newPage(['name' => 'My new test page', 'html' => 'this is a story about an orange donkey']);
 
         $exactSearchA = $this->asEditor()->get('/search?term=' . urlencode('"story about an orange"'));
         $exactSearchA->assertStatus(200)->assertSee($page->name);
@@ -123,7 +123,7 @@ class EntitySearchTest extends TestCase
     public function test_search_terms_with_delimiters_are_converted_to_exact_matches()
     {
         $this->asEditor();
-        $page = $this->newPage(['name' => 'Delimiter test', 'html' => '<p>1.1 2,2 3?3 4:4 5;5 (8) &lt;9&gt; "10" \'11\' `12`</p>']);
+        $page = $this->entities->newPage(['name' => 'Delimiter test', 'html' => '<p>1.1 2,2 3?3 4:4 5;5 (8) &lt;9&gt; "10" \'11\' `12`</p>']);
         $terms = explode(' ', '1.1 2,2 3?3 4:4 5;5 (8) <9> "10" \'11\' `12`');
 
         foreach ($terms as $term) {
@@ -134,7 +134,7 @@ class EntitySearchTest extends TestCase
 
     public function test_search_filters()
     {
-        $page = $this->newPage(['name' => 'My new test quaffleachits', 'html' => 'this is about an orange donkey danzorbhsing']);
+        $page = $this->entities->newPage(['name' => 'My new test quaffleachits', 'html' => 'this is about an orange donkey danzorbhsing']);
         $this->asEditor();
         $editorId = $this->getEditor()->id;
         $editorSlug = $this->getEditor()->slug;
@@ -197,7 +197,7 @@ class EntitySearchTest extends TestCase
 
     public function test_ajax_entity_search()
     {
-        $page = $this->newPage(['name' => 'my ajax search test', 'html' => 'ajax test']);
+        $page = $this->entities->newPage(['name' => 'my ajax search test', 'html' => 'ajax test']);
         $notVisitedPage = Page::first();
 
         // Visit the page to make popular
@@ -334,15 +334,15 @@ class EntitySearchTest extends TestCase
 
     public function test_search_ranks_common_words_lower()
     {
-        $this->newPage(['name' => 'Test page A', 'html' => '<p>dog biscuit dog dog</p>']);
-        $this->newPage(['name' => 'Test page B', 'html' => '<p>cat biscuit</p>']);
+        $this->entities->newPage(['name' => 'Test page A', 'html' => '<p>dog biscuit dog dog</p>']);
+        $this->entities->newPage(['name' => 'Test page B', 'html' => '<p>cat biscuit</p>']);
 
         $search = $this->asEditor()->get('/search?term=cat+dog+biscuit');
         $this->withHtml($search)->assertElementContains('.entity-list > .page:nth-child(1)', 'Test page A');
         $this->withHtml($search)->assertElementContains('.entity-list > .page:nth-child(2)', 'Test page B');
 
         for ($i = 0; $i < 2; $i++) {
-            $this->newPage(['name' => 'Test page ' . $i, 'html' => '<p>dog</p>']);
+            $this->entities->newPage(['name' => 'Test page ' . $i, 'html' => '<p>dog</p>']);
         }
 
         $search = $this->asEditor()->get('/search?term=cat+dog+biscuit');
@@ -352,7 +352,7 @@ class EntitySearchTest extends TestCase
 
     public function test_terms_in_headers_have_an_adjusted_index_score()
     {
-        $page = $this->newPage(['name' => 'Test page A', 'html' => '
+        $page = $this->entities->newPage(['name' => 'Test page A', 'html' => '
             <p>TermA</p>
             <h1>TermB <strong>TermNested</strong></h1>
             <h2>TermC</h2>
@@ -377,7 +377,7 @@ class EntitySearchTest extends TestCase
 
     public function test_name_and_content_terms_are_merged_to_single_score()
     {
-        $page = $this->newPage(['name' => 'TermA', 'html' => '
+        $page = $this->entities->newPage(['name' => 'TermA', 'html' => '
             <p>TermA</p>
         ']);
 
@@ -389,7 +389,7 @@ class EntitySearchTest extends TestCase
 
     public function test_tag_names_and_values_are_indexed_for_search()
     {
-        $page = $this->newPage(['name' => 'PageA', 'html' => '<p>content</p>', 'tags' => [
+        $page = $this->entities->newPage(['name' => 'PageA', 'html' => '<p>content</p>', 'tags' => [
             ['name' => 'Animal', 'value' => 'MeowieCat'],
             ['name' => 'SuperImportant'],
         ]]);
@@ -402,7 +402,7 @@ class EntitySearchTest extends TestCase
 
     public function test_matching_terms_in_search_results_are_highlighted()
     {
-        $this->newPage(['name' => 'My Meowie Cat', 'html' => '<p>A superimportant page about meowieable animals</p>', 'tags' => [
+        $this->entities->newPage(['name' => 'My Meowie Cat', 'html' => '<p>A superimportant page about meowieable animals</p>', 'tags' => [
             ['name' => 'Animal', 'value' => 'MeowieCat'],
             ['name' => 'SuperImportant'],
         ]]);
@@ -420,7 +420,7 @@ class EntitySearchTest extends TestCase
 
     public function test_match_highlighting_works_with_multibyte_content()
     {
-        $this->newPage([
+        $this->entities->newPage([
             'name' => 'Test Page',
             'html' => '<p>На мен ми трябва нещо добро test</p>',
         ]);
@@ -431,7 +431,7 @@ class EntitySearchTest extends TestCase
 
     public function test_html_entities_in_item_details_remains_escaped_in_search_results()
     {
-        $this->newPage(['name' => 'My <cool> TestPageContent', 'html' => '<p>My supercool &lt;great&gt; TestPageContent page</p>']);
+        $this->entities->newPage(['name' => 'My <cool> TestPageContent', 'html' => '<p>My supercool &lt;great&gt; TestPageContent page</p>']);
 
         $search = $this->asEditor()->get('/search?term=TestPageContent');
         $search->assertSee('My &lt;cool&gt; <strong>TestPageContent</strong>', false);
@@ -440,7 +440,7 @@ class EntitySearchTest extends TestCase
 
     public function test_words_adjacent_to_lines_breaks_can_be_matched_with_normal_terms()
     {
-        $page = $this->newPage(['name' => 'TermA', 'html' => '
+        $page = $this->entities->newPage(['name' => 'TermA', 'html' => '
             <p>TermA<br>TermB<br>TermC</p>
         ']);
 

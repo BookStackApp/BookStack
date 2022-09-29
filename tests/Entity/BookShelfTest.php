@@ -45,7 +45,7 @@ class BookShelfTest extends TestCase
         $resp = $this->actingAs($user)->get('/');
         $this->withHtml($resp)->assertElementNotContains('header', 'Shelves');
 
-        $this->setEntityRestrictions($shelf, ['view'], [$userRole]);
+        $this->entities->setPermissions($shelf, ['view'], [$userRole]);
 
         $resp = $this->get('/');
         $this->withHtml($resp)->assertElementContains('header', 'Shelves');
@@ -69,7 +69,7 @@ class BookShelfTest extends TestCase
         $resp->assertSee($book->name);
         $resp->assertSee($book->getUrl());
 
-        $this->setEntityRestrictions($book, []);
+        $this->entities->setPermissions($book, []);
 
         $resp = $this->asEditor()->get('/shelves');
         $resp->assertDontSee($book->name);
@@ -298,7 +298,7 @@ class BookShelfTest extends TestCase
         $this->assertFalse(boolval($child->restricted), 'Child book should not be restricted by default');
         $this->assertTrue($child->permissions()->count() === 0, 'Child book should have no permissions by default');
 
-        $this->setEntityRestrictions($shelf, ['view', 'update'], [$editorRole]);
+        $this->entities->setPermissions($shelf, ['view', 'update'], [$editorRole]);
         $resp = $this->post($shelf->getUrl('/copy-permissions'));
         $child = $shelf->books()->first();
 

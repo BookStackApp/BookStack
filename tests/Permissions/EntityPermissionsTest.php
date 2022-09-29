@@ -36,7 +36,7 @@ class EntityPermissionsTest extends TestCase
             $this->user->roles->first(),
             $this->viewer->roles->first(),
         ];
-        $this->setEntityRestrictions($entity, $actions, $roles);
+        $this->entities->setPermissions($entity, $actions, $roles);
     }
 
     public function test_bookshelf_view_restriction()

@@ -24,7 +24,7 @@ class HomepageTest extends TestCase
         $this->asEditor();
         $name = 'My custom homepage';
         $content = str_repeat('This is the body content of my custom homepage.', 20);
-        $customPage = $this->newPage(['name' => $name, 'html' => $content]);
+        $customPage = $this->entities->newPage(['name' => $name, 'html' => $content]);
         $this->setSettings(['app-homepage' => $customPage->id]);
         $this->setSettings(['app-homepage-type' => 'page']);
 
@@ -41,7 +41,7 @@ class HomepageTest extends TestCase
         $this->asEditor();
         $name = 'My custom homepage';
         $content = str_repeat('This is the body content of my custom homepage.', 20);
-        $customPage = $this->newPage(['name' => $name, 'html' => $content]);
+        $customPage = $this->entities->newPage(['name' => $name, 'html' => $content]);
         $this->setSettings([
             'app-homepage'      => $customPage->id,
             'app-homepage-type' => 'page',
@@ -67,7 +67,7 @@ class HomepageTest extends TestCase
         $this->asEditor();
         $name = 'My custom homepage';
         $content = str_repeat('This is the body content of my custom homepage.', 20);
-        $customPage = $this->newPage(['name' => $name, 'html' => $content]);
+        $customPage = $this->entities->newPage(['name' => $name, 'html' => $content]);
         $this->setSettings([
             'app-homepage'      => $customPage->id,
             'app-homepage-type' => 'default',
@@ -107,7 +107,7 @@ class HomepageTest extends TestCase
         $included->save();
 
         $name = 'My custom homepage';
-        $customPage = $this->newPage(['name' => $name, 'html' => '{{@' . $included->id . '}}']);
+        $customPage = $this->entities->newPage(['name' => $name, 'html' => '{{@' . $included->id . '}}']);
         $this->setSettings(['app-homepage' => $customPage->id]);
         $this->setSettings(['app-homepage-type' => 'page']);
 
@@ -177,7 +177,7 @@ class HomepageTest extends TestCase
         $this->withHtml($homeVisit)->assertElementNotContains('.content-wrap', $book->name);
 
         // Ensure is visible again with entity-level view permission
-        $this->setEntityRestrictions($book, ['view'], [$editor->roles()->first()]);
+        $this->entities->setPermissions($book, ['view'], [$editor->roles()->first()]);
         $homeVisit = $this->get('/');
         $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $shelf->name);
         $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $book->name);

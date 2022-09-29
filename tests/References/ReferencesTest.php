@@ -57,7 +57,7 @@ class ReferencesTest extends TestCase
 
     public function test_references_to_count_visible_on_entity_show_view()
     {
-        $entities = $this->getEachEntityType();
+        $entities = $this->entities->all();
         /** @var Page $otherPage */
         $otherPage = Page::query()->where('id', '!=', $entities['page']->id)->first();
 
@@ -79,7 +79,7 @@ class ReferencesTest extends TestCase
 
     public function test_references_to_visible_on_references_page()
     {
-        $entities = $this->getEachEntityType();
+        $entities = $this->entities->all();
         $this->asEditor();
         foreach ($entities as $entity) {
             $this->createReference($entities['page'], $entity);
@@ -101,7 +101,7 @@ class ReferencesTest extends TestCase
         $pageB = Page::query()->where('id', '!=', $page->id)->first();
         $this->createReference($pageB, $page);
 
-        $this->setEntityRestrictions($pageB);
+        $this->entities->setPermissions($pageB);
 
         $this->asEditor()->get($page->getUrl('/references'))->assertDontSee($pageB->name);
         $this->asAdmin()->get($page->getUrl('/references'))->assertSee($pageB->name);
