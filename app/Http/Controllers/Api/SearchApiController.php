@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Api;
 
+use BookStack\Api\ApiEntityListFormatter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Search\SearchOptions;
 use BookStack\Search\SearchResultsFormatter;
@@ -10,8 +11,8 @@ use Illuminate\Http\Request;
 
 class SearchApiController extends ApiController
 {
-    protected $searchRunner;
-    protected $resultsFormatter;
+    protected SearchRunner $searchRunner;
+    protected SearchResultsFormatter $resultsFormatter;
 
     protected $rules = [
         'all' => [
@@ -50,24 +51,17 @@ class SearchApiController extends ApiController
         $results = $this->searchRunner->searchEntities($options, 'all', $page, $count);
         $this->resultsFormatter->format($results['results']->all(), $options);
 
-        /** @var Entity $result */
-        foreach ($results['results'] as $result) {
-            $result->setVisible([
-                'id', 'name', 'slug', 'book_id',
-                'chapter_id', 'draft', 'template',
-                'created_at', 'updated_at',
-                'tags', 'type', 'preview_html', 'url',
-            ]);
-            $result->setAttribute('type', $result->getType());
-            $result->setAttribute('url', $result->getUrl());
-            $result->setAttribute('preview_html', [
-                'name'    => (string) $result->getAttribute('preview_name'),
-                'content' => (string) $result->getAttribute('preview_content'),
-            ]);
-        }
+        $data = (new ApiEntityListFormatter($results['results']->all()))
+            ->withType()->withTags()
+            ->withField('preview_html', function (Entity $entity) {
+                return [
+                    'name'    => (string) $entity->getAttribute('preview_name'),
+                    'content' => (string) $entity->getAttribute('preview_content'),
+                ];
+            })->format();
 
         return response()->json([
-            'data'  => $results['results'],
+            'data'  => $data,
             'total' => $results['total'],
         ]);
     }
