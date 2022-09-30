@@ -216,105 +216,87 @@ class LdapService
             $this->ldap->setOption(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }
 
-        $serverDetails = $this->parseServerString($this->config['server']);
-        if (array_key_exists('hosts', $serverDetails)) {
-            $fail_counter = 0;
-            foreach ($serverDetails['hosts'] as $serverDetailsItem) {
-                try {
-                    $ldapConnection = $this->ldap->connect($serverDetailsItem['host'], $serverDetailsItem['port']);
-
-                    if ($ldapConnection === false) {
-                        throw new LdapException(trans('errors.ldap_cannot_connect'));
-                    }
-
-                    // Set any required options
-                    if ($this->config['version']) {
-                        $this->ldap->setVersion($ldapConnection, $this->config['version']);
-                    }
-
-                    // Start and verify TLS if it's enabled
-                    if ($this->config['start_tls']) {
-                        $started = $this->ldap->startTls($ldapConnection);
-                        if (!$started) {
-                            throw new LdapException('Could not start TLS connection');
-                        }
-                    }
-                } catch (\Throwable $exception) {
-                    $fail_counter++;
-                }
-            }
-
-            if ($fail_counter == count($serverDetails['hosts'])) {
-                throw new LdapException(trans('errors.ldap_cannot_connect'));
-            }
-        } else {
-            $ldapConnection = $this->ldap->connect($serverDetails['host'], $serverDetails['port']);
-
-            if ($ldapConnection === false) {
-                throw new LdapException(trans('errors.ldap_cannot_connect'));
-            }
-
-            // Set any required options
-            if ($this->config['version']) {
-                $this->ldap->setVersion($ldapConnection, $this->config['version']);
-            }
-
-            // Start and verify TLS if it's enabled
-            if ($this->config['start_tls']) {
-                $started = $this->ldap->startTls($ldapConnection);
-                if (!$started) {
-                    throw new LdapException('Could not start TLS connection');
-                }
-            }
-        }
-
-        $this->ldapConnection = $ldapConnection;
+        $serverDetails = $this->parseEnvironmentServer($this->config['server']);
+        $this->ldapConnection = $this->prepareServerConnection($serverDetails);
 
         return $this->ldapConnection;
     }
 
     /**
+     * Processes an array of received servers and returns the first working connection.
+     *
+     * @param  array  $serverDetails
+     * @return resource
+     * @throws LdapException
+     */
+    protected function prepareServerConnection(array $serverDetails)
+    {
+        $lastException = null;
+        foreach ($serverDetails as $server) {
+            try {
+                $ldapConnection = $this->ldap->connect($server['host'], $server['port']);
+
+                if (!$ldapConnection) {
+                    throw new LdapException(trans('errors.ldap_cannot_connect'));
+                }
+
+                // Set any required options
+                if ($this->config['version']) {
+                    $this->ldap->setVersion($ldapConnection, $this->config['version']);
+                }
+
+                // Start and verify TLS if it's enabled
+                if ($this->config['start_tls']) {
+                    $started = $this->ldap->startTls($ldapConnection);
+                    if (!$started) {
+                        throw new LdapException('Could not start TLS connection');
+                    }
+                }
+
+                return $ldapConnection;
+            } catch (LdapException $exception) {
+                $lastException = $exception;
+            }
+        }
+
+        throw $lastException;
+    }
+
+    /**
+     * Parse environment variable with LDAP server and returns an array of recognized servers.
+     * If you need to use multiple addresses, separate them with a semicolon.
+     * Ex: 'ldap.example.com:8069;ldaps://ldap.example.com'
+     */
+    protected function parseEnvironmentServer(string $environmentServer): array
+    {
+        $explodedEnvironmentServer = explode(';', $environmentServer);
+        $result_servers = [];
+
+        foreach ($explodedEnvironmentServer as $serverString) {
+            $result_servers[] = $this->parseServerString($serverString);
+        }
+
+        return $result_servers;
+    }
+
+    /**
      * Parse a LDAP server string and return the host and port for a connection.
      * Is flexible to formats such as 'ldap.example.com:8069' or 'ldaps://ldap.example.com'.
-     * If you need to use multiple addresses, separate them with a semicolon.
-     * Ex: dc1.domain.local:389;dc2.domain.local:389
      */
     protected function parseServerString(string $serverString): array
     {
-        $explodedServerString = explode(';', $serverString);
-        if (count($explodedServerString) > 1) {
-            $result = ['hosts' => []];
+        $serverNameParts = explode(':', $serverString);
 
-            foreach ($explodedServerString as $serverString) {
-                $serverNameParts = explode(':', $serverString);
-
-                // If we have a protocol just return the full string since PHP will ignore a separate port.
-                if ($serverNameParts[0] === 'ldaps' || $serverNameParts[0] === 'ldap') {
-                    return ['host' => $serverString, 'port' => 389];
-                }
-
-                // Otherwise, extract the port out
-                $hostName = $serverNameParts[0];
-                $ldapPort = (count($serverNameParts) > 1) ? intval($serverNameParts[1]) : 389;
-
-                $result['hosts'][] = ['host' => $hostName, 'port' => $ldapPort];
-            }
-
-            return $result;
-        } else {
-            $serverNameParts = explode(':', $serverString);
-
-            // If we have a protocol just return the full string since PHP will ignore a separate port.
-            if ($serverNameParts[0] === 'ldaps' || $serverNameParts[0] === 'ldap') {
-                return ['host' => $serverString, 'port' => 389];
-            }
-
-            // Otherwise, extract the port out
-            $hostName = $serverNameParts[0];
-            $ldapPort = (count($serverNameParts) > 1) ? intval($serverNameParts[1]) : 389;
-
-            return ['host' => $hostName, 'port' => $ldapPort];
+        // If we have a protocol just return the full string since PHP will ignore a separate port.
+        if ($serverNameParts[0] === 'ldaps' || $serverNameParts[0] === 'ldap') {
+            return ['host' => $serverString, 'port' => 389];
         }
+
+        // Otherwise, extract the port out
+        $hostName = $serverNameParts[0];
+        $ldapPort = (count($serverNameParts) > 1) ? intval($serverNameParts[1]) : 389;
+
+        return ['host' => $hostName, 'port' => $ldapPort];
     }
 
     /**
