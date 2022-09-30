@@ -3,6 +3,7 @@ import {listen as listenForCommonEvents} from "./common-events";
 import {scrollToQueryString} from "./scrolling";
 import {listenForDragAndPaste} from "./drop-paste-handling";
 import {getPrimaryToolbar, registerAdditionalToolbars} from "./toolbars";
+import {registerCustomIcons} from "./icons";
 
 import {getPlugin as getCodeeditorPlugin} from "./plugin-codeeditor";
 import {getPlugin as getDrawioPlugin} from "./plugin-drawio";
@@ -291,6 +292,7 @@ export function build(options) {
             head.innerHTML += fetchCustomHeadContent();
         },
         setup(editor) {
+            registerCustomIcons(editor);
             registerAdditionalToolbars(editor, options);
             getSetupCallback(options)(editor);
         },
