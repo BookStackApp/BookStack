@@ -1,4 +1,4 @@
-<form action="{{ $model->getUrl('/permissions') }}" method="POST">
+<form component="entity-permissions" action="{{ $model->getUrl('/permissions') }}" method="POST">
     {!! csrf_field() !!}
     <input type="hidden" name="_method" value="PUT">
 
@@ -22,6 +22,10 @@
         @foreach(\BookStack\Auth\Role::restrictable() as $role)
             @include('form.entity-permissions-row', ['role' => $role, 'model' => $model])
         @endforeach
+    </div>
+
+    <div class="content-permissions mt-m mb-xl">
+        @include('form.entity-permissions-row', ['role' => \BookStack\Auth\Role::getEveryoneElseRole(), 'model' => $model])
     </div>
 
     <div class="text-right">

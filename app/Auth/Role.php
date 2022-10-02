@@ -121,6 +121,19 @@ class Role extends Model implements Loggable
     }
 
     /**
+     * Get a role to represent the case of 'Everyone else' in the system.
+     * Used within the interface since the default-fallback for permissions uses role_id=0.
+     */
+    public static function getEveryoneElseRole(): self
+    {
+        return (new static())->forceFill([
+            'id' => 0,
+            'display_name' => 'Everyone Else',
+            'description'  => 'Set permissions for all roles not specifically overridden.'
+        ]);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function logDescriptor(): string

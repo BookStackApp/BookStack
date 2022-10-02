@@ -184,8 +184,10 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function hasRestriction(int $role_id, string $action): bool
     {
-        return $this->permissions()->where('role_id', '=', $role_id)
-            ->where('action', '=', $action)->count() > 0;
+        return $this->permissions()
+                ->where('role_id', '=', $role_id)
+                ->where('action', '=', $action)
+                ->count() > 0;
     }
 
     /**
