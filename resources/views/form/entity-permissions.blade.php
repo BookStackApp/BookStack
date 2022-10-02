@@ -24,31 +24,12 @@
         <p class="text-warn">{{ trans('entities.shelves_permissions_cascade_warning') }}</p>
     @endif
 
-    <hr>
 
-    <table permissions-table class="table permissions-table toggle-switch-list" style="{{ !$model->restricted ? 'display: none' : '' }}">
-        <tr>
-            <th>{{ trans('common.role') }}</th>
-            <th colspan="{{ $model->isA('page') ? '3' : '4'  }}">
-                {{ trans('common.actions') }}
-                <a href="#" permissions-table-toggle-all class="text-small ml-m text-primary">{{ trans('common.toggle_all') }}</a>
-            </th>
-        </tr>
+    <div class="content-permissions mt-m mb-xl">
         @foreach(\BookStack\Auth\Role::restrictable() as $role)
-            <tr>
-                <td width="33%" class="pt-m">
-                    {{ $role->display_name }}
-                    <a href="#" permissions-table-toggle-all-in-row class="text-small float right ml-m text-primary">{{ trans('common.toggle_all') }}</a>
-                </td>
-                <td>@include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.view'), 'action' => 'view'])</td>
-                @if(!$model->isA('page'))
-                    <td>@include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.create'), 'action' => 'create'])</td>
-                @endif
-                <td>@include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.update'), 'action' => 'update'])</td>
-                <td>@include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.delete'), 'action' => 'delete'])</td>
-            </tr>
+            @include('form.entity-permissions-row', ['role' => $role, 'model' => $model])
         @endforeach
-    </table>
+    </div>
 
     <div class="text-right">
         <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
