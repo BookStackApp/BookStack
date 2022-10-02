@@ -43,7 +43,6 @@ return [
     // Permissions and restrictions
     'permissions' => 'Permissions',
     'permissions_intro' => 'Once enabled, These permissions will take priority over any set role permissions.',
-    'permissions_enable' => 'Enable Custom Permissions',
     'permissions_save' => 'Save Permissions',
     'permissions_owner' => 'Owner',
 

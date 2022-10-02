@@ -18,7 +18,6 @@ import dropdown from "./dropdown.js"
 import dropdownSearch from "./dropdown-search.js"
 import dropzone from "./dropzone.js"
 import editorToolbox from "./editor-toolbox.js"
-import entityPermissionsEditor from "./entity-permissions-editor.js"
 import entitySearch from "./entity-search.js"
 import entitySelector from "./entity-selector.js"
 import entitySelectorPopup from "./entity-selector-popup.js"
@@ -75,7 +74,6 @@ const componentMapping = {
     "dropdown-search": dropdownSearch,
     "dropzone": dropzone,
     "editor-toolbox": editorToolbox,
-    "entity-permissions-editor": entityPermissionsEditor,
     "entity-search": entitySearch,
     "entity-selector": entitySelector,
     "entity-selector-popup": entitySelectorPopup,

@@ -1,22 +1,21 @@
 
 class PermissionsTable {
 
-    constructor(elem) {
-        this.container = elem;
+    setup() {
+        this.container = this.$el;
 
         // Handle toggle all event
-        const toggleAll = elem.querySelector('[permissions-table-toggle-all]');
-        toggleAll.addEventListener('click', this.toggleAllClick.bind(this));
+        for (const toggleAllElem of (this.$manyRefs.toggleAll || [])) {
+            toggleAllElem.addEventListener('click', this.toggleAllClick.bind(this));
+        }
 
         // Handle toggle row event
-        const toggleRowElems = elem.querySelectorAll('[permissions-table-toggle-all-in-row]');
-        for (let toggleRowElem of toggleRowElems) {
+        for (const toggleRowElem of (this.$manyRefs.toggleRow || [])) {
             toggleRowElem.addEventListener('click', this.toggleRowClick.bind(this));
         }
 
         // Handle toggle column event
-        const toggleColumnElems = elem.querySelectorAll('[permissions-table-toggle-all-in-column]');
-        for (let toggleColElem of toggleColumnElems) {
+        for (const toggleColElem of (this.$manyRefs.toggleColumn || [])) {
             toggleColElem.addEventListener('click', this.toggleColumnClick.bind(this));
         }
     }
