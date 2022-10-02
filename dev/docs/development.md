@@ -5,6 +5,8 @@ When it's time for a release the `development` branch is merged into release wit
 
 * [Node.js](https://nodejs.org/en/) v16.0+
 
+## Building CSS & JavaScript Assets
+
 This project uses SASS for CSS development and this is built, along with the JavaScript, using a range of npm scripts. The below npm commands can be used to install the dependencies & run the build tasks:
 
 ``` bash
