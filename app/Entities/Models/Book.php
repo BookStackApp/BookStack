@@ -19,6 +19,7 @@ use Illuminate\Support\Collection;
  * @property \Illuminate\Database\Eloquent\Collection $chapters
  * @property \Illuminate\Database\Eloquent\Collection $pages
  * @property \Illuminate\Database\Eloquent\Collection $directPages
+ * @property \Illuminate\Database\Eloquent\Collection $shelves
  */
 class Book extends Entity implements HasCoverImage
 {

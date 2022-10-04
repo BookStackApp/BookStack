@@ -114,6 +114,8 @@ return [
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
@@ -121,27 +123,22 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Illuminate\Notifications\NotificationServiceProvider::class,
-        SocialiteProviders\Manager\ServiceProvider::class,
 
         // Third party service providers
-        Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
-
-        // BookStack replacement service providers (Extends Laravel)
-        BookStack\Providers\PaginationServiceProvider::class,
-        BookStack\Providers\TranslationServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
 
         // BookStack custom service providers
         BookStack\Providers\ThemeServiceProvider::class,
-        BookStack\Providers\AuthServiceProvider::class,
         BookStack\Providers\AppServiceProvider::class,
-        BookStack\Providers\BroadcastServiceProvider::class,
+        BookStack\Providers\AuthServiceProvider::class,
         BookStack\Providers\EventServiceProvider::class,
         BookStack\Providers\RouteServiceProvider::class,
-        BookStack\Providers\CustomFacadeProvider::class,
-        BookStack\Providers\CustomValidationServiceProvider::class,
+        BookStack\Providers\TranslationServiceProvider::class,
+        BookStack\Providers\ValidationRuleServiceProvider::class,
+        BookStack\Providers\ViewTweaksServiceProvider::class,
     ],
 
     /*

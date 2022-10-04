@@ -2,8 +2,6 @@
 
 namespace Tests\Permissions;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -11,7 +9,7 @@ class ExportPermissionsTest extends TestCase
 {
     public function test_page_content_without_view_access_hidden_on_chapter_export()
     {
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $page = $chapter->pages()->firstOrFail();
         $pageContent = Str::random(48);
         $page->html = '<p>' . $pageContent . '</p>';
@@ -27,7 +25,7 @@ class ExportPermissionsTest extends TestCase
             $resp->assertSee($pageContent);
         }
 
-        $this->setEntityRestrictions($page, []);
+        $this->entities->setPermissions($page, []);
 
         foreach ($formats as $format) {
             $resp = $this->get($chapter->getUrl("export/{$format}"));
@@ -39,7 +37,7 @@ class ExportPermissionsTest extends TestCase
 
     public function test_page_content_without_view_access_hidden_on_book_export()
     {
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $page = $book->pages()->firstOrFail();
         $pageContent = Str::random(48);
         $page->html = '<p>' . $pageContent . '</p>';
@@ -55,7 +53,7 @@ class ExportPermissionsTest extends TestCase
             $resp->assertSee($pageContent);
         }
 
-        $this->setEntityRestrictions($page, []);
+        $this->entities->setPermissions($page, []);
 
         foreach ($formats as $format) {
             $resp = $this->get($book->getUrl("export/{$format}"));

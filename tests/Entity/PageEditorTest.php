@@ -2,20 +2,18 @@
 
 namespace Tests\Entity;
 
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
 class PageEditorTest extends TestCase
 {
-    /** @var Page */
-    protected $page;
+    protected Page $page;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->page = Page::query()->first();
+        $this->page = $this->entities->page();
     }
 
     public function test_default_editor_is_wysiwyg_for_new_pages()
@@ -58,8 +56,7 @@ class PageEditorTest extends TestCase
     public function test_empty_markdown_still_saves_without_error()
     {
         $this->setSettings(['app-editor' => 'markdown']);
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         $this->asEditor()->get($book->getUrl('/create-page'));
         $draft = Page::query()->where('book_id', '=', $book->id)
@@ -81,8 +78,7 @@ class PageEditorTest extends TestCase
 
     public function test_back_link_in_editor_has_correct_url()
     {
-        /** @var Book $book */
-        $book = Book::query()->whereHas('pages')->whereHas('chapters')->firstOrFail();
+        $book = $this->entities->bookHasChaptersAndPages();
         $this->asEditor()->get($book->getUrl('/create-page'));
         /** @var Chapter $chapter */
         $chapter = $book->chapters()->firstOrFail();
@@ -108,8 +104,7 @@ class PageEditorTest extends TestCase
 
     public function test_switching_from_html_to_clean_markdown_works()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>';
         $page->save();
 
@@ -121,8 +116,7 @@ class PageEditorTest extends TestCase
 
     public function test_switching_from_html_to_stable_markdown_works()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>';
         $page->save();
 
@@ -134,8 +128,7 @@ class PageEditorTest extends TestCase
 
     public function test_switching_from_markdown_to_wysiwyg_works()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '';
         $page->markdown = "## A Header\n\nSome content with **bold** text!";
         $page->save();
@@ -180,8 +173,7 @@ class PageEditorTest extends TestCase
 
     public function test_page_editor_type_switch_does_not_work_without_change_editor_permissions()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>';
         $page->save();
 
@@ -193,8 +185,7 @@ class PageEditorTest extends TestCase
 
     public function test_page_save_does_not_change_active_editor_without_change_editor_permissions()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->html = '<h2>A Header</h2><p>Some <strong>bold</strong> content.</p>';
         $page->editor = 'wysiwyg';
         $page->save();

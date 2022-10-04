@@ -14,8 +14,7 @@ class ConvertTest extends TestCase
 {
     public function test_chapter_edit_view_shows_convert_option()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
 
         $resp = $this->asEditor()->get($chapter->getUrl('/edit'));
         $resp->assertSee('Convert to Book');
@@ -25,8 +24,7 @@ class ConvertTest extends TestCase
 
     public function test_convert_chapter_to_book()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->whereHas('pages')->first();
+        $chapter = $this->entities->chapterHasPages();
         $chapter->tags()->save(new Tag(['name' => 'Category', 'value' => 'Penguins']));
         /** @var Page $childPage */
         $childPage = $chapter->pages()->first();
@@ -50,8 +48,7 @@ class ConvertTest extends TestCase
 
     public function test_convert_chapter_to_book_requires_permissions()
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $chapter = $this->entities->chapter();
         $user = $this->getViewer();
 
         $permissions = ['chapter-delete-all', 'book-create-all', 'chapter-update-all'];
@@ -71,7 +68,7 @@ class ConvertTest extends TestCase
 
     public function test_book_edit_view_shows_convert_option()
     {
-        $book = Book::query()->first();
+        $book = $this->entities->book();
 
         $resp = $this->asEditor()->get($book->getUrl('/edit'));
         $resp->assertSee('Convert to Shelf');
@@ -124,8 +121,7 @@ class ConvertTest extends TestCase
 
     public function test_book_convert_to_shelf_requires_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $user = $this->getViewer();
 
         $permissions = ['book-delete-all', 'bookshelf-create-all', 'book-update-all', 'book-create-all'];

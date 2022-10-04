@@ -4,6 +4,7 @@ namespace BookStack\Entities\Tools;
 
 use BookStack\Actions\Tag;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
@@ -71,8 +72,10 @@ class Cloner
         $bookDetails = $this->entityToInputData($original);
         $bookDetails['name'] = $newName;
 
+        // Clone book
         $copyBook = $this->bookRepo->create($bookDetails);
 
+        // Clone contents
         $directChildren = $original->getDirectChildren();
         foreach ($directChildren as $child) {
             if ($child instanceof Chapter && userCan('chapter-create', $copyBook)) {
@@ -81,6 +84,14 @@ class Cloner
 
             if ($child instanceof Page && !$child->draft && userCan('page-create', $copyBook)) {
                 $this->clonePage($child, $copyBook, $child->name);
+            }
+        }
+
+        // Clone bookshelf relationships
+        /** @var Bookshelf $shelf */
+        foreach ($original->shelves as $shelf) {
+            if (userCan('bookshelf-update', $shelf)) {
+                $shelf->appendBook($copyBook);
             }
         }
 

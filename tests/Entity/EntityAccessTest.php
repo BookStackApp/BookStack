@@ -4,7 +4,6 @@ namespace Tests\Entity;
 
 use BookStack\Auth\UserRepo;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Repos\PageRepo;
 use Tests\TestCase;
 
 class EntityAccessTest extends TestCase
@@ -14,9 +13,9 @@ class EntityAccessTest extends TestCase
         // Create required assets and revisions
         $creator = $this->getEditor();
         $updater = $this->getViewer();
-        $entities = $this->createEntityChainBelongingToUser($creator, $updater);
+        $entities = $this->entities->createChainBelongingToUser($creator, $updater);
         app()->make(UserRepo::class)->destroy($creator);
-        app()->make(PageRepo::class)->update($entities['page'], ['html' => '<p>hello!</p>>']);
+        $this->entities->updatePage($entities['page'], ['html' => '<p>hello!</p>>']);
 
         $this->checkEntitiesViewable($entities);
     }
@@ -26,9 +25,9 @@ class EntityAccessTest extends TestCase
         // Create required assets and revisions
         $creator = $this->getViewer();
         $updater = $this->getEditor();
-        $entities = $this->createEntityChainBelongingToUser($creator, $updater);
+        $entities = $this->entities->createChainBelongingToUser($creator, $updater);
         app()->make(UserRepo::class)->destroy($updater);
-        app()->make(PageRepo::class)->update($entities['page'], ['html' => '<p>Hello there!</p>']);
+        $this->entities->updatePage($entities['page'], ['html' => '<p>Hello there!</p>']);
 
         $this->checkEntitiesViewable($entities);
     }

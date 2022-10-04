@@ -53,9 +53,18 @@
 
 <ul>
     <li>application/json</li>
-    <li>application/x-www-form-urlencoded</li>
-    <li>multipart/form-data</li>
+    <li>application/x-www-form-urlencoded*</li>
+    <li>multipart/form-data*</li>
 </ul>
+
+<p>
+    <em>
+        * Form requests currently only work for POST requests due to how PHP handles request data.
+        If you need to use these formats for PUT or DELETE requests you can work around this limitation by
+        using a POST request and providing a "_method" parameter with the value equal to
+        <code>PUT</code> or <code>DELETE</code>.
+    </em>
+</p>
 
 <p>
     Regardless of format chosen, ensure you set a <code>Content-Type</code> header on requests so that the system can correctly parse your request data.

@@ -7,11 +7,8 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    protected $tagRepo;
+    protected TagRepo $tagRepo;
 
-    /**
-     * TagController constructor.
-     */
     public function __construct(TagRepo $tagRepo)
     {
         $this->tagRepo = $tagRepo;
@@ -46,7 +43,7 @@ class TagController extends Controller
      */
     public function getNameSuggestions(Request $request)
     {
-        $searchTerm = $request->get('search', null);
+        $searchTerm = $request->get('search', '');
         $suggestions = $this->tagRepo->getNameSuggestions($searchTerm);
 
         return response()->json($suggestions);
@@ -57,8 +54,8 @@ class TagController extends Controller
      */
     public function getValueSuggestions(Request $request)
     {
-        $searchTerm = $request->get('search', null);
-        $tagName = $request->get('name', null);
+        $searchTerm = $request->get('search', '');
+        $tagName = $request->get('name', '');
         $suggestions = $this->tagRepo->getValueSuggestions($searchTerm, $tagName);
 
         return response()->json($suggestions);

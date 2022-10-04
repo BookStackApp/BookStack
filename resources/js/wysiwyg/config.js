@@ -3,6 +3,7 @@ import {listen as listenForCommonEvents} from "./common-events";
 import {scrollToQueryString} from "./scrolling";
 import {listenForDragAndPaste} from "./drop-paste-handling";
 import {getPrimaryToolbar, registerAdditionalToolbars} from "./toolbars";
+import {registerCustomIcons} from "./icons";
 
 import {getPlugin as getCodeeditorPlugin} from "./plugin-codeeditor";
 import {getPlugin as getDrawioPlugin} from "./plugin-drawio";
@@ -255,7 +256,7 @@ export function build(options) {
         statusbar: false,
         menubar: false,
         paste_data_images: false,
-        extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram],details[*],summary[*],div[*],li[class|checked]',
+        extended_valid_elements: 'pre[*],svg[*],div[drawio-diagram],details[*],summary[*],div[*],li[class|checked|style]',
         automatic_uploads: false,
         custom_elements: 'doc-root,code-block',
         valid_children: [
@@ -291,6 +292,7 @@ export function build(options) {
             head.innerHTML += fetchCustomHeadContent();
         },
         setup(editor) {
+            registerCustomIcons(editor);
             registerAdditionalToolbars(editor, options);
             getSetupCallback(options)(editor);
         },

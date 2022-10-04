@@ -5,6 +5,7 @@ namespace BookStack\Auth\Access;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\Mfa\MfaSession;
 use BookStack\Auth\User;
+use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Facades\Activity;
 use BookStack\Facades\Theme;
@@ -149,6 +150,7 @@ class LoginService
      * May interrupt the flow if extra authentication requirements are imposed.
      *
      * @throws StoppedAuthenticationException
+     * @throws LoginAttemptException
      */
     public function attempt(array $credentials, string $method, bool $remember = false): bool
     {

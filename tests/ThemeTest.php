@@ -64,7 +64,7 @@ class ThemeTest extends TestCase
         };
         Theme::listen(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $callback);
 
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $content = new PageContent($page);
         $content->setNewMarkdown('# test');
 
@@ -199,7 +199,7 @@ class ThemeTest extends TestCase
 
     public function test_event_activity_logged()
     {
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $args = [];
         $callback = function (...$eventArgs) use (&$args) {
             $args = $eventArgs;
@@ -218,7 +218,7 @@ class ThemeTest extends TestCase
     {
         /** @var Page $page */
         /** @var Page $otherPage */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $otherPage = Page::query()->where('id', '!=', $page->id)->first();
         $otherPage->html = '<p id="bkmrk-cool">This is a really cool section</p>';
         $page->html = "<p>{{@{$otherPage->id}#bkmrk-cool}}</p>";
@@ -322,10 +322,9 @@ class ThemeTest extends TestCase
 
     public function test_export_body_start_and_end_template_files_can_be_used()
     {
-        $bodyStartStr = 'barry-fought-against-the-panther';
-        $bodyEndStr = 'barry-lost-his-fight-with-grace';
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $bodyStartStr = 'garry-fought-against-the-panther';
+        $bodyEndStr = 'garry-lost-his-fight-with-grace';
+        $page = $this->entities->page();
 
         $this->usingThemeFolder(function (string $folder) use ($bodyStartStr, $bodyEndStr, $page) {
             $viewDir = theme_path('layouts/parts');
@@ -342,18 +341,18 @@ class ThemeTest extends TestCase
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
-        $themeFolderName = 'testing_theme_' . rtrim(base64_encode(time()), '=');
+        $themeFolderName = 'testing_theme_' . str_shuffle(rtrim(base64_encode(time()), '='));
         config()->set('view.theme', $themeFolderName);
         $themeFolderPath = theme_path('');
+
+        // Create theme folder and clean it up on application tear-down
         File::makeDirectory($themeFolderPath);
+        $this->beforeApplicationDestroyed(fn() => File::deleteDirectory($themeFolderPath));
 
         // Run provided callback with theme env option set
         $this->runWithEnv('APP_THEME', $themeFolderName, function () use ($callback, $themeFolderName) {
             call_user_func($callback, $themeFolderName);
         });
-
-        // Cleanup the custom theme folder we created
-        File::deleteDirectory($themeFolderPath);
     }
 }
 
