@@ -136,7 +136,7 @@ return [
     'books_search_this' => 'این کتاب را جستجو کنید',
     'books_navigation' => 'ناوبری کتاب',
     'books_sort' => 'مرتب سازی مطالب کتاب',
-    'books_sort_named' => 'مرتب سازی کتاب:bookName',
+    'books_sort_named' => 'مرتب‌سازی کتاب:bookName',
     'books_sort_name' => 'مرتب سازی بر اساس نام',
     'books_sort_created' => 'مرتب سازی بر اساس تاریخ ایجاد',
     'books_sort_updated' => 'مرتب سازی بر اساس تاریخ به روز رسانی',
