@@ -448,8 +448,15 @@ class EntitySearchTest extends TestCase
 
     public function test_searches_with_user_filters_adds_them_into_advanced_search_form()
     {
-        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:me} {created_by:dan}'));
-        $this->withHtml($resp)->assertElementExists('form input[type="hidden"][name="filters[updated_by]"][value="me"]');
-        $this->withHtml($resp)->assertElementExists('form input[type="hidden"][name="filters[created_by]"][value="dan"]');
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:dan} {created_by:dan}'));
+        $this->withHtml($resp)->assertElementExists('form input[name="filters[updated_by]"][value="dan"]');
+        $this->withHtml($resp)->assertElementExists('form input[name="filters[created_by]"][value="dan"]');
+    }
+
+    public function test_searches_with_user_filters_using_me_adds_them_into_advanced_search_form()
+    {
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:me} {created_by:me}'));
+        $this->withHtml($resp)->assertElementExists('form input[name="filters[updated_by]"][value="me"][checked="checked"]');
+        $this->withHtml($resp)->assertElementExists('form input[name="filters[created_by]"][value="me"][checked="checked"]');
     }
 }
