@@ -89,10 +89,10 @@ return [
     'maint_send_test_email_mail_text' => 'Felicitări! Deoarece ai primit această notificare prin e-mail, setările de e-mail par să fie configurate corespunzător.',
     'maint_recycle_bin_desc' => 'Rafturile, cărțile, capitole și paginile șterse se trimit la coșul de gunoi pentru a putea fi restaurate sau șterse definitiv. Elementele mai vechi din coșul de gunoi pot fi eliminate automat după o vreme, în funcție de configurația sistemului.',
     'maint_recycle_bin_open' => 'Deschide coșul de gunoi',
-    'maint_regen_references' => 'Regenerate References',
-    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
-    'maint_regen_references_success' => 'Reference index has been regenerated!',
-    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
+    'maint_regen_references' => 'Regenerează referințe',
+    'maint_regen_references_desc' => 'Această acțiune va reconstrui indexul de referință al elementului încrucișat în baza de date. Acest lucru este de obicei manipulat automat, dar această acțiune poate fi utilă pentru a indexa conținutul vechi sau conținutul adăugat prin metode neoficiale.',
+    'maint_regen_references_success' => 'Indicele de referință a fost regenerat!',
+    'maint_timeout_command_note' => 'Notă: Această acțiune necesită timp pentru a funcționa, ceea ce poate duce la apariția unor probleme în unele medii web. Ca alternativă, această acțiune trebuie efectuată utilizând o comandă din terminal.',
 
     // Recycle Bin
     'recycle_bin' => 'Coș de gunoi',
@@ -161,7 +161,7 @@ return [
     'roles_system_warning' => 'Fi conștient de faptul că accesul la oricare dintre cele trei permisiuni de mai sus poate permite unui utilizator să își modifice propriile privilegii sau privilegiile altor persoane din sistem. Atribuie doar roluri cu aceste permisiuni utilizatorilor de încredere.',
     'role_asset_desc' => 'Aceste permisiuni controlează accesul implicit la activele din sistem. Permisiunile pe Cărți, Capitole și Pagini vor suprascrie aceste permisiuni.',
     'role_asset_admins' => 'Administratorilor li se acordă automat acces la tot conținutul, dar aceste opțiuni pot afișa sau ascunde opțiunile UI.',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'Acest lucru se referă la vizibilitatea în managerul de imagini. Accesul efectiv al fișierelor de imagine încărcate va depinde de opțiunea de stocare a imaginilor din sistem.',
     'role_all' => 'Tot',
     'role_own' => 'Propriu',
     'role_controlled_by_asset' => 'Controlat de activele pe care sunt încărcate',
