@@ -139,6 +139,7 @@ class PermissionsRepo
             }
         }
 
+        $role->entityPermissions()->delete();
         $role->jointPermissions()->delete();
         Activity::add(ActivityType::ROLE_DELETE, $role);
         $role->delete();
