@@ -40,7 +40,7 @@ class JointPermissionBuilder
         });
 
         // Chunk through all bookshelves
-        Bookshelf::query()->withTrashed()->select(['id', 'restricted', 'owned_by'])
+        Bookshelf::query()->withTrashed()->select(['id', 'owned_by'])
             ->chunk(50, function (EloquentCollection $shelves) use ($roles) {
                 $this->createManyJointPermissions($shelves->all(), $roles);
             });
@@ -92,7 +92,7 @@ class JointPermissionBuilder
         });
 
         // Chunk through all bookshelves
-        Bookshelf::query()->select(['id', 'restricted', 'owned_by'])
+        Bookshelf::query()->select(['id', 'owned_by'])
             ->chunk(50, function ($shelves) use ($roles) {
                 $this->createManyJointPermissions($shelves->all(), $roles);
             });
@@ -138,12 +138,11 @@ class JointPermissionBuilder
     protected function bookFetchQuery(): Builder
     {
         return Book::query()->withTrashed()
-            ->select(['id', 'restricted', 'owned_by'])->with([
+            ->select(['id', 'owned_by'])->with([
                 'chapters' => function ($query) {
-                    $query->withTrashed()->select(['id', 'restricted', 'owned_by', 'book_id']);
                 },
                 'pages' => function ($query) {
-                    $query->withTrashed()->select(['id', 'restricted', 'owned_by', 'book_id', 'chapter_id']);
+                    $query->withTrashed()->select(['id', 'owned_by', 'book_id', 'chapter_id']);
                 },
             ]);
     }
@@ -218,7 +217,6 @@ class JointPermissionBuilder
             $simple = new SimpleEntityData();
             $simple->id = $attrs['id'];
             $simple->type = $entity->getMorphClass();
-            $simple->restricted = boolval($attrs['restricted'] ?? 0);
             $simple->owned_by = $attrs['owned_by'] ?? 0;
             $simple->book_id = $attrs['book_id'] ?? null;
             $simple->chapter_id = $attrs['chapter_id'] ?? null;
@@ -240,24 +238,14 @@ class JointPermissionBuilder
         $this->readyEntityCache($entities);
         $jointPermissions = [];
 
-        // Create a mapping of entity restricted statuses
-        $entityRestrictedMap = [];
-        foreach ($entities as $entity) {
-            $entityRestrictedMap[$entity->type . ':' . $entity->id] = $entity->restricted;
-        }
-
         // Fetch related entity permissions
         $permissions = $this->getEntityPermissionsForEntities($entities);
 
         // Create a mapping of explicit entity permissions
-        // TODO - Handle new format, Now getting all defined entity permissions
-        //   from the above call, Need to handle entries with none, and the 'Other Roles' (role_id=0)
-        //   fallback option.
         $permissionMap = [];
         foreach ($permissions as $permission) {
             $key = $permission->entity_type . ':' . $permission->entity_id . ':' . $permission->role_id;
-            $isRestricted = $entityRestrictedMap[$permission->entity_type . ':' . $permission->entity_id];
-            $permissionMap[$key] = $isRestricted;
+            $permissionMap[$key] = $permission->view;
         }
 
         // Create a mapping of role permissions
@@ -347,7 +335,7 @@ class JointPermissionBuilder
             return $this->createJointPermissionDataArray($entity, $roleId, true, true);
         }
 
-        if ($entity->restricted) {
+        if ($this->entityPermissionsActiveForRole($permissionMap, $entity, $roleId)) {
             $hasAccess = $this->mapHasActiveRestriction($permissionMap, $entity, $roleId);
 
             return $this->createJointPermissionDataArray($entity, $roleId, $hasAccess, $hasAccess);
@@ -360,13 +348,14 @@ class JointPermissionBuilder
         // For chapters and pages, Check if explicit permissions are set on the Book.
         $book = $this->getBook($entity->book_id);
         $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $book, $roleId);
-        $hasPermissiveAccessToParents = !$book->restricted;
+        $hasPermissiveAccessToParents = !$this->entityPermissionsActiveForRole($permissionMap, $book, $roleId);
 
         // For pages with a chapter, Check if explicit permissions are set on the Chapter
         if ($entity->type === 'page' && $entity->chapter_id !== 0) {
             $chapter = $this->getChapter($entity->chapter_id);
-            $hasPermissiveAccessToParents = $hasPermissiveAccessToParents && !$chapter->restricted;
-            if ($chapter->restricted) {
+            $chapterRestricted = $this->entityPermissionsActiveForRole($permissionMap, $chapter, $roleId);
+            $hasPermissiveAccessToParents = $hasPermissiveAccessToParents && !$chapterRestricted;
+            if ($chapterRestricted) {
                 $hasExplicitAccessToParents = $this->mapHasActiveRestriction($permissionMap, $chapter, $roleId);
             }
         }
@@ -380,13 +369,24 @@ class JointPermissionBuilder
     }
 
     /**
+     * Check if entity permissions are defined within the given map, for the given entity and role.
+     * Checks for the default `role_id=0` backup option as a fallback.
+     */
+    protected function entityPermissionsActiveForRole(array $permissionMap, SimpleEntityData $entity, int $roleId): bool
+    {
+        $keyPrefix = $entity->type . ':' . $entity->id . ':';
+        return isset($permissionMap[$keyPrefix . $roleId]) || isset($permissionMap[$keyPrefix . '0']);
+    }
+
+    /**
      * Check for an active restriction in an entity map.
      */
     protected function mapHasActiveRestriction(array $entityMap, SimpleEntityData $entity, int $roleId): bool
     {
-        $key = $entity->type . ':' . $entity->id . ':' . $roleId;
+        $roleKey = $entity->type . ':' . $entity->id . ':' . $roleId;
+        $defaultKey = $entity->type . ':' . $entity->id . ':0';
 
-        return $entityMap[$key] ?? false;
+        return $entityMap[$roleKey] ?? $entityMap[$defaultKey] ?? false;
     }
 
     /**
