@@ -2,6 +2,7 @@
 
 namespace Tests\Helpers;
 
+use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
@@ -207,13 +208,12 @@ class EntityProvider
         $entity->permissions()->delete();
 
         $permissions = [];
-        foreach ($actions as $action) {
-            foreach ($roles as $role) {
-                $permissions[] = [
-                    'role_id' => $role->id,
-                    'action'  => strtolower($action),
-                ];
+        foreach ($roles as $role) {
+            $permission = ['role_id' => $role->id];
+            foreach (EntityPermission::PERMISSIONS as $possibleAction) {
+                $permission[$possibleAction] = in_array($possibleAction, $actions);
             }
+            $permissions[] = $permission;
         }
 
         $entity->permissions()->createMany($permissions);

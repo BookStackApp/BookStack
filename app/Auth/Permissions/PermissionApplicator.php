@@ -59,6 +59,8 @@ class PermissionApplicator
      */
     protected function hasEntityPermission(Entity $entity, array $userRoleIds, string $action): ?bool
     {
+        $this->ensureValidEntityAction($action);
+
         $adminRoleId = Role::getSystemRole('admin')->id;
         if (in_array($adminRoleId, $userRoleIds)) {
             return true;
@@ -81,7 +83,7 @@ class PermissionApplicator
             if ($currentEntity->restricted) {
                 return $currentEntity->permissions()
                     ->whereIn('role_id', $userRoleIds)
-                    ->where('action', '=', $action)
+                    ->where($action, '=', true)
                     ->count() > 0;
             }
         }
@@ -95,18 +97,16 @@ class PermissionApplicator
      */
     public function checkUserHasEntityPermissionOnAny(string $action, string $entityClass = ''): bool
     {
-        if (strpos($action, '-') !== false) {
-            throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
-        }
+        $this->ensureValidEntityAction($action);
 
         $permissionQuery = EntityPermission::query()
-            ->where('action', '=', $action)
+            ->where($action, '=', true)
             ->whereIn('role_id', $this->getCurrentUserRoleIds());
 
         if (!empty($entityClass)) {
             /** @var Entity $entityInstance */
             $entityInstance = app()->make($entityClass);
-            $permissionQuery = $permissionQuery->where('restrictable_type', '=', $entityInstance->getMorphClass());
+            $permissionQuery = $permissionQuery->where('entity_type', '=', $entityInstance->getMorphClass());
         }
 
         $hasPermission = $permissionQuery->count() > 0;
@@ -254,5 +254,17 @@ class PermissionApplicator
         }
 
         return $this->currentUser()->roles->pluck('id')->values()->all();
+    }
+
+    /**
+     * Ensure the given action is a valid and expected entity action.
+     * Throws an exception if invalid otherwise does nothing.
+     * @throws InvalidArgumentException
+     */
+    protected function ensureValidEntityAction(string $action): void
+    {
+        if (!in_array($action, EntityPermission::PERMISSIONS)) {
+            throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
+        }
     }
 }

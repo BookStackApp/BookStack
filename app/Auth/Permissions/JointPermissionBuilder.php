@@ -250,10 +250,13 @@ class JointPermissionBuilder
         $permissions = $this->getEntityPermissionsForEntities($entities);
 
         // Create a mapping of explicit entity permissions
+        // TODO - Handle new format, Now getting all defined entity permissions
+        //   from the above call, Need to handle entries with none, and the 'Other Roles' (role_id=0)
+        //   fallback option.
         $permissionMap = [];
         foreach ($permissions as $permission) {
-            $key = $permission->restrictable_type . ':' . $permission->restrictable_id . ':' . $permission->role_id;
-            $isRestricted = $entityRestrictedMap[$permission->restrictable_type . ':' . $permission->restrictable_id];
+            $key = $permission->entity_type . ':' . $permission->entity_id . ':' . $permission->role_id;
+            $isRestricted = $entityRestrictedMap[$permission->entity_type . ':' . $permission->entity_id];
             $permissionMap[$key] = $isRestricted;
         }
 
@@ -319,11 +322,10 @@ class JointPermissionBuilder
     {
         $idsByType = $this->entitiesToTypeIdMap($entities);
         $permissionFetch = EntityPermission::query()
-            ->where('action', '=', 'view')
             ->where(function (Builder $query) use ($idsByType) {
                 foreach ($idsByType as $type => $ids) {
                     $query->orWhere(function (Builder $query) use ($type, $ids) {
-                        $query->where('restrictable_type', '=', $type)->whereIn('restrictable_id', $ids);
+                        $query->where('entity_type', '=', $type)->whereIn('entity_id', $ids);
                     });
                 }
             });

@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\Actions\ActivityType;
+use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity;
@@ -16,11 +17,9 @@ class PermissionsUpdater
      */
     public function updateFromPermissionsForm(Entity $entity, Request $request)
     {
-        $restricted = $request->get('restricted') === 'true';
-        $permissions = $request->get('restrictions', null);
+        $permissions = $request->get('permissions', null);
         $ownerId = $request->get('owned_by', null);
 
-        $entity->restricted = $restricted;
         $entity->permissions()->delete();
 
         if (!is_null($permissions)) {
@@ -52,18 +51,20 @@ class PermissionsUpdater
     }
 
     /**
-     * Format permissions provided from a permission form to be
-     * EntityPermission data.
+     * Format permissions provided from a permission form to be EntityPermission data.
      */
-    protected function formatPermissionsFromRequestToEntityPermissions(array $permissions): Collection
+    protected function formatPermissionsFromRequestToEntityPermissions(array $permissions): array
     {
-        return collect($permissions)->flatMap(function ($restrictions, $roleId) {
-            return collect($restrictions)->keys()->map(function ($action) use ($roleId) {
-                return [
-                    'role_id' => $roleId,
-                    'action'  => strtolower($action),
-                ];
-            });
-        });
+        $formatted = [];
+
+        foreach ($permissions as $roleId => $info) {
+            $entityPermissionData = ['role_id' => $roleId];
+            foreach (EntityPermission::PERMISSIONS as $permission) {
+                $entityPermissionData[$permission] = (($info[$permission] ?? false) === "true");
+            }
+            $formatted[] = $entityPermissionData;
+        }
+
+        return $formatted;
     }
 }

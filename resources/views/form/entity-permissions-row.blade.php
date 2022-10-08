@@ -28,19 +28,20 @@
         </div>
     @endif
     <div class="flex-container-row justify-space-between gap-x-xl wrap items-center">
+        <input type="hidden" name="permissions[{{ $role->id }}][active]" value="true">
         <div class="px-l">
-            @include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.view'), 'action' => 'view', 'disabled' => $inheriting])
+            @include('form.restriction-checkbox', ['name'=>'permissions', 'label' => trans('common.view'), 'action' => 'view', 'disabled' => $inheriting])
         </div>
         <div class="px-l">
             @if(!$model instanceof \BookStack\Entities\Models\Page)
-                @include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.create'), 'action' => 'create', 'disabled' => $inheriting])
+                @include('form.restriction-checkbox', ['name'=>'permissions', 'label' => trans('common.create'), 'action' => 'create', 'disabled' => $inheriting])
             @endif
         </div>
         <div class="px-l">
-            @include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.update'), 'action' => 'update', 'disabled' => $inheriting])
+            @include('form.restriction-checkbox', ['name'=>'permissions', 'label' => trans('common.update'), 'action' => 'update', 'disabled' => $inheriting])
         </div>
         <div class="px-l">
-            @include('form.restriction-checkbox', ['name'=>'restrictions', 'label' => trans('common.delete'), 'action' => 'delete', 'disabled' => $inheriting])
+            @include('form.restriction-checkbox', ['name'=>'permissions', 'label' => trans('common.delete'), 'action' => 'delete', 'disabled' => $inheriting])
         </div>
     </div>
 </div>
