@@ -176,7 +176,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function permissions(): MorphMany
     {
-        return $this->morphMany(EntityPermission::class, 'restrictable');
+        return $this->morphMany(EntityPermission::class, 'entity');
     }
 
     /**
@@ -186,7 +186,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     {
         return $this->permissions()
                 ->where('role_id', '=', $role_id)
-                ->where('action', '=', $action)
+                ->where($action, '=', true)
                 ->count() > 0;
     }
 

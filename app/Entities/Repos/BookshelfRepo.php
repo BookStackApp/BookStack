@@ -139,7 +139,7 @@ class BookshelfRepo
      */
     public function copyDownPermissions(Bookshelf $shelf, $checkUserPermissions = true): int
     {
-        $shelfPermissions = $shelf->permissions()->get(['role_id', 'action'])->toArray();
+        $shelfPermissions = $shelf->permissions()->get(['role_id', 'view', 'create', 'update', 'delete'])->toArray();
         $shelfBooks = $shelf->books()->get(['id', 'restricted', 'owned_by']);
         $updatedBookCount = 0;
 
