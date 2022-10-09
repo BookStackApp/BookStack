@@ -3,7 +3,7 @@
 namespace BookStack\Console\Commands;
 
 use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Repos\BookshelfRepo;
+use BookStack\Entities\Tools\PermissionsUpdater;
 use Illuminate\Console\Command;
 
 class CopyShelfPermissions extends Command
@@ -25,19 +25,16 @@ class CopyShelfPermissions extends Command
      */
     protected $description = 'Copy shelf permissions to all child books';
 
-    /**
-     * @var BookshelfRepo
-     */
-    protected $bookshelfRepo;
+    protected PermissionsUpdater $permissionsUpdater;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(BookshelfRepo $repo)
+    public function __construct(PermissionsUpdater $permissionsUpdater)
     {
-        $this->bookshelfRepo = $repo;
+        $this->permissionsUpdater = $permissionsUpdater;
         parent::__construct();
     }
 
@@ -80,7 +77,7 @@ class CopyShelfPermissions extends Command
         }
 
         foreach ($shelves as $shelf) {
-            $this->bookshelfRepo->copyDownPermissions($shelf, false);
+            $this->permissionsUpdater->updateBookPermissionsFromShelf($shelf, false);
             $this->info('Copied permissions for shelf [' . $shelf->id . ']');
         }
 

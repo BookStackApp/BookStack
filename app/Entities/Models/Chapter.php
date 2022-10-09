@@ -58,4 +58,13 @@ class Chapter extends BookChild
         ->orderBy('priority', 'asc')
         ->get();
     }
+
+    /**
+     * Get a visible chapter by its book and page slugs.
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public static function getBySlugs(string $bookSlug, string $chapterSlug): self
+    {
+        return static::visible()->whereSlugs($bookSlug, $chapterSlug)->firstOrFail();
+    }
 }

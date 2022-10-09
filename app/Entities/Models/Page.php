@@ -145,4 +145,13 @@ class Page extends BookChild
 
         return $refreshed;
     }
+
+    /**
+     * Get a visible page by its book and page slugs.
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public static function getBySlugs(string $bookSlug, string $pageSlug): self
+    {
+        return static::visible()->whereSlugs($bookSlug, $pageSlug)->firstOrFail();
+    }
 }

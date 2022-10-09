@@ -109,4 +109,13 @@ class Bookshelf extends Entity implements HasCoverImage
         $maxOrder = $this->books()->max('order');
         $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
     }
+
+    /**
+     * Get a visible shelf by its slug.
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public static function getBySlug(string $slug): self
+    {
+        return static::visible()->where('slug', '=', $slug)->firstOrFail();
+    }
 }

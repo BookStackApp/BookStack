@@ -5,6 +5,8 @@ namespace BookStack\Entities\Tools;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity;
 use Illuminate\Http\Request;
@@ -66,5 +68,31 @@ class PermissionsUpdater
         }
 
         return $formatted;
+    }
+
+    /**
+     * Copy down the permissions of the given shelf to all child books.
+     */
+    public function updateBookPermissionsFromShelf(Bookshelf $shelf, $checkUserPermissions = true): int
+    {
+        // TODO - Fix for new format
+        $shelfPermissions = $shelf->permissions()->get(['role_id', 'view', 'create', 'update', 'delete'])->toArray();
+        $shelfBooks = $shelf->books()->get(['id', 'restricted', 'owned_by']);
+        $updatedBookCount = 0;
+
+        /** @var Book $book */
+        foreach ($shelfBooks as $book) {
+            if ($checkUserPermissions && !userCan('restrictions-manage', $book)) {
+                continue;
+            }
+            $book->permissions()->delete();
+            $book->restricted = $shelf->restricted;
+            $book->permissions()->createMany($shelfPermissions);
+            $book->save();
+            $book->rebuildPermissions();
+            $updatedBookCount++;
+        }
+
+        return $updatedBookCount;
     }
 }

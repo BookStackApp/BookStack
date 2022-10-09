@@ -22,8 +22,7 @@ class ReferenceController extends Controller
      */
     public function page(string $bookSlug, string $pageSlug)
     {
-        /** @var Page $page */
-        $page = Page::visible()->whereSlugs($bookSlug, $pageSlug)->firstOrFail();
+        $page = Page::getBySlugs($bookSlug, $pageSlug);
         $references = $this->referenceFetcher->getPageReferencesToEntity($page);
 
         return view('pages.references', [
@@ -37,8 +36,7 @@ class ReferenceController extends Controller
      */
     public function chapter(string $bookSlug, string $chapterSlug)
     {
-        /** @var Chapter $chapter */
-        $chapter = Chapter::visible()->whereSlugs($bookSlug, $chapterSlug)->firstOrFail();
+        $chapter = Chapter::getBySlugs($bookSlug, $chapterSlug);
         $references = $this->referenceFetcher->getPageReferencesToEntity($chapter);
 
         return view('chapters.references', [
@@ -52,7 +50,7 @@ class ReferenceController extends Controller
      */
     public function book(string $slug)
     {
-        $book = Book::visible()->where('slug', '=', $slug)->firstOrFail();
+        $book = Book::getBySlug($slug);
         $references = $this->referenceFetcher->getPageReferencesToEntity($book);
 
         return view('books.references', [
@@ -66,7 +64,7 @@ class ReferenceController extends Controller
      */
     public function shelf(string $slug)
     {
-        $shelf = Bookshelf::visible()->where('slug', '=', $slug)->firstOrFail();
+        $shelf = Bookshelf::getBySlug($slug);
         $references = $this->referenceFetcher->getPageReferencesToEntity($shelf);
 
         return view('shelves.references', [
