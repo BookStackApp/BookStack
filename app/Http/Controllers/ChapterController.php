@@ -9,7 +9,6 @@ use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
 use BookStack\Entities\Tools\HierarchyTransformer;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
-use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
@@ -241,38 +240,6 @@ class ChapterController extends Controller
         $this->showSuccessNotification(trans('entities.chapters_copy_success'));
 
         return redirect($chapterCopy->getUrl());
-    }
-
-    /**
-     * Show the Restrictions view.
-     *
-     * @throws NotFoundException
-     */
-    public function showPermissions(string $bookSlug, string $chapterSlug)
-    {
-        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
-        $this->checkOwnablePermission('restrictions-manage', $chapter);
-
-        return view('chapters.permissions', [
-            'chapter' => $chapter,
-        ]);
-    }
-
-    /**
-     * Set the restrictions for this chapter.
-     *
-     * @throws NotFoundException
-     */
-    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $bookSlug, string $chapterSlug)
-    {
-        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
-        $this->checkOwnablePermission('restrictions-manage', $chapter);
-
-        $permissionsUpdater->updateFromPermissionsForm($chapter, $request);
-
-        $this->showSuccessNotification(trans('entities.chapters_permissions_success'));
-
-        return redirect($chapter->getUrl());
     }
 
     /**

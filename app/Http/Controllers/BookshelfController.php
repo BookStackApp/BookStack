@@ -6,7 +6,6 @@ use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\BookshelfRepo;
-use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
@@ -206,47 +205,5 @@ class BookshelfController extends Controller
         $this->shelfRepo->destroy($shelf);
 
         return redirect('/shelves');
-    }
-
-    /**
-     * Show the permissions view.
-     */
-    public function showPermissions(string $slug)
-    {
-        $shelf = $this->shelfRepo->getBySlug($slug);
-        $this->checkOwnablePermission('restrictions-manage', $shelf);
-
-        return view('shelves.permissions', [
-            'shelf' => $shelf,
-        ]);
-    }
-
-    /**
-     * Set the permissions for this bookshelf.
-     */
-    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $slug)
-    {
-        $shelf = $this->shelfRepo->getBySlug($slug);
-        $this->checkOwnablePermission('restrictions-manage', $shelf);
-
-        $permissionsUpdater->updateFromPermissionsForm($shelf, $request);
-
-        $this->showSuccessNotification(trans('entities.shelves_permissions_updated'));
-
-        return redirect($shelf->getUrl());
-    }
-
-    /**
-     * Copy the permissions of a bookshelf to the child books.
-     */
-    public function copyPermissions(string $slug)
-    {
-        $shelf = $this->shelfRepo->getBySlug($slug);
-        $this->checkOwnablePermission('restrictions-manage', $shelf);
-
-        $updateCount = $this->shelfRepo->copyDownPermissions($shelf);
-        $this->showSuccessNotification(trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
-
-        return redirect($shelf->getUrl());
     }
 }

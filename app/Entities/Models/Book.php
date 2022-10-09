@@ -120,4 +120,13 @@ class Book extends Entity implements HasCoverImage
 
         return $pages->concat($chapters)->sortBy('priority')->sortByDesc('draft');
     }
+
+    /**
+     * Get a visible book by its slug.
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public static function getBySlug(string $slug): self
+    {
+        return static::visible()->where('slug', '=', $slug)->firstOrFail();
+    }
 }
