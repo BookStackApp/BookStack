@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Auth\Permissions\PermissionFormData;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
@@ -28,6 +29,7 @@ class PermissionsController extends Controller
 
         return view('pages.permissions', [
             'page' => $page,
+            'data' => new PermissionFormData($page),
         ]);
     }
 
@@ -56,6 +58,7 @@ class PermissionsController extends Controller
 
         return view('chapters.permissions', [
             'chapter' => $chapter,
+            'data' => new PermissionFormData($chapter),
         ]);
     }
 
@@ -84,6 +87,7 @@ class PermissionsController extends Controller
 
         return view('books.permissions', [
             'book' => $book,
+            'data' => new PermissionFormData($book),
         ]);
     }
 
@@ -112,6 +116,7 @@ class PermissionsController extends Controller
 
         return view('shelves.permissions', [
             'shelf' => $shelf,
+            'data' => new PermissionFormData($shelf),
         ]);
     }
 

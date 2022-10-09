@@ -2,7 +2,9 @@
 
 namespace BookStack\Auth\Permissions;
 
+use BookStack\Auth\Role;
 use BookStack\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -28,5 +30,13 @@ class EntityPermission extends Model
     public function restrictable(): MorphTo
     {
         return $this->morphTo('restrictable');
+    }
+
+    /**
+     * Get the role assigned to this entity permission.
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 }

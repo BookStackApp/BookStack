@@ -19,13 +19,13 @@
     @endif
 
     <div class="content-permissions mt-m mb-xl">
-        @foreach(\BookStack\Auth\Role::restrictable() as $role)
+        @foreach($data->rolesWithPermissions() as $role)
             @include('form.entity-permissions-row', ['role' => $role, 'model' => $model])
         @endforeach
     </div>
 
     <div class="content-permissions mt-m mb-xl">
-        @include('form.entity-permissions-row', ['role' => \BookStack\Auth\Role::getEveryoneElseRole(), 'model' => $model])
+        @include('form.entity-permissions-row', ['role' => $data->everyoneElseRole(), 'model' => $model])
     </div>
 
     <div class="text-right">
