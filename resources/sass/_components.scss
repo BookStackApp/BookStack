@@ -818,6 +818,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border-radius: 0 0 4px 4px;
   border-bottom-width: 1.5px;
 }
+.content-permissions-row:first-child:last-child {
+  border-radius: 4px;
+}
 .content-permissions-row-toggle-all {
   visibility: hidden;
 }
