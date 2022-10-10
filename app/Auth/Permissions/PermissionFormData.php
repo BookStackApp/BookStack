@@ -15,16 +15,15 @@ class PermissionFormData
     }
 
     /**
-     * Get the roles with permissions assigned.
+     * Get the permissions with assigned roles.
      */
-    public function rolesWithPermissions(): array
+    public function permissionsWithRoles(): array
     {
         return $this->entity->permissions()
             ->with('role')
             ->where('role_id', '!=', 0)
-            ->get(['id', 'role_id'])
-            ->pluck('role')
-            ->sortBy('display_name')
+            ->get()
+            ->sortBy('role.display_name')
             ->all();
     }
 

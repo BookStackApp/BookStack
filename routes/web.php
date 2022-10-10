@@ -215,6 +215,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index']);
 
+    // Permissions
+    Route::get('/permissions/form-row/{entityType}/{roleId}', [PermissionsController::class, 'formRowForRole']);
+
     // Maintenance
     Route::get('/settings/maintenance', [MaintenanceController::class, 'index']);
     Route::delete('/settings/maintenance/cleanup-images', [MaintenanceController::class, 'cleanupImages']);
