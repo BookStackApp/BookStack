@@ -122,7 +122,6 @@ class Cloner
      */
     public function copyEntityPermissions(Entity $sourceEntity, Entity $targetEntity): void
     {
-        $targetEntity->restricted = $sourceEntity->restricted;
         $permissions = $sourceEntity->permissions()->get(['role_id', 'view', 'create', 'update', 'delete'])->toArray();
         $targetEntity->permissions()->delete();
         $targetEntity->permissions()->createMany($permissions);

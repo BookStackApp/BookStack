@@ -19,7 +19,7 @@ class CopyShelfPermissionsCommandTest extends TestCase
         $shelf = $this->entities->shelf();
         $child = $shelf->books()->first();
         $editorRole = $this->getEditor()->roles()->first();
-        $this->assertFalse(boolval($child->restricted), 'Child book should not be restricted by default');
+        $this->assertFalse(boolval($child->hasPermissions()), 'Child book should not be restricted by default');
         $this->assertTrue($child->permissions()->count() === 0, 'Child book should have no permissions by default');
 
         $this->entities->setPermissions($shelf, ['view', 'update'], [$editorRole]);
@@ -28,7 +28,7 @@ class CopyShelfPermissionsCommandTest extends TestCase
         ]);
         $child = $shelf->books()->first();
 
-        $this->assertTrue(boolval($child->restricted), 'Child book should now be restricted');
+        $this->assertTrue(boolval($child->hasPermissions()), 'Child book should now be restricted');
         $this->assertTrue($child->permissions()->count() === 2, 'Child book should have copied permissions');
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'view', 'role_id' => $editorRole->id]);
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'update', 'role_id' => $editorRole->id]);
@@ -40,7 +40,7 @@ class CopyShelfPermissionsCommandTest extends TestCase
         Bookshelf::query()->where('id', '!=', $shelf->id)->delete();
         $child = $shelf->books()->first();
         $editorRole = $this->getEditor()->roles()->first();
-        $this->assertFalse(boolval($child->restricted), 'Child book should not be restricted by default');
+        $this->assertFalse(boolval($child->hasPermissions()), 'Child book should not be restricted by default');
         $this->assertTrue($child->permissions()->count() === 0, 'Child book should have no permissions by default');
 
         $this->entities->setPermissions($shelf, ['view', 'update'], [$editorRole]);
@@ -48,7 +48,7 @@ class CopyShelfPermissionsCommandTest extends TestCase
             ->expectsQuestion('Permission settings for all shelves will be cascaded. Books assigned to multiple shelves will receive only the permissions of it\'s last processed shelf. Are you sure you want to proceed?', 'y');
         $child = $shelf->books()->first();
 
-        $this->assertTrue(boolval($child->restricted), 'Child book should now be restricted');
+        $this->assertTrue(boolval($child->hasPermissions()), 'Child book should now be restricted');
         $this->assertTrue($child->permissions()->count() === 2, 'Child book should have copied permissions');
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'view', 'role_id' => $editorRole->id]);
         $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'update', 'role_id' => $editorRole->id]);

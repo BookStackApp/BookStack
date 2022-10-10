@@ -75,9 +75,8 @@ class PermissionsUpdater
      */
     public function updateBookPermissionsFromShelf(Bookshelf $shelf, $checkUserPermissions = true): int
     {
-        // TODO - Fix for new format
         $shelfPermissions = $shelf->permissions()->get(['role_id', 'view', 'create', 'update', 'delete'])->toArray();
-        $shelfBooks = $shelf->books()->get(['id', 'restricted', 'owned_by']);
+        $shelfBooks = $shelf->books()->get(['id', 'owned_by']);
         $updatedBookCount = 0;
 
         /** @var Book $book */
@@ -86,9 +85,7 @@ class PermissionsUpdater
                 continue;
             }
             $book->permissions()->delete();
-            $book->restricted = $shelf->restricted;
             $book->permissions()->createMany($shelfPermissions);
-            $book->save();
             $book->rebuildPermissions();
             $updatedBookCount++;
         }

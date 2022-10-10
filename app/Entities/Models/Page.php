@@ -39,7 +39,7 @@ class Page extends BookChild
 
     public $textField = 'text';
 
-    protected $hidden = ['html', 'markdown', 'text', 'restricted', 'pivot', 'deleted_at'];
+    protected $hidden = ['html', 'markdown', 'text', 'pivot', 'deleted_at'];
 
     protected $casts = [
         'draft'    => 'boolean',

@@ -42,7 +42,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon     $deleted_at
  * @property int        $created_by
  * @property int        $updated_by
- * @property bool       $restricted
  * @property Collection $tags
  *
  * @method static Entity|Builder visible()

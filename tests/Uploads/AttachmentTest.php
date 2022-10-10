@@ -253,11 +253,7 @@ class AttachmentTest extends TestCase
         $this->uploadFile($fileName, $page->id);
         $attachment = Attachment::orderBy('id', 'desc')->take(1)->first();
 
-        $page->restricted = true;
-        $page->permissions()->delete();
-        $page->save();
-        $page->rebuildPermissions();
-        $page->load('jointPermissions');
+        $this->entities->setPermissions($page, [], []);
 
         $this->actingAs($viewer);
         $attachmentGet = $this->get($attachment->getUrl());

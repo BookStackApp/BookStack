@@ -101,9 +101,7 @@ class ChapterTest extends TestCase
         // Hide pages to all non-admin roles
         /** @var Page $page */
         foreach ($chapter->pages as $page) {
-            $page->restricted = true;
-            $page->save();
-            $this->entities->regenPermissions($page);
+            $this->entities->setPermissions($page, [], []);
         }
 
         $this->asEditor()->post($chapter->getUrl('/copy'), [

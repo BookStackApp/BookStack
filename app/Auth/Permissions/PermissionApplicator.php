@@ -66,6 +66,8 @@ class PermissionApplicator
             return true;
         }
 
+        // The chain order here is very important due to the fact we walk up the chain
+        // in the loop below. Earlier items in the chain have higher priority.
         $chain = [$entity];
         if ($entity instanceof Page && $entity->chapter_id) {
             $chain[] = $entity->chapter;
@@ -76,16 +78,26 @@ class PermissionApplicator
         }
 
         foreach ($chain as $currentEntity) {
-            if (is_null($currentEntity->restricted)) {
-                throw new InvalidArgumentException('Entity restricted field used but has not been loaded');
+            $allowedByRoleId = $currentEntity->permissions()
+                ->whereIn('role_id', [0, ...$userRoleIds])
+                ->pluck($action, 'role_id');
+
+            // Continue up the chain if no applicable entity permission overrides.
+            if (empty($allowedByRoleId)) {
+                continue;
             }
 
-            if ($currentEntity->restricted) {
-                return $currentEntity->permissions()
-                    ->whereIn('role_id', $userRoleIds)
-                    ->where($action, '=', true)
-                    ->count() > 0;
+            // If we have user-role-specific permissions set, allow if any of those
+            // role permissions allow access.
+            $hasDefault = $allowedByRoleId->has(0);
+            if (!$hasDefault || $allowedByRoleId->count() > 1) {
+                return $allowedByRoleId->search(function (bool $allowed, int $roleId) {
+                        return $roleId !== 0 && $allowed;
+                }) !== false;
             }
+
+            // Otherwise, return the default "Other roles" fallback value.
+            return $allowedByRoleId->get(0);
         }
 
         return null;

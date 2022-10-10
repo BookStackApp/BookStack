@@ -65,7 +65,7 @@ class HierarchyTransformer
         foreach ($book->chapters as $index => $chapter) {
             $newBook = $this->transformChapterToBook($chapter);
             $shelfBookSyncData[$newBook->id] = ['order' => $index];
-            if (!$newBook->restricted) {
+            if (!$newBook->hasPermissions()) {
                 $this->cloner->copyEntityPermissions($shelf, $newBook);
             }
         }

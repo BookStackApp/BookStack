@@ -376,7 +376,6 @@ class EntityPermissionsTest extends TestCase
             ->assertSee($title);
 
         $this->put($modelInstance->getUrl('/permissions'), [
-            'restricted'   => 'true',
             'restrictions' => [
                 $roleId => [
                     $permission => 'true',
