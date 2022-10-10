@@ -18,7 +18,7 @@ class EntityPermissions {
         // "Everyone Else" inherit toggle
         this.everyoneInheritToggle.addEventListener('change', event => {
             const inherit = event.target.checked;
-            const permissions = document.querySelectorAll('input[type="checkbox"][name^="restrictions[0]["]');
+            const permissions = document.querySelectorAll('input[name^="permissions[0]["]');
             for (const permission of permissions) {
                 permission.disabled = inherit;
                 permission.checked = false;

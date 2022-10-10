@@ -164,6 +164,7 @@ class PermissionsController extends Controller
             'role' => $role,
             'permission' => new EntityPermission(),
             'entityType' => $entityType,
+            'inheriting' => false,
         ]);
     }
 }
