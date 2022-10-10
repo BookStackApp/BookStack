@@ -109,10 +109,21 @@ button {
   display: block;
 }
 
-.button.icon {
+.button.icon, .icon-button {
   .svg-icon {
     margin-inline-end: 0;
   }
+}
+
+.icon-button {
+  text-align: center;
+  border: 1px solid transparent;
+}
+.icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  border-color: #DDD;
+  cursor: pointer;
 }
 
 .button.svg {

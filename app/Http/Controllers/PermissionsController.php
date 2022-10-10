@@ -2,7 +2,9 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Permissions\PermissionFormData;
+use BookStack\Auth\Role;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
@@ -147,5 +149,21 @@ class PermissionsController extends Controller
         $this->showSuccessNotification(trans('entities.shelves_copy_permission_success', ['count' => $updateCount]));
 
         return redirect($shelf->getUrl());
+    }
+
+    /**
+     * Get an empty entity permissions form row for the given role.
+     */
+    public function formRowForRole(string $entityType, string $roleId)
+    {
+        $this->checkPermissionOr('restrictions-manage', fn() => userCan('restrictions-manage-all'));
+
+        $role = Role::query()->findOrFail($roleId);
+
+        return view('form.entity-permissions-row', [
+            'role' => $role,
+            'permission' => new EntityPermission(),
+            'entityType' => $entityType,
+        ]);
     }
 }

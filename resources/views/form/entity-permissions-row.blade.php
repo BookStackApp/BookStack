@@ -1,3 +1,9 @@
+{{--
+$role - The Role to display this row for.
+$entityType - String identifier for type of entity having permissions applied.
+$permission - The entity permission containing the permissions.
+--}}
+
 <div component="permissions-table" class="content-permissions-row flex-container-row justify-space-between wrap">
     <div class="gap-x-m flex-container-row items-center px-l py-m flex">
         <div class="text-large" title="{{ $role->id === 0 ? 'Everyone Else' : trans('common.role') }}">
@@ -15,7 +21,8 @@
         @endif
     </div>
     @php
-        $inheriting = ($role->id === 0 && !$model->restricted);
+        // TODO
+        $inheriting = ($role->id === 0);
     @endphp
     @if($role->id === 0)
         <div class="px-l flex-container-row items-center" refs="entity-permissions@everyoneInherit">
@@ -30,18 +37,53 @@
     <div class="flex-container-row justify-space-between gap-x-xl wrap items-center">
         <input type="hidden" name="permissions[{{ $role->id }}][active]" value="true">
         <div class="px-l">
-            @include('form.restriction-checkbox', ['name'=>'permissions', 'label' => trans('common.view'), 'action' => 'view', 'disabled' => $inheriting])
+            @include('form.custom-checkbox', [
+                'name' =>  'permissions[' . $role->id . '][view]',
+                'label' => trans('common.view'),
+                'value' => 'true',
+                'checked' => $permission->view,
+                'disabled' => $inheriting
+            ])
+        </div>
+        @if($entityType !== 'page')
+            <div class="px-l">
+                @include('form.custom-checkbox', [
+                    'name' =>  'permissions[' . $role->id . '][create]',
+                    'label' => trans('common.create'),
+                    'value' => 'true',
+                    'checked' => $permission->create,
+                    'disabled' => $inheriting
+                ])
+            </div>
+        @endif
+        <div class="px-l">
+            @include('form.custom-checkbox', [
+                'name' =>  'permissions[' . $role->id . '][update]',
+                'label' => trans('common.update'),
+                'value' => 'true',
+                'checked' => $permission->update,
+                'disabled' => $inheriting
+            ])
         </div>
         <div class="px-l">
-            @if(!$model instanceof \BookStack\Entities\Models\Page)
-                @include('form.restriction-checkbox', ['name'=>'permissions', 'label' => trans('common.create'), 'action' => 'create', 'disabled' => $inheriting])
-            @endif
-        </div>
-        <div class="px-l">
-            @include('form.restriction-checkbox', ['name'=>'permissions', 'label' => trans('common.update'), 'action' => 'update', 'disabled' => $inheriting])
-        </div>
-        <div class="px-l">
-            @include('form.restriction-checkbox', ['name'=>'permissions', 'label' => trans('common.delete'), 'action' => 'delete', 'disabled' => $inheriting])
+            @include('form.custom-checkbox', [
+                'name' =>  'permissions[' . $role->id . '][delete]',
+                'label' => trans('common.delete'),
+                'value' => 'true',
+                'checked' => $permission->delete,
+                'disabled' => $inheriting
+            ])
         </div>
     </div>
+    @if($role->id !== 0)
+        <div class="flex-container-row items-center px-m py-s">
+            <button type="button"
+                    class="text-neg p-m icon-button"
+                    data-role-id="{{ $role->id }}"
+                    data-role-name="{{ $role->display_name }}"
+                    title="Remove Row">
+                @icon('close') <span class="hide-over-m ml-xs">Remove Row</span>
+            </button>
+        </div>
+    @endif
 </div>
