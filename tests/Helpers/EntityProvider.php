@@ -204,7 +204,6 @@ class EntityProvider
      */
     public function setPermissions(Entity $entity, array $actions = [], array $roles = []): void
     {
-        $entity->restricted = true;
         $entity->permissions()->delete();
 
         $permissions = [];
@@ -217,7 +216,6 @@ class EntityProvider
         }
 
         $entity->permissions()->createMany($permissions);
-        $entity->save();
         $entity->load('permissions');
         $this->regenPermissions($entity);
     }

@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PageRevision extends Model implements Loggable
 {
     protected $fillable = ['name', 'text', 'summary'];
-    protected $hidden = ['html', 'markdown', 'restricted', 'text'];
+    protected $hidden = ['html', 'markdown', 'text'];
 
     /**
      * Get the user that created the page revision.

@@ -50,9 +50,7 @@ class AttachmentsApiTest extends TestCase
             ],
         ]]);
 
-        $page->restricted = true;
-        $page->save();
-        $this->entities->regenPermissions($page);
+        $this->entities->setPermissions($page, [], []);
 
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJsonMissing(['data' => [

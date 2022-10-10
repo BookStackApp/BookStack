@@ -172,8 +172,7 @@ class EntitySearchTest extends TestCase
 
         // Restricted filter
         $this->get('/search?term=' . urlencode('danzorbhsing {is_restricted}'))->assertDontSee($page->name);
-        $page->restricted = true;
-        $page->save();
+        $this->entities->setPermissions($page, [], []);
         $this->get('/search?term=' . urlencode('danzorbhsing {is_restricted}'))->assertSee($page->name);
 
         // Date filters

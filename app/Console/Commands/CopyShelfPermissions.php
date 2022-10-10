@@ -66,11 +66,11 @@ class CopyShelfPermissions extends Command
                 return;
             }
 
-            $shelves = Bookshelf::query()->get(['id', 'restricted']);
+            $shelves = Bookshelf::query()->get(['id']);
         }
 
         if ($shelfSlug) {
-            $shelves = Bookshelf::query()->where('slug', '=', $shelfSlug)->get(['id', 'restricted']);
+            $shelves = Bookshelf::query()->where('slug', '=', $shelfSlug)->get(['id']);
             if ($shelves->count() === 0) {
                 $this->info('No shelves found with the given slug.');
             }
