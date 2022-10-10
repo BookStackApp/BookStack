@@ -2,6 +2,7 @@
 $role - The Role to display this row for.
 $entityType - String identifier for type of entity having permissions applied.
 $permission - The entity permission containing the permissions.
+$inheriting - Boolean if the current row should be marked as inheriting default permissions. Used for "Everyone Else" role.
 --}}
 
 <div component="permissions-table" class="content-permissions-row flex-container-row justify-space-between wrap">
@@ -20,12 +21,8 @@ $permission - The entity permission containing the permissions.
                 ><strong>{{ trans('common.toggle_all') }}</strong></button>
         @endif
     </div>
-    @php
-        // TODO
-        $inheriting = ($role->id === 0);
-    @endphp
     @if($role->id === 0)
-        <div class="px-l flex-container-row items-center" refs="entity-permissions@everyoneInherit">
+        <div class="px-l flex-container-row items-center" refs="entity-permissions@everyone-inherit">
             @include('form.custom-checkbox', [
                 'name' => 'entity-permissions-inherit',
                 'label' => 'Inherit defaults',
@@ -35,7 +32,9 @@ $permission - The entity permission containing the permissions.
         </div>
     @endif
     <div class="flex-container-row justify-space-between gap-x-xl wrap items-center">
-        <input type="hidden" name="permissions[{{ $role->id }}][active]" value="true">
+        <input type="hidden" name="permissions[{{ $role->id }}][active]"
+               @if($inheriting) disabled="disabled" @endif
+               value="true">
         <div class="px-l">
             @include('form.custom-checkbox', [
                 'name' =>  'permissions[' . $role->id . '][view]',

@@ -43,6 +43,18 @@ class PermissionFormData
     }
 
     /**
+     * Get the entity permission for the "Everyone Else" option.
+     */
+    public function everyoneElseEntityPermission(): EntityPermission
+    {
+        /** @var EntityPermission $permission */
+        $permission = $this->entity->permissions()
+            ->where('role_id', '=', 0)
+            ->first();
+        return $permission ?? (new EntityPermission());
+    }
+
+    /**
      * Get the "Everyone Else" role entry.
      */
     public function everyoneElseRole(): Role

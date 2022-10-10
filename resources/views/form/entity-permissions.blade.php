@@ -1,3 +1,6 @@
+<?php
+  /** @var \BookStack\Auth\Permissions\PermissionFormData $data */
+?>
 <form component="entity-permissions"
       option:entity-permissions:entity-type="{{ $model->getType() }}"
       action="{{ $model->getUrl('/permissions') }}"
@@ -26,7 +29,8 @@
             @include('form.entity-permissions-row', [
                 'permission' => $permission,
                 'role' => $permission->role,
-                'entityType' => $model->getType()
+                'entityType' => $model->getType(),
+                'inheriting' => false,
             ])
         @endforeach
     </div>
@@ -46,8 +50,9 @@
     <div class="content-permissions mt-m mb-xl">
         @include('form.entity-permissions-row', [
                 'role' => $data->everyoneElseRole(),
-                'permission' => new \BookStack\Auth\Permissions\EntityPermission(),
+                'permission' => $data->everyoneElseEntityPermission(),
                 'entityType' => $model->getType(),
+                'inheriting' => !$model->permissions()->where('role_id', '=', 0)->exists(),
             ])
     </div>
 
