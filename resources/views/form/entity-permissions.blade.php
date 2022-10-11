@@ -8,21 +8,39 @@
     {!! csrf_field() !!}
     <input type="hidden" name="_method" value="PUT">
 
-    <div class="grid half left-focus v-center">
+    <div class="grid half left-focus v-end gap-m wrap">
         <div>
-            <p class="mb-none mt-m">{{ trans('entities.permissions_intro') }}</p>
+            <h1 class="list-heading">{{ $title }}</h1>
+{{--            <p class="mb-none mt-m">{{ trans('entities.permissions_intro') }}</p>--}}
+            <p class="text-muted mb-s">
+                Set permissions here to override the default permissions provided by user roles.
+
+                @if($model instanceof \BookStack\Entities\Models\Book)
+                <br>
+                Permissions set on books will automatically cascade to child chapters and pages, unless
+                they have their own permissions defined.
+                @endif
+
+                @if($model instanceof \BookStack\Entities\Models\Chapter)
+                    <br>
+                    Permissions set on chapters will automatically cascade to child pages, unless
+                    they have their own permissions defined.
+                @endif
+            </p>
+
+            @if($model instanceof \BookStack\Entities\Models\Bookshelf)
+                <p class="text-warn">{{ trans('entities.shelves_permissions_cascade_warning') }}</p>
+            @endif
         </div>
-        <div>
-            <div class="form-group">
+        <div class="flex-container-row justify-flex-end">
+            <div class="form-group mb-m">
                 <label for="owner">{{ trans('entities.permissions_owner') }}</label>
                 @include('form.user-select', ['user' => $model->ownedBy, 'name' => 'owned_by'])
             </div>
         </div>
     </div>
 
-    @if($model instanceof \BookStack\Entities\Models\Bookshelf)
-        <p class="text-warn">{{ trans('entities.shelves_permissions_cascade_warning') }}</p>
-    @endif
+    <hr>
 
     <div refs="entity-permissions@role-container" class="content-permissions mt-m mb-m">
         @foreach($data->permissionsWithRoles() as $permission)
@@ -36,8 +54,8 @@
     </div>
 
     <div class="flex-container-row justify-flex-end mb-xl">
-        <div>
-            <label for="role_select">Override permissions for role</label>
+        <div class="flex-container-row items-center gap-m">
+            <label for="role_select" class="m-none p-none"><span class="bold">Override permissions for role</span></label>
             <select name="role_select" id="role_select" refs="entity-permissions@role-select">
                 <option value="">{{ trans('common.select') }}</option>
                 @foreach($data->rolesNotAssigned() as $role)
@@ -55,6 +73,8 @@
                 'inheriting' => !$model->permissions()->where('role_id', '=', 0)->exists(),
             ])
     </div>
+
+    <hr class="mb-m">
 
     <div class="text-right">
         <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
