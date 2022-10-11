@@ -29,6 +29,7 @@ class PermissionsController extends Controller
         $page = Page::getBySlugs($bookSlug, $pageSlug);
         $this->checkOwnablePermission('restrictions-manage', $page);
 
+        $this->setPageTitle(trans('entities.pages_permissions'));
         return view('pages.permissions', [
             'page' => $page,
             'data' => new PermissionFormData($page),
@@ -58,6 +59,7 @@ class PermissionsController extends Controller
         $chapter = Chapter::getBySlugs($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('restrictions-manage', $chapter);
 
+        $this->setPageTitle(trans('entities.chapters_permissions'));
         return view('chapters.permissions', [
             'chapter' => $chapter,
             'data' => new PermissionFormData($chapter),
@@ -87,6 +89,7 @@ class PermissionsController extends Controller
         $book = Book::getBySlug($slug);
         $this->checkOwnablePermission('restrictions-manage', $book);
 
+        $this->setPageTitle(trans('entities.books_permissions'));
         return view('books.permissions', [
             'book' => $book,
             'data' => new PermissionFormData($book),
@@ -116,6 +119,7 @@ class PermissionsController extends Controller
         $shelf = Bookshelf::getBySlug($slug);
         $this->checkOwnablePermission('restrictions-manage', $shelf);
 
+        $this->setPageTitle(trans('entities.shelves_permissions'));
         return view('shelves.permissions', [
             'shelf' => $shelf,
             'data' => new PermissionFormData($shelf),

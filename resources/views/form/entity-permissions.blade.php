@@ -11,20 +11,13 @@
     <div class="grid half left-focus v-end gap-m wrap">
         <div>
             <h1 class="list-heading">{{ $title }}</h1>
-{{--            <p class="mb-none mt-m">{{ trans('entities.permissions_intro') }}</p>--}}
             <p class="text-muted mb-s">
-                Set permissions here to override the default permissions provided by user roles.
+                {{ trans('entities.permissions_desc') }}
 
                 @if($model instanceof \BookStack\Entities\Models\Book)
-                <br>
-                Permissions set on books will automatically cascade to child chapters and pages, unless
-                they have their own permissions defined.
-                @endif
-
-                @if($model instanceof \BookStack\Entities\Models\Chapter)
-                    <br>
-                    Permissions set on chapters will automatically cascade to child pages, unless
-                    they have their own permissions defined.
+                    <br> {{ trans('entities.permissions_book_cascade') }}
+                @elseif($model instanceof \BookStack\Entities\Models\Chapter)
+                    <br> {{ trans('entities.permissions_chapter_cascade') }}
                 @endif
             </p>
 
@@ -55,7 +48,7 @@
 
     <div class="flex-container-row justify-flex-end mb-xl">
         <div class="flex-container-row items-center gap-m">
-            <label for="role_select" class="m-none p-none"><span class="bold">Override permissions for role</span></label>
+            <label for="role_select" class="m-none p-none"><span class="bold">{{ trans('entities.permissions_role_override') }}</span></label>
             <select name="role_select" id="role_select" refs="entity-permissions@role-select">
                 <option value="">{{ trans('common.select') }}</option>
                 @foreach($data->rolesNotAssigned() as $role)
