@@ -61,8 +61,8 @@ class PermissionFormData
     {
         return (new Role())->forceFill([
             'id' => 0,
-            'display_name' => 'Everyone Else',
-            'description' => 'Set permissions for all roles not specifically overridden.'
+            'display_name' => trans('entities.permissions_role_everyone_else'),
+            'description' => trans('entities.permissions_role_everyone_else_desc'),
         ]);
     }
 }

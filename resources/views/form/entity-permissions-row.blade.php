@@ -7,7 +7,7 @@ $inheriting - Boolean if the current row should be marked as inheriting default 
 
 <div component="permissions-table" class="content-permissions-row flex-container-row justify-space-between wrap">
     <div class="gap-x-m flex-container-row items-center px-l py-m flex">
-        <div class="text-large" title="{{ $role->id === 0 ? 'Everyone Else' : trans('common.role') }}">
+        <div class="text-large" title="{{ $role->id === 0 ? trans('entities.permissions_role_everyone_else') : trans('common.role') }}">
             @icon($role->id === 0 ? 'groups' : 'role')
         </div>
         <span>
@@ -80,8 +80,8 @@ $inheriting - Boolean if the current row should be marked as inheriting default 
                     class="text-neg p-m icon-button"
                     data-role-id="{{ $role->id }}"
                     data-role-name="{{ $role->display_name }}"
-                    title="Remove Row">
-                @icon('close') <span class="hide-over-m ml-xs">Remove Row</span>
+                    title="{{ trans('common.remove') }}">
+                @icon('close') <span class="hide-over-m ml-xs">{{ trans('common.remove') }}</span>
             </button>
         </div>
     @endif
