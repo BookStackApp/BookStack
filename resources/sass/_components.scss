@@ -880,7 +880,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   gap: $-s;
   line-height: normal;
   .svg-icon {
-    height: 16px;
+    height: 26px;
+    width: 26px;
     margin: 0;
   }
   .avatar {
@@ -902,10 +903,11 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   white-space: nowrap;
 }
 .dropdown-search-toggle-select-caret {
-  font-size: 1.5rem;
   line-height: 0;
   margin-left: auto;
   margin-top: -2px;
+  display: flex;
+  align-items: center;
 }
 
 .dropdown-search-dropdown {
