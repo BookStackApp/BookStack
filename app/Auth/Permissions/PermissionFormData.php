@@ -47,7 +47,7 @@ class PermissionFormData
      */
     public function everyoneElseEntityPermission(): EntityPermission
     {
-        /** @var EntityPermission $permission */
+        /** @var ?EntityPermission $permission */
         $permission = $this->entity->permissions()
             ->where('role_id', '=', 0)
             ->first();

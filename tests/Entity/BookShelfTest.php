@@ -295,7 +295,7 @@ class BookShelfTest extends TestCase
 
         $child = $shelf->books()->first();
         $editorRole = $this->getEditor()->roles()->first();
-        $this->assertFalse(boolval($child->hasPermissions()), 'Child book should not be restricted by default');
+        $this->assertFalse($child->hasPermissions(), 'Child book should not be restricted by default');
         $this->assertTrue($child->permissions()->count() === 0, 'Child book should have no permissions by default');
 
         $this->entities->setPermissions($shelf, ['view', 'update'], [$editorRole]);
@@ -303,10 +303,14 @@ class BookShelfTest extends TestCase
         $child = $shelf->books()->first();
 
         $resp->assertRedirect($shelf->getUrl());
-        $this->assertTrue(boolval($child->hasPermissions()), 'Child book should now be restricted');
+        $this->assertTrue($child->hasPermissions(), 'Child book should now be restricted');
         $this->assertTrue($child->permissions()->count() === 2, 'Child book should have copied permissions');
-        $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'view', 'role_id' => $editorRole->id]);
-        $this->assertDatabaseHas('entity_permissions', ['restrictable_id' => $child->id, 'action' => 'update', 'role_id' => $editorRole->id]);
+        $this->assertDatabaseHas('entity_permissions', [
+            'entity_type' => 'book',
+            'entity_id' => $child->id,
+            'role_id' => $editorRole->id,
+            'view' => true, 'update' => true, 'create' => false, 'delete' => false,
+        ]);
     }
 
     public function test_permission_page_has_a_warning_about_no_cascading()

@@ -173,16 +173,16 @@ class RolesTest extends TestCase
 
         $this->assertDatabaseHas('entity_permissions', [
             'role_id' => $roleA->id,
-            'restrictable_id' => $page->id,
-            'restrictable_type' => $page->getMorphClass(),
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
         ]);
 
         $this->asAdmin()->delete("/settings/roles/delete/$roleA->id");
 
         $this->assertDatabaseMissing('entity_permissions', [
             'role_id' => $roleA->id,
-            'restrictable_id' => $page->id,
-            'restrictable_type' => $page->getMorphClass(),
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
         ]);
     }
 

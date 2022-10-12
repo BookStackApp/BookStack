@@ -83,7 +83,7 @@ class PermissionApplicator
                 ->pluck($action, 'role_id');
 
             // Continue up the chain if no applicable entity permission overrides.
-            if (empty($allowedByRoleId)) {
+            if ($allowedByRoleId->isEmpty()) {
                 continue;
             }
 
