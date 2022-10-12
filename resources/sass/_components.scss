@@ -802,13 +802,14 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 .content-permissions-row {
-  border: 1.5px solid #E2E2E2;
+  border: 1.5px solid;
+  @include lightDark(border-color, #E2E2E2, #444);
   border-bottom-width: 0;
   label {
     padding-bottom: 0;
   }
   &:hover {
-    background-color: #F2F2F2;
+    @include lightDark(background-color, #F2F2F2, #333);
   }
 }
 .content-permissions-row:first-child {

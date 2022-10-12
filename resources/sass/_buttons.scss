@@ -48,9 +48,10 @@ button {
 
 .button.outline {
   background-color: transparent;
-  @include lightDark(color, #666, #aaa);
+  @include lightDark(color, #666, #AAA);
   fill: currentColor;
-  border: 1px solid #CCC;
+  border: 1px solid;
+  @include lightDark(border-color, #CCC, #666);
   &:hover, &:focus, &:active {
     border: 1px solid #CCC;
     box-shadow: none;
@@ -122,7 +123,7 @@ button {
 .icon-button:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
-  border-color: #DDD;
+  @include lightDark(border-color, #DDD, #444);
   cursor: pointer;
 }
 
