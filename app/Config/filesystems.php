@@ -56,6 +56,12 @@ return [
             'use_path_style_endpoint' => env('STORAGE_S3_ENDPOINT', null) !== null,
         ],
 
+        'backup' => [
+            'driver' => 'local',
+            'root' => env('BACKUP_ROOT', storage_path('backup')),
+            'throw' => false,
+        ],
+
     ],
 
     // Symbolic Links
