@@ -160,7 +160,7 @@ class PermissionsController extends Controller
      */
     public function formRowForRole(string $entityType, string $roleId)
     {
-        $this->checkPermissionOr('restrictions-manage', fn() => userCan('restrictions-manage-all'));
+        $this->checkPermissionOr('restrictions-manage-all', fn() => userCan('restrictions-manage-own'));
 
         $role = Role::query()->findOrFail($roleId);
 
