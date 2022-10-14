@@ -132,9 +132,8 @@ class EntitySearchTest extends TestCase
     public function test_search_filters()
     {
         $page = $this->entities->newPage(['name' => 'My new test quaffleachits', 'html' => 'this is about an orange donkey danzorbhsing']);
-        $this->asEditor();
-        $editorId = $this->getEditor()->id;
-        $editorSlug = $this->getEditor()->slug;
+        $editor = $this->getEditor();
+        $this->actingAs($editor);
 
         // Viewed filter searches
         $this->get('/search?term=' . urlencode('danzorbhsing {not_viewed_by_me}'))->assertSee($page->name);
@@ -147,22 +146,22 @@ class EntitySearchTest extends TestCase
         $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertDontSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:' . $editorSlug . '}'))->assertDontSee($page->name);
-        $page->created_by = $editorId;
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:' . $editor->slug . '}'))->assertDontSee($page->name);
+        $page->created_by = $editor->id;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {created_by:me}'))->assertSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {created_by: ' . $editorSlug . '}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {created_by: ' . $editor->slug . '}'))->assertSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertDontSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertDontSee($page->name);
-        $page->updated_by = $editorId;
+        $page->updated_by = $editor->id;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:me}'))->assertSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:' . $editorSlug . '}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {updated_by:' . $editor->slug . '}'))->assertSee($page->name);
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertDontSee($page->name);
-        $page->owned_by = $editorId;
+        $page->owned_by = $editor->id;
         $page->save();
         $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:me}'))->assertSee($page->name);
-        $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:' . $editorSlug . '}'))->assertSee($page->name);
+        $this->get('/search?term=' . urlencode('danzorbhsing {owned_by:' . $editor->slug . '}'))->assertSee($page->name);
 
         // Content filters
         $this->get('/search?term=' . urlencode('{in_name:danzorbhsing}'))->assertDontSee($page->name);
@@ -172,8 +171,7 @@ class EntitySearchTest extends TestCase
 
         // Restricted filter
         $this->get('/search?term=' . urlencode('danzorbhsing {is_restricted}'))->assertDontSee($page->name);
-        $page->restricted = true;
-        $page->save();
+        $this->entities->setPermissions($page, ['view'], [$editor->roles->first()]);
         $this->get('/search?term=' . urlencode('danzorbhsing {is_restricted}'))->assertSee($page->name);
 
         // Date filters

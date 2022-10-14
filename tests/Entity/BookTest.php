@@ -304,9 +304,7 @@ class BookTest extends TestCase
         // Hide child content
         /** @var BookChild $page */
         foreach ($book->getDirectChildren() as $child) {
-            $child->restricted = true;
-            $child->save();
-            $this->entities->regenPermissions($child);
+            $this->entities->setPermissions($child, [], []);
         }
 
         $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);

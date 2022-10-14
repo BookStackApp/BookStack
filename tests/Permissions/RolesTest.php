@@ -163,6 +163,29 @@ class RolesTest extends TestCase
         $this->assertEquals($this->user->id, $roleA->users()->first()->id);
     }
 
+    public function test_entity_permissions_are_removed_on_delete()
+    {
+        /** @var Role $roleA */
+        $roleA = Role::query()->create(['display_name' => 'Entity Permissions Delete Test']);
+        $page = $this->entities->page();
+
+        $this->entities->setPermissions($page, ['view'], [$roleA]);
+
+        $this->assertDatabaseHas('entity_permissions', [
+            'role_id' => $roleA->id,
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+        ]);
+
+        $this->asAdmin()->delete("/settings/roles/delete/$roleA->id");
+
+        $this->assertDatabaseMissing('entity_permissions', [
+            'role_id' => $roleA->id,
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+        ]);
+    }
+
     public function test_image_view_notice_shown_on_role_form()
     {
         /** @var Role $role */

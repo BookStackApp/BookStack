@@ -11,7 +11,6 @@ use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditActivity;
 use BookStack\Entities\Tools\PageEditorData;
-use BookStack\Entities\Tools\PermissionsUpdater;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\References\ReferenceFetcher;
@@ -451,38 +450,5 @@ class PageController extends Controller
         $this->showSuccessNotification(trans('entities.pages_copy_success'));
 
         return redirect($pageCopy->getUrl());
-    }
-
-    /**
-     * Show the Permissions view.
-     *
-     * @throws NotFoundException
-     */
-    public function showPermissions(string $bookSlug, string $pageSlug)
-    {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('restrictions-manage', $page);
-
-        return view('pages.permissions', [
-            'page' => $page,
-        ]);
-    }
-
-    /**
-     * Set the permissions for this page.
-     *
-     * @throws NotFoundException
-     * @throws Throwable
-     */
-    public function permissions(Request $request, PermissionsUpdater $permissionsUpdater, string $bookSlug, string $pageSlug)
-    {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('restrictions-manage', $page);
-
-        $permissionsUpdater->updateFromPermissionsForm($page, $request);
-
-        $this->showSuccessNotification(trans('entities.pages_permissions_success'));
-
-        return redirect($page->getUrl());
     }
 }

@@ -59,11 +59,15 @@ class PermissionApplicator
      */
     protected function hasEntityPermission(Entity $entity, array $userRoleIds, string $action): ?bool
     {
+        $this->ensureValidEntityAction($action);
+
         $adminRoleId = Role::getSystemRole('admin')->id;
         if (in_array($adminRoleId, $userRoleIds)) {
             return true;
         }
 
+        // The chain order here is very important due to the fact we walk up the chain
+        // in the loop below. Earlier items in the chain have higher priority.
         $chain = [$entity];
         if ($entity instanceof Page && $entity->chapter_id) {
             $chain[] = $entity->chapter;
@@ -74,16 +78,26 @@ class PermissionApplicator
         }
 
         foreach ($chain as $currentEntity) {
-            if (is_null($currentEntity->restricted)) {
-                throw new InvalidArgumentException('Entity restricted field used but has not been loaded');
+            $allowedByRoleId = $currentEntity->permissions()
+                ->whereIn('role_id', [0, ...$userRoleIds])
+                ->pluck($action, 'role_id');
+
+            // Continue up the chain if no applicable entity permission overrides.
+            if ($allowedByRoleId->isEmpty()) {
+                continue;
             }
 
-            if ($currentEntity->restricted) {
-                return $currentEntity->permissions()
-                    ->whereIn('role_id', $userRoleIds)
-                    ->where('action', '=', $action)
-                    ->count() > 0;
+            // If we have user-role-specific permissions set, allow if any of those
+            // role permissions allow access.
+            $hasDefault = $allowedByRoleId->has(0);
+            if (!$hasDefault || $allowedByRoleId->count() > 1) {
+                return $allowedByRoleId->search(function (bool $allowed, int $roleId) {
+                        return $roleId !== 0 && $allowed;
+                }) !== false;
             }
+
+            // Otherwise, return the default "Other roles" fallback value.
+            return $allowedByRoleId->get(0);
         }
 
         return null;
@@ -95,18 +109,16 @@ class PermissionApplicator
      */
     public function checkUserHasEntityPermissionOnAny(string $action, string $entityClass = ''): bool
     {
-        if (strpos($action, '-') !== false) {
-            throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
-        }
+        $this->ensureValidEntityAction($action);
 
         $permissionQuery = EntityPermission::query()
-            ->where('action', '=', $action)
+            ->where($action, '=', true)
             ->whereIn('role_id', $this->getCurrentUserRoleIds());
 
         if (!empty($entityClass)) {
             /** @var Entity $entityInstance */
             $entityInstance = app()->make($entityClass);
-            $permissionQuery = $permissionQuery->where('restrictable_type', '=', $entityInstance->getMorphClass());
+            $permissionQuery = $permissionQuery->where('entity_type', '=', $entityInstance->getMorphClass());
         }
 
         $hasPermission = $permissionQuery->count() > 0;
@@ -254,5 +266,17 @@ class PermissionApplicator
         }
 
         return $this->currentUser()->roles->pluck('id')->values()->all();
+    }
+
+    /**
+     * Ensure the given action is a valid and expected entity action.
+     * Throws an exception if invalid otherwise does nothing.
+     * @throws InvalidArgumentException
+     */
+    protected function ensureValidEntityAction(string $action): void
+    {
+        if (!in_array($action, EntityPermission::PERMISSIONS)) {
+            throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
+        }
     }
 }

@@ -162,7 +162,7 @@ class SearchRunner
         $entityQuery = $entityModelInstance->newQuery()->scopes('visible');
 
         if ($entityModelInstance instanceof Page) {
-            $entityQuery->select(array_merge($entityModelInstance::$listAttributes, ['restricted', 'owned_by']));
+            $entityQuery->select(array_merge($entityModelInstance::$listAttributes, ['owned_by']));
         } else {
             $entityQuery->select(['*']);
         }
@@ -447,7 +447,7 @@ class SearchRunner
 
     protected function filterIsRestricted(EloquentBuilder $query, Entity $model, $input)
     {
-        $query->where('restricted', '=', true);
+        $query->whereHas('permissions');
     }
 
     protected function filterViewedByMe(EloquentBuilder $query, Entity $model, $input)
