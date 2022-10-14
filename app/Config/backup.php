@@ -21,6 +21,7 @@ return [
                  */
                 'include' => [
                     base_path('.env'),
+                    base_path('version'),
                     base_path('public/uploads'),
                     base_path('storage/uploads'),
                 ],
