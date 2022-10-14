@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => '権限',
-    'permissions_intro' => 'この設定は各ユーザの役割よりも優先して適用されます。',
-    'permissions_enable' => 'カスタム権限設定を有効にする',
+    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
+    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => '権限を保存',
     'permissions_owner' => '所有者',
+    'permissions_role_everyone_else' => 'Everyone Else',
+    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
+    'permissions_role_override' => 'Override permissions for role',
 
     // Search
     'search_results' => '検索結果',
