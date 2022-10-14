@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => '권한',
-    'permissions_intro' => '한번 허용하면 이 설정은 사용자 권한에 우선합니다.',
-    'permissions_enable' => '설정 허용',
+    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
+    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => '권한 저장',
     'permissions_owner' => '소유자',
+    'permissions_role_everyone_else' => 'Everyone Else',
+    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
+    'permissions_role_override' => 'Override permissions for role',
 
     // Search
     'search_results' => '검색 결과',
