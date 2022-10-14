@@ -798,11 +798,35 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   max-width: 500px;
 }
 
-.permissions-table [permissions-table-toggle-all-in-row] {
-  display: none;
+.content-permissions {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
-.permissions-table tr:hover [permissions-table-toggle-all-in-row] {
-  display: inline;
+.content-permissions-row {
+  border: 1.5px solid;
+  @include lightDark(border-color, #E2E2E2, #444);
+  border-bottom-width: 0;
+  label {
+    padding-bottom: 0;
+  }
+  &:hover {
+    @include lightDark(background-color, #F2F2F2, #333);
+  }
+}
+.content-permissions-row:first-child {
+  border-radius: 4px 4px 0 0;
+}
+.content-permissions-row:last-child {
+  border-radius: 0 0 4px 4px;
+  border-bottom-width: 1.5px;
+}
+.content-permissions-row:first-child:last-child {
+  border-radius: 4px;
+}
+.content-permissions-row-toggle-all {
+  visibility: hidden;
+}
+.content-permissions-row:hover .content-permissions-row-toggle-all {
+  visibility: visible;
 }
 
 .template-item {
@@ -857,7 +881,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   gap: $-s;
   line-height: normal;
   .svg-icon {
-    height: 16px;
+    height: 26px;
+    width: 26px;
     margin: 0;
   }
   .avatar {
@@ -879,10 +904,11 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   white-space: nowrap;
 }
 .dropdown-search-toggle-select-caret {
-  font-size: 1.5rem;
   line-height: 0;
   margin-left: auto;
   margin-top: -2px;
+  display: flex;
+  align-items: center;
 }
 
 .dropdown-search-dropdown {
