@@ -47,9 +47,9 @@ return [
     'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Enregistrer les permissions',
     'permissions_owner' => 'Propriétaire',
-    'permissions_role_everyone_else' => 'Everyone Else',
+    'permissions_role_everyone_else' => 'Tous les autres',
     'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
+    'permissions_role_override' => 'Remplacer les permissions pour le rôle',
 
     // Search
     'search_results' => 'Résultats de recherche',
