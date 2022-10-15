@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Εισαγωγή/Επεξεργασία συνδέσμου',
     'insert_horizontal_line' => 'Εισαγωγή οριζόντιας γραμμής',
     'insert_code_block' => 'Εισαγωγή μπλοκ κώδικα',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'Εισαγωγή/Επεξεργασία σχεδίου',
     'drawing_manager' => 'Διαχειριστής σχεδίασης',
     'insert_media' => 'Εισαγωγή/Επεξεργασία πολυμέσων',
