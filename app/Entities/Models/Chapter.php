@@ -19,7 +19,7 @@ class Chapter extends BookChild
     public $searchFactor = 1.2;
 
     protected $fillable = ['name', 'description', 'priority'];
-    protected $hidden = ['restricted', 'pivot', 'deleted_at'];
+    protected $hidden = ['pivot', 'deleted_at'];
 
     /**
      * Get the pages that this chapter contains.
@@ -57,5 +57,14 @@ class Chapter extends BookChild
         ->orderBy('draft', 'desc')
         ->orderBy('priority', 'asc')
         ->get();
+    }
+
+    /**
+     * Get a visible chapter by its book and page slugs.
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public static function getBySlugs(string $bookSlug, string $chapterSlug): self
+    {
+        return static::visible()->whereSlugs($bookSlug, $chapterSlug)->firstOrFail();
     }
 }

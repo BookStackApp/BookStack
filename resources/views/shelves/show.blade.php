@@ -85,7 +85,7 @@
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
             @include('entities.meta', ['entity' => $shelf])
-            @if($shelf->restricted)
+            @if($shelf->hasPermissions())
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $shelf))
                         <a href="{{ $shelf->getUrl('/permissions') }}" class="entity-meta-item">
