@@ -376,20 +376,18 @@ class EntityPermissionsTest extends TestCase
             ->assertSee($title);
 
         $this->put($modelInstance->getUrl('/permissions'), [
-            'restricted'   => 'true',
-            'restrictions' => [
+            'permissions' => [
                 $roleId => [
                     $permission => 'true',
                 ],
             ],
         ]);
 
-        $this->assertDatabaseHas($modelInstance->getTable(), ['id' => $modelInstance->id, 'restricted' => true]);
         $this->assertDatabaseHas('entity_permissions', [
-            'restrictable_id'   => $modelInstance->id,
-            'restrictable_type' => $modelInstance->getMorphClass(),
+            'entity_id'   => $modelInstance->id,
+            'entity_type' => $modelInstance->getMorphClass(),
             'role_id'           => $roleId,
-            'action'            => $permission,
+            $permission         => true,
         ]);
     }
 

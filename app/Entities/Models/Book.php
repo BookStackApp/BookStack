@@ -28,7 +28,7 @@ class Book extends Entity implements HasCoverImage
     public $searchFactor = 1.2;
 
     protected $fillable = ['name', 'description'];
-    protected $hidden = ['restricted', 'pivot', 'image_id', 'deleted_at'];
+    protected $hidden = ['pivot', 'image_id', 'deleted_at'];
 
     /**
      * Get the url for this book.
@@ -119,5 +119,14 @@ class Book extends Entity implements HasCoverImage
         $chapters = $this->chapters()->scopes('visible')->get();
 
         return $pages->concat($chapters)->sortBy('priority')->sortByDesc('draft');
+    }
+
+    /**
+     * Get a visible book by its slug.
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public static function getBySlug(string $slug): self
+    {
+        return static::visible()->where('slug', '=', $slug)->firstOrFail();
     }
 }

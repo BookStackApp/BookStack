@@ -16,9 +16,8 @@
             ]])
         </div>
 
-        <main class="card content-wrap">
-            <h1 class="list-heading">{{ trans('entities.pages_permissions') }}</h1>
-            @include('form.entity-permissions', ['model' => $page])
+        <main class="card content-wrap auto-height">
+            @include('form.entity-permissions', ['model' => $page, 'title' => trans('entities.pages_permissions')])
         </main>
     </div>
 
