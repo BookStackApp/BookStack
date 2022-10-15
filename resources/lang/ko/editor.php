@@ -66,6 +66,7 @@ return [
     'insert_link_title' => '링크 삽입/수정',
     'insert_horizontal_line' => '수평선 삽입',
     'insert_code_block' => '코드 블럭 삽입',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => '그리기 삽입/수정',
     'drawing_manager' => '그리기 설정',
     'insert_media' => '미디어 삽입/수정',
