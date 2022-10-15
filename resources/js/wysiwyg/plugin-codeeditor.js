@@ -153,6 +153,14 @@ function register(editor, url) {
         }
     });
 
+    editor.ui.registry.addButton('editcodeeditor', {
+        tooltip: 'Edit code block',
+        icon: 'edit-block',
+        onAction() {
+            editor.execCommand('codeeditor');
+        }
+    });
+
     editor.addCommand('codeeditor', () => {
         const selectedNode = editor.selection.getNode();
         const doc = selectedNode.ownerDocument;
@@ -206,6 +214,15 @@ function register(editor, url) {
                 el.unwrap();
             }
         });
+    });
+
+    editor.ui.registry.addContextToolbar('codeeditor', {
+        predicate: function (node) {
+            return node.nodeName.toLowerCase() === 'code-block';
+        },
+        items: 'editcodeeditor',
+        position: 'node',
+        scope: 'node'
     });
 
     editor.on('PreInit', () => {
