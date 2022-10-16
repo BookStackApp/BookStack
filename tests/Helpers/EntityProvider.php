@@ -2,6 +2,7 @@
 
 namespace Tests\Helpers;
 
+use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
@@ -203,21 +204,22 @@ class EntityProvider
      */
     public function setPermissions(Entity $entity, array $actions = [], array $roles = []): void
     {
-        $entity->restricted = true;
         $entity->permissions()->delete();
 
-        $permissions = [];
-        foreach ($actions as $action) {
-            foreach ($roles as $role) {
-                $permissions[] = [
-                    'role_id' => $role->id,
-                    'action'  => strtolower($action),
-                ];
+        $permissions = [
+            // Set default permissions to not allow actions so that only the provided role permissions are at play.
+            ['role_id' => 0, 'view' => false, 'create' => false, 'update' => false, 'delete' => false],
+        ];
+
+        foreach ($roles as $role) {
+            $permission = ['role_id' => $role->id];
+            foreach (EntityPermission::PERMISSIONS as $possibleAction) {
+                $permission[$possibleAction] = in_array($possibleAction, $actions);
             }
+            $permissions[] = $permission;
         }
 
         $entity->permissions()->createMany($permissions);
-        $entity->save();
         $entity->load('permissions');
         $this->regenPermissions($entity);
     }

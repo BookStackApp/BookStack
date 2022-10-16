@@ -81,7 +81,7 @@
         <div class="blended-links">
             @include('entities.meta', ['entity' => $page])
 
-            @if($book->restricted)
+            @if($book->hasPermissions())
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $book))
                         <a href="{{ $book->getUrl('/permissions') }}" class="entity-meta-item">
@@ -97,7 +97,7 @@
                 </div>
             @endif
 
-            @if($page->chapter && $page->chapter->restricted)
+            @if($page->chapter && $page->chapter->hasPermissions())
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $page->chapter))
                         <a href="{{ $page->chapter->getUrl('/permissions') }}" class="entity-meta-item">
@@ -113,7 +113,7 @@
                 </div>
             @endif
 
-            @if($page->restricted)
+            @if($page->hasPermissions())
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $page))
                         <a href="{{ $page->getUrl('/permissions') }}" class="entity-meta-item">

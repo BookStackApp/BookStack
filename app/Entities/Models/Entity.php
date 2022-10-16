@@ -42,7 +42,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon     $deleted_at
  * @property int        $created_by
  * @property int        $updated_by
- * @property bool       $restricted
  * @property Collection $tags
  *
  * @method static Entity|Builder visible()
@@ -176,16 +175,15 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function permissions(): MorphMany
     {
-        return $this->morphMany(EntityPermission::class, 'restrictable');
+        return $this->morphMany(EntityPermission::class, 'entity');
     }
 
     /**
      * Check if this entity has a specific restriction set against it.
      */
-    public function hasRestriction(int $role_id, string $action): bool
+    public function hasPermissions(): bool
     {
-        return $this->permissions()->where('role_id', '=', $role_id)
-            ->where('action', '=', $action)->count() > 0;
+        return $this->permissions()->count() > 0;
     }
 
     /**
