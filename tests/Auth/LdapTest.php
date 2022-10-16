@@ -29,6 +29,7 @@ class LdapTest extends TestCase
         config()->set([
             'auth.method'                          => 'ldap',
             'auth.defaults.guard'                  => 'ldap',
+            'services.ldap.server'                 => 'ldap.example.com',
             'services.ldap.base_dn'                => 'dc=ldap,dc=local',
             'services.ldap.email_attribute'        => 'mail',
             'services.ldap.display_name_attribute' => 'cn',
@@ -579,6 +580,39 @@ class LdapTest extends TestCase
     public function test_default_ldap_port_used_if_not_in_server_string_and_not_uri()
     {
         $this->checkLdapReceivesCorrectDetails('ldap.bookstack.com', 'ldap.bookstack.com', 389);
+    }
+
+    public function test_host_fail_over_by_using_semicolon_seperated_hosts()
+    {
+        app('config')->set([
+            'services.ldap.server' => 'ldap-tiger.example.com;ldap-donkey.example.com:8080',
+        ]);
+
+        // Standard mocks
+        $this->commonLdapMocks(0, 1, 1, 2, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)->andReturn(['count' => 1, 0 => [
+            'uid' => [$this->mockUser->name],
+            'cn'  => [$this->mockUser->name],
+            'dn'  => ['dc=test' . config('services.ldap.base_dn')],
+        ]]);
+
+        $this->mockLdap->shouldReceive('connect')->once()->with('ldap-tiger.example.com', 389)->andReturn(false);
+        $this->mockLdap->shouldReceive('connect')->once()->with('ldap-donkey.example.com', 8080)->andReturn($this->resourceId);
+        $this->mockUserLogin();
+    }
+
+    public function test_host_fail_over_by_using_semicolon_seperated_hosts_still_throws_error()
+    {
+        app('config')->set([
+            'services.ldap.server' => 'ldap-tiger.example.com;ldap-donkey.example.com:8080',
+        ]);
+
+        $this->mockLdap->shouldReceive('connect')->once()->with('ldap-tiger.example.com', 389)->andReturn(false);
+        $this->mockLdap->shouldReceive('connect')->once()->with('ldap-donkey.example.com', 8080)->andReturn(false);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertStatus(500);
+        $resp->assertSee('Cannot connect to ldap server, Initial connection failed');
     }
 
     public function test_forgot_password_routes_inaccessible()

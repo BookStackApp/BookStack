@@ -247,8 +247,13 @@ class LdapService
 
                 // Start and verify TLS if it's enabled
                 if ($this->config['start_tls']) {
-                    $started = $this->ldap->startTls($ldapConnection);
-                    if (!$started) {
+                    try {
+                        $tlsStarted = $this->ldap->startTls($ldapConnection);
+                    } catch (ErrorException $exception) {
+                        $tlsStarted = false;
+                    }
+
+                    if (!$tlsStarted) {
                         throw new LdapException('Could not start TLS connection');
                     }
                 }
