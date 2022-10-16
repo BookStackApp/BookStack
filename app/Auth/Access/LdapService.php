@@ -216,7 +216,7 @@ class LdapService
             $this->ldap->setOption(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }
 
-        $serverDetails = $this->parseEnvironmentServer($this->config['server']);
+        $serverDetails = $this->parseMultiServerString($this->config['server']);
         $this->ldapConnection = $this->prepareServerConnection($serverDetails);
 
         return $this->ldapConnection;
@@ -225,7 +225,7 @@ class LdapService
     /**
      * Processes an array of received servers and returns the first working connection.
      *
-     * @param  array  $serverDetails
+     * @param array $serverDetails array<array{host: string, port: int}>
      * @return resource
      * @throws LdapException
      */
@@ -234,31 +234,7 @@ class LdapService
         $lastException = null;
         foreach ($serverDetails as $server) {
             try {
-                $ldapConnection = $this->ldap->connect($server['host'], $server['port']);
-
-                if (!$ldapConnection) {
-                    throw new LdapException(trans('errors.ldap_cannot_connect'));
-                }
-
-                // Set any required options
-                if ($this->config['version']) {
-                    $this->ldap->setVersion($ldapConnection, $this->config['version']);
-                }
-
-                // Start and verify TLS if it's enabled
-                if ($this->config['start_tls']) {
-                    try {
-                        $tlsStarted = $this->ldap->startTls($ldapConnection);
-                    } catch (ErrorException $exception) {
-                        $tlsStarted = false;
-                    }
-
-                    if (!$tlsStarted) {
-                        throw new LdapException('Could not start TLS connection');
-                    }
-                }
-
-                return $ldapConnection;
+                return $this->startServerConnection($server);
             } catch (LdapException $exception) {
                 $lastException = $exception;
             }
@@ -268,27 +244,61 @@ class LdapService
     }
 
     /**
-     * Parse environment variable with LDAP server and returns an array of recognized servers.
-     * If you need to use multiple addresses, separate them with a semicolon.
-     * Ex: 'ldap.example.com:8069;ldaps://ldap.example.com'
+     * Attempt to start a server connection from the provided details.
+     *
+     * @param array{host: string, port: int} $serverDetail
+     * @return resource
+     * @throws LdapException
      */
-    protected function parseEnvironmentServer(string $environmentServer): array
+    protected function startServerConnection(array $serverDetail)
     {
-        $explodedEnvironmentServer = explode(';', $environmentServer);
-        $result_servers = [];
+        $ldapConnection = $this->ldap->connect($serverDetail['host'], $serverDetail['port']);
 
-        foreach ($explodedEnvironmentServer as $serverString) {
-            $result_servers[] = $this->parseServerString($serverString);
+        if (!$ldapConnection) {
+            throw new LdapException(trans('errors.ldap_cannot_connect'));
         }
 
-        return $result_servers;
+        // Set any required options
+        if ($this->config['version']) {
+            $this->ldap->setVersion($ldapConnection, $this->config['version']);
+        }
+
+        // Start and verify TLS if it's enabled
+        if ($this->config['start_tls']) {
+            try {
+                $tlsStarted = $this->ldap->startTls($ldapConnection);
+            } catch (ErrorException $exception) {
+                $tlsStarted = false;
+            }
+
+            if (!$tlsStarted) {
+                throw new LdapException('Could not start TLS connection');
+            }
+        }
+
+        return $ldapConnection;
     }
 
     /**
-     * Parse a LDAP server string and return the host and port for a connection.
-     * Is flexible to formats such as 'ldap.example.com:8069' or 'ldaps://ldap.example.com'.
+     * Parse a potentially multi-value LDAP server host string and return an array of host/port detail pairs.
+     * Multiple hosts are separated with a semicolon, for example: 'ldap.example.com:8069;ldaps://ldap.example.com'
+     *
+     * @return array<array{host: string, port: int}>
      */
-    protected function parseServerString(string $serverString): array
+    protected function parseMultiServerString(string $serversString): array
+    {
+        $serverStringList = explode(';', $serversString);
+
+        return array_map(fn ($serverStr) => $this->parseSingleServerString($serverStr), $serverStringList);
+    }
+
+    /**
+     * Parse an LDAP server string and return the host and port for a connection.
+     * Is flexible to formats such as 'ldap.example.com:8069' or 'ldaps://ldap.example.com'.
+     *
+     * @return array{host: string, port: int}
+     */
+    protected function parseSingleServerString(string $serverString): array
     {
         $serverNameParts = explode(':', $serverString);
 
