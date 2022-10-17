@@ -215,7 +215,7 @@ return [
     'users_api_tokens_docs' => 'Documentação da API',
     'users_mfa' => 'Autenticação de Múltiplos Fatores',
     'users_mfa_desc' => 'A autenticação multi-fator adiciona outra camada de segurança à sua conta.',
-    'users_mfa_x_methods' => ':count método configurado):count métodos configurados',
+    'users_mfa_x_methods' => ':count método configurado|:count métodos configurados',
     'users_mfa_configure' => 'Configurar Métodos',
 
     // API Tokens
