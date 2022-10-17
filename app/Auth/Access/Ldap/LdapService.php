@@ -1,13 +1,13 @@
 <?php
 
-namespace BookStack\Auth\Access;
+namespace BookStack\Auth\Access\Ldap;
 
+use BookStack\Auth\Access\GroupSyncService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\LdapException;
 use BookStack\Exceptions\LdapFailedBindException;
 use BookStack\Uploads\UserAvatars;
-use ErrorException;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -16,31 +16,18 @@ use Illuminate\Support\Facades\Log;
  */
 class LdapService
 {
-    protected Ldap $ldap;
+    protected LdapConnectionManager $ldap;
     protected GroupSyncService $groupSyncService;
     protected UserAvatars $userAvatars;
 
     protected array $config;
-    protected bool $enabled;
 
-    /**
-     * LdapService constructor.
-     */
-    public function __construct(Ldap $ldap, UserAvatars $userAvatars, GroupSyncService $groupSyncService)
+    public function __construct(LdapConnectionManager $ldap, UserAvatars $userAvatars, GroupSyncService $groupSyncService)
     {
         $this->ldap = $ldap;
         $this->userAvatars = $userAvatars;
         $this->groupSyncService = $groupSyncService;
         $this->config = config('services.ldap');
-        $this->enabled = config('auth.method') === 'ldap';
-    }
-
-    /**
-     * Check if groups should be synced.
-     */
-    public function shouldSyncGroups(): bool
-    {
-        return $this->enabled && $this->config['user_to_groups'] !== false;
     }
 
     /**
@@ -50,7 +37,7 @@ class LdapService
      */
     protected function getUserWithAttributes(string $userName, array $attributes): ?array
     {
-        $ldapConnection = $this->bindConnection();
+        $connection = $this->ldap->startSystemBind($this->config);
 
         // Clean attributes
         foreach ($attributes as $index => $attribute) {
@@ -64,8 +51,8 @@ class LdapService
         $baseDn = $this->config['base_dn'];
 
         $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
-        $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
-        $users = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $userFilter, $attributes);
+        $connection->setOption(LDAP_OPT_REFERRALS, $followReferrals);
+        $users = $connection->searchAndGetEntries($baseDn, $userFilter, $attributes);
         if ($users['count'] === 0) {
             return null;
         }
@@ -151,7 +138,7 @@ class LdapService
         }
 
         try {
-            $this->bindConnection($ldapUserDetails['dn'], $password);
+            $this->ldap->startBind($ldapUserDetails['dn'], $password, $this->config);
         } catch (LdapFailedBindException $e) {
             return false;
         } catch (LdapException $e) {
@@ -159,179 +146,6 @@ class LdapService
         }
 
         return true;
-    }
-
-
-    /**
-     * Attempted to start and bind to a new LDAP connection.
-     * Will attempt against multiple defined fail-over hosts if set.
-     *
-     * Throws a LdapFailedBindException error if the bind connected but failed.
-     * Otherwise, generic LdapException errors would be thrown.
-     *
-     * @return resource
-     * @throws LdapException
-     */
-    protected function bindConnection(string $dn = null, string $password = null)
-    {
-        $systemBind = ($dn === null && $password === null);
-
-        // Check LDAP extension in installed
-        if (!function_exists('ldap_connect') && config('app.env') !== 'testing') {
-            throw new LdapException(trans('errors.ldap_extension_not_installed'));
-        }
-
-        // Disable certificate verification.
-        // This option works globally and must be set before a connection is created.
-        if ($this->config['tls_insecure']) {
-            $this->ldap->setOption(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
-        }
-
-        $serverDetails = $this->parseMultiServerString($this->config['server']);
-        $lastException = null;
-
-        foreach ($serverDetails as $server) {
-            try {
-                $connection = $this->startServerConnection($server);
-            } catch (LdapException $exception) {
-                $lastException = $exception;
-                continue;
-            }
-
-            try {
-                if ($systemBind) {
-                    $this->bindSystemUser($connection);
-                } else {
-                    $this->bindGivenUser($connection, $dn, $password);
-                }
-            } catch (LdapFailedBindException $exception) {
-                // Rethrow simply to indicate the importance of handling this exception case
-                // to indicate auth status. We skip past attempting fail-over hosts in this case since it's
-                // likely the connection worked here but the bind was unauthorised.
-                throw $exception;
-            } catch (ErrorException $exception) {
-                Log::error('LDAP bind error: ' . $exception->getMessage());
-                $lastException = new LdapException('Encountered error during LDAP bind');
-                continue;
-            }
-
-            return $connection;
-        }
-
-        throw $lastException;
-    }
-
-    /**
-     * Bind to the given LDAP connection using the given credentials.
-     * MUST throw an exception on failure.
-     *
-     * @param resource $connection
-     *
-     * @throws LdapFailedBindException
-     */
-    protected function bindGivenUser($connection, string $dn = null, string $password = null): void
-    {
-        $ldapBind = $this->ldap->bind($connection, $dn, $password);
-
-        if (!$ldapBind) {
-            throw new LdapFailedBindException('Failed to bind with given user details');
-        }
-    }
-
-    /**
-     * Bind the system user to the LDAP connection using the configured credentials  otherwise anonymous
-     * access is attempted. MUST throw an exception on failure.
-     *
-     * @param resource $connection
-     *
-     * @throws LdapFailedBindException
-     */
-    protected function bindSystemUser($connection): void
-    {
-        $ldapDn = $this->config['dn'];
-        $ldapPass = $this->config['pass'];
-
-        $isAnonymous = ($ldapDn === false || $ldapPass === false);
-        if ($isAnonymous) {
-            $ldapBind = $this->ldap->bind($connection);
-        } else {
-            $ldapBind = $this->ldap->bind($connection, $ldapDn, $ldapPass);
-        }
-
-        if (!$ldapBind) {
-            throw new LdapFailedBindException(($isAnonymous ? trans('errors.ldap_fail_anonymous') : trans('errors.ldap_fail_authed')));
-        }
-    }
-
-    /**
-     * Attempt to start a server connection from the provided details.
-     *
-     * @param array{host: string, port: int} $serverDetail
-     * @return resource
-     * @throws LdapException
-     */
-    protected function startServerConnection(array $serverDetail)
-    {
-        $ldapConnection = $this->ldap->connect($serverDetail['host'], $serverDetail['port']);
-
-        if (!$ldapConnection) {
-            throw new LdapException(trans('errors.ldap_cannot_connect'));
-        }
-
-        // Set any required options
-        if ($this->config['version']) {
-            $this->ldap->setVersion($ldapConnection, $this->config['version']);
-        }
-
-        // Start and verify TLS if it's enabled
-        if ($this->config['start_tls']) {
-            try {
-                $tlsStarted = $this->ldap->startTls($ldapConnection);
-            } catch (ErrorException $exception) {
-                $tlsStarted = false;
-            }
-
-            if (!$tlsStarted) {
-                throw new LdapException('Could not start TLS connection');
-            }
-        }
-
-        return $ldapConnection;
-    }
-
-    /**
-     * Parse a potentially multi-value LDAP server host string and return an array of host/port detail pairs.
-     * Multiple hosts are separated with a semicolon, for example: 'ldap.example.com:8069;ldaps://ldap.example.com'
-     *
-     * @return array<array{host: string, port: int}>
-     */
-    protected function parseMultiServerString(string $serversString): array
-    {
-        $serverStringList = explode(';', $serversString);
-
-        return array_map(fn ($serverStr) => $this->parseSingleServerString($serverStr), $serverStringList);
-    }
-
-    /**
-     * Parse an LDAP server string and return the host and port for a connection.
-     * Is flexible to formats such as 'ldap.example.com:8069' or 'ldaps://ldap.example.com'.
-     *
-     * @return array{host: string, port: int}
-     */
-    protected function parseSingleServerString(string $serverString): array
-    {
-        $serverNameParts = explode(':', $serverString);
-
-        // If we have a protocol just return the full string since PHP will ignore a separate port.
-        if ($serverNameParts[0] === 'ldaps' || $serverNameParts[0] === 'ldap') {
-            return ['host' => $serverString, 'port' => 389];
-        }
-
-        // Otherwise, extract the port out
-        $hostName = $serverNameParts[0];
-        $ldapPort = (count($serverNameParts) > 1) ? intval($serverNameParts[1]) : 389;
-
-        return ['host' => $hostName, 'port' => $ldapPort];
     }
 
     /**
@@ -342,7 +156,7 @@ class LdapService
         $newAttrs = [];
         foreach ($attrs as $key => $attrText) {
             $newKey = '${' . $key . '}';
-            $newAttrs[$newKey] = $this->ldap->escape($attrText);
+            $newAttrs[$newKey] = LdapConnection::escape($attrText);
         }
 
         return strtr($filterString, $newAttrs);
@@ -411,16 +225,16 @@ class LdapService
      */
     private function getGroupGroups(string $groupName): array
     {
-        $ldapConnection = $this->bindConnection();
+        $connection = $this->ldap->startSystemBind($this->config);
 
         $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
-        $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
+        $connection->setOption(LDAP_OPT_REFERRALS, $followReferrals);
 
         $baseDn = $this->config['base_dn'];
         $groupsAttr = strtolower($this->config['group_attribute']);
 
-        $groupFilter = 'CN=' . $this->ldap->escape($groupName);
-        $groups = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $groupFilter, [$groupsAttr]);
+        $groupFilter = 'CN=' . $connection->escape($groupName);
+        $groups = $connection->searchAndGetEntries($baseDn, $groupFilter, [$groupsAttr]);
         if ($groups['count'] === 0) {
             return [];
         }
@@ -443,7 +257,7 @@ class LdapService
         }
 
         for ($i = 0; $i < $count; $i++) {
-            $dnComponents = $this->ldap->explodeDn($userGroupSearchResponse[$groupsAttr][$i], 1);
+            $dnComponents = LdapConnection::explodeDn($userGroupSearchResponse[$groupsAttr][$i], 1);
             if (!in_array($dnComponents[0], $ldapGroups)) {
                 $ldapGroups[] = $dnComponents[0];
             }
@@ -465,12 +279,20 @@ class LdapService
     }
 
     /**
+     * Check if groups should be synced.
+     */
+    public function shouldSyncGroups(): bool
+    {
+        return $this->config['user_to_groups'] !== false;
+    }
+
+    /**
      * Save and attach an avatar image, if found in the ldap details, and attach
      * to the given user model.
      */
     public function saveAndAttachAvatar(User $user, array $ldapUserDetails): void
     {
-        if (is_null(config('services.ldap.thumbnail_attribute')) || is_null($ldapUserDetails['avatar'])) {
+        if (is_null($this->config['thumbnail_attribute']) || is_null($ldapUserDetails['avatar'])) {
             return;
         }
 

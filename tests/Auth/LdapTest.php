@@ -2,8 +2,9 @@
 
 namespace Tests\Auth;
 
-use BookStack\Auth\Access\Ldap;
-use BookStack\Auth\Access\LdapService;
+use BookStack\Auth\Access\Ldap\LdapConnection;
+use BookStack\Auth\Access\Ldap\LdapConnectionManager;
+use BookStack\Auth\Access\Ldap\LdapService;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use Illuminate\Testing\TestResponse;
@@ -23,9 +24,11 @@ class LdapTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         if (!defined('LDAP_OPT_REFERRALS')) {
             define('LDAP_OPT_REFERRALS', 1);
         }
+
         config()->set([
             'auth.method'                          => 'ldap',
             'auth.defaults.guard'                  => 'ldap',
@@ -41,8 +44,12 @@ class LdapTest extends TestCase
             'services.ldap.tls_insecure'           => false,
             'services.ldap.thumbnail_attribute'    => null,
         ]);
-        $this->mockLdap = \Mockery::mock(Ldap::class);
-        $this->app[Ldap::class] = $this->mockLdap;
+
+        $lcm = $this->mock(LdapConnectionManager::class);
+        // TODO - Properly mock
+
+        $this->mockLdap = \Mockery::mock(LdapConnection::class);
+        $this->app[LdapConnection::class] = $this->mockLdap;
         $this->mockUser = User::factory()->make();
     }
 
@@ -81,7 +88,6 @@ class LdapTest extends TestCase
      */
     protected function commonLdapMocks(int $connects = 1, int $versions = 1, int $options = 2, int $binds = 4, int $escapes = 2, int $explodes = 0)
     {
-        $this->mockLdap->shouldReceive('connect')->times($connects)->andReturn($this->resourceId);
         $this->mockLdap->shouldReceive('setVersion')->times($versions);
         $this->mockLdap->shouldReceive('setOption')->times($options);
         $this->mockLdap->shouldReceive('bind')->times($binds)->andReturn(true);

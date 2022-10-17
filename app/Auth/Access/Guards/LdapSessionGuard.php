@@ -2,7 +2,7 @@
 
 namespace BookStack\Auth\Access\Guards;
 
-use BookStack\Auth\Access\LdapService;
+use BookStack\Auth\Access\Ldap\LdapService;
 use BookStack\Auth\Access\RegistrationService;
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
