@@ -42,14 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Permessi',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
-    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
+    'permissions_desc' => 'Imposta qui i permessi per sovrascrivere i permessi predefiniti forniti dai ruoli utente.',
+    'permissions_book_cascade' => 'I permessi impostati sui libri si trasmettono automaticamente a cascata ai capitoli e alle pagine figli, a meno che non siano stati definiti permessi propri.',
+    'permissions_chapter_cascade' => 'I permessi impostati sui capitoli si trasmettono automaticamente a cascata alle pagine figlie, a meno che non siano stati definiti permessi propri.',
     'permissions_save' => 'Salva Permessi',
     'permissions_owner' => 'Proprietario',
-    'permissions_role_everyone_else' => 'Everyone Else',
-    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
+    'permissions_role_everyone_else' => 'Tutti Gli Altri',
+    'permissions_role_everyone_else_desc' => 'Imposta i permessi per tutti i ruoli non specificamente sovrascritti.',
+    'permissions_role_override' => 'Sovrascrivere i permessi per il ruolo',
 
     // Search
     'search_results' => 'Risultati Ricerca',
