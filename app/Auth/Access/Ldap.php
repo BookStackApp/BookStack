@@ -2,6 +2,8 @@
 
 namespace BookStack\Auth\Access;
 
+use ErrorException;
+
 /**
  * Class Ldap
  * An object-orientated thin abstraction wrapper for common PHP LDAP functions.
@@ -32,6 +34,8 @@ class Ldap
 
     /**
      * Start TLS on the given LDAP connection.
+     *
+     * @throws ErrorException
      */
     public function startTls($ldapConnection): bool
     {
@@ -97,12 +101,9 @@ class Ldap
      * Bind to LDAP directory.
      *
      * @param resource $ldapConnection
-     * @param string   $bindRdn
-     * @param string   $bindPassword
-     *
-     * @return bool
+     * @throws ErrorException
      */
-    public function bind($ldapConnection, $bindRdn = null, $bindPassword = null)
+    public function bind($ldapConnection, string $bindRdn = null, string $bindPassword = null): bool
     {
         return ldap_bind($ldapConnection, $bindRdn, $bindPassword);
     }

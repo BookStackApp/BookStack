@@ -5,6 +5,7 @@ namespace BookStack\Auth\Access;
 use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\LdapException;
+use BookStack\Exceptions\LdapFailedBindException;
 use BookStack\Uploads\UserAvatars;
 use ErrorException;
 use Illuminate\Support\Facades\Log;
@@ -18,11 +19,6 @@ class LdapService
     protected Ldap $ldap;
     protected GroupSyncService $groupSyncService;
     protected UserAvatars $userAvatars;
-
-    /**
-     * @var resource
-     */
-    protected $ldapConnection;
 
     protected array $config;
     protected bool $enabled;
@@ -52,10 +48,9 @@ class LdapService
      *
      * @throws LdapException
      */
-    private function getUserWithAttributes(string $userName, array $attributes): ?array
+    protected function getUserWithAttributes(string $userName, array $attributes): ?array
     {
-        $ldapConnection = $this->getConnection();
-        $this->bindSystemUser($ldapConnection);
+        $ldapConnection = $this->bindConnection();
 
         // Clean attributes
         foreach ($attributes as $index => $attribute) {
@@ -155,55 +150,31 @@ class LdapService
             return false;
         }
 
-        $ldapConnection = $this->getConnection();
-
         try {
-            $ldapBind = $this->ldap->bind($ldapConnection, $ldapUserDetails['dn'], $password);
-        } catch (ErrorException $e) {
-            $ldapBind = false;
+            $this->bindConnection($ldapUserDetails['dn'], $password);
+        } catch (LdapFailedBindException $e) {
+            return false;
+        } catch (LdapException $e) {
+            throw $e;
         }
 
-        return $ldapBind;
+        return true;
     }
 
-    /**
-     * Bind the system user to the LDAP connection using the given credentials
-     * otherwise anonymous access is attempted.
-     *
-     * @param resource $connection
-     *
-     * @throws LdapException
-     */
-    protected function bindSystemUser($connection)
-    {
-        $ldapDn = $this->config['dn'];
-        $ldapPass = $this->config['pass'];
-
-        $isAnonymous = ($ldapDn === false || $ldapPass === false);
-        if ($isAnonymous) {
-            $ldapBind = $this->ldap->bind($connection);
-        } else {
-            $ldapBind = $this->ldap->bind($connection, $ldapDn, $ldapPass);
-        }
-
-        if (!$ldapBind) {
-            throw new LdapException(($isAnonymous ? trans('errors.ldap_fail_anonymous') : trans('errors.ldap_fail_authed')));
-        }
-    }
 
     /**
-     * Get the connection to the LDAP server.
-     * Creates a new connection if one does not exist.
+     * Attempted to start and bind to a new LDAP connection.
+     * Will attempt against multiple defined fail-over hosts if set.
      *
-     * @throws LdapException
+     * Throws a LdapFailedBindException error if the bind connected but failed.
+     * Otherwise, generic LdapException errors would be thrown.
      *
      * @return resource
+     * @throws LdapException
      */
-    protected function getConnection()
+    protected function bindConnection(string $dn = null, string $password = null)
     {
-        if ($this->ldapConnection !== null) {
-            return $this->ldapConnection;
-        }
+        $systemBind = ($dn === null && $password === null);
 
         // Check LDAP extension in installed
         if (!function_exists('ldap_connect') && config('app.env') !== 'testing') {
@@ -217,30 +188,79 @@ class LdapService
         }
 
         $serverDetails = $this->parseMultiServerString($this->config['server']);
-        $this->ldapConnection = $this->prepareServerConnection($serverDetails);
-
-        return $this->ldapConnection;
-    }
-
-    /**
-     * Processes an array of received servers and returns the first working connection.
-     *
-     * @param array $serverDetails array<array{host: string, port: int}>
-     * @return resource
-     * @throws LdapException
-     */
-    protected function prepareServerConnection(array $serverDetails)
-    {
         $lastException = null;
+
         foreach ($serverDetails as $server) {
             try {
-                return $this->startServerConnection($server);
+                $connection = $this->startServerConnection($server);
             } catch (LdapException $exception) {
                 $lastException = $exception;
+                continue;
             }
+
+            try {
+                if ($systemBind) {
+                    $this->bindSystemUser($connection);
+                } else {
+                    $this->bindGivenUser($connection, $dn, $password);
+                }
+            } catch (LdapFailedBindException $exception) {
+                // Rethrow simply to indicate the importance of handling this exception case
+                // to indicate auth status. We skip past attempting fail-over hosts in this case since it's
+                // likely the connection worked here but the bind was unauthorised.
+                throw $exception;
+            } catch (ErrorException $exception) {
+                Log::error('LDAP bind error: ' . $exception->getMessage());
+                $lastException = new LdapException('Encountered error during LDAP bind');
+                continue;
+            }
+
+            return $connection;
         }
 
         throw $lastException;
+    }
+
+    /**
+     * Bind to the given LDAP connection using the given credentials.
+     * MUST throw an exception on failure.
+     *
+     * @param resource $connection
+     *
+     * @throws LdapFailedBindException
+     */
+    protected function bindGivenUser($connection, string $dn = null, string $password = null): void
+    {
+        $ldapBind = $this->ldap->bind($connection, $dn, $password);
+
+        if (!$ldapBind) {
+            throw new LdapFailedBindException('Failed to bind with given user details');
+        }
+    }
+
+    /**
+     * Bind the system user to the LDAP connection using the configured credentials  otherwise anonymous
+     * access is attempted. MUST throw an exception on failure.
+     *
+     * @param resource $connection
+     *
+     * @throws LdapFailedBindException
+     */
+    protected function bindSystemUser($connection): void
+    {
+        $ldapDn = $this->config['dn'];
+        $ldapPass = $this->config['pass'];
+
+        $isAnonymous = ($ldapDn === false || $ldapPass === false);
+        if ($isAnonymous) {
+            $ldapBind = $this->ldap->bind($connection);
+        } else {
+            $ldapBind = $this->ldap->bind($connection, $ldapDn, $ldapPass);
+        }
+
+        if (!$ldapBind) {
+            throw new LdapFailedBindException(($isAnonymous ? trans('errors.ldap_fail_anonymous') : trans('errors.ldap_fail_authed')));
+        }
     }
 
     /**
@@ -391,8 +411,7 @@ class LdapService
      */
     private function getGroupGroups(string $groupName): array
     {
-        $ldapConnection = $this->getConnection();
-        $this->bindSystemUser($ldapConnection);
+        $ldapConnection = $this->bindConnection();
 
         $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
         $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
