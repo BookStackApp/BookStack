@@ -18,9 +18,9 @@
 
     <main class="content-wrap card">
         <div class="page-content clearfix" page-display="{{ $page->id }}">
-            @include('pages.parts.pointer', ['page' => $page])
             @include('pages.parts.page-display')
         </div>
+        @include('pages.parts.pointer', ['page' => $page])
     </main>
 
     @include('entities.sibling-navigation', ['next' => $next, 'previous' => $previous])
