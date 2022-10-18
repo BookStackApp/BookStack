@@ -38,6 +38,7 @@ import pageDisplay from "./page-display.js"
 import pageEditor from "./page-editor.js"
 import pagePicker from "./page-picker.js"
 import permissionsTable from "./permissions-table.js"
+import pointer from "./pointer.js";
 import popup from "./popup.js"
 import settingAppColorPicker from "./setting-app-color-picker.js"
 import settingColorPicker from "./setting-color-picker.js"
@@ -95,6 +96,7 @@ const componentMapping = {
     "page-editor": pageEditor,
     "page-picker": pagePicker,
     "permissions-table": permissionsTable,
+    "pointer": pointer,
     "popup": popup,
     "setting-app-color-picker": settingAppColorPicker,
     "setting-color-picker": settingColorPicker,
