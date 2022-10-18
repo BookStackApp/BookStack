@@ -23,9 +23,9 @@ return [
     'meta_updated' => 'Atualizado :timeLength',
     'meta_updated_name' => 'Atualizado :timeLength por :user',
     'meta_owned_name' => 'De :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenciado em 1 página|Referenciado em :count pages',
     'entity_select' => 'Seleção de Entidade',
-    'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
+    'entity_select_lack_permission' => 'Você não tem as permissões necessárias para selecionar este item',
     'images' => 'Imagens',
     'my_recent_drafts' => 'Meus Rascunhos Recentes',
     'my_recently_viewed' => 'Visualizados por mim Recentemente',
@@ -42,7 +42,7 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Permissões',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_desc' => 'Defina as permissões aqui para substituir as permissões padrão fornecidas pelas funções do usuário.',
     'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
     'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Salvar Permissões',
