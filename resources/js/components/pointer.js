@@ -16,13 +16,7 @@ class Pointer {
         this.pointerModeLink = true;
         this.pointerSectionId = '';
 
-        this.init();
         this.setupListeners();
-    }
-
-    init() {
-        // Set up pointer by removing it
-        this.container.parentNode.removeChild(this.container);
 
         // Set up clipboard
         new Clipboard(this.container.querySelector('button'));
@@ -52,8 +46,7 @@ class Pointer {
         // Hide pointer when clicking away
         DOM.onEvents(document.body, ['click', 'focus'], event => {
             if (!this.showing || this.isSelection) return;
-            this.container.parentElement.removeChild(this.container);
-            this.showing = false;
+            this.hidePointer();
         });
 
         // Show pointer when selecting a single block of tagged content
@@ -65,6 +58,11 @@ class Pointer {
                 this.showPointerAtTarget(targetEl, event.pageX);
             }
         });
+    }
+
+    hidePointer() {
+        this.container.style.display = null;
+        this.showing = false;
     }
 
     /**
@@ -80,23 +78,29 @@ class Pointer {
         this.pointerSectionId = element.id;
         this.updateForTarget(element);
 
-        element.parentNode.insertBefore(this.container, element);
         this.container.style.display = 'block';
+        const targetBounds = element.getBoundingClientRect();
+        const pointerBounds = this.container.getBoundingClientRect();
+
+        const xTarget = Math.min(Math.max(xPosition, targetBounds.left), targetBounds.right);
+        const xOffset = xTarget - (pointerBounds.width / 2);
+        const yOffset = (targetBounds.top - pointerBounds.height) - 16;
+
+        this.container.style.left = `${xOffset}px`;
+        this.container.style.top = `${yOffset}px`;
+
         this.showing = true;
         this.isSelection = true;
 
-        // Set pointer to sit near mouse-up position
-        requestAnimationFrame(() => {
-            const bookMarkBounds = element.getBoundingClientRect();
-            const pointerLeftOffset = Math.max((xPosition - bookMarkBounds.left - 164), 0);
-            const pointerLeftOffsetPercent = (pointerLeftOffset / bookMarkBounds.width) * 100;
+        setTimeout(() => {
+            this.isSelection = false;
+        }, 100);
 
-            this.container.children[0].style.left = pointerLeftOffsetPercent + '%';
-
-            setTimeout(() => {
-                this.isSelection = false;
-            }, 100);
-        });
+        const scrollListener = () => {
+            this.hidePointer();
+            window.removeEventListener('scroll', scrollListener, {passive: true});
+        };
+        window.addEventListener('scroll', scrollListener, {passive: true});
     }
 
     /**
