@@ -42,14 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Дозволи',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
-    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
+    'permissions_desc' => 'Встановіть тут дозволи, щоб перевизначити права за замовчуванням, які надаються ролями користувачів.',
+    'permissions_book_cascade' => 'Дозволи, встановлені на книги будуть автоматично каскадом до дитячих глав та сторінок, якщо вони не матимуть свої дозволи.',
+    'permissions_chapter_cascade' => 'Дозволи, встановлені для глав будуть автоматично каскадом на дочірні сторінки, якщо вони не матимуть своїх прав.',
     'permissions_save' => 'Зберегти дозволи',
     'permissions_owner' => 'Власник',
-    'permissions_role_everyone_else' => 'Everyone Else',
-    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
+    'permissions_role_everyone_else' => 'Всі інші',
+    'permissions_role_everyone_else_desc' => 'Встановити дозвіл для всіх ролей не спеціально перевизначений.',
+    'permissions_role_override' => 'Змінити права доступу для ролі',
 
     // Search
     'search_results' => 'Результати пошуку',
