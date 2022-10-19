@@ -42,30 +42,30 @@ return [
     'bookshelf_create_notification'    => 'Hyllan har skapats',
     'bookshelf_create_from_book'    => 'konverterade bok till hylla',
     'bookshelf_create_from_book_notification'    => 'Boken har konverterats till en hylla',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'uppdaterade hyllan',
+    'bookshelf_update_notification'    => 'Hyllan har uppdaterats',
+    'bookshelf_delete'                 => 'raderade hyllan',
+    'bookshelf_delete_notification'    => 'Hyllan har tagits bort',
 
     // Favourites
     'favourite_add_notification' => '":name" har lagts till i dina favoriter',
     'favourite_remove_notification' => '":name" har tagits bort från dina favoriter',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Multifaktor-metod har konfigurerats',
+    'mfa_remove_method_notification' => 'Multifaktor-metod har tagits bort',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'skapade webhook',
+    'webhook_create_notification' => 'Webhook har skapats',
+    'webhook_update' => 'uppdaterade webhook',
+    'webhook_update_notification' => 'Webhook har uppdaterats',
+    'webhook_delete' => 'raderade webhook',
+    'webhook_delete_notification' => 'Webhook har tagits bort',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Användaren har uppdaterats',
+    'user_delete_notification' => 'Användaren har tagits bort',
 
     // Other
     'commented_on'                => 'kommenterade',
