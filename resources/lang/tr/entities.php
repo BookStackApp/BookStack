@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'İzinler',
-    'permissions_intro' => 'Etkinleştirildikten sonra bu izinler, diğer bütün izinlerden öncelikli olacaktır.',
-    'permissions_enable' => 'Özelleştirilmiş Yetkileri Etkinleştir',
+    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
+    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'İzinleri Kaydet',
     'permissions_owner' => 'Sahip',
+    'permissions_role_everyone_else' => 'Everyone Else',
+    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
+    'permissions_role_override' => 'Override permissions for role',
 
     // Search
     'search_results' => 'Arama Sonuçları',

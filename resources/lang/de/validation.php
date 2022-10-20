@@ -44,7 +44,7 @@ return [
         'numeric' => ':attribute muss größer-gleich :value sein.',
         'file'    => ':attribute muss mindestens :value Kilobytes groß sein.',
         'string'  => ':attribute muss mindestens :value Zeichen enthalten.',
-        'array'   => ':attribute muss :value Elemente oder mehr haben.',
+        'array'   => ':attribute muss :value oder mehr Elemente haben.',
     ],
     'exists'               => ':attribute ist ungültig.',
     'image'                => ':attribute muss ein Bild sein.',
@@ -56,7 +56,7 @@ return [
     'ipv6'                 => ':attribute muss eine gültige IPv6-Adresse sein.',
     'json'                 => 'Das Attribut muss eine gültige JSON-Zeichenfolge sein.',
     'lt'                   => [
-        'numeric' => ':attribute muss kleiner sein :value sein.',
+        'numeric' => ':attribute muss kleiner als :value sein.',
         'file'    => ':attribute muss kleiner als :value Kilobytes sein.',
         'string'  => ':attribute muss weniger als :value Zeichen haben.',
         'array'   => ':attribute muss weniger als :value Elemente haben.',

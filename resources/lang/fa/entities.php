@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'مجوزها',
-    'permissions_intro' => 'پس از فعال شدن، این مجوزها نسبت به مجوزهای تعیین شده نقش اولویت دارند.',
-    'permissions_enable' => 'مجوزهای سفارشی را فعال کنید',
+    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
+    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'ذخيره مجوزها',
     'permissions_owner' => 'مالک',
+    'permissions_role_everyone_else' => 'Everyone Else',
+    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
+    'permissions_role_override' => 'Override permissions for role',
 
     // Search
     'search_results' => 'نتایج جستجو',
@@ -136,7 +140,7 @@ return [
     'books_search_this' => 'این کتاب را جستجو کنید',
     'books_navigation' => 'ناوبری کتاب',
     'books_sort' => 'مرتب سازی مطالب کتاب',
-    'books_sort_named' => 'مرتب سازی کتاب:bookName',
+    'books_sort_named' => 'مرتب‌سازی کتاب:bookName',
     'books_sort_name' => 'مرتب سازی بر اساس نام',
     'books_sort_created' => 'مرتب سازی بر اساس تاریخ ایجاد',
     'books_sort_updated' => 'مرتب سازی بر اساس تاریخ به روز رسانی',

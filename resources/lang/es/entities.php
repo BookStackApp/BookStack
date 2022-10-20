@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Permisos',
-    'permissions_intro' => 'Una vez habilitado, estos permisos tendrán prioridad por encima de cualquier permiso establecido.',
-    'permissions_enable' => 'Habilitar permisos personalizados',
+    'permissions_desc' => 'Establezca los permisos aquí para anular los permisos por defecto proporcionados por los roles de usuario.',
+    'permissions_book_cascade' => 'Los permisos establecidos en los libros se aplicarán a sus capítulos y páginas, a menos que tengan sus propios permisos definidos.',
+    'permissions_chapter_cascade' => 'Los permisos establecidos en los capítulos se aplicarán a sus páginas, a menos que tengan sus propios permisos definidos.',
     'permissions_save' => 'Guardar permisos',
     'permissions_owner' => 'Propietario',
+    'permissions_role_everyone_else' => 'Todos los demás',
+    'permissions_role_everyone_else_desc' => 'Establecer permisos para todos los roles sin permisos específicos asignados.',
+    'permissions_role_override' => 'Reemplazar permisos para el rol',
 
     // Search
     'search_results' => 'Resultados de búsqueda',

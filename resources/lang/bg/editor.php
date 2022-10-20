@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Вмъкни/редактирай връзка',
     'insert_horizontal_line' => 'Вмъкни хоризонтална линия',
     'insert_code_block' => 'Въведи код',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'Вмъкни/редактирай рисунка',
     'drawing_manager' => 'Управление на рисунките',
     'insert_media' => 'Вмъкни/редактирай мултимедия',

@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'افزودن/ویرایش پیوند',
     'insert_horizontal_line' => 'افزودن خط افقی',
     'insert_code_block' => 'افزودن بلوک کد',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'افزودن/ویرایش طرح',
     'drawing_manager' => 'مدیریت طراحی',
     'insert_media' => 'افزودن/ویرایش رسانه',

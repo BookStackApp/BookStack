@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Bağlantı Ekle/Düzenle',
     'insert_horizontal_line' => 'Yatay çizgi ekle',
     'insert_code_block' => 'Kod bloğu ekle',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'Çizim ekle/düzenle',
     'drawing_manager' => 'Çizim yöneticisi',
     'insert_media' => 'Medya ekle/düzenle',

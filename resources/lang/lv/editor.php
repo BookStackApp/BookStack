@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Ievietot/rediģēt saiti',
     'insert_horizontal_line' => 'Ievietot horizontālu līniju',
     'insert_code_block' => 'Ievietot koda bloku',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'Ievietot/rediģēt zīmējumu',
     'drawing_manager' => 'Zīmēšanas pārvaldnieks',
     'insert_media' => 'Ievietot/rediģēt mediju',

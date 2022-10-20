@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Indsæt/Rediger Link',
     'insert_horizontal_line' => 'Indsæt vandret linje',
     'insert_code_block' => 'Indsæt kodeblok',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'Indsæt/rediger tegning',
     'drawing_manager' => 'Drawing manager',
     'insert_media' => 'Indsæt/rediger medie',

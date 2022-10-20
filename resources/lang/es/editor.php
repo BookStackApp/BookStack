@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Insertar/Editar enlace',
     'insert_horizontal_line' => 'Insertar línea horizontal',
     'insert_code_block' => 'Insertar bloque de código',
+    'edit_code_block' => 'Editar bloque de código',
     'insert_drawing' => 'Insertar/editar dibujo',
     'drawing_manager' => 'Gestor de dibujo',
     'insert_media' => 'Insertar/editar medios',

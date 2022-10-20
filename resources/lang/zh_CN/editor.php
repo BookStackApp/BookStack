@@ -66,6 +66,7 @@ return [
     'insert_link_title' => '插入/编辑链接',
     'insert_horizontal_line' => '插入水平线',
     'insert_code_block' => '插入代码块',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => '插入/编辑绘图',
     'drawing_manager' => '绘图管理器',
     'insert_media' => '插入/编辑媒体',

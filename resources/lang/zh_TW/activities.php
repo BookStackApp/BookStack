@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => '已建立書本',
     'book_create_notification'    => '書本已建立成功',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => '將章節轉爲書籍',
+    'book_create_from_chapter_notification' => '章節已轉換爲書籍',
     'book_update'                 => '已更新書本',
     'book_update_notification'    => '書本已更新成功',
     'book_delete'                 => '已刪除書本',
@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => '書本已重新排序成功',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create'            => '已建立書棧',
+    'bookshelf_create_notification'    => '書棧已創建',
+    'bookshelf_create_from_book'    => '將書籍轉爲書棧',
+    'bookshelf_create_from_book_notification'    => '章節已轉爲書籍',
+    'bookshelf_update'                 => '更新書棧',
+    'bookshelf_update_notification'    => '書棧已更新',
+    'bookshelf_delete'                 => '刪除書棧',
+    'bookshelf_delete_notification'    => '書棧已刪除',
 
     // Favourites
     'favourite_add_notification' => '":name" 已加入到你的最愛',

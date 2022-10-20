@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Uppdaterad :timeLength',
     'meta_updated_name' => 'Uppdaterad :timeLength av :user',
     'meta_owned_name' => 'Ägs av :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referas till på en sida|Refereras till på :count sidor',
     'entity_select' => 'Välj enhet',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Bilder',
@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Rättigheter',
-    'permissions_intro' => 'Dessa rättigheter kommer att överskrida eventuella rollbaserade rättigheter.',
-    'permissions_enable' => 'Aktivera anpassade rättigheter',
+    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
+    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Spara rättigheter',
     'permissions_owner' => 'Ägare',
+    'permissions_role_everyone_else' => 'Everyone Else',
+    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
+    'permissions_role_override' => 'Override permissions for role',
 
     // Search
     'search_results' => 'Sökresultat',
@@ -352,27 +356,27 @@ return [
     'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.',
 
     // Copy view
-    'copy_consider' => 'Please consider the below when copying content.',
-    'copy_consider_permissions' => 'Custom permission settings will not be copied.',
-    'copy_consider_owner' => 'You will become the owner of all copied content.',
-    'copy_consider_images' => 'Page image files will not be duplicated & the original images will retain their relation to the page they were originally uploaded to.',
-    'copy_consider_attachments' => 'Page attachments will not be copied.',
-    'copy_consider_access' => 'A change of location, owner or permissions may result in this content being accessible to those previously without access.',
+    'copy_consider' => 'Tänk på nedan när du kopierar innehåll.',
+    'copy_consider_permissions' => 'Anpassade behörighetsinställningar kommer inte att kopieras.',
+    'copy_consider_owner' => 'Du kommer att bli ägare till allt kopierat innehåll.',
+    'copy_consider_images' => 'Bildfiler för sidan kommer inte att dupliceras och de ursprungliga bilderna kommer att behålla sin relation till den sida de ursprungligen laddades upp till.',
+    'copy_consider_attachments' => 'Sidans bifogade filer kommer inte att kopieras.',
+    'copy_consider_access' => 'Ändring av plats, ägare eller behörigheter kan leda till att detta innehåll blir tillgängligt för dem som tidigare inte haft åtkomst.',
 
     // Conversions
-    'convert_to_shelf' => 'Convert to Shelf',
-    'convert_to_shelf_contents_desc' => 'You can convert this book to a new shelf with the same contents. Chapters contained within this book will be converted to new books. If this book contains any pages, that are not in a chapter, this book will be renamed and contain such pages, and this book will become part of the new shelf.',
-    'convert_to_shelf_permissions_desc' => 'Any permissions set on this book will be copied to the new shelf and to all new child books that don\'t have their own permissions enforced. Note that permissions on shelves do not auto-cascade to content within, as they do for books.',
-    'convert_book' => 'Convert Book',
-    'convert_book_confirm' => 'Are you sure you want to convert this book?',
-    'convert_undo_warning' => 'This cannot be as easily undone.',
-    'convert_to_book' => 'Convert to Book',
-    'convert_to_book_desc' => 'You can convert this chapter to a new book with the same contents. Any permissions set on this chapter will be copied to the new book but any inherited permissions, from the parent book, will not be copied which could lead to a change of access control.',
-    'convert_chapter' => 'Convert Chapter',
-    'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
+    'convert_to_shelf' => 'Konvertera till hylla',
+    'convert_to_shelf_contents_desc' => 'Du kan konvertera denna bok till en ny hylla med samma innehåll. Kapitlen inom denna bok konverteras till nya böcker. Om denna bok innehåller sidor som inte är i ett kapitel så kommer denna bok att döpas om och innehålla dessa sidor. Denna bok blir då en del av den nya hyllan.',
+    'convert_to_shelf_permissions_desc' => 'Alla behörigheter som ställs in på denna bok kommer att kopieras till den nya hyllan och till alla nya underböcker som inte har egna behörigheter applicerade. Observera att behörigheter på hyllor inte automatisk ärvs av innehåll inom hyllan, så som med böcker.',
+    'convert_book' => 'Konvertera bok',
+    'convert_book_confirm' => 'Är du säker på att du vill konvertera boken?',
+    'convert_undo_warning' => 'Detta kan inte ångras lika lätt.',
+    'convert_to_book' => 'Konvertera till bok',
+    'convert_to_book_desc' => 'Du kan konvertera detta kapitel till en ny bok med samma innehåll. Eventuella behörigheter som angetts på detta kapitel kommer att kopieras till den nya boken men ärvda behörigheter från föräldraboken kommer inte att kopieras vilket kan leda till skillnader i åtkomsten.',
+    'convert_chapter' => 'Konvertera kapitel',
+    'convert_chapter_confirm' => 'Är du säker på att du vill konvertera det här kapitlet?',
 
     // References
-    'references' => 'References',
-    'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references' => 'Referenser',
+    'references_none' => 'Det finns inga referenser kopplade till detta objekt.',
+    'references_to_desc' => 'Nedan visas alla kända sidor i systemet som länkar till detta objekt.',
 ];

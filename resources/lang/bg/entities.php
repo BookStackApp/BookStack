@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Права',
-    'permissions_intro' => 'Веднъж добавени, тези права ще вземат приоритет над всички други установени права.',
-    'permissions_enable' => 'Разреши уникални права',
+    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
+    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Запази права',
     'permissions_owner' => 'Собственик',
+    'permissions_role_everyone_else' => 'Everyone Else',
+    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
+    'permissions_role_override' => 'Override permissions for role',
 
     // Search
     'search_results' => 'Резултати от търсенето',

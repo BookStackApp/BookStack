@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Txertatu/Aldatu esteka',
     'insert_horizontal_line' => 'Txertatu linea horizontala',
     'insert_code_block' => 'Txertatu kode-blokea',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'Txertatu marrazki berria',
     'drawing_manager' => 'Marrazki kudeaketa',
     'insert_media' => 'Txertatu/aldatu media',
