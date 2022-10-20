@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Inserare/Editare link',
     'insert_horizontal_line' => 'Inserează linie orizontală',
     'insert_code_block' => 'Inserează bloc de cod',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'Inserare/editare desen',
     'drawing_manager' => 'Manager de desene',
     'insert_media' => 'Inserare/editare media',

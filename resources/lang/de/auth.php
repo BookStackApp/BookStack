@@ -35,7 +35,7 @@ return [
     'register_thanks' => 'Vielen Dank für Ihre Registrierung!',
     'register_confirm' => 'Bitte prüfen Sie Ihren Posteingang und bestätigen Sie die Registrierung.',
     'registrations_disabled' => 'Eine Registrierung ist momentan nicht möglich',
-    'registration_email_domain_invalid' => 'Sie können sich mit dieser E-Mail nicht registrieren.',
+    'registration_email_domain_invalid' => 'Sie können sich mit dieser E-Mail-Adresse nicht registrieren',
     'register_success' => 'Vielen Dank für Ihre Registrierung! Die Daten sind gespeichert und Sie sind angemeldet.',
 
     // Login auto-initiation
@@ -58,7 +58,7 @@ return [
     'email_confirm_greeting' => 'Danke, dass Sie sich für :appName registriert haben!',
     'email_confirm_text' => 'Bitte bestätigen Sie Ihre E-Mail-Adresse, indem Sie auf die Schaltfläche klicken:',
     'email_confirm_action' => 'E-Mail-Adresse bestätigen',
-    'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur bestätigung Ihrer E-Mail-Adresse nicht versandt werden. Bitte kontaktieren Sie den Systemadministrator!',
+    'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur Bestätigung Ihrer E-Mail-Adresse nicht versandt werden. Bitte kontaktieren Sie den Systemadministrator!',
     'email_confirm_success' => 'Ihre E-Mail wurde bestätigt! Sie sollten nun in der Lage sein, sich mit dieser E-Mail-Adresse anzumelden.',
     'email_confirm_resent' => 'Bestätigungs-E-Mail wurde erneut versendet, bitte überprüfen Sie Ihren Posteingang.',
 
@@ -69,12 +69,12 @@ return [
     'email_not_confirmed_resend_button' => 'Bestätigungs-E-Mail erneut senden',
 
     // User Invite
-    'user_invite_email_subject' => 'Du wurdest eingeladen :appName beizutreten!',
+    'user_invite_email_subject' => 'Sie wurden eingeladen :appName beizutreten!',
     'user_invite_email_greeting' => 'Ein Konto wurde für Sie auf :appName erstellt.',
     'user_invite_email_text' => 'Klicken Sie auf die Schaltfläche unten, um ein Passwort festzulegen und Zugriff zu erhalten:',
     'user_invite_email_action' => 'Account-Passwort festlegen',
     'user_invite_page_welcome' => 'Willkommen bei :appName!',
-    'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft zum Einloggen benötigt.',
+    'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft für die Anmeldung benötigt.',
     'user_invite_page_confirm_button' => 'Passwort bestätigen',
     'user_invite_success_login' => 'Passwort gesetzt, Sie sollten nun in der Lage sein, sich mit Ihrem Passwort an :appName anzumelden!',
 

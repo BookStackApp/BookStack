@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Rettigheder',
-    'permissions_intro' => 'Når de er aktiveret, vil disse tilladelser have prioritet over alle indstillede rolletilladelser.',
-    'permissions_enable' => 'Aktivér tilpassede tilladelser',
+    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
+    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Gem tilladelser',
     'permissions_owner' => 'Ejer',
+    'permissions_role_everyone_else' => 'Everyone Else',
+    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
+    'permissions_role_override' => 'Override permissions for role',
 
     // Search
     'search_results' => 'Søgeresultater',

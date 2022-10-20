@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Inserisci/Modifica Collegamento',
     'insert_horizontal_line' => 'Inserisci Riga Orizzontale',
     'insert_code_block' => 'Inserisci blocco di codice',
+    'edit_code_block' => 'Modifica blocco di codice',
     'insert_drawing' => 'Inserisci/Modifica Disegno',
     'drawing_manager' => 'Gestore disegni',
     'insert_media' => 'Inserisci/modifica media',

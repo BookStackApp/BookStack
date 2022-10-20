@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'リンクの挿入・編集',
     'insert_horizontal_line' => '水平線を挿入',
     'insert_code_block' => 'コードブロックを挿入',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => '描画を挿入・編集',
     'drawing_manager' => '描画マネージャー',
     'insert_media' => 'メディアの挿入・編集',

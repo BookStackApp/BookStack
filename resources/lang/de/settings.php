@@ -25,8 +25,8 @@ return [
     'app_public_access_toggle' => 'Öffentlichen Zugriff erlauben',
     'app_public_viewing' => 'Öffentliche Ansicht erlauben?',
     'app_secure_images' => 'Erhöhte Sicherheit für hochgeladene Bilder aktivieren?',
-    'app_secure_images_toggle' => 'Aktiviere Bild-Upload höherer Sicherheit',
-    'app_secure_images_desc' => 'Aus Leistungsgründen sind alle Bilder öffentlich sichtbar. Diese Option fügt zufällige, schwer zu eratene, Zeichenketten zu Bild-URLs hinzu. Stellen sie sicher, dass Verzeichnisindizes deaktiviert sind, um einen einfachen Zugriff zu verhindern.',
+    'app_secure_images_toggle' => 'Aktiviere höhere Sicherheit für Bild-Uploads',
+    'app_secure_images_desc' => 'Aus Leistungsgründen sind alle Bilder öffentlich sichtbar. Diese Option fügt zufällige, schwer zu erratende, Zeichenketten zu Bild-URLs hinzu. Stellen Sie sicher, dass Verzeichnisindizes deaktiviert sind, um einen einfachen Zugriff zu verhindern.',
     'app_default_editor' => 'Standard-Seiten-Editor',
     'app_default_editor_desc' => 'Wählen Sie aus, welcher Editor standardmäßig beim Bearbeiten neuer Seiten verwendet wird. Dies kann auf einer Seitenebene überschrieben werden, wenn es die Berechtigungen erlauben.',
     'app_custom_html' => 'Benutzerdefinierter HTML <head> Inhalt',
@@ -37,12 +37,12 @@ return [
 Größere Bilder werden verkleinert.',
     'app_primary_color' => 'Primäre Anwendungsfarbe',
     'app_primary_color_desc' => 'Dies sollte ein HEX Wert sein.
-Wenn Sie nicht eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt.',
+Wenn Sie nichts eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt.',
     'app_homepage' => 'Startseite der Anwendung',
     'app_homepage_desc' => 'Wählen Sie eine Seite als Startseite aus, die statt der Standardansicht angezeigt werden soll. Seitenberechtigungen werden für die ausgewählten Seiten ignoriert.',
     'app_homepage_select' => 'Wählen Sie eine Seite aus',
     'app_footer_links' => 'Fußzeilen-Links',
-    'app_footer_links_desc' => 'Fügen Sie Links hinzu, die innerhalb der Seitenfußzeile angezeigt werden. Diese werden am unteren Ende der meisten Seiten angezeigt, einschließlich derjenigen, die keinen Login benötigen. Sie können die Bezeichnung "trans::<key>" verwenden, um systemdefinierte Übersetzungen zu verwenden. Beispiel: Mit "trans::common.privacy_policy" wird der übersetzte Text "Privacy Policy" bereitgestellt und "trans::common.terms_of_service" liefert den übersetzten Text "Terms of Service".',
+    'app_footer_links_desc' => 'Fügen Sie Links hinzu, die innerhalb der Seitenfußzeile angezeigt werden. Diese werden am unteren Ende der meisten Seiten angezeigt, einschließlich derjenigen, die keine Anmeldung benötigen. Sie können die Bezeichnung "trans::<key>" verwenden, um systemdefinierte Übersetzungen zu verwenden. Beispiel: Mit "trans::common.privacy_policy" wird der übersetzte Text "Privacy Policy" bereitgestellt und "trans::common.terms_of_service" liefert den übersetzten Text "Terms of Service".',
     'app_footer_links_label' => 'Link-Label',
     'app_footer_links_url' => 'Link-URL',
     'app_footer_links_add' => 'Fußzeilen-Link hinzufügen',
@@ -70,8 +70,8 @@ Wenn Sie nicht eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt
     'reg_email_confirmation_toggle' => 'Bestätigung per E-Mail erforderlich',
     'reg_confirm_email_desc' => 'Falls die Einschränkung für Domains genutzt wird, ist die Bestätigung per E-Mail zwingend erforderlich und der untenstehende Wert wird ignoriert.',
     'reg_confirm_restrict_domain' => 'Registrierung auf bestimmte Domains einschränken',
-    'reg_confirm_restrict_domain_desc' => 'Fügen sie eine durch Komma getrennte Liste von Domains hinzu, auf die die Registrierung eingeschränkt werden soll. Benutzern wird eine E-Mail gesendet, um ihre E-Mail Adresse zu bestätigen, bevor sie diese Anwendung nutzen können.
-Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung ändern.',
+    'reg_confirm_restrict_domain_desc' => 'Fügen Sie eine durch Komma getrennte Liste von Domains hinzu, auf die die Registrierung eingeschränkt werden soll. Benutzern wird eine E-Mail gesendet, um ihre E-Mail-Adresse zu bestätigen, bevor diese die Anwendung nutzen können.
+Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung ändern.',
     'reg_confirm_restrict_domain_placeholder' => 'Keine Einschränkung gesetzt',
 
     // Maintenance settings

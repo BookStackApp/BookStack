@@ -23,10 +23,10 @@ return [
     'saml_no_email_address' => 'Kunde inte hitta en e-postadress för den här användaren i data som tillhandahålls av det externa autentiseringssystemet',
     'saml_invalid_response_id' => 'En begäran från det externa autentiseringssystemet känns inte igen av en process som startats av denna applikation. Att navigera bakåt efter en inloggning kan orsaka detta problem.',
     'saml_fail_authed' => 'Inloggning med :system misslyckades, systemet godkände inte auktoriseringen',
-    'oidc_already_logged_in' => 'Already logged in',
-    'oidc_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
-    'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'oidc_already_logged_in' => 'Redan inloggad',
+    'oidc_user_not_registered' => 'Användaren :name är inte registrerad och automatisk registrering är inaktiverad',
+    'oidc_no_email_address' => 'Kunde inte hitta en e-postadress för den här användaren i den data som tillhandahölls av det externa autentiseringssystemet',
+    'oidc_fail_authed' => 'Inloggning med :system misslyckades, systemet presenterade inte en godkänd auktorisering',
     'social_no_action_defined' => 'Ingen åtgärd definierad',
     'social_login_bad_response' => "Ett fel inträffade vid inloggning genom :socialAccount: \n:error",
     'social_account_in_use' => 'Detta konto från :socialAccount används redan. Testa att logga in med :socialAccount istället.',
@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Innehållet hittades inte',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Hyllan hittades inte',
     'book_not_found' => 'Boken hittades inte',
     'page_not_found' => 'Sidan hittades inte',
     'chapter_not_found' => 'Kapitlet hittades inte',
