@@ -28,6 +28,7 @@ class LanguageManager
         'de'          => ['iso' => 'de_DE', 'windows' => 'German'],
         'de_informal' => ['iso' => 'de_DE', 'windows' => 'German'],
         'en'          => ['iso' => 'en_GB', 'windows' => 'English'],
+        'el'          => ['iso' => 'el_GR', 'windows' => 'Greek'],
         'es'          => ['iso' => 'es_ES', 'windows' => 'Spanish'],
         'es_AR'       => ['iso' => 'es_AR', 'windows' => 'Spanish'],
         'et'          => ['iso' => 'et_EE', 'windows' => 'Estonian'],
