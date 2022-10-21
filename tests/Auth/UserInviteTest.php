@@ -54,7 +54,7 @@ class UserInviteTest extends TestCase
             /** @var MailMessage $mail */
             $mail = $notification->toMail($notifiable);
 
-            return 'Du wurdest eingeladen BookStack beizutreten!' === $mail->subject &&
+            return 'Sie wurden eingeladen BookStack beizutreten!' === $mail->subject &&
                 'Ein Konto wurde für Sie auf BookStack erstellt.' === $mail->greeting;
         });
     }
