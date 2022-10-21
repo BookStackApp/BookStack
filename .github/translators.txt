@@ -280,3 +280,11 @@ DerLinkman (derlinkman) :: German; German Informal
 TurnArabic :: Arabic
 Martin Sebek (sebekmartin) :: Czech
 Kuchinashi Hoshikawa (kuchinashi) :: Chinese Simplified
+digilady :: Greek
+Linus (LinusOP) :: Swedish
+Felipe Cardoso (felipecardosoruff) :: Portuguese, Brazilian
+RandomUser0815 :: German
+Ismael Mesquita (mesquitoliveira) :: Portuguese, Brazilian
+구인회 (laskdjlaskdj12) :: Korean
+LiZerui (CNLiZerui) :: Chinese Traditional
+Fabrice Boyer (FabriceBoyer) :: French
