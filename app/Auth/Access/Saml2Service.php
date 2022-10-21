@@ -20,14 +20,11 @@ use OneLogin\Saml2\ValidationError;
  */
 class Saml2Service
 {
-    protected $config;
-    protected $registrationService;
-    protected $loginService;
-    protected $groupSyncService;
+    protected array $config;
+    protected RegistrationService $registrationService;
+    protected LoginService $loginService;
+    protected GroupSyncService $groupSyncService;
 
-    /**
-     * Saml2Service constructor.
-     */
     public function __construct(
         RegistrationService $registrationService,
         LoginService $loginService,
@@ -169,7 +166,7 @@ class Saml2Service
      */
     public function metadata(): string
     {
-        $toolKit = $this->getToolkit();
+        $toolKit = $this->getToolkit(true);
         $settings = $toolKit->getSettings();
         $metadata = $settings->getSPMetadata();
         $errors = $settings->validateMetadata($metadata);
@@ -190,7 +187,7 @@ class Saml2Service
      * @throws Error
      * @throws Exception
      */
-    protected function getToolkit(): Auth
+    protected function getToolkit(bool $spOnly = false): Auth
     {
         $settings = $this->config['onelogin'];
         $overrides = $this->config['onelogin_overrides'] ?? [];
@@ -200,14 +197,14 @@ class Saml2Service
         }
 
         $metaDataSettings = [];
-        if ($this->config['autoload_from_metadata']) {
+        if (!$spOnly && $this->config['autoload_from_metadata']) {
             $metaDataSettings = IdPMetadataParser::parseRemoteXML($settings['idp']['entityId']);
         }
 
         $spSettings = $this->loadOneloginServiceProviderDetails();
         $settings = array_replace_recursive($settings, $spSettings, $metaDataSettings, $overrides);
 
-        return new Auth($settings);
+        return new Auth($settings, $spOnly);
     }
 
     /**

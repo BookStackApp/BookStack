@@ -7,65 +7,65 @@ return [
 
     // Pages
     'page_create'                 => 'skapade sidan',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Sidan har skapats',
     'page_update'                 => 'uppdaterade sidan',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Sidan har uppdaterats',
     'page_delete'                 => 'tog bort sidan',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Sidan har tagits bort',
     'page_restore'                => 'återställde sidan',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Sidan har återställts',
     'page_move'                   => 'flyttade sidan',
 
     // Chapters
     'chapter_create'              => 'skapade kapitlet',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Kapitlet har skapats',
     'chapter_update'              => 'uppdaterade kapitlet',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Kapitlet har uppdaterats',
     'chapter_delete'              => 'tog bort kapitlet',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Kapitlet har tagits bort',
     'chapter_move'                => 'flyttade kapitlet',
 
     // Books
     'book_create'                 => 'skapade boken',
-    'book_create_notification'    => 'Book successfully created',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_notification'    => 'Boken har skapats',
+    'book_create_from_chapter'              => 'konverterade kapitel till bok',
+    'book_create_from_chapter_notification' => 'Kapitlet har konverterats till en bok',
     'book_update'                 => 'uppdaterade boken',
-    'book_update_notification'    => 'Book successfully updated',
+    'book_update_notification'    => 'Boken har uppdaterats',
     'book_delete'                 => 'tog bort boken',
-    'book_delete_notification'    => 'Book successfully deleted',
+    'book_delete_notification'    => 'Boken har tagits bort',
     'book_sort'                   => 'sorterade boken',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort_notification'      => 'Boken har sorterats om',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create'            => 'skapade hylla',
+    'bookshelf_create_notification'    => 'Hyllan har skapats',
+    'bookshelf_create_from_book'    => 'konverterade bok till hylla',
+    'bookshelf_create_from_book_notification'    => 'Boken har konverterats till en hylla',
+    'bookshelf_update'                 => 'uppdaterade hyllan',
+    'bookshelf_update_notification'    => 'Hyllan har uppdaterats',
+    'bookshelf_delete'                 => 'raderade hyllan',
+    'bookshelf_delete_notification'    => 'Hyllan har tagits bort',
 
     // Favourites
     'favourite_add_notification' => '":name" har lagts till i dina favoriter',
     'favourite_remove_notification' => '":name" har tagits bort från dina favoriter',
 
     // MFA
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method_notification' => 'Multifaktor-metod har konfigurerats',
+    'mfa_remove_method_notification' => 'Multifaktor-metod har tagits bort',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'skapade webhook',
+    'webhook_create_notification' => 'Webhook har skapats',
+    'webhook_update' => 'uppdaterade webhook',
+    'webhook_update_notification' => 'Webhook har uppdaterats',
+    'webhook_delete' => 'raderade webhook',
+    'webhook_delete_notification' => 'Webhook har tagits bort',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Användaren har uppdaterats',
+    'user_delete_notification' => 'Användaren har tagits bort',
 
     // Other
     'commented_on'                => 'kommenterade',

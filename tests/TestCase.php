@@ -7,31 +7,27 @@ use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\Page;
-use BookStack\Entities\Repos\BookRepo;
-use BookStack\Entities\Repos\BookshelfRepo;
-use BookStack\Entities\Repos\ChapterRepo;
-use BookStack\Entities\Repos\PageRepo;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Env;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Psr\Http\Client\ClientInterface;
 use Ssddanbrown\AssertHtml\TestsHtml;
+use Tests\Helpers\EntityProvider;
+use Tests\Helpers\TestServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -41,11 +37,33 @@ abstract class TestCase extends BaseTestCase
 
     protected ?User $admin = null;
     protected ?User $editor = null;
+    protected EntityProvider $entities;
+
+    protected function setUp(): void
+    {
+        $this->entities = new EntityProvider();
+        parent::setUp();
+    }
 
     /**
      * The base URL to use while testing the application.
      */
     protected string $baseUrl = 'http://localhost';
+
+    /**
+     * Creates the application.
+     *
+     * @return \Illuminate\Foundation\Application
+     */
+    public function createApplication()
+    {
+        /** @var \Illuminate\Foundation\Application  $app */
+        $app = require __DIR__ . '/../bootstrap/app.php';
+        $app->register(TestServiceProvider::class);
+        $app->make(Kernel::class)->bootstrap();
+
+        return $app;
+    }
 
     /**
      * Set the current user context to be an admin.
@@ -119,51 +137,6 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Regenerate the permission for an entity.
-     */
-    protected function regenEntityPermissions(Entity $entity): void
-    {
-        $entity->rebuildPermissions();
-        $entity->load('jointPermissions');
-    }
-
-    /**
-     * Create and return a new bookshelf.
-     */
-    public function newShelf(array $input = ['name' => 'test shelf', 'description' => 'My new test shelf']): Bookshelf
-    {
-        return app(BookshelfRepo::class)->create($input, []);
-    }
-
-    /**
-     * Create and return a new book.
-     */
-    public function newBook(array $input = ['name' => 'test book', 'description' => 'My new test book']): Book
-    {
-        return app(BookRepo::class)->create($input);
-    }
-
-    /**
-     * Create and return a new test chapter.
-     */
-    public function newChapter(array $input, Book $book): Chapter
-    {
-        return app(ChapterRepo::class)->create($input, $book);
-    }
-
-    /**
-     * Create and return a new test page.
-     */
-    public function newPage(array $input = ['name' => 'test page', 'html' => 'My new test page']): Page
-    {
-        $book = Book::query()->first();
-        $pageRepo = app(PageRepo::class);
-        $draftPage = $pageRepo->getNewDraftPage($book);
-
-        return $pageRepo->publishDraft($draftPage, $input);
-    }
-
-    /**
      * Quickly sets an array of settings.
      */
     protected function setSettings(array $settingsArray): void
@@ -172,31 +145,6 @@ abstract class TestCase extends BaseTestCase
         foreach ($settingsArray as $key => $value) {
             $settings->put($key, $value);
         }
-    }
-
-    /**
-     * Manually set some permissions on an entity.
-     */
-    protected function setEntityRestrictions(Entity $entity, array $actions = [], array $roles = []): void
-    {
-        $entity->restricted = true;
-        $entity->permissions()->delete();
-
-        $permissions = [];
-        foreach ($actions as $action) {
-            foreach ($roles as $role) {
-                $permissions[] = [
-                    'role_id' => $role->id,
-                    'action'  => strtolower($action),
-                ];
-            }
-        }
-        $entity->permissions()->createMany($permissions);
-
-        $entity->save();
-        $entity->load('permissions');
-        $this->app->make(JointPermissionBuilder::class)->rebuildForEntity($entity);
-        $entity->load('jointPermissions');
     }
 
     /**
@@ -246,27 +194,6 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Create a group of entities that belong to a specific user.
-     *
-     * @return array{book: Book, chapter: Chapter, page: Page}
-     */
-    protected function createEntityChainBelongingToUser(User $creatorUser, ?User $updaterUser = null): array
-    {
-        if (empty($updaterUser)) {
-            $updaterUser = $creatorUser;
-        }
-
-        $userAttrs = ['created_by' => $creatorUser->id, 'owned_by' => $creatorUser->id, 'updated_by' => $updaterUser->id];
-        $book = Book::factory()->create($userAttrs);
-        $chapter = Chapter::factory()->create(array_merge(['book_id' => $book->id], $userAttrs));
-        $page = Page::factory()->create(array_merge(['book_id' => $book->id, 'chapter_id' => $chapter->id], $userAttrs));
-
-        $this->app->make(JointPermissionBuilder::class)->rebuildForEntity($book);
-
-        return compact('book', 'chapter', 'page');
-    }
-
-    /**
      * Mock the HttpFetcher service and return the given data on fetch.
      */
     protected function mockHttpFetch($returnData, int $times = 1)
@@ -299,6 +226,8 @@ abstract class TestCase extends BaseTestCase
     /**
      * Run a set test with the given env variable.
      * Remembers the original and resets the value after test.
+     * Database config is juggled so the value can be restored when
+     * parallel testing are used, where multiple databases exist.
      */
     protected function runWithEnv(string $name, $value, callable $callback)
     {
@@ -311,7 +240,12 @@ abstract class TestCase extends BaseTestCase
             $_SERVER[$name] = $value;
         }
 
+        $database = config('database.connections.mysql_testing.database');
         $this->refreshApplication();
+
+        DB::purge();
+        config()->set('database.connections.mysql_testing.database', $database);
+
         $callback();
 
         if (is_null($originalVal)) {
@@ -435,18 +369,5 @@ abstract class TestCase extends BaseTestCase
         }
 
         $this->assertDatabaseHas('activities', $detailsToCheck);
-    }
-
-    /**
-     * @return array{page: Page, chapter: Chapter, book: Book, bookshelf: Bookshelf}
-     */
-    protected function getEachEntityType(): array
-    {
-        return [
-            'page'      => Page::query()->first(),
-            'chapter'   => Chapter::query()->first(),
-            'book'      => Book::query()->first(),
-            'bookshelf' => Bookshelf::query()->first(),
-        ];
     }
 }

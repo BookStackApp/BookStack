@@ -161,7 +161,7 @@ return [
     'roles_system_warning' => 'Wees ervan bewust dat toegang tot een van de bovengenoemde drie machtigingen een gebruiker in staat kan stellen zijn eigen machtigingen of de machtigingen van anderen in het systeem kan wijzigen. Wijs alleen rollen toe met deze machtigingen aan vertrouwde gebruikers.',
     'role_asset_desc' => 'Deze machtigingen bepalen de standaard toegang tot de assets binnen het systeem. Machtigingen op boeken, hoofdstukken en pagina\'s overschrijven deze instelling.',
     'role_asset_admins' => 'Beheerders krijgen automatisch toegang tot alle inhoud, maar deze opties kunnen gebruikersinterface opties tonen of verbergen.',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'Dit heeft betrekking op de zichtbaarheid binnen de afbeeldingsbeheerder. De werkelijke toegang tot geüploade afbeeldingsbestanden hangt af van de gekozen opslagmethode.',
     'role_all' => 'Alles',
     'role_own' => 'Eigen',
     'role_controlled_by_asset' => 'Gecontroleerd door de asset waar deze is geüpload',

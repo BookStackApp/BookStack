@@ -2,6 +2,7 @@
 
 namespace BookStack\Auth;
 
+use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Interfaces\Loggable;
@@ -52,6 +53,14 @@ class Role extends Model implements Loggable
     public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(RolePermission::class, 'permission_role', 'role_id', 'permission_id');
+    }
+
+    /**
+     * Get the entity permissions assigned to this role.
+     */
+    public function entityPermissions(): HasMany
+    {
+        return $this->hasMany(EntityPermission::class);
     }
 
     /**
@@ -107,17 +116,6 @@ class Role extends Model implements Loggable
     public static function visible(): Collection
     {
         return static::query()->where('hidden', '=', false)->orderBy('name')->get();
-    }
-
-    /**
-     * Get the roles that can be restricted.
-     */
-    public static function restrictable(): Collection
-    {
-        return static::query()
-            ->where('system_name', '!=', 'admin')
-            ->orderBy('display_name', 'asc')
-            ->get();
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Tests\Entity;
 
 use BookStack\Actions\Tag;
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
@@ -76,9 +75,7 @@ class TagTest extends TestCase
         $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->assertSimilarJson(['color', 'country']);
 
         // Set restricted permission the page
-        $page->restricted = true;
-        $page->save();
-        $page->rebuildPermissions();
+        $this->entities->setPermissions($page, [], []);
 
         $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->assertSimilarJson(['color', 'country']);
         $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->assertSimilarJson([]);
@@ -102,8 +99,7 @@ class TagTest extends TestCase
 
     public function test_tags_index_shows_tag_name_as_expected_with_right_counts()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
         $page->tags()->create(['name' => 'Category', 'value' => 'OtherTestContent']);
 
@@ -120,8 +116,7 @@ class TagTest extends TestCase
         $html->assertElementContains('a[title="Assigned to Shelves"]', '0');
         $html->assertElementContains('a[href$="/tags?name=Category"]', '2 unique values');
 
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $book->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
         $resp = $this->asEditor()->get('/tags');
         $this->withHtml($resp)->assertElementContains('a[title="Total tag usages"]', '3');
@@ -131,8 +126,7 @@ class TagTest extends TestCase
 
     public function test_tag_index_can_be_searched()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
 
         $resp = $this->asEditor()->get('/tags?search=cat');
@@ -148,8 +142,7 @@ class TagTest extends TestCase
 
     public function test_tag_index_search_will_show_mulitple_values_of_a_single_tag_name()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'Animal', 'value' => 'Catfish']);
         $page->tags()->create(['name' => 'Animal', 'value' => 'Catdog']);
 
@@ -160,8 +153,7 @@ class TagTest extends TestCase
 
     public function test_tag_index_can_be_scoped_to_specific_tag_name()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'Category', 'value' => 'GreatTestContent']);
         $page->tags()->create(['name' => 'Category', 'value' => 'OtherTestContent']);
         $page->tags()->create(['name' => 'OtherTagName', 'value' => 'OtherValue']);
@@ -178,8 +170,7 @@ class TagTest extends TestCase
 
     public function test_tags_index_adheres_to_page_permissions()
     {
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => 'SuperCategory', 'value' => 'GreatTestContent']);
 
         $resp = $this->asEditor()->get('/tags');
@@ -187,8 +178,7 @@ class TagTest extends TestCase
         $resp = $this->get('/tags?name=SuperCategory');
         $resp->assertSee('GreatTestContent');
 
-        $page->restricted = true;
-        $this->regenEntityPermissions($page);
+        $this->entities->setPermissions($page, [], []);
 
         $resp = $this->asEditor()->get('/tags');
         $resp->assertDontSee('SuperCategory');
@@ -207,7 +197,7 @@ class TagTest extends TestCase
     {
         $this->asEditor();
 
-        foreach ($this->getEachEntityType() as $entity) {
+        foreach ($this->entities->all() as $entity) {
             $entity->tags()->create(['name' => 'My Super Tag Name', 'value' => 'An-awesome-value']);
             $html = $this->withHtml($this->get($entity->getUrl()));
             $html->assertElementExists('body.tag-name-mysupertagname.tag-value-anawesomevalue.tag-pair-mysupertagname-anawesomevalue');
@@ -216,7 +206,7 @@ class TagTest extends TestCase
 
     public function test_tag_classes_are_escaped()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $page->tags()->create(['name' => '<>']);
         $resp = $this->asEditor()->get($page->getUrl());
         $resp->assertDontSee('tag-name-<>', false);

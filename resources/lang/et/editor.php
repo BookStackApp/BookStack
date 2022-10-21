@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Sisesta/muuda linki',
     'insert_horizontal_line' => 'Sisesta vahejoon',
     'insert_code_block' => 'Sisesta koodiplokk',
+    'edit_code_block' => 'Muuda koodiplokki',
     'insert_drawing' => 'Sisesta/muuda joonist',
     'drawing_manager' => 'Jooniste haldur',
     'insert_media' => 'Sisesta/muuda meediat',

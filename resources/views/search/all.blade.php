@@ -61,10 +61,10 @@
                         @include('search.parts.date-filter', ['name' => 'created_after', 'filters' => $options->filters])
                         @include('search.parts.date-filter', ['name' => 'created_before', 'filters' => $options->filters])
 
-                        @if(isset($options->filters['created_by']))
+                        @if(isset($options->filters['created_by']) && $options->filters['created_by'] !== "me")
                             <input type="hidden" name="filters[created_by]" value="{{ $options->filters['created_by'] }}">
                         @endif
-                        @if(isset($options->filters['updated_by']))
+                        @if(isset($options->filters['updated_by']) && $options->filters['updated_by'] !== "me")
                             <input type="hidden" name="filters[updated_by]" value="{{ $options->filters['updated_by'] }}">
                         @endif
 

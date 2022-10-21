@@ -13,9 +13,6 @@ class BookshelfApiController extends ApiController
 {
     protected BookshelfRepo $bookshelfRepo;
 
-    /**
-     * BookshelfApiController constructor.
-     */
     public function __construct(BookshelfRepo $bookshelfRepo)
     {
         $this->bookshelfRepo = $bookshelfRepo;

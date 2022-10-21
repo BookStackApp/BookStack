@@ -17,6 +17,44 @@
     "id": 1,
     "name": "Admin"
   },
+  "contents": [
+    {
+      "id": 50,
+      "name": "Bridge Structures",
+      "slug": "bridge-structures",
+      "book_id": 16,
+      "created_at": "2021-12-19T15:22:11.000000Z",
+      "updated_at": "2021-12-21T19:42:29.000000Z",
+      "url": "https://example.com/books/my-own-book/chapter/bridge-structures",
+      "type": "chapter",
+      "pages": [
+        {
+          "id": 42,
+          "name": "Building Bridges",
+          "slug": "building-bridges",
+          "book_id": 16,
+          "chapter_id": 50,
+          "draft": false,
+          "template": false,
+          "created_at": "2021-12-19T15:22:11.000000Z",
+          "updated_at": "2022-09-29T13:44:15.000000Z",
+          "url": "https://example.com/books/my-own-book/page/building-bridges"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "name": "Cool Animals",
+      "slug": "cool-animals",
+      "book_id": 16,
+      "chapter_id": 0,
+      "draft": false,
+      "template": false,
+      "created_at": "2021-12-19T18:22:11.000000Z",
+      "updated_at": "2022-07-29T13:44:15.000000Z",
+      "url": "https://example.com/books/my-own-book/page/cool-animals"
+    }
+  ],
   "tags": [
     {
       "id": 13,
@@ -28,12 +66,12 @@
   "cover": {
     "id": 452,
     "name": "sjovall_m117hUWMu40.jpg",
-    "url": "http:\/\/bookstack.local\/uploads\/images\/cover_book\/2020-01\/sjovall_m117hUWMu40.jpg",
+    "url": "https://example.com/uploads/images/cover_book/2020-01/sjovall_m117hUWMu40.jpg",
     "created_at": "2020-01-12T14:11:51.000000Z",
     "updated_at": "2020-01-12T14:11:51.000000Z",
     "created_by": 1,
     "updated_by": 1,
-    "path": "\/uploads\/images\/cover_book\/2020-01\/sjovall_m117hUWMu40.jpg",
+    "path": "/uploads/images/cover_book/2020-01/sjovall_m117hUWMu40.jpg",
     "type": "cover_book",
     "uploaded_to": 16
   }

@@ -41,6 +41,20 @@ class Saml2Test extends TestCase
         $req->assertSee(url('/saml2/acs'));
     }
 
+    public function test_metadata_endpoint_loads_when_autoloading_with_bad_url_set()
+    {
+        config()->set([
+            'saml2.autoload_from_metadata' => true,
+            'saml2.onelogin.idp.entityId' => 'http://192.168.1.1:9292',
+            'saml2.onelogin.idp.singleSignOnService.url' => null,
+        ]);
+
+        $req = $this->get('/saml2/metadata');
+        $req->assertOk();
+        $req->assertHeader('Content-Type', 'text/xml; charset=UTF-8');
+        $req->assertSee('md:EntityDescriptor');
+    }
+
     public function test_onelogin_overrides_functions_as_expected()
     {
         $json = '{"sp": {"assertionConsumerService": {"url": "https://example.com/super-cats"}}, "contactPerson": {"technical": {"givenName": "Barry Scott", "emailAddress": "barry@example.com"}}}';

@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Książka posortowana pomyślnie',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create'            => 'utworzył półkę',
+    'bookshelf_create_notification'    => 'Półka utworzona pomyślnie',
+    'bookshelf_create_from_book'    => 'skonwertował książkę na półkę',
     'bookshelf_create_from_book_notification'    => 'Książka została pomyślnie skonwertowana na półkę',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'zaktualizował półkę',
+    'bookshelf_update_notification'    => 'Półka zaktualizowana pomyślnie',
+    'bookshelf_delete'                 => 'usunął półkę',
+    'bookshelf_delete_notification'    => 'Półka usunięta pomyślnie',
 
     // Favourites
     'favourite_add_notification' => '":name" został dodany do Twoich ulubionych',

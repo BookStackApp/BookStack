@@ -75,7 +75,7 @@ return [
     'locale' => env('APP_LANG', 'en'),
 
     // Locales available
-    'locales' => ['en', 'ar', 'bg', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'de_informal', 'es', 'es_AR', 'et', 'eu', 'fa', 'fr', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'nb', 'pt', 'pt_BR', 'sk', 'sl', 'sv', 'pl',  'ro', 'ru', 'tr', 'uk', 'uz', 'vi', 'zh_CN', 'zh_TW'],
+    'locales' => ['en', 'ar', 'bg', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'de_informal', 'el', 'es', 'es_AR', 'et', 'eu', 'fa', 'fr', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'nb', 'pt', 'pt_BR', 'sk', 'sl', 'sv', 'pl',  'ro', 'ru', 'tr', 'uk', 'uz', 'vi', 'zh_CN', 'zh_TW'],
 
     //  Application Fallback Locale
     'fallback_locale' => 'en',
@@ -114,6 +114,8 @@ return [
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
@@ -121,27 +123,22 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Illuminate\Notifications\NotificationServiceProvider::class,
-        SocialiteProviders\Manager\ServiceProvider::class,
 
         // Third party service providers
-        Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
-
-        // BookStack replacement service providers (Extends Laravel)
-        BookStack\Providers\PaginationServiceProvider::class,
-        BookStack\Providers\TranslationServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
 
         // BookStack custom service providers
         BookStack\Providers\ThemeServiceProvider::class,
-        BookStack\Providers\AuthServiceProvider::class,
         BookStack\Providers\AppServiceProvider::class,
-        BookStack\Providers\BroadcastServiceProvider::class,
+        BookStack\Providers\AuthServiceProvider::class,
         BookStack\Providers\EventServiceProvider::class,
         BookStack\Providers\RouteServiceProvider::class,
-        BookStack\Providers\CustomFacadeProvider::class,
-        BookStack\Providers\CustomValidationServiceProvider::class,
+        BookStack\Providers\TranslationServiceProvider::class,
+        BookStack\Providers\ValidationRuleServiceProvider::class,
+        BookStack\Providers\ViewTweaksServiceProvider::class,
     ],
 
     /*

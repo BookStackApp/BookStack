@@ -66,6 +66,7 @@ return [
     'insert_link_title' => 'Hivatkozás Beszúrása/Szerkesztése',
     'insert_horizontal_line' => 'Vízszintes vonal beszúrása',
     'insert_code_block' => 'Kódrészlet beszúrása',
+    'edit_code_block' => 'Edit code block',
     'insert_drawing' => 'Rajz beszúrása/szerkesztése',
     'drawing_manager' => 'Rajzkezelő',
     'insert_media' => 'Media beszúrása/szerkesztése',

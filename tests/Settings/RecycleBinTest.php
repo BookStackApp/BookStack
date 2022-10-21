@@ -3,10 +3,7 @@
 namespace Tests\Settings;
 
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
-use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +13,7 @@ class RecycleBinTest extends TestCase
 {
     public function test_recycle_bin_routes_permissions()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
         $deletion = Deletion::query()->firstOrFail();
@@ -57,7 +54,7 @@ class RecycleBinTest extends TestCase
 
     public function test_recycle_bin_view()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = Book::query()->whereHas('pages')->whereHas('chapters')->withCount(['pages', 'chapters'])->first();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
@@ -74,7 +71,7 @@ class RecycleBinTest extends TestCase
 
     public function test_recycle_bin_empty()
     {
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $book = Book::query()->where('id', '!=', $page->book_id)->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
         $editor = $this->getEditor();
         $this->actingAs($editor)->delete($page->getUrl());
@@ -97,7 +94,7 @@ class RecycleBinTest extends TestCase
 
     public function test_entity_restore()
     {
-        $book = Book::query()->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $book = $this->entities->bookHasChaptersAndPages();
         $this->asEditor()->delete($book->getUrl());
         $deletion = Deletion::query()->firstOrFail();
 
@@ -118,7 +115,7 @@ class RecycleBinTest extends TestCase
 
     public function test_permanent_delete()
     {
-        $book = Book::query()->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $book = $this->entities->bookHasChaptersAndPages();
         $this->asEditor()->delete($book->getUrl());
         $deletion = Deletion::query()->firstOrFail();
 
@@ -137,9 +134,7 @@ class RecycleBinTest extends TestCase
 
     public function test_permanent_delete_for_each_type()
     {
-        /** @var Entity $entity */
-        foreach ([new Bookshelf(), new Book(), new Chapter(), new Page()] as $entity) {
-            $entity = $entity->newQuery()->first();
+        foreach ($this->entities->all() as $type => $entity) {
             $this->asEditor()->delete($entity->getUrl());
             $deletion = Deletion::query()->orderBy('id', 'desc')->firstOrFail();
 
@@ -152,7 +147,7 @@ class RecycleBinTest extends TestCase
 
     public function test_permanent_entity_delete_updates_existing_activity_with_entity_name()
     {
-        $page = Page::query()->firstOrFail();
+        $page = $this->entities->page();
         $this->asEditor()->delete($page->getUrl());
         $deletion = $page->deletions()->firstOrFail();
 
@@ -181,8 +176,8 @@ class RecycleBinTest extends TestCase
     public function test_auto_clear_functionality_works()
     {
         config()->set('app.recycle_bin_lifetime', 5);
-        $page = Page::query()->firstOrFail();
-        $otherPage = Page::query()->where('id', '!=', $page->id)->firstOrFail();
+        $page = $this->entities->page();
+        $otherPage = $this->entities->page();
 
         $this->asEditor()->delete($page->getUrl());
         $this->assertDatabaseHas('pages', ['id' => $page->id]);
@@ -198,8 +193,8 @@ class RecycleBinTest extends TestCase
     public function test_auto_clear_functionality_with_negative_time_keeps_forever()
     {
         config()->set('app.recycle_bin_lifetime', -1);
-        $page = Page::query()->firstOrFail();
-        $otherPage = Page::query()->where('id', '!=', $page->id)->firstOrFail();
+        $page = $this->entities->page();
+        $otherPage = $this->entities->page();
 
         $this->asEditor()->delete($page->getUrl());
         $this->assertEquals(1, Deletion::query()->count());
@@ -214,7 +209,7 @@ class RecycleBinTest extends TestCase
     public function test_auto_clear_functionality_with_zero_time_deletes_instantly()
     {
         config()->set('app.recycle_bin_lifetime', 0);
-        $page = Page::query()->firstOrFail();
+        $page = $this->entities->page();
 
         $this->asEditor()->delete($page->getUrl());
         $this->assertDatabaseMissing('pages', ['id' => $page->id]);
@@ -253,8 +248,7 @@ class RecycleBinTest extends TestCase
 
     public function test_restore_page_shows_link_to_parent_restore_if_parent_also_deleted()
     {
-        /** @var Book $book */
-        $book = Book::query()->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
+        $book = $this->entities->bookHasChaptersAndPages();
         $chapter = $book->chapters->first();
         /** @var Page $page */
         $page = $chapter->pages->first();

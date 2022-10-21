@@ -18,7 +18,7 @@ import dropdown from "./dropdown.js"
 import dropdownSearch from "./dropdown-search.js"
 import dropzone from "./dropzone.js"
 import editorToolbox from "./editor-toolbox.js"
-import entityPermissionsEditor from "./entity-permissions-editor.js"
+import entityPermissions from "./entity-permissions";
 import entitySearch from "./entity-search.js"
 import entitySelector from "./entity-selector.js"
 import entitySelectorPopup from "./entity-selector-popup.js"
@@ -38,6 +38,7 @@ import pageDisplay from "./page-display.js"
 import pageEditor from "./page-editor.js"
 import pagePicker from "./page-picker.js"
 import permissionsTable from "./permissions-table.js"
+import pointer from "./pointer.js";
 import popup from "./popup.js"
 import settingAppColorPicker from "./setting-app-color-picker.js"
 import settingColorPicker from "./setting-color-picker.js"
@@ -75,7 +76,7 @@ const componentMapping = {
     "dropdown-search": dropdownSearch,
     "dropzone": dropzone,
     "editor-toolbox": editorToolbox,
-    "entity-permissions-editor": entityPermissionsEditor,
+    "entity-permissions": entityPermissions,
     "entity-search": entitySearch,
     "entity-selector": entitySelector,
     "entity-selector-popup": entitySelectorPopup,
@@ -95,6 +96,7 @@ const componentMapping = {
     "page-editor": pageEditor,
     "page-picker": pagePicker,
     "permissions-table": permissionsTable,
+    "pointer": pointer,
     "popup": popup,
     "setting-app-color-picker": settingAppColorPicker,
     "setting-color-picker": settingColorPicker,

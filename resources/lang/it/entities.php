@@ -42,10 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Permessi',
-    'permissions_intro' => 'Una volta abilitati, questi permessi avranno la priorità su tutti gli altri.',
-    'permissions_enable' => 'Abilita Permessi Custom',
+    'permissions_desc' => 'Imposta qui i permessi per sovrascrivere i permessi predefiniti forniti dai ruoli utente.',
+    'permissions_book_cascade' => 'I permessi impostati sui libri si trasmettono automaticamente a cascata ai capitoli e alle pagine figli, a meno che non siano stati definiti permessi propri.',
+    'permissions_chapter_cascade' => 'I permessi impostati sui capitoli si trasmettono automaticamente a cascata alle pagine figlie, a meno che non siano stati definiti permessi propri.',
     'permissions_save' => 'Salva Permessi',
     'permissions_owner' => 'Proprietario',
+    'permissions_role_everyone_else' => 'Tutti Gli Altri',
+    'permissions_role_everyone_else_desc' => 'Imposta i permessi per tutti i ruoli non specificamente sovrascritti.',
+    'permissions_role_override' => 'Sovrascrivere i permessi per il ruolo',
 
     // Search
     'search_results' => 'Risultati Ricerca',

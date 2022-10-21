@@ -1,4 +1,7 @@
-<div class="pointer-container" id="pointer">
+<div component="pointer"
+     option:pointer:page-id="{{ $page->id }}"
+     id="pointer"
+     class="pointer-container">
     <div class="pointer anim {{ userCan('page-update', $page) ? 'is-page-editable' : ''}}" >
         <span class="icon mr-xxs">@icon('link') @icon('include', ['style' => 'display:none;'])</span>
         <div class="input-group inline block">

@@ -39,16 +39,16 @@ function defineCodeBlockCustomElement(editor) {
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
-            const linkElem = document.createElement('link');
-            linkElem.setAttribute('rel', 'stylesheet');
-            linkElem.setAttribute('href', window.baseUrl('/dist/styles.css'));
+
+            const stylesToCopy = document.querySelectorAll('link[rel="stylesheet"]:not([media="print"])');
+            const copiedStyles = Array.from(stylesToCopy).map(styleEl => styleEl.cloneNode(false));
 
             const cmContainer = document.createElement('div');
             cmContainer.style.pointerEvents = 'none';
             cmContainer.contentEditable = 'false';
             cmContainer.classList.add('CodeMirrorContainer');
 
-            this.shadowRoot.append(linkElem, cmContainer);
+            this.shadowRoot.append(...copiedStyles, cmContainer);
         }
 
         getLanguage() {
@@ -153,6 +153,14 @@ function register(editor, url) {
         }
     });
 
+    editor.ui.registry.addButton('editcodeeditor', {
+        tooltip: 'Edit code block',
+        icon: 'edit-block',
+        onAction() {
+            editor.execCommand('codeeditor');
+        }
+    });
+
     editor.addCommand('codeeditor', () => {
         const selectedNode = editor.selection.getNode();
         const doc = selectedNode.ownerDocument;
@@ -206,6 +214,15 @@ function register(editor, url) {
                 el.unwrap();
             }
         });
+    });
+
+    editor.ui.registry.addContextToolbar('codeeditor', {
+        predicate: function (node) {
+            return node.nodeName.toLowerCase() === 'code-block';
+        },
+        items: 'editcodeeditor',
+        position: 'node',
+        scope: 'node'
     });
 
     editor.on('PreInit', () => {

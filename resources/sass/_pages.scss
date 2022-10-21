@@ -182,7 +182,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
 
 // Page content pointers
 .pointer-container {
-  position: relative;
+  position: fixed;
   display: none;
   left: 0;
   z-index: 10;
@@ -196,11 +196,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
   padding: $-s $-s;
   border-radius: 4px;
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: -60px;
   @include lightDark(background-color, #fff, #333);
   width: 275px;
-  z-index: 55;
 
   &.is-page-editable {
     width: 328px;

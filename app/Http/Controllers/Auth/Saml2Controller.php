@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class Saml2Controller extends Controller
 {
-    protected $samlService;
+    protected Saml2Service $samlService;
 
     /**
      * Saml2Controller constructor.

@@ -26,7 +26,6 @@
         "laravel/framework": "^8.68",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.6",
-        "laravel/ui": "^3.3",
         "league/commonmark": "^1.6",
         "league/flysystem-aws-s3-v3": "^1.0.29",
         "league/html-to-markdown": "^5.0.0",
@@ -44,6 +43,7 @@
         "ssddanbrown/htmldiff": "^1.0.2"
     },
     "require-dev": {
+        "brianium/paratest": "^6.6",
         "fakerphp/faker": "^1.16",
         "itsgoingd/clockwork": "^5.1",
         "mockery/mockery": "^1.4",
@@ -73,6 +73,8 @@
         "format": "phpcbf",
         "lint": "phpcs",
         "test": "phpunit",
+        "t": "@php artisan test --parallel",
+        "t-reset": "@php artisan test --recreate-databases",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

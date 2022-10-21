@@ -1,4 +1,3 @@
-import Clipboard from "clipboard/dist/clipboard.min";
 import * as DOM from "../services/dom";
 import {scrollAndHighlightElement} from "../services/util";
 
@@ -9,7 +8,6 @@ class PageDisplay {
         this.pageId = elem.getAttribute('page-display');
 
         window.importVersioned('code').then(Code => Code.highlight());
-        this.setupPointer();
         this.setupNavHighlighting();
         this.setupDetailsCodeBlockRefresh();
 
@@ -48,108 +46,6 @@ class PageDisplay {
                 scrollAndHighlightElement(textElem);
             }
         }
-    }
-
-    setupPointer() {
-        let pointer = document.getElementById('pointer');
-        if (!pointer) {
-            return;
-        }
-
-        // Set up pointer
-        pointer = pointer.parentNode.removeChild(pointer);
-        const pointerInner = pointer.querySelector('div.pointer');
-
-        // Instance variables
-        let pointerShowing = false;
-        let isSelection = false;
-        let pointerModeLink = true;
-        let pointerSectionId = '';
-
-        // Select all contents on input click
-        DOM.onChildEvent(pointer, 'input', 'click', (event, input) => {
-            input.select();
-            event.stopPropagation();
-        });
-
-        // Prevent closing pointer when clicked or focused
-        DOM.onEvents(pointer, ['click', 'focus'], event => {
-            event.stopPropagation();
-        });
-
-        // Pointer mode toggle
-        DOM.onChildEvent(pointer, 'span.icon', 'click', (event, icon) => {
-            event.stopPropagation();
-            pointerModeLink = !pointerModeLink;
-            icon.querySelector('[data-icon="include"]').style.display = (!pointerModeLink) ? 'inline' : 'none';
-            icon.querySelector('[data-icon="link"]').style.display = (pointerModeLink) ? 'inline' : 'none';
-            updatePointerContent();
-        });
-
-        // Set up clipboard
-        new Clipboard(pointer.querySelector('button'));
-
-        // Hide pointer when clicking away
-        DOM.onEvents(document.body, ['click', 'focus'], event => {
-            if (!pointerShowing || isSelection) return;
-            pointer = pointer.parentElement.removeChild(pointer);
-            pointerShowing = false;
-        });
-
-        let updatePointerContent = (element) => {
-            let inputText = pointerModeLink ? window.baseUrl(`/link/${this.pageId}#${pointerSectionId}`) : `{{@${this.pageId}#${pointerSectionId}}}`;
-            if (pointerModeLink && !inputText.startsWith('http')) {
-                inputText = window.location.protocol + "//" + window.location.host + inputText;
-            }
-
-            pointer.querySelector('input').value = inputText;
-
-            // Update anchor if present
-            const editAnchor = pointer.querySelector('#pointer-edit');
-            if (editAnchor && element) {
-                const editHref = editAnchor.dataset.editHref;
-                const elementId = element.id;
-
-                // get the first 50 characters.
-                const queryContent = element.textContent && element.textContent.substring(0, 50);
-                editAnchor.href = `${editHref}?content-id=${elementId}&content-text=${encodeURIComponent(queryContent)}`;
-            }
-        };
-
-        // Show pointer when selecting a single block of tagged content
-        DOM.forEach('.page-content [id^="bkmrk"]', bookMarkElem => {
-            DOM.onEvents(bookMarkElem, ['mouseup', 'keyup'], event => {
-                event.stopPropagation();
-                let selection = window.getSelection();
-                if (selection.toString().length === 0) return;
-
-                // Show pointer and set link
-                pointerSectionId = bookMarkElem.id;
-                updatePointerContent(bookMarkElem);
-
-                bookMarkElem.parentNode.insertBefore(pointer, bookMarkElem);
-                pointer.style.display = 'block';
-                pointerShowing = true;
-                isSelection = true;
-
-                // Set pointer to sit near mouse-up position
-                requestAnimationFrame(() => {
-                    const bookMarkBounds = bookMarkElem.getBoundingClientRect();
-                    let pointerLeftOffset = (event.pageX - bookMarkBounds.left - 164);
-                    if (pointerLeftOffset < 0) {
-                        pointerLeftOffset = 0
-                    }
-                    const pointerLeftOffsetPercent = (pointerLeftOffset / bookMarkBounds.width) * 100;
-
-                    pointerInner.style.left = pointerLeftOffsetPercent + '%';
-
-                    setTimeout(() => {
-                        isSelection = false;
-                    }, 100);
-                });
-
-            });
-        });
     }
 
     setupNavHighlighting() {

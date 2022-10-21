@@ -6,7 +6,7 @@ use BookStack\Uploads\ImageService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
-class CustomValidationServiceProvider extends ServiceProvider
+class ValidationRuleServiceProvider extends ServiceProvider
 {
     /**
      * Register our custom validation rules when the application boots.

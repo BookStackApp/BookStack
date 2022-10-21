@@ -246,26 +246,40 @@ $btt-size: 40px;
   border-radius: 3px;
   min-height: 20px;
   @include lightDark(background-color, #EEE, #000);
-  .scroll-box-item {
+}
+.scroll-box-item {
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+  @include lightDark(border-color, #DDD, #000);
+  margin-top: -1px;
+  @include lightDark(background-color, #FFF, #222);
+  display: flex;
+  padding: 1px;
+  &:last-child {
+    border-bottom: 0;
+  }
+  &:hover {
+    cursor: pointer;
+    @include lightDark(background-color, #f8f8f8, #333);
+  }
+  .handle {
+    color: #AAA;
+    cursor: grab;
+  }
+  .handle svg {
+    margin: 0;
+  }
+  > * {
     padding: $-xs $-m;
-    border-bottom: 1px solid;
-    border-top: 1px solid;
-    @include lightDark(border-color, #DDD, #000);
-    margin-top: -1px;
-    @include lightDark(background-color, #FFF, #222);
-    display: flex;
-    gap: $-xs;
-    &:last-child {
-      border-bottom: 0;
-    }
-    &:hover {
-      cursor: pointer;
-      @include lightDark(background-color, #f8f8f8, #333);
-    }
-    .handle {
-      color: #AAA;
-      cursor: grab;
-    }
+  }
+  .handle + * {
+    padding-left: 0;
+  }
+  &:hover .handle {
+    @include lightDark(color, #444, #FFF);
+  }
+  a:hover {
+    text-decoration: none;
   }
 }
 

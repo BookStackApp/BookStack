@@ -25,14 +25,14 @@
 
             <table class="table">
                 <tr>
-                    <th></th>
-                    <th>
+                    <th width="9%"></th>
+                    <th width="36%">
                         <a href="{{ sortUrl('/settings/users', $listDetails, ['sort' => 'name']) }}">{{ trans('auth.name') }}</a>
                         /
                         <a href="{{ sortUrl('/settings/users', $listDetails, ['sort' => 'email']) }}">{{ trans('auth.email') }}</a>
                     </th>
-                    <th>{{ trans('settings.role_user_roles') }}</th>
-                    <th class="text-right">
+                    <th width="35%">{{ trans('settings.role_user_roles') }}</th>
+                    <th class="text-right" width="20%">
                         <a href="{{ sortUrl('/settings/users', $listDetails, ['sort' => 'last_activity_at']) }}">{{ trans('settings.users_latest_activity') }}</a>
                     </th>
                 </tr>

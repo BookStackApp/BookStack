@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 class RolesTest extends TestCase
 {
-    protected $user;
+    protected User $user;
 
     protected function setUp(): void
     {
@@ -163,6 +163,29 @@ class RolesTest extends TestCase
         $this->assertEquals($this->user->id, $roleA->users()->first()->id);
     }
 
+    public function test_entity_permissions_are_removed_on_delete()
+    {
+        /** @var Role $roleA */
+        $roleA = Role::query()->create(['display_name' => 'Entity Permissions Delete Test']);
+        $page = $this->entities->page();
+
+        $this->entities->setPermissions($page, ['view'], [$roleA]);
+
+        $this->assertDatabaseHas('entity_permissions', [
+            'role_id' => $roleA->id,
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+        ]);
+
+        $this->asAdmin()->delete("/settings/roles/delete/$roleA->id");
+
+        $this->assertDatabaseMissing('entity_permissions', [
+            'role_id' => $roleA->id,
+            'entity_id' => $page->id,
+            'entity_type' => $page->getMorphClass(),
+        ]);
+    }
+
     public function test_image_view_notice_shown_on_role_form()
     {
         /** @var Role $role */
@@ -285,7 +308,7 @@ class RolesTest extends TestCase
     {
         /** @var Page $otherUsersPage */
         $otherUsersPage = Page::query()->first();
-        $content = $this->createEntityChainBelongingToUser($this->user);
+        $content = $this->entities->createChainBelongingToUser($this->user);
 
         // Set a different creator on the page we're checking to ensure
         // that the owner fields are checked
@@ -355,9 +378,9 @@ class RolesTest extends TestCase
     {
         /** @var Bookshelf $otherShelf */
         $otherShelf = Bookshelf::query()->first();
-        $ownShelf = $this->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
+        $ownShelf = $this->entities->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
         $ownShelf->forceFill(['owned_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
-        $this->regenEntityPermissions($ownShelf);
+        $this->entities->regenPermissions($ownShelf);
 
         $this->checkAccessPermission('bookshelf-update-own', [
             $ownShelf->getUrl('/edit'),
@@ -386,9 +409,9 @@ class RolesTest extends TestCase
         $this->giveUserPermissions($this->user, ['bookshelf-update-all']);
         /** @var Bookshelf $otherShelf */
         $otherShelf = Bookshelf::query()->first();
-        $ownShelf = $this->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
+        $ownShelf = $this->entities->newShelf(['name' => 'test-shelf', 'slug' => 'test-shelf']);
         $ownShelf->forceFill(['owned_by' => $this->user->id, 'updated_by' => $this->user->id])->save();
-        $this->regenEntityPermissions($ownShelf);
+        $this->entities->regenPermissions($ownShelf);
 
         $this->checkAccessPermission('bookshelf-delete-own', [
             $ownShelf->getUrl('/delete'),
@@ -438,7 +461,7 @@ class RolesTest extends TestCase
     {
         /** @var Book $otherBook */
         $otherBook = Book::query()->take(1)->get()->first();
-        $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
+        $ownBook = $this->entities->createChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('book-update-own', [
             $ownBook->getUrl() . '/edit',
         ], [
@@ -466,7 +489,7 @@ class RolesTest extends TestCase
         $this->giveUserPermissions($this->user, ['book-update-all']);
         /** @var Book $otherBook */
         $otherBook = Book::query()->take(1)->get()->first();
-        $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
+        $ownBook = $this->entities->createChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('book-delete-own', [
             $ownBook->getUrl() . '/delete',
         ], [
@@ -501,7 +524,7 @@ class RolesTest extends TestCase
     {
         /** @var Book $book */
         $book = Book::query()->take(1)->get()->first();
-        $ownBook = $this->createEntityChainBelongingToUser($this->user)['book'];
+        $ownBook = $this->entities->createChainBelongingToUser($this->user)['book'];
         $this->checkAccessPermission('chapter-create-own', [
             $ownBook->getUrl('/create-chapter'),
         ], [
@@ -520,8 +543,7 @@ class RolesTest extends TestCase
 
     public function test_chapter_create_all_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
+        $book = $this->entities->book();
         $this->checkAccessPermission('chapter-create-all', [
             $book->getUrl('/create-chapter'),
         ], [
@@ -538,7 +560,7 @@ class RolesTest extends TestCase
     {
         /** @var Chapter $otherChapter */
         $otherChapter = Chapter::query()->first();
-        $ownChapter = $this->createEntityChainBelongingToUser($this->user)['chapter'];
+        $ownChapter = $this->entities->createChainBelongingToUser($this->user)['chapter'];
         $this->checkAccessPermission('chapter-update-own', [
             $ownChapter->getUrl() . '/edit',
         ], [
@@ -566,7 +588,7 @@ class RolesTest extends TestCase
         $this->giveUserPermissions($this->user, ['chapter-update-all']);
         /** @var Chapter $otherChapter */
         $otherChapter = Chapter::query()->first();
-        $ownChapter = $this->createEntityChainBelongingToUser($this->user)['chapter'];
+        $ownChapter = $this->entities->createChainBelongingToUser($this->user)['chapter'];
         $this->checkAccessPermission('chapter-delete-own', [
             $ownChapter->getUrl() . '/delete',
         ], [
@@ -603,12 +625,10 @@ class RolesTest extends TestCase
 
     public function test_page_create_own_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $book = $this->entities->book();
+        $chapter = $this->entities->chapter();
 
-        $entities = $this->createEntityChainBelongingToUser($this->user);
+        $entities = $this->entities->createChainBelongingToUser($this->user);
         $ownBook = $entities['book'];
         $ownChapter = $entities['chapter'];
 
@@ -652,10 +672,8 @@ class RolesTest extends TestCase
 
     public function test_page_create_all_permissions()
     {
-        /** @var Book $book */
-        $book = Book::query()->first();
-        /** @var Chapter $chapter */
-        $chapter = Chapter::query()->first();
+        $book = $this->entities->book();
+        $chapter = $this->entities->chapter();
         $createUrl = $book->getUrl('/create-page');
 
         $createUrlChapter = $chapter->getUrl('/create-page');
@@ -699,7 +717,7 @@ class RolesTest extends TestCase
     {
         /** @var Page $otherPage */
         $otherPage = Page::query()->first();
-        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $ownPage = $this->entities->createChainBelongingToUser($this->user)['page'];
         $this->checkAccessPermission('page-update-own', [
             $ownPage->getUrl() . '/edit',
         ], [
@@ -727,7 +745,7 @@ class RolesTest extends TestCase
         $this->giveUserPermissions($this->user, ['page-update-all']);
         /** @var Page $otherPage */
         $otherPage = Page::query()->first();
-        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $ownPage = $this->entities->createChainBelongingToUser($this->user)['page'];
         $this->checkAccessPermission('page-delete-own', [
             $ownPage->getUrl() . '/delete',
         ], [
@@ -806,8 +824,7 @@ class RolesTest extends TestCase
     public function test_image_delete_own_permission()
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $image = Image::factory()->create([
             'uploaded_to' => $page->id,
             'created_by'  => $this->user->id,
@@ -826,8 +843,7 @@ class RolesTest extends TestCase
     {
         $this->giveUserPermissions($this->user, ['image-update-all']);
         $admin = $this->getAdmin();
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $image = Image::factory()->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);
 
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertStatus(403);
@@ -845,8 +861,7 @@ class RolesTest extends TestCase
     public function test_role_permission_removal()
     {
         // To cover issue fixed in f99c8ff99aee9beb8c692f36d4b84dc6e651e50a.
-        /** @var Page $page */
-        $page = Page::query()->first();
+        $page = $this->entities->page();
         $viewerRole = Role::getRole('viewer');
         $viewer = $this->getViewer();
         $this->actingAs($viewer)->get($page->getUrl())->assertOk();
@@ -865,14 +880,14 @@ class RolesTest extends TestCase
         $admin = $this->getAdmin();
         // Book links
         $book = Book::factory()->create(['created_by' => $admin->id, 'updated_by' => $admin->id]);
-        $this->regenEntityPermissions($book);
+        $this->entities->regenPermissions($book);
         $this->actingAs($this->getViewer())->get($book->getUrl())
             ->assertDontSee('Create a new page')
             ->assertDontSee('Add a chapter');
 
         // Chapter links
         $chapter = Chapter::factory()->create(['created_by' => $admin->id, 'updated_by' => $admin->id, 'book_id' => $book->id]);
-        $this->regenEntityPermissions($chapter);
+        $this->entities->regenPermissions($chapter);
         $this->actingAs($this->getViewer())->get($chapter->getUrl())
             ->assertDontSee('Create a new page')
             ->assertDontSee('Sort the current book');
@@ -880,7 +895,7 @@ class RolesTest extends TestCase
 
     public function test_comment_create_permission()
     {
-        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $ownPage = $this->entities->createChainBelongingToUser($this->user)['page'];
 
         $this->actingAs($this->user)
             ->addComment($ownPage)
@@ -895,7 +910,7 @@ class RolesTest extends TestCase
 
     public function test_comment_update_own_permission()
     {
-        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $ownPage = $this->entities->createChainBelongingToUser($this->user)['page'];
         $this->giveUserPermissions($this->user, ['comment-create-all']);
         $this->actingAs($this->user)->addComment($ownPage);
         /** @var Comment $comment */
@@ -913,7 +928,7 @@ class RolesTest extends TestCase
     public function test_comment_update_all_permission()
     {
         /** @var Page $ownPage */
-        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $ownPage = $this->entities->createChainBelongingToUser($this->user)['page'];
         $this->asAdmin()->addComment($ownPage);
         /** @var Comment $comment */
         $comment = $ownPage->comments()->latest()->first();
@@ -930,7 +945,7 @@ class RolesTest extends TestCase
     public function test_comment_delete_own_permission()
     {
         /** @var Page $ownPage */
-        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $ownPage = $this->entities->createChainBelongingToUser($this->user)['page'];
         $this->giveUserPermissions($this->user, ['comment-create-all']);
         $this->actingAs($this->user)->addComment($ownPage);
 
@@ -949,7 +964,7 @@ class RolesTest extends TestCase
     public function test_comment_delete_all_permission()
     {
         /** @var Page $ownPage */
-        $ownPage = $this->createEntityChainBelongingToUser($this->user)['page'];
+        $ownPage = $this->entities->createChainBelongingToUser($this->user)['page'];
         $this->asAdmin()->addComment($ownPage);
         /** @var Comment $comment */
         $comment = $ownPage->comments()->latest()->first();
