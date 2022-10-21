@@ -118,3 +118,16 @@ export function removeLoading(element) {
         el.remove();
     }
 }
+
+/**
+ * Convert the given html data into a live DOM element.
+ * Initiates any components defined in the data.
+ * @param {String} html
+ * @returns {Element}
+ */
+export function htmlToDom(html) {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = html;
+    window.components.init(wrap);
+    return wrap.children[0];
+}

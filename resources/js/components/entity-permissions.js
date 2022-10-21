@@ -1,6 +1,8 @@
 /**
  * @extends {Component}
  */
+import {htmlToDom} from "../services/dom";
+
 class EntityPermissions {
 
     setup() {
@@ -53,11 +55,8 @@ class EntityPermissions {
 
         // Get and insert new row
         const resp = await window.$http.get(`/permissions/form-row/${this.entityType}/${roleId}`);
-        const wrap = document.createElement('div');
-        wrap.innerHTML = resp.data;
-        const row = wrap.children[0];
+        const row = htmlToDom(resp.data);
         this.roleContainer.append(row);
-        window.components.init(row);
 
         this.roleSelect.disabled = false;
     }
