@@ -140,6 +140,7 @@ class JointPermissionBuilder
         return Book::query()->withTrashed()
             ->select(['id', 'owned_by'])->with([
                 'chapters' => function ($query) {
+                    $query->withTrashed()->select(['id', 'owned_by', 'book_id']);
                 },
                 'pages' => function ($query) {
                     $query->withTrashed()->select(['id', 'owned_by', 'book_id', 'chapter_id']);
