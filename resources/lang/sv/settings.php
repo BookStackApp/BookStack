@@ -248,7 +248,7 @@ return [
     'webhooks_details' => 'Webhook-detaljer',
     'webhooks_details_desc' => 'Provide a user friendly name and a POST endpoint as a location for the webhook data to be sent to.',
     'webhooks_events' => 'Webhook-händelser',
-    'webhooks_events_desc' => 'Select all the events that should trigger this webhook to be called.',
+    'webhooks_events_desc' => 'Välja alla händelser som ska trigga ett anrop av denna webhook.',
     'webhooks_events_warning' => 'Tänk på att dessa händelser kommer att triggas för alla valda händelser, även om anpassade behörigheter tillämpas. Se till att användningen av denna webhook inte avslöjar konfidentiellt innehåll.',
     'webhooks_events_all' => 'Alla systemhändelser',
     'webhooks_name' => 'Namn på webhook',
@@ -263,7 +263,7 @@ return [
     'webhooks_format_example_desc' => 'Webhook data is sent as a POST request to the configured endpoint as JSON following the format below. The "related_item" and "url" properties are optional and will depend on the type of event triggered.',
     'webhooks_status' => 'Webhook-status',
     'webhooks_last_called' => 'Senast anropad:',
-    'webhooks_last_errored' => 'Last Errored:',
+    'webhooks_last_errored' => 'Senast felande:',
     'webhooks_last_error_message' => 'Senaste felmeddelande:',
 
 
