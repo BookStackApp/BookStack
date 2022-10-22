@@ -6,7 +6,7 @@
  */
 return [
 
-    'failed' => 'Uppgifterna stämmer inte överrens med våra register.',
+    'failed' => 'Uppgifterna stämmer inte överens med våra register.',
     'throttle' => 'För många inloggningsförsök. Prova igen om :seconds sekunder.',
 
     // Login & Register
