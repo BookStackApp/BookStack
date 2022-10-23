@@ -27,7 +27,7 @@ return [
     'app_secure_images' => 'Aktivera högre säkerhet för bilduppladdningar?',
     'app_secure_images_toggle' => 'Aktivera säkrare bilduppladdningar',
     'app_secure_images_desc' => 'Av prestandaskäl är alla bilder publika. Det här alternativet lägger till en slumpmässig, svårgissad sträng framför alla bild-URL:er. Se till att kataloglistning inte är aktivt för att förhindra åtkomst.',
-    'app_default_editor' => 'Standard sidredigerare',
+    'app_default_editor' => 'Standard-sidredigerare',
     'app_default_editor_desc' => 'Välj vilken redigerare som ska användas som standard vid redigering av nya sidor. Detta kan ändras enskilt för sidor som tillåter det.',
     'app_custom_html' => 'Egen HTML i <head>',
     'app_custom_html_desc' => 'Eventuellt innehåll i det här fältet placeras längst ner i <head>-sektionen på varje sida. Detta är användbart för att skriva över stilmaller eller lägga in spårningskoder.',
