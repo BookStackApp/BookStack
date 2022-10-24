@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
+use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
@@ -50,6 +51,7 @@ class PageRevisionController extends Controller
     public function show(string $bookSlug, string $pageSlug, int $revisionId)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        /** @var ?PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
             throw new NotFoundException();
@@ -78,6 +80,7 @@ class PageRevisionController extends Controller
     public function changes(string $bookSlug, string $pageSlug, int $revisionId)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        /** @var ?PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
             throw new NotFoundException();

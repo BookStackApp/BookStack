@@ -50,7 +50,7 @@ class SearchRunner
      * The provided count is for each entity to search,
      * Total returned could be larger and not guaranteed.
      *
-     * @return array{total: int, count: int, has_more: bool, results: Entity[]}
+     * @return array{total: int, count: int, has_more: bool, results: Collection<Entity>}
      */
     public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20): array
     {

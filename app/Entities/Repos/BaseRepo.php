@@ -87,14 +87,14 @@ class BaseRepo
     {
         if ($coverImage) {
             $imageType = $entity->coverImageTypeKey();
-            $this->imageRepo->destroyImage($entity->cover);
+            $this->imageRepo->destroyImage($entity->cover()->first());
             $image = $this->imageRepo->saveNew($coverImage, $imageType, $entity->id, 512, 512, true);
             $entity->cover()->associate($image);
             $entity->save();
         }
 
         if ($removeImage) {
-            $this->imageRepo->destroyImage($entity->cover);
+            $this->imageRepo->destroyImage($entity->cover()->first());
             $entity->image_id = 0;
             $entity->save();
         }

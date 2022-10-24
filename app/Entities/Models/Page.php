@@ -88,8 +88,6 @@ class Page extends BookChild
 
     /**
      * Get the current revision for the page if existing.
-     *
-     * @return PageRevision|null
      */
     public function currentRevision(): HasOne
     {
