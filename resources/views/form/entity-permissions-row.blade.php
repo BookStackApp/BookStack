@@ -5,7 +5,7 @@ $permission - The entity permission containing the permissions.
 $inheriting - Boolean if the current row should be marked as inheriting default permissions. Used for "Everyone Else" role.
 --}}
 
-<div component="permissions-table" class="content-permissions-row flex-container-row justify-space-between wrap">
+<div component="permissions-table" class="item-list-row flex-container-row justify-space-between wrap">
     <div class="gap-x-m flex-container-row items-center px-l py-m flex">
         <div class="text-large" title="{{ $role->id === 0 ? trans('entities.permissions_role_everyone_else') : trans('common.role') }}">
             @icon($role->id === 0 ? 'groups' : 'role')
@@ -16,7 +16,7 @@ $inheriting - Boolean if the current row should be marked as inheriting default 
         </span>
         @if($role->id !== 0)
             <button type="button"
-                class="ml-auto flex-none text-small text-primary text-button hover-underline content-permissions-row-toggle-all hide-under-s"
+                class="ml-auto flex-none text-small text-primary text-button hover-underline item-list-row-toggle-all hide-under-s"
                 refs="permissions-table@toggle-all"
                 ><strong>{{ trans('common.toggle_all') }}</strong></button>
         @endif

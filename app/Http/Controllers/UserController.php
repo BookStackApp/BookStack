@@ -37,15 +37,15 @@ class UserController extends Controller
     {
         $this->checkPermission('users-manage');
         $listDetails = [
-            'order'  => $request->get('order', 'asc'),
             'search' => $request->get('search', ''),
-            'sort'   => $request->get('sort', 'name'),
+            'sort'   => setting()->getForCurrentUser('users_sort', 'name'),
+            'order'  => setting()->getForCurrentUser('users_sort_order', 'asc'),
         ];
 
         $users = (new AllUsersPaginatedAndSorted())->run(20, $listDetails);
 
         $this->setPageTitle(trans('settings.users'));
-        $users->appends($listDetails);
+        $users->appends(['search' => $listDetails['search']]);
 
         return view('users.index', [
             'users'       => $users,
@@ -251,7 +251,7 @@ class UserController extends Controller
      */
     public function changeSort(Request $request, string $id, string $type)
     {
-        $validSortTypes = ['books', 'bookshelves', 'shelf_books'];
+        $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users'];
         if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }
@@ -318,7 +318,7 @@ class UserController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $sort = $request->get('sort');
-        if (!in_array($sort, ['name', 'created_at', 'updated_at', 'default'])) {
+        if (!in_array($sort, ['name', 'created_at', 'updated_at', 'default', 'email', 'last_activity_at'])) {
             $sort = 'name';
         }
 
