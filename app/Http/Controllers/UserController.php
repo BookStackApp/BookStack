@@ -251,7 +251,7 @@ class UserController extends Controller
      */
     public function changeSort(Request $request, string $id, string $type)
     {
-        $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users'];
+        $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users', 'roles'];
         if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }
@@ -318,7 +318,13 @@ class UserController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $userId);
 
         $sort = $request->get('sort');
-        if (!in_array($sort, ['name', 'created_at', 'updated_at', 'default', 'email', 'last_activity_at'])) {
+        // TODO - Need to find a better way to validate sort options
+        //   Probably better to do a simple validation here then validate at usage.
+        $validSorts = [
+            'name', 'created_at', 'updated_at', 'default', 'email', 'last_activity_at', 'display_name',
+            'users_count', 'permissions_count',
+        ];
+        if (!in_array($sort, $validSorts)) {
             $sort = 'name';
         }
 

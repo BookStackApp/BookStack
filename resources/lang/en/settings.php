@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'Roles',
     'role_user_roles' => 'User Roles',
+    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
+    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
+    'roles_x_permissions_provided' => '1 permission|:count permissions',
+    'roles_assigned_users' => 'Assigned Users',
+    'roles_permissions_provided' => 'Provided Permissions',
     'role_create' => 'Create New Role',
     'role_create_success' => 'Role successfully created',
     'role_delete' => 'Delete Role',
