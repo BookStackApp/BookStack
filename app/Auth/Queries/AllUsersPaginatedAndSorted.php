@@ -19,6 +19,9 @@ class AllUsersPaginatedAndSorted
     public function run(int $count, array $sortData): LengthAwarePaginator
     {
         $sort = $sortData['sort'];
+        if ($sort === 'created_at') {
+            $sort = 'users.created_at';
+        }
 
         $query = User::query()->select(['*'])
             ->scopes(['withLastActivityAt'])

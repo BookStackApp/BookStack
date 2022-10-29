@@ -172,6 +172,7 @@ return [
 
     // Users
     'users' => 'Users',
+    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
     'user_profile' => 'User Profile',
     'users_add_new' => 'Add New User',
     'users_search' => 'Search Users',

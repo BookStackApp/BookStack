@@ -62,7 +62,7 @@ class EntityPermissions {
     }
 
     removeRowOnButtonClick(button) {
-        const row = button.closest('.content-permissions-row');
+        const row = button.closest('.item-list-row');
         const roleId = button.dataset.roleId;
         const roleName = button.dataset.roleName;
 

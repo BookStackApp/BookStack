@@ -35,7 +35,7 @@
 
     <hr>
 
-    <div refs="entity-permissions@role-container" class="content-permissions mt-m mb-m">
+    <div refs="entity-permissions@role-container" class="item-list mt-m mb-m">
         @foreach($data->permissionsWithRoles() as $permission)
             @include('form.entity-permissions-row', [
                 'permission' => $permission,
@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <div class="content-permissions mt-m mb-xl">
+    <div class="item-list mt-m mb-xl">
         @include('form.entity-permissions-row', [
                 'role' => $data->everyoneElseRole(),
                 'permission' => $data->everyoneElseEntityPermission(),

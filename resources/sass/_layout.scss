@@ -158,6 +158,18 @@ body.flexbox {
   }
 }
 
+.flex-2 {
+  min-height: 0;
+  flex: 2;
+  max-width: 100%;
+}
+
+.flex-3 {
+  min-height: 0;
+  flex: 3;
+  max-width: 100%;
+}
+
 .flex-none {
   flex: none;
 }
@@ -178,6 +190,27 @@ body.flexbox {
   align-items: center;
 }
 
+/**
+ * Min width utilities
+ */
+.min-width-xs {
+  min-width: 120px;
+}
+.min-width-s {
+  min-width: 160px;
+}
+.min-width-m {
+  min-width: 200px;
+}
+.min-width-l {
+  min-width: 240px;
+}
+.min-width-xl {
+  min-width: 280px;
+}
+.min-width-xxl {
+  min-width: 320px;
+}
 
 /**
  * Display and float utilities
