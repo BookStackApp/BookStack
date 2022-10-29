@@ -10,7 +10,7 @@
             <div class="flex-container-row wrap justify-space-between items-center">
                 <h1 class="list-heading">{{ trans('settings.users') }}</h1>
                 <div>
-                    <a href="{{ url("/settings/users/create") }}" class="outline button mt-none">{{ trans('settings.users_add_new') }}</a>
+                    <a href="{{ url("/settings/users/create") }}" class="outline button my-none">{{ trans('settings.users_add_new') }}</a>
                 </div>
             </div>
 
