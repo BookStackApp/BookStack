@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers;
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\Queries\WebhooksAllPaginatedAndSorted;
 use BookStack\Actions\Webhook;
+use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 
 class WebhookController extends Controller
@@ -21,20 +22,22 @@ class WebhookController extends Controller
      */
     public function index(Request $request)
     {
-        $listDetails = [
-            'search' => $request->get('search', ''),
-            'sort'   => setting()->getForCurrentUser('webhooks_sort', 'name'),
-            'order'  => setting()->getForCurrentUser('webhooks_sort_order', 'asc'),
-        ];
+        $listOptions = SimpleListOptions::fromRequest($request, 'webhooks')->withSortOptions([
+            'name' => trans('common.sort_name'),
+            'endpoint'  => trans('settings.webhooks_endpoint'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+            'active'     => trans('common.status'),
+        ]);
 
-        $webhooks = (new WebhooksAllPaginatedAndSorted())->run(20, $listDetails);
-        $webhooks->appends(['search' => $listDetails['search']]);
+        $webhooks = (new WebhooksAllPaginatedAndSorted())->run(20, $listOptions);
+        $webhooks->appends($listOptions->getPaginationAppends());
 
         $this->setPageTitle(trans('settings.webhooks'));
 
         return view('settings.webhooks.index', [
             'webhooks'    => $webhooks,
-            'listDetails' => $listDetails,
+            'listOptions' => $listOptions,
         ]);
     }
 

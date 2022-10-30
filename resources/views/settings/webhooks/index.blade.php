@@ -23,18 +23,15 @@
                 <div>
                     <div class="block inline mr-xs">
                         <form method="get" action="{{ url("/settings/webhooks") }}">
-                            <input type="text" name="search" placeholder="{{ trans('common.search') }}" @if($listDetails['search']) value="{{$listDetails['search']}}" @endif>
+                            <input type="text"
+                                   name="search"
+                                   placeholder="{{ trans('common.search') }}"
+                                   value="{{ $listOptions->getSearch() }}">
                         </form>
                     </div>
                 </div>
                 <div class="justify-flex-end">
-                    @include('common.sort', ['options' => [
-                        'name' => trans('common.sort_name'),
-                        'endpoint'  => trans('settings.webhooks_endpoint'),
-                        'created_at' => trans('common.sort_created_at'),
-                        'updated_at' => trans('common.sort_updated_at'),
-                        'active'     => trans('common.status'),
-                    ], 'order' => $listDetails['order'], 'sort' => $listDetails['sort'], 'type' => 'webhooks'])
+                    @include('common.sort', $listOptions->getSortControlData())
                 </div>
             </div>
 

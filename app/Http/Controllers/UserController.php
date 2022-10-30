@@ -10,6 +10,7 @@ use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Util\SimpleListOptions;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,20 +37,23 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $this->checkPermission('users-manage');
-        $listDetails = [
-            'search' => $request->get('search', ''),
-            'sort'   => setting()->getForCurrentUser('users_sort', 'name'),
-            'order'  => setting()->getForCurrentUser('users_sort_order', 'asc'),
-        ];
 
-        $users = (new UsersAllPaginatedAndSorted())->run(20, $listDetails);
+        $listOptions = SimpleListOptions::fromRequest($request, 'users')->withSortOptions([
+            'name' => trans('common.sort_name'),
+            'email' => trans('auth.email'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+            'last_activity_at' => trans('settings.users_latest_activity'),
+        ]);
+
+        $users = (new UsersAllPaginatedAndSorted())->run(20, $listOptions);
 
         $this->setPageTitle(trans('settings.users'));
-        $users->appends(['search' => $listDetails['search']]);
+        $users->appends($listOptions->getPaginationAppends());
 
         return view('users.index', [
             'users'       => $users,
-            'listDetails' => $listDetails,
+            'listOptions' => $listOptions,
         ]);
     }
 
@@ -256,7 +260,18 @@ class UserController extends Controller
             return redirect()->back(500);
         }
 
-        return $this->changeListSort($id, $request, $type);
+        $this->checkPermissionOrCurrentUser('users-manage', $id);
+
+        $sort = substr($request->get('sort') ?: 'name', 0, 50);
+        $order = $request->get('order') === 'desc' ? 'desc' : 'asc';
+
+        $user = $this->userRepo->getById($id);
+        $sortKey = $type . '_sort';
+        $orderKey = $type . '_sort_order';
+        setting()->putUser($user, $sortKey, $sort);
+        setting()->putUser($user, $orderKey, $order);
+
+        return redirect()->back(302, [], "/settings/users/{$id}");
     }
 
     /**
@@ -308,37 +323,5 @@ class UserController extends Controller
         }
 
         setting()->putUser(user(), 'code-language-favourites', implode(',', $currentFavorites));
-    }
-
-    /**
-     * Changed the stored preference for a list sort order.
-     */
-    protected function changeListSort(int $userId, Request $request, string $listName)
-    {
-        $this->checkPermissionOrCurrentUser('users-manage', $userId);
-
-        $sort = $request->get('sort');
-        // TODO - Need to find a better way to validate sort options
-        //   Probably better to do a simple validation here then validate at usage.
-        $validSorts = [
-            'name', 'created_at', 'updated_at', 'default', 'email', 'last_activity_at', 'display_name',
-            'users_count', 'permissions_count', 'endpoint', 'active',
-        ];
-        if (!in_array($sort, $validSorts)) {
-            $sort = 'name';
-        }
-
-        $order = $request->get('order');
-        if (!in_array($order, ['asc', 'desc'])) {
-            $order = 'asc';
-        }
-
-        $user = $this->userRepo->getById($userId);
-        $sortKey = $listName . '_sort';
-        $orderKey = $listName . '_sort_order';
-        setting()->putUser($user, $sortKey, $sort);
-        setting()->putUser($user, $orderKey, $order);
-
-        return redirect()->back(302, [], "/settings/users/$userId");
     }
 }

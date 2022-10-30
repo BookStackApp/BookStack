@@ -6,6 +6,7 @@ use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Queries\RolesAllPaginatedAndSorted;
 use BookStack\Auth\Role;
 use BookStack\Exceptions\PermissionsException;
+use BookStack\Util\SimpleListOptions;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -26,20 +27,22 @@ class RoleController extends Controller
     {
         $this->checkPermission('user-roles-manage');
 
-        $listDetails = [
-            'search' => $request->get('search', ''),
-            'sort'   => setting()->getForCurrentUser('roles_sort', 'display_name'),
-            'order'  => setting()->getForCurrentUser('roles_sort_order', 'asc'),
-        ];
+        $listOptions = SimpleListOptions::fromRequest($request, 'roles')->withSortOptions([
+            'display_name' => trans('common.sort_name'),
+            'users_count' => trans('settings.roles_assigned_users'),
+            'permissions_count' => trans('settings.roles_permissions_provided'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+        ]);
 
-        $roles = (new RolesAllPaginatedAndSorted())->run(20, $listDetails);
-        $roles->appends(['search' => $listDetails['search']]);
+        $roles = (new RolesAllPaginatedAndSorted())->run(20, $listOptions);
+        $roles->appends($listOptions->getPaginationAppends());
 
         $this->setPageTitle(trans('settings.roles'));
 
         return view('settings.roles.index', [
             'roles'       => $roles,
-            'listDetails' => $listDetails,
+            'listOptions' => $listOptions,
         ]);
     }
 
