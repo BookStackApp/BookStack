@@ -3,7 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\Permissions\PermissionsRepo;
-use BookStack\Auth\Queries\AllRolesPaginatedAndSorted;
+use BookStack\Auth\Queries\RolesAllPaginatedAndSorted;
 use BookStack\Auth\Role;
 use BookStack\Exceptions\PermissionsException;
 use Exception;
@@ -32,7 +32,7 @@ class RoleController extends Controller
             'order'  => setting()->getForCurrentUser('roles_sort_order', 'asc'),
         ];
 
-        $roles = (new AllRolesPaginatedAndSorted())->run(20, $listDetails);
+        $roles = (new RolesAllPaginatedAndSorted())->run(20, $listDetails);
         $roles->appends(['search' => $listDetails['search']]);
 
         $this->setPageTitle(trans('settings.roles'));

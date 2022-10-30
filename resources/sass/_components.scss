@@ -970,3 +970,16 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .item-list-row:hover .item-list-row-toggle-all {
   visibility: visible;
 }
+
+.status-indicator-active, .status-indicator-inactive {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-indicator-active {
+  background-color: $positive;
+}
+.status-indicator-inactive {
+  background-color: $negative;
+}

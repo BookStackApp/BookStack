@@ -31,6 +31,8 @@
                         'display_name' => trans('common.sort_name'),
                         'users_count' => trans('settings.roles_assigned_users'),
                         'permissions_count' => trans('settings.roles_permissions_provided'),
+                        'created_at' => trans('common.sort_created_at'),
+                        'updated_at' => trans('common.sort_updated_at'),
                     ], 'order' => $listDetails['order'], 'sort' => $listDetails['sort'], 'type' => 'roles'])
                 </div>
             </div>

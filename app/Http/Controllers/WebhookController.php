@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
+use BookStack\Actions\Queries\WebhooksAllPaginatedAndSorted;
 use BookStack\Actions\Webhook;
 use Illuminate\Http\Request;
 
@@ -18,16 +19,23 @@ class WebhookController extends Controller
     /**
      * Show all webhooks configured in the system.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $webhooks = Webhook::query()
-            ->orderBy('name', 'desc')
-            ->with('trackedEvents')
-            ->get();
+        $listDetails = [
+            'search' => $request->get('search', ''),
+            'sort'   => setting()->getForCurrentUser('webhooks_sort', 'name'),
+            'order'  => setting()->getForCurrentUser('webhooks_sort_order', 'asc'),
+        ];
+
+        $webhooks = (new WebhooksAllPaginatedAndSorted())->run(20, $listDetails);
+        $webhooks->appends(['search' => $listDetails['search']]);
 
         $this->setPageTitle(trans('settings.webhooks'));
 
-        return view('settings.webhooks.index', ['webhooks' => $webhooks]);
+        return view('settings.webhooks.index', [
+            'webhooks'    => $webhooks,
+            'listDetails' => $listDetails,
+        ]);
     }
 
     /**
