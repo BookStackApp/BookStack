@@ -1,10 +1,10 @@
 <div class="item-list-row py-s">
     <div class="flex-container-row">
-        <div class="flex-2 py-xxs px-m flex-container-row items-center gap-s">
+        <div class="flex-2 px-m flex-container-row items-center gap-xs">
             @include('common.status-indicator', ['status' => $webhook->active])
-            <a href="{{ $webhook->getUrl() }}">{{ $webhook->name }}</a>
+            <div>&nbsp;<a href="{{ $webhook->getUrl() }}">{{ $webhook->name }}</a></div>
         </div>
-        <div class="flex py-xxs px-m text-right text-muted">
+        <div class="flex px-m text-right text-muted">
             @if($webhook->tracksEvent('all'))
                 {{ trans('settings.webhooks_events_all') }}
             @else
@@ -12,7 +12,7 @@
             @endif
         </div>
     </div>
-    <div class="px-m py-xxs text-muted italic text-limit-lines-1">
+    <div class="px-m text-muted italic text-limit-lines-1">
         <small>{{ $webhook->endpoint }}</small>
     </div>
 </div>

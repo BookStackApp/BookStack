@@ -1,4 +1,4 @@
-<div class="flex-container-row item-list-row items-center wrap py-s">
+<div class="flex-container-row item-list-row items-center wrap py-xs">
     <div class="px-m py-xs flex-container-row items-center flex-2 gap-l min-width-m">
         <img class="avatar med" width="40" height="40" src="{{ $user->getAvatar(40)}}" alt="{{ $user->name }}">
         <a href="{{ url("/settings/users/{$user->id}") }}">
