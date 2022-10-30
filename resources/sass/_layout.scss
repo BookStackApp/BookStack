@@ -144,6 +144,10 @@ body.flexbox {
   flex-direction: column;
 }
 
+.flex-container-row.inline, .flex-container-column.inline {
+  display: inline-flex !important;
+}
+
 .flex-container-column.wrap, .flex-container-row.wrap {
   flex-wrap: wrap;
 }
