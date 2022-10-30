@@ -1,7 +1,7 @@
 @extends('layouts.tri')
 
 @section('body')
-    @include('shelves.parts.list', ['shelves' => $shelves, 'view' => $view])
+    @include('shelves.parts.list', ['shelves' => $shelves, 'view' => $view, 'listOptions' => $listOptions])
 @stop
 
 @section('right')

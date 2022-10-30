@@ -3,6 +3,7 @@
 namespace BookStack\Auth\Queries;
 
 use BookStack\Auth\User;
+use BookStack\Util\SimpleListOptions;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -13,12 +14,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class UsersAllPaginatedAndSorted
 {
-    /**
-     * @param array{sort: string, order: string, search: string} $sortData
-     */
-    public function run(int $count, array $sortData): LengthAwarePaginator
+    public function run(int $count, SimpleListOptions $listOptions): LengthAwarePaginator
     {
-        $sort = $sortData['sort'];
+        $sort = $listOptions->getSort();
         if ($sort === 'created_at') {
             $sort = 'users.created_at';
         }
@@ -27,10 +25,10 @@ class UsersAllPaginatedAndSorted
             ->scopes(['withLastActivityAt'])
             ->with(['roles', 'avatar'])
             ->withCount('mfaValues')
-            ->orderBy($sort, $sortData['order']);
+            ->orderBy($sort, $listOptions->getOrder());
 
-        if ($sortData['search']) {
-            $term = '%' . $sortData['search'] . '%';
+        if ($listOptions->getSearch()) {
+            $term = '%' . $listOptions->getSearch() . '%';
             $query->where(function ($query) use ($term) {
                 $query->where('name', 'like', $term)
                     ->orWhere('email', 'like', $term);

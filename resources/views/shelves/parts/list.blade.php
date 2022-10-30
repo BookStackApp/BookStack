@@ -3,7 +3,7 @@
     <div class="grid half v-center">
         <h1 class="list-heading">{{ trans('entities.shelves') }}</h1>
         <div class="text-right">
-            @include('common.sort', ['options' => $sortOptions, 'order' => $order, 'sort' => $sort, 'type' => 'bookshelves'])
+            @include('common.sort', $listOptions->getSortControlData())
         </div>
     </div>
 

@@ -22,18 +22,15 @@
                 <div>
                     <div class="block inline mr-xs">
                         <form method="get" action="{{ url("/settings/roles") }}">
-                            <input type="text" name="search" placeholder="{{ trans('common.search') }}" @if($listDetails['search']) value="{{$listDetails['search']}}" @endif>
+                            <input type="text"
+                                   name="search"
+                                   placeholder="{{ trans('common.search') }}"
+                                   value="{{ $listOptions->getSearch() }}">
                         </form>
                     </div>
                 </div>
                 <div class="justify-flex-end">
-                    @include('common.sort', ['options' => [
-                        'display_name' => trans('common.sort_name'),
-                        'users_count' => trans('settings.roles_assigned_users'),
-                        'permissions_count' => trans('settings.roles_permissions_provided'),
-                        'created_at' => trans('common.sort_created_at'),
-                        'updated_at' => trans('common.sort_updated_at'),
-                    ], 'order' => $listDetails['order'], 'sort' => $listDetails['sort'], 'type' => 'roles'])
+                    @include('common.sort', $listOptions->getSortControlData())
                 </div>
             </div>
 

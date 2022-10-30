@@ -15,6 +15,7 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
 use BookStack\References\ReferenceFetcher;
+use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -35,13 +36,16 @@ class BookController extends Controller
     /**
      * Display a listing of the book.
      */
-    public function index()
+    public function index(Request $request)
     {
         $view = setting()->getForCurrentUser('books_view_type');
-        $sort = setting()->getForCurrentUser('books_sort', 'name');
-        $order = setting()->getForCurrentUser('books_sort_order', 'asc');
+        $listOptions = SimpleListOptions::fromRequest($request, 'books')->withSortOptions([
+            'name' => trans('common.sort_name'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+        ]);
 
-        $books = $this->bookRepo->getAllPaginated(18, $sort, $order);
+        $books = $this->bookRepo->getAllPaginated(18, $listOptions->getSort(), $listOptions->getOrder());
         $recents = $this->isSignedIn() ? $this->bookRepo->getRecentlyViewed(4) : false;
         $popular = $this->bookRepo->getPopular(4);
         $new = $this->bookRepo->getRecentlyCreated(4);
@@ -56,8 +60,7 @@ class BookController extends Controller
             'popular' => $popular,
             'new'     => $new,
             'view'    => $view,
-            'sort'    => $sort,
-            'order'   => $order,
+            'listOptions' => $listOptions,
         ]);
     }
 

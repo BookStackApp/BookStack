@@ -2,13 +2,7 @@
     <div class="grid half v-center no-row-gap">
         <h1 class="list-heading">{{ trans('entities.books') }}</h1>
         <div class="text-m-right my-m">
-
-            @include('common.sort', ['options' => [
-                'name' => trans('common.sort_name'),
-                'created_at' => trans('common.sort_created_at'),
-                'updated_at' => trans('common.sort_updated_at'),
-            ], 'order' => $order, 'sort' => $sort, 'type' => 'books'])
-
+            @include('common.sort', $listOptions->getSortControlData())
         </div>
     </div>
     @if(count($books) > 0)
