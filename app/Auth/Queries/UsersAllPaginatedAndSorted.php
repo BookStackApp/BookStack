@@ -11,7 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * user is assumed to be trusted. (Admin users).
  * Email search can be abused to extract email addresses.
  */
-class AllUsersPaginatedAndSorted
+class UsersAllPaginatedAndSorted
 {
     /**
      * @param array{sort: string, order: string, search: string} $sortData

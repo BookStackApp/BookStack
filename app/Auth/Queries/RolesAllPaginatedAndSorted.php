@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 /**
  * Get all the roles in the system in a paginated format.
  */
-class AllRolesPaginatedAndSorted
+class RolesAllPaginatedAndSorted
 {
     /**
      * @param array{sort: string, order: string, search: string} $sortData

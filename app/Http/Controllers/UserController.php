@@ -3,7 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\Access\SocialAuthService;
-use BookStack\Auth\Queries\AllUsersPaginatedAndSorted;
+use BookStack\Auth\Queries\UsersAllPaginatedAndSorted;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
@@ -42,7 +42,7 @@ class UserController extends Controller
             'order'  => setting()->getForCurrentUser('users_sort_order', 'asc'),
         ];
 
-        $users = (new AllUsersPaginatedAndSorted())->run(20, $listDetails);
+        $users = (new UsersAllPaginatedAndSorted())->run(20, $listDetails);
 
         $this->setPageTitle(trans('settings.users'));
         $users->appends(['search' => $listDetails['search']]);
@@ -251,7 +251,7 @@ class UserController extends Controller
      */
     public function changeSort(Request $request, string $id, string $type)
     {
-        $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users', 'roles'];
+        $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users', 'roles', 'webhooks'];
         if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }
@@ -322,7 +322,7 @@ class UserController extends Controller
         //   Probably better to do a simple validation here then validate at usage.
         $validSorts = [
             'name', 'created_at', 'updated_at', 'default', 'email', 'last_activity_at', 'display_name',
-            'users_count', 'permissions_count',
+            'users_count', 'permissions_count', 'endpoint', 'active',
         ];
         if (!in_array($sort, $validSorts)) {
             $sort = 'name';
