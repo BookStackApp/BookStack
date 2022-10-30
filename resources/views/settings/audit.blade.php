@@ -81,12 +81,12 @@
                 </div>
             </div>
             @foreach($activities as $activity)
-                <div class="item-list-row flex-container-row items-center wrap">
-                    <div class="flex-2 px-m py-xs flex-container-row items-center min-width-m">
+                <div class="item-list-row flex-container-row items-center wrap py-xxs">
+                    <div class="flex-2 px-m py-xxs flex-container-row items-center min-width-m">
                         @include('settings.parts.table-user', ['user' => $activity->user, 'user_id' => $activity->user_id])
                     </div>
-                    <div class="flex-2 px-m py-xs min-width-m"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_event') }}:</strong> {{ $activity->type }}</div>
-                    <div class="flex-3 px-m py-xs min-width-l">
+                    <div class="flex-2 px-m py-xxs min-width-m"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_event') }}:</strong> {{ $activity->type }}</div>
+                    <div class="flex-3 px-m py-xxs min-width-l">
                         @if($activity->entity)
                             <a href="{{ $activity->entity->getUrl() }}" class="flex-container-row items-center">
                                 <span role="presentation" class="icon flex-none text-{{$activity->entity->getType()}}">@icon($activity->entity->getType())</span>
@@ -103,9 +103,9 @@
                             <div class="px-m">{{ $activity->detail }}</div>
                         @endif
                     </div>
-                    <div class="flex-container-row flex-3 wrap">
-                        <div class="flex px-m py-xs min-width-xs"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_ip') }}:<br></strong> {{ $activity->ip }}</div>
-                        <div class="flex-2 px-m py-xs text-m-right min-width-xs"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_date') }}:<br></strong> {{ $activity->created_at }}</div>
+                    <div class="flex-container-row flex-3">
+                        <div class="flex px-m py-xxs min-width-xs"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_ip') }}:<br></strong> {{ $activity->ip }}</div>
+                        <div class="flex-2 px-m py-xxs text-m-right min-width-xs"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_date') }}:<br></strong> {{ $activity->created_at }}</div>
                     </div>
                 </div>
             @endforeach
