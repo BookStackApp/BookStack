@@ -95,12 +95,12 @@
                                 </div>
                             </a>
                         @elseif($activity->detail && $activity->isForEntity())
-                            <div class="px-m">
+                            <div>
                                 {{ trans('settings.audit_deleted_item') }} <br>
                                 {{ trans('settings.audit_deleted_item_name', ['name' => $activity->detail]) }}
                             </div>
                         @elseif($activity->detail)
-                            <div class="px-m">{{ $activity->detail }}</div>
+                            <div>{{ $activity->detail }}</div>
                         @endif
                     </div>
                     <div class="flex-container-row flex-3">
