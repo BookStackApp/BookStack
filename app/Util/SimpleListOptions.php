@@ -28,11 +28,11 @@ class SimpleListOptions
      * Create a new instance from the given request.
      * Takes the item type (plural) that's used as a key for storing sort preferences.
      */
-    public static function fromRequest(Request $request, string $typeKey): self
+    public static function fromRequest(Request $request, string $typeKey, bool $sortDescDefault = false): self
     {
         $search = $request->get('search', '');
         $sort = setting()->getForCurrentUser($typeKey . '_sort', '');
-        $order = setting()->getForCurrentUser($typeKey . '_sort_order', 'asc');
+        $order = setting()->getForCurrentUser($typeKey . '_sort_order', $sortDescDefault ? 'desc' : 'asc');
 
         return new static($typeKey, $sort, $order, $search);
     }
