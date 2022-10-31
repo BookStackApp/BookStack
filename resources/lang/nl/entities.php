@@ -42,8 +42,8 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Machtigingen',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
+    'permissions_desc' => 'Stel hier machtigingen in om de standaardmachtigingen van gebruikersrollen te overschrijven.',
+    'permissions_book_cascade' => 'Machtigingen voor boeken worden automatisch doorgegeven aan hoofdstukken en pagina\'s, tenzij deze hun eigen machtigingen hebben.',
     'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Machtigingen opslaan',
     'permissions_owner' => 'Eigenaar',
