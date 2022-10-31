@@ -286,33 +286,8 @@
   margin-bottom: 0;
 }
 
-td .tag-item {
+.item-list-row .tag-item {
   margin-bottom: 0;
-}
-
-/**
- * Pill boxes
- */
-
-.pill {
-  display: inline-block;
-  border: 1px solid currentColor;
-  padding: .2em .8em;
-  font-size: 0.8em;
-  border-radius: 1rem;
-  position: relative;
-  overflow: hidden;
-  line-height: 1.4;
-  &:before {
-    content: '';
-    background-color: currentColor;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.1;
-  }
 }
 
 /**

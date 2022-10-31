@@ -160,6 +160,11 @@ body.flexbox {
     flex-basis: auto;
     flex-grow: 0;
   }
+  &.fill-area {
+    flex-grow: 1;
+    flex-shrink: 0;
+    min-width: fit-content;
+  }
 }
 
 .flex-2 {
