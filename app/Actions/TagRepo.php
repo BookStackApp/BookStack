@@ -4,6 +4,7 @@ namespace BookStack\Actions;
 
 use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Models\Entity;
+use BookStack\Util\SimpleListOptions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -20,8 +21,14 @@ class TagRepo
     /**
      * Start a query against all tags in the system.
      */
-    public function queryWithTotals(string $searchTerm, string $nameFilter): Builder
+    public function queryWithTotals(SimpleListOptions $listOptions, string $nameFilter): Builder
     {
+        $searchTerm = $listOptions->getSearch();
+        $sort = $listOptions->getSort();
+        if ($sort === 'name' && $nameFilter) {
+            $sort = 'value';
+        }
+
         $query = Tag::query()
             ->select([
                 'name',
@@ -32,7 +39,7 @@ class TagRepo
                 DB::raw('SUM(IF(entity_type = \'book\', 1, 0)) as book_count'),
                 DB::raw('SUM(IF(entity_type = \'bookshelf\', 1, 0)) as shelf_count'),
             ])
-            ->orderBy($nameFilter ? 'value' : 'name');
+            ->orderBy($sort, $listOptions->getOrder());
 
         if ($nameFilter) {
             $query->where('name', '=', $nameFilter);

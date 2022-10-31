@@ -62,7 +62,7 @@ class UserPreferencesController extends Controller
      */
     public function changeSort(Request $request, string $id, string $type)
     {
-        $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users', 'roles', 'webhooks'];
+        $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users', 'roles', 'webhooks', 'tags'];
         if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }

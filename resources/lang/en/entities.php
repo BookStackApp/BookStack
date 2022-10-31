@@ -275,6 +275,7 @@ return [
     'shelf_tags' => 'Shelf Tags',
     'tag' => 'Tag',
     'tags' =>  'Tags',
+    'tags_index_desc' => 'Tags can be applied to content within the system to apply a flexible form of categorization. Tags can have both a key and value, with the value being optional. Once applied, content can then be queried using the tag name and value.',
     'tag_name' =>  'Tag Name',
     'tag_value' => 'Tag Value (Optional)',
     'tags_explain' => "Add some tags to better categorise your content. \n You can assign a value to a tag for more in-depth organisation.",

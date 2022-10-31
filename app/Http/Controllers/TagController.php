@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\TagRepo;
+use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -19,22 +20,26 @@ class TagController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->get('search', '');
+        $listOptions = SimpleListOptions::fromRequest($request, 'tags')->withSortOptions([
+            'name' => trans('common.sort_name'),
+            'usages' => trans('entities.tags_usages'),
+        ]);
+
         $nameFilter = $request->get('name', '');
         $tags = $this->tagRepo
-            ->queryWithTotals($search, $nameFilter)
+            ->queryWithTotals($listOptions, $nameFilter)
             ->paginate(50)
             ->appends(array_filter([
-                'search' => $search,
+                ...$listOptions->getPaginationAppends(),
                 'name'   => $nameFilter,
             ]));
 
         $this->setPageTitle(trans('entities.tags'));
 
         return view('tags.index', [
-            'tags'       => $tags,
-            'search'     => $search,
-            'nameFilter' => $nameFilter,
+            'tags'        => $tags,
+            'nameFilter'  => $nameFilter,
+            'listOptions' => $listOptions,
         ]);
     }
 
