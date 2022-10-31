@@ -202,6 +202,15 @@ body.flexbox {
 /**
  * Min width utilities
  */
+.min-width-xxxxs {
+  min-width: 60px;
+}
+.min-width-xxxs {
+  min-width: 80px;
+}
+.min-width-xxs {
+  min-width: 100px;
+}
 .min-width-xs {
   min-width: 120px;
 }
