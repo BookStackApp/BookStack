@@ -10,13 +10,15 @@ use BookStack\Entities\Queries\TopFavourites;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\PageContent;
+use BookStack\Util\SimpleListOptions;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
      * Display the homepage.
      */
-    public function index(ActivityQueries $activities)
+    public function index(Request $request, ActivityQueries $activities)
     {
         $activity = $activities->latest(10);
         $draftPages = [];
@@ -61,33 +63,27 @@ class HomeController extends Controller
         if ($homepageOption === 'bookshelves' || $homepageOption === 'books') {
             $key = $homepageOption;
             $view = setting()->getForCurrentUser($key . '_view_type');
-            $sort = setting()->getForCurrentUser($key . '_sort', 'name');
-            $order = setting()->getForCurrentUser($key . '_sort_order', 'asc');
-
-            $sortOptions = [
-                'name'       => trans('common.sort_name'),
+            $listOptions = SimpleListOptions::fromRequest($request, $key)->withSortOptions([
+                'name' => trans('common.sort_name'),
                 'created_at' => trans('common.sort_created_at'),
                 'updated_at' => trans('common.sort_updated_at'),
-            ];
+            ]);
 
             $commonData = array_merge($commonData, [
                 'view'        => $view,
-                'sort'        => $sort,
-                'order'       => $order,
-                'sortOptions' => $sortOptions,
+                'listOptions' => $listOptions,
             ]);
         }
 
         if ($homepageOption === 'bookshelves') {
-            $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['sort'], $commonData['order']);
+            $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
             $data = array_merge($commonData, ['shelves' => $shelves]);
 
             return view('home.shelves', $data);
         }
 
         if ($homepageOption === 'books') {
-            $bookRepo = app(BookRepo::class);
-            $books = $bookRepo->getAllPaginated(18, $commonData['sort'], $commonData['order']);
+            $books = app(BookRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
             $data = array_merge($commonData, ['books' => $books]);
 
             return view('home.books', $data);

@@ -195,12 +195,12 @@ class PageRevisionTest extends TestCase
         $this->createRevisions($page, 1, ['html' => 'new page html']);
 
         $resp = $this->asAdmin()->get($page->refresh()->getUrl('/revisions'));
-        $this->withHtml($resp)->assertElementContains('td', '(WYSIWYG)');
-        $this->withHtml($resp)->assertElementNotContains('td', '(Markdown)');
+        $this->withHtml($resp)->assertElementContains('.item-list-row > div:nth-child(2)', 'WYSIWYG)');
+        $this->withHtml($resp)->assertElementNotContains('.item-list-row > div:nth-child(2)', 'Markdown)');
 
         $this->createRevisions($page, 1, ['markdown' => '# Some markdown content']);
         $resp = $this->get($page->refresh()->getUrl('/revisions'));
-        $this->withHtml($resp)->assertElementContains('td', '(Markdown)');
+        $this->withHtml($resp)->assertElementContains('.item-list-row > div:nth-child(2)', 'Markdown)');
     }
 
     public function test_revision_restore_action_only_visible_with_permission()
