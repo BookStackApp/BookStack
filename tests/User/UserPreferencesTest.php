@@ -29,21 +29,6 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals('desc', setting()->getForCurrentUser('books_sort_order'));
     }
 
-    public function test_update_sort_preference_defaults()
-    {
-        $editor = $this->getEditor();
-        $this->actingAs($editor);
-
-        $updateRequest = $this->patch('/settings/users/' . $editor->id . '/change-sort/bookshelves', [
-            'sort'  => 'cat',
-            'order' => 'dog',
-        ]);
-        $updateRequest->assertStatus(302);
-
-        $this->assertEquals('name', setting()->getForCurrentUser('bookshelves_sort'));
-        $this->assertEquals('asc', setting()->getForCurrentUser('bookshelves_sort_order'));
-    }
-
     public function test_update_sort_bad_entity_type_handled()
     {
         $editor = $this->getEditor();
