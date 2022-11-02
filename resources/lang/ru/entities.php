@@ -42,14 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Разрешения',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_desc' => 'Установите права доступа для переопределения прав по умолчанию, предоставленных ролями пользователей.',
     'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
     'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Сохранить разрешения',
     'permissions_owner' => 'Владелец',
-    'permissions_role_everyone_else' => 'Everyone Else',
-    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
+    'permissions_role_everyone_else' => 'Все остальные',
+    'permissions_role_everyone_else_desc' => 'Установить права доступа для всех ролей, которые не были специально переопределены.',
+    'permissions_role_override' => 'Переопределить права доступа для роли',
 
     // Search
     'search_results' => 'Результаты поиска',
