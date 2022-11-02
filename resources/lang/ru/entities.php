@@ -43,8 +43,8 @@ return [
     // Permissions and restrictions
     'permissions' => 'Разрешения',
     'permissions_desc' => 'Установите права доступа для переопределения прав по умолчанию, предоставленных ролями пользователей.',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
-    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
+    'permissions_book_cascade' => 'Разрешения, установленные для книг, автоматически распространяются на дочерние главы и страницы, если для них не определены собственные разрешения.',
+    'permissions_chapter_cascade' => 'Разрешения, установленные для глав, автоматически распространяются на дочерние страницы, если для них не определены собственные разрешения.',
     'permissions_save' => 'Сохранить разрешения',
     'permissions_owner' => 'Владелец',
     'permissions_role_everyone_else' => 'Все остальные',
