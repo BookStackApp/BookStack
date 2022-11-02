@@ -66,7 +66,7 @@ return [
     'insert_link_title' => 'Wstaw/Edytuj Link',
     'insert_horizontal_line' => 'Wstaw linię poziomą',
     'insert_code_block' => 'Wstaw blok kodu',
-    'edit_code_block' => 'Edit code block',
+    'edit_code_block' => 'Edytuj blok kodu',
     'insert_drawing' => 'Wstaw/Edytuj rysunek',
     'drawing_manager' => 'Menedżer rysunków',
     'insert_media' => 'Wstaw/edytuj multimedia',

@@ -280,6 +280,7 @@ return [
         'da' => 'Dansk (taani keel)',
         'de' => 'Deutsch (saksa keel)',
         'de_informal' => 'Deutsch (Du) (mitteformaalne saksa keel)',
+        'el' => 'ελληνικά',
         'es' => 'Español (hispaania keel)',
         'es_AR' => 'Español Argentina (Argentiina hispaania keel)',
         'et' => 'Eesti keel',

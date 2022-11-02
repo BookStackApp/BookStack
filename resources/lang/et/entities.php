@@ -42,14 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Õigused',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
-    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
+    'permissions_desc' => 'Sea siin õigused, et kirjutada üle rollide vaikimisi õigused.',
+    'permissions_book_cascade' => 'Raamatutele seatud õigused rakenduvad automaatselt peatükkidele ja lehtedele, kui neile pole seatud oma õiguseid.',
+    'permissions_chapter_cascade' => 'Peatükkidele seatud õigused rakenduvad automaatselt lehtedele, kui neile pole seatud oma õiguseid.',
     'permissions_save' => 'Salvesta õigused',
     'permissions_owner' => 'Omanik',
-    'permissions_role_everyone_else' => 'Everyone Else',
-    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
+    'permissions_role_everyone_else' => 'Kõik muud',
+    'permissions_role_everyone_else_desc' => 'Sea õigused kõigile rollidele, mida pole üle kirjutatud.',
+    'permissions_role_override' => 'Kirjuta rolli õigused üle',
 
     // Search
     'search_results' => 'Otsingutulemused',
