@@ -14,7 +14,7 @@ return [
     'page_delete_notification'    => 'Sayfa başarıyla silindi',
     'page_restore'                => 'sayfayı eski haline getirdi',
     'page_restore_notification'   => 'Sayfa Başarıyla Eski Haline Getirildi',
-    'page_move'                   => 'sayfayı taşıdı',
+    'page_move'                   => 'sayfa taşındı',
 
     // Chapters
     'chapter_create'              => 'bölüm oluşturdu',
@@ -38,7 +38,7 @@ return [
     'book_sort_notification'      => 'Kitap başarıyla yeniden sıralandı',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create'            => 'kitaplık oluşturuldu',
     'bookshelf_create_notification'    => 'Shelf successfully created',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',

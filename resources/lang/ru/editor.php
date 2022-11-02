@@ -66,7 +66,7 @@ return [
     'insert_link_title' => 'Вставить/Редактировать ссылку',
     'insert_horizontal_line' => 'Вставить горизонтальную линию',
     'insert_code_block' => 'Вставить блок кода',
-    'edit_code_block' => 'Edit code block',
+    'edit_code_block' => 'Редактировать код',
     'insert_drawing' => 'Вставить/редактировать схему',
     'drawing_manager' => 'Менеджер схем',
     'insert_media' => 'Вставить/редактировать медиафайл',

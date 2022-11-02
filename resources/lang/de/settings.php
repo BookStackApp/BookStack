@@ -283,6 +283,7 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
         'da' => 'Dänisch',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',
+        'el' => 'ελληνικά',
         'es' => 'Spanisch',
         'es_AR' => 'Spanisch Argentinisch',
         'et' => 'Estnisch',
