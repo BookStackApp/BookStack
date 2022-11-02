@@ -288,3 +288,6 @@ Ismael Mesquita (mesquitoliveira) :: Portuguese, Brazilian
 구인회 (laskdjlaskdj12) :: Korean
 LiZerui (CNLiZerui) :: Chinese Traditional
 Fabrice Boyer (FabriceBoyer) :: French
+mikael (bitcanon) :: Swedish
+Matthias Mai (schnapsidee) :: German
+Ufuk Ayyıldız (ufukayyildiz) :: Turkish

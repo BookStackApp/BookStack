@@ -280,6 +280,7 @@ return [
         'da' => 'Danese',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',
+        'el' => 'ελληνικά',
         'es' => 'Spagnolo',
         'es_AR' => 'Spagnolo d\'Argentina',
         'et' => 'Estone',
