@@ -42,14 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => '权限',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
-    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
+    'permissions_desc' => '在此处设置权限以覆盖用户角色提供的默认权限。',
+    'permissions_book_cascade' => '书籍上设置的权限将自动应用到子章节和子页面，除非它们有自己的权限设置。',
+    'permissions_chapter_cascade' => '章节上设置的权限将自动应用到子页面，除非它们有自己的权限设置。',
     'permissions_save' => '保存权限',
     'permissions_owner' => '拥有者',
-    'permissions_role_everyone_else' => 'Everyone Else',
-    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
+    'permissions_role_everyone_else' => '其他所有人',
+    'permissions_role_everyone_else_desc' => '为所有未被特别覆盖的角色设置权限。',
+    'permissions_role_override' => '覆盖角色权限',
 
     // Search
     'search_results' => '搜索结果',
