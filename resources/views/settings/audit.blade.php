@@ -66,7 +66,7 @@
         <div class="flex-container-row justify-space-between items-center wrap">
             <div class="flex-2 min-width-xl">{{ $activities->links() }}</div>
             <div class="flex-none min-width-m py-m">
-                @include('common.sort', [...$listOptions->getSortControlData(), 'useQuery' => true])
+                @include('common.sort', array_merge($listOptions->getSortControlData(), ['useQuery' => true]))
             </div>
         </div>
 
