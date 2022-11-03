@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'Cargos',
     'role_user_roles' => 'Cargos de Usuário',
+    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
+    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
+    'roles_x_permissions_provided' => '1 permission|:count permissions',
+    'roles_assigned_users' => 'Assigned Users',
+    'roles_permissions_provided' => 'Provided Permissions',
     'role_create' => 'Criar novo Cargo',
     'role_create_success' => 'Cargo criado com sucesso',
     'role_delete' => 'Excluir Cargo',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => 'Usuários',
+    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
     'user_profile' => 'Perfil do Usuário',
     'users_add_new' => 'Adicionar Novo Usuário',
     'users_search' => 'Pesquisar Usuários',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
+    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
     'webhooks_create' => 'Criar novo webhook',
     'webhooks_none_created' => 'Nenhum webhooks foi criado ainda.',
     'webhooks_edit' => 'Editar webhook',
