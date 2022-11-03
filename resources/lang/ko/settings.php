@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => '권한',
     'role_user_roles' => '사용자 권한',
+    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
+    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
+    'roles_x_permissions_provided' => '1 permission|:count permissions',
+    'roles_assigned_users' => 'Assigned Users',
+    'roles_permissions_provided' => 'Provided Permissions',
     'role_create' => '권한 만들기',
     'role_create_success' => '권한 만듦',
     'role_delete' => '권한 제거',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => '사용자',
+    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
     'user_profile' => '사용자 프로필',
     'users_add_new' => '사용자 만들기',
     'users_search' => '사용자 검색',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => '웹 훅',
+    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
     'webhooks_create' => '웹 훅 만들기',
     'webhooks_none_created' => '웹 훅이 없습니다.',
     'webhooks_edit' => '웹 훅 수정',
