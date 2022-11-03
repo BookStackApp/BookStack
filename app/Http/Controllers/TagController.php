@@ -29,10 +29,9 @@ class TagController extends Controller
         $tags = $this->tagRepo
             ->queryWithTotals($listOptions, $nameFilter)
             ->paginate(50)
-            ->appends(array_filter([
-                ...$listOptions->getPaginationAppends(),
+            ->appends(array_filter(array_merge($listOptions->getPaginationAppends(), [
                 'name'   => $nameFilter,
-            ]));
+            ])));
 
         $this->setPageTitle(trans('entities.tags'));
 
