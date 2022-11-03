@@ -144,6 +144,10 @@ body.flexbox {
   flex-direction: column;
 }
 
+.flex-container-row.inline, .flex-container-column.inline {
+  display: inline-flex !important;
+}
+
 .flex-container-column.wrap, .flex-container-row.wrap {
   flex-wrap: wrap;
 }
@@ -156,6 +160,23 @@ body.flexbox {
     flex-basis: auto;
     flex-grow: 0;
   }
+  &.fill-area {
+    flex-grow: 1;
+    flex-shrink: 0;
+    min-width: fit-content;
+  }
+}
+
+.flex-2 {
+  min-height: 0;
+  flex: 2;
+  max-width: 100%;
+}
+
+.flex-3 {
+  min-height: 0;
+  flex: 3;
+  max-width: 100%;
 }
 
 .flex-none {
@@ -178,6 +199,36 @@ body.flexbox {
   align-items: center;
 }
 
+/**
+ * Min width utilities
+ */
+.min-width-xxxxs {
+  min-width: 60px;
+}
+.min-width-xxxs {
+  min-width: 80px;
+}
+.min-width-xxs {
+  min-width: 100px;
+}
+.min-width-xs {
+  min-width: 120px;
+}
+.min-width-s {
+  min-width: 160px;
+}
+.min-width-m {
+  min-width: 200px;
+}
+.min-width-l {
+  min-width: 240px;
+}
+.min-width-xl {
+  min-width: 280px;
+}
+.min-width-xxl {
+  min-width: 320px;
+}
 
 /**
  * Display and float utilities

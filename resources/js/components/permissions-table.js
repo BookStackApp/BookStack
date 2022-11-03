@@ -3,6 +3,8 @@ class PermissionsTable {
 
     setup() {
         this.container = this.$el;
+        this.cellSelector = this.$opts.cellSelector || 'td,th';
+        this.rowSelector = this.$opts.rowSelector || 'tr';
 
         // Handle toggle all event
         for (const toggleAllElem of (this.$manyRefs.toggleAll || [])) {
@@ -27,15 +29,15 @@ class PermissionsTable {
 
     toggleRowClick(event) {
         event.preventDefault();
-        this.toggleAllInElement(event.target.closest('tr'));
+        this.toggleAllInElement(event.target.closest(this.rowSelector));
     }
 
     toggleColumnClick(event) {
         event.preventDefault();
 
-        const tableCell = event.target.closest('th,td');
+        const tableCell = event.target.closest(this.cellSelector);
         const colIndex = Array.from(tableCell.parentElement.children).indexOf(tableCell);
-        const tableRows = tableCell.closest('table').querySelectorAll('tr');
+        const tableRows = this.container.querySelectorAll(this.rowSelector);
         const inputsToToggle = [];
 
         for (let row of tableRows) {

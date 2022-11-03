@@ -29,6 +29,7 @@ use BookStack\Http\Controllers\StatusController;
 use BookStack\Http\Controllers\TagController;
 use BookStack\Http\Controllers\UserApiTokenController;
 use BookStack\Http\Controllers\UserController;
+use BookStack\Http\Controllers\UserPreferencesController;
 use BookStack\Http\Controllers\UserProfileController;
 use BookStack\Http\Controllers\UserSearchController;
 use BookStack\Http\Controllers\WebhookController;
@@ -239,17 +240,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/users', [UserController::class, 'index']);
     Route::get('/settings/users/create', [UserController::class, 'create']);
     Route::get('/settings/users/{id}/delete', [UserController::class, 'delete']);
-    Route::patch('/settings/users/{id}/switch-books-view', [UserController::class, 'switchBooksView']);
-    Route::patch('/settings/users/{id}/switch-shelves-view', [UserController::class, 'switchShelvesView']);
-    Route::patch('/settings/users/{id}/switch-shelf-view', [UserController::class, 'switchShelfView']);
-    Route::patch('/settings/users/{id}/change-sort/{type}', [UserController::class, 'changeSort']);
-    Route::patch('/settings/users/{id}/update-expansion-preference/{key}', [UserController::class, 'updateExpansionPreference']);
-    Route::patch('/settings/users/toggle-dark-mode', [UserController::class, 'toggleDarkMode']);
-    Route::patch('/settings/users/update-code-language-favourite', [UserController::class, 'updateCodeLanguageFavourite']);
     Route::post('/settings/users/create', [UserController::class, 'store']);
     Route::get('/settings/users/{id}', [UserController::class, 'edit']);
     Route::put('/settings/users/{id}', [UserController::class, 'update']);
     Route::delete('/settings/users/{id}', [UserController::class, 'destroy']);
+
+    // User Preferences
+    Route::patch('/settings/users/{id}/switch-books-view', [UserPreferencesController::class, 'switchBooksView']);
+    Route::patch('/settings/users/{id}/switch-shelves-view', [UserPreferencesController::class, 'switchShelvesView']);
+    Route::patch('/settings/users/{id}/switch-shelf-view', [UserPreferencesController::class, 'switchShelfView']);
+    Route::patch('/settings/users/{id}/change-sort/{type}', [UserPreferencesController::class, 'changeSort']);
+    Route::patch('/settings/users/{id}/update-expansion-preference/{key}', [UserPreferencesController::class, 'updateExpansionPreference']);
+    Route::patch('/settings/users/toggle-dark-mode', [UserPreferencesController::class, 'toggleDarkMode']);
+    Route::patch('/settings/users/update-code-language-favourite', [UserPreferencesController::class, 'updateCodeLanguageFavourite']);
 
     // User API Tokens
     Route::get('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);

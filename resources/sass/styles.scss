@@ -4,6 +4,7 @@
 @import "variables";
 @import "mixins";
 @import "spacing";
+@import "opacity";
 @import "html";
 @import "text";
 @import "colors";
@@ -352,15 +353,4 @@ input.scroll-box-search, .scroll-box-header-item {
       transform: rotate(180deg);
     }
   }
-}
-
-table.table .table-user-item {
-  display: grid;
-  grid-template-columns: 42px 1fr;
-  align-items: center;
-}
-table.table .table-entity-item {
-  display: grid;
-  grid-template-columns: 36px 1fr;
-  align-items: center;
 }

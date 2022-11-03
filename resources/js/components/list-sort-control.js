@@ -1,17 +1,22 @@
 /**
  * ListSortControl
  * Manages the logic for the control which provides list sorting options.
+ * @extends {Component}
  */
 class ListSortControl {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.menu = elem.querySelector('ul');
+    setup() {
+        this.elem = this.$el;
+        this.menu = this.$refs.menu;
 
-        this.sortInput = elem.querySelector('[name="sort"]');
-        this.orderInput = elem.querySelector('[name="order"]');
-        this.form = elem.querySelector('form');
+        this.sortInput = this.$refs.sort;
+        this.orderInput = this.$refs.order;
+        this.form = this.$refs.form;
 
+        this.setupListeners();
+    }
+
+    setupListeners() {
         this.menu.addEventListener('click', event => {
             if (event.target.closest('[data-sort-value]') !== null) {
                 this.sortOptionClick(event);
@@ -34,8 +39,7 @@ class ListSortControl {
 
     sortDirectionClick(event) {
         const currentDir = this.orderInput.value;
-        const newDir = (currentDir === 'asc') ? 'desc' : 'asc';
-        this.orderInput.value = newDir;
+        this.orderInput.value = (currentDir === 'asc') ? 'desc' : 'asc';
         event.preventDefault();
         this.form.submit();
     }
