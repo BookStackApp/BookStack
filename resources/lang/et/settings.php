@@ -133,11 +133,11 @@ return [
     // Role Settings
     'roles' => 'Rollid',
     'role_user_roles' => 'Kasutaja rollid',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
-    'roles_x_permissions_provided' => '1 permission|:count permissions',
-    'roles_assigned_users' => 'Assigned Users',
-    'roles_permissions_provided' => 'Provided Permissions',
+    'roles_index_desc' => 'Rolle saab kasutada kasutajate grupeerimiseks ja liikmetele süsteemsete õiguste andmiseks. Kui kasutaja on mitme rolli liige, siis õigused kombineeritakse ning kasutaja saab kõik õigused.',
+    'roles_x_users_assigned' => '1 kasutaja|:count kasutajat',
+    'roles_x_permissions_provided' => '1 õigus|:count õigust',
+    'roles_assigned_users' => 'Määratud kasutajad',
+    'roles_permissions_provided' => 'Antud õigused',
     'role_create' => 'Lisa uus roll',
     'role_create_success' => 'Roll on lisatud',
     'role_delete' => 'Kustuta roll',
@@ -177,7 +177,7 @@ return [
 
     // Users
     'users' => 'Kasutajad',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => 'Loo ja halda süsteemi kasutajakontosid. Kontosid kasutatakse sisselogimiseks ning sisu ja tegevuse omistamiseks. Ligipääsuload on enamasti rollipõhised, aga sisu omandus ja muud faktorid võivad samuti mõjutada õiguseid ja ligipääsu.',
     'user_profile' => 'Kasutajaprofiil',
     'users_add_new' => 'Lisa uus kasutaja',
     'users_search' => 'Otsi kasutajaid',
@@ -247,8 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Veebihaagid',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
-    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
+    'webhooks_index_desc' => 'Veebihaakide abil saab teatud süsteemis toimunud tegevuste ja sündmuste puhul saata andmeid välistele URL-idele, mis võimaldab integreerida väliseid platvorme, nagu sõnumi- või teavitussüsteemid.',
+    'webhooks_x_trigger_events' => '1 sündmus|:count sündmust',
     'webhooks_create' => 'Lisa uus veebihaak',
     'webhooks_none_created' => 'Ühtegi veebihaaki pole lisatud.',
     'webhooks_edit' => 'Muuda veebihaaki',
