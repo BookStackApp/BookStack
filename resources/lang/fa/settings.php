@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'نقش ها',
     'role_user_roles' => 'نقش های کاربر',
+    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
+    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
+    'roles_x_permissions_provided' => '1 permission|:count permissions',
+    'roles_assigned_users' => 'Assigned Users',
+    'roles_permissions_provided' => 'Provided Permissions',
     'role_create' => 'نقش جدید ایجاد کنید',
     'role_create_success' => 'نقش با موفقیت ایجاد شد',
     'role_delete' => 'حذف نقش',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => 'کاربران',
+    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
     'user_profile' => 'پرونده کاربر',
     'users_add_new' => 'افزودن کاربر جدید',
     'users_search' => 'جستجوی کاربران',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'وب‌هوک‌ها',
+    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
     'webhooks_create' => 'ایجاد وب هوک جدید',
     'webhooks_none_created' => 'هنوز هیچ وب هوکی ایجاد نشده است.',
     'webhooks_edit' => 'ویرایش وب هوک',
