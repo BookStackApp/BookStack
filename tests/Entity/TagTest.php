@@ -164,7 +164,7 @@ class TagTest extends TestCase
         $resp->assertSee('OtherTestContent');
         $resp->assertDontSee('OtherTagName');
         $resp->assertSee('Active Filter:');
-        $this->withHtml($resp)->assertElementCount('table .tag-item', 2);
+        $this->withHtml($resp)->assertElementCount('.item-list .tag-item', 2);
         $this->withHtml($resp)->assertElementContains('form[action$="/tags"]', 'Clear Filter');
     }
 

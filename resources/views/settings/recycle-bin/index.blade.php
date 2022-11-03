@@ -8,11 +8,11 @@
         <div class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.recycle_bin') }}</h2>
 
-            <div class="grid half left-focus">
-                <div>
-                    <p class="text-muted">{{ trans('settings.recycle_bin_desc') }}</p>
+            <div class="flex-container-row items-center gap-x-l gap-y-m wrap">
+                <div class="flex-2 min-width-l">
+                    <p class="text-muted mb-none">{{ trans('settings.recycle_bin_desc') }}</p>
                 </div>
-                <div class="text-right">
+                <div class="flex text-m-right min-width-m">
                     <div component="dropdown" class="dropdown-container">
                         <button refs="dropdown@toggle"
                                 type="button"
@@ -30,79 +30,33 @@
                 </div>
             </div>
 
-
             <hr class="mt-l mb-s">
 
-            {!! $deletions->links() !!}
+            <div class="py-m">
+                {!! $deletions->links() !!}
+            </div>
 
-            <table class="table">
-                <tr>
-                    <th width="30%">{{ trans('settings.recycle_bin_deleted_item') }}</th>
-                    <th width="20%">{{ trans('settings.recycle_bin_deleted_parent') }}</th>
-                    <th width="20%">{{ trans('settings.recycle_bin_deleted_by') }}</th>
-                    <th width="15%">{{ trans('settings.recycle_bin_deleted_at') }}</th>
-                    <th width="15%"></th>
-                </tr>
+            <div class="item-list">
+                <div class="item-list-row flex-container-row items-center px-s bold hide-under-l">
+                    <div class="flex-2 px-m py-xs">{{ trans('settings.audit_deleted_item') }}</div>
+                    <div class="flex-2 px-m py-xs">{{ trans('settings.recycle_bin_deleted_parent') }}</div>
+                    <div class="flex-2 px-m py-xs">{{ trans('settings.recycle_bin_deleted_by') }}</div>
+                    <div class="flex px-m py-xs">{{ trans('settings.recycle_bin_deleted_at') }}</div>
+                    <div class="flex px-m py-xs text-right"></div>
+                </div>
                 @if(count($deletions) === 0)
-                    <tr>
-                        <td colspan="5">
-                            <p class="text-muted"><em>{{ trans('settings.recycle_bin_contents_empty') }}</em></p>
-                        </td>
-                    </tr>
+                    <div class="item-list-row px-l py-m">
+                        <p class="text-muted mb-none"><em>{{ trans('settings.recycle_bin_contents_empty') }}</em></p>
+                    </div>
                 @endif
                 @foreach($deletions as $deletion)
-                <tr>
-                    <td>
-                        <div class="table-entity-item">
-                            <span role="presentation" class="icon text-{{$deletion->deletable->getType()}}">@icon($deletion->deletable->getType())</span>
-                            <div class="text-{{ $deletion->deletable->getType() }}">
-                                {{ $deletion->deletable->name }}
-                            </div>
-                        </div>
-                        @if($deletion->deletable instanceof \BookStack\Entities\Models\Book || $deletion->deletable instanceof \BookStack\Entities\Models\Chapter)
-                            <div class="mb-m"></div>
-                        @endif
-                        @if($deletion->deletable instanceof \BookStack\Entities\Models\Book)
-                            <div class="pl-xl block inline">
-                                <div class="text-chapter">
-                                    @icon('chapter') {{ trans_choice('entities.x_chapters', $deletion->deletable->chapters()->withTrashed()->count()) }}
-                                </div>
-                            </div>
-                        @endif
-                        @if($deletion->deletable instanceof \BookStack\Entities\Models\Book || $deletion->deletable instanceof \BookStack\Entities\Models\Chapter)
-                        <div class="pl-xl block inline">
-                            <div class="text-page">
-                                @icon('page') {{ trans_choice('entities.x_pages', $deletion->deletable->pages()->withTrashed()->count()) }}
-                            </div>
-                        </div>
-                        @endif
-                    </td>
-                    <td>
-                        @if($deletion->deletable->getParent())
-                        <div class="table-entity-item">
-                            <span role="presentation" class="icon text-{{$deletion->deletable->getParent()->getType()}}">@icon($deletion->deletable->getParent()->getType())</span>
-                            <div class="text-{{ $deletion->deletable->getParent()->getType() }}">
-                                {{ $deletion->deletable->getParent()->name }}
-                            </div>
-                        </div>
-                        @endif
-                    </td>
-                    <td>@include('settings.parts.table-user', ['user' => $deletion->deleter, 'user_id' => $deletion->deleted_by])</td>
-                    <td width="200">{{ $deletion->created_at }}</td>
-                    <td width="150" class="text-right">
-                        <div component="dropdown" class="dropdown-container">
-                            <button type="button" refs="dropdown@toggle" class="button outline">{{ trans('common.actions') }}</button>
-                            <ul refs="dropdown@menu" class="dropdown-menu">
-                                <li><a class="text-item" href="{{ $deletion->getUrl('/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
-                                <li><a class="text-item" href="{{ $deletion->getUrl('/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                    @include('settings.recycle-bin.parts.recycle-bin-list-item', ['deletion' => $deletion])
                 @endforeach
-            </table>
+            </div>
 
-            {!! $deletions->links() !!}
+            <div class="py-m">
+                {!! $deletions->links() !!}
+            </div>
 
         </div>
 

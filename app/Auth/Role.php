@@ -111,14 +111,6 @@ class Role extends Model implements Loggable
     }
 
     /**
-     * Get all visible roles.
-     */
-    public static function visible(): Collection
-    {
-        return static::query()->where('hidden', '=', false)->orderBy('name')->get();
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function logDescriptor(): string

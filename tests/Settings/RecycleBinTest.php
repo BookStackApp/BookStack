@@ -62,11 +62,11 @@ class RecycleBinTest extends TestCase
 
         $viewReq = $this->asAdmin()->get('/settings/recycle-bin');
         $html = $this->withHtml($viewReq);
-        $html->assertElementContains('table.table', $page->name);
-        $html->assertElementContains('table.table', $editor->name);
-        $html->assertElementContains('table.table', $book->name);
-        $html->assertElementContains('table.table', $book->pages_count . ' Pages');
-        $html->assertElementContains('table.table', $book->chapters_count . ' Chapters');
+        $html->assertElementContains('.item-list-row', $page->name);
+        $html->assertElementContains('.item-list-row', $editor->name);
+        $html->assertElementContains('.item-list-row', $book->name);
+        $html->assertElementContains('.item-list-row', $book->pages_count . ' Pages');
+        $html->assertElementContains('.item-list-row', $book->chapters_count . ' Chapters');
     }
 
     public function test_recycle_bin_empty()

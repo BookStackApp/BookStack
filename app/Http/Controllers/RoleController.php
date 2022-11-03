@@ -3,19 +3,18 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\Permissions\PermissionsRepo;
+use BookStack\Auth\Queries\RolesAllPaginatedAndSorted;
 use BookStack\Auth\Role;
 use BookStack\Exceptions\PermissionsException;
+use BookStack\Util\SimpleListOptions;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class RoleController extends Controller
 {
-    protected $permissionsRepo;
+    protected PermissionsRepo $permissionsRepo;
 
-    /**
-     * PermissionController constructor.
-     */
     public function __construct(PermissionsRepo $permissionsRepo)
     {
         $this->permissionsRepo = $permissionsRepo;
@@ -24,14 +23,27 @@ class RoleController extends Controller
     /**
      * Show a listing of the roles in the system.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->checkPermission('user-roles-manage');
-        $roles = $this->permissionsRepo->getAllRoles();
+
+        $listOptions = SimpleListOptions::fromRequest($request, 'roles')->withSortOptions([
+            'display_name' => trans('common.sort_name'),
+            'users_count' => trans('settings.roles_assigned_users'),
+            'permissions_count' => trans('settings.roles_permissions_provided'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+        ]);
+
+        $roles = (new RolesAllPaginatedAndSorted())->run(20, $listOptions);
+        $roles->appends($listOptions->getPaginationAppends());
 
         $this->setPageTitle(trans('settings.roles'));
 
-        return view('settings.roles.index', ['roles' => $roles]);
+        return view('settings.roles.index', [
+            'roles'       => $roles,
+            'listOptions' => $listOptions,
+        ]);
     }
 
     /**
@@ -75,16 +87,11 @@ class RoleController extends Controller
 
     /**
      * Show the form for editing a user role.
-     *
-     * @throws PermissionsException
      */
     public function edit(string $id)
     {
         $this->checkPermission('user-roles-manage');
         $role = $this->permissionsRepo->getRoleById($id);
-        if ($role->hidden) {
-            throw new PermissionsException(trans('errors.role_cannot_be_edited'));
-        }
 
         $this->setPageTitle(trans('settings.role_edit'));
 
