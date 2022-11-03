@@ -34,7 +34,7 @@ class SimpleListOptions
         $sort = setting()->getForCurrentUser($typeKey . '_sort', '');
         $order = setting()->getForCurrentUser($typeKey . '_sort_order', $sortDescDefault ? 'desc' : 'asc');
 
-        return new static($typeKey, $sort, $order, $search);
+        return new self($typeKey, $sort, $order, $search);
     }
 
     /**
