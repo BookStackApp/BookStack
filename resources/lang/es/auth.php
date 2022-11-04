@@ -69,12 +69,12 @@ return [
     'email_not_confirmed_resend_button' => 'Reenviar Correo Electrónico de confirmación',
 
     // User Invite
-    'user_invite_email_subject' => 'Has sido invitado a unirte a :appName!',
+    'user_invite_email_subject' => '¡Has sido invitado a unirte a :appName!',
     'user_invite_email_greeting' => 'Se ha creado una cuenta para usted en :appName.',
-    'user_invite_email_text' => 'Clica en el botón a continuación para ajustar una contraseña y poder acceder:',
-    'user_invite_email_action' => 'Ajustar la Contraseña de la Cuenta',
+    'user_invite_email_text' => 'Haga clic en el botón de abajo para establecer una contraseña de cuenta y obtener acceso:',
+    'user_invite_email_action' => 'Establecer contraseña de la cuenta',
     'user_invite_page_welcome' => '¡Bienvenido a :appName!',
-    'user_invite_page_text' => 'Para completar la cuenta y tener acceso es necesario que configure una contraseña que se utilizará para entrar en :appName en futuros accesos.',
+    'user_invite_page_text' => 'Para finalizar tu cuenta y obtener acceso necesitas establecer una contraseña que se utilizará para iniciar sesión en :appName en futuras visitas.',
     'user_invite_page_confirm_button' => 'Confirmar Contraseña',
     'user_invite_success_login' => 'Contraseña guardada, ¡ahora debería ser capaz de iniciar sesión usando su contraseña establecida para acceder a :appName!',
 
