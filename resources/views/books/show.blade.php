@@ -109,7 +109,7 @@
             <hr class="primary-background">
 
             @if(userCan('book-update', $book))
-                <a href="{{ $book->getUrl('/edit') }}" class="icon-list-item">
+                <a href="{{ $book->getUrl('/edit') }}" data-shortcut="edit" class="icon-list-item">
                     <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>

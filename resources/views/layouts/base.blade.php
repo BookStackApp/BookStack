@@ -31,7 +31,7 @@
     <!-- Translations for JS -->
     @stack('translations')
 </head>
-<body class="@stack('body-class')">
+<body component="shortcuts" class="@stack('body-class')">
 
     @include('layouts.parts.base-body-start')
     @include('common.skip-to-content')
