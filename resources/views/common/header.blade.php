@@ -22,6 +22,7 @@
             <form action="{{ url('/search') }}" method="GET" class="search-box" role="search">
                 <button id="header-search-box-button" type="submit" aria-label="{{ trans('common.search') }}" tabindex="-1">@icon('search') </button>
                 <input id="header-search-box-input" type="text" name="term"
+                       data-shortcut="global_search"
                        aria-label="{{ trans('common.search') }}" placeholder="{{ trans('common.search') }}"
                        value="{{ isset($searchTerm) ? $searchTerm : '' }}">
             </form>
