@@ -115,6 +115,10 @@ class Shortcuts {
     }
 
     showHints() {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('shortcut-container');
+        this.container.append(wrapper);
+
         const shortcutEls = this.container.querySelectorAll('[data-shortcut]');
         const displayedIds = new Set();
         for (const shortcutEl of shortcutEls) {
@@ -124,7 +128,7 @@ class Shortcuts {
             }
 
             const key = this.mapById[id];
-            this.showHintLabel(shortcutEl, key);
+            this.showHintLabel(shortcutEl, key, wrapper);
             displayedIds.add(id);
         }
 
@@ -136,24 +140,36 @@ class Shortcuts {
         this.hintsShowing = true;
     }
 
-    showHintLabel(targetEl, key) {
+    /**
+     * @param {Element} targetEl
+     * @param {String} key
+     * @param {Element} wrapper
+     */
+    showHintLabel(targetEl, key, wrapper) {
         const targetBounds = targetEl.getBoundingClientRect();
+
         const label = document.createElement('div');
         label.classList.add('shortcut-hint');
         label.textContent = key;
-        this.container.append(label);
+
+        const linkage = document.createElement('div');
+        linkage.classList.add('shortcut-linkage');
+        linkage.style.left = targetBounds.x + 'px';
+        linkage.style.top = targetBounds.y + 'px';
+        linkage.style.width = targetBounds.width + 'px';
+        linkage.style.height = targetBounds.height + 'px';
+
+        wrapper.append(label, linkage);
 
         const labelBounds = label.getBoundingClientRect();
 
-        label.style.insetInlineStart = `${((targetBounds.x + targetBounds.width) - (labelBounds.width + 12))}px`;
+        label.style.insetInlineStart = `${((targetBounds.x + targetBounds.width) - (labelBounds.width + 6))}px`;
         label.style.insetBlockStart = `${(targetBounds.y + (targetBounds.height - labelBounds.height) / 2)}px`;
     }
 
     hideHints() {
-        const hints = this.container.querySelectorAll('.shortcut-hint');
-        for (const hint of hints) {
-            hint.remove();
-        }
+        const wrapper = this.container.querySelector('.shortcut-container');
+        wrapper.remove();
 
         window.removeEventListener('scroll', this.hideHints);
         window.removeEventListener('focus', this.hideHints);
