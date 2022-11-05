@@ -145,37 +145,37 @@
 
             {{--User Actions--}}
             @if(userCan('page-update', $page))
-                <a href="{{ $page->getUrl('/edit') }}" class="icon-list-item">
+                <a href="{{ $page->getUrl('/edit') }}" data-shortcut="edit" class="icon-list-item">
                     <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
             @if(userCanOnAny('create', \BookStack\Entities\Models\Book::class) || userCanOnAny('create', \BookStack\Entities\Models\Chapter::class) || userCan('page-create-all') || userCan('page-create-own'))
-                <a href="{{ $page->getUrl('/copy') }}" class="icon-list-item">
+                <a href="{{ $page->getUrl('/copy') }}" data-shortcut="copy" class="icon-list-item">
                     <span>@icon('copy')</span>
                     <span>{{ trans('common.copy') }}</span>
                 </a>
             @endif
             @if(userCan('page-update', $page))
                 @if(userCan('page-delete', $page))
-	                <a href="{{ $page->getUrl('/move') }}" class="icon-list-item">
+	                <a href="{{ $page->getUrl('/move') }}" data-shortcut="move" class="icon-list-item">
 	                    <span>@icon('folder')</span>
 	                    <span>{{ trans('common.move') }}</span>
 	                </a>
                 @endif
             @endif
-            <a href="{{ $page->getUrl('/revisions') }}" class="icon-list-item">
+            <a href="{{ $page->getUrl('/revisions') }}" data-shortcut="revisions" class="icon-list-item">
                 <span>@icon('history')</span>
                 <span>{{ trans('entities.revisions') }}</span>
             </a>
             @if(userCan('restrictions-manage', $page))
-                <a href="{{ $page->getUrl('/permissions') }}" class="icon-list-item">
+                <a href="{{ $page->getUrl('/permissions') }}" data-shortcut="permissions" class="icon-list-item">
                     <span>@icon('lock')</span>
                     <span>{{ trans('entities.permissions') }}</span>
                 </a>
             @endif
             @if(userCan('page-delete', $page))
-                <a href="{{ $page->getUrl('/delete') }}" class="icon-list-item">
+                <a href="{{ $page->getUrl('/delete') }}" data-shortcut="delete" class="icon-list-item">
                     <span>@icon('delete')</span>
                     <span>{{ trans('common.delete') }}</span>
                 </a>

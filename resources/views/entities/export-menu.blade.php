@@ -2,8 +2,13 @@
      class="dropdown-container"
      id="export-menu">
 
-    <div refs="dropdown@toggle" class="icon-list-item"
-         aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('entities.export') }}" tabindex="0">
+    <div refs="dropdown@toggle"
+         class="icon-list-item"
+         aria-haspopup="true"
+         aria-expanded="false"
+         aria-label="{{ trans('entities.export') }}"
+         data-shortcut="export"
+         tabindex="0">
         <span>@icon('export')</span>
         <span>{{ trans('entities.export') }}</span>
     </div>
