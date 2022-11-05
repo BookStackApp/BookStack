@@ -984,13 +984,27 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   background-color: $negative;
 }
 
+.shortcut-container {
+  background-color: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+.shortcut-linkage {
+  position: fixed;
+  box-shadow: 0 0 4px 0 #FFF;
+  border-radius: 3px;
+}
 .shortcut-hint {
   position: fixed;
   padding: $-xxs $-xxs;
   font-size: .85rem;
   font-weight: 700;
   line-height: 1;
-  z-index: 99;
   background-color: #eee;
   border-radius: 3px;
   border: 1px solid #b4b4b4;
