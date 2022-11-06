@@ -42,14 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'مجوزها',
-    'permissions_desc' => 'مجوزها را در اینجا تنظیم کنید تا مجوزهای پیش فرض ارائه شده توسط نقش های کاربر را لغو کنید.',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
-    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
+    'permissions_desc' => 'مجوزها را در اینجا تنظیم کنید تا مجوزهای پیش فرض تنظیم شده برای نقش های کاربر را لغو کنید.',
+    'permissions_book_cascade' => 'مجوزهای تنظیم‌شده روی کتاب‌ها به‌طور خودکار به فصل‌ها و صفحات داخل آن اختصاص داده می‌شوند، مگر اینکه مجوزهای اختصاصی برای آن‌ها (فصل‌ها و صفحات) تعریف شده باشد.',
+    'permissions_chapter_cascade' => 'مجوزهای تنظیم‌شده روی فصل‌ها به‌طور خودکار به صفحات داخل آن اختصاص داده می‌شوند، مگر اینکه مجوزهای اختصاصی برای آن‌ها (صفحات) تعریف شده باشد.',
     'permissions_save' => 'ذخيره مجوزها',
     'permissions_owner' => 'مالک',
     'permissions_role_everyone_else' => 'سایر کاربران',
     'permissions_role_everyone_else_desc' => 'مجوزها را برای نقش‌هایی تنظیم کنید که به طور خاص لغو نشده‌اند.',
-    'permissions_role_override' => 'Override permissions for role',
+    'permissions_role_override' => 'لغو مجوز برای نقش',
 
     // Search
     'search_results' => 'نتایج جستجو',
