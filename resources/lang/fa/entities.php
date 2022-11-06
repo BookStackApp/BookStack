@@ -42,13 +42,13 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'مجوزها',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_desc' => 'مجوزها را در اینجا تنظیم کنید تا مجوزهای پیش فرض ارائه شده توسط نقش های کاربر را لغو کنید.',
     'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
     'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'ذخيره مجوزها',
     'permissions_owner' => 'مالک',
-    'permissions_role_everyone_else' => 'Everyone Else',
-    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
+    'permissions_role_everyone_else' => 'سایر کاربران',
+    'permissions_role_everyone_else_desc' => 'مجوزها را برای نقش‌هایی تنظیم کنید که به طور خاص لغو نشده‌اند.',
     'permissions_role_override' => 'Override permissions for role',
 
     // Search
