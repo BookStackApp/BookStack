@@ -47,8 +47,8 @@ return [
     'previous' => 'Předchozí',
     'filter_active' => 'Aktivní filtr:',
     'filter_clear' => 'Zrušit filtr',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => 'Stáhnout',
+    'open_in_tab' => 'Otevřít v nové záložce',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',
@@ -77,7 +77,7 @@ return [
     'status_active' => 'Aktivní',
     'status_inactive' => 'Neaktivní',
     'never' => 'Nikdy',
-    'none' => 'None',
+    'none' => 'Žádná',
 
     // Header
     'header_menu_expand' => 'Rozbalit menu v záhlaví',
