@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\UserRepo;
+use BookStack\Settings\UserShortcutMap;
 use Illuminate\Http\Request;
 
 class UserPreferencesController extends Controller
@@ -12,6 +13,37 @@ class UserPreferencesController extends Controller
     public function __construct(UserRepo $userRepo)
     {
         $this->userRepo = $userRepo;
+    }
+
+    /**
+     * Show the user-specific interface shortcuts.
+     */
+    public function showShortcuts()
+    {
+        $shortcuts = UserShortcutMap::fromUserPreferences();
+        $enabled = setting()->getForCurrentUser('ui-shortcuts-enabled', false);
+
+        return view('users.preferences.shortcuts', [
+            'shortcuts' => $shortcuts,
+            'enabled' => $enabled,
+        ]);
+    }
+
+    /**
+     * Update the user-specific interface shortcuts.
+     */
+    public function updateShortcuts(Request $request)
+    {
+        $enabled = $request->get('enabled') === 'true';
+        $providedShortcuts = $request->get('shortcuts', []);
+        $shortcuts = new UserShortcutMap($providedShortcuts);
+
+        setting()->putUser(user(), 'ui-shortcuts', $shortcuts->toJson());
+        setting()->putUser(user(), 'ui-shortcuts-enabled', $enabled);
+
+        $this->showSuccessNotification('Shortcuts preferences have been updated!');
+
+        return redirect('/preferences/shortcuts');
     }
 
     /**

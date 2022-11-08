@@ -2,7 +2,7 @@
     <div class="grid mx-l">
 
         <div>
-            <a href="{{ url('/') }}" data-shortcut="home" class="logo">
+            <a href="{{ url('/') }}" data-shortcut="home_view" class="logo">
                 @if(setting('app-logo', '') !== 'none')
                     <img class="logo-image" src="{{ setting('app-logo', '') === '' ? url('/logo.png') : url(setting('app-logo', '')) }}" alt="Logo">
                 @endif
@@ -62,7 +62,7 @@
                         </span>
                     <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{ url('/favourites') }}" data-shortcut="favorites_view" class="icon-item">
+                            <a href="{{ url('/favourites') }}" data-shortcut="favourites_view" class="icon-item">
                                 @icon('star')
                                 <div>{{ trans('entities.my_favourites') }}</div>
                             </a>
@@ -90,6 +90,12 @@
                             </form>
                         </li>
                         <li><hr></li>
+                        <li>
+                            <a href="{{ url('/preferences/shortcuts') }}" class="icon-item">
+                                @icon('shortcuts')
+                                <div>{{ 'Shortcuts' }}</div>
+                            </a>
+                        </li>
                         <li>
                             @include('common.dark-mode-toggle', ['classes' => 'icon-item'])
                         </li>

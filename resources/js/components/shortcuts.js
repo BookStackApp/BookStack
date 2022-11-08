@@ -1,35 +1,3 @@
-/**
- * The default mapping of unique id to shortcut key.
- * @type {Object<string, string>}
- */
-const defaultMap = {
-    // Header actions
-    "home": "1",
-    "shelves_view": "2",
-    "books_view": "3",
-    "settings_view": "4",
-    "favorites_view": "5",
-    "profile_view": "6",
-    "global_search": "/",
-    "logout": "0",
-
-    // Generic actions
-    "edit": "e",
-    "new": "n",
-    "copy": "c",
-    "delete": "d",
-    "favorite": "f",
-    "export": "x",
-    "sort": "s",
-    "permissions": "p",
-    "move": "m",
-    "revisions": "r",
-
-    // Navigation
-    "next": "ArrowRight",
-    "prev": "ArrowLeft",
-};
-
 function reverseMap(map) {
     const reversed = {};
     for (const [key, value] of Object.entries(map)) {
@@ -45,14 +13,12 @@ class Shortcuts {
 
     setup() {
         this.container = this.$el;
-        this.mapById = defaultMap;
+        this.mapById = JSON.parse(this.$opts.keyMap);
         this.mapByShortcut = reverseMap(this.mapById);
 
         this.hintsShowing = false;
 
         this.hideHints = this.hideHints.bind(this);
-        // TODO - Allow custom key maps
-        // TODO - Allow turning off shortcuts
 
         this.setupListeners();
     }
