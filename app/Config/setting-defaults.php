@@ -26,6 +26,8 @@ return [
 
     // User-level default settings
     'user' => [
+        'ui-shortcuts'          => '{}',
+        'ui-shortcuts-enabled'  => false,
         'dark-mode-enabled'     => env('APP_DEFAULT_DARK_MODE', false),
         'bookshelves_view_type' => env('APP_VIEWS_BOOKSHELVES', 'grid'),
         'bookshelf_view_type'   => env('APP_VIEWS_BOOKSHELF', 'grid'),

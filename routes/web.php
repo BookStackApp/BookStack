@@ -246,6 +246,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/users/{id}', [UserController::class, 'destroy']);
 
     // User Preferences
+    Route::redirect('/preferences', '/');
+    Route::get('/preferences/shortcuts', [UserPreferencesController::class, 'showShortcuts']);
+    Route::put('/preferences/shortcuts', [UserPreferencesController::class, 'updateShortcuts']);
     Route::patch('/settings/users/{id}/switch-books-view', [UserPreferencesController::class, 'switchBooksView']);
     Route::patch('/settings/users/{id}/switch-shelves-view', [UserPreferencesController::class, 'switchShelvesView']);
     Route::patch('/settings/users/{id}/switch-shelf-view', [UserPreferencesController::class, 'switchShelfView']);

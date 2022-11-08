@@ -1,7 +1,7 @@
 <div id="sibling-navigation" class="grid half collapse-xs items-center mb-m px-m no-row-gap fade-in-when-active print-hidden">
     <div>
         @if($previous)
-            <a href="{{  $previous->getUrl()  }}" data-shortcut="prev" class="outline-hover no-link-style block rounded">
+            <a href="{{  $previous->getUrl()  }}" data-shortcut="previous" class="outline-hover no-link-style block rounded">
                 <div class="px-m pt-xs text-muted">{{ trans('common.previous') }}</div>
                 <div class="inline-block">
                     <div class="icon-list-item no-hover">
