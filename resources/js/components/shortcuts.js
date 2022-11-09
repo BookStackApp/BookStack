@@ -70,7 +70,6 @@ class Shortcuts {
      */
     runShortcut(id) {
         const el = this.container.querySelector(`[data-shortcut="${id}"]`);
-        console.info('Shortcut run', el);
         if (!el) {
             return false;
         }

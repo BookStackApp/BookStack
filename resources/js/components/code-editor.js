@@ -73,7 +73,7 @@ class CodeEditor {
             isFavorite ? this.favourites.add(language) : this.favourites.delete(language);
             button.setAttribute('data-favourite', isFavorite ? 'true' : 'false');
 
-            window.$http.patch('/settings/users/update-code-language-favourite', {
+            window.$http.patch('/preferences/update-code-language-favourite', {
                 language: language,
                 active: isFavorite
             });
