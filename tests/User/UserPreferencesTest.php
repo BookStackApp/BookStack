@@ -6,6 +6,45 @@ use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
 {
+    public function test_interface_shortcuts_updating()
+    {
+        $this->asEditor();
+
+        // View preferences with defaults
+        $resp = $this->get('/preferences/shortcuts');
+        $resp->assertSee('Interface Keyboard Shortcuts');
+
+        $html = $this->withHtml($resp);
+        $html->assertFieldHasValue('enabled', 'false');
+        $html->assertFieldHasValue('shortcut[home_view]', '1');
+
+        // Update preferences
+        $resp = $this->put('/preferences/shortcuts', [
+            'enabled' => 'true',
+            'shortcut' => ['home_view' => 'Ctrl + 1'],
+        ]);
+
+        $resp->assertRedirect('/preferences/shortcuts');
+        $resp->assertSessionHas('success', 'Shortcut preferences have been updated!');
+
+        // View updates to preferences page
+        $resp = $this->get('/preferences/shortcuts');
+        $html = $this->withHtml($resp);
+        $html->assertFieldHasValue('enabled', 'true');
+        $html->assertFieldHasValue('shortcut[home_view]', 'Ctrl + 1');
+    }
+
+    public function test_body_has_shortcuts_component_when_active()
+    {
+        $editor = $this->getEditor();
+        $this->actingAs($editor);
+
+        $this->withHtml($this->get('/'))->assertElementNotExists('body[component="shortcuts"]');
+
+        setting()->putUser($editor, 'ui-shortcuts-enabled', 'true');
+        $this->withHtml($this->get('/'))->assertElementExists('body[component="shortcuts"]');
+    }
+
     public function test_update_sort_preference()
     {
         $editor = $this->getEditor();
