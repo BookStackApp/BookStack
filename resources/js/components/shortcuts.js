@@ -30,13 +30,7 @@ class Shortcuts {
                 return;
             }
 
-            const shortcutId = this.mapByShortcut[event.key];
-            if (shortcutId) {
-                const wasHandled = this.runShortcut(shortcutId);
-                if (wasHandled) {
-                    event.preventDefault();
-                }
-            }
+            this.handleShortcutPress(event);
         });
 
         window.addEventListener('keydown', event => {
@@ -44,6 +38,28 @@ class Shortcuts {
                 this.hintsShowing ? this.hideHints() : this.showHints();
             }
         });
+    }
+
+    /**
+     * @param {KeyboardEvent} event
+     */
+    handleShortcutPress(event) {
+
+        const keys = [
+            event.ctrlKey ? 'Ctrl' : '',
+            event.metaKey ? 'Cmd' : '',
+            event.key,
+        ];
+
+        const combo = keys.filter(s => Boolean(s)).join(' + ');
+
+        const shortcutId = this.mapByShortcut[combo];
+        if (shortcutId) {
+            const wasHandled = this.runShortcut(shortcutId);
+            if (wasHandled) {
+                event.preventDefault();
+            }
+        }
     }
 
     /**

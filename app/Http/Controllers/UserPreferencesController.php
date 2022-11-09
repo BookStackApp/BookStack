@@ -35,7 +35,7 @@ class UserPreferencesController extends Controller
     public function updateShortcuts(Request $request)
     {
         $enabled = $request->get('enabled') === 'true';
-        $providedShortcuts = $request->get('shortcuts', []);
+        $providedShortcuts = $request->get('shortcut', []);
         $shortcuts = new UserShortcutMap($providedShortcuts);
 
         setting()->putUser(user(), 'ui-shortcuts', $shortcuts->toJson());

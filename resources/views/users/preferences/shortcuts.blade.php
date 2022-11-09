@@ -13,9 +13,12 @@
                 <div class="flex-container-row items-center gap-m wrap mb-m">
                     <p class="flex mb-none min-width-m text-small text-muted">
                         Here you can enable or disable keyboard system interface shortcuts, used for navigation
-                        and actions. You can customize each of the shortcuts below.
+                        and actions.
+
+                        You can customize each of the shortcuts below. Just press your desired key combination
+                        after selecting the input for a shortcut.
                     </p>
-                    <div class="flex min-width-m text-m-right">
+                    <div class="flex min-width-m text-m-center">
                         @include('form.toggle-switch', [
                             'name' => 'enabled',
                             'value' => $enabled,
