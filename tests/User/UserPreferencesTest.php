@@ -50,7 +50,7 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $updateRequest = $this->patch('/settings/users/' . $editor->id . '/change-sort/books', [
+        $updateRequest = $this->patch('/preferences/change-sort/books', [
             'sort'  => 'created_at',
             'order' => 'desc',
         ]);
@@ -73,7 +73,7 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $updateRequest = $this->patch('/settings/users/' . $editor->id . '/change-sort/dogs', [
+        $updateRequest = $this->patch('/preferences/change-sort/dogs', [
             'sort'  => 'name',
             'order' => 'asc',
         ]);
@@ -88,7 +88,7 @@ class UserPreferencesTest extends TestCase
         $editor = $this->getEditor();
         $this->actingAs($editor);
 
-        $updateRequest = $this->patch('/settings/users/' . $editor->id . '/update-expansion-preference/home-details', ['expand' => 'true']);
+        $updateRequest = $this->patch('/preferences/change-expansion/home-details', ['expand' => 'true']);
         $updateRequest->assertStatus(204);
 
         $this->assertDatabaseHas('settings', [
@@ -97,7 +97,7 @@ class UserPreferencesTest extends TestCase
         ]);
         $this->assertEquals(true, setting()->getForCurrentUser('section_expansion#home-details'));
 
-        $invalidKeyRequest = $this->patch('/settings/users/' . $editor->id . '/update-expansion-preference/my-home-details', ['expand' => 'true']);
+        $invalidKeyRequest = $this->patch('/preferences/change-expansion/my-home-details', ['expand' => 'true']);
         $invalidKeyRequest->assertStatus(500);
     }
 
@@ -108,7 +108,7 @@ class UserPreferencesTest extends TestCase
         $this->withHtml($home)->assertElementNotExists('.dark-mode');
 
         $this->assertEquals(false, setting()->getForCurrentUser('dark-mode-enabled', false));
-        $prefChange = $this->patch('/settings/users/toggle-dark-mode');
+        $prefChange = $this->patch('/preferences/toggle-dark-mode');
         $prefChange->assertRedirect();
         $this->assertEquals(true, setting()->getForCurrentUser('dark-mode-enabled'));
 
@@ -162,7 +162,7 @@ class UserPreferencesTest extends TestCase
             ->assertElementNotExists('.featured-image-container')
             ->assertElementExists('.content-wrap .entity-list-item');
 
-        $req = $this->patch("/settings/users/{$editor->id}/switch-shelf-view", ['view_type' => 'grid']);
+        $req = $this->patch("/preferences/change-view/bookshelf", ['view' => 'grid']);
         $req->assertRedirect($shelf->getUrl());
 
         $resp = $this->actingAs($editor)->get($shelf->getUrl())
@@ -179,14 +179,14 @@ class UserPreferencesTest extends TestCase
         $page = $this->entities->page();
         $this->actingAs($editor);
 
-        $this->patch('/settings/users/update-code-language-favourite', ['language' => 'php', 'active' => true]);
-        $this->patch('/settings/users/update-code-language-favourite', ['language' => 'javascript', 'active' => true]);
+        $this->patch('/preferences/update-code-language-favourite', ['language' => 'php', 'active' => true]);
+        $this->patch('/preferences/update-code-language-favourite', ['language' => 'javascript', 'active' => true]);
 
         $resp = $this->get($page->getUrl('/edit'));
         $resp->assertSee('option:code-editor:favourites="php,javascript"', false);
 
-        $this->patch('/settings/users/update-code-language-favourite', ['language' => 'ruby', 'active' => true]);
-        $this->patch('/settings/users/update-code-language-favourite', ['language' => 'php', 'active' => false]);
+        $this->patch('/preferences/update-code-language-favourite', ['language' => 'ruby', 'active' => true]);
+        $this->patch('/preferences/update-code-language-favourite', ['language' => 'php', 'active' => false]);
 
         $resp = $this->get($page->getUrl('/edit'));
         $resp->assertSee('option:code-editor:favourites="javascript,ruby"', false);

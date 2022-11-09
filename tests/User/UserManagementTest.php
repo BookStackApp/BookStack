@@ -160,6 +160,23 @@ class UserManagementTest extends TestCase
         ]);
     }
 
+    public function test_delete_removes_user_preferences()
+    {
+        $editor = $this->getEditor();
+        setting()->putUser($editor, 'dark-mode-enabled', 'true');
+
+        $this->assertDatabaseHas('settings', [
+            'setting_key' => 'user:' . $editor->id . ':dark-mode-enabled',
+            'value' => 'true',
+        ]);
+
+        $this->asAdmin()->delete("settings/users/{$editor->id}");
+
+        $this->assertDatabaseMissing('settings', [
+            'setting_key' => 'user:' . $editor->id . ':dark-mode-enabled',
+        ]);
+    }
+
     public function test_guest_profile_shows_limited_form()
     {
         $guest = User::getDefault();

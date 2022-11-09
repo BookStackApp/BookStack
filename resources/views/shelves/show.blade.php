@@ -118,7 +118,7 @@
                 </a>
             @endif
 
-            @include('entities.view-toggle', ['view' => $view, 'type' => 'shelf'])
+            @include('entities.view-toggle', ['view' => $view, 'type' => 'bookshelf'])
 
             <hr class="primary-background">
 
