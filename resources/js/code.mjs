@@ -4,6 +4,7 @@ import Clipboard from "clipboard/dist/clipboard.min";
 // Modes
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/clike/clike';
+import 'codemirror/mode/dart/dart';
 import 'codemirror/mode/diff/diff';
 import 'codemirror/mode/fortran/fortran';
 import 'codemirror/mode/go/go';
@@ -49,6 +50,7 @@ const modeMap = {
     'c++': 'text/x-c++src',
     'c#': 'text/x-csharp',
     csharp: 'text/x-csharp',
+    dart: 'application/dart',
     diff: 'diff',
     for: 'fortran',
     fortran: 'fortran',
