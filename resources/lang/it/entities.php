@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Tutti Gli Altri',
     'permissions_role_everyone_else_desc' => 'Imposta i permessi per tutti i ruoli non specificamente sovrascritti.',
     'permissions_role_override' => 'Sovrascrivere i permessi per il ruolo',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Risultati Ricerca',
