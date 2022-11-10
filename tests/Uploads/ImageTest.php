@@ -310,12 +310,29 @@ class ImageTest extends TestCase
         }
     }
 
-    public function test_system_images_remain_public()
+    public function test_system_images_remain_public_with_local_secure()
     {
         config()->set('filesystems.images', 'local_secure');
         $this->asAdmin();
         $galleryFile = $this->getTestImage('my-system-test-upload.png');
         $expectedPath = public_path('uploads/images/system/' . date('Y-m') . '/my-system-test-upload.png');
+
+        $upload = $this->call('POST', '/settings/customization', [], [], ['app_logo' => $galleryFile], []);
+        $upload->assertRedirect('/settings/customization');
+
+        $this->assertTrue(file_exists($expectedPath), 'Uploaded image not found at path: ' . $expectedPath);
+
+        if (file_exists($expectedPath)) {
+            unlink($expectedPath);
+        }
+    }
+
+    public function test_system_images_remain_public_with_local_secure_restricted()
+    {
+        config()->set('filesystems.images', 'local_secure_restricted');
+        $this->asAdmin();
+        $galleryFile = $this->getTestImage('my-system-test-restricted-upload.png');
+        $expectedPath = public_path('uploads/images/system/' . date('Y-m') . '/my-system-test-restricted-upload.png');
 
         $upload = $this->call('POST', '/settings/customization', [], [], ['app_logo' => $galleryFile], []);
         $upload->assertRedirect('/settings/customization');
