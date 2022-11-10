@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Alle anderen',
     'permissions_role_everyone_else_desc' => 'Berechtigungen für alle Rollen setzen, die nicht explizit überschrieben wurden.',
     'permissions_role_override' => 'Berechtigungen für Rolle überschreiben',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Suchergebnisse',
