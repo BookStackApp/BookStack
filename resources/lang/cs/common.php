@@ -25,6 +25,7 @@ return [
     'actions' => 'Akce',
     'view' => 'Zobrazit',
     'view_all' => 'Zobrazit vše',
+    'new' => 'New',
     'create' => 'Vytvořit',
     'update' => 'Aktualizovat',
     'edit' => 'Upravit',
@@ -80,12 +81,14 @@ return [
     'none' => 'Žádná',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Rozbalit menu v záhlaví',
     'profile_menu' => 'Nabídka profilu',
     'view_profile' => 'Zobrazit profil',
     'edit_profile' => 'Upravit profil',
     'dark_mode' => 'Tmavý režim',
     'light_mode' => 'Světlý režim',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Informace',
