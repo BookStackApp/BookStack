@@ -25,6 +25,7 @@ return [
     'actions' => 'פעולות',
     'view' => 'הצג',
     'view_all' => 'הצג הכל',
+    'new' => 'New',
     'create' => 'צור',
     'update' => 'עדכן',
     'edit' => 'ערוך',
@@ -80,12 +81,14 @@ return [
     'none' => 'None',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'הרחב תפריט',
     'profile_menu' => 'Profile Menu',
     'view_profile' => 'הצג פרופיל',
     'edit_profile' => 'ערוך פרופיל',
     'dark_mode' => 'מצב לילה',
     'light_mode' => 'מצב יום',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'מידע',
