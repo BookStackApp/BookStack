@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => '其他所有人',
     'permissions_role_everyone_else_desc' => '为所有未被特别覆盖的角色设置权限。',
     'permissions_role_override' => '覆盖角色权限',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => '搜索结果',
