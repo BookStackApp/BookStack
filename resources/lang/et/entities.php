@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Kõik muud',
     'permissions_role_everyone_else_desc' => 'Sea õigused kõigile rollidele, mida pole üle kirjutatud.',
     'permissions_role_override' => 'Kirjuta rolli õigused üle',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Otsingutulemused',
