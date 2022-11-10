@@ -8,31 +8,28 @@
                 {{ method_field('put') }}
                 {{ csrf_field() }}
 
-                <h1 class="list-heading">Interface Keyboard Shortcuts</h1>
+                <h1 class="list-heading">{{ trans('preferences.shortcuts_interface') }}</h1>
 
                 <div class="flex-container-row items-center gap-m wrap mb-m">
                     <p class="flex mb-none min-width-m text-small text-muted">
-                        Here you can enable or disable keyboard system interface shortcuts, used for navigation
-                        and actions.
-
-                        You can customize each of the shortcuts below. Just press your desired key combination
-                        after selecting the input for a shortcut.
+                        {{ trans('preferences.shortcuts_toggle_desc') }}
+                        {{ trans('preferences.shortcuts_customize_desc') }}
                     </p>
                     <div class="flex min-width-m text-m-center">
                         @include('form.toggle-switch', [
                             'name' => 'enabled',
                             'value' => $enabled,
-                            'label' => 'Keyboard shortcuts enabled',
+                            'label' => trans('preferences.shortcuts_toggle_label'),
                         ])
                     </div>
                 </div>
 
                 <hr>
 
-                <h2 class="list-heading mb-m">Navigation</h2>
+                <h2 class="list-heading mb-m">{{ trans('preferences.shortcuts_section_navigation') }}</h2>
                 <div class="flex-container-row wrap gap-m mb-xl">
                     <div class="flex min-width-l item-list">
-                        @include('users.preferences.parts.shortcut-control', ['label' => 'Homepage', 'id' => 'home_view'])
+                        @include('users.preferences.parts.shortcut-control', ['label' => trans('common.homepage'), 'id' => 'home_view'])
                         @include('users.preferences.parts.shortcut-control', ['label' => trans('entities.shelves'), 'id' => 'shelves_view'])
                         @include('users.preferences.parts.shortcut-control', ['label' => trans('entities.books'), 'id' => 'books_view'])
                         @include('users.preferences.parts.shortcut-control', ['label' => trans('settings.settings'), 'id' => 'settings_view'])
@@ -41,13 +38,13 @@
                     <div class="flex min-width-l item-list">
                         @include('users.preferences.parts.shortcut-control', ['label' => trans('common.view_profile'), 'id' => 'profile_view'])
                         @include('users.preferences.parts.shortcut-control', ['label' => trans('auth.logout'), 'id' => 'logout'])
-                        @include('users.preferences.parts.shortcut-control', ['label' => 'Global Search', 'id' => 'global_search'])
+                        @include('users.preferences.parts.shortcut-control', ['label' => trans('common.global_search'), 'id' => 'global_search'])
                         @include('users.preferences.parts.shortcut-control', ['label' => trans('common.next'), 'id' => 'next'])
                         @include('users.preferences.parts.shortcut-control', ['label' => trans('common.previous'), 'id' => 'previous'])
                     </div>
                 </div>
 
-                <h2 class="list-heading mb-m">Common Actions</h2>
+                <h2 class="list-heading mb-m">{{ trans('preferences.shortcuts_section_actions') }}</h2>
                 <div class="flex-container-row wrap gap-m mb-xl">
                     <div class="flex min-width-l item-list">
                         @include('users.preferences.parts.shortcut-control', ['label' => trans('common.new'), 'id' => 'new'])
@@ -65,13 +62,10 @@
                     </div>
                 </div>
 
-                <p class="text-small text-muted">
-                    Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will
-                    highlight the available shortcuts for actions currently visible on the screen.
-                </p>
+                <p class="text-small text-muted">{{ trans('preferences.shortcuts_overlay_desc') }}</p>
 
                 <div class="form-group text-right">
-                    <button class="button">{{ 'Save Shortcuts' }}</button>
+                    <button class="button">{{ trans('preferences.shortcuts_save') }}</button>
                 </div>
 
             </form>

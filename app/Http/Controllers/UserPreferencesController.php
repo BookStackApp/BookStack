@@ -41,7 +41,7 @@ class UserPreferencesController extends Controller
         setting()->putForCurrentUser('ui-shortcuts', $shortcuts->toJson());
         setting()->putForCurrentUser('ui-shortcuts-enabled', $enabled);
 
-        $this->showSuccessNotification('Shortcut preferences have been updated!');
+        $this->showSuccessNotification(trans('preferences.shortcuts_update_success'));
 
         return redirect('/preferences/shortcuts');
     }
