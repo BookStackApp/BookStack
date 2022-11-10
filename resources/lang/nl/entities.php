@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'De rest',
     'permissions_role_everyone_else_desc' => 'Stel machtigingen in voor alle rollen die niet specifiek overschreven worden.',
     'permissions_role_override' => 'Overschrijf machtigingen voor rol',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Zoekresultaten',
