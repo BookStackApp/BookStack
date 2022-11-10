@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Todos os outros',
     'permissions_role_everyone_else_desc' => 'Defina permissões para todas as funções não especificamente substituídas.',
     'permissions_role_override' => 'Substituir permissões para função',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Resultado(s) da Pesquisa',
