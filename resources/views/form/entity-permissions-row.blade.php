@@ -25,7 +25,7 @@ $inheriting - Boolean if the current row should be marked as inheriting default 
         <div class="px-l flex-container-row items-center" refs="entity-permissions@everyone-inherit">
             @include('form.custom-checkbox', [
                 'name' => 'entity-permissions-inherit',
-                'label' => 'Inherit defaults',
+                'label' => trans('entities.permissions_inherit_defaults'),
                 'value' => 'true',
                 'checked' => $inheriting
             ])
