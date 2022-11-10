@@ -13,6 +13,6 @@ return [
     'shortcuts_section_navigation' => 'Navegación',
     'shortcuts_section_actions' => 'Acciones comunes',
     'shortcuts_save' => 'Guardar atajos',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts_overlay_desc' => 'Nota: Cuando se activan los accesos directos se puede mostrar la ayuda presionando la tecla "?" que resaltará los accesos rápidos disponibles para las acciones actualmente visibles en la pantalla.',
+    'shortcuts_update_success' => '¡Las preferencias de accesos rápidos han sido actualizadas!',
 ];
