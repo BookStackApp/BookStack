@@ -31,7 +31,12 @@
     <!-- Translations for JS -->
     @stack('translations')
 </head>
-<body class="@stack('body-class')">
+<body
+    @if(setting()->getForCurrentUser('ui-shortcuts-enabled', false))
+        component="shortcuts"
+        option:shortcuts:key-map="{{ \BookStack\Settings\UserShortcutMap::fromUserPreferences()->toJson() }}"
+    @endif
+      class="@stack('body-class')">
 
     @include('layouts.parts.base-body-start')
     @include('common.skip-to-content')

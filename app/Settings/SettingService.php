@@ -194,6 +194,8 @@ class SettingService
 
     /**
      * Put a user-specific setting into the database.
+     * Can only take string value types since this may use
+     * the session which is less flexible to data types.
      */
     public function putUser(User $user, string $key, string $value): bool
     {
@@ -204,6 +206,16 @@ class SettingService
         }
 
         return $this->put($this->userKey($user->id, $key), $value);
+    }
+
+    /**
+     * Put a user-specific setting into the database for the current access user.
+     * Can only take string value types since this may use
+     * the session which is less flexible to data types.
+     */
+    public function putForCurrentUser(string $key, string $value)
+    {
+        return $this->putUser(user(), $key, $value);
     }
 
     /**

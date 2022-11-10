@@ -9,7 +9,7 @@
               action="{{ url()->current() }}"
               method="get"
           @else
-              action="{{ url("/settings/users/". user()->id ."/change-sort/{$type}") }}"
+              action="{{ url("/preferences/change-sort/{$type}") }}"
               method="post"
           @endif
     >

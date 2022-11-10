@@ -4,7 +4,7 @@ $key - Unique key for checking existing stored state.
 --}}
 <?php $isOpen = setting()->getForCurrentUser('section_expansion#'. $key); ?>
 <button type="button" expand-toggle="{{ $target }}"
-   expand-toggle-update-endpoint="{{ url('/settings/users/'. user()->id .'/update-expansion-preference/' . $key) }}"
+   expand-toggle-update-endpoint="{{ url('/preferences/change-expansion/' . $key) }}"
    expand-toggle-is-open="{{ $isOpen ? 'yes' : 'no' }}"
    class="icon-list-item {{ $classes ?? '' }}">
     <span>@icon('expand-text')</span>

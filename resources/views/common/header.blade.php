@@ -2,7 +2,7 @@
     <div class="grid mx-l">
 
         <div>
-            <a href="{{ url('/') }}" class="logo">
+            <a href="{{ url('/') }}" data-shortcut="home_view" class="logo">
                 @if(setting('app-logo', '') !== 'none')
                     <img class="logo-image" src="{{ setting('app-logo', '') === '' ? url('/logo.png') : url(setting('app-logo', '')) }}" alt="Logo">
                 @endif
@@ -22,6 +22,7 @@
             <form action="{{ url('/search') }}" method="GET" class="search-box" role="search">
                 <button id="header-search-box-button" type="submit" aria-label="{{ trans('common.search') }}" tabindex="-1">@icon('search') </button>
                 <input id="header-search-box-input" type="text" name="term"
+                       data-shortcut="global_search"
                        aria-label="{{ trans('common.search') }}" placeholder="{{ trans('common.search') }}"
                        value="{{ isset($searchTerm) ? $searchTerm : '' }}">
             </form>
@@ -33,14 +34,14 @@
                 @if (hasAppAccess())
                     <a class="hide-over-l" href="{{ url('/search') }}">@icon('search'){{ trans('common.search') }}</a>
                     @if(userCanOnAny('view', \BookStack\Entities\Models\Bookshelf::class) || userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
-                        <a href="{{ url('/shelves') }}">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
+                        <a href="{{ url('/shelves') }}" data-shortcut="shelves_view">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
                     @endif
-                    <a href="{{ url('/books') }}">@icon('books'){{ trans('entities.books') }}</a>
+                    <a href="{{ url('/books') }}" data-shortcut="books_view">@icon('books'){{ trans('entities.books') }}</a>
                     @if(signedInUser() && userCan('settings-manage'))
-                        <a href="{{ url('/settings') }}">@icon('settings'){{ trans('settings.settings') }}</a>
+                        <a href="{{ url('/settings') }}" data-shortcut="settings_view">@icon('settings'){{ trans('settings.settings') }}</a>
                     @endif
                     @if(signedInUser() && userCan('users-manage') && !userCan('settings-manage'))
-                        <a href="{{ url('/settings/users') }}">@icon('users'){{ trans('settings.users') }}</a>
+                        <a href="{{ url('/settings/users') }}" data-shortcut="settings_view">@icon('users'){{ trans('settings.users') }}</a>
                     @endif
                 @endif
 
@@ -61,13 +62,13 @@
                         </span>
                     <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                         <li>
-                            <a href="{{ url('/favourites') }}" class="icon-item">
+                            <a href="{{ url('/favourites') }}" data-shortcut="favourites_view" class="icon-item">
                                 @icon('star')
                                 <div>{{ trans('entities.my_favourites') }}</div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ $currentUser->getProfileUrl() }}" class="icon-item">
+                            <a href="{{ $currentUser->getProfileUrl() }}" data-shortcut="profile_view" class="icon-item">
                                 @icon('user')
                                 <div>{{ trans('common.view_profile') }}</div>
                             </a>
@@ -82,13 +83,19 @@
                             <form action="{{ url(config('auth.method') === 'saml2' ? '/saml2/logout' : '/logout') }}"
                                   method="post">
                                 {{ csrf_field() }}
-                                <button class="icon-item">
+                                <button class="icon-item" data-shortcut="logout">
                                     @icon('logout')
                                     <div>{{ trans('auth.logout') }}</div>
                                 </button>
                             </form>
                         </li>
                         <li><hr></li>
+                        <li>
+                            <a href="{{ url('/preferences/shortcuts') }}" class="icon-item">
+                                @icon('shortcuts')
+                                <div>{{ trans('preferences.shortcuts') }}</div>
+                            </a>
+                        </li>
                         <li>
                             @include('common.dark-mode-toggle', ['classes' => 'icon-item'])
                         </li>

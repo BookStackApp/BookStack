@@ -158,6 +158,9 @@ class UserRepo
         // Delete user profile images
         $this->userAvatar->destroyAllForUser($user);
 
+        // Delete related activities
+        setting()->deleteUserSettings($user->id);
+
         if (!empty($newOwnerId)) {
             $newOwner = User::query()->find($newOwnerId);
             if (!is_null($newOwner)) {

@@ -1,4 +1,4 @@
-<form action="{{ url('/settings/users/toggle-dark-mode') }}" method="post">
+<form action="{{ url('/preferences/toggle-dark-mode') }}" method="post">
     {{ csrf_field() }}
     {{ method_field('patch') }}
     @if(setting()->getForCurrentUser('dark-mode-enabled'))

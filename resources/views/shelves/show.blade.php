@@ -112,32 +112,32 @@
         <div class="icon-list text-primary">
 
             @if(userCan('book-create-all') && userCan('bookshelf-update', $shelf))
-                <a href="{{ $shelf->getUrl('/create-book') }}" class="icon-list-item">
+                <a href="{{ $shelf->getUrl('/create-book') }}" data-shortcut="new" class="icon-list-item">
                     <span class="icon">@icon('add')</span>
                     <span>{{ trans('entities.books_new_action') }}</span>
                 </a>
             @endif
 
-            @include('entities.view-toggle', ['view' => $view, 'type' => 'shelf'])
+            @include('entities.view-toggle', ['view' => $view, 'type' => 'bookshelf'])
 
             <hr class="primary-background">
 
             @if(userCan('bookshelf-update', $shelf))
-                <a href="{{ $shelf->getUrl('/edit') }}" class="icon-list-item">
+                <a href="{{ $shelf->getUrl('/edit') }}" data-shortcut="edit" class="icon-list-item">
                     <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
 
             @if(userCan('restrictions-manage', $shelf))
-                <a href="{{ $shelf->getUrl('/permissions') }}" class="icon-list-item">
+                <a href="{{ $shelf->getUrl('/permissions') }}" data-shortcut="permissions" class="icon-list-item">
                     <span>@icon('lock')</span>
                     <span>{{ trans('entities.permissions') }}</span>
                 </a>
             @endif
 
             @if(userCan('bookshelf-delete', $shelf))
-                <a href="{{ $shelf->getUrl('/delete') }}" class="icon-list-item">
+                <a href="{{ $shelf->getUrl('/delete') }}" data-shortcut="delete" class="icon-list-item">
                     <span>@icon('delete')</span>
                     <span>{{ trans('common.delete') }}</span>
                 </a>
