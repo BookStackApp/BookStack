@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Wszyscy inni',
     'permissions_role_everyone_else_desc' => 'Ustaw uprawnienia dla wszystkich nienadpisywanych specjalnie ról.',
     'permissions_role_override' => 'Nadpisz uprawnienia dla roli',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Wyniki wyszukiwania',
