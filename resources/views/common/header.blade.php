@@ -93,7 +93,7 @@
                         <li>
                             <a href="{{ url('/preferences/shortcuts') }}" class="icon-item">
                                 @icon('shortcuts')
-                                <div>{{ 'Shortcuts' }}</div>
+                                <div>{{ trans('preferences.shortcuts') }}</div>
                             </a>
                         </li>
                         <li>
