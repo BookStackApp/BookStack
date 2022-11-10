@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Alla andra',
     'permissions_role_everyone_else_desc' => 'Ställ in rättigheter för alla roller som inte uttryckligen har åsidosatts.',
     'permissions_role_override' => 'Åsidosätt rättigheter för roll',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Sökresultat',
