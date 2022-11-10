@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Všichni ostatní',
     'permissions_role_everyone_else_desc' => 'Nastavte oprávnění pro všechny role, které nejsou výslovně přepsány.',
     'permissions_role_override' => 'Přepsat oprávnění pro roli',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Výsledky hledání',
