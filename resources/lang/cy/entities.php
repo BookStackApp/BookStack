@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Everyone Else',
     'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
     'permissions_role_override' => 'Override permissions for role',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Search Results',
