@@ -10,7 +10,7 @@ function register(editor, url) {
         parentNode.insertBefore(hrElem, cNode);
     });
 
-    editor.ui.registry.addButton('hr', {
+    editor.ui.registry.addButton('customhr', {
         icon: 'horizontal-rule',
         tooltip: 'Insert horizontal line',
         onAction() {
