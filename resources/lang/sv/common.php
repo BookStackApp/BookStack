@@ -25,6 +25,7 @@ return [
     'actions' => 'Åtgärder',
     'view' => 'Visa',
     'view_all' => 'Visa alla',
+    'new' => 'New',
     'create' => 'Skapa',
     'update' => 'Uppdatera',
     'edit' => 'Redigera',
@@ -80,12 +81,14 @@ return [
     'none' => 'Inga',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Expandera sidhuvudsmenyn',
     'profile_menu' => 'Profilmeny',
     'view_profile' => 'Visa profil',
     'edit_profile' => 'Redigera profil',
     'dark_mode' => 'Mörkt läge',
     'light_mode' => 'Ljust läge',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Information',
