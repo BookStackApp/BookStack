@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Всі інші',
     'permissions_role_everyone_else_desc' => 'Встановити дозвіл для всіх ролей не спеціально перевизначений.',
     'permissions_role_override' => 'Змінити права доступу для ролі',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Результати пошуку',
