@@ -43,6 +43,8 @@ import popup from "./popup.js"
 import settingAppColorPicker from "./setting-app-color-picker.js"
 import settingColorPicker from "./setting-color-picker.js"
 import shelfSort from "./shelf-sort.js"
+import shortcuts from "./shortcuts";
+import shortcutInput from "./shortcut-input";
 import sidebar from "./sidebar.js"
 import sortableList from "./sortable-list.js"
 import submitOnChange from "./submit-on-change.js"
@@ -101,6 +103,8 @@ const componentMapping = {
     "setting-app-color-picker": settingAppColorPicker,
     "setting-color-picker": settingColorPicker,
     "shelf-sort": shelfSort,
+    "shortcuts": shortcuts,
+    "shortcut-input": shortcutInput,
     "sidebar": sidebar,
     "sortable-list": sortableList,
     "submit-on-change": submitOnChange,

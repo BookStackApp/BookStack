@@ -474,3 +474,9 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   border-color: var(--color-primary);
   outline: 1px solid var(--color-primary);
 }
+
+input.shortcut-input {
+  width: auto;
+  max-width: 120px;
+  height: auto;
+}

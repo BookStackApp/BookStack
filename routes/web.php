@@ -246,13 +246,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/users/{id}', [UserController::class, 'destroy']);
 
     // User Preferences
-    Route::patch('/settings/users/{id}/switch-books-view', [UserPreferencesController::class, 'switchBooksView']);
-    Route::patch('/settings/users/{id}/switch-shelves-view', [UserPreferencesController::class, 'switchShelvesView']);
-    Route::patch('/settings/users/{id}/switch-shelf-view', [UserPreferencesController::class, 'switchShelfView']);
-    Route::patch('/settings/users/{id}/change-sort/{type}', [UserPreferencesController::class, 'changeSort']);
-    Route::patch('/settings/users/{id}/update-expansion-preference/{key}', [UserPreferencesController::class, 'updateExpansionPreference']);
-    Route::patch('/settings/users/toggle-dark-mode', [UserPreferencesController::class, 'toggleDarkMode']);
-    Route::patch('/settings/users/update-code-language-favourite', [UserPreferencesController::class, 'updateCodeLanguageFavourite']);
+    Route::redirect('/preferences', '/');
+    Route::get('/preferences/shortcuts', [UserPreferencesController::class, 'showShortcuts']);
+    Route::put('/preferences/shortcuts', [UserPreferencesController::class, 'updateShortcuts']);
+    Route::patch('/preferences/change-view/{type}', [UserPreferencesController::class, 'changeView']);
+    Route::patch('/preferences/change-sort/{type}', [UserPreferencesController::class, 'changeSort']);
+    Route::patch('/preferences/change-expansion/{type}', [UserPreferencesController::class, 'changeExpansion']);
+    Route::patch('/preferences/toggle-dark-mode', [UserPreferencesController::class, 'toggleDarkMode']);
+    Route::patch('/preferences/update-code-language-favourite', [UserPreferencesController::class, 'updateCodeLanguageFavourite']);
 
     // User API Tokens
     Route::get('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);

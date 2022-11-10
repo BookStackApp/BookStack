@@ -18,7 +18,7 @@
                     <span>{{ trans('entities.shelves_new_action') }}</span>
                 </a>
             @endif
-            @include('entities.view-toggle', ['view' => $view, 'type' => 'shelves'])
+            @include('entities.view-toggle', ['view' => $view, 'type' => 'bookshelves'])
             @include('home.parts.expand-toggle', ['classes' => 'text-primary', 'target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
             @include('common.dark-mode-toggle', ['classes' => 'icon-list-item text-primary'])
         </div>

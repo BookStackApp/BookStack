@@ -3,6 +3,7 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Auth\UserRepo;
+use BookStack\Settings\UserShortcutMap;
 use Illuminate\Http\Request;
 
 class UserPreferencesController extends Controller
@@ -15,70 +16,76 @@ class UserPreferencesController extends Controller
     }
 
     /**
-     * Update the user's preferred book-list display setting.
+     * Show the user-specific interface shortcuts.
      */
-    public function switchBooksView(Request $request, int $id)
+    public function showShortcuts()
     {
-        return $this->switchViewType($id, $request, 'books');
+        $shortcuts = UserShortcutMap::fromUserPreferences();
+        $enabled = setting()->getForCurrentUser('ui-shortcuts-enabled', false);
+
+        return view('users.preferences.shortcuts', [
+            'shortcuts' => $shortcuts,
+            'enabled' => $enabled,
+        ]);
     }
 
     /**
-     * Update the user's preferred shelf-list display setting.
+     * Update the user-specific interface shortcuts.
      */
-    public function switchShelvesView(Request $request, int $id)
+    public function updateShortcuts(Request $request)
     {
-        return $this->switchViewType($id, $request, 'bookshelves');
+        $enabled = $request->get('enabled') === 'true';
+        $providedShortcuts = $request->get('shortcut', []);
+        $shortcuts = new UserShortcutMap($providedShortcuts);
+
+        setting()->putForCurrentUser('ui-shortcuts', $shortcuts->toJson());
+        setting()->putForCurrentUser('ui-shortcuts-enabled', $enabled);
+
+        $this->showSuccessNotification(trans('preferences.shortcuts_update_success'));
+
+        return redirect('/preferences/shortcuts');
     }
 
     /**
-     * Update the user's preferred shelf-view book list display setting.
+     * Update the preferred view format for a list view of the given type.
      */
-    public function switchShelfView(Request $request, int $id)
+    public function changeView(Request $request, string $type)
     {
-        return $this->switchViewType($id, $request, 'bookshelf');
-    }
-
-    /**
-     * For a type of list, switch with stored view type for a user.
-     */
-    protected function switchViewType(int $userId, Request $request, string $listName)
-    {
-        $this->checkPermissionOrCurrentUser('users-manage', $userId);
-
-        $viewType = $request->get('view_type');
-        if (!in_array($viewType, ['grid', 'list'])) {
-            $viewType = 'list';
+        $valueViewTypes = ['books', 'bookshelves', 'bookshelf'];
+        if (!in_array($type, $valueViewTypes)) {
+            return redirect()->back(500);
         }
 
-        $user = $this->userRepo->getById($userId);
-        $key = $listName . '_view_type';
-        setting()->putUser($user, $key, $viewType);
+        $view = $request->get('view');
+        if (!in_array($view, ['grid', 'list'])) {
+            $view = 'list';
+        }
 
-        return redirect()->back(302, [], "/settings/users/$userId");
+        $key = $type . '_view_type';
+        setting()->putForCurrentUser($key, $view);
+
+        return redirect()->back(302, [], "/");
     }
 
     /**
      * Change the stored sort type for a particular view.
      */
-    public function changeSort(Request $request, string $id, string $type)
+    public function changeSort(Request $request, string $type)
     {
         $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users', 'roles', 'webhooks', 'tags', 'page_revisions'];
         if (!in_array($type, $validSortTypes)) {
             return redirect()->back(500);
         }
 
-        $this->checkPermissionOrCurrentUser('users-manage', $id);
-
         $sort = substr($request->get('sort') ?: 'name', 0, 50);
         $order = $request->get('order') === 'desc' ? 'desc' : 'asc';
 
-        $user = $this->userRepo->getById($id);
         $sortKey = $type . '_sort';
         $orderKey = $type . '_sort_order';
-        setting()->putUser($user, $sortKey, $sort);
-        setting()->putUser($user, $orderKey, $order);
+        setting()->putForCurrentUser($sortKey, $sort);
+        setting()->putForCurrentUser($orderKey, $order);
 
-        return redirect()->back(302, [], "/settings/users/{$id}");
+        return redirect()->back(302, [], "/");
     }
 
     /**
@@ -87,7 +94,7 @@ class UserPreferencesController extends Controller
     public function toggleDarkMode()
     {
         $enabled = setting()->getForCurrentUser('dark-mode-enabled', false);
-        setting()->putUser(user(), 'dark-mode-enabled', $enabled ? 'false' : 'true');
+        setting()->putForCurrentUser('dark-mode-enabled', $enabled ? 'false' : 'true');
 
         return redirect()->back();
     }
@@ -95,18 +102,15 @@ class UserPreferencesController extends Controller
     /**
      * Update the stored section expansion preference for the given user.
      */
-    public function updateExpansionPreference(Request $request, string $id, string $key)
+    public function changeExpansion(Request $request, string $type)
     {
-        $this->checkPermissionOrCurrentUser('users-manage', $id);
-        $keyWhitelist = ['home-details'];
-        if (!in_array($key, $keyWhitelist)) {
+        $typeWhitelist = ['home-details'];
+        if (!in_array($type, $typeWhitelist)) {
             return response('Invalid key', 500);
         }
 
         $newState = $request->get('expand', 'false');
-
-        $user = $this->userRepo->getById($id);
-        setting()->putUser($user, 'section_expansion#' . $key, $newState);
+        setting()->putForCurrentUser('section_expansion#' . $type, $newState);
 
         return response('', 204);
     }
@@ -129,6 +133,6 @@ class UserPreferencesController extends Controller
             array_splice($currentFavorites, $index, 1);
         }
 
-        setting()->putUser(user(), 'code-language-favourites', implode(',', $currentFavorites));
+        setting()->putForCurrentUser('code-language-favourites', implode(',', $currentFavorites));
     }
 }
