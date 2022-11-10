@@ -50,7 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Todos los demás',
     'permissions_role_everyone_else_desc' => 'Establecer permisos para todos los roles sin permisos específicos asignados.',
     'permissions_role_override' => 'Reemplazar permisos para el rol',
-    'permissions_inherit_defaults' => 'Inherit defaults',
+    'permissions_inherit_defaults' => 'Heredar valores por defecto',
 
     // Search
     'search_results' => 'Resultados de búsqueda',
