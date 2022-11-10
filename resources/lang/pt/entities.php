@@ -50,6 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Restante',
     'permissions_role_everyone_else_desc' => 'Definir permissões para todos os papéis não substituídos especificamente.',
     'permissions_role_override' => 'Substituir permissões para o papel',
+    'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
     'search_results' => 'Resultado(s) da Pesquisa',
