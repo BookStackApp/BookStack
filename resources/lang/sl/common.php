@@ -25,6 +25,7 @@ return [
     'actions' => 'Dejanja',
     'view' => 'Pogled',
     'view_all' => 'Prikaži vse',
+    'new' => 'New',
     'create' => 'Ustvari',
     'update' => 'Posodobi',
     'edit' => 'Uredi',
@@ -80,12 +81,14 @@ return [
     'none' => 'None',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Expand Header Menu',
     'profile_menu' => 'Meni profila',
     'view_profile' => 'Ogled profila',
     'edit_profile' => 'Uredi profil',
     'dark_mode' => 'Način temnega zaslona',
     'light_mode' => 'Način svetlega zaslona',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Informacije',
