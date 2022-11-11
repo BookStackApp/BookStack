@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'Skróty',
+    'shortcuts_interface' => 'Interfejs Skrótów Klawiszowych',
+    'shortcuts_toggle_desc' => 'Tutaj możesz włączyć lub wyłączyć interfejs skrótów klawiszowych używanych do nawigacji i akcji.',
+    'shortcuts_customize_desc' => 'Możesz dostosować każdy z poniższych skrótów. Wystarczy nacisnąć wybraną kombinację klawiszy po wybraniu wprowadzania dla danego skrótu.',
+    'shortcuts_toggle_label' => 'Skróty klawiszowe włączone',
+    'shortcuts_section_navigation' => 'Nawigacja',
+    'shortcuts_section_actions' => 'Częste działania',
+    'shortcuts_save' => 'Zapisz skróty',
+    'shortcuts_overlay_desc' => 'Uwaga: Gdy skróty są włączone, przez naciśnięcie "?" może być otworzona nakładka pomocnicza, która podświetli dostępne skróty dla akcji widocznych obecnie na ekranie.',
+    'shortcuts_update_success' => 'Ustawienia skrótów zostały zaktualizowane!',
 ];
