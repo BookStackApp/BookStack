@@ -5,8 +5,8 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
+    'shortcuts' => 'Kiirklahvid',
+    'shortcuts_interface' => 'Kasutajaliidese kiirklahvid',
     'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
     'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
     'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
