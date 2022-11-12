@@ -28,6 +28,7 @@ import 'codemirror/mode/rust/rust';
 import 'codemirror/mode/shell/shell';
 import 'codemirror/mode/sql/sql';
 import 'codemirror/mode/stex/stex';
+import 'codemirror/mode/swift/swift';
 import 'codemirror/mode/toml/toml';
 import 'codemirror/mode/vb/vb';
 import 'codemirror/mode/vbscript/vbscript';
@@ -93,11 +94,12 @@ const modeMap = {
     rs: 'rust',
     shell: 'shell',
     sh: 'shell',
+    sql: 'text/x-sql',
     stext: 'text/x-stex',
+    swift: 'text/x-swift',
     toml: 'toml',
     ts: 'text/typescript',
     typescript: 'text/typescript',
-    sql: 'text/x-sql',
     vbs: 'vbscript',
     vbscript: 'vbscript',
     'vb.net': 'text/x-vb',
