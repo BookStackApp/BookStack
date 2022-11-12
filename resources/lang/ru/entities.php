@@ -50,7 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Все остальные',
     'permissions_role_everyone_else_desc' => 'Установить права доступа для всех ролей, которые не были специально переопределены.',
     'permissions_role_override' => 'Переопределить права доступа для роли',
-    'permissions_inherit_defaults' => 'Inherit defaults',
+    'permissions_inherit_defaults' => 'Наследовать по умолчанию',
 
     // Search
     'search_results' => 'Результаты поиска',
