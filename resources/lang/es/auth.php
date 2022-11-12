@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Confirmation de correo electrónico requerida pero el sistema no pudo enviar el correo. Contacte con el administrador para asegurarse de que el correo electrónico está configurado correctamente.',
     'email_confirm_success' => '¡Tu correo electrónico ha sido confirmado! Ahora deberías poder iniciar sesión usando esta dirección de correo electrónico.',
     'email_confirm_resent' => 'correo electrónico de confirmación reenviado, compruebe su bandeja de entrada.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Dirección de Correo Electrónico no confirmada',
     'email_not_confirmed_text' => 'Su Cuenta de Correo electrónico todavía no ha sido confirmada.',
