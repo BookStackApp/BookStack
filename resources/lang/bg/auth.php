@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Нужно ви е потвърждение чрез емейл, но системата не успя да го изпрати. Моля свържете се с администратора, за да проверите дали вашият емейл адрес е конфигуриран правилно.',
     'email_confirm_success' => 'Имейлът ти е потвърден! Вече би трябвало да можеш да се впишеш с този имейл адрес.',
     'email_confirm_resent' => 'Беше изпратен имейл с потвърждение, Моля, проверете кутията си.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Имейл адресът не е потвърден',
     'email_not_confirmed_text' => 'Вашият емейл адрес все още не е потвърден.',
