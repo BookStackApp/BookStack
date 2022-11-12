@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'E-Mail-bekræftelse kræves, men systemet kunne ikke sende E-Mailen. Kontakt administratoren for at sikre, at E-Mail er konfigureret korrekt.',
     'email_confirm_success' => 'Din email er blevet bekræftet! Du bør nu kune logge ind med denne emailadresse.',
     'email_confirm_resent' => 'Bekræftelsesmail sendt, tjek venligst din indboks.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'E-Mail adresse ikke bekræftet',
     'email_not_confirmed_text' => 'Din E-Mail adresse er endnu ikke blevet bekræftet.',
