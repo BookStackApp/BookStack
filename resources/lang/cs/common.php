@@ -25,7 +25,7 @@ return [
     'actions' => 'Akce',
     'view' => 'Zobrazit',
     'view_all' => 'Zobrazit vše',
-    'new' => 'New',
+    'new' => 'Nový',
     'create' => 'Vytvořit',
     'update' => 'Aktualizovat',
     'edit' => 'Upravit',
@@ -81,7 +81,7 @@ return [
     'none' => 'Žádná',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Domovská stránka',
     'header_menu_expand' => 'Rozbalit menu v záhlaví',
     'profile_menu' => 'Nabídka profilu',
     'view_profile' => 'Zobrazit profil',
