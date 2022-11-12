@@ -88,7 +88,7 @@ return [
     'edit_profile' => 'Upravit profil',
     'dark_mode' => 'Tmavý režim',
     'light_mode' => 'Světlý režim',
-    'global_search' => 'Global Search',
+    'global_search' => 'Globální vyhledávání',
 
     // Layout tabs
     'tab_info' => 'Informace',
