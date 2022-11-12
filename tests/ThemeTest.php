@@ -338,6 +338,23 @@ class ThemeTest extends TestCase
         });
     }
 
+    public function test_login_and_register_message_template_files_can_be_used()
+    {
+        $loginMessage = 'Welcome to this instance, login below you scallywag';
+        $registerMessage = 'You want to register? Enter the deets below you numpty';
+
+        $this->usingThemeFolder(function (string $folder) use ($loginMessage, $registerMessage) {
+            $viewDir = theme_path('auth/parts');
+            mkdir($viewDir, 0777, true);
+            file_put_contents($viewDir . '/login-message.blade.php', $loginMessage);
+            file_put_contents($viewDir . '/register-message.blade.php', $registerMessage);
+            $this->setSettings(['registration-enabled' => 'true']);
+
+            $this->get('/login')->assertSee($loginMessage);
+            $this->get('/register')->assertSee($registerMessage);
+        });
+    }
+
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
