@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'E-poštna potrditev je zahtevana ampak sistem ni mogel poslati e-pošte. Kontaktirajte administratorja, da zagotovite, da je e-pošta pravilno nastavljena.',
     'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Poslali smo vam potrditveno sporočilo. Prosimo preverite svojo elektronsko pošto.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Elektronski naslov ni potrjen',
     'email_not_confirmed_text' => 'Vaš e-naslov še ni bil potrjen.',
