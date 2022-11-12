@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Potvrzení e-mailu je vyžadováno, ale systém nemohl odeslat e-mail. Obraťte se na správce, abyste se ujistili, že je e-mail správně nastaven.',
     'email_confirm_success' => 'Váš email byl ověřen! Nyní byste měli být schopni se touto emailovou adresou přihlásit.',
     'email_confirm_resent' => 'E-mail s potvrzením byl znovu odeslán. Zkontrolujte svou příchozí poštu.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'E-mailová adresa nebyla potvrzena',
     'email_not_confirmed_text' => 'Vaše e-mailová adresa nebyla dosud potvrzena.',
