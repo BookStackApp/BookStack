@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'La conferma della mail è richiesta ma non è stato possibile mandare la mail. Contatta l\'amministratore.',
     'email_confirm_success' => 'La tua email è stata confermata! Ora dovresti essere in grado di effettuare il login utilizzando questo indirizzo email.',
     'email_confirm_resent' => 'Mail di conferma reinviata, controlla la tua posta.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Indirizzo Email Non Confermato',
     'email_not_confirmed_text' => 'Il tuo indirizzo email non è ancora stato confermato.',
