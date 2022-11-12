@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => '需要電子郵件驗證，但系統無法傳送電子郵件。請與管理員聯絡以確保電子郵件正確設定。',
     'email_confirm_success' => '您的電子郵箱已確認成功！您可以使用該電子郵箱地址進行登入了。',
     'email_confirm_resent' => '確認電子郵件已重新傳送。請檢查您的收件匣。',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => '電子郵件地址未確認',
     'email_not_confirmed_text' => '您的電子郵件位址尚未確認。',
