@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Требуется подтверждение электронной почты, но система не может отправить письмо. Свяжитесь с администратором, чтобы убедиться, что адрес электронной почты настроен правильно.',
     'email_confirm_success' => 'Ваш адрес электронной почты был подтвержден! Теперь вы можете войти в систему, используя этот адрес электронной почты.',
     'email_confirm_resent' => 'Письмо с подтверждение выслано снова. Пожалуйста, проверьте ваш почтовый ящик.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Адрес электронной почты не подтвержден',
     'email_not_confirmed_text' => 'Ваш email адрес все еще не подтвержден.',
