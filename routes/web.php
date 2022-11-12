@@ -316,7 +316,8 @@ Route::get('/register', [Auth\RegisterController::class, 'getRegister']);
 Route::get('/register/confirm', [Auth\ConfirmEmailController::class, 'show']);
 Route::get('/register/confirm/awaiting', [Auth\ConfirmEmailController::class, 'showAwaiting']);
 Route::post('/register/confirm/resend', [Auth\ConfirmEmailController::class, 'resend']);
-Route::get('/register/confirm/{token}', [Auth\ConfirmEmailController::class, 'confirm']);
+Route::get('/register/confirm/{token}', [Auth\ConfirmEmailController::class, 'showAcceptForm']);
+Route::post('/register/confirm/accept', [Auth\ConfirmEmailController::class, 'confirm']);
 Route::post('/register', [Auth\RegisterController::class, 'postRegister']);
 
 // SAML routes

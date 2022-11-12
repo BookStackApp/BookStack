@@ -4,6 +4,7 @@ import ajaxForm from "./ajax-form.js"
 import attachments from "./attachments.js"
 import attachmentsList from "./attachments-list.js"
 import autoSuggest from "./auto-suggest.js"
+import autoSubmit from "./auto-submit.js";
 import backToTop from "./back-to-top.js"
 import bookSort from "./book-sort.js"
 import chapterContents from "./chapter-contents.js"
@@ -64,6 +65,7 @@ const componentMapping = {
     "attachments": attachments,
     "attachments-list": attachmentsList,
     "auto-suggest": autoSuggest,
+    "auto-submit": autoSubmit,
     "back-to-top": backToTop,
     "book-sort": bookSort,
     "chapter-contents": chapterContents,

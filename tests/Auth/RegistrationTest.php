@@ -46,8 +46,18 @@ class RegistrationTest extends TestCase
             return $notification->token === $emailConfirmation->token;
         });
 
-        // Check confirmation email confirmation activation.
-        $this->get('/register/confirm/' . $emailConfirmation->token)->assertRedirect('/login');
+        // Check confirmation email confirmation accept page.
+        $resp = $this->get('/register/confirm/' . $emailConfirmation->token);
+        $acceptPage = $this->withHtml($resp);
+        $resp->assertOk();
+        $resp->assertSee('Thanks for confirming!');
+        $acceptPage->assertElementExists('form[method="post"][action$="/register/confirm/accept"][component="auto-submit"] button');
+        $acceptPage->assertFieldHasValue('token', $emailConfirmation->token);
+
+        // Check acceptance confirm
+        $this->post('/register/confirm/accept', ['token' => $emailConfirmation->token])->assertRedirect('/login');
+
+        // Check state on login redirect
         $this->get('/login')->assertSee('Your email has been confirmed! You should now be able to login using this email address.');
         $this->assertDatabaseMissing('email_confirmations', ['token' => $emailConfirmation->token]);
         $this->assertDatabaseHas('users', ['name' => $dbUser->name, 'email' => $dbUser->email, 'email_confirmed' => true]);
