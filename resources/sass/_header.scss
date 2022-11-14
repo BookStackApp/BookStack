@@ -108,21 +108,6 @@ header .search-box {
       border: 1px solid rgba(255, 255, 255, 0.4);
     }
   }
-  button {
-    z-index: 1;
-    left: 16px;
-    top: 10px;
-    color: #FFF;
-    opacity: 0.6;
-    @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
-    @include rtl {
-      left: auto;
-      right: 16px;
-    }
-    svg {
-      margin-block-end: 0;
-    }
-  }
   input::placeholder {
     color: #FFF;
     opacity: 0.6;
@@ -130,8 +115,23 @@ header .search-box {
   @include between($l, $xl) {
     max-width: 200px;
   }
-  &:focus-within button {
+  &:focus-within #header-search-box-button {
     opacity: 1;
+  }
+}
+#header-search-box-button {
+  z-index: 1;
+  left: 16px;
+  top: 10px;
+  color: #FFF;
+  opacity: 0.6;
+  @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
+  @include rtl {
+    left: auto;
+    right: 16px;
+  }
+  svg {
+    margin-block-end: 0;
   }
 }
 

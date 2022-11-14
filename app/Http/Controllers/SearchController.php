@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    protected $searchRunner;
+    protected SearchRunner $searchRunner;
 
     public function __construct(SearchRunner $searchRunner)
     {

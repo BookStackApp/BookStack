@@ -86,11 +86,13 @@
 .card-title a {
   line-height: 1;
 }
-.card-footer-link {
+.card-footer-link, button.card-footer-link  {
   display: block;
   padding: $-s $-m;
   line-height: 1;
   border-top: 1px solid;
+  width: 100%;
+  text-align: left;
   @include lightDark(border-color, #DDD, #555);
   border-radius: 0 0 3px 3px;
   font-size: 0.9em;

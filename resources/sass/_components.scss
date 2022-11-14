@@ -1011,3 +1011,30 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
   color: #333;
 }
+
+.global-search-suggestions {
+  display: none;
+  position: absolute;
+  top: -$-s;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  margin-left: -$-xxl;
+  margin-right: -$-xxl;
+  padding-top: 56px;
+  border-radius: 3px;
+  box-shadow: $bs-hover;
+  .entity-item-snippet p  {
+    display: none;
+  }
+  .entity-item-snippet {
+    font-size: .8rem;
+  }
+  .entity-list-item-name {
+    font-size: .9rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+}
