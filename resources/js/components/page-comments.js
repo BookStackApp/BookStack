@@ -90,7 +90,7 @@ class PageComments {
             newComment.innerHTML = resp.data;
             this.editingComment.innerHTML = newComment.children[0].innerHTML;
             window.$events.success(this.updatedText);
-            window.components.init(this.editingComment);
+            window.$components.init(this.editingComment);
             this.closeUpdateForm();
             this.editingComment = null;
         }).catch(window.$events.showValidationErrors).then(() => {
@@ -123,7 +123,7 @@ class PageComments {
             newComment.innerHTML = resp.data;
             let newElem = newComment.children[0];
             this.container.appendChild(newElem);
-            window.components.init(newElem);
+            window.$components.init(newElem);
             window.$events.success(this.createdText);
             this.resetForm();
             this.updateCount();

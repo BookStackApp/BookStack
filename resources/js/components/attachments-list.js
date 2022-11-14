@@ -1,10 +1,11 @@
+import {Component} from "./component";
+
 /**
  * Attachments List
  * Adds '?open=true' query to file attachment links
  * when ctrl/cmd is pressed down.
- * @extends {Component}
  */
-class AttachmentsList {
+export class AttachmentsList extends Component {
 
     setup() {
         this.container = this.$el;

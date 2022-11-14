@@ -1,5 +1,6 @@
+import {Component} from "./component";
 
-class AutoSubmit {
+export class AutoSubmit extends Component {
 
     setup() {
         this.form = this.$el;
@@ -8,5 +9,3 @@ class AutoSubmit {
     }
 
 }
-
-export default AutoSubmit;

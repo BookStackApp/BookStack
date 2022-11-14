@@ -128,6 +128,6 @@ export function removeLoading(element) {
 export function htmlToDom(html) {
     const wrap = document.createElement('div');
     wrap.innerHTML = html;
-    window.components.init(wrap);
+    window.$components.init(wrap);
     return wrap.children[0];
 }
