@@ -42,15 +42,15 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Permisos',
-    'permissions_desc' => 'Establezca los permisos aquí para anular los permisos por defecto proporcionados por los roles de usuario.',
-    'permissions_book_cascade' => 'Los permisos establecidos en los libros se aplicarán a sus capítulos y páginas, a menos que tengan sus propios permisos definidos.',
-    'permissions_chapter_cascade' => 'Los permisos establecidos en los capítulos se aplicarán a sus páginas, a menos que tengan sus propios permisos definidos.',
+    'permissions_desc' => 'Establezca los permisos aquí para reemplazar los permisos por defecto proporcionados por los roles de usuario.',
+    'permissions_book_cascade' => 'Los permisos establecidos en los libros se aplicarán a los capítulos contenidos y las páginas contenidas, a menos que tengan sus propios permisos definidos.',
+    'permissions_chapter_cascade' => 'Los permisos establecidos en los capítulos se aplicarán a las páginas contenidas, a menos que tengan sus propios permisos definidos.',
     'permissions_save' => 'Guardar permisos',
     'permissions_owner' => 'Propietario',
     'permissions_role_everyone_else' => 'Todos los demás',
-    'permissions_role_everyone_else_desc' => 'Establecer permisos para todos los roles sin permisos específicos asignados.',
+    'permissions_role_everyone_else_desc' => 'Establecer permisos para todos los roles no específicamente reemplazados.',
     'permissions_role_override' => 'Reemplazar permisos para el rol',
-    'permissions_inherit_defaults' => 'Inherit defaults',
+    'permissions_inherit_defaults' => 'Heredar valores por defecto',
 
     // Search
     'search_results' => 'Buscar resultados',
@@ -234,7 +234,7 @@ return [
     'pages_permissions_success' => 'Permisos de página actualizados',
     'pages_revision' => 'Revisión',
     'pages_revisions' => 'Revisiones de página',
-    'pages_revisions_desc' => 'A continuación se listan todas las revisiones pasadas de esta página. Puede volver la vista atrás, comparar y restaurar versiones antiguas de la página si los permisos lo permiten. Es posible que el historial completo de la página no se refleje en esta sección. Dependiendo de la configuración del sistema, las viejas revisiones podrían ser eliminadas automáticamente.',
+    'pages_revisions_desc' => 'A continuación se listan todas las revisiones anteriores de esta página. Puede volver la vista atrás, comparar y restaurar versiones antiguas de la página si los permisos lo permiten. Es posible que el historial completo de la página no se refleje en esta sección. Dependiendo de la configuración del sistema, las revisiones viejas podrían eliminarse automáticamente.',
     'pages_revisions_named' => 'Revisiones de página para :pageName',
     'pages_revision_named' => 'Revisión de ágina para :pageName',
     'pages_revision_restored_from' => 'Restaurado desde #:id; :summary',
@@ -278,7 +278,7 @@ return [
     'shelf_tags' => 'Etiquetas de Estante',
     'tag' => 'Etiqueta',
     'tags' =>  'Etiquetas',
-    'tags_index_desc' => 'Las etiquetas se pueden aplicar al contenido dentro del sistema para aplicar una forma flexible de categorización. Las etiquetas pueden tener tanto una clave como un valor, siendo el valor opcional. Una vez aplicado, el contenido puede ser consultado usando el nombre y el valor de la etiqueta.',
+    'tags_index_desc' => 'Las etiquetas se pueden aplicar al contenido dentro del sistema para lograr una forma flexible de categorización. Las etiquetas pueden tener tanto una clave como un valor, siendo el valor opcional. Una vez aplicado, el contenido puede ser consultado usando el nombre y el valor de la etiqueta.',
     'tag_name' =>  'Nombre de etiqueta',
     'tag_value' => 'Valor de la etiqueta (Opcional)',
     'tags_explain' => "Agregar algunas etiquetas para mejorar la categorización de su contenido. \n Se puede asignar un valor a una etiqueta para una organizacón con mayor detalle.",
