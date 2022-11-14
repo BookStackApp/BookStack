@@ -1,13 +1,13 @@
 import {escapeHtml} from "../services/util";
 import {onChildEvent} from "../services/dom";
+import {Component} from "./component";
 
 const ajaxCache = {};
 
 /**
  * AutoSuggest
- * @extends {Component}
  */
-class AutoSuggest {
+export class AutoSuggest extends Component {
     setup() {
         this.parent = this.$el.parentElement;
         this.container = this.$el;
@@ -149,5 +149,3 @@ class AutoSuggest {
         }
     }
 }
-
-export default AutoSuggest;

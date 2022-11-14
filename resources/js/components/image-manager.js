@@ -132,7 +132,7 @@ class ImageManager {
     addReturnedHtmlElementsToList(html) {
         const el = document.createElement('div');
         el.innerHTML = html;
-        window.components.init(el);
+        window.$components.init(el);
         for (const child of [...el.children]) {
             this.listContainer.appendChild(child);
         }
@@ -207,7 +207,7 @@ class ImageManager {
         const params = requestDelete ? {delete: true} : {};
         const {data: formHtml} = await window.$http.get(`/images/edit/${imageId}`, params);
         this.formContainer.innerHTML = formHtml;
-        window.components.init(this.formContainer);
+        window.$components.init(this.formContainer);
     }
 
 }

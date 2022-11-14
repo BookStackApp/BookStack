@@ -22,7 +22,7 @@ class PageDisplay {
         if (sidebarPageNav) {
             DOM.onChildEvent(sidebarPageNav, 'a', 'click', (event, child) => {
                 event.preventDefault();
-                window.components['tri-layout'][0].showContent();
+                window.$components.first('tri-layout').showContent();
                 const contentId = child.getAttribute('href').substr(1);
                 this.goToText(contentId);
                 window.history.pushState(null, null, '#' + contentId);

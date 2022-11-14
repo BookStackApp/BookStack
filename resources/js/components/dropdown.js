@@ -74,7 +74,7 @@ class DropDown {
     }
 
     hideAll() {
-        for (let dropdown of window.components.dropdown) {
+        for (let dropdown of window.$components.get('dropdown')) {
             dropdown.hide();
         }
     }
