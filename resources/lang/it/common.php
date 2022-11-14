@@ -25,7 +25,7 @@ return [
     'actions' => 'Azioni',
     'view' => 'Visualizza',
     'view_all' => 'Vedi tutto',
-    'new' => 'New',
+    'new' => 'Nuovo',
     'create' => 'Crea',
     'update' => 'Aggiorna',
     'edit' => 'Modifica',
@@ -88,7 +88,7 @@ return [
     'edit_profile' => 'Modifica Profilo',
     'dark_mode' => 'Modalità Scura',
     'light_mode' => 'Modalità Chiara',
-    'global_search' => 'Global Search',
+    'global_search' => 'Ricerca Globale',
 
     // Layout tabs
     'tab_info' => 'Info',
