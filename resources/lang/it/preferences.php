@@ -6,13 +6,13 @@
 
 return [
     'shortcuts' => 'Scorciatoie',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts_interface' => 'Interfaccia scorciatoie da tastiera',
+    'shortcuts_toggle_desc' => 'Qui puoi abilitare o disabilitare le scorciatoie dell\'interfaccia di sistema da tastiera, utilizzate per la navigazione e le azioni.',
+    'shortcuts_customize_desc' => 'È possibile personalizzare ciascuna delle scorciatoie riportate di seguito. È sufficiente premere la combinazione di tasti desiderata dopo aver selezionato l\'input per una scelta rapida.',
+    'shortcuts_toggle_label' => 'Scorciatoie da tastiera attivate',
+    'shortcuts_section_navigation' => 'Navigazione',
+    'shortcuts_section_actions' => 'Azioni Comuni',
+    'shortcuts_save' => 'Salva Scorciatoie',
+    'shortcuts_overlay_desc' => 'Nota: quando le scorciatoie sono abilitate, premendo "?" è possibile visualizzare le scorciatoie disponibili per le azioni attualmente visibili sullo schermo.',
+    'shortcuts_update_success' => 'Le preferenze delle scorciatoie sono state aggiornate!',
 ];
