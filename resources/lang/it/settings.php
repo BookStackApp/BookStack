@@ -133,11 +133,11 @@ return [
     // Role Settings
     'roles' => 'Ruoli',
     'role_user_roles' => 'Ruoli Utente',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
+    'roles_index_desc' => 'I ruoli sono utilizzati per raggruppare gli utenti e fornire ai loro membri i permessi di sistema. Quando un utente è membro di più ruoli, i privilegi concessi si sovrappongono e l\'utente eredita tutte le abilità.',
     'roles_x_users_assigned' => '1 user assigned|:count users assigned',
     'roles_x_permissions_provided' => '1 permission|:count permissions',
-    'roles_assigned_users' => 'Assigned Users',
-    'roles_permissions_provided' => 'Provided Permissions',
+    'roles_assigned_users' => 'Utenti Assegnati',
+    'roles_permissions_provided' => 'Autorizzazioni fornite',
     'role_create' => 'Crea Nuovo Ruolo',
     'role_create_success' => 'Ruolo creato correttamente',
     'role_delete' => 'Elimina Ruolo',
@@ -177,7 +177,7 @@ return [
 
     // Users
     'users' => 'Utenti',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => 'Crea e gestisci account utente individuali all\'interno del sistema. Gli account utente sono utilizzati per il login e l\'attribuzione di contenuti e attività. Le autorizzazioni di accesso sono principalmente basate sui ruoli, ma la proprietà dei contenuti dell\'utente, insieme ad altri fattori, può influenzare le autorizzazioni e l\'accesso.',
     'user_profile' => 'Profilo Utente',
     'users_add_new' => 'Aggiungi Nuovo Utente',
     'users_search' => 'Cerca Utenti',
@@ -247,7 +247,7 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_index_desc' => 'I webhook sono un modo per inviare dati a URL esterne quando si verificano determinate azioni ed eventi all\'interno del sistema, consentendo l\'integrazione basata sugli eventi con piattaforme esterne, come sistemi di messaggistica o di notifica.',
     'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
     'webhooks_create' => 'Crea Nuovo Webhook',
     'webhooks_none_created' => 'Nessun webhook è stato creato.',
