@@ -57,6 +57,7 @@ import triLayout from "./tri-layout.js"
 import userSelect from "./user-select.js"
 import webhookEvents from "./webhook-events";
 import wysiwygEditor from "./wysiwyg-editor.js"
+import globalSearch from "./global-search";
 
 const componentMapping = {
     "add-remove-rows": addRemoveRows,
@@ -86,6 +87,7 @@ const componentMapping = {
     "entity-selector-popup": entitySelectorPopup,
     "event-emit-select": eventEmitSelect,
     "expand-toggle": expandToggle,
+    "global-search": globalSearch,
     "header-mobile-toggle": headerMobileToggle,
     "homepage-control": homepageControl,
     "image-manager": imageManager,
