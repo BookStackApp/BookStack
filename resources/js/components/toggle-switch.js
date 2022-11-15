@@ -1,10 +1,10 @@
+import {Component} from "./component";
 
-class ToggleSwitch {
+export class ToggleSwitch extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.input = elem.querySelector('input[type=hidden]');
-        this.checkbox = elem.querySelector('input[type=checkbox]');
+    setup() {
+        this.input = this.$el.querySelector('input[type=hidden]');
+        this.checkbox = this.$el.querySelector('input[type=checkbox]');
 
         this.checkbox.addEventListener('change', this.stateChange.bind(this));
     }
@@ -19,5 +19,3 @@ class ToggleSwitch {
     }
 
 }
-
-export default ToggleSwitch;
