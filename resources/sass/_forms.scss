@@ -328,7 +328,7 @@ input[type=color] {
   }
 }
 
-.form-group[collapsible] {
+.form-group.collapsible {
   padding: 0 $-m;
   border: 1px solid;
   @include lightDark(border-color, #DDD, #000);

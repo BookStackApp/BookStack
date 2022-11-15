@@ -1,17 +1,15 @@
 import {slideUp, slideDown} from "../services/animations";
+import {Component} from "./component";
 
-class ExpandToggle {
+export class ExpandToggle extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-
-        // Component state
-        this.isOpen = elem.getAttribute('expand-toggle-is-open') === 'yes';
-        this.updateEndpoint = elem.getAttribute('expand-toggle-update-endpoint');
-        this.selector = elem.getAttribute('expand-toggle');
+    setup(elem) {
+        this.targetSelector = this.$opts.targetSelector;
+        this.isOpen = this.$opts.isOpen === 'true';
+        this.updateEndpoint = this.$opts.updateEndpoint;
 
         // Listener setup
-        elem.addEventListener('click', this.click.bind(this));
+        this.$el.addEventListener('click', this.click.bind(this));
     }
 
     open(elemToToggle) {
@@ -25,7 +23,7 @@ class ExpandToggle {
     click(event) {
         event.preventDefault();
 
-        const matchingElems = document.querySelectorAll(this.selector);
+        const matchingElems = document.querySelectorAll(this.targetSelector);
         for (let match of matchingElems) {
             this.isOpen ?  this.close(match) : this.open(match);
         }
@@ -41,5 +39,3 @@ class ExpandToggle {
     }
 
 }
-
-export default ExpandToggle;

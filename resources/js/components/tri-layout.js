@@ -1,5 +1,6 @@
+import {Component} from "./component";
 
-class TriLayout {
+export class TriLayout extends Component {
 
     setup() {
         this.container = this.$refs.container;
@@ -109,5 +110,3 @@ class TriLayout {
     }
 
 }
-
-export default TriLayout;

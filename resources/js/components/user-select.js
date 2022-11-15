@@ -1,6 +1,7 @@
 import {onChildEvent} from "../services/dom";
+import {Component} from "./component";
 
-class UserSelect {
+export class UserSelect extends Component {
 
     setup() {
         this.input = this.$refs.input;
@@ -13,13 +14,10 @@ class UserSelect {
 
     selectUser(event, userEl) {
         event.preventDefault();
-        const id = userEl.getAttribute('data-id');
-        this.input.value = id;
+        this.input.value = userEl.getAttribute('data-id');
         this.userInfoContainer.innerHTML = userEl.innerHTML;
         this.input.dispatchEvent(new Event('change', {bubbles: true}));
         this.hide();
     }
 
 }
-
-export default UserSelect;

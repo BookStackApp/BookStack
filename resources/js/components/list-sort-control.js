@@ -1,9 +1,10 @@
 /**
  * ListSortControl
  * Manages the logic for the control which provides list sorting options.
- * @extends {Component}
  */
-class ListSortControl {
+import {Component} from "./component";
+
+export class ListSortControl extends Component {
 
     setup() {
         this.elem = this.$el;
@@ -45,5 +46,3 @@ class ListSortControl {
     }
 
 }
-
-export default ListSortControl;
