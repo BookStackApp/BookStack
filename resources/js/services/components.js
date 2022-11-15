@@ -127,7 +127,6 @@ export function register(mapping) {
     for (const key of keys) {
         componentMap[camelToKebab(key)] = mapping[key];
     }
-    console.log(componentMap);
 }
 
 /**

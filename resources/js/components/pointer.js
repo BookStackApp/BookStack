@@ -1,10 +1,9 @@
 import * as DOM from "../services/dom";
 import Clipboard from "clipboard/dist/clipboard.min";
+import {Component} from "./component";
 
-/**
- * @extends Component
- */
-class Pointer {
+
+export class Pointer extends Component {
 
     setup() {
         this.container = this.$el;
@@ -127,5 +126,3 @@ class Pointer {
         }
     }
 }
-
-export default Pointer;
