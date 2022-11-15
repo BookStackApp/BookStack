@@ -1,3 +1,5 @@
+import {Component} from "./component";
+
 function reverseMap(map) {
     const reversed = {};
     for (const [key, value] of Object.entries(map)) {
@@ -6,10 +8,8 @@ function reverseMap(map) {
     return reversed;
 }
 
-/**
- * @extends {Component}
- */
-class Shortcuts {
+
+export class Shortcuts extends Component {
 
     setup() {
         this.container = this.$el;
@@ -160,5 +160,3 @@ class Shortcuts {
         this.hintsShowing = false;
     }
 }
-
-export default Shortcuts;

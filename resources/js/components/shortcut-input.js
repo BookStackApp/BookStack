@@ -1,13 +1,12 @@
+import {Component} from "./component";
+
 /**
  * Keys to ignore when recording shortcuts.
  * @type {string[]}
  */
 const ignoreKeys = ['Control', 'Alt', 'Shift', 'Meta', 'Super', ' ', '+', 'Tab', 'Escape'];
 
-/**
- * @extends {Component}
- */
-class ShortcutInput {
+export class ShortcutInput extends Component {
 
     setup() {
         this.input = this.$el;
@@ -53,5 +52,3 @@ class ShortcutInput {
     }
 
 }
-
-export default ShortcutInput;
