@@ -1,10 +1,10 @@
-
 /**
  * Webhook Events
  * Manages dynamic selection control in the webhook form interface.
- * @extends {Component}
  */
-class WebhookEvents {
+import {Component} from "./component";
+
+export class WebhookEvents extends Component {
 
     setup() {
         this.checkboxes = this.$el.querySelectorAll('input[type="checkbox"]');
@@ -28,5 +28,3 @@ class WebhookEvents {
     }
 
 }
-
-export default WebhookEvents;

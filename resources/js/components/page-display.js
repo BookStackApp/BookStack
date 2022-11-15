@@ -1,11 +1,12 @@
 import * as DOM from "../services/dom";
 import {scrollAndHighlightElement} from "../services/util";
+import {Component} from "./component";
 
-class PageDisplay {
+export class PageDisplay extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.pageId = elem.getAttribute('page-display');
+    setup() {
+        this.container = this.$el;
+        this.pageId = this.$opts.pageId;
 
         window.importVersioned('code').then(Code => Code.highlight());
         this.setupNavHighlighting();
@@ -13,7 +14,7 @@ class PageDisplay {
 
         // Check the hash on load
         if (window.location.hash) {
-            let text = window.location.hash.replace(/\%20/g, ' ').substr(1);
+            const text = window.location.hash.replace(/%20/g, ' ').substring(1);
             this.goToText(text);
         }
 
@@ -49,17 +50,10 @@ class PageDisplay {
     }
 
     setupNavHighlighting() {
-        // Check if support is present for IntersectionObserver
-        if (!('IntersectionObserver' in window) ||
-            !('IntersectionObserverEntry' in window) ||
-            !('intersectionRatio' in window.IntersectionObserverEntry.prototype)) {
-            return;
-        }
-
-        let pageNav = document.querySelector('.sidebar-page-nav');
+        const pageNav = document.querySelector('.sidebar-page-nav');
 
         // fetch all the headings.
-        let headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
+        const headings = document.querySelector('.page-content').querySelectorAll('h1, h2, h3, h4, h5, h6');
         // if headings are present, add observers.
         if (headings.length > 0 && pageNav !== null) {
             addNavObserver(headings);
@@ -67,21 +61,21 @@ class PageDisplay {
 
         function addNavObserver(headings) {
             // Setup the intersection observer.
-            let intersectOpts = {
+            const intersectOpts = {
                 rootMargin: '0px 0px 0px 0px',
                 threshold: 1.0
             };
-            let pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
+            const pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
 
             // observe each heading
-            for (let heading of headings) {
+            for (const heading of headings) {
                 pageNavObserver.observe(heading);
             }
         }
 
         function headingVisibilityChange(entries, observer) {
-            for (let entry of entries) {
-                let isVisible = (entry.intersectionRatio === 1);
+            for (const entry of entries) {
+                const isVisible = (entry.intersectionRatio === 1);
                 toggleAnchorHighlighting(entry.target.id, isVisible);
             }
         }
@@ -99,9 +93,7 @@ class PageDisplay {
             codeMirrors.forEach(cm => cm.CodeMirror && cm.CodeMirror.refresh());
         };
 
-        const details = [...this.elem.querySelectorAll('details')];
+        const details = [...this.container.querySelectorAll('details')];
         details.forEach(detail => detail.addEventListener('toggle', onToggle));
     }
 }
-
-export default PageDisplay;

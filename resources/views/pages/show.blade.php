@@ -17,7 +17,9 @@
     </div>
 
     <main class="content-wrap card">
-        <div class="page-content clearfix" page-display="{{ $page->id }}">
+        <div component="page-display"
+             option:page-display:page-id="{{ $page->id }}"
+             class="page-content clearfix">
             @include('pages.parts.page-display')
         </div>
         @include('pages.parts.pointer', ['page' => $page])
