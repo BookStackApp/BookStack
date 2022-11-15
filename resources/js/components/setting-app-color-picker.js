@@ -1,23 +1,13 @@
+import {Component} from "./component";
 
-class SettingAppColorPicker {
+export class SettingAppColorPicker extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.colorInput = elem.querySelector('input[type=color]');
-        this.lightColorInput = elem.querySelector('input[name="setting-app-color-light"]');
-        this.resetButton = elem.querySelector('[setting-app-color-picker-reset]');
-        this.defaultButton = elem.querySelector('[setting-app-color-picker-default]');
+    setup() {
+        this.colorInput = this.$refs.input;
+        this.lightColorInput = this.$refs.lightInput;
 
         this.colorInput.addEventListener('change', this.updateColor.bind(this));
         this.colorInput.addEventListener('input', this.updateColor.bind(this));
-        this.resetButton.addEventListener('click', event => {
-            this.colorInput.value = this.colorInput.dataset.current;
-            this.updateColor();
-        });
-        this.defaultButton.addEventListener('click', event => {
-            this.colorInput.value = this.colorInput.dataset.default;
-            this.updateColor();
-        });
     }
 
     /**
@@ -44,8 +34,8 @@ class SettingAppColorPicker {
     /**
      * Covert a hex color code to rgb components.
      * @attribution https://stackoverflow.com/a/5624139
-     * @param hex
-     * @returns {*}
+     * @param {String} hex
+     * @returns {{r: Number, g: Number, b: Number}}
      */
     hexToRgb(hex) {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -57,5 +47,3 @@ class SettingAppColorPicker {
     }
 
 }
-
-export default SettingAppColorPicker;

@@ -1,14 +1,10 @@
-/**
- * Entity Selector Popup
- * @extends {Component}
- */
-class EntitySelectorPopup {
+import {Component} from "./component";
+
+export class EntitySelectorPopup extends Component {
 
     setup() {
-        this.elem = this.$el;
+        this.container = this.$el;
         this.selectButton = this.$refs.select;
-
-        window.EntitySelectorPopup = this;
         this.selectorEl = this.$refs.selector;
 
         this.callback = null;
@@ -21,12 +17,12 @@ class EntitySelectorPopup {
 
     show(callback) {
         this.callback = callback;
-        this.elem.components.popup.show();
+        this.container.components.popup.show();
         this.getSelector().focusSearch();
     }
 
     hide() {
-        this.elem.components.popup.hide();
+        this.container.components.popup.hide();
     }
 
     getSelector() {
@@ -52,5 +48,3 @@ class EntitySelectorPopup {
         if (this.callback && entity) this.callback(entity);
     }
 }
-
-export default EntitySelectorPopup;

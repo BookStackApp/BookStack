@@ -1,5 +1,6 @@
+import {Component} from "./component";
 
-class PermissionsTable {
+export class PermissionsTable extends Component {
 
     setup() {
         this.container = this.$el;
@@ -63,5 +64,3 @@ class PermissionsTable {
     }
 
 }
-
-export default PermissionsTable;
