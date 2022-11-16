@@ -431,7 +431,9 @@ export class MarkdownEditor extends Component {
 
     actionInsertImage() {
         const cursorPos = this.cm.getCursor('from');
-        window.ImageManager.show(image => {
+        /** @type {ImageManager} **/
+        const imageManager = window.$components.first('image-manager');
+        imageManager.show(image => {
             const imageUrl = image.thumbs.display || image.url;
             let selectedText = this.cm.getSelection();
             let newText = "[![" + (selectedText || image.name) + "](" + imageUrl + ")](" + image.url + ")";
@@ -443,7 +445,9 @@ export class MarkdownEditor extends Component {
 
     actionShowImageManager() {
         const cursorPos = this.cm.getCursor('from');
-        window.ImageManager.show(image => {
+        /** @type {ImageManager} **/
+        const imageManager = window.$components.first('image-manager');
+        imageManager.show(image => {
             this.insertDrawing(image, cursorPos);
         }, 'drawio');
     }
@@ -451,7 +455,9 @@ export class MarkdownEditor extends Component {
     // Show the popup link selector and insert a link when finished
     actionShowLinkSelector() {
         const cursorPos = this.cm.getCursor('from');
-        window.EntitySelectorPopup.show(entity => {
+        /** @type {EntitySelectorPopup} **/
+        const selector = window.$components.first('entity-selector-popup');
+        selector.show(entity => {
             let selectedText = this.cm.getSelection() || entity.name;
             let newText = `[${selectedText}](${entity.link})`;
             this.cm.focus();
