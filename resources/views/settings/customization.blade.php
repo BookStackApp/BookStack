@@ -59,13 +59,16 @@
                     <label class="setting-list-label">{{ trans('settings.app_primary_color') }}</label>
                     <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
                 </div>
-                <div setting-app-color-picker class="text-m-right pt-xs">
-                    <input type="color" data-default="#206ea7" data-current="{{ setting('app-color') }}" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
-                    <input type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
+                <div component="setting-app-color-picker setting-color-picker"
+                     option:setting-color-picker:default="#206ea7"
+                     option:setting-color-picker:current="{{ setting('app-color') }}"
+                     class="text-m-right pt-xs">
+                    <input refs="setting-color-picker@input setting-app-color-picker@input" type="color" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
+                    <input refs="setting-app-color-picker@light-input" type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
                     <div class="pr-s">
-                        <button type="button" class="text-button text-muted mt-s" setting-app-color-picker-default>{{ trans('common.default') }}</button>
+                        <button refs="setting-color-picker@default-button" type="button" class="text-button text-muted mt-s">{{ trans('common.default') }}</button>
                         <span class="sep">|</span>
-                        <button type="button" class="text-button text-muted mt-s" setting-app-color-picker-reset>{{ trans('common.reset') }}</button>
+                        <button refs="setting-color-picker@reset-button" type="button" class="text-button text-muted mt-s">{{ trans('common.reset') }}</button>
                     </div>
 
                 </div>
@@ -90,20 +93,22 @@
                 </div>
             </div>
 
-            <div homepage-control id="homepage-control" class="grid half gap-xl items-center">
+            <div component="setting-homepage-control" id="homepage-control" class="grid half gap-xl items-center">
                 <div>
                     <label for="setting-app-homepage-type" class="setting-list-label">{{ trans('settings.app_homepage') }}</label>
                     <p class="small">{{ trans('settings.app_homepage_desc') }}</p>
                 </div>
                 <div>
-                    <select name="setting-app-homepage-type" id="setting-app-homepage-type">
+                    <select refs="setting-homepage-control@type-control"
+                            name="setting-app-homepage-type"
+                            id="setting-app-homepage-type">
                         <option @if(setting('app-homepage-type') === 'default') selected @endif value="default">{{ trans('common.default') }}</option>
                         <option @if(setting('app-homepage-type') === 'books') selected @endif value="books">{{ trans('entities.books') }}</option>
                         <option @if(setting('app-homepage-type') === 'bookshelves') selected @endif value="bookshelves">{{ trans('entities.shelves') }}</option>
                         <option @if(setting('app-homepage-type') === 'page') selected @endif value="page">{{ trans('entities.pages_specific') }}</option>
                     </select>
 
-                    <div page-picker-container style="display: none;" class="mt-m">
+                    <div refs="setting-homepage-control@page-picker-container" style="display: none;" class="mt-m">
                         @include('settings.parts.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_select'), 'value' => setting('app-homepage')])
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 import {onEnterPress, onSelect} from "../services/dom";
+import {Component} from "./component";
 
 /**
  * Ajax Form
@@ -8,10 +9,8 @@ import {onEnterPress, onSelect} from "../services/dom";
  *
  * Will handle a real form if that's what the component is added to
  * otherwise will act as a fake form element.
- *
- * @extends {Component}
  */
-class AjaxForm {
+export class AjaxForm extends Component {
     setup() {
         this.container = this.$el;
         this.responseContainer = this.container;
@@ -72,11 +71,9 @@ class AjaxForm {
             this.responseContainer.innerHTML = err.data;
         }
 
-        window.components.init(this.responseContainer);
+        window.$components.init(this.responseContainer);
         this.responseContainer.style.opacity = null;
         this.responseContainer.style.pointerEvents = null;
     }
 
 }
-
-export default AjaxForm;

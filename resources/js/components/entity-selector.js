@@ -1,10 +1,10 @@
 import {onChildEvent} from "../services/dom";
+import {Component} from "./component";
 
 /**
  * Entity Selector
- * @extends {Component}
  */
-class EntitySelector {
+export class EntitySelector extends Component {
 
     setup() {
         this.elem = this.$el;
@@ -186,5 +186,3 @@ class EntitySelector {
     }
 
 }
-
-export default EntitySelector;

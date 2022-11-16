@@ -1,6 +1,6 @@
 
 // System wide notifications
-[notification] {
+.notification {
   position: fixed;
   top: 0;
   right: 0;
@@ -1010,4 +1010,41 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border: 1px solid #b4b4b4;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
   color: #333;
+}
+
+// Back to top link
+$btt-size: 40px;
+.back-to-top {
+  background-color: var(--color-primary);
+  position: fixed;
+  bottom: $-m;
+  right: $-l;
+  padding: 5px 7px;
+  cursor: pointer;
+  color: #FFF;
+  fill: #FFF;
+  svg {
+    width: math.div($btt-size, 1.5);
+    height: math.div($btt-size, 1.5);
+    margin-inline-end: 4px;
+  }
+  width: $btt-size;
+  height: $btt-size;
+  border-radius: $btt-size;
+  transition: all ease-in-out 180ms;
+  opacity: 0;
+  z-index: 999;
+  overflow: hidden;
+  &:hover {
+    width: $btt-size*3.4;
+    opacity: 1 !important;
+  }
+  .inner {
+    width: $btt-size*3.4;
+  }
+  span {
+    position: relative;
+    vertical-align: top;
+    line-height: 2;
+  }
 }

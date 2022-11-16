@@ -1,13 +1,13 @@
 import {onChildEvent} from "../services/dom";
 import {uniqueId} from "../services/util";
+import {Component} from "./component";
 
 /**
  * AddRemoveRows
  * Allows easy row add/remove controls onto a table.
  * Needs a model row to use when adding a new row.
- * @extends {Component}
  */
-class AddRemoveRows {
+export class AddRemoveRows extends Component {
     setup() {
         this.modelRow = this.$refs.model;
         this.addButton = this.$refs.add;
@@ -31,7 +31,7 @@ class AddRemoveRows {
         clone.classList.remove('hidden');
         this.setClonedInputNames(clone);
         this.modelRow.parentNode.insertBefore(clone, this.modelRow);
-        window.components.init(clone);
+        window.$components.init(clone);
     }
 
     /**
@@ -50,5 +50,3 @@ class AddRemoveRows {
         }
     }
 }
-
-export default AddRemoveRows;

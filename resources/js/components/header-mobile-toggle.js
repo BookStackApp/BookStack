@@ -1,5 +1,6 @@
+import {Component} from "./component";
 
-class HeaderMobileToggle {
+export class HeaderMobileToggle extends Component {
 
     setup() {
         this.elem = this.$el;
@@ -37,5 +38,3 @@ class HeaderMobileToggle {
     }
 
 }
-
-export default HeaderMobileToggle;

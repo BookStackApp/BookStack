@@ -1,6 +1,7 @@
 import {build as buildEditorConfig} from "../wysiwyg/config";
+import {Component} from "./component";
 
-class WysiwygEditor {
+export class WysiwygEditor extends Component {
 
     setup() {
         this.elem = this.$el;
@@ -36,5 +37,3 @@ class WysiwygEditor {
     }
 
 }
-
-export default WysiwygEditor;

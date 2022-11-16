@@ -1,11 +1,8 @@
 import DropZoneLib from "dropzone";
 import {fadeOut} from "../services/animations";
+import {Component} from "./component";
 
-/**
- * Dropzone
- * @extends {Component}
- */
-class Dropzone {
+export class Dropzone extends Component {
     setup() {
         this.container = this.$el;
         this.url = this.$opts.url;
@@ -74,5 +71,3 @@ class Dropzone {
         this.dz.removeAllFiles(true);
     }
 }
-
-export default Dropzone;

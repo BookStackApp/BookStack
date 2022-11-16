@@ -1,9 +1,8 @@
 import {scrollAndHighlightElement} from "../services/util";
+import {Component} from "./component";
+import {htmlToDom} from "../services/dom";
 
-/**
- * @extends {Component}
- */
-class PageComments {
+export class PageComments extends Component {
 
     setup() {
         this.elem = this.$el;
@@ -90,7 +89,7 @@ class PageComments {
             newComment.innerHTML = resp.data;
             this.editingComment.innerHTML = newComment.children[0].innerHTML;
             window.$events.success(this.updatedText);
-            window.components.init(this.editingComment);
+            window.$components.init(this.editingComment);
             this.closeUpdateForm();
             this.editingComment = null;
         }).catch(window.$events.showValidationErrors).then(() => {
@@ -119,11 +118,9 @@ class PageComments {
         };
         this.showLoading(this.form);
         window.$http.post(`/comment/${this.pageId}`, reqData).then(resp => {
-            let newComment = document.createElement('div');
-            newComment.innerHTML = resp.data;
-            let newElem = newComment.children[0];
+            const newElem = htmlToDom(resp.data);
             this.container.appendChild(newElem);
-            window.components.init(newElem);
+            window.$components.init(newElem);
             window.$events.success(this.createdText);
             this.resetForm();
             this.updateCount();
@@ -200,5 +197,3 @@ class PageComments {
     }
 
 }
-
-export default PageComments;

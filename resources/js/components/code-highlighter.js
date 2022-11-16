@@ -1,14 +1,16 @@
-class CodeHighlighter {
+import {Component} from "./component";
 
-    constructor(elem) {
-        const codeBlocks = elem.querySelectorAll('pre');
+export class CodeHighlighter extends Component{
+
+    setup() {
+        const container = this.$el;
+
+        const codeBlocks = container.querySelectorAll('pre');
         if (codeBlocks.length > 0) {
             window.importVersioned('code').then(Code => {
-               Code.highlightWithin(elem);
+               Code.highlightWithin(container);
             });
         }
     }
 
 }
-
-export default CodeHighlighter;

@@ -278,16 +278,16 @@ body.tox-fullscreen, body.markdown-fullscreen {
   &.open {
     width: 480px;
   }
-  [toolbox-toggle] svg {
+  .toolbox-toggle svg {
     transition: transform ease-in-out 180ms;
   }
-  [toolbox-toggle] {
+  .toolbox-toggle {
     transition: background-color ease-in-out 180ms;
   }
-  &.open [toolbox-toggle] {
+  &.open .toolbox-toggle {
     background-color: rgba(255, 0, 0, 0.29);
   }
-  &.open [toolbox-toggle] svg {
+  &.open .toolbox-toggle svg {
     transform: rotate(180deg);
   }
   > div {
@@ -357,7 +357,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 }
 
-[toolbox-tab-content] {
+.toolbox-tab-content {
   display: none;
 }
 

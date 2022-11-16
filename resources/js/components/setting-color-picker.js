@@ -1,18 +1,20 @@
+import {Component} from "./component";
 
-class SettingColorPicker {
+export class SettingColorPicker extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.colorInput = elem.querySelector('input[type=color]');
-        this.resetButton = elem.querySelector('[setting-color-picker-reset]');
-        this.defaultButton = elem.querySelector('[setting-color-picker-default]');
-        this.resetButton.addEventListener('click', event => {
-            this.colorInput.value = this.colorInput.dataset.current;
-        });
-        this.defaultButton.addEventListener('click', event => {
-          this.colorInput.value = this.colorInput.dataset.default;
-        });
+    setup() {
+        this.colorInput = this.$refs.input;
+        this.resetButton = this.$refs.resetButton;
+        this.defaultButton = this.$refs.defaultButton;
+        this.currentColor = this.$opts.current;
+        this.defaultColor = this.$opts.default;
+
+        this.resetButton.addEventListener('click', () => this.setValue(this.currentColor));
+        this.defaultButton.addEventListener('click', () => this.setValue(this.defaultColor));
+    }
+
+    setValue(value) {
+        this.colorInput.value = value;
+        this.colorInput.dispatchEvent(new Event('change'));
     }
 }
-
-export default SettingColorPicker;

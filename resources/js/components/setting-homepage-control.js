@@ -1,10 +1,10 @@
+import {Component} from "./component";
 
-class HomepageControl {
+export class SettingHomepageControl extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.typeControl = elem.querySelector('[name="setting-app-homepage-type"]');
-        this.pagePickerContainer = elem.querySelector('[page-picker-container]');
+    setup() {
+        this.typeControl = this.$refs.typeControl;
+        this.pagePickerContainer = this.$refs.pagePickerContainer;
 
         this.typeControl.addEventListener('change', this.controlPagePickerVisibility.bind(this));
         this.controlPagePickerVisibility();
@@ -14,9 +14,4 @@ class HomepageControl {
         const showPagePicker = this.typeControl.value === 'page';
         this.pagePickerContainer.style.display = (showPagePicker ? 'block' : 'none');
     }
-
-
-
 }
-
-export default HomepageControl;
