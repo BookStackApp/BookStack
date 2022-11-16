@@ -158,7 +158,7 @@ export function first(name) {
  * @param {String} name
  * @returns {Component[]}
  */
-export function get(name = '') {
+export function get(name) {
     return components[name] || [];
 }
 
