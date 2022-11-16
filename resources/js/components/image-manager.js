@@ -4,7 +4,6 @@ import {Component} from "./component";
 export class ImageManager extends Component {
 
     setup() {
-
         // Options
         this.uploadedTo = this.$opts.uploadedTo;
 
@@ -33,8 +32,6 @@ export class ImageManager extends Component {
         this.resetState();
 
         this.setupListeners();
-
-        window.ImageManager = this;
     }
 
     setupListeners() {
