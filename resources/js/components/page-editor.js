@@ -196,7 +196,8 @@ export class PageEditor extends Component {
         event.preventDefault();
 
         const link = event.target.closest('a').href;
-        const dialog = this.switchDialogContainer.components['confirm-dialog'];
+        /** @var {ConfirmDialog} **/
+        const dialog = window.$components.firstOnElement(this.switchDialogContainer, 'confirm-dialog');
         const [saved, confirmed] = await Promise.all([this.saveDraft(), dialog.show()]);
 
         if (saved && confirmed) {

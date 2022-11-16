@@ -4,12 +4,11 @@ import {Component} from "./component";
 export class UserSelect extends Component {
 
     setup() {
+        this.container = this.$el;
         this.input = this.$refs.input;
         this.userInfoContainer = this.$refs.userInfo;
 
-        this.hide = this.$el.components.dropdown.hide;
-
-        onChildEvent(this.$el, 'a.dropdown-search-item', 'click', this.selectUser.bind(this));
+        onChildEvent(this.container, 'a.dropdown-search-item', 'click', this.selectUser.bind(this));
     }
 
     selectUser(event, userEl) {
@@ -18,6 +17,12 @@ export class UserSelect extends Component {
         this.userInfoContainer.innerHTML = userEl.innerHTML;
         this.input.dispatchEvent(new Event('change', {bubbles: true}));
         this.hide();
+    }
+
+    hide() {
+        /** @var {Dropdown} **/
+        const dropdown = window.$components.firstOnElement(this.container, 'dropdown');
+        dropdown.hide();
     }
 
 }

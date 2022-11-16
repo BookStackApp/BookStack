@@ -11,7 +11,8 @@ export class TagManager extends Component {
 
     setupListeners() {
         this.container.addEventListener('change', event => {
-            const addRemoveComponent = this.addRemoveComponentEl.components['add-remove-rows'];
+            /** @var {AddRemoveRows} **/
+            const addRemoveComponent = window.$components.firstOnElement(this.addRemoveComponentEl, 'add-remove-rows');
             if (!this.hasEmptyRows()) {
                 addRemoveComponent.add();
             }

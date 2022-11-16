@@ -43,7 +43,9 @@ export class Attachments extends Component {
 
     reloadList() {
         this.stopEdit();
-        this.mainTabs.components.tabs.show('items');
+        /** @var {Tabs} */
+        const tabs = window.$components.firstOnElement(this.mainTabs, 'tabs');
+        tabs.show('items');
         window.$http.get(`/attachments/get/page/${this.pageId}`).then(resp => {
             this.list.innerHTML = resp.data;
             window.$components.init(this.list);
