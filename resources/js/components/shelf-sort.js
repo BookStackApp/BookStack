@@ -80,5 +80,3 @@ export class ShelfSort extends Component {
     }
 
 }
-
-export default ShelfSort;

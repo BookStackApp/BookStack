@@ -1,25 +1,48 @@
 import * as DOM from "../services/dom";
+import {Component} from "./component";
 
-class TemplateManager {
+export class TemplateManager extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.list = elem.querySelector('[template-manager-list]');
-        this.searching = false;
+    setup() {
+        this.container = this.$el;
+        this.list = this.$refs.list;
 
+        this.searchInput = this.$refs.searchInput;
+        this.searchButton = this.$refs.searchButton;
+        this.searchCancel = this.$refs.searchCancel;
+
+        this.setupListeners();
+    }
+
+    setupListeners() {
         // Template insert action buttons
-        DOM.onChildEvent(this.elem, '[template-action]', 'click', this.handleTemplateActionClick.bind(this));
+        DOM.onChildEvent(this.container, '[template-action]', 'click', this.handleTemplateActionClick.bind(this));
 
         // Template list pagination click
-        DOM.onChildEvent(this.elem, '.pagination a', 'click', this.handlePaginationClick.bind(this));
+        DOM.onChildEvent(this.container, '.pagination a', 'click', this.handlePaginationClick.bind(this));
 
         // Template list item content click
-        DOM.onChildEvent(this.elem, '.template-item-content', 'click', this.handleTemplateItemClick.bind(this));
+        DOM.onChildEvent(this.container, '.template-item-content', 'click', this.handleTemplateItemClick.bind(this));
 
         // Template list item drag start
-        DOM.onChildEvent(this.elem, '.template-item', 'dragstart', this.handleTemplateItemDragStart.bind(this));
+        DOM.onChildEvent(this.container, '.template-item', 'dragstart', this.handleTemplateItemDragStart.bind(this));
 
-        this.setupSearchBox();
+        // Search box enter press
+        this.searchInput.addEventListener('keypress', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                this.performSearch();
+            }
+        });
+
+        // Search submit button press
+        this.searchButton.addEventListener('click', event => this.performSearch());
+
+        // Search cancel button press
+        this.searchCancel.addEventListener('click', event => {
+            this.searchInput.value = '';
+            this.performSearch();
+        });
     }
 
     handleTemplateItemClick(event, templateItem) {
@@ -54,45 +77,12 @@ class TemplateManager {
         this.list.innerHTML = resp.data;
     }
 
-    setupSearchBox() {
-        const searchBox = this.elem.querySelector('.search-box');
-
-        // Search box may not exist if there are no existing templates in the system.
-        if (!searchBox) return;
-
-        const input = searchBox.querySelector('input');
-        const submitButton = searchBox.querySelector('button');
-        const cancelButton = searchBox.querySelector('button.search-box-cancel');
-
-        async function performSearch() {
-            const searchTerm = input.value;
-            const resp = await window.$http.get(`/templates`, {
-                search: searchTerm
-            });
-            cancelButton.style.display = searchTerm ? 'block' : 'none';
-            this.list.innerHTML = resp.data;
-        }
-        performSearch = performSearch.bind(this);
-
-        // Search box enter press
-        searchBox.addEventListener('keypress', event => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                performSearch();
-            }
+    async performSearch() {
+        const searchTerm = this.searchInput.value;
+        const resp = await window.$http.get(`/templates`, {
+            search: searchTerm
         });
-
-        // Submit button press
-        submitButton.addEventListener('click', event => {
-            performSearch();
-        });
-
-        // Cancel button press
-        cancelButton.addEventListener('click', event => {
-            input.value = '';
-            performSearch();
-        });
+        this.searchCancel.style.display = searchTerm ? 'block' : 'none';
+        this.list.innerHTML = resp.data;
     }
 }
-
-export default TemplateManager;

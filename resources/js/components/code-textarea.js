@@ -13,5 +13,3 @@ export class CodeTextarea extends Component {
     }
 
 }
-
-export default CodeTextarea;

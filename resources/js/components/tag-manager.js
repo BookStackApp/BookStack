@@ -1,8 +1,6 @@
-/**
- * TagManager
- * @extends {Component}
- */
-class TagManager {
+import {Component} from "./component";
+
+export class TagManager extends Component {
     setup() {
         this.addRemoveComponentEl = this.$refs.addRemove;
         this.container = this.$el;
@@ -28,5 +26,3 @@ class TagManager {
         return firstEmpty !== undefined;
     }
 }
-
-export default TagManager;

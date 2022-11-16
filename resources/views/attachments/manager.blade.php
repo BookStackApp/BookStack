@@ -1,6 +1,9 @@
-<div style="display: block;" toolbox-tab-content="files"
+<div style="display: block;"
+     refs="editor-toolbox@tab-content"
+     data-tab-content="files"
      component="attachments"
-     option:attachments:page-id="{{ $page->id ?? 0 }}">
+     option:attachments:page-id="{{ $page->id ?? 0 }}"
+     class="toolbox-tab-content">
 
     <h4>{{ trans('entities.attachments') }}</h4>
     <div class="px-l files">
