@@ -1,11 +1,8 @@
 import * as Dates from "../services/dates";
 import {onSelect} from "../services/dom";
+import {Component} from "./component";
 
-/**
- * Page Editor
- * @extends {Component}
- */
-class PageEditor {
+export class PageEditor extends Component {
     setup() {
         // Options
         this.draftsEnabled = this.$opts.draftsEnabled === 'true';
@@ -208,5 +205,3 @@ class PageEditor {
     }
 
 }
-
-export default PageEditor;

@@ -1,10 +1,7 @@
 import {onSelect} from "../services/dom";
+import {Component} from "./component";
 
-/**
- * Class EntitySearch
- * @extends {Component}
- */
-class EntitySearch {
+export class EntitySearch extends Component {
     setup() {
         this.entityId = this.$opts.entityId;
         this.entityType = this.$opts.entityType;
@@ -55,5 +52,3 @@ class EntitySearch {
         this.searchInput.value = '';
     }
 }
-
-export default EntitySearch;

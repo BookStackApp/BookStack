@@ -1,10 +1,8 @@
 import {onChildEvent, onEnterPress, onSelect} from "../services/dom";
+import {Component} from "./component";
 
-/**
- * Code Editor
- * @extends {Component}
- */
-class CodeEditor {
+
+export class CodeEditor extends Component {
 
     setup() {
         this.container = this.$refs.container;
@@ -185,5 +183,3 @@ class CodeEditor {
     }
 
 }
-
-export default CodeEditor;

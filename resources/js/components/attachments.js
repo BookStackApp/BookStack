@@ -72,5 +72,3 @@ export class Attachments extends Component {
     }
 
 }
-
-export default Attachments;

@@ -1,10 +1,7 @@
 import {onChildEvent, onSelect, removeLoading, showLoading} from "../services/dom";
+import {Component} from "./component";
 
-/**
- * ImageManager
- * @extends {Component}
- */
-class ImageManager {
+export class ImageManager extends Component {
 
     setup() {
 
@@ -211,5 +208,3 @@ class ImageManager {
     }
 
 }
-
-export default ImageManager;

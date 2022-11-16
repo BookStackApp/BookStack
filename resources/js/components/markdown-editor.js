@@ -4,8 +4,9 @@ import Clipboard from "../services/clipboard";
 import {debounce} from "../services/util";
 import {patchDomFromHtmlString} from "../services/vdom";
 import DrawIO from "../services/drawio";
+import {Component} from "./component";
 
-class MarkdownEditor {
+export class MarkdownEditor extends Component {
 
     setup() {
         this.elem = this.$el;
@@ -619,5 +620,3 @@ class MarkdownEditor {
         });
     }
 }
-
-export default MarkdownEditor ;

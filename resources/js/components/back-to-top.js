@@ -56,5 +56,3 @@ export class BackToTop extends Component {
     }
 
 }
-
-export default BackToTop;

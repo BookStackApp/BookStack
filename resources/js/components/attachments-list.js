@@ -44,5 +44,3 @@ export class AttachmentsList extends Component {
         }
     }
 }
-
-export default AttachmentsList;
