@@ -17,16 +17,26 @@ export class EntitySelectorPopup extends Component {
 
     show(callback) {
         this.callback = callback;
-        this.container.components.popup.show();
+        this.getPopup().show();
         this.getSelector().focusSearch();
     }
 
     hide() {
-        this.container.components.popup.hide();
+        this.getPopup().hide();
     }
 
+    /**
+     * @returns {Popup}
+     */
+    getPopup() {
+        return window.$components.firstOnElement(this.container, 'popup');
+    }
+
+    /**
+     * @returns {EntitySelector}
+     */
     getSelector() {
-        return this.selectorEl.components['entity-selector'];
+        return window.$components.firstOnElement(this.selectorEl, 'entity-selector');
     }
 
     onSelectButtonClick() {

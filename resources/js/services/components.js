@@ -1,5 +1,21 @@
+/**
+ * A mapping of active components keyed by name, with values being arrays of component
+ * instances since there can be multiple components of the same type.
+ * @type {Object<String, Component[]>}
+ */
 const components = {};
-const componentMap = {};
+
+/**
+ * A mapping of component class models, keyed by name.
+ * @type {Object<String, Constructor<Component>>}
+ */
+const componentModelMap = {};
+
+/**
+ * A mapping of active component maps, keyed by the element components are assigned to.
+ * @type {WeakMap<Element, Object<String, Component>>}
+ */
+const elementComponentMap = new WeakMap();
 
 /**
  * Initialize a component instance on the given dom element.
@@ -8,7 +24,7 @@ const componentMap = {};
  */
 function initComponent(name, element) {
     /** @type {Function<Component>|undefined} **/
-    const componentModel = componentMap[name];
+    const componentModel = componentModelMap[name];
     if (componentModel === undefined) return;
 
     // Create our component instance
@@ -33,11 +49,10 @@ function initComponent(name, element) {
     }
     components[name].push(instance);
 
-    // Add to element listing
-    if (typeof element.components === 'undefined') {
-        element.components = {};
-    }
-    element.components[name] = instance;
+    // Add to element mapping
+    const elComponents = elementComponentMap.get(element) || {};
+    elComponents[name] = instance;
+    elementComponentMap.set(element, elComponents);
 }
 
 /**
@@ -125,7 +140,7 @@ export function init(parentElement = document) {
 export function register(mapping) {
     const keys = Object.keys(mapping);
     for (const key of keys) {
-        componentMap[camelToKebab(key)] = mapping[key];
+        componentModelMap[camelToKebab(key)] = mapping[key];
     }
 }
 
@@ -145,6 +160,17 @@ export function first(name) {
  */
 export function get(name = '') {
     return components[name] || [];
+}
+
+/**
+ * Get the first component, of the given name, that's assigned to the given element.
+ * @param {Element} element
+ * @param {String} name
+ * @returns {Component|null}
+ */
+export function firstOnElement(element, name) {
+    const elComponents = elementComponentMap.get(element) || {};
+    return elComponents[name] || null;
 }
 
 function camelToKebab(camelStr) {

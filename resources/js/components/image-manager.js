@@ -94,7 +94,7 @@ export class ImageManager extends Component {
 
         this.callback = callback;
         this.type = type;
-        this.popupEl.components.popup.show();
+        this.getPopup().show();
         this.dropzoneContainer.classList.toggle('hidden', type !== 'gallery');
 
         if (!this.hasData) {
@@ -104,7 +104,14 @@ export class ImageManager extends Component {
     }
 
     hide() {
-        this.popupEl.components.popup.hide();
+        this.getPopup().hide();
+    }
+
+    /**
+     * @returns {Popup}
+     */
+    getPopup() {
+        return window.$components.firstOnElement(this.popupEl, 'popup');
     }
 
     async loadGallery() {

@@ -34,7 +34,7 @@ export class ConfirmDialog extends Component {
      * @returns {Popup}
      */
     getPopup() {
-        return this.container.components.popup;
+        return window.$components.firstOnElement(this.container, 'popup');
     }
 
     /**

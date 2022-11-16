@@ -126,7 +126,7 @@ export class CodeEditor extends Component {
         }
 
         this.loadHistory();
-        this.popup.components.popup.show(() => {
+        this.getPopup().show(() => {
             Code.updateLayout(this.editor);
             this.editor.focus();
         }, () => {
@@ -135,8 +135,15 @@ export class CodeEditor extends Component {
     }
 
     hide() {
-        this.popup.components.popup.hide();
+        this.getPopup().hide();
         this.addHistory();
+    }
+
+    /**
+     * @returns {Popup}
+     */
+    getPopup() {
+        return window.$components.firstOnElement(this.popup, 'popup');
     }
 
     async updateEditorMode(language) {
