@@ -1,4 +1,5 @@
 import Sortable from "sortablejs";
+import {Component} from "./component";
 
 /**
  * SortableList
@@ -6,10 +7,8 @@ import Sortable from "sortablejs";
  * Can have data set on the dragged items by setting a 'data-drag-content' attribute.
  * This attribute must contain JSON where the keys are content types and the values are
  * the data to set on the data-transfer.
- *
- * @extends {Component}
  */
-class SortableList {
+export class SortableList extends Component {
     setup() {
         this.container = this.$el;
         this.handleSelector = this.$opts.handleSelector;
@@ -35,5 +34,3 @@ class SortableList {
         });
     }
 }
-
-export default SortableList;

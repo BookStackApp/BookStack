@@ -1,11 +1,11 @@
 import {onSelect} from "../services/dom";
+import {Component} from "./component";
 
 /**
  * Dropdown
  * Provides some simple logic to create simple dropdown menus.
- * @extends {Component}
  */
-class DropDown {
+export class Dropdown extends Component {
 
     setup() {
         this.container = this.$el;
@@ -74,7 +74,7 @@ class DropDown {
     }
 
     hideAll() {
-        for (let dropdown of window.components.dropdown) {
+        for (let dropdown of window.$components.get('dropdown')) {
             dropdown.hide();
         }
     }
@@ -172,5 +172,3 @@ class DropDown {
     }
 
 }
-
-export default DropDown;

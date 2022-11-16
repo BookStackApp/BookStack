@@ -48,7 +48,7 @@
 @endif
 
 @if($authMethod === 'standard')
-    <div new-user-password>
+    <div component="new-user-password">
         <label class="setting-list-label">{{ trans('settings.users_password') }}</label>
 
         @if(!isset($model))
@@ -61,10 +61,9 @@
                 'value' => old('send_invite', 'true') === 'true',
                 'label' => trans('settings.users_send_invite_option')
             ])
-
         @endif
 
-        <div id="password-input-container" @if(!isset($model)) style="display: none;" @endif>
+        <div refs="new-user-password@input-container" @if(!isset($model)) style="display: none;" @endif>
             <p class="small">{{ trans('settings.users_password_desc') }}</p>
             @if(isset($model))
                 <p class="small">

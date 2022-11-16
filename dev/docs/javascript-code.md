@@ -24,7 +24,7 @@ class Dropdown {
 
 All usage of $refs, $manyRefs and $opts should be done at the top of the `setup` function so any requirements can be easily seen.
 
-Once defined, the component has to be registered for use. This is done in the `resources/js/components/index.js` file. You'll need to import the component class then add it to `componentMapping` object, following the pattern of other components. 
+Once defined, the component has to be registered for use. This is done in the `resources/js/components/index.js` file by defining an additional export, following the pattern of other components. 
 
 ### Using a Component in HTML
 
@@ -80,9 +80,9 @@ Will result with `this.$opts` being:
 }
 ```
 
-#### Component Properties
+#### Component Properties & Methods
 
-A component has the below shown properties available for use. As mentioned above, most of these should be used within the `setup()` function to make the requirements/dependencies of the component clear.
+A component has the below shown properties & methods available for use. As mentioned above, most of these should be used within the `setup()` function to make the requirements/dependencies of the component clear.
 
 ```javascript
 // The root element that the compontent has been applied to.
@@ -98,6 +98,15 @@ this.$manyRefs
 
 // Options defined for the compontent.
 this.$opts
+
+// The registered name of the component, usually kebab-case.
+this.$name
+
+// Emit a custom event from this component.
+// Will be bubbled up from the dom element this is registered on, 
+// as a custom event with the name `<elementName>-<eventName>`,
+// with the provided data in the event detail.
+this.$emit(eventName, data = {})
 ```
 
 ## Global JavaScript Helpers
@@ -132,7 +141,16 @@ window.trans_plural(translationString, count, replacements);
 
 // Component System
 // Parse and initialise any components from the given root el down.
-window.components.init(rootEl);
-// Get the first active component of the given name
-window.components.first(name);
+window.$components.init(rootEl);
+// Register component models to be used by the component system.
+// Takes a mapping of classes/constructors keyed by component names.
+// Names will be converted to kebab-case.
+window.$components.register(mapping);
+// Get the first active component of the given name.
+window.$components.first(name);
+// Get all the active components of the given name. 
+window.$components.get(name);
+// Get the first active component of the given name that's been
+// created on the given element.
+window.$components.firstOnElement(element, name);
 ```

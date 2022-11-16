@@ -1,10 +1,8 @@
 import {onChildEvent, onEnterPress, onSelect} from "../services/dom";
+import {Component} from "./component";
 
-/**
- * Code Editor
- * @extends {Component}
- */
-class CodeEditor {
+
+export class CodeEditor extends Component {
 
     setup() {
         this.container = this.$refs.container;
@@ -128,7 +126,7 @@ class CodeEditor {
         }
 
         this.loadHistory();
-        this.popup.components.popup.show(() => {
+        this.getPopup().show(() => {
             Code.updateLayout(this.editor);
             this.editor.focus();
         }, () => {
@@ -137,8 +135,15 @@ class CodeEditor {
     }
 
     hide() {
-        this.popup.components.popup.hide();
+        this.getPopup().hide();
         this.addHistory();
+    }
+
+    /**
+     * @returns {Popup}
+     */
+    getPopup() {
+        return window.$components.firstOnElement(this.popup, 'popup');
     }
 
     async updateEditorMode(language) {
@@ -185,5 +190,3 @@ class CodeEditor {
     }
 
 }
-
-export default CodeEditor;

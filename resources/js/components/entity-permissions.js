@@ -1,9 +1,7 @@
-/**
- * @extends {Component}
- */
 import {htmlToDom} from "../services/dom";
+import {Component} from "./component";
 
-class EntityPermissions {
+export class EntityPermissions extends Component {
 
     setup() {
         this.container = this.$el;
@@ -75,5 +73,3 @@ class EntityPermissions {
     }
 
 }
-
-export default EntityPermissions;

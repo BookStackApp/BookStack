@@ -1,13 +1,9 @@
 import {onChildEvent, onSelect, removeLoading, showLoading} from "../services/dom";
+import {Component} from "./component";
 
-/**
- * ImageManager
- * @extends {Component}
- */
-class ImageManager {
+export class ImageManager extends Component {
 
     setup() {
-
         // Options
         this.uploadedTo = this.$opts.uploadedTo;
 
@@ -36,8 +32,6 @@ class ImageManager {
         this.resetState();
 
         this.setupListeners();
-
-        window.ImageManager = this;
     }
 
     setupListeners() {
@@ -100,7 +94,7 @@ class ImageManager {
 
         this.callback = callback;
         this.type = type;
-        this.popupEl.components.popup.show();
+        this.getPopup().show();
         this.dropzoneContainer.classList.toggle('hidden', type !== 'gallery');
 
         if (!this.hasData) {
@@ -110,7 +104,14 @@ class ImageManager {
     }
 
     hide() {
-        this.popupEl.components.popup.hide();
+        this.getPopup().hide();
+    }
+
+    /**
+     * @returns {Popup}
+     */
+    getPopup() {
+        return window.$components.firstOnElement(this.popupEl, 'popup');
     }
 
     async loadGallery() {
@@ -132,7 +133,7 @@ class ImageManager {
     addReturnedHtmlElementsToList(html) {
         const el = document.createElement('div');
         el.innerHTML = html;
-        window.components.init(el);
+        window.$components.init(el);
         for (const child of [...el.children]) {
             this.listContainer.appendChild(child);
         }
@@ -207,9 +208,7 @@ class ImageManager {
         const params = requestDelete ? {delete: true} : {};
         const {data: formHtml} = await window.$http.get(`/images/edit/${imageId}`, params);
         this.formContainer.innerHTML = formHtml;
-        window.components.init(this.formContainer);
+        window.$components.init(this.formContainer);
     }
 
 }
-
-export default ImageManager;

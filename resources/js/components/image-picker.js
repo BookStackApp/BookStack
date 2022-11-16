@@ -1,21 +1,25 @@
+import {Component} from "./component";
 
-class ImagePicker {
+export class ImagePicker extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.imageElem = elem.querySelector('img');
-        this.imageInput = elem.querySelector('input[type=file]');
-        this.resetInput = elem.querySelector('input[data-reset-input]');
-        this.removeInput = elem.querySelector('input[data-remove-input]');
+    setup() {
+        this.imageElem = this.$refs.image;
+        this.imageInput = this.$refs.imageInput;
+        this.resetInput = this.$refs.resetInput;
+        this.removeInput = this.$refs.removeInput;
+        this.resetButton = this.$refs.resetButton;
+        this.removeButton = this.$refs.removeButton || null;
 
-        this.defaultImage = elem.getAttribute('data-default-image');
+        this.defaultImage = this.$opts.defaultImage;
 
-        const resetButton = elem.querySelector('button[data-action="reset-image"]');
-        resetButton.addEventListener('click', this.reset.bind(this));
+        this.setupListeners();
+    }
 
-        const removeButton = elem.querySelector('button[data-action="remove-image"]');
-        if (removeButton) {
-            removeButton.addEventListener('click', this.removeImage.bind(this));
+    setupListeners() {
+        this.resetButton.addEventListener('click', this.reset.bind(this));
+
+        if (this.removeButton) {
+            this.removeButton.addEventListener('click', this.removeImage.bind(this));
         }
 
         this.imageInput.addEventListener('change', this.fileInputChange.bind(this));
@@ -51,5 +55,3 @@ class ImagePicker {
     }
 
 }
-
-export default ImagePicker;

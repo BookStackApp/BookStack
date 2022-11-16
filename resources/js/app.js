@@ -27,5 +27,8 @@ window.trans_choice = translator.getPlural.bind(translator);
 window.trans_plural = translator.parsePlural.bind(translator);
 
 // Load Components
-import components from "./components"
-components();
+import * as components from "./services/components"
+import * as componentMap from "./components";
+components.register(componentMap);
+window.$components = components;
+components.init();

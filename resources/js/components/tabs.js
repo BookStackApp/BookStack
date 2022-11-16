@@ -1,11 +1,11 @@
+import {onSelect} from "../services/dom";
+import {Component} from "./component";
+
 /**
  * Tabs
  * Works by matching 'tabToggle<Key>' with 'tabContent<Key>' sections.
- * @extends {Component}
  */
-import {onSelect} from "../services/dom";
-
-class Tabs {
+export class Tabs extends Component {
 
     setup() {
         this.tabContentsByName = {};
@@ -47,5 +47,3 @@ class Tabs {
     }
 
 }
-
-export default Tabs;

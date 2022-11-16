@@ -34,14 +34,14 @@
 @endif
 
 @if($endpoint['example_request'] ?? false)
-    <details details-highlighter class="mb-m">
+    <details component="details-highlighter" class="mb-m">
         <summary class="text-muted">Example Request</summary>
         <pre><code class="language-json">{{ $endpoint['example_request'] }}</code></pre>
     </details>
 @endif
 
 @if($endpoint['example_response'] ?? false)
-    <details details-highlighter class="mb-m">
+    <details component="details-highlighter" class="mb-m">
         <summary class="text-muted">Example Response</summary>
         <pre><code class="language-json">{{ $endpoint['example_response'] }}</code></pre>
     </details>

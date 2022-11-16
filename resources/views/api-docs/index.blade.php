@@ -38,7 +38,7 @@
 
             <div style="overflow: auto;">
 
-                <section code-highlighter class="card content-wrap auto-height">
+                <section component="code-highlighter" class="card content-wrap auto-height">
                     @include('api-docs.parts.getting-started')
                 </section>
 

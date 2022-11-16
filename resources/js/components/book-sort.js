@@ -1,4 +1,6 @@
 import Sortable from "sortablejs";
+import {Component} from "./component";
+import {htmlToDom} from "../services/dom";
 
 // Auto sort control
 const sortOperations = {
@@ -35,14 +37,14 @@ const sortOperations = {
     },
 };
 
-class BookSort {
+export class BookSort extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.sortContainer = elem.querySelector('[book-sort-boxes]');
-        this.input = elem.querySelector('[book-sort-input]');
+    setup() {
+        this.container = this.$el;
+        this.sortContainer = this.$refs.sortContainer;
+        this.input = this.$refs.input;
 
-        const initialSortBox = elem.querySelector('.sort-box');
+        const initialSortBox = this.container.querySelector('.sort-box');
         this.setupBookSortable(initialSortBox);
         this.setupSortPresets();
 
@@ -90,14 +92,12 @@ class BookSort {
      * @param {Object} entityInfo
      */
     bookSelect(entityInfo) {
-        const alreadyAdded = this.elem.querySelector(`[data-type="book"][data-id="${entityInfo.id}"]`) !== null;
+        const alreadyAdded = this.container.querySelector(`[data-type="book"][data-id="${entityInfo.id}"]`) !== null;
         if (alreadyAdded) return;
 
         const entitySortItemUrl = entityInfo.link + '/sort-item';
         window.$http.get(entitySortItemUrl).then(resp => {
-            const wrap = document.createElement('div');
-            wrap.innerHTML = resp.data;
-            const newBookContainer = wrap.children[0];
+            const newBookContainer = htmlToDom(resp.data);
             this.sortContainer.append(newBookContainer);
             this.setupBookSortable(newBookContainer);
         });
@@ -155,7 +155,7 @@ class BookSort {
      */
     buildEntityMap() {
         const entityMap = [];
-        const lists = this.elem.querySelectorAll('.sort-list');
+        const lists = this.container.querySelectorAll('.sort-list');
 
         for (let list of lists) {
             const bookId = list.closest('[data-type="book"]').getAttribute('data-id');
@@ -203,5 +203,3 @@ class BookSort {
     }
 
 }
-
-export default BookSort;

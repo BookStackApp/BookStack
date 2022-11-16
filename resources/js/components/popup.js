@@ -1,13 +1,13 @@
 import {fadeIn, fadeOut} from "../services/animations";
 import {onSelect} from "../services/dom";
+import {Component} from "./component";
 
 /**
  * Popup window that will contain other content.
  * This component provides the show/hide functionality
  * with the ability for popup@hide child references to close this.
- * @extends {Component}
  */
-class Popup {
+export class Popup extends Component {
 
     setup() {
         this.container = this.$el;
@@ -57,5 +57,3 @@ class Popup {
     }
 
 }
-
-export default Popup;
