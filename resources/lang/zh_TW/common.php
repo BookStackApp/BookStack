@@ -49,7 +49,7 @@ return [
     'filter_active' => '使用中的過濾器',
     'filter_clear' => '清理過濾',
     'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'open_in_tab' => '在新分頁中開啟',
 
     // Sort Options
     'sort_options' => '排序選項',
