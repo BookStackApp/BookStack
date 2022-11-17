@@ -39,9 +39,9 @@ return [
     'register_success' => '感謝您註冊！您已註冊完成並可登入。',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => '嘗試登入中',
+    'auto_init_starting_desc' => '正在與認證系統連線以開始流程，若 5 秒鐘仍無回應，請嘗試點擊以下的連結。',
+    'auto_init_start_link' => '進行認證',
 
     // Password Reset
     'reset_password' => '重設密碼',
@@ -61,7 +61,7 @@ return [
     'email_confirm_send_error' => '需要電子郵件驗證，但系統無法傳送電子郵件。請與管理員聯絡以確保電子郵件正確設定。',
     'email_confirm_success' => '您的電子郵箱已確認成功！您可以使用該電子郵箱地址進行登入了。',
     'email_confirm_resent' => '確認電子郵件已重新傳送。請檢查您的收件匣。',
-    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks' => '完成驗證，謝謝。',
     'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => '電子郵件地址未確認',
