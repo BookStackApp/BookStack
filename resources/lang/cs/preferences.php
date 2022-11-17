@@ -6,13 +6,13 @@
 
 return [
     'shortcuts' => 'Zkratky',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts_interface' => 'Zobrazit klávesové zkratky',
+    'shortcuts_toggle_desc' => 'Zde můžete povolit nebo zakázat klávesové zkratky systémového rozhraní používané pro navigaci a akce.',
+    'shortcuts_customize_desc' => 'Po výběru vstupu pro zástupce si můžete přizpůsobit všechny klávesové zkratky.',
+    'shortcuts_toggle_label' => 'Klávesové zkratky povoleny',
+    'shortcuts_section_navigation' => 'Navigace',
+    'shortcuts_section_actions' => 'Společné akce',
+    'shortcuts_save' => 'Uložit zkratky',
+    'shortcuts_overlay_desc' => 'Poznámka: Když jsou povoleny zkratky, je k dispozici pomocný překryv stisknutím "? která zvýrazní dostupné zkratky pro akce viditelné na obrazovce.',
+    'shortcuts_update_success' => 'Nastavení pro zkratky bylo aktualizováno!',
 ];
