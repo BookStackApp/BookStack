@@ -113,5 +113,5 @@ return [
     'mfa_verify_backup_code_desc' => 'Enter one of your remaining backup codes below:',
     'mfa_verify_backup_code_enter_here' => 'Enter backup code here',
     'mfa_verify_totp_desc' => 'Enter the code, generated using your mobile app, below:',
-    'mfa_setup_login_notification' => 'Multi-factor method configured, Please now login again using the configured method.',
+    'mfa_setup_login_notification' => '多因素認證已設定，請使用新的設定登入',
 ];
