@@ -61,8 +61,8 @@ return [
     'email_confirm_send_error' => 'E-posti aadressi kinnitamine on vajalik, aga e-kirja saatmine ebaõnnestus. Võta ühendust administraatoriga.',
     'email_confirm_success' => 'E-posti aadress on kinnitatud! Nüüd saad selle aadressiga sisse logida.',
     'email_confirm_resent' => 'Kinnituskiri on saadetud, vaata oma postkasti.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'Aitäh, et kinnitasid!',
+    'email_confirm_thanks_desc' => 'Palun oota hetke, kuni kinnitust töödeldakse. Kui sind 3 sekundi jooksul ümber ei suunata, klõpsa jätkamiseks allpool "Jätka" linki.',
 
     'email_not_confirmed' => 'E-posti aadress ei ole kinnitatud',
     'email_not_confirmed_text' => 'Sinu e-posti aadress ei ole veel kinnitatud.',
