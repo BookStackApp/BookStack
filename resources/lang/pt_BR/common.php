@@ -25,7 +25,7 @@ return [
     'actions' => 'Ações',
     'view' => 'Visualizar',
     'view_all' => 'Visualizar Tudo',
-    'new' => 'New',
+    'new' => 'Novo',
     'create' => 'Criar',
     'update' => 'Atualizar',
     'edit' => 'Editar',
@@ -81,14 +81,14 @@ return [
     'none' => 'Nenhum',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Página inicial',
     'header_menu_expand' => 'Expandir Cabeçalho do Menu',
     'profile_menu' => 'Menu de Perfil',
     'view_profile' => 'Visualizar Perfil',
     'edit_profile' => 'Editar Perfil',
     'dark_mode' => 'Modo Escuro',
     'light_mode' => 'Modo Claro',
-    'global_search' => 'Global Search',
+    'global_search' => 'Pesquisa Global',
 
     // Layout tabs
     'tab_info' => 'Informações',
