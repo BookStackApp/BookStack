@@ -135,6 +135,47 @@ header .search-box {
   }
 }
 
+.global-search-suggestions {
+  display: none;
+  position: absolute;
+  top: -$-s;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  margin-left: -$-xxl;
+  margin-right: -$-xxl;
+  padding-top: 56px;
+  border-radius: 3px;
+  box-shadow: $bs-hover;
+  transform-origin: top center;
+  opacity: .5;
+  transform: scale(0.9);
+  .entity-item-snippet p  {
+    display: none;
+  }
+  .entity-item-snippet {
+    font-size: .8rem;
+  }
+  .entity-list-item-name {
+    font-size: .9rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+}
+.search-active .global-search-suggestions {
+  display: block;
+}
+header .search-box.search-active input {
+  background-color: #EEE;
+  color: #444;
+  border-color: #DDD;
+}
+header .search-box.search-active #header-search-box-button {
+  color: #444;
+}
+
 .logo {
   display: inline-flex;
   padding: ($-s - 6px) $-s;
