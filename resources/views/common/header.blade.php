@@ -26,6 +26,7 @@
                        type="text"
                        name="term"
                        data-shortcut="global_search"
+                       autocomplete="off"
                        aria-label="{{ trans('common.search') }}" placeholder="{{ trans('common.search') }}"
                        value="{{ $searchTerm ?? '' }}">
                 <div refs="global-search@suggestions" class="global-search-suggestions card">

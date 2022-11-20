@@ -16,23 +16,21 @@
   }
 }
 
-.anim.searchResult {
-  opacity: 0;
-  transform: translate3d(580px, 0, 0);
-  animation-name: searchResult;
-  animation-duration: 220ms;
+.search-suggestions-animation{
+  animation-name: searchSuggestions;
+  animation-duration: 180ms;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(.62, .28, .23, .99);
 }
 
-@keyframes searchResult {
+@keyframes searchSuggestions {
   0% {
-    opacity: 0;
-    transform: translate3d(400px, 0, 0);
+    opacity: .5;
+    transform: scale(0.9);
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: scale(1);
   }
 }
 
