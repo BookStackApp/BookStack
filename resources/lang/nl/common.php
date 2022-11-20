@@ -25,7 +25,7 @@ return [
     'actions' => 'Acties',
     'view' => 'Bekijk',
     'view_all' => 'Bekijk Alle',
-    'new' => 'New',
+    'new' => 'Nieuw',
     'create' => 'Aanmaken',
     'update' => 'Bijwerken',
     'edit' => 'Bewerk',
@@ -81,14 +81,14 @@ return [
     'none' => 'Geen',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Startpagina',
     'header_menu_expand' => 'Header menu uitvouwen',
     'profile_menu' => 'Profiel menu',
     'view_profile' => 'Profiel weergeven',
     'edit_profile' => 'Profiel bewerken',
     'dark_mode' => 'Donkere modus',
     'light_mode' => 'Lichte modus',
-    'global_search' => 'Global Search',
+    'global_search' => 'Algemene zoekopdracht',
 
     // Layout tabs
     'tab_info' => 'Info',
