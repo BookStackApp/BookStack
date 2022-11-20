@@ -15,8 +15,6 @@ class GlobalSearch {
     }
 
     setupListeners() {
-        this.hideOnOuterEventListener = this.hideOnOuterEventListener.bind(this);
-
         this.input.addEventListener('input', () => {
             const value = this.input.value;
             if (value.length > 0) {
@@ -45,8 +43,6 @@ class GlobalSearch {
 
     showSuggestions() {
         this.container.classList.add('search-active');
-        document.addEventListener('click', this.hideOnOuterEventListener);
-        document.addEventListener('focusin', this.hideOnOuterEventListener);
         window.requestAnimationFrame(() => {
             this.suggestions.classList.add('search-suggestions-animation');
         })
@@ -56,15 +52,7 @@ class GlobalSearch {
         this.container.classList.remove('search-active');
         this.suggestions.classList.remove('search-suggestions-animation');
         this.suggestionResultsWrap.innerHTML = '';
-        document.removeEventListener('click', this.hideOnOuterEventListener);
-        document.removeEventListener('focusin', this.hideOnOuterEventListener);
     }
-
-    hideOnOuterEventListener(event) {
-        if (!this.container.contains(event.target)) {
-            this.hideSuggestions();
-        }
-    };
 }
 
 export default GlobalSearch;
