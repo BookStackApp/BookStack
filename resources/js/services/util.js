@@ -6,9 +6,9 @@
  * N milliseconds. If `immediate` is passed, trigger the function on the
  * leading edge, instead of the trailing.
  * @attribution https://davidwalsh.name/javascript-debounce-function
- * @param func
- * @param wait
- * @param immediate
+ * @param {Function} func
+ * @param {Number} wait
+ * @param {Boolean} immediate
  * @returns {Function}
  */
 export function debounce(func, wait, immediate) {
