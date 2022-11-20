@@ -164,7 +164,7 @@ header .search-box {
     overflow: hidden;
   }
 }
-.search-active .global-search-suggestions {
+.search-active:focus-within .global-search-suggestions {
   display: block;
 }
 header .search-box.search-active input {
