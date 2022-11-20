@@ -30,6 +30,7 @@
                        aria-label="{{ trans('common.search') }}" placeholder="{{ trans('common.search') }}"
                        value="{{ $searchTerm ?? '' }}">
                 <div refs="global-search@suggestions" class="global-search-suggestions card">
+                    <div refs="global-search@loading" class="text-center px-m global-search-loading">@include('common.loading-icon')</div>
                     <div refs="global-search@suggestion-results" class="px-m"></div>
                     <button class="text-button card-footer-link" type="submit">{{ trans('common.view_all') }}</button>
                 </div>

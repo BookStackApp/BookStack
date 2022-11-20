@@ -131,7 +131,7 @@ header .search-box {
     right: 16px;
   }
   svg {
-    margin-block-end: 0;
+    margin-inline-end: 0;
   }
 }
 
@@ -163,17 +163,23 @@ header .search-box {
     -webkit-line-clamp: 2;
     overflow: hidden;
   }
+  .global-search-loading {
+    position: absolute;
+    width: 100%;
+  }
 }
-.search-active:focus-within .global-search-suggestions {
-  display: block;
-}
-header .search-box.search-active input {
-  background-color: #EEE;
-  color: #444;
-  border-color: #DDD;
-}
-header .search-box.search-active #header-search-box-button {
-  color: #444;
+header .search-box.search-active:focus-within {
+  .global-search-suggestions {
+    display: block;
+  }
+  input {
+    background-color: #EEE;
+    color: #444;
+    border-color: #DDD;
+  }
+  #header-search-box-button {
+    color: #444;
+  }
 }
 
 .logo {
