@@ -190,7 +190,7 @@ class EntitySearchTest extends TestCase
         $this->get('/search?term=' . urlencode('danzorbhsing {created_before:2037-01-01}'))->assertDontSee($page->name);
     }
 
-    public function test_ajax_entity_search()
+    public function test_entity_selector_search()
     {
         $page = $this->entities->newPage(['name' => 'my ajax search test', 'html' => 'ajax test']);
         $notVisitedPage = $this->entities->page();
@@ -198,38 +198,38 @@ class EntitySearchTest extends TestCase
         // Visit the page to make popular
         $this->asEditor()->get($page->getUrl());
 
-        $normalSearch = $this->get('/ajax/search/entities?term=' . urlencode($page->name));
+        $normalSearch = $this->get('/search/entity-selector?term=' . urlencode($page->name));
         $normalSearch->assertSee($page->name);
 
-        $bookSearch = $this->get('/ajax/search/entities?types=book&term=' . urlencode($page->name));
+        $bookSearch = $this->get('/search/entity-selector?types=book&term=' . urlencode($page->name));
         $bookSearch->assertDontSee($page->name);
 
-        $defaultListTest = $this->get('/ajax/search/entities');
+        $defaultListTest = $this->get('/search/entity-selector');
         $defaultListTest->assertSee($page->name);
         $defaultListTest->assertDontSee($notVisitedPage->name);
     }
 
-    public function test_ajax_entity_search_shows_breadcrumbs()
+    public function test_entity_selector_search_shows_breadcrumbs()
     {
         $chapter = $this->entities->chapter();
         $page = $chapter->pages->first();
         $this->asEditor();
 
-        $pageSearch = $this->get('/ajax/search/entities?term=' . urlencode($page->name));
+        $pageSearch = $this->get('/search/entity-selector?term=' . urlencode($page->name));
         $pageSearch->assertSee($page->name);
         $pageSearch->assertSee($chapter->getShortName(42));
         $pageSearch->assertSee($page->book->getShortName(42));
 
-        $chapterSearch = $this->get('/ajax/search/entities?term=' . urlencode($chapter->name));
+        $chapterSearch = $this->get('/search/entity-selector?term=' . urlencode($chapter->name));
         $chapterSearch->assertSee($chapter->name);
         $chapterSearch->assertSee($chapter->book->getShortName(42));
     }
 
-    public function test_ajax_entity_search_reflects_items_without_permission()
+    public function test_entity_selector_search_reflects_items_without_permission()
     {
         $page = $this->entities->page();
         $baseSelector = 'a[data-entity-type="page"][data-entity-id="' . $page->id . '"]';
-        $searchUrl = '/ajax/search/entities?permission=update&term=' . urlencode($page->name);
+        $searchUrl = '/search/entity-selector?permission=update&term=' . urlencode($page->name);
 
         $resp = $this->asEditor()->get($searchUrl);
         $this->withHtml($resp)->assertElementContains($baseSelector, $page->name);
@@ -456,5 +456,26 @@ class EntitySearchTest extends TestCase
         $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:me} {created_by:me}'));
         $this->withHtml($resp)->assertElementExists('form input[name="filters[updated_by]"][value="me"][checked="checked"]');
         $this->withHtml($resp)->assertElementExists('form input[name="filters[created_by]"][value="me"][checked="checked"]');
+    }
+
+    public function test_search_suggestion_endpoint()
+    {
+        $this->entities->newPage(['name' => 'My suggestion page', 'html' => '<p>My supercool suggestion page</p>']);
+
+        // Test specific search
+        $resp = $this->asEditor()->get('/search/suggest?term="supercool+suggestion"');
+        $resp->assertSee('My suggestion page');
+        $resp->assertDontSee('My supercool suggestion page');
+        $resp->assertDontSee('No items available');
+        $this->withHtml($resp)->assertElementCount('a', 1);
+
+        // Test search limit
+        $resp = $this->asEditor()->get('/search/suggest?term=et');
+        $this->withHtml($resp)->assertElementCount('a', 5);
+
+        // Test empty state
+        $resp = $this->asEditor()->get('/search/suggest?term=spaghettisaurusrex');
+        $this->withHtml($resp)->assertElementCount('a', 0);
+        $resp->assertSee('No items available');
     }
 }
