@@ -133,11 +133,11 @@ return [
     // Role Settings
     'roles' => 'Rollen',
     'role_user_roles' => 'Gebruikersrollen',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
-    'roles_x_permissions_provided' => '1 permission|:count permissions',
-    'roles_assigned_users' => 'Assigned Users',
-    'roles_permissions_provided' => 'Provided Permissions',
+    'roles_index_desc' => 'Rollen worden gebruikt om gebruikers te groeperen en systeemrechten te geven. Wanneer een gebruiker lid is van meerdere rollen worden de toegekende rechten samengevoegd en erft de gebruiker alle mogelijkheden.',
+    'roles_x_users_assigned' => '1 gebruiker toegewezen|:count gebruikers toegewezen',
+    'roles_x_permissions_provided' => '1 machtiging|:count machtigingen',
+    'roles_assigned_users' => 'Toegewezen Gebruikers',
+    'roles_permissions_provided' => 'Verleende Machtigingen',
     'role_create' => 'Nieuwe Rol Maken',
     'role_create_success' => 'Rol succesvol aangemaakt',
     'role_delete' => 'Rol Verwijderen',
@@ -177,7 +177,7 @@ return [
 
     // Users
     'users' => 'Gebruikers',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => 'Creëer en beheer individuele gebruikersaccounts binnen het systeem. Gebruikersaccounts worden gebruikt voor aanmelding en toekenning van inhoud en activiteiten. Toegangsmachtigingen zijn voornamelijk gebaseerd op rollen, maar het eigendom van gebruikersinhoud en andere factoren kunnen ook van invloed zijn op machtigingen en toegang.',
     'user_profile' => 'Gebruikersprofiel',
     'users_add_new' => 'Gebruiker toevoegen',
     'users_search' => 'Gebruiker zoeken',
@@ -247,7 +247,7 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_index_desc' => 'Webhooks zijn een manier om gegevens naar externe URL\'s te sturen wanneer bepaalde acties en gebeurtenissen in het systeem plaatsvinden, wat op gebeurtenissen gebaseerde integratie met externe platforms zoals berichten- of notificatiesystemen mogelijk maakt.',
     'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
     'webhooks_create' => 'Nieuwe Webhook Maken',
     'webhooks_none_created' => 'Er zijn nog geen webhooks aangemaakt.',
