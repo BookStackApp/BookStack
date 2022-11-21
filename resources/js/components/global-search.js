@@ -1,5 +1,6 @@
 import {htmlToDom} from "../services/dom";
 import {debounce} from "../services/util";
+import {KeyboardNavigationHandler} from "../services/keyboard-navigation";
 
 /**
  * @extends {Component}
@@ -37,7 +38,11 @@ class GlobalSearch {
             this.input.setAttribute('autocomplete', 'on');
             this.button.focus();
             this.input.focus();
-        })
+        });
+
+        new KeyboardNavigationHandler(this.container, () => {
+            this.hideSuggestions();
+        });
     }
 
     /**
