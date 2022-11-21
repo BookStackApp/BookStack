@@ -20,7 +20,11 @@
         <div class="flex-container-column items-center justify-center hide-under-l">
             @if (hasAppAccess())
             <form component="global-search" action="{{ url('/search') }}" method="GET" class="search-box" role="search">
-                <button id="header-search-box-button" type="submit" aria-label="{{ trans('common.search') }}" tabindex="-1">@icon('search') </button>
+                <button id="header-search-box-button"
+                        refs="global-search@button"
+                        type="submit"
+                        aria-label="{{ trans('common.search') }}"
+                        tabindex="-1">@icon('search')</button>
                 <input id="header-search-box-input"
                        refs="global-search@input"
                        type="text"

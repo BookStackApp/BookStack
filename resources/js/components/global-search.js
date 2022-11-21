@@ -12,6 +12,7 @@ class GlobalSearch {
         this.suggestions = this.$refs.suggestions;
         this.suggestionResultsWrap = this.$refs.suggestionResults;
         this.loadingWrap = this.$refs.loading;
+        this.button = this.$refs.button;
 
         this.setupListeners();
     }
@@ -34,7 +35,7 @@ class GlobalSearch {
         // Allow double click to show auto-click suggestions
         this.input.addEventListener('dblclick', () => {
             this.input.setAttribute('autocomplete', 'on');
-            this.input.blur();
+            this.button.focus();
             this.input.focus();
         })
     }
@@ -43,17 +44,12 @@ class GlobalSearch {
      * @param {String} search
      */
     async updateSuggestions(search) {
-        const {data: results} = await window.$http.get('/ajax/search/entities', {term: search, count: 5});
+        const {data: results} = await window.$http.get('/search/suggest', {term: search});
         if (!this.input.value) {
             return;
         }
         
         const resultDom = htmlToDom(results);
-
-        const childrenToTrim = Array.from(resultDom.children).slice(9);
-        for (const child of childrenToTrim) {
-            child.remove();
-        }
 
         this.suggestionResultsWrap.innerHTML = '';
         this.suggestionResultsWrap.style.opacity = '1';
