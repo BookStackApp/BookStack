@@ -1,5 +1,6 @@
 import * as Dates from "../services/dates";
 import {onSelect} from "../services/dom";
+import {debounce} from "../services/util";
 
 /**
  * Page Editor
@@ -69,7 +70,8 @@ class PageEditor {
         });
 
         // Changelog controls
-        this.changelogInput.addEventListener('change', this.updateChangelogDisplay.bind(this));
+        const updateChangelogDebounced = debounce(this.updateChangelogDisplay.bind(this), 300, false);
+        this.changelogInput.addEventListener('input', updateChangelogDebounced);
 
         // Draft Controls
         onSelect(this.saveDraftButton, this.saveDraft.bind(this));

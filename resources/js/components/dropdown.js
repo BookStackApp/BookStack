@@ -1,4 +1,5 @@
 import {onSelect} from "../services/dom";
+import {KeyboardNavigationHandler} from "../services/keyboard-navigation";
 
 /**
  * Dropdown
@@ -17,8 +18,9 @@ class DropDown {
         this.direction = (document.dir === 'rtl') ? 'right' : 'left';
         this.body = document.body;
         this.showing = false;
-        this.setupListeners();
+
         this.hide = this.hide.bind(this);
+        this.setupListeners();
     }
 
     show(event = null) {
@@ -52,7 +54,7 @@ class DropDown {
         }
 
         // Set listener to hide on mouse leave or window click
-        this.menu.addEventListener('mouseleave', this.hide.bind(this));
+        this.menu.addEventListener('mouseleave', this.hide);
         window.addEventListener('click', event => {
             if (!this.menu.contains(event.target)) {
                 this.hide();
@@ -97,33 +99,25 @@ class DropDown {
         this.showing = false;
     }
 
-    getFocusable() {
-        return Array.from(this.menu.querySelectorAll('[tabindex]:not([tabindex="-1"]),[href],button,input:not([type=hidden])'));
-    }
-
-    focusNext() {
-        const focusable = this.getFocusable();
-        const currentIndex = focusable.indexOf(document.activeElement);
-        let newIndex = currentIndex + 1;
-        if (newIndex >= focusable.length) {
-            newIndex = 0;
-        }
-
-        focusable[newIndex].focus();
-    }
-
-    focusPrevious() {
-        const focusable = this.getFocusable();
-        const currentIndex = focusable.indexOf(document.activeElement);
-        let newIndex = currentIndex - 1;
-        if (newIndex < 0) {
-            newIndex = focusable.length - 1;
-        }
-
-        focusable[newIndex].focus();
-    }
-
     setupListeners() {
+        const keyboardNavHandler = new KeyboardNavigationHandler(this.container, (event) => {
+            this.hide();
+            this.toggle.focus();
+            if (!this.bubbleEscapes) {
+                event.stopPropagation();
+            }
+        }, (event) => {
+            if (event.target.nodeName === 'INPUT') {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            this.hide();
+        });
+
+        if (this.moveMenu) {
+            keyboardNavHandler.shareHandlingToEl(this.menu);
+        }
+
         // Hide menu on option click
         this.container.addEventListener('click', event => {
              const possibleChildren = Array.from(this.menu.querySelectorAll('a'));
@@ -136,37 +130,7 @@ class DropDown {
             event.stopPropagation();
             this.show(event);
             if (event instanceof KeyboardEvent) {
-                this.focusNext();
-            }
-        });
-
-        // Keyboard navigation
-        const keyboardNavigation = event => {
-            if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-                this.focusNext();
-                event.preventDefault();
-            } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-                this.focusPrevious();
-                event.preventDefault();
-            } else if (event.key === 'Escape') {
-                this.hide();
-                this.toggle.focus();
-                if (!this.bubbleEscapes) {
-                    event.stopPropagation();
-                }
-            }
-        };
-        this.container.addEventListener('keydown', keyboardNavigation);
-        if (this.moveMenu) {
-            this.menu.addEventListener('keydown', keyboardNavigation);
-        }
-
-        // Hide menu on enter press or escape
-        this.menu.addEventListener('keydown ', event => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                event.stopPropagation();
-                this.hide();
+                keyboardNavHandler.focusNext();
             }
         });
     }
