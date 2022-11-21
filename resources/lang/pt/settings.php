@@ -133,11 +133,11 @@ return [
     // Role Settings
     'roles' => 'Cargos',
     'role_user_roles' => 'Cargos de Utilizador',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
-    'roles_x_permissions_provided' => '1 permission|:count permissions',
-    'roles_assigned_users' => 'Assigned Users',
-    'roles_permissions_provided' => 'Provided Permissions',
+    'roles_index_desc' => 'Papéis são usados para agrupar utilizadores & fornecer permissão ao sistema para os seus membros. Quando um utilizador é membro de múltiplas funções, os privilégios concedidos irão acumular e o utilizador herdará todas as habilidades.',
+    'roles_x_users_assigned' => '1 utilizador atribuído|:count utilizadores atribuídos',
+    'roles_x_permissions_provided' => '1 permissão|:count permissões',
+    'roles_assigned_users' => 'Utilizadores atribuídos',
+    'roles_permissions_provided' => 'Permissões fornecidas',
     'role_create' => 'Criar novo Cargo',
     'role_create_success' => 'Cargo criado com sucesso',
     'role_delete' => 'Excluir Cargo',
@@ -177,7 +177,7 @@ return [
 
     // Users
     'users' => 'Utilizadores',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => 'Crie & gira individualmente contas de utilizador no sistema. Contas de utilizador são usadas para iniciar sessão e atribuição de conteúdo & atividade. As permissões de acesso são principalmente baseadas em funções, mas a propriedade de conteúdo do utilizador, entre outros fatores, também pode afetar permissões e acesso.',
     'user_profile' => 'Perfil do Utilizador',
     'users_add_new' => 'Adicionar Novo Utilizador',
     'users_search' => 'Pesquisar Utilizadores',
@@ -247,8 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
-    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
+    'webhooks_index_desc' => 'Webhooks são uma maneira de enviar dados para URLs externas quando certas ações e eventos ocorrem no sistema. Isto permite uma integração baseada em eventos com plataformas externas como mensagens ou sistemas de notificação.',
+    'webhooks_x_trigger_events' => '1 acionador|:count acionadores',
     'webhooks_create' => 'Criar um novo webhook',
     'webhooks_none_created' => 'Ainda nenhum webhooks foi criado.',
     'webhooks_edit' => 'Editar Webhook',
