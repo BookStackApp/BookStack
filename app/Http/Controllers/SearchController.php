@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    protected $searchRunner;
+    protected SearchRunner $searchRunner;
 
     public function __construct(SearchRunner $searchRunner)
     {
@@ -69,7 +69,7 @@ class SearchController extends Controller
      * Search for a list of entities and return a partial HTML response of matching entities.
      * Returns the most popular entities if no search is provided.
      */
-    public function searchEntitiesAjax(Request $request)
+    public function searchForSelector(Request $request)
     {
         $entityTypes = $request->filled('types') ? explode(',', $request->get('types')) : ['page', 'chapter', 'book'];
         $searchTerm = $request->get('term', false);
@@ -83,7 +83,25 @@ class SearchController extends Controller
             $entities = (new Popular())->run(20, 0, $entityTypes);
         }
 
-        return view('search.parts.entity-ajax-list', ['entities' => $entities, 'permission' => $permission]);
+        return view('search.parts.entity-selector-list', ['entities' => $entities, 'permission' => $permission]);
+    }
+
+    /**
+     * Search for a list of entities and return a partial HTML response of matching entities
+     * to be used as a result preview suggestion list for global system searches.
+     */
+    public function searchSuggestions(Request $request)
+    {
+        $searchTerm = $request->get('term', '');
+        $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 5)['results'];
+
+        foreach ($entities as $entity) {
+            $entity->setAttribute('preview_content', '');
+        }
+
+        return view('search.parts.entity-suggestion-list', [
+            'entities' => $entities->slice(0, 5)
+        ]);
     }
 
     /**
