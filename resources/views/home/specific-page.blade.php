@@ -4,7 +4,7 @@
     <div class="mt-m">
         <main class="content-wrap card">
             <div component="page-display"
-                 option:page-display:page-id="{{ $page->id }}"
+                 option:page-display:page-id="{{ $customHomepage->id }}"
                  class="page-content">
                 @include('pages.parts.page-display', ['page' => $customHomepage])
             </div>

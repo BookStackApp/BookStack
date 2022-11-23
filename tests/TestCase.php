@@ -330,7 +330,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function assertNotificationContains(\Illuminate\Testing\TestResponse $resp, string $text)
     {
-        return $this->withHtml($resp)->assertElementContains('[notification]', $text);
+        return $this->withHtml($resp)->assertElementContains('.notification[role="alert"]', $text);
     }
 
     /**
