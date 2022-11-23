@@ -360,6 +360,37 @@ class OidcTest extends TestCase
         $this->assertTrue(auth()->check());
     }
 
+    public function test_auth_login_with_autodiscovery_with_keys_that_do_not_have_use_property()
+    {
+        // Based on reading the OIDC discovery spec:
+        // > This contains the signing key(s) the RP uses to validate signatures from the OP. The JWK Set MAY also
+        // > contain the Server's encryption key(s), which are used by RPs to encrypt requests to the Server. When
+        // > both signing and encryption keys are made available, a use (Key Use) parameter value is REQUIRED for all
+        // > keys in the referenced JWK Set to indicate each key's intended usage.
+        // We can assume that keys without use are intended for signing.
+        $this->withAutodiscovery();
+
+        $keyArray = OidcJwtHelper::publicJwkKeyArray();
+        unset($keyArray['use']);
+
+        $this->mockHttpClient([
+            $this->getAutoDiscoveryResponse(),
+            new Response(200, [
+                'Content-Type'  => 'application/json',
+                'Cache-Control' => 'no-cache, no-store',
+                'Pragma'        => 'no-cache',
+            ], json_encode([
+                'keys' => [
+                    $keyArray,
+                ],
+            ])),
+        ]);
+
+        $this->assertFalse(auth()->check());
+        $this->runLogin();
+        $this->assertTrue(auth()->check());
+    }
+
     public function test_login_group_sync()
     {
         config()->set([
