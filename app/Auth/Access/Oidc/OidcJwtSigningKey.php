@@ -67,11 +67,10 @@ class OidcJwtSigningKey
             throw new OidcInvalidKeyException("Only RS256 keys are currently supported. Found key using {$alg}");
         }
 
-        if (empty($jwk['use'])) {
-            throw new OidcInvalidKeyException('A "use" parameter on the provided key is expected');
-        }
-
-        if ($jwk['use'] !== 'sig') {
+        // 'use' is optional for a JWK but we assume 'sig' where no value exists since that's what
+        // the OIDC discovery spec infers since 'sig' MUST be set if encryption keys come into play.
+        $use = $jwk['use'] ?? 'sig';
+        if ($use !== 'sig') {
             throw new OidcInvalidKeyException("Only signature keys are currently supported. Found key for use {$jwk['use']}");
         }
 
