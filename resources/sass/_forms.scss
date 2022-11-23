@@ -412,7 +412,7 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
 .search-box {
   max-width: 100%;
   position: relative;
-  button {
+  button[tabindex="-1"] {
     background-color: transparent;
     border: none;
     @include lightDark(color, #666, #AAA);

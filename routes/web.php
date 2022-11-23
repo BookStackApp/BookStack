@@ -184,8 +184,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/tags/suggest/names', [TagController::class, 'getNameSuggestions']);
     Route::get('/ajax/tags/suggest/values', [TagController::class, 'getValueSuggestions']);
 
-    Route::get('/ajax/search/entities', [SearchController::class, 'searchEntitiesAjax']);
-
     // Comments
     Route::post('/comment/{pageId}', [CommentController::class, 'savePageComment']);
     Route::put('/comment/{id}', [CommentController::class, 'update']);
@@ -199,6 +197,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/search/book/{bookId}', [SearchController::class, 'searchBook']);
     Route::get('/search/chapter/{bookId}', [SearchController::class, 'searchChapter']);
     Route::get('/search/entity/siblings', [SearchController::class, 'searchSiblings']);
+    Route::get('/search/entity-selector', [SearchController::class, 'searchForSelector']);
+    Route::get('/search/suggest', [SearchController::class, 'searchSuggestions']);
 
     // User Search
     Route::get('/search/users/select', [UserSearchController::class, 'forSelect']);

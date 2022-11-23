@@ -108,21 +108,6 @@ header .search-box {
       border: 1px solid rgba(255, 255, 255, 0.4);
     }
   }
-  button {
-    z-index: 1;
-    left: 16px;
-    top: 10px;
-    color: #FFF;
-    opacity: 0.6;
-    @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
-    @include rtl {
-      left: auto;
-      right: 16px;
-    }
-    svg {
-      margin-block-end: 0;
-    }
-  }
   input::placeholder {
     color: #FFF;
     opacity: 0.6;
@@ -130,8 +115,65 @@ header .search-box {
   @include between($l, $xl) {
     max-width: 200px;
   }
-  &:focus-within button {
+  &:focus-within #header-search-box-button {
     opacity: 1;
+  }
+}
+#header-search-box-button {
+  z-index: 1;
+  inset-inline-start: 16px;
+  top: 10px;
+  color: #FFF;
+  opacity: 0.6;
+  @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
+  svg {
+    margin-inline-end: 0;
+  }
+}
+
+.global-search-suggestions {
+  display: none;
+  position: absolute;
+  top: -$-s;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  margin-left: -$-xxl;
+  margin-right: -$-xxl;
+  padding-top: 56px;
+  border-radius: 3px;
+  box-shadow: $bs-hover;
+  transform-origin: top center;
+  opacity: .5;
+  transform: scale(0.9);
+  .entity-item-snippet p  {
+    display: none;
+  }
+  .entity-item-snippet {
+    font-size: .8rem;
+  }
+  .entity-list-item-name {
+    font-size: .9rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .global-search-loading {
+    position: absolute;
+    width: 100%;
+  }
+}
+header .search-box.search-active:focus-within {
+  .global-search-suggestions {
+    display: block;
+  }
+  input {
+    @include lightDark(background-color, #EEE, #333);
+    @include lightDark(border-color, #DDD, #111);
+  }
+  #header-search-box-button, input {
+    @include lightDark(color, #444, #AAA);
   }
 }
 
