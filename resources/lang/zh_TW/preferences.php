@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => '快捷鍵',
+    'shortcuts_interface' => '介面鍵盤快捷鍵',
+    'shortcuts_toggle_desc' => '您可以在此處啟用或停用鍵盤系統介面快捷鍵，這些快捷鍵用於導覽與操作。',
+    'shortcuts_customize_desc' => '您可以自訂下方的每個快捷鍵。只要在選取快捷鍵輸入後按下您想要使用的按鍵組合即可。',
+    'shortcuts_toggle_label' => '鍵盤快捷鍵已啟用',
+    'shortcuts_section_navigation' => '導覽',
+    'shortcuts_section_actions' => '通用動作',
+    'shortcuts_save' => '儲存快捷鍵',
+    'shortcuts_overlay_desc' => '注意：當快捷鍵啟用時，可以按下「?」來使用小幫手覆蓋畫面。這將會在目前的畫面上突顯可見動作的快捷鍵。',
+    'shortcuts_update_success' => '快捷鍵偏好設定已更新！',
 ];
