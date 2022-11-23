@@ -121,15 +121,11 @@ header .search-box {
 }
 #header-search-box-button {
   z-index: 1;
-  left: 16px;
+  inset-inline-start: 16px;
   top: 10px;
   color: #FFF;
   opacity: 0.6;
   @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
-  @include rtl {
-    left: auto;
-    right: 16px;
-  }
   svg {
     margin-inline-end: 0;
   }
@@ -173,12 +169,11 @@ header .search-box.search-active:focus-within {
     display: block;
   }
   input {
-    background-color: #EEE;
-    color: #444;
-    border-color: #DDD;
+    @include lightDark(background-color, #EEE, #333);
+    @include lightDark(border-color, #DDD, #111);
   }
-  #header-search-box-button {
-    color: #444;
+  #header-search-box-button, input {
+    @include lightDark(color, #444, #AAA);
   }
 }
 
