@@ -1,11 +1,13 @@
 import {htmlToDom} from "../services/dom";
 import {debounce} from "../services/util";
 import {KeyboardNavigationHandler} from "../services/keyboard-navigation";
+import {Component} from "./component";
 
 /**
- * @extends {Component}
+ * Global (header) search box handling.
+ * Mainly to show live results preview.
  */
-class GlobalSearch {
+export class GlobalSearch extends Component {
 
     setup() {
         this.container = this.$el;
@@ -78,5 +80,3 @@ class GlobalSearch {
         this.suggestionResultsWrap.innerHTML = '';
     }
 }
-
-export default GlobalSearch;
