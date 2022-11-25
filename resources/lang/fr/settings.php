@@ -133,8 +133,8 @@ return [
     // Role Settings
     'roles' => 'Rôles',
     'role_user_roles' => 'Rôles des utilisateurs',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
+    'roles_index_desc' => 'Les rôles sont utilisés pour regrouper les utilisateurs et fournir une autorisation système à leurs membres. Lorsqu\'un utilisateur est membre de plusieurs rôles, les privilèges accordés se cumulent et l\'utilisateur hérite de tous les droits d\'accès.',
+    'roles_x_users_assigned' => '1 utilisateur affecté| : nombre d\'affectés',
     'roles_x_permissions_provided' => '1 permission|:count permissions',
     'roles_assigned_users' => 'Assigned Users',
     'roles_permissions_provided' => 'Provided Permissions',
