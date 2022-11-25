@@ -61,7 +61,7 @@ return [
     'email_confirm_send_error' => 'La confirmation par e-mail est requise mais le système n\'a pas pu envoyer l\'e-mail. Contactez l\'administrateur système.',
     'email_confirm_success' => 'Votre adresse e-mail a été confirmée ! Vous devriez maintenant pouvoir vous connecter en utilisant cette adresse e-mail.',
     'email_confirm_resent' => 'L\'e-mail de confirmation a été ré-envoyé. Vérifiez votre boîte de réception.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks' => 'Merci d\'avoir confirmé !',
     'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Adresse e-mail non confirmée',
