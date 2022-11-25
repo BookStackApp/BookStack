@@ -62,7 +62,7 @@ return [
     'email_confirm_success' => 'Votre adresse e-mail a été confirmée ! Vous devriez maintenant pouvoir vous connecter en utilisant cette adresse e-mail.',
     'email_confirm_resent' => 'L\'e-mail de confirmation a été ré-envoyé. Vérifiez votre boîte de réception.',
     'email_confirm_thanks' => 'Merci d\'avoir confirmé !',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks_desc' => 'Veuillez patienter un moment pendant que votre confirmation est traitée. Si vous n’êtes pas redirigé après 3 secondes, appuyez sur le lien « Continuer » ci-dessous pour continuer.',
 
     'email_not_confirmed' => 'Adresse e-mail non confirmée',
     'email_not_confirmed_text' => 'Votre adresse e-mail n\'a pas été confirmée.',
