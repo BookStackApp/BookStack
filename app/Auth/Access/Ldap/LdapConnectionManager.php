@@ -14,11 +14,11 @@ class LdapConnectionManager
     /**
      * Attempt to start and bind to a new LDAP connection as the configured LDAP system user.
      */
-    public function startSystemBind(array $config): LdapConnection
+    public function startSystemBind(LdapConfig $config): LdapConnection
     {
         // Incoming options are string|false
-        $dn = $config['dn'];
-        $pass = $config['pass'];
+        $dn = $config->get('dn');
+        $pass = $config->get('pass');
 
         $isAnonymous = ($dn === false || $pass === false);
 
@@ -39,7 +39,7 @@ class LdapConnectionManager
      *
      * @throws LdapException
      */
-    public function startBind(?string $dn, ?string $password, array $config): LdapConnection
+    public function startBind(?string $dn, ?string $password, LdapConfig $config): LdapConnection
     {
         // Check LDAP extension in installed
         if (!function_exists('ldap_connect') && config('app.env') !== 'testing') {
@@ -48,11 +48,11 @@ class LdapConnectionManager
 
         // Disable certificate verification.
         // This option works globally and must be set before a connection is created.
-        if ($config['tls_insecure']) {
+        if ($config->get('tls_insecure')) {
             LdapConnection::setGlobalOption(LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }
 
-        $serverDetails = $this->parseMultiServerString($config['server']);
+        $serverDetails = $config->getServers();
         $lastException = null;
 
         foreach ($serverDetails as $server) {
@@ -85,25 +85,26 @@ class LdapConnectionManager
      * Attempt to start a server connection from the provided details.
      * @throws LdapException
      */
-    protected function startServerConnection(string $host, int $port, array $config): LdapConnection
+    protected function startServerConnection(string $host, int $port, LdapConfig $config): LdapConnection
     {
         if (isset($this->connectionCache[$host . ':' . $port])) {
             return $this->connectionCache[$host . ':' . $port];
         }
 
-        $ldapConnection = new LdapConnection($host, $port);
+        /** @var LdapConnection $ldapConnection */
+        $ldapConnection = app()->make(LdapConnection::class, [$host, $port]);
 
         if (!$ldapConnection) {
             throw new LdapException(trans('errors.ldap_cannot_connect'));
         }
 
         // Set any required options
-        if ($config['version']) {
-            $ldapConnection->setVersion($config['version']);
+        if ($config->get('version')) {
+            $ldapConnection->setVersion($config->get('version'));
         }
 
         // Start and verify TLS if it's enabled
-        if ($config['start_tls']) {
+        if ($config->get('start_tls')) {
             try {
                 $tlsStarted = $ldapConnection->startTls();
             } catch (ErrorException $exception) {
@@ -116,40 +117,5 @@ class LdapConnectionManager
         }
 
         return $ldapConnection;
-    }
-
-    /**
-     * Parse a potentially multi-value LDAP server host string and return an array of host/port detail pairs.
-     * Multiple hosts are separated with a semicolon, for example: 'ldap.example.com:8069;ldaps://ldap.example.com'
-     *
-     * @return array<array{host: string, port: int}>
-     */
-    protected function parseMultiServerString(string $serversString): array
-    {
-        $serverStringList = explode(';', $serversString);
-
-        return array_map(fn ($serverStr) => $this->parseSingleServerString($serverStr), $serverStringList);
-    }
-
-    /**
-     * Parse an LDAP server string and return the host and port for a connection.
-     * Is flexible to formats such as 'ldap.example.com:8069' or 'ldaps://ldap.example.com'.
-     *
-     * @return array{host: string, port: int}
-     */
-    protected function parseSingleServerString(string $serverString): array
-    {
-        $serverNameParts = explode(':', $serverString);
-
-        // If we have a protocol just return the full string since PHP will ignore a separate port.
-        if ($serverNameParts[0] === 'ldaps' || $serverNameParts[0] === 'ldap') {
-            return ['host' => $serverString, 'port' => 389];
-        }
-
-        // Otherwise, extract the port out
-        $hostName = $serverNameParts[0];
-        $ldapPort = (count($serverNameParts) > 1) ? intval($serverNameParts[1]) : 389;
-
-        return ['host' => $hostName, 'port' => $ldapPort];
     }
 }

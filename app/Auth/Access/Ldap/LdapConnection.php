@@ -16,19 +16,25 @@ class LdapConnection
      */
     protected $connection;
 
+    protected string $hostName;
+    protected int $port;
+
     public function __construct(string $hostName, int $port)
     {
-        $this->connection = $this->connect($hostName, $port);
+        $this->hostName = $hostName;
+        $this->port = $port;
+        $this->connection = $this->connect();
     }
 
     /**
-     * Connect to an LDAP server.
+     * Start a connection to an LDAP server.
+     * Does not actually call out to the external server until an action is performed.
      *
      * @return resource
      */
-    protected function connect(string $hostName, int $port)
+    protected function connect()
     {
-        return ldap_connect($hostName, $port);
+        return ldap_connect($this->hostName, $this->port);
     }
 
     /**

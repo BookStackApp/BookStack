@@ -20,14 +20,14 @@ class LdapService
     protected GroupSyncService $groupSyncService;
     protected UserAvatars $userAvatars;
 
-    protected array $config;
+    protected LdapConfig $config;
 
     public function __construct(LdapConnectionManager $ldap, UserAvatars $userAvatars, GroupSyncService $groupSyncService)
     {
         $this->ldap = $ldap;
         $this->userAvatars = $userAvatars;
         $this->groupSyncService = $groupSyncService;
-        $this->config = config('services.ldap');
+        $this->config = new LdapConfig(config('services.ldap'));
     }
 
     /**
@@ -47,10 +47,10 @@ class LdapService
         }
 
         // Find user
-        $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
-        $baseDn = $this->config['base_dn'];
+        $userFilter = $this->buildFilter($this->config->get('user_filter'), ['user' => $userName]);
+        $baseDn = $this->config->get('base_dn');
 
-        $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
+        $followReferrals = $this->config->get('follow_referrals') ? 1 : 0;
         $connection->setOption(LDAP_OPT_REFERRALS, $followReferrals);
         $users = $connection->searchAndGetEntries($baseDn, $userFilter, $attributes);
         if ($users['count'] === 0) {
@@ -68,10 +68,10 @@ class LdapService
      */
     public function getUserDetails(string $userName): ?array
     {
-        $idAttr = $this->config['id_attribute'];
-        $emailAttr = $this->config['email_attribute'];
-        $displayNameAttr = $this->config['display_name_attribute'];
-        $thumbnailAttr = $this->config['thumbnail_attribute'];
+        $idAttr = $this->config->get('id_attribute');
+        $emailAttr = $this->config->get('email_attribute');
+        $displayNameAttr = $this->config->get('display_name_attribute');
+        $thumbnailAttr = $this->config->get('thumbnail_attribute');
 
         $user = $this->getUserWithAttributes($userName, array_filter([
             'cn', 'dn', $idAttr, $emailAttr, $displayNameAttr, $thumbnailAttr,
@@ -90,7 +90,7 @@ class LdapService
             'avatar' => $thumbnailAttr ? $this->getUserResponseProperty($user, $thumbnailAttr, null) : null,
         ];
 
-        if ($this->config['dump_user_details']) {
+        if ($this->config->get('dump_user_details')) {
             throw new JsonDebugException([
                 'details_from_ldap'        => $user,
                 'details_bookstack_parsed' => $formatted,
@@ -170,7 +170,7 @@ class LdapService
      */
     public function getUserGroups(string $userName): array
     {
-        $groupsAttr = $this->config['group_attribute'];
+        $groupsAttr = $this->config->get('group_attribute');
         $user = $this->getUserWithAttributes($userName, [$groupsAttr]);
 
         if ($user === null) {
@@ -180,7 +180,7 @@ class LdapService
         $userGroups = $this->groupFilter($user);
         $allGroups = $this->getGroupsRecursive($userGroups, []);
 
-        if ($this->config['dump_user_groups']) {
+        if ($this->config->get('dump_user_groups')) {
             throw new JsonDebugException([
                 'details_from_ldap'             => $user,
                 'parsed_direct_user_groups'     => $userGroups,
@@ -227,13 +227,13 @@ class LdapService
     {
         $connection = $this->ldap->startSystemBind($this->config);
 
-        $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
+        $followReferrals = $this->config->get('follow_referrals') ? 1 : 0;
         $connection->setOption(LDAP_OPT_REFERRALS, $followReferrals);
 
-        $baseDn = $this->config['base_dn'];
-        $groupsAttr = strtolower($this->config['group_attribute']);
+        $baseDn = $this->config->get('base_dn');
+        $groupsAttr = strtolower($this->config->get('group_attribute'));
 
-        $groupFilter = 'CN=' . $connection->escape($groupName);
+        $groupFilter = 'CN=' . LdapConnection::escape($groupName);
         $groups = $connection->searchAndGetEntries($baseDn, $groupFilter, [$groupsAttr]);
         if ($groups['count'] === 0) {
             return [];
@@ -248,7 +248,7 @@ class LdapService
      */
     protected function groupFilter(array $userGroupSearchResponse): array
     {
-        $groupsAttr = strtolower($this->config['group_attribute']);
+        $groupsAttr = strtolower($this->config->get('group_attribute'));
         $ldapGroups = [];
         $count = 0;
 
@@ -275,7 +275,7 @@ class LdapService
     public function syncGroups(User $user, string $username)
     {
         $userLdapGroups = $this->getUserGroups($username);
-        $this->groupSyncService->syncUserWithFoundGroups($user, $userLdapGroups, $this->config['remove_from_groups']);
+        $this->groupSyncService->syncUserWithFoundGroups($user, $userLdapGroups, $this->config->get('remove_from_groups'));
     }
 
     /**
@@ -283,7 +283,7 @@ class LdapService
      */
     public function shouldSyncGroups(): bool
     {
-        return $this->config['user_to_groups'] !== false;
+        return $this->config->get('user_to_groups') !== false;
     }
 
     /**
@@ -292,7 +292,7 @@ class LdapService
      */
     public function saveAndAttachAvatar(User $user, array $ldapUserDetails): void
     {
-        if (is_null($this->config['thumbnail_attribute']) || is_null($ldapUserDetails['avatar'])) {
+        if (is_null($this->config->get('thumbnail_attribute')) || is_null($ldapUserDetails['avatar'])) {
             return;
         }
 
