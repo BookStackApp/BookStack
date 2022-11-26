@@ -78,7 +78,7 @@ export class Actions {
 
             const data = {
                 image: pngData,
-                uploaded_to: Number(this.pageId),
+                uploaded_to: Number(this.editor.config.pageId),
             };
 
             window.$http.post("/images/drawio", data).then(resp => {
@@ -368,7 +368,7 @@ export class Actions {
         const scroll = this.editor.cm.getScrollInfo();
         const atEnd = scroll.top + scroll.clientHeight === scroll.height;
         if (atEnd) {
-            editor.display.scrollToIndex(-1);
+            this.editor.display.scrollToIndex(-1);
             return;
         }
 
@@ -377,7 +377,7 @@ export class Actions {
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.editor.markdown.render(range), 'text/html');
         const totalLines = doc.documentElement.querySelectorAll('body > *');
-        editor.display.scrollToIndex(totalLines.length);
+        this.editor.display.scrollToIndex(totalLines.length);
     }
 
     /**
@@ -404,7 +404,7 @@ export class Actions {
         const cursorPos = this.editor.cm.coordsChar({left: event.pageX, top: event.pageY});
         this.editor.cm.setCursor(cursorPos);
         for (const image of images) {
-            editor.actions.uploadImage(image);
+            this.editor.actions.uploadImage(image);
         }
     }
 }
