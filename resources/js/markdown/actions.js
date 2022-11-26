@@ -327,6 +327,44 @@ export class Actions {
     }
 
     /**
+     * Cycles through the type of callout block within the selection.
+     * Creates a callout block if none existing, and removes it if cycling past the danger type.
+     */
+    cycleCalloutTypeAtSelection() {
+        const selectionRange = this.editor.cm.listSelections()[0];
+        const lineContent = this.editor.cm.getLine(selectionRange.anchor.line);
+        const lineLength = lineContent.length;
+        const contentRange = {
+            anchor: {line: selectionRange.anchor.line, ch: 0},
+            head: {line: selectionRange.anchor.line, ch: lineLength},
+        };
+
+        const formats = ['info', 'success', 'warning', 'danger'];
+        const joint = formats.join('|');
+        const regex = new RegExp(`class="((${joint})\\s+callout|callout\\s+(${joint}))"`, 'i');
+        const matches = regex.exec(lineContent);
+        const format = (matches ? (matches[2] || matches[3]) : '').toLowerCase();
+
+        if (format === formats[formats.length - 1]) {
+            this.wrapLine(`<p class="callout ${formats[formats.length - 1]}">`, '</p>');
+        } else if (format === '') {
+            this.wrapLine('<p class="callout info">', '</p>');
+        } else {
+            const newFormatIndex = formats.indexOf(format) + 1;
+            const newFormat = formats[newFormatIndex];
+            const newContent = lineContent.replace(matches[0], matches[0].replace(format, newFormat));
+            this.editor.cm.replaceRange(newContent, contentRange.anchor, contentRange.head);
+
+            const chDiff = newContent.length - lineContent.length;
+            selectionRange.anchor.ch += chDiff;
+            if (selectionRange.anchor !== selectionRange.head) {
+                selectionRange.head.ch += chDiff;
+            }
+            this.editor.cm.setSelection(selectionRange.anchor, selectionRange.head);
+        }
+    }
+
+    /**
      * Handle image upload and add image into markdown content
      * @param {File} file
      */
@@ -404,7 +442,7 @@ export class Actions {
         const cursorPos = this.editor.cm.coordsChar({left: event.pageX, top: event.pageY});
         this.editor.cm.setCursor(cursorPos);
         for (const image of images) {
-            this.editor.actions.uploadImage(image);
+            this.uploadImage(image);
         }
     }
 }
