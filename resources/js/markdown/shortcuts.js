@@ -40,7 +40,7 @@ export function provide(editor, metaKey) {
     shortcuts[`${metaKey}-7`] = cm => editor.actions.wrapSelection('\n```\n', '\n```');
     shortcuts[`${metaKey}-8`] = cm => editor.actions.wrapSelection('`', '`');
     shortcuts[`Shift-${metaKey}-E`] = cm => editor.actions.wrapSelection('`', '`');
-    shortcuts[`${metaKey}-9`] = cm => editor.actions.wrapSelection('<p class="callout info">', '</p>');
+    shortcuts[`${metaKey}-9`] = cm => editor.actions.cycleCalloutTypeAtSelection();
     shortcuts[`${metaKey}-P`] = cm => editor.actions.replaceLineStart('-')
     shortcuts[`${metaKey}-O`] = cm => editor.actions.replaceLineStartForOrderedList()
 
