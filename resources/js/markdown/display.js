@@ -26,7 +26,7 @@ export class Display {
         this.doc.body.className = 'page-content';
 
         // Prevent markdown display link click redirect
-        this.doc.addEventListener('click', this.onDisplayClick)
+        this.doc.addEventListener('click', this.onDisplayClick.bind(this));
     }
 
     /**
@@ -91,8 +91,8 @@ export class Display {
      * @param {Number} index
      */
     scrollToIndex(index) {
-        const elems = this.doc.body.children;
-        if (elems.length <= index) return;
+        const elems = this.doc.body?.children[0]?.children;
+        if (elems && elems.length <= index) return;
 
         const topElem = (index === -1) ? elems[elems.length-1] : elems[index];
         topElem.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth'});
