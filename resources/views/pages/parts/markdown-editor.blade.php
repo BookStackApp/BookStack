@@ -23,6 +23,7 @@
 
         <div markdown-input class="flex flex-fill">
             <textarea id="markdown-editor-input"
+                      refs="markdown-editor@input"
                       @if($errors->has('markdown')) class="text-neg" @endif
                       name="markdown"
                       rows="5">@if(isset($model) || old('markdown')){{ old('markdown') ?? ($model->markdown === '' ? $model->html : $model->markdown) }}@endif</textarea>
@@ -34,7 +35,10 @@
         <div class="editor-toolbar">
             <div class="editor-toolbar-label">{{ trans('entities.pages_md_preview') }}</div>
         </div>
-        <iframe src="about:blank" class="markdown-display" sandbox="allow-same-origin"></iframe>
+        <iframe src="about:blank"
+                refs="markdown-editor@display"
+                class="markdown-display"
+                sandbox="allow-same-origin"></iframe>
     </div>
 </div>
 
