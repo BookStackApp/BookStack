@@ -14,6 +14,7 @@ export class MarkdownEditor extends Component {
 
         this.display = this.$refs.display;
         this.input = this.$refs.input;
+        this.settingContainer = this.$refs.settingContainer;
 
         this.editor = null;
         initEditor({
@@ -72,6 +73,15 @@ export class MarkdownEditor extends Component {
             }
 
             toolbarLabel.closest('.markdown-editor-wrap').classList.add('active');
+        });
+
+        // Setting changes
+        this.settingContainer.addEventListener('change', e => {
+            const actualInput = e.target.parentNode.querySelector('input[type="hidden"]');
+            const name = actualInput.getAttribute('name');
+            const value = actualInput.getAttribute('value');
+            window.$http.patch('/preferences/update-boolean', {name, value});
+            // TODO - Update state locally
         });
 
         // Refresh CodeMirror on container resize

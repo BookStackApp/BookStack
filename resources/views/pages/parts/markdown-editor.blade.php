@@ -10,13 +10,23 @@
             <div class="editor-toolbar-label text-mono px-m py-xs flex-container-row items-center flex">
                 <span>{{ trans('entities.pages_md_editor') }}</span>
             </div>
-            <div class="buttons flex-container-row items-stretch">
+            <div component="dropdown" class="buttons flex-container-row items-stretch">
                 @if(config('services.drawio'))
                     <button class="text-button" type="button" data-action="insertDrawing" title="{{ trans('entities.pages_md_insert_drawing') }}">@icon('drawing')</button>
                 @endif
                 <button class="text-button" type="button" data-action="insertImage" title="{{ trans('entities.pages_md_insert_image') }}">@icon('image')</button>
                 <button class="text-button" type="button" data-action="insertLink" title="{{ trans('entities.pages_md_insert_link') }}">@icon('link')</button>
                 <button class="text-button" type="button" data-action="fullscreen" title="{{ trans('common.fullscreen') }}">@icon('fullscreen')</button>
+                <button refs="dropdown@toggle" class="text-button" type="button" title="{{ trans('common.more') }}">@icon('more')</button>
+                <div refs="dropdown@menu markdown-editor@setting-container" class="dropdown-menu" role="menu">
+                    <div class="px-m">
+                        @include('form.toggle-switch', ['name' => 'md-show-preview', 'label' => 'Show preview', 'value' => setting()->getForCurrentUser('md-show-preview')])
+                    </div>
+                    <hr class="m-none">
+                    <div class="px-m">
+                        @include('form.toggle-switch', ['name' => 'md-scroll-sync', 'label' => 'Sync preview scroll', 'value' => setting()->getForCurrentUser('md-scroll-sync')])
+                    </div>
+                </div>
             </div>
         </div>
 
