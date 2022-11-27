@@ -5,7 +5,7 @@
 body, button, input, select, label, textarea {
   font-family: $text;
 }
-.Codemirror, pre, #markdown-editor-input, .editor-toolbar, .code-base {
+.Codemirror, pre, #markdown-editor-input, .text-mono, .code-base {
   font-family: $mono;
 }
 
