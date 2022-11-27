@@ -64,14 +64,6 @@
     flex: 1;
     position: relative;
   }
-  .markdown-editor-wrap {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #DDD;
-    @include lightDark(border-color, #ddd, #000);
-    width: 50%;
-    max-width: 50%;
-  }
   &.fullscreen {
     position: fixed;
     top: 0;
@@ -79,6 +71,21 @@
     height: 100%;
     z-index: 2;
   }
+}
+
+.markdown-editor-wrap {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+  @include lightDark(border-color, #ddd, #000);
+  width: 50%;
+  max-width: 50%;
+}
+
+.markdown-editor-wrap + .markdown-editor-wrap {
+  border-inline-start: 1px solid;
+  @include lightDark(border-color, #ddd, #000);
 }
 
 @include smaller-than($m) {
@@ -98,7 +105,7 @@
   }
   .editor-toolbar-label {
     float: none !important;
-    border-bottom: 1px solid #DDD;
+    @include lightDark(border-color, #DDD, #555);
     display: block;
   }
   .markdown-editor-wrap:not(.active) .editor-toolbar + div,
@@ -111,10 +118,6 @@
     flex: none;
     min-height: 0;
   }
-}
-
-.markdown-display {
-  margin-inline-start: -1px;
 }
 
 .markdown-editor-display {
@@ -138,8 +141,8 @@ html.markdown-editor-display.dark-mode {
 }
 
 .editor-toolbar {
+  height: 32px;
   width: 100%;
-  padding: $-xs $-m;
   font-size: 11px;
   line-height: 1.6;
   border-bottom: 1px solid #DDD;
@@ -147,15 +150,24 @@ html.markdown-editor-display.dark-mode {
   @include lightDark(background-color, #eee, #111);
   @include lightDark(border-color, #ddd, #000);
   flex: none;
-  &:after {
-    content: '';
-    display: block;
-    clear: both;
-  }
   @include whenDark {
     button {
       color: #AAA;
     }
+  }
+}
+
+.editor-toolbar .buttons button {
+  font-size: .9rem;
+  width: 2rem;
+  text-align: center;
+  border-left: 1px solid;
+  @include lightDark(border-color, #DDD, #555);
+  svg {
+    margin-inline-end: 0;
+  }
+  &:hover {
+    @include lightDark(background-color, #DDD, #222);
   }
 }
 
