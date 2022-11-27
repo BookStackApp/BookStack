@@ -254,6 +254,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/preferences/change-expansion/{type}', [UserPreferencesController::class, 'changeExpansion']);
     Route::patch('/preferences/toggle-dark-mode', [UserPreferencesController::class, 'toggleDarkMode']);
     Route::patch('/preferences/update-code-language-favourite', [UserPreferencesController::class, 'updateCodeLanguageFavourite']);
+    Route::patch('/preferences/update-boolean', [UserPreferencesController::class, 'updateBooleanPreference']);
 
     // User API Tokens
     Route::get('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);

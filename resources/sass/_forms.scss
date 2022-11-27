@@ -157,6 +157,16 @@ html.markdown-editor-display.dark-mode {
   }
 }
 
+.editor-toolbar .buttons {
+  font-size: $fs-m;
+  .dropdown-menu {
+    padding: 0;
+  }
+  .toggle-switch {
+    margin: $-s 0;
+  }
+}
+
 .editor-toolbar .buttons button {
   font-size: .9rem;
   width: 2rem;
