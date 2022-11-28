@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Görsel Ekle',
     'pages_md_insert_link' => 'Öge Bağlantısı Ekle',
     'pages_md_insert_drawing' => 'Çizim Ekle',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Bu sayfa, bir bölüme ait değil',
     'pages_move' => 'Sayfayı Taşı',
     'pages_move_success' => 'Sayfa şuraya taşındı: :parentName',
