@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Insereix una imatge',
     'pages_md_insert_link' => 'Insereix un enllaç a una entitat',
     'pages_md_insert_drawing' => 'Insereix un diagrama',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'La pàgina no pertany a cap capítol',
     'pages_move' => 'Mou la pàgina',
     'pages_move_success' => 'S\'ha mogut la pàgina a ":parentName"',
