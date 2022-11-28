@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Εισαγωγή Εικόνας',
     'pages_md_insert_link' => 'Εισαγωγή/Επεξεργασία συνδέσμου',
     'pages_md_insert_drawing' => 'Εισαγωγή Σχεδίου',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Η σελίδα δεν είναι σε κεφάλαιο',
     'pages_move' => 'Μετακίνηση Σελίδας',
     'pages_move_success' => 'Η σελίδα μετακινήθηκε στο ":parentName"',
