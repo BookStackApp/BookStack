@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Vložiť obrázok',
     'pages_md_insert_link' => 'Vložiť odkaz na entitu',
     'pages_md_insert_drawing' => 'Vložiť kresbu',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Stránka nie je v kapitole',
     'pages_move' => 'Presunúť stránku',
     'pages_move_success' => 'Stránka presunutá do ":parentName"',
