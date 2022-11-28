@@ -1,3 +1,5 @@
+import {kebabToCamel, camelToKebab} from "./text";
+
 /**
  * A mapping of active components keyed by name, with values being arrays of component
  * instances since there can be multiple components of the same type.
@@ -108,17 +110,6 @@ function parseOpts(name, element) {
 }
 
 /**
- * Convert a kebab-case string to camelCase
- * @param {String} kebab
- * @returns {string}
- */
-function kebabToCamel(kebab) {
-    const ucFirst = (word) => word.slice(0,1).toUpperCase() + word.slice(1);
-    const words = kebab.split('-');
-    return words[0] + words.slice(1).map(ucFirst).join('');
-}
-
-/**
  * Initialize all components found within the given element.
  * @param {Element|Document} parentElement
  */
@@ -171,8 +162,4 @@ export function get(name) {
 export function firstOnElement(element, name) {
     const elComponents = elementComponentMap.get(element) || {};
     return elComponents[name] || null;
-}
-
-function camelToKebab(camelStr) {
-    return camelStr.replace(/[A-Z]/g, (str, offset) =>  (offset > 0 ? '-' : '') + str.toLowerCase());
 }
