@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Lim inn bilde',
     'pages_md_insert_link' => 'Lim in lenke',
     'pages_md_insert_drawing' => 'Lim inn tegning',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Siden tilhører ingen kapittel',
     'pages_move' => 'Flytt side',
     'pages_move_success' => 'Siden ble flyttet til ":parentName"',
