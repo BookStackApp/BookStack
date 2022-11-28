@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Добавяна на изображение',
     'pages_md_insert_link' => 'Добави линк към обекта',
     'pages_md_insert_drawing' => 'Вмъкни рисунка',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Страницата не принадлежи в никоя глава',
     'pages_move' => 'Премести страницата',
     'pages_move_success' => 'Страницата беше преместена в ":parentName"',
