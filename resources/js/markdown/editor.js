@@ -1,6 +1,7 @@
 import {Markdown} from "./markdown";
 import {Display} from "./display";
 import {Actions} from "./actions";
+import {Settings} from "./settings";
 import {listen} from "./common-events";
 import {init as initCodemirror} from "./codemirror";
 
@@ -18,6 +19,7 @@ export async function init(config) {
     const editor = {
         config,
         markdown: new Markdown(),
+        settings: new Settings(config.settings),
     };
 
     editor.actions = new Actions(editor);
@@ -38,6 +40,7 @@ export async function init(config) {
  * @property {HTMLTextAreaElement} inputEl
  * @property {String} drawioUrl
  * @property {Object<String, String>} text
+ * @property {Object<String, any>} settings
  */
 
 /**
@@ -47,4 +50,5 @@ export async function init(config) {
  * @property {Markdown} markdown
  * @property {Actions} actions
  * @property {CodeMirror} cm
+ * @property {Settings} settings
  */

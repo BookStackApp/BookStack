@@ -80,7 +80,6 @@
   border-bottom: 1px solid #DDD;
   @include lightDark(border-color, #ddd, #000);
   width: 50%;
-  max-width: 50%;
 }
 
 .markdown-editor-wrap + .markdown-editor-wrap {
@@ -96,12 +95,6 @@
     width: 100%;
     max-width: 100%;
     flex-grow: 1;
-  }
-  #markdown-editor .editor-toolbar {
-    padding: 0;
-  }
-  #markdown-editor .editor-toolbar > * {
-    padding: $-xs $-s;
   }
   .editor-toolbar-label {
     float: none !important;

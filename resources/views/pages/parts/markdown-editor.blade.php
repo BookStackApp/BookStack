@@ -20,11 +20,11 @@
                 <button refs="dropdown@toggle" class="text-button" type="button" title="{{ trans('common.more') }}">@icon('more')</button>
                 <div refs="dropdown@menu markdown-editor@setting-container" class="dropdown-menu" role="menu">
                     <div class="px-m">
-                        @include('form.toggle-switch', ['name' => 'md-show-preview', 'label' => 'Show preview', 'value' => setting()->getForCurrentUser('md-show-preview')])
+                        @include('form.toggle-switch', ['name' => 'md-show-preview', 'label' => trans('entities.pages_md_show_preview'), 'value' => setting()->getForCurrentUser('md-show-preview')])
                     </div>
                     <hr class="m-none">
                     <div class="px-m">
-                        @include('form.toggle-switch', ['name' => 'md-scroll-sync', 'label' => 'Sync preview scroll', 'value' => setting()->getForCurrentUser('md-scroll-sync')])
+                        @include('form.toggle-switch', ['name' => 'md-scroll-sync', 'label' => trans('entities.pages_md_sync_scroll'), 'value' => setting()->getForCurrentUser('md-scroll-sync')])
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
 
     </div>
 
-    <div class="markdown-editor-wrap">
+    <div class="markdown-editor-wrap" @if(!setting()->getForCurrentUser('md-show-preview')) style="display: none;" @endif>
         <div class="editor-toolbar">
             <div class="editor-toolbar-label text-mono px-m py-xs">{{ trans('entities.pages_md_preview') }}</div>
         </div>
