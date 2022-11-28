@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => '插入圖片',
     'pages_md_insert_link' => '插入連結',
     'pages_md_insert_drawing' => '插入繪圖',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => '頁面不在章節中',
     'pages_move' => '移動頁面',
     'pages_move_success' => '頁面已移動到「:parentName」',
