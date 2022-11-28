@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'הכנס תמונה',
     'pages_md_insert_link' => 'הכנס קישור ליישות',
     'pages_md_insert_drawing' => 'הכנס סרטוט',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'דף אינו חלק מפרק',
     'pages_move' => 'העבר דף',
     'pages_move_success' => 'הדף הועבר אל ":parentName"',
