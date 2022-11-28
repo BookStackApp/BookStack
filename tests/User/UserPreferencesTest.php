@@ -191,22 +191,4 @@ class UserPreferencesTest extends TestCase
         $resp = $this->get($page->getUrl('/edit'));
         $resp->assertSee('option:code-editor:favourites="javascript,ruby"', false);
     }
-
-    public function test_update_boolean()
-    {
-        $editor = $this->getEditor();
-
-        $this->assertTrue(setting()->getUser($editor, 'md-show-preview'));
-
-        $resp = $this->actingAs($editor)->patch('/preferences/update-boolean', ['name' => 'md-show-preview', 'value' => 'false']);
-        $resp->assertStatus(204);
-
-        $this->assertFalse(setting()->getUser($editor, 'md-show-preview'));
-    }
-
-    public function test_update_boolean_rejects_unfamiliar_key()
-    {
-        $resp = $this->asEditor()->patch('/preferences/update-boolean', ['name' => 'md-donkey-show', 'value' => 'false']);
-        $resp->assertStatus(500);
-    }
 }
