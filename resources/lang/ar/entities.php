@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'إدخال صورة',
     'pages_md_insert_link' => 'إدراج ارتباط الكيان',
     'pages_md_insert_drawing' => 'إدخال رسمة',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'صفحة ليست في فصل',
     'pages_move' => 'نقل الصفحة',
     'pages_move_success' => 'تم نقل الصفحة إلى ":parentName"',
