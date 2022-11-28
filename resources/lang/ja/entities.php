@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => '画像を挿入',
     'pages_md_insert_link' => 'エンティティへのリンクを挿入',
     'pages_md_insert_drawing' => '描画を追加',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'チャプターが設定されていません',
     'pages_move' => 'ページを移動',
     'pages_move_success' => 'ページを ":parentName" へ移動しました',
