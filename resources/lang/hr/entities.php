@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Umetni sliku',
     'pages_md_insert_link' => 'Umetni poveznicu',
     'pages_md_insert_drawing' => 'Umetni crtež',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Stranica nije u poglavlju',
     'pages_move' => 'Premjesti stranicu',
     'pages_move_success' => 'Stranica premještena u ":parentName"',
