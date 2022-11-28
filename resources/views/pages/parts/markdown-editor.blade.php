@@ -6,23 +6,33 @@
      class="flex-fill flex code-fill">
 
     <div class="markdown-editor-wrap active">
-        <div class="editor-toolbar">
-            <span class="float left editor-toolbar-label">{{ trans('entities.pages_md_editor') }}</span>
-            <div class="float right buttons">
+        <div class="editor-toolbar flex-container-row items-stretch justify-space-between">
+            <div class="editor-toolbar-label text-mono px-m py-xs flex-container-row items-center flex">
+                <span>{{ trans('entities.pages_md_editor') }}</span>
+            </div>
+            <div component="dropdown" class="buttons flex-container-row items-stretch">
                 @if(config('services.drawio'))
-                    <button class="text-button" type="button" data-action="insertDrawing">@icon('drawing'){{ trans('entities.pages_md_insert_drawing') }}</button>
-                    <span class="mx-xs text-muted">|</span>
+                    <button class="text-button" type="button" data-action="insertDrawing" title="{{ trans('entities.pages_md_insert_drawing') }}">@icon('drawing')</button>
                 @endif
-                <button class="text-button" type="button" data-action="insertImage">@icon('image'){{ trans('entities.pages_md_insert_image') }}</button>
-                <span class="mx-xs text-muted">|</span>
-                <button class="text-button" type="button" data-action="insertLink">@icon('link'){{ trans('entities.pages_md_insert_link') }}</button>
-                <span class="mx-xs text-muted">|</span>
-                <button class="text-button" type="button" data-action="fullscreen">@icon('fullscreen'){{ trans('common.fullscreen') }}</button>
+                <button class="text-button" type="button" data-action="insertImage" title="{{ trans('entities.pages_md_insert_image') }}">@icon('image')</button>
+                <button class="text-button" type="button" data-action="insertLink" title="{{ trans('entities.pages_md_insert_link') }}">@icon('link')</button>
+                <button class="text-button" type="button" data-action="fullscreen" title="{{ trans('common.fullscreen') }}">@icon('fullscreen')</button>
+                <button refs="dropdown@toggle" class="text-button" type="button" title="{{ trans('common.more') }}">@icon('more')</button>
+                <div refs="dropdown@menu markdown-editor@setting-container" class="dropdown-menu" role="menu">
+                    <div class="px-m">
+                        @include('form.toggle-switch', ['name' => 'md-show-preview', 'label' => trans('entities.pages_md_show_preview'), 'value' => setting()->getForCurrentUser('md-show-preview')])
+                    </div>
+                    <hr class="m-none">
+                    <div class="px-m">
+                        @include('form.toggle-switch', ['name' => 'md-scroll-sync', 'label' => trans('entities.pages_md_sync_scroll'), 'value' => setting()->getForCurrentUser('md-scroll-sync')])
+                    </div>
+                </div>
             </div>
         </div>
 
         <div markdown-input class="flex flex-fill">
             <textarea id="markdown-editor-input"
+                      refs="markdown-editor@input"
                       @if($errors->has('markdown')) class="text-neg" @endif
                       name="markdown"
                       rows="5">@if(isset($model) || old('markdown')){{ old('markdown') ?? ($model->markdown === '' ? $model->html : $model->markdown) }}@endif</textarea>
@@ -30,11 +40,14 @@
 
     </div>
 
-    <div class="markdown-editor-wrap">
+    <div class="markdown-editor-wrap" @if(!setting()->getForCurrentUser('md-show-preview')) style="display: none;" @endif>
         <div class="editor-toolbar">
-            <div class="editor-toolbar-label">{{ trans('entities.pages_md_preview') }}</div>
+            <div class="editor-toolbar-label text-mono px-m py-xs">{{ trans('entities.pages_md_preview') }}</div>
         </div>
-        <iframe src="about:blank" class="markdown-display" sandbox="allow-same-origin"></iframe>
+        <iframe src="about:blank"
+                refs="markdown-editor@display"
+                class="markdown-display"
+                sandbox="allow-same-origin"></iframe>
     </div>
 </div>
 
