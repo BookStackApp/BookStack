@@ -19,7 +19,7 @@ export async function init(config) {
     const editor = {
         config,
         markdown: new Markdown(),
-        settings: new Settings(config.settings),
+        settings: new Settings(config.settingInputs),
     };
 
     editor.actions = new Actions(editor);
@@ -39,8 +39,8 @@ export async function init(config) {
  * @property {Element} displayEl
  * @property {HTMLTextAreaElement} inputEl
  * @property {String} drawioUrl
+ * @property {HTMLInputElement[]} settingInputs
  * @property {Object<String, String>} text
- * @property {Object<String, any>} settings
  */
 
 /**

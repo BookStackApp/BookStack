@@ -5,7 +5,7 @@
      option:markdown-editor:server-upload-limit-text="{{ trans('errors.server_upload_limit') }}"
      class="flex-fill flex code-fill">
 
-    <div class="markdown-editor-wrap active">
+    <div class="markdown-editor-wrap active flex-container-column">
         <div class="editor-toolbar flex-container-row items-stretch justify-space-between">
             <div class="editor-toolbar-label text-mono px-m py-xs flex-container-row items-center flex">
                 <span>{{ trans('entities.pages_md_editor') }}</span>
@@ -20,11 +20,11 @@
                 <button refs="dropdown@toggle" class="text-button" type="button" title="{{ trans('common.more') }}">@icon('more')</button>
                 <div refs="dropdown@menu markdown-editor@setting-container" class="dropdown-menu" role="menu">
                     <div class="px-m">
-                        @include('form.toggle-switch', ['name' => 'md-show-preview', 'label' => trans('entities.pages_md_show_preview'), 'value' => setting()->getForCurrentUser('md-show-preview')])
+                        @include('form.custom-checkbox', ['name' => 'md-showPreview', 'label' => trans('entities.pages_md_show_preview'), 'value' => true, 'checked' => true])
                     </div>
                     <hr class="m-none">
                     <div class="px-m">
-                        @include('form.toggle-switch', ['name' => 'md-scroll-sync', 'label' => trans('entities.pages_md_sync_scroll'), 'value' => setting()->getForCurrentUser('md-scroll-sync')])
+                        @include('form.custom-checkbox', ['name' => 'md-scrollSync', 'label' => trans('entities.pages_md_sync_scroll'), 'value' => true, 'checked' => true])
                     </div>
                 </div>
             </div>
@@ -40,14 +40,17 @@
 
     </div>
 
-    <div class="markdown-editor-wrap" @if(!setting()->getForCurrentUser('md-show-preview')) style="display: none;" @endif>
-        <div class="editor-toolbar">
-            <div class="editor-toolbar-label text-mono px-m py-xs">{{ trans('entities.pages_md_preview') }}</div>
+    <div refs="markdown-editor@display-wrap" class="markdown-editor-wrap flex-container-row items-stretch" style="display: none">
+        <div refs="markdown-editor@divider" class="markdown-panel-divider flex-fill"></div>
+        <div class="flex-container-column flex flex-fill">
+            <div class="editor-toolbar">
+                <div class="editor-toolbar-label text-mono px-m py-xs">{{ trans('entities.pages_md_preview') }}</div>
+            </div>
+            <iframe src="about:blank"
+                    refs="markdown-editor@display"
+                    class="markdown-display flex flex-fill"
+                    sandbox="allow-same-origin"></iframe>
         </div>
-        <iframe src="about:blank"
-                refs="markdown-editor@display"
-                class="markdown-display"
-                sandbox="allow-same-origin"></iframe>
     </div>
 </div>
 

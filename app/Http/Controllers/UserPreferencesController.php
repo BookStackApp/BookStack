@@ -139,25 +139,4 @@ class UserPreferencesController extends Controller
         setting()->putForCurrentUser('code-language-favourites', implode(',', $currentFavorites));
         return response('', 204);
     }
-
-    /**
-     * Update a boolean user preference setting.
-     */
-    public function updateBooleanPreference(Request $request)
-    {
-        $allowedKeys = ['md-scroll-sync', 'md-show-preview'];
-        $validated = $this->validate($request, [
-            'name'  => ['required', 'string'],
-            'value' => ['required'],
-        ]);
-
-        if (!in_array($validated['name'], $allowedKeys)) {
-            return response('Invalid boolean preference', 500);
-        }
-
-        $value = $validated['value'] === 'true' ? 'true' : 'false';
-        setting()->putForCurrentUser($validated['name'], $value);
-
-        return response('', 204);
-    }
 }

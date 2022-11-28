@@ -14,7 +14,11 @@ export class MarkdownEditor extends Component {
 
         this.display = this.$refs.display;
         this.input = this.$refs.input;
-        this.settingContainer = this.$refs.settingContainer;
+        this.divider = this.$refs.divider;
+        this.displayWrap = this.$refs.displayWrap;
+
+        const settingContainer = this.$refs.settingContainer;
+        const settingInputs = settingContainer.querySelectorAll('input[type="checkbox"]');
 
         this.editor = null;
         initEditor({
@@ -23,11 +27,11 @@ export class MarkdownEditor extends Component {
             displayEl: this.display,
             inputEl: this.input,
             drawioUrl: this.getDrawioUrl(),
+            settingInputs: Array.from(settingInputs),
             text: {
                 serverUploadLimit: this.serverUploadLimitText,
                 imageUploadError: this.imageUploadErrorText,
             },
-            settings: this.loadSettings(),
         }).then(editor => {
             this.editor = editor;
             this.setupListeners();
@@ -76,30 +80,40 @@ export class MarkdownEditor extends Component {
             toolbarLabel.closest('.markdown-editor-wrap').classList.add('active');
         });
 
-        // Setting changes
-        this.settingContainer.addEventListener('change', e => {
-            const actualInput = e.target.parentNode.querySelector('input[type="hidden"]');
-            const name = actualInput.getAttribute('name');
-            const value = actualInput.getAttribute('value');
-            window.$http.patch('/preferences/update-boolean', {name, value});
-            this.editor.settings.set(name, value === 'true');
-        });
-
         // Refresh CodeMirror on container resize
         const resizeDebounced = debounce(() => this.editor.cm.refresh(), 100, false);
         const observer = new ResizeObserver(resizeDebounced);
         observer.observe(this.elem);
+
+        this.handleDividerDrag();
     }
 
-    loadSettings() {
-        const settings = {};
-        const inputs = this.settingContainer.querySelectorAll('input[type="hidden"]');
+    handleDividerDrag() {
+        this.divider.addEventListener('pointerdown', event => {
+            const wrapRect = this.elem.getBoundingClientRect();
+            const moveListener = (event) => {
+                const xRel = event.pageX - wrapRect.left;
+                const xPct = Math.min(Math.max(20, Math.floor((xRel / wrapRect.width) * 100)), 80);
+                this.displayWrap.style.flexBasis = `${100-xPct}%`;
+                this.editor.settings.set('editorWidth', xPct);
+            };
+            const upListener = (event) => {
+                window.removeEventListener('pointermove', moveListener);
+                window.removeEventListener('pointerup', upListener);
+                this.display.style.pointerEvents = null;
+                document.body.style.userSelect = null;
+                this.editor.cm.refresh();
+            };
 
-        for (const input of inputs) {
-            settings[input.getAttribute('name')] = input.value === 'true';
+            this.display.style.pointerEvents = 'none';
+            document.body.style.userSelect = 'none';
+            window.addEventListener('pointermove', moveListener);
+            window.addEventListener('pointerup', upListener);
+        });
+        const widthSetting = this.editor.settings.get('editorWidth');
+        if (widthSetting) {
+            this.displayWrap.style.flexBasis = `${100-widthSetting}%`;
         }
-
-        return settings;
     }
 
     scrollToTextIfNeeded() {

@@ -60,10 +60,6 @@
       outline: 0;
     }
   }
-  .markdown-display, .markdown-editor-wrap {
-    flex: 1;
-    position: relative;
-  }
   &.fullscreen {
     position: fixed;
     top: 0;
@@ -74,17 +70,22 @@
 }
 
 .markdown-editor-wrap {
-  display: flex;
-  flex-direction: column;
   border-top: 1px solid #DDD;
   border-bottom: 1px solid #DDD;
   @include lightDark(border-color, #ddd, #000);
-  width: 50%;
+  position: relative;
+  flex: 1;
+}
+.markdown-editor-wrap + .markdown-editor-wrap {
+  flex-basis: 50%;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
-.markdown-editor-wrap + .markdown-editor-wrap {
-  border-inline-start: 1px solid;
-  @include lightDark(border-color, #ddd, #000);
+.markdown-panel-divider {
+  width: 2px;
+  @include lightDark(background-color, #ddd, #000);
+  cursor: col-resize;
 }
 
 @include smaller-than($m) {
@@ -95,6 +96,7 @@
     width: 100%;
     max-width: 100%;
     flex-grow: 1;
+    flex-basis: auto !important;
   }
   .editor-toolbar-label {
     float: none !important;
