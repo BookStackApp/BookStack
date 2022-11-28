@@ -812,14 +812,16 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     height: 100%;
     display: flex;
     flex-direction: column;
-    border-inline-start: 1px solid #DDD;
+    border-inline-start: 1px solid;
+    @include lightDark(border-color, #ddd, #000);
   }
   .template-item-actions button {
     cursor: pointer;
     flex: 1;
-    background: #FFF;
+    @include lightDark(background-color, #FFF, #222);
     border: 0;
-    border-top: 1px solid #DDD;
+    border-top: 1px solid;
+    @include lightDark(border-color, #DDD, #000);
   }
   .template-item-actions button svg {
     margin: 0;
