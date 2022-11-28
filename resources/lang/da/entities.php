@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Indsæt billede',
     'pages_md_insert_link' => 'Indsæt emnelink',
     'pages_md_insert_drawing' => 'Indsæt tegning',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Side er ikke i et kapitel',
     'pages_move' => 'Flyt side',
     'pages_move_success' => 'Flyt side til ":parentName"',
