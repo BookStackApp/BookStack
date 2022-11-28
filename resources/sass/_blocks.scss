@@ -109,7 +109,8 @@
 }
 
 .card.border-card {
-  border: 1px solid #DDD;
+  border: 1px solid;
+  @include lightDark(border-color, #ddd, #000);
 }
 
 .card.drag-card {
@@ -133,7 +134,7 @@
     flex-grow: 0;
     padding: 0 $-xs;
     &:hover {
-      background-color: #EEE;
+      @include lightDark(background-color, #eee, #2d2d2d);
     }
     .svg-icon {
       margin-inline-end: 0px;
