@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Infoga bild',
     'pages_md_insert_link' => 'Infoga länk',
     'pages_md_insert_drawing' => 'Infoga teckning',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Sidan ligger inte i något kapitel',
     'pages_move' => 'Flytta sida',
     'pages_move_success' => 'Sidan har flyttats till ":parentName"',
