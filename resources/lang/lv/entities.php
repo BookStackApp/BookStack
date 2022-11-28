@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Ievietot attēlu',
     'pages_md_insert_link' => 'Ievietot vienuma saiti',
     'pages_md_insert_drawing' => 'Ievietot zīmējumu',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Lapa nav nodaļā',
     'pages_move' => 'Pārvietot lapu',
     'pages_move_success' => 'Lapa pārvietota uz ":parentName"',
