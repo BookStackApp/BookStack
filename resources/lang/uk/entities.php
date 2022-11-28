@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Вставити зображення',
     'pages_md_insert_link' => 'Вставити посилання на об\'єкт',
     'pages_md_insert_drawing' => 'Вставити малюнок',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Сторінка не знаходиться в розділі',
     'pages_move' => 'Перемістити сторінку',
     'pages_move_success' => 'Сторінку переміщено до ":parentName"',
