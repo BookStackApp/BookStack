@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Sisipkan Gambar',
     'pages_md_insert_link' => 'Sisipkan Tautan Entitas',
     'pages_md_insert_drawing' => 'Sisipkan Gambar',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Halaman tidak dalam satu bab',
     'pages_move' => 'Pindahkan Halaman',
     'pages_move_success' => 'Halaman dipindahkan ke ":parentName"',
