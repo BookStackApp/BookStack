@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Kép beillesztése',
     'pages_md_insert_link' => 'Entitás hivatkozás beillesztése',
     'pages_md_insert_drawing' => 'Rajz beillesztése',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Az oldal nincs fejezetben',
     'pages_move' => 'Oldal áthelyezése',
     'pages_move_success' => 'Oldal áthelyezve ide: ":parentName"',
