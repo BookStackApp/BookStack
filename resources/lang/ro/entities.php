@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Inserare imagine',
     'pages_md_insert_link' => 'Inserează link-ul entității',
     'pages_md_insert_drawing' => 'Inserează desen',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Pagina nu este într-un capitol',
     'pages_move' => 'Mută pagina',
     'pages_move_success' => 'Pagina mutată la ":parentName"',
