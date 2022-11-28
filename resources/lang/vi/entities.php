@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Chèn hình ảnh',
     'pages_md_insert_link' => 'Chèn liên kết thực thể',
     'pages_md_insert_drawing' => 'Chèn bản vẽ',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Trang không nằm trong một chương',
     'pages_move' => 'Di chuyển Trang',
     'pages_move_success' => 'Trang đã chuyển tới ":parentName"',
