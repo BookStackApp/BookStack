@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Insertar Imagen',
     'pages_md_insert_link' => 'Insertar link de entidad',
     'pages_md_insert_drawing' => 'Insertar Dibujo',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'La página no esá en el capítulo',
     'pages_move' => 'Mover página',
     'pages_move_success' => 'Página movida a ":parentName"',
