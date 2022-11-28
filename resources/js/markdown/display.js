@@ -17,6 +17,14 @@ export class Display {
         } else {
             this.container.addEventListener('load', this.onLoad.bind(this));
         }
+
+        this.updateVisibility(editor.settings.get('showPreview'));
+        editor.settings.onChange('showPreview', show => this.updateVisibility(show));
+    }
+
+    updateVisibility(show) {
+        const wrap = this.container.closest('.markdown-editor-wrap');
+        wrap.style.display = show ? null : 'none';
     }
 
     onLoad() {

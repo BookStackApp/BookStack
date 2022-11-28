@@ -24,7 +24,13 @@ export async function init(editor) {
 
     // Handle scroll to sync display view
     const onScrollDebounced = debounce(editor.actions.syncDisplayPosition.bind(editor.actions), 100, false);
-    cm.on('scroll', instance => onScrollDebounced(instance));
+    let syncActive = editor.settings.get('scrollSync');
+    editor.settings.onChange('scrollSync', val => syncActive = val);
+    cm.on('scroll', instance => {
+        if (syncActive) {
+            onScrollDebounced(instance);
+        }
+    });
 
     // Handle image paste
     cm.on('paste', (cm, event) => {

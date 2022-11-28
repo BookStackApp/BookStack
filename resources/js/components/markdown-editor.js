@@ -26,7 +26,8 @@ export class MarkdownEditor extends Component {
             text: {
                 serverUploadLimit: this.serverUploadLimitText,
                 imageUploadError: this.imageUploadErrorText,
-            }
+            },
+            settings: this.loadSettings(),
         }).then(editor => {
             this.editor = editor;
             this.setupListeners();
@@ -81,13 +82,24 @@ export class MarkdownEditor extends Component {
             const name = actualInput.getAttribute('name');
             const value = actualInput.getAttribute('value');
             window.$http.patch('/preferences/update-boolean', {name, value});
-            // TODO - Update state locally
+            this.editor.settings.set(name, value === 'true');
         });
 
         // Refresh CodeMirror on container resize
         const resizeDebounced = debounce(() => this.editor.cm.refresh(), 100, false);
         const observer = new ResizeObserver(resizeDebounced);
         observer.observe(this.elem);
+    }
+
+    loadSettings() {
+        const settings = {};
+        const inputs = this.settingContainer.querySelectorAll('input[type="hidden"]');
+
+        for (const input of inputs) {
+            settings[input.getAttribute('name')] = input.value === 'true';
+        }
+
+        return settings;
     }
 
     scrollToTextIfNeeded() {
