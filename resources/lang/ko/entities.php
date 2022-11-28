@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => '이미지 추가',
     'pages_md_insert_link' => '내부 링크',
     'pages_md_insert_drawing' => '드로잉 추가',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => '챕터에 있는 문서가 아닙니다.',
     'pages_move' => '문서 이동하기',
     'pages_move_success' => ':parentName(으)로 옮김',
