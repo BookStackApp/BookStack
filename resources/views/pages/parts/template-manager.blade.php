@@ -13,7 +13,7 @@
 
     <div class="search-box flexible mb-m" style="display: {{ count($templates) > 0 ? 'block' : 'none' }}">
         <input refs="template-manager@searchInput" type="text" name="template-search" placeholder="{{ trans('common.search') }}">
-        <button refs="template-manager@searchButton" type="button">@icon('search')</button>
+        <button refs="template-manager@searchButton" tabindex="-1" type="button">@icon('search')</button>
         <button refs="template-manager@searchCancel" class="search-box-cancel text-neg" type="button" style="display: none">@icon('close')</button>
     </div>
 
