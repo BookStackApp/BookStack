@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'درج تصویر',
     'pages_md_insert_link' => 'پیوند نهاد را درج کنید',
     'pages_md_insert_drawing' => 'درج طرح',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'صفحه در یک فصل نیست',
     'pages_move' => 'انتقال صفحه',
     'pages_move_success' => 'صفحه به ":parentName" منتقل شد',
