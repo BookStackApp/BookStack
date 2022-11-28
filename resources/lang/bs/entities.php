@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Insert Image',
     'pages_md_insert_link' => 'Insert Entity Link',
     'pages_md_insert_drawing' => 'Insert Drawing',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Page is not in a chapter',
     'pages_move' => 'Move Page',
     'pages_move_success' => 'Page moved to ":parentName"',
