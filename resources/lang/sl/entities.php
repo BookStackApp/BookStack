@@ -224,6 +224,8 @@ return [
     'pages_md_insert_image' => 'Vstavi sliko',
     'pages_md_insert_link' => 'Vnesi povezavo do objekta',
     'pages_md_insert_drawing' => 'Vstavi risbo',
+    'pages_md_show_preview' => 'Show preview',
+    'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Stran ni v poglavju',
     'pages_move' => 'Premakni stran',
     'pages_move_success' => 'Stran premaknjena v ":parentName"',
