@@ -3,6 +3,8 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\Activity;
+use BookStack\Actions\ActivityType;
+use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,10 +15,15 @@ class AuditLogController extends Controller
         $this->checkPermission('settings-manage');
         $this->checkPermission('users-manage');
 
-        $listDetails = [
-            'order'     => $request->get('order', 'desc'),
+        $sort = $request->get('sort', 'activity_date');
+        $order = $request->get('order', 'desc');
+        $listOptions = (new SimpleListOptions('', $sort, $order))->withSortOptions([
+            'created_at' => trans('settings.audit_table_date'),
+            'type' => trans('settings.audit_table_event'),
+        ]);
+
+        $filters = [
             'event'     => $request->get('event', ''),
-            'sort'      => $request->get('sort', 'created_at'),
             'date_from' => $request->get('date_from', ''),
             'date_to'   => $request->get('date_to', ''),
             'user'      => $request->get('user', ''),
@@ -25,39 +32,38 @@ class AuditLogController extends Controller
 
         $query = Activity::query()
             ->with([
-                'entity' => function ($query) {
-                    $query->withTrashed();
-                },
+                'entity' => fn ($query) => $query->withTrashed(),
                 'user',
             ])
-            ->orderBy($listDetails['sort'], $listDetails['order']);
+            ->orderBy($listOptions->getSort(), $listOptions->getOrder());
 
-        if ($listDetails['event']) {
-            $query->where('type', '=', $listDetails['event']);
+        if ($filters['event']) {
+            $query->where('type', '=', $filters['event']);
         }
-        if ($listDetails['user']) {
-            $query->where('user_id', '=', $listDetails['user']);
+        if ($filters['user']) {
+            $query->where('user_id', '=', $filters['user']);
         }
 
-        if ($listDetails['date_from']) {
-            $query->where('created_at', '>=', $listDetails['date_from']);
+        if ($filters['date_from']) {
+            $query->where('created_at', '>=', $filters['date_from']);
         }
-        if ($listDetails['date_to']) {
-            $query->where('created_at', '<=', $listDetails['date_to']);
+        if ($filters['date_to']) {
+            $query->where('created_at', '<=', $filters['date_to']);
         }
-        if ($listDetails['ip']) {
-            $query->where('ip', 'like', $listDetails['ip'] . '%');
+        if ($filters['ip']) {
+            $query->where('ip', 'like', $filters['ip'] . '%');
         }
 
         $activities = $query->paginate(100);
-        $activities->appends($listDetails);
+        $activities->appends($request->all());
 
-        $types = DB::table('activities')->select('type')->distinct()->pluck('type');
+        $types = ActivityType::all();
         $this->setPageTitle(trans('settings.audit'));
 
         return view('settings.audit', [
             'activities'    => $activities,
-            'listDetails'   => $listDetails,
+            'filters'       => $filters,
+            'listOptions'   => $listOptions,
             'activityTypes' => $types,
         ]);
     }

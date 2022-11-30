@@ -9,7 +9,11 @@
         <h1 class="list-heading">{{ trans('settings.audit') }}</h1>
         <p class="text-muted">{{ trans('settings.audit_desc') }}</p>
 
-        <form action="{{ url('/settings/audit') }}" method="get" class="flex-container-row wrap justify-flex-start gap-m">
+        <form action="{{ url('/settings/audit') }}" method="get" class="flex-container-row wrap justify-flex-start gap-x-m gap-y-xs">
+
+            @foreach(request()->only(['order', 'sort']) as $key => $val)
+                <input type="hidden" name="{{ $key }}" value="{{ $val }}">
+            @endforeach
 
             <div component="dropdown" class="list-sort-type dropdown-container">
                 <label for="">{{ trans('settings.audit_event_filter') }}</label>
@@ -18,17 +22,17 @@
                         aria-haspopup="true"
                         aria-expanded="false"
                         aria-label="{{ trans('common.sort_options') }}"
-                        class="input-base text-left">{{ $listDetails['event'] ?: trans('settings.audit_event_filter_no_filter') }}</button>
+                        class="input-base text-left">{{ $filters['event'] ?: trans('settings.audit_event_filter_no_filter') }}</button>
                 <ul refs="dropdown@menu" class="dropdown-menu">
-                    <li @if($listDetails['event'] === '') class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => '']) }}" class="text-item">{{ trans('settings.audit_event_filter_no_filter') }}</a></li>
+                    <li @if($filters['event'] === '') class="active" @endif><a href="{{ sortUrl('/settings/audit', array_filter(request()->except('page')), ['event' => '']) }}" class="text-item">{{ trans('settings.audit_event_filter_no_filter') }}</a></li>
                     @foreach($activityTypes as $type)
-                        <li @if($type === $listDetails['event']) class="active" @endif><a href="{{ sortUrl('/settings/audit', $listDetails, ['event' => $type]) }}" class="text-item">{{ $type }}</a></li>
+                        <li @if($type === $filters['event']) class="active" @endif><a href="{{ sortUrl('/settings/audit', array_filter(request()->except('page')), ['event' => $type]) }}" class="text-item">{{ $type }}</a></li>
                     @endforeach
                 </ul>
             </div>
 
-            @if(!empty($listDetails['event']))
-                <input type="hidden" name="event" value="{{ $listDetails['event'] }}">
+            @if(!empty($filters['event']))
+                <input type="hidden" name="event" value="{{ $filters['event'] }}">
             @endif
 
             @foreach(['date_from', 'date_to'] as $filterKey)
@@ -38,7 +42,7 @@
                            component="submit-on-change"
                            type="date"
                            name="{{ $filterKey }}"
-                           value="{{ $listDetails[$filterKey] ?? '' }}">
+                           value="{{ $filters[$filterKey] ?? '' }}">
                 </div>
             @endforeach
 
@@ -46,64 +50,70 @@
                  component="submit-on-change"
                  option:submit-on-change:filter='[name="user"]'>
                 <label for="owner">{{ trans('settings.audit_table_user') }}</label>
-                @include('form.user-select', ['user' => $listDetails['user'] ? \BookStack\Auth\User::query()->find($listDetails['user']) : null, 'name' => 'user'])
+                @include('form.user-select', ['user' => $filters['user'] ? \BookStack\Auth\User::query()->find($filters['user']) : null, 'name' => 'user'])
             </div>
 
 
             <div class="form-group">
                 <label for="ip">{{ trans('settings.audit_table_ip') }}</label>
-                @include('form.text', ['name' => 'ip', 'model' => (object) $listDetails])
+                @include('form.text', ['name' => 'ip', 'model' => (object) $filters])
                 <input type="submit" style="display: none">
             </div>
         </form>
 
-        <hr class="mt-l mb-s">
+        <hr class="mt-m mb-s">
 
-        {{ $activities->links() }}
+        <div class="flex-container-row justify-space-between items-center wrap">
+            <div class="flex-2 min-width-xl">{{ $activities->links() }}</div>
+            <div class="flex-none min-width-m py-m">
+                @include('common.sort', array_merge($listOptions->getSortControlData(), ['useQuery' => true]))
+            </div>
+        </div>
 
-        <table class="table">
-            <tbody>
-            <tr>
-                <th>{{ trans('settings.audit_table_user') }}</th>
-                <th>
-                    <a href="{{ sortUrl('/settings/audit', $listDetails, ['sort' => 'key']) }}">{{ trans('settings.audit_table_event') }}</a>
-                </th>
-                <th>{{ trans('settings.audit_table_related') }}</th>
-                <th>{{ trans('settings.audit_table_ip') }}</th>
-                <th>
-                    <a href="{{ sortUrl('/settings/audit', $listDetails, ['sort' => 'created_at']) }}">{{ trans('settings.audit_table_date') }}</a></th>
-            </tr>
+        <div class="item-list">
+            <div class="item-list-row flex-container-row items-center bold hide-under-m">
+                <div class="flex-2 px-m py-xs flex-container-row items-center">{{ trans('settings.audit_table_user') }}</div>
+                <div class="flex-2 px-m py-xs">{{ trans('settings.audit_table_event') }}</div>
+                <div class="flex-3 px-m py-xs">{{ trans('settings.audit_table_related') }}</div>
+                <div class="flex-container-row flex-3">
+                    <div class="flex px-m py-xs">{{ trans('settings.audit_table_ip') }}</div>
+                    <div class="flex-2 px-m py-xs text-right">{{ trans('settings.audit_table_date') }}</div>
+                </div>
+            </div>
             @foreach($activities as $activity)
-                <tr>
-                    <td>
+                <div class="item-list-row flex-container-row items-center wrap py-xxs">
+                    <div class="flex-2 px-m py-xxs flex-container-row items-center min-width-m">
                         @include('settings.parts.table-user', ['user' => $activity->user, 'user_id' => $activity->user_id])
-                    </td>
-                    <td>{{ $activity->type }}</td>
-                    <td width="40%">
+                    </div>
+                    <div class="flex-2 px-m py-xxs min-width-m"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_event') }}:</strong> {{ $activity->type }}</div>
+                    <div class="flex-3 px-m py-xxs min-width-l">
                         @if($activity->entity)
-                            <a href="{{ $activity->entity->getUrl() }}" class="table-entity-item">
-                                <span role="presentation" class="icon text-{{$activity->entity->getType()}}">@icon($activity->entity->getType())</span>
-                                <div class="text-{{ $activity->entity->getType() }}">
+                            <a href="{{ $activity->entity->getUrl() }}" class="flex-container-row items-center">
+                                <span role="presentation" class="icon flex-none text-{{$activity->entity->getType()}}">@icon($activity->entity->getType())</span>
+                                <div class="flex text-{{ $activity->entity->getType() }}">
                                     {{ $activity->entity->name }}
                                 </div>
                             </a>
                         @elseif($activity->detail && $activity->isForEntity())
-                            <div class="px-m">
+                            <div>
                                 {{ trans('settings.audit_deleted_item') }} <br>
                                 {{ trans('settings.audit_deleted_item_name', ['name' => $activity->detail]) }}
                             </div>
                         @elseif($activity->detail)
-                            <div class="px-m">{{ $activity->detail }}</div>
+                            <div>{{ $activity->detail }}</div>
                         @endif
-                    </td>
-                    <td>{{ $activity->ip }}</td>
-                    <td>{{ $activity->created_at }}</td>
-                </tr>
+                    </div>
+                    <div class="flex-container-row flex-3">
+                        <div class="flex px-m py-xxs min-width-xs"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_ip') }}:<br></strong> {{ $activity->ip }}</div>
+                        <div class="flex-2 px-m py-xxs text-m-right min-width-xs"><strong class="mr-xs hide-over-m">{{ trans('settings.audit_table_date') }}:<br></strong> {{ $activity->created_at }}</div>
+                    </div>
+                </div>
             @endforeach
-            </tbody>
-        </table>
+        </div>
 
-        {{ $activities->links() }}
+        <div class="py-m">
+            {{ $activities->links() }}
+        </div>
     </div>
 
 </div>

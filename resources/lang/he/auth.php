@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'נדרש אימות אי-מייל אך שליחת האי-מייל אליך נכשלה. יש ליצור קשר עם מנהל המערכת כדי לוודא שאכן ניתן לשלוח מיילים.',
     'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'אימות נשלח לאי-מייל שלך, יש לבדוק בתיבת הדואר הנכנס',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'כתובת המייל לא אומתה',
     'email_not_confirmed_text' => 'כתובת המייל שלך טרם אומתה',

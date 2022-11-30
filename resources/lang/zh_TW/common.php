@@ -25,6 +25,7 @@ return [
     'actions' => '動作',
     'view' => '檢視',
     'view_all' => '檢視全部',
+    'new' => '新增',
     'create' => '建立',
     'update' => '更新',
     'edit' => '編輯',
@@ -47,8 +48,8 @@ return [
     'previous' => '上一頁',
     'filter_active' => '使用中的過濾器',
     'filter_clear' => '清理過濾',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => '下載',
+    'open_in_tab' => '在新分頁中開啟',
 
     // Sort Options
     'sort_options' => '排序選項',
@@ -80,12 +81,14 @@ return [
     'none' => '無',
 
     // Header
+    'homepage' => '首頁',
     'header_menu_expand' => '展開選單',
     'profile_menu' => '個人資料選單',
     'view_profile' => '檢視個人資料',
     'edit_profile' => '編輯個人資料',
     'dark_mode' => '深色模式',
     'light_mode' => '淺色模式',
+    'global_search' => '全域搜尋',
 
     // Layout tabs
     'tab_info' => '資訊',

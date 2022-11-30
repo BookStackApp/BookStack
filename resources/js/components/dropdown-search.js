@@ -1,7 +1,8 @@
 import {debounce} from "../services/util";
 import {transitionHeight} from "../services/animations";
+import {Component} from "./component";
 
-class DropdownSearch {
+export class DropdownSearch extends Component {
 
     setup() {
         this.elem = this.$el;
@@ -79,5 +80,3 @@ class DropdownSearch {
     }
 
 }
-
-export default DropdownSearch;

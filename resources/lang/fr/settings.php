@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'Rôles',
     'role_user_roles' => 'Rôles des utilisateurs',
+    'roles_index_desc' => 'Les rôles sont utilisés pour regrouper les utilisateurs et fournir une autorisation système à leurs membres. Lorsqu\'un utilisateur est membre de plusieurs rôles, les privilèges accordés se cumulent et l\'utilisateur hérite de tous les droits d\'accès.',
+    'roles_x_users_assigned' => '1 utilisateur affecté| : nombre d\'affectés',
+    'roles_x_permissions_provided' => '1 permission|:count permissions',
+    'roles_assigned_users' => 'Assigned Users',
+    'roles_permissions_provided' => 'Provided Permissions',
     'role_create' => 'Créer un nouveau rôle',
     'role_create_success' => 'Rôle créé avec succès',
     'role_delete' => 'Supprimer le rôle',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => 'Utilisateurs',
+    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
     'user_profile' => 'Profil d\'utilisateur',
     'users_add_new' => 'Ajouter un nouvel utilisateur',
     'users_search' => 'Rechercher les utilisateurs',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
+    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
     'webhooks_create' => 'Créer un nouveau Webhook',
     'webhooks_none_created' => 'Aucun webhook n\'a encore été créé.',
     'webhooks_edit' => 'Éditer le Webhook',

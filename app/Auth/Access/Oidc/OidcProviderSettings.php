@@ -15,40 +15,17 @@ use Psr\Http\Client\ClientInterface;
  */
 class OidcProviderSettings
 {
-    /**
-     * @var string
-     */
-    public $issuer;
-
-    /**
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * @var string
-     */
-    public $clientSecret;
-
-    /**
-     * @var string
-     */
-    public $redirectUri;
-
-    /**
-     * @var string
-     */
-    public $authorizationEndpoint;
-
-    /**
-     * @var string
-     */
-    public $tokenEndpoint;
+    public string $issuer;
+    public string $clientId;
+    public string $clientSecret;
+    public ?string $redirectUri;
+    public ?string $authorizationEndpoint;
+    public ?string $tokenEndpoint;
 
     /**
      * @var string[]|array[]
      */
-    public $keys = [];
+    public ?array $keys = [];
 
     public function __construct(array $settings)
     {
@@ -164,9 +141,10 @@ class OidcProviderSettings
     protected function filterKeys(array $keys): array
     {
         return array_filter($keys, function (array $key) {
-            $alg = $key['alg'] ?? null;
+            $alg = $key['alg'] ?? 'RS256';
+            $use = $key['use'] ?? 'sig';
 
-            return $key['kty'] === 'RSA' && $key['use'] === 'sig' && (is_null($alg) || $alg === 'RS256');
+            return $key['kty'] === 'RSA' && $use === 'sig' && $alg === 'RS256';
         });
     }
 

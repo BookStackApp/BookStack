@@ -1,11 +1,9 @@
 import * as Dates from "../services/dates";
 import {onSelect} from "../services/dom";
+import {debounce} from "../services/util";
+import {Component} from "./component";
 
-/**
- * Page Editor
- * @extends {Component}
- */
-class PageEditor {
+export class PageEditor extends Component {
     setup() {
         // Options
         this.draftsEnabled = this.$opts.draftsEnabled === 'true';
@@ -69,7 +67,8 @@ class PageEditor {
         });
 
         // Changelog controls
-        this.changelogInput.addEventListener('change', this.updateChangelogDisplay.bind(this));
+        const updateChangelogDebounced = debounce(this.updateChangelogDisplay.bind(this), 300, false);
+        this.changelogInput.addEventListener('input', updateChangelogDebounced);
 
         // Draft Controls
         onSelect(this.saveDraftButton, this.saveDraft.bind(this));
@@ -199,7 +198,8 @@ class PageEditor {
         event.preventDefault();
 
         const link = event.target.closest('a').href;
-        const dialog = this.switchDialogContainer.components['confirm-dialog'];
+        /** @var {ConfirmDialog} **/
+        const dialog = window.$components.firstOnElement(this.switchDialogContainer, 'confirm-dialog');
         const [saved, confirmed] = await Promise.all([this.saveDraft(), dialog.show()]);
 
         if (saved && confirmed) {
@@ -208,5 +208,3 @@ class PageEditor {
     }
 
 }
-
-export default PageEditor;

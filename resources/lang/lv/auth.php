@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'E-pasta apriprināšana ir nepieciešama, bet sistēma nevarēja e-pastu nosūtīt. Lūdzu sazinaties ar administratoru, lai pārliecinātos, ka e-pasts ir iestatīts pareizi.',
     'email_confirm_success' => 'Jūsu epasta adrese ir apstiprināta! Jums tagad jābūt iespējai pieslēgties, izmantojot šo epasta adresi.',
     'email_confirm_resent' => 'Apstiprinājuma vēstule tika nosūtīta. Lūdzu, pārbaudiet jūsu e-pastu.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'E-pasts nav apstiprināts',
     'email_not_confirmed_text' => 'Jūsu e-pasta adrese vēl nav apstiprināta.',

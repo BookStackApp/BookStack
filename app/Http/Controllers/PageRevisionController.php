@@ -3,10 +3,13 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
+use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
+use BookStack\Util\SimpleListOptions;
+use Illuminate\Http\Request;
 use Ssddanbrown\HtmlDiff\Diff;
 
 class PageRevisionController extends Controller
@@ -23,22 +26,29 @@ class PageRevisionController extends Controller
      *
      * @throws NotFoundException
      */
-    public function index(string $bookSlug, string $pageSlug)
+    public function index(Request $request, string $bookSlug, string $pageSlug)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $listOptions = SimpleListOptions::fromRequest($request, 'page_revisions', true)->withSortOptions([
+            'id' => trans('entities.pages_revisions_sort_number')
+        ]);
+
         $revisions = $page->revisions()->select([
-            'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at',
-            'type', 'revision_number', 'summary',
-        ])
+                'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at',
+                'type', 'revision_number', 'summary',
+            ])
             ->selectRaw("IF(markdown = '', false, true) as is_markdown")
             ->with(['page.book', 'createdBy'])
-            ->get();
+            ->reorder('id', $listOptions->getOrder())
+            ->reorder('created_at', $listOptions->getOrder())
+            ->paginate(50);
 
         $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName' => $page->getShortName()]));
 
         return view('pages.revisions', [
-            'revisions' => $revisions,
-            'page'      => $page,
+            'revisions'   => $revisions,
+            'page'        => $page,
+            'listOptions' => $listOptions,
         ]);
     }
 
@@ -50,6 +60,7 @@ class PageRevisionController extends Controller
     public function show(string $bookSlug, string $pageSlug, int $revisionId)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        /** @var ?PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
             throw new NotFoundException();
@@ -78,6 +89,7 @@ class PageRevisionController extends Controller
     public function changes(string $bookSlug, string $pageSlug, int $revisionId)
     {
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        /** @var ?PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
             throw new NotFoundException();

@@ -1,35 +1,37 @@
 import {slideDown, slideUp} from "../services/animations";
+import {Component} from "./component";
 
 /**
  * Collapsible
  * Provides some simple logic to allow collapsible sections.
  */
-class Collapsible {
+export class Collapsible extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.trigger = elem.querySelector('[collapsible-trigger]');
-        this.content = elem.querySelector('[collapsible-content]');
+    setup() {
+        this.container = this.$el;
+        this.trigger = this.$refs.trigger;
+        this.content = this.$refs.content;
 
-        if (!this.trigger) return;
-        this.trigger.addEventListener('click', this.toggle.bind(this));
-        this.openIfContainsError();
+        if (this.trigger) {
+            this.trigger.addEventListener('click', this.toggle.bind(this));
+            this.openIfContainsError();
+        }
     }
 
     open() {
-        this.elem.classList.add('open');
+        this.container.classList.add('open');
         this.trigger.setAttribute('aria-expanded', 'true');
         slideDown(this.content, 300);
     }
 
     close() {
-        this.elem.classList.remove('open');
+        this.container.classList.remove('open');
         this.trigger.setAttribute('aria-expanded', 'false');
         slideUp(this.content, 300);
     }
 
     toggle() {
-        if (this.elem.classList.contains('open')) {
+        if (this.container.classList.contains('open')) {
             this.close();
         } else {
             this.open();
@@ -44,5 +46,3 @@ class Collapsible {
     }
 
 }
-
-export default Collapsible;

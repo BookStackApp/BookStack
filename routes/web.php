@@ -29,6 +29,7 @@ use BookStack\Http\Controllers\StatusController;
 use BookStack\Http\Controllers\TagController;
 use BookStack\Http\Controllers\UserApiTokenController;
 use BookStack\Http\Controllers\UserController;
+use BookStack\Http\Controllers\UserPreferencesController;
 use BookStack\Http\Controllers\UserProfileController;
 use BookStack\Http\Controllers\UserSearchController;
 use BookStack\Http\Controllers\WebhookController;
@@ -183,8 +184,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/ajax/tags/suggest/names', [TagController::class, 'getNameSuggestions']);
     Route::get('/ajax/tags/suggest/values', [TagController::class, 'getValueSuggestions']);
 
-    Route::get('/ajax/search/entities', [SearchController::class, 'searchEntitiesAjax']);
-
     // Comments
     Route::post('/comment/{pageId}', [CommentController::class, 'savePageComment']);
     Route::put('/comment/{id}', [CommentController::class, 'update']);
@@ -198,6 +197,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/search/book/{bookId}', [SearchController::class, 'searchBook']);
     Route::get('/search/chapter/{bookId}', [SearchController::class, 'searchChapter']);
     Route::get('/search/entity/siblings', [SearchController::class, 'searchSiblings']);
+    Route::get('/search/entity-selector', [SearchController::class, 'searchForSelector']);
+    Route::get('/search/suggest', [SearchController::class, 'searchSuggestions']);
 
     // User Search
     Route::get('/search/users/select', [UserSearchController::class, 'forSelect']);
@@ -239,17 +240,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/users', [UserController::class, 'index']);
     Route::get('/settings/users/create', [UserController::class, 'create']);
     Route::get('/settings/users/{id}/delete', [UserController::class, 'delete']);
-    Route::patch('/settings/users/{id}/switch-books-view', [UserController::class, 'switchBooksView']);
-    Route::patch('/settings/users/{id}/switch-shelves-view', [UserController::class, 'switchShelvesView']);
-    Route::patch('/settings/users/{id}/switch-shelf-view', [UserController::class, 'switchShelfView']);
-    Route::patch('/settings/users/{id}/change-sort/{type}', [UserController::class, 'changeSort']);
-    Route::patch('/settings/users/{id}/update-expansion-preference/{key}', [UserController::class, 'updateExpansionPreference']);
-    Route::patch('/settings/users/toggle-dark-mode', [UserController::class, 'toggleDarkMode']);
-    Route::patch('/settings/users/update-code-language-favourite', [UserController::class, 'updateCodeLanguageFavourite']);
     Route::post('/settings/users/create', [UserController::class, 'store']);
     Route::get('/settings/users/{id}', [UserController::class, 'edit']);
     Route::put('/settings/users/{id}', [UserController::class, 'update']);
     Route::delete('/settings/users/{id}', [UserController::class, 'destroy']);
+
+    // User Preferences
+    Route::redirect('/preferences', '/');
+    Route::get('/preferences/shortcuts', [UserPreferencesController::class, 'showShortcuts']);
+    Route::put('/preferences/shortcuts', [UserPreferencesController::class, 'updateShortcuts']);
+    Route::patch('/preferences/change-view/{type}', [UserPreferencesController::class, 'changeView']);
+    Route::patch('/preferences/change-sort/{type}', [UserPreferencesController::class, 'changeSort']);
+    Route::patch('/preferences/change-expansion/{type}', [UserPreferencesController::class, 'changeExpansion']);
+    Route::patch('/preferences/toggle-dark-mode', [UserPreferencesController::class, 'toggleDarkMode']);
+    Route::patch('/preferences/update-code-language-favourite', [UserPreferencesController::class, 'updateCodeLanguageFavourite']);
+    Route::patch('/preferences/update-boolean', [UserPreferencesController::class, 'updateBooleanPreference']);
 
     // User API Tokens
     Route::get('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);
@@ -312,7 +317,8 @@ Route::get('/register', [Auth\RegisterController::class, 'getRegister']);
 Route::get('/register/confirm', [Auth\ConfirmEmailController::class, 'show']);
 Route::get('/register/confirm/awaiting', [Auth\ConfirmEmailController::class, 'showAwaiting']);
 Route::post('/register/confirm/resend', [Auth\ConfirmEmailController::class, 'resend']);
-Route::get('/register/confirm/{token}', [Auth\ConfirmEmailController::class, 'confirm']);
+Route::get('/register/confirm/{token}', [Auth\ConfirmEmailController::class, 'showAcceptForm']);
+Route::post('/register/confirm/accept', [Auth\ConfirmEmailController::class, 'confirm']);
 Route::post('/register', [Auth\RegisterController::class, 'postRegister']);
 
 // SAML routes

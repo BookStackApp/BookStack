@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'صفحه ایجاد شده',
+    'page_create'                 => 'تاریخ ایجاد',
     'page_create_notification'    => 'صفحه با موفقیت ایجاد شد',
     'page_update'                 => 'به روزرسانی صفحه',
     'page_update_notification'    => 'صفحه با موفقیت به روزرسانی شد',
@@ -29,7 +29,7 @@ return [
     'book_create'                 => 'ایجاد کتاب',
     'book_create_notification'    => 'کتاب با موفقیت ایجاد شد',
     'book_create_from_chapter'              => 'تبدیل فصل به کتاب',
-    'book_create_from_chapter_notification' => 'فصل با موفقیت به یک کتاب تبدیل شد',
+    'book_create_from_chapter_notification' => 'کتاب با موفقیت به یک قفسه تبدیل شد',
     'book_update'                 => 'به روزرسانی کتاب',
     'book_update_notification'    => 'کتاب با موفقیت به روزرسانی شد',
     'book_delete'                 => 'حذف کتاب',

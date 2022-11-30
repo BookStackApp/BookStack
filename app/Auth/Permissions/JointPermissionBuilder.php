@@ -22,7 +22,7 @@ class JointPermissionBuilder
     /**
      * @var array<string, array<int, SimpleEntityData>>
      */
-    protected $entityCache;
+    protected array $entityCache;
 
     /**
      * Re-generate all entity permission from scratch.
@@ -230,7 +230,7 @@ class JointPermissionBuilder
     /**
      * Create & Save entity jointPermissions for many entities and roles.
      *
-     * @param Entity[] $entities
+     * @param Entity[] $originalEntities
      * @param Role[]   $roles
      */
     protected function createManyJointPermissions(array $originalEntities, array $roles)

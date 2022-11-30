@@ -1,14 +1,14 @@
+import {Component} from "./component";
 
-class PagePicker {
+export class PagePicker extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.input = elem.querySelector('input');
-        this.resetButton = elem.querySelector('[page-picker-reset]');
-        this.selectButton = elem.querySelector('[page-picker-select]');
-        this.display = elem.querySelector('[page-picker-display]');
-        this.defaultDisplay = elem.querySelector('[page-picker-default]');
-        this.buttonSep = elem.querySelector('span.sep');
+    setup() {
+        this.input = this.$refs.input;
+        this.resetButton = this.$refs.resetButton;
+        this.selectButton = this.$refs.selectButton;
+        this.display = this.$refs.display;
+        this.defaultDisplay = this.$refs.defaultDisplay;
+        this.buttonSep = this.$refs.buttonSeperator;
 
         this.value = this.input.value;
         this.setupListeners();
@@ -24,7 +24,9 @@ class PagePicker {
     }
 
     showPopup() {
-        window.EntitySelectorPopup.show(entity => {
+        /** @type {EntitySelectorPopup} **/
+        const selectorPopup = window.$components.first('entity-selector-popup');
+        selectorPopup.show(entity => {
             this.setValue(entity.id, entity.name);
         });
     }
@@ -36,7 +38,7 @@ class PagePicker {
     }
 
     controlView(name) {
-        let hasValue = this.value && this.value !== 0;
+        const hasValue = this.value && this.value !== 0;
         toggleElem(this.resetButton, hasValue);
         toggleElem(this.buttonSep, hasValue);
         toggleElem(this.defaultDisplay, !hasValue);
@@ -55,8 +57,5 @@ class PagePicker {
 }
 
 function toggleElem(elem, show) {
-    let display = (elem.tagName === 'BUTTON' || elem.tagName === 'SPAN') ? 'inline-block' : 'block';
-    elem.style.display = show ? display : 'none';
+    elem.style.display = show ? null : 'none';
 }
-
-export default PagePicker;

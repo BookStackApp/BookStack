@@ -225,18 +225,18 @@ class BookTest extends TestCase
         setting()->putUser($editor, 'books_view_type', 'list');
 
         $resp = $this->actingAs($editor)->get('/books');
-        $this->withHtml($resp)->assertElementContains('form[action$="/settings/users/' . $editor->id . '/switch-books-view"]', 'Grid View');
-        $this->withHtml($resp)->assertElementExists('input[name="view_type"][value="grid"]');
+        $this->withHtml($resp)->assertElementContains('form[action$="/preferences/change-view/books"]', 'Grid View');
+        $this->withHtml($resp)->assertElementExists('button[name="view"][value="grid"]');
 
-        $resp = $this->patch("/settings/users/{$editor->id}/switch-books-view", ['view_type' => 'grid']);
+        $resp = $this->patch("/preferences/change-view/books", ['view' => 'grid']);
         $resp->assertRedirect();
         $this->assertEquals('grid', setting()->getUser($editor, 'books_view_type'));
 
         $resp = $this->actingAs($editor)->get('/books');
-        $this->withHtml($resp)->assertElementContains('form[action$="/settings/users/' . $editor->id . '/switch-books-view"]', 'List View');
-        $this->withHtml($resp)->assertElementExists('input[name="view_type"][value="list"]');
+        $this->withHtml($resp)->assertElementContains('form[action$="/preferences/change-view/books"]', 'List View');
+        $this->withHtml($resp)->assertElementExists('button[name="view"][value="list"]');
 
-        $resp = $this->patch("/settings/users/{$editor->id}/switch-books-view", ['view_type' => 'list']);
+        $resp = $this->patch("/preferences/change-view/books", ['view_type' => 'list']);
         $resp->assertRedirect();
         $this->assertEquals('list', setting()->getUser($editor, 'books_view_type'));
     }

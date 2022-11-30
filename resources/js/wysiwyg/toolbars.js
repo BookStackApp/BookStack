@@ -36,7 +36,7 @@ function registerPrimaryToolbarGroups(editor) {
     editor.ui.registry.addGroupToolbarButton('insertoverflow', {
         icon: 'more-drawer',
         tooltip: 'More',
-        items: 'hr codeeditor drawio media details'
+        items: 'customhr codeeditor drawio media details'
     });
 }
 

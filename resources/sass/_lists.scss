@@ -284,7 +284,8 @@
     padding-inline-start: $-m;
   }
   li {
-    border: 1px solid #DDD;
+    border: 1px solid;
+    @include lightDark(border-color, #DDD, #666);
     margin-top: -1px;
     min-height: 38px;
   }

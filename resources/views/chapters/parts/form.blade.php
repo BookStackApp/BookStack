@@ -11,11 +11,11 @@
     @include('form.textarea', ['name' => 'description'])
 </div>
 
-<div class="form-group" collapsible id="logo-control">
-    <button type="button" class="collapse-title text-primary" collapsible-trigger aria-expanded="false">
+<div class="form-group collapsible" component="collapsible" id="logo-control">
+    <button refs="collapsible@trigger" type="button" class="collapse-title text-primary" aria-expanded="false">
         <label for="tags">{{ trans('entities.chapter_tags') }}</label>
     </button>
-    <div class="collapse-content" collapsible-content>
+    <div refs="collapsible@content" class="collapse-content">
         @include('entities.tag-manager', ['entity' => $chapter ?? null])
     </div>
 </div>

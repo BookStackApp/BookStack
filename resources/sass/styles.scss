@@ -4,6 +4,7 @@
 @import "variables";
 @import "mixins";
 @import "spacing";
+@import "opacity";
 @import "html";
 @import "text";
 @import "colors";
@@ -96,43 +97,6 @@ $loadingSize: 10px;
     font-style: italic;
     color: #888;
     vertical-align: top;
-  }
-}
-
-// Back to top link
-$btt-size: 40px;
-[back-to-top] {
-  background-color: var(--color-primary);
-  position: fixed;
-  bottom: $-m;
-  right: $-l;
-  padding: 5px 7px;
-  cursor: pointer;
-  color: #FFF;
-  fill: #FFF;
-  svg {
-    width: math.div($btt-size, 1.5);
-    height: math.div($btt-size, 1.5);
-    margin-inline-end: 4px;
-  }
-  width: $btt-size;
-  height: $btt-size;
-  border-radius: $btt-size;
-  transition: all ease-in-out 180ms;
-  opacity: 0;
-  z-index: 999;
-  overflow: hidden;
-  &:hover {
-    width: $btt-size*3.4;
-    opacity: 1 !important;
-  }
-  .inner {
-    width: $btt-size*3.4;
-  }
-  span {
-    position: relative;
-    vertical-align: top;
-    line-height: 2;
   }
 }
 
@@ -352,15 +316,4 @@ input.scroll-box-search, .scroll-box-header-item {
       transform: rotate(180deg);
     }
   }
-}
-
-table.table .table-user-item {
-  display: grid;
-  grid-template-columns: 42px 1fr;
-  align-items: center;
-}
-table.table .table-entity-item {
-  display: grid;
-  grid-template-columns: 36px 1fr;
-  align-items: center;
 }

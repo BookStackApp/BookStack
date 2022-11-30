@@ -9,6 +9,8 @@
         <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ Str::title(trans('auth.log_in')) }}</h1>
 
+            @include('auth.parts.login-message')
+
             @include('auth.parts.login-form-' . $authMethod)
 
             @if(count($socialDrivers) > 0)

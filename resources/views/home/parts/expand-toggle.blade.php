@@ -3,10 +3,12 @@ $target - CSS selector of items to expand
 $key - Unique key for checking existing stored state.
 --}}
 <?php $isOpen = setting()->getForCurrentUser('section_expansion#'. $key); ?>
-<button type="button" expand-toggle="{{ $target }}"
-   expand-toggle-update-endpoint="{{ url('/settings/users/'. user()->id .'/update-expansion-preference/' . $key) }}"
-   expand-toggle-is-open="{{ $isOpen ? 'yes' : 'no' }}"
-   class="icon-list-item {{ $classes ?? '' }}">
+<button component="expand-toggle"
+        option:expand-toggle:target-selector="{{ $target }}"
+        option:expand-toggle:update-endpoint="{{ url('/preferences/change-expansion/' . $key) }}"
+        option:expand-toggle:is-open="{{ $isOpen ? 'true' : 'false' }}"
+        type="button"
+        class="icon-list-item {{ $classes ?? '' }}">
     <span>@icon('expand-text')</span>
     <span>{{ trans('common.toggle_details') }}</span>
 </button>

@@ -3,6 +3,7 @@
 namespace BookStack\Auth\Queries;
 
 use BookStack\Auth\User;
+use BookStack\Util\SimpleListOptions;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -11,23 +12,23 @@ use Illuminate\Pagination\LengthAwarePaginator;
  * user is assumed to be trusted. (Admin users).
  * Email search can be abused to extract email addresses.
  */
-class AllUsersPaginatedAndSorted
+class UsersAllPaginatedAndSorted
 {
-    /**
-     * @param array{sort: string, order: string, search: string} $sortData
-     */
-    public function run(int $count, array $sortData): LengthAwarePaginator
+    public function run(int $count, SimpleListOptions $listOptions): LengthAwarePaginator
     {
-        $sort = $sortData['sort'];
+        $sort = $listOptions->getSort();
+        if ($sort === 'created_at') {
+            $sort = 'users.created_at';
+        }
 
         $query = User::query()->select(['*'])
             ->scopes(['withLastActivityAt'])
             ->with(['roles', 'avatar'])
             ->withCount('mfaValues')
-            ->orderBy($sort, $sortData['order']);
+            ->orderBy($sort, $listOptions->getOrder());
 
-        if ($sortData['search']) {
-            $term = '%' . $sortData['search'] . '%';
+        if ($listOptions->getSearch()) {
+            $term = '%' . $listOptions->getSearch() . '%';
             $query->where(function ($query) use ($term) {
                 $query->where('name', 'like', $term)
                     ->orWhere('email', 'like', $term);

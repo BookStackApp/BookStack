@@ -1,4 +1,4 @@
-<div template-manager>
+<div component="template-manager">
     @if(userCan('templates-manage'))
         <p class="text-muted small mb-none">
             {{ trans('entities.templates_explain_set_as_template') }}
@@ -11,15 +11,13 @@
         <hr>
     @endif
 
-    @if(count($templates) > 0)
-        <div class="search-box flexible mb-m">
-            <input type="text" name="template-search" placeholder="{{ trans('common.search') }}">
-            <button type="button">@icon('search')</button>
-            <button class="search-box-cancel text-neg hidden" type="button">@icon('close')</button>
-        </div>
-    @endif
+    <div class="search-box flexible mb-m" style="display: {{ count($templates) > 0 ? 'block' : 'none' }}">
+        <input refs="template-manager@searchInput" type="text" name="template-search" placeholder="{{ trans('common.search') }}">
+        <button refs="template-manager@searchButton" tabindex="-1" type="button">@icon('search')</button>
+        <button refs="template-manager@searchCancel" class="search-box-cancel text-neg" type="button" style="display: none">@icon('close')</button>
+    </div>
 
-    <div template-manager-list>
+    <div refs="template-manager@list">
         @include('pages.parts.template-manager-list', ['templates' => $templates])
     </div>
 </div>

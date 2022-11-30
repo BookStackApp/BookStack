@@ -52,7 +52,6 @@ class OidcService
     {
         $settings = $this->getProviderSettings();
         $provider = $this->getProvider($settings);
-
         return [
             'url'   => $provider->getAuthorizationUrl(),
             'state' => $provider->getState(),

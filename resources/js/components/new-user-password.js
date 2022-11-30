@@ -1,9 +1,11 @@
+import {Component} from "./component";
 
-class NewUserPassword {
+export class NewUserPassword extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.inviteOption = elem.querySelector('input[name=send_invite]');
+    setup() {
+        this.container = this.$el;
+        this.inputContainer = this.$refs.inputContainer;
+        this.inviteOption = this.container.querySelector('input[name=send_invite]');
 
         if (this.inviteOption) {
             this.inviteOption.addEventListener('change', this.inviteOptionChange.bind(this));
@@ -13,16 +15,12 @@ class NewUserPassword {
 
     inviteOptionChange() {
         const inviting = (this.inviteOption.value === 'true');
-        const passwordBoxes = this.elem.querySelectorAll('input[type=password]');
+        const passwordBoxes = this.container.querySelectorAll('input[type=password]');
         for (const input of passwordBoxes) {
             input.disabled = inviting;
         }
-        const container = this.elem.querySelector('#password-input-container');
-        if (container) {
-            container.style.display = inviting ? 'none' : 'block';
-        }
+
+        this.inputContainer.style.display = inviting ? 'none' : 'block';
     }
 
 }
-
-export default NewUserPassword;

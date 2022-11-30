@@ -51,7 +51,7 @@ class AuditLogTest extends TestCase
         $resp->assertSeeText($page->name);
         $resp->assertSeeText('page_create');
         $resp->assertSeeText($activity->created_at->toDateTimeString());
-        $this->withHtml($resp)->assertElementContains('.table-user-item', $admin->name);
+        $this->withHtml($resp)->assertElementContains('a[href*="users/' . $admin->id . '"]', $admin->name);
     }
 
     public function test_shows_name_for_deleted_items()

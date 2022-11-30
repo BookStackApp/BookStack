@@ -1,18 +1,19 @@
+import {Component} from "./component";
 
-class CustomCheckbox {
+export class CustomCheckbox extends Component {
 
-    constructor(elem) {
-        this.elem = elem;
-        this.checkbox = elem.querySelector('input[type=checkbox]');
-        this.display = elem.querySelector('[role="checkbox"]');
+    setup() {
+        this.container = this.$el;
+        this.checkbox = this.container.querySelector('input[type=checkbox]');
+        this.display = this.container.querySelector('[role="checkbox"]');
 
         this.checkbox.addEventListener('change', this.stateChange.bind(this));
-        this.elem.addEventListener('keydown', this.onKeyDown.bind(this));
+        this.container.addEventListener('keydown', this.onKeyDown.bind(this));
     }
 
     onKeyDown(event) {
-        const isEnterOrPress = event.keyCode === 32 || event.keyCode === 13;
-        if (isEnterOrPress) {
+        const isEnterOrSpace = event.key === ' ' || event.key === 'Enter';
+        if (isEnterOrSpace) {
             event.preventDefault();
             this.toggle();
         }
@@ -30,5 +31,3 @@ class CustomCheckbox {
     }
 
 }
-
-export default CustomCheckbox;

@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Cal confirmar l\'adreça electrònica, però el sistema no ha pogut enviar el correu electrònic. Poseu-vos en contacte amb l\'administrador perquè s\'asseguri que el correu electrònic està ben configurat.',
     'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'S\'ha tornat a enviar el correu electrònic de confirmació. Reviseu la vostra safata d\'entrada.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Adreça electrònica no confirmada',
     'email_not_confirmed_text' => 'La vostra adreça electrònica encara no està confirmada.',

@@ -4,21 +4,29 @@ namespace BookStack\Api;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ListingResponseBuilder
 {
-    protected $query;
-    protected $request;
-    protected $fields;
+    protected Builder $query;
+    protected Request $request;
+
+    /**
+     * @var string[]
+     */
+    protected array $fields;
 
     /**
      * @var array<callable>
      */
-    protected $resultModifiers = [];
+    protected array $resultModifiers = [];
 
-    protected $filterOperators = [
+    /**
+     * @var array<string, string>
+     */
+    protected array $filterOperators = [
         'eq'   => '=',
         'ne'   => '!=',
         'gt'   => '>',
@@ -62,9 +70,9 @@ class ListingResponseBuilder
     /**
      * Add a callback to modify each element of the results.
      *
-     * @param (callable(Model)) $modifier
+     * @param (callable(Model): void) $modifier
      */
-    public function modifyResults($modifier): void
+    public function modifyResults(callable $modifier): void
     {
         $this->resultModifiers[] = $modifier;
     }

@@ -1,10 +1,7 @@
-/**
- * Attachments
- * @extends {Component}
- */
 import {showLoading} from "../services/dom";
+import {Component} from "./component";
 
-class Attachments {
+export class Attachments extends Component {
 
     setup() {
         this.container = this.$el;
@@ -46,10 +43,12 @@ class Attachments {
 
     reloadList() {
         this.stopEdit();
-        this.mainTabs.components.tabs.show('items');
+        /** @var {Tabs} */
+        const tabs = window.$components.firstOnElement(this.mainTabs, 'tabs');
+        tabs.show('items');
         window.$http.get(`/attachments/get/page/${this.pageId}`).then(resp => {
             this.list.innerHTML = resp.data;
-            window.components.init(this.list);
+            window.$components.init(this.list);
         });
     }
 
@@ -66,7 +65,7 @@ class Attachments {
         showLoading(this.editContainer);
         const resp = await window.$http.get(`/attachments/edit/${id}`);
         this.editContainer.innerHTML = resp.data;
-        window.components.init(this.editContainer);
+        window.$components.init(this.editContainer);
     }
 
     stopEdit() {
@@ -75,5 +74,3 @@ class Attachments {
     }
 
 }
-
-export default Attachments;
