@@ -75,7 +75,7 @@ return [
     'locale' => env('APP_LANG', 'en'),
 
     // Locales available
-    'locales' => ['en', 'ar', 'bg', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'de_informal', 'el', 'es', 'es_AR', 'et', 'eu', 'fa', 'fr', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'lv', 'nl', 'nb', 'pt', 'pt_BR', 'sk', 'sl', 'sv', 'pl',  'ro', 'ru', 'tr', 'uk', 'uz', 'vi', 'zh_CN', 'zh_TW'],
+    'locales' => ['en', 'ar', 'bg', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'de_informal', 'el', 'es', 'es_AR', 'et', 'eu', 'fa', 'fr', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ka', 'ko', 'lt', 'lv', 'nl', 'nb', 'pt', 'pt_BR', 'sk', 'sl', 'sv', 'pl',  'ro', 'ru', 'tr', 'uk', 'uz', 'vi', 'zh_CN', 'zh_TW'],
 
     //  Application Fallback Locale
     'fallback_locale' => 'en',
