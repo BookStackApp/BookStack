@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => '메일을 보낼 수 없었습니다.',
     'email_confirm_success' => '메일 인증을 성공했습니다. 이 메일 주소로 로그인할 수 있습니다.',
     'email_confirm_resent' => '다시 보냈습니다. 메일함을 확인하세요.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => '인증하지 않았습니다.',
     'email_not_confirmed_text' => '인증을 완료하지 않았습니다.',

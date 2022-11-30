@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => '需要Email验证，但系统无法发送电子邮件，请联系网站管理员。',
     'email_confirm_success' => '您已成功验证电子邮件地址！您现在可以使用此电子邮件地址登录。',
     'email_confirm_resent' => '验证邮件已重新发送，请检查收件箱。',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Email地址未验证',
     'email_not_confirmed_text' => '您的电子邮件地址尚未确认。',

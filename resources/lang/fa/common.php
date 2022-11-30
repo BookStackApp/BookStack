@@ -25,6 +25,7 @@ return [
     'actions' => 'عملیات',
     'view' => 'نمایش',
     'view_all' => 'نمایش همه',
+    'new' => 'New',
     'create' => 'ایجاد',
     'update' => 'به‌روز رسانی',
     'edit' => 'ويرايش',
@@ -80,12 +81,14 @@ return [
     'none' => 'هیچکدام',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'گسترش منو',
     'profile_menu' => 'منو پروفایل',
     'view_profile' => 'مشاهده پروفایل',
     'edit_profile' => 'ویرایش پروفایل',
     'dark_mode' => 'حالت تاریک',
     'light_mode' => 'حالت روشن',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'اطلاعات',

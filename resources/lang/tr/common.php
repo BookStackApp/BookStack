@@ -25,6 +25,7 @@ return [
     'actions' => 'İşlemler',
     'view' => 'Görüntüle',
     'view_all' => 'Hepsini Göster',
+    'new' => 'New',
     'create' => 'Oluştur',
     'update' => 'Güncelle',
     'edit' => 'Düzenle',
@@ -80,12 +81,14 @@ return [
     'none' => 'Hiçbiri',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Başlık Menüsünü Genişlet',
     'profile_menu' => 'Profil Menüsü',
     'view_profile' => 'Profili Görüntüle',
     'edit_profile' => 'Profili Düzenle',
     'dark_mode' => 'Gece Modu',
     'light_mode' => 'Aydınlık Modu',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Bilgi',

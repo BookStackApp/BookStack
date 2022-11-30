@@ -25,6 +25,7 @@ return [
     'actions' => 'Дії',
     'view' => 'Подивитись',
     'view_all' => 'Подивитись все',
+    'new' => 'New',
     'create' => 'Створити',
     'update' => 'Оновити',
     'edit' => 'Редагувати',
@@ -80,12 +81,14 @@ return [
     'none' => 'Відсутньо',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Розгорнути меню заголовка',
     'profile_menu' => 'Меню профілю',
     'view_profile' => 'Переглянути профіль',
     'edit_profile' => 'Редагувати профіль',
     'dark_mode' => 'Темний режим',
     'light_mode' => 'Світлий режим',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Інфо',

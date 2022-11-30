@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'تایید پست الکترونیک الزامی می باشد، اما سیستم قادر به ارسال پیام نمی باشد.',
     'email_confirm_success' => 'ایمیل شما تایید شد! اکنون باید بتوانید با استفاده از این آدرس ایمیل وارد شوید.',
     'email_confirm_resent' => 'پیام تایید پست الکترونیک مجدد ارسال گردید، لطفا صندوق ورودی خود را بررسی نمایید.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'پست الکترونیک تایید نشده است',
     'email_not_confirmed_text' => 'پست الکترونیک شما هنوز تایید نشده است.',

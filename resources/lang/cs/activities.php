@@ -28,7 +28,7 @@ return [
     // Books
     'book_create'                 => 'vytvořil/a knihu',
     'book_create_notification'    => 'Kniha byla úspěšně vytvořena',
-    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter'              => 'převést kapitolu na knihu',
     'book_create_from_chapter_notification' => 'Kapitola byla úspěšně převedena na knihu',
     'book_update'                 => 'aktualizoval/a knihu',
     'book_update_notification'    => 'Kniha byla úspěšně aktualizována',
@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Kniha byla úspěšně seřazena',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create'            => 'vytvořit knihovnu',
+    'bookshelf_create_notification'    => 'Knihovna byla úspěšně vytvořena',
+    'bookshelf_create_from_book'    => 'převést knihu na knihovnu',
+    'bookshelf_create_from_book_notification'    => 'Kniha byla úspěšně převedena na knihovnu',
+    'bookshelf_update'                 => 'aktualizovat knihovnu',
+    'bookshelf_update_notification'    => 'Knihovna byla úspěšně aktualizována',
+    'bookshelf_delete'                 => 'odstranit knihovnu',
+    'bookshelf_delete_notification'    => 'Knihovna byla úspěšně smazána',
 
     // Favourites
     'favourite_add_notification' => '":name" byla přidána do Vašich oblíbených',
@@ -64,8 +64,8 @@ return [
     'webhook_delete_notification' => 'Webhook byl úspěšně odstraněn',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Uživatel byl úspěšně aktualizován',
+    'user_delete_notification' => 'Uživatel byl úspěšně odstraněn',
 
     // Other
     'commented_on'                => 'okomentoval/a',

@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Confirmation de correo electrónico requerida pero el sistema no pudo enviar el correo. Contacte con el administrador para asegurarse de que el correo electrónico está configurado correctamente.',
     'email_confirm_success' => '¡Tu correo electrónico ha sido confirmado! Ahora deberías poder iniciar sesión usando esta dirección de correo electrónico.',
     'email_confirm_resent' => 'correo electrónico de confirmación reenviado, compruebe su bandeja de entrada.',
+    'email_confirm_thanks' => '¡Gracias por confirmar!',
+    'email_confirm_thanks_desc' => 'Por favor, espere un momento mientras se gestiona su confirmación. Si no es redirigido después de 3 segundos, pulse el enlace "Continuar" para continuar.',
 
     'email_not_confirmed' => 'Dirección de Correo Electrónico no confirmada',
     'email_not_confirmed_text' => 'Su Cuenta de Correo electrónico todavía no ha sido confirmada.',
@@ -69,12 +71,12 @@ return [
     'email_not_confirmed_resend_button' => 'Reenviar Correo Electrónico de confirmación',
 
     // User Invite
-    'user_invite_email_subject' => 'As sido invitado a unirte a :appName!',
+    'user_invite_email_subject' => '¡Has sido invitado a unirte a :appName!',
     'user_invite_email_greeting' => 'Se ha creado una cuenta para usted en :appName.',
-    'user_invite_email_text' => 'Clica en el botón a continuación para ajustar una contraseña y poder acceder:',
-    'user_invite_email_action' => 'Ajustar la Contraseña de la Cuenta',
+    'user_invite_email_text' => 'Haga clic en el botón de abajo para establecer una contraseña de cuenta y obtener acceso:',
+    'user_invite_email_action' => 'Establecer contraseña de la cuenta',
     'user_invite_page_welcome' => '¡Bienvenido a :appName!',
-    'user_invite_page_text' => 'Para completar la cuenta y tener acceso es necesario que configure una contraseña que se utilizará para entrar en :appName en futuros accesos.',
+    'user_invite_page_text' => 'Para finalizar tu cuenta y obtener acceso necesitas establecer una contraseña que se utilizará para iniciar sesión en :appName en futuras visitas.',
     'user_invite_page_confirm_button' => 'Confirmar Contraseña',
     'user_invite_success_login' => 'Contraseña guardada, ¡ahora debería ser capaz de iniciar sesión usando su contraseña establecida para acceder a :appName!',
 

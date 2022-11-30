@@ -25,6 +25,7 @@ return [
     'actions' => '활동',
     'view' => '보기',
     'view_all' => '모두 보기',
+    'new' => 'New',
     'create' => '만들기',
     'update' => '바꾸기',
     'edit' => '수정',
@@ -80,12 +81,14 @@ return [
     'none' => '없음',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => '헤더 메뉴 펼치기',
     'profile_menu' => '프로필',
     'view_profile' => '프로필 보기',
     'edit_profile' => '프로필 바꾸기',
     'dark_mode' => '어두운 테마',
     'light_mode' => '밝은 테마',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => '정보',

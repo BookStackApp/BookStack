@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'Vloge',
     'role_user_roles' => 'Vloge uporabnika',
+    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
+    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
+    'roles_x_permissions_provided' => '1 permission|:count permissions',
+    'roles_assigned_users' => 'Assigned Users',
+    'roles_permissions_provided' => 'Provided Permissions',
     'role_create' => 'Ustvari novo vlogo',
     'role_create_success' => 'Vloga uspešno ustvarjena',
     'role_delete' => 'Brisanje vloge',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => 'Uporabniki',
+    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
     'user_profile' => 'Uporabniški profil',
     'users_add_new' => 'Dodaj novega uporabnika',
     'users_search' => 'Išči uporabnike',
@@ -242,6 +248,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
+    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
     'webhooks_create' => 'Create New Webhook',
     'webhooks_none_created' => 'No webhooks have yet been created.',
     'webhooks_edit' => 'Edit Webhook',
