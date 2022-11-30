@@ -11,7 +11,7 @@ return [
     // Auth
     'error_user_exists_different_creds' => 'En användare med adressen :email finns redan.',
     'email_already_confirmed' => 'E-posten har redan bekräftats, prova att logga in.',
-    'email_confirmation_invalid' => 'Denna bekräftelsekod är inte giltig eller har redan använts. Vänligen prova att registera dig på nytt',
+    'email_confirmation_invalid' => 'Denna bekräftelsekod är inte giltig eller har redan använts. Vänligen prova att registrera dig på nytt.',
     'email_confirmation_expired' => 'Denna bekräftelsekod har gått ut. Vi har skickat dig en ny.',
     'email_confirmation_awaiting' => 'E-postadressen för det konto som används måste bekräftas',
     'ldap_fail_anonymous' => 'LDAP-inloggning misslyckades med anonym bindning',
