@@ -291,3 +291,10 @@ Fabrice Boyer (FabriceBoyer) :: French
 mikael (bitcanon) :: Swedish
 Matthias Mai (schnapsidee) :: German
 Ufuk Ayyıldız (ufukayyildiz) :: Turkish
+Jan Mitrof (jan.kachlik) :: Czech
+edwardsmirnov :: Russian
+Mr_OSS117 :: French
+shotu :: French
+Cesar_Lopez_Aguillon :: Spanish
+bdewoop :: German
+dina davoudi (dina.davoudi) :: Persian
