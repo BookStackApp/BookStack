@@ -25,6 +25,7 @@ return [
     'actions' => 'Hành động',
     'view' => 'Xem',
     'view_all' => 'Xem tất cả',
+    'new' => 'New',
     'create' => 'Tạo',
     'update' => 'Cập nhật',
     'edit' => 'Sửa',
@@ -80,12 +81,14 @@ return [
     'none' => 'Không',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Mở rộng Header Menu',
     'profile_menu' => 'Menu Hồ sơ',
     'view_profile' => 'Xem Hồ sơ',
     'edit_profile' => 'Sửa Hồ sơ',
     'dark_mode' => 'Chế độ Tối',
     'light_mode' => 'Chế độ Sáng',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Thông tin',

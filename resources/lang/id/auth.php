@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Konfirmasi email diperlukan tetapi sistem tidak dapat mengirim email. Hubungi admin untuk memastikan email disiapkan dengan benar.',
     'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Email konfirmasi dikirim ulang, Harap periksa kotak masuk Anda.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Alamat Email Tidak Dikonfirmasi',
     'email_not_confirmed_text' => 'Alamat email Anda belum dikonfirmasi.',

@@ -25,6 +25,7 @@ return [
     'actions' => 'Handlinger',
     'view' => 'Vis',
     'view_all' => 'Vis alle',
+    'new' => 'New',
     'create' => 'Opret',
     'update' => 'Opdater',
     'edit' => 'Rediger',
@@ -80,12 +81,14 @@ return [
     'none' => 'Ingen',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Udvid header menu',
     'profile_menu' => 'Profilmenu',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Redigér Profil',
     'dark_mode' => 'Mørk tilstand',
     'light_mode' => 'Lys tilstand',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Info',

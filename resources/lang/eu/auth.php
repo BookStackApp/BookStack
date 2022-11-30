@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Posta elektronikoaren baieztapenak behar da, baina sistemak ezin izan du posta elektronikoa bidali. Administratzailearekin harremanetan jarri email ezarpenak ongi dauden baieztatzeko.',
     'email_confirm_success' => 'Zure posta elektronikoa baieztatu da! Helbide elektroniko hau erabili dezakezu saioa hasteko.',
     'email_confirm_resent' => 'Eragiketa baieztatzeko email bat bidali dizugu. Mesedez, begiratu zure posta elektronikoa.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Email helbidea ez da baieztatu',
     'email_not_confirmed_text' => 'Your email address has not yet been confirmed.',

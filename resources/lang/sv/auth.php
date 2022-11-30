@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'E-posten behöver bekräftas men systemet kan inte skicka mail. Kontakta adminstratören för att kontrollera att allt är konfigurerat korrekt.',
     'email_confirm_success' => 'Din e-postadress har bekräftats! Du bör nu kunna logga in med denna e-postadress.',
     'email_confirm_resent' => 'Bekräftelsemailet har skickats på nytt, kolla din mail',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'E-posadress ej bekräftad',
     'email_not_confirmed_text' => 'Din e-postadress har inte bekräftats ännu.',

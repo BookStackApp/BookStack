@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'E-mail bevestiging is vereisd maar het systeem kon geen mail verzenden. Neem contact op met de beheerder.',
     'email_confirm_success' => 'Uw e-mailadres is bevestigd! U zou nu moeten kunnen inloggen met dit e-mailadres.',
     'email_confirm_resent' => 'De bevestigingse-mails is opnieuw verzonden. Controleer je inbox.',
+    'email_confirm_thanks' => 'Bedankt voor de bevestiging!',
+    'email_confirm_thanks_desc' => 'Wacht even terwijl uw bevestiging wordt behandeld. Als u na 3 seconden niet wordt doorverwezen, drukt u op de onderstaande link "Doorgaan" om verder te gaan.',
 
     'email_not_confirmed' => 'E-mailadres nog niet bevestigd',
     'email_not_confirmed_text' => 'Je e-mailadres is nog niet bevestigd.',

@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'Rollid',
     'role_user_roles' => 'Kasutaja rollid',
+    'roles_index_desc' => 'Rolle saab kasutada kasutajate grupeerimiseks ja liikmetele süsteemsete õiguste andmiseks. Kui kasutaja on mitme rolli liige, siis õigused kombineeritakse ning kasutaja saab kõik õigused.',
+    'roles_x_users_assigned' => '1 kasutaja|:count kasutajat',
+    'roles_x_permissions_provided' => '1 õigus|:count õigust',
+    'roles_assigned_users' => 'Määratud kasutajad',
+    'roles_permissions_provided' => 'Antud õigused',
     'role_create' => 'Lisa uus roll',
     'role_create_success' => 'Roll on lisatud',
     'role_delete' => 'Kustuta roll',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => 'Kasutajad',
+    'users_index_desc' => 'Loo ja halda süsteemi kasutajakontosid. Kontosid kasutatakse sisselogimiseks ning sisu ja tegevuse omistamiseks. Ligipääsuload on enamasti rollipõhised, aga sisu omandus ja muud faktorid võivad samuti mõjutada õiguseid ja ligipääsu.',
     'user_profile' => 'Kasutajaprofiil',
     'users_add_new' => 'Lisa uus kasutaja',
     'users_search' => 'Otsi kasutajaid',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Veebihaagid',
+    'webhooks_index_desc' => 'Veebihaakide abil saab teatud süsteemis toimunud tegevuste ja sündmuste puhul saata andmeid välistele URL-idele, mis võimaldab integreerida väliseid platvorme, nagu sõnumi- või teavitussüsteemid.',
+    'webhooks_x_trigger_events' => '1 sündmus|:count sündmust',
     'webhooks_create' => 'Lisa uus veebihaak',
     'webhooks_none_created' => 'Ühtegi veebihaaki pole lisatud.',
     'webhooks_edit' => 'Muuda veebihaaki',

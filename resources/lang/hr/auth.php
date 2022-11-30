@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Potvrda e-mail adrese je obavezna, ali sustav ne može poslati e-mail. Javite se administratoru kako bi provjerio vaš e-mail.',
     'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
     'email_confirm_resent' => 'Ponovno je poslana potvrda. Molimo, provjerite svoj inbox.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'E-mail adresa nije potvrđena.',
     'email_not_confirmed_text' => 'Vaša e-mail adresa još nije potvrđena.',

@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'Role',
     'role_user_roles' => 'Role użytkowników',
+    'roles_index_desc' => 'Role są używane do grupowania użytkowników i udzielania uprawnień systemowych ich członkom. Gdy użytkownik jest członkiem wielu ról, przyznane uprawnienia będą gromadzone, a użytkownik odziedziczy wszystkie możliwości.',
+    'roles_x_users_assigned' => '1 użytkownik przypisany|:count użytkowników przypisanych',
+    'roles_x_permissions_provided' => '1 uprawnienie|:count uprawnień',
+    'roles_assigned_users' => 'Przypisani Użytkownicy',
+    'roles_permissions_provided' => 'Przyznawane Uprawnienia',
     'role_create' => 'Utwórz nową rolę',
     'role_create_success' => 'Rola utworzona pomyślnie',
     'role_delete' => 'Usuń rolę',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => 'Użytkownicy',
+    'users_index_desc' => 'Twórz indywidualne konta użytkowników w systemie i zarządzaj nimi. Konta użytkowników są używane do logowania i przypisywania treści i aktywności. Uprawnienia dostępu są przede wszystkim oparte na roli, ale posiadanie przez użytkownika zawartości, podobnie jak inne czynniki może również wpływać na uprawnienia i dostęp.',
     'user_profile' => 'Profil użytkownika',
     'users_add_new' => 'Dodaj użytkownika',
     'users_search' => 'Wyszukaj użytkownika',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooki',
+    'webhooks_index_desc' => 'Webhooki to sposób na wysyłanie danych do zewnętrznych adresów URL, gdy pewne działania i zdarzenia zachodzą w ramach systemu, co umożliwia integrację zdarzeń w systemie z zewnętrznymi platformami, takimi jak systemy wysyłania wiadomości lub powiadamiania.',
+    'webhooks_x_trigger_events' => '1 zdarzenie wyzwalacza|:count zdarzeń wyzwalacza',
     'webhooks_create' => 'Utwórz nowy Webhook',
     'webhooks_none_created' => 'Nie utworzono jeszcze żadnych webhooków.',
     'webhooks_edit' => 'Edytuj Webhook',

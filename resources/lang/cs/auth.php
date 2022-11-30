@@ -39,9 +39,9 @@ return [
     'register_success' => 'Děkujeme za registraci! Nyní jste zaregistrováni a přihlášeni.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Pokus o přihlášení',
+    'auto_init_starting_desc' => 'Kontaktujeme váš ověřovací systém pro zahájení procesu přihlášení. Pokud po 5 sekundách nedojde k žádnému pokroku, můžete zkusit kliknout na odkaz níže.',
+    'auto_init_start_link' => 'Pokračovat s ověřováním',
 
     // Password Reset
     'reset_password' => 'Obnovit heslo',
@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Potvrzení e-mailu je vyžadováno, ale systém nemohl odeslat e-mail. Obraťte se na správce, abyste se ujistili, že je e-mail správně nastaven.',
     'email_confirm_success' => 'Váš email byl ověřen! Nyní byste měli být schopni se touto emailovou adresou přihlásit.',
     'email_confirm_resent' => 'E-mail s potvrzením byl znovu odeslán. Zkontrolujte svou příchozí poštu.',
+    'email_confirm_thanks' => 'Děkujeme za potvrzení!',
+    'email_confirm_thanks_desc' => 'Počkejte prosím chvíli, než se vaše potvrzení vyřizuje. Pokud nebudete po 3 sekundách přesměrováni, klikněte na odkaz "Pokračovat" níže pro pokračování.',
 
     'email_not_confirmed' => 'E-mailová adresa nebyla potvrzena',
     'email_not_confirmed_text' => 'Vaše e-mailová adresa nebyla dosud potvrzena.',
@@ -97,19 +99,19 @@ return [
     'mfa_gen_backup_codes_usage_warning' => 'Každý kód může být použit pouze jednou',
     'mfa_gen_totp_title' => 'Nastavení mobilní aplikace',
     'mfa_gen_totp_desc' => 'Pro použití vícefaktorového ověření budete potřebovat mobilní aplikaci, která podporuje TOTP jako např. Google Authenticator, Authy nebo Microsoft Authenticator.',
-    'mfa_gen_totp_scan' => 'Scan the QR code below using your preferred authentication app to get started.',
+    'mfa_gen_totp_scan' => 'Naskenujte QR kód níže pomocí vaší preferované ověřovací aplikace.',
     'mfa_gen_totp_verify_setup' => 'Ověřit nastavení',
-    'mfa_gen_totp_verify_setup_desc' => 'Verify that all is working by entering a code, generated within your authentication app, in the input box below:',
+    'mfa_gen_totp_verify_setup_desc' => 'Ověřte, že vše funguje zadáním kódu, generovaného v ověřovací aplikaci, do níže uvedeného vstupního pole:',
     'mfa_gen_totp_provide_code_here' => 'Zde zadejte kód vygenerovaný vaší aplikací',
     'mfa_verify_access' => 'Ověřit přístup',
-    'mfa_verify_access_desc' => 'Your user account requires you to confirm your identity via an additional level of verification before you\'re granted access. Verify using one of your configured methods to continue.',
+    'mfa_verify_access_desc' => 'Váš uživatelský účet vyžaduje, abyste před udělením přístupu potvrdili svou totožnost prostřednictvím další úrovně ověření. Ověřte pomocí jedné z vašich nakonfigurovaných metod, abyste mohli pokračovat.',
     'mfa_verify_no_methods' => 'Nejsou nastaveny žádné metody',
-    'mfa_verify_no_methods_desc' => 'No multi-factor authentication methods could be found for your account. You\'ll need to set up at least one method before you gain access.',
+    'mfa_verify_no_methods_desc' => 'Pro váš účet nebyly nalezeny žádné vícefázové metody ověřování. Před získáním přístupu budete muset nastavit alespoň jednu metodu.',
     'mfa_verify_use_totp' => 'Ověřit pomocí mobilní aplikace',
     'mfa_verify_use_backup_codes' => 'Ověřit pomocí záložního kódu',
     'mfa_verify_backup_code' => 'Záložní kód',
     'mfa_verify_backup_code_desc' => 'Níže zadejte jeden z vašich zbývajících záložních kódů:',
     'mfa_verify_backup_code_enter_here' => 'Zde zadejte záložní kód',
     'mfa_verify_totp_desc' => 'Níže zadejte kód, který jste si vygenerovali pomocí mobilní aplikace:',
-    'mfa_setup_login_notification' => 'Multi-factor method configured, Please now login again using the configured method.',
+    'mfa_setup_login_notification' => 'Vícefázová metoda nastavena, nyní se prosím znovu přihlaste pomocí konfigurované metody.',
 ];

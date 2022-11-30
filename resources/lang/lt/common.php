@@ -25,6 +25,7 @@ return [
     'actions' => 'Veiksmai',
     'view' => 'Rodyti',
     'view_all' => 'Rodyti visus',
+    'new' => 'New',
     'create' => 'Sukurti',
     'update' => 'Atnaujinti',
     'edit' => 'Redaguoti',
@@ -80,12 +81,14 @@ return [
     'none' => 'None',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Plėsti antraštės meniu',
     'profile_menu' => 'Profilio meniu',
     'view_profile' => 'Rodyti porofilį',
     'edit_profile' => 'Redaguoti profilį',
     'dark_mode' => 'Tamsus rėžimas',
     'light_mode' => 'Šviesus rėžimas',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Informacija',

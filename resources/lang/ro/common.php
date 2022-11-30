@@ -25,6 +25,7 @@ return [
     'actions' => 'Acțiuni',
     'view' => 'Vizualizare',
     'view_all' => 'Vizualizează tot',
+    'new' => 'New',
     'create' => 'Crează',
     'update' => 'Actualzează',
     'edit' => 'Editează',
@@ -80,12 +81,14 @@ return [
     'none' => 'Niciunul',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Extindere meniu antet',
     'profile_menu' => 'Meniu profil',
     'view_profile' => 'Vezi profil',
     'edit_profile' => 'Editare profil',
     'dark_mode' => 'Mod întunecat',
     'light_mode' => 'Mod luminos',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Informații',

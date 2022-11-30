@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute 只能包含字母、數字、破折號與底線。',
     'alpha_num'            => ':attribute 只能包含字母和數字。',
     'array'                => ':attribute 必須是陣列。',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => '提供的代碼無效或已被使用。',
     'before'               => ':attribute 必須是在 :date 前的日期。',
     'between'              => [
         'numeric' => ':attribute 必須在 :min 到 :max 之間。',
@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute 必須為 :min 到 :max 位數。',
     'email'                => ':attribute 必須是有效的電子郵件地址。',
     'ends_with' => ':attribute必須以下列之一結尾：:values',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => ':attribute 必須作為有效檔案提供。',
     'filled'               => ':attribute 欄位必填。',
     'gt'                   => [
         'numeric' => ':attribute 必須大於 :value。',
@@ -100,7 +100,7 @@ return [
     ],
     'string'               => ':attribute 必須是字元串。',
     'timezone'             => ':attribute 必須是有效的區域。',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => '提供的代碼無效或已過期。',
     'unique'               => ':attribute 已經被使用。',
     'url'                  => ':attribute 格式無效。',
     'uploaded'             => '無法上傳文件， 服務器可能不接受此大小的文件。',

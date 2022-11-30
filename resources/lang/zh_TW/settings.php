@@ -92,7 +92,7 @@ return [
     'maint_regen_references' => 'Regenerate References',
     'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
     'maint_regen_references_success' => 'Reference index has been regenerated!',
-    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
+    'maint_timeout_command_note' => '備註：這項操作需要較長的時間，可能導致多數的網路環境發生連線逾時的問題。若有需要，可以透過終端機指令來替代。',
 
     // Recycle Bin
     'recycle_bin' => '資源回收桶',
@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => '角色',
     'role_user_roles' => '使用者角色',
+    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
+    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
+    'roles_x_permissions_provided' => '1 permission|:count permissions',
+    'roles_assigned_users' => 'Assigned Users',
+    'roles_permissions_provided' => 'Provided Permissions',
     'role_create' => '建立新角色',
     'role_create_success' => '角色建立成功',
     'role_delete' => '刪除角色',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => '使用者',
+    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
     'user_profile' => '使用者個人資料',
     'users_add_new' => '新增使用者',
     'users_search' => '搜尋使用者',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
+    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
     'webhooks_create' => '建立 Webhook',
     'webhooks_none_created' => '沒有已建立的 Webhook',
     'webhooks_edit' => '設置 Webhook',

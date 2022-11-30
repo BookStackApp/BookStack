@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'E-posta adresinin doğrulanması gerekiyor fakat sistem, doğrulama bağlantısını göndermeyi başaramadı. E-posta adresinin doğru bir şekilde ayarlığından emin olmak için yöneticiyle iletişime geçin.',
     'email_confirm_success' => 'Email hesabınız onaylandı. Email adresinizi kullanarak giriş yapabilirsiniz.',
     'email_confirm_resent' => 'Doğrulama e-postası tekrar gönderildi, lütfen gelen kutunuzu kontrol ediniz.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'E-posta Adresi Doğrulanmadı',
     'email_not_confirmed_text' => 'E-posta adresiniz henüz doğrulanmadı.',

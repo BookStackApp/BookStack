@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Este necesară confirmarea prin e-mail, dar sistemul nu a putut trimite e-mailul. Contactează administratorul pentru a te asigura că e-mailul este configurat corect.',
     'email_confirm_success' => 'E-mailul a fost confirmat! Acum ar trebui să te poți autentifica folosind această adresă de e-mail.',
     'email_confirm_resent' => 'E-mailul de confirmare a fost retrimis, te rugăm să îți verifici căsuța de e-mail.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Adresa de e-mail neconfirmată',
     'email_not_confirmed_text' => 'Adresa ta de e-mail nu a fost încă confirmată.',

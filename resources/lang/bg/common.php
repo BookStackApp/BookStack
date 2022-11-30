@@ -25,6 +25,7 @@ return [
     'actions' => 'Действия',
     'view' => 'Преглед',
     'view_all' => 'Преглед на всички',
+    'new' => 'New',
     'create' => 'Създай',
     'update' => 'Обновяване',
     'edit' => 'Редактиране',
@@ -80,12 +81,14 @@ return [
     'none' => 'Няма',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Разшири заглавното меню',
     'profile_menu' => 'Профил меню',
     'view_profile' => 'Разглеждане на профил',
     'edit_profile' => 'Редактиране на профила',
     'dark_mode' => 'Тъмен режим',
     'light_mode' => 'Светъл режим',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Информация',

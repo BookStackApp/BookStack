@@ -23,10 +23,10 @@ return [
     'saml_no_email_address' => 'Nelze najít e-mailovou adresu pro tohoto uživatele v datech poskytnutých externím přihlašovacím systémem',
     'saml_invalid_response_id' => 'Požadavek z externího ověřovacího systému nebyl rozpoznám procesem, který tato aplikace spustila. Tento problém může způsobit stisknutí tlačítka Zpět po přihlášení.',
     'saml_fail_authed' => 'Přihlášení pomocí :system selhalo, systém neposkytl úspěšnou autorizaci',
-    'oidc_already_logged_in' => 'Already logged in',
-    'oidc_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
-    'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'oidc_already_logged_in' => 'Již jste přihlášeni',
+    'oidc_user_not_registered' => 'Uživatel :name není registrován a automatická registrace je zakázána',
+    'oidc_no_email_address' => 'Nelze najít e-mailovou adresu pro tohoto uživatele v datech poskytnutých externím přihlašovacím systémem',
+    'oidc_fail_authed' => 'Přihlášení pomocí :system selhalo, systém neposkytl úspěšnou autorizaci',
     'social_no_action_defined' => 'Nebyla zvolena žádá akce',
     'social_login_bad_response' => "Nastala chyba během přihlašování přes :socialAccount \n:error",
     'social_account_in_use' => 'Tento účet na :socialAccount se již používá. Pokuste se s ním přihlásit volbou Přihlásit přes :socialAccount.',
@@ -58,7 +58,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Prvek nenalezen',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Knihovna nenalezena',
     'book_not_found' => 'Kniha nenalezena',
     'page_not_found' => 'Stránka nenalezena',
     'chapter_not_found' => 'Kapitola nenalezena',

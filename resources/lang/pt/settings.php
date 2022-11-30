@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'Cargos',
     'role_user_roles' => 'Cargos de Utilizador',
+    'roles_index_desc' => 'Papéis são usados para agrupar utilizadores & fornecer permissão ao sistema para os seus membros. Quando um utilizador é membro de múltiplas funções, os privilégios concedidos irão acumular e o utilizador herdará todas as habilidades.',
+    'roles_x_users_assigned' => '1 utilizador atribuído|:count utilizadores atribuídos',
+    'roles_x_permissions_provided' => '1 permissão|:count permissões',
+    'roles_assigned_users' => 'Utilizadores atribuídos',
+    'roles_permissions_provided' => 'Permissões fornecidas',
     'role_create' => 'Criar novo Cargo',
     'role_create_success' => 'Cargo criado com sucesso',
     'role_delete' => 'Excluir Cargo',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => 'Utilizadores',
+    'users_index_desc' => 'Crie & gira individualmente contas de utilizador no sistema. Contas de utilizador são usadas para iniciar sessão e atribuição de conteúdo & atividade. As permissões de acesso são principalmente baseadas em funções, mas a propriedade de conteúdo do utilizador, entre outros fatores, também pode afetar permissões e acesso.',
     'user_profile' => 'Perfil do Utilizador',
     'users_add_new' => 'Adicionar Novo Utilizador',
     'users_search' => 'Pesquisar Utilizadores',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
+    'webhooks_index_desc' => 'Webhooks são uma maneira de enviar dados para URLs externas quando certas ações e eventos ocorrem no sistema. Isto permite uma integração baseada em eventos com plataformas externas como mensagens ou sistemas de notificação.',
+    'webhooks_x_trigger_events' => '1 acionador|:count acionadores',
     'webhooks_create' => 'Criar um novo webhook',
     'webhooks_none_created' => 'Ainda nenhum webhooks foi criado.',
     'webhooks_edit' => 'Editar Webhook',

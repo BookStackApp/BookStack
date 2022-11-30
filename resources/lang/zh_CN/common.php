@@ -25,6 +25,7 @@ return [
     'actions' => '操作',
     'view' => '浏览',
     'view_all' => '查看全部',
+    'new' => 'New',
     'create' => '创建',
     'update' => '更新',
     'edit' => '编辑',
@@ -80,12 +81,14 @@ return [
     'none' => '无',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => '展开标头菜单',
     'profile_menu' => '个人资料',
     'view_profile' => '查看个人资料',
     'edit_profile' => '编辑个人资料',
     'dark_mode' => '夜间模式',
     'light_mode' => '日间模式',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => '信息',

@@ -25,6 +25,7 @@ return [
     'actions' => 'Ekintzak',
     'view' => 'Ikusi',
     'view_all' => 'Ikusi denak',
+    'new' => 'New',
     'create' => 'Sortu',
     'update' => 'Eguneratu',
     'edit' => 'Editatu',
@@ -80,12 +81,14 @@ return [
     'none' => 'Bat ere ez',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Zabaldu goiburuko menua',
     'profile_menu' => 'Perfileko menua',
     'view_profile' => 'Ikusi profila',
     'edit_profile' => 'Editatu profila',
     'dark_mode' => 'Modu iluna',
     'light_mode' => 'Modu argia',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Info',

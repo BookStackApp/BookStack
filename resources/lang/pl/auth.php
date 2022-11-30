@@ -61,6 +61,8 @@ return [
     'email_confirm_send_error' => 'Wymagane jest potwierdzenie hasła, lecz wiadomość nie mogła zostać wysłana. Skontaktuj się z administratorem w celu upewnienia się, że skrzynka została skonfigurowana prawidłowo.',
     'email_confirm_success' => 'Twój e-mail został potwierdzony! Powinieneś teraz mieć możliwość zalogowania się za pomocą tego adresu e-mail.',
     'email_confirm_resent' => 'E-mail z potwierdzeniem został wysłany ponownie, sprawdź swoją skrzynkę odbiorczą.',
+    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'Adres e-mail nie został potwierdzony',
     'email_not_confirmed_text' => 'Twój adres e-mail nie został jeszcze potwierdzony.',

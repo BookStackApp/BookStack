@@ -133,6 +133,11 @@ return [
     // Role Settings
     'roles' => 'Cargos',
     'role_user_roles' => 'Cargos de Usuário',
+    'roles_index_desc' => 'As funções são usadas para agrupar usuários & fornecer permissão de sistema a seus membros. Quando um usuário é membro de várias funções, os privilégios concedidos serão acumulados e o usuário herdará todas as habilidades.',
+    'roles_x_users_assigned' => '1 usuário atribuído|:count usuários atribuídos',
+    'roles_x_permissions_provided' => '1 permissão|:count permissões',
+    'roles_assigned_users' => 'Usuários atribuídos',
+    'roles_permissions_provided' => 'Permissões fornecidas',
     'role_create' => 'Criar novo Cargo',
     'role_create_success' => 'Cargo criado com sucesso',
     'role_delete' => 'Excluir Cargo',
@@ -172,6 +177,7 @@ return [
 
     // Users
     'users' => 'Usuários',
+    'users_index_desc' => 'Crie e gerencie contas de usuários individuais dentro do sistema. As contas de usuário são usadas para login e atribuição de conteúdo e atividade. As permissões de acesso são baseadas principalmente na função, mas a propriedade do conteúdo do usuário, entre outros fatores, também pode afetar as permissões e o acesso.',
     'user_profile' => 'Perfil do Usuário',
     'users_add_new' => 'Adicionar Novo Usuário',
     'users_search' => 'Pesquisar Usuários',
@@ -241,6 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
+    'webhooks_index_desc' => 'Os webhooks são uma maneira de enviar dados para URLs externos quando certas ações e eventos ocorrem dentro do sistema, o que permite a integração baseada em eventos com plataformas externas, como sistemas de mensagens ou notificação.',
+    'webhooks_x_trigger_events' => '1 evento de gatilho|:count evento de gatilho',
     'webhooks_create' => 'Criar novo webhook',
     'webhooks_none_created' => 'Nenhum webhooks foi criado ainda.',
     'webhooks_edit' => 'Editar webhook',

@@ -25,6 +25,7 @@ return [
     'actions' => 'Aktionen',
     'view' => 'Anzeigen',
     'view_all' => 'Alle anzeigen',
+    'new' => 'New',
     'create' => 'Erstellen',
     'update' => 'Aktualisieren',
     'edit' => 'Bearbeiten',
@@ -80,12 +81,14 @@ return [
     'none' => 'Nichts',
 
     // Header
+    'homepage' => 'Homepage',
     'header_menu_expand' => 'Header-Menü erweitern',
     'profile_menu' => 'Profilmenü',
     'view_profile' => 'Profil ansehen',
     'edit_profile' => 'Profil bearbeiten',
     'dark_mode' => 'Dunkler Modus',
     'light_mode' => 'Heller Modus',
+    'global_search' => 'Global Search',
 
     // Layout tabs
     'tab_info' => 'Info',
