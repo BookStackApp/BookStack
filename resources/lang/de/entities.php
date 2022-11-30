@@ -50,7 +50,7 @@ return [
     'permissions_role_everyone_else' => 'Alle anderen',
     'permissions_role_everyone_else_desc' => 'Berechtigungen für alle Rollen setzen, die nicht explizit überschrieben wurden.',
     'permissions_role_override' => 'Berechtigungen für Rolle überschreiben',
-    'permissions_inherit_defaults' => 'Inherit defaults',
+    'permissions_inherit_defaults' => 'Standardeinstellungen vererben',
 
     // Search
     'search_results' => 'Suchergebnisse',
@@ -224,7 +224,7 @@ return [
     'pages_md_insert_image' => 'Bild einfügen',
     'pages_md_insert_link' => 'Link zu einem Objekt einfügen',
     'pages_md_insert_drawing' => 'Zeichnung einfügen',
-    'pages_md_show_preview' => 'Show preview',
+    'pages_md_show_preview' => 'Vorschau anzeigen',
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Seite ist in keinem Kapitel',
     'pages_move' => 'Seite verschieben',
@@ -236,7 +236,7 @@ return [
     'pages_permissions_success' => 'Seiten Berechtigungen aktualisiert',
     'pages_revision' => 'Version',
     'pages_revisions' => 'Seitenversionen',
-    'pages_revisions_desc' => 'Listed below are all the past revisions of this page. You can look back upon, compare, and restore old page versions if permissions allow. The full history of the page may not be fully reflected here since, depending on system configuration, old revisions could be auto-deleted.',
+    'pages_revisions_desc' => 'Alle vorherhigen Revisionen dieser Seite sind unten aufgelistet. Sie können zurückschauen, vergleichen und alte Seitenversionen wiederherstellen, wenn die Berechtigungen dies erlauben. Der vollständige Verlauf der Seite kann hier möglicherweise nicht vollständig wiedergegeben werden, da je nach Systemkonfiguration alte Revisionen automatisch hätten gelöscht werden können.',
     'pages_revisions_named' => 'Seitenversionen von ":pageName"',
     'pages_revision_named' => 'Seitenversion von ":pageName"',
     'pages_revision_restored_from' => 'Wiederhergestellt von #:id; :summary',
