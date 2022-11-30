@@ -7,11 +7,11 @@ return [
 
     // Pages
     'page_create'                 => 'تاریخ ایجاد',
-    'page_create_notification'    => 'نقش با موفقیت ایجاد شد',
+    'page_create_notification'    => 'صفحه با موفقیت ایجاد شد',
     'page_update'                 => 'به روزرسانی صفحه',
-    'page_update_notification'    => 'فایل با موفقیت به روز شد',
+    'page_update_notification'    => 'صفحه با موفقیت به روزرسانی شد',
     'page_delete'                 => 'حذف صفحه',
-    'page_delete_notification'    => 'تصویر با موفقیت حذف شد',
+    'page_delete_notification'    => 'صفحه با موفقیت حذف شد',
     'page_restore'                => 'بازیابی صفحه',
     'page_restore_notification'   => 'صفحه با موفقیت بازیابی شد',
     'page_move'                   => 'انتقال صفحه',
