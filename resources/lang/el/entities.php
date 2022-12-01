@@ -42,15 +42,15 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Δικαιώματα',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_desc' => 'Ορίστε εδώ δικαιώματα για να παρακάμψετε τα προκαθορισμένα δικαιώματα που παρέχονται από τους ρόλους των χρηστών.',
     'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
     'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Αποθήκευση Δικαιωμάτων',
     'permissions_owner' => 'Ιδιοκτήτης / Κάτοχος',
     'permissions_role_everyone_else' => 'Everyone Else',
-    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
-    'permissions_inherit_defaults' => 'Inherit defaults',
+    'permissions_role_everyone_else_desc' => 'Ορίστε δικαιώματα για όλους τους ρόλους που δεν παραβλέπονται συγκεκριμένα.',
+    'permissions_role_override' => 'Παράκαμψη δικαιωμάτων για ρόλο',
+    'permissions_inherit_defaults' => 'Κληρονόμηση προεπιλογών',
 
     // Search
     'search_results' => 'Αποτελέσματα αναζήτησης',
