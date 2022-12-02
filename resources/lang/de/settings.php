@@ -140,7 +140,7 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'roles_x_users_assigned' => '1 Benutzer zugewiesen|:count Benutzer zugewiesen',
     'roles_x_permissions_provided' => '1 Berechtigung|:count Berechtigungen',
     'roles_assigned_users' => 'Zugewiesene Benutzer',
-    'roles_permissions_provided' => 'Provided Permissions',
+    'roles_permissions_provided' => 'Genutzte Berechtigungen',
     'role_create' => 'Neue Rolle anlegen',
     'role_create_success' => 'Rolle erfolgreich angelegt',
     'role_delete' => 'Rolle löschen',
@@ -180,7 +180,7 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
 
     // Users
     'users' => 'Benutzer',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => 'Erstellen und Verwalten Sie individuelle Benutzerkonten innerhalb des Systems. Benutzerkonten werden zur Anmeldung und Besitz von Inhalten und Aktivitäten verwendet. Zugriffsberechtigungen sind in erster Linie rollenbasiert, aber Besitz von Benutzerinhalten kann unter anderem auch Berechtigungen beeinflussen.',
     'user_profile' => 'Benutzerprofil',
     'users_add_new' => 'Benutzer hinzufügen',
     'users_search' => 'Benutzer suchen',
@@ -251,7 +251,7 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     // Webhooks
     'webhooks' => 'Webhooks',
     'webhooks_index_desc' => 'Webhooks sind eine Möglichkeit, Daten an externe URLs zu senden, wenn bestimmte Aktionen und Ereignisse im System auftreten, was eine ereignisbasierte Integration mit externen Plattformen wie Messaging- oder Benachrichtigungssystemen ermöglicht.',
-    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
+    'webhooks_x_trigger_events' => '1 Triggerereignis|:count Triggerereignisse',
     'webhooks_create' => 'Neuen Webhook erstellen',
     'webhooks_none_created' => 'Es wurden noch keine Webhooks erstellt.',
     'webhooks_edit' => 'Webhook bearbeiten',
