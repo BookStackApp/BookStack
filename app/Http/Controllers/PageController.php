@@ -74,7 +74,6 @@ class PageController extends Controller
         $page = $this->pageRepo->getNewDraftPage($parent);
         $this->pageRepo->publishDraft($page, [
             'name' => $request->get('name'),
-            'html' => '',
         ]);
 
         return redirect($page->getUrl('/edit'));

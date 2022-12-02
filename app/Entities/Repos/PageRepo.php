@@ -148,6 +148,12 @@ class PageRepo
             $page->book_id = $parent->id;
         }
 
+        if ($page->book->defaultTemplate) {
+            $page->forceFill([
+                'html'  => $page->book->defaultTemplate->html,
+            ]);
+        }
+
         $page->save();
         $page->refresh()->rebuildPermissions();
 
