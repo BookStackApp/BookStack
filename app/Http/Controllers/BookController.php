@@ -6,6 +6,7 @@ use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
@@ -79,8 +80,14 @@ class BookController extends Controller
 
         $this->setPageTitle(trans('entities.books_create'));
 
+        $templates = Page::visible()
+            ->where('template', '=', true)
+            ->orderBy('name', 'asc')
+            ->get();
+
         return view('books.create', [
             'bookshelf' => $bookshelf,
+            'templates' => $templates,
         ]);
     }
 
@@ -98,6 +105,7 @@ class BookController extends Controller
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
             'tags'        => ['array'],
+            'default_template'  => ['nullable', 'exists:pages,id'], 
         ]);
 
         $bookshelf = null;
@@ -151,7 +159,12 @@ class BookController extends Controller
         $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle(trans('entities.books_edit_named', ['bookName' => $book->getShortName()]));
 
-        return view('books.edit', ['book' => $book, 'current' => $book]);
+        $templates = Page::visible()
+            ->where('template', '=', true)
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('books.edit', ['book' => $book, 'current' => $book, 'templates' => $templates]);
     }
 
     /**
@@ -171,6 +184,7 @@ class BookController extends Controller
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
             'tags'        => ['array'],
+            'default_template'  => ['nullable', 'exists:pages,id'], 
         ]);
 
         if ($request->has('image_reset')) {

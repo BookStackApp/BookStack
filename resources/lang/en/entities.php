@@ -328,6 +328,8 @@ return [
     'templates_replace_content' => 'Replace page content',
     'templates_append_content' => 'Append to page content',
     'templates_prepend_content' => 'Prepend to page content',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => "Assign a default template that will be used for all new pages in this book.",
 
     // Profile View
     'profile_user_for_x' => 'User for :time',
