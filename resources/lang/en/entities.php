@@ -192,6 +192,7 @@ return [
     'pages_delete_draft' => 'Delete Draft Page',
     'pages_delete_success' => 'Page deleted',
     'pages_delete_draft_success' => 'Draft page deleted',
+    'pages_delete_warning_template' => '{0}|{1}Be careful: this page is used as a template for :count book.|[2,*]Be careful: this page is used as a template for :count books.',
     'pages_delete_confirm' => 'Are you sure you want to delete this page?',
     'pages_delete_draft_confirm' => 'Are you sure you want to delete this draft page?',
     'pages_editing_named' => 'Editing Page :pageName',
