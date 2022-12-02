@@ -225,7 +225,7 @@ return [
     'pages_md_insert_link' => 'Link zu einem Objekt einfügen',
     'pages_md_insert_drawing' => 'Zeichnung einfügen',
     'pages_md_show_preview' => 'Vorschau anzeigen',
-    'pages_md_sync_scroll' => 'Sync preview scroll',
+    'pages_md_sync_scroll' => 'Vorschau synchronisieren',
     'pages_not_in_chapter' => 'Seite ist in keinem Kapitel',
     'pages_move' => 'Seite verschieben',
     'pages_move_success' => 'Seite nach ":parentName" verschoben',
