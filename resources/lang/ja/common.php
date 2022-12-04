@@ -40,7 +40,7 @@ return [
     'reset' => 'リセット',
     'remove' => '削除',
     'add' => '追加',
-    'configure' => 'Configure',
+    'configure' => '設定',
     'fullscreen' => '全画面',
     'favourite' => 'お気に入り',
     'unfavourite' => 'お気に入りから削除',
