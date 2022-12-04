@@ -133,8 +133,8 @@ return [
     // Role Settings
     'roles' => '役割',
     'role_user_roles' => '役割',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
+    'roles_index_desc' => '役割は、ユーザーをグループ化しメンバーにシステム権限を与えるために使用されます。ユーザーが複数の役割のメンバーである場合、与えられた権限は積み重なり、ユーザーはすべての能力を継承します。',
+    'roles_x_users_assigned' => '1人のユーザーに割り当て|:count人のユーザーに割り当て',
     'roles_x_permissions_provided' => '1 permission|:count permissions',
     'roles_assigned_users' => 'Assigned Users',
     'roles_permissions_provided' => 'Provided Permissions',
