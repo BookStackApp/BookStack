@@ -9,7 +9,7 @@ return [
     'shortcuts_interface' => '界面键盘快捷键',
     'shortcuts_toggle_desc' => '你可以启用或禁用键盘系统界面快捷键，这些快捷键用于导航和操作。',
     'shortcuts_customize_desc' => '您可以自定义下面的每个快捷键。选择快捷方式输入后按下您想使用的按键组合即可。',
-    'shortcuts_toggle_label' => '键盘快捷键已启用',
+    'shortcuts_toggle_label' => '启用键盘快捷键',
     'shortcuts_section_navigation' => '导航',
     'shortcuts_section_actions' => '通用操作',
     'shortcuts_save' => '保存快捷键',
