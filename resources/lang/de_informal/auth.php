@@ -30,10 +30,10 @@ return [
     'dont_have_account' => 'Noch kein Konto erstellt?',
     'social_login' => 'Mit Sozialem Netzwerk anmelden',
     'social_registration' => 'Mit Sozialem Netzwerk registrieren',
-    'social_registration_text' => 'Mit einer dieser Dienste registrieren oder anmelden',
+    'social_registration_text' => 'Mit einem dieser Dienste registrieren oder anmelden',
 
     'register_thanks' => 'Vielen Dank für deine Registrierung!',
-    'register_confirm' => 'Bitte prüfe Deinen Posteingang und bestätig die Registrierung.',
+    'register_confirm' => 'Bitte prüfe deinen Posteingang und bestätige die Registrierung.',
     'registrations_disabled' => 'Eine Registrierung ist momentan nicht möglich',
     'registration_email_domain_invalid' => 'Du kannst dich mit dieser E-Mail nicht registrieren.',
     'register_success' => 'Vielen Dank für deine Registrierung! Du bist jetzt registriert und eingeloggt.',
@@ -45,12 +45,12 @@ return [
 
     // Password Reset
     'reset_password' => 'Passwort vergessen',
-    'reset_password_send_instructions' => 'Bitte gib Deine E-Mail-Adresse ein. Danach erhältst Du eine E-Mail mit einem Link zum Zurücksetzen Deines Passwortes.',
+    'reset_password_send_instructions' => 'Bitte gib Deine E-Mail-Adresse ein. Danach erhältst Du eine E-Mail mit einem Link zum Zurücksetzen deines Passwortes.',
     'reset_password_send_button' => 'Passwort zurücksetzen',
     'reset_password_sent' => 'Ein Link zum Zurücksetzen des Passworts wird an :email gesendet, wenn diese E-Mail-Adresse im System gefunden wird.',
     'reset_password_success' => 'Dein Passwort wurde erfolgreich zurückgesetzt.',
     'email_reset_subject' => 'Passwort zurücksetzen für :appName',
-    'email_reset_text' => 'Du erhältst diese E-Mail, weil jemand versucht hat, Dein Passwort zurückzusetzen.',
+    'email_reset_text' => 'Du erhältst diese E-Mail, weil jemand versucht hat, dein Passwort zurückzusetzen.',
     'email_reset_not_requested' => 'Wenn du das Zurücksetzen des Passworts nicht angefordert hast, ist keine weitere Aktion erforderlich.',
 
     // Email Confirmation
@@ -58,15 +58,15 @@ return [
     'email_confirm_greeting' => 'Danke, dass Du dich für :appName registrierst hast!',
     'email_confirm_text' => 'Bitte bestätige Deine E-Mail-Adresse, indem Du auf die Schaltfläche klickst:',
     'email_confirm_action' => 'E-Mail-Adresse bestätigen',
-    'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur Bestätigung Deiner E-Mail-Adresse nicht versandt werden. Bitte kontaktiere den Systemadministrator!',
-    'email_confirm_success' => 'Ihre E-Mail wurde bestätigt! Sie sollten nun in der Lage sein, sich mit dieser E-Mail-Adresse anzumelden.',
-    'email_confirm_resent' => 'Bestätigungs-E-Mail wurde erneut versendet, bitte überprüfe Deinen Posteingang.',
+    'email_confirm_send_error' => 'Leider konnte die für die Registrierung notwendige E-Mail zur Bestätigung deiner E-Mail-Adresse nicht versandt werden. Bitte kontaktiere deinen Systemadministrator!',
+    'email_confirm_success' => 'Deine E-Mail Adresse wurde bestätigt! Du solltest nun in der Lage sein, dich mit deiner E-Mail-Adresse anzumelden.',
+    'email_confirm_resent' => 'Bestätigungs-E-Mail wurde erneut versendet, bitte überprüfe deinen Posteingang.',
     'email_confirm_thanks' => 'Vielen Dank für das Bestätigen!',
     'email_confirm_thanks_desc' => 'Bitte warte einen Augenblick, während deine Bestätigung bearbeitet wird. Wenn Du nach 3 Sekunden nicht weitergeleitet wirst, drücke unten den "Weiter" Link, um fortzufahren.',
 
     'email_not_confirmed' => 'E-Mail-Adresse ist nicht bestätigt',
     'email_not_confirmed_text' => 'Deine E-Mail-Adresse ist bisher nicht bestätigt.',
-    'email_not_confirmed_click_link' => 'Bitte klicke auf den Link in der E-Mail, die Du nach der Registrierung erhalten hast.',
+    'email_not_confirmed_click_link' => 'Bitte klicke auf den Link in der E-Mail, die du nach der Registrierung erhalten hast.',
     'email_not_confirmed_resend' => 'Wenn Du die E-Mail nicht erhalten hast, kannst Du die Nachricht erneut anfordern. Fülle hierzu bitte das folgende Formular aus:',
     'email_not_confirmed_resend_button' => 'Bestätigungs-E-Mail erneut senden',
 
@@ -76,16 +76,16 @@ return [
     'user_invite_email_text' => 'Klicke auf die Schaltfläche unten, um ein Passwort festzulegen und Zugriff zu erhalten:',
     'user_invite_email_action' => 'Konto-Passwort festlegen',
     'user_invite_page_welcome' => 'Willkommen bei :appName!',
-    'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft zum Einloggen benötigt.',
+    'user_invite_page_text' => 'Um die Anmeldung abzuschließen und Zugriff auf :appName zu bekommen, muss noch ein Passwort festgelegt werden. Dieses wird in Zukunft für die Anmeldung benötigt.',
     'user_invite_page_confirm_button' => 'Passwort bestätigen',
-    'user_invite_success_login' => 'Passwort gesetzt, Sie sollten nun in der Lage sein, sich mit Ihrem Passwort an :appName anzumelden!',
+    'user_invite_success_login' => 'Passwort gesetzt, du solltest nun in der Lage sein, dich mit deinem Passwort an :appName anzumelden!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Multi-Faktor-Authentifizierung einrichten',
-    'mfa_setup_desc' => 'Richten Sie Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für Ihr Benutzerkonto ein.',
+    'mfa_setup_desc' => 'Richte eine Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für dein Benutzerkonto ein.',
     'mfa_setup_configured' => 'Bereits konfiguriert',
     'mfa_setup_reconfigure' => 'Umkonfigurieren',
-    'mfa_setup_remove_confirmation' => 'Sind Sie sicher, dass Sie diese Multi-Faktor-Authentifizierungsmethode entfernen möchten?',
+    'mfa_setup_remove_confirmation' => 'Bist du sicher, dass du diese Multi-Faktor-Authentifizierungsmethode entfernen möchtest?',
     'mfa_setup_action' => 'Einrichtung',
     'mfa_backup_codes_usage_limit_warning' => 'Sie haben weniger als 5 Backup-Codes übrig, Bitte erstellen und speichern Sie ein neues set bevor Sie keine codes mehr haben, um zu verhindern, dass Sie von Ihrem konto gesperrt werden.',
     'mfa_option_totp_title' => 'Mobile App',
