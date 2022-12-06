@@ -10,6 +10,7 @@ else
     composer install
     wait-for-it db:3306 -t 45
     php artisan migrate --database=mysql
-    chown -R www-data:www-data storage
+    chown www-data:www-data -R bootstrap/cache public/uploads storage 
+    chmod -R 755 bootstrap/cache public/uploads storage
     exec apache2-foreground
 fi
