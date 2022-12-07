@@ -208,7 +208,7 @@ class EntityProvider
 
         $permissions = [
             // Set default permissions to not allow actions so that only the provided role permissions are at play.
-            ['role_id' => 0, 'view' => false, 'create' => false, 'update' => false, 'delete' => false],
+            ['role_id' => null, 'view' => false, 'create' => false, 'update' => false, 'delete' => false],
         ];
 
         foreach ($roles as $role) {

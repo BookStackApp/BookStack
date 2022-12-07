@@ -162,10 +162,14 @@ class PermissionsController extends Controller
     {
         $this->checkPermissionOr('restrictions-manage-all', fn() => userCan('restrictions-manage-own'));
 
+        /** @var Role $role */
         $role = Role::query()->findOrFail($roleId);
 
         return view('form.entity-permissions-row', [
-            'role' => $role,
+            'modelType' => 'role',
+            'modelId' => $role->id,
+            'modelName' => $role->display_name,
+            'modelDescription' => $role->description,
             'permission' => new EntityPermission(),
             'entityType' => $entityType,
             'inheriting' => false,

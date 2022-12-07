@@ -28,7 +28,7 @@ export class EntityPermissions extends Component {
         // Remove role row button click
         this.container.addEventListener('click', event => {
             const button = event.target.closest('button');
-            if (button && button.dataset.roleId) {
+            if (button && button.dataset.modelType) {
                 this.removeRowOnButtonClick(button)
             }
         });
@@ -61,14 +61,18 @@ export class EntityPermissions extends Component {
 
     removeRowOnButtonClick(button) {
         const row = button.closest('.item-list-row');
-        const roleId = button.dataset.roleId;
-        const roleName = button.dataset.roleName;
+        const modelId = button.dataset.modelId;
+        const modelName = button.dataset.modelName;
+        const modelType = button.dataset.modelType;
 
         const option = document.createElement('option');
-        option.value = roleId;
-        option.textContent = roleName;
+        option.value = modelId;
+        option.textContent = modelName;
 
-        this.roleSelect.append(option);
+        if (modelType === 'role') {
+            this.roleSelect.append(option);
+        }
+        // TODO - User role!
         row.remove();
     }
 

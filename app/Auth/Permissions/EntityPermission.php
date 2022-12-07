@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * @property int $id
  * @property int $role_id
+ * @property int $user_id
  * @property int $entity_id
  * @property string $entity_type
  * @property boolean $view

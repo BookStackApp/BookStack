@@ -245,7 +245,9 @@ class JointPermissionBuilder
         // Create a mapping of explicit entity permissions
         $permissionMap = [];
         foreach ($permissions as $permission) {
-            $key = $permission->entity_type . ':' . $permission->entity_id . ':' . $permission->role_id;
+            $type = $permission->role_id ? 'role' : ($permission->user_id ? 'user' : 'fallback');
+            $id = $permission->role_id ?? $permission->user_id ?? '0';
+            $key = $permission->entity_type . ':' . $permission->entity_id . ':' . $type  . ':' .  $id;
             $permissionMap[$key] = $permission->view;
         }
 
@@ -376,18 +378,18 @@ class JointPermissionBuilder
     protected function entityPermissionsActiveForRole(array $permissionMap, SimpleEntityData $entity, int $roleId): bool
     {
         $keyPrefix = $entity->type . ':' . $entity->id . ':';
-        return isset($permissionMap[$keyPrefix . $roleId]) || isset($permissionMap[$keyPrefix . '0']);
+        return isset($permissionMap[$keyPrefix . 'role:' . $roleId]) || isset($permissionMap[$keyPrefix . 'fallback:0']);
     }
 
     /**
      * Check for an active restriction in an entity map.
      */
-    protected function mapHasActiveRestriction(array $entityMap, SimpleEntityData $entity, int $roleId): bool
+    protected function mapHasActiveRestriction(array $permissionMap, SimpleEntityData $entity, int $roleId): bool
     {
-        $roleKey = $entity->type . ':' . $entity->id . ':' . $roleId;
-        $defaultKey = $entity->type . ':' . $entity->id . ':0';
+        $roleKey = $entity->type . ':' . $entity->id . ':role:' . $roleId;
+        $defaultKey = $entity->type . ':' . $entity->id . ':fallback:0';
 
-        return $entityMap[$roleKey] ?? $entityMap[$defaultKey] ?? false;
+        return $permissionMap[$roleKey] ?? $permissionMap[$defaultKey] ?? false;
     }
 
     /**

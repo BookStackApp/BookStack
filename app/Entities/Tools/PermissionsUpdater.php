@@ -58,13 +58,30 @@ class PermissionsUpdater
     protected function formatPermissionsFromRequestToEntityPermissions(array $permissions): array
     {
         $formatted = [];
+        $columnsByType = [
+            'role' => 'role_id',
+            'user' => 'user_id',
+            'fallback' => '',
+        ];
 
-        foreach ($permissions as $roleId => $info) {
-            $entityPermissionData = ['role_id' => $roleId];
-            foreach (EntityPermission::PERMISSIONS as $permission) {
-                $entityPermissionData[$permission] = (($info[$permission] ?? false) === "true");
+        foreach ($permissions as $type => $byId) {
+            $column  = $columnsByType[$type] ?? null;
+            if (is_null($column)) {
+                continue;
             }
-            $formatted[] = $entityPermissionData;
+
+            foreach ($byId as $id => $info) {
+                $entityPermissionData = [];
+
+                if (!empty($column)) {
+                    $entityPermissionData[$column] = $id;
+                }
+
+                foreach (EntityPermission::PERMISSIONS as $permission) {
+                    $entityPermissionData[$permission] = (($info[$permission] ?? false) === "true");
+                }
+                $formatted[] = $entityPermissionData;
+            }
         }
 
         return $formatted;

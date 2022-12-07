@@ -39,7 +39,10 @@
         @foreach($data->permissionsWithRoles() as $permission)
             @include('form.entity-permissions-row', [
                 'permission' => $permission,
-                'role' => $permission->role,
+                'modelType' => 'role',
+                'modelId' => $permission->role->id,
+                'modelName' => $permission->role->display_name,
+                'modelDescription' => $permission->role->description,
                 'entityType' => $model->getType(),
                 'inheriting' => false,
             ])
@@ -60,10 +63,13 @@
 
     <div class="item-list mt-m mb-xl">
         @include('form.entity-permissions-row', [
-                'role' => $data->everyoneElseRole(),
+                'modelType' => 'fallback',
+                'modelId' => 0,
+                'modelName' => trans('entities.permissions_role_everyone_else'),
+                'modelDescription' => trans('entities.permissions_role_everyone_else_desc'),
                 'permission' => $data->everyoneElseEntityPermission(),
                 'entityType' => $model->getType(),
-                'inheriting' => !$model->permissions()->where('role_id', '=', 0)->exists(),
+                'inheriting' => $data->everyoneElseInheriting(),
             ])
     </div>
 

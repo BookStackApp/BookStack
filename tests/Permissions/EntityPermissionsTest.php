@@ -378,8 +378,10 @@ class EntityPermissionsTest extends TestCase
 
         $this->put($modelInstance->getUrl('/permissions'), [
             'permissions' => [
-                $roleId => [
-                    $permission => 'true',
+                'role' => [
+                    $roleId => [
+                        $permission => 'true',
+                    ],
                 ],
             ],
         ]);

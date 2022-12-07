@@ -21,7 +21,7 @@ class PermissionFormData
     {
         return $this->entity->permissions()
             ->with('role')
-            ->where('role_id', '!=', 0)
+            ->whereNotNull('role_id')
             ->get()
             ->sortBy('role.display_name')
             ->all();
@@ -33,7 +33,7 @@ class PermissionFormData
      */
     public function rolesNotAssigned(): array
     {
-        $assigned = $this->entity->permissions()->pluck('role_id');
+        $assigned = $this->entity->permissions()->whereNotNull('role_id')->pluck('role_id');
         return Role::query()
             ->where('system_name', '!=', 'admin')
             ->whereNotIn('id', $assigned)
@@ -49,20 +49,19 @@ class PermissionFormData
     {
         /** @var ?EntityPermission $permission */
         $permission = $this->entity->permissions()
-            ->where('role_id', '=', 0)
+            ->whereNull(['role_id', 'user_id'])
             ->first();
         return $permission ?? (new EntityPermission());
     }
 
     /**
-     * Get the "Everyone Else" role entry.
+     * Check if the "Everyone else" option is inheriting default role system permissions.
+     * Is determined by any system entity_permission existing for the current entity.
      */
-    public function everyoneElseRole(): Role
+    public function everyoneElseInheriting(): bool
     {
-        return (new Role())->forceFill([
-            'id' => 0,
-            'display_name' => trans('entities.permissions_role_everyone_else'),
-            'description' => trans('entities.permissions_role_everyone_else_desc'),
-        ]);
+        return !$this->entity->permissions()
+            ->whereNull(['role_id', 'user_id'])
+            ->exists();
     }
 }

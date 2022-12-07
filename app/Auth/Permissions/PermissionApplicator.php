@@ -78,26 +78,53 @@ class PermissionApplicator
         }
 
         foreach ($chain as $currentEntity) {
-            $allowedByRoleId = $currentEntity->permissions()
-                ->whereIn('role_id', [0, ...$userRoleIds])
-                ->pluck($action, 'role_id');
+            $relevantPermissions = $currentEntity->permissions()
+                ->where(function (Builder $query) use ($userRoleIds) {
+                    $query->whereIn('role_id', $userRoleIds)
+                    ->orWhere(function (Builder $query) {
+                        $query->whereNull(['role_id', 'user_id']);
+                    });
+                })
+                ->get(['role_id', 'user_id', $action])
+                ->all();
+
+            // TODO - Update below for user permissions
+
+            // 1. Default fallback set and allows, no role permissions -> True
+            // 2. Default fallback set and prevents, no role permissions -> False
+            // 3. Role permission allows, fallback set and allows -> True
+            // 3. Role permission allows, fallback set and prevents -> True
+            // 3. Role permission allows, fallback not set -> True
+            // 3. Role permission prevents, fallback set and allows -> False
+            // 3. Role permission prevents, fallback set and prevents -> False
+            // 3. Role permission prevents, fallback not set -> False
+            // 4. Nothing exists -> Continue
+
+            // If the default is set, we have to return something here.
+            $allowedById = [];
+            foreach ($relevantPermissions as $permission) {
+                $allowedById[$permission->role_id . ':' . $permission->user_id] = $permission->$action;
+            }
 
             // Continue up the chain if no applicable entity permission overrides.
-            if ($allowedByRoleId->isEmpty()) {
+            if (empty($allowedById)) {
                 continue;
             }
 
             // If we have user-role-specific permissions set, allow if any of those
             // role permissions allow access.
-            $hasDefault = $allowedByRoleId->has(0);
-            if (!$hasDefault || $allowedByRoleId->count() > 1) {
-                return $allowedByRoleId->search(function (bool $allowed, int $roleId) {
-                        return $roleId !== 0 && $allowed;
-                }) !== false;
+            $hasDefault = isset($allowedById[':']);
+            if (!$hasDefault || count($allowedById) > 1) {
+                foreach ($allowedById as $key => $allowed) {
+                    if ($key !== ':' && $allowed) {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             // Otherwise, return the default "Other roles" fallback value.
-            return $allowedByRoleId->get(0);
+            return $allowedById[':'];
         }
 
         return null;
@@ -114,6 +141,7 @@ class PermissionApplicator
         $permissionQuery = EntityPermission::query()
             ->where($action, '=', true)
             ->whereIn('role_id', $this->getCurrentUserRoleIds());
+        // TODO - Update for user permission
 
         if (!empty($entityClass)) {
             /** @var Entity $entityInstance */
@@ -134,6 +162,7 @@ class PermissionApplicator
     {
         return $query->where(function (Builder $parentQuery) {
             $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
+                // TODO - Update for user permission
                 $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
                     ->where(function (Builder $query) {
                         $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
@@ -170,6 +199,7 @@ class PermissionApplicator
         $pageMorphClass = (new Page())->getMorphClass();
 
         $q = $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
+            // TODO - Update for user permission
             /** @var Builder $permissionQuery */
             $permissionQuery->select(['role_id'])->from('joint_permissions')
                 ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
@@ -203,6 +233,7 @@ class PermissionApplicator
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
         $morphClass = (new Page())->getMorphClass();
 
+        // TODO - Update for user permission
         $existsQuery = function ($permissionQuery) use ($fullPageIdColumn, $morphClass) {
             /** @var Builder $permissionQuery */
             $permissionQuery->select('joint_permissions.role_id')->from('joint_permissions')
