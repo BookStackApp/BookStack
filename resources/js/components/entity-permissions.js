@@ -10,6 +10,8 @@ export class EntityPermissions extends Component {
         this.everyoneInheritToggle = this.$refs.everyoneInherit;
         this.roleSelect = this.$refs.roleSelect;
         this.roleContainer = this.$refs.roleContainer;
+        this.userContainer = this.$refs.userContainer;
+        this.userSelectContainer = this.$refs.userSelectContainer;
 
         this.setupListeners();
     }
@@ -40,6 +42,14 @@ export class EntityPermissions extends Component {
                 this.addRoleRow(roleId);
             }
         });
+
+        // User select change
+        this.userSelectContainer.querySelector('input[name="user_select"]').addEventListener('change', event => {
+            const userId = event.target.value;
+            if (userId) {
+                this.addUserRow(userId);
+            }
+        });
     }
 
     async addRoleRow(roleId) {
@@ -52,11 +62,30 @@ export class EntityPermissions extends Component {
         }
 
         // Get and insert new row
-        const resp = await window.$http.get(`/permissions/form-row/${this.entityType}/${roleId}`);
+        const resp = await window.$http.get(`/permissions/role-form-row/${this.entityType}/${roleId}`);
         const row = htmlToDom(resp.data);
         this.roleContainer.append(row);
 
         this.roleSelect.disabled = false;
+    }
+
+    async addUserRow(userId) {
+        const exists = this.userContainer.querySelector(`[name^="permissions[user][${userId}]"]`) !== null;
+        if (exists) {
+            return;
+        }
+
+        const toggle = this.userSelectContainer.querySelector('.dropdown-search-toggle-select');
+        toggle.classList.add('disabled');
+        this.userContainer.style.pointerEvents = 'none';
+
+        // Get and insert new row
+        const resp = await window.$http.get(`/permissions/user-form-row/${this.entityType}/${userId}`);
+        const row = htmlToDom(resp.data);
+        this.userContainer.append(row);
+
+        toggle.classList.remove('disabled');
+        this.userContainer.style.pointerEvents = null;
     }
 
     removeRowOnButtonClick(button) {
@@ -72,7 +101,7 @@ export class EntityPermissions extends Component {
         if (modelType === 'role') {
             this.roleSelect.append(option);
         }
-        // TODO - User role!
+
         row.remove();
     }
 

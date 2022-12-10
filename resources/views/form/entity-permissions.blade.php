@@ -35,6 +35,27 @@
 
     <hr>
 
+    <div refs="entity-permissions@user-container" class="item-list mt-m mb-m">
+        @foreach($data->permissionsWithUsers() as $permission)
+            @include('form.entity-permissions-row', [
+                'permission' => $permission,
+                'modelType' => 'user',
+                'modelId' => $permission->user->id,
+                'modelName' => $permission->user->name,
+                'modelDescription' => '',
+                'entityType' => $model->getType(),
+                'inheriting' => false,
+            ])
+        @endforeach
+    </div>
+
+    <div class="flex-container-row justify-flex-end mb-xl">
+        <div refs="entity-permissions@user-select-container" class="flex-container-row items-center gap-m">
+            <label for="user_select" class="m-none p-none"><span class="bold">{{ trans('entities.permissions_user_override') }}</span></label>
+            @include('form.user-select', ['name' => 'user_select', 'user' => null])
+        </div>
+    </div>
+
     <div refs="entity-permissions@role-container" class="item-list mt-m mb-m">
         @foreach($data->permissionsWithRoles() as $permission)
             @include('form.entity-permissions-row', [

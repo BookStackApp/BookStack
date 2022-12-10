@@ -5,6 +5,7 @@ namespace BookStack\Http\Controllers;
 use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Permissions\PermissionFormData;
 use BookStack\Auth\Role;
+use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
@@ -170,6 +171,27 @@ class PermissionsController extends Controller
             'modelId' => $role->id,
             'modelName' => $role->display_name,
             'modelDescription' => $role->description,
+            'permission' => new EntityPermission(),
+            'entityType' => $entityType,
+            'inheriting' => false,
+        ]);
+    }
+
+    /**
+     * Get an empty entity permissions form row for the given user.
+     */
+    public function formRowForUser(string $entityType, string $userId)
+    {
+        $this->checkPermissionOr('restrictions-manage-all', fn() => userCan('restrictions-manage-own'));
+
+        /** @var User $user */
+        $user  = User::query()->findOrFail($userId);
+
+        return view('form.entity-permissions-row', [
+            'modelType' => 'user',
+            'modelId' => $user->id,
+            'modelName' => $user->name,
+            'modelDescription' => '',
             'permission' => new EntityPermission(),
             'entityType' => $entityType,
             'inheriting' => false,

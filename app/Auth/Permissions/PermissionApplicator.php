@@ -48,7 +48,7 @@ class PermissionApplicator
             return $hasRolePermission;
         }
 
-        $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $userRoleIds, $action);
+        $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $userRoleIds, $user->id, $action);
 
         return is_null($hasApplicableEntityPermissions) ? $hasRolePermission : $hasApplicableEntityPermissions;
     }
@@ -57,7 +57,7 @@ class PermissionApplicator
      * Check if there are permissions that are applicable for the given entity item, action and roles.
      * Returns null when no entity permissions are in force.
      */
-    protected function hasEntityPermission(Entity $entity, array $userRoleIds, string $action): ?bool
+    protected function hasEntityPermission(Entity $entity, array $userRoleIds, int $userId, string $action): ?bool
     {
         $this->ensureValidEntityAction($action);
 
@@ -79,8 +79,9 @@ class PermissionApplicator
 
         foreach ($chain as $currentEntity) {
             $relevantPermissions = $currentEntity->permissions()
-                ->where(function (Builder $query) use ($userRoleIds) {
+                ->where(function (Builder $query) use ($userRoleIds, $userId) {
                     $query->whereIn('role_id', $userRoleIds)
+                    ->orWhere('user_id', '=', $userId)
                     ->orWhere(function (Builder $query) {
                         $query->whereNull(['role_id', 'user_id']);
                     });
@@ -88,22 +89,17 @@ class PermissionApplicator
                 ->get(['role_id', 'user_id', $action])
                 ->all();
 
-            // TODO - Update below for user permissions
-
-            // 1. Default fallback set and allows, no role permissions -> True
-            // 2. Default fallback set and prevents, no role permissions -> False
-            // 3. Role permission allows, fallback set and allows -> True
-            // 3. Role permission allows, fallback set and prevents -> True
-            // 3. Role permission allows, fallback not set -> True
-            // 3. Role permission prevents, fallback set and allows -> False
-            // 3. Role permission prevents, fallback set and prevents -> False
-            // 3. Role permission prevents, fallback not set -> False
-            // 4. Nothing exists -> Continue
+            // Permissions work on specificity, in order of:
+            // 1. User-specific permissions
+            // 2. Role-specific permissions
+            // 3. Fallback-specific permissions
+            // For role permissions, the system tries to be fairly permissive, in that if the user has two roles,
+            // one lacking and one permitting an action, they will be permitted.
 
             // If the default is set, we have to return something here.
             $allowedById = [];
             foreach ($relevantPermissions as $permission) {
-                $allowedById[$permission->role_id . ':' . $permission->user_id] = $permission->$action;
+                $allowedById[($permission->role_id ?? '') . ':' . ($permission->user_id ?? '')] = $permission->$action;
             }
 
             // Continue up the chain if no applicable entity permission overrides.
@@ -111,7 +107,14 @@ class PermissionApplicator
                 continue;
             }
 
-            // If we have user-role-specific permissions set, allow if any of those
+            // If we have user-specific permissions set, return the status of that
+            // since it's the most specific possible.
+            $userKey = ':' . $userId;
+            if (isset($allowedById[$userKey])) {
+                return $allowedById[$userKey];
+            }
+
+            // If we have role-specific permissions set, allow if any of those
             // role permissions allow access.
             $hasDefault = isset($allowedById[':']);
             if (!$hasDefault || count($allowedById) > 1) {
@@ -140,8 +143,10 @@ class PermissionApplicator
 
         $permissionQuery = EntityPermission::query()
             ->where($action, '=', true)
-            ->whereIn('role_id', $this->getCurrentUserRoleIds());
-        // TODO - Update for user permission
+            ->where(function (Builder $query) {
+                $query->whereIn('role_id', $this->getCurrentUserRoleIds())
+                ->orWhere('user_id', '=', $this->currentUser()->id);
+            });
 
         if (!empty($entityClass)) {
             /** @var Entity $entityInstance */

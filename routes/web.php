@@ -217,7 +217,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index']);
 
     // Permissions
-    Route::get('/permissions/form-row/{entityType}/{roleId}', [PermissionsController::class, 'formRowForRole']);
+    Route::get('/permissions/role-form-row/{entityType}/{roleId}', [PermissionsController::class, 'formRowForRole']);
+    Route::get('/permissions/user-form-row/{entityType}/{userId}', [PermissionsController::class, 'formRowForUser']);
 
     // Maintenance
     Route::get('/settings/maintenance', [MaintenanceController::class, 'index']);

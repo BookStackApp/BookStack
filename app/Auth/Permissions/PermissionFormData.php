@@ -28,6 +28,19 @@ class PermissionFormData
     }
 
     /**
+     * Get the permissions with assigned users.
+     */
+    public function permissionsWithUsers(): array
+    {
+        return $this->entity->permissions()
+            ->with('user')
+            ->whereNotNull('user_id')
+            ->get()
+            ->sortBy('user.name')
+            ->all();
+    }
+
+    /**
      * Get the roles that don't yet have specific permissions for the
      * entity we're managing permissions for.
      */

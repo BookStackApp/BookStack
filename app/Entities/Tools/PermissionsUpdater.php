@@ -10,7 +10,6 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class PermissionsUpdater
 {
