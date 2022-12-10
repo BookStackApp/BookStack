@@ -18,6 +18,7 @@ return [
     'name' => 'Name',
     'description' => 'Description',
     'role' => 'Role',
+    'user' => 'User',
     'cover_image' => 'Cover image',
     'cover_image_description' => 'This image should be approx 440x250px.',
 

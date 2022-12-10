@@ -86,6 +86,10 @@ export class EntityPermissions extends Component {
 
         toggle.classList.remove('disabled');
         this.userContainer.style.pointerEvents = null;
+
+        /** @var {UserSelect} **/
+        const userSelect = window.$components.firstOnElement(this.userSelectContainer.querySelector('.dropdown-search'), 'user-select');
+        userSelect.reset();
     }
 
     removeRowOnButtonClick(button) {

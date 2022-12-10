@@ -8,6 +8,9 @@ export class UserSelect extends Component {
         this.input = this.$refs.input;
         this.userInfoContainer = this.$refs.userInfo;
 
+        this.initialValue = this.input.value;
+        this.initialContent = this.userInfoContainer.innerHTML;
+
         onChildEvent(this.container, 'a.dropdown-search-item', 'click', this.selectUser.bind(this));
     }
 
@@ -15,6 +18,13 @@ export class UserSelect extends Component {
         event.preventDefault();
         this.input.value = userEl.getAttribute('data-id');
         this.userInfoContainer.innerHTML = userEl.innerHTML;
+        this.input.dispatchEvent(new Event('change', {bubbles: true}));
+        this.hide();
+    }
+
+    reset() {
+        this.input.value = this.initialValue;
+        this.userInfoContainer.innerHTML = this.initialContent;
         this.input.dispatchEvent(new Event('change', {bubbles: true}));
         this.hide();
     }

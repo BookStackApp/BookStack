@@ -10,7 +10,7 @@ $inheriting - Boolean if the current row should be marked as inheriting default 
 
 <div component="permissions-table" class="item-list-row flex-container-row justify-space-between wrap">
     <div class="gap-x-m flex-container-row items-center px-l py-m flex">
-        <div class="text-large" title="{{  $modelType === 'fallback' ? trans('entities.permissions_role_everyone_else') : trans('common.role') }}">
+        <div class="text-large" title="{{  $modelType === 'fallback' ? trans('entities.permissions_role_everyone_else') : ($modelType === 'role' ? trans('common.role') : trans('common.user')) }}">
             @icon($modelType === 'fallback' ? 'groups' : ($modelType === 'role' ? 'role' : 'user'))
         </div>
         <span>
