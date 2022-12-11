@@ -167,12 +167,15 @@ class PermissionApplicator
     {
         return $query->where(function (Builder $parentQuery) {
             $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
-                // TODO - Update for user permission
                 $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
                     ->where(function (Builder $query) {
                         $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
                     });
+            })->orWhereHas('jointUserPermissions', function (Builder $query) {
+                $query->where('user_id', '=', $this->currentUser()->id)->where('has_permission', '=', true);
             });
+        })->whereDoesntHave('jointUserPermissions', function (Builder $query) {
+            $query->where('user_id', '=', $this->currentUser()->id)->where('has_permission', '=', false);
         });
     }
 
@@ -203,16 +206,30 @@ class PermissionApplicator
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
         $pageMorphClass = (new Page())->getMorphClass();
 
-        $q = $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
-            // TODO - Update for user permission
-            /** @var Builder $permissionQuery */
-            $permissionQuery->select(['role_id'])->from('joint_permissions')
-                ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
-                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
-                ->where(function (QueryBuilder $query) {
-                    $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                });
+        $q = $query->where(function ($query) use ($tableDetails) {
+            $query->whereExists(function ($permissionQuery) use ($tableDetails) {
+                /** @var Builder $permissionQuery */
+                $permissionQuery->select(['role_id'])->from('joint_permissions')
+                    ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                    ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
+                    ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
+                    ->where(function (QueryBuilder $query) {
+                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
+                    });
+            })->orWhereExists(function ($permissionQuery) use ($tableDetails) {
+                /** @var Builder $permissionQuery */
+                $permissionQuery->select(['user_id'])->from('joint_user_permissions')
+                    ->whereColumn('joint_user_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                    ->whereColumn('joint_user_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
+                    ->where('joint_user_permissions.user_id', '=', $this->currentUser()->id)
+                    ->where('joint_user_permissions.has_permission', '=', true);
+            });
+        })->whereNotExists(function ($query) use ($tableDetails) {
+            $query->select(['user_id'])->from('joint_user_permissions')
+                ->whereColumn('joint_user_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                ->whereColumn('joint_user_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
+                ->where('joint_user_permissions.user_id', '=', $this->currentUser()->id)
+                ->where('joint_user_permissions.has_permission', '=', false);
         })->where(function ($query) use ($tableDetails, $pageMorphClass) {
             /** @var Builder $query */
             $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
@@ -238,7 +255,6 @@ class PermissionApplicator
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
         $morphClass = (new Page())->getMorphClass();
 
-        // TODO - Update for user permission
         $existsQuery = function ($permissionQuery) use ($fullPageIdColumn, $morphClass) {
             /** @var Builder $permissionQuery */
             $permissionQuery->select('joint_permissions.role_id')->from('joint_permissions')
@@ -250,10 +266,22 @@ class PermissionApplicator
                 });
         };
 
-        $q = $query->where(function ($query) use ($existsQuery, $fullPageIdColumn) {
+        $userExistsQuery = function ($hasPermission) use ($fullPageIdColumn, $morphClass) {
+            return function ($permissionQuery) use ($fullPageIdColumn, $morphClass) {
+                /** @var Builder $permissionQuery */
+                $permissionQuery->select('joint_user_permissions.user_id')->from('joint_user_permissions')
+                    ->whereColumn('joint_user_permissions.entity_id', '=', $fullPageIdColumn)
+                    ->where('joint_user_permissions.entity_type', '=', $morphClass)
+                    ->where('joint_user_permissions.user_id', $this->currentUser()->id)
+                    ->where('has_permission', '=', true);
+            };
+        };
+
+        $q = $query->where(function ($query) use ($existsQuery, $userExistsQuery, $fullPageIdColumn) {
             $query->whereExists($existsQuery)
+                ->orWhereExists($userExistsQuery(true))
                 ->orWhere($fullPageIdColumn, '=', 0);
-        });
+        })->whereNotExists($userExistsQuery(false));
 
         // Prevent visibility of non-owned draft pages
         $q->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {

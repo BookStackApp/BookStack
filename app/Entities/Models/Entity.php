@@ -10,6 +10,7 @@ use BookStack\Actions\View;
 use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\JointPermissionBuilder;
+use BookStack\Auth\Permissions\JointUserPermission;
 use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Interfaces\Deletable;
@@ -192,6 +193,14 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public function jointPermissions(): MorphMany
     {
         return $this->morphMany(JointPermission::class, 'entity');
+    }
+
+    /**
+     * Get the join user permissions for this entity.
+     */
+    public function jointUserPermissions(): MorphMany
+    {
+        return $this->morphMany(JointUserPermission::class, 'entity');
     }
 
     /**
