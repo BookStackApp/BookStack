@@ -30,6 +30,7 @@ class JointPermissionBuilder
     public function rebuildForAll()
     {
         JointPermission::query()->truncate();
+        JointUserPermission::query()->truncate();
 
         // Get all roles (Should be the most limited dimension)
         $roles = Role::query()->with('permissions')->get()->all();
@@ -199,6 +200,10 @@ class JointPermissionBuilder
                         ->where('entity_type', '=', $type)
                         ->whereIn('entity_id', $idChunk)
                         ->delete();
+                    DB::table('joint_user_permissions')
+                        ->where('entity_type', '=', $type)
+                        ->whereIn('entity_id', $idChunk)
+                        ->delete();
                 }
             }
         });
@@ -238,16 +243,21 @@ class JointPermissionBuilder
         $entities = $this->entitiesToSimpleEntities($originalEntities);
         $this->readyEntityCache($entities);
         $jointPermissions = [];
+        $jointUserPermissions = [];
 
         // Fetch related entity permissions
         $permissions = $this->getEntityPermissionsForEntities($entities);
 
         // Create a mapping of explicit entity permissions
         $permissionMap = [];
+        $controlledUserIds = [];
         foreach ($permissions as $permission) {
             $type = $permission->role_id ? 'role' : ($permission->user_id ? 'user' : 'fallback');
             $id = $permission->role_id ?? $permission->user_id ?? '0';
             $key = $permission->entity_type . ':' . $permission->entity_id . ':' . $type  . ':' .  $id;
+            if ($type === 'user') {
+                $controlledUserIds[$id] = true;
+            }
             $permissionMap[$key] = $permission->view;
         }
 
@@ -270,11 +280,23 @@ class JointPermissionBuilder
                     $role->system_name === 'admin'
                 );
             }
+            foreach ($controlledUserIds as $userId => $exists) {
+                $userPermitted = $this->getUserPermissionOverrideStatus($entity, $userId, $permissionMap);
+                if ($userPermitted !== null) {
+                    $jointUserPermissions[] = $this->createJointUserPermissionDataArray($entity, $userId, $userPermitted);
+                }
+            }
         }
 
         DB::transaction(function () use ($jointPermissions) {
             foreach (array_chunk($jointPermissions, 1000) as $jointPermissionChunk) {
                 DB::table('joint_permissions')->insert($jointPermissionChunk);
+            }
+        });
+
+        DB::transaction(function () use ($jointUserPermissions) {
+            foreach (array_chunk($jointUserPermissions, 1000) as $jointUserPermissionsChunk) {
+                DB::table('joint_user_permissions')->insert($jointUserPermissionsChunk);
             }
         });
     }
@@ -372,6 +394,40 @@ class JointPermissionBuilder
     }
 
     /**
+     * Get the status of a user-specific permission override for the given entity user combo if existing.
+     * This can return null where no user-specific permission overrides are applicable.
+     */
+    protected function getUserPermissionOverrideStatus(SimpleEntityData $entity, int $userId, array $permissionMap): ?bool
+    {
+        // If direct permissions exists, return those
+        $directKey = $entity->type . ':' . $entity->id . ':user:' . $userId;
+        if (isset($permissionMap[$directKey])) {
+            return $permissionMap[$directKey];
+        }
+
+        // If a book or shelf, exit out since no parents to check
+        if ($entity->type === 'book' || $entity->type === 'bookshelf') {
+            return null;
+        }
+
+        // If a chapter or page, get the parent book permission status.
+        // defaults to null where no permission is set.
+        $bookKey = 'book:' . $entity->book_id . ':user:' . $userId;
+        $bookPermission = $permissionMap[$bookKey] ?? null;
+
+        // If a page within a chapter, return the chapter permission if existing otherwise
+        // default ot the parent book permission.
+        if ($entity->type === 'page' && $entity->chapter_id !== 0) {
+            $chapterKey = 'chapter:' . $entity->chapter_id . ':user:' . $userId;
+            $chapterPermission = $permissionMap[$chapterKey] ?? null;
+            return $chapterPermission ?? $bookPermission;
+        }
+
+        // Return the book permission status
+        return $bookPermission;
+    }
+
+    /**
      * Check if entity permissions are defined within the given map, for the given entity and role.
      * Checks for the default `role_id=0` backup option as a fallback.
      */
@@ -405,6 +461,20 @@ class JointPermissionBuilder
             'has_permission_own' => $permissionOwn,
             'owned_by'           => $entity->owned_by,
             'role_id'            => $roleId,
+        ];
+    }
+
+    /**
+     * Create an array of data with the information of an JointUserPermission.
+     * Used to build data for bulk insertion.
+     */
+    protected function createJointUserPermissionDataArray(SimpleEntityData $entity, int $userId, bool $hasPermission): array
+    {
+        return [
+            'entity_id'          => $entity->id,
+            'entity_type'        => $entity->type,
+            'has_permission'     => $hasPermission,
+            'user_id'            => $userId,
         ];
     }
 }
