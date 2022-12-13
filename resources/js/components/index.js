@@ -57,3 +57,4 @@ export {TriLayout} from "./tri-layout.js"
 export {UserSelect} from "./user-select.js"
 export {WebhookEvents} from "./webhook-events"
 export {WysiwygEditor} from "./wysiwyg-editor.js"
+export {ReadingFontResizer} from './reading-font-resizer.js'

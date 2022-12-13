@@ -71,7 +71,10 @@ class SettingService
             return $this->getFromSession($key, $default);
         }
 
-        return $this->get($this->userKey($user->id, $key), $default);
+        $userKey = $this->userKey($user->id, $key);
+        $this->clearFromCache($userKey);
+
+        return $this->get($userKey, $default);
     }
 
     /**

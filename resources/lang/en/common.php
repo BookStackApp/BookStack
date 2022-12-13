@@ -89,6 +89,8 @@ return [
     'dark_mode' => 'Dark Mode',
     'light_mode' => 'Light Mode',
     'global_search' => 'Global Search',
+    'increase_reading_font_size' => 'Increase font size',
+    'decrease_reading_font_size' => 'Decrease font size',
 
     // Layout tabs
     'tab_info' => 'Info',

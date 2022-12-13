@@ -7,5 +7,6 @@
         --color-chapter: {{ setting('chapter-color')}};
         --color-page: {{ setting('page-color')}};
         --color-page-draft: {{ setting('page-draft-color')}};
-    }
+        --reading-font-size: {{ setting()->getForCurrentUser('reading-font-size').'em'}};
+}
 </style>

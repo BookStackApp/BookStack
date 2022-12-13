@@ -139,4 +139,33 @@ class UserPreferencesController extends Controller
         setting()->putForCurrentUser('code-language-favourites', implode(',', $currentFavorites));
         return response('', 204);
     }
+
+    /**
+     * Update the user's reading font preference
+     */
+    public function changeReadingFontSize(Request $request, string $type)
+    {
+        $validReadingFontSizeTypes = ['increaseFont', 'decreaseFont'];
+
+        if (!in_array($type, $validReadingFontSizeTypes)) {
+            return redirect()->back(500);
+        }
+
+        $currentReadingFontSize = setting()->getForCurrentUser('reading-font-size');
+        $defaultReadingFontSize = setting()->get('reading-font-size');
+        $revisedReadingFontSize = $currentReadingFontSize ? $currentReadingFontSize : $defaultReadingFontSize;
+
+        if ($type === 'increaseFont') {
+            $revisedReadingFontSize = $revisedReadingFontSize * 1.2;
+        } else {
+            $revisedReadingFontSize = $revisedReadingFontSize / 1.2;
+        }
+
+        setting()->putForCurrentUser('reading-font-size', $revisedReadingFontSize);
+
+        return response()->json([
+            'fontSize' => $revisedReadingFontSize
+        ]);
+    }
+
 }
