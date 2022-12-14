@@ -202,14 +202,16 @@ class EntityProvider
      * @param string[] $actions
      * @param Role[] $roles
      */
-    public function setPermissions(Entity $entity, array $actions = [], array $roles = []): void
+    public function setPermissions(Entity $entity, array $actions = [], array $roles = [], $inherit = false): void
     {
         $entity->permissions()->delete();
 
-        $permissions = [
+        $permissions = [];
+
+        if (!$inherit) {
             // Set default permissions to not allow actions so that only the provided role permissions are at play.
-            ['role_id' => null, 'view' => false, 'create' => false, 'update' => false, 'delete' => false],
-        ];
+            $permissions[] = ['role_id' => null, 'user_id' => null, 'view' => false, 'create' => false, 'update' => false, 'delete' => false];
+        }
 
         foreach ($roles as $role) {
             $permission = ['role_id' => $role->id];

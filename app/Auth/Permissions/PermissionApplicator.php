@@ -77,6 +77,11 @@ class PermissionApplicator
             $chain[] = $entity->book;
         }
 
+        // Record role access preventions.
+        // Used when we encounter a negative role permission where inheritance is active and therefore
+        // need to check permissive status on parent items.
+        $blockedRoleIds = [];
+
         foreach ($chain as $currentEntity) {
             $relevantPermissions = $currentEntity->permissions()
                 ->where(function (Builder $query) use ($userRoleIds, $userId) {
@@ -95,39 +100,62 @@ class PermissionApplicator
             // 3. Fallback-specific permissions
             // For role permissions, the system tries to be fairly permissive, in that if the user has two roles,
             // one lacking and one permitting an action, they will be permitted.
+            // This can be complex when multiple roles and inheritance gets involved. If permission is prevented
+            // via "Role A" on an item, but inheritance is active and permission is granted via "Role B" on parent item,
+            // the user will be granted permission.
 
-            // If the default is set, we have to return something here.
-            $allowedById = [];
+            $allowedByTypeById = ['fallback' => [], 'user' => [], 'role' => []];
+            /** @var EntityPermission $permission */
             foreach ($relevantPermissions as $permission) {
-                $allowedById[($permission->role_id ?? '') . ':' . ($permission->user_id ?? '')] = $permission->$action;
+                $allowedByTypeById[$permission->getAssignedType()][$permission->getAssignedTypeId()] = $permission->$permission;
             }
 
+            $inheriting = !isset($allowedByTypeById['fallback'][0]);
+
             // Continue up the chain if no applicable entity permission overrides.
-            if (empty($allowedById)) {
+            if (count($relevantPermissions) === 0) {
                 continue;
             }
 
             // If we have user-specific permissions set, return the status of that
             // since it's the most specific possible.
-            $userKey = ':' . $userId;
-            if (isset($allowedById[$userKey])) {
-                return $allowedById[$userKey];
+            if (isset($allowedByTypeById['user'][$userId])) {
+                return $allowedByTypeById['user'][$userId];
             }
 
             // If we have role-specific permissions set, allow if any of those
-            // role permissions allow access.
-            $hasDefault = isset($allowedById[':']);
-            if (!$hasDefault || count($allowedById) > 1) {
-                foreach ($allowedById as $key => $allowed) {
-                    if ($key !== ':' && $allowed) {
-                        return true;
-                    }
+            // role permissions allow access. We do not allow if the role has been previously
+            // blocked by a high-priority inheriting level.
+            // If we're inheriting at this level, and there's an explicit non-allow permission, we record
+            // it for checking up the chain.
+            foreach ($allowedByTypeById['role'] as $roleId => $allowed) {
+                if ($allowed && !in_array($roleId, $blockedRoleIds)) {
+                    return true;
+                } else if (!$allowed) {
+                    $blockedRoleIds[] = $roleId;
                 }
+            }
+
+            // If we had role permissions, and none of them allowed (via above loop), and
+            // we are not inheriting, exit here since we only have role permissions in play blocking access.
+            if (count($allowedByTypeById['role']) > 0 && !$inheriting) {
                 return false;
             }
 
+            // Continue up the chain if inheriting
+            if ($inheriting) {
+                continue;
+            }
+
             // Otherwise, return the default "Other roles" fallback value.
-            return $allowedById[':'];
+            return $allowedByTypeById['fallback'][0];
+        }
+
+        // If we have roles that need to be assessed, but we are also inheriting, pass back the prevented
+        // role IDs so they can be excluded from the role permission check.
+        if (count($blockedRoleIds) > 0) {
+            // TODO - Need to use these ids in some form in outer permission check, as blockers when access
+            return false;
         }
 
         return null;

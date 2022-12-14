@@ -20,7 +20,7 @@ export class EntityPermissions extends Component {
         // "Everyone Else" inherit toggle
         this.everyoneInheritToggle.addEventListener('change', event => {
             const inherit = event.target.checked;
-            const permissions = document.querySelectorAll('input[name^="permissions[0]["]');
+            const permissions = document.querySelectorAll('input[name^="permissions[fallback]"]');
             for (const permission of permissions) {
                 permission.disabled = inherit;
                 permission.checked = false;

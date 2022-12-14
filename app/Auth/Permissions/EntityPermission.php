@@ -40,4 +40,30 @@ class EntityPermission extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the type of entity permission this is.
+     * Will be one of: user, role, fallback
+     */
+    public function getAssignedType(): string
+    {
+        if ($this->user_id) {
+            return 'user';
+        }
+
+        if ($this->role_id) {
+            return 'role';
+        }
+
+        return 'fallback';
+    }
+
+    /**
+     * Get the ID for the assigned type of permission.
+     * (Role/User ID). Defaults to 0 for fallback.
+     */
+    public function getAssignedTypeId(): int
+    {
+        return $this->user_id ?? $this->role_id ?? 0;
+    }
 }

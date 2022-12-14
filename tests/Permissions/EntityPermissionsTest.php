@@ -2,6 +2,7 @@
 
 namespace Tests\Permissions;
 
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -655,6 +656,34 @@ class EntityPermissionsTest extends TestCase
             'html' => 'test content',
         ]);
         $resp->assertRedirect($book->getUrl('/page/test-page'));
+    }
+
+    public function test_access_to_item_prevented_if_inheritance_active_but_permission_prevented_via_role()
+    {
+        $user = $this->getViewer();
+        $viewerRole = $user->roles->first();
+        $chapter = $this->entities->chapter();
+        $book = $chapter->book;
+
+        $this->entities->setPermissions($book, ['edit'], [$viewerRole], false);
+        $this->entities->setPermissions($chapter, [], [$viewerRole], true);
+
+        $this->assertFalse(userCan('chapter-update', $chapter));
+    }
+
+    public function test_access_to_item_allowed_if_inheritance_active_and_permission_prevented_via_role_but_allowed_via_parent()
+    {
+        $user = $this->getViewer();
+        $viewerRole = $user->roles->first();
+        $editorRole = Role::getRole('Editor');
+        $user->attachRole($editorRole);
+        $chapter = $this->entities->chapter();
+        $book = $chapter->book;
+
+        $this->entities->setPermissions($book, ['edit'], [$editorRole], false);
+        $this->entities->setPermissions($chapter, [], [$viewerRole], true);
+
+        $this->assertTrue(userCan('chapter-update', $chapter));
     }
 
     public function test_book_permissions_can_be_generated_without_error_if_child_chapter_is_in_recycle_bin()
