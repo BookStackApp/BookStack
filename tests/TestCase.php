@@ -2,11 +2,6 @@
 
 namespace Tests;
 
-use BookStack\Auth\Permissions\JointPermissionBuilder;
-use BookStack\Auth\Permissions\PermissionsRepo;
-use BookStack\Auth\Permissions\RolePermission;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
@@ -22,12 +17,15 @@ use Illuminate\Support\Env;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
+use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Psr\Http\Client\ClientInterface;
 use Ssddanbrown\AssertHtml\TestsHtml;
 use Tests\Helpers\EntityProvider;
+use Tests\Helpers\PermissionsProvider;
 use Tests\Helpers\TestServiceProvider;
+use Tests\Helpers\UserRoleProvider;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -35,13 +33,16 @@ abstract class TestCase extends BaseTestCase
     use DatabaseTransactions;
     use TestsHtml;
 
-    protected ?User $admin = null;
-    protected ?User $editor = null;
     protected EntityProvider $entities;
+    protected UserRoleProvider $users;
+    protected PermissionsProvider $permissions;
 
     protected function setUp(): void
     {
         $this->entities = new EntityProvider();
+        $this->users = new UserRoleProvider();
+        $this->permissions = new PermissionsProvider($this->users);
+
         parent::setUp();
     }
 
@@ -70,20 +71,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function asAdmin()
     {
-        return $this->actingAs($this->getAdmin());
-    }
-
-    /**
-     * Get the current admin user.
-     */
-    public function getAdmin(): User
-    {
-        if (is_null($this->admin)) {
-            $adminRole = Role::getSystemRole('admin');
-            $this->admin = $adminRole->users->first();
-        }
-
-        return $this->admin;
+        return $this->actingAs($this->users->admin());
     }
 
     /**
@@ -91,20 +79,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function asEditor()
     {
-        return $this->actingAs($this->getEditor());
-    }
-
-    /**
-     * Get a editor user.
-     */
-    protected function getEditor(): User
-    {
-        if ($this->editor === null) {
-            $editorRole = Role::getRole('editor');
-            $this->editor = $editorRole->users->first();
-        }
-
-        return $this->editor;
+        return $this->actingAs($this->users->editor());
     }
 
     /**
@@ -112,28 +87,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function asViewer()
     {
-        return $this->actingAs($this->getViewer());
-    }
-
-    /**
-     * Get an instance of a user with 'viewer' permissions.
-     */
-    protected function getViewer(array $attributes = []): User
-    {
-        $user = Role::getRole('viewer')->users()->first();
-        if (!empty($attributes)) {
-            $user->forceFill($attributes)->save();
-        }
-
-        return $user;
-    }
-
-    /**
-     * Get a user that's not a system user such as the guest user.
-     */
-    public function getNormalUser(): User
-    {
-        return User::query()->where('system_name', '=', null)->get()->last();
+        return $this->actingAs($this->users->viewer());
     }
 
     /**
@@ -145,52 +99,6 @@ abstract class TestCase extends BaseTestCase
         foreach ($settingsArray as $key => $value) {
             $settings->put($key, $value);
         }
-    }
-
-    /**
-     * Give the given user some permissions.
-     */
-    protected function giveUserPermissions(User $user, array $permissions = []): void
-    {
-        $newRole = $this->createNewRole($permissions);
-        $user->attachRole($newRole);
-        $user->load('roles');
-        $user->clearPermissionCache();
-    }
-
-    /**
-     * Completely remove the given permission name from the given user.
-     */
-    protected function removePermissionFromUser(User $user, string $permissionName)
-    {
-        $permissionBuilder = app()->make(JointPermissionBuilder::class);
-
-        /** @var RolePermission $permission */
-        $permission = RolePermission::query()->where('name', '=', $permissionName)->firstOrFail();
-
-        $roles = $user->roles()->whereHas('permissions', function ($query) use ($permission) {
-            $query->where('id', '=', $permission->id);
-        })->get();
-
-        /** @var Role $role */
-        foreach ($roles as $role) {
-            $role->detachPermission($permission);
-            $permissionBuilder->rebuildForRole($role);
-        }
-
-        $user->clearPermissionCache();
-    }
-
-    /**
-     * Create a new basic role for testing purposes.
-     */
-    protected function createNewRole(array $permissions = []): Role
-    {
-        $permissionRepo = app(PermissionsRepo::class);
-        $roleData = Role::factory()->make()->toArray();
-        $roleData['permissions'] = array_flip($permissions);
-
-        return $permissionRepo->saveNewRole($roleData);
     }
 
     /**

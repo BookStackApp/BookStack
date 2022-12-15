@@ -11,10 +11,9 @@ class EntityRolePermissions extends TestCase
 {
     public function test_01_explicit_allow()
     {
-        $user = $this->getViewer();
-        $role = $user->roles->first();
+        [$user, $role] = $this->users->newUserWithRole();
         $page = $this->entities->page();
-        $this->entities->setPermissions($page, ['view'], [$role], false);
+        $this->permissions->setEntityPermissions($page, ['view'], [$role], false);
 
         $this->actingAs($user);
         $this->assertTrue(userCan('page-view', $page));
@@ -23,10 +22,9 @@ class EntityRolePermissions extends TestCase
 
     public function test_02_explicit_deny()
     {
-        $user = $this->getViewer();
-        $role = $user->roles->first();
+        [$user, $role] = $this->users->newUserWithRole();
         $page = $this->entities->page();
-        $this->entities->setPermissions($page, ['edit'], [$role], false);
+        $this->permissions->setEntityPermissions($page, ['edit'], [$role], false);
 
         $this->actingAs($user);
         $this->assertFalse(userCan('page-view', $page));
@@ -35,18 +33,16 @@ class EntityRolePermissions extends TestCase
 
     public function test_03_same_level_conflicting()
     {
-        $user = $this->getViewer();
-        $roleA = $user->roles->first();
-        $roleB = $this->createNewRole();
-        $user->attachRole($roleB);
-
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $roleB = $this->users->attachRole($user);
         $page = $this->entities->page();
-        // TODO - Can't do this as second call will overwrite first
-        $this->entities->setPermissions($page, ['edit'], [$roleA], false);
-        $this->entities->setPermissions($page, ['view'], [$roleB], false);
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->addEntityPermission($page, ['update'], $roleA->id);
+        $this->permissions->addEntityPermission($page, ['view'], $roleB->id);
 
         $this->actingAs($user);
-        $this->assertFalse(userCan('page-view', $page));
-        $this->assertNull(Page::visible()->find($page->id));
+        $this->assertTrue(userCan('page-view', $page));
+        $this->assertNotNull(Page::visible()->find($page->id));
     }
 }

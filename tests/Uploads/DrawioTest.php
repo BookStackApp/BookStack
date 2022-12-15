@@ -30,7 +30,7 @@ class DrawioTest extends TestCase
     public function test_drawing_base64_upload()
     {
         $page = Page::first();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $upload = $this->postJson('images/drawio', [
@@ -58,7 +58,7 @@ class DrawioTest extends TestCase
     {
         config()->set('services.drawio', 'http://cats.com?dog=tree');
         $page = Page::first();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
         $resp->assertSee('drawio-url="http://cats.com?dog=tree"', false);
@@ -68,7 +68,7 @@ class DrawioTest extends TestCase
     {
         config()->set('services.drawio', true);
         $page = Page::first();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
         $resp->assertSee('drawio-url="https://embed.diagrams.net/?embed=1&amp;proto=json&amp;spin=1&amp;configure=1"', false);

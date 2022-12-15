@@ -46,7 +46,7 @@ class UserManagementTest extends TestCase
 
     public function test_user_updating()
     {
-        $user = $this->getNormalUser();
+        $user = $this->users->viewer();
         $password = $user->password;
 
         $resp = $this->asAdmin()->get('/settings/users/' . $user->id);
@@ -65,7 +65,7 @@ class UserManagementTest extends TestCase
 
     public function test_user_password_update()
     {
-        $user = $this->getNormalUser();
+        $user = $this->users->viewer();
         $userProfilePage = '/settings/users/' . $user->id;
 
         $this->asAdmin()->get($userProfilePage);
@@ -113,7 +113,7 @@ class UserManagementTest extends TestCase
 
     public function test_delete()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $resp = $this->asAdmin()->delete("settings/users/{$editor->id}");
         $resp->assertRedirect('/settings/users');
         $resp = $this->followRedirects($resp);
@@ -126,7 +126,7 @@ class UserManagementTest extends TestCase
 
     public function test_delete_offers_migrate_option()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $resp = $this->asAdmin()->get("settings/users/{$editor->id}/delete");
         $resp->assertSee('Migrate Ownership');
         $resp->assertSee('new_owner_id');
@@ -134,13 +134,13 @@ class UserManagementTest extends TestCase
 
     public function test_migrate_option_hidden_if_user_cannot_manage_users()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $resp = $this->asEditor()->get("settings/users/{$editor->id}/delete");
         $resp->assertDontSee('Migrate Ownership');
         $resp->assertDontSee('new_owner_id');
 
-        $this->giveUserPermissions($editor, ['users-manage']);
+        $this->permissions->grantUserRolePermissions($editor, ['users-manage']);
 
         $resp = $this->asEditor()->get("settings/users/{$editor->id}/delete");
         $resp->assertSee('Migrate Ownership');
@@ -162,7 +162,7 @@ class UserManagementTest extends TestCase
 
     public function test_delete_removes_user_preferences()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'dark-mode-enabled', 'true');
 
         $this->assertDatabaseHas('settings', [
@@ -253,7 +253,7 @@ class UserManagementTest extends TestCase
 
     public function test_user_create_update_fails_if_locale_is_invalid()
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
 
         // Too long
         $resp = $this->asAdmin()->put($user->getEditUrl(), ['language' => 'this_is_too_long']);

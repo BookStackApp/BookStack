@@ -173,7 +173,7 @@ class PublicActionTest extends TestCase
     {
         $this->setSettings(['app-public' => 'true']);
         $book = $this->entities->book();
-        $this->entities->setPermissions($book);
+        $this->permissions->setEntityPermissions($book);
 
         $resp = $this->get($book->getUrl());
         $resp->assertSee('Book not found');

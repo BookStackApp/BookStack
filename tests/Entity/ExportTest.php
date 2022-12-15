@@ -275,7 +275,7 @@ class ExportTest extends TestCase
 
     public function test_page_export_with_deleted_creator_and_updater()
     {
-        $user = $this->getViewer(['name' => 'ExportWizardTheFifth']);
+        $user = $this->users->viewer(['name' => 'ExportWizardTheFifth']);
         $page = $this->entities->page();
         $page->created_by = $user->id;
         $page->updated_by = $user->id;
@@ -409,7 +409,7 @@ class ExportTest extends TestCase
         $chapter = $book->chapters()->first();
         $page = $chapter->pages()->first();
         $entities = [$book, $chapter, $page];
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
         $this->actingAs($user);
 
         foreach ($entities as $entity) {
@@ -417,8 +417,7 @@ class ExportTest extends TestCase
             $resp->assertSee('/export/pdf');
         }
 
-        /** @var Role $role */
-        $this->removePermissionFromUser($user, 'content-export');
+        $this->permissions->removeUserRolePermissions($user, ['content-export']);
 
         foreach ($entities as $entity) {
             $resp = $this->get($entity->getUrl());

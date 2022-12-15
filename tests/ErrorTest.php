@@ -11,7 +11,7 @@ class ErrorTest extends TestCase
         // Due to middleware being handled differently this will not fail
         // if our custom, middleware-loaded handler fails but this is here
         // as a reminder and as a general check in the event of other issues.
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $editor->name = 'tester';
         $editor->save();
 
@@ -24,7 +24,7 @@ class ErrorTest extends TestCase
 
     public function test_item_not_found_does_not_get_logged_to_file()
     {
-        $this->actingAs($this->getViewer());
+        $this->actingAs($this->users->viewer());
         $handler = $this->withTestLogger();
         $book = $this->entities->book();
 
@@ -41,7 +41,7 @@ class ErrorTest extends TestCase
 
     public function test_access_to_non_existing_image_location_provides_404_response()
     {
-        $resp = $this->actingAs($this->getViewer())->get('/uploads/images/gallery/2021-05/anonexistingimage.png');
+        $resp = $this->actingAs($this->users->viewer())->get('/uploads/images/gallery/2021-05/anonexistingimage.png');
         $resp->assertStatus(404);
         $resp->assertSeeText('Image Not Found');
     }
