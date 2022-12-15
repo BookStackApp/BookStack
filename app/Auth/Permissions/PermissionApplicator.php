@@ -107,7 +107,7 @@ class PermissionApplicator
             $allowedByTypeById = ['fallback' => [], 'user' => [], 'role' => []];
             /** @var EntityPermission $permission */
             foreach ($relevantPermissions as $permission) {
-                $allowedByTypeById[$permission->getAssignedType()][$permission->getAssignedTypeId()] = $permission->$permission;
+                $allowedByTypeById[$permission->getAssignedType()][$permission->getAssignedTypeId()] = boolval($permission->$action);
             }
 
             $inheriting = !isset($allowedByTypeById['fallback'][0]);
