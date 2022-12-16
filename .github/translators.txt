@@ -283,13 +283,13 @@ Kuchinashi Hoshikawa (kuchinashi) :: Chinese Simplified
 digilady :: Greek
 Linus (LinusOP) :: Swedish
 Felipe Cardoso (felipecardosoruff) :: Portuguese, Brazilian
-RandomUser0815 :: German
+RandomUser0815 :: German Informal; German
 Ismael Mesquita (mesquitoliveira) :: Portuguese, Brazilian
 구인회 (laskdjlaskdj12) :: Korean
 LiZerui (CNLiZerui) :: Chinese Traditional
 Fabrice Boyer (FabriceBoyer) :: French
 mikael (bitcanon) :: Swedish
-Matthias Mai (schnapsidee) :: German
+Matthias Mai (schnapsidee) :: German; German Informal
 Ufuk Ayyıldız (ufukayyildiz) :: Turkish
 Jan Mitrof (jan.kachlik) :: Czech
 edwardsmirnov :: Russian
@@ -298,3 +298,7 @@ shotu :: French
 Cesar_Lopez_Aguillon :: Spanish
 bdewoop :: German
 dina davoudi (dina.davoudi) :: Persian
+Angelos Chouvardas (achouvardas) :: Greek
+rndrss :: Portuguese, Brazilian
+rirac294 :: Russian
+David Furman (thefourCraft) :: Hebrew
