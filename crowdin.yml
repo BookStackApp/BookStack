@@ -1,6 +1,9 @@
 project_identifier: bookstack
 base_path: .
 preserve_hierarchy: false
+pull_request_title: Updated translations with latest Crowdin changes
+pull_request_labels:
+  - ":earth_africa: Translations"
 files:
   - source: /resources/lang/en/*.php
     translation: /resources/lang/%two_letters_code%/%original_file_name%
