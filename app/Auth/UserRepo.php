@@ -234,6 +234,8 @@ class UserRepo
      */
     protected function setUserRoles(User $user, array $roles)
     {
+        $roles = array_filter(array_values($roles));
+
         if ($this->demotingLastAdmin($user, $roles)) {
             throw new UserUpdateException(trans('errors.role_cannot_remove_only_admin'), $user->getEditUrl());
         }
