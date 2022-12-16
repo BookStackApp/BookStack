@@ -25,7 +25,7 @@ return [
     'actions' => '実行',
     'view' => '表示',
     'view_all' => 'すべて表示',
-    'new' => 'New',
+    'new' => '新規作成',
     'create' => '作成',
     'update' => '更新',
     'edit' => '編集',
@@ -40,7 +40,7 @@ return [
     'reset' => 'リセット',
     'remove' => '削除',
     'add' => '追加',
-    'configure' => 'Configure',
+    'configure' => '設定',
     'fullscreen' => '全画面',
     'favourite' => 'お気に入り',
     'unfavourite' => 'お気に入りから削除',
@@ -81,14 +81,14 @@ return [
     'none' => 'なし',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'ホームページ',
     'header_menu_expand' => 'ヘッダーメニューを展開',
     'profile_menu' => 'プロフィールメニュー',
     'view_profile' => 'プロフィール表示',
     'edit_profile' => 'プロフィール編集',
     'dark_mode' => 'ダークモード',
     'light_mode' => 'ライトモード',
-    'global_search' => 'Global Search',
+    'global_search' => 'グローバル検索',
 
     // Layout tabs
     'tab_info' => '情報',

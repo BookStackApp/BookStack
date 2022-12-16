@@ -113,7 +113,7 @@ return [
     'paste_row_after' => 'Paste row after',
     'row_type' => 'Row type',
     'row_type_header' => 'Header',
-    'row_type_body' => 'Body',
+    'row_type_body' => 'תוכן',
     'row_type_footer' => 'Footer',
     'alignment' => 'Alignment',
     'cut_column' => 'Cut column',
