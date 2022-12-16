@@ -133,11 +133,11 @@ return [
     // Role Settings
     'roles' => '角色',
     'role_user_roles' => '用户角色',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
-    'roles_x_permissions_provided' => '1 permission|:count permissions',
-    'roles_assigned_users' => 'Assigned Users',
-    'roles_permissions_provided' => 'Provided Permissions',
+    'roles_index_desc' => '角色用于对用户进行分组并为其成员提供系统权限。当一个用户是多个角色的成员时，授予的权限将叠加，用户将继承所有角色的能力。',
+    'roles_x_users_assigned' => '1 位用户已分配|:count 位用户已分配',
+    'roles_x_permissions_provided' => '1 个权限|:count 个权限',
+    'roles_assigned_users' => '已分配用户',
+    'roles_permissions_provided' => '已提供权限',
     'role_create' => '创建角色',
     'role_create_success' => '角色创建成功',
     'role_delete' => '删除角色',
@@ -177,7 +177,7 @@ return [
 
     // Users
     'users' => '用户',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => '在系统内创建和管理个人用户账户。用户账户用于登录和内容及活动的归属。访问权限主要是基于角色的，但用户的内容所有权以及其他因素，也可能影响到权限和访问。',
     'user_profile' => '用户资料',
     'users_add_new' => '添加用户',
     'users_search' => '搜索用户',
@@ -209,7 +209,7 @@ return [
     'users_preferred_language' => '语言',
     'users_preferred_language_desc' => '此选项将更改用于应用程序用户界面的语言。 这不会影响任何用户创建的内容。',
     'users_social_accounts' => '社交账户',
-    'users_social_accounts_info' => '在这里，您可以绑定您的其他帐户，以便更快更轻松地登录。如果您选择解除绑定，之后将不能通过此社交账户登录，请设置社交账户来取消本App的访问权限。',
+    'users_social_accounts_info' => '在这里，您可以绑定您的其他账户，以便更快更轻松地登录。如果您选择解除绑定，之后将不能通过此社交账户登录，请设置社交账户来取消本App的访问权限。',
     'users_social_connect' => '绑定账户',
     'users_social_disconnect' => '解除绑定账户',
     'users_social_connected' => ':socialAccount 账户已经成功绑定到您的资料。',
@@ -247,8 +247,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
-    'webhooks_x_trigger_events' => '1 trigger event|:count trigger events',
+    'webhooks_index_desc' => 'Webhook 是一种在系统内发生某些操作和事件时将数据发送到外部 URL 的方法，它允许与外部平台（例如消息传递或通知系统）进行基于事件的集成。',
+    'webhooks_x_trigger_events' => '1 个触发事件 |:count 个触发事件',
     'webhooks_create' => '新建 Webhook',
     'webhooks_none_created' => '尚未创建任何 Webhook。',
     'webhooks_edit' => '编辑 Webhook',
