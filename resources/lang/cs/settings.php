@@ -26,7 +26,7 @@ return [
     'app_public_viewing' => 'Povolit prohlížení veřejností?',
     'app_secure_images' => 'Nahrávat obrázky neveřejně a zabezpečeně',
     'app_secure_images_toggle' => 'Zapnout bezpečnější nahrávání obrázků',
-    'app_secure_images_desc' => 'Z výkonnostních důvodů jsou všechny obrázky veřejně dostupné. Tato volba přidá do adresy obrázku náhodný řetězec, aby nikdo neodhadnul adresu obrázku. Ujistěte se, že server nezobrazuje v adresáři seznam souborů, což by přístup k přístup opět otevřelo.',
+    'app_secure_images_desc' => 'Z výkonnostních důvodů jsou všechny obrázky veřejně dostupné. Tato volba přidá do adresy obrázku náhodný řetězec, aby nikdo neodhadnul adresu obrázku. Ujistěte se, že server nezobrazuje v adresáři seznam souborů, což by přístup k obrázkům opět otevřelo.',
     'app_default_editor' => 'Výchozí editor',
     'app_default_editor_desc' => 'Vyberte, který editor bude použit ve výchozím nastavení při úpravách nových stránek. To může být přepsáno na úrovni stránky, kde to dovolují oprávnění.',
     'app_custom_html' => 'Vlastní obsah hlavičky HTML',

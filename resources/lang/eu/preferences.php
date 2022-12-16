@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'Lastertekla',
+    'shortcuts_interface' => 'Teklatuko lasterbideak ikusi',
+    'shortcuts_toggle_desc' => 'Hemen, nabigaziorako eta ekintzetarako erabiltzen diren teklatu-sistemako lasterbideak gaitu edo desgaitu daitezke.',
+    'shortcuts_customize_desc' => 'Beheko lasterbide bakoitza pertsonalizatu dezakezu. Sakatu nahi duzun tekla konbinazioa lasterbide baterako sarrera aukeratu ondoren.',
+    'shortcuts_toggle_label' => 'Teklatu-lasterbideak aktibatuta',
+    'shortcuts_section_navigation' => 'Nabigazioa',
+    'shortcuts_section_actions' => 'Ohiko ekintzak',
+    'shortcuts_save' => 'Gorde lasterbideak',
+    'shortcuts_overlay_desc' => 'Oharra: Lasterbideak gaituta daudenean, "?" sakagailuaren bidez laguntzaileen gainjartze bat egongo da, eta horrek pantailan gaur egun ikus daitezkeen ekintzetarako dauden lasterbideak nabarmenduko ditu.',
+    'shortcuts_update_success' => 'Zure lehentasunak gorde dira!',
 ];

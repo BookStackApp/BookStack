@@ -30,14 +30,14 @@ return [
     'social_no_action_defined' => '没有定义行为',
     'social_login_bad_response' => "在 :socialAccount 登录时遇到错误：\n:error",
     'social_account_in_use' => ':socialAccount 账户已被使用，请尝试通过 :socialAccount 选项登录。',
-    'social_account_email_in_use' => 'Email :email 已经被使用。如果您已有帐户，则可以在个人资料设置中绑定您的 :socialAccount。',
+    'social_account_email_in_use' => 'Email :email 已经被使用。如果您已有账户，则可以在个人资料设置中绑定您的 :socialAccount。',
     'social_account_existing' => ':socialAccount已经被绑定到您的账户。',
     'social_account_already_used_existing' => ':socialAccount账户已经被其他用户使用。',
     'social_account_not_used' => ':socialAccount账户没有绑定到任何用户，请在您的个人资料设置中绑定。',
-    'social_account_register_instructions' => '如果您还没有帐户，您可以使用 :socialAccount 选项注册账户。',
+    'social_account_register_instructions' => '如果您还没有账户，您可以使用 :socialAccount 选项注册账户。',
     'social_driver_not_found' => '未找到社交驱动程序',
     'social_driver_not_configured' => '您的:socialAccount社交设置不正确。',
-    'invite_token_expired' => '此邀请链接已过期。 您可以尝试重置您的帐户密码。',
+    'invite_token_expired' => '此邀请链接已过期。 您可以尝试重置您的账户密码。',
 
     // System
     'path_not_writable' => '无法上传到文件路径“:filePath”，请确保它可写入服务器。',

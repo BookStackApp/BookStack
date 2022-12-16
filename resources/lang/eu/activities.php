@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => 'liburua sortuta',
     'book_create_notification'    => 'Liburua ongi sortu da',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'bihurtu kapitulua liburu',
+    'book_create_from_chapter_notification' => 'Kapitulua ongi bilakatu da liburu',
     'book_update'                 => 'liburua eguneratuta',
     'book_update_notification'    => 'Liburua egoki eguneratua',
     'book_delete'                 => 'liburua ezabatua',
@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Liburua ongi bersailaktu da',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create'            => 'apalategia sortuta',
+    'bookshelf_create_notification'    => 'Apalategia egoki sortuta',
+    'bookshelf_create_from_book'    => 'liburua apalategi bihurtuta',
+    'bookshelf_create_from_book_notification'    => 'Kapitulua ongi bilakatu da liburu',
+    'bookshelf_update'                 => 'apalategia eguneratuta',
+    'bookshelf_update_notification'    => 'Erabiltzailea egoki eguneratua',
+    'bookshelf_delete'                 => 'apalategia ezabatua',
+    'bookshelf_delete_notification'    => 'Apalategia egoki ezabatua',
 
     // Favourites
     'favourite_add_notification' => '":name" zure gogoetara gehitua izan da',
