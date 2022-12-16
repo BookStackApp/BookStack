@@ -57,6 +57,12 @@ export class KeyboardNavigationHandler {
      * @param {KeyboardEvent} event
      */
     #keydownHandler(event) {
+
+        // Ignore certain key events in inputs to allow text editing.
+        if (event.target.matches('input') && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
+            return;
+        }
+
         if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
             this.focusNext();
             event.preventDefault();
