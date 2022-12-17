@@ -59,7 +59,7 @@ class UserRoleProvider
     public function newUserWithRole(array $userAttrs = [], array $rolePermissions = []): array
     {
         $user = User::factory()->create($userAttrs);
-        $role = $this->attachRole($user, $rolePermissions);
+        $role = $this->attachNewRole($user, $rolePermissions);
 
         return [$user, $role];
     }
@@ -68,7 +68,7 @@ class UserRoleProvider
      * Attach a new role, with the given role permissions, to the given user
      * and return that role.
      */
-    public function attachRole(User $user, array $rolePermissions = []): Role
+    public function attachNewRole(User $user, array $rolePermissions = []): Role
     {
         $role = $this->createRole($rolePermissions);
         $user->attachRole($role);

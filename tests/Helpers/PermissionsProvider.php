@@ -90,9 +90,9 @@ class PermissionsProvider
         $this->addEntityPermissionEntries($entity, $permissions);
     }
 
-    public function addEntityPermission(Entity $entity, array $actionList, int $roleId = null, int $userId = null)
+    public function addEntityPermission(Entity $entity, array $actionList, ?Role $role = null, ?User $user = null)
     {
-        $permissionData = $this->actionListToEntityPermissionData($actionList, $roleId, $userId);
+        $permissionData = $this->actionListToEntityPermissionData($actionList, $role->id ?? null, $user->id ?? null);
         $this->addEntityPermissionEntries($entity, [$permissionData]);
     }
 

@@ -10,28 +10,76 @@ Test cases are written ability abstract, since all abilities should act the same
 
 These are tests related to entity-level role-specific permission overrides.
 
-#### entity_role_01 - Explicit allow
+#### test_01_explicit_allow
 
 - Page permissions have inherit disabled.
-- Role A has explicit page permission.
+- Role A has entity allow page permission.
 - User has Role A.
 
 User should have page permission.
 
-#### entity_role_02 - Explicit deny
+#### test_02_explicit_deny
 
 - Page permissions have inherit disabled.
-- Role A has explicit page permission.
+- Role A has entity deny page permission.
 - User has Role A.
 
-User should not have permission.
+User denied page permission.
 
-#### entity_role_03 - Same level conflicting
+#### test_03_same_level_conflicting
 
 - Page permissions have inherit disabled.
-- Role A has explicit page permission.
-- Role B has explicit blocked page permission.
+- Role A has entity allow page permission.
+- Role B has entity deny page permission.
 - User has both Role A & B.
 
-User should have page permission. Explicit grant overrides explicit deny at same level.
- 
+User should have page permission. 
+Explicit grant overrides entity deny at same level.
+
+#### test_20_inherit_allow
+
+- Page permissions have inherit enabled.
+- Chapter permissions has inherit disabled.
+- Role A has entity allow chapter permission.
+- User has both Role A.
+
+User should have page permission.
+
+#### test_21_inherit_deny
+
+- Page permissions have inherit enabled.
+- Chapter permissions has inherit disabled.
+- Role A has entity deny chapter permission.
+- User has both Role A.
+
+User denied page permission.
+
+#### test_22_same_level_conflict_inherit 
+
+- Page permissions have inherit enabled.
+- Chapter permissions has inherit disabled.
+- Role A has entity deny chapter permission.
+- Role B has entity allow chapter permission.
+- User has both Role A & B.
+
+User should have page permission.
+
+#### test_30_child_inherit_override_allow
+
+- Page permissions have inherit enabled.
+- Chapter permissions has inherit disabled.
+- Role A has entity deny chapter permission.
+- Role A has entity allow page permission.
+- User has Role A.
+
+User should have page permission.
+
+#### test_31_child_inherit_override_deny
+
+- Page permissions have inherit enabled.
+- Chapter permissions has inherit disabled.
+- Role A has entity allow chapter permission.
+- Role A has entity deny page permission.
+- User has Role A.
+
+User denied page permission.
