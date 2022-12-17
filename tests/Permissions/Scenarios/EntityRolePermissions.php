@@ -2,13 +2,7 @@
 
 namespace Tests\Permissions\Scenarios;
 
-use BookStack\Auth\User;
-use BookStack\Entities\Models\Entity;
-use Tests\TestCase;
-
-// Cases defined in dev/docs/permission-scenario-testing.md
-
-class EntityRolePermissions extends TestCase
+class EntityRolePermissions extends PermissionScenarioTestCase
 {
     public function test_01_explicit_allow()
     {
@@ -103,31 +97,5 @@ class EntityRolePermissions extends TestCase
         $this->permissions->addEntityPermission($page, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
-    }
-
-    protected function assertVisibleToUser(Entity $entity, User $user)
-    {
-        $this->actingAs($user);
-        $funcView = userCan($entity->getMorphClass() . '-view', $entity);
-        $queryView = $entity->newQuery()->scopes(['visible'])->find($entity->id) !== null;
-
-        $id = $entity->getMorphClass() . ':' . $entity->id;
-        $msg = "Item [{$id}] should be visible but was not found via ";
-        $msg .= implode(' and ', array_filter([!$funcView ? 'userCan' : '', !$queryView ? 'query' : '']));
-
-        static::assertTrue($funcView && $queryView, $msg);
-    }
-
-    protected function assertNotVisibleToUser(Entity $entity, User $user)
-    {
-        $this->actingAs($user);
-        $funcView = userCan($entity->getMorphClass() . '-view', $entity);
-        $queryView = $entity->newQuery()->scopes(['visible'])->find($entity->id) !== null;
-
-        $id = $entity->getMorphClass() . ':' . $entity->id;
-        $msg = "Item [{$id}] should not be visible but was found via ";
-        $msg .= implode(' and ', array_filter([$funcView ? 'userCan' : '', $queryView ? 'query' : '']));
-
-        static::assertTrue(!$funcView && !$queryView, $msg);
     }
 }

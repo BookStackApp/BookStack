@@ -57,6 +57,16 @@ class PermissionsProvider
     }
 
     /**
+     * Change the owner of the given entity to the given user.
+     */
+    public function changeEntityOwner(Entity $entity, User $newOwner): void
+    {
+        $entity->owned_by = $newOwner->id;
+        $entity->save();
+        $entity->rebuildPermissions();
+    }
+
+    /**
      * Regenerate the permission for an entity.
      * Centralised to manage clearing of cached elements between requests.
      */
