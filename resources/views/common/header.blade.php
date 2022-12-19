@@ -45,16 +45,6 @@
         <nav refs="header-mobile-toggle@menu" class="header-links">
             <div class="links text-center">
                 @if (hasAppAccess())
-                    <span component="reading-font-resizer"
-                          option:reading-font-resizer:name="increaseFont"
-                          option:reading-font-resizer:font="increase">
-                        @icon('arrow-up')
-                    </span>
-                    <span component="reading-font-resizer"
-                          option:reading-font-resizer:name="decreaseFont"
-                          option:reading-font-resizer:font="decrease">
-                        @icon('arrow-down')
-                    </span>
                     <a class="hide-over-l" href="{{ url('/search') }}">@icon('search'){{ trans('common.search') }}</a>
                     @if(userCanOnAny('view', \BookStack\Entities\Models\Bookshelf::class) || userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
                         <a href="{{ url('/shelves') }}" data-shortcut="shelves_view">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
@@ -121,6 +111,18 @@
                         </li>
                         <li>
                             @include('common.dark-mode-toggle', ['classes' => 'icon-item'])
+                        </li>
+                        <li>
+                            <div class="icon-item" component="reading-font-resizer"
+                                  option:reading-font-resizer:name="increaseFont"
+                                  option:reading-font-resizer:font="increase">
+                                @icon('magnifying-glass-plus-solid') {{ trans('common.increase_reading_font_size') }}
+                            </div>
+                            <div class="icon-item" component="reading-font-resizer"
+                                  option:reading-font-resizer:name="decreaseFont"
+                                  option:reading-font-resizer:font="decrease">
+                                @icon('magnifying-glass-minus-solid') {{ trans('common.decrease_reading_font_size') }}
+                            </div>
                         </li>
                     </ul>
                 </div>
