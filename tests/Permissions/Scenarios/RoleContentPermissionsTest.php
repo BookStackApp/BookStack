@@ -2,7 +2,7 @@
 
 namespace Tests\Permissions\Scenarios;
 
-class RoleContentPermissions extends PermissionScenarioTestCase
+class RoleContentPermissionsTest extends PermissionScenarioTestCase
 {
     public function test_01_allow()
     {

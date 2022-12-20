@@ -2,7 +2,7 @@
 
 namespace Tests\Permissions\Scenarios;
 
-class EntityUserPermissions extends PermissionScenarioTestCase
+class EntityUserPermissionsTest extends PermissionScenarioTestCase
 {
     public function test_01_explicit_allow()
     {
@@ -112,6 +112,97 @@ class EntityUserPermissions extends PermissionScenarioTestCase
         $this->permissions->disableEntityInheritedPermissions($chapter);
         $this->permissions->addEntityPermission($chapter, [], null, $user);
         $this->permissions->addEntityPermission($page, ['view'], $role);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_50_role_override_allow()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $page = $this->entities->page();
+        $this->permissions->addEntityPermission($page, ['view'], null, $user);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_51_role_override_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
+        $page = $this->entities->page();
+        $this->permissions->addEntityPermission($page, [], null, $user);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_60_inherited_role_override_allow()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], []);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->addEntityPermission($chapter, ['view'], null, $user);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_61_inherited_role_override_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->addEntityPermission($chapter, [], null, $user);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_61_inherited_role_override_deny_on_own()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-own']);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->addEntityPermission($chapter, [], null, $user);
+        $this->permissions->changeEntityOwner($page, $user);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_70_all_override_allow()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], []);
+        $page = $this->entities->page();
+        $this->permissions->addEntityPermission($page, [], $roleA, null);
+        $this->permissions->addEntityPermission($page, ['view'], null, $user);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_71_all_override_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
+        $page = $this->entities->page();
+        $this->permissions->addEntityPermission($page, ['view'], $roleA, null);
+        $this->permissions->addEntityPermission($page, [], null, $user);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_80_inherited_all_override_allow()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], []);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->addEntityPermission($chapter, [], $roleA, null);
+        $this->permissions->addEntityPermission($chapter, ['view'], null, $user);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_81_inherited_all_override_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->addEntityPermission($chapter, ['view'], $roleA, null);
+        $this->permissions->addEntityPermission($chapter, [], null, $user);
 
         $this->assertNotVisibleToUser($page, $user);
     }

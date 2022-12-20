@@ -2,7 +2,7 @@
 
 namespace Tests\Permissions\Scenarios;
 
-class EntityRolePermissions extends PermissionScenarioTestCase
+class EntityRolePermissionsTest extends PermissionScenarioTestCase
 {
     public function test_01_explicit_allow()
     {
@@ -125,5 +125,54 @@ class EntityRolePermissions extends PermissionScenarioTestCase
         $this->permissions->addEntityPermission($chapter, [], $roleB);
 
         $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_50_role_override_allow()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $page = $this->entities->page();
+        $this->permissions->addEntityPermission($page, ['view'], $roleA);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_51_role_override_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
+        $page = $this->entities->page();
+        $this->permissions->addEntityPermission($page, [], $roleA);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_60_inherited_role_override_allow()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], []);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_61_inherited_role_override_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->addEntityPermission($chapter, [], $roleA);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_62_inherited_role_override_deny_on_own()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-own']);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->addEntityPermission($chapter, [], $roleA);
+        $this->permissions->changeEntityOwner($page, $user);
+
+        $this->assertNotVisibleToUser($page, $user);
     }
 }

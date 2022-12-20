@@ -20,11 +20,6 @@ The below are some general rules we follow to standardise the behaviour of permi
 
 ## Cases
 
-TODO - Role & entity-role interplay
-TODO - Role & entity-user interplay
-TODO - Role content relations?
-TODO - Role system permissions?
-
 ### Content Role Permissions
 
 These are tests related to item/entity permissions that are set only at a role level.
@@ -176,6 +171,55 @@ User granted page permission.
 
 User granted page permission.
 
+#### test_50_role_override_allow
+
+- Page permissions have inherit enabled.
+- Role A has no page role permission.
+- Role A has entity allow page permission.
+- User has Role A.
+
+User granted page permission.
+
+#### test_51_role_override_deny
+
+- Page permissions have inherit enabled.
+- Role A has no page-view-all role permission.
+- Role A has entity deny page permission.
+- User has Role A.
+
+User denied page permission.
+
+#### test_60_inherited_role_override_allow
+
+- Page permissions have inherit enabled.
+- Chapter permissions have inherit enabled.
+- Role A has no page role permission.
+- Role A has entity allow chapter permission.
+- User has Role A.
+
+User granted page permission.
+
+#### test_61_inherited_role_override_deny
+
+- Page permissions have inherit enabled.
+- Chapter permissions have inherit enabled.
+- Role A has page role permission.
+- Role A has entity denied chapter permission.
+- User has Role A.
+
+User denied page permission.
+
+#### test_62_inherited_role_override_deny_on_own
+
+- Page permissions have inherit enabled.
+- Chapter permissions have inherit enabled.
+- Role A has own-page role permission.
+- Role A has entity denied chapter permission.
+- User has Role A.
+- User owns Page.
+
+User denied page permission.
+
 ---
 
 ### Entity User Permissions
@@ -265,5 +309,91 @@ User granted page permission.
 - User has entity deny chapter permission.
 - Role A has entity allow page permission.
 - User has role A.
+
+User denied page permission.
+
+#### test_50_role_override_allow
+
+- Page permissions have inherit enabled.
+- Role A has no page role permission.
+- User has entity allow page permission.
+- User has Role A.
+
+User granted page permission.
+
+#### test_51_role_override_deny
+
+- Page permissions have inherit enabled.
+- Role A has all-page role permission.
+- User has entity deny page permission.
+- User has Role A.
+
+User denied page permission.
+
+#### test_60_inherited_role_override_allow
+
+- Page permissions have inherit enabled.
+- Role A has no page role permission.
+- User has entity allow chapter permission.
+- User has Role A.
+
+User granted page permission.
+
+#### test_61_inherited_role_override_deny
+
+- Page permissions have inherit enabled.
+- Role A has view-all page role permission.
+- User has entity deny chapter permission.
+- User has Role A.
+
+User denied page permission.
+
+#### test_61_inherited_role_override_deny_on_own
+
+- Page permissions have inherit enabled.
+- Role A has view-own page role permission.
+- User has entity deny chapter permission.
+- User has Role A.
+- User owns Page.
+
+User denied page permission.
+
+#### test_70_all_override_allow
+
+- Page permissions have inherit enabled.
+- Role A has no page role permission.
+- Role A has entity deny page permission.
+- User has entity allow page permission.
+- User has Role A.
+
+User granted page permission.
+
+#### test_71_all_override_deny
+
+- Page permissions have inherit enabled.
+- Role A has page-all role permission.
+- Role A has entity allow page permission.
+- User has entity deny page permission.
+- User has Role A.
+
+User denied page permission.
+
+#### test_80_inherited_all_override_allow
+
+- Page permissions have inherit enabled.
+- Role A has no page role permission.
+- Role A has entity deny chapter permission.
+- User has entity allow chapter permission.
+- User has Role A.
+
+User granted page permission.
+
+#### test_81_inherited_all_override_deny
+
+- Page permissions have inherit enabled.
+- Role A has view-all page role permission.
+- Role A has entity allow chapter permission.
+- User has entity deny chapter permission.
+- User has Role A.
 
 User denied page permission.
