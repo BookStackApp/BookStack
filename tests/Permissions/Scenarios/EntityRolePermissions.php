@@ -98,4 +98,32 @@ class EntityRolePermissions extends PermissionScenarioTestCase
 
         $this->assertNotVisibleToUser($page, $user);
     }
+
+    public function test_40_multi_role_inherit_conflict_override_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $roleB = $this->users->attachNewRole($user);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+
+        $this->permissions->disableEntityInheritedPermissions($chapter);
+        $this->permissions->addEntityPermission($page, [], $roleA);
+        $this->permissions->addEntityPermission($chapter, ['view'], $roleB);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_41_multi_role_inherit_conflict_retain_allow()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $roleB = $this->users->attachNewRole($user);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+
+        $this->permissions->disableEntityInheritedPermissions($chapter);
+        $this->permissions->addEntityPermission($page, ['view'], $roleA);
+        $this->permissions->addEntityPermission($chapter, [], $roleB);
+
+        $this->assertVisibleToUser($page, $user);
+    }
 }

@@ -51,6 +51,14 @@ class UserRoleProvider
     }
 
     /**
+     * Create a new fresh user without any relations.
+     */
+    public function newUser(array $attrs = []): User
+    {
+        return User::factory()->create($attrs);
+    }
+
+    /**
      * Create a new fresh user, with the given attrs, that has assigned a fresh role
      * that has the given role permissions.
      * Intended as a helper to create a blank slate baseline user and role.
@@ -58,7 +66,7 @@ class UserRoleProvider
      */
     public function newUserWithRole(array $userAttrs = [], array $rolePermissions = []): array
     {
-        $user = User::factory()->create($userAttrs);
+        $user = $this->newUser($userAttrs);
         $role = $this->attachNewRole($user, $rolePermissions);
 
         return [$user, $role];
