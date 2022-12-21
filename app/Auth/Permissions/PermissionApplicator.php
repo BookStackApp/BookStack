@@ -94,15 +94,8 @@ class PermissionApplicator
                 ->get(['role_id', 'user_id', $action])
                 ->all();
 
-            // Permissions work on specificity, in order of:
-            // 1. User-specific permissions
-            // 2. Role-specific permissions
-            // 3. Fallback-specific permissions
-            // For role permissions, the system tries to be fairly permissive, in that if the user has two roles,
-            // one lacking and one permitting an action, they will be permitted.
-            // This can be complex when multiple roles and inheritance gets involved. If permission is prevented
-            // via "Role A" on an item, but inheritance is active and permission is granted via "Role B" on parent item,
-            // the user will be granted permission.
+            // See dev/docs/permission-scenario-testing.md for technical details
+            // on how permissions should be enforced.
 
             $allowedByTypeById = ['fallback' => [], 'user' => [], 'role' => []];
             /** @var EntityPermission $permission */
@@ -151,10 +144,9 @@ class PermissionApplicator
             return $allowedByTypeById['fallback'][0];
         }
 
-        // If we have roles that need to be assessed, but we are also inheriting, pass back the prevented
-        // role IDs so they can be excluded from the role permission check.
+        // If we have relevant roles conditions that are actively blocking
+        // return false since these are more specific than potential role-level permissions.
         if (count($blockedRoleIds) > 0) {
-            // TODO - Need to use these ids in some form in outer permission check, as blockers when access
             return false;
         }
 

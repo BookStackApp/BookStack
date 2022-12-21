@@ -220,6 +220,25 @@ User denied page permission.
 
 User denied page permission.
 
+#### test_70_multi_role_inheriting_deny
+
+- Page permissions have inherit enabled.
+- Role A has all page role permission.
+- Role B has entity denied page permission.
+- User has Role A and B.
+
+User denied page permission.
+
+#### test_80_multi_role_inherited_deny_via_parent
+
+- Page permissions have inherit enabled.
+- Chapter permissions have inherit enabled.
+- Role A has all-pages role permission.
+- Role B has entity denied chapter permission.
+- User has Role A & B.
+
+User denied page permission.
+
 ---
 
 ### Entity User Permissions
