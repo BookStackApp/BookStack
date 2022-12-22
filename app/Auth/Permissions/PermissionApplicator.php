@@ -183,20 +183,70 @@ class PermissionApplicator
      * Limit the given entity query so that the query will only
      * return items that the user has view permission for.
      */
-    public function restrictEntityQuery(Builder $query): Builder
+    public function restrictEntityQuery(Builder $query, string $morphClass): Builder
     {
-        return $query->where(function (Builder $parentQuery) {
-            $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
-                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
-                    ->where(function (Builder $query) {
-                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                    });
-            })->orWhereHas('jointUserPermissions', function (Builder $query) {
-                $query->where('user_id', '=', $this->currentUser()->id)->where('has_permission', '=', true);
-            });
-        })->whereDoesntHave('jointUserPermissions', function (Builder $query) {
-            $query->where('user_id', '=', $this->currentUser()->id)->where('has_permission', '=', false);
+        $this->getCurrentUserRoleIds();
+        $this->currentUser()->id;
+
+        $userViewAll = userCan($morphClass . '-view-all');
+        $userViewOwn = userCan($morphClass . '-view-own');
+
+        // TODO - Leave this as the new admin workaround?
+        //   Or auto generate collapsed role permissions for admins?
+        if (\user()->hasSystemRole('admin')) {
+            return $query;
+        }
+
+        // Fallback permission join
+        $query->joinSub(function (QueryBuilder $joinQuery) use ($morphClass) {
+            $joinQuery->select(['entity_id'])->selectRaw('max(view) as perms_fallback')
+                ->from('entity_permissions_collapsed')
+                ->where('entity_type', '=', $morphClass)
+                ->whereNull(['role_id', 'user_id'])
+                ->groupBy('entity_id');
+        }, 'p_f', 'id', '=', 'p_f.entity_id', 'left');
+
+        // Role permission join
+        $query->joinSub(function (QueryBuilder $joinQuery) use ($morphClass) {
+            $joinQuery->select(['entity_id'])->selectRaw('max(view) as perms_role')
+                ->from('entity_permissions_collapsed')
+                ->where('entity_type', '=', $morphClass)
+                ->whereIn('role_id', $this->getCurrentUserRoleIds())
+                ->groupBy('entity_id');
+        }, 'p_r', 'id', '=', 'p_r.entity_id', 'left');
+
+        // User permission join
+        $query->joinSub(function (QueryBuilder $joinQuery) use ($morphClass) {
+            $joinQuery->select(['entity_id'])->selectRaw('max(view) as perms_user')
+                ->from('entity_permissions_collapsed')
+                ->where('entity_type', '=', $morphClass)
+                ->where('user_id', '=', $this->currentUser()->id)
+                ->groupBy('entity_id');
+        }, 'p_u', 'id', '=', 'p_u.entity_id', 'left');
+
+        // Where permissions apply
+        $query->where(function (Builder $query) use ($userViewOwn, $userViewAll) {
+            $query->where('perms_user', '=', 1)
+                ->orWhere(function (Builder $query) {
+                    $query->whereNull('perms_user')->where('perms_role', '=', 1);
+                })->orWhere(function (Builder $query) {
+                    $query->whereNull(['perms_user', 'perms_role'])
+                        ->where('perms_fallback', '=', 1);
+                });
+
+            if ($userViewAll) {
+                $query->orWhere(function (Builder $query) {
+                    $query->whereNull(['perms_user', 'perms_role', 'perms_fallback']);
+                });
+            } else if ($userViewOwn) {
+                $query->orWhere(function (Builder $query) {
+                    $query->whereNull(['perms_user', 'perms_role', 'perms_fallback'])
+                        ->where('created_by', '=', $this->currentUser()->id);
+                });
+            }
         });
+
+        return $query;
     }
 
     /**
@@ -225,6 +275,9 @@ class PermissionApplicator
     {
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
         $pageMorphClass = (new Page())->getMorphClass();
+
+        // TODO;
+        return $query;
 
         $q = $query->where(function ($query) use ($tableDetails) {
             $query->whereExists(function ($permissionQuery) use ($tableDetails) {
@@ -274,6 +327,9 @@ class PermissionApplicator
     {
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
         $morphClass = (new Page())->getMorphClass();
+
+        // TODO
+        return $query;
 
         $existsQuery = function ($permissionQuery) use ($fullPageIdColumn, $morphClass) {
             /** @var Builder $permissionQuery */

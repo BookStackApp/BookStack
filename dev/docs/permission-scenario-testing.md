@@ -8,7 +8,10 @@ Tests are categorised by the most specific element involved in the scenario, whe
 
 - User entity permissions.
 - Role entity permissions.
+- Fallback entity permissions.
 - Role permissions.
+
+- TODO - Test fallback in the context of the above.
 
 ## General Permission Logical Rules
 

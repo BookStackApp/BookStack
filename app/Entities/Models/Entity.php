@@ -70,7 +70,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function scopeVisible(Builder $query): Builder
     {
-        return app()->make(PermissionApplicator::class)->restrictEntityQuery($query);
+        return app()->make(PermissionApplicator::class)->restrictEntityQuery($query, $this->getMorphClass());
     }
 
     /**

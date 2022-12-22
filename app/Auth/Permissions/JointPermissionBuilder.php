@@ -2,7 +2,6 @@
 
 namespace BookStack\Auth\Permissions;
 
-use BookStack\Auth\Role;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Bookshelf;
