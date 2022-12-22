@@ -34,8 +34,6 @@ class PermissionsProvider
      */
     public function removeUserRolePermissions(User $user, array $permissions): void
     {
-        $permissionBuilder = app()->make(JointPermissionBuilder::class);
-
         foreach ($permissions as $permissionName) {
             /** @var RolePermission $permission */
             $permission = RolePermission::query()
@@ -49,7 +47,6 @@ class PermissionsProvider
             /** @var Role $role */
             foreach ($roles as $role) {
                 $role->detachPermission($permission);
-                $permissionBuilder->rebuildForRole($role);
             }
 
             $user->clearPermissionCache();

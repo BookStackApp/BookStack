@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJointUserPermissionsTable extends Migration
+class CreateCollapsedRolePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateJointUserPermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('joint_user_permissions', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
+        Schema::create('entity_permissions_collapsed', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('role_id')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
             $table->string('entity_type');
             $table->unsignedInteger('entity_id');
-            $table->boolean('has_permission')->index();
+            $table->boolean('view')->index();
 
-            $table->primary(['user_id', 'entity_type', 'entity_id']);
+            $table->index(['entity_type', 'entity_id']);
         });
     }
 
@@ -30,6 +32,6 @@ class CreateJointUserPermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('joint_user_permissions');
+        Schema::dropIfExists('entity_permissions_collapsed');
     }
 }
