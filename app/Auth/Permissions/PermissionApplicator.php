@@ -66,88 +66,63 @@ class PermissionApplicator
             return true;
         }
 
-        // The chain order here is very important due to the fact we walk up the chain
-        // in the loop below. Earlier items in the chain have higher priority.
-        $chain = [$entity];
+        // The array order here is very important due to the fact we walk up the chain
+        // in the flattening loop below. Earlier items in the chain have higher priority.
+        $typeIdList = [$entity->getMorphClass() . ':' . $entity->id];
         if ($entity instanceof Page && $entity->chapter_id) {
-            $chain[] = $entity->chapter;
+            $typeIdList[] = 'chapter:' . $entity->chapter_id;
         }
 
         if ($entity instanceof Page || $entity instanceof Chapter) {
-            $chain[] = $entity->book;
+            $typeIdList[] = 'book:' . $entity->book_id;
         }
 
-        // Record role access preventions.
-        // Used when we encounter a negative role permission where inheritance is active and therefore
-        // need to check permissive status on parent items.
-        $blockedRoleIds = [];
-
-        foreach ($chain as $currentEntity) {
-            $relevantPermissions = $currentEntity->permissions()
-                ->where(function (Builder $query) use ($userRoleIds, $userId) {
-                    $query->whereIn('role_id', $userRoleIds)
+        $relevantPermissions = EntityPermission::query()
+            ->where(function (Builder $query) use ($typeIdList) {
+                foreach ($typeIdList as $typeId) {
+                    $query->orWhere(function (Builder $query) use ($typeId) {
+                        [$type, $id] = explode(':', $typeId);
+                        $query->where('entity_type', '=', $type)
+                            ->where('entity_id', '=', $id);
+                    });
+                }
+            })->where(function (Builder $query) use ($userRoleIds, $userId) {
+                $query->whereIn('role_id', $userRoleIds)
                     ->orWhere('user_id', '=', $userId)
                     ->orWhere(function (Builder $query) {
                         $query->whereNull(['role_id', 'user_id']);
                     });
-                })
-                ->get(['role_id', 'user_id', $action])
-                ->all();
+            })->get(['entity_id', 'entity_type', 'role_id', 'user_id', $action])
+            ->all();
 
-            // See dev/docs/permission-scenario-testing.md for technical details
-            // on how permissions should be enforced.
+        $permissionMap = new EntityPermissionMap($relevantPermissions);
+        $permitsByType = ['user' => [], 'fallback' => [], 'role' => []];
 
-            $allowedByTypeById = ['fallback' => [], 'user' => [], 'role' => []];
-            /** @var EntityPermission $permission */
-            foreach ($relevantPermissions as $permission) {
-                $allowedByTypeById[$permission->getAssignedType()][$permission->getAssignedTypeId()] = boolval($permission->$action);
-            }
-
-            $inheriting = !isset($allowedByTypeById['fallback'][0]);
-
-            // Continue up the chain if no applicable entity permission overrides.
-            if (count($relevantPermissions) === 0) {
-                continue;
-            }
-
-            // If we have user-specific permissions set, return the status of that
-            // since it's the most specific possible.
-            if (isset($allowedByTypeById['user'][$userId])) {
-                return $allowedByTypeById['user'][$userId];
-            }
-
-            // If we have role-specific permissions set, allow if any of those
-            // role permissions allow access. We do not allow if the role has been previously
-            // blocked by a high-priority inheriting level.
-            // If we're inheriting at this level, and there's an explicit non-allow permission, we record
-            // it for checking up the chain.
-            foreach ($allowedByTypeById['role'] as $roleId => $allowed) {
-                if ($allowed && !in_array($roleId, $blockedRoleIds)) {
-                    return true;
-                } else if (!$allowed) {
-                    $blockedRoleIds[] = $roleId;
+        // Collapse and simplify permission structure
+        foreach ($typeIdList as $typeId) {
+            $permissions = $permissionMap->getForEntity($typeId);
+            foreach ($permissions as $permission) {
+                $related = $permission->getAssignedType();
+                $relatedId = $permission->getAssignedTypeId();
+                if (!isset($permitsByType[$related][$relatedId])) {
+                    $permitsByType[$related][$relatedId] = $permission->$action;
                 }
             }
-
-            // If we had role permissions, and none of them allowed (via above loop), and
-            // we are not inheriting, exit here since we only have role permissions in play blocking access.
-            if (count($allowedByTypeById['role']) > 0 && !$inheriting) {
-                return false;
-            }
-
-            // Continue up the chain if inheriting
-            if ($inheriting) {
-                continue;
-            }
-
-            // Otherwise, return the default "Other roles" fallback value.
-            return $allowedByTypeById['fallback'][0];
         }
 
-        // If we have relevant roles conditions that are actively blocking
-        // return false since these are more specific than potential role-level permissions.
-        if (count($blockedRoleIds) > 0) {
-            return false;
+        // Return user-level permission if exists
+        if (count($permitsByType['user']) > 0) {
+            return boolval(array_values($permitsByType['user'])[0]);
+        }
+
+        // Return grant or reject from role-level if exists
+        if (count($permitsByType['role']) > 0) {
+            return boolval(max($permitsByType['role']));
+        }
+
+        // Return fallback permission if exists
+        if (count($permitsByType['fallback']) > 0) {
+            return boolval($permitsByType['fallback'][0]);
         }
 
         return null;
@@ -241,7 +216,7 @@ class PermissionApplicator
             } else if ($userViewOwn) {
                 $query->orWhere(function (Builder $query) {
                     $query->whereNull(['perms_user', 'perms_role', 'perms_fallback'])
-                        ->where('created_by', '=', $this->currentUser()->id);
+                        ->where('owned_by', '=', $this->currentUser()->id);
                 });
             }
         });
