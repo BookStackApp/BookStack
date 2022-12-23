@@ -55,8 +55,9 @@ function hasAppAccess(): bool
 }
 
 /**
- * Check if the current user has a permission. If an ownable element
- * is passed in the jointPermissions are checked against that particular item.
+ * Check if the current user has a permission.
+ * Checks a generic role permission or, if an ownable model is passed in, it will
+ * check against the given entity model, taking into account entity-level permissions.
  */
 function userCan(string $permission, Model $ownable = null): bool
 {

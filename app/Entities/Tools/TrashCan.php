@@ -372,7 +372,7 @@ class TrashCan
         $entity->permissions()->delete();
         $entity->tags()->delete();
         $entity->comments()->delete();
-        $entity->jointPermissions()->delete();
+        $entity->collapsedPermissions()->delete();
         $entity->searchTerms()->delete();
         $entity->deletions()->delete();
         $entity->favourites()->delete();

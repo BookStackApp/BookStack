@@ -153,6 +153,8 @@ class UserRepo
         $user->apiTokens()->delete();
         $user->favourites()->delete();
         $user->mfaValues()->delete();
+        $user->collapsedPermissions()->delete();
+        $user->entityPermissions()->delete();
         $user->delete();
 
         // Delete user profile images

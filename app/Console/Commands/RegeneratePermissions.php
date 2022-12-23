@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Auth\Permissions\JointPermissionBuilder;
+use BookStack\Auth\Permissions\CollapsedPermissionBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -22,12 +22,12 @@ class RegeneratePermissions extends Command
      */
     protected $description = 'Regenerate all system permissions';
 
-    protected JointPermissionBuilder $permissionBuilder;
+    protected CollapsedPermissionBuilder $permissionBuilder;
 
     /**
      * Create a new command instance.
      */
-    public function __construct(JointPermissionBuilder $permissionBuilder)
+    public function __construct(CollapsedPermissionBuilder $permissionBuilder)
     {
         $this->permissionBuilder = $permissionBuilder;
         parent::__construct();

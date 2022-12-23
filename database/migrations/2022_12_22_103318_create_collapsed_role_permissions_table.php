@@ -13,6 +13,9 @@ class CreateCollapsedRolePermissionsTable extends Migration
      */
     public function up()
     {
+        // TODO - Drop joint permissions
+        // TODO - Run collapsed table rebuild.
+
         Schema::create('entity_permissions_collapsed', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('role_id')->nullable();

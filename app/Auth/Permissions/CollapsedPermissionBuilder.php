@@ -13,13 +13,13 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Joint permissions provide a pre-query "cached" table of view permissions for all core entity
- * types for all roles in the system. This class generates out that table for different scenarios.
+ * Collapsed permissions act as a "flattened" view of entity-level permissions in the system
+ * so inheritance does not have to managed as part of permission querying.
  */
-class JointPermissionBuilder
+class CollapsedPermissionBuilder
 {
     /**
-     * Re-generate all entity permission from scratch.
+     * Re-generate all collapsed permissions from scratch.
      */
     public function rebuildForAll()
     {
@@ -27,26 +27,26 @@ class JointPermissionBuilder
 
         // Chunk through all books
         $this->bookFetchQuery()->chunk(5, function (EloquentCollection $books) {
-            $this->buildJointPermissionsForBooks($books);
+            $this->buildForBooks($books, false);
         });
 
         // Chunk through all bookshelves
         Bookshelf::query()->withTrashed()
-            ->select(['id', 'owned_by'])
+            ->select(['id'])
             ->chunk(50, function (EloquentCollection $shelves) {
                 $this->generateCollapsedPermissions($shelves->all());
             });
     }
 
     /**
-     * Rebuild the entity jointPermissions for a particular entity.
+     * Rebuild the collapsed permissions for a particular entity.
      */
     public function rebuildForEntity(Entity $entity)
     {
         $entities = [$entity];
         if ($entity instanceof Book) {
             $books = $this->bookFetchQuery()->where('id', '=', $entity->id)->get();
-            $this->buildJointPermissionsForBooks($books, true);
+            $this->buildForBooks($books, true);
 
             return;
         }
@@ -66,7 +66,7 @@ class JointPermissionBuilder
             }
         }
 
-        $this->buildJointPermissionsForEntities($entities);
+        $this->buildForEntities($entities);
     }
 
     /**
@@ -75,20 +75,20 @@ class JointPermissionBuilder
     protected function bookFetchQuery(): Builder
     {
         return Book::query()->withTrashed()
-            ->select(['id', 'owned_by'])->with([
+            ->select(['id'])->with([
                 'chapters' => function ($query) {
-                    $query->withTrashed()->select(['id', 'owned_by', 'book_id']);
+                    $query->withTrashed()->select(['id', 'book_id']);
                 },
                 'pages' => function ($query) {
-                    $query->withTrashed()->select(['id', 'owned_by', 'book_id', 'chapter_id']);
+                    $query->withTrashed()->select(['id', 'book_id', 'chapter_id']);
                 },
             ]);
     }
 
     /**
-     * Build joint permissions for the given book and role combinations.
+     * Build collapsed permissions for the given books.
      */
-    protected function buildJointPermissionsForBooks(EloquentCollection $books, bool $deleteOld = false)
+    protected function buildForBooks(EloquentCollection $books, bool $deleteOld)
     {
         $entities = clone $books;
 
@@ -103,27 +103,27 @@ class JointPermissionBuilder
         }
 
         if ($deleteOld) {
-            $this->deleteManyJointPermissionsForEntities($entities->all());
+            $this->deleteForEntities($entities->all());
         }
 
         $this->generateCollapsedPermissions($entities->all());
     }
 
     /**
-     * Rebuild the entity jointPermissions for a collection of entities.
+     * Rebuild the collapsed permissions for a collection of entities.
      */
-    protected function buildJointPermissionsForEntities(array $entities)
+    protected function buildForEntities(array $entities)
     {
-        $this->deleteManyJointPermissionsForEntities($entities);
+        $this->deleteForEntities($entities);
         $this->generateCollapsedPermissions($entities);
     }
 
     /**
-     * Delete all the entity jointPermissions for a list of entities.
+     * Delete the stored collapsed permissions for a list of entities.
      *
      * @param Entity[] $entities
      */
-    protected function deleteManyJointPermissionsForEntities(array $entities)
+    protected function deleteForEntities(array $entities)
     {
         $simpleEntities = $this->entitiesToSimpleEntities($entities);
         $idsByType = $this->entitiesToTypeIdMap($simpleEntities);
@@ -141,6 +141,9 @@ class JointPermissionBuilder
     }
 
     /**
+     * Convert the given list of entities into "SimpleEntityData" representations
+     * for faster usage and property access.
+     *
      * @param Entity[] $entities
      *
      * @return SimpleEntityData[]
@@ -154,7 +157,6 @@ class JointPermissionBuilder
             $simple = new SimpleEntityData();
             $simple->id = $attrs['id'];
             $simple->type = $entity->getMorphClass();
-            $simple->owned_by = $attrs['owned_by'] ?? 0;
             $simple->book_id = $attrs['book_id'] ?? null;
             $simple->chapter_id = $attrs['chapter_id'] ?? null;
             $simpleEntities[] = $simple;
@@ -171,7 +173,7 @@ class JointPermissionBuilder
     protected function generateCollapsedPermissions(array $originalEntities)
     {
         $entities = $this->entitiesToSimpleEntities($originalEntities);
-        $jointPermissions = [];
+        $collapsedPermData = [];
 
         // Fetch related entity permissions
         $permissions = $this->getEntityPermissionsForEntities($entities);
@@ -181,12 +183,12 @@ class JointPermissionBuilder
 
         // Create Joint Permission Data
         foreach ($entities as $entity) {
-            array_push($jointPermissions, ...$this->createCollapsedPermissionData($entity, $permissionMap));
+            array_push($collapsedPermData, ...$this->createCollapsedPermissionData($entity, $permissionMap));
         }
 
-        DB::transaction(function () use ($jointPermissions) {
-            foreach (array_chunk($jointPermissions, 1000) as $jointPermissionChunk) {
-                DB::table('entity_permissions_collapsed')->insert($jointPermissionChunk);
+        DB::transaction(function () use ($collapsedPermData) {
+            foreach (array_chunk($collapsedPermData, 1000) as $dataChunk) {
+                DB::table('entity_permissions_collapsed')->insert($dataChunk);
             }
         });
     }
@@ -198,8 +200,8 @@ class JointPermissionBuilder
     {
         $chain = [
             $entity->type . ':' . $entity->id,
-            $entity->chapter_id ? null : ('chapter:' . $entity->chapter_id),
-            $entity->book_id ? null : ('book:' . $entity->book_id),
+            $entity->chapter_id ? ('chapter:' . $entity->chapter_id) : null,
+            $entity->book_id ? ('book:' . $entity->book_id) : null,
         ];
 
         $permissionData = [];

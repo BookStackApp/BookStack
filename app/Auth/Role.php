@@ -2,8 +2,8 @@
 
 namespace BookStack\Auth;
 
+use BookStack\Auth\Permissions\CollapsedPermission;
 use BookStack\Auth\Permissions\EntityPermission;
-use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Interfaces\Loggable;
 use BookStack\Model;
@@ -40,14 +40,6 @@ class Role extends Model implements Loggable
     }
 
     /**
-     * Get all related JointPermissions.
-     */
-    public function jointPermissions(): HasMany
-    {
-        return $this->hasMany(JointPermission::class);
-    }
-
-    /**
      * The RolePermissions that belong to the role.
      */
     public function permissions(): BelongsToMany
@@ -61,6 +53,14 @@ class Role extends Model implements Loggable
     public function entityPermissions(): HasMany
     {
         return $this->hasMany(EntityPermission::class);
+    }
+
+    /**
+     * Get all related entity collapsed permissions.
+     */
+    public function collapsedPermissions(): HasMany
+    {
+        return $this->hasMany(CollapsedPermission::class);
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Tests\Helpers;
 
 use BookStack\Auth\Permissions\EntityPermission;
-use BookStack\Auth\Permissions\JointPermissionBuilder;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
@@ -70,7 +69,6 @@ class PermissionsProvider
     public function regenerateForEntity(Entity $entity): void
     {
         $entity->rebuildPermissions();
-        $entity->load('jointPermissions');
     }
 
     /**

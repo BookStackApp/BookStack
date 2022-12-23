@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 class PermissionsRepo
 {
-    protected JointPermissionBuilder $permissionBuilder;
-    protected $systemRoles = ['admin', 'public'];
+    protected CollapsedPermissionBuilder $permissionBuilder;
+    protected array $systemRoles = ['admin', 'public'];
 
     /**
      * PermissionsRepo constructor.
      */
-    public function __construct(JointPermissionBuilder $permissionBuilder)
+    public function __construct(CollapsedPermissionBuilder $permissionBuilder)
     {
         $this->permissionBuilder = $permissionBuilder;
     }
@@ -138,7 +138,7 @@ class PermissionsRepo
         }
 
         $role->entityPermissions()->delete();
-        $role->jointPermissions()->delete();
+        $role->collapsedPermissions()->delete();
         Activity::add(ActivityType::ROLE_DELETE, $role);
         $role->delete();
     }

@@ -5,6 +5,8 @@ namespace BookStack\Auth;
 use BookStack\Actions\Favourite;
 use BookStack\Api\ApiToken;
 use BookStack\Auth\Access\Mfa\MfaValue;
+use BookStack\Auth\Permissions\CollapsedPermission;
+use BookStack\Auth\Permissions\EntityPermission;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Interfaces\Loggable;
 use BookStack\Interfaces\Sluggable;
@@ -296,6 +298,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                     ->selectRaw('max(created_at) as created_at')
                     ->groupBy('user_id');
             }, 'activities', 'users.id', '=', 'activities.user_id');
+    }
+
+    /**
+     * Get the entity permissions assigned to this specific user.
+     */
+    public function entityPermissions(): HasMany
+    {
+        return $this->hasMany(EntityPermission::class);
+    }
+
+    /**
+     * Get all related entity collapsed permissions.
+     */
+    public function collapsedPermissions(): HasMany
+    {
+        return $this->hasMany(CollapsedPermission::class);
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use BookStack\Api\ApiToken;
-use BookStack\Auth\Permissions\JointPermissionBuilder;
+use BookStack\Auth\Permissions\CollapsedPermissionBuilder;
 use BookStack\Auth\Permissions\RolePermission;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
@@ -69,7 +69,7 @@ class DummyContentSeeder extends Seeder
         ]);
         $token->save();
 
-        app(JointPermissionBuilder::class)->rebuildForAll();
+        app(CollapsedPermissionBuilder::class)->rebuildForAll();
         app(SearchIndex::class)->indexAllEntities();
     }
 }
