@@ -19,6 +19,7 @@
     <!-- Styles and Fonts -->
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
     <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
+    <link rel="stylesheet" href="{{ versioned_asset('dist/tailwind-compiled.css') }}">
 
     @yield('head')
 
