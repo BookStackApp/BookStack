@@ -177,7 +177,7 @@ return [
 
     // Users
     'users' => 'Utilisateurs',
-    'users_index_desc' => 'Créer et gérer des comptes utilisateurs individuels au sein du système. Les comptes utilisateurs sont employés pour la connexion et l\'attribution du contenu et le suivi d\'activité. Les autorisations d\'accès sont principalement basées sur les rôles, mais la propriété du contenu de l\'utilisateur, entre autres facteurs, peut également affecter les autorisations et l\'accès.',
+    'users_index_desc' => 'Créer et gérer des comptes utilisateur individuels au sein du système. Les comptes utilisateur sont employés pour la connexion et l\'attribution du contenu et le suivi d\'activité. Les permissions d\'accès sont principalement basées sur les rôles, mais la propriété du contenu de l\'utilisateur, entre autres facteurs, peut également affecter les permissions et l\'accès.',
     'user_profile' => 'Profil d\'utilisateur',
     'users_add_new' => 'Ajouter un nouvel utilisateur',
     'users_search' => 'Rechercher les utilisateurs',
