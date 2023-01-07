@@ -24,7 +24,7 @@ return [
     'password_hint' => '必须至少有 8 个字符',
     'forgot_password' => '忘记密码?',
     'remember_me' => '记住我',
-    'ldap_email_hint' => '请输入用于此帐户的电子邮件。',
+    'ldap_email_hint' => '请输入用于此账户的电子邮件。',
     'create_account' => '创建账户',
     'already_have_account' => '已经有账号了？',
     'dont_have_account' => '您还没有账号吗？',
@@ -50,7 +50,7 @@ return [
     'reset_password_sent' => '重置密码的链接将通过您的电子邮箱发送:email。',
     'reset_password_success' => '您的密码已成功重置。',
     'email_reset_subject' => '重置您的:appName密码',
-    'email_reset_text' => '您收到此电子邮件是因为我们收到了您的帐户的密码重置请求。',
+    'email_reset_text' => '您收到此电子邮件是因为我们收到了您的账户的密码重置请求。',
     'email_reset_not_requested' => '如果您没有要求重置密码，则不需要采取进一步的操作。',
 
     // Email Confirmation
@@ -61,8 +61,8 @@ return [
     'email_confirm_send_error' => '需要Email验证，但系统无法发送电子邮件，请联系网站管理员。',
     'email_confirm_success' => '您已成功验证电子邮件地址！您现在可以使用此电子邮件地址登录。',
     'email_confirm_resent' => '验证邮件已重新发送，请检查收件箱。',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => '感谢您的确认！',
+    'email_confirm_thanks_desc' => '请稍等，您的确认正在处理。如果您在3秒后未被重定向，请按下面的“继续“链接继续。',
 
     'email_not_confirmed' => 'Email地址未验证',
     'email_not_confirmed_text' => '您的电子邮件地址尚未确认。',
@@ -72,11 +72,11 @@ return [
 
     // User Invite
     'user_invite_email_subject' => '您已受邀加入 :appName！',
-    'user_invite_email_greeting' => ' :appName 已为您创建了一个帐户。',
-    'user_invite_email_text' => '点击下面的按钮以设置帐户密码并获得访问权限：',
-    'user_invite_email_action' => '设置帐号密码',
+    'user_invite_email_greeting' => ':appName 已为您创建了一个账户。',
+    'user_invite_email_text' => '点击下面的按钮以设置账户密码并获得访问权限：',
+    'user_invite_email_action' => '设置账号密码',
     'user_invite_page_welcome' => '欢迎来到 :appName！',
-    'user_invite_page_text' => '要完成您的帐户并获得访问权限，您需要设置一个密码，该密码将在以后访问时用于登录 :appName。',
+    'user_invite_page_text' => '要完成您的账户并获得访问权限，您需要设置一个密码，该密码将在以后访问时用于登录 :appName。',
     'user_invite_page_confirm_button' => '确认密码',
     'user_invite_success_login' => '密码已设置，您现在可以使用您设置的密码登录 :appName!',
 
@@ -87,7 +87,7 @@ return [
     'mfa_setup_reconfigure' => '重新配置',
     'mfa_setup_remove_confirmation' => '您确定想要移除多重身份认证吗？',
     'mfa_setup_action' => '设置',
-    'mfa_backup_codes_usage_limit_warning' => '您剩余的备用认证码少于 5 个，请在用完认证码之前生成并保存新的认证码，以防止您的帐户被锁定。',
+    'mfa_backup_codes_usage_limit_warning' => '您剩余的备用认证码少于 5 个，请在用完认证码之前生成并保存新的认证码，以防止您的账户被锁定。',
     'mfa_option_totp_title' => '移动设备 App',
     'mfa_option_totp_desc' => '要使用多重身份认证功能，您需要一个支持 TOTP（基于时间的一次性密码算法） 的移动设备 App，如谷歌身份验证器（Google Authenticator）、Authy 或微软身份验证器（Microsoft Authenticator）。',
     'mfa_option_backup_codes_title' => '备用认证码',

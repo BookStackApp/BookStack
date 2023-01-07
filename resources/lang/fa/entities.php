@@ -74,7 +74,7 @@ return [
     'search_date_options' => 'گزینه های تاریخ',
     'search_updated_before' => 'قبلا به روز شده',
     'search_updated_after' => 'پس از به روز رسانی',
-    'search_created_before' => 'قبلا ایجاد شده است',
+    'search_created_before' => 'ایجاد شده قبل از',
     'search_created_after' => 'ایجاد شده پس از',
     'search_set_date' => 'تنظیم تاریخ',
     'search_update' => 'جستجو را به روز کنید',

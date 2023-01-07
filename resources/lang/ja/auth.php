@@ -61,8 +61,8 @@ return [
     'email_confirm_send_error' => 'Eメールの確認が必要でしたが、システム上でEメールの送信ができませんでした。管理者に連絡し、Eメールが正しく設定されていることを確認してください。',
     'email_confirm_success' => 'メールアドレスが確認されました！このメールアドレスでログインできるようになりました。',
     'email_confirm_resent' => '確認メールを再送信しました。受信トレイを確認してください。',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => '確認いただきありがとうございます！',
+    'email_confirm_thanks_desc' => '確認のため、しばらくお待ちください。3秒後にリダイレクトされない場合は、下の「続ける」リンクを押して次に進んでください。',
 
     'email_not_confirmed' => 'Eメールアドレスが確認できていません',
     'email_not_confirmed_text' => 'Eメールアドレスの確認が完了していません。',

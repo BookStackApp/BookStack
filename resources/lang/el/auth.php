@@ -61,8 +61,8 @@ return [
     'email_confirm_send_error' => 'Απαιτείται επιβεβαίωση μέσω email, αλλά το σύστημα δεν μπόρεσε να στείλει το email. Επικοινωνήστε με τον διαχειριστή για να βεβαιωθείτε ότι το email έχει ρυθμιστεί σωστά.',
     'email_confirm_success' => 'Το email σας επιβεβαιώθηκε! Θα πρέπει τώρα να μπορείτε να συνδεθείτε χρησιμοποιώντας αυτήν τη διεύθυνση email.',
     'email_confirm_resent' => 'Το email επιβεβαίωσης στάλθηκε εκ νέου. Ελέγξτε τα εισερχόμενά σας.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'Ευχαριστούμε για την επιβεβαίωση!',
+    'email_confirm_thanks_desc' => 'Παρακαλώ περιμένετε λίγο όσο διεκπεραιώνεται η επιβεβαίωσή σας. Εάν δεν ανακατευθυνθείτε μετά από 3 δευτερόλεπτα, πατήστε τον παρακάτω σύνδεσμο "Συνέχεια" για να συνεχίσετε.',
 
     'email_not_confirmed' => 'Η διεύθυνση email δεν επιβεβαιώθηκε',
     'email_not_confirmed_text' => 'Η διεύθυνση email σας δεν έχει ακόμη επιβεβαιωθεί.',
