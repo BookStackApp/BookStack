@@ -32,3 +32,14 @@ import * as componentMap from "./components";
 components.register(componentMap);
 window.$components = components;
 components.init();
+
+import $ from "jquery";
+$.when($.ready).then(function () {
+    const scrollYPosition = localStorage.getItem(window.location.href + "-scroll-y");
+    if (scrollYPosition !== null) {
+        window.scrollTo(0, scrollYPosition)
+    }
+    $(window).scroll(function () {
+        localStorage.setItem(window.location.href + "-scroll-y", window.scrollY);
+    });
+});
