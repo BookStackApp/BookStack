@@ -57,6 +57,19 @@ export class MarkdownEditor extends Component {
             if (button === null) return;
 
             const action = button.getAttribute('data-action');
+            if (action === 'insertHeadline') this.editor.actions.insertHeadline();
+            if (action === 'insertBold') this.editor.actions.insertStyling('bold');
+            if (action === 'insertItalic') this.editor.actions.insertStyling('italic');
+            if (action === 'insertStrikethrough') this.editor.actions.insertStyling('strikethrough');
+            if (action === 'insertListBulleted') this.editor.actions.insertList('bulleted');
+            if (action === 'insertListNumbered') this.editor.actions.insertList('numbered');
+            if (action === 'insertCode') this.editor.actions.insertCode();
+            if (action === 'insertTable') this.editor.actions.insertSnippet('table');
+            if (action === 'insertCollapsibleSection') this.editor.actions.insertSnippet('collapsibleSection');
+            if (action === 'insertCalloutInfo') this.editor.actions.insertCallout('info');
+            if (action === 'insertCalloutSuccess') this.editor.actions.insertCallout('success');
+            if (action === 'insertCalloutWarning') this.editor.actions.insertCallout('warning');
+            if (action === 'insertCalloutDanger') this.editor.actions.insertCallout('danger');
             if (action === 'insertImage') this.editor.actions.insertImage();
             if (action === 'insertLink') this.editor.actions.showLinkSelector();
             if (action === 'insertDrawing' && (event.ctrlKey || event.metaKey)) {

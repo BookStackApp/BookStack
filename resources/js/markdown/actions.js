@@ -18,6 +18,120 @@ export class Actions {
         this.editor.display.patchWithHtml(html);
     }
 
+    insertHeadline() {
+        const cursorPos = this.editor.cm.getCursor('from');
+        const headlineElement = `### `;
+        this.editor.cm.focus();
+        this.editor.cm.execCommand('goLineStart');
+        this.editor.cm.replaceSelection(headlineElement);
+        this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + headlineElement.length);
+    }
+
+    insertStyling(type) {
+        const cursorPos = this.editor.cm.getCursor('from');
+        const selectedText = this.editor.cm.getSelection() || '';
+        let newText;
+        let cursorPosDiff;
+        switch (type) {
+            case 'bold':
+                newText = `**${selectedText}**`;
+                cursorPosDiff = -2;
+                break;
+            case 'italic':
+                newText = `_${selectedText}_`;
+                cursorPosDiff = -1;
+                break;
+            case 'strikethrough':
+                newText = `~~${selectedText}~~`;
+                cursorPosDiff = -2;
+                break;
+        }
+        this.editor.cm.focus();
+        this.editor.cm.replaceSelection(newText);
+        this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length+cursorPosDiff);
+    }
+
+    insertList(type) {
+        const cursorPos = this.editor.cm.getCursor('from');
+        const selectedText = this.editor.cm.getSelection("\n") || '';
+        const lineCount = selectedText.split("\n").length;
+        let listElement;
+        switch(type) {
+            case 'bulleted': listElement = '- '; break;
+            case 'numbered': listElement = '1. '; break;
+        }
+        this.editor.cm.focus();
+        for (let i = 0; i < lineCount; i++) {
+            this.editor.cm.setCursor(cursorPos.line + i, 0);
+            this.editor.cm.execCommand('goLineStart');
+            this.editor.cm.replaceSelection(listElement);
+        }
+        this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + listElement.length);
+    }
+
+    insertCode() {
+        const cursorPos = this.editor.cm.getCursor('from');
+        const selectedText = this.editor.cm.getSelection() || '';
+        const multiLine = (selectedText.split("\n").length > 1);
+        this.editor.cm.focus();
+        if (multiLine) {
+            const lineCount = selectedText.split("\n").length;
+            this.editor.cm.setCursor(cursorPos.line, 0);
+            this.editor.cm.replaceSelection(`\`\`\`\n`);
+            this.editor.cm.setCursor(cursorPos.line+lineCount, 999999);
+            this.editor.cm.replaceSelection(`\n\`\`\``);
+        } else {
+            const newText = `\`${selectedText}\``;
+            this.editor.cm.replaceSelection(newText);
+            this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length-1);
+        }
+    }
+
+    insertSnippet(type) {
+        const cursorPos = this.editor.cm.getCursor('from');
+        const selectedText = this.editor.cm.getSelection() || '';
+        let snippet;
+        if (type === 'table') {
+            snippet = `| header | header |\n` +
+                      `| ------ | ------ |\n` +
+                      `|        |        |\n` +
+                      `|        |        |`;
+        } else if (type === 'collapsibleSection') {
+            snippet = `<details><summary>Click to expand</summary>\n` +
+                      `\n` +
+                      `</details>`;
+        }
+        this.editor.cm.focus();
+        this.editor.cm.execCommand('goLineEnd');
+        this.editor.cm.replaceSelection('\n\n' + snippet);
+    }
+
+    insertCallout(type) {
+        const cursorPos = this.editor.cm.getCursor('from');
+        const selectedText = this.editor.cm.getSelection() || '';
+        let calloutStart;
+        const calloutEnd = '</p>';
+        switch(type) {
+            case 'info': calloutStart = '<p class="callout info">'; break;
+            case 'success': calloutStart = '<p class="callout success">'; break;
+            case 'warning': calloutStart = '<p class="callout warning">'; break;
+            case 'danger': calloutStart = '<p class="callout danger">'; break;
+        }
+        this.editor.cm.focus();
+
+        if (selectedText === '') {
+            this.editor.cm.execCommand('goLineEnd');
+            this.editor.cm.replaceSelection('\n\n'+calloutStart+calloutEnd+'\n');
+            this.editor.cm.setCursor(cursorPos.line+2, calloutStart.length);
+        } else {
+            this.editor.cm.execCommand('goLineStart');
+            this.editor.cm.replaceSelection(calloutStart);
+            this.editor.cm.execCommand('goLineEnd');
+            this.editor.cm.replaceSelection(calloutEnd+'\n');
+            this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + calloutStart.length);
+        }
+    }
+
     insertImage() {
         const cursorPos = this.editor.cm.getCursor('from');
         /** @type {ImageManager} **/

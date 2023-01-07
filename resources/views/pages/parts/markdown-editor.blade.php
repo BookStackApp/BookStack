@@ -10,6 +10,24 @@
             <div class="editor-toolbar-label text-mono px-m py-xs flex-container-row items-center flex">
                 <span>{{ trans('entities.pages_md_editor') }}</span>
             </div>
+            <div component="dropdown" class="buttons flex-container-row items-stretch editor-toolbar-stylings">
+                <button class="text-button" type="button" data-action="insertHeadline" title="{{ trans('entities.pages_md_insert_headline') }}">@icon('headline')</button>
+                <button class="text-button" type="button" data-action="insertBold" title="{{ trans('entities.pages_md_insert_bold') }}">@icon('bold')</button>
+                <button class="text-button" type="button" data-action="insertItalic" title="{{ trans('entities.pages_md_insert_italic') }}">@icon('italic')</button>
+                <button class="text-button" type="button" data-action="insertStrikethrough" title="{{ trans('entities.pages_md_insert_strikethrough') }}">@icon('strikethrough')</button>
+                <button class="text-button" type="button" data-action="insertListBulleted" title="{{ trans('entities.pages_md_insert_list_bulleted') }}">@icon('list-bulleted')</button>
+                <button class="text-button" type="button" data-action="insertListNumbered" title="{{ trans('entities.pages_md_insert_list_numbered') }}">@icon('list-numbered')</button>
+                <button class="text-button" type="button" data-action="insertCode" title="{{ trans('entities.pages_md_insert_code') }}">@icon('code')</button>
+                <button refs="dropdown@toggle" class="text-button" type="button" title="{{ trans('entities.pages_md_insert_snippet') }}">@icon('snippet')</button>
+                <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
+                    <li><button type="button" data-action="insertTable" title="{{ trans('entities.pages_md_insert_table') }}">{{ trans('entities.pages_md_insert_table') }}</button></li>
+                    <li><button type="button" data-action="insertCollapsibleSection" title="{{ trans('entities.pages_md_insert_collapsible_section') }}">{{ trans('entities.pages_md_insert_collapsible_section') }}</button></li>
+                    <li><button type="button" data-action="insertCalloutInfo" title="{{ trans('entities.pages_md_insert_callout_info') }}">{{ trans('entities.pages_md_insert_callout_info') }}</button></li>
+                    <li><button type="button" data-action="insertCalloutSuccess" title="{{ trans('entities.pages_md_insert_callout_success') }}">{{ trans('entities.pages_md_insert_callout_success') }}</button></li>
+                    <li><button type="button" data-action="insertCalloutWarning" title="{{ trans('entities.pages_md_insert_callout_warning') }}">{{ trans('entities.pages_md_insert_callout_warning') }}</button></li>
+                    <li><button type="button" data-action="insertCalloutDanger" title="{{ trans('entities.pages_md_insert_callout_danger') }}">{{ trans('entities.pages_md_insert_callout_danger') }}</button></li>
+                </ul>
+            </div>
             <div component="dropdown" class="buttons flex-container-row items-stretch">
                 @if(config('services.drawio'))
                     <button class="text-button" type="button" data-action="insertDrawing" title="{{ trans('entities.pages_md_insert_drawing') }}">@icon('drawing')</button>

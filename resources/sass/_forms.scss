@@ -78,7 +78,7 @@
 }
 .markdown-editor-wrap + .markdown-editor-wrap {
   flex-basis: 50%;
-  flex-shrink: 0;
+  flex-shrink: 1;
   flex-grow: 0;
 }
 
@@ -112,6 +112,12 @@
     flex-grow: 0;
     flex: none;
     min-height: 0;
+  }
+}
+
+@include smaller-than($s) {
+  .editor-toolbar-stylings {
+    display: none;
   }
 }
 
@@ -176,6 +182,17 @@ html.markdown-editor-display.dark-mode {
   }
 }
 
+.editor-toolbar .buttons .dropdown-menu button {
+  @include lightDark(color, #666, #ddd);
+  width:100%;
+  text-align: left;
+  font-size: 0.94em;
+  font-weight: 400;
+  border-left:none;
+  border-bottom: 1px solid;
+  @include lightDark(border-color, #DDD, #555);
+  padding:8px 6px 8px 6px;
+}
 
 label {
   @include lightDark(color, #666, #ddd);
