@@ -6,6 +6,9 @@ module.exports = {
     theme: {
         extend: {},
     },
-    mode: 'jit'
+    mode: 'jit',
+    corePlugins: {
+        preflight: false,
+    }
 }
 ;

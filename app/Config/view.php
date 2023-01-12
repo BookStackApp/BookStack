@@ -9,7 +9,7 @@
  */
 
 // Join up possible view locations
-$viewPaths = [realpath(base_path('resources/views'))];
+$viewPaths = [realpath(base_path('resources/smf-views'))];
 if ($theme = env('APP_THEME', false)) {
     array_unshift($viewPaths, base_path('themes/' . $theme));
 }

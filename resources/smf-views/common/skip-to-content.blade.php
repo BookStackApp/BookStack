@@ -1,0 +1,1 @@
+<a class="px-m py-s skip-to-content-link print-hidden" href="#main-content">{{ trans('common.skip_to_main_content') }}</a>
