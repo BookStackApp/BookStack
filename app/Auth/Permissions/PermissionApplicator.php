@@ -161,12 +161,6 @@ class PermissionApplicator
      */
     public function restrictEntityQuery(Builder $query, string $morphClass): Builder
     {
-        // TODO - Leave this as the new admin workaround?
-        //   Or auto generate collapsed role permissions for admins?
-        if (\user()->hasSystemRole('admin')) {
-            return $query;
-        }
-
         $this->applyPermissionsToQuery($query, $query->getModel()->getTable(), $morphClass, 'id', '');
 
         return $query;
@@ -174,14 +168,17 @@ class PermissionApplicator
 
     /**
      * @param Builder|QueryBuilder $query
-     * @return void
      */
-    protected function applyPermissionsToQuery($query, string $queryTable, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
+    protected function applyPermissionsToQuery($query, string $queryTable, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn): void
     {
+        if ($this->currentUser()->hasSystemRole('admin')) {
+            return;
+        }
+
         $this->applyFallbackJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
         $this->applyRoleJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
         $this->applyUserJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
-        $this->applyPermissionWhereFilter($query, $queryTable, $entityTypeLimiter, $entityTypeColumn);
+        $this->applyPermissionWhereFilter($query, $entityTypeLimiter, $entityTypeColumn);
     }
 
     /**
@@ -319,7 +316,6 @@ class PermissionApplicator
      */
     public function restrictEntityRelationQuery($query, string $tableName, string $entityIdColumn, string $entityTypeColumn)
     {
-        // TODO - Apply admin allow all as per above query thing
         $this->applyPermissionsToQuery($query, $tableName, '', $entityIdColumn, $entityTypeColumn);
         // TODO - Test page draft access (Might allow drafts which should not be seen)
 
@@ -337,7 +333,6 @@ class PermissionApplicator
         $morphClass = (new Page())->getMorphClass();
 
         $this->applyPermissionsToQuery($query, $tableName, $morphClass, $pageIdColumn, '');
-        // TODO - Admin workaround as above
         // TODO - Draft display
         return $query;
     }
