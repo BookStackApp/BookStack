@@ -161,33 +161,49 @@ class PermissionApplicator
      */
     public function restrictEntityQuery(Builder $query, string $morphClass): Builder
     {
-        $this->getCurrentUserRoleIds();
-        $this->currentUser()->id;
-
         // TODO - Leave this as the new admin workaround?
         //   Or auto generate collapsed role permissions for admins?
         if (\user()->hasSystemRole('admin')) {
             return $query;
         }
 
-        // Apply permission level joins
-        $this->applyFallbackJoin($query, $morphClass, 'id', '');
-        $this->applyRoleJoin($query, $morphClass, 'id', '');
-        $this->applyUserJoin($query, $morphClass, 'id', '');
-
-        // Where permissions apply
-        $this->applyPermissionWhereFilter($query, $morphClass);
+        $this->applyPermissionsToQuery($query, $query->getModel()->getTable(), $morphClass, 'id', '');
 
         return $query;
     }
 
-    protected function applyPermissionWhereFilter($query, string $entityTypeLimiter)
+    /**
+     * @param Builder|QueryBuilder $query
+     * @return void
+     */
+    protected function applyPermissionsToQuery($query, string $queryTable, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
     {
-        // TODO - Morph for all types
-        $userViewAll = userCan($entityTypeLimiter . '-view-all');
-        $userViewOwn = userCan($entityTypeLimiter . '-view-own');
+        $this->applyFallbackJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
+        $this->applyRoleJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
+        $this->applyUserJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
+        $this->applyPermissionWhereFilter($query, $queryTable, $entityTypeLimiter, $entityTypeColumn);
+    }
 
-        $query->where(function (Builder $query) use ($userViewOwn, $userViewAll) {
+    /**
+     * Apply the where condition to a permission restricting query, to limit based upon the values of the joined
+     * permission data. Query must have joins pre-applied.
+     * Either entityTypeLimiter or entityTypeColumn should be supplied, with the other empty.
+     * Both should not be applied since that would conflict upon intent.
+     * @param Builder|QueryBuilder $query
+     */
+    protected function applyPermissionWhereFilter($query, string $entityTypeLimiter, string $entityTypeColumn)
+    {
+        $abilities = ['all' => [], 'own' => []];
+        $types = $entityTypeLimiter ? [$entityTypeLimiter] : ['page', 'chapter', 'bookshelf', 'book'];
+        foreach ($types as $type) {
+            $abilities['all'][$type] = userCan($type . '-view-all');
+            $abilities['own'][$type] = userCan($type . '-view-own');
+        }
+
+        $abilities['all'] = array_filter($abilities['all']);
+        $abilities['own'] = array_filter($abilities['own']);
+
+        $query->where(function (Builder $query) use ($abilities, $entityTypeColumn) {
             $query->where('perms_user', '=', 1)
                 ->orWhere(function (Builder $query) {
                     $query->whereNull('perms_user')->where('perms_role', '=', 1);
@@ -196,14 +212,22 @@ class PermissionApplicator
                         ->where('perms_fallback', '=', 1);
                 });
 
-            if ($userViewAll) {
-                $query->orWhere(function (Builder $query) {
+            if (count($abilities['all']) > 0) {
+                $query->orWhere(function (Builder $query) use ($abilities, $entityTypeColumn) {
                     $query->whereNull(['perms_user', 'perms_role', 'perms_fallback']);
+                    if ($entityTypeColumn) {
+                        $query->whereIn($entityTypeColumn, array_keys($abilities['all']));
+                    }
                 });
-            } else if ($userViewOwn) {
-                $query->orWhere(function (Builder $query) {
+            }
+
+            if (count($abilities['own']) > 0) {
+                $query->orWhere(function (Builder $query) use ($abilities, $entityTypeColumn) {
                     $query->whereNull(['perms_user', 'perms_role', 'perms_fallback'])
                         ->where('owned_by', '=', $this->currentUser()->id);
+                    if ($entityTypeColumn) {
+                        $query->whereIn($entityTypeColumn, array_keys($abilities['all']));
+                    }
                 });
             }
         });
@@ -212,9 +236,9 @@ class PermissionApplicator
     /**
      * @param Builder|QueryBuilder $query
      */
-    protected function applyPermissionJoin(callable $joinCallable, string $subAlias, $query, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
+    protected function applyPermissionJoin(callable $joinCallable, string $subAlias, $query, string $queryTable, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
     {
-        $joinCondition = $this->getJoinCondition($subAlias, $entityIdColumn, $entityTypeColumn);
+        $joinCondition = $this->getJoinCondition($queryTable, $subAlias, $entityIdColumn, $entityTypeColumn);
 
         $query->joinSub(function (QueryBuilder $joinQuery) use ($joinCallable, $entityTypeLimiter) {
             $joinQuery->select(['entity_id', 'entity_type'])->from('entity_permissions_collapsed')
@@ -230,43 +254,43 @@ class PermissionApplicator
     /**
      * @param Builder|QueryBuilder $query
      */
-    protected function applyUserJoin($query, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
+    protected function applyUserJoin($query, string $queryTable, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
     {
         $this->applyPermissionJoin(function (QueryBuilder $joinQuery) {
             $joinQuery->selectRaw('max(view) as perms_user')
                 ->where('user_id', '=', $this->currentUser()->id);
-        }, 'p_u', $query, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
+        }, 'p_u', $query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
     }
 
 
     /**
      * @param Builder|QueryBuilder $query
      */
-    protected function applyRoleJoin($query, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
+    protected function applyRoleJoin($query, string $queryTable, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
     {
         $this->applyPermissionJoin(function (QueryBuilder $joinQuery) {
             $joinQuery->selectRaw('max(view) as perms_role')
                 ->whereIn('role_id', $this->getCurrentUserRoleIds());
-        }, 'p_r', $query, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
+        }, 'p_r', $query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
     }
 
     /**
      * @param Builder|QueryBuilder $query
      */
-    protected function applyFallbackJoin($query, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
+    protected function applyFallbackJoin($query, string $queryTable, string $entityTypeLimiter, string $entityIdColumn, string $entityTypeColumn)
     {
         $this->applyPermissionJoin(function (QueryBuilder $joinQuery) {
             $joinQuery->selectRaw('max(view) as perms_fallback')
                 ->whereNull(['role_id', 'user_id']);
-        }, 'p_f', $query, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
+        }, 'p_f', $query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
     }
 
-    protected function getJoinCondition(string $joinTableName, string $entityIdColumn, string $entityTypeColumn): callable
+    protected function getJoinCondition(string $queryTable, string $joinTableName, string $entityIdColumn, string $entityTypeColumn): callable
     {
-        return function (JoinClause $join) use ($joinTableName, $entityIdColumn, $entityTypeColumn) {
-            $join->on($entityIdColumn, '=', $joinTableName . '.entity_id');
+        return function (JoinClause $join) use ($queryTable, $joinTableName, $entityIdColumn, $entityTypeColumn) {
+            $join->on($queryTable . '.' . $entityIdColumn, '=', $joinTableName . '.entity_id');
             if ($entityTypeColumn) {
-                $join->on($entityTypeColumn, '=', $joinTableName . '.entity_type');
+                $join->on($queryTable . '.' . $entityTypeColumn, '=', $joinTableName . '.entity_type');
             }
         };
     }
@@ -295,49 +319,12 @@ class PermissionApplicator
      */
     public function restrictEntityRelationQuery($query, string $tableName, string $entityIdColumn, string $entityTypeColumn)
     {
-        $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
-        $pageMorphClass = (new Page())->getMorphClass();
+        $this->applyPermissionsToQuery($query, $tableName, '', $entityIdColumn, $entityTypeColumn);
+        // TODO - Test page draft access (Might allow drafts which should not be seen)
+        // TODO - Test each use of this to check column/relation fetching.
+        //    Original queries might need selects applied to limit field exposure and to get right original table columns.
 
-        // TODO - Abstract the permission queries above to make their join columns configurable
-        //   so the query methods can be used on non-entity tables if possible.
         return $query;
-
-        $q = $query->where(function ($query) use ($tableDetails) {
-            $query->whereExists(function ($permissionQuery) use ($tableDetails) {
-                /** @var Builder $permissionQuery */
-                $permissionQuery->select(['role_id'])->from('joint_permissions')
-                    ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                    ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
-                    ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
-                    ->where(function (QueryBuilder $query) {
-                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                    });
-            })->orWhereExists(function ($permissionQuery) use ($tableDetails) {
-                /** @var Builder $permissionQuery */
-                $permissionQuery->select(['user_id'])->from('joint_user_permissions')
-                    ->whereColumn('joint_user_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                    ->whereColumn('joint_user_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
-                    ->where('joint_user_permissions.user_id', '=', $this->currentUser()->id)
-                    ->where('joint_user_permissions.has_permission', '=', true);
-            });
-        })->whereNotExists(function ($query) use ($tableDetails) {
-            $query->select(['user_id'])->from('joint_user_permissions')
-                ->whereColumn('joint_user_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                ->whereColumn('joint_user_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
-                ->where('joint_user_permissions.user_id', '=', $this->currentUser()->id)
-                ->where('joint_user_permissions.has_permission', '=', false);
-        })->where(function ($query) use ($tableDetails, $pageMorphClass) {
-            /** @var Builder $query */
-            $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
-                ->orWhereExists(function (QueryBuilder $query) use ($tableDetails, $pageMorphClass) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                        ->where($tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'], '=', $pageMorphClass)
-                        ->where('pages.draft', '=', false);
-                });
-        });
-
-        return $q;
     }
 
     /**

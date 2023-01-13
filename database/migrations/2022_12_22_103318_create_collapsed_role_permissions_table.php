@@ -18,8 +18,8 @@ class CreateCollapsedRolePermissionsTable extends Migration
 
         Schema::create('entity_permissions_collapsed', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('role_id')->nullable();
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('role_id')->nullable()->index();
+            $table->unsignedInteger('user_id')->nullable()->index();
             $table->string('entity_type');
             $table->unsignedInteger('entity_id');
             $table->boolean('view')->index();

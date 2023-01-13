@@ -25,8 +25,9 @@ class ActivityQueries
      */
     public function latest(int $count = 20, int $page = 0): array
     {
+        $query = Activity::query()->select(['id', 'type', 'detail', 'activities.entity_type', 'activities.entity_id', 'user_id', 'created_at']);
         $activityList = $this->permissions
-            ->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type')
+            ->restrictEntityRelationQuery($query, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->with(['user', 'entity'])
             ->skip($count * $page)
