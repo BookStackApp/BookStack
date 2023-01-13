@@ -15,6 +15,8 @@ class ActivityQueries
 {
     protected PermissionApplicator $permissions;
 
+    protected array $fieldsForLists = ['id', 'type', 'detail', 'activities.entity_type', 'activities.entity_id', 'user_id', 'created_at'];
+
     public function __construct(PermissionApplicator $permissions)
     {
         $this->permissions = $permissions;
@@ -25,7 +27,7 @@ class ActivityQueries
      */
     public function latest(int $count = 20, int $page = 0): array
     {
-        $query = Activity::query()->select(['id', 'type', 'detail', 'activities.entity_type', 'activities.entity_id', 'user_id', 'created_at']);
+        $query = Activity::query()->select($this->fieldsForLists);
         $activityList = $this->permissions
             ->restrictEntityRelationQuery($query, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
@@ -79,8 +81,9 @@ class ActivityQueries
      */
     public function userActivity(User $user, int $count = 20, int $page = 0): array
     {
+        $query = Activity::query()->select($this->fieldsForLists);
         $activityList = $this->permissions
-            ->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type')
+            ->restrictEntityRelationQuery($query, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->where('user_id', '=', $user->id)
             ->skip($count * $page)

@@ -29,15 +29,16 @@ class TagRepo
             $sort = 'value';
         }
 
+        $entityTypeCol = DB::getTablePrefix() . 'tags.entity_type';
         $query = Tag::query()
             ->select([
                 'name',
                 ($searchTerm || $nameFilter) ? 'value' : DB::raw('COUNT(distinct value) as `values`'),
                 DB::raw('COUNT(id) as usages'),
-                DB::raw('SUM(IF(entity_type = \'page\', 1, 0)) as page_count'),
-                DB::raw('SUM(IF(entity_type = \'chapter\', 1, 0)) as chapter_count'),
-                DB::raw('SUM(IF(entity_type = \'book\', 1, 0)) as book_count'),
-                DB::raw('SUM(IF(entity_type = \'bookshelf\', 1, 0)) as shelf_count'),
+                DB::raw("SUM(IF({$entityTypeCol} = 'page', 1, 0)) as page_count"),
+                DB::raw("SUM(IF({$entityTypeCol} = 'chapter', 1, 0)) as chapter_count"),
+                DB::raw("SUM(IF({$entityTypeCol} = 'book', 1, 0)) as book_count"),
+                DB::raw("SUM(IF({$entityTypeCol} = 'bookshelf', 1, 0)) as shelf_count"),
             ])
             ->orderBy($sort, $listOptions->getOrder());
 
