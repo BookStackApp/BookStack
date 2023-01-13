@@ -223,7 +223,7 @@ class SearchRunner
         });
         $subQuery->groupBy('entity_type', 'entity_id');
 
-        $entityQuery->joinSub($subQuery, 's', 'id', '=', 'entity_id');
+        $entityQuery->joinSub($subQuery, 's', 'id', '=', 's.entity_id');
         $entityQuery->addSelect('s.score');
         $entityQuery->orderBy('score', 'desc');
     }
