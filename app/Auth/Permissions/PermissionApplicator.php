@@ -178,7 +178,7 @@ class PermissionApplicator
         $this->applyFallbackJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
         $this->applyRoleJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
         $this->applyUserJoin($query, $queryTable, $entityTypeLimiter, $entityIdColumn, $entityTypeColumn);
-        $this->applyPermissionWhereFilter($query, $entityTypeLimiter, $entityTypeColumn);
+        $this->applyPermissionWhereFilter($query, $queryTable, $entityTypeLimiter, $entityTypeColumn);
     }
 
     /**
@@ -188,10 +188,11 @@ class PermissionApplicator
      * Both should not be applied since that would conflict upon intent.
      * @param Builder|QueryBuilder $query
      */
-    protected function applyPermissionWhereFilter($query, string $entityTypeLimiter, string $entityTypeColumn)
+    protected function applyPermissionWhereFilter($query, string $queryTable, string $entityTypeLimiter, string $entityTypeColumn)
     {
         $abilities = ['all' => [], 'own' => []];
         $types = $entityTypeLimiter ? [$entityTypeLimiter] : ['page', 'chapter', 'bookshelf', 'book'];
+        $fullEntityTypeColumn = $queryTable . '.' . $entityTypeColumn;
         foreach ($types as $type) {
             $abilities['all'][$type] = userCan($type . '-view-all');
             $abilities['own'][$type] = userCan($type . '-view-own');
@@ -200,7 +201,7 @@ class PermissionApplicator
         $abilities['all'] = array_filter($abilities['all']);
         $abilities['own'] = array_filter($abilities['own']);
 
-        $query->where(function (Builder $query) use ($abilities, $entityTypeColumn) {
+        $query->where(function (Builder $query) use ($abilities, $fullEntityTypeColumn) {
             $query->where('perms_user', '=', 1)
                 ->orWhere(function (Builder $query) {
                     $query->whereNull('perms_user')->where('perms_role', '=', 1);
@@ -210,20 +211,20 @@ class PermissionApplicator
                 });
 
             if (count($abilities['all']) > 0) {
-                $query->orWhere(function (Builder $query) use ($abilities, $entityTypeColumn) {
+                $query->orWhere(function (Builder $query) use ($abilities, $fullEntityTypeColumn) {
                     $query->whereNull(['perms_user', 'perms_role', 'perms_fallback']);
-                    if ($entityTypeColumn) {
-                        $query->whereIn($entityTypeColumn, array_keys($abilities['all']));
+                    if ($fullEntityTypeColumn) {
+                        $query->whereIn($fullEntityTypeColumn, array_keys($abilities['all']));
                     }
                 });
             }
 
             if (count($abilities['own']) > 0) {
-                $query->orWhere(function (Builder $query) use ($abilities, $entityTypeColumn) {
+                $query->orWhere(function (Builder $query) use ($abilities, $fullEntityTypeColumn) {
                     $query->whereNull(['perms_user', 'perms_role', 'perms_fallback'])
                         ->where('owned_by', '=', $this->currentUser()->id);
-                    if ($entityTypeColumn) {
-                        $query->whereIn($entityTypeColumn, array_keys($abilities['all']));
+                    if ($fullEntityTypeColumn) {
+                        $query->whereIn($fullEntityTypeColumn, array_keys($abilities['all']));
                     }
                 });
             }

@@ -31,6 +31,7 @@ class ActivityQueries
         $activityList = $this->permissions
             ->restrictEntityRelationQuery($query, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
+            ->whereNotNull('activities.entity_id')
             ->with(['user', 'entity'])
             ->skip($count * $page)
             ->take($count)
@@ -86,6 +87,7 @@ class ActivityQueries
             ->restrictEntityRelationQuery($query, 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
             ->where('user_id', '=', $user->id)
+            ->whereNotNull('activities.entity_id')
             ->skip($count * $page)
             ->take($count)
             ->get();
