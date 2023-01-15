@@ -1,0 +1,17 @@
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+indent_style = tab
+indent_size = 2
+prettier.printWidth = 120
+
+[*.{js,txt,md,css,html,php,py,json,yml,sass,pug}]
+indent_style = tab
+indent_size = 2
+
+[*.{diff,md}]
+trim_trailing_whitespace = false
