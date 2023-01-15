@@ -13,6 +13,7 @@ use BookStack\Traits\HasOwner;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 class PermissionApplicator
@@ -201,7 +202,7 @@ class PermissionApplicator
         $abilities['all'] = array_filter($abilities['all']);
         $abilities['own'] = array_filter($abilities['own']);
 
-        $query->where(function (Builder $query) use ($abilities, $fullEntityTypeColumn) {
+        $query->where(function (Builder $query) use ($abilities, $fullEntityTypeColumn, $entityTypeColumn) {
             $query->where('perms_user', '=', 1)
                 ->orWhere(function (Builder $query) {
                     $query->whereNull('perms_user')->where('perms_role', '=', 1);
@@ -211,19 +212,19 @@ class PermissionApplicator
                 });
 
             if (count($abilities['all']) > 0) {
-                $query->orWhere(function (Builder $query) use ($abilities, $fullEntityTypeColumn) {
+                $query->orWhere(function (Builder $query) use ($abilities, $fullEntityTypeColumn, $entityTypeColumn) {
                     $query->whereNull(['perms_user', 'perms_role', 'perms_fallback']);
-                    if ($fullEntityTypeColumn) {
+                    if ($entityTypeColumn) {
                         $query->whereIn($fullEntityTypeColumn, array_keys($abilities['all']));
                     }
                 });
             }
 
             if (count($abilities['own']) > 0) {
-                $query->orWhere(function (Builder $query) use ($abilities, $fullEntityTypeColumn) {
+                $query->orWhere(function (Builder $query) use ($abilities, $fullEntityTypeColumn, $entityTypeColumn) {
                     $query->whereNull(['perms_user', 'perms_role', 'perms_fallback'])
                         ->where('owned_by', '=', $this->currentUser()->id);
-                    if ($fullEntityTypeColumn) {
+                    if ($entityTypeColumn) {
                         $query->whereIn($fullEntityTypeColumn, array_keys($abilities['all']));
                     }
                 });
@@ -317,6 +318,19 @@ class PermissionApplicator
      */
     public function restrictEntityRelationQuery($query, string $tableName, string $entityIdColumn, string $entityTypeColumn)
     {
+        $query->leftJoinSub(function (QueryBuilder $query) {
+            $query->select(['id as entity_id', DB::raw("'page' as entity_type"), 'owned_by', 'deleted_at', 'draft'])->from('pages');
+            $tablesByType = ['page' => 'pages', 'book' => 'books', 'chapter' => 'chapters', 'bookshelf' => 'bookshelves'];
+            foreach ($tablesByType as $type => $table) {
+                $query->unionAll(function (QueryBuilder $query) use ($type, $table) {
+                    $query->select(['id as entity_id', DB::raw("'{$type}' as entity_type"), 'owned_by', 'deleted_at', DB::raw('0 as draft')])->from($table);
+                });
+            }
+        }, 'entities', function (JoinClause $join) use ($tableName, $entityIdColumn, $entityTypeColumn) {
+            $join->on($tableName . '.' . $entityIdColumn, '=', 'entities.entity_id')
+                 ->on($tableName . '.' . $entityTypeColumn, '=', 'entities.entity_type');
+        });
+
         $this->applyPermissionsToQuery($query, $tableName, '', $entityIdColumn, $entityTypeColumn);
         // TODO - Test page draft access (Might allow drafts which should not be seen)
 
@@ -335,6 +349,7 @@ class PermissionApplicator
 
         $this->applyPermissionsToQuery($query, $tableName, $morphClass, $pageIdColumn, '');
         // TODO - Draft display
+        // TODO - Likely need owned_by entity join workaround as used above
         return $query;
     }
 
