@@ -8,7 +8,6 @@
 
         <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ Str::title(trans('auth.log_in')) }}</h1>
-
             @include('auth.parts.login-message')
 
             @include('auth.parts.login-form-' . $authMethod)
@@ -35,3 +34,14 @@
     </div>
 
 @stop
+
+{{--@section('content')--}}
+{{--    <div class="flex flex-row">--}}
+{{--        <div class="debug basis-1/2">--}}
+{{--            Image--}}
+{{--        </div>--}}
+{{--        <div class="debug basis-1/2 flex justify-center">--}}
+{{--            signup--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--@stop--}}

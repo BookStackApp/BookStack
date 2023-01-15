@@ -18,6 +18,7 @@
     "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "^10.4.13",
     "chokidar-cli": "^3.0",
     "esbuild": "^0.15.12",
@@ -30,6 +31,7 @@
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "clipboard": "^2.0.11",
     "codemirror": "^5.65.5",
     "dropzone": "^5.9.3",
