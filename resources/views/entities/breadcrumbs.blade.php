@@ -7,7 +7,7 @@
             <span>@icon('books')</span>
             <span>{{ trans('entities.books') }}</span>
         </a>
-            <?php $breadcrumbCount++; ?>
+        <?php $breadcrumbCount++; ?>
     @endif
 
     {{-- Show top level shelves item --}}
@@ -16,14 +16,14 @@
             <span>@icon('bookshelf')</span>
             <span>{{ trans('entities.shelves') }}</span>
         </a>
-            <?php $breadcrumbCount++; ?>
+        <?php $breadcrumbCount++; ?>
     @endif
 
     @foreach($crumbs as $key => $crumb)
-            <?php $isEntity = ($crumb instanceof \BookStack\Entities\Models\Entity); ?>
+        <?php $isEntity = ($crumb instanceof \BookStack\Entities\Models\Entity); ?>
 
         @if (is_null($crumb))
-                <?php continue; ?>
+            <?php continue; ?>
         @endif
         @if ($breadcrumbCount !== 0 && !$isEntity)
             <div class="separator">@icon('chevron-right')</div>
@@ -49,24 +49,6 @@
                 </span>
             </a>
         @endif
-            <?php $breadcrumbCount++; ?>
+        <?php $breadcrumbCount++; ?>
     @endforeach
-    &nbsp; &nbsp;
-    <span
-        component="reading-font-resizer"
-        option:reading-font-resizer:name="increaseFont"
-        option:reading-font-resizer:font="increase">
-            @icon('magnifying-glass-plus-solid')
-            {{-- {{ trans('common.increase_reading_font_size') }} --}}
-    </span>
-    &nbsp; &nbsp;
-    <span
-        component="reading-font-resizer"
-        option:reading-font-resizer:name="decreaseFont"
-        option:reading-font-resizer:font="decrease">
-            @icon('magnifying-glass-minus-solid')
-        {{-- {{ trans('common.decrease_reading_font_size') }} --}}
-    </span>
 </nav>
-
-

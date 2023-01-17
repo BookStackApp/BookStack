@@ -1459,6 +1459,7 @@ module.exports = {
             center: true,
         },
     },
+	prefix: 'smf-',
     mode: 'jit',
     corePlugins: {
         preflight: false,

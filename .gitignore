@@ -25,3 +25,4 @@ webpack-stats.json
 .phpunit.result.cache
 .DS_Store
 phpstan.neon
+/app/Config/database.php

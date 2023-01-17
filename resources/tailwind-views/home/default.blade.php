@@ -78,6 +78,66 @@
             </div>
 
         </div>
+
+		<div class="grid third gap-xxl no-row-gap" >
+			{{-- Start:  Carousel --}}
+			<div class="smf-carousel-with-progress">
+				<div class="smf-card-with-progress" style="flex: none; order: 0; flex-grow: 0;">
+					<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');"></div>
+					<div class="smf-progress-indicator">
+						<div class="smf-whole-progress-indicator">
+							<div class="smf-progress-value"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="smf-card-with-progress" style="flex: none; order: 1; flex-grow: 0;">
+					<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');"></div>
+					<div class="smf-progress-indicator">
+						<div class="smf-whole-progress-indicator">
+							<div class="smf-progress-value"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="smf-card-with-progress" style="flex: none; order: 2; flex-grow: 0;">
+					<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');"></div>
+					<div class="smf-progress-indicator">
+						<div class="smf-whole-progress-indicator">
+							<div class="smf-progress-value"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="smf-card-with-progress" style="flex: none; order: 3; flex-grow: 0;">
+					<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');"></div>
+					<div class="smf-progress-indicator">
+						<div class="smf-whole-progress-indicator">
+							<div class="smf-progress-value"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="smf-card-with-progress" style="flex: none; order: 4; flex-grow: 0;">
+					<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');"></div>
+					<div class="smf-progress-indicator">
+						<div class="smf-whole-progress-indicator">
+							<div class="smf-progress-value"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="smf-card-with-progress" style="flex: none; order: 5; flex-grow: 0;">
+					<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');"></div>
+					<div class="smf-progress-indicator">
+						<div class="smf-whole-progress-indicator">
+							<div class="smf-progress-value"</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{-- End: Carousel --}}
+		</div>
     </div>
 
 @stop

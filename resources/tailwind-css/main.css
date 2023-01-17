@@ -4,6 +4,6 @@
 
 @layer utilities {
     .debug {
-        @apply border-[1px] border-solid border-red-500
+        border:1px solid border-red-500
     }
 }
