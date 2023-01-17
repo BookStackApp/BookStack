@@ -1451,7 +1451,8 @@ module.exports = {
     },
     ...defaultModifiers,
     content: [
-        './resources/**/*.{html,js,php}'
+        './resources/**/*.{html,js,php,blade.php}',
+		'./node_modules/flowbite/**/*.js'
     ],
     theme: {
         extend: {},
@@ -1462,10 +1463,10 @@ module.exports = {
 	prefix: 'smf-',
     mode: 'jit',
     corePlugins: {
-        preflight: false,
     },
     plugins: [
 			require('@tailwindcss/typography'),
-			require('@tailwindcss/forms')
+			require('@tailwindcss/forms'),
+			require('flowbite/plugin')
     ]
 }

@@ -17,7 +17,7 @@
     @stack('social-meta')
 
     <!-- Styles and Fonts -->
-	<!-- <link rel="stylesheet" href="{{ versioned_asset('dist/tailwind-compiled.css') }}"> -->
+	<link rel="stylesheet" href="{{ versioned_asset('dist/tailwind-compiled.css') }}"> 
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
     <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
@@ -59,6 +59,7 @@
 
     @yield('bottom')
     <script src="{{ versioned_asset('dist/app.js') }}" nonce="{{ $cspNonce }}"></script>
+	<script src="{{ versioned_asset('dist/flowbite.min.js') }}" nonce="{{ $cspNonce }}"></script>
     @yield('scripts')
 
     @include('layouts.parts.base-body-end')
