@@ -49,7 +49,7 @@
         @yield('content')
     </div>
 
-    @include('common.footer')
+		@include('common.footer')
 
     <div component="back-to-top" class="back-to-top print-hidden">
         <div class="inner">
@@ -59,7 +59,7 @@
 
     @yield('bottom')
     <script src="{{ versioned_asset('dist/app.js') }}" nonce="{{ $cspNonce }}"></script>
-	<script src="{{ versioned_asset('dist/flowbite.min.js') }}" nonce="{{ $cspNonce }}"></script>
+		<script src="{{ versioned_asset('dist/flowbite.min.js') }}" nonce="{{ $cspNonce }}"></script>
     @yield('scripts')
 
     @include('layouts.parts.base-body-end')
