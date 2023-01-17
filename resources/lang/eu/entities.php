@@ -157,7 +157,7 @@ return [
     'chapters' => 'Kapituluak',
     'x_chapters' => ':count Kapitulu|:count Kapitulu',
     'chapters_popular' => 'Kapitulu ikusienak',
-    'chapters_new' => 'Kopiatu kapitulua',
+    'chapters_new' => 'Kapitulu berria',
     'chapters_create' => 'Sortu kapitulu berria',
     'chapters_delete' => 'Kapitulua ezabatu',
     'chapters_delete_named' => ':chapterName kapitulua ezabatu',
