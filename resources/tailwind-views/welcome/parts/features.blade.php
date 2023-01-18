@@ -1,4 +1,4 @@
-<section class="smf-bg-gray-50 dark:smf-bg-gray-900">
+<section class="smf-bg-gray-50 dark:smf-bg-gray-900 smf-flex-1">
 	<div class="smf-py-8 smf-px-4 smf-mx-auto smf-max-w-screen-xl sm:smf-py-8 lg:smf-px-6">
 		<div class="mx-auto smf-max-w-screen-md smf-text-center smf-mb-8 lg:smf-mb-12">
 			<p class="smf-mb-4 smf-text-4xl smf-tracking-tight smf-font-extrabold smf-text-gray-900 dark:smf-text-white">What can you do on Petals?</p>

@@ -38,7 +38,7 @@
         component="shortcuts"
         option:shortcuts:key-map="{{ \BookStack\Settings\UserShortcutMap::fromUserPreferences()->toJson() }}"
     @endif
-      class="@stack('body-class') smf-bg-white">
+      class="@stack('body-class') smf-bg-white smf-h-screen smf-w-screen">
 
     @include('layouts.parts.base-body-start')
     {{-- @include('common.skip-to-content') --}}
@@ -65,7 +65,7 @@
 
     @yield('bottom')
     <script src="{{ versioned_asset('dist/app.js') }}" nonce="{{ $cspNonce }}"></script>
-	<script src="{{ versioned_asset('dist/flowbite.min.js') }}" nonce="{{ $cspNonce }}"></script>
+		<script src="{{ versioned_asset('dist/flowbite.min.js') }}" nonce="{{ $cspNonce }}"></script>
     @yield('scripts')
 
     @include('layouts.parts.base-body-end')
