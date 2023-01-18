@@ -17,9 +17,9 @@
     @stack('social-meta')
 
     <!-- Styles and Fonts -->
+	<link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
 	<link rel="stylesheet" href="{{ versioned_asset('dist/tailwind-compiled.css') }}"> 
-    <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
-    <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
+    {{-- <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}"> --}}
 
 
     @yield('head')
@@ -38,17 +38,21 @@
         component="shortcuts"
         option:shortcuts:key-map="{{ \BookStack\Settings\UserShortcutMap::fromUserPreferences()->toJson() }}"
     @endif
-      class="@stack('body-class')">
+      class="@stack('body-class') smf-bg-white">
 
     @include('layouts.parts.base-body-start')
     {{-- @include('common.skip-to-content') --}}
     {{-- @include('common.notifications') --}}
-    @include('welcome.parts.header')
-
-    <div id="content" components="@yield('content-components')" class="block">
+    {{-- @include('welcome.parts.header') --}}
+	<header>
+		@include('welcome.parts.navbar')
+	</header>
+	
+    
+	{{-- <div id="content" components="@yield('content-components')" class="block  smf-container"> --}}
 		@include('welcome.parts.body')
 		@include('welcome.parts.features')
-    </div>
+    {{-- </div> --}}
 
 	@include('common.footer')
 
