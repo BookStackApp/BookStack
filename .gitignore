@@ -26,3 +26,4 @@ webpack-stats.json
 .DS_Store
 phpstan.neon
 /app/Config/database.php
+app/Config/database.php

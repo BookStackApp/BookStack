@@ -47,6 +47,7 @@
 
     <div id="content" components="@yield('content-components')" class="block">
 		@include('welcome.parts.body')
+		@include('welcome.parts.features')
     </div>
 
 	@include('common.footer')

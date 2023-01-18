@@ -1,14 +1,13 @@
 {
   "private": true,
   "scripts": {
-
     "build:css:dev": "sass ./resources/sass:./public/dist --embed-sources && npx tailwindcss -i ./resources/tailwind-css/main.css -o ./dist/tailwind-compiled.css --watch",
     "build:css:watch": "sass ./resources/sass:./public/dist --watch --embed-sources",
     "build:css:production": "sass ./resources/sass:./public/dist -s compressed",
     "build:js:dev": "node dev/build/esbuild.js",
     "build:js:watch": "chokidar --initial \"./resources/**/*.js\" -c \"npm run build:js:dev\"",
     "build:js:production": "node dev/build/esbuild.js production",
-		"build:flowbite:watch": "cp -Rp node_modules/flowbite/dist/* public/dist",
+    "build:flowbite:watch": "cp -Rp node_modules/flowbite/dist/* public/dist",
     "build:tailwind:dev": "npx tailwindcss -i ./resources/tailwind-css/main.css -o ./public/dist/tailwind-compiled.css --watch",
     "build:tailwind:watch": "npx tailwindcss -i ./resources/tailwind-css/main.css -o ./public/dist/tailwind-compiled.css --watch",
     "build:tailwind:production": "npx tailwindcss -i ./resources/tailwind-css/main.css -o ./public/dist/tailwind-compiled.css --minify",
@@ -25,6 +24,7 @@
     "chokidar-cli": "^3.0",
     "esbuild": "^0.15.12",
     "flowbite": "^1.6.2",
+    "flowbite-typography": "^1.0.3",
     "livereload": "^0.9.3",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.20",
