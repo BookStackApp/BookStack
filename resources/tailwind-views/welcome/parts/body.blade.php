@@ -1,6 +1,6 @@
 <section class="smf-bg-white dark:smf-bg-gray-900">
     <div
-        class="smf-grid smf-max-w-screen-xl smf-px-4 smf-py-8 smf-mx-auto lg:smf-gap-8 xl:smf-gap-0 lg:smf-py-16 lg:smf-mt-4 lg:smf-grid-cols-12">
+        class="smf-grid smf-max-w-screen-xl smf-px-4 smf-py-16 smf-mx-auto lg:smf-gap-8 xl:smf-gap-0 lg:smf-py-16 lg:smf-mt-4 lg:smf-grid-cols-12">
         <div class="smf-mr-auto smf-place-self-center lg:smf-col-span-7">
             <h1
                 class="smf-max-w-2xl smf-mb-4 smf-text-4xl smf-font-extrabold smf-tracking-tight smf-leading-none md:smf-text-5xl xl:smf-text-6xl dark:smf-text-white">
