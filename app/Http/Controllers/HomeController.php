@@ -12,6 +12,7 @@ use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -31,7 +32,9 @@ class HomeController extends Controller
                 ->with('book')
                 ->take(6)
                 ->get();
-        }
+        } else {
+			return view('welcome.default');
+		}
 
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
         $recents = $this->isSignedIn() ?
