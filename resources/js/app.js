@@ -42,4 +42,8 @@ $.when($.ready).then(function () {
     $(window).scroll(function () {
         localStorage.setItem(window.location.href + "-scroll-y", window.scrollY);
     });
+		$('#startReadingButton').on('click', ()=>{
+			const userEmailAddress = $("#welcomePageEmailAddressInput").val();
+			window.location.href = `/login?email=${userEmailAddress}`;
+		})
 });
