@@ -1,4 +1,4 @@
-<section class="smf-bg-white dark:smf-bg-gray-900">
+<section class="smf-bg-white dark:smf-bg-gray-900 ">
 		<div class="smf-mx-auto smf-grid smf-max-w-screen-xl smf-px-4 smf-py-16 lg:smf-mt-4 lg:smf-grid-cols-12 lg:smf-gap-8 lg:smf-py-16 xl:smf-gap-0">
 				<div class="smf-mr-auto smf-place-self-center lg:smf-col-span-7">
 						<h1 class="smf-mb-4 smf-max-w-2xl smf-text-4xl smf-font-extrabold smf-leading-none smf-tracking-tight dark:smf-text-white md:smf-text-5xl xl:smf-text-6xl">

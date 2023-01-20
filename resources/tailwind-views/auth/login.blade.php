@@ -1,18 +1,20 @@
-@extends('layouts.simple')
-
+@extends('layouts-v2.simple')
 @section('content')
-
-    <div class="container very-small">
-
-        <div class="my-l">&nbsp;</div>
-
-        <div class="card content-wrap auto-height">
-            <h1 class="list-heading">{{ Str::title(trans('auth.log_in')) }}</h1>
-            @include('auth.parts.login-message')
-
-            @include('auth.parts.login-form-' . $authMethod)
-
-            @if(count($socialDrivers) > 0)
+ 
+<section class="smf-bg-gray-50 dark:smf-bg-gray-900 smf-flex smf-flex-1 smf-items-center smf-place-content-center">
+	<div class="smf-container smf-flex  smf-justify-center smf-px-6 smf-py-16 smf-space-y-2 smf-mx-auto lg:smf-py-16">
+		<div class="smf-w-screen smf-bg-white smf-rounded-lg smf-shadow dark:smf-border md:smf-mt-0 sm:smf-max-w-md xl:smf-p-0 dark:smf-bg-gray-800 dark:smf-border-gray-700">
+			<div class="smf-p-6 smf-space-y-4 md:smf-space-y-6 sm:smf-p-8">
+				<div>
+					<h1 class="smf-text-xl smf-font-bold smf-leading-tight smf-tracking-tight smf-text-gray-900 md:smf-text-2xl dark:smf-text-white">
+						{{ Str::title(trans('auth.log_in')) }}
+					</h1>
+					@include('auth.parts.login-message')
+				</div>
+				
+				@include('auth.parts.login-form-' . $authMethod)
+			</div>
+			@if(count($socialDrivers) > 0)
                 <hr class="my-l">
                 @foreach($socialDrivers as $driver => $name)
                     <div>
@@ -24,24 +26,8 @@
                 @endforeach
             @endif
 
-            @if(setting('registration-enabled') && config('auth.method') === 'standard')
-                <div class="text-center pb-s">
-                    <hr class="my-l">
-                    <a href="{{ url('/register') }}">{{ trans('auth.dont_have_account') }}</a>
-                </div>
-            @endif
-        </div>
-    </div>
+		</div>
+	</div>
+  </section>
 
-@stop
-
-{{--@section('content')--}}
-{{--    <div class="flex flex-row">--}}
-{{--        <div class="debug basis-1/2">--}}
-{{--            Image--}}
-{{--        </div>--}}
-{{--        <div class="debug basis-1/2 flex justify-center">--}}
-{{--            signup--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--@stop--}}
+  @stop
