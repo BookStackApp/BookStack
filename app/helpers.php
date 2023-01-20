@@ -122,8 +122,13 @@ function theme_path(string $path = ''): ?string
  */
 function icon(string $name, array $attrs = []): string
 {
+	$classStr = 'svg-icon';
+
+	if (array_key_exists("className",$attrs))
+		$classStr = $classStr." ".$attrs['className'];
+
     $attrs = array_merge([
-        'class'     => 'svg-icon',
+        'class'     => $classStr,
         'data-icon' => $name,
         'role'      => 'presentation',
     ], $attrs);
