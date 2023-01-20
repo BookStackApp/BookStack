@@ -44,6 +44,17 @@ $.when($.ready).then(function () {
     });
 		$('#startReadingButton').on('click', ()=>{
 			const userEmailAddress = $("#welcomePageEmailAddressInput").val();
-			window.location.href = `/login?email=${userEmailAddress}`;
+			window.location.href = `/register?email=${userEmailAddress}`;
 		})
+
+		$('#userRegistration').on('click', ()=>{
+			const userEmailAddress = $("#welcomePageEmailAddressInput").val();
+			if(userEmailAddress)
+				window.location.href = `/register?email=${userEmailAddress}`;
+			else	
+				window.location.href = `/register`;
+		})
+
+
+		
 });
