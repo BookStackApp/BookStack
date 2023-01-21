@@ -85,7 +85,7 @@ class PermissionsProvider
 
         if (!$inherit) {
             // Set default permissions to not allow actions so that only the provided role permissions are at play.
-            $permissions[] = ['role_id' => null, 'user_id' => null, 'view' => false, 'create' => false, 'update' => false, 'delete' => false];
+            $permissions[] = ['role_id' => 0, 'view' => false, 'create' => false, 'update' => false, 'delete' => false];
         }
 
         foreach ($roles as $role) {
@@ -95,9 +95,9 @@ class PermissionsProvider
         $this->addEntityPermissionEntries($entity, $permissions);
     }
 
-    public function addEntityPermission(Entity $entity, array $actionList, ?Role $role = null, ?User $user = null)
+    public function addEntityPermission(Entity $entity, array $actionList, Role $role)
     {
-        $permissionData = $this->actionListToEntityPermissionData($actionList, $role->id ?? null, $user->id ?? null);
+        $permissionData = $this->actionListToEntityPermissionData($actionList, $role->id);
         $this->addEntityPermissionEntries($entity, [$permissionData]);
     }
 
@@ -107,7 +107,7 @@ class PermissionsProvider
      */
     public function disableEntityInheritedPermissions(Entity $entity): void
     {
-        $entity->permissions()->whereNull(['user_id', 'role_id'])->delete();
+        $entity->permissions()->where('role_id', '=', 0)->delete();
         $fallback = $this->actionListToEntityPermissionData([]);
         $this->addEntityPermissionEntries($entity, [$fallback]);
     }
@@ -124,9 +124,9 @@ class PermissionsProvider
      * the format to entity permission data, where permission is granted if the action is in the
      * given actionList array.
      */
-    protected function actionListToEntityPermissionData(array $actionList, int $roleId = null, int $userId = null): array
+    protected function actionListToEntityPermissionData(array $actionList, int $roleId = 0): array
     {
-        $permissionData = ['role_id' => $roleId, 'user_id' => $userId];
+        $permissionData = ['role_id' => $roleId];
         foreach (EntityPermission::PERMISSIONS as $possibleAction) {
             $permissionData[$possibleAction] = in_array($possibleAction, $actionList);
         }
