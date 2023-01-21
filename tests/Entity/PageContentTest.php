@@ -310,7 +310,7 @@ class PageContentTest extends TestCase
     {
         $this->asEditor();
         $page = $this->entities->page();
-        config()->push('app.allow_content_scripts', 'true');
+        config()->set('app.allow_content_scripts', 'true');
 
         $script = 'abc123<script>console.log("hello-test")</script>abc123';
         $page->html = "no escape {$script}";
@@ -355,7 +355,7 @@ class PageContentTest extends TestCase
     {
         $this->asEditor();
         $page = $this->entities->page();
-        config()->push('app.allow_content_scripts', 'true');
+        config()->set('app.allow_content_scripts', 'true');
 
         $script = '<p onmouseenter="console.log(\'test\')">Hello</p>';
         $page->html = "escape {$script}";

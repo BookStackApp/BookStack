@@ -18,7 +18,7 @@ class WebhookFactory extends Factory
     {
         return [
             'name'     => 'My webhook for ' . $this->faker->country(),
-            'endpoint' => $this->faker->url,
+            'endpoint' => $this->faker->url(),
             'active'   => true,
             'timeout'  => 3,
         ];

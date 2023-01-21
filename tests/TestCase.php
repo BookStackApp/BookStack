@@ -43,6 +43,10 @@ abstract class TestCase extends BaseTestCase
     {
         $this->entities = new EntityProvider();
         parent::setUp();
+
+        // We can uncomment the below to run tests with failings upon deprecations.
+        // Can't leave on since some deprecations can only be fixed upstream.
+         // $this->withoutDeprecationHandling();
     }
 
     /**

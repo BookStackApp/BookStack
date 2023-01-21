@@ -5,7 +5,7 @@
      style="display: none;"
      class="notification pos"
      role="alert">
-    @icon('check-circle') <span>{!! nl2br(htmlentities(session()->get('success'))) !!}</span><div class="dismiss">@icon('close')</div>
+    @icon('check-circle') <span>@if(session()->has('success')){!! nl2br(htmlentities(session()->get('success'))) !!}@endif</span><div class="dismiss">@icon('close')</div>
 </div>
 
 <div component="notification"
@@ -15,7 +15,7 @@
      style="display: none;"
      class="notification warning"
      role="alert">
-    @icon('info') <span>{!! nl2br(htmlentities(session()->get('warning'))) !!}</span><div class="dismiss">@icon('close')</div>
+    @icon('info') <span>@if(session()->has('warning')){!! nl2br(htmlentities(session()->get('warning'))) !!}@endif</span><div class="dismiss">@icon('close')</div>
 </div>
 
 <div component="notification"
@@ -25,5 +25,5 @@
      style="display: none;"
      class="notification neg"
      role="alert">
-    @icon('danger') <span>{!! nl2br(htmlentities(session()->get('error'))) !!}</span><div class="dismiss">@icon('close')</div>
+    @icon('danger') <span>@if(session()->has('error')){!! nl2br(htmlentities(session()->get('error'))) !!}@endif</span><div class="dismiss">@icon('close')</div>
 </div>

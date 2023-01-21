@@ -160,9 +160,9 @@ class ExportTest extends TestCase
         $page = $this->entities->page();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
-        $resp->assertSee($page->created_at->formatLocalized('%e %B %Y %H:%M:%S'));
+        $resp->assertSee($page->created_at->isoFormat('D MMMM Y HH:mm:ss'));
         $resp->assertDontSee($page->created_at->diffForHumans());
-        $resp->assertSee($page->updated_at->formatLocalized('%e %B %Y %H:%M:%S'));
+        $resp->assertSee($page->updated_at->isoFormat('D MMMM Y HH:mm:ss'));
         $resp->assertDontSee($page->updated_at->diffForHumans());
     }
 
