@@ -18,12 +18,12 @@
 
 
                     <div class="smf-flex smf-flex-row smf-items-center smf-place-content-center smf-gap-x-3">
-                        <div class="smf-w-24 smf-border-gray-100 smf-border-solid smf-border-b-2"></div>
+                        <div class="smf-w-8 lg:smf-w-24 smf-border-gray-100 smf-border-solid smf-border-b-2"></div>
                         <div
                             class="smf-max-w-2xl smf-font-light smf-text-gray-500 dark:smf-text-gray-400 md:smf-text-xs lg:smf-text-sm">
                             Or continue with
                         </div>
-                        <div class="smf-w-24 smf-border-gray-100 smf-border-solid smf-border-b-2"></div>
+                        <div class="smf-w-8 lg:smf-w-24 smf-border-gray-100 smf-border-solid smf-border-b-2"></div>
 
                     </div>
 
