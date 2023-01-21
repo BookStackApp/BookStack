@@ -17,7 +17,7 @@
                 @if($revision->createdBy) {{ $revision->createdBy->name }} @else {{ trans('common.deleted_user') }} @endif
                 <br>
                 <div class="text-muted">
-                    <small>{{ $revision->created_at->formatLocalized('%e %B %Y %H:%M:%S') }}</small>
+                    <small>{{ $revision->created_at->isoFormat('D MMMM Y HH:mm:ss') }}</small>
                     <small>({{ $revision->created_at->diffForHumans() }})</small>
                 </div>
             </div>

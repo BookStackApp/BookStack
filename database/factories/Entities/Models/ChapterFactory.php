@@ -22,9 +22,9 @@ class ChapterFactory extends Factory
     public function definition()
     {
         return [
-            'name'        => $this->faker->sentence,
+            'name'        => $this->faker->sentence(),
             'slug'        => Str::random(10),
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->paragraph(),
         ];
     }
 }

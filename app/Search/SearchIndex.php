@@ -112,12 +112,12 @@ class SearchIndex
      *
      * @returns array<string, int>
      */
-    protected function generateTermScoreMapFromText(string $text, int $scoreAdjustment = 1): array
+    protected function generateTermScoreMapFromText(string $text, float $scoreAdjustment = 1): array
     {
         $termMap = $this->textToTermCountMap($text);
 
         foreach ($termMap as $term => $count) {
-            $termMap[$term] = $count * $scoreAdjustment;
+            $termMap[$term] = floor($count * $scoreAdjustment);
         }
 
         return $termMap;
