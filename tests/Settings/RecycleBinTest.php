@@ -14,7 +14,7 @@ class RecycleBinTest extends TestCase
     public function test_recycle_bin_routes_permissions()
     {
         $page = $this->entities->page();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor)->delete($page->getUrl());
         $deletion = Deletion::query()->firstOrFail();
 
@@ -33,7 +33,7 @@ class RecycleBinTest extends TestCase
             $this->assertPermissionError($resp);
         }
 
-        $this->giveUserPermissions($editor, ['restrictions-manage-all']);
+        $this->permissions->grantUserRolePermissions($editor, ['restrictions-manage-all']);
 
         foreach ($routes as $route) {
             [$method, $url] = explode(':', $route);
@@ -41,7 +41,7 @@ class RecycleBinTest extends TestCase
             $this->assertPermissionError($resp);
         }
 
-        $this->giveUserPermissions($editor, ['settings-manage']);
+        $this->permissions->grantUserRolePermissions($editor, ['settings-manage']);
 
         foreach ($routes as $route) {
             DB::beginTransaction();
@@ -56,7 +56,7 @@ class RecycleBinTest extends TestCase
     {
         $page = $this->entities->page();
         $book = Book::query()->whereHas('pages')->whereHas('chapters')->withCount(['pages', 'chapters'])->first();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor)->delete($page->getUrl());
         $this->actingAs($editor)->delete($book->getUrl());
 
@@ -73,7 +73,7 @@ class RecycleBinTest extends TestCase
     {
         $page = $this->entities->page();
         $book = Book::query()->where('id', '!=', $page->book_id)->whereHas('pages')->whereHas('chapters')->with(['pages', 'chapters'])->firstOrFail();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor)->delete($page->getUrl());
         $this->actingAs($editor)->delete($book->getUrl());
 

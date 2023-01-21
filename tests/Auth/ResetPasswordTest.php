@@ -85,7 +85,7 @@ class ResetPasswordTest extends TestCase
 
     public function test_reset_request_is_throttled()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         Notification::fake();
         $this->get('/password/email');
         $this->followingRedirects()->post('/password/email', [

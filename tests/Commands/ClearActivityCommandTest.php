@@ -19,7 +19,7 @@ class ClearActivityCommandTest extends TestCase
         $this->assertDatabaseHas('activities', [
             'type'      => 'page_update',
             'entity_id' => $page->id,
-            'user_id'   => $this->getEditor()->id,
+            'user_id'   => $this->users->editor()->id,
         ]);
 
         DB::rollBack();

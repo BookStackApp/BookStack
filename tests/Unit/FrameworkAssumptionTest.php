@@ -25,7 +25,7 @@ class FrameworkAssumptionTest extends TestCase
         // Page has SoftDeletes trait by default, so we apply our custom scope and ensure
         // it stacks on the global scope to filter out deleted items.
         $query = Page::query()->scopes('visible')->toSql();
-        $this->assertStringContainsString('joint_permissions', $query);
+        $this->assertStringContainsString('entity_permissions_collapsed', $query);
         $this->assertStringContainsString('`deleted_at` is null', $query);
     }
 }

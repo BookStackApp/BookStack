@@ -16,7 +16,7 @@ class ImageTest extends TestCase
     public function test_image_upload()
     {
         $page = $this->entities->page();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $this->actingAs($admin);
 
         $imgDetails = $this->uploadGalleryImage($page);
@@ -40,7 +40,7 @@ class ImageTest extends TestCase
     public function test_image_display_thumbnail_generation_does_not_increase_image_size()
     {
         $page = $this->entities->page();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $this->actingAs($admin);
 
         $originalFile = $this->getTestImageFilePath('compressed.png');
@@ -64,7 +64,7 @@ class ImageTest extends TestCase
     public function test_image_display_thumbnail_generation_for_apng_images_uses_original_file()
     {
         $page = $this->entities->page();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $this->actingAs($admin);
 
         $imgDetails = $this->uploadGalleryImage($page, 'animated.png');
@@ -76,7 +76,7 @@ class ImageTest extends TestCase
 
     public function test_image_edit()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $imgDetails = $this->uploadGalleryImage();
@@ -126,7 +126,7 @@ class ImageTest extends TestCase
     public function test_image_usage()
     {
         $page = $this->entities->page();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $imgDetails = $this->uploadGalleryImage($page);
@@ -146,7 +146,7 @@ class ImageTest extends TestCase
     public function test_php_files_cannot_be_uploaded()
     {
         $page = $this->entities->page();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $this->actingAs($admin);
 
         $fileName = 'bad.php';
@@ -168,7 +168,7 @@ class ImageTest extends TestCase
     public function test_php_like_files_cannot_be_uploaded()
     {
         $page = $this->entities->page();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $this->actingAs($admin);
 
         $fileName = 'bad.phtml';
@@ -185,7 +185,7 @@ class ImageTest extends TestCase
     public function test_files_with_double_extensions_will_get_sanitized()
     {
         $page = $this->entities->page();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $this->actingAs($admin);
 
         $fileName = 'bad.phtml.png';
@@ -358,7 +358,7 @@ class ImageTest extends TestCase
 
         $this->get($expectedUrl)->assertOk();
 
-        $this->entities->setPermissions($page, [], []);
+        $this->permissions->setEntityPermissions($page, [], []);
 
         $resp = $this->get($expectedUrl);
         $resp->assertNotFound();
@@ -382,7 +382,7 @@ class ImageTest extends TestCase
 
         $this->get($expectedUrl)->assertOk();
 
-        $this->entities->setPermissions($page, [], []);
+        $this->permissions->setEntityPermissions($page, [], []);
 
         $resp = $this->get($expectedUrl);
         $resp->assertNotFound();
@@ -415,7 +415,7 @@ class ImageTest extends TestCase
         $export = $this->get($pageB->getUrl('/export/html'));
         $this->assertStringContainsString($encodedImageContent, $export->getContent());
 
-        $this->entities->setPermissions($pageA, [], []);
+        $this->permissions->setEntityPermissions($pageA, [], []);
 
         $export = $this->get($pageB->getUrl('/export/html'));
         $this->assertStringNotContainsString($encodedImageContent, $export->getContent());
@@ -479,7 +479,7 @@ class ImageTest extends TestCase
         $imageName = 'first-image.png';
         $relPath = $this->getTestImagePath('gallery', $imageName);
         $this->deleteImage($relPath);
-        $viewer = $this->getViewer();
+        $viewer = $this->users->viewer();
 
         $this->uploadImage($imageName, $page->id);
         $image = Image::first();
@@ -490,7 +490,7 @@ class ImageTest extends TestCase
         $resp = $this->actingAs($viewer)->get("/images/edit/{$image->id}");
         $this->withHtml($resp)->assertElementNotExists('button#image-manager-delete[title="Delete"]');
 
-        $this->giveUserPermissions($viewer, ['image-delete-all']);
+        $this->permissions->grantUserRolePermissions($viewer, ['image-delete-all']);
 
         $resp = $this->actingAs($viewer)->get("/images/edit/{$image->id}");
         $this->withHtml($resp)->assertElementExists('button#image-manager-delete[title="Delete"]');
@@ -509,8 +509,8 @@ class ImageTest extends TestCase
 
     public function test_user_image_upload()
     {
-        $editor = $this->getEditor();
-        $admin = $this->getAdmin();
+        $editor = $this->users->editor();
+        $admin = $this->users->admin();
         $this->actingAs($admin);
 
         $file = $this->getTestProfileImage();
@@ -525,7 +525,7 @@ class ImageTest extends TestCase
 
     public function test_user_images_deleted_on_user_deletion()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $file = $this->getTestProfileImage();
@@ -555,7 +555,7 @@ class ImageTest extends TestCase
     public function test_deleted_unused_images()
     {
         $page = $this->entities->page();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $this->actingAs($admin);
 
         $imageName = 'unused-image.png';
