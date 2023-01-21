@@ -21,11 +21,7 @@
 	</div>
 	<button type="submit" class="smf-w-full smf-text-white smf-bg-primary-600 hover:smf-bg-primary-700 focus:smf-ring-4 focus:smf-outline-none focus:smf-ring-primary-300 smf-font-medium smf-rounded-lg smf-text-sm smf-px-5 smf-py-2.5 smf-text-center dark:smf-bg-primary-600 dark:hover:smf-bg-primary-700 dark:focus:smf-ring-primary-800">{{ Str::title(trans('auth.log_in')) }}</button>
 	
-	@if(setting('registration-enabled') && config('auth.method') === 'standard')
-		<p class="smf-text-sm smf-font-light smf-text-gray-500 dark:smf-text-gray-400">
-			Don’t have an account yet? <a href="{{ url('/register') }}" class="smf-font-medium smf-text-primary-600 hover:smf-underline dark:smf-text-primary-500">{{ trans('auth.dont_have_account') }}</a>
-		</p>
-	@endif
+
 	
 </form>
 
