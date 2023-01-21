@@ -16,21 +16,20 @@ class BookShelfTest extends TestCase
 
     public function test_shelves_shows_in_header_if_have_view_permissions()
     {
-        $viewer = $this->getViewer();
+        $viewer = $this->users->viewer();
         $resp = $this->actingAs($viewer)->get('/');
         $this->withHtml($resp)->assertElementContains('header', 'Shelves');
 
         $viewer->roles()->delete();
-        $this->giveUserPermissions($viewer);
         $resp = $this->actingAs($viewer)->get('/');
         $this->withHtml($resp)->assertElementNotContains('header', 'Shelves');
 
-        $this->giveUserPermissions($viewer, ['bookshelf-view-all']);
+        $this->permissions->grantUserRolePermissions($viewer, ['bookshelf-view-all']);
         $resp = $this->actingAs($viewer)->get('/');
         $this->withHtml($resp)->assertElementContains('header', 'Shelves');
 
         $viewer->roles()->delete();
-        $this->giveUserPermissions($viewer, ['bookshelf-view-own']);
+        $this->permissions->grantUserRolePermissions($viewer, ['bookshelf-view-own']);
         $resp = $this->actingAs($viewer)->get('/');
         $this->withHtml($resp)->assertElementContains('header', 'Shelves');
     }
@@ -38,14 +37,14 @@ class BookShelfTest extends TestCase
     public function test_shelves_shows_in_header_if_have_any_shelve_view_permission()
     {
         $user = User::factory()->create();
-        $this->giveUserPermissions($user, ['image-create-all']);
+        $this->permissions->grantUserRolePermissions($user, ['image-create-all']);
         $shelf = $this->entities->shelf();
         $userRole = $user->roles()->first();
 
         $resp = $this->actingAs($user)->get('/');
         $this->withHtml($resp)->assertElementNotContains('header', 'Shelves');
 
-        $this->entities->setPermissions($shelf, ['view'], [$userRole]);
+        $this->permissions->setEntityPermissions($shelf, ['view'], [$userRole]);
 
         $resp = $this->get('/');
         $this->withHtml($resp)->assertElementContains('header', 'Shelves');
@@ -69,7 +68,7 @@ class BookShelfTest extends TestCase
         $resp->assertSee($book->name);
         $resp->assertSee($book->getUrl());
 
-        $this->entities->setPermissions($book, []);
+        $this->permissions->setEntityPermissions($book, []);
 
         $resp = $this->asEditor()->get('/shelves');
         $resp->assertDontSee($book->name);
@@ -93,7 +92,7 @@ class BookShelfTest extends TestCase
             ],
         ]));
         $resp->assertRedirect();
-        $editorId = $this->getEditor()->id;
+        $editorId = $this->users->editor()->id;
         $this->assertDatabaseHas('bookshelves', array_merge($shelfInfo, ['created_by' => $editorId, 'updated_by' => $editorId]));
 
         $shelf = Bookshelf::where('name', '=', $shelfInfo['name'])->first();
@@ -186,13 +185,13 @@ class BookShelfTest extends TestCase
         $this->withHtml($resp)->assertElementContains('.book-content a.grid-card:nth-child(1)', $books[0]->name);
         $this->withHtml($resp)->assertElementNotContains('.book-content a.grid-card:nth-child(3)', $books[0]->name);
 
-        setting()->putUser($this->getEditor(), 'shelf_books_sort_order', 'desc');
+        setting()->putUser($this->users->editor(), 'shelf_books_sort_order', 'desc');
         $resp = $this->asEditor()->get($shelf->getUrl());
         $this->withHtml($resp)->assertElementNotContains('.book-content a.grid-card:nth-child(1)', $books[0]->name);
         $this->withHtml($resp)->assertElementContains('.book-content a.grid-card:nth-child(3)', $books[0]->name);
 
-        setting()->putUser($this->getEditor(), 'shelf_books_sort_order', 'desc');
-        setting()->putUser($this->getEditor(), 'shelf_books_sort', 'name');
+        setting()->putUser($this->users->editor(), 'shelf_books_sort_order', 'desc');
+        setting()->putUser($this->users->editor(), 'shelf_books_sort', 'name');
         $resp = $this->asEditor()->get($shelf->getUrl());
         $this->withHtml($resp)->assertElementContains('.book-content a.grid-card:nth-child(1)', 'hdgfgdfg');
         $this->withHtml($resp)->assertElementContains('.book-content a.grid-card:nth-child(2)', 'bsfsdfsdfsd');
@@ -224,7 +223,7 @@ class BookShelfTest extends TestCase
         $resp->assertRedirect($shelf->getUrl());
         $this->assertSessionHas('success');
 
-        $editorId = $this->getEditor()->id;
+        $editorId = $this->users->editor()->id;
         $this->assertDatabaseHas('bookshelves', array_merge($shelfInfo, ['id' => $shelf->id, 'created_by' => $editorId, 'updated_by' => $editorId]));
 
         $shelfPage = $this->get($shelf->getUrl());
@@ -294,11 +293,11 @@ class BookShelfTest extends TestCase
         $resp->assertSee("action=\"{$shelf->getUrl('/copy-permissions')}\"", false);
 
         $child = $shelf->books()->first();
-        $editorRole = $this->getEditor()->roles()->first();
+        $editorRole = $this->users->editor()->roles()->first();
         $this->assertFalse($child->hasPermissions(), 'Child book should not be restricted by default');
         $this->assertTrue($child->permissions()->count() === 0, 'Child book should have no permissions by default');
 
-        $this->entities->setPermissions($shelf, ['view', 'update'], [$editorRole]);
+        $this->permissions->setEntityPermissions($shelf, ['view', 'update'], [$editorRole]);
         $resp = $this->post($shelf->getUrl('/copy-permissions'));
         $child = $shelf->books()->first();
 

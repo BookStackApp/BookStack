@@ -135,7 +135,7 @@ class WebhookManagementTest extends TestCase
 
     public function test_settings_manage_permission_required_for_webhook_routes()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $routes = [
@@ -153,7 +153,7 @@ class WebhookManagementTest extends TestCase
             $this->assertPermissionError($resp);
         }
 
-        $this->giveUserPermissions($editor, ['settings-manage']);
+        $this->permissions->grantUserRolePermissions($editor, ['settings-manage']);
 
         foreach ($routes as [$method, $endpoint]) {
             $resp = $this->call($method, $endpoint);

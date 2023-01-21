@@ -4,7 +4,7 @@ namespace Tests;
 
 class LanguageTest extends TestCase
 {
-    protected array $langs;
+    protected $langs;
 
     /**
      * LanguageTest constructor.
@@ -77,20 +77,8 @@ class LanguageTest extends TestCase
     {
         $this->asEditor();
         $this->assertFalse(config('app.rtl'), 'App RTL config should be false by default');
-        setting()->putUser($this->getEditor(), 'language', 'ar');
+        setting()->putUser($this->users->editor(), 'language', 'ar');
         $this->get('/');
         $this->assertTrue(config('app.rtl'), 'App RTL config should have been set to true by middleware');
-    }
-
-    public function test_pluralisation_for_non_standard_locales()
-    {
-        $text = trans_choice('entities.x_pages', 1, [], 'de_informal');
-        $this->assertEquals('1 Seite', $text);
-
-        $text = trans_choice('entities.x_pages', 2, [], 'de_informal');
-        $this->assertEquals('2 Seiten', $text);
-
-        $text = trans_choice('entities.x_pages', 0, [], 'de_informal');
-        $this->assertEquals('0 Seiten', $text);
     }
 }

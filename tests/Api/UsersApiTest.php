@@ -175,7 +175,7 @@ class UsersApiTest extends TestCase
     {
         $this->actingAsApiAdmin();
         /** @var User $user */
-        $user = $this->getAdmin();
+        $user = $this->users->admin();
         $roles = Role::query()->pluck('id');
         $resp = $this->putJson($this->baseEndpoint . "/{$user->id}", [
             'name'             => 'My updated user',
@@ -204,7 +204,7 @@ class UsersApiTest extends TestCase
     {
         $this->actingAsApiAdmin();
         /** @var User $user */
-        $user = $this->getAdmin();
+        $user = $this->users->admin();
         $roleCount = $user->roles()->count();
         $resp = $this->putJson($this->baseEndpoint . "/{$user->id}", []);
 
@@ -222,7 +222,7 @@ class UsersApiTest extends TestCase
     {
         $this->actingAsApiAdmin();
         /** @var User $user */
-        $user = User::query()->where('id', '!=', $this->getAdmin()->id)
+        $user = User::query()->where('id', '!=', $this->users->admin()->id)
             ->whereNull('system_name')
             ->first();
 
@@ -236,7 +236,7 @@ class UsersApiTest extends TestCase
     {
         $this->actingAsApiAdmin();
         /** @var User $user */
-        $user = User::query()->where('id', '!=', $this->getAdmin()->id)
+        $user = User::query()->where('id', '!=', $this->users->admin()->id)
             ->whereNull('system_name')
             ->first();
         $entityChain = $this->entities->createChainBelongingToUser($user);

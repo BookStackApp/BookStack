@@ -221,7 +221,7 @@ class BookTest extends TestCase
     public function test_books_view_shows_view_toggle_option()
     {
         /** @var Book $book */
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'books_view_type', 'list');
 
         $resp = $this->actingAs($editor)->get('/books');
@@ -304,7 +304,7 @@ class BookTest extends TestCase
         // Hide child content
         /** @var BookChild $page */
         foreach ($book->getDirectChildren() as $child) {
-            $this->entities->setPermissions($child, [], []);
+            $this->permissions->setEntityPermissions($child, [], []);
         }
 
         $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
@@ -318,8 +318,8 @@ class BookTest extends TestCase
     {
         /** @var Book $book */
         $book = Book::query()->whereHas('chapters')->whereHas('directPages')->whereHas('chapters')->first();
-        $viewer = $this->getViewer();
-        $this->giveUserPermissions($viewer, ['book-create-all']);
+        $viewer = $this->users->viewer();
+        $this->permissions->grantUserRolePermissions($viewer, ['book-create-all']);
 
         $this->actingAs($viewer)->post($book->getUrl('/copy'), ['name' => 'My copy book']);
         /** @var Book $copy */
@@ -354,9 +354,9 @@ class BookTest extends TestCase
         $shelfA->appendBook($book);
         $shelfB->appendBook($book);
 
-        $viewer = $this->getViewer();
-        $this->giveUserPermissions($viewer, ['book-update-all', 'book-create-all', 'bookshelf-update-all']);
-        $this->entities->setPermissions($shelfB);
+        $viewer = $this->users->viewer();
+        $this->permissions->grantUserRolePermissions($viewer, ['book-update-all', 'book-create-all', 'bookshelf-update-all']);
+        $this->permissions->setEntityPermissions($shelfB);
 
 
         $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);

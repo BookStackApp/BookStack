@@ -18,11 +18,11 @@ class CopyShelfPermissionsCommandTest extends TestCase
     {
         $shelf = $this->entities->shelf();
         $child = $shelf->books()->first();
-        $editorRole = $this->getEditor()->roles()->first();
+        $editorRole = $this->users->editor()->roles()->first();
         $this->assertFalse($child->hasPermissions(), 'Child book should not be restricted by default');
         $this->assertTrue($child->permissions()->count() === 0, 'Child book should have no permissions by default');
 
-        $this->entities->setPermissions($shelf, ['view', 'update'], [$editorRole]);
+        $this->permissions->setEntityPermissions($shelf, ['view', 'update'], [$editorRole]);
         $this->artisan('bookstack:copy-shelf-permissions', [
             '--slug' => $shelf->slug,
         ]);
@@ -43,11 +43,11 @@ class CopyShelfPermissionsCommandTest extends TestCase
         $shelf = $this->entities->shelf();
         Bookshelf::query()->where('id', '!=', $shelf->id)->delete();
         $child = $shelf->books()->first();
-        $editorRole = $this->getEditor()->roles()->first();
+        $editorRole = $this->users->editor()->roles()->first();
         $this->assertFalse($child->hasPermissions(), 'Child book should not be restricted by default');
         $this->assertTrue($child->permissions()->count() === 0, 'Child book should have no permissions by default');
 
-        $this->entities->setPermissions($shelf, ['view', 'update'], [$editorRole]);
+        $this->permissions->setEntityPermissions($shelf, ['view', 'update'], [$editorRole]);
         $this->artisan('bookstack:copy-shelf-permissions --all')
             ->expectsQuestion('Permission settings for all shelves will be cascaded. Books assigned to multiple shelves will receive only the permissions of it\'s last processed shelf. Are you sure you want to proceed?', 'y');
         $child = $shelf->books()->first();
