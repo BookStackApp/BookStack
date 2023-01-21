@@ -21,6 +21,7 @@ class BookShelfTest extends TestCase
         $this->withHtml($resp)->assertElementContains('header', 'Shelves');
 
         $viewer->roles()->delete();
+        $this->permissions->grantUserRolePermissions($viewer, []);
         $resp = $this->actingAs($viewer)->get('/');
         $this->withHtml($resp)->assertElementNotContains('header', 'Shelves');
 

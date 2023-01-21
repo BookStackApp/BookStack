@@ -153,8 +153,11 @@ abstract class TestCase extends BaseTestCase
 
         DB::purge();
         config()->set('database.connections.mysql_testing.database', $database);
+        DB::beginTransaction();
 
         $callback();
+
+        DB::rollBack();
 
         if (is_null($originalVal)) {
             unset($_SERVER[$name]);

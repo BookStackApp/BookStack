@@ -379,19 +379,17 @@ class EntityPermissionsTest extends TestCase
 
         $this->put($modelInstance->getUrl('/permissions'), [
             'permissions' => [
-                'role' => [
-                    $roleId => [
-                        $permission => 'true',
-                    ],
+                $roleId => [
+                    $permission => 'true',
                 ],
             ],
         ]);
 
         $this->assertDatabaseHas('entity_permissions', [
-            'entity_id'   => $modelInstance->id,
-            'entity_type' => $modelInstance->getMorphClass(),
-            'role_id'           => $roleId,
-            $permission         => true,
+            'entity_id'      => $modelInstance->id,
+            'entity_type'    => $modelInstance->getMorphClass(),
+            'role_id'        => $roleId,
+            $permission => true,
         ]);
     }
 
