@@ -47,7 +47,7 @@ class PermissionApplicator
             return $hasRolePermission;
         }
 
-        $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $user->id, $userRoleIds, $action);
+        $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $userRoleIds, $action);
 
         return is_null($hasApplicableEntityPermissions) ? $hasRolePermission : $hasApplicableEntityPermissions;
     }
@@ -56,11 +56,11 @@ class PermissionApplicator
      * Check if there are permissions that are applicable for the given entity item, action and roles.
      * Returns null when no entity permissions are in force.
      */
-    protected function hasEntityPermission(Entity $entity, int $userId, array $userRoleIds, string $action): ?bool
+    protected function hasEntityPermission(Entity $entity, array $userRoleIds, string $action): ?bool
     {
         $this->ensureValidEntityAction($action);
 
-        return (new EntityPermissionEvaluator($entity, $userId, $userRoleIds, $action))->evaluate();
+        return (new EntityPermissionEvaluator($action))->evaluateEntityForUser($entity, $userRoleIds);
     }
 
     /**

@@ -3,36 +3,36 @@
 namespace BookStack\Auth\Permissions;
 
 use BookStack\Auth\Role;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\Page;
 use Illuminate\Database\Eloquent\Builder;
 
 class EntityPermissionEvaluator
 {
-    protected Entity $entity;
-    protected array $userRoleIds;
     protected string $action;
-    protected int $userId;
 
-    public function __construct(Entity $entity, int $userId, array $userRoleIds, string $action)
+    public function __construct(string $action)
     {
-        $this->entity = $entity;
-        $this->userId = $userId;
-        $this->userRoleIds = $userRoleIds;
         $this->action = $action;
     }
 
-    public function evaluate(): ?bool
+    public function evaluateEntityForUser(Entity $entity, array $userRoleIds): ?bool
     {
-        if ($this->isUserSystemAdmin()) {
+        if ($this->isUserSystemAdmin($userRoleIds)) {
             return true;
         }
 
-        $typeIdChain = $this->gatherEntityChainTypeIds();
-        $relevantPermissions = $this->getRelevantPermissionsMapByTypeId($typeIdChain);
+        $typeIdChain = $this->gatherEntityChainTypeIds(SimpleEntityData::fromEntity($entity));
+        $relevantPermissions = $this->getPermissionsMapByTypeId($typeIdChain, [...$userRoleIds, 0]);
         $permitsByType = $this->collapseAndCategorisePermissions($typeIdChain, $relevantPermissions);
 
+        return $this->evaluatePermitsByType($permitsByType);
+    }
+
+    /**
+     * @param array<string, array<string, int>> $permitsByType
+     */
+    protected function evaluatePermitsByType(array $permitsByType): ?bool
+    {
         // Return grant or reject from role-level if exists
         if (count($permitsByType['role']) > 0) {
             return boolval(max($permitsByType['role']));
@@ -73,21 +73,25 @@ class EntityPermissionEvaluator
      * @param string[] $typeIdChain
      * @return array<string, EntityPermission[]>
      */
-    protected function getRelevantPermissionsMapByTypeId(array $typeIdChain): array
+    protected function getPermissionsMapByTypeId(array $typeIdChain, array $filterRoleIds): array
     {
-        $relevantPermissions = EntityPermission::query()
-            ->where(function (Builder $query) use ($typeIdChain) {
-                foreach ($typeIdChain as $typeId) {
-                    $query->orWhere(function (Builder $query) use ($typeId) {
-                        [$type, $id] = explode(':', $typeId);
-                        $query->where('entity_type', '=', $type)
-                            ->where('entity_id', '=', $id);
-                    });
-                }
-            })->where(function (Builder $query) {
-                $query->whereIn('role_id', [...$this->userRoleIds, 0]);
-            })->get(['entity_id', 'entity_type', 'role_id', $this->action])
-            ->all();
+        $query = EntityPermission::query()->where(function (Builder $query) use ($typeIdChain) {
+            foreach ($typeIdChain as $typeId) {
+                $query->orWhere(function (Builder $query) use ($typeId) {
+                    [$type, $id] = explode(':', $typeId);
+                    $query->where('entity_type', '=', $type)
+                        ->where('entity_id', '=', $id);
+                });
+            }
+        });
+
+        if (!empty($filterRoleIds)) {
+            $query->where(function (Builder $query) use ($filterRoleIds) {
+                $query->whereIn('role_id', [...$filterRoleIds, 0]);
+            });
+        }
+
+        $relevantPermissions = $query->get(['entity_id', 'entity_type', 'role_id', $this->action])->all();
 
         $map = [];
         foreach ($relevantPermissions as $permission) {
@@ -105,27 +109,27 @@ class EntityPermissionEvaluator
     /**
      * @return string[]
      */
-    protected function gatherEntityChainTypeIds(): array
+    protected function gatherEntityChainTypeIds(SimpleEntityData $entity): array
     {
         // The array order here is very important due to the fact we walk up the chain
         // elsewhere in the class. Earlier items in the chain have higher priority.
 
-        $chain = [$this->entity->getMorphClass() . ':' . $this->entity->id];
+        $chain = [$entity->type . ':' . $entity->id];
 
-        if ($this->entity instanceof Page && $this->entity->chapter_id) {
-            $chain[] = 'chapter:' . $this->entity->chapter_id;
+        if ($entity->type === 'page' && $entity->chapter_id) {
+            $chain[] = 'chapter:' . $entity->chapter_id;
         }
 
-        if ($this->entity instanceof Page || $this->entity instanceof Chapter) {
-            $chain[] = 'book:' . $this->entity->book_id;
+        if ($entity->type === 'page' || $entity->type === 'chapter') {
+            $chain[] = 'book:' . $entity->book_id;
         }
 
         return $chain;
     }
 
-    protected function isUserSystemAdmin(): bool
+    protected function isUserSystemAdmin($userRoleIds): bool
     {
         $adminRoleId = Role::getSystemRole('admin')->id;
-        return in_array($adminRoleId, $this->userRoleIds);
+        return in_array($adminRoleId, $userRoleIds);
     }
 }
