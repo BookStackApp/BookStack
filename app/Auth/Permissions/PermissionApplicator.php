@@ -4,7 +4,6 @@ namespace BookStack\Auth\Permissions;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
@@ -48,7 +47,7 @@ class PermissionApplicator
             return $hasRolePermission;
         }
 
-        $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $userRoleIds, $action);
+        $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $user->id, $userRoleIds, $action);
 
         return is_null($hasApplicableEntityPermissions) ? $hasRolePermission : $hasApplicableEntityPermissions;
     }
@@ -57,50 +56,11 @@ class PermissionApplicator
      * Check if there are permissions that are applicable for the given entity item, action and roles.
      * Returns null when no entity permissions are in force.
      */
-    protected function hasEntityPermission(Entity $entity, array $userRoleIds, string $action): ?bool
+    protected function hasEntityPermission(Entity $entity, int $userId, array $userRoleIds, string $action): ?bool
     {
         $this->ensureValidEntityAction($action);
 
-        $adminRoleId = Role::getSystemRole('admin')->id;
-        if (in_array($adminRoleId, $userRoleIds)) {
-            return true;
-        }
-
-        // The chain order here is very important due to the fact we walk up the chain
-        // in the loop below. Earlier items in the chain have higher priority.
-        $chain = [$entity];
-        if ($entity instanceof Page && $entity->chapter_id) {
-            $chain[] = $entity->chapter;
-        }
-
-        if ($entity instanceof Page || $entity instanceof Chapter) {
-            $chain[] = $entity->book;
-        }
-
-        foreach ($chain as $currentEntity) {
-            $allowedByRoleId = $currentEntity->permissions()
-                ->whereIn('role_id', [0, ...$userRoleIds])
-                ->pluck($action, 'role_id');
-
-            // Continue up the chain if no applicable entity permission overrides.
-            if ($allowedByRoleId->isEmpty()) {
-                continue;
-            }
-
-            // If we have user-role-specific permissions set, allow if any of those
-            // role permissions allow access.
-            $hasDefault = $allowedByRoleId->has(0);
-            if (!$hasDefault || $allowedByRoleId->count() > 1) {
-                return $allowedByRoleId->search(function (bool $allowed, int $roleId) {
-                        return $roleId !== 0 && $allowed;
-                }) !== false;
-            }
-
-            // Otherwise, return the default "Other roles" fallback value.
-            return $allowedByRoleId->get(0);
-        }
-
-        return null;
+        return (new EntityPermissionEvaluator($entity, $userId, $userRoleIds, $action))->evaluate();
     }
 
     /**
