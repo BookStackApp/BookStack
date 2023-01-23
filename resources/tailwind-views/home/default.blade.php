@@ -30,8 +30,9 @@
 
 						{{-- Start: Carousel --}}
 						<div class="smf-carousel-with-progress smf-basis-9/12">
+							@foreach($books as $key => $book)
 								<div class="smf-card-with-progress" style="flex: none; order: 0; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
+										<div class="smf-card-header smf-bg-contain smf-bg-no-repeat smf-bg-center" style="background-image: url('{{ $book->getBookCover() }}');">
 										</div>
 										<div class="smf-progress-indicator">
 												<div class="smf-whole-progress-indicator">
@@ -39,99 +40,9 @@
 												</div>
 										</div>
 								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 1; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value"></div>
-												</div>
-										</div>
-								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 2; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value"></div>
-												</div>
-										</div>
-								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 3; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value"></div>
-												</div>
-										</div>
-								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 4; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value"></div>
-												</div>
-										</div>
-								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 3; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value"></div>
-												</div>
-										</div>
-								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 4; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value"></div>
-												</div>
-										</div>
-								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 3; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value"></div>
-												</div>
-										</div>
-								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 4; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value"></div>
-												</div>
-										</div>
-								</div>
-
-								<div class="smf-card-with-progress" style="flex: none; order: 5; flex-grow: 0;">
-										<div class="smf-card-header" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2FTEMP%2Fb2b12f2366a84ae0a00ce02e94acc5c9');">
-										</div>
-										<div class="smf-progress-indicator">
-												<div class="smf-whole-progress-indicator">
-														<div class="smf-progress-value" </div>
-														</div>
-												</div>
-										</div>
-								</div>
-								{{-- End: Carousel --}}
+							@endforeach
 						</div>
+						{{-- End: Carousel --}}
 				</div>
 		</div>
 @stop

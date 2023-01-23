@@ -33,8 +33,8 @@ class HomeController extends Controller
                 ->take(6)
                 ->get();
         } else {
-			return view('welcome.default');
-		}
+					return view('welcome.default');
+				}
 
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
         $recents = $this->isSignedIn() ?
@@ -80,16 +80,16 @@ class HomeController extends Controller
 
         if ($homepageOption === 'bookshelves') {
             $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
-            $data = array_merge($commonData, ['shelves' => $shelves]);
+            $commonData = array_merge($commonData, ['shelves' => $shelves]);
 
-            return view('home.shelves', $data);
+            return view('home.shelves', $commonData);
         }
 
-        if ($homepageOption === 'books') {
-            $books = app(BookRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
-            $data = array_merge($commonData, ['books' => $books]);
+				$books = app(BookRepo::class)->getAllPaginated(10);
+				$commonData = array_merge($commonData, ['books' => $books]);
 
-            return view('home.books', $data);
+        if ($homepageOption === 'books') {
+            return view('home.books', $commonData);
         }
 
         if ($homepageOption === 'page') {
