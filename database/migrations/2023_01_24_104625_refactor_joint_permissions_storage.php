@@ -46,7 +46,7 @@ class RefactorJointPermissionsStorage extends Migration
 
             $table->boolean('has_permission')->index();
             $table->boolean('has_permission_own')->index();
-            $table->unsignedInteger('created_by')->index();
+            $table->unsignedInteger('owned_by')->index();
         });
     }
 }
