@@ -94,10 +94,14 @@ class PermissionApplicator
     {
         return $query->where(function (Builder $parentQuery) {
             $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
-                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
-                    ->where(function (Builder $query) {
-                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                    });
+                $permissionQuery->select(['entity_id', 'entity_type'])
+                    ->selectRaw('max(owned_by) as owned_by')
+                    ->selectRaw('max(has_permission) as has_permission')
+                    ->selectRaw('max(has_permission_own) as has_permission_own')
+                    ->whereIn('role_id', $this->getCurrentUserRoleIds())
+                    ->groupBy(['entity_type', 'entity_id'])
+                    ->havingRaw('has_permission > 0')
+                    ->orHavingRaw('(has_permission_own > 0 and owned_by = ?)', [$this->currentUser()->id]);
             });
         });
     }
