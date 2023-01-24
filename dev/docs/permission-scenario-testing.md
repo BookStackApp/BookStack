@@ -318,3 +318,26 @@ User granted page permission.
 - User has Role A & B.
 
 User denied page permission.
+
+#### test_90_fallback_overrides_parent_entity_role_deny
+
+- Chapter permissions have inherit disabled.
+- Page permissions have inherit disabled.
+- Chapter fallback has entity deny permission.
+- Page fallback has entity deny permission.
+- Role A has entity allow chapter permission.
+- User has Role A.
+
+User denied page permission.
+
+#### test_91_fallback_overrides_parent_entity_role_inherit
+
+- Book permissions have inherit disabled.
+- Chapter permissions have inherit disabled. 
+- Page permissions have inherit enabled.
+- Book fallback has entity deny permission.
+- Chapter fallback has entity deny permission.
+- Role A has entity allow book permission.
+- User has Role A.
+
+User denied page permission.
