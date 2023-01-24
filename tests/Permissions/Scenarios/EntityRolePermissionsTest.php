@@ -293,4 +293,31 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
 
         $this->assertNotVisibleToUser($page, $user);
     }
+
+    public function test_90_fallback_overrides_parent_entity_role_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $page = $this->entities->page();
+        $chapter = $page->chapter;
+
+        $this->permissions->setFallbackPermissions($chapter, []);
+        $this->permissions->setFallbackPermissions($page, []);
+        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_91_fallback_overrides_parent_entity_role_inherit()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $page = $this->entities->page();
+        $chapter = $page->chapter;
+        $book = $page->book;
+
+        $this->permissions->setFallbackPermissions($book, []);
+        $this->permissions->setFallbackPermissions($chapter, []);
+        $this->permissions->addEntityPermission($book, ['view'], $roleA);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
 }

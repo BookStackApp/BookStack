@@ -66,6 +66,10 @@ class EntityPermissionEvaluator
                     $permitsByType[$type][$roleId] = $permission->{$this->action};
                 }
             }
+
+            if (isset($permitsByType['fallback'][0])) {
+                break;
+            }
         }
 
         return $permitsByType;
