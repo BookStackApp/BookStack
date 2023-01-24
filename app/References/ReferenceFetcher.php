@@ -5,6 +5,7 @@ namespace BookStack\References;
 use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -23,8 +24,7 @@ class ReferenceFetcher
      */
     public function getPageReferencesToEntity(Entity $entity): Collection
     {
-        $baseQuery = $entity->referencesTo()
-            ->where('from_type', '=', (new Page())->getMorphClass())
+        $baseQuery = $this->queryPageReferencesToEntity($entity)
             ->with([
                 'from'         => fn (Relation $query) => $query->select(Page::$listAttributes),
                 'from.book'    => fn (Relation $query) => $query->scopes('visible'),
@@ -47,16 +47,21 @@ class ReferenceFetcher
      */
     public function getPageReferenceCountToEntity(Entity $entity): int
     {
-        $baseQuery = $entity->referencesTo()
-            ->where('from_type', '=', (new Page())->getMorphClass());
-
         $count = $this->permissions->restrictEntityRelationQuery(
-            $baseQuery,
+            $this->queryPageReferencesToEntity($entity),
             'references',
             'from_id',
             'from_type'
         )->count();
 
         return $count;
+    }
+
+    protected function queryPageReferencesToEntity(Entity $entity): Builder
+    {
+        return Reference::query()
+            ->where('to_type', '=', $entity->getMorphClass())
+            ->where('to_id', '=', $entity->id)
+            ->where('from_type', '=', (new Page())->getMorphClass());
     }
 }

@@ -256,35 +256,38 @@ class JointPermissionBuilder
     {
         // Ensure system admin role retains permissions
         if ($isAdminRole) {
-            return $this->createJointPermissionDataArray($entity, $roleId, true, true);
+            return $this->createJointPermissionDataArray($entity, $roleId, PermissionStatus::EXPLICIT_ALLOW, true);
         }
 
         // Return evaluated entity permission status if it has an affect.
         $entityPermissionStatus = $permissionMap->evaluateEntityForRole($entity, $roleId);
         if ($entityPermissionStatus !== null) {
-            return $this->createJointPermissionDataArray($entity, $roleId, $entityPermissionStatus, $entityPermissionStatus);
+            $status = $entityPermissionStatus ? PermissionStatus::EXPLICIT_ALLOW : PermissionStatus::EXPLICIT_DENY;
+            return $this->createJointPermissionDataArray($entity, $roleId, $status, $entityPermissionStatus);
         }
 
         // Otherwise default to the role-level permissions
         $permissionPrefix = $entity->type . '-view';
         $roleHasPermission = isset($rolePermissionMap[$roleId . ':' . $permissionPrefix . '-all']);
         $roleHasPermissionOwn = isset($rolePermissionMap[$roleId . ':' . $permissionPrefix . '-own']);
-        return $this->createJointPermissionDataArray($entity, $roleId, $roleHasPermission, $roleHasPermissionOwn);
+        $status = $roleHasPermission ? PermissionStatus::IMPLICIT_ALLOW : PermissionStatus::IMPLICIT_DENY;
+        return $this->createJointPermissionDataArray($entity, $roleId, $status, $roleHasPermissionOwn);
     }
 
     /**
      * Create an array of data with the information of an entity jointPermissions.
      * Used to build data for bulk insertion.
      */
-    protected function createJointPermissionDataArray(SimpleEntityData $entity, int $roleId, bool $permissionAll, bool $permissionOwn): array
+    protected function createJointPermissionDataArray(SimpleEntityData $entity, int $roleId, int $permissionStatus, bool $hasPermissionOwn): array
     {
+        $ownPermissionActive = ($hasPermissionOwn && $permissionStatus !== PermissionStatus::EXPLICIT_DENY && $entity->owned_by);
+
         return [
-            'entity_id'          => $entity->id,
-            'entity_type'        => $entity->type,
-            'has_permission'     => $permissionAll,
-            'has_permission_own' => $permissionOwn,
-            'owned_by'           => $entity->owned_by,
-            'role_id'            => $roleId,
+            'entity_id'   => $entity->id,
+            'entity_type' => $entity->type,
+            'role_id'     => $roleId,
+            'status'      => $permissionStatus,
+            'owner_id'    => $ownPermissionActive ? $entity->owned_by : null,
         ];
     }
 }

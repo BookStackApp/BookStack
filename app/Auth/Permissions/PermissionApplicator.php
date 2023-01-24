@@ -95,13 +95,11 @@ class PermissionApplicator
         return $query->where(function (Builder $parentQuery) {
             $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
                 $permissionQuery->select(['entity_id', 'entity_type'])
-                    ->selectRaw('max(owned_by) as owned_by')
-                    ->selectRaw('max(has_permission) as has_permission')
-                    ->selectRaw('max(has_permission_own) as has_permission_own')
+                    ->selectRaw('max(owner_id) as owner_id')
+                    ->selectRaw('max(status) as status')
                     ->whereIn('role_id', $this->getCurrentUserRoleIds())
                     ->groupBy(['entity_type', 'entity_id'])
-                    ->havingRaw('has_permission > 0')
-                    ->orHavingRaw('(has_permission_own > 0 and owned_by = ?)', [$this->currentUser()->id]);
+                    ->havingRaw('(status IN (1, 3) or owner_id = ?)', [$this->currentUser()->id]);
             });
         });
     }
@@ -125,35 +123,23 @@ class PermissionApplicator
      * Filter items that have entities set as a polymorphic relation.
      * For simplicity, this will not return results attached to draft pages.
      * Draft pages should never really have related items though.
-     *
-     * @param Builder|QueryBuilder $query
      */
-    public function restrictEntityRelationQuery($query, string $tableName, string $entityIdColumn, string $entityTypeColumn)
+    public function restrictEntityRelationQuery(Builder $query, string $tableName, string $entityIdColumn, string $entityTypeColumn): Builder
     {
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
         $pageMorphClass = (new Page())->getMorphClass();
 
-        $q = $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
-            /** @var Builder $permissionQuery */
-            $permissionQuery->select(['role_id'])->from('joint_permissions')
-                ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
-                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
-                ->where(function (QueryBuilder $query) {
-                    $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                });
-        })->where(function ($query) use ($tableDetails, $pageMorphClass) {
-            /** @var Builder $query */
-            $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
+        return $this->restrictEntityQuery($query)
+            ->where(function ($query) use ($tableDetails, $pageMorphClass) {
+                /** @var Builder $query */
+                $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
                 ->orWhereExists(function (QueryBuilder $query) use ($tableDetails, $pageMorphClass) {
                     $query->select('id')->from('pages')
                         ->whereColumn('pages.id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where($tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'], '=', $pageMorphClass)
                         ->where('pages.draft', '=', false);
                 });
-        });
-
-        return $q;
+            });
     }
 
     /**
@@ -164,6 +150,7 @@ class PermissionApplicator
      */
     public function restrictPageRelationQuery(Builder $query, string $tableName, string $pageIdColumn): Builder
     {
+        // TODO - Refactor
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
         $morphClass = (new Page())->getMorphClass();
 
