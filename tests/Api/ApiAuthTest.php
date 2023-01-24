@@ -16,8 +16,8 @@ class ApiAuthTest extends TestCase
 
     public function test_requests_succeed_with_default_auth()
     {
-        $viewer = $this->getViewer();
-        $this->giveUserPermissions($viewer, ['access-api']);
+        $viewer = $this->users->viewer();
+        $this->permissions->grantUserRolePermissions($viewer, ['access-api']);
 
         $resp = $this->get($this->endpoint);
         $resp->assertStatus(401);
@@ -63,7 +63,7 @@ class ApiAuthTest extends TestCase
         auth()->logout();
 
         $accessApiPermission = RolePermission::getByName('access-api');
-        $editorRole = $this->getEditor()->roles()->first();
+        $editorRole = $this->users->editor()->roles()->first();
         $editorRole->detachPermission($accessApiPermission);
 
         $resp = $this->get($this->endpoint, $this->apiAuthHeader());
@@ -73,7 +73,7 @@ class ApiAuthTest extends TestCase
 
     public function test_api_access_permission_required_to_access_api_with_session_auth()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor, 'standard');
 
         $resp = $this->get($this->endpoint);
@@ -81,7 +81,7 @@ class ApiAuthTest extends TestCase
         auth('standard')->logout();
 
         $accessApiPermission = RolePermission::getByName('access-api');
-        $editorRole = $this->getEditor()->roles()->first();
+        $editorRole = $this->users->editor()->roles()->first();
         $editorRole->detachPermission($accessApiPermission);
 
         $editor = User::query()->where('id', '=', $editor->id)->first();
@@ -114,7 +114,7 @@ class ApiAuthTest extends TestCase
 
     public function test_token_expiry_checked()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $token = $editor->apiTokens()->first();
 
         $resp = $this->get($this->endpoint, $this->apiAuthHeader());
@@ -130,7 +130,7 @@ class ApiAuthTest extends TestCase
 
     public function test_email_confirmation_checked_using_api_auth()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $editor->email_confirmed = false;
         $editor->save();
 

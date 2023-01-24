@@ -17,7 +17,7 @@ class UserInviteTest extends TestCase
     public function test_user_creation_creates_invite()
     {
         Notification::fake();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
 
         $email = Str::random(16) . '@example.com';
         $resp = $this->actingAs($admin)->post('/settings/users/create', [
@@ -38,7 +38,7 @@ class UserInviteTest extends TestCase
     public function test_user_invite_sent_in_selected_language()
     {
         Notification::fake();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
 
         $email = Str::random(16) . '@example.com';
         $resp = $this->actingAs($admin)->post('/settings/users/create', [
@@ -62,7 +62,7 @@ class UserInviteTest extends TestCase
     public function test_invite_set_password()
     {
         Notification::fake();
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
         $inviteService = app(UserInviteService::class);
 
         $inviteService->sendInvitation($user);
@@ -91,7 +91,7 @@ class UserInviteTest extends TestCase
     public function test_invite_set_has_password_validation()
     {
         Notification::fake();
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
         $inviteService = app(UserInviteService::class);
 
         $inviteService->sendInvitation($user);
@@ -126,7 +126,7 @@ class UserInviteTest extends TestCase
     public function test_token_expires_after_two_weeks()
     {
         Notification::fake();
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
         $inviteService = app(UserInviteService::class);
 
         $inviteService->sendInvitation($user);

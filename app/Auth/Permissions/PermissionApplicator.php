@@ -4,7 +4,6 @@ namespace BookStack\Auth\Permissions;
 
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
@@ -61,46 +60,7 @@ class PermissionApplicator
     {
         $this->ensureValidEntityAction($action);
 
-        $adminRoleId = Role::getSystemRole('admin')->id;
-        if (in_array($adminRoleId, $userRoleIds)) {
-            return true;
-        }
-
-        // The chain order here is very important due to the fact we walk up the chain
-        // in the loop below. Earlier items in the chain have higher priority.
-        $chain = [$entity];
-        if ($entity instanceof Page && $entity->chapter_id) {
-            $chain[] = $entity->chapter;
-        }
-
-        if ($entity instanceof Page || $entity instanceof Chapter) {
-            $chain[] = $entity->book;
-        }
-
-        foreach ($chain as $currentEntity) {
-            $allowedByRoleId = $currentEntity->permissions()
-                ->whereIn('role_id', [0, ...$userRoleIds])
-                ->pluck($action, 'role_id');
-
-            // Continue up the chain if no applicable entity permission overrides.
-            if ($allowedByRoleId->isEmpty()) {
-                continue;
-            }
-
-            // If we have user-role-specific permissions set, allow if any of those
-            // role permissions allow access.
-            $hasDefault = $allowedByRoleId->has(0);
-            if (!$hasDefault || $allowedByRoleId->count() > 1) {
-                return $allowedByRoleId->search(function (bool $allowed, int $roleId) {
-                        return $roleId !== 0 && $allowed;
-                }) !== false;
-            }
-
-            // Otherwise, return the default "Other roles" fallback value.
-            return $allowedByRoleId->get(0);
-        }
-
-        return null;
+        return (new EntityPermissionEvaluator($action))->evaluateEntityForUser($entity, $userRoleIds);
     }
 
     /**
@@ -134,10 +94,12 @@ class PermissionApplicator
     {
         return $query->where(function (Builder $parentQuery) {
             $parentQuery->whereHas('jointPermissions', function (Builder $permissionQuery) {
-                $permissionQuery->whereIn('role_id', $this->getCurrentUserRoleIds())
-                    ->where(function (Builder $query) {
-                        $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                    });
+                $permissionQuery->select(['entity_id', 'entity_type'])
+                    ->selectRaw('max(owner_id) as owner_id')
+                    ->selectRaw('max(status) as status')
+                    ->whereIn('role_id', $this->getCurrentUserRoleIds())
+                    ->groupBy(['entity_type', 'entity_id'])
+                    ->havingRaw('(status IN (1, 3) or owner_id = ?)', [$this->currentUser()->id]);
             });
         });
     }
@@ -161,35 +123,23 @@ class PermissionApplicator
      * Filter items that have entities set as a polymorphic relation.
      * For simplicity, this will not return results attached to draft pages.
      * Draft pages should never really have related items though.
-     *
-     * @param Builder|QueryBuilder $query
      */
-    public function restrictEntityRelationQuery($query, string $tableName, string $entityIdColumn, string $entityTypeColumn)
+    public function restrictEntityRelationQuery(Builder $query, string $tableName, string $entityIdColumn, string $entityTypeColumn): Builder
     {
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
         $pageMorphClass = (new Page())->getMorphClass();
 
-        $q = $query->whereExists(function ($permissionQuery) use (&$tableDetails) {
-            /** @var Builder $permissionQuery */
-            $permissionQuery->select(['role_id'])->from('joint_permissions')
-                ->whereColumn('joint_permissions.entity_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
-                ->whereColumn('joint_permissions.entity_type', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'])
-                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
-                ->where(function (QueryBuilder $query) {
-                    $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
-                });
-        })->where(function ($query) use ($tableDetails, $pageMorphClass) {
-            /** @var Builder $query */
-            $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
+        return $this->restrictEntityQuery($query)
+            ->where(function ($query) use ($tableDetails, $pageMorphClass) {
+                /** @var Builder $query */
+                $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
                 ->orWhereExists(function (QueryBuilder $query) use ($tableDetails, $pageMorphClass) {
                     $query->select('id')->from('pages')
                         ->whereColumn('pages.id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where($tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'], '=', $pageMorphClass)
                         ->where('pages.draft', '=', false);
                 });
-        });
-
-        return $q;
+            });
     }
 
     /**
@@ -201,49 +151,15 @@ class PermissionApplicator
     public function restrictPageRelationQuery(Builder $query, string $tableName, string $pageIdColumn): Builder
     {
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
-        $morphClass = (new Page())->getMorphClass();
-
-        $existsQuery = function ($permissionQuery) use ($fullPageIdColumn, $morphClass) {
-            /** @var Builder $permissionQuery */
-            $permissionQuery->select('joint_permissions.role_id')->from('joint_permissions')
-                ->whereColumn('joint_permissions.entity_id', '=', $fullPageIdColumn)
-                ->where('joint_permissions.entity_type', '=', $morphClass)
-                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
-                ->where(function (QueryBuilder $query) {
-                    $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
+        return $this->restrictEntityQuery($query)
+            ->where(function ($query) use ($fullPageIdColumn) {
+                /** @var Builder $query */
+                $query->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
+                    $query->select('id')->from('pages')
+                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
+                        ->where('pages.draft', '=', false);
                 });
-        };
-
-        $q = $query->where(function ($query) use ($existsQuery, $fullPageIdColumn) {
-            $query->whereExists($existsQuery)
-                ->orWhere($fullPageIdColumn, '=', 0);
-        });
-
-        // Prevent visibility of non-owned draft pages
-        $q->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
-            $query->select('id')->from('pages')
-                ->whereColumn('pages.id', '=', $fullPageIdColumn)
-                ->where(function (QueryBuilder $query) {
-                    $query->where('pages.draft', '=', false)
-                        ->orWhere('pages.owned_by', '=', $this->currentUser()->id);
-                });
-        });
-
-        return $q;
-    }
-
-    /**
-     * Add the query for checking the given user id has permission
-     * within the join_permissions table.
-     *
-     * @param QueryBuilder|Builder $query
-     */
-    protected function addJointHasPermissionCheck($query, int $userIdToCheck)
-    {
-        $query->where('joint_permissions.has_permission', '=', true)->orWhere(function ($query) use ($userIdToCheck) {
-            $query->where('joint_permissions.has_permission_own', '=', true)
-                ->where('joint_permissions.owned_by', '=', $userIdToCheck);
-        });
+            });
     }
 
     /**

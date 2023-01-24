@@ -221,7 +221,7 @@ class ChaptersApiTest extends TestCase
     {
         $types = ['html', 'plaintext', 'pdf', 'markdown'];
         $this->actingAsApiEditor();
-        $this->removePermissionFromUser($this->getEditor(), 'content-export');
+        $this->permissions->removeUserRolePermissions($this->users->editor(), ['content-export']);
 
         $chapter = Chapter::visible()->has('pages')->first();
         foreach ($types as $type) {

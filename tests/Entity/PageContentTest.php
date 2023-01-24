@@ -483,7 +483,7 @@ class PageContentTest extends TestCase
     {
         $page = $this->entities->page();
 
-        $this->actingAs($this->getAdmin())
+        $this->actingAs($this->users->admin())
             ->put($page->getUrl(''), [
                 'name' => 'Testing',
                 'html' => '<p>&quot;Hello &amp; welcome&quot;</p>',

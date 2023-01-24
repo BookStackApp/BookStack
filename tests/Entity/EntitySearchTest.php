@@ -132,7 +132,7 @@ class EntitySearchTest extends TestCase
     public function test_search_filters()
     {
         $page = $this->entities->newPage(['name' => 'My new test quaffleachits', 'html' => 'this is about an orange donkey danzorbhsing']);
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         // Viewed filter searches
@@ -171,7 +171,7 @@ class EntitySearchTest extends TestCase
 
         // Restricted filter
         $this->get('/search?term=' . urlencode('danzorbhsing {is_restricted}'))->assertDontSee($page->name);
-        $this->entities->setPermissions($page, ['view'], [$editor->roles->first()]);
+        $this->permissions->setEntityPermissions($page, ['view'], [$editor->roles->first()]);
         $this->get('/search?term=' . urlencode('danzorbhsing {is_restricted}'))->assertSee($page->name);
 
         // Date filters
@@ -235,7 +235,7 @@ class EntitySearchTest extends TestCase
         $this->withHtml($resp)->assertElementContains($baseSelector, $page->name);
         $this->withHtml($resp)->assertElementNotContains($baseSelector, "You don't have the required permissions to select this item");
 
-        $resp = $this->actingAs($this->getViewer())->get($searchUrl);
+        $resp = $this->actingAs($this->users->viewer())->get($searchUrl);
         $this->withHtml($resp)->assertElementContains($baseSelector, $page->name);
         $this->withHtml($resp)->assertElementContains($baseSelector, "You don't have the required permissions to select this item");
     }
@@ -246,7 +246,7 @@ class EntitySearchTest extends TestCase
         $this->assertGreaterThan(2, count($chapter->pages), 'Ensure we\'re testing with at least 1 sibling');
         $page = $chapter->pages->first();
 
-        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$page->id}&entity_type=page");
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$page->id}&entity_type=page");
         $search->assertSuccessful();
         foreach ($chapter->pages as $page) {
             $search->assertSee($page->name);
@@ -261,7 +261,7 @@ class EntitySearchTest extends TestCase
         $bookChildren = $page->book->getDirectChildren();
         $this->assertGreaterThan(2, count($bookChildren), 'Ensure we\'re testing with at least 1 sibling');
 
-        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$page->id}&entity_type=page");
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$page->id}&entity_type=page");
         $search->assertSuccessful();
         foreach ($bookChildren as $child) {
             $search->assertSee($child->name);
@@ -276,7 +276,7 @@ class EntitySearchTest extends TestCase
         $bookChildren = $chapter->book->getDirectChildren();
         $this->assertGreaterThan(2, count($bookChildren), 'Ensure we\'re testing with at least 1 sibling');
 
-        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$chapter->id}&entity_type=chapter");
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$chapter->id}&entity_type=chapter");
         $search->assertSuccessful();
         foreach ($bookChildren as $child) {
             $search->assertSee($child->name);
@@ -291,7 +291,7 @@ class EntitySearchTest extends TestCase
         $book = $books->first();
         $this->assertGreaterThan(2, count($books), 'Ensure we\'re testing with at least 1 sibling');
 
-        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$book->id}&entity_type=book");
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$book->id}&entity_type=book");
         $search->assertSuccessful();
         foreach ($books as $expectedBook) {
             $search->assertSee($expectedBook->name);
@@ -304,7 +304,7 @@ class EntitySearchTest extends TestCase
         $shelf = $shelves->first();
         $this->assertGreaterThan(2, count($shelves), 'Ensure we\'re testing with at least 1 sibling');
 
-        $search = $this->actingAs($this->getViewer())->get("/search/entity/siblings?entity_id={$shelf->id}&entity_type=bookshelf");
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$shelf->id}&entity_type=bookshelf");
         $search->assertSuccessful();
         foreach ($shelves as $expectedShelf) {
             $search->assertSee($expectedShelf->name);

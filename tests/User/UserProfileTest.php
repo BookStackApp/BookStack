@@ -88,8 +88,8 @@ class UserProfileTest extends TestCase
 
     public function test_profile_has_search_links_in_created_entity_lists()
     {
-        $user = $this->getEditor();
-        $resp = $this->actingAs($this->getAdmin())->get('/user/' . $user->slug);
+        $user = $this->users->editor();
+        $resp = $this->actingAs($this->users->admin())->get('/user/' . $user->slug);
 
         $expectedLinks = [
             '/search?term=%7Bcreated_by%3A' . $user->slug . '%7D+%7Btype%3Apage%7D',
