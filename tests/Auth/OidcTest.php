@@ -93,7 +93,7 @@ class OidcTest extends TestCase
 
     public function test_logout_route_functions()
     {
-        $this->actingAs($this->getEditor());
+        $this->actingAs($this->users->editor());
         $this->post('/logout');
         $this->assertFalse(auth()->check());
     }
@@ -228,7 +228,7 @@ class OidcTest extends TestCase
 
     public function test_auth_login_as_existing_user()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $editor->external_auth_id = 'benny505';
         $editor->save();
 
@@ -245,7 +245,7 @@ class OidcTest extends TestCase
 
     public function test_auth_login_as_existing_user_email_with_different_auth_id_fails()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $editor->external_auth_id = 'editor101';
         $editor->save();
 

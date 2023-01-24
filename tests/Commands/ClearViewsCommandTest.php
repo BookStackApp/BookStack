@@ -16,7 +16,7 @@ class ClearViewsCommandTest extends TestCase
         $this->get($page->getUrl());
 
         $this->assertDatabaseHas('views', [
-            'user_id'     => $this->getEditor()->id,
+            'user_id'     => $this->users->editor()->id,
             'viewable_id' => $page->id,
             'views'       => 1,
         ]);
@@ -27,7 +27,7 @@ class ClearViewsCommandTest extends TestCase
         $this->assertTrue($exitCode === 0, 'Command executed successfully');
 
         $this->assertDatabaseMissing('views', [
-            'user_id' => $this->getEditor()->id,
+            'user_id' => $this->users->editor()->id,
         ]);
     }
 }

@@ -38,8 +38,8 @@ class PageTest extends TestCase
     public function test_page_view_when_creator_is_deleted_but_owner_exists()
     {
         $page = $this->entities->page();
-        $user = $this->getViewer();
-        $owner = $this->getEditor();
+        $user = $this->users->viewer();
+        $owner = $this->users->editor();
         $page->created_by = $user->id;
         $page->owned_by = $owner->id;
         $page->save();
@@ -190,15 +190,15 @@ class PageTest extends TestCase
         $page = $this->entities->page();
         $currentBook = $page->book;
         $newBook = Book::where('id', '!=', $currentBook->id)->first();
-        $viewer = $this->getViewer();
+        $viewer = $this->users->viewer();
 
         $resp = $this->actingAs($viewer)->get($page->getUrl());
         $resp->assertDontSee($page->getUrl('/copy'));
 
         $newBook->owned_by = $viewer->id;
         $newBook->save();
-        $this->giveUserPermissions($viewer, ['page-create-own']);
-        $this->entities->regenPermissions($newBook);
+        $this->permissions->grantUserRolePermissions($viewer, ['page-create-own']);
+        $this->permissions->regenerateForEntity($newBook);
 
         $resp = $this->actingAs($viewer)->get($page->getUrl());
         $resp->assertSee($page->getUrl('/copy'));
@@ -249,7 +249,7 @@ class PageTest extends TestCase
 
     public function test_recently_updated_pages_view()
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $content = $this->entities->createChainBelongingToUser($user);
 
         $resp = $this->asAdmin()->get('/pages/recently-updated');
@@ -258,7 +258,7 @@ class PageTest extends TestCase
 
     public function test_recently_updated_pages_view_shows_updated_by_details()
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $page = $this->entities->page();
 
         $this->actingAs($user)->put($page->getUrl(), [
@@ -272,7 +272,7 @@ class PageTest extends TestCase
 
     public function test_recently_updated_pages_view_shows_parent_chain()
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $page = $this->entities->pageWithinChapter();
 
         $this->actingAs($user)->put($page->getUrl(), [
@@ -287,7 +287,7 @@ class PageTest extends TestCase
 
     public function test_recently_updated_pages_view_does_not_show_parent_if_not_visible()
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $page = $this->entities->pageWithinChapter();
 
         $this->actingAs($user)->put($page->getUrl(), [
@@ -295,8 +295,8 @@ class PageTest extends TestCase
             'html' => '<p>Updated content</p>',
         ]);
 
-        $this->entities->setPermissions($page->book);
-        $this->entities->setPermissions($page, ['view'], [$user->roles->first()]);
+        $this->permissions->setEntityPermissions($page->book);
+        $this->permissions->setEntityPermissions($page, ['view'], [$user->roles->first()]);
 
         $resp = $this->get('/pages/recently-updated');
         $resp->assertDontSee($page->book->getShortName(42));

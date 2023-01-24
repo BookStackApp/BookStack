@@ -140,7 +140,7 @@ class MfaVerificationTest extends TestCase
 
     public function test_both_mfa_options_available_if_set_on_profile()
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $user->password = Hash::make('password');
         $user->save();
 
@@ -165,7 +165,7 @@ class MfaVerificationTest extends TestCase
 
     public function test_mfa_required_with_no_methods_leads_to_setup()
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $user->password = Hash::make('password');
         $user->save();
         /** @var Role $role */
@@ -222,7 +222,7 @@ class MfaVerificationTest extends TestCase
         // Attempted login user, who has configured mfa, access
         // Sets up user that has MFA required after attempted login.
         $loginService = $this->app->make(LoginService::class);
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         /** @var Role $role */
         $role = $user->roles->first();
         $role->mfa_enforced = true;
@@ -257,7 +257,7 @@ class MfaVerificationTest extends TestCase
     protected function startTotpLogin(): array
     {
         $secret = $this->app->make(TotpService::class)->generateSecret();
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $user->password = Hash::make('password');
         $user->save();
         MfaValue::upsertWithValue($user, MfaValue::METHOD_TOTP, $secret);
@@ -274,7 +274,7 @@ class MfaVerificationTest extends TestCase
      */
     protected function startBackupCodeLogin($codes = ['kzzu6-1pgll', 'bzxnf-plygd', 'bwdsp-ysl51', '1vo93-ioy7n', 'lf7nw-wdyka', 'xmtrd-oplac']): array
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $user->password = Hash::make('password');
         $user->save();
         MfaValue::upsertWithValue($user, MfaValue::METHOD_BACKUP_CODES, json_encode($codes));

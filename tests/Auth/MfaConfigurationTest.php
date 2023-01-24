@@ -13,7 +13,7 @@ class MfaConfigurationTest extends TestCase
 {
     public function test_totp_setup()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->assertDatabaseMissing('mfa_values', ['user_id' => $editor->id]);
 
         // Setup page state
@@ -66,7 +66,7 @@ class MfaConfigurationTest extends TestCase
 
     public function test_backup_codes_setup()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->assertDatabaseMissing('mfa_values', ['user_id' => $editor->id]);
 
         // Setup page state
@@ -112,8 +112,8 @@ class MfaConfigurationTest extends TestCase
 
     public function test_mfa_method_count_is_visible_on_user_edit_page()
     {
-        $user = $this->getEditor();
-        $resp = $this->actingAs($this->getAdmin())->get($user->getEditUrl());
+        $user = $this->users->editor();
+        $resp = $this->actingAs($this->users->admin())->get($user->getEditUrl());
         $resp->assertSee('0 methods configured');
 
         MfaValue::upsertWithValue($user, MfaValue::METHOD_TOTP, 'test');
@@ -127,17 +127,17 @@ class MfaConfigurationTest extends TestCase
 
     public function test_mfa_setup_link_only_shown_when_viewing_own_user_edit_page()
     {
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $resp = $this->actingAs($admin)->get($admin->getEditUrl());
         $this->withHtml($resp)->assertElementExists('a[href$="/mfa/setup"]');
 
-        $resp = $this->actingAs($admin)->get($this->getEditor()->getEditUrl());
+        $resp = $this->actingAs($admin)->get($this->users->editor()->getEditUrl());
         $this->withHtml($resp)->assertElementNotExists('a[href$="/mfa/setup"]');
     }
 
     public function test_mfa_indicator_shows_in_user_list()
     {
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         User::query()->where('id', '!=', $admin->id)->delete();
 
         $resp = $this->actingAs($admin)->get('/settings/users');
@@ -150,7 +150,7 @@ class MfaConfigurationTest extends TestCase
 
     public function test_remove_mfa_method()
     {
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
 
         MfaValue::upsertWithValue($admin, MfaValue::METHOD_TOTP, 'test');
         $this->assertEquals(1, $admin->mfaValues()->count());
@@ -168,7 +168,7 @@ class MfaConfigurationTest extends TestCase
 
     public function test_totp_setup_url_shows_correct_user_when_setup_forced_upon_login()
     {
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         /** @var Role $role */
         $role = $admin->roles()->first();
         $role->mfa_enforced = true;

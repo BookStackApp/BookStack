@@ -20,7 +20,7 @@ class TestEmailTest extends TestCase
     public function test_send_test_email_endpoint_sends_email_and_redirects_user_and_shows_notification()
     {
         Notification::fake();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
 
         $sendReq = $this->actingAs($admin)->post('/settings/maintenance/send-test-email');
         $sendReq->assertRedirect('/settings/maintenance#image-cleanup');
@@ -37,7 +37,7 @@ class TestEmailTest extends TestCase
         $exception = new \Exception('A random error occurred when testing an email');
         $mockDispatcher->shouldReceive('sendNow')->andThrow($exception);
 
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $sendReq = $this->actingAs($admin)->post('/settings/maintenance/send-test-email');
         $sendReq->assertRedirect('/settings/maintenance#image-cleanup');
         $this->assertSessionHas('error');
@@ -50,12 +50,12 @@ class TestEmailTest extends TestCase
     public function test_send_test_email_requires_settings_manage_permission()
     {
         Notification::fake();
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
 
         $sendReq = $this->actingAs($user)->post('/settings/maintenance/send-test-email');
         Notification::assertNothingSent();
 
-        $this->giveUserPermissions($user, ['settings-manage']);
+        $this->permissions->grantUserRolePermissions($user, ['settings-manage']);
         $sendReq = $this->actingAs($user)->post('/settings/maintenance/send-test-email');
         Notification::assertSentTo($user, TestEmail::class);
     }

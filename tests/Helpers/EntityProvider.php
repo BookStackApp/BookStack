@@ -2,8 +2,6 @@
 
 namespace Tests\Helpers;
 
-use BookStack\Auth\Permissions\EntityPermission;
-use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -184,44 +182,6 @@ class EntityProvider
         $draftPage = $pageRepo->getNewDraftPage($book);
         $this->addToCache($draftPage);
         return $pageRepo->publishDraft($draftPage, $input);
-    }
-
-    /**
-     * Regenerate the permission for an entity.
-     * Centralised to manage clearing of cached elements between requests.
-     */
-    public function regenPermissions(Entity $entity): void
-    {
-        $entity->rebuildPermissions();
-        $entity->load('jointPermissions');
-    }
-
-    /**
-     * Set the given entity as having restricted permissions, and apply the given
-     * permissions for the given roles.
-     * @param string[] $actions
-     * @param Role[] $roles
-     */
-    public function setPermissions(Entity $entity, array $actions = [], array $roles = []): void
-    {
-        $entity->permissions()->delete();
-
-        $permissions = [
-            // Set default permissions to not allow actions so that only the provided role permissions are at play.
-            ['role_id' => 0, 'view' => false, 'create' => false, 'update' => false, 'delete' => false],
-        ];
-
-        foreach ($roles as $role) {
-            $permission = ['role_id' => $role->id];
-            foreach (EntityPermission::PERMISSIONS as $possibleAction) {
-                $permission[$possibleAction] = in_array($possibleAction, $actions);
-            }
-            $permissions[] = $permission;
-        }
-
-        $entity->permissions()->createMany($permissions);
-        $entity->load('permissions');
-        $this->regenPermissions($entity);
     }
 
     /**

@@ -75,7 +75,7 @@ class AttachmentTest extends TestCase
     {
         $page = $this->entities->page();
         $this->asAdmin();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $fileName = 'upload_test_file.txt';
 
         $expectedResp = [
@@ -137,7 +137,7 @@ class AttachmentTest extends TestCase
     public function test_attaching_link_to_page()
     {
         $page = $this->entities->page();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
         $this->asAdmin();
 
         $linkReq = $this->call('POST', 'attachments/link', [
@@ -245,15 +245,15 @@ class AttachmentTest extends TestCase
 
     public function test_attachment_access_without_permission_shows_404()
     {
-        $admin = $this->getAdmin();
-        $viewer = $this->getViewer();
+        $admin = $this->users->admin();
+        $viewer = $this->users->viewer();
         $page = $this->entities->page(); /** @var Page $page */
         $this->actingAs($admin);
         $fileName = 'permission_test.txt';
         $this->uploadFile($fileName, $page->id);
         $attachment = Attachment::orderBy('id', 'desc')->take(1)->first();
 
-        $this->entities->setPermissions($page, [], []);
+        $this->permissions->setEntityPermissions($page, [], []);
 
         $this->actingAs($viewer);
         $attachmentGet = $this->get($attachment->getUrl());

@@ -41,7 +41,7 @@ class WebhookFormatTesting extends TestCase
     protected function getWebhookData(string $event, $detail): array
     {
         $webhook = Webhook::factory()->make();
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $formatter = WebhookFormatter::getDefault($event, $webhook, $detail, $user, time());
 
         return $formatter->format();

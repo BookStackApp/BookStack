@@ -16,12 +16,12 @@ class UserApiTokenTest extends TestCase
 
     public function test_tokens_section_not_visible_without_access_api_permission()
     {
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
 
         $resp = $this->actingAs($user)->get($user->getEditUrl());
         $resp->assertDontSeeText('API Tokens');
 
-        $this->giveUserPermissions($user, ['access-api']);
+        $this->permissions->grantUserRolePermissions($user, ['access-api']);
 
         $resp = $this->actingAs($user)->get($user->getEditUrl());
         $resp->assertSeeText('API Tokens');
@@ -30,9 +30,9 @@ class UserApiTokenTest extends TestCase
 
     public function test_those_with_manage_users_can_view_other_user_tokens_but_not_create()
     {
-        $viewer = $this->getViewer();
-        $editor = $this->getEditor();
-        $this->giveUserPermissions($viewer, ['users-manage']);
+        $viewer = $this->users->viewer();
+        $editor = $this->users->editor();
+        $this->permissions->grantUserRolePermissions($viewer, ['users-manage']);
 
         $resp = $this->actingAs($viewer)->get($editor->getEditUrl());
         $resp->assertSeeText('API Tokens');
@@ -41,7 +41,7 @@ class UserApiTokenTest extends TestCase
 
     public function test_create_api_token()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $resp = $this->asAdmin()->get($editor->getEditUrl('/create-api-token'));
         $resp->assertStatus(200);
@@ -74,7 +74,7 @@ class UserApiTokenTest extends TestCase
 
     public function test_create_with_no_expiry_sets_expiry_hundred_years_away()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), ['name' => 'No expiry token', 'expires_at' => '']);
         $token = ApiToken::query()->latest()->first();
 
@@ -88,7 +88,7 @@ class UserApiTokenTest extends TestCase
 
     public function test_created_token_displays_on_profile_page()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
 
@@ -101,7 +101,7 @@ class UserApiTokenTest extends TestCase
 
     public function test_secret_shown_once_after_creation()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $resp = $this->asAdmin()->followingRedirects()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $resp->assertSeeText('Token Secret');
 
@@ -114,7 +114,7 @@ class UserApiTokenTest extends TestCase
 
     public function test_token_update()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
         $updateData = [
@@ -132,7 +132,7 @@ class UserApiTokenTest extends TestCase
 
     public function test_token_update_with_blank_expiry_sets_to_hundred_years_away()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
 
@@ -152,7 +152,7 @@ class UserApiTokenTest extends TestCase
 
     public function test_token_delete()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->asAdmin()->post($editor->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();
 
@@ -171,9 +171,9 @@ class UserApiTokenTest extends TestCase
 
     public function test_user_manage_can_delete_token_without_api_permission_themselves()
     {
-        $viewer = $this->getViewer();
-        $editor = $this->getEditor();
-        $this->giveUserPermissions($editor, ['users-manage']);
+        $viewer = $this->users->viewer();
+        $editor = $this->users->editor();
+        $this->permissions->grantUserRolePermissions($editor, ['users-manage']);
 
         $this->asAdmin()->post($viewer->getEditUrl('/create-api-token'), $this->testTokenData);
         $token = ApiToken::query()->latest()->first();

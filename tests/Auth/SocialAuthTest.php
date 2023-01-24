@@ -77,18 +77,18 @@ class SocialAuthTest extends TestCase
 
         // Test social callback with matching social account
         DB::table('social_accounts')->insert([
-            'user_id'   => $this->getAdmin()->id,
+            'user_id'   => $this->users->admin()->id,
             'driver'    => 'github',
             'driver_id' => 'logintest123',
         ]);
         $resp = $this->followingRedirects()->get('/login/service/github/callback');
         $resp->assertDontSee('login-form');
-        $this->assertActivityExists(ActivityType::AUTH_LOGIN, null, 'github; (' . $this->getAdmin()->id . ') ' . $this->getAdmin()->name);
+        $this->assertActivityExists(ActivityType::AUTH_LOGIN, null, 'github; (' . $this->users->admin()->id . ') ' . $this->users->admin()->name);
     }
 
     public function test_social_account_detach()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         config([
             'GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc',
             'APP_URL'       => 'http://localhost',

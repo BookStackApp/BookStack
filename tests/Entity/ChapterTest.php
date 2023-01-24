@@ -101,7 +101,7 @@ class ChapterTest extends TestCase
         // Hide pages to all non-admin roles
         /** @var Page $page */
         foreach ($chapter->pages as $page) {
-            $this->entities->setPermissions($page, [], []);
+            $this->permissions->setEntityPermissions($page, [], []);
         }
 
         $this->asEditor()->post($chapter->getUrl('/copy'), [
@@ -116,8 +116,8 @@ class ChapterTest extends TestCase
     public function test_copy_does_not_copy_pages_if_user_cant_page_create()
     {
         $chapter = $this->entities->chapterHasPages();
-        $viewer = $this->getViewer();
-        $this->giveUserPermissions($viewer, ['chapter-create-all']);
+        $viewer = $this->users->viewer();
+        $this->permissions->grantUserRolePermissions($viewer, ['chapter-create-all']);
 
         // Lacking permission results in no copied pages
         $this->actingAs($viewer)->post($chapter->getUrl('/copy'), [
@@ -128,7 +128,7 @@ class ChapterTest extends TestCase
         $newChapter = Chapter::query()->where('name', '=', 'My copied chapter')->first();
         $this->assertEquals(0, $newChapter->pages()->count());
 
-        $this->giveUserPermissions($viewer, ['page-create-all']);
+        $this->permissions->grantUserRolePermissions($viewer, ['page-create-all']);
 
         // Having permission rules in copied pages
         $this->actingAs($viewer)->post($chapter->getUrl('/copy'), [
@@ -144,7 +144,7 @@ class ChapterTest extends TestCase
     {
         $chapter = $this->entities->chapter();
 
-        $resp = $this->actingAs($this->getViewer())->get($chapter->getUrl());
+        $resp = $this->actingAs($this->users->viewer())->get($chapter->getUrl());
         $this->withHtml($resp)->assertLinkNotExists($chapter->book->getUrl('sort'));
 
         $resp = $this->asEditor()->get($chapter->getUrl());
