@@ -25,22 +25,24 @@ class EntityPermissionEvaluator
         $relevantPermissions = $this->getPermissionsMapByTypeId($typeIdChain, [...$userRoleIds, 0]);
         $permitsByType = $this->collapseAndCategorisePermissions($typeIdChain, $relevantPermissions);
 
-        return $this->evaluatePermitsByType($permitsByType);
+        $status = $this->evaluatePermitsByType($permitsByType);
+
+        return is_null($status) ? null : $status === PermissionStatus::IMPLICIT_ALLOW || $status === PermissionStatus::EXPLICIT_ALLOW;
     }
 
     /**
      * @param array<string, array<string, int>> $permitsByType
      */
-    protected function evaluatePermitsByType(array $permitsByType): ?bool
+    protected function evaluatePermitsByType(array $permitsByType): ?int
     {
         // Return grant or reject from role-level if exists
         if (count($permitsByType['role']) > 0) {
-            return boolval(max($permitsByType['role']));
+            return max($permitsByType['role']) ? PermissionStatus::EXPLICIT_ALLOW : PermissionStatus::EXPLICIT_DENY;
         }
 
         // Return fallback permission if exists
         if (count($permitsByType['fallback']) > 0) {
-            return boolval($permitsByType['fallback'][0]);
+            return $permitsByType['fallback'][0] ? PermissionStatus::IMPLICIT_ALLOW : PermissionStatus::IMPLICIT_DENY;
         }
 
         return null;

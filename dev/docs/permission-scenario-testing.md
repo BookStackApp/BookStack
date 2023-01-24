@@ -229,12 +229,92 @@ User denied page permission.
 
 User denied page permission.
 
-#### test_80_multi_role_inherited_deny_via_parent
+#### test_75_multi_role_inherited_deny_via_parent
 
 - Page permissions have inherit enabled.
 - Chapter permissions have inherit enabled.
 - Role A has all-pages role permission.
 - Role B has entity denied chapter permission.
+- User has Role A & B.
+
+User denied page permission.
+
+#### test_80_fallback_override_allow
+
+- Page permissions have inherit disabled.
+- Page fallback has entity deny permission.
+- Role A has entity allow page permission.
+- User has Role A.
+
+User granted page permission.
+
+#### test_81_fallback_override_deny
+
+- Page permissions have inherit disabled.
+- Page fallback has entity allow permission.
+- Role A has entity deny page permission.
+- User has Role A.
+
+User denied page permission.
+
+#### test_84_fallback_override_allow_multi_role
+
+- Page permissions have inherit disabled.
+- Page fallback has entity deny permission.
+- Role A has entity allow page permission.
+- Role B has no entity page permissions.
+- User has Role A & B.
+
+User granted page permission.
+
+#### test_85_fallback_override_deny_multi_role
+
+- Page permissions have inherit disabled.
+- Page fallback has entity allow permission.
+- Role A has entity deny page permission.
+- Role B has no entity page permissions.
+- User has Role A & B.
+
+User denied page permission.
+
+#### test_86_fallback_override_allow_inherit
+
+- Chapter permissions have inherit disabled.
+- Page permissions have inherit enabled.
+- Chapter fallback has entity deny permission.
+- Role A has entity allow chapter permission.
+- User has Role A.
+
+User granted page permission.
+
+#### test_87_fallback_override_deny_inherit
+
+- Chapter permissions have inherit disabled.
+- Page permissions have inherit enabled.
+- Chapter fallback has entity allow permission.
+- Role A has entity deny chapter permission.
+- User has Role A.
+
+User denied page permission.
+
+#### test_88_fallback_override_allow_multi_role_inherit
+
+- Chapter permissions have inherit disabled.
+- Page permissions have inherit enabled.
+- Chapter fallback has entity deny permission.
+- Role A has entity allow chapter permission.
+- Role B has no entity chapter permissions.
+- User has Role A & B.
+
+User granted page permission.
+
+#### test_89_fallback_override_deny_multi_role_inherit
+
+- Chapter permissions have inherit disabled.
+- Page permissions have inherit enabled.
+- Chapter fallback has entity allow permission.
+- Role A has entity deny chapter permission.
+- Role B has no entity chapter permissions.
 - User has Role A & B.
 
 User denied page permission.
