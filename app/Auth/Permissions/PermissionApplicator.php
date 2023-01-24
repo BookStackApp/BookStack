@@ -150,51 +150,16 @@ class PermissionApplicator
      */
     public function restrictPageRelationQuery(Builder $query, string $tableName, string $pageIdColumn): Builder
     {
-        // TODO - Refactor
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
-        $morphClass = (new Page())->getMorphClass();
-
-        $existsQuery = function ($permissionQuery) use ($fullPageIdColumn, $morphClass) {
-            /** @var Builder $permissionQuery */
-            $permissionQuery->select('joint_permissions.role_id')->from('joint_permissions')
-                ->whereColumn('joint_permissions.entity_id', '=', $fullPageIdColumn)
-                ->where('joint_permissions.entity_type', '=', $morphClass)
-                ->whereIn('joint_permissions.role_id', $this->getCurrentUserRoleIds())
-                ->where(function (QueryBuilder $query) {
-                    $this->addJointHasPermissionCheck($query, $this->currentUser()->id);
+        return $this->restrictEntityQuery($query)
+            ->where(function ($query) use ($fullPageIdColumn) {
+                /** @var Builder $query */
+                $query->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
+                    $query->select('id')->from('pages')
+                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
+                        ->where('pages.draft', '=', false);
                 });
-        };
-
-        $q = $query->where(function ($query) use ($existsQuery, $fullPageIdColumn) {
-            $query->whereExists($existsQuery)
-                ->orWhere($fullPageIdColumn, '=', 0);
-        });
-
-        // Prevent visibility of non-owned draft pages
-        $q->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
-            $query->select('id')->from('pages')
-                ->whereColumn('pages.id', '=', $fullPageIdColumn)
-                ->where(function (QueryBuilder $query) {
-                    $query->where('pages.draft', '=', false)
-                        ->orWhere('pages.owned_by', '=', $this->currentUser()->id);
-                });
-        });
-
-        return $q;
-    }
-
-    /**
-     * Add the query for checking the given user id has permission
-     * within the join_permissions table.
-     *
-     * @param QueryBuilder|Builder $query
-     */
-    protected function addJointHasPermissionCheck($query, int $userIdToCheck)
-    {
-        $query->where('joint_permissions.has_permission', '=', true)->orWhere(function ($query) use ($userIdToCheck) {
-            $query->where('joint_permissions.has_permission_own', '=', true)
-                ->where('joint_permissions.owned_by', '=', $userIdToCheck);
-        });
+            });
     }
 
     /**
