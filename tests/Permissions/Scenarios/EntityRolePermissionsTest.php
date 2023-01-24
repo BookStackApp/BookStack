@@ -187,7 +187,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $this->assertNotVisibleToUser($page, $user);
     }
 
-    public function test_80_multi_role_inherited_deny_via_parent()
+    public function test_75_multi_role_inherited_deny_via_parent()
     {
         [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
         $roleB = $this->users->attachNewRole($user);
@@ -195,6 +195,101 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->addEntityPermission($chapter, [], $roleB);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_80_fallback_override_allow()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $page = $this->entities->page();
+
+        $this->permissions->setFallbackPermissions($page, []);
+        $this->permissions->addEntityPermission($page, ['view'], $roleA);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+    public function test_81_fallback_override_deny()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $page = $this->entities->page();
+
+        $this->permissions->setFallbackPermissions($page, ['view']);
+        $this->permissions->addEntityPermission($page, [], $roleA);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_84_fallback_override_allow_multi_role()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $roleB = $this->users->attachNewRole($user);
+        $page = $this->entities->page();
+
+        $this->permissions->setFallbackPermissions($page, []);
+        $this->permissions->addEntityPermission($page, ['view'], $roleA);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_85_fallback_override_deny_multi_role()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $roleB = $this->users->attachNewRole($user);
+        $page = $this->entities->page();
+
+        $this->permissions->setFallbackPermissions($page, ['view']);
+        $this->permissions->addEntityPermission($page, [], $roleA);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_86_fallback_override_allow_inherit()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $page = $this->entities->page();
+        $chapter = $page->chapter;
+
+        $this->permissions->setFallbackPermissions($chapter, []);
+        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_87_fallback_override_deny_inherit()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $page = $this->entities->page();
+        $chapter = $page->chapter;
+
+        $this->permissions->setFallbackPermissions($chapter, ['view']);
+        $this->permissions->addEntityPermission($chapter, [], $roleA);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_88_fallback_override_allow_multi_role_inherit()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $roleB = $this->users->attachNewRole($user);
+        $page = $this->entities->page();
+        $chapter = $page->chapter;
+
+        $this->permissions->setFallbackPermissions($chapter, []);
+        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+
+        $this->assertVisibleToUser($page, $user);
+    }
+
+    public function test_89_fallback_override_deny_multi_role_inherit()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole();
+        $roleB = $this->users->attachNewRole($user);
+        $page = $this->entities->page();
+        $chapter = $page->chapter;
+
+        $this->permissions->setFallbackPermissions($chapter, ['view']);
+        $this->permissions->addEntityPermission($chapter, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }

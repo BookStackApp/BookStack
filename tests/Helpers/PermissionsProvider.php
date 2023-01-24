@@ -101,6 +101,13 @@ class PermissionsProvider
         $this->addEntityPermissionEntries($entity, [$permissionData]);
     }
 
+    public function setFallbackPermissions(Entity $entity, array $actionList)
+    {
+        $entity->permissions()->where('role_id', '=', 0)->delete();
+        $permissionData = $this->actionListToEntityPermissionData($actionList, 0);
+        $this->addEntityPermissionEntries($entity, [$permissionData]);
+    }
+
     /**
      * Disable inherited permissions on the given entity.
      * Effectively sets the "Other Users" UI permission option to not inherit, with no permissions.

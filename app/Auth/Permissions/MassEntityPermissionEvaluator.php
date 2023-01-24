@@ -16,7 +16,7 @@ class MassEntityPermissionEvaluator extends EntityPermissionEvaluator
         parent::__construct($action);
     }
 
-    public function evaluateEntityForRole(SimpleEntityData $entity, int $roleId): ?bool
+    public function evaluateEntityForRole(SimpleEntityData $entity, int $roleId): ?int
     {
         $typeIdChain = $this->gatherEntityChainTypeIds($entity);
         $relevantPermissions = $this->getPermissionMapByTypeIdForChainAndRole($typeIdChain, $roleId);

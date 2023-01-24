@@ -262,8 +262,7 @@ class JointPermissionBuilder
         // Return evaluated entity permission status if it has an affect.
         $entityPermissionStatus = $permissionMap->evaluateEntityForRole($entity, $roleId);
         if ($entityPermissionStatus !== null) {
-            $status = $entityPermissionStatus ? PermissionStatus::EXPLICIT_ALLOW : PermissionStatus::EXPLICIT_DENY;
-            return $this->createJointPermissionDataArray($entity, $roleId, $status, $entityPermissionStatus);
+            return $this->createJointPermissionDataArray($entity, $roleId, $entityPermissionStatus, false);
         }
 
         // Otherwise default to the role-level permissions
