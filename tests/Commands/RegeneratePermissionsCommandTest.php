@@ -29,7 +29,7 @@ class RegeneratePermissionsCommandTest extends TestCase
             'entity_id' => $page->id,
             'entity_type' => 'page',
             'role_id' => $role->id,
-            'has_permission' => 1,
+            'status' => 3, // Explicit allow
         ]);
 
         $page->permissions()->delete();

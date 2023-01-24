@@ -663,7 +663,7 @@ class EntityPermissionsTest extends TestCase
         $chapter = $this->entities->chapter();
         $book = $chapter->book;
 
-        $this->permissions->setEntityPermissions($book, ['edit'], [$viewerRole], false);
+        $this->permissions->setEntityPermissions($book, ['update'], [$viewerRole], false);
         $this->permissions->setEntityPermissions($chapter, [], [$viewerRole], true);
 
         $this->assertFalse(userCan('chapter-update', $chapter));
@@ -678,9 +678,10 @@ class EntityPermissionsTest extends TestCase
         $chapter = $this->entities->chapter();
         $book = $chapter->book;
 
-        $this->permissions->setEntityPermissions($book, ['edit'], [$editorRole], false);
+        $this->permissions->setEntityPermissions($book, ['update'], [$editorRole], false);
         $this->permissions->setEntityPermissions($chapter, [], [$viewerRole], true);
 
+        $this->actingAs($user);
         $this->assertTrue(userCan('chapter-update', $chapter));
     }
 
