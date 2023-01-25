@@ -19,7 +19,7 @@
 
         <div class="flex-container-column items-center justify-center hide-under-l">
             @if (hasAppAccess())
-            <form component="global-search" action="{{ url('/search') }}" method="GET" class="search-box" role="search">
+            <form component="global-search" action="{{ url('/search') }}" method="GET" class="search-box" role="search" tabindex="0">
                 <button id="header-search-box-button"
                         refs="global-search@button"
                         type="submit"
