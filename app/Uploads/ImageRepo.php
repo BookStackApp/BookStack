@@ -180,13 +180,17 @@ class ImageRepo
     }
 
     /**
-     * Destroy all images of a certain type.
+     * Destroy images that have a specific URL and type combination.
      *
      * @throws Exception
      */
-    public function destroyByType(string $imageType): void
+    public function destroyByUrlAndType(string $url, string $imageType): void
     {
-        $images = Image::query()->where('type', '=', $imageType)->get();
+        $images = Image::query()
+            ->where('url', '=', $url)
+            ->where('type', '=', $imageType)
+            ->get();
+
         foreach ($images as $image) {
             $this->destroyImage($image);
         }

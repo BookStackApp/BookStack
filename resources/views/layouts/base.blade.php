@@ -20,6 +20,12 @@
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
     <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="256x256" href="{{ setting('app-icon') ?? url('/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="128x128" href="{{ setting('app-icon-128') ?? url('/icon-128.png') }}">
+    <link rel="icon" type="image/png" sizes="64x64" href="{{ setting('app-icon-64') ?? url('/icon-64.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ setting('app-icon-32') ?? url('/icon-32.png') }}">
+
     @yield('head')
 
     <!-- Custom Styles & Head Content -->

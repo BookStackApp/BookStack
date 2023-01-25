@@ -33,7 +33,7 @@ return [
     'app_custom_html_desc' => 'Any content added here will be inserted into the bottom of the <head> section of every page. This is handy for overriding styles or adding analytics code.',
     'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Application Logo',
-    'app_logo_desc' => 'This image should be 43px in height. <br>Large images will be scaled down.',
+    'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_primary_color' => 'Application Primary Color',
     'app_primary_color_desc' => 'Sets the primary color for the application including the banner, buttons, and links.',
     'app_homepage' => 'Application Homepage',
