@@ -53,6 +53,22 @@
                 </div>
             </div>
 
+            <div class="grid half gap-xl">
+                <div>
+                    <label class="setting-list-label">{{ trans('settings.app_icon') }}</label>
+                    <p class="small">{{ trans('settings.app_icon_desc') }}</p>
+                </div>
+                <div class="pt-xs">
+                    @include('form.image-picker', [
+                             'removeValue' => 'none',
+                             'defaultImage' => url('/icon.png'),
+                             'currentImage' => setting('app-icon'),
+                             'name' => 'app_icon',
+                             'imageClass' => 'logo-image',
+                         ])
+                </div>
+            </div>
+
             <!-- Primary Color -->
             <div class="grid half gap-xl">
                 <div>
