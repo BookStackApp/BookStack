@@ -33,8 +33,9 @@ return [
     'app_custom_html_desc' => 'Jeder Inhalt, der hier hinzugefügt wird, wird am Ende der <head> Sektion jeder Seite eingefügt. Diese kann praktisch sein, um CSS Styles anzupassen oder Analytics-Code hinzuzufügen.',
     'app_custom_html_disabled_notice' => 'Benutzerdefinierte HTML-Kopfzeileninhalte sind auf dieser Einstellungsseite deaktiviert, um sicherzustellen, dass alle Änderungen rückgängig gemacht werden können.',
     'app_logo' => 'Anwendungslogo',
-    'app_logo_desc' => 'Dieses Bild sollte 43px hoch sein.
-Größere Bilder werden verkleinert.',
+    'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
+    'app_icon' => 'Application Icon',
+    'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
     'app_primary_color' => 'Primäre Anwendungsfarbe',
     'app_primary_color_desc' => 'Dies sollte ein HEX Wert sein.
 Wenn Sie nichts eingeben, wird die Anwendung auf die Standardfarbe zurückgesetzt.',
