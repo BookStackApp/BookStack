@@ -6,10 +6,11 @@
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
 
     <!-- Meta -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <meta name="token" content="{{ csrf_token() }}">
     <meta name="base-url" content="{{ url('/') }}">
-    <meta charset="utf-8">
+    <meta name="theme-color" content="{{ setting('app-color') }}"/>
 
     <!-- Social Cards Meta -->
     <meta property="og:title" content="{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}">
@@ -21,10 +22,12 @@
     <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
     <!-- Icons -->
-    <link rel="icon" type="image/png" sizes="256x256" href="{{ setting('app-icon') ?? url('/icon.png') }}">
-    <link rel="icon" type="image/png" sizes="128x128" href="{{ setting('app-icon-128') ?? url('/icon-128.png') }}">
-    <link rel="icon" type="image/png" sizes="64x64" href="{{ setting('app-icon-64') ?? url('/icon-64.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ setting('app-icon-32') ?? url('/icon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="256x256" href="{{ setting('app-icon') ?: url('/icon.png') }}">
+    <link rel="icon" type="image/png" sizes="180x180" href="{{ setting('app-icon-180') ?: url('/icon-180.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ setting('app-icon-180') ?: url('/icon-180.png') }}">
+    <link rel="icon" type="image/png" sizes="128x128" href="{{ setting('app-icon-128') ?: url('/icon-128.png') }}">
+    <link rel="icon" type="image/png" sizes="64x64" href="{{ setting('app-icon-64') ?: url('/icon-64.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ setting('app-icon-32') ?: url('/icon-32.png') }}">
 
     @yield('head')
 
