@@ -55,11 +55,8 @@
 
             <div class="grid half gap-xl">
                 <div>
-                    <label class="setting-list-label">{{ 'Application Icon' }}</label>
-                    <p class="small">
-                        This icon is used for browser tabs and shortcut icons.
-                        This should be a 256px square PNG image.
-                    </p>
+                    <label class="setting-list-label">{{ trans('settings.app_icon') }}</label>
+                    <p class="small">{{ trans('settings.app_icon_desc') }}</p>
                 </div>
                 <div class="pt-xs">
                     @include('form.image-picker', [

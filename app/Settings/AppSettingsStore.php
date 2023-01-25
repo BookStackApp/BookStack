@@ -25,7 +25,7 @@ class AppSettingsStore
 
     protected function updateAppIcon(Request $request): void
     {
-        $sizes = [128, 64, 32];
+        $sizes = [180, 128, 64, 32];
 
         // Update icon image if set
         if ($request->hasFile('app_icon')) {
@@ -35,6 +35,7 @@ class AppSettingsStore
             setting()->put('app-icon', $image->url);
 
             foreach ($sizes as $size) {
+                $this->destroyExistingSettingImage('app-icon-' . $size);
                 $icon = $this->imageRepo->saveNew($iconFile, 'system', 0, $size, $size);
                 setting()->put('app-icon-' . $size, $icon->url);
             }
