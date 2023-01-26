@@ -187,12 +187,38 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $this->assertNotVisibleToUser($page, $user);
     }
 
+    public function test_71_multi_role_inheriting_deny_on_own()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-own']);
+        $roleB = $this->users->attachNewRole($user);
+        $page = $this->entities->page();
+        $this->permissions->changeEntityOwner($page, $user);
+
+        $this->permissions->addEntityPermission($page, [], $roleB);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+
     public function test_75_multi_role_inherited_deny_via_parent()
     {
         [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
         $roleB = $this->users->attachNewRole($user);
         $page = $this->entities->pageWithinChapter();
         $chapter = $page->chapter;
+
+        $this->permissions->addEntityPermission($chapter, [], $roleB);
+
+        $this->assertNotVisibleToUser($page, $user);
+    }
+
+    public function test_76_multi_role_inherited_deny_via_parent_on_own()
+    {
+        [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-own']);
+        $roleB = $this->users->attachNewRole($user);
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $this->permissions->changeEntityOwner($page, $user);
 
         $this->permissions->addEntityPermission($chapter, [], $roleB);
 
