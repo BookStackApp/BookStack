@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Provjerite imate li instaliranu GD PHP ekstenziju.',
     'server_upload_limit' => 'Prevelika količina za server. Pokušajte prenijeti manju veličinu.',
     'uploaded'  => 'Prevelika količina za server. Pokušajte prenijeti manju veličinu.',
+    'file_upload_timeout' => 'Isteklo vrijeme za prijenos datoteke.',
+
+    // Drawing & Images
     'image_upload_error' => 'Problem s prenosom slike',
     'image_upload_type_error' => 'Nepodržani format slike',
-    'file_upload_timeout' => 'Isteklo vrijeme za prijenos datoteke.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Prilozi nisu pronađeni',
