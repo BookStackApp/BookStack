@@ -132,7 +132,7 @@ async function request(url, options = {}) {
     };
 
     if (!response.ok) {
-        throw returnData;
+        throw new HttpError(response, content);
     }
 
     return returnData;
@@ -159,10 +159,24 @@ async function getResponseContent(response) {
     return await response.text();
 }
 
+class HttpError extends Error {
+    constructor(response, content) {
+        super(response.statusText);
+        this.data = content;
+        this.headers = response.headers;
+        this.redirected = response.redirected;
+        this.status = response.status;
+        this.statusText = response.statusText;
+        this.url = response.url;
+        this.original = response;
+    }
+}
+
 export default {
     get: get,
     post: post,
     put: put,
     patch: patch,
     delete: performDelete,
+    HttpError: HttpError,
 };
