@@ -99,7 +99,7 @@ class PermissionApplicator
                     ->selectRaw('max(status) as status')
                     ->whereIn('role_id', $this->getCurrentUserRoleIds())
                     ->groupBy(['entity_type', 'entity_id'])
-                    ->havingRaw('(status IN (1, 3) or owner_id = ?)', [$this->currentUser()->id]);
+                    ->havingRaw('(status IN (1, 3) or (owner_id = ? and status != 2))', [$this->currentUser()->id]);
             });
         });
     }
