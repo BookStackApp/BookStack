@@ -42,6 +42,7 @@ class OidcTest extends TestCase
             'oidc.user_to_groups'         => false,
             'oidc.groups_claim'           => 'group',
             'oidc.remove_from_groups'     => false,
+            'oidc.external_id_claim'      => 'sub',
         ]);
     }
 
@@ -389,6 +390,25 @@ class OidcTest extends TestCase
         $this->assertFalse(auth()->check());
         $this->runLogin();
         $this->assertTrue(auth()->check());
+    }
+
+    public function test_auth_uses_configured_external_id_claim_option()
+    {
+        config()->set([
+            'oidc.external_id_claim' => 'super_awesome_id',
+        ]);
+        $roleA = Role::factory()->create(['display_name' => 'Wizards']);
+
+        $resp = $this->runLogin([
+            'email'            => 'benny@example.com',
+            'sub'              => 'benny1010101',
+            'super_awesome_id' => 'xXBennyTheGeezXx',
+        ]);
+        $resp->assertRedirect('/');
+
+        /** @var User $user */
+        $user = User::query()->where('email', '=', 'benny@example.com')->first();
+        $this->assertEquals('xXBennyTheGeezXx', $user->external_auth_id);
     }
 
     public function test_login_group_sync()
