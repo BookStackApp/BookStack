@@ -10,10 +10,11 @@ export class TagManager extends Component {
     }
 
     setupListeners() {
-        this.container.addEventListener('change', event => {
+        this.container.addEventListener('input', event => {
+
             /** @var {AddRemoveRows} **/
             const addRemoveComponent = window.$components.firstOnElement(this.addRemoveComponentEl, 'add-remove-rows');
-            if (!this.hasEmptyRows()) {
+            if (!this.hasEmptyRows() && event.target.value) {
                 addRemoveComponent.add();
             }
         });
