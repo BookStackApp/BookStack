@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Servern kan inte skapa miniatyrer. Kontrollera att du har PHPs GD-tillägg aktiverat.',
     'server_upload_limit' => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
     'uploaded'  => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
+    'file_upload_timeout' => 'Filuppladdningen har tagits ut.',
+
+    // Drawing & Images
     'image_upload_error' => 'Ett fel inträffade vid uppladdningen',
     'image_upload_type_error' => 'Filtypen du försöker ladda upp är ogiltig',
-    'file_upload_timeout' => 'Filuppladdningen har tagits ut.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Bilagan hittades ej',
