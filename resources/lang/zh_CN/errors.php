@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => '服务器无法创建缩略图，请检查您是否安装了GD PHP扩展。',
     'server_upload_limit' => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
     'uploaded'  => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
+    'file_upload_timeout' => '文件上传已超时。',
+
+    // Drawing & Images
     'image_upload_error' => '上传图片时发生错误',
     'image_upload_type_error' => '上传的图像类型无效',
-    'file_upload_timeout' => '文件上传已超时。',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => '找不到附件',
