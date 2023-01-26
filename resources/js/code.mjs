@@ -25,6 +25,7 @@ import 'codemirror/mode/properties/properties';
 import 'codemirror/mode/python/python';
 import 'codemirror/mode/ruby/ruby';
 import 'codemirror/mode/rust/rust';
+import 'codemirror/mode/scheme/scheme';
 import 'codemirror/mode/shell/shell';
 import 'codemirror/mode/smarty/smarty';
 import 'codemirror/mode/sql/sql';
@@ -76,6 +77,8 @@ const modeMap = {
     mdown: 'markdown',
     markdown: 'markdown',
     ml: 'mllike',
+    mssql: 'text/x-mssql',
+    mysql: 'text/x-mysql',
     nginx: 'nginx',
     octave: 'text/x-octave',
     perl: 'perl',
@@ -88,16 +91,21 @@ const modeMap = {
     php: (content) => {
         return content.includes('<?php') ? 'php' : 'text/x-php';
     },
+    pgsql: 'text/x-pgsql',
+    'pl/sql': 'text/x-plsql',
+    postgresql: 'text/x-pgsql',
     py: 'python',
     python: 'python',
     ruby: 'ruby',
     rust: 'rust',
     rb: 'ruby',
     rs: 'rust',
+    scheme: 'scheme',
     shell: 'shell',
     sh: 'shell',
     smarty: 'smarty',
     sql: 'text/x-sql',
+    sqlite: 'text/x-sqlite',
     stext: 'text/x-stex',
     swift: 'text/x-swift',
     toml: 'toml',
