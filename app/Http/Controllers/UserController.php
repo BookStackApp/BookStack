@@ -164,6 +164,8 @@ class UserController extends Controller
         // Delete the profile image if reset option is in request
         if ($request->has('profile_image_reset')) {
             $this->imageRepo->destroyImage($user->avatar);
+            $user->image_id = 0;
+            $user->save();
         }
 
         $redirectUrl = userCan('users-manage') ? '/settings/users' : "/settings/users/{$user->id}";
