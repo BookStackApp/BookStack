@@ -6,14 +6,18 @@ use BookStack\Actions\ActivityType;
 use BookStack\Auth\Access\UserInviteService;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use BookStack\Uploads\Image;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
 use RuntimeException;
 use Tests\TestCase;
+use Tests\Uploads\UsesImages;
 
 class UserManagementTest extends TestCase
 {
+    use UsesImages;
+
     public function test_user_creation()
     {
         /** @var User $user */
@@ -273,5 +277,34 @@ class UserManagementTest extends TestCase
         ]);
         $resp->assertSessionHasErrors(['language' => 'The language may not be greater than 15 characters.']);
         $resp->assertSessionHasErrors(['language' => 'The language may only contain letters, numbers, dashes and underscores.']);
+    }
+
+    public function test_user_avatar_update_and_reset()
+    {
+        $user = $this->users->viewer();
+        $avatarFile = $this->getTestImage('avatar-icon.png');
+
+        $this->assertEquals(0, $user->image_id);
+
+        $upload = $this->asAdmin()->call('PUT', "/settings/users/{$user->id}", [
+            'name' => 'Barry Scott',
+        ], [], ['profile_image' => $avatarFile], []);
+        $upload->assertRedirect('/settings/users');
+
+        $user->refresh();
+        $this->assertNotEquals(0, $user->image_id);
+        /** @var Image $image */
+        $image = Image::query()->findOrFail($user->image_id);
+        $this->assertFileExists(public_path($image->path));
+
+        $reset = $this->put("/settings/users/{$user->id}", [
+            'name' => 'Barry Scott',
+            'profile_image_reset' => 'true',
+        ]);
+        $upload->assertRedirect('/settings/users');
+
+        $user->refresh();
+        $this->assertFileDoesNotExist(public_path($image->path));
+        $this->assertEquals(0, $user->image_id);
     }
 }
