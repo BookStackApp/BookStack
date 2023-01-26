@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'El servidor no pot crear miniatures. Reviseu que tingueu instal·lada l\'extensió GD del PHP.',
     'server_upload_limit' => 'El servidor no permet pujades d\'aquesta mida. Proveu-ho amb una mida de fitxer més petita.',
     'uploaded'  => 'El servidor no permet pujades d\'aquesta mida. Proveu-ho amb una mida de fitxer més petita.',
+    'file_upload_timeout' => 'La pujada del fitxer ha superat el temps màxim d\'espera.',
+
+    // Drawing & Images
     'image_upload_error' => 'S\'ha produït un error en pujar la imatge',
     'image_upload_type_error' => 'El tipus d\'imatge que heu pujat no és vàlid',
-    'file_upload_timeout' => 'La pujada del fitxer ha superat el temps màxim d\'espera.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'No s\'ha trobat l\'adjunció',
