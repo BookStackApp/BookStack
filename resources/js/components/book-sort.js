@@ -37,6 +37,113 @@ const sortOperations = {
     },
 };
 
+/**
+ * The available move actions.
+ * The active function indicates if the action is possible for the given item.
+ * The run function performs the move.
+ * @type {{up: {active(Element, ?Element, Element): boolean, run(Element, ?Element, Element)}}}
+ */
+const moveActions = {
+    up: {
+        active(elem, parent, book) {
+            return !(elem.previousElementSibling === null && !parent);
+        },
+        run(elem, parent, book) {
+            const newSibling = elem.previousElementSibling || parent;
+            newSibling.insertAdjacentElement('beforebegin', elem);
+        }
+    },
+    down: {
+        active(elem, parent, book) {
+            return !(elem.nextElementSibling === null && !parent);
+        },
+        run(elem, parent, book) {
+            const newSibling = elem.nextElementSibling || parent;
+            newSibling.insertAdjacentElement('afterend', elem);
+        }
+    },
+    next_book: {
+        active(elem, parent, book) {
+            return book.nextElementSibling !== null;
+        },
+        run(elem, parent, book) {
+            const newList = book.nextElementSibling.querySelector('ul');
+            newList.prepend(elem);
+        }
+    },
+    prev_book: {
+        active(elem, parent, book) {
+            return book.previousElementSibling !== null;
+        },
+        run(elem, parent, book) {
+            const newList = book.previousElementSibling.querySelector('ul');
+            newList.appendChild(elem);
+        }
+    },
+    next_chapter: {
+        active(elem, parent, book) {
+            return elem.dataset.type === 'page' && this.getNextChapter(elem, parent);
+        },
+        run(elem, parent, book) {
+            const nextChapter = this.getNextChapter(elem, parent);
+            nextChapter.querySelector('ul').prepend(elem);
+        },
+        getNextChapter(elem, parent) {
+            const topLevel = (parent || elem);
+            const topItems = Array.from(topLevel.parentElement.children);
+            const index = topItems.indexOf(topLevel);
+            return topItems.slice(index + 1).find(elem => elem.dataset.type === 'chapter');
+        }
+    },
+    prev_chapter: {
+        active(elem, parent, book) {
+            return elem.dataset.type === 'page' && this.getPrevChapter(elem, parent);
+        },
+        run(elem, parent, book) {
+            const prevChapter = this.getPrevChapter(elem, parent);
+            prevChapter.querySelector('ul').append(elem);
+        },
+        getPrevChapter(elem, parent) {
+            const topLevel = (parent || elem);
+            const topItems = Array.from(topLevel.parentElement.children);
+            const index = topItems.indexOf(topLevel);
+            return topItems.slice(0, index).reverse().find(elem => elem.dataset.type === 'chapter');
+        }
+    },
+    book_end: {
+        active(elem, parent, book) {
+            return parent || (parent === null && elem.nextElementSibling);
+        },
+        run(elem, parent, book) {
+            book.querySelector('ul').append(elem);
+        }
+    },
+    book_start: {
+        active(elem, parent, book) {
+            return parent || (parent === null && elem.previousElementSibling);
+        },
+        run(elem, parent, book) {
+            book.querySelector('ul').prepend(elem);
+        }
+    },
+    before_chapter: {
+        active(elem, parent, book) {
+            return parent;
+        },
+        run(elem, parent, book) {
+            parent.insertAdjacentElement('beforebegin', elem);
+        }
+    },
+    after_chapter: {
+        active(elem, parent, book) {
+            return parent;
+        },
+        run(elem, parent, book) {
+            parent.insertAdjacentElement('afterend', elem);
+        }
+    },
+};
+
 export class BookSort extends Component {
 
     setup() {
@@ -49,8 +156,33 @@ export class BookSort extends Component {
         const initialSortBox = this.container.querySelector('.sort-box');
         this.setupBookSortable(initialSortBox);
         this.setupSortPresets();
+        this.setupMoveActions();
 
         window.$events.listen('entity-select-confirm', this.bookSelect.bind(this));
+    }
+
+    /**
+     * Setup the handlers for the item-level move buttons.
+     */
+    setupMoveActions() {
+        // Handle move button click
+        this.container.addEventListener('click', event => {
+            if (event.target.matches('[data-move]')) {
+                const action = event.target.getAttribute('data-move');
+                const sortItem = event.target.closest('[data-id]');
+                this.runSortAction(sortItem, action);
+            }
+        });
+        // TODO - Probably can remove this
+        // // Handle action updating on likely use
+        // this.container.addEventListener('focusin', event => {
+        //     const sortItem = event.target.closest('[data-type="chapter"],[data-type="page"]');
+        //     if (sortItem) {
+        //         this.updateMoveActionState(sortItem);
+        //     }
+        // });
+
+        this.updateMoveActionStateForAll();
     }
 
     /**
@@ -102,6 +234,7 @@ export class BookSort extends Component {
             const newBookContainer = htmlToDom(resp.data);
             this.sortContainer.append(newBookContainer);
             this.setupBookSortable(newBookContainer);
+            this.updateMoveActionStateForAll();
         });
     }
 
@@ -204,4 +337,38 @@ export class BookSort extends Component {
         }
     }
 
+    /**
+     * Run the given sort action up the provided sort item.
+     * @param {Element} item
+     * @param {String} action
+     */
+    runSortAction(item, action) {
+        const parentItem = item.parentElement.closest('li[data-id]');
+        const parentBook = item.parentElement.closest('[data-type="book"]');
+        moveActions[action].run(item, parentItem, parentBook);
+        this.updateMapInput();
+        this.updateMoveActionStateForAll();
+        item.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+        item.focus();
+    }
+
+    /**
+     * Update the state of the available move actions on this item.
+     * @param {Element} item
+     */
+    updateMoveActionState(item) {
+        const parentItem = item.parentElement.closest('li[data-id]');
+        const parentBook = item.parentElement.closest('[data-type="book"]');
+        for (const [action, functions] of Object.entries(moveActions)) {
+            const moveButton = item.querySelector(`[data-move="${action}"]`);
+            moveButton.disabled = !functions.active(item, parentItem, parentBook);
+        }
+    }
+
+    updateMoveActionStateForAll() {
+        const items = this.container.querySelectorAll('[data-type="chapter"],[data-type="page"]');
+        for (const item of items) {
+            this.updateMoveActionState(item);
+        }
+    }
 }
