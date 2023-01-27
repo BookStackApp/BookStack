@@ -26,7 +26,7 @@
                 data-name="{{ $bookChild->name }}"
                 data-created="{{ $bookChild->created_at->timestamp }}"
                 data-updated="{{ $bookChild->updated_at->timestamp }}"
-                tabindex="0">
+                tabindex="-1">
                 <div class="flex-container-row items-center">
                     <div class="text-muted sort-list-handle px-s py-m">@icon('grip')</div>
                     <div class="entity-list-item px-none no-hover">
@@ -47,7 +47,7 @@
                                 data-id="{{$page->id}}" data-type="page"
                                 data-name="{{ $page->name }}" data-created="{{ $page->created_at->timestamp }}"
                                 data-updated="{{ $page->updated_at->timestamp }}"
-                                tabindex="0">
+                                tabindex="-1">
                                 <div class="text-muted sort-list-handle px-s py-m">@icon('grip')</div>
                                 <div class="entity-list-item px-none no-hover">
                                     <span>@icon('page')</span>

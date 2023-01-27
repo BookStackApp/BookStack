@@ -5,6 +5,7 @@
             title="{{ trans('entities.books_sort_move_down') }}">@icon('chevron-down')</button>
     <div class="dropdown-container" component="dropdown">
         <button refs="dropdown@toggle"
+                type="button"
                 title="{{ trans('common.more') }}"
                 class="icon-button p-xs text-bigger"
                 aria-haspopup="true"

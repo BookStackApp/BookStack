@@ -41,7 +41,7 @@
                     <h2 class="list-heading">{{ trans('entities.books_sort_show_other') }}</h2>
                     <p class="text-muted">{{ trans('entities.books_sort_show_other_desc') }}</p>
 
-                    @include('entities.selector', ['name' => 'books_list', 'selectorSize' => 'compact', 'entityTypes' => 'book', 'entityPermission' => 'update', 'showAdd' => true])
+                    @include('entities.selector', ['name' => 'books_list', 'selectorSize' => 'compact', 'entityTypes' => 'book', 'entityPermission' => 'update'])
 
                 </main>
             </div>
