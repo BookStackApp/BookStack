@@ -1,10 +1,12 @@
-<div class="sort-box-actions">
-    <button type="button" data-move="up" title="{{ trans('entities.books_sort_move_up') }}">@icon('chevron-up')</button>
-    <button type="button" data-move="down"
+<div class="sort-box-actions flex-container-row items-center px-s gap-xxs">
+    <button type="button" data-move="up" class="icon-button p-xs text-bigger"
+            title="{{ trans('entities.books_sort_move_up') }}">@icon('chevron-up')</button>
+    <button type="button" data-move="down" class="icon-button p-xs text-bigger"
             title="{{ trans('entities.books_sort_move_down') }}">@icon('chevron-down')</button>
     <div class="dropdown-container" component="dropdown">
         <button refs="dropdown@toggle"
                 title="{{ trans('common.more') }}"
+                class="icon-button p-xs text-bigger"
                 aria-haspopup="true"
                 aria-expanded="false">
             @icon('more')

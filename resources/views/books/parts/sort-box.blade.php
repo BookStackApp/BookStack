@@ -21,30 +21,35 @@
 
         @foreach($bookChildren as $bookChild)
             <li class="text-{{ $bookChild->getType() }}"
-                data-id="{{$bookChild->id}}" data-type="{{ $bookChild->getType() }}"
-                data-name="{{ $bookChild->name }}" data-created="{{ $bookChild->created_at->timestamp }}"
-                data-updated="{{ $bookChild->updated_at->timestamp }}" tabindex="0">
-                <div class="text-muted sort-list-handle">@icon('grip')</div>
-                <div class="entity-list-item">
-                    <span>@icon($bookChild->getType()) </span>
-                    <div>
-                        {{ $bookChild->name }}
+                data-id="{{$bookChild->id}}"
+                data-type="{{ $bookChild->getType() }}"
+                data-name="{{ $bookChild->name }}"
+                data-created="{{ $bookChild->created_at->timestamp }}"
+                data-updated="{{ $bookChild->updated_at->timestamp }}"
+                tabindex="0">
+                <div class="flex-container-row items-center">
+                    <div class="text-muted sort-list-handle px-s py-m">@icon('grip')</div>
+                    <div class="entity-list-item px-none no-hover">
+                        <span>@icon($bookChild->getType()) </span>
                         <div>
+                            {{ $bookChild->name }}
+                            <div>
 
+                            </div>
                         </div>
                     </div>
+                    @include('books.parts.sort-box-actions')
                 </div>
-                @include('books.parts.sort-box-actions')
                 @if($bookChild->isA('chapter'))
                     <ul class="sortable-page-sublist">
                         @foreach($bookChild->visible_pages as $page)
-                            <li class="text-page"
+                            <li class="text-page flex-container-row items-center"
                                 data-id="{{$page->id}}" data-type="page"
                                 data-name="{{ $page->name }}" data-created="{{ $page->created_at->timestamp }}"
                                 data-updated="{{ $page->updated_at->timestamp }}"
                                 tabindex="0">
-                                <div class="text-muted sort-list-handle">@icon('grip')</div>
-                                <div class="entity-list-item">
+                                <div class="text-muted sort-list-handle px-s py-m">@icon('grip')</div>
+                                <div class="entity-list-item px-none no-hover">
                                     <span>@icon('page')</span>
                                     <span>{{ $page->name }}</span>
                                 </div>

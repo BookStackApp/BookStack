@@ -267,7 +267,7 @@
   .entity-list-item > span:first-child {
     align-self: flex-start;
   }
-  .sortable-selected  .entity-list-item, .sortable-selected  .entity-list-item:hover {
+  .sortable-selected, .sortable-selected:hover {
     outline: 1px dotted var(--color-primary);
     background-color: var(--color-primary-light) !important;
   }
@@ -284,6 +284,7 @@
     padding-inline-start: $-m;
   }
   li {
+    @include lightDark(background-color, #FFF, #222);
     border: 1px solid;
     @include lightDark(border-color, #DDD, #666);
     margin-top: -1px;
@@ -315,6 +316,22 @@ details.sort-box summary .caret-container svg {
 }
 details.sort-box[open] summary .caret-container svg {
   transform: rotate(90deg);
+}
+.sort-box-actions .icon-button {
+  opacity: .6;
+}
+.sort-box .flex-container-row:hover .sort-box-actions .icon-button,
+.sort-box .flex-container-row:focus-within .sort-box-actions .icon-button {
+  opacity: 1;
+}
+.sort-box-actions .icon-button[disabled] {
+  visibility: hidden;
+}
+.sort-box-actions .dropdown-menu button[disabled] {
+  display: none;
+}
+.sort-list-handle {
+  cursor: grab;
 }
 
 .activity-list-item {

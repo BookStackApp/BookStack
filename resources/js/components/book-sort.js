@@ -162,7 +162,7 @@ export class BookSort extends Component {
     }
 
     /**
-     * Setup the handlers for the item-level move buttons.
+     * Set up the handlers for the item-level move buttons.
      */
     setupMoveActions() {
         // Handle move button click
@@ -173,20 +173,12 @@ export class BookSort extends Component {
                 this.runSortAction(sortItem, action);
             }
         });
-        // TODO - Probably can remove this
-        // // Handle action updating on likely use
-        // this.container.addEventListener('focusin', event => {
-        //     const sortItem = event.target.closest('[data-type="chapter"],[data-type="page"]');
-        //     if (sortItem) {
-        //         this.updateMoveActionState(sortItem);
-        //     }
-        // });
 
         this.updateMoveActionStateForAll();
     }
 
     /**
-     * Setup the handlers for the preset sort type buttons.
+     * Set up the handlers for the preset sort type buttons.
      */
     setupSortPresets() {
         let lastSort = '';
@@ -235,6 +227,9 @@ export class BookSort extends Component {
             this.sortContainer.append(newBookContainer);
             this.setupBookSortable(newBookContainer);
             this.updateMoveActionStateForAll();
+
+            const summary = newBookContainer.querySelector('summary');
+            summary.focus();
         });
     }
 
@@ -243,8 +238,7 @@ export class BookSort extends Component {
      * @param {Element} bookContainer
      */
     setupBookSortable(bookContainer) {
-        const sortElems = [bookContainer.querySelector('.sort-list')];
-        sortElems.push(...bookContainer.querySelectorAll('.entity-list-item + ul'));
+        const sortElems = Array.from(bookContainer.querySelectorAll('.sort-list, .sortable-page-sublist'));
 
         const bookGroupConfig = {
             name: 'book',
