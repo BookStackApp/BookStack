@@ -302,6 +302,20 @@
 .sortable-page-list li.placeholder:before {
   position: absolute;
 }
+.sort-box summary {
+  list-style: none;
+  font-size: .9rem;
+  cursor: pointer;
+}
+.sort-box summary::-webkit-details-marker {
+  display: none;
+}
+details.sort-box summary .caret-container svg {
+  transition: transform ease-in-out 120ms;
+}
+details.sort-box[open] summary .caret-container svg {
+  transform: rotate(90deg);
+}
 
 .activity-list-item {
   padding: $-s 0;

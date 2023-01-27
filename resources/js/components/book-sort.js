@@ -1,4 +1,4 @@
-import Sortable from "sortablejs";
+import Sortable, {MultiDrag} from "sortablejs";
 import {Component} from "./component";
 import {htmlToDom} from "../services/dom";
 
@@ -43,6 +43,8 @@ export class BookSort extends Component {
         this.container = this.$el;
         this.sortContainer = this.$refs.sortContainer;
         this.input = this.$refs.input;
+
+        Sortable.mount(new MultiDrag());
 
         const initialSortBox = this.container.querySelector('.sort-box');
         this.setupBookSortable(initialSortBox);
@@ -104,7 +106,7 @@ export class BookSort extends Component {
     }
 
     /**
-     * Setup the given book container element to have sortable items.
+     * Set up the given book container element to have sortable items.
      * @param {Element} bookContainer
      */
     setupBookSortable(bookContainer) {
@@ -125,8 +127,8 @@ export class BookSort extends Component {
             }
         };
 
-        for (let sortElem of sortElems) {
-            new Sortable(sortElem, {
+        for (const sortElem of sortElems) {
+            Sortable.create(sortElem, {
                 group: sortElem.classList.contains('sort-list') ? bookGroupConfig : chapterGroupConfig,
                 animation: 150,
                 fallbackOnBody: true,
@@ -135,7 +137,7 @@ export class BookSort extends Component {
                 dragClass: 'bg-white',
                 ghostClass: 'primary-background-light',
                 multiDrag: true,
-                multiDragKey: 'CTRL',
+                multiDragKey: 'Control',
                 selectedClass: 'sortable-selected',
             });
         }
