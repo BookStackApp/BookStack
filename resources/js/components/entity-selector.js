@@ -15,7 +15,6 @@ export class EntitySelector extends Component {
         this.searchInput = this.$refs.search;
         this.loading = this.$refs.loading;
         this.resultsContainer = this.$refs.results;
-        this.addButton = this.$refs.add;
 
         this.search = '';
         this.lastClick = 0;
@@ -42,15 +41,6 @@ export class EntitySelector extends Component {
         this.searchInput.addEventListener('keydown', event => {
             if (event.keyCode === 13) event.preventDefault();
         });
-
-        if (this.addButton) {
-            this.addButton.addEventListener('click', event => {
-                if (this.selectedItemData) {
-                    this.confirmSelection(this.selectedItemData);
-                    this.unselectAll();
-                }
-            });
-        }
 
         // Keyboard navigation
         onChildEvent(this.$el, '[data-entity-type]', 'keydown', (e, el) => {

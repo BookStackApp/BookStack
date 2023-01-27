@@ -86,7 +86,7 @@ export class KeyboardNavigationHandler {
      */
     #getFocusable() {
         const focusable = [];
-        const selector = '[tabindex]:not([tabindex="-1"]),[href],button:not([tabindex="-1"]),input:not([type=hidden])';
+        const selector = '[tabindex]:not([tabindex="-1"]),[href],button:not([tabindex="-1"],[disabled]),input:not([type=hidden])';
         for (const container of this.containers) {
             focusable.push(...container.querySelectorAll(selector))
         }

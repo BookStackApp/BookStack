@@ -1,4 +1,4 @@
-import Sortable from "sortablejs";
+import Sortable, {MultiDrag} from "sortablejs";
 import {Component} from "./component";
 import {htmlToDom} from "../services/dom";
 
@@ -37,6 +37,113 @@ const sortOperations = {
     },
 };
 
+/**
+ * The available move actions.
+ * The active function indicates if the action is possible for the given item.
+ * The run function performs the move.
+ * @type {{up: {active(Element, ?Element, Element): boolean, run(Element, ?Element, Element)}}}
+ */
+const moveActions = {
+    up: {
+        active(elem, parent, book) {
+            return !(elem.previousElementSibling === null && !parent);
+        },
+        run(elem, parent, book) {
+            const newSibling = elem.previousElementSibling || parent;
+            newSibling.insertAdjacentElement('beforebegin', elem);
+        }
+    },
+    down: {
+        active(elem, parent, book) {
+            return !(elem.nextElementSibling === null && !parent);
+        },
+        run(elem, parent, book) {
+            const newSibling = elem.nextElementSibling || parent;
+            newSibling.insertAdjacentElement('afterend', elem);
+        }
+    },
+    next_book: {
+        active(elem, parent, book) {
+            return book.nextElementSibling !== null;
+        },
+        run(elem, parent, book) {
+            const newList = book.nextElementSibling.querySelector('ul');
+            newList.prepend(elem);
+        }
+    },
+    prev_book: {
+        active(elem, parent, book) {
+            return book.previousElementSibling !== null;
+        },
+        run(elem, parent, book) {
+            const newList = book.previousElementSibling.querySelector('ul');
+            newList.appendChild(elem);
+        }
+    },
+    next_chapter: {
+        active(elem, parent, book) {
+            return elem.dataset.type === 'page' && this.getNextChapter(elem, parent);
+        },
+        run(elem, parent, book) {
+            const nextChapter = this.getNextChapter(elem, parent);
+            nextChapter.querySelector('ul').prepend(elem);
+        },
+        getNextChapter(elem, parent) {
+            const topLevel = (parent || elem);
+            const topItems = Array.from(topLevel.parentElement.children);
+            const index = topItems.indexOf(topLevel);
+            return topItems.slice(index + 1).find(elem => elem.dataset.type === 'chapter');
+        }
+    },
+    prev_chapter: {
+        active(elem, parent, book) {
+            return elem.dataset.type === 'page' && this.getPrevChapter(elem, parent);
+        },
+        run(elem, parent, book) {
+            const prevChapter = this.getPrevChapter(elem, parent);
+            prevChapter.querySelector('ul').append(elem);
+        },
+        getPrevChapter(elem, parent) {
+            const topLevel = (parent || elem);
+            const topItems = Array.from(topLevel.parentElement.children);
+            const index = topItems.indexOf(topLevel);
+            return topItems.slice(0, index).reverse().find(elem => elem.dataset.type === 'chapter');
+        }
+    },
+    book_end: {
+        active(elem, parent, book) {
+            return parent || (parent === null && elem.nextElementSibling);
+        },
+        run(elem, parent, book) {
+            book.querySelector('ul').append(elem);
+        }
+    },
+    book_start: {
+        active(elem, parent, book) {
+            return parent || (parent === null && elem.previousElementSibling);
+        },
+        run(elem, parent, book) {
+            book.querySelector('ul').prepend(elem);
+        }
+    },
+    before_chapter: {
+        active(elem, parent, book) {
+            return parent;
+        },
+        run(elem, parent, book) {
+            parent.insertAdjacentElement('beforebegin', elem);
+        }
+    },
+    after_chapter: {
+        active(elem, parent, book) {
+            return parent;
+        },
+        run(elem, parent, book) {
+            parent.insertAdjacentElement('afterend', elem);
+        }
+    },
+};
+
 export class BookSort extends Component {
 
     setup() {
@@ -44,15 +151,34 @@ export class BookSort extends Component {
         this.sortContainer = this.$refs.sortContainer;
         this.input = this.$refs.input;
 
+        Sortable.mount(new MultiDrag());
+
         const initialSortBox = this.container.querySelector('.sort-box');
         this.setupBookSortable(initialSortBox);
         this.setupSortPresets();
+        this.setupMoveActions();
 
-        window.$events.listen('entity-select-confirm', this.bookSelect.bind(this));
+        window.$events.listen('entity-select-change', this.bookSelect.bind(this));
     }
 
     /**
-     * Setup the handlers for the preset sort type buttons.
+     * Set up the handlers for the item-level move buttons.
+     */
+    setupMoveActions() {
+        // Handle move button click
+        this.container.addEventListener('click', event => {
+            if (event.target.matches('[data-move]')) {
+                const action = event.target.getAttribute('data-move');
+                const sortItem = event.target.closest('[data-id]');
+                this.runSortAction(sortItem, action);
+            }
+        });
+
+        this.updateMoveActionStateForAll();
+    }
+
+    /**
+     * Set up the handlers for the preset sort type buttons.
      */
     setupSortPresets() {
         let lastSort = '';
@@ -100,16 +226,19 @@ export class BookSort extends Component {
             const newBookContainer = htmlToDom(resp.data);
             this.sortContainer.append(newBookContainer);
             this.setupBookSortable(newBookContainer);
+            this.updateMoveActionStateForAll();
+
+            const summary = newBookContainer.querySelector('summary');
+            summary.focus();
         });
     }
 
     /**
-     * Setup the given book container element to have sortable items.
+     * Set up the given book container element to have sortable items.
      * @param {Element} bookContainer
      */
     setupBookSortable(bookContainer) {
-        const sortElems = [bookContainer.querySelector('.sort-list')];
-        sortElems.push(...bookContainer.querySelectorAll('.entity-list-item + ul'));
+        const sortElems = Array.from(bookContainer.querySelectorAll('.sort-list, .sortable-page-sublist'));
 
         const bookGroupConfig = {
             name: 'book',
@@ -125,19 +254,37 @@ export class BookSort extends Component {
             }
         };
 
-        for (let sortElem of sortElems) {
-            new Sortable(sortElem, {
+        for (const sortElem of sortElems) {
+            Sortable.create(sortElem, {
                 group: sortElem.classList.contains('sort-list') ? bookGroupConfig : chapterGroupConfig,
                 animation: 150,
                 fallbackOnBody: true,
                 swapThreshold: 0.65,
-                onSort: this.updateMapInput.bind(this),
+                onSort: (event) => {
+                    this.ensureNoNestedChapters()
+                    this.updateMapInput();
+                    this.updateMoveActionStateForAll();
+                },
                 dragClass: 'bg-white',
                 ghostClass: 'primary-background-light',
                 multiDrag: true,
-                multiDragKey: 'CTRL',
+                multiDragKey: 'Control',
                 selectedClass: 'sortable-selected',
             });
+        }
+    }
+
+    /**
+     * Handle nested chapters by moving them to the parent book.
+     * Needed since sorting with multi-sort only checks group rules based on the active item,
+     * not all in group, therefore need to manually check after a sort.
+     * Must be done before updating the map input.
+     */
+    ensureNoNestedChapters() {
+        const nestedChapters = this.container.querySelectorAll('[data-type="chapter"] [data-type="chapter"]');
+        for (const chapter of nestedChapters) {
+            const parentChapter = chapter.parentElement.closest('[data-type="chapter"]');
+            parentChapter.insertAdjacentElement('afterend', chapter);
         }
     }
 
@@ -202,4 +349,38 @@ export class BookSort extends Component {
         }
     }
 
+    /**
+     * Run the given sort action up the provided sort item.
+     * @param {Element} item
+     * @param {String} action
+     */
+    runSortAction(item, action) {
+        const parentItem = item.parentElement.closest('li[data-id]');
+        const parentBook = item.parentElement.closest('[data-type="book"]');
+        moveActions[action].run(item, parentItem, parentBook);
+        this.updateMapInput();
+        this.updateMoveActionStateForAll();
+        item.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+        item.focus();
+    }
+
+    /**
+     * Update the state of the available move actions on this item.
+     * @param {Element} item
+     */
+    updateMoveActionState(item) {
+        const parentItem = item.parentElement.closest('li[data-id]');
+        const parentBook = item.parentElement.closest('[data-type="book"]');
+        for (const [action, functions] of Object.entries(moveActions)) {
+            const moveButton = item.querySelector(`[data-move="${action}"]`);
+            moveButton.disabled = !functions.active(item, parentItem, parentBook);
+        }
+    }
+
+    updateMoveActionStateForAll() {
+        const items = this.container.querySelectorAll('[data-type="chapter"],[data-type="page"]');
+        for (const item of items) {
+            this.updateMoveActionState(item);
+        }
+    }
 }
