@@ -232,7 +232,7 @@
 }
 
 // Sortable Lists
-.sortable-page-list, .sortable-page-list ul {
+.sortable-page-list, .sortable-page-sublist {
   list-style: none;
 }
 .sort-box {
@@ -278,7 +278,7 @@
   > ul {
     margin-inline-start: 0;
   }
-  ul {
+  .sortable-page-sublist {
     margin-bottom: $-m;
     margin-top: 0;
     padding-inline-start: $-m;
