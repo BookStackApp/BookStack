@@ -158,7 +158,7 @@ export class BookSort extends Component {
         this.setupSortPresets();
         this.setupMoveActions();
 
-        window.$events.listen('entity-select-confirm', this.bookSelect.bind(this));
+        window.$events.listen('entity-select-change', this.bookSelect.bind(this));
     }
 
     /**
@@ -260,7 +260,10 @@ export class BookSort extends Component {
                 animation: 150,
                 fallbackOnBody: true,
                 swapThreshold: 0.65,
-                onSort: this.updateMapInput.bind(this),
+                onSort: () => {
+                    this.updateMapInput();
+                    this.updateMoveActionStateForAll();
+                },
                 dragClass: 'bg-white',
                 ghostClass: 'primary-background-light',
                 multiDrag: true,
