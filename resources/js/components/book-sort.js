@@ -260,7 +260,8 @@ export class BookSort extends Component {
                 animation: 150,
                 fallbackOnBody: true,
                 swapThreshold: 0.65,
-                onSort: () => {
+                onSort: (event) => {
+                    this.ensureNoNestedChapters()
                     this.updateMapInput();
                     this.updateMoveActionStateForAll();
                 },
@@ -270,6 +271,20 @@ export class BookSort extends Component {
                 multiDragKey: 'Control',
                 selectedClass: 'sortable-selected',
             });
+        }
+    }
+
+    /**
+     * Handle nested chapters by moving them to the parent book.
+     * Needed since sorting with multi-sort only checks group rules based on the active item,
+     * not all in group, therefore need to manually check after a sort.
+     * Must be done before updating the map input.
+     */
+    ensureNoNestedChapters() {
+        const nestedChapters = this.container.querySelectorAll('[data-type="chapter"] [data-type="chapter"]');
+        for (const chapter of nestedChapters) {
+            const parentChapter = chapter.parentElement.closest('[data-type="chapter"]');
+            parentChapter.insertAdjacentElement('afterend', chapter);
         }
     }
 
