@@ -36,7 +36,7 @@
                 </div>
                 @include('books.parts.sort-box-actions')
                 @if($bookChild->isA('chapter'))
-                    <ul>
+                    <ul class="sortable-page-sublist">
                         @foreach($bookChild->visible_pages as $page)
                             <li class="text-page"
                                 data-id="{{$page->id}}" data-type="page"
