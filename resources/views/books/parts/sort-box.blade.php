@@ -23,7 +23,8 @@
             <li class="text-{{ $bookChild->getType() }}"
                 data-id="{{$bookChild->id}}" data-type="{{ $bookChild->getType() }}"
                 data-name="{{ $bookChild->name }}" data-created="{{ $bookChild->created_at->timestamp }}"
-                data-updated="{{ $bookChild->updated_at->timestamp }}">
+                data-updated="{{ $bookChild->updated_at->timestamp }}" tabindex="0">
+                <div class="text-muted sort-list-handle">@icon('grip')</div>
                 <div class="entity-list-item">
                     <span>@icon($bookChild->getType()) </span>
                     <div>
@@ -33,17 +34,21 @@
                         </div>
                     </div>
                 </div>
+                @include('books.parts.sort-box-actions')
                 @if($bookChild->isA('chapter'))
                     <ul>
                         @foreach($bookChild->visible_pages as $page)
                             <li class="text-page"
                                 data-id="{{$page->id}}" data-type="page"
                                 data-name="{{ $page->name }}" data-created="{{ $page->created_at->timestamp }}"
-                                data-updated="{{ $page->updated_at->timestamp }}">
+                                data-updated="{{ $page->updated_at->timestamp }}"
+                                tabindex="0">
+                                <div class="text-muted sort-list-handle">@icon('grip')</div>
                                 <div class="entity-list-item">
                                     <span>@icon('page')</span>
                                     <span>{{ $page->name }}</span>
                                 </div>
+                                @include('books.parts.sort-box-actions')
                             </li>
                         @endforeach
                     </ul>
