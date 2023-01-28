@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Aplikazioaren kolore lehenetsia',
-    'app_primary_color_desc' => 'Konfiguratu aplikaziorako kolore nagusia, botoi, banner eta estekak barne.',
     'app_homepage' => 'Aplikazioko hasiera orria',
     'app_homepage_desc' => 'Aukeratu hasierako orriko bista, defektuzkoa beharrean. Orrialde baimenak ez dira kontutan hartuko aukeratutako orrialdeentzat.',
     'app_homepage_select' => 'Aukeratu Orria',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
 
     // Color settings
-    'content_colors' => 'Eduki koloreak',
-    'content_colors_desc' => 'Sets colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Apal kolorea',
     'book_color' => 'Liburu kolorea',
     'chapter_color' => 'Kapitulu kolorea',
