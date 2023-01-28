@@ -44,7 +44,7 @@
 
 
 <div class="form-group collapsible" component="collapsible" id="logo-control">
-    <button refs="collapsible@trigger" type="button" class="collapse-title text-primary" aria-expanded="false">
+    <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
         <label>{{ trans('common.cover_image') }}</label>
     </button>
     <div refs="collapsible@content" class="collapse-content">
@@ -60,7 +60,7 @@
 </div>
 
 <div class="form-group collapsible" component="collapsible" id="tags-control">
-    <button refs="collapsible@trigger" type="button" class="collapse-title text-primary" aria-expanded="false">
+    <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
         <label for="tag-manager">{{ trans('entities.shelf_tags') }}</label>
     </button>
     <div refs="collapsible@content" class="collapse-content">

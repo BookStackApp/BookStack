@@ -11,7 +11,7 @@
                     refs="tri-layout@tab"
                     data-tab="info"
                     aria-label="{{ trans('common.tab_info_label') }}"
-                    class="tri-layout-mobile-tab px-m py-m text-primary">
+                    class="tri-layout-mobile-tab px-m py-m text-link">
                 {{ trans('common.tab_info') }}
             </button>
             <button type="button"
@@ -19,7 +19,7 @@
                     data-tab="content"
                     aria-label="{{ trans('common.tab_content_label') }}"
                     aria-selected="true"
-                    class="tri-layout-mobile-tab px-m py-m text-primary active">
+                    class="tri-layout-mobile-tab px-m py-m text-link active">
                 {{ trans('common.tab_content') }}
             </button>
         </div>

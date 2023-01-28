@@ -46,7 +46,7 @@
                             <form action="{{ $revision->getUrl('/restore') }}" method="POST">
                                 {!! csrf_field() !!}
                                 <input type="hidden" name="_method" value="PUT">
-                                <button type="submit" class="text-primary icon-item">
+                                <button type="submit" class="text-link icon-item">
                                     @icon('history')
                                     <div>{{ trans('entities.pages_revisions_restore') }}</div>
                                 </button>

@@ -28,7 +28,7 @@
 
     <div component="permissions-table">
         <label class="setting-list-label">{{ trans('settings.role_system') }}</label>
-        <a href="#" refs="permissions-table@toggle-all" class="text-small text-primary">{{ trans('common.toggle_all') }}</a>
+        <a href="#" refs="permissions-table@toggle-all" class="text-small text-link">{{ trans('common.toggle_all') }}</a>
 
         <div class="toggle-switch-list grid half mt-m">
             <div>
@@ -62,7 +62,7 @@
              class="item-list toggle-switch-list">
             <div class="item-list-row flex-container-row items-center hide-under-m bold">
                 <div class="flex py-s px-m min-width-s">
-                    <a href="#" refs="permissions-table@toggle-all" class="text-small text-primary">{{ trans('common.toggle_all') }}</a>
+                    <a href="#" refs="permissions-table@toggle-all" class="text-small text-link">{{ trans('common.toggle_all') }}</a>
                 </div>
                 <div refs="permissions-table@toggle-column" class="flex py-s px-m min-width-xxs">{{ trans('common.create') }}</div>
                 <div refs="permissions-table@toggle-column" class="flex py-s px-m min-width-xxs">{{ trans('common.view') }}</div>
