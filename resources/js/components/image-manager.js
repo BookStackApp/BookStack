@@ -140,10 +140,9 @@ export class ImageManager extends Component {
     }
 
     setActiveFilterTab(filterName) {
-        this.filterTabs.forEach(t => t.classList.remove('selected'));
-        const activeTab = this.filterTabs.find(t => t.dataset.filter === filterName);
-        if (activeTab) {
-            activeTab.classList.add('selected');
+        for (const tab of this.filterTabs) {
+            const selected = tab.dataset.filter === filterName;
+            tab.setAttribute('aria-selected', selected ? 'true' : 'false');
         }
     }
 
