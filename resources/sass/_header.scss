@@ -22,9 +22,6 @@ header {
   border-bottom: 1px solid #DDD;
   box-shadow: $bs-card;
   @include lightDark(border-bottom-color, #DDD, #000);
-  @include whenDark {
-    filter: saturate(0.8) brightness(0.8);
-  }
   .header-links {
     display: flex;
     align-items: center;
