@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Color primari de l\'aplicació',
-    'app_primary_color_desc' => 'Defineix el color primari de l\'aplicació, incloent-hi la part superior, els botons i els enllaços.',
     'app_homepage' => 'Pàgina d\'inici de l\'aplicació',
     'app_homepage_desc' => 'Seleccioneu la visualització que es mostrarà a la pàgina d\'inici en lloc de la visualització per defecte. Els permisos de pàgines s\'ignoraran per a les pàgines seleccionades.',
     'app_homepage_select' => 'Selecciona una pàgina',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Desactiva els comentaris a totes les pàgines de l\'aplicació. <br> Els comentaris existents no es mostraran.',
 
     // Color settings
-    'content_colors' => 'Colors del contingut',
-    'content_colors_desc' => 'Defineix els colors de tots els elements de la jerarquia d\'organització de pàgines. És recomanable triar colors amb una brillantor semblant als colors per defecte per a mantenir-ne la llegibilitat.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Color dels prestatges',
     'book_color' => 'Color dels llibres',
     'chapter_color' => 'Color dels capítols',
