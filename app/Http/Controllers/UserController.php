@@ -37,6 +37,7 @@ class UserController extends Controller
         $listOptions = SimpleListOptions::fromRequest($request, 'users')->withSortOptions([
             'name' => trans('common.sort_name'),
             'email' => trans('auth.email'),
+            'mobile' => trans('auth.mobile'),
             'created_at' => trans('common.sort_created_at'),
             'updated_at' => trans('common.sort_updated_at'),
             'last_activity_at' => trans('settings.users_latest_activity'),
@@ -83,6 +84,7 @@ class UserController extends Controller
         $validationRules = [
             'name'             => ['required', 'max:100'],
             'email'            => ['required', 'email', 'unique:users,email'],
+            'mobile'             => ['string', 'max:50'],
             'language'         => ['string', 'max:15', 'alpha_dash'],
             'roles'            => ['array'],
             'roles.*'          => ['integer'],
@@ -140,6 +142,7 @@ class UserController extends Controller
         $validated = $this->validate($request, [
             'name'             => ['min:2', 'max:100'],
             'email'            => ['min:2', 'email', 'unique:users,email,' . $id],
+            'mobile'             => ['string','min:10', 'max:50'],
             'password'         => ['required_with:password_confirm', Password::default()],
             'password-confirm' => ['same:password', 'required_with:password'],
             'language'         => ['string', 'max:15', 'alpha_dash'],

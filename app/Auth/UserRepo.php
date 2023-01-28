@@ -62,6 +62,7 @@ class UserRepo
         $user = new User();
         $user->name = $data['name'];
         $user->email = $data['email'];
+				$user->mobile = $data['mobile'];
         $user->password = Hash::make(empty($data['password']) ? Str::random(32) : $data['password']);
         $user->email_confirmed = $emailConfirmed;
         $user->external_auth_id = $data['external_auth_id'] ?? '';
@@ -117,6 +118,10 @@ class UserRepo
         if (!empty($data['email']) && $manageUsersAllowed) {
             $user->email = $data['email'];
         }
+
+				if (!empty($data['mobile'])) {
+					$user->mobile = $data['mobile'];
+				}
 
         if (!empty($data['external_auth_id']) && $manageUsersAllowed) {
             $user->external_auth_id = $data['external_auth_id'];

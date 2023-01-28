@@ -67,6 +67,7 @@ class RegistrationService
             $userData = [
                 'name'             => $name,
                 'email'            => $email,
+								'mobile'            => $mobile,
                 'password'         => Str::random(32),
                 'external_auth_id' => $externalId,
             ];

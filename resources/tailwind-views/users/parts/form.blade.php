@@ -22,6 +22,10 @@
                 @include('form.text', ['name' => 'email', 'disabled' => !userCan('users-manage')])
             @endif
         </div>
+				<div>
+					<label for="mobile">{{ trans('auth.mobile') }}</label>
+					@include('form.number', ['name' => 'mobile','min' => 1000000000, 'max' => 999999999999999])
+			</div>
     </div>
 </div>
 

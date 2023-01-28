@@ -10,7 +10,7 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
     // Login & Register
-    'sign_up' => 'Sign up',
+    'sign_up' => 'Sign up2',
     'log_in' => 'Log in',
     'log_in_with' => 'Login with :socialDriver',
     'sign_up_with' => 'Sign up with :socialDriver',
@@ -19,6 +19,7 @@ return [
     'name' => 'Name',
     'username' => 'Username',
     'email' => 'Email',
+		'mobile' => 'Mobile',
     'password' => 'Password',
     'password_confirm' => 'Confirm Password',
     'password_hint' => 'Must be at least 8 characters',

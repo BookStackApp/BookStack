@@ -27,6 +27,7 @@ class UserFactory extends Factory
         return [
             'name'            => $name,
             'email'           => $this->faker->email,
+						'mobile'          => $mobile,
             'slug'            => Str::slug($name . '-' . Str::random(5)),
             'password'        => Str::random(10),
             'remember_token'  => Str::random(10),

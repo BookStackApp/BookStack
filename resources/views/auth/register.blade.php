@@ -23,6 +23,11 @@
                     @include('form.text', ['name' => 'email'])
                 </div>
 
+								<div class="form-group">
+                    <label for="email">{{ trans('auth.mobile') }}</label>
+                    @include('form.number', ['name' => 'mobile','min' => 1000000000, 'max' => 999999999999999])
+                </div>
+
                 <div class="form-group">
                     <label for="password">{{ trans('auth.password') }}</label>
                     @include('form.password', ['name' => 'password', 'placeholder' => trans('auth.password_hint')])

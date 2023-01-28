@@ -61,7 +61,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['name', 'email'];
+    protected $fillable = ['name', 'email','mobile'];
 
     protected $casts = ['last_activity_at' => 'datetime'];
 
