@@ -43,7 +43,7 @@ export class Tabs extends Component {
             tab.setAttribute('aria-selected', selected ? 'true' : 'false');
         }
 
-        this.$emit('change', {section: sectionId});
+        this.$emit('change', {showing: sectionId});
     }
 
 }

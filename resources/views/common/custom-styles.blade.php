@@ -1,13 +1,7 @@
-<style id="custom-styles"
-       data-color="{{ setting('app-color') }}"
-       data-color-dark="{{ setting('app-color-dark') }}"
-       data-color-light="{{ setting('app-color-light') }}"
-       data-color-light-dark="{{ setting('app-color-light-dark') }}">
-
-    @php
-        $settingSuffix = setting()->getForCurrentUser('dark-mode-enabled') ? '-dark' : '';
-    @endphp
-
+@php
+    $settingSuffix = setting()->getForCurrentUser('dark-mode-enabled') ? '-dark' : '';
+@endphp
+<style>
     :root {
         --color-primary: {{ setting('app-color' . $settingSuffix) }};
         --color-primary-light: {{ setting('app-color-light' . $settingSuffix) }};
