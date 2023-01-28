@@ -31,6 +31,13 @@ class CopyColorSettingsForDarkMode extends Migration
             $newSetting = (array) $setting;
             $newSetting['setting_key'] .= '-dark';
             $newData[] = $newSetting;
+
+            if ($newSetting['setting_key'] === 'app-color-dark') {
+                $newSetting['setting_key'] = 'link-color';
+                $newData[] = $newSetting;
+                $newSetting['setting_key'] = 'link-color-dark';
+                $newData[] = $newSetting;
+            }
         }
 
         DB::table('settings')->insert($newData);
@@ -45,6 +52,8 @@ class CopyColorSettingsForDarkMode extends Migration
     {
         $colorSettings = [
             'app-color-dark',
+            'link-color',
+            'link-color-dark',
             'app-color-light-dark',
             'bookshelf-color-dark',
             'book-color-dark',
