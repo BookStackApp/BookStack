@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Applicatie hoofdkleur',
-    'app_primary_color_desc' => 'Stelt de primaire kleur in voor de applicatie, inclusief de banner, knoppen en hyperlinks.',
     'app_homepage' => 'Applicatie Startpagina',
     'app_homepage_desc' => 'Selecteer een weergave om weer te geven op de startpagina in plaats van de standaard weergave. Paginamachtigingen worden genegeerd voor geselecteerde pagina\'s.',
     'app_homepage_select' => 'Selecteer een pagina',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Schakel reacties uit op alle pagina\'s in de applicatie. <br> Bestaande reacties worden niet getoond.',
 
     // Color settings
-    'content_colors' => 'Kleuren van inhoud',
-    'content_colors_desc' => 'Stelt de kleuren in voor alle elementen van de hiërarchische pagina-indeling. Voor de leesbaarheid wordt aanbevolen kleuren te kiezen met een vergelijkbare helderheid als de standaardkleuren.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Kleur van de Boekenplank',
     'book_color' => 'Kleur van het Boek',
     'chapter_color' => 'Kleur van het Hoofdstuk',
