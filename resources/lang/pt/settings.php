@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Cor Primária da Aplicação',
-    'app_primary_color_desc' => 'Define a cor primária para a aplicação, incluindo o banner, botões e links.',
     'app_homepage' => 'Página Inicial',
     'app_homepage_desc' => 'Selecione uma opção para ser exibida como página inicial em vez da padrão. Permissões de página serão ignoradas para as páginas selecionadas.',
     'app_homepage_select' => 'Selecione uma página',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Desativar comentários em todas as páginas no aplicativo.<br> Comentários existentes não serão exibidos.',
 
     // Color settings
-    'content_colors' => 'Cores do Conteúdo',
-    'content_colors_desc' => 'Define as cores para todos os elementos da hierarquia de organização de páginas. Escolher cores com brilho similar ao das cores padrão é aconselhável para a legibilidade.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Cor da Prateleira',
     'book_color' => 'Cor do Livro',
     'chapter_color' => 'Cor do Capítulo',
