@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Programos pagrindinė spalva',
-    'app_primary_color_desc' => 'Nustato pagrindinę spalvą programai, įskaitant reklamjuostę, mygtukus ir nuorodas.',
     'app_homepage' => 'Programos pagrindinis puslapis',
     'app_homepage_desc' => 'Pasirinkite vaizdą rodyti pagrindiniame paslapyje vietoj numatyto vaizdo. Puslapio leidimai yra ignoruojami pasirinktiems puslapiams.',
     'app_homepage_select' => 'Pasirinkti puslapį',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Išjungti komentarus visuose programos puslapiuose. <br> Esantys komentarai nerodomi.',
 
     // Color settings
-    'content_colors' => 'Turinio spalvos',
-    'content_colors_desc' => 'Nustato spalvas visiems elementams puslapio organizacijos herarchijoje. Rekomenduojama pasirinkti spalvas su panačiu šviesumu kaip numatytos spalvos, kad būtų lengviau skaityti.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Lentynos spalva',
     'book_color' => 'Knygos spalva',
     'chapter_color' => 'Skyriaus spalva',
