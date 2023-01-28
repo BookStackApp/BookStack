@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Culoare primară aplicaţie',
-    'app_primary_color_desc' => 'Setează culoarea principală pentru aplicație, inclusiv bannerul, butoanele și link-urile.',
     'app_homepage' => 'Pagina principală a aplicației',
     'app_homepage_desc' => 'Selectează o vizualizare pentru a afișa pe prima pagină în loc de vizualizarea implicită. Permisiunile paginii sunt ignorate pentru paginile selectate.',
     'app_homepage_select' => 'Selectează o pagină',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Dezactivează comentariile pentru toate paginile aplicației. <br> Comentariile existente nu sunt afișate.',
 
     // Color settings
-    'content_colors' => 'Culori conținut',
-    'content_colors_desc' => 'Setează culori pentru toate elementele din ierarhia organizării paginii. Alegerea de culori cu o luminozitate similară cu cea a culorilor implicite este recomandată pentru lizibilitate.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Culoare raft',
     'book_color' => 'Culoare carte',
     'chapter_color' => 'Culoare capitol',
