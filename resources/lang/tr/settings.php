@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Uygulamanın Birincil Rengi',
-    'app_primary_color_desc' => 'Başlık, butonlar ve bağlantılar da dahil olmak üzere uygulama için ana rengi ayarlar.',
     'app_homepage' => 'Ana Sayfa',
     'app_homepage_desc' => 'Varsayılan görünüm yerine ana sayfada görünmesi için bir görünüm seçin. Sayfa izinleri, burada seçeceğiniz sayfalar için yok sayılacaktır.',
     'app_homepage_select' => 'Bir sayfa seçin',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Bütün sayfalar için yorumları devre dışı bırakır. <br> Mevcut yorumlar gösterilmeyecektir.',
 
     // Color settings
-    'content_colors' => 'İçerik Renkleri',
-    'content_colors_desc' => 'Sayfa hiyerarşisinde bulunan bütün elemanlar için renkleri ayarlar. Bu renkleri varsayılan renklerin parlaklığına yakın bir parlaklıkta seçmeniz, okunurluğun iyileştirilmesi açısından önerilir.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Raf Rengi',
     'book_color' => 'Kitap Rengi',
     'chapter_color' => 'Bölüm Rengi',
