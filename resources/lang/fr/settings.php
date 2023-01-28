@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Couleur principale de l\'application',
-    'app_primary_color_desc' => 'Cela devrait être une valeur hexadécimale. <br>Laisser vide pour rétablir la couleur par défaut.',
     'app_homepage' => 'Page d\'accueil de l\'application',
     'app_homepage_desc' => 'Choisissez une page à afficher sur la page d\'accueil au lieu de la vue par défaut. Les permissions sont ignorées pour les pages sélectionnées.',
     'app_homepage_select' => 'Choisissez une page',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Désactive les commentaires sur toutes les pages de l\'application. Les commentaires existants ne sont pas affichés.',
 
     // Color settings
-    'content_colors' => 'Couleur du contenu',
-    'content_colors_desc' => 'Définit les couleurs pour tous les éléments de la hiérarchie d\'organisation des pages. Choisir les couleurs avec une luminosité similaire aux couleurs par défaut est recommandé pour la lisibilité.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Couleur des étagères',
     'book_color' => 'Couleur des livres',
     'chapter_color' => 'Couleur des chapitres',
