@@ -22,12 +22,12 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->name;
+        $name = $this->faker->name();
 
         return [
             'name'            => $name,
-            'email'           => $this->faker->email,
-						'mobile'          => $mobile,
+            'email'           => $this->faker->email(),
+            'mobile'          => $mobile,
             'slug'            => Str::slug($name . '-' . Str::random(5)),
             'password'        => Str::random(10),
             'remember_token'  => Str::random(10),

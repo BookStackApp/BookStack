@@ -209,7 +209,7 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $page = $this->entities->page();
         $chapter = Chapter::visible()->where('book_id', '!=', $page->book_id)->first();
-        $this->entities->setPermissions($chapter, ['view'], [$this->getEditor()->roles()->first()]);
+        $this->permissions->setEntityPermissions($chapter, ['view'], [$this->users->editor()->roles()->first()]);
         $details = [
             'name'       => 'My updated API page',
             'chapter_id' => $chapter->id,
@@ -315,7 +315,7 @@ class PagesApiTest extends TestCase
     {
         $types = ['html', 'plaintext', 'pdf', 'markdown'];
         $this->actingAsApiEditor();
-        $this->removePermissionFromUser($this->getEditor(), 'content-export');
+        $this->permissions->removeUserRolePermissions($this->users->editor(), ['content-export']);
 
         $page = $this->entities->page();
         foreach ($types as $type) {

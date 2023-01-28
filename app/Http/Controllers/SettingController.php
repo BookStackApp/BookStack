@@ -4,19 +4,13 @@ namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\User;
+use BookStack\Settings\AppSettingsStore;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    protected ImageRepo $imageRepo;
-
     protected array $settingCategories = ['features', 'customization', 'registration'];
-
-    public function __construct(ImageRepo $imageRepo)
-    {
-        $this->imageRepo = $imageRepo;
-    }
 
     /**
      * Handle requests to the settings index path.
@@ -48,37 +42,17 @@ class SettingController extends Controller
     /**
      * Update the specified settings in storage.
      */
-    public function update(Request $request, string $category)
+    public function update(Request $request, AppSettingsStore $store, string $category)
     {
         $this->ensureCategoryExists($category);
         $this->preventAccessInDemoMode();
         $this->checkPermission('settings-manage');
         $this->validate($request, [
-            'app_logo' => array_merge(['nullable'], $this->getImageValidationRules()),
+            'app_logo' => ['nullable', ...$this->getImageValidationRules()],
+            'app_icon' => ['nullable', ...$this->getImageValidationRules()],
         ]);
 
-        // Cycles through posted settings and update them
-        foreach ($request->all() as $name => $value) {
-            $key = str_replace('setting-', '', trim($name));
-            if (strpos($name, 'setting-') !== 0) {
-                continue;
-            }
-            setting()->put($key, $value);
-        }
-
-        // Update logo image if set
-        if ($category === 'customization' && $request->hasFile('app_logo')) {
-            $logoFile = $request->file('app_logo');
-            $this->imageRepo->destroyByType('system');
-            $image = $this->imageRepo->saveNew($logoFile, 'system', 0, null, 86);
-            setting()->put('app-logo', $image->url);
-        }
-
-        // Clear logo image if requested
-        if ($category === 'customization' && $request->get('app_logo_reset', null)) {
-            $this->imageRepo->destroyByType('system');
-            setting()->remove('app-logo');
-        }
+        $store->storeFromUpdateRequest($request, $category);
 
         $this->logActivity(ActivityType::SETTINGS_UPDATE, $category);
         $this->showSuccessNotification(trans('settings.settings_save_success'));

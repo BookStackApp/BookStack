@@ -36,7 +36,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_body_has_shortcuts_component_when_active()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $this->withHtml($this->get('/'))->assertElementNotExists('body[component="shortcuts"]');
@@ -47,7 +47,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_update_sort_preference()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $updateRequest = $this->patch('/preferences/change-sort/books', [
@@ -70,7 +70,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_update_sort_bad_entity_type_handled()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $updateRequest = $this->patch('/preferences/change-sort/dogs', [
@@ -85,7 +85,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_update_expansion_preference()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $updateRequest = $this->patch('/preferences/change-expansion/home-details', ['expand' => 'true']);
@@ -103,7 +103,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_toggle_dark_mode()
     {
-        $home = $this->actingAs($this->getEditor())->get('/');
+        $home = $this->actingAs($this->users->editor())->get('/');
         $home->assertSee('Dark Mode');
         $this->withHtml($home)->assertElementNotExists('.dark-mode');
 
@@ -112,7 +112,7 @@ class UserPreferencesTest extends TestCase
         $prefChange->assertRedirect();
         $this->assertEquals(true, setting()->getForCurrentUser('dark-mode-enabled'));
 
-        $home = $this->actingAs($this->getEditor())->get('/');
+        $home = $this->actingAs($this->users->editor())->get('/');
         $this->withHtml($home)->assertElementExists('.dark-mode');
         $home->assertDontSee('Dark Mode');
         $home->assertSee('Light Mode');
@@ -133,7 +133,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_books_view_type_preferences_when_list()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'books_view_type', 'list');
 
         $resp = $this->actingAs($editor)->get('/books');
@@ -144,7 +144,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_books_view_type_preferences_when_grid()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'books_view_type', 'grid');
 
         $resp = $this->actingAs($editor)->get('/books');
@@ -153,7 +153,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_shelf_view_type_change()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $shelf = $this->entities->shelf();
         setting()->putUser($editor, 'bookshelf_view_type', 'list');
 
@@ -175,7 +175,7 @@ class UserPreferencesTest extends TestCase
 
     public function test_update_code_language_favourite()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $page = $this->entities->page();
         $this->actingAs($editor);
 

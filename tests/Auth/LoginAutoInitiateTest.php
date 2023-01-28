@@ -70,7 +70,7 @@ class LoginAutoInitiateTest extends TestCase
         config()->set([
             'auth.method' => 'oidc',
         ]);
-        $this->actingAs($this->getEditor());
+        $this->actingAs($this->users->editor());
 
         $req = $this->post('/logout');
         $req->assertRedirect('/login?prevent_auto_init=true');

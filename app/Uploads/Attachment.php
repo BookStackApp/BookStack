@@ -2,6 +2,7 @@
 
 namespace BookStack\Uploads;
 
+use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
@@ -10,6 +11,7 @@ use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int    $id
@@ -54,6 +56,12 @@ class Attachment extends Model
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class, 'uploaded_to');
+    }
+
+    public function jointPermissions(): HasMany
+    {
+        return $this->hasMany(JointPermission::class, 'entity_id', 'uploaded_to')
+            ->where('joint_permissions.entity_type', '=', 'page');
     }
 
     /**
