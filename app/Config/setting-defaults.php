@@ -24,7 +24,7 @@ return [
     'page-draft-color'     => '#7e50b1',
     'app-color-dark'       => '#195785',
     'app-color-light-dark' => 'rgba(32,110,167,0.15)',
-    'link-color-dark'      => '#195785',
+    'link-color-dark'      => '#429fe3',
     'bookshelf-color-dark' => '#ff5454',
     'book-color-dark'      => '#389f60',
     'chapter-color-dark'   => '#ee7a2d',

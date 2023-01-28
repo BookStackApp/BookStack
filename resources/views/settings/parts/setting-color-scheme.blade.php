@@ -23,3 +23,7 @@
         @include('settings.parts.setting-color-picker', ['type' => 'page-draft', 'mode' => $mode])
     </div>
 </div>
+
+<input type="hidden"
+       value="{{ setting('app-color-light' . ($mode === 'dark' ? '-dark' : '')) }}"
+       name="setting-app-color-light{{ $mode === 'dark' ? '-dark' : '' }}">

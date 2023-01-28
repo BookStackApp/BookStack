@@ -70,15 +70,17 @@
             </div>
 
             <!-- App Color Scheme -->
-            <div class="pb-l">
+            @php
+                $darkMode = boolval(setting()->getForCurrentUser('dark-mode-enabled'));
+            @endphp
+            <div component="setting-app-color-scheme"
+                 option:setting-app-color-scheme:mode="{{ $darkMode ? 'dark' : 'light' }}"
+                 class="pb-l">
                 <div class="mb-l">
                     <label class="setting-list-label">{{ trans('settings.color_scheme') }}</label>
                     <p class="small">{{ trans('settings.color_scheme_desc') }}</p>
                 </div>
 
-                @php
-                    $darkMode = boolval(setting()->getForCurrentUser('dark-mode-enabled'));
-                @endphp
                 <div component="tabs" class="tab-container">
                     <div role="tablist" class="controls-card">
                         <button type="button"
@@ -94,6 +96,7 @@
                     </div>
                     <div class="sub-card">
                         <div id="color-scheme-panel-light"
+                             refs="setting-app-color-scheme@lightContainer"
                              tabindex="0"
                              role="tabpanel"
                              aria-labelledby="color-scheme-tab-light"
@@ -102,6 +105,7 @@
                             @include('settings.parts.setting-color-scheme', ['mode' => 'light'])
                         </div>
                         <div id="color-scheme-panel-dark"
+                             refs="setting-app-color-scheme@darkContainer"
                              tabindex="0"
                              role="tabpanel"
                              aria-labelledby="color-scheme-tab-light"
