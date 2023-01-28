@@ -433,7 +433,7 @@ body.flexbox {
     display: none;
   }
   .tri-layout-left-contents > *, .tri-layout-right-contents > * {
-    @include lightDark(opacity, 0.6, 0.7);
+    @include lightDark(opacity, 0.6, 0.75);
     transition: opacity ease-in-out 120ms;
     &:hover, &:focus-within {
       opacity: 1 !important;
@@ -442,7 +442,6 @@ body.flexbox {
       opacity: 1 !important;
     }
   }
-
 }
 
 @include smaller-than($m) {
