@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'Seda kasutatakse muuhulgas rakenduse päises. Pildifail peaks olema 86px kõrge. Suuremad pildid tehakse väiksemaks.',
     'app_icon' => 'Rakenduse ikoon',
     'app_icon_desc' => 'Seda ikooni kasutatakse brauseri sakkidel ja järjehoidjate ikoonidena. See peaks olema 256px ruudukujuline PNG.',
-    'app_primary_color' => 'Rakenduse põhivärv',
-    'app_primary_color_desc' => 'Määrab rakenduse primaarse värvi, sh. päise, nuppude ja linkide jaoks.',
     'app_homepage' => 'Rakenduse avaleht',
     'app_homepage_desc' => 'Vali leht, mida näidata avalehel vaikimisi vaate asemel. Valitud lehele ei rakendata ligipääsuõiguseid.',
     'app_homepage_select' => 'Vali leht',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Keelab kommentaarid kogu rakenduses. <br>Olemasolevaid kommentaare ei näidata.',
 
     // Color settings
-    'content_colors' => 'Sisuelementide värvid',
-    'content_colors_desc' => 'Määrab värvid erinevatele sisuelementidele. Loetavuse huvides on soovituslik valida värvid, mille heledus on sarnane vaikimisi värvidele.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Riiuli värv',
     'book_color' => 'Raamatu värv',
     'chapter_color' => 'Peatüki värv',
