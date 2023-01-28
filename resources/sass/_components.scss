@@ -608,35 +608,38 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 
 .tab-container .nav-tabs {
+  display: flex;
+  align-items: end;
+  justify-items: start;
   text-align: start;
   border-bottom: 1px solid #DDD;
   @include lightDark(border-color, #ddd, #444);
   margin-bottom: $-m;
-  .tab-item {
-    padding: $-s;
-    @include lightDark(color, #666, #999);
-    &.selected {
-      border-bottom-width: 3px;
-    }
-  }
 }
 
 .nav-tabs {
   text-align: center;
-  a, .tab-item {
-    padding: $-m;
+  .tab-item {
     display: inline-block;
-    @include lightDark(color, #666, #999);
+    padding: $-s;
+    @include lightDark(color, rgba(0, 0, 0, .5), rgba(255, 255, 255, .5));
     cursor: pointer;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
     &.selected {
-      border-bottom: 2px solid var(--color-primary);
+      color: var(--color-primary) !important;
+      border-bottom-color: var(--color-primary) !important;
     }
-    &:last-child {
-      border-right: 0;
+    &:hover, &:focus {
+      @include lightDark(color, rgba(0, 0, 0, .8), rgba(255, 255, 255, .8));
+      @include lightDark(border-bottom-color,  rgba(0, 0, 0, .2), rgba(255, 255, 255, .2));
     }
   }
+}
+.nav-tabs.controls-card {
+  margin-bottom: 0;
+  border-bottom: 0;
+  padding: 0 $-xs;
 }
 
 .image-picker .none {

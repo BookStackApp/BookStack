@@ -16,6 +16,7 @@ return [
     'app-editor'           => 'wysiwyg',
     'app-color'            => '#206ea7',
     'app-color-light'      => 'rgba(32,110,167,0.15)',
+    'link-color'           => '#206ea7',
     'bookshelf-color'      => '#a94747',
     'book-color'           => '#077b70',
     'chapter-color'        => '#af4d0d',
