@@ -69,42 +69,32 @@
                 </div>
             </div>
 
-            <!-- Primary Color -->
-            <div class="grid half gap-xl">
-                <div>
-                    <label class="setting-list-label">{{ trans('settings.app_primary_color') }}</label>
-                    <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
-                </div>
-                <div component="setting-app-color-picker setting-color-picker"
-                     option:setting-color-picker:default="#206ea7"
-                     option:setting-color-picker:current="{{ setting('app-color') }}"
-                     class="text-m-right pt-xs">
-                    <input refs="setting-color-picker@input setting-app-color-picker@input" type="color" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
-                    <input refs="setting-app-color-picker@light-input" type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
-                    <div class="pr-s">
-                        <button refs="setting-color-picker@default-button" type="button" class="text-button text-muted mt-s">{{ trans('common.default') }}</button>
-                        <span class="sep">|</span>
-                        <button refs="setting-color-picker@reset-button" type="button" class="text-button text-muted mt-s">{{ trans('common.reset') }}</button>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Entity Color -->
+            <!-- App Color Scheme -->
             <div class="pb-l">
-                <div>
-                    <label class="setting-list-label">{{ trans('settings.content_colors') }}</label>
-                    <p class="small">{!! trans('settings.content_colors_desc') !!}</p>
+                <div class="mb-l">
+                    <label class="setting-list-label">{{ trans('settings.color_scheme') }}</label>
+                    <p class="small">{{ trans('settings.color_scheme_desc') }}</p>
                 </div>
-                <div class="grid half pt-m">
-                    <div>
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'bookshelf'])
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'book'])
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'chapter'])
+
+                @php
+                    $darkMode = boolval(setting()->getForCurrentUser('dark-mode-enabled'));
+                @endphp
+                <div component="tabs" class="tab-container">
+                    <div class="nav-tabs controls-card">
+                        <button refs="tabs@toggleLight"
+                                type="button"
+                                class="{{ $darkMode ? '' : 'selected' }} tab-item">@icon('light-mode'){{ trans('common.light_mode') }}</button>
+                        <button refs="tabs@toggleDark"
+                                type="button"
+                                class="{{ $darkMode ? 'selected' : '' }} tab-item">@icon('dark-mode'){{ trans('common.dark_mode') }}</button>
                     </div>
-                    <div>
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'page'])
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'page-draft'])
+                    <div class="sub-card">
+                        <div refs="tabs@contentLight attachments@list" class="{{ $darkMode ? 'hidden' : '' }} p-m">
+                            @include('settings.parts.setting-color-scheme', ['mode' => 'light'])
+                        </div>
+                        <div refs="tabs@contentDark" class="{{ $darkMode ? '' : 'hidden' }} p-m">
+                            @include('settings.parts.setting-color-scheme', ['mode' => 'dark'])
+                        </div>
                     </div>
                 </div>
             </div>

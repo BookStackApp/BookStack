@@ -21,10 +21,10 @@
                                 type="button" class="tab-item selected" title="{{ trans('components.image_all_title') }}">@icon('images') {{ trans('components.image_all') }}</button>
                         <button refs="image-manager@filterTabs"
                                 data-filter="book"
-                                type="button" class="tab-item" title="{{ trans('components.image_book_title') }}">@icon('book', ['class' => 'text-book svg-icon']) {{ trans('entities.book') }}</button>
+                                type="button" class="tab-item" title="{{ trans('components.image_book_title') }}">@icon('book', ['class' => 'svg-icon']) {{ trans('entities.book') }}</button>
                         <button refs="image-manager@filterTabs"
                                 data-filter="page"
-                                type="button" class="tab-item" title="{{ trans('components.image_page_title') }}">@icon('page', ['class' => 'text-page svg-icon']) {{ trans('entities.page') }}</button>
+                                type="button" class="tab-item" title="{{ trans('components.image_page_title') }}">@icon('page', ['class' => 'svg-icon']) {{ trans('entities.page') }}</button>
                     </div>
                     <div>
                         <form refs="image-manager@searchForm" class="contained-search-box">
