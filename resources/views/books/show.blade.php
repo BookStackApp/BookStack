@@ -91,7 +91,7 @@
 
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
-        <div class="icon-list text-primary">
+        <div class="icon-list text-link">
 
             @if(userCan('page-create', $book))
                 <a href="{{ $book->getUrl('/create-page') }}" data-shortcut="new" class="icon-list-item">

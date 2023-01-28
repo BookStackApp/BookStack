@@ -237,6 +237,13 @@
   }
 }
 
+.sub-card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1.5px solid;
+  @include lightDark(border-color, #E2E2E2, #444);
+  border-radius: 4px;
+}
+
 .outline-hover {
   border: 1px solid transparent !important;
   &:hover {

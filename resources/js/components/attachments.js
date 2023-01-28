@@ -45,7 +45,7 @@ export class Attachments extends Component {
         this.stopEdit();
         /** @var {Tabs} */
         const tabs = window.$components.firstOnElement(this.mainTabs, 'tabs');
-        tabs.show('items');
+        tabs.show('attachment-panel-items');
         window.$http.get(`/attachments/get/page/${this.pageId}`).then(resp => {
             this.list.innerHTML = resp.data;
             window.$components.init(this.list);

@@ -11,7 +11,7 @@
 @section('right')
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
-        <div class="icon-list text-primary">
+        <div class="icon-list text-link">
             @if(user()->can('bookshelf-create-all'))
                 <a href="{{ url("/create-shelf") }}" class="icon-list-item">
                     <span>@icon('add')</span>
@@ -19,8 +19,8 @@
                 </a>
             @endif
             @include('entities.view-toggle', ['view' => $view, 'type' => 'bookshelves'])
-            @include('home.parts.expand-toggle', ['classes' => 'text-primary', 'target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
-            @include('common.dark-mode-toggle', ['classes' => 'icon-list-item text-primary'])
+            @include('home.parts.expand-toggle', ['classes' => 'text-link', 'target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
+            @include('common.dark-mode-toggle', ['classes' => 'icon-list-item text-link'])
         </div>
     </div>
 @stop

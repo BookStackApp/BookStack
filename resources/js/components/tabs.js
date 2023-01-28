@@ -1,49 +1,49 @@
-import {onSelect} from "../services/dom";
 import {Component} from "./component";
 
 /**
  * Tabs
- * Works by matching 'tabToggle<Key>' with 'tabContent<Key>' sections.
+ * Uses accessible attributes to drive its functionality.
+ * On tab wrapping element:
+ * - role=tablist
+ * On tabs (Should be a button):
+ * - id
+ * - role=tab
+ * - aria-selected=true/false
+ * - aria-controls=<id-of-panel-section>
+ * On panels:
+ * - id
+ * - tabindex=0
+ * - role=tabpanel
+ * - aria-labelledby=<id-of-tab-for-panel>
+ * - hidden (If not shown by default).
  */
 export class Tabs extends Component {
 
     setup() {
-        this.tabContentsByName = {};
-        this.tabButtonsByName = {};
-        this.allContents = [];
-        this.allButtons = [];
+        this.container = this.$el;
+        this.tabs = Array.from(this.container.querySelectorAll('[role="tab"]'));
+        this.panels = Array.from(this.container.querySelectorAll('[role="tabpanel"]'));
 
-        for (const [key, elems] of Object.entries(this.$manyRefs || {})) {
-            if (key.startsWith('toggle')) {
-                const cleanKey = key.replace('toggle', '').toLowerCase();
-                onSelect(elems, e => this.show(cleanKey));
-                this.allButtons.push(...elems);
-                this.tabButtonsByName[cleanKey] = elems;
+        this.container.addEventListener('click', event => {
+            const button = event.target.closest('[role="tab"]');
+            if (button) {
+                this.show(button.getAttribute('aria-controls'));
             }
-            if (key.startsWith('content')) {
-                const cleanKey = key.replace('content', '').toLowerCase();
-                this.tabContentsByName[cleanKey] = elems;
-                this.allContents.push(...elems);
-            }
-        }
+        });
     }
 
-    show(key) {
-        this.allContents.forEach(c => {
-            c.classList.add('hidden');
-            c.classList.remove('selected');
-        });
-        this.allButtons.forEach(b => b.classList.remove('selected'));
-
-        const contents = this.tabContentsByName[key] || [];
-        const buttons = this.tabButtonsByName[key] || [];
-        if (contents.length > 0) {
-            contents.forEach(c => {
-                c.classList.remove('hidden')
-                c.classList.add('selected')
-            });
-            buttons.forEach(b => b.classList.add('selected'));
+    show(sectionId) {
+        for (const panel of this.panels) {
+            panel.toggleAttribute('hidden', panel.id !== sectionId);
         }
+
+        for (const tab of this.tabs) {
+            const tabSection = tab.getAttribute('aria-controls');
+            const selected = tabSection === sectionId;
+            tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        }
+
+        this.$emit('change', {showing: sectionId});
     }
 
 }

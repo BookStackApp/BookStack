@@ -5,7 +5,7 @@
     {{ csrf_field() }}
     <input type="hidden" name="type" value="{{ get_class($entity) }}">
     <input type="hidden" name="id" value="{{ $entity->id }}">
-    <button type="submit" data-shortcut="favourite" class="icon-list-item text-primary">
+    <button type="submit" data-shortcut="favourite" class="icon-list-item text-link">
         <span>@icon($isFavourite ? 'star' : 'star-outline')</span>
         <span>{{ $isFavourite ? trans('common.unfavourite') : trans('common.favourite') }}</span>
     </button>

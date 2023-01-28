@@ -34,7 +34,7 @@ export function scrollAndHighlightElement(element) {
     if (!element) return;
     element.scrollIntoView({behavior: 'smooth'});
 
-    const color = document.getElementById('custom-styles').getAttribute('data-color-light');
+    const color = getComputedStyle(document.body).getPropertyValue('--color-primary-light');
     const initColor = window.getComputedStyle(element).getPropertyValue('background-color');
     element.style.backgroundColor = color;
     setTimeout(() => {

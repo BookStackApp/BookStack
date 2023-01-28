@@ -6,12 +6,12 @@
         <div class="grid half">
             <div>
                 <div class="icon-list inline block">
-                    @include('home.parts.expand-toggle', ['classes' => 'text-muted text-primary', 'target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
+                    @include('home.parts.expand-toggle', ['classes' => 'text-muted text-link', 'target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
                 </div>
             </div>
             <div class="text-m-right">
                 <div class="icon-list inline block">
-                    @include('common.dark-mode-toggle', ['classes' => 'text-muted icon-list-item text-primary'])
+                    @include('common.dark-mode-toggle', ['classes' => 'text-muted icon-list-item text-link'])
                 </div>
             </div>
         </div>

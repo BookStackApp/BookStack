@@ -15,6 +15,6 @@ export class SettingColorPicker extends Component {
 
     setValue(value) {
         this.colorInput.value = value;
-        this.colorInput.dispatchEvent(new Event('change'));
+        this.colorInput.dispatchEvent(new Event('change', {bubbles: true}));
     }
 }
