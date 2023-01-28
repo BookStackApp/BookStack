@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'Se utiliza en la cabecera de la aplicación, entre otras áreas. Esta imagen debe ser de 86px de altura. Las imágenes grandes serán reducidas en tamaño.',
     'app_icon' => 'Logo de la Aplicación',
     'app_icon_desc' => 'Se utiliza para las pestañas del navegador y los accesos directos. Debería ser una imagen PNG cuadrada de 256px.',
-    'app_primary_color' => 'Color Primario de la Aplicación',
-    'app_primary_color_desc' => 'Esto debería ser un valor hexadecimal. <br>Deje el valor vacío para restaurar al valor por defecto.',
     'app_homepage' => 'Página de inicio',
     'app_homepage_desc' => 'Elija la vista que se mostrará en la página de inicio en lugar de la vista predeterminada. Se ignorarán los permisos de la página seleccionada.',
     'app_homepage_select' => 'Elija una página',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Deshabilita los comentarios en todas las páginas de la aplicación. <br> Los comentarios existentes no se muestran.',
 
     // Color settings
-    'content_colors' => 'Colores del contenido',
-    'content_colors_desc' => 'Establece los colores para todos los elementos en la jerarquía de la organización de la página. Se recomienda elegir colores con un brillo similar al predeterminado para mayor legibilidad.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Color del estante',
     'book_color' => 'Color del libro',
     'chapter_color' => 'Color del capítulo',
