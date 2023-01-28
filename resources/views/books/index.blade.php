@@ -35,7 +35,7 @@
 
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
-        <div class="icon-list text-primary">
+        <div class="icon-list text-link">
             @if(user()->can('book-create-all'))
                 <a href="{{ url("/create-book") }}" data-shortcut="new" class="icon-list-item">
                     <span>@icon('add')</span>

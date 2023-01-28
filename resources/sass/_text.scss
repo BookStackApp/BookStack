@@ -90,7 +90,7 @@ h2.list-heading {
  * Link styling
  */
 a {
-  color: var(--color-primary);
+  color: var(--color-link);
   fill: currentColor;
   cursor: pointer;
   text-decoration: none;
@@ -107,7 +107,7 @@ a {
     display: inline-block;
   }
   &:focus img:only-child {
-    outline: 2px dashed var(--color-primary);
+    outline: 2px dashed var(--color-link);
     outline-offset: 2px;
   }
 }
