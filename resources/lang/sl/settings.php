@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Osnovna barva aplikacije',
-    'app_primary_color_desc' => 'Nastavi osnovno barvo za aplikacijo vključno s pasico, gumbi in povezavami.',
     'app_homepage' => 'Domača stran aplikacije',
     'app_homepage_desc' => 'Izberi pogled, da se pokaže na domači strani, namesto osnovnega pogleda. Dovoljenja strani so prezrta za izbrane strani.',
     'app_homepage_select' => 'Izberi stran',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Onemogoči komentarje na vseh straneh v aplikaciji. <br> Obstoječi komentarji se ne prikazujejo.',
 
     // Color settings
-    'content_colors' => 'Barve vsebine',
-    'content_colors_desc' => 'Nastavi barve za vse elemente v hierarhiji. Izbor barv s podobno barvno svetlostjo je priporočljivo za osnovne barve za branje.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Barva police',
     'book_color' => 'knjiga barv',
     'chapter_color' => 'barvno poglavje',
