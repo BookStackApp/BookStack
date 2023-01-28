@@ -80,19 +80,33 @@
                     $darkMode = boolval(setting()->getForCurrentUser('dark-mode-enabled'));
                 @endphp
                 <div component="tabs" class="tab-container">
-                    <div class="nav-tabs controls-card">
-                        <button refs="tabs@toggleLight"
-                                type="button"
-                                class="{{ $darkMode ? '' : 'selected' }} tab-item">@icon('light-mode'){{ trans('common.light_mode') }}</button>
-                        <button refs="tabs@toggleDark"
-                                type="button"
-                                class="{{ $darkMode ? 'selected' : '' }} tab-item">@icon('dark-mode'){{ trans('common.dark_mode') }}</button>
+                    <div role="tablist" class="controls-card">
+                        <button type="button"
+                                role="tab"
+                                id="color-scheme-tab-light"
+                                aria-selected="{{ $darkMode ? 'false' : 'true' }}"
+                                aria-controls="color-scheme-panel-light">@icon('light-mode'){{ trans('common.light_mode') }}</button>
+                        <button type="button"
+                                role="tab"
+                                id="color-scheme-tab-dark"
+                                aria-selected="{{ $darkMode ? 'true' : 'false' }}"
+                                aria-controls="color-scheme-panel-dark">@icon('dark-mode'){{ trans('common.dark_mode') }}</button>
                     </div>
                     <div class="sub-card">
-                        <div refs="tabs@contentLight attachments@list" class="{{ $darkMode ? 'hidden' : '' }} p-m">
+                        <div id="color-scheme-panel-light"
+                             tabindex="0"
+                             role="tabpanel"
+                             aria-labelledby="color-scheme-tab-light"
+                             @if($darkMode) hidden @endif
+                             class="p-m">
                             @include('settings.parts.setting-color-scheme', ['mode' => 'light'])
                         </div>
-                        <div refs="tabs@contentDark" class="{{ $darkMode ? '' : 'hidden' }} p-m">
+                        <div id="color-scheme-panel-dark"
+                             tabindex="0"
+                             role="tabpanel"
+                             aria-labelledby="color-scheme-tab-light"
+                             @if(!$darkMode) hidden @endif
+                             class="p-m">
                             @include('settings.parts.setting-color-scheme', ['mode' => 'dark'])
                         </div>
                     </div>

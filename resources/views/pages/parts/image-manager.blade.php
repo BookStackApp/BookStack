@@ -15,15 +15,21 @@
             <div class="flex-fill image-manager-body">
 
                 <div class="image-manager-content">
-                    <div class="image-manager-header primary-background-light nav-tabs grid third no-gap">
+                    <div role="tablist" class="image-manager-header primary-background-light grid third no-gap">
                         <button refs="image-manager@filterTabs"
                                 data-filter="all"
-                                type="button" class="tab-item selected" title="{{ trans('components.image_all_title') }}">@icon('images') {{ trans('components.image_all') }}</button>
+                                role="tab"
+                                aria-selected="true"
+                                type="button" class="tab-item" title="{{ trans('components.image_all_title') }}">@icon('images') {{ trans('components.image_all') }}</button>
                         <button refs="image-manager@filterTabs"
                                 data-filter="book"
+                                role="tab"
+                                aria-selected="false"
                                 type="button" class="tab-item" title="{{ trans('components.image_book_title') }}">@icon('book', ['class' => 'svg-icon']) {{ trans('entities.book') }}</button>
                         <button refs="image-manager@filterTabs"
                                 data-filter="page"
+                                role="tab"
+                                aria-selected="false"
                                 type="button" class="tab-item" title="{{ trans('components.image_page_title') }}">@icon('page', ['class' => 'svg-icon']) {{ trans('entities.page') }}</button>
                     </div>
                     <div>
