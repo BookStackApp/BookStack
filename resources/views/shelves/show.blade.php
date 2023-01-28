@@ -109,7 +109,7 @@
 @section('right')
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
-        <div class="icon-list text-primary">
+        <div class="icon-list text-link">
 
             @if(userCan('book-create-all') && userCan('bookshelf-update', $shelf))
                 <a href="{{ $shelf->getUrl('/create-book') }}" data-shortcut="new" class="icon-list-item">

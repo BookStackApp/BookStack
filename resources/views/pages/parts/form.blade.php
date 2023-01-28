@@ -44,7 +44,7 @@
     <button type="submit"
             id="save-button-mobile"
             title="{{ trans('entities.pages_save') }}"
-            class="text-primary text-button hide-over-m page-save-mobile-button">@icon('save')</button>
+            class="text-link text-button hide-over-m page-save-mobile-button">@icon('save')</button>
 
     {{--Editor Change Dialog--}}
     @component('common.confirm-dialog', ['title' => trans('entities.pages_editor_switch_title'), 'ref' => 'page-editor@switchDialog'])

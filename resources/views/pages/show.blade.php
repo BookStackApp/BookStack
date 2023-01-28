@@ -66,7 +66,7 @@
                     @foreach($pageNav as $navItem)
                         <li class="page-nav-item h{{ $navItem['level'] }}">
                             <a href="{{ $navItem['link'] }}" class="text-limit-lines-1 block">{{ $navItem['text'] }}</a>
-                            <div class="primary-background sidebar-page-nav-bullet"></div>
+                            <div class="link-background sidebar-page-nav-bullet"></div>
                         </li>
                     @endforeach
                 </div>
@@ -143,7 +143,7 @@
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
 
-        <div class="icon-list text-primary">
+        <div class="icon-list text-link">
 
             {{--User Actions--}}
             @if(userCan('page-update', $page))

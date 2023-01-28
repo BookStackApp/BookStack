@@ -42,6 +42,8 @@ export class Tabs extends Component {
             const selected = tabSection === sectionId;
             tab.setAttribute('aria-selected', selected ? 'true' : 'false');
         }
+
+        this.$emit('change', {section: sectionId});
     }
 
 }

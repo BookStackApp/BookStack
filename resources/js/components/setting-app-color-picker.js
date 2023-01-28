@@ -3,6 +3,7 @@ import {Component} from "./component";
 export class SettingAppColorPicker extends Component {
 
     setup() {
+        // TODO
         this.colorInput = this.$refs.input;
         this.lightColorInput = this.$refs.lightInput;
 

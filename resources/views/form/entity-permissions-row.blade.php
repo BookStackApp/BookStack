@@ -16,7 +16,7 @@ $inheriting - Boolean if the current row should be marked as inheriting default 
         </span>
         @if($role->id !== 0)
             <button type="button"
-                class="ml-auto flex-none text-small text-primary text-button hover-underline item-list-row-toggle-all hide-under-s"
+                class="ml-auto flex-none text-small text-link text-button hover-underline item-list-row-toggle-all hide-under-s"
                 refs="permissions-table@toggle-all"
                 ><strong>{{ trans('common.toggle_all') }}</strong></button>
         @endif

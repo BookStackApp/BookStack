@@ -22,7 +22,7 @@
 
                             <form action="{{ url('/settings/recycle-bin/empty') }}" method="POST">
                                 {!! csrf_field() !!}
-                                <button type="submit" class="text-primary small delete text-item">{{ trans('common.confirm') }}</button>
+                                <button type="submit" class="text-link small delete text-item">{{ trans('common.confirm') }}</button>
                             </form>
                         </div>
                     </div>
