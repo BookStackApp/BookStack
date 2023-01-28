@@ -36,8 +36,6 @@ return [
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
-    'app_primary_color' => 'Primær applikationsfarve',
-    'app_primary_color_desc' => 'Sætter den primære farve for applikationen herunder banneret, knapper og links.',
     'app_homepage' => 'Applikationsforside',
     'app_homepage_desc' => 'Vælg en visning, der skal vises på forsiden i stedet for standardvisningen. Sidetilladelser ignoreres for de valgte sider.',
     'app_homepage_select' => 'Vælg en side',
@@ -51,8 +49,12 @@ return [
     'app_disable_comments_desc' => 'Deaktiverer kommentarer på tværs af alle sider i applikationen. <br> Eksisterende kommentarer vises ikke.',
 
     // Color settings
-    'content_colors' => 'Indholdsfarver',
-    'content_colors_desc' => 'Sætter farver for alle elementer i sideorganisationshierarkiet. Valg af farver med en lignende lysstyrke som standardfarverne anbefales af hensyn til læsbarhed.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Bogreolfarve',
     'book_color' => 'Bogfarve',
     'chapter_color' => 'Kapitelfarve',
