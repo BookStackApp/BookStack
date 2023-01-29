@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen que se quiere subir no es válido',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'No se han podido cargar los datos del dibujo. Puede que el archivo de dibujo ya no exista o que no tenga permiso para acceder a él.',
 
     // Attachments
     'attachment_not_found' => 'No se encontró el adjunto',
