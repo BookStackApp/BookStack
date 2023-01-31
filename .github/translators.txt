@@ -176,7 +176,7 @@ Alexander Predl (Harveyhase68) :: German
 Rem (Rem9000) :: Dutch
 Michał Stelmach (stelmach-web) :: Polish
 arniom :: French
-REMOVED_USER :: ; Dutch; Turkish
+REMOVED_USER :: ; French; Dutch; Turkish
 林祖年 (contagion) :: Chinese Traditional
 Siamak Guodarzi (siamakgoudarzi88) :: Persian
 Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
@@ -302,3 +302,9 @@ Angelos Chouvardas (achouvardas) :: Greek
 rndrss :: Portuguese, Brazilian
 rirac294 :: Russian
 David Furman (thefourCraft) :: Hebrew
+Pafzedog :: French
+Yllelder :: Spanish
+Adrian Ocneanu (aocneanu) :: Romanian
+Eduardo Castanho (EduardoCastanho) :: Portuguese
+VIET NAM VPS (vietnamvps) :: Vietnamese
+m4tthi4s :: French
