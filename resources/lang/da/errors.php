@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Serveren kan ikke oprette miniaturer. Kontroller, at GD PHP-udvidelsen er installeret.',
     'server_upload_limit' => 'Serveren tillader ikke uploads af denne størrelse. Prøv en mindre filstørrelse.',
     'uploaded'  => 'Serveren tillader ikke uploads af denne størrelse. Prøv en mindre filstørrelse.',
+    'file_upload_timeout' => 'Filuploaden udløb.',
+
+    // Drawing & Images
     'image_upload_error' => 'Der opstod en fejl ved upload af billedet',
     'image_upload_type_error' => 'Billedtypen, der uploades, er ugyldig',
-    'file_upload_timeout' => 'Filuploaden udløb.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Vedhæftning ikke fundet',

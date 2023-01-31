@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Server tidak dapat membuat thumbnail. Harap periksa apakah Anda telah memasang ekstensi GD PHP.',
     'server_upload_limit' => 'Server tidak mengizinkan unggahan dengan ukuran ini. Harap coba ukuran berkas yang lebih kecil.',
     'uploaded'  => 'Server tidak mengizinkan unggahan dengan ukuran ini. Harap coba ukuran berkas yang lebih kecil.',
+    'file_upload_timeout' => 'Unggahan berkas telah habis waktu.',
+
+    // Drawing & Images
     'image_upload_error' => 'Terjadi kesalahan saat mengunggah gambar',
     'image_upload_type_error' => 'Jenis gambar yang diunggah tidak valid',
-    'file_upload_timeout' => 'Unggahan berkas telah habis waktu.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Lampiran tidak ditemukan',

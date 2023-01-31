@@ -8,11 +8,11 @@
 return [
     // General editor terms
     'general' => 'General',
-    'advanced' => 'Advanced',
+    'advanced' => 'Nâng cao',
     'none' => 'None',
-    'cancel' => 'Cancel',
+    'cancel' => 'Huỷ',
     'save' => 'Save',
-    'close' => 'Close',
+    'close' => 'Đóng',
     'undo' => 'Undo',
     'redo' => 'Redo',
     'left' => 'Left',
