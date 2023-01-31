@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Ο διακομιστής δεν μπορεί να δημιουργήσει μικρογραφίες. Παρακαλώ ελέγξτε ότι έχετε την επέκταση GD PHP εγκατεστημένη.',
     'server_upload_limit' => 'Ο διακομιστής δεν επιτρέπει τη μεταφόρτωση αυτού του μεγέθους. Παρακαλώ δοκιμάστε ένα μικρότερο μέγεθος αρχείου.',
     'uploaded'  => 'Ο διακομιστής δεν επιτρέπει τη μεταφόρτωση αυτού του μεγέθους. Παρακαλώ δοκιμάστε ένα μικρότερο μέγεθος αρχείου.',
+    'file_upload_timeout' => 'Το χρονικό όριο μεταφόρτωσης αρχείου έληξε.',
+
+    // Drawing & Images
     'image_upload_error' => 'Παρουσιάστηκε σφάλμα κατά το ανέβασμα της εικόνας.',
     'image_upload_type_error' => 'Ο τύπος εικόνας που μεταφορτώθηκε δεν είναι έγκυρος',
-    'file_upload_timeout' => 'Το χρονικό όριο μεταφόρτωσης αρχείου έληξε.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Το συνημμένο δεν βρέθηκε',

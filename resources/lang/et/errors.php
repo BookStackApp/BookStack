@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Server ei saa piltide eelvaateid tekitada. Veendu, et PHP GD laiendus on paigaldatud.',
     'server_upload_limit' => 'Server ei luba nii suurte failide üleslaadimist. Proovi väiksema failiga.',
     'uploaded'  => 'Server ei luba nii suurte failide üleslaadimist. Proovi väiksema failiga.',
+    'file_upload_timeout' => 'Faili üleslaadimine aegus.',
+
+    // Drawing & Images
     'image_upload_error' => 'Pildi üleslaadimisel tekkis viga',
     'image_upload_type_error' => 'Pildifaili tüüp ei ole korrektne',
-    'file_upload_timeout' => 'Faili üleslaadimine aegus.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Manust ei leitud',

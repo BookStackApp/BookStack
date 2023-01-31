@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'このサーバはサムネイルを作成できません。GD PHP extensionがインストールされていることを確認してください。',
     'server_upload_limit' => 'このサイズの画像をアップロードすることは許可されていません。ファイルサイズを小さくし、再試行してください。',
     'uploaded'  => 'このサイズの画像をアップロードすることは許可されていません。ファイルサイズを小さくし、再試行してください。',
+    'file_upload_timeout' => 'ファイルのアップロードがタイムアウトしました。',
+
+    // Drawing & Images
     'image_upload_error' => '画像アップロード時にエラーが発生しました。',
     'image_upload_type_error' => 'アップロード中の画像の種類が無効です',
-    'file_upload_timeout' => 'ファイルのアップロードがタイムアウトしました。',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => '添付ファイルが見つかりません',

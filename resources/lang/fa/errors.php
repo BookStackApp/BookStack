@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'سرور نمی تواند تصاویر کوچک ایجاد کند. لطفاً بررسی کنید که پسوند GD PHP را نصب کرده اید.',
     'server_upload_limit' => 'سرور اجازه آپلود در این اندازه را نمی دهد. لطفا اندازه فایل کوچکتر را امتحان کنید.',
     'uploaded'  => 'سرور اجازه آپلود در این اندازه را نمی دهد. لطفا اندازه فایل کوچکتر را امتحان کنید.',
+    'file_upload_timeout' => 'زمان بارگذاری فایل به پایان رسیده است.',
+
+    // Drawing & Images
     'image_upload_error' => 'هنگام آپلود تصویر خطایی روی داد',
     'image_upload_type_error' => 'نوع تصویر در حال آپلود نامعتبر است',
-    'file_upload_timeout' => 'زمان بارگذاری فایل به پایان رسیده است.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'پیوست یافت نشد',
