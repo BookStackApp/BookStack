@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Server ne može kreirati sličice. Provjerite da imate instaliranu GD PHP ekstenziju.',
     'server_upload_limit' => 'Server ne dopušta učitavanja ove veličine. Pokušajte sa manjom veličinom fajla.',
     'uploaded'  => 'Server ne dopušta učitavanja ove veličine. Pokušajte sa manjom veličinom fajla.',
+    'file_upload_timeout' => 'Vrijeme učitavanja fajla je isteklo.',
+
+    // Drawing & Images
     'image_upload_error' => 'Desila se greška prilikom učitavanja slike',
     'image_upload_type_error' => 'Vrsta slike koja se učitava je neispravna',
-    'file_upload_timeout' => 'Vrijeme učitavanja fajla je isteklo.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Prilog nije pronađen',

@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'השרת אינו מרשה העלאת קבצים במשקל זה. אנא נסה להעלות קובץ קטן יותר.',
     'uploaded'  => 'השרת אינו מרשה העלאת קבצים במשקל זה. אנא נסה להעלות קובץ קטן יותר.',
+    'file_upload_timeout' => 'The file upload has timed out.',
+
+    // Drawing & Images
     'image_upload_error' => 'התרחשה שגיאה במהלך העלאת התמונה',
     'image_upload_type_error' => 'התמונה שהועלתה אינה תקינה',
-    'file_upload_timeout' => 'The file upload has timed out.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'קובץ מצורף לא נמצא',

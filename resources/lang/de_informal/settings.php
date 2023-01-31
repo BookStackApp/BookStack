@@ -33,11 +33,9 @@ return [
     'app_custom_html_desc' => 'Jeder Inhalt, der hier hinzugefügt wird, wird am Ende der <head> Sektion jeder Seite eingefügt. Diese kann praktisch sein, um CSS Styles anzupassen oder Analytics-Code hinzuzufügen.',
     'app_custom_html_disabled_notice' => 'Benutzerdefinierte HTML-Kopfzeileninhalte sind auf dieser Einstellungsseite deaktiviert, um sicherzustellen, dass alle Änderungen rückgängig gemacht werden können.',
     'app_logo' => 'Anwendungslogo',
-    'app_logo_desc' => 'Dieses Bild sollte 43px hoch sein.
-Größere Bilder werden verkleinert.',
-    'app_primary_color' => 'Primäre Anwendungsfarbe',
-    'app_primary_color_desc' => 'Dies sollte ein HEX Wert sein.
-Wenn du nichts eingibst, wird die Anwendung auf die Standardfarbe zurückgesetzt.',
+    'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
+    'app_icon' => 'Application Icon',
+    'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
     'app_homepage' => 'Startseite der Anwendung',
     'app_homepage_desc' => 'Wähle eine Seite als Startseite aus, die statt der Standardansicht angezeigt werden soll. Seitenberechtigungen werden für die ausgewählten Seiten ignoriert.',
     'app_homepage_select' => 'Wähle eine Seite aus',
@@ -51,8 +49,12 @@ Wenn du nichts eingibst, wird die Anwendung auf die Standardfarbe zurückgesetzt
     'app_disable_comments_desc' => 'Deaktiviert Kommentare über alle Seiten in der Anwendung. Vorhandene Kommentare werden nicht angezeigt.',
 
     // Color settings
-    'content_colors' => 'Inhaltsfarben',
-    'content_colors_desc' => 'Legt Farben für alle Elemente in der Seitenorganisationshierarchie fest. Die Auswahl von Farben mit einer ähnlichen Helligkeit wie die Standardfarben wird zur Lesbarkeit empfohlen.',
+    'color_scheme' => 'Application Color Scheme',
+    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
+    'app_color' => 'Primary Color',
+    'link_color' => 'Default Link Color',
+    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Regalfarbe',
     'book_color' => 'Buchfarbe',
     'chapter_color' => 'Kapitelfarbe',

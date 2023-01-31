@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Server nedokáže udělat náhledy. Zkontrolujte, že rozšíření GD pro PHP je nainstalováno.',
     'server_upload_limit' => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.',
     'uploaded'  => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.',
+    'file_upload_timeout' => 'Nahrávání souboru trvalo příliš dlouho a tak bylo ukončeno.',
+
+    // Drawing & Images
     'image_upload_error' => 'Nastala chyba během nahrávání souboru',
     'image_upload_type_error' => 'Typ nahrávaného obrázku je neplatný.',
-    'file_upload_timeout' => 'Nahrávání souboru trvalo příliš dlouho a tak bylo ukončeno.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Příloha nenalezena',
