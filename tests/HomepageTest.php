@@ -114,7 +114,7 @@ class HomepageTest extends TestCase
 
     public function test_set_book_homepage()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'books_view_type', 'grid');
 
         $this->setSettings(['app-homepage-type' => 'books']);
@@ -133,7 +133,7 @@ class HomepageTest extends TestCase
 
     public function test_set_bookshelves_homepage()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'bookshelves_view_type', 'grid');
         $shelf = $this->entities->shelf();
 
@@ -152,7 +152,7 @@ class HomepageTest extends TestCase
 
     public function test_shelves_list_homepage_adheres_to_book_visibility_permissions()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'bookshelves_view_type', 'list');
         $this->setSettings(['app-homepage-type' => 'bookshelves']);
         $this->asEditor();
@@ -167,13 +167,13 @@ class HomepageTest extends TestCase
 
         // Ensure book no longer visible without view permission
         $editor->roles()->detach();
-        $this->giveUserPermissions($editor, ['bookshelf-view-all']);
+        $this->permissions->grantUserRolePermissions($editor, ['bookshelf-view-all']);
         $homeVisit = $this->get('/');
         $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $shelf->name);
         $this->withHtml($homeVisit)->assertElementNotContains('.content-wrap', $book->name);
 
         // Ensure is visible again with entity-level view permission
-        $this->entities->setPermissions($book, ['view'], [$editor->roles()->first()]);
+        $this->permissions->setEntityPermissions($book, ['view'], [$editor->roles()->first()]);
         $homeVisit = $this->get('/');
         $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $shelf->name);
         $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $book->name);

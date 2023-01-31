@@ -14,7 +14,7 @@ class ExportPermissionsTest extends TestCase
         $pageContent = Str::random(48);
         $page->html = '<p>' . $pageContent . '</p>';
         $page->save();
-        $viewer = $this->getViewer();
+        $viewer = $this->users->viewer();
         $this->actingAs($viewer);
         $formats = ['html', 'plaintext'];
 
@@ -25,7 +25,7 @@ class ExportPermissionsTest extends TestCase
             $resp->assertSee($pageContent);
         }
 
-        $this->entities->setPermissions($page, []);
+        $this->permissions->setEntityPermissions($page, []);
 
         foreach ($formats as $format) {
             $resp = $this->get($chapter->getUrl("export/{$format}"));
@@ -42,7 +42,7 @@ class ExportPermissionsTest extends TestCase
         $pageContent = Str::random(48);
         $page->html = '<p>' . $pageContent . '</p>';
         $page->save();
-        $viewer = $this->getViewer();
+        $viewer = $this->users->viewer();
         $this->actingAs($viewer);
         $formats = ['html', 'plaintext'];
 
@@ -53,7 +53,7 @@ class ExportPermissionsTest extends TestCase
             $resp->assertSee($pageContent);
         }
 
-        $this->entities->setPermissions($page, []);
+        $this->permissions->setEntityPermissions($page, []);
 
         foreach ($formats as $format) {
             $resp = $this->get($book->getUrl("export/{$format}"));

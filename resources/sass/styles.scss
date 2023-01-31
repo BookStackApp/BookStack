@@ -113,7 +113,7 @@ $loadingSize: 10px;
   &:focus {
     top: $-xl;
     outline-offset: -10px;
-    outline: 2px dotted var(--color-primary);
+    outline: 2px dotted var(--color-link);
   }
 }
 
@@ -187,17 +187,13 @@ $loadingSize: 10px;
     height: 400px;
     padding-top: $-l;
   }
-  .entity-selector-add button {
-    margin: 0;
-    display: block;
-    width: 100%;
-    border: 0;
-    border-top: 1px solid #DDD;
-  }
   &.compact {
     font-size: 10px;
     .entity-item-snippet {
       display: none;
+    }
+    h4 {
+      font-size: 14px;
     }
   }
 }

@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Sunucu, görsel ön izlemelerini oluşturamadı. Lütfen GD PHP eklentisinin kurulu olduğundan emin olun.',
     'server_upload_limit' => 'Sunucu bu boyutta dosya yüklemenize izin vermiyor. Lütfen daha küçük bir dosya deneyin.',
     'uploaded'  => 'Sunucu bu boyutta dosya yüklemenize izin vermiyor. Lütfen daha küçük bir dosya deneyin.',
+    'file_upload_timeout' => 'Dosya yüklemesi zaman aşımına uğradı',
+
+    // Drawing & Images
     'image_upload_error' => 'Görsel yüklenirken bir hata meydana geldi',
     'image_upload_type_error' => 'Yüklemeye çalıştığınız dosya türü geçersizdir',
-    'file_upload_timeout' => 'Dosya yüklemesi zaman aşımına uğradı',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Ek bulunamadı',

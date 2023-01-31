@@ -29,6 +29,8 @@ The testing database will also need migrating and seeding beforehand. This can b
 
 Once done you can run `composer test` in the application root directory to run all tests. Tests can be ran in parallel by running them via `composer t`. This will use Laravel's built-in parallel testing functionality, and attempt to create and seed a database instance for each testing thread. If required these parallel testing instances can be reset, before testing again, by running `composer t-reset`.
 
+If the codebase needs to be tested with deprecations, this can be done via uncommenting the relevant line within the TestCase@setUp function. 
+
 ## Code Standards
 
 PHP code standards are managed by [using PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer).

@@ -43,16 +43,25 @@ function emitPublic(targetElement, eventName, eventData) {
 }
 
 /**
- * Notify of a http error.
- * Check for standard scenarios such as validation errors and
- * formats an error notification accordingly.
- * @param {Error} error
+ * Notify of standard server-provided validation errors.
+ * @param {Object} error
  */
 function showValidationErrors(error) {
     if (!error.status) return;
     if (error.status === 422 && error.data) {
         const message = Object.values(error.data).flat().join('\n');
         emit('error', message);
+    }
+}
+
+/**
+ * Notify standard server-provided error messages.
+ * @param {Object} error
+ */
+function showResponseError(error) {
+    if (!error.status) return;
+    if (error.status >= 400 && error.data && error.data.message) {
+        emit('error', error.data.message);
     }
 }
 
@@ -63,4 +72,5 @@ export default {
     success: (msg) => emit('success', msg),
     error: (msg) => emit('error', msg),
     showValidationErrors,
+    showResponseError,
 }

@@ -2,10 +2,12 @@
 
 namespace BookStack\Actions;
 
+use BookStack\Auth\Permissions\JointPermission;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
 
@@ -38,6 +40,12 @@ class Activity extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function jointPermissions(): HasMany
+    {
+        return $this->hasMany(JointPermission::class, 'entity_id', 'entity_id')
+            ->whereColumn('activities.entity_type', '=', 'joint_permissions.entity_type');
     }
 
     /**

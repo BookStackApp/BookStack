@@ -235,7 +235,7 @@ class LdapTest extends TestCase
 
     public function test_user_edit_form()
     {
-        $editUser = $this->getNormalUser();
+        $editUser = $this->users->viewer();
         $editPage = $this->asAdmin()->get("/settings/users/{$editUser->id}");
         $editPage->assertSee('Edit User');
         $editPage->assertDontSee('Password');
@@ -257,7 +257,7 @@ class LdapTest extends TestCase
 
     public function test_non_admins_cannot_change_auth_id()
     {
-        $testUser = $this->getNormalUser();
+        $testUser = $this->users->viewer();
         $this->actingAs($testUser)
             ->get('/settings/users/' . $testUser->id)
             ->assertDontSee('External Authentication');

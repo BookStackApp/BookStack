@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Сървърът не може да създаде малки изображения. Моля, увери се, че разширението GD PHP е инсталирано.',
     'server_upload_limit' => 'Сървърът не позволява качвания с такъв размер. Моля, пробвайте файл с по-малък размер.',
     'uploaded'  => 'Сървърът не позволява качвания с такъв размер. Моля, пробвайте файл с по-малък размер.',
+    'file_upload_timeout' => 'Качването на файла изтече.',
+
+    // Drawing & Images
     'image_upload_error' => 'Възникна грешка при качването на изображението',
     'image_upload_type_error' => 'Типът на качваното изображение е невалиден',
-    'file_upload_timeout' => 'Качването на файла изтече.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Прикачения файл не е намерен',

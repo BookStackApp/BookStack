@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Serverul nu poate crea miniaturi. Verifică dacă este instalată extensia GD PHP.',
     'server_upload_limit' => 'Serverul nu permite încărcarea acestei dimensiuni. Te rog să încerci o dimensiune mai mică a fișierului.',
     'uploaded'  => 'Serverul nu permite încărcarea acestei dimensiuni. Te rog să încerci o dimensiune mai mică a fișierului.',
+    'file_upload_timeout' => 'Încărcarea fișierului a expirat.',
+
+    // Drawing & Images
     'image_upload_error' => 'A apărut o eroare la încărcarea imaginii',
     'image_upload_type_error' => 'Tipul de imagine încărcat nu este valid',
-    'file_upload_timeout' => 'Încărcarea fișierului a expirat.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Atașamentul nu a fost găsit',

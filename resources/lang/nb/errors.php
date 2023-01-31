@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Kan ikke opprette miniatyrbilder. GD PHP er ikke installert.',
     'server_upload_limit' => 'Vedlegget er for stort, forsøk med et mindre vedlegg.',
     'uploaded'  => 'Tjenesten aksepterer ikke vedlegg som er så stor.',
+    'file_upload_timeout' => 'Opplastingen gikk ut på tid.',
+
+    // Drawing & Images
     'image_upload_error' => 'Bildet kunne ikke lastes opp, forsøk igjen.',
     'image_upload_type_error' => 'Bildeformatet støttes ikke, forsøk med et annet format.',
-    'file_upload_timeout' => 'Opplastingen gikk ut på tid.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Vedlegget ble ikke funnet',

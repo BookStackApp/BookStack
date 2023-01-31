@@ -53,42 +53,66 @@
                 </div>
             </div>
 
-            <!-- Primary Color -->
             <div class="grid half gap-xl">
                 <div>
-                    <label class="setting-list-label">{{ trans('settings.app_primary_color') }}</label>
-                    <p class="small">{!! trans('settings.app_primary_color_desc') !!}</p>
+                    <label class="setting-list-label">{{ trans('settings.app_icon') }}</label>
+                    <p class="small">{{ trans('settings.app_icon_desc') }}</p>
                 </div>
-                <div component="setting-app-color-picker setting-color-picker"
-                     option:setting-color-picker:default="#206ea7"
-                     option:setting-color-picker:current="{{ setting('app-color') }}"
-                     class="text-m-right pt-xs">
-                    <input refs="setting-color-picker@input setting-app-color-picker@input" type="color" value="{{ setting('app-color') }}" name="setting-app-color" id="setting-app-color" placeholder="#206ea7">
-                    <input refs="setting-app-color-picker@light-input" type="hidden" value="{{ setting('app-color-light') }}" name="setting-app-color-light" id="setting-app-color-light">
-                    <div class="pr-s">
-                        <button refs="setting-color-picker@default-button" type="button" class="text-button text-muted mt-s">{{ trans('common.default') }}</button>
-                        <span class="sep">|</span>
-                        <button refs="setting-color-picker@reset-button" type="button" class="text-button text-muted mt-s">{{ trans('common.reset') }}</button>
-                    </div>
-
+                <div class="pt-xs">
+                    @include('form.image-picker', [
+                             'removeValue' => 'none',
+                             'defaultImage' => url('/icon.png'),
+                             'currentImage' => setting('app-icon'),
+                             'name' => 'app_icon',
+                             'imageClass' => 'logo-image',
+                         ])
                 </div>
             </div>
 
-            <!-- Entity Color -->
-            <div class="pb-l">
-                <div>
-                    <label class="setting-list-label">{{ trans('settings.content_colors') }}</label>
-                    <p class="small">{!! trans('settings.content_colors_desc') !!}</p>
+            <!-- App Color Scheme -->
+            @php
+                $darkMode = boolval(setting()->getForCurrentUser('dark-mode-enabled'));
+            @endphp
+            <div component="setting-app-color-scheme"
+                 option:setting-app-color-scheme:mode="{{ $darkMode ? 'dark' : 'light' }}"
+                 class="pb-l">
+                <div class="mb-l">
+                    <label class="setting-list-label">{{ trans('settings.color_scheme') }}</label>
+                    <p class="small">{{ trans('settings.color_scheme_desc') }}</p>
                 </div>
-                <div class="grid half pt-m">
-                    <div>
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'bookshelf'])
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'book'])
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'chapter'])
+
+                <div component="tabs" class="tab-container">
+                    <div role="tablist" class="controls-card">
+                        <button type="button"
+                                role="tab"
+                                id="color-scheme-tab-light"
+                                aria-selected="{{ $darkMode ? 'false' : 'true' }}"
+                                aria-controls="color-scheme-panel-light">@icon('light-mode'){{ trans('common.light_mode') }}</button>
+                        <button type="button"
+                                role="tab"
+                                id="color-scheme-tab-dark"
+                                aria-selected="{{ $darkMode ? 'true' : 'false' }}"
+                                aria-controls="color-scheme-panel-dark">@icon('dark-mode'){{ trans('common.dark_mode') }}</button>
                     </div>
-                    <div>
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'page'])
-                        @include('settings.parts.setting-entity-color-picker', ['type' => 'page-draft'])
+                    <div class="sub-card">
+                        <div id="color-scheme-panel-light"
+                             refs="setting-app-color-scheme@lightContainer"
+                             tabindex="0"
+                             role="tabpanel"
+                             aria-labelledby="color-scheme-tab-light"
+                             @if($darkMode) hidden @endif
+                             class="p-m">
+                            @include('settings.parts.setting-color-scheme', ['mode' => 'light'])
+                        </div>
+                        <div id="color-scheme-panel-dark"
+                             refs="setting-app-color-scheme@darkContainer"
+                             tabindex="0"
+                             role="tabpanel"
+                             aria-labelledby="color-scheme-tab-light"
+                             @if(!$darkMode) hidden @endif
+                             class="p-m">
+                            @include('settings.parts.setting-color-scheme', ['mode' => 'dark'])
+                        </div>
                     </div>
                 </div>
             </div>

@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'لا يمكن للخادم إنشاء صور مصغرة. الرجاء التأكد من تثبيت إضافة GD PHP.',
     'server_upload_limit' => 'الخادم لا يسمح برفع ملفات بهذا الحجم. الرجاء محاولة الرفع بحجم أصغر.',
     'uploaded'  => 'الخادم لا يسمح برفع ملفات بهذا الحجم. الرجاء محاولة الرفع بحجم أصغر.',
+    'file_upload_timeout' => 'انتهت عملية تحميل الملف.',
+
+    // Drawing & Images
     'image_upload_error' => 'حدث خطأ خلال رفع الصورة',
     'image_upload_type_error' => 'صيغة الصورة المرفوعة غير صالحة',
-    'file_upload_timeout' => 'انتهت عملية تحميل الملف.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'لم يتم العثور على المرفق',

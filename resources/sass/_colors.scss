@@ -9,10 +9,13 @@
   background-color: var(--color-primary-light);
   @include whenDark {
     background: #000;
-    .text-primary {
+    .text-link {
       color: #AAA !important;
     }
   }
+}
+.link-background {
+  background-color: var(--color-link) !important;
 }
 
 /*
@@ -39,6 +42,11 @@
 .text-primary, .text-primary:hover, .text-primary-hover:hover  {
   color: var(--color-primary) !important;
   fill: var(--color-primary) !important;
+}
+
+.text-link, .text-link:hover, .text-link-hover:hover  {
+  color: var(--color-link) !important;
+  fill: var(--color-link) !important;
 }
 
 .text-muted {

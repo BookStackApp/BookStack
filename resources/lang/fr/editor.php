@@ -150,7 +150,7 @@ return [
     'open_link_new' => 'Nouvelle fenêtre',
     'remove_link' => 'Retirer le lien',
     'insert_collapsible' => 'Insérer un bloc repliable',
-    'collapsible_unwrap' => 'Dérouler',
+    'collapsible_unwrap' => 'Sortir le contenu',
     'edit_label' => 'Modifier le libellé',
     'toggle_open_closed' => 'Basculer ouvert/fermé',
     'collapsible_edit' => 'Modifier un bloc repliable',
