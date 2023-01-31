@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Il server non può creare thumbnail. Controlla che l\'estensione GD sia installata.',
     'server_upload_limit' => 'Il server non permette un upload di questa grandezza. Prova con un file più piccolo.',
     'uploaded'  => 'Il server non consente upload di questa grandezza. Prova un file più piccolo.',
+    'file_upload_timeout' => 'Il caricamento del file è andato in timeout.',
+
+    // Drawing & Images
     'image_upload_error' => 'C\'è stato un errore caricando l\'immagine',
     'image_upload_type_error' => 'Il tipo di immagine caricata non è valido',
-    'file_upload_timeout' => 'Il caricamento del file è andato in timeout.',
+    'drawing_data_not_found' => 'Non è stato possibile caricare i dati del disegno. È possibile che il file del disegno non esista più o che non si abbia il permesso di accedervi.',
 
     // Attachments
     'attachment_not_found' => 'Allegato non trovato',

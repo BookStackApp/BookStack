@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Сервер не може створювати ескізи. Будь ласка, перевірте, чи встановлено розширення GD PHP.',
     'server_upload_limit' => 'Сервер не дозволяє завантажувати файли такого розміру. Спробуйте менший розмір файлу.',
     'uploaded'  => 'Сервер не дозволяє завантажувати файли такого розміру. Спробуйте менший розмір файлу.',
+    'file_upload_timeout' => 'Тайм-аут при завантаженні файлу',
+
+    // Drawing & Images
     'image_upload_error' => 'Виникла помилка під час завантаження зображення',
     'image_upload_type_error' => 'Тип завантаженого зображення недійсний',
-    'file_upload_timeout' => 'Тайм-аут при завантаженні файлу',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Вкладення не знайдено',

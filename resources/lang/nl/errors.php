@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'De server kon geen miniaturen maken. Controleer of je de GD PHP extensie geïnstalleerd hebt.',
     'server_upload_limit' => 'De server staat geen uploads van deze grootte toe. Probeer een kleinere bestandsgrootte.',
     'uploaded'  => 'De server staat geen uploads van deze grootte toe. Probeer een kleinere bestandsgrootte.',
+    'file_upload_timeout' => 'Het uploaden van het bestand is verlopen.',
+
+    // Drawing & Images
     'image_upload_error' => 'Er is een fout opgetreden bij het uploaden van de afbeelding',
     'image_upload_type_error' => 'Het geüploade afbeeldingstype is ongeldig',
-    'file_upload_timeout' => 'Het uploaden van het bestand is verlopen.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Bijlage niet gevonden',

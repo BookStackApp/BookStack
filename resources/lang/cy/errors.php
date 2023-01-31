@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Ni all y gweinydd greu mân-luniau. Gwiriwch fod gennych yr estyniad GD PHP wedi\'i osod.',
     'server_upload_limit' => 'Nid yw\'r gweinydd yn caniatáu uwchlwythiadau o\'r maint hwn. Rhowch gynnig ar faint ffeil llai.',
     'uploaded'  => 'Nid yw\'r gweinydd yn caniatáu uwchlwythiadau o\'r maint hwn. Rhowch gynnig ar faint ffeil llai.',
+    'file_upload_timeout' => 'Mae\'r amser uwchlwytho ffeil wedi dod i ben.',
+
+    // Drawing & Images
     'image_upload_error' => 'Bu gwall wrth uwchlwytho\'r ddelwedd',
     'image_upload_type_error' => 'Mae\'r math o ddelwedd sy\'n cael ei huwchlwytho yn annilys',
-    'file_upload_timeout' => 'Mae\'r amser uwchlwytho ffeil wedi dod i ben.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Ni chanfuwyd yr atodiad',

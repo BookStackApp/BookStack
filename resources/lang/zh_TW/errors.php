@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => '伺服器無法建立縮圖。請檢查您是否安裝了 PHP 的 GD 擴充程式。',
     'server_upload_limit' => '伺服器不允許上傳這個大的檔案。請嘗試較小的檔案。',
     'uploaded'  => '伺服器不允許上傳這個大的檔案。請嘗試較小的檔案。',
+    'file_upload_timeout' => '檔案上傳逾時。',
+
+    // Drawing & Images
     'image_upload_error' => '上傳圖片時發生錯誤',
     'image_upload_type_error' => '上傳圖片類型無效',
-    'file_upload_timeout' => '檔案上傳逾時。',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => '找不到附件',

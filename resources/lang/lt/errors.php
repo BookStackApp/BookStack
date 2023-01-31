@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Serveris negali sukurti miniatiūros. Prašome patikrinkite, ar turite įdiegtą GD PHP plėtinį.',
     'server_upload_limit' => 'Serveris neleidžia įkelti tokio dydžio failų. Prašome bandykite mažesnį failo dydį.',
     'uploaded'  => 'Serveris neleidžia įkelti tokio dydžio failų. Prašome bandykite mažesnį failo dydį.',
+    'file_upload_timeout' => 'Failo įkėlimo laikas baigėsi',
+
+    // Drawing & Images
     'image_upload_error' => 'Įvyko klaida įkeliant vaizdą',
     'image_upload_type_error' => 'Vaizdo tipas, kurį norima įkelti, yra neteisingas',
-    'file_upload_timeout' => 'Failo įkėlimo laikas baigėsi',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Priedas nerastas',

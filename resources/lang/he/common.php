@@ -25,7 +25,7 @@ return [
     'actions' => 'פעולות',
     'view' => 'הצג',
     'view_all' => 'הצג הכל',
-    'new' => 'New',
+    'new' => 'חדש',
     'create' => 'צור',
     'update' => 'עדכן',
     'edit' => 'ערוך',
@@ -48,12 +48,12 @@ return [
     'previous' => 'קודם',
     'filter_active' => 'מסנן פעיל:',
     'filter_clear' => 'נקה מסננים',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => 'הורדה',
+    'open_in_tab' => 'פתח בכרטיסייה חדשה',
 
     // Sort Options
     'sort_options' => 'אפשרויות מיון',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_direction_toggle' => 'החלפת כיוון מיון',
     'sort_ascending' => 'מיין בסדר עולה',
     'sort_descending' => 'מיין בסדר יורד',
     'sort_name' => 'שם',
@@ -78,23 +78,23 @@ return [
     'status_active' => 'פעיל',
     'status_inactive' => 'לא פעיל',
     'never' => 'אף פעם',
-    'none' => 'None',
+    'none' => 'ללא',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'דף הבית',
     'header_menu_expand' => 'הרחב תפריט',
-    'profile_menu' => 'Profile Menu',
+    'profile_menu' => 'תפריט הפרופיל',
     'view_profile' => 'הצג פרופיל',
     'edit_profile' => 'ערוך פרופיל',
     'dark_mode' => 'מצב לילה',
     'light_mode' => 'מצב יום',
-    'global_search' => 'Global Search',
+    'global_search' => 'חיפוש כללי',
 
     // Layout tabs
     'tab_info' => 'מידע',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'כרטיסייה: הצג מידע משני',
     'tab_content' => 'תוכן',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'כרטיסייה: הצג תוכן ראשי',
 
     // Email Content
     'email_action_help' => 'אם לא ניתן ללחות על כפתור ״:actionText״, יש להעתיק ולהדביק את הכתובת למטה אל דפדפן האינטרנט שלך:',

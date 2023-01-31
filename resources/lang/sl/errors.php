@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'Strežnik ne more izdelati sličice. Prosimo preverite če imate GD PHP razširitev nameščeno.',
     'server_upload_limit' => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite z manjšo velikostjo datoteke.',
     'uploaded'  => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite zmanjšati velikost datoteke.',
+    'file_upload_timeout' => 'Čas nalaganjanja datoteke je potekel.',
+
+    // Drawing & Images
     'image_upload_error' => 'Prišlo je do napake med nalaganjem slike',
     'image_upload_type_error' => 'Napačen tip (format) slike',
-    'file_upload_timeout' => 'Čas nalaganjanja datoteke je potekel.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Priloga ni najdena',

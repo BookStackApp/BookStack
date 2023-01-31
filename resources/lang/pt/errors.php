@@ -45,9 +45,12 @@ return [
     'cannot_create_thumbs' => 'O servidor não pôde criar as miniaturas de imagem. Por favor, verifique se a extensão GD PHP está instalada.',
     'server_upload_limit' => 'O servidor não permite o carregamento de arquivos com esse tamanho. Por favor, tente fazer o carregamento de arquivos mais pequenos.',
     'uploaded'  => 'O servidor não permite o carregamento de arquivos com esse tamanho. Por favor, tente fazer o carregamento de arquivos mais pequenos.',
+    'file_upload_timeout' => 'O carregamento do arquivo expirou.',
+
+    // Drawing & Images
     'image_upload_error' => 'Ocorreu um erro no carregamento da imagem',
     'image_upload_type_error' => 'O tipo de imagem enviada é inválida',
-    'file_upload_timeout' => 'O carregamento do arquivo expirou.',
+    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Anexo não encontrado',
