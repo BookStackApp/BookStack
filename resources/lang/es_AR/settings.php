@@ -49,12 +49,12 @@ return [
     'app_disable_comments_desc' => 'Deshabilitar comentarios en todas las páginas de la aplicación. Los comentarios existentes no se muestran.',
 
     // Color settings
-    'color_scheme' => 'Application Color Scheme',
-    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
-    'app_color' => 'Primary Color',
-    'link_color' => 'Default Link Color',
-    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'color_scheme' => 'Esquema de color de la aplicación',
+    'color_scheme_desc' => 'Establecer los colores a usar en la interfaz de BookStack. Los colores pueden configurarse por separado para que los modos oscuros y claros se ajusten mejor al tema y garanticen la legibilidad.',
+    'ui_colors_desc' => 'Establezca el color principal y el color de los enlaces para BookStack. El color principal se utiliza principalmente para la cabecera, botones y decoraciones de la interfaz. El color de los enlaces se utiliza para enlaces y acciones de texto, tanto dentro del contenido escrito como en la interfaz de Bookstack.',
+    'app_color' => 'Color principal',
+    'link_color' => 'Color de enlaces por defecto',
+    'content_colors_desc' => 'Establece los colores para todos los elementos en la jerarquía de la organización de la página. Se recomienda elegir colores con un brillo similar al predeterminado para mayor legibilidad.',
     'bookshelf_color' => 'Color del estante',
     'book_color' => 'Color del libro',
     'chapter_color' => 'Color del capítulo',
