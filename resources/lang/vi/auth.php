@@ -39,9 +39,9 @@ return [
     'register_success' => 'Cảm ơn bạn đã đăng kí! Bạn đã được xác nhận và đăng nhập.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Đang thử đăng nhập',
+    'auto_init_starting_desc' => 'Chúng tôi đang liên lạc với hệ thống xác thực của bạn để bắt đầu quá trình đăng nhập. Nếu sau 5 giây không có tiến triển, bạn có thể thử nhấp vào liên kết dưới đây.',
+    'auto_init_start_link' => 'Tiến hành xác thực',
 
     // Password Reset
     'reset_password' => 'Đặt lại mật khẩu',
@@ -61,8 +61,8 @@ return [
     'email_confirm_send_error' => 'Email xác nhận cần gửi nhưng hệ thống đã không thể gửi được email. Liên hệ với quản trị viên để chắc chắn email được thiết lập đúng.',
     'email_confirm_success' => 'Email của bạn đã được xác nhận! Bạn có thể đăng nhập với email này ngay bây giờ.',
     'email_confirm_resent' => 'Email xác nhận đã được gửi lại, Vui lòng kiểm tra hộp thư.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'Cảm ơn bạn đã xác nhận!',
+    'email_confirm_thanks_desc' => 'Vui lòng chờ trong giây lát khi yêu cầu xác nhận của bạn được xử lý. Nếu sau 3 giây bạn không được chuyển hướng, nhấp vào liên kết "Tiếp tục" dưới đây để tiếp tục.',
 
     'email_not_confirmed' => 'Địa chỉ email chưa được xác nhận',
     'email_not_confirmed_text' => 'Địa chỉ email của bạn hiện vẫn chưa được xác nhận.',

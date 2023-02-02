@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => 'đã tạo sách',
     'book_create_notification'    => 'Sách đã được tạo thành công',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'chuyển chương thành sách',
+    'book_create_from_chapter_notification' => 'Chuyển chương thành sách thành công',
     'book_update'                 => 'đã cập nhật sách',
     'book_update_notification'    => 'Sách đã được cập nhật thành công',
     'book_delete'                 => 'đã xóa sách',
@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Sách đã được sắp xếp lại thành công',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create'            => 'đã tạo giá sách',
+    'bookshelf_create_notification'    => 'Giá sách đã được tạo thành công',
+    'bookshelf_create_from_book'    => 'chuyển sách thành giá sách',
+    'bookshelf_create_from_book_notification'    => 'Chuyển sách thành giá sách thành công',
+    'bookshelf_update'                 => 'cập nhật giá sách',
+    'bookshelf_update_notification'    => 'Giá sách được cập nhật thành công',
+    'bookshelf_delete'                 => 'xoá giá sách',
+    'bookshelf_delete_notification'    => 'Xoá giá sách thành công',
 
     // Favourites
     'favourite_add_notification' => '":name" đã được thêm vào danh sách yêu thích của bạn',

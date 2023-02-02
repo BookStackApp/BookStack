@@ -34,7 +34,7 @@ return [
     'app_custom_html_disabled_notice' => 'El contenido personailzado para la cabecera HTML está deshabilitado en esta configuración para garantizar que cualquier cambio importante se pueda revertir.',
     'app_logo' => 'Logo de la aplicación',
     'app_logo_desc' => 'Se utiliza en la cabecera de la aplicación, entre otras áreas. Esta imagen debe ser de 86px de altura. Las imágenes grandes serán reducidas en tamaño.',
-    'app_icon' => 'Logo de la Aplicación',
+    'app_icon' => 'Icono de la aplicación',
     'app_icon_desc' => 'Se utiliza para las pestañas del navegador y los accesos directos. Debería ser una imagen PNG cuadrada de 256px.',
     'app_homepage' => 'Página de inicio de la Aplicación',
     'app_homepage_desc' => 'Seleccione una página de inicio para mostrar en lugar de la vista por defecto. Se ignoran los permisos de página para las páginas seleccionadas.',
