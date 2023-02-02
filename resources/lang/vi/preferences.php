@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'Lối tắt',
+    'shortcuts_interface' => 'Giao diện phím tắt',
+    'shortcuts_toggle_desc' => 'Tại đây, bạn có thể bật hoặc tắt các phím tắt trên giao diện hệ thống bàn phím, được sử dụng để điều hướng và thực hiện các thao tác.',
+    'shortcuts_customize_desc' => 'Bạn có thể tùy chỉnh từng phím tắt dưới đây. Chỉ cần nhấn tổ hợp phím mong muốn của bạn sau khi chọn đầu vào cho một phím tắt.',
+    'shortcuts_toggle_label' => 'Bật phím tắt',
+    'shortcuts_section_navigation' => 'Điều hướng',
+    'shortcuts_section_actions' => 'Hành động chung',
+    'shortcuts_save' => 'Lưu phím tắt',
+    'shortcuts_overlay_desc' => 'Lưu ý: Khi các phím tắt được bật, lớp phủ trợ giúp sẽ khả dụng bằng cách nhấn "?" sẽ làm nổi bật các lối tắt khả dụng cho các tác vụ hiện đang hiển thị trên màn hình.',
+    'shortcuts_update_success' => 'Các tùy chọn phím tắt đã được cập nhật!',
 ];
