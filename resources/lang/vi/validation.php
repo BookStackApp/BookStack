@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => ':attribute chỉ được chứa chữ cái, chữ số, gạch nối và gạch dưới.',
     'alpha_num'            => ':attribute chỉ được chứa chữ cái hoặc chữ số.',
     'array'                => ':attribute phải là một mảng.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'Mã cung cấp không hợp lệ hoặc đã được sử dụng.',
     'before'               => ':attribute phải là một ngày trước :date.',
     'between'              => [
         'numeric' => ':attribute phải nằm trong khoảng :min đến :max.',
@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute phải có từ :min đến :max chữ số.',
     'email'                => ':attribute phải là địa chỉ email hợp lệ.',
     'ends_with' => ':attribute phải kết thúc bằng một trong các ký tự: :values',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => ':attribute phải được cung cấp dưới dạng tệp hợp lệ.',
     'filled'               => 'Trường :attribute là bắt buộc.',
     'gt'                   => [
         'numeric' => ':attribute phải lớn hơn :value.',
@@ -100,7 +100,7 @@ return [
     ],
     'string'               => ':attribute phải là một chuỗi.',
     'timezone'             => ':attribute phải là một khu vực hợp lệ.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'Mã cung cấp không hợp lệ hoặc đã hết hạn.',
     'unique'               => ':attribute đã có người sử dụng.',
     'url'                  => 'Định dạng của :attribute không hợp lệ.',
     'uploaded'             => 'Tệp tin đã không được tải lên. Máy chủ không chấp nhận các tệp tin với dung lượng lớn như tệp tin trên.',

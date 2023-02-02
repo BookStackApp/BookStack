@@ -25,7 +25,7 @@ return [
     'actions' => 'Hành động',
     'view' => 'Xem',
     'view_all' => 'Xem tất cả',
-    'new' => 'New',
+    'new' => 'Mới',
     'create' => 'Tạo',
     'update' => 'Cập nhật',
     'edit' => 'Sửa',
@@ -48,8 +48,8 @@ return [
     'previous' => 'Trước đó',
     'filter_active' => 'Bộ lọc có hiệu lực:',
     'filter_clear' => 'Xóa bộ lọc',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => 'Tải về',
+    'open_in_tab' => 'Mở trong thẻ mới',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',
@@ -81,20 +81,20 @@ return [
     'none' => 'Không',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Trang chủ',
     'header_menu_expand' => 'Mở rộng Header Menu',
     'profile_menu' => 'Menu Hồ sơ',
     'view_profile' => 'Xem Hồ sơ',
     'edit_profile' => 'Sửa Hồ sơ',
     'dark_mode' => 'Chế độ Tối',
     'light_mode' => 'Chế độ Sáng',
-    'global_search' => 'Global Search',
+    'global_search' => 'Tìm kiếm toàn trang',
 
     // Layout tabs
     'tab_info' => 'Thông tin',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tab: Hiển thị thông tin phụ',
     'tab_content' => 'Nội dung',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tab: Hiển thị nội dung chính',
 
     // Email Content
     'email_action_help' => 'Nếu bạn đang có vấn đề trong việc bấm nút ":actionText", sao chép và dán địa chỉ URL dưới đây vào trình duyệt web:',

@@ -49,12 +49,12 @@ return [
     'app_disable_comments_desc' => 'Keelab kommentaarid kogu rakenduses. <br>Olemasolevaid kommentaare ei näidata.',
 
     // Color settings
-    'color_scheme' => 'Application Color Scheme',
-    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
-    'app_color' => 'Primary Color',
-    'link_color' => 'Default Link Color',
-    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'color_scheme' => 'Rakenduse värvid',
+    'color_scheme_desc' => 'Määra BookStack\'i kasutajaliidese värvid. Tumeda ja heleda režiimi värve saab sobivuse ja loetavuse huvides eraldi seadistada.',
+    'ui_colors_desc' => 'Määra BookStack\'i põhivärv ja vaikimisi linkide värv. Põhivärvi kasutatakse peamiselt päise, nuppude ning kasutajaliidese dekoratsioonide jaoks. Vaikimisi linkide värvi kasutatakse tekstipõhiste linkide ja tegevuste jaoks, nii kirjalikus sisus kui BookStack\'i kasutajaliideses.',
+    'app_color' => 'Põhivärv',
+    'link_color' => 'Vaikimisi linkide värv',
+    'content_colors_desc' => 'Määra värvid erinevatele sisuelementidele. Loetavuse huvides on soovituslik valida värvid, mille heledus on sarnane vaikimisi värvidele.',
     'bookshelf_color' => 'Riiuli värv',
     'book_color' => 'Raamatu värv',
     'chapter_color' => 'Peatüki värv',

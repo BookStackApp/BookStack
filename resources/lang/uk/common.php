@@ -25,7 +25,7 @@ return [
     'actions' => 'Дії',
     'view' => 'Подивитись',
     'view_all' => 'Подивитись все',
-    'new' => 'New',
+    'new' => 'Новий',
     'create' => 'Створити',
     'update' => 'Оновити',
     'edit' => 'Редагувати',
@@ -81,14 +81,14 @@ return [
     'none' => 'Відсутньо',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Домашня Сторінка',
     'header_menu_expand' => 'Розгорнути меню заголовка',
     'profile_menu' => 'Меню профілю',
     'view_profile' => 'Переглянути профіль',
     'edit_profile' => 'Редагувати профіль',
     'dark_mode' => 'Темний режим',
     'light_mode' => 'Світлий режим',
-    'global_search' => 'Global Search',
+    'global_search' => 'Глобальний Пошук',
 
     // Layout tabs
     'tab_info' => 'Інфо',
