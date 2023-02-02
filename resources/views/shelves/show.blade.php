@@ -11,6 +11,10 @@
 
 @section('body')
 
+    @php
+        $allPagesUrl = $shelf->getUrl('all');
+    @endphp
+
     <div class="mb-s">
         @include('entities.breadcrumbs', ['crumbs' => [
             $shelf,
@@ -32,12 +36,39 @@
             @if(count($sortedVisibleShelfBooks) > 0)
                 @if($view === 'list')
                     <div class="entity-list">
+                        @if(count($sortedVisibleShelfBooks) > 1)
+                            <a href="{{ $allPagesUrl }}" class="book entity-list-item">
+                                <div class="entity-list-item-image bg-book"
+                                    gstyle="background-image: url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')">
+                                    @icon('book')
+                                </div>
+                                <div class="content">
+                                    <h4 class="entity-list-item-name break-text">See All</h4>
+                                    <div class="entity-item-snippet">
+                                        <p class="text-muted break-text mb-s text-limit-lines-1"> </p>
+                                    </div>
+                                </div>
+                            </a>
+                        @endif
                         @foreach($sortedVisibleShelfBooks as $book)
                             @include('books.parts.list-item', ['book' => $book])
                         @endforeach
                     </div>
                 @else
                     <div class="grid third">
+                        @if (count($sortedVisibleShelfBooks) > 1)
+                            <a href="{{ $allPagesUrl }}" class="grid-card">
+                                <div class="bg-book featured-image-container-wrap">
+                                    <div class="featured-image-container"
+                                        style="background-image: url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==')">
+                                    </div>
+                                    @icon('book')
+                                </div>
+                                <div class="grid-card-content">
+                                    <h2 class="text-limit-lines-2">See All</h2>
+                                </div>
+                            </a>
+                        @endif
                         @foreach($sortedVisibleShelfBooks as $book)
                             @include('entities.grid-item', ['entity' => $book])
                         @endforeach
@@ -143,10 +174,10 @@
                 </a>
             @endif
 
-            @if(signedInUser())
+            {{-- @if(signedInUser())
                 <hr class="primary-background">
                 @include('entities.favourite-action', ['entity' => $shelf])
-            @endif
+            @endif --}}
 
         </div>
     </div>

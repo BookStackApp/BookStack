@@ -89,4 +89,16 @@ class PageRevision extends Model implements Loggable
     {
         return "Revision #{$this->revision_number} (ID: {$this->id}) for page ID {$this->page_id}";
     }
+
+    /**
+     * Added just to get this to place nice with "Entity" objects.
+     *
+     * Get the entity type as a simple lowercase word.
+     */
+    public static function getType(): string
+    {
+        $className = array_slice(explode('\\', static::class), -1, 1)[0];
+
+        return strtolower($className);
+    }
 }

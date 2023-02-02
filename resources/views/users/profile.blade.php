@@ -30,7 +30,7 @@
                         <div id="content-counts">
                             <div class="text-muted">{{ trans('entities.profile_created_content') }}</div>
                             <div class="grid half v-center no-row-gap">
-                                <div class="icon-list">
+                                {{-- <div class="icon-list">
                                     <a href="#recent-pages" class="text-page icon-list-item">
                                         <span>@icon('page')</span>
                                         <span>{{ trans_choice('entities.x_pages', $assetCounts['pages']) }}</span>
@@ -49,6 +49,18 @@
                                         <span>@icon('bookshelf')</span>
                                         <span>{{ trans_choice('entities.x_shelves', $assetCounts['shelves']) }}</span>
                                     </a>
+                                </div> --}}
+                                <div class="icon-list">
+                                    <a href="#recent-pages" class="text-page icon-list-item">
+                                        <span>@icon('page')</span>
+                                        <span>{{ trans_choice('entities.x_pages', $assetCounts['pages']) }}</span>
+                                    </a>
+                                </div>
+                                <div class="icon-list">
+                                    <a href="#recent-books" class="text-book icon-list-item">
+                                        <span>@icon('edit')</span>
+                                        <span>{{ trans_choice('entities.x_updates', $assetCounts['updates']) }}</span>
+                                    </a>
                                 </div>
                             </div>
 
@@ -60,17 +72,41 @@
                     <h2 id="recent-pages" class="list-heading">
                         {{ trans('entities.recently_created_pages') }}
                         @if (count($recentlyCreated['pages']) > 0)
-                            <a href="{{ url('/search?term=' . urlencode('{created_by:'.$user->slug.'} {type:page}') ) }}" class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                            <a href="{{ url('/search?term=' . urlencode('{created_by:' . $user->slug . '} {type:page}')) }}"
+                                class="text-small ml-s">{{ trans('common.view_all') }}</a>
                         @endif
                     </h2>
                     @if (count($recentlyCreated['pages']) > 0)
-                        @include('entities.list', ['entities' => $recentlyCreated['pages'], 'showPath' => true])
+                        @include('entities.list', [
+                            'entities' => $recentlyCreated['pages'],
+                            'showPath' => true,
+                        ])
                     @else
-                        <p class="text-muted">{{ trans('entities.profile_not_created_pages', ['userName' => $user->name]) }}</p>
+                        <p class="text-muted">
+                            {{ trans('entities.profile_not_created_pages', ['userName' => $user->name]) }}</p>
                     @endif
                 </section>
 
                 <section class="card content-wrap auto-height book-contents">
+                    <h2 id="recent-chapters" class="list-heading">
+                        {{ trans('entities.recently_edited_pages') }}
+                        @if (count($recentlyCreated['updates']) > 0)
+                            <a href="{{ url('/search?term=' . urlencode('{created_by:' . $user->slug . '} {type:page}')) }}"
+                                class="text-small ml-s">{{ trans('common.view_all') }}</a>
+                        @endif
+                    </h2>
+                    @if (count($recentlyCreated['updates']) > 0)
+                        @include('entities.list', [
+                            'entities' => $recentlyCreated['updates']
+                            // 'showPath' => true,
+                        ])
+                    @else
+                        <p class="text-muted">
+                            {{ trans('entities.profile_not_created_updates', ['userName' => $user->name]) }}</p>
+                    @endif
+                </section>
+
+                {{-- <section class="card content-wrap auto-height book-contents">
                     <h2 id="recent-chapters" class="list-heading">
                         {{ trans('entities.recently_created_chapters') }}
                         @if (count($recentlyCreated['chapters']) > 0)
@@ -110,7 +146,7 @@
                     @else
                         <p class="text-muted">{{ trans('entities.profile_not_created_shelves', ['userName' => $user->name]) }}</p>
                     @endif
-                </section>
+                </section> --}}
             </div>
 
         </div>

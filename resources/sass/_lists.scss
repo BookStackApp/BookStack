@@ -433,6 +433,26 @@ ul.pagination {
   display: none;
 }
 
+.add-shortcut {
+  display: inline;
+  font-size: 0.5em;
+  background-color: hsl(210, 100%, 56%);
+  // vertical-align: middle;
+  color: white !important; // TODO: Find way to avoid using !important
+  padding: 0.6em;
+  border-radius: 0.7em;
+  font-size: 0.7em;
+  transition: background-color 0.15s ease;
+  // transition: opacity 0.15s ease;
+  // opacity: 0.8;
+
+  &:hover {
+    text-decoration: none;
+    background-color: hsl(210, 100%, 40%);
+    // opacity: 1;
+  }
+}
+
 .entity-list-item, .icon-list-item {
   padding: $-s $-m;
   display: flex;
@@ -443,10 +463,20 @@ ul.pagination {
   width: 100%;
   position: relative;
   word-break: break-word;
+
+  &:not(a):not(button) { // This was added to allow the right sidebar actions list (new page, edit, sort, etc.) to work again
+    pointer-events: none;
+  }
+
   h4 a {
     color: #666;
   }
-  > span:first-child {
+  
+  a {
+    pointer-events: auto;
+  }
+
+  > span:first-of-type {
     flex-basis: 1.88em;
     flex: none;
   }
@@ -456,6 +486,13 @@ ul.pagination {
   }
   > .content {
     min-width: 0;
+  }
+  > a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   }
   &:not(.no-hover) {
     cursor: pointer;
@@ -609,7 +646,7 @@ ul.pagination {
 
 .entity-list.compact {
   font-size: 0.6 * $fs-m;
-  h4, a {
+  h4, .entity-list-item, a {
     line-height: 1.2;
   }
   .entity-item-snippet {
@@ -783,9 +820,9 @@ ul.pagination {
   opacity: .5;
 }
 
-.action-link-list {
-  //padding: $-s 0;
-}
+// .action-link-list {
+//   //padding: $-s 0;
+// }
 .action-link {
   background: transparent;
   border: none;

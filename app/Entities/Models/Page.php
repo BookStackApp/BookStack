@@ -152,4 +152,35 @@ class Page extends BookChild
     {
         return static::visible()->whereSlugs($bookSlug, $pageSlug)->firstOrFail();
     }
+
+    /**
+     * 
+     * Get all visible pages nested in a bookshelf.
+     *
+     * */
+    public static function getVisiblePagesInBookshelf(string $bookshelfSlug)
+    {
+        $visibleBelongsScope = function (BelongsTo $query) {
+            $query->scopes('visible');
+        };
+
+        $bookIds = Bookshelf::getBySlug($bookshelfSlug)
+            ->visibleBooks()
+            ->get()
+            ->pluck('id')
+            ->all();
+
+        return Page::visible()
+            ->with(['updatedBy', 'book' => $visibleBelongsScope, 'chapter' => $visibleBelongsScope])
+            ->whereIn('book_id', $bookIds);
+    }
+
+    public static function getAllVisiblePages() // TODO: Move to Page?
+    {
+        $visibleBelongsScope = function (BelongsTo $query) {
+            $query->scopes('visible');
+        };
+
+        return Page::visible()->with(['updatedBy', 'book' => $visibleBelongsScope, 'chapter' => $visibleBelongsScope]);
+    }
 }

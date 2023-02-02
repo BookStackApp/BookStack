@@ -6,6 +6,7 @@ use BookStack\Actions\ActivityQueries;
 use BookStack\Actions\ActivityType;
 use BookStack\Actions\View;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
@@ -122,7 +123,7 @@ class BookController extends Controller
     public function show(Request $request, ActivityQueries $activities, string $slug)
     {
         $book = $this->bookRepo->getBySlug($slug);
-        $bookChildren = (new BookContents($book))->getTree(true);
+        $bookChildren = (new BookContents($book))->getTree(true)->paginate(50);
         $bookParentShelves = $book->shelves()->scopes('visible')->get();
 
         View::incrementFor($book);
@@ -132,13 +133,41 @@ class BookController extends Controller
 
         $this->setPageTitle($book->getShortName());
 
-        return view('books.show', [
+        return view('books.show-paginated', [
             'book'              => $book,
             'current'           => $book,
             'bookChildren'      => $bookChildren,
             'bookParentShelves' => $bookParentShelves,
             'activity'          => $activities->entityActivity($book, 20, 1),
             'referenceCount'    => $this->referenceFetcher->getPageReferenceCountToEntity($book),
+        ]);
+    }
+
+    /**
+     * Display the specified book.
+     */
+    public function showAllFromBookshelf(Request $request, ActivityQueries $activities, string $shelfSlug)
+    {
+        $shelf = Bookshelf::getBySlug($shelfSlug);
+        $bookParentShelves = $shelf->visibleBooks()->get();
+
+        $shelfPages = Page::getVisiblePagesInBookshelf($shelfSlug)
+        ->orderBy('name', 'asc')
+        ->paginate(50);
+
+        $pageName = 'All '.$shelf->getShortName();
+        $this->setPageTitle($pageName);
+
+        return view('books.show-paginated', [
+            'customName' => $pageName,
+            'book' => $shelf,
+            'current' => $shelf,
+            'bookChildren' => $shelfPages,
+            'bookParentShelves' => $bookParentShelves, // TODO: Rename
+            'activity' => $activities->entityActivity($shelf, 20, 1),
+            'referenceCount' => $this->referenceFetcher->getPageReferenceCountToEntity($shelf),
+            'isABook' => false,
+            'showPath' => true,
         ]);
     }
 

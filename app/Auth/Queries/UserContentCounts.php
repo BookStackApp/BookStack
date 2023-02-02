@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\PageRevision;
 
 /**
  * Get asset created counts for the given user.
@@ -25,6 +26,7 @@ class UserContentCounts
             'chapters' => Chapter::visible()->where($createdBy)->count(),
             'books'    => Book::visible()->where($createdBy)->count(),
             'shelves'  => Bookshelf::visible()->where($createdBy)->count(),
+            'updates'  => PageRevision::query()->where('created_by', '=', $user->id)->where('revision_number', '!=', 1)->get()->count(),
         ];
     }
 }

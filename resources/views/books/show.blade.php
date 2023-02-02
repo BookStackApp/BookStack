@@ -24,7 +24,7 @@
     </div>
 
     <main class="content-wrap card">
-        <h1 class="break-text">{{$book->name}}</h1>
+        <h1 class="break-text">{ $customName ?? {$book->name}}</h1>
         <div refs="entity-search@contentView" class="book-content">
             <p class="text-muted">{!! nl2br(e($book->description)) !!}</p>
             @if(count($bookChildren) > 0)
@@ -89,6 +89,7 @@
         </div>
     </div>
 
+@if ($isABook ?? true)
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-link">
@@ -137,16 +138,17 @@
                 </a>
             @endif
 
-            <hr class="primary-background">
+            {{-- <hr class="primary-background">
 
             @if(signedInUser())
                 @include('entities.favourite-action', ['entity' => $book])
             @endif
             @if(userCan('content-export'))
                 @include('entities.export-menu', ['entity' => $book])
-            @endif
+            @endif --}}
         </div>
     </div>
+@endif
 
 @stop
 
@@ -167,7 +169,7 @@
         </div>
     @endif
 
-    @if(count($activity) > 0)
+    @if(($isABook ?? true) && count($activity) > 0)
         <div class="mb-xl">
             <h5>{{ trans('entities.recent_activity') }}</h5>
             @include('common.activity-list', ['activity' => $activity])

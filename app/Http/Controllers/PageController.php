@@ -338,11 +338,7 @@ class PageController extends Controller
      */
     public function showRecentlyUpdated()
     {
-        $visibleBelongsScope = function (BelongsTo $query) {
-            $query->scopes('visible');
-        };
-
-        $pages = Page::visible()->with(['updatedBy', 'book' => $visibleBelongsScope, 'chapter' => $visibleBelongsScope])
+        $pages = Page::getAllVisiblePages()
             ->orderBy('updated_at', 'desc')
             ->paginate(20)
             ->setPath(url('/pages/recently-updated'));
@@ -350,10 +346,71 @@ class PageController extends Controller
         $this->setPageTitle(trans('entities.recently_updated_pages'));
 
         return view('common.detailed-listing-paginated', [
-            'title'         => trans('entities.recently_updated_pages'),
-            'entities'      => $pages,
+            'title' => trans('entities.recently_updated_pages'),
+            'entities' => $pages,
             'showUpdatedBy' => true,
-            'showPath'      => true,
+            'showPath' => true,
+        ]);
+    }
+    
+    /**
+     * Show a listing of newest symbols.
+     */
+    public function showNewestSymbols()
+    {
+        $pages = Page::getVisiblePagesInBookshelf('symbols')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20)
+            ->setPath(url('/pages/newest-symbols'));
+
+        $this->setPageTitle('Newest Symbols');
+
+        return view('common.detailed-listing-paginated', [
+            'title' => 'Newest Symbols',
+            'entities' => $pages,
+            'showUpdatedBy' => true,
+            'showPath' => true,
+        ]);
+    }
+
+    /**
+     * Show a listing of recently updated symbols.
+     */
+    public function showRecentlyUpdatedSymbols()
+    {
+        $pages = Page::getVisiblePagesInBookshelf('symbols')
+            ->orderBy('updated_at', 'desc')
+            ->where('revision_count', '>', 1)
+            ->paginate(20)
+            ->setPath(url('/pages/symbols-recently-updated'));
+
+        $this->setPageTitle('Recently Edited Symbols');
+
+        return view('common.detailed-listing-paginated', [
+            'title' => 'Recently Edited Symbols',
+            'entities' => $pages,
+            'showUpdatedBy' => true,
+            'showPath' => true,
+        ]);
+    }
+
+    /**
+     * Show a listing of recently updated draft pages.
+     */
+    public function showRecentlyUpdatedDrafts()
+    {
+        $pages = Page::getVisiblePagesInBookshelf('contribute')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(20)
+            ->setPath(url('/pages/drafts-recently-updated'));
+
+        $this->setPageTitle('Recently Updated Drafts');
+
+        return view('common.detailed-listing-paginated', [
+            'title' => 'Recently Updated Drafts',
+            'entities' => $pages,
+            'showUpdatedBy' => true,
+            // 'showPath' => true,
         ]);
     }
 

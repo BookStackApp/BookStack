@@ -1,7 +1,7 @@
 <header id="header" component="header-mobile-toggle" class="primary-background">
     <div class="grid mx-l">
 
-        <div>
+        <div id="left-header">
             <a href="{{ url('/') }}" data-shortcut="home_view" class="logo">
                 @if(setting('app-logo', '') !== 'none')
                     <img class="logo-image" src="{{ setting('app-logo', '') === '' ? url('/logo.png') : url(setting('app-logo', '')) }}" alt="Logo">
@@ -10,6 +10,14 @@
                     <span class="logo-text">{{ setting('app-name') }}</span>
                 @endif
             </a>
+
+            <a target="_blank" rel="noopener noreferrer" href="https://decodingsymbols.wordpress.com/blog/"
+            id="blog-btn" class="btn-special">Visit<br />Blog</a>
+
+            {{-- @if (userCan('page-create', Book::getBySlug('drafts'))) --}}
+            <a href="{{ url('/books/drafts/create-page') }}" class="btn-special">+ Draft</a>
+            {{-- @endif --}}
+
             <button type="button"
                     refs="header-mobile-toggle@toggle"
                     title="{{ trans('common.header_menu_expand') }}"
@@ -46,6 +54,7 @@
             <div class="links text-center">
                 @if (hasAppAccess())
                     <a class="hide-over-l" href="{{ url('/search') }}">@icon('search'){{ trans('common.search') }}</a>
+                    <a href="{{ url('/shelves/symbols/all') }}" class="btn-special">@icon('star-circle')All Symbols</a>
                     @if(userCanOnAny('view', \BookStack\Entities\Models\Bookshelf::class) || userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
                         <a href="{{ url('/shelves') }}" data-shortcut="shelves_view">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
                     @endif
@@ -74,22 +83,38 @@
                             <span class="name">{{ $currentUser->getShortName(9) }}</span> @icon('caret-down')
                         </span>
                     <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
-                        <li>
+                        {{-- <li>
                             <a href="{{ url('/favourites') }}" data-shortcut="favourites_view" class="icon-item">
                                 @icon('star')
                                 <div>{{ trans('entities.my_favourites') }}</div>
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a href="{{ $currentUser->getProfileUrl() }}" data-shortcut="profile_view" class="icon-item">
                                 @icon('user')
                                 <div>{{ trans('common.view_profile') }}</div>
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{ $currentUser->getEditUrl() }}" class="icon-item">
                                 @icon('edit')
                                 <div>{{ trans('common.edit_profile') }}</div>
+                            </a>
+                        </li> --}}
+                        @if (signedInUser() && userCan('settings-manage'))
+                            <li>
+                                <a href="{{ url('/settings') }}" class="icon-item">
+                                    @icon('settings')
+                                    <div>{{ trans('settings.settings') }}</div>
+                                </a>
+                            </li>
+                        @endif
+                        <li>
+                            {{-- <a target="_blank" rel="noopener noreferrer" href="https://decodingsymbols.wordpress.com/blog/" class="hide-over-l">@icon('export')Visit Blog</a> --}}
+                            <a target="_blank" rel="noopener noreferrer"
+                                href="https://decodingsymbols.wordpress.com/blog/" class="icon-item hide-over-l">
+                                @icon('export')
+                                <div>Visit Blog</div>
                             </a>
                         </li>
                         <li>

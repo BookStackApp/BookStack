@@ -26,6 +26,14 @@ header {
     display: flex;
     align-items: center;
     justify-content: end;
+
+    .btn-special {
+      color: var(--color-primary);
+
+      // &:hover {
+      //   background-color: rgba(255, 255, 255, 0.95);
+      // }
+    }
   }
   .links {
     display: inline-block;
@@ -188,6 +196,42 @@ header .search-box.search-active:focus-within {
   }
 }
 
+.btn-special {
+  display: inline-flex;
+  padding: ($-s - 6px) $-s;
+  // margin: 6px (-$-s);
+  // gap: $-s;
+  align-items: center;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 1em;
+  // color: #fff;
+  color: var(--color-primary);
+  // font-weight: 400;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+
+  transition: background-color ease 0.15s;
+  outline: none;
+
+  &:hover {
+    // color: #fff;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.93) !important;
+  }
+
+  &:active {
+    background-color: rgba(255, 255, 255, 0.87) !important;
+  }
+}
+
+#left-header {
+  display: flex;
+  align-items: center;
+  gap: $-m;
+}
+
 .logo-text {
   font-size: 1.8em;
   color: #fff;
@@ -207,8 +251,8 @@ header .search-box.search-active:focus-within {
   padding: 0 $-xs;
   position: absolute;
   right: $-m;
-  top: 13px;
-  line-height: 1;
+  // top: 13px;
+  // line-height: 1;
   cursor: pointer;
   user-select: none;
   svg {
@@ -224,6 +268,10 @@ header .search-box.search-active:focus-within {
 
 
 @include smaller-than($l) {
+  #blog-btn {
+    display: none;
+  }
+
   header .header-links {
     @include lightDark(background-color, #fff, #333);
     display: none;
@@ -249,6 +297,9 @@ header .search-box.search-active:focus-within {
     grid-template-columns: 16px auto;
     line-height: 1.4;
     @include lightDark(color, $text-dark, #eee);
+    &.btn-special {
+      color: var(--color-primary);
+    }
     svg {
       margin-inline-end: $-s;
       width: 16px;
@@ -337,9 +388,9 @@ header .search-box.search-active:focus-within {
 @include smaller-than($l) {
   .breadcrumbs .icon-list-item {
     padding: $-xs;
-    > span + span {
-      display: none;
-    }
+    // > span + span {
+    //   display: none;
+    // }
     > span:first-child {
       margin-inline-end: 0;
     }

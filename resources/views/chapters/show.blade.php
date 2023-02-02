@@ -155,14 +155,14 @@
                 </a>
             @endif
 
-            <hr class="primary-background"/>
+            {{-- <hr class="primary-background"/>
 
             @if(signedInUser())
                 @include('entities.favourite-action', ['entity' => $chapter])
             @endif
             @if(userCan('content-export'))
                 @include('entities.export-menu', ['entity' => $chapter])
-            @endif
+            @endif --}}
         </div>
     </div>
 @stop

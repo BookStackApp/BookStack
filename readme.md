@@ -14,6 +14,7 @@
 
 A platform for storing and organising information and documentation. Details for BookStack can be found on the official website at https://www.bookstackapp.com/.
 
+* [Development Quickstart](#development-quickstart)
 * [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)
 * [Documentation](https://www.bookstackapp.com/docs)
 * [Demo Instance](https://demo.bookstackapp.com)
@@ -22,6 +23,29 @@ A platform for storing and organising information and documentation. Details for
 * [BookStack Blog](https://www.bookstackapp.com/blog)
 * [Issue List](https://github.com/BookStackApp/BookStack/issues)
 * [Discord Chat](https://discord.gg/ztkBqR2)
+
+## Development Quickstart
+
+> These instructions were added for this fork, since the [original instructions](/dev/docs/development.md) can be confusing (but have good details, so worth checking out). The [docs folder](/dev/docs) is also helpful.
+
+1. Duplicate `.env.dev` and rename the duplicate to `.env`
+2. `npm install`
+3. `npm run build` (Builds the JS and SASS. If you skip this step, you'll need to run it, then restart the Docker container for changes to take effect.)
+4. `docker compose up`
+
+Now open http://localhost:8081/ and login with admin@admin.com and "password" (no quotes). Any changes you make to the files will be reflected automatically! (So long as the Docker container is running) *Note:* `docker compose` takes a while, as does starting the container. Give it some time if the browser can't connect right away.
+
+**To get home screen working:** You'll need to create the categories ("shelves" internally) that [HomeController.php](app/Http/Controllers/HomeController.php) is expecting, as well as at least one sub-category ("book") and page for each shelf. Which I think is: (spelling must be exact for categories)
+- Symbols *(Category name)*
+  - "Vocab Words" or any name *(sub-category)*
+    - "Test page" or any name *(page)*
+- Contribute
+  - "Drafts" or any name (I think)
+    - "Test draft page" or any name
+
+**Debugging:** If using VSCode, there is already a [.vscode/launch.json](/.vscode/launch.json) file included. All you need to do is install the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug) package by Xdebug. [More info on debugging](/dev/docs/development.md#debugging).
+
+**Accessing SQL database in Docker:** In the Docker Desktop app, open the sub-container "db-1", then go to "Terminal" (or connect via CLI). Then use `mysql -u bookstack-test -p` followed by the password `bookstack-test`. (These values are set in [docker-compose.yml](docker-compose.yml))
 
 ## 📚 Project Definition
 

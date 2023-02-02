@@ -3,7 +3,9 @@
 namespace BookStack\Http\Controllers;
 
 use BookStack\Actions\ActivityQueries;
+use BookStack\Entities\BasicListItem;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\RecentlyViewed;
 use BookStack\Entities\Queries\TopFavourites;
@@ -20,30 +22,45 @@ class HomeController extends Controller
      */
     public function index(Request $request, ActivityQueries $activities)
     {
-        $activity = $activities->latest(10);
-        $draftPages = [];
+        $activeUsers = $activities->recentlyActiveUsers(3);
 
-        if ($this->isSignedIn()) {
-            $draftPages = Page::visible()
-                ->where('draft', '=', true)
-                ->where('created_by', '=', user()->id)
-                ->orderBy('updated_at', 'desc')
-                ->with('book')
-                ->take(6)
-                ->get();
-        }
-
-        $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
-        $recents = $this->isSignedIn() ?
-            (new RecentlyViewed())->run(12 * $recentFactor, 1)
-            : Book::visible()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
-        $favourites = (new TopFavourites())->run(6);
-        $recentlyUpdatedPages = Page::visible()->with('book')
-            ->where('draft', false)
-            ->orderBy('updated_at', 'desc')
-            ->take($favourites->count() > 0 ? 5 : 10)
+        $newSymbols = Page::getVisiblePagesInBookshelf('symbols')
+            ->orderBy('created_at', 'desc')
+            ->take(10)
             ->select(Page::$listAttributes)
             ->get();
+
+        $latestDrafts = Page::getVisiblePagesInBookshelf('contribute')
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->select(Page::$listAttributes)
+            ->get();
+
+        // $blogTodos = Book::getBySlug('blog-post-symbols-to-extract')->visible();
+
+        $quickLinks = collect([
+            new BasicListItem('/shelves/symbols/all', 'All Symbols', 'See all of the official symbols', 'star-circle'),
+            // new BasicListItem('/shelves/to-do-lists/all', 'To-Do Items', 'Help out by checking off to-do items!', 'check'),
+            new BasicListItem('/shelves/to-do-lists/all', 'How Can I Help?', 'Learn how you can help Symbolpedia!', 'info'),
+            ...Bookshelf::getBySlug('contribute')->visibleBooks()->get()->all(),
+            // Book::getBySlug('blog-post-symbols-to-extract'),
+            // Book::getBySlug('blog-post-to-dos'),
+        ]);
+
+        // $test = Book::getBySlug('drafts');
+
+        // $recentUpdates = Page::getAllVisiblePages()
+        // ->orderBy('created_at', 'desc')
+        // ->take(2)
+        // ->get();
+        $recentUpdates = Page::getVisiblePagesInBookshelf('symbols')
+        ->orderBy('updated_at', 'desc')
+        ->where('revision_count', '>', 1)
+        ->take(3)
+        ->select(Page::$listAttributes)
+        ->get();
+
+        $symbolTypesList = Bookshelf::getBySlug('symbols')->visibleBooks()->get();
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
         $homepageOption = setting('app-homepage-type', 'default');
@@ -52,53 +69,13 @@ class HomeController extends Controller
         }
 
         $commonData = [
-            'activity'             => $activity,
-            'recents'              => $recents,
-            'recentlyUpdatedPages' => $recentlyUpdatedPages,
-            'draftPages'           => $draftPages,
-            'favourites'           => $favourites,
+            'activeUsers' => $activeUsers,
+            'latestDrafts' => $latestDrafts,
+            'newSymbols' => $newSymbols,
+            'quickLinks' => $quickLinks,
+            'symbolTypesList' => $symbolTypesList,
+            'recentUpdates' => $recentUpdates,
         ];
-
-        // Add required list ordering & sorting for books & shelves views.
-        if ($homepageOption === 'bookshelves' || $homepageOption === 'books') {
-            $key = $homepageOption;
-            $view = setting()->getForCurrentUser($key . '_view_type');
-            $listOptions = SimpleListOptions::fromRequest($request, $key)->withSortOptions([
-                'name' => trans('common.sort_name'),
-                'created_at' => trans('common.sort_created_at'),
-                'updated_at' => trans('common.sort_updated_at'),
-            ]);
-
-            $commonData = array_merge($commonData, [
-                'view'        => $view,
-                'listOptions' => $listOptions,
-            ]);
-        }
-
-        if ($homepageOption === 'bookshelves') {
-            $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
-            $data = array_merge($commonData, ['shelves' => $shelves]);
-
-            return view('home.shelves', $data);
-        }
-
-        if ($homepageOption === 'books') {
-            $books = app(BookRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
-            $data = array_merge($commonData, ['books' => $books]);
-
-            return view('home.books', $data);
-        }
-
-        if ($homepageOption === 'page') {
-            $homepageSetting = setting('app-homepage', '0:');
-            $id = intval(explode(':', $homepageSetting)[0]);
-            /** @var Page $customHomepage */
-            $customHomepage = Page::query()->where('draft', '=', false)->findOrFail($id);
-            $pageContent = new PageContent($customHomepage);
-            $customHomepage->html = $pageContent->render(false);
-
-            return view('home.specific-page', array_merge($commonData, ['customHomepage' => $customHomepage]));
-        }
 
         return view('home.default', $commonData);
     }

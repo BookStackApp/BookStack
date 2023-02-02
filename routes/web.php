@@ -53,6 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/docs', [Api\ApiDocsController::class, 'display']);
 
     Route::get('/pages/recently-updated', [PageController::class, 'showRecentlyUpdated']);
+    Route::get('/pages/newest-symbols', [PageController::class, 'showNewestSymbols']);
+    Route::get('/pages/symbols-recently-updated', [PageController::class, 'showRecentlyUpdatedSymbols']);
+    Route::get('/pages/drafts-recently-updated', [PageController::class, 'showRecentlyUpdatedDrafts']);
 
     // Shelves
     Route::get('/create-shelf', [BookshelfController::class, 'create']);
@@ -62,6 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/shelves/{slug}/delete', [BookshelfController::class, 'showDelete']);
     Route::get('/shelves/{slug}', [BookshelfController::class, 'show']);
     Route::put('/shelves/{slug}', [BookshelfController::class, 'update']);
+    Route::get('/shelves/{slug}/all', [BookController::class, 'showAllFromBookshelf']);
     Route::delete('/shelves/{slug}', [BookshelfController::class, 'destroy']);
     Route::get('/shelves/{slug}/permissions', [PermissionsController::class, 'showForShelf']);
     Route::put('/shelves/{slug}/permissions', [PermissionsController::class, 'updateForShelf']);

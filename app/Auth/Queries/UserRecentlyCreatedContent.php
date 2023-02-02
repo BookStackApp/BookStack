@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\PageRevision;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -32,6 +33,7 @@ class UserRecentlyCreatedContent
             'chapters' => $query(Chapter::visible()),
             'books'    => $query(Book::visible()),
             'shelves'  => $query(Bookshelf::visible()),
+            'updates'  => PageRevision::query()->where('created_by', '=', $user->id)->where('revision_number', '!=', 1)->orderBy('updated_at', 'desc')->take($count)->get(),
         ];
     }
 }

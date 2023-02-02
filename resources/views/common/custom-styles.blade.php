@@ -11,5 +11,6 @@
         --color-chapter: {{ setting('chapter-color' . $settingSuffix)}};
         --color-page: {{ setting('page-color' . $settingSuffix)}};
         --color-page-draft: {{ setting('page-draft-color' . $settingSuffix)}};
+        --color-star-circle: {{ setting('app-color') }};
     }
 </style>

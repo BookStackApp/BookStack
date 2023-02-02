@@ -36,6 +36,49 @@ class ActivityQueries
         return $this->filterSimilar($activityList);
     }
 
+    public function allUserActivity()
+    {
+        $activityList = $this->permissions->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type');
+
+        $activity = $activityList
+            // ->where('type', '=', ActivityType::PAGE_UPDATE)
+            // ->whereIn('type', '=', [ActivityType::PAGE_UPDATE])
+            ->whereIn('type', [ActivityType::PAGE_UPDATE, ActivityType::BOOK_CREATE, ActivityType::PAGE_CREATE, ActivityType::BOOKSHELF_CREATE])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->unique('user_id');
+
+        return $activity;
+    }
+
+    /**
+     * Gets the latest activity.
+     */
+    public function recentlyActiveUsers(int $count = 5, int $page = 0): array
+    {
+        // $activityList = $this->permissions->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type');
+
+        // $activity = $activityList
+        //     ->orderBy('created_at', 'desc')
+        //     ->get()
+        //     // ->groupBy('user_id')
+        //     ->unique('user_id')
+        //     // ->distinct('user_id')
+        //     // ->distinct()
+        //     // ->with(['user'])
+        //     // ->with(['entity'])
+        //     // ->with(['user', 'entity'])
+        //     ->skip($count * $page)
+        //     ->take($count);
+        // // ->get();
+
+        $activity = $this->allUserActivity()
+            ->skip($count * $page)
+            ->take($count);
+
+        return $this->filterSimilar($activity);
+    }
+
     /**
      * Gets the latest activity for an entity, Filtering out similar
      * items to prevent a message activity list.

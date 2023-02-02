@@ -183,14 +183,14 @@
                 </a>
             @endif
 
-            <hr class="primary-background"/>
+            {{-- <hr class="primary-background"/>
 
             @if(signedInUser())
                 @include('entities.favourite-action', ['entity' => $page])
             @endif
             @if(userCan('content-export'))
                 @include('entities.export-menu', ['entity' => $page])
-            @endif
+            @endif --}}
         </div>
 
     </div>

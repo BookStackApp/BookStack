@@ -1,4 +1,4 @@
-@component('entities.list-item-basic', ['entity' => $entity, 'classes' => (($locked ?? false) ? 'disabled ' : '') . ($classes ?? '') ])
+@component('entities.list-item-basic', ['entity' => $entity, 'classes' => (($locked ?? false) ? 'disabled ' : '') . ($classes ?? ''), 'showQuickAdd' => $showQuickAdd ?? false, ])
 
 <div class="entity-item-snippet">
 
@@ -17,7 +17,10 @@
         @endif
     @endif
 
-    <p class="text-muted break-text">{{ $entity->preview_content ?? $entity->getExcerpt() }}</p>
+    @if ($showExcerpt ?? true)
+        <p class="text-muted break-text">
+            {{ $entity->getType() !== 'pagerevision' ? $entity->preview_content ?? $entity->getExcerpt() : '' }}</p>
+    @endif
 </div>
 
 @if(($showTags ?? false) && $entity->tags->count() > 0)
