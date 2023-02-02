@@ -86,8 +86,8 @@ return [
     'profile_menu' => '个人资料',
     'view_profile' => '查看个人资料',
     'edit_profile' => '编辑个人资料',
-    'dark_mode' => '夜间模式',
-    'light_mode' => '日间模式',
+    'dark_mode' => '深色模式',
+    'light_mode' => '浅色模式',
     'global_search' => '全局搜索',
 
     // Layout tabs
