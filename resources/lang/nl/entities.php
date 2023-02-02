@@ -174,7 +174,7 @@ return [
     'chapters_delete' => 'Hoofdstuk verwijderen',
     'chapters_delete_named' => 'Verwijder hoofdstuk :chapterName',
     'chapters_delete_explain' => 'Dit verwijdert het hoofdstuk met de naam \':chapterName\'. Alle pagina\'s die binnen dit hoofdstuk staan, worden ook verwijderd.',
-    'chapters_delete_confirm' => 'Weet je zeker dat je dit boek wilt verwijderen?',
+    'chapters_delete_confirm' => 'Weet je zeker dat je dit hoofdstuk wilt verwijderen?',
     'chapters_edit' => 'Hoofdstuk aanpassen',
     'chapters_edit_named' => 'Hoofdstuk :chapterName aanpassen',
     'chapters_save' => 'Hoofdstuk opslaan',
