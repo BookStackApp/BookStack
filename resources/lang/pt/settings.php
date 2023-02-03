@@ -46,7 +46,7 @@ return [
     'app_footer_links_add' => 'Adicionar Link de Rodapé',
     'app_disable_comments' => 'Desativar Comentários',
     'app_disable_comments_toggle' => 'Desativar comentários',
-    'app_disable_comments_desc' => 'Desativar comentários em todas as páginas no aplicativo.<br> Comentários existentes não serão exibidos.',
+    'app_disable_comments_desc' => 'Desativar comentários em todas as páginas da aplicação.<br> Comentários existentes não serão exibidos.',
 
     // Color settings
     'color_scheme' => 'Esquema de cores da aplicação',
@@ -62,11 +62,11 @@ return [
     'page_draft_color' => 'Cor do Rascunho',
 
     // Registration Settings
-    'reg_settings' => 'Cadastro',
-    'reg_enable' => 'Habilitar Cadastro',
-    'reg_enable_toggle' => 'Habilitar cadastro',
-    'reg_enable_desc' => 'Quando o cadastro é habilitado, visitantes poderão cadastrar-se como usuários do aplicativo. Realizado o cadastro, recebem um único cargo padrão.',
-    'reg_default_role' => 'Cargo padrão para usuários após o cadastro',
+    'reg_settings' => 'Inscrição',
+    'reg_enable' => 'Permitir inscrições',
+    'reg_enable_toggle' => 'Permitir inscrições',
+    'reg_enable_desc' => 'Quando o registo é ativado, os visitantes poderão registar se como utilizadores padrão da aplicação.',
+    'reg_default_role' => 'Papel por omissão apôs registo',
     'reg_enable_external_warning' => 'A opção acima é ignorada enquanto a autenticação externa LDAP ou SAML estiver ativa. Contas de usuários para membros não existentes serão criadas automaticamente se a autenticação pelo sistema externo em uso for bem sucedida.',
     'reg_email_confirmation' => 'Confirmação de E-mail',
     'reg_email_confirmation_toggle' => 'Requerer confirmação de e-mail',
@@ -198,7 +198,7 @@ return [
     'users_external_auth_id' => 'ID de Autenticação Externa',
     'users_external_auth_id_desc' => 'Este ID é utilizado para relacionar um utilizador ao comunicar com um sistema de autenticação externo.',
     'users_password_warning' => 'Apenas preencha os dados abaixo caso queira modificar a sua palavra-passe.',
-    'users_system_public' => 'Este utilizador representa quaisquer convidados que visitam a aplicação. Não pode ser utilizado para efetuar autenticação mas é automaticamente atribuído.',
+    'users_system_public' => 'Este utilizador representa quaisquer convidados que visitam a aplicação. Não pode ser utilizado para efetuar autenticação, mas é automaticamente atribuído.',
     'users_delete' => 'Eliminar Utilizador',
     'users_delete_named' => 'Eliminar :userName',
     'users_delete_warning' => 'A ação vai eliminar completamente o utilizador de nome \':userName\' do sistema.',
