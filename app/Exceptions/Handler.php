@@ -98,6 +98,7 @@ class Handler extends ExceptionHandler
         ];
 
         if ($e instanceof ValidationException) {
+            $responseData['error']['message'] = 'The given data was invalid.';
             $responseData['error']['validation'] = $e->errors();
             $code = $e->status;
         }

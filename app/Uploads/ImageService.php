@@ -547,7 +547,7 @@ class ImageService
             // Check the image file exists
             && $disk->exists($imagePath)
             // Check the file is likely an image file
-            && strpos($disk->getMimetype($imagePath), 'image/') === 0;
+            && strpos($disk->mimeType($imagePath), 'image/') === 0;
     }
 
     /**
