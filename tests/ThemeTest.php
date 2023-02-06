@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\Environment;
 
 class ThemeTest extends TestCase
 {
@@ -57,7 +58,7 @@ class ThemeTest extends TestCase
     {
         $callbackCalled = false;
         $callback = function ($environment) use (&$callbackCalled) {
-            $this->assertInstanceOf(ConfigurableEnvironmentInterface::class, $environment);
+            $this->assertInstanceOf(Environment::class, $environment);
             $callbackCalled = true;
 
             return $environment;

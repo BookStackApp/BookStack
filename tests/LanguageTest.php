@@ -12,7 +12,7 @@ class LanguageTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->langs = array_diff(scandir(resource_path('lang')), ['..', '.']);
+        $this->langs = array_diff(scandir(lang_path('')), ['..', '.']);
     }
 
     public function test_locales_config_key_set_properly()
@@ -58,7 +58,7 @@ class LanguageTest extends TestCase
 
     public function test_all_lang_files_loadable()
     {
-        $files = array_diff(scandir(resource_path('lang/en')), ['..', '.']);
+        $files = array_diff(scandir(lang_path('en')), ['..', '.']);
         foreach ($this->langs as $lang) {
             foreach ($files as $file) {
                 $loadError = false;

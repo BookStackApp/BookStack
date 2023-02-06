@@ -20,7 +20,6 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "barryvdh/laravel-snappy": "^1.0",
         "doctrine/dbal": "^3.5",
-        "filp/whoops": "^2.14",
         "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.0",
