@@ -14,13 +14,7 @@ return [
     // From Laravel 7+ this is MAIL_MAILER in laravel.
     // Kept as MAIL_DRIVER in BookStack to prevent breaking change.
     // Options: smtp, sendmail, log, array
-    'driver' => env('MAIL_DRIVER', 'smtp'),
-
-    // SMTP host address
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-
-    // SMTP host port
-    'port' => env('MAIL_PORT', 587),
+    'default' => env('MAIL_DRIVER', 'smtp'),
 
     // Global "From" address & name
     'from' => [
@@ -28,17 +22,42 @@ return [
         'name'    => env('MAIL_FROM_NAME', 'BookStack'),
     ],
 
-    // Email encryption protocol
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    // Mailer Configurations
+    // Available mailing methods and their settings.
+    'mailers' => [
+        'smtp' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+        ],
 
-    // SMTP server username
-    'username' => env('MAIL_USERNAME'),
+        'sendmail' => [
+            'transport' => 'sendmail',
+            'path' => '/usr/sbin/sendmail -bs',
+        ],
 
-    // SMTP server password
-    'password' => env('MAIL_PASSWORD'),
+        'log' => [
+            'transport' => 'log',
+            'channel' => env('MAIL_LOG_CHANNEL'),
+        ],
 
-    // Sendmail application path
-    'sendmail' => '/usr/sbin/sendmail -bs',
+        'array' => [
+            'transport' => 'array',
+        ],
+
+        'failover' => [
+            'transport' => 'failover',
+            'mailers' => [
+                'smtp',
+                'log',
+            ],
+        ],
+    ],
 
     // Email markdown configuration
     'markdown' => [
@@ -47,11 +66,4 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
-    // Log Channel
-    // If you are using the "log" driver, you may specify the logging channel
-    // if you prefer to keep mail messages separate from other log entries
-    // for simpler reading. Otherwise, the default channel will be used.
-    'log_channel' => env('MAIL_LOG_CHANNEL'),
-
 ];
