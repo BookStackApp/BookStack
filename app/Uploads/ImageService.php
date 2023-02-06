@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\Image as InterventionImage;
 use Intervention\Image\ImageManager;
-use League\Flysystem\Util;
+use League\Flysystem\WhitespacePathNormalizer;
 use Psr\SimpleCache\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -29,10 +29,9 @@ class ImageService
 {
     protected ImageManager $imageTool;
     protected Cache $cache;
-    protected $storageUrl;
     protected FilesystemManager $fileSystem;
 
-    protected static $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    protected static array $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     public function __construct(ImageManager $imageTool, FilesystemManager $fileSystem, Cache $cache)
     {
@@ -73,7 +72,7 @@ class ImageService
      */
     protected function adjustPathForStorageDisk(string $path, string $imageType = ''): string
     {
-        $path = Util::normalizePath(str_replace('uploads/images/', '', $path));
+        $path = (new WhitespacePathNormalizer())->normalizePath(str_replace('uploads/images/', '', $path));
 
         if ($this->usingSecureImages($imageType)) {
             return $path;
@@ -661,25 +660,21 @@ class ImageService
      */
     private function getPublicUrl(string $filePath): string
     {
-        if (is_null($this->storageUrl)) {
-            $storageUrl = config('filesystems.url');
+        $storageUrl = config('filesystems.url');
 
-            // Get the standard public s3 url if s3 is set as storage type
-            // Uses the nice, short URL if bucket name has no periods in otherwise the longer
-            // region-based url will be used to prevent http issues.
-            if ($storageUrl == false && config('filesystems.images') === 's3') {
-                $storageDetails = config('filesystems.disks.s3');
-                if (strpos($storageDetails['bucket'], '.') === false) {
-                    $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
-                } else {
-                    $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
-                }
+        // Get the standard public s3 url if s3 is set as storage type
+        // Uses the nice, short URL if bucket name has no periods in otherwise the longer
+        // region-based url will be used to prevent http issues.
+        if (!$storageUrl && config('filesystems.images') === 's3') {
+            $storageDetails = config('filesystems.disks.s3');
+            if (strpos($storageDetails['bucket'], '.') === false) {
+                $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
+            } else {
+                $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
             }
-
-            $this->storageUrl = $storageUrl;
         }
 
-        $basePath = ($this->storageUrl == false) ? url('/') : $this->storageUrl;
+        $basePath = $storageUrl ?: url('/');
 
         return rtrim($basePath, '/') . $filePath;
     }
