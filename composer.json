@@ -8,7 +8,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0.2",
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-fileinfo": "*",
@@ -19,36 +19,35 @@
         "bacon/bacon-qr-code": "^2.0",
         "barryvdh/laravel-dompdf": "^2.0",
         "barryvdh/laravel-snappy": "^1.0",
-        "doctrine/dbal": "^3.1",
+        "doctrine/dbal": "^3.5",
         "filp/whoops": "^2.14",
         "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^2.7",
-        "laravel/framework": "^8.68",
+        "laravel/framework": "^9.0",
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.6",
-        "league/commonmark": "^1.6",
-        "league/flysystem-aws-s3-v3": "^1.0.29",
+        "league/commonmark": "^2.3",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "league/html-to-markdown": "^5.0.0",
         "league/oauth2-client": "^2.6",
         "onelogin/php-saml": "^4.0",
-        "phpseclib/phpseclib": "~3.0",
+        "phpseclib/phpseclib": "^3.0",
         "pragmarx/google2fa": "^8.0",
         "predis/predis": "^1.1",
         "socialiteproviders/discord": "^4.1",
         "socialiteproviders/gitlab": "^4.1",
-        "socialiteproviders/microsoft-azure": "^5.0.1",
-        "socialiteproviders/okta": "^4.1",
+        "socialiteproviders/microsoft-azure": "^5.1",
+        "socialiteproviders/okta": "^4.2",
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
         "ssddanbrown/htmldiff": "^1.0.2"
     },
     "require-dev": {
-        "brianium/paratest": "^6.6",
-        "fakerphp/faker": "^1.16",
+        "fakerphp/faker": "^1.21",
         "itsgoingd/clockwork": "^5.1",
-        "mockery/mockery": "^1.4",
-        "nunomaduro/collision": "^5.10",
-        "nunomaduro/larastan": "^1.0",
+        "mockery/mockery": "^1.5",
+        "nunomaduro/collision": "^6.4",
+        "nunomaduro/larastan": "^2.4",
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "^3.7",
         "ssddanbrown/asserthtml": "^1.0"
@@ -102,7 +101,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "7.4.0"
+            "php": "8.0.2"
         }
     },
     "extra": {
@@ -110,6 +109,6 @@
             "dont-discover": []
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

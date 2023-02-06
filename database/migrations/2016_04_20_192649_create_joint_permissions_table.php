@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Str;
 
-class CreateJointPermissionsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -97,4 +97,4 @@ class CreateJointPermissionsTable extends Migration
             $table->dropColumn('hidden');
         });
     }
-}
+};

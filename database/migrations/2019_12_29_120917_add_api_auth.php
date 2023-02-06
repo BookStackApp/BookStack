@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
-class AddApiAuth extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -57,4 +57,4 @@ class AddApiAuth extends Migration
         DB::table('permission_role')->where('permission_id', '=', $apiAccessPermission->id)->delete();
         DB::table('role_permissions')->where('name', '=', 'access-api')->delete();
     }
-}
+};

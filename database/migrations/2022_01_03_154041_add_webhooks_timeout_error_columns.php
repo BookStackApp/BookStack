@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddWebhooksTimeoutErrorColumns extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -35,4 +35,4 @@ class AddWebhooksTimeoutErrorColumns extends Migration
             $table->dropColumn('last_errored_at');
         });
     }
-}
+};

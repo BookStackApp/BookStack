@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-
 /**
  * Much of this code has been taken from entrust,
  * a role & permission management solution for Laravel.
@@ -12,7 +9,11 @@ use Illuminate\Database\Schema\Blueprint;
  * @license MIT
  * @url https://github.com/Zizaco/entrust
  */
-class AddRolesAndPermissions extends Migration
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -147,4 +148,4 @@ class AddRolesAndPermissions extends Migration
         Schema::drop('role_user');
         Schema::drop('roles');
     }
-}
+};
