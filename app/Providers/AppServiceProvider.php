@@ -8,16 +8,16 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use BookStack\Exceptions\WhoopsBookStackPrettyHandler;
+use BookStack\Exceptions\BookStackExceptionHandlerPage;
 use BookStack\Settings\SettingService;
 use BookStack\Util\CspService;
 use GuzzleHttp\Client;
+use Illuminate\Contracts\Foundation\ExceptionRenderer;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
-use Whoops\Handler\HandlerInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      * @var string[]
      */
     public $bindings = [
-        HandlerInterface::class => WhoopsBookStackPrettyHandler::class,
+        ExceptionRenderer::class => BookStackExceptionHandlerPage::class,
     ];
 
     /**

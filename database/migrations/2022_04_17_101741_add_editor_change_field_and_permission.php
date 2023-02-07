@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class AddEditorChangeFieldAndPermission extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -59,4 +59,4 @@ class AddEditorChangeFieldAndPermission extends Migration
         // Remove traces of the role permission
         DB::table('role_permissions')->where('name', '=', 'editor-change')->delete();
     }
-}
+};

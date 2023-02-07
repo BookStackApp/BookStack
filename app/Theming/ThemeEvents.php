@@ -65,8 +65,8 @@ class ThemeEvents
      * Provides the commonmark library environment for customization before it's used to render markdown content.
      * If the listener returns a non-null value, that will be used as an environment instead.
      *
-     * @param \League\CommonMark\ConfigurableEnvironmentInterface $environment
-     * @returns \League\CommonMark\ConfigurableEnvironmentInterface|null
+     * @param \League\CommonMark\Environment\Environment $environment
+     * @returns \League\CommonMark\Environment\Environment|null
      */
     const COMMONMARK_ENVIRONMENT_CONFIGURE = 'commonmark_environment_configure';
 
