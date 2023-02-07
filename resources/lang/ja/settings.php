@@ -252,7 +252,7 @@ return [
     // Webhooks
     'webhooks' => 'Webhook',
     'webhooks_index_desc' => 'Webhookは、システム内で特定のアクションやイベントが発生したときに外部URLにデータを送信する方法で、メッセージングシステムや通知システムなどの外部プラットフォームとのイベントベースの統合を可能にします。',
-    'webhooks_x_trigger_events' => '1個のトリガーイベント|:count個のトリガーイベント',
+    'webhooks_x_trigger_events' => ':count個のトリガーイベント|:count個のトリガーイベント',
     'webhooks_create' => 'Webhookを作成',
     'webhooks_none_created' => 'Webhookはまだ作成されていません。',
     'webhooks_edit' => 'Webhookを編集',
