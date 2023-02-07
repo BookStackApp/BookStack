@@ -32,7 +32,7 @@
         "onelogin/php-saml": "^4.0",
         "phpseclib/phpseclib": "^3.0",
         "pragmarx/google2fa": "^8.0",
-        "predis/predis": "^1.1",
+        "predis/predis": "^2.1",
         "socialiteproviders/discord": "^4.1",
         "socialiteproviders/gitlab": "^4.1",
         "socialiteproviders/microsoft-azure": "^5.1",
@@ -71,7 +71,6 @@
         "format": "phpcbf",
         "lint": "phpcs",
         "test": "phpunit",
-        "t": "@php artisan test --parallel",
         "t-reset": "@php artisan test --recreate-databases",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
