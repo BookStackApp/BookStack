@@ -49,12 +49,12 @@ return [
     'app_disable_comments_desc' => 'Vypne komentáře napříč všemi stránkami. <br> Existující komentáře se přestanou zobrazovat.',
 
     // Color settings
-    'color_scheme' => 'Application Color Scheme',
-    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
-    'app_color' => 'Primary Color',
-    'link_color' => 'Default Link Color',
-    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'color_scheme' => 'Barevné schéma aplikace',
+    'color_scheme_desc' => 'Nastavte barvy pro použití v rozhraní BookStack. Barvy mohou být nastaveny samostatně pro tmavé a světlé režimy, aby se nejlépe vešly do motivu a zajistila čitelnost.',
+    'ui_colors_desc' => 'Nastavte primární barvu a výchozí barvu odkazů pro BookStack. Hlavní barva se používá hlavně pro banner hlavičky, tlačítka a dekorace rozhraní. Výchozí barva odkazu se používá pro textové odkazy a akce, a to jak v psaném obsahu, tak v rozhraní Bookstack.',
+    'app_color' => 'Hlavní barva',
+    'link_color' => 'Výchozí barva odkazu',
+    'content_colors_desc' => 'Nastaví barvy pro všechny prvky v organizační struktuře stránky. Pro lepší čitelnost doporučujeme zvolit barvy s podobným jasem, jakou mají výchozí barvy.',
     'bookshelf_color' => 'Barva knihovny',
     'book_color' => 'Barva knihy',
     'chapter_color' => 'Barva kapitoly',
