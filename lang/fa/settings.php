@@ -33,9 +33,9 @@ return [
     'app_custom_html_desc' => 'هر محتوای اضافه شده در اینجا در پایین بخش <head> هر صفحه درج می شود. این برای تغییر سبک ها یا اضافه کردن کد تجزیه و تحلیل مفید است.',
     'app_custom_html_disabled_notice' => 'محتوای سر HTML سفارشی در این صفحه تنظیمات غیرفعال است تا اطمینان حاصل شود که هر گونه تغییر شکسته می تواند برگردانده شود.',
     'app_logo' => 'لوگوی برنامه',
-    'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
-    'app_icon' => 'Application Icon',
-    'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
+    'app_logo_desc' => 'این مورد در نوار هدر برنامه و در میان سایر قسمت‌ها استفاده می‌شود. این تصویر باید 86 پیکسل ارتفاع داشته باشد. تصاویر بزرگ، کوچک نمایش داده می‌شوند.',
+    'app_icon' => 'آیکون برنامه',
+    'app_icon_desc' => 'این آیکون برای تب‌های مرورگر و نمادهای میانبر استفاده می‌شود. این مورد باید یک تصویر PNG مربعی ببه طول 256 پیکسل باشد.',
     'app_homepage' => 'صفحه اصلی برنامه',
     'app_homepage_desc' => 'به جای نمای پیش‌فرض، یک نمای را برای نمایش در صفحه اصلی انتخاب کنید. مجوزهای صفحه برای صفحات انتخابی نادیده گرفته می شود.',
     'app_homepage_select' => 'یک صفحه را انتخاب کنید',
@@ -49,7 +49,7 @@ return [
     'app_disable_comments_desc' => 'نظرات را در تمام صفحات برنامه غیرفعال می کند. <br> نظرات موجود نشان داده نمی شوند.',
 
     // Color settings
-    'color_scheme' => 'Application Color Scheme',
+    'color_scheme' => 'ترکیب رنگی برنامه',
     'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
     'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
     'app_color' => 'Primary Color',
