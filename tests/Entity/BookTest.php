@@ -247,7 +247,7 @@ class BookTest extends TestCase
             'name' => 'информация',
         ]);
 
-        $this->assertEquals('informaciya', $book->slug);
+        $this->assertEquals('informaciia', $book->slug);
 
         $book = $this->entities->newBook([
             'name' => '¿Qué?',

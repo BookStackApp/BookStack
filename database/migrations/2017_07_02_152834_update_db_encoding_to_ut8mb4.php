@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateDbEncodingToUt8mb4 extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -25,4 +25,4 @@ class UpdateDbEncodingToUt8mb4 extends Migration
     {
         //
     }
-}
+};

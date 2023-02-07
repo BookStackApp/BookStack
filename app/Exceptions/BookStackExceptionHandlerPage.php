@@ -2,25 +2,18 @@
 
 namespace BookStack\Exceptions;
 
-use Whoops\Handler\Handler;
+use Illuminate\Contracts\Foundation\ExceptionRenderer;
 
-class WhoopsBookStackPrettyHandler extends Handler
+class BookStackExceptionHandlerPage implements ExceptionRenderer
 {
-    /**
-     * @return int|null A handler may return nothing, or a Handler::HANDLE_* constant
-     */
-    public function handle()
+    public function render($throwable)
     {
-        $exception = $this->getException();
-
-        echo view('errors.debug', [
-            'error'       => $exception->getMessage(),
-            'errorClass'  => get_class($exception),
-            'trace'       => $exception->getTraceAsString(),
+        return view('errors.debug', [
+            'error'       => $throwable->getMessage(),
+            'errorClass'  => get_class($throwable),
+            'trace'       => $throwable->getTraceAsString(),
             'environment' => $this->getEnvironment(),
         ])->render();
-
-        return Handler::QUIT;
     }
 
     protected function safeReturn(callable $callback, $default = null)

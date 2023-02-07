@@ -130,7 +130,7 @@ class LanguageManager
         ]);
 
         if (!empty($locales)) {
-            setlocale(LC_TIME, ...$locales);
+            setlocale(LC_TIME, $locales[0], ...array_slice($locales, 1));
         }
     }
 }

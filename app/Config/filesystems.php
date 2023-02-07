@@ -33,17 +33,20 @@ return [
             'driver'     => 'local',
             'root'       => public_path(),
             'visibility' => 'public',
+            'throw'      => true,
         ],
 
         'local_secure_attachments' => [
             'driver' => 'local',
             'root'   => storage_path('uploads/files/'),
+            'throw'  => true,
         ],
 
         'local_secure_images' => [
             'driver'     => 'local',
             'root'       => storage_path('uploads/images/'),
             'visibility' => 'public',
+            'throw'      => true,
         ],
 
         's3' => [
@@ -54,6 +57,7 @@ return [
             'bucket'                  => env('STORAGE_S3_BUCKET', 'your-bucket'),
             'endpoint'                => env('STORAGE_S3_ENDPOINT', null),
             'use_path_style_endpoint' => env('STORAGE_S3_ENDPOINT', null) !== null,
+            'throw'                   => true,
         ],
 
     ],
