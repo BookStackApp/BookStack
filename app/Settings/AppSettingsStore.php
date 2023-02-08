@@ -2,16 +2,16 @@
 
 namespace BookStack\Settings;
 
+use BookStack\Uploads\FaviconHandler;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
 
 class AppSettingsStore
 {
-    protected ImageRepo $imageRepo;
-
-    public function __construct(ImageRepo $imageRepo)
-    {
-        $this->imageRepo = $imageRepo;
+    public function __construct(
+        protected ImageRepo $imageRepo,
+        protected FaviconHandler $faviconHandler,
+    ) {
     }
 
     public function storeFromUpdateRequest(Request $request, string $category)
@@ -39,6 +39,8 @@ class AppSettingsStore
                 $icon = $this->imageRepo->saveNew($iconFile, 'system', 0, $size, $size);
                 setting()->put('app-icon-' . $size, $icon->url);
             }
+
+            $this->faviconHandler->saveForUploadedImage($iconFile);
         }
 
         // Clear icon image if requested
