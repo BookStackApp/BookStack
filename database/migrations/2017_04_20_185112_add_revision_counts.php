@@ -24,7 +24,7 @@ return new class extends Migration
         // Update revision count
         $pTable = DB::getTablePrefix() . 'pages';
         $rTable = DB::getTablePrefix() . 'page_revisions';
-        DB::statement("UPDATE ${pTable} SET ${pTable}.revision_count=(SELECT count(*) FROM ${rTable} WHERE ${rTable}.page_id=${pTable}.id)");
+        DB::statement("UPDATE {$pTable} SET {$pTable}.revision_count=(SELECT count(*) FROM {$rTable} WHERE {$rTable}.page_id={$pTable}.id)");
     }
 
     /**
