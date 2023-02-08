@@ -7,12 +7,9 @@ use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Repos\BookRepo;
 use Tests\TestCase;
-use Tests\Uploads\UsesImages;
 
 class BookTest extends TestCase
 {
-    use UsesImages;
-
     public function test_create()
     {
         $book = Book::factory()->make([
@@ -333,7 +330,7 @@ class BookTest extends TestCase
     {
         $book = $this->entities->book();
         $bookRepo = $this->app->make(BookRepo::class);
-        $coverImageFile = $this->getTestImage('cover.png');
+        $coverImageFile = $this->files->uploadedImage('cover.png');
         $bookRepo->updateCoverImage($book, $coverImageFile);
 
         $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);

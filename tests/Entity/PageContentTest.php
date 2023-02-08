@@ -5,12 +5,9 @@ namespace Tests\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
 use Tests\TestCase;
-use Tests\Uploads\UsesImages;
 
 class PageContentTest extends TestCase
 {
-    use UsesImages;
-
     protected $base64Jpeg = '/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=';
 
     public function test_page_includes()
@@ -591,7 +588,7 @@ class PageContentTest extends TestCase
         $imageFile = public_path($imagePath);
         $this->assertEquals(base64_decode($this->base64Jpeg), file_get_contents($imageFile));
 
-        $this->deleteImage($imagePath);
+        $this->files->deleteAtRelativePath($imagePath);
     }
 
     public function test_base64_images_get_extracted_when_containing_whitespace()
@@ -615,7 +612,7 @@ class PageContentTest extends TestCase
         $imageFile = public_path($imagePath);
         $this->assertEquals(base64_decode($base64PngWithoutWhitespace), file_get_contents($imageFile));
 
-        $this->deleteImage($imagePath);
+        $this->files->deleteAtRelativePath($imagePath);
     }
 
     public function test_base64_images_within_html_blanked_if_not_supported_extension_for_extract()
@@ -659,7 +656,7 @@ class PageContentTest extends TestCase
         $imageFile = public_path($imagePath);
         $this->assertEquals(base64_decode($this->base64Jpeg), file_get_contents($imageFile));
 
-        $this->deleteImage($imagePath);
+        $this->files->deleteAtRelativePath($imagePath);
     }
 
     public function test_markdown_base64_extract_not_limited_by_pcre_limits()
@@ -690,7 +687,7 @@ class PageContentTest extends TestCase
         $imageFile = public_path($imagePath);
         $this->assertEquals($content, file_get_contents($imageFile));
 
-        $this->deleteImage($imagePath);
+        $this->files->deleteAtRelativePath($imagePath);
         ini_set('pcre.backtrack_limit', $pcreBacktrackLimit);
         ini_set('pcre.recursion_limit', $pcreRecursionLimit);
     }

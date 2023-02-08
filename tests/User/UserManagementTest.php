@@ -12,12 +12,9 @@ use Illuminate\Support\Str;
 use Mockery\MockInterface;
 use RuntimeException;
 use Tests\TestCase;
-use Tests\Uploads\UsesImages;
 
 class UserManagementTest extends TestCase
 {
-    use UsesImages;
-
     public function test_user_creation()
     {
         /** @var User $user */
@@ -282,7 +279,7 @@ class UserManagementTest extends TestCase
     public function test_user_avatar_update_and_reset()
     {
         $user = $this->users->viewer();
-        $avatarFile = $this->getTestImage('avatar-icon.png');
+        $avatarFile = $this->files->uploadedImage('avatar-icon.png');
 
         $this->assertEquals(0, $user->image_id);
 

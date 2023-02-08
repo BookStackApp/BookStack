@@ -10,6 +10,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Attachment extends Model
 {
     use HasCreatorAndUpdater;
+    use HasFactory;
 
     protected $fillable = ['name', 'order'];
     protected $hidden = ['path', 'page'];
