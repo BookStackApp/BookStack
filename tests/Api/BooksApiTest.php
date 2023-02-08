@@ -6,12 +6,10 @@ use BookStack\Entities\Models\Book;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
-use Tests\Uploads\UsesImages;
 
 class BooksApiTest extends TestCase
 {
     use TestsApi;
-    use UsesImages;
 
     protected string $baseEndpoint = '/api/books';
 
@@ -157,7 +155,7 @@ class BooksApiTest extends TestCase
         /** @var Book $book */
         $book = $this->entities->book();
         $this->assertNull($book->cover);
-        $file = $this->getTestImage('image.png');
+        $file = $this->files->uploadedImage('image.png');
 
         // Ensure cover image can be set via API
         $resp = $this->call('PUT', $this->baseEndpoint . "/{$book->id}", [

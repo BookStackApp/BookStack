@@ -2,21 +2,18 @@
 
 namespace Tests\Uploads;
 
-use BookStack\Entities\Models\Page;
 use BookStack\Uploads\Image;
 use Tests\TestCase;
 
 class DrawioTest extends TestCase
 {
-    use UsesImages;
-
     public function test_get_image_as_base64()
     {
         $page = $this->entities->page();
         $this->asAdmin();
         $imageName = 'first-image.png';
 
-        $this->uploadImage($imageName, $page->id);
+        $this->files->uploadGalleryImage($this, $imageName, $page->id);
         /** @var Image $image */
         $image = Image::query()->first();
         $image->type = 'drawio';
@@ -34,7 +31,7 @@ class DrawioTest extends TestCase
         $this->asEditor();
         $imageName = 'non-accessible-image.png';
 
-        $this->uploadImage($imageName, $page->id);
+        $this->files->uploadGalleryImage($this, $imageName, $page->id);
         /** @var Image $image */
         $image = Image::query()->first();
         $image->type = 'drawio';
@@ -70,7 +67,7 @@ class DrawioTest extends TestCase
         $image = Image::where('type', '=', 'drawio')->first();
         $this->assertTrue(file_exists(public_path($image->path)), 'Uploaded image not found at path: ' . public_path($image->path));
 
-        $testImageData = file_get_contents($this->getTestImageFilePath());
+        $testImageData = $this->files->pngImageData();
         $uploadedImageData = file_get_contents(public_path($image->path));
         $this->assertTrue($testImageData === $uploadedImageData, 'Uploaded image file data does not match our test image as expected');
     }

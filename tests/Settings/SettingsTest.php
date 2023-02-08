@@ -3,12 +3,9 @@
 namespace Tests\Settings;
 
 use Tests\TestCase;
-use Tests\Uploads\UsesImages;
 
 class SettingsTest extends TestCase
 {
-    use UsesImages;
-
     public function test_settings_endpoint_redirects_to_settings_view()
     {
         $resp = $this->asAdmin()->get('/settings');
@@ -47,7 +44,7 @@ class SettingsTest extends TestCase
     public function test_updating_and_removing_app_icon()
     {
         $this->asAdmin();
-        $galleryFile = $this->getTestImage('my-app-icon.png');
+        $galleryFile = $this->files->uploadedImage('my-app-icon.png');
         $expectedPath = public_path('uploads/images/system/' . date('Y-m') . '/my-app-icon.png');
 
         $this->assertFalse(setting()->get('app-icon'));

@@ -8,12 +8,9 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Uploads\Image;
 use Illuminate\Support\Str;
 use Tests\TestCase;
-use Tests\Uploads\UsesImages;
 
 class BookShelfTest extends TestCase
 {
-    use UsesImages;
-
     public function test_shelves_shows_in_header_if_have_view_permissions()
     {
         $viewer = $this->users->viewer();
@@ -114,7 +111,7 @@ class BookShelfTest extends TestCase
             'description' => 'Test book description ' . Str::random(10),
         ];
 
-        $imageFile = $this->getTestImage('shelf-test.png');
+        $imageFile = $this->files->uploadedImage('shelf-test.png');
         $resp = $this->asEditor()->call('POST', '/shelves', $shelfInfo, [], ['image' => $imageFile]);
         $resp->assertRedirect();
 

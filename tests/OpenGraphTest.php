@@ -6,12 +6,9 @@ use BookStack\Entities\Repos\BaseRepo;
 use BookStack\Entities\Repos\BookRepo;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
-use Tests\Uploads\UsesImages;
 
 class OpenGraphTest extends TestCase
 {
-    use UsesImages;
-
     public function test_page_tags()
     {
         $page = $this->entities->page();
@@ -47,7 +44,7 @@ class OpenGraphTest extends TestCase
 
         // Test image set if image has cover image
         $bookRepo = app(BookRepo::class);
-        $bookRepo->updateCoverImage($book, $this->getTestImage('image.png'));
+        $bookRepo->updateCoverImage($book, $this->files->uploadedImage('image.png'));
         $resp = $this->asEditor()->get($book->getUrl());
         $tags = $this->getOpenGraphTags($resp);
 
@@ -67,7 +64,7 @@ class OpenGraphTest extends TestCase
 
         // Test image set if image has cover image
         $baseRepo = app(BaseRepo::class);
-        $baseRepo->updateCoverImage($shelf, $this->getTestImage('image.png'));
+        $baseRepo->updateCoverImage($shelf, $this->files->uploadedImage('image.png'));
         $resp = $this->asEditor()->get($shelf->getUrl());
         $tags = $this->getOpenGraphTags($resp);
 
