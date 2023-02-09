@@ -25,11 +25,9 @@ class FaviconHandler
         $imageData = file_get_contents($file->getRealPath());
         $image = $this->imageTool->make($imageData);
         $image->resize(32, 32);
-        $bmpData = $image->encode('bmp');
-        $icoData = $this->bmpToIco($bmpData, 32, 32);
+        $bmpData = $image->encode('png');
+        $icoData = $this->pngToIco($bmpData, 32, 32);
 
-//        file_put_contents(public_path('icon.bmp'), $bmpData);
-//        file_put_contents(public_path('icon-test.png'), $image->encode('png'));
         file_put_contents($targetPath, $icoData);
     }
 
@@ -48,18 +46,12 @@ class FaviconHandler
     }
 
     /**
-     * Convert BMP image data to ICO file format.
+     * Convert PNG image data to ICO file format.
      * Built following the file format info from Wikipedia:
      * https://en.wikipedia.org/wiki/ICO_(file_format)
      */
-    protected function bmpToIco(string $bmpData, int $width, int $height): string
+    protected function pngToIco(string $bmpData, int $width, int $height): string
     {
-        // Trim off the header of the bitmap file
-        $rawBmpData = substr($bmpData, 14);
-        // Double the height in the "BITMAPINFOHEADER" since, when in an ICO file, half
-        // of the image data is expected to be a mask.
-        $rawBmpData[8] = hex2bin(dechex($height * 2));
-
         // ICO header
         $header = pack('v', 0x00); // Reserved. Must always be 0
         $header .= pack('v', 0x01); // Specifies ico image
@@ -71,23 +63,17 @@ class FaviconHandler
         $entry .= "\0"; // Color palette, typically 0
         $entry .= "\0"; // Reserved
 
-        // AND mask
-//        $pxCount = $width * $height;
-//        $pxMask = hex2bin('00000000');
-//        $mask = str_repeat($pxMask, $pxCount);
-        $mask = '';
-
         // Color planes, Appears to remain 1 for bmp image data
         $entry .= pack('v', 0x01);
         // Bits per pixel, can range from 1 to 32. From testing conversion
         // via intervention from png typically provides this as 24.
-        $entry .= pack('v', 0x18);
+        $entry .= pack('v', 0x00);
         // Size of the image data in bytes
-        $entry .= pack('V', strlen($rawBmpData) + strlen($mask));
+        $entry .= pack('V', strlen($bmpData));
         // Offset of the bmp data from file start
         $entry .= pack('V', strlen($header) + strlen($entry) + 4);
 
         // Join & return the combined parts of the ICO image data
-        return $header . $entry . $rawBmpData . $mask;
+        return $header . $entry . $bmpData;
     }
 }
