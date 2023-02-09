@@ -7,9 +7,12 @@ use Intervention\Image\ImageManager;
 
 class FaviconHandler
 {
+    protected string $path;
+
     public function __construct(
         protected ImageManager $imageTool
     ) {
+        $this->path = public_path('favicon.ico');
     }
 
     /**
@@ -17,8 +20,7 @@ class FaviconHandler
      */
     public function saveForUploadedImage(UploadedFile $file): void
     {
-        $targetPath = public_path('favicon.ico');
-        if (!is_writeable($targetPath)) {
+        if (!is_writeable($this->path)) {
             return;
         }
 
@@ -28,7 +30,7 @@ class FaviconHandler
         $bmpData = $image->encode('png');
         $icoData = $this->pngToIco($bmpData, 32, 32);
 
-        file_put_contents($targetPath, $icoData);
+        file_put_contents($this->path, $icoData);
     }
 
     /**
@@ -36,13 +38,30 @@ class FaviconHandler
      */
     public function restoreOriginal(): void
     {
-        $targetPath = public_path('favicon.ico');
         $original = public_path('icon.ico');
-        if (!is_writeable($targetPath)) {
+        if (!is_writeable($this->path)) {
             return;
         }
 
-        copy($original, $targetPath);
+        copy($original, $this->path);
+    }
+
+    /**
+     * Restore the original favicon image if no favicon image is already in use.
+     */
+    public function restoreOriginalIfNotExists(): void
+    {
+        if (!file_exists($this->path)) {
+            $this->restoreOriginal();
+        }
+    }
+
+    /**
+     * Get the path to the favicon file.
+     */
+    public function getPath(): string
+    {
+        return $this->path;
     }
 
     /**
