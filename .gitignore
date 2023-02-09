@@ -11,6 +11,7 @@ yarn-error.log
 /public/js
 /public/bower
 /public/build/
+/public/favicon.ico
 /storage/images
 _ide_helper.php
 /storage/debugbar
