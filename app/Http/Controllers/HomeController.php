@@ -136,7 +136,7 @@ class HomeController extends Controller
      */
     public function favicon(FaviconHandler $favicons)
     {
-        $favicons->restoreOriginalIfNotExists();
-        return response()->file($favicons->getPath());
+        $exists = $favicons->restoreOriginalIfNotExists();
+        return response()->file($exists ? $favicons->getPath() : $favicons->getOriginalPath());
     }
 }
