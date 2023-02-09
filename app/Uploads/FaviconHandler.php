@@ -35,25 +35,29 @@ class FaviconHandler
 
     /**
      * Restore the original favicon image.
+     * Returned boolean indicates if the copy occurred.
      */
-    public function restoreOriginal(): void
+    public function restoreOriginal(): bool
     {
-        $original = public_path('icon.ico');
-        if (!is_writeable($this->path)) {
-            return;
+        $permissionItem = file_exists($this->path) ? $this->path : dirname($this->path);
+        if (!is_writeable($permissionItem)) {
+            return false;
         }
 
-        copy($original, $this->path);
+        return copy($this->getOriginalPath(), $this->path);
     }
 
     /**
      * Restore the original favicon image if no favicon image is already in use.
+     * Returns a boolean to indicate if the file exists.
      */
-    public function restoreOriginalIfNotExists(): void
+    public function restoreOriginalIfNotExists(): bool
     {
-        if (!file_exists($this->path)) {
-            $this->restoreOriginal();
+        if (file_exists($this->path)) {
+            return true;
         }
+
+        return $this->restoreOriginal();
     }
 
     /**
@@ -62,6 +66,14 @@ class FaviconHandler
     public function getPath(): string
     {
         return $this->path;
+    }
+
+    /**
+     * Get the path of the original favicon copy.
+     */
+    public function getOriginalPath(): string
+    {
+        return public_path('icon.ico');
     }
 
     /**
