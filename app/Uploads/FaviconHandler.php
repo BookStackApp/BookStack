@@ -17,19 +17,32 @@ class FaviconHandler
      */
     public function saveForUploadedImage(UploadedFile $file): void
     {
+        $targetPath = public_path('favicon.ico');
+        if (!is_writeable($targetPath)) {
+            return;
+        }
+
         $imageData = file_get_contents($file->getRealPath());
         $image = $this->imageTool->make($imageData);
         $image->resize(32, 32);
         $bmpData = $image->encode('bmp');
         $icoData = $this->bmpToIco($bmpData, 32, 32);
 
-        // TODO - Below are test paths
-        file_put_contents(public_path('uploads/test.ico'), $icoData);
-        file_put_contents(public_path('uploads/test.bmp'), $bmpData);
+        file_put_contents($targetPath, $icoData);
+    }
 
-        // TODO - Permission check for icon overwrite
-        // TODO - Write to correct location
-        // TODO - Handle deletion and restore of original icon on user icon clear
+    /**
+     * Restore the original favicon image.
+     */
+    public function restoreOriginal(): void
+    {
+        $targetPath = public_path('favicon.ico');
+        $original = public_path('icon.ico');
+        if (!is_writeable($targetPath)) {
+            return;
+        }
+
+        copy($original, $targetPath);
     }
 
     /**
