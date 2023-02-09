@@ -51,6 +51,8 @@ class AppSettingsStore
                 $this->destroyExistingSettingImage('app-icon-' . $size);
                 setting()->remove('app-icon-' . $size);
             }
+
+            $this->faviconHandler->restoreOriginal();
         }
     }
 
