@@ -52,6 +52,10 @@ class SettingsTest extends TestCase
         $this->assertFalse(setting()->get('app-icon-128'));
         $this->assertFalse(setting()->get('app-icon-64'));
         $this->assertFalse(setting()->get('app-icon-32'));
+        $this->assertEquals(
+            file_get_contents(public_path('icon.ico')),
+            file_get_contents(public_path('favicon.ico')),
+        );
 
         $prevFileCount = count(glob(dirname($expectedPath) . DIRECTORY_SEPARATOR . '*.png'));
 
@@ -71,6 +75,11 @@ class SettingsTest extends TestCase
         $resp = $this->get('/');
         $this->withHtml($resp)->assertElementCount('link[sizes][href*="my-app-icon"]', 6);
 
+        $this->assertNotEquals(
+            file_get_contents(public_path('icon.ico')),
+            file_get_contents(public_path('favicon.ico')),
+        );
+
         $reset = $this->post('/settings/customization', ['app_icon_reset' => 'true']);
         $reset->assertRedirect('/settings/customization');
 
@@ -81,5 +90,10 @@ class SettingsTest extends TestCase
         $this->assertFalse(setting()->get('app-icon-128'));
         $this->assertFalse(setting()->get('app-icon-64'));
         $this->assertFalse(setting()->get('app-icon-32'));
+
+        $this->assertEquals(
+            file_get_contents(public_path('icon.ico')),
+            file_get_contents(public_path('favicon.ico')),
+        );
     }
 }

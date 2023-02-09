@@ -10,6 +10,7 @@ use BookStack\Entities\Queries\TopFavourites;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\PageContent;
+use BookStack\Uploads\FaviconHandler;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 
@@ -126,5 +127,16 @@ class HomeController extends Controller
     public function notFound()
     {
         return response()->view('errors.404', [], 404);
+    }
+
+    /**
+     * Serve the application favicon.
+     * Ensures a 'favicon.ico' file exists at the web root location (if writable) to be served
+     * directly by the webserver in the future.
+     */
+    public function favicon(FaviconHandler $favicons)
+    {
+        $exists = $favicons->restoreOriginalIfNotExists();
+        return response()->file($exists ? $favicons->getPath() : $favicons->getOriginalPath());
     }
 }

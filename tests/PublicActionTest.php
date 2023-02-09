@@ -155,6 +155,18 @@ class PublicActionTest extends TestCase
         $this->get('/robots.txt')->assertSee("User-agent: *\nDisallow: /");
     }
 
+    public function test_default_favicon_file_created_upon_access()
+    {
+        $faviconPath = public_path('favicon.ico');
+        if (file_exists($faviconPath)) {
+            unlink($faviconPath);
+        }
+
+        $this->assertFileDoesNotExist($faviconPath);
+        $this->get('/favicon.ico');
+        $this->assertFileExists($faviconPath);
+    }
+
     public function test_public_view_then_login_redirects_to_previous_content()
     {
         $this->setSettings(['app-public' => 'true']);
