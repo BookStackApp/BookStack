@@ -158,6 +158,11 @@ class PermissionApplicator
                     $query->select('id')->from('pages')
                         ->whereColumn('pages.id', '=', $fullPageIdColumn)
                         ->where('pages.draft', '=', false);
+                })->orWhereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
+                    $query->select('id')->from('pages')
+                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
+                        ->where('pages.draft', '=', true)
+                        ->where('pages.created_by', '=', $this->currentUser()->id);
                 });
             });
     }

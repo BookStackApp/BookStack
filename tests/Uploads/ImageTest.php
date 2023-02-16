@@ -120,6 +120,17 @@ class ImageTest extends TestCase
         $this->withHtml($searchFailRequest)->assertElementNotExists('div');
     }
 
+    public function test_image_gallery_lists_for_draft_page()
+    {
+        $this->actingAs($this->users->editor());
+        $draft = $this->entities->newDraftPage();
+        $this->files->uploadGalleryImageToPage($this, $draft);
+        $image = Image::query()->where('uploaded_to', '=', $draft->id)->firstOrFail();
+
+        $resp = $this->get("/images/gallery?page=1&uploaded_to={$draft->id}");
+        $resp->assertSee($image->getThumb(150, 150));
+    }
+
     public function test_image_usage()
     {
         $page = $this->entities->page();
