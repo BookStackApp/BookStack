@@ -15,7 +15,24 @@
         <label for="books">{{ trans('entities.shelves_books') }}</label>
         <input refs="shelf-sort@input" type="hidden" name="books"
                value="{{ isset($shelf) ? $shelf->visibleBooks->implode('id', ',') : '' }}">
-        <div class="scroll-box-header-item">{{ trans('entities.shelves_drag_books') }}</div>
+        <div class="scroll-box-header-item flex-container-row items-center py-xs">
+            <span class="px-m py-xs">{{ trans('entities.shelves_drag_books') }}</span>
+            <div class="dropdown-container ml-auto" component="dropdown">
+                <button refs="dropdown@toggle"
+                        type="button"
+                        title="{{ trans('common.more') }}"
+                        class="icon-button px-xs py-xxs mx-xs text-bigger"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    @icon('more')
+                </button>
+                <div refs="dropdown@menu shelf-sort@sort-button-container" class="dropdown-menu" role="menu">
+                    <button type="button" class="text-item" data-sort="name">{{ trans('entities.books_sort_name') }}</button>
+                    <button type="button" class="text-item" data-sort="created">{{ trans('entities.books_sort_created') }}</button>
+                    <button type="button" class="text-item" data-sort="updated">{{ trans('entities.books_sort_updated') }}</button>
+                </div>
+            </div>
+        </div>
         <ul refs="shelf-sort@shelf-book-list" class="scroll-box">
             @foreach (($shelf->visibleBooks ?? []) as $book)
                 @include('shelves.parts.shelf-sort-book-item', ['book' => $book])

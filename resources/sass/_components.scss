@@ -1057,7 +1057,7 @@ $btt-size: 40px;
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 250px;
+  max-height: 280px;
   overflow-y: scroll;
   border: 1px solid;
   @include lightDark(border-color, #DDD, #000);
@@ -1104,7 +1104,6 @@ $btt-size: 40px;
 
 input.scroll-box-search, .scroll-box-header-item {
   font-size: 0.8rem;
-  padding: $-xs $-m;
   border: 1px solid;
   @include lightDark(border-color, #DDD, #000);
   @include lightDark(background-color, #FFF, #222);
@@ -1125,6 +1124,9 @@ input.scroll-box-search, .scroll-box-header-item {
 .scroll-box[refs="shelf-sort@shelf-book-list"] [data-action="add"] {
   display: none;
 }
-.scroll-box[refs="shelf-sort@all-book-list"] [data-action="remove"] {
+.scroll-box[refs="shelf-sort@all-book-list"] [data-action="remove"],
+.scroll-box[refs="shelf-sort@all-book-list"] [data-action="move_up"],
+.scroll-box[refs="shelf-sort@all-book-list"] [data-action="move_down"],
+{
   display: none;
 }
