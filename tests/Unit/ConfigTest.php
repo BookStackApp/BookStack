@@ -96,6 +96,11 @@ class ConfigTest extends TestCase
         $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'a4', 'snappy.pdf.options.page-size', 'A4');
     }
 
+    public function test_sendmail_command_is_configurage()
+    {
+        $this->checkEnvConfigResult('MAIL_SENDMAIL_COMMAND', '/var/sendmail -o', 'mail.mailers.sendmail.path', '/var/sendmail -o');
+    }
+
     /**
      * Set an environment variable of the given name and value
      * then check the given config key to see if it matches the given result.
