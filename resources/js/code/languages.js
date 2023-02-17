@@ -1,37 +1,37 @@
 import {StreamLanguage} from "@codemirror/language"
 
-import {css} from '@codemirror/lang-css';
-import {c, csharp, kotlin, scala} from '@codemirror/legacy-modes/mode/clike';
-import {cpp} from '@codemirror/lang-cpp';
+import {css} from '@codemirror/legacy-modes/mode/css';
+import {c, cpp, csharp, java, kotlin, scala, dart} from '@codemirror/legacy-modes/mode/clike';
 import {diff} from '@codemirror/legacy-modes/mode/diff';
 import {fortran} from '@codemirror/legacy-modes/mode/fortran';
 import {go} from '@codemirror/legacy-modes/mode/go';
 import {haskell} from '@codemirror/legacy-modes/mode/haskell';
-import {html} from '@codemirror/lang-html';
-import {java} from '@codemirror/lang-java';
-import {javascript} from '@codemirror/lang-javascript';
-import {json} from '@codemirror/lang-json';
+import {javascript, json, typescript} from '@codemirror/legacy-modes/mode/javascript';
 import {julia} from '@codemirror/legacy-modes/mode/julia';
 import {lua} from '@codemirror/legacy-modes/mode/lua';
 import {markdown} from '@codemirror/lang-markdown';
 import {oCaml, fSharp, sml} from '@codemirror/legacy-modes/mode/mllike';
 import {nginx} from '@codemirror/legacy-modes/mode/nginx';
+import {octave} from '@codemirror/legacy-modes/mode/octave';
 import {perl} from '@codemirror/legacy-modes/mode/perl';
 import {pascal} from '@codemirror/legacy-modes/mode/pascal';
 import {php} from '@codemirror/lang-php';
 import {powerShell} from '@codemirror/legacy-modes/mode/powershell';
 import {properties} from '@codemirror/legacy-modes/mode/properties';
-import {python} from '@codemirror/lang-python';
+import {python} from '@codemirror/legacy-modes/mode/python';
 import {ruby} from '@codemirror/legacy-modes/mode/ruby';
-import {rust} from '@codemirror/lang-rust';
+import {rust} from '@codemirror/legacy-modes/mode/rust';
+import {scheme} from '@codemirror/legacy-modes/mode/scheme';
 import {shell} from '@codemirror/legacy-modes/mode/shell';
-import {sql} from '@codemirror/lang-sql';
+import {standardSQL, pgSQL, msSQL, mySQL, sqlite, plSQL} from '@codemirror/legacy-modes/mode/sql';
 import {stex} from '@codemirror/legacy-modes/mode/stex';
 import {toml} from '@codemirror/legacy-modes/mode/toml';
+// import {twig, smarty} from '@codemirror/legacy-modes/mode/php'; // TODO
 import {vb} from '@codemirror/legacy-modes/mode/vb';
 import {vbScript} from '@codemirror/legacy-modes/mode/vbscript';
-import {xml} from '@codemirror/lang-xml';
+import {xml, html} from '@codemirror/legacy-modes/mode/xml';
 import {yaml} from '@codemirror/legacy-modes/mode/yaml';
+import {swift} from "@codemirror/legacy-modes/mode/swift";
 
 
 // Mapping of possible languages or formats from user input to their codemirror modes.
@@ -40,10 +40,11 @@ import {yaml} from '@codemirror/legacy-modes/mode/yaml';
 const modeMap = {
     bash: () => StreamLanguage.define(shell),
     c: () => StreamLanguage.define(c),
-    css: () => css(),
-    'c++': () => cpp(),
+    css: () => StreamLanguage.define(css),
+    'c++': () => StreamLanguage.define(cpp),
     'c#': () => StreamLanguage.define(csharp),
     csharp: () => StreamLanguage.define(csharp),
+    dart: () => StreamLanguage.define(dart),
     diff: () => StreamLanguage.define(diff),
     for: () => StreamLanguage.define(fortran),
     fortran: () => StreamLanguage.define(fortran),
@@ -52,52 +53,62 @@ const modeMap = {
     go: () => StreamLanguage.define(go),
     haskell: () => StreamLanguage.define(haskell),
     hs: () => StreamLanguage.define(haskell),
-    html: () => html(),
+    html: () => StreamLanguage.define(html),
     ini: () => StreamLanguage.define(properties),
-    java: () => java(),
-    javascript: () => javascript(),
-    json: () => json(),
-    js: () => javascript(),
+    java: () => StreamLanguage.define(java),
+    javascript: () => StreamLanguage.define(javascript),
+    json: () => StreamLanguage.define(json),
+    js: () => StreamLanguage.define(javascript),
     jl: () => StreamLanguage.define(julia),
     julia: () => StreamLanguage.define(julia),
     kotlin: () => StreamLanguage.define(kotlin),
     latex: () => StreamLanguage.define(stex),
     lua: () => StreamLanguage.define(lua),
     markdown: () => markdown(),
+    matlab: () => StreamLanguage.define(octave),
     md: () => markdown(),
     mdown: () => markdown(),
     ml: () => StreamLanguage.define(sml),
+    mssql: () => StreamLanguage.define(msSQL),
+    mysql: () => StreamLanguage.define(mySQL),
     nginx: () => StreamLanguage.define(nginx),
+    octave: () => StreamLanguage.define(octave),
     pas: () => StreamLanguage.define(pascal),
     pascal: () => StreamLanguage.define(pascal),
     perl: () => StreamLanguage.define(perl),
+    pgsql: () => StreamLanguage.define(pgSQL),
     php: (code) => {
         const hasTags = code.includes('<?php');
         return php({plain: !hasTags});
     },
     pl: () => StreamLanguage.define(perl),
+    'pl/sql': () => StreamLanguage.define(plSQL),
+    postgresql: () => StreamLanguage.define(pgSQL),
     powershell: () => StreamLanguage.define(powerShell),
     properties: () => StreamLanguage.define(properties),
     ocaml: () => StreamLanguage.define(oCaml),
-    py: () => python(),
-    python: () => python(),
+    py: () => StreamLanguage.define(python),
+    python: () => StreamLanguage.define(python),
     rb: () => StreamLanguage.define(ruby),
-    rs: () => rust(),
+    rs: () => StreamLanguage.define(rust),
     ruby: () => StreamLanguage.define(ruby),
-    rust: () => rust(),
+    rust: () => StreamLanguage.define(rust),
     scala: () => StreamLanguage.define(scala),
+    scheme: () => StreamLanguage.define(scheme),
     shell: () => StreamLanguage.define(shell),
     sh: () => StreamLanguage.define(shell),
     stext: () => StreamLanguage.define(stex),
+    swift: () => StreamLanguage.define(swift),
     toml: () => StreamLanguage.define(toml),
-    ts: () => javascript({typescript: true}),
-    typescript: () => javascript({typescript: true}),
-    sql: () => sql(),
+    ts: () => StreamLanguage.define(typescript),
+    typescript: () => StreamLanguage.define(typescript),
+    sql: () => StreamLanguage.define(standardSQL),
+    sqlite: () => StreamLanguage.define(sqlite),
     vbs: () => StreamLanguage.define(vbScript),
     vbscript: () => StreamLanguage.define(vbScript),
     'vb.net': () => StreamLanguage.define(vb),
     vbnet: () => StreamLanguage.define(vb),
-    xml: () => xml(),
+    xml: () => StreamLanguage.define(xml),
     yaml: () => StreamLanguage.define(yaml),
     yml: () => StreamLanguage.define(yaml),
 };
