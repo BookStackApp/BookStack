@@ -4,7 +4,7 @@
      data-updated="{{ $book->updated_at->timestamp }}"
      class="scroll-box-item">
     <div class="handle px-s">@icon('grip')</div>
-    <a href="{{ $book->getUrl() }}" class="text-book">@icon('book'){{ $book->name }}</a>
+    <div class="text-book">@icon('book'){{ $book->name }}</div>
     <div class="buttons flex-container-row items-center ml-auto px-xxs py-xs">
         <button type="button" data-action="move_up" class="icon-button p-xxs"
                 title="{{ trans('entities.books_sort_move_up') }}">@icon('chevron-up')</button>
