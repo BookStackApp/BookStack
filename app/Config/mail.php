@@ -38,7 +38,7 @@ return [
 
         'sendmail' => [
             'transport' => 'sendmail',
-            'path' => '/usr/sbin/sendmail -bs',
+            'path' => env('MAIL_SENDMAIL_COMMAND', '/usr/sbin/sendmail -bs'),
         ],
 
         'log' => [
