@@ -12,7 +12,7 @@
 
 <div component="shelf-sort" class="grid half gap-xl">
     <div class="form-group">
-        <label for="books">{{ trans('entities.shelves_books') }}</label>
+        <label for="books" id="shelf-sort-books-label">{{ trans('entities.shelves_books') }}</label>
         <input refs="shelf-sort@input" type="hidden" name="books"
                value="{{ isset($shelf) ? $shelf->visibleBooks->implode('id', ',') : '' }}">
         <div class="scroll-box-header-item flex-container-row items-center py-xs">
@@ -33,16 +33,20 @@
                 </div>
             </div>
         </div>
-        <ul refs="shelf-sort@shelf-book-list" class="scroll-box">
+        <ul refs="shelf-sort@shelf-book-list"
+            aria-labelledby="shelf-sort-books-label"
+            class="scroll-box">
             @foreach (($shelf->visibleBooks ?? []) as $book)
                 @include('shelves.parts.shelf-sort-book-item', ['book' => $book])
             @endforeach
         </ul>
     </div>
     <div class="form-group">
-        <label for="books">{{ trans('entities.shelves_add_books') }}</label>
+        <label for="books" id="shelf-sort-all-books-label">{{ trans('entities.shelves_add_books') }}</label>
         <input type="text" refs="shelf-sort@book-search" class="scroll-box-search" placeholder="{{ trans('common.search') }}">
-        <ul refs="shelf-sort@all-book-list" class="scroll-box">
+        <ul refs="shelf-sort@all-book-list"
+            aria-labelledby="shelf-sort-all-books-label"
+            class="scroll-box">
             @foreach ($books as $book)
                 @include('shelves.parts.shelf-sort-book-item', ['book' => $book])
             @endforeach

@@ -1085,6 +1085,9 @@ $btt-size: 40px;
     color: #AAA;
     cursor: grab;
   }
+  button {
+    opacity: .6;
+  }
   .handle svg {
     margin: 0;
   }
@@ -1096,6 +1099,9 @@ $btt-size: 40px;
   }
   &:hover .handle {
     @include lightDark(color, #444, #FFF);
+  }
+  &:hover button {
+    opacity: 1;
   }
   a:hover {
     text-decoration: none;
