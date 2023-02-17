@@ -2,6 +2,7 @@
 
 const esbuild = require('esbuild');
 const path = require('path');
+const fs = require('fs');
 
 // Check if we're building for production
 // (Set via passing `production` as first argument)
@@ -19,6 +20,7 @@ const outdir = path.join(__dirname, '../../public/dist');
 // Build via esbuild
 esbuild.build({
     bundle: true,
+    metafile: true,
     entryPoints,
     outdir,
     sourcemap: true,
@@ -27,4 +29,6 @@ esbuild.build({
     format: 'esm',
     minify: isProd,
     logLevel: "info",
+}).then(result => {
+    fs.writeFileSync('esbuild-meta.json', JSON.stringify(result.metafile));
 }).catch(() => process.exit(1));
