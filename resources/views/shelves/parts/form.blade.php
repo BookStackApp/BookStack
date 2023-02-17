@@ -12,32 +12,45 @@
 
 <div component="shelf-sort" class="grid half gap-xl">
     <div class="form-group">
-        <label for="books">{{ trans('entities.shelves_books') }}</label>
+        <label for="books" id="shelf-sort-books-label">{{ trans('entities.shelves_books') }}</label>
         <input refs="shelf-sort@input" type="hidden" name="books"
                value="{{ isset($shelf) ? $shelf->visibleBooks->implode('id', ',') : '' }}">
-        <div class="scroll-box-header-item">{{ trans('entities.shelves_drag_books') }}</div>
-        <div refs="shelf-sort@shelf-book-list" class="scroll-box">
-            @if (count($shelf->visibleBooks ?? []) > 0)
-                @foreach ($shelf->visibleBooks as $book)
-                    <div data-id="{{ $book->id }}" class="scroll-box-item">
-                        <div class="handle">@icon('grip')</div>
-                        <a href="{{ $book->getUrl() }}" class="text-book">@icon('book'){{ $book->name }}</a>
-                    </div>
-                @endforeach
-            @endif
+        <div class="scroll-box-header-item flex-container-row items-center py-xs">
+            <span class="px-m py-xs">{{ trans('entities.shelves_drag_books') }}</span>
+            <div class="dropdown-container ml-auto" component="dropdown">
+                <button refs="dropdown@toggle"
+                        type="button"
+                        title="{{ trans('common.more') }}"
+                        class="icon-button px-xs py-xxs mx-xs text-bigger"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    @icon('more')
+                </button>
+                <div refs="dropdown@menu shelf-sort@sort-button-container" class="dropdown-menu" role="menu">
+                    <button type="button" class="text-item" data-sort="name">{{ trans('entities.books_sort_name') }}</button>
+                    <button type="button" class="text-item" data-sort="created">{{ trans('entities.books_sort_created') }}</button>
+                    <button type="button" class="text-item" data-sort="updated">{{ trans('entities.books_sort_updated') }}</button>
+                </div>
+            </div>
         </div>
+        <ul refs="shelf-sort@shelf-book-list"
+            aria-labelledby="shelf-sort-books-label"
+            class="scroll-box">
+            @foreach (($shelf->visibleBooks ?? []) as $book)
+                @include('shelves.parts.shelf-sort-book-item', ['book' => $book])
+            @endforeach
+        </ul>
     </div>
     <div class="form-group">
-        <label for="books">{{ trans('entities.shelves_add_books') }}</label>
+        <label for="books" id="shelf-sort-all-books-label">{{ trans('entities.shelves_add_books') }}</label>
         <input type="text" refs="shelf-sort@book-search" class="scroll-box-search" placeholder="{{ trans('common.search') }}">
-        <div refs="shelf-sort@all-book-list" class="scroll-box">
+        <ul refs="shelf-sort@all-book-list"
+            aria-labelledby="shelf-sort-all-books-label"
+            class="scroll-box">
             @foreach ($books as $book)
-                <div data-id="{{ $book->id }}" class="scroll-box-item">
-                    <div class="handle">@icon('grip')</div>
-                    <a href="{{ $book->getUrl() }}" class="text-book">@icon('book'){{ $book->name }}</a>
-                </div>
+                @include('shelves.parts.shelf-sort-book-item', ['book' => $book])
             @endforeach
-        </div>
+        </ul>
     </div>
 </div>
 
