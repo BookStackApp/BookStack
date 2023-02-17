@@ -64,7 +64,7 @@ class BookshelfController extends Controller
     public function create()
     {
         $this->checkPermission('bookshelf-create-all');
-        $books = Book::visible()->orderBy('name')->get(['name', 'id', 'slug']);
+        $books = Book::visible()->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
         $this->setPageTitle(trans('entities.shelves_create'));
 
         return view('shelves.create', ['books' => $books]);
@@ -140,7 +140,7 @@ class BookshelfController extends Controller
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $shelfBookIds = $shelf->books()->get(['id'])->pluck('id');
-        $books = Book::visible()->whereNotIn('id', $shelfBookIds)->orderBy('name')->get(['name', 'id', 'slug']);
+        $books = Book::visible()->whereNotIn('id', $shelfBookIds)->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
 
         $this->setPageTitle(trans('entities.shelves_edit_named', ['name' => $shelf->getShortName()]));
 
