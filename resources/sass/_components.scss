@@ -1051,3 +1051,80 @@ $btt-size: 40px;
     line-height: 2;
   }
 }
+
+// Sortable scroll boxes
+.scroll-box {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 250px;
+  overflow-y: scroll;
+  border: 1px solid;
+  @include lightDark(border-color, #DDD, #000);
+  border-radius: 3px;
+  min-height: 20px;
+  @include lightDark(background-color, #EEE, #000);
+}
+.scroll-box-item {
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+  @include lightDark(border-color, #DDD, #000);
+  margin-top: -1px;
+  @include lightDark(background-color, #FFF, #222);
+  display: flex;
+  align-items: flex-start;
+  padding: 1px;
+  &:last-child {
+    border-bottom: 0;
+  }
+  &:hover {
+    cursor: pointer;
+    @include lightDark(background-color, #f8f8f8, #333);
+  }
+  .handle {
+    color: #AAA;
+    cursor: grab;
+  }
+  .handle svg {
+    margin: 0;
+  }
+  > * {
+    padding: $-xs $-m;
+  }
+  .handle + * {
+    padding-left: 0;
+  }
+  &:hover .handle {
+    @include lightDark(color, #444, #FFF);
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+input.scroll-box-search, .scroll-box-header-item {
+  font-size: 0.8rem;
+  padding: $-xs $-m;
+  border: 1px solid;
+  @include lightDark(border-color, #DDD, #000);
+  @include lightDark(background-color, #FFF, #222);
+  margin-bottom: -1px;
+  border-radius: 3px 3px 0 0;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  line-height: 1.4;
+  color: #666;
+}
+
+.scroll-box-search + .scroll-box,
+.scroll-box-header-item + .scroll-box {
+  border-radius: 0 0 3px 3px;
+}
+
+.scroll-box[refs="shelf-sort@shelf-book-list"] [data-action="add"] {
+  display: none;
+}
+.scroll-box[refs="shelf-sort@all-book-list"] [data-action="remove"] {
+  display: none;
+}
