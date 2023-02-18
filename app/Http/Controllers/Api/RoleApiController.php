@@ -4,7 +4,6 @@ namespace BookStack\Http\Controllers\Api;
 
 use BookStack\Auth\Permissions\PermissionsRepo;
 use BookStack\Auth\Role;
-use BookStack\Exceptions\UserUpdateException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -127,7 +126,7 @@ class RoleApiController extends ApiController
     {
         $role->load('users:id,name,slug');
         $role->unsetRelation('permissions');
-        $role->setAttribute('permissions', $role->permissions()->pluck('name'));
+        $role->setAttribute('permissions', $role->permissions()->orderBy('name', 'asc')->pluck('name'));
         $role->makeVisible(['users', 'permissions']);
     }
 }
