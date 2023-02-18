@@ -133,7 +133,7 @@ class RolesApiTest extends TestCase
             'description'  => $role->description,
             'mfa_enforced' => $role->mfa_enforced,
             'external_auth_id' => $role->external_auth_id,
-            'permissions'  => $role->permissions()->pluck('name')->toArray(),
+            'permissions'  => $role->permissions()->orderBy('name', 'asc')->pluck('name')->toArray(),
             'users' => $role->users()->get()->map(function (User $user) {
                 return [
                     'id' => $user->id,
