@@ -16,6 +16,7 @@ use BookStack\Http\Controllers\Api\ChapterExportApiController;
 use BookStack\Http\Controllers\Api\PageApiController;
 use BookStack\Http\Controllers\Api\PageExportApiController;
 use BookStack\Http\Controllers\Api\RecycleBinApiController;
+use BookStack\Http\Controllers\Api\RoleApiController;
 use BookStack\Http\Controllers\Api\SearchApiController;
 use BookStack\Http\Controllers\Api\UserApiController;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +75,12 @@ Route::post('users', [UserApiController::class, 'create']);
 Route::get('users/{id}', [UserApiController::class, 'read']);
 Route::put('users/{id}', [UserApiController::class, 'update']);
 Route::delete('users/{id}', [UserApiController::class, 'delete']);
+
+Route::get('roles', [RoleApiController::class, 'list']);
+Route::post('roles', [RoleApiController::class, 'create']);
+Route::get('roles/{id}', [RoleApiController::class, 'read']);
+Route::put('roles/{id}', [RoleApiController::class, 'update']);
+Route::delete('roles/{id}', [RoleApiController::class, 'delete']);
 
 Route::get('recycle-bin', [RecycleBinApiController::class, 'list']);
 Route::put('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'restore']);
