@@ -74,13 +74,17 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $this->checkPermission('user-roles-manage');
-        $this->validate($request, [
+        $data = $this->validate($request, [
             'display_name' => ['required', 'min:3', 'max:180'],
             'description'  => ['max:180'],
+            'external_auth_id' => ['string'],
+            'permissions'  => ['array'],
+            'mfa_enforced' => ['string'],
         ]);
 
-        $this->permissionsRepo->saveNewRole($request->all());
-        $this->showSuccessNotification(trans('settings.role_create_success'));
+        $data['permissions'] = array_keys($data['permissions'] ?? []);
+        $data['mfa_enforced'] = ($data['mfa_enforced'] ?? 'false') === 'true';
+        $this->permissionsRepo->saveNewRole($data);
 
         return redirect('/settings/roles');
     }
@@ -100,19 +104,27 @@ class RoleController extends Controller
 
     /**
      * Updates a user role.
-     *
-     * @throws ValidationException
      */
     public function update(Request $request, string $id)
     {
         $this->checkPermission('user-roles-manage');
-        $this->validate($request, [
+        $data = $this->validate($request, [
             'display_name' => ['required', 'min:3', 'max:180'],
             'description'  => ['max:180'],
+            'external_auth_id' => ['string'],
+            'permissions'  => ['array'],
+            'mfa_enforced' => ['string'],
         ]);
 
-        $this->permissionsRepo->updateRole($id, $request->all());
-        $this->showSuccessNotification(trans('settings.role_update_success'));
+        if (isset($data['permissions'])) {
+            $data['permissions'] = array_keys($data['permissions']);
+        }
+
+        if (isset($data['mfa_enforced'])) {
+            $data['mfa_enforced'] = $data['mfa_enforced'] === 'true';
+        }
+
+        $this->permissionsRepo->updateRole($id, $data);
 
         return redirect('/settings/roles');
     }
@@ -145,14 +157,12 @@ class RoleController extends Controller
         $this->checkPermission('user-roles-manage');
 
         try {
-            $this->permissionsRepo->deleteRole($id, $request->get('migrate_role_id'));
+            $this->permissionsRepo->deleteRole($id, $request->get('migrate_role_id', 0));
         } catch (PermissionsException $e) {
             $this->showErrorNotification($e->getMessage());
 
             return redirect()->back();
         }
-
-        $this->showSuccessNotification(trans('settings.role_delete_success'));
 
         return redirect('/settings/roles');
     }

@@ -40,14 +40,15 @@ class RolesApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
-                'id'          => $firstRole->id,
-                'display_name'        => $firstRole->display_name,
-                'description'        => $firstRole->description,
-                'mfa_enforced'       => $firstRole->mfa_enforced,
+                'id'                => $firstRole->id,
+                'display_name'      => $firstRole->display_name,
+                'description'       => $firstRole->description,
+                'mfa_enforced'      => $firstRole->mfa_enforced,
+                'external_auth_id'  => $firstRole->external_auth_id,
                 'permissions_count' => $firstRole->permissions()->count(),
-                'users_count'    => $firstRole->users()->count(),
-                'created_at'    => $firstRole->created_at->toJSON(),
-                'updated_at'    => $firstRole->updated_at->toJSON(),
+                'users_count'       => $firstRole->users()->count(),
+                'created_at'        => $firstRole->created_at->toJSON(),
+                'updated_at'        => $firstRole->updated_at->toJSON(),
             ],
         ]]);
 
@@ -64,11 +65,12 @@ class RolesApiTest extends TestCase
             'display_name' => 'My awesome role',
             'description'  => 'My great role description',
             'mfa_enforced' => true,
+            'external_auth_id' => 'auth_id',
             'permissions'  => [
                 'content-export',
-                'users-manage',
-                'page-view-own',
                 'page-view-all',
+                'page-view-own',
+                'users-manage',
             ]
         ]);
 
@@ -77,11 +79,12 @@ class RolesApiTest extends TestCase
             'display_name' => 'My awesome role',
             'description'  => 'My great role description',
             'mfa_enforced' => true,
+            'external_auth_id' => 'auth_id',
             'permissions'  => [
                 'content-export',
-                'users-manage',
-                'page-view-own',
                 'page-view-all',
+                'page-view-own',
+                'users-manage',
             ]
         ]);
 
@@ -89,6 +92,7 @@ class RolesApiTest extends TestCase
             'display_name' => 'My awesome role',
             'description'  => 'My great role description',
             'mfa_enforced' => true,
+            'external_auth_id' => 'auth_id',
         ]);
 
         /** @var Role $role */
@@ -107,7 +111,7 @@ class RolesApiTest extends TestCase
             'description' => 'My new role',
         ]);
         $resp->assertStatus(422);
-        $resp->assertJson($this->validationResponse(['display_name' => ['The display_name field is required.']]));
+        $resp->assertJson($this->validationResponse(['display_name' => ['The display name field is required.']]));
 
         $resp = $this->postJson($this->baseEndpoint, [
             'name' => 'My great role with a too long desc',
@@ -128,6 +132,7 @@ class RolesApiTest extends TestCase
             'display_name' => $role->display_name,
             'description'  => $role->description,
             'mfa_enforced' => $role->mfa_enforced,
+            'external_auth_id' => $role->external_auth_id,
             'permissions'  => $role->permissions()->pluck('name')->toArray(),
             'users' => $role->users()->get()->map(function (User $user) {
                 return [
@@ -147,11 +152,12 @@ class RolesApiTest extends TestCase
             'display_name' => 'My updated role',
             'description'  => 'My great role description',
             'mfa_enforced' => true,
+            'external_auth_id' => 'updated_auth_id',
             'permissions'  => [
                 'content-export',
-                'users-manage',
-                'page-view-own',
                 'page-view-all',
+                'page-view-own',
+                'users-manage',
             ]
         ]);
 
@@ -161,16 +167,18 @@ class RolesApiTest extends TestCase
             'display_name' => 'My updated role',
             'description'  => 'My great role description',
             'mfa_enforced' => true,
+            'external_auth_id' => 'updated_auth_id',
             'permissions'  => [
                 'content-export',
-                'users-manage',
-                'page-view-own',
                 'page-view-all',
+                'page-view-own',
+                'users-manage',
             ]
         ]);
 
         $role->refresh();
         $this->assertEquals(4, $role->permissions()->count());
+        $this->assertActivityExists(ActivityType::ROLE_UPDATE);
     }
 
     public function test_update_endpoint_does_not_remove_info_if_not_provided()
@@ -181,10 +189,11 @@ class RolesApiTest extends TestCase
         $permissionCount = $role->permissions()->count();
 
         $resp->assertStatus(200);
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('roles', [
             'id'           => $role->id,
             'display_name' => $role->display_name,
             'description'  => $role->description,
+            'external_auth_id' => $role->external_auth_id,
         ]);
 
         $role->refresh();

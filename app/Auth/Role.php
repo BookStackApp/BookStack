@@ -27,7 +27,7 @@ class Role extends Model implements Loggable
 {
     use HasFactory;
 
-    protected $fillable = ['display_name', 'description', 'external_auth_id'];
+    protected $fillable = ['display_name', 'description', 'external_auth_id', 'mfa_enforced'];
 
     protected $hidden = ['pivot'];
 

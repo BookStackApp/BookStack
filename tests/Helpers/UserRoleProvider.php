@@ -90,7 +90,7 @@ class UserRoleProvider
     {
         $permissionRepo = app(PermissionsRepo::class);
         $roleData = Role::factory()->make()->toArray();
-        $roleData['permissions'] = array_flip($rolePermissions);
+        $roleData['permissions'] = $rolePermissions;
 
         return $permissionRepo->saveNewRole($roleData);
     }
