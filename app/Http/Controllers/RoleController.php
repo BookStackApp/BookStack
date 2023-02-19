@@ -116,14 +116,8 @@ class RoleController extends Controller
             'mfa_enforced' => ['string'],
         ]);
 
-        if (isset($data['permissions'])) {
-            $data['permissions'] = array_keys($data['permissions']);
-        }
-
-        if (isset($data['mfa_enforced'])) {
-            $data['mfa_enforced'] = $data['mfa_enforced'] === 'true';
-        }
-
+        $data['permissions'] = array_keys($data['permissions'] ?? []);
+        $data['mfa_enforced'] = ($data['mfa_enforced'] ?? 'false') === 'true';
         $this->permissionsRepo->updateRole($id, $data);
 
         return redirect('/settings/roles');
