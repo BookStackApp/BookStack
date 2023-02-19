@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Користувача було успішно оновлено',
     'user_delete_notification' => 'Користувача успішно видалено',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'прокоментував',
     'permissions_update'          => 'оновив дозволи',
