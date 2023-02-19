@@ -60,7 +60,7 @@ Route::delete('pages/{id}', [PageApiController::class, 'delete']);
 Route::get('pages/{id}/export/html', [PageExportApiController::class, 'exportHtml']);
 Route::get('pages/{id}/export/pdf', [PageExportApiController::class, 'exportPdf']);
 Route::get('pages/{id}/export/plaintext', [PageExportApiController::class, 'exportPlainText']);
-Route::get('pages/{id}/export/markdown', [PageExportApiController::class, 'exportMarkDown']);
+Route::get('pages/{id}/export/markdown', [PageExportApiController::class, 'exportMarkdown']);
 
 Route::get('search', [SearchApiController::class, 'all']);
 

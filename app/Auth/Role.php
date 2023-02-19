@@ -31,6 +31,10 @@ class Role extends Model implements Loggable
 
     protected $hidden = ['pivot'];
 
+    protected $casts = [
+        'mfa_enforced' => 'boolean',
+    ];
+
     /**
      * The roles that belong to the role.
      */
