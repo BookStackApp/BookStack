@@ -137,9 +137,9 @@ return [
     // Role Settings
     'roles' => 'نقش ها',
     'role_user_roles' => 'نقش های کاربر',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => '1 user assigned|:count users assigned',
-    'roles_x_permissions_provided' => '1 permission|:count permissions',
+    'roles_index_desc' => 'نقش‌ها برای گروه‌بندی کاربران و ارائه مجوز سیستم به اعضای آن‌ها استفاده می‌شوند. هنگامی که یک کاربر عضو چندین نقش باشد، امتیازات اعطا شده روی هم قرار می‌گیرند و کاربر تمام مجوزها را به ارث می‌برد.',
+    'roles_x_users_assigned' => ':count کاربر اختصاص داده شده|:count کاربر اختصاص داده شده',
+    'roles_x_permissions_provided' => ':count مجوز|:count مجوزها',
     'roles_assigned_users' => 'Assigned Users',
     'roles_permissions_provided' => 'Provided Permissions',
     'role_create' => 'نقش جدید ایجاد کنید',
