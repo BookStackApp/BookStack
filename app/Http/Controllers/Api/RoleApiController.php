@@ -17,16 +17,16 @@ class RoleApiController extends ApiController
 
     protected $rules = [
         'create' => [
-            'display_name'  => ['required', 'min:3', 'max:180'],
-            'description'   => ['max:180'],
+            'display_name'  => ['required', 'string', 'min:3', 'max:180'],
+            'description'   => ['string', 'max:180'],
             'mfa_enforced'  => ['boolean'],
             'external_auth_id' => ['string'],
             'permissions'   => ['array'],
             'permissions.*' => ['string'],
         ],
         'update' => [
-            'display_name'  => ['min:3', 'max:180'],
-            'description'   => ['max:180'],
+            'display_name'  => ['string', 'min:3', 'max:180'],
+            'description'   => ['string', 'max:180'],
             'mfa_enforced'  => ['boolean'],
             'external_auth_id' => ['string'],
             'permissions'   => ['array'],
@@ -64,6 +64,7 @@ class RoleApiController extends ApiController
 
     /**
      * Create a new role in the system.
+     * Permissions should be provided as an array of permission name strings.
      * Requires permission to manage roles.
      */
     public function create(Request $request)
@@ -81,7 +82,8 @@ class RoleApiController extends ApiController
     }
 
     /**
-     * View the details of a single user.
+     * View the details of a single role.
+     * Provides the permissions and a high-level list of the users assigned.
      * Requires permission to manage roles.
      */
     public function read(string $id)
@@ -94,6 +96,10 @@ class RoleApiController extends ApiController
 
     /**
      * Update an existing role in the system.
+     * Permissions should be provided as an array of permission name strings.
+     * An empty "permissions" array would clear granted permissions.
+     * In many cases, where permissions are changed, you'll want to fetch the existing
+     * permissions and then modify before providing in your update request.
      * Requires permission to manage roles.
      */
     public function update(Request $request, string $id)
@@ -107,9 +113,7 @@ class RoleApiController extends ApiController
     }
 
     /**
-     * Delete a user from the system.
-     * Can optionally accept a user id via `migrate_ownership_id` to indicate
-     * who should be the new owner of their related content.
+     * Delete a role from the system.
      * Requires permission to manage roles.
      */
     public function delete(string $id)

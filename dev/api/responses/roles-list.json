@@ -1,0 +1,41 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "display_name": "Admin",
+      "description": "Administrator of the whole application",
+      "created_at": "2021-09-29T16:29:19.000000Z",
+      "updated_at": "2022-11-03T13:26:18.000000Z",
+      "system_name": "admin",
+      "external_auth_id": "wizards",
+      "mfa_enforced": true,
+      "users_count": 11,
+      "permissions_count": 54
+    },
+    {
+      "id": 2,
+      "display_name": "Editor",
+      "description": "User can edit Books, Chapters & Pages",
+      "created_at": "2021-09-29T16:29:19.000000Z",
+      "updated_at": "2022-12-01T02:32:57.000000Z",
+      "system_name": "",
+      "external_auth_id": "",
+      "mfa_enforced": false,
+      "users_count": 17,
+      "permissions_count": 49
+    },
+    {
+      "id": 3,
+      "display_name": "Public",
+      "description": "The role given to public visitors if allowed",
+      "created_at": "2021-09-29T16:29:19.000000Z",
+      "updated_at": "2022-09-02T12:32:12.000000Z",
+      "system_name": "public",
+      "external_auth_id": "",
+      "mfa_enforced": false,
+      "users_count": 1,
+      "permissions_count": 2
+    }
+  ],
+  "total": 3
+}
