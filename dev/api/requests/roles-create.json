@@ -1,0 +1,11 @@
+{
+  "display_name": "Book Maintainer",
+  "description": "People who maintain books",
+  "mfa_enforced": true,
+  "permissions": [
+    "book-view-all",
+    "book-update-all",
+    "book-delete-all",
+    "restrictions-manage-all"
+  ]
+}

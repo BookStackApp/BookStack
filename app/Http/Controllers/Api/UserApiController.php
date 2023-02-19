@@ -13,9 +13,9 @@ use Illuminate\Validation\Rules\Unique;
 
 class UserApiController extends ApiController
 {
-    protected $userRepo;
+    protected UserRepo $userRepo;
 
-    protected $fieldsToExpose = [
+    protected array $fieldsToExpose = [
         'email', 'created_at', 'updated_at', 'last_activity_at', 'external_auth_id',
     ];
 
