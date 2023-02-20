@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Обновлено :timeLength',
     'meta_updated_name' => ':user обновил :timeLength',
     'meta_owned_name' => 'Владелец :user',
-    'meta_reference_page_count' => 'Ссылается на 1 страницу|Ссылается на :count страниц',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Выбор объекта',
     'entity_select_lack_permission' => 'У вас нет разрешения на выбор этого элемента',
     'images' => 'Изображения',
