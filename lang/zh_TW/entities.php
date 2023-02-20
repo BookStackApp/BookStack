@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新於 :timeLength',
     'meta_updated_name' => '由 :user 更新於 :timeLength',
     'meta_owned_name' => ':user 所擁有',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => '選取項目',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => '圖片',
