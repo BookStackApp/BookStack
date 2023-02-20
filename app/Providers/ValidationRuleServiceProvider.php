@@ -21,8 +21,8 @@ class ValidationRuleServiceProvider extends ServiceProvider
 
         Validator::extend('safe_url', function ($attribute, $value, $parameters, $validator) {
             $cleanLinkName = strtolower(trim($value));
-            $isJs = strpos($cleanLinkName, 'javascript:') === 0;
-            $isData = strpos($cleanLinkName, 'data:') === 0;
+            $isJs = str_starts_with($cleanLinkName, 'javascript:');
+            $isData = str_starts_with($cleanLinkName, 'data:');
 
             return !$isJs && !$isData;
         });
