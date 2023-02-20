@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
     'meta_owned_name' => '所有者: :user',
-    'meta_reference_page_count' => '{0}ページの参照はありません|[1,9]:count つのページから参照|[10,*]:count ページから参照',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'エンティティ選択',
     'entity_select_lack_permission' => 'この項目を選択するために必要な権限がありません',
     'images' => '画像',
