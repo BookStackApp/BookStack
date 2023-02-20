@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Bijgewerkt: :timeLength',
     'meta_updated_name' => 'Bijgewerkt: :timeLength door :user',
     'meta_owned_name' => 'Eigendom van :user',
-    'meta_reference_page_count' => 'Naartoe verwezen op 1 pagina|Naartoe verwezen op :count pagina\'s',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Entiteit selecteren',
     'entity_select_lack_permission' => 'Je hebt niet de vereiste machtiging om dit item te selecteren',
     'images' => 'Afbeeldingen',
