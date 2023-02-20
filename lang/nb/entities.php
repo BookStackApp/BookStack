@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Oppdatert :timeLength',
     'meta_updated_name' => 'Oppdatert :timeLength av :user',
     'meta_owned_name' => 'Eies av :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Velg entitet',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Bilder',
