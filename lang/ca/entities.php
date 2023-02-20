@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Actualitzat :timeLength',
     'meta_updated_name' => 'Actualitzat :timeLength per :user',
     'meta_owned_name' => 'Propietat de :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Selecciona una entitat',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Imatges',
