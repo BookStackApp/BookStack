@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'ユーザーを削除しました',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => '役割を作成しました',
+    'role_update_notification' => '役割を更新しました',
+    'role_delete_notification' => '役割を削除しました',
 
     // Other
     'commented_on'                => 'がコメント:',
