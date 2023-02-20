@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Beim Hochladen des Bildes trat ein Fehler auf.',
     'image_upload_type_error' => 'Der Bildtyp der hochgeladenen Datei ist ungültig.',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Zeichnungsdaten konnten nicht geladen werden. Die Zeichnungsdatei existiert möglicherweise nicht mehr oder Sie haben nicht die Berechtigung, darauf zuzugreifen.',
 
     // Attachments
     'attachment_not_found' => 'Anhang konnte nicht gefunden werden.',
