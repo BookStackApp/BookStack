@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'Kasutaja on kustutatud',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'Roll on lisatud',
+    'role_update_notification' => 'Roll on muudetud',
+    'role_delete_notification' => 'Roll on kustutatud',
 
     // Other
     'commented_on'                => 'kommenteeris lehte',
