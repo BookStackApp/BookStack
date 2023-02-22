@@ -139,7 +139,7 @@ return [
     'role_user_roles' => 'Роли пользователей',
     'roles_index_desc' => 'Роли используются для группировки пользователей и предоставления системных разрешений их участникам. Когда пользователь является членом нескольких ролей, предоставленные разрешения объединяются, и пользователь наследует все возможности.',
     'roles_x_users_assigned' => ':count user assigned|:count users assigned',
-    'roles_x_permissions_provided' => ':count permission|:count permissions',
+    'roles_x_permissions_provided' => ':count разрешение|:count разрешений',
     'roles_assigned_users' => 'Назначенные пользователи',
     'roles_permissions_provided' => 'Предоставленные разрешения',
     'role_create' => 'Добавить роль',
