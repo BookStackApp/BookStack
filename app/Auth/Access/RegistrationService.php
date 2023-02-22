@@ -54,10 +54,11 @@ class RegistrationService
     /**
      * Attempt to find a user in the system otherwise register them as a new
      * user. For use with external auth systems since password is auto-generated.
+     * Update user's name and email when requested and necessary.
      *
      * @throws UserRegistrationException
      */
-    public function findOrRegister(string $name, string $email, string $externalId): User
+    public function findOrRegister(string $name, string $email, string $externalId, bool $updateUser = false): User
     {
         $user = User::query()
             ->where('external_auth_id', '=', $externalId)
@@ -72,6 +73,13 @@ class RegistrationService
             ];
 
             $user = $this->registerUser($userData, null, false);
+        } else if ($updateUser && ($user->name !== $name || $user->email !== $email)) {
+            $user->update([
+                'name'  => $name,
+                'email' => $email,
+            ]);
+
+            Activity::add(ActivityType::USER_UPDATE, $user);
         }
 
         return $user;

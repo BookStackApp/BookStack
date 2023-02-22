@@ -18,6 +18,9 @@ return [
     // Attribute, within a SAML response, to use to connect a BookStack user to the SAML user.
     'external_id_attribute' => env('SAML2_EXTERNAL_ID_ATTRIBUTE', null),
 
+    // Update user's display name and email on every login
+    'update_user_on_login' => env('SAML2_UPDATE_USER_ON_LOGIN', false),
+
     // Group sync options
     // Enable syncing, upon login, of SAML2 groups to BookStack groups
     'user_to_groups' => env('SAML2_USER_TO_GROUPS', false),

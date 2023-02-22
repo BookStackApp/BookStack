@@ -375,7 +375,8 @@ class Saml2Service
         $user = $this->registrationService->findOrRegister(
             $userDetails['name'],
             $userDetails['email'],
-            $userDetails['external_id']
+            $userDetails['external_id'],
+            $this->config['update_user_on_login']
         );
 
         if ($user === null) {
