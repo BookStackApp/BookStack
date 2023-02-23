@@ -111,7 +111,13 @@ class Role extends Model implements Loggable
      */
     public static function getSystemRole(string $systemName): ?self
     {
-        return static::query()->where('system_name', '=', $systemName)->first();
+        static $cache = [];
+
+        if (!isset($cache[$systemName])) {
+            $cache[$systemName] = static::query()->where('system_name', '=', $systemName)->first();
+        }
+
+        return $cache[$systemName];
     }
 
     /**
