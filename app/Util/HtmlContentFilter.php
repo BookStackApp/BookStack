@@ -19,10 +19,10 @@ class HtmlContentFilter
             return $html;
         }
 
-        $html = '<body>' . $html . '</body>';
+        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $doc->loadHTML($html);
         $xPath = new DOMXPath($doc);
 
         // Remove standard script tags
