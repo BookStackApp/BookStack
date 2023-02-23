@@ -33,12 +33,11 @@ export class PageEditor extends Component {
         this.setChangelogText = this.$opts.setChangelogText;
 
         // State data
-        this.editorHTML = '';
-        this.editorMarkdown = '';
         this.autoSave = {
             interval: null,
             frequency: 30000,
             last: 0,
+            pendingChange: false,
         };
         this.shownWarningsCache = new Set();
 
@@ -59,12 +58,12 @@ export class PageEditor extends Component {
         window.$events.listen('editor-save-page', this.savePage.bind(this));
 
         // Listen to content changes from the editor
-        window.$events.listen('editor-html-change', html => {
-            this.editorHTML = html;
-        });
-        window.$events.listen('editor-markdown-change', markdown => {
-            this.editorMarkdown = markdown;
-        });
+        const onContentChange = () => this.autoSave.pendingChange = true;
+        window.$events.listen('editor-html-change', onContentChange);
+        window.$events.listen('editor-markdown-change', onContentChange);
+
+        // Listen to changes on the title input
+        this.titleElem.addEventListener('input', onContentChange);
 
         // Changelog controls
         const updateChangelogDebounced = debounce(this.updateChangelogDisplay.bind(this), 300, false);
@@ -89,18 +88,17 @@ export class PageEditor extends Component {
     }
 
     startAutoSave() {
-        let lastContent = this.titleElem.value.trim() + '::' + this.editorHTML;
-        this.autoSaveInterval = window.setInterval(() => {
-            // Stop if manually saved recently to prevent bombarding the server
-            let savedRecently = (Date.now() - this.autoSave.last < (this.autoSave.frequency)/2);
-            if (savedRecently) return;
-            const newContent = this.titleElem.value.trim() + '::' + this.editorHTML;
-            if (newContent !== lastContent) {
-                lastContent = newContent;
-                this.saveDraft();
-            }
+        this.autoSave.interval = window.setInterval(this.runAutoSave.bind(this), this.autoSave.frequency);
+    }
 
-        }, this.autoSave.frequency);
+    runAutoSave() {
+        // Stop if manually saved recently to prevent bombarding the server
+        const savedRecently = (Date.now() - this.autoSave.last < (this.autoSave.frequency)/2);
+        if (savedRecently || !this.autoSave.pendingChange) {
+            return;
+        }
+
+        this.saveDraft()
     }
 
     savePage() {
@@ -108,14 +106,10 @@ export class PageEditor extends Component {
     }
 
     async saveDraft() {
-        const data = {
-            name: this.titleElem.value.trim(),
-            html: this.editorHTML,
-        };
+        const data = {name: this.titleElem.value.trim()};
 
-        if (this.editorType === 'markdown') {
-            data.markdown = this.editorMarkdown;
-        }
+        const editorContent = this.getEditorComponent().getContent();
+        Object.assign(data, editorContent);
 
         let didSave = false;
         try {
@@ -132,6 +126,7 @@ export class PageEditor extends Component {
             }
 
             didSave = true;
+            this.autoSave.pendingChange = false;
         } catch (err) {
             // Save the editor content in LocalStorage as a last resort, just in case.
             try {
@@ -205,6 +200,13 @@ export class PageEditor extends Component {
         if (saved && confirmed) {
             window.location = link;
         }
+    }
+
+    /**
+     * @return MarkdownEditor|WysiwygEditor
+     */
+    getEditorComponent() {
+        return window.$components.first('markdown-editor') || window.$components.first('wysiwyg-editor');
     }
 
 }
