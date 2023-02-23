@@ -449,8 +449,8 @@ class PageContent
     {
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
-        $html = '<body>' . $html . '</body>';
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
+        $doc->loadHTML($html);
 
         return $doc;
     }
