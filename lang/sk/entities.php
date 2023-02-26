@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aktualizované :timeLength',
     'meta_updated_name' => 'Aktualizované :timeLength používateľom :user',
     'meta_owned_name' => 'Vlastník :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Entita vybraná',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Obrázky',

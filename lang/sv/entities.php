@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Uppdaterad :timeLength',
     'meta_updated_name' => 'Uppdaterad :timeLength av :user',
     'meta_owned_name' => 'Ägs av :user',
-    'meta_reference_page_count' => 'Referas till på en sida|Refereras till på :count sidor',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Välj enhet',
     'entity_select_lack_permission' => 'Du har inte den behörighet som krävs för att välja det här objektet',
     'images' => 'Bilder',

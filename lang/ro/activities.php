@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Utilizator actualizat cu succes',
     'user_delete_notification' => 'Utilizator eliminat cu succes',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'a comentat la',
     'permissions_update'          => 'a actualizat permisiunile',

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Diperbaharui :timeLength',
     'meta_updated_name' => 'Diperbaharui :timeLength oleh :user',
     'meta_owned_name' => 'Dimiliki oleh :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Pilihan Entitas',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Gambar-gambar',

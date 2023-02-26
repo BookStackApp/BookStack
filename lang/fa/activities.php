@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'کاربر با موفقیت به روز شد',
     'user_delete_notification' => 'کاربر با موفقیت حذف شد',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'ثبت دیدگاه',
     'permissions_update'          => 'به روزرسانی مجوزها',

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Atnaujintas :timeLength',
     'meta_updated_name' => 'Atnaujinta :timeLength naudotojo :user',
     'meta_owned_name' => 'Priklauso :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Pasirinkti subjektą',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Nuotraukos',

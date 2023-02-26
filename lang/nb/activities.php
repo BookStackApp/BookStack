@@ -36,17 +36,17 @@ return [
     'book_delete'                 => 'slettet bok',
     'book_delete_notification'    => 'Boken ble slettet',
     'book_sort'                   => 'sorterte bok',
-    'book_sort_notification'      => 'Boken ble gjenopprettet',
+    'book_sort_notification'      => 'Boken ble omsortert',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create'            => 'opprettet hylle',
+    'bookshelf_create_notification'    => 'Hylllen ble opprettet',
+    'bookshelf_create_from_book'    => 'endret fra bok til hylle',
     'bookshelf_create_from_book_notification'    => 'Boken ble konvertert til en bokhylle',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'oppdatert hylle',
+    'bookshelf_update_notification'    => 'Hyllen ble oppdatert',
+    'bookshelf_delete'                 => 'slettet hylle',
+    'bookshelf_delete_notification'    => 'Hyllen ble slettet',
 
     // Favourites
     'favourite_add_notification' => '«:name» ble lagt til i dine favoritter',
@@ -57,16 +57,21 @@ return [
     'mfa_remove_method_notification' => 'Flerfaktor-metoden ble fjernet',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'opprettet webhook',
+    'webhook_create_notification' => 'Webhook ble opprettet',
+    'webhook_update' => 'oppdatert webhook',
+    'webhook_update_notification' => 'Webhook ble oppdatert',
+    'webhook_delete' => 'slettet webhook',
+    'webhook_delete_notification' => 'Webhook ble slettet',
 
     // Users
-    'user_update_notification' => 'User successfully updated',
-    'user_delete_notification' => 'User successfully removed',
+    'user_update_notification' => 'Brukeren ble oppdatert',
+    'user_delete_notification' => 'Brukeren ble fjernet',
+
+    // Roles
+    'role_create_notification' => 'Rollen ble opprettet',
+    'role_update_notification' => 'Rollen ble oppdatert',
+    'role_delete_notification' => 'Rollen ble fjernet',
 
     // Other
     'commented_on'                => 'kommenterte på',

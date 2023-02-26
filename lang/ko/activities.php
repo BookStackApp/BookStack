@@ -67,6 +67,11 @@ return [
     'user_update_notification' => '사용자가 업데이트되었습니다',
     'user_delete_notification' => '사용자가 삭제되었습니다',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => '댓글 쓰기',
     'permissions_update'          => '권한 수정함',

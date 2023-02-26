@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Användaren har uppdaterats',
     'user_delete_notification' => 'Användaren har tagits bort',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'kommenterade',
     'permissions_update'          => 'uppdaterade behörigheter',

@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Diweddarwyd y defnyddiwr yn llwyddiannus',
     'user_delete_notification' => 'Tynnwyd y defnyddiwr yn llwyddiannus',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'gwnaeth sylwadau ar',
     'permissions_update'          => 'caniatadau wedi\'u diweddaru',

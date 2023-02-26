@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Erabiltzailea egoki eguneratua',
     'user_delete_notification' => 'Erabiltzailea egoki ezabatua',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'iruzkinak',
     'permissions_update'          => 'eguneratu baimenak',

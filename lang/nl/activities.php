@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Gebruiker succesvol bijgewerkt',
     'user_delete_notification' => 'Gebruiker succesvol verwijderd',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'reageerde op',
     'permissions_update'          => 'wijzigde machtigingen',
