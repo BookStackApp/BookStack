@@ -38,8 +38,8 @@ return [
     'book_sort_notification'      => 'Kniha úspešne znovu zoradená',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create'            => 'vytvoril(a) policu',
+    'bookshelf_create_notification'    => 'Polica úspešne vytvorená',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Kniha úspešne konvertovaná na poličku',
     'bookshelf_update'                 => 'updated shelf',
