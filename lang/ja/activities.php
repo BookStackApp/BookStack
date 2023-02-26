@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'ユーザーを更新しました',
     'user_delete_notification' => 'ユーザーを削除しました',
 
+    // Roles
+    'role_create_notification' => '役割を作成しました',
+    'role_update_notification' => '役割を更新しました',
+    'role_delete_notification' => '役割を削除しました',
+
     // Other
     'commented_on'                => 'がコメント:',
     'permissions_update'          => 'が権限を更新:',

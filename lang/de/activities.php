@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Benutzer erfolgreich aktualisiert',
     'user_delete_notification' => 'Benutzer erfolgreich entfernt',
 
+    // Roles
+    'role_create_notification' => 'Rolle erfolgreich angelegt',
+    'role_update_notification' => 'Rolle erfolgreich aktualisiert',
+    'role_delete_notification' => 'Rolle erfolgreich gelöscht',
+
     // Other
     'commented_on'                => 'hat einen Kommentar hinzugefügt',
     'permissions_update'          => 'hat die Berechtigungen aktualisiert',

@@ -23,7 +23,7 @@ return [
     'meta_updated' => ':timeLength güncellendi',
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
     'meta_owned_name' => 'Owned by :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Öge Seçimi',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Görseller',

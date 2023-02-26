@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'تم تحديث المستخدم بنجاح',
     'user_delete_notification' => 'تم إزالة المستخدم بنجاح',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'تم التعليق',
     'permissions_update'          => 'تحديث الأذونات',

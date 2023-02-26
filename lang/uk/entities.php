@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Оновлено :timeLength',
     'meta_updated_name' => ':user оновив :timeLength',
     'meta_owned_name' => 'Власник :user',
-    'meta_reference_page_count' => 'Посилання на 1 сторінку|Посилання на :count сторінок',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Вибір об\'єкта',
     'entity_select_lack_permission' => 'У вас немає необхідних прав для вибору цього елемента',
     'images' => 'Зображення',

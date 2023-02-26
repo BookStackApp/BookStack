@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Произошла ошибка при загрузке изображения',
     'image_upload_type_error' => 'Неправильный тип загружаемого изображения',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Данные чертежа не могут быть загружены. Возможно, файл чертежа больше не существует или у вас нет разрешения на доступ к нему.',
 
     // Attachments
     'attachment_not_found' => 'Вложение не найдено',

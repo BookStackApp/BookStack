@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Používateľ úspešne upravený',
     'user_delete_notification' => 'Používateľ úspešne zmazaný',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'komentoval(a)',
     'permissions_update'          => 'aktualizované oprávnenia',

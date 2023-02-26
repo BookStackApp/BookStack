@@ -67,6 +67,11 @@ return [
     'user_update_notification' => '用户更新成功',
     'user_delete_notification' => '成功移除用户',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => '评论',
     'permissions_update'          => '权限已更新',

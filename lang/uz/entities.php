@@ -23,7 +23,7 @@ return [
     'meta_updated' => ':timeLength da yangilangan',
     'meta_updated_name' => ':user tomonidan :timeLength da yangilangan',
     'meta_owned_name' => 'Egasi :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Entity Select',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Rasmlar',

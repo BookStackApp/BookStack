@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'User successfully updated',
     'user_delete_notification' => 'User successfully removed',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'je komentarisao/la na',
     'permissions_update'          => 'je ažurirao/la dozvole',

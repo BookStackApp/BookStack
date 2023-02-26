@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Posodobljeno :timeLength',
     'meta_updated_name' => 'Posodobil :timeLength uporabnik :user',
     'meta_owned_name' => 'V lasti :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Izbira entitete',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Slike',
