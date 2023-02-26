@@ -18,7 +18,7 @@ class UserRoleProvider
     {
         if (is_null($this->admin)) {
             $adminRole = Role::getSystemRole('admin');
-            $this->admin = $adminRole->users->first();
+            $this->admin = $adminRole->users()->first();
         }
 
         return $this->admin;
