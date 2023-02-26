@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'Benutzer erfolgreich entfernt',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'Rolle erfolgreich angelegt',
+    'role_update_notification' => 'Rolle erfolgreich aktualisiert',
+    'role_delete_notification' => 'Rolle erfolgreich gelöscht',
 
     // Other
     'commented_on'                => 'kommentiert',
