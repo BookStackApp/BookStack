@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Pri nahrávaní obrázka nastala chyba',
     'image_upload_type_error' => 'Typ nahrávaného obrázka je neplatný',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Údaje výkresu sa nepodarilo načítať. Súbor výkresu už možno neexistuje alebo nemáte povolenie na prístup k nemu.',
 
     // Attachments
     'attachment_not_found' => 'Príloha nenájdená',
@@ -61,7 +61,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entita nenájdená',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Polica nenájdená',
     'book_not_found' => 'Kniha nenájdená',
     'page_not_found' => 'Stránka nenájdená',
     'chapter_not_found' => 'Kapitola nenájdená',
