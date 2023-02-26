@@ -23,6 +23,7 @@ use Monolog\Logger;
 use Psr\Http\Client\ClientInterface;
 use Ssddanbrown\AssertHtml\TestsHtml;
 use Tests\Helpers\EntityProvider;
+use Tests\Helpers\FileProvider;
 use Tests\Helpers\PermissionsProvider;
 use Tests\Helpers\TestServiceProvider;
 use Tests\Helpers\UserRoleProvider;
@@ -36,12 +37,14 @@ abstract class TestCase extends BaseTestCase
     protected EntityProvider $entities;
     protected UserRoleProvider $users;
     protected PermissionsProvider $permissions;
+    protected FileProvider $files;
 
     protected function setUp(): void
     {
         $this->entities = new EntityProvider();
         $this->users = new UserRoleProvider();
         $this->permissions = new PermissionsProvider($this->users);
+        $this->files = new FileProvider();
 
         parent::setUp();
 

@@ -6,6 +6,10 @@ export class Actions {
      */
     constructor(editor) {
         this.editor = editor;
+        this.lastContent = {
+            html: '',
+            markdown: '',
+        };
     }
 
     updateAndRender() {
@@ -13,9 +17,15 @@ export class Actions {
         this.editor.config.inputEl.value = content;
 
         const html = this.editor.markdown.render(content);
-        window.$events.emit('editor-html-change', html);
-        window.$events.emit('editor-markdown-change', content);
+        window.$events.emit('editor-html-change', '');
+        window.$events.emit('editor-markdown-change', '');
+        this.lastContent.html = html;
+        this.lastContent.markdown = content;
         this.editor.display.patchWithHtml(html);
+    }
+
+    getContent() {
+        return this.lastContent;
     }
 
     insertImage() {

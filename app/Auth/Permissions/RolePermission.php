@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int $id
+ * @property string $name
+ * @property string $display_name
  */
 class RolePermission extends Model
 {

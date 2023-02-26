@@ -3,12 +3,9 @@
 namespace Tests\Settings;
 
 use Tests\TestCase;
-use Tests\Uploads\UsesImages;
 
 class SettingsTest extends TestCase
 {
-    use UsesImages;
-
     public function test_settings_endpoint_redirects_to_settings_view()
     {
         $resp = $this->asAdmin()->get('/settings');
@@ -47,7 +44,7 @@ class SettingsTest extends TestCase
     public function test_updating_and_removing_app_icon()
     {
         $this->asAdmin();
-        $galleryFile = $this->getTestImage('my-app-icon.png');
+        $galleryFile = $this->files->uploadedImage('my-app-icon.png');
         $expectedPath = public_path('uploads/images/system/' . date('Y-m') . '/my-app-icon.png');
 
         $this->assertFalse(setting()->get('app-icon'));
@@ -55,6 +52,10 @@ class SettingsTest extends TestCase
         $this->assertFalse(setting()->get('app-icon-128'));
         $this->assertFalse(setting()->get('app-icon-64'));
         $this->assertFalse(setting()->get('app-icon-32'));
+        $this->assertEquals(
+            file_get_contents(public_path('icon.ico')),
+            file_get_contents(public_path('favicon.ico')),
+        );
 
         $prevFileCount = count(glob(dirname($expectedPath) . DIRECTORY_SEPARATOR . '*.png'));
 
@@ -74,6 +75,11 @@ class SettingsTest extends TestCase
         $resp = $this->get('/');
         $this->withHtml($resp)->assertElementCount('link[sizes][href*="my-app-icon"]', 6);
 
+        $this->assertNotEquals(
+            file_get_contents(public_path('icon.ico')),
+            file_get_contents(public_path('favicon.ico')),
+        );
+
         $reset = $this->post('/settings/customization', ['app_icon_reset' => 'true']);
         $reset->assertRedirect('/settings/customization');
 
@@ -84,5 +90,10 @@ class SettingsTest extends TestCase
         $this->assertFalse(setting()->get('app-icon-128'));
         $this->assertFalse(setting()->get('app-icon-64'));
         $this->assertFalse(setting()->get('app-icon-32'));
+
+        $this->assertEquals(
+            file_get_contents(public_path('icon.ico')),
+            file_get_contents(public_path('favicon.ico')),
+        );
     }
 }

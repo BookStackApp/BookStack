@@ -308,3 +308,6 @@ Adrian Ocneanu (aocneanu) :: Romanian
 Eduardo Castanho (EduardoCastanho) :: Portuguese
 VIET NAM VPS (vietnamvps) :: Vietnamese
 m4tthi4s :: French
+toras9000 :: Japanese
+pathab :: German
+MichelSchoon85 :: Dutch

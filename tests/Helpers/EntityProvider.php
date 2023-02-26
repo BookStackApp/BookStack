@@ -185,6 +185,19 @@ class EntityProvider
     }
 
     /**
+     * Create and return a new test draft page.
+     */
+    public function newDraftPage(array $input = ['name' => 'test page', 'html' => 'My new test page']): Page
+    {
+        $book = $this->book();
+        $pageRepo = app(PageRepo::class);
+        $draftPage = $pageRepo->getNewDraftPage($book);
+        $pageRepo->updatePageDraft($draftPage, $input);
+        $this->addToCache($draftPage);
+        return $draftPage;
+    }
+
+    /**
      * @param Entity|Entity[] $entities
      */
     protected function addToCache($entities): void

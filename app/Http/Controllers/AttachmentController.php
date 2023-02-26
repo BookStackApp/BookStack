@@ -15,16 +15,10 @@ use Illuminate\Validation\ValidationException;
 
 class AttachmentController extends Controller
 {
-    protected AttachmentService $attachmentService;
-    protected PageRepo $pageRepo;
-
-    /**
-     * AttachmentController constructor.
-     */
-    public function __construct(AttachmentService $attachmentService, PageRepo $pageRepo)
-    {
-        $this->attachmentService = $attachmentService;
-        $this->pageRepo = $pageRepo;
+    public function __construct(
+        protected AttachmentService $attachmentService,
+        protected PageRepo $pageRepo
+    ) {
     }
 
     /**
@@ -112,7 +106,7 @@ class AttachmentController extends Controller
         try {
             $this->validate($request, [
                 'attachment_edit_name' => ['required', 'string', 'min:1', 'max:255'],
-                'attachment_edit_url'  => ['string', 'min:1', 'max:255', 'safe_url'],
+                'attachment_edit_url'  => ['string', 'min:1', 'max:2000', 'safe_url'],
             ]);
         } catch (ValidationException $exception) {
             return response()->view('attachments.manager-edit-form', array_merge($request->only(['attachment_edit_name', 'attachment_edit_url']), [
@@ -148,7 +142,7 @@ class AttachmentController extends Controller
             $this->validate($request, [
                 'attachment_link_uploaded_to' => ['required', 'integer', 'exists:pages,id'],
                 'attachment_link_name'        => ['required', 'string', 'min:1', 'max:255'],
-                'attachment_link_url'         => ['required', 'string', 'min:1', 'max:255', 'safe_url'],
+                'attachment_link_url'         => ['required', 'string', 'min:1', 'max:2000', 'safe_url'],
             ]);
         } catch (ValidationException $exception) {
             return response()->view('attachments.manager-link-form', array_merge($request->only(['attachment_link_name', 'attachment_link_url']), [
