@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新于 :timeLength',
     'meta_updated_name' => '由 :user 更新于 :timeLength',
     'meta_owned_name' => '拥有者 :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_page_count' => '被 :count 个页面引用|被 :count 个页面引用',
     'entity_select' => '选择项目',
     'entity_select_lack_permission' => '您没有选择此项目所需的权限',
     'images' => '图片',
