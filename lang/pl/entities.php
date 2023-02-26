@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Zaktualizowano :timeLength',
     'meta_updated_name' => 'Zaktualizowano :timeLength przez :user',
     'meta_owned_name' => 'Właściciel: :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Odniesienie na :count stronie|Odniesienie na :count stronach',
     'entity_select' => 'Wybór obiektu',
     'entity_select_lack_permission' => 'Nie masz wymaganych uprawnień do wybrania tej pozycji',
     'images' => 'Obrazki',
