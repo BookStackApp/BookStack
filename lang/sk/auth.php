@@ -21,7 +21,7 @@ return [
     'email' => 'E-mail',
     'password' => 'Heslo',
     'password_confirm' => 'Potvrdiť heslo',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'Musí obsahovať aspoň 8 znakov',
     'forgot_password' => 'Zabudli ste heslo?',
     'remember_me' => 'Zapamätať si ma',
     'ldap_email_hint' => 'Zadajte prosím e-mail, ktorý sa má použiť pre tento účet.',
@@ -39,9 +39,9 @@ return [
     'register_success' => 'Ďakujeme za registráciu! Teraz ste registrovaný a prihlásený.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Pokus o prihlásenie',
+    'auto_init_starting_desc' => 'Kontaktujeme váš overovací systém, aby sme spustili proces prihlásenia. Ak po 5 sekundách nedôjde k žiadnemu pokroku, môžete skúsiť kliknúť na odkaz nižšie.',
+    'auto_init_start_link' => 'Pokračujte v autentifikácii',
 
     // Password Reset
     'reset_password' => 'Resetovanie hesla',
@@ -59,10 +59,10 @@ return [
     'email_confirm_text' => 'Prosím, potvrďte Vašu e-mailovú adresu kliknutím na tlačidlo nižšie:',
     'email_confirm_action' => 'Potvrdiť e-mail',
     'email_confirm_send_error' => 'Je požadované overenie e-mailu, ale systém nemohol e-mail odoslať. Kontaktujte administrátora, aby ste sa uistili, že je e-mail nastavený správne.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Váš email bol potvrdený! Teraz by ste sa mali vedieť prihlásiť pomocou tejto e-mailovej adresy.',
     'email_confirm_resent' => 'Potvrdzujúci e-mail bol poslaný znovu, skontrolujte prosím svoju e-mailovú schránku.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'Ďakujeme za potvrdenie!',
+    'email_confirm_thanks_desc' => 'Počkajte chvíľu, kým sa spracuje vaše potvrdenie. Ak nebudete presmerovaní do 3 sekúnd, pokračujte kliknutím na odkaz „Pokračovať“ nižšie.',
 
     'email_not_confirmed' => 'E-mailová adresa nebola overená',
     'email_not_confirmed_text' => 'Vaša e-mailová adresa nebola zatiaľ overená.',
@@ -78,7 +78,7 @@ return [
     'user_invite_page_welcome' => 'Vitajte v :appName!',
     'user_invite_page_text' => 'Ak chcete dokončiť svoj účet a získať prístup, musíte nastaviť heslo, ktoré sa použije na prihlásenie do aplikácie :appName pri budúcich návštevách.',
     'user_invite_page_confirm_button' => 'Potvrdiť heslo',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Heslo je nastavené, teraz by ste sa mali vedieť prihlásiť pomocou svojho nastaveného hesla na prístup k :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Nastaviť viacúrovňové prihlasovanie',

@@ -61,8 +61,8 @@ return [
     'email_confirm_send_error' => 'Необхідно підтвердження електронною поштою, але система не змогла надіслати електронний лист. Зверніться до адміністратора, щоб правильно налаштувати електронну пошту.',
     'email_confirm_success' => 'Ваша адреса електронної пошти була підтверджена! Тепер ви можете увійти в систему, використовуючи цю адресу електронної пошти.',
     'email_confirm_resent' => 'Лист з підтвердженням надіслано, перевірте свою пошту.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'Дякуємо за підтвердження!',
+    'email_confirm_thanks_desc' => 'Будь ласка, зачекайте деякий час, поки підтвердження буде оброблено. Якщо ви не перенаправлені через 3 секунди, натисніть посилання "Продовжити" нижче, щоб продовжити.',
 
     'email_not_confirmed' => 'Адресу електронної скриньки не підтверджено',
     'email_not_confirmed_text' => 'Ваша електронна адреса ще не підтверджена.',

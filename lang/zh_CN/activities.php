@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => '成功移除用户',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => '角色创建成功',
+    'role_update_notification' => '角色更新成功',
+    'role_delete_notification' => '角色删除成功',
 
     // Other
     'commented_on'                => '评论',
