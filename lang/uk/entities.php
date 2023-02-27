@@ -292,7 +292,7 @@ return [
     'shelf_tags' => 'Теги полиць',
     'tag' => 'Тег',
     'tags' =>  'Теги',
-    'tags_index_desc' => 'Tags can be applied to content within the system to apply a flexible form of categorization. Tags can have both a key and value, with the value being optional. Once applied, content can then be queried using the tag name and value.',
+    'tags_index_desc' => 'Теги можна застосовувати до вмісту в системі, щоб застосувати гнучку форму категоризації. Теги можуть мати як ключ, так і значення, при цьому значення є необов’язковим. Після застосування вміст можна запитувати за допомогою імені та значення тегу.',
     'tag_name' =>  'Назва тегу',
     'tag_value' => 'Значення тегу (необов\'язково)',
     'tags_explain' => "Додайте кілька тегів, щоб краще класифікувати ваш вміст. \n Ви можете присвоїти значення тегу для більш глибокої організації.",
