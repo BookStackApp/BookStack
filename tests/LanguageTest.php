@@ -4,7 +4,7 @@ namespace Tests;
 
 class LanguageTest extends TestCase
 {
-    protected $langs;
+    protected array $langs;
 
     /**
      * LanguageTest constructor.
@@ -80,5 +80,14 @@ class LanguageTest extends TestCase
         setting()->putUser($this->users->editor(), 'language', 'ar');
         $this->get('/');
         $this->assertTrue(config('app.rtl'), 'App RTL config should have been set to true by middleware');
+    }
+
+    public function test_unknown_lang_does_not_break_app()
+    {
+        config()->set('app.locale', 'zz');
+
+        $loginReq = $this->get('/login', ['Accept-Language' => 'zz']);
+        $loginReq->assertOk();
+        $loginReq->assertSee('Log In');
     }
 }

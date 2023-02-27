@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'Skratky',
+    'shortcuts_interface' => 'Klávesové skratky rozhrania',
+    'shortcuts_toggle_desc' => 'Tu môžete povoliť alebo zakázať klávesové skratky systémového rozhrania, ktoré sa používajú na navigáciu a akcie.',
+    'shortcuts_customize_desc' => 'Každú z nižšie uvedených skratiek si môžete prispôsobiť. Po výbere vstupu pre skratku stačí stlačiť požadovanú kombináciu klávesov.',
+    'shortcuts_toggle_label' => 'Klávesové skratky sú povolené',
+    'shortcuts_section_navigation' => 'Navigácia',
+    'shortcuts_section_actions' => 'Hlavné akcie',
+    'shortcuts_save' => 'Uložiť skratky',
+    'shortcuts_overlay_desc' => 'Poznámka: Keď sú zapnuté skratky, pomocné prekrytie je dostupné stlačením „?", ktoré zvýrazní dostupné skratky akcií,, ktoré sú momentálne viditeľné na obrazovke.',
+    'shortcuts_update_success' => 'Predvoľby skratiek boli aktualizované!',
 ];
