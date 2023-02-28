@@ -50,7 +50,7 @@ return [
 
     // Color settings
     'color_scheme' => 'アプリケーションの配色',
-    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'color_scheme_desc' => 'アプリケーションのユーザーインターフェイスで使用する色を設定します。 色はダークモードとライトモードで個別に設定することができ、テーマへの適合と読みやすさを確保することができます。',
     'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
     'app_color' => 'プライマリ色',
     'link_color' => 'デフォルトのリンク色',
