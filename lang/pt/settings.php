@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Esquema de cores da aplicação',
-    'color_scheme_desc' => 'Define as cores a serem usadas na interface do BookStack. As cores podem ser configuradas separadamente para modos escuro e claro para melhor se adequar ao tema e garantir a legibilidade.',
-    'ui_colors_desc' => 'Defina a cor primária e a cor padrão do link para o BookStack. A cor primária é usada principalmente para o banner do cabeçalho, botões e decorações da interface. A cor padrão do link é usada para links e ações baseados em texto, tanto no conteúdo escrito quanto na interface do BookStack.',
+    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
     'app_color' => 'Cor primária',
     'link_color' => 'Cor padrão do link',
     'content_colors_desc' => 'Definir cores para todos os elementos na hierarquia da organização da página. Escolher cores com um brilho semelhante às cores padrão é recomendado para a legibilidade.',
