@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'アプリケーションの配色',
-    'color_scheme_desc' => 'BookStack インターフェイスで使用する色を設定します。 色はダークモードとライトモードで個別に設定することができ、テーマへの適合と読みやすさを確保することができます。',
-    'ui_colors_desc' => 'BookStackのプライマリカラーとデフォルトリンクカラーを設定します。プライマリカラーは主にヘッダーバナー、ボタン、インターフェイスの装飾に使用されます。 デフォルトのリンク色はテキストベースのリンクとアクションに使用されます。これは作成されたコンテンツと Bookstack インターフェイスの両方に適用されます。',
+    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
     'app_color' => 'プライマリ色',
     'link_color' => 'デフォルトのリンク色',
     'content_colors_desc' => 'ページ構成階層の各要素に色を設定します。読みやすさを考慮して、デフォルトの色と同じような明るさの色を選ぶことをお勧めします。',
