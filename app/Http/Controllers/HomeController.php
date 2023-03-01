@@ -7,12 +7,6 @@ use BookStack\Entities\BasicListItem;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Queries\RecentlyViewed;
-use BookStack\Entities\Queries\TopFavourites;
-use BookStack\Entities\Repos\BookRepo;
-use BookStack\Entities\Repos\BookshelfRepo;
-use BookStack\Entities\Tools\PageContent;
-use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,27 +21,36 @@ class HomeController extends Controller
         $newSymbols = Page::getVisiblePagesInBookshelf('symbols')
             ->orderBy('created_at', 'desc')
             ->take(10)
-            ->select(Page::$listAttributes)
+            // ->select(Page::$listAttributes)
             ->get();
 
         $latestDrafts = Page::getVisiblePagesInBookshelf('contribute')
             ->orderBy('created_at', 'desc')
             ->take(3)
-            ->select(Page::$listAttributes)
+            // ->select(Page::$listAttributes)
             ->get();
 
-        // $blogTodos = Book::getBySlug('blog-post-symbols-to-extract')->visible();
+        $latestCommunityReviews = Page::getVisiblePagesInBookshelf('contribute')
+            // ->where('book_id', '=', '5')
+            ->where('book_id', '=',  Book::getBySlug('community-review', true)->id)
+            ->orderBy('created_at', 'desc')
+            // ->take(3)
+            // ->select(Page::$listAttributes)
+            ->get();
 
         $quickLinks = collect([
-            new BasicListItem('/shelves/symbols/all', 'All Symbols', 'See all of the official symbols', 'star-circle'),
+            new BasicListItem('/shelves/symbols', 'All Symbols', 'See all of the official symbols', 'star-circle'),
+            // new BasicListItem('http://localhost:4000', 'Community Tasks', 'Go to the task manager', 'check'),
+            new BasicListItem(env('TASK_MANAGER_URL', null), 'Tasks', 'Go to the community task manager', 'check'),
             // new BasicListItem('/shelves/to-do-lists/all', 'To-Do Items', 'Help out by checking off to-do items!', 'check'),
-            new BasicListItem('/shelves/to-do-lists/all', 'How Can I Help?', 'Learn how you can help Symbolpedia!', 'info'),
+            new BasicListItem('/shelves/getting-started/all', 'How Can I Help?', 'Learn how you can help Symbolpedia!', 'info'),
+            // ...(Bookshelf::getBySlug('contribute')->visibleBooks()->get()->all() ?? [], true),
             ...Bookshelf::getBySlug('contribute')->visibleBooks()->get()->all(),
-            // Book::getBySlug('blog-post-symbols-to-extract'),
-            // Book::getBySlug('blog-post-to-dos'),
+            // Book::getBySlug('blog-post-symbols-to-extract', true),
+            // Book::getBySlug('blog-post-to-dos', true),
         ]);
 
-        // $test = Book::getBySlug('drafts');
+        // $test = Book::getBySlug('drafts', true);
 
         // $recentUpdates = Page::getAllVisiblePages()
         // ->orderBy('created_at', 'desc')
@@ -60,7 +63,7 @@ class HomeController extends Controller
         ->select(Page::$listAttributes)
         ->get();
 
-        $symbolTypesList = Bookshelf::getBySlug('symbols')->visibleBooks()->get();
+        $symbolTypesList = Bookshelf::getBySlug('symbols', true)->visibleBooks()->get();
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
         $homepageOption = setting('app-homepage-type', 'default');
@@ -71,6 +74,7 @@ class HomeController extends Controller
         $commonData = [
             'activeUsers' => $activeUsers,
             'latestDrafts' => $latestDrafts,
+            'latestCommunityReviews' => $latestCommunityReviews,
             'newSymbols' => $newSymbols,
             'quickLinks' => $quickLinks,
             'symbolTypesList' => $symbolTypesList,

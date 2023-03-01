@@ -159,7 +159,7 @@
                 </a>
             @endif
             @if(userCan('page-update', $page))
-                @if(userCan('page-delete', $page))
+                @if(userCan('page-delete', $page) || (user()->id === $page->getAttribute('owned_by') && $book->slug === 'community-review'))
 	                <a href="{{ $page->getUrl('/move') }}" data-shortcut="move" class="icon-list-item">
 	                    <span>@icon('folder')</span>
 	                    <span>{{ trans('common.move') }}</span>

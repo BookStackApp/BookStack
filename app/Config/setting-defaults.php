@@ -10,11 +10,11 @@
 
 return [
 
-    'app-name'             => 'BookStack',
+    'app-name'             => 'Symbolpedia',
     'app-logo'             => '',
     'app-name-header'      => true,
     'app-editor'           => 'wysiwyg',
-    'app-color'            => '#206ea7',
+    'app-color'            => '#7209B7',
     'app-color-light'      => 'rgba(32,110,167,0.15)',
     'link-color'           => '#206ea7',
     'bookshelf-color'      => '#a94747',

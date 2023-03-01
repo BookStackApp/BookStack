@@ -14,7 +14,7 @@
                     <p class="small">{{ trans('settings.app_name_desc') }}</p>
                 </div>
                 <div class="pt-xs">
-                    <input type="text" value="{{ setting('app-name', 'BookStack') }}" name="setting-app-name" id="setting-app-name">
+                    <input type="text" value="{{ setting('app-name', 'Symbolpedia') }}" name="setting-app-name" id="setting-app-name">
                     @include('form.toggle-switch', [
                         'name' => 'setting-app-name-header',
                         'value' => setting('app-name-header'),

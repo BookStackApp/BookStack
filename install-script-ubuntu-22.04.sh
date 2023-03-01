@@ -6,7 +6,7 @@
 # Commented out "CustomLog" for the apache config to prevent ip logging
 #
 
-echo "This script installs a new BookStack instance on a fresh Ubuntu 22.04 server."
+echo "This script installs a new Symbolpedia instance on a fresh Ubuntu 22.04 server."
 echo "This script does not ensure system security."
 echo ""
 
@@ -100,7 +100,7 @@ function run_database_setup() {
 # Download BookStack
 function run_bookstack_download() {
   cd /var/www || exit
-  git clone https://github.com/CaffeineSheep/BookStack.git --branch development --single-branch bookstack
+  git clone https://github.com/CaffeineSheep/BookStack.git --branch new-mods --single-branch bookstack
 }
 
 # Install composer
@@ -133,8 +133,8 @@ function run_install_bookstack_composer_deps() {
 # Copy and update BookStack environment variables
 function run_update_bookstack_env() {
   cd "$BOOKSTACK_DIR" || exit
-  cp .env.default .env
-  sed -i.bak "s@APP_URL=.*\$@APP_URL=http://$DOMAIN@" .env
+  cp .prod.env .env
+  sed -i.bak "s@APP_URL=.*\$@APP_URL=https://$DOMAIN@" .env
   sed -i.bak 's/DB_DATABASE=.*$/DB_DATABASE=bookstack/' .env
   sed -i.bak 's/DB_USERNAME=.*$/DB_USERNAME=bookstack/' .env
   sed -i.bak "s/DB_PASSWORD=.*\$/DB_PASSWORD=$DB_PASS/" .env
@@ -204,7 +204,7 @@ function run_configure_apache() {
       </IfModule>
   </Directory>
 
-  ErrorLog \${APACHE_LOG_DIR}/error.log
+  # ErrorLog \${APACHE_LOG_DIR}/error.log
   # CustomLog \${APACHE_LOG_DIR}/access.log combined
 
 </VirtualHost>

@@ -75,6 +75,10 @@
   color: var(--color-book);
   fill: var(--color-book);
 }
+.text-check, .text-book:hover {
+  color: var(--color-tasks);
+  fill: var(--color-tasks);
+}
 .text-star-circle, .text-star-circle:hover {
   color: var(--color-star-circle);
   fill: var(--color-star-circle);

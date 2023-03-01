@@ -455,3 +455,10 @@ header .search-box.search-active:focus-within {
     padding-inline-start: $-xs;
   }
 }
+
+@include smaller-than($s) {
+  .logo {
+    padding-left: $-xs;
+    gap: $-xs;
+  }
+}

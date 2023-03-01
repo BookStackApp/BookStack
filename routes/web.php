@@ -241,6 +241,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/audit', [AuditLogController::class, 'index']);
 
     // Users
+    Route::get('/users/all', [UserController::class, 'showAll']);
     Route::get('/settings/users', [UserController::class, 'index']);
     Route::get('/settings/users/create', [UserController::class, 'create']);
     Route::get('/settings/users/{id}/delete', [UserController::class, 'delete']);
@@ -316,6 +317,7 @@ Route::get('/register/service/{socialDriver}', [Auth\SocialController::class, 'r
 // Login/Logout routes
 Route::get('/login', [Auth\LoginController::class, 'getLogin']);
 Route::post('/login', [Auth\LoginController::class, 'login']);
+Route::get('/logout', [Auth\LoginController::class, 'logout']);
 Route::post('/logout', [Auth\LoginController::class, 'logout']);
 Route::get('/register', [Auth\RegisterController::class, 'getRegister']);
 Route::get('/register/confirm', [Auth\ConfirmEmailController::class, 'show']);

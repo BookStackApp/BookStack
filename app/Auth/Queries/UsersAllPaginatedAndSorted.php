@@ -14,7 +14,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
  */
 class UsersAllPaginatedAndSorted
 {
-    public function run(int $count, SimpleListOptions $listOptions): LengthAwarePaginator
+    public function run(int $count, SimpleListOptions $listOptions, $limitToContributionActivity = false): LengthAwarePaginator
     {
         $sort = $listOptions->getSort();
         if ($sort === 'created_at') {
@@ -22,7 +22,7 @@ class UsersAllPaginatedAndSorted
         }
 
         $query = User::query()->select(['*'])
-            ->scopes(['withLastActivityAt'])
+            ->withLastActivityAt($limitToContributionActivity)
             ->with(['roles', 'avatar'])
             ->withCount('mfaValues')
             ->orderBy($sort, $listOptions->getOrder());

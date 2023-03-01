@@ -105,7 +105,7 @@
                 userCan('book-delete', $book))
                 <h5>{{ trans('common.actions') }}</h5>
             @endif
-            <div class="icon-list text-primary">
+            <div class="icon-list text-link">
 
                 @if (userCan('page-create', $book))
                     <a href="{{ $book->getUrl('/create-page') }}" class="icon-list-item">

@@ -2,9 +2,11 @@
 
 namespace BookStack\Auth;
 
+use BookStack\Actions\ActivityType;
 use BookStack\Actions\Favourite;
 use BookStack\Api\ApiToken;
 use BookStack\Auth\Access\Mfa\MfaValue;
+use BookStack\Auth\Queries\UserContentCounts;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Interfaces\Loggable;
 use BookStack\Interfaces\Sluggable;
@@ -128,6 +130,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsToMany(Role::class);
     }
 
+    /**
+     * Get's the asset counts for the user
+     *
+     */
+    public function getAssetCountsAttribute() {
+         return (new UserContentCounts())->run($this);
+    }
+    
     /**
      * Check if the user has a role.
      */
@@ -289,11 +299,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Get the last activity time for this user.
      */
-    public function scopeWithLastActivityAt(Builder $query)
+    public function scopeWithLastActivityAt(Builder $query, bool $onlyIncludeContributionActivity = false)
     {
         $query->addSelect(['activities.created_at as last_activity_at'])
-            ->leftJoinSub(function (\Illuminate\Database\Query\Builder $query) {
+            ->leftJoinSub(function (\Illuminate\Database\Query\Builder $query) use ($onlyIncludeContributionActivity) {
                 $query->from('activities')->select('user_id')
+                    ->when($onlyIncludeContributionActivity, function (\Illuminate\Database\Query\Builder $query) {
+                        return $query->whereIn('type', [ActivityType::PAGE_UPDATE, ActivityType::BOOK_CREATE, ActivityType::PAGE_CREATE, ActivityType::BOOKSHELF_CREATE]);
+                    })
                     ->selectRaw('max(created_at) as created_at')
                     ->groupBy('user_id');
             }, 'activities', 'users.id', '=', 'activities.user_id');

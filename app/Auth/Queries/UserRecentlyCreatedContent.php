@@ -33,7 +33,9 @@ class UserRecentlyCreatedContent
             'chapters' => $query(Chapter::visible()),
             'books'    => $query(Book::visible()),
             'shelves'  => $query(Bookshelf::visible()),
-            'updates'  => PageRevision::query()->where('created_by', '=', $user->id)->where('revision_number', '!=', 1)->orderBy('updated_at', 'desc')->take($count)->get(),
+            'updates'  => PageRevision::query()->where('created_by', '=', $user->id)->where('revision_number', '!=', 1)->orderBy('updated_at', 'desc')->take($count)->get(), // The way this is setup seems to prevent "showPath" from working 
+            'symbols'  => $query(Page::getVisiblePagesInBookshelf('symbols')->where('created_by', '=', $user->id)),
+            'drafts'  => $query(Page::getVisiblePagesInBookshelf('contribute')->where('created_by', '=', $user->id)),
         ];
     }
 }

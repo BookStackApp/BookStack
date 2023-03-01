@@ -361,7 +361,7 @@ ul.pagination {
   display: inline-block;
   list-style: none;
   margin: $-m 0;
-  padding-inline-start: 1px;
+  // padding-inline-start: 1px; // Not sure why this was needed
   li {
     float: left;
   }

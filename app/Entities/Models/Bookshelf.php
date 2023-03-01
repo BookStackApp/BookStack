@@ -112,10 +112,12 @@ class Bookshelf extends Entity implements HasCoverImage
 
     /**
      * Get a visible shelf by its slug.
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException if $allowNull is false
      */
-    public static function getBySlug(string $slug): self
+    public static function getBySlug(string $slug, bool $allowNull = false): self|null
     {
-        return static::visible()->where('slug', '=', $slug)->firstOrFail();
+        $result = static::visible()->where('slug', '=', $slug);
+
+        return $allowNull ? $result->first() : $result->firstOrFail();
     }
 }

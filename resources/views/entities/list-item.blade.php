@@ -2,11 +2,11 @@
 
 <div class="entity-item-snippet">
 
-    @if($locked ?? false)
+    {{-- @if($locked ?? false)
         <div class="text-warn my-xxs bold">
             @icon('lock'){{ trans('entities.entity_select_lack_permission') }}
         </div>
-    @endif
+    @endif --}}
 
     @if($showPath ?? false)
         @if($entity->relationLoaded('book') && $entity->book)

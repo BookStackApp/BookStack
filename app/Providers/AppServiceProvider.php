@@ -77,6 +77,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(HttpClientInterface::class, function ($app) {
             return new Client([
                 'timeout' => 3,
+                'verify' => config('app.env') !== 'development' // Allows self-signed certificates to work when in dev mode
             ]);
         });
     }

@@ -175,7 +175,7 @@ class Page extends BookChild
             ->whereIn('book_id', $bookIds);
     }
 
-    public static function getAllVisiblePages() // TODO: Move to Page?
+    public static function getAllVisiblePages()
     {
         $visibleBelongsScope = function (BelongsTo $query) {
             $query->scopes('visible');

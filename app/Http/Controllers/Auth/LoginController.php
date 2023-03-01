@@ -103,13 +103,17 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::guard()->logout();
+  Auth::guard()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        $redirectUri = $this->shouldAutoInitiate() ? '/login?prevent_auto_init=true' : '/';
+        $issuer = env('OIDC_ISSUER', null);
 
-        return redirect($redirectUri);
+        if ($issuer) {
+            return redirect(env('TASK_MANAGER_URL', null).env('TASK_MANAGER_LOGOUT_PATH', null)); // Wekan lets you log out even if you're already logged out (BookStack might also, but using Wekan, at least for now), so just redirect to wekan, which will then trigger KeyCloak/SSO logout
+        } else {
+            return $this->shouldAutoInitiate() ? '/login?prevent_auto_init=true' : '/';
+        }
     }
 
     /**

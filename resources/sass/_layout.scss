@@ -134,6 +134,13 @@ body.flexbox {
 .flex-container-row {
   display: flex;
   flex-direction: row;
+
+  @media (max-width: $s) {
+    &.mobile-column {
+        flex-direction: column;
+    }
+  }
+
   &.v-center {
     align-items: center;
   }

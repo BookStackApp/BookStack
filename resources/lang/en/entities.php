@@ -15,6 +15,8 @@ return [
     'recently_created_shelves' => 'Recently Created Categories',
     'recently_update' => 'Recently Updated',
     'x_updates' => ':count Edit|:count Edits',
+    'x_symbols' => ':count Symbol|:count Symbols',
+    'x_drafts' => ':count Draft|:count Drafts',
     'recently_viewed' => 'Recently Viewed',
     'recent_activity' => 'Recent User Activity',
     'create_now' => 'Create one now',
@@ -196,6 +198,7 @@ return [
     'page' => 'Page',
     'pages' => 'Pages',
     'x_pages' => ':count Page|:count Pages',
+    // 'all_x_pages' => 'All :count Page|All :count Pages',
     'pages_popular' => 'Popular Pages',
     'pages_new' => 'New Page',
     'pages_attachments' => 'Attachments',
@@ -350,6 +353,9 @@ return [
     'profile_not_created_chapters' => ':userName has not created any chapters',
     'profile_not_created_books' => ':userName has not created any sub-categories',
     'profile_not_created_shelves' => ':userName has not created any shelves',
+    'profile_not_created_symbols' => ':userName has not created any symbols',
+    'profile_not_created_drafts' => ':userName has not created any drafts',
+    'profile_not_updated' => ':userName has not updated any pages',
 
     // Comments
     'comment' => 'Comment',

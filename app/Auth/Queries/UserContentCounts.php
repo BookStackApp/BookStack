@@ -27,6 +27,8 @@ class UserContentCounts
             'books'    => Book::visible()->where($createdBy)->count(),
             'shelves'  => Bookshelf::visible()->where($createdBy)->count(),
             'updates'  => PageRevision::query()->where('created_by', '=', $user->id)->where('revision_number', '!=', 1)->get()->count(),
+            'symbols'  => $symbols = Page::getVisiblePagesInBookshelf('symbols')->where($createdBy)->count(),
+            'drafts'  => $symbols = Page::getVisiblePagesInBookshelf('contribute')->where($createdBy)->count(),
         ];
     }
 }

@@ -5,6 +5,11 @@ When it's time for a release the `development` branch is merged into release wit
 
 * [Node.js](https://nodejs.org/en/) v16.0+
 
+
+## This Fork
+
+This fork uses [laravel-collection-macros](https://github.com/spatie/laravel-collection-macros) to allow for easy pagination and other things
+
 ## Building CSS & JavaScript Assets
 
 This project uses SASS for CSS development and this is built, along with the JavaScript, using a range of npm scripts. The below npm commands can be used to install the dependencies & run the build tasks:
@@ -98,3 +103,5 @@ docker-compose run app php vendor/bin/phpunit
 
 The docker-compose setup ships with Xdebug, which you can listen to on port 9090.
 NB : For some editors like Visual Studio Code, you might need to map your workspace folder to the /app folder within the docker container for this to work.
+
+You can also put `APP_DEBUG=true` in the `.env` file

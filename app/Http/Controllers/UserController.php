@@ -2,9 +2,11 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Actions\ActivityQueries;
 use BookStack\Auth\Access\SocialAuthService;
 use BookStack\Auth\Queries\UsersAllPaginatedAndSorted;
 use BookStack\Auth\Role;
+use BookStack\Auth\User;
 use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\UserUpdateException;
@@ -12,6 +14,7 @@ use BookStack\Uploads\ImageRepo;
 use BookStack\Util\SimpleListOptions;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
@@ -202,5 +205,30 @@ class UserController extends Controller
         $this->userRepo->destroy($user, $newOwnerId);
 
         return redirect('/settings/users');
+    }
+
+    /**
+     * 
+     */
+    public function showAll(Request $request, ActivityQueries $activities)
+    {
+
+        $listOptions = SimpleListOptions::fromRequest($request, 'users', true)->withSortOptions([
+            'last_activity_at' => trans('settings.users_latest_activity'),
+            'name' => trans('common.sort_name')
+        ]);
+
+        $users = (new UsersAllPaginatedAndSorted())->run(10, $listOptions, true)
+        ->through(function ($user) use ($activities) {
+            $user->activity = Arr::first($activities->userActivity($user, 1));
+            return $user;
+        });
+
+        return view('users.list', [
+            'title' => 'All '.max(count($users) - 1, 0).' Users',
+            'users' => $users,
+            'skippedUserIds' => [User::getDefault()->id],
+            'listOptions' => $listOptions,
+        ]);
     }
 }

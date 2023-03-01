@@ -14,9 +14,9 @@
             <a target="_blank" rel="noopener noreferrer" href="https://decodingsymbols.wordpress.com/blog/"
             id="blog-btn" class="btn-special">Visit<br />Blog</a>
 
-            {{-- @if (userCan('page-create', Book::getBySlug('drafts'))) --}}
-            <a href="{{ url('/books/drafts/create-page') }}" class="btn-special">+ Draft</a>
-            {{-- @endif --}}
+            @if (userCan('page-create', \BookStack\Entities\Models\Book::getBySlug('drafts', true)))
+                <a href="{{ url('/books/drafts/create-page') }}" class="btn-special">+ Draft</a>
+            @endif
 
             <button type="button"
                     refs="header-mobile-toggle@toggle"
@@ -54,17 +54,17 @@
             <div class="links text-center">
                 @if (hasAppAccess())
                     <a class="hide-over-l" href="{{ url('/search') }}">@icon('search'){{ trans('common.search') }}</a>
-                    <a href="{{ url('/shelves/symbols/all') }}" class="btn-special">@icon('star-circle')All Symbols</a>
+                    <a href="{{ url('/shelves/symbols') }}" class="btn-special">@icon('star-circle')Symbols</a>
                     @if(userCanOnAny('view', \BookStack\Entities\Models\Bookshelf::class) || userCan('bookshelf-view-all') || userCan('bookshelf-view-own'))
                         <a href="{{ url('/shelves') }}" data-shortcut="shelves_view">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
                     @endif
-                    <a href="{{ url('/books') }}" data-shortcut="books_view">@icon('books'){{ trans('entities.books') }}</a>
+                    {{-- <a href="{{ url('/books') }}" data-shortcut="books_view">@icon('books'){{ trans('entities.books') }}</a>
                     @if(signedInUser() && userCan('settings-manage'))
                         <a href="{{ url('/settings') }}" data-shortcut="settings_view">@icon('settings'){{ trans('settings.settings') }}</a>
                     @endif
                     @if(signedInUser() && userCan('users-manage') && !userCan('settings-manage'))
                         <a href="{{ url('/settings/users') }}" data-shortcut="settings_view">@icon('users'){{ trans('settings.users') }}</a>
-                    @endif
+                    @endif --}}
                 @endif
 
                 @if(!signedInUser())
@@ -95,6 +95,12 @@
                                 <div>{{ trans('common.view_profile') }}</div>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ env('TASK_MANAGER_URL', null) }}" class="icon-item">
+                                @icon('check')
+                                <div>Go To Tasks</div>
+                            </a>
+                        </li>
                         {{-- <li>
                             <a href="{{ $currentUser->getEditUrl() }}" class="icon-item">
                                 @icon('edit')
@@ -117,6 +123,17 @@
                                 <div>Visit Blog</div>
                             </a>
                         </li>
+                        <li><hr></li>
+                        <li>
+                            <a href="{{ url('/preferences/shortcuts') }}" class="icon-item">
+                                @icon('shortcuts')
+                                <div>{{ trans('preferences.shortcuts') }}</div>
+                            </a>
+                        </li>
+                        {{-- <li>
+                            @include('common.dark-mode-toggle', ['classes' => 'icon-item'])
+                        </li> --}}
+                        <li><hr></li>
                         <li>
                             <form action="{{ url(config('auth.method') === 'saml2' ? '/saml2/logout' : '/logout') }}"
                                   method="post">
@@ -126,16 +143,6 @@
                                     <div>{{ trans('auth.logout') }}</div>
                                 </button>
                             </form>
-                        </li>
-                        <li><hr></li>
-                        <li>
-                            <a href="{{ url('/preferences/shortcuts') }}" class="icon-item">
-                                @icon('shortcuts')
-                                <div>{{ trans('preferences.shortcuts') }}</div>
-                            </a>
-                        </li>
-                        <li>
-                            @include('common.dark-mode-toggle', ['classes' => 'icon-item'])
                         </li>
                     </ul>
                 </div>

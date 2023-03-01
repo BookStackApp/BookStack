@@ -337,7 +337,7 @@ class PageRepo
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
 
-        if (!userCan('page-create', $parent)) {
+        if (!userCan('page-create', $parent) && !($parent->slug === 'community-review' && userCan('page-update', $parent))) {
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 

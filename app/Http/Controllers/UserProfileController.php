@@ -16,7 +16,8 @@ class UserProfileController extends Controller
     {
         $user = $repo->getBySlug($slug);
 
-        $userActivity = $activities->userActivity($user);
+        $userActivity = array_slice($activities->userActivity($user), 0, 15);
+
         $recentlyCreated = (new UserRecentlyCreatedContent())->run($user, 5);
         $assetCounts = (new UserContentCounts())->run($user);
 

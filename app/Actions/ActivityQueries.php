@@ -36,17 +36,15 @@ class ActivityQueries
         return $this->filterSimilar($activityList);
     }
 
-    public function allUserActivity()
+    public function latestActivityForAllUsers()
     {
         $activityList = $this->permissions->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type');
 
         $activity = $activityList
-            // ->where('type', '=', ActivityType::PAGE_UPDATE)
-            // ->whereIn('type', '=', [ActivityType::PAGE_UPDATE])
             ->whereIn('type', [ActivityType::PAGE_UPDATE, ActivityType::BOOK_CREATE, ActivityType::PAGE_CREATE, ActivityType::BOOKSHELF_CREATE])
             ->orderBy('created_at', 'desc')
             ->get()
-            ->unique('user_id');
+            ->unique('user_id'); //  I think this means only one activity from each user will be returned 🤷🏻‍♂️
 
         return $activity;
     }
@@ -56,23 +54,7 @@ class ActivityQueries
      */
     public function recentlyActiveUsers(int $count = 5, int $page = 0): array
     {
-        // $activityList = $this->permissions->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type');
-
-        // $activity = $activityList
-        //     ->orderBy('created_at', 'desc')
-        //     ->get()
-        //     // ->groupBy('user_id')
-        //     ->unique('user_id')
-        //     // ->distinct('user_id')
-        //     // ->distinct()
-        //     // ->with(['user'])
-        //     // ->with(['entity'])
-        //     // ->with(['user', 'entity'])
-        //     ->skip($count * $page)
-        //     ->take($count);
-        // // ->get();
-
-        $activity = $this->allUserActivity()
+        $activity = $this->latestActivityForAllUsers()
             ->skip($count * $page)
             ->take($count);
 

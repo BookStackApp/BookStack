@@ -2,6 +2,7 @@
 
 use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Auth\User;
+use BookStack\Entities\Models\Book;
 use BookStack\Model;
 use BookStack\Settings\SettingService;
 
@@ -60,6 +61,15 @@ function hasAppAccess(): bool
  */
 function userCan(string $permission, Model $ownable = null): bool
 {
+    /*
+
+        *** Disabling Chapter Creation ***
+
+    */
+    if ($permission === 'chapter-create') {
+            return false;
+        }
+
     if ($ownable === null) {
         return user() && user()->can($permission);
     }

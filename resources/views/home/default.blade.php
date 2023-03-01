@@ -12,20 +12,20 @@
                     ])
                 </div>
             </div>
-            <div class="text-m-right">
+            {{-- <div class="text-m-right">
                 <div class="icon-list inline block">
                     @include('common.dark-mode-toggle', [
                         'classes' => 'text-muted icon-list-item text-link',
                     ])
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="container" id="home-default">
         <div class="grid third gap-x-xxl no-row-gap">
             <div>
                 <div id="recent-pages" class="card mb-xl">
-                    <h3 class="card-title">Quick Links</h3>
+                    <h3 class="card-title">Quick Links ⚡️</h3>
                     <div id="recently-updated-pages" class="px-m">
                         @include('entities.list', [
                             'entities' => $quickLinks,
@@ -36,20 +36,20 @@
                     </div>
                 </div>
                 <div id="recent-pages" class="card mb-xl">
-                    <h3 class="card-title">Symbol Types</h3>
+                    <h3 class="card-title">Symbol Types 📚</h3>
                     <div id="recently-updated-pages" class="px-m">
                         @include('entities.list', [
                             'entities' => $symbolTypesList,
                             'style' => 'compact',
                             'emptyText' => trans('entities.no_pages_recently_updated'),
-                            'showQuickAdd' => true
+                            'showQuickAdd' => false
                         ])
                     </div>
                 </div>
             </div>
             <div>
                 <div id="recent-pages" class="card mb-xl">
-                    <h3 class="card-title">Newest Symbols</h3>
+                    <h3 class="card-title">Newest Symbols 🌅</h3>
                     <div id="recently-updated-pages" class="px-m">
                         @include('entities.list', [
                             'entities' => $newSymbols,
@@ -60,16 +60,30 @@
                     <a href="/pages/newest-symbols"
                     class="card-footer-link">{{ trans('common.view_all') }}</a>
                 </div>
+                <div id="recent-pages" class="card mb-xl">
+                    <h3 class="card-title">Ready For Review 🤓</h3>
+                    <div id="recently-updated-pages" class="px-m">
+                        @include('entities.list', [
+                            'entities' => $latestCommunityReviews,
+                            'style' => 'compact',
+                            'emptyText' => trans('entities.no_pages_recently_updated'),
+                        ])
+                    </div>
+                    <a href="{{ url('/books/community-review') }}"
+                        class="card-footer-link">{{ trans('common.view_all') }}</a>
+                </div>
             </div>
             <div>
                 <div id="recent-activity">
                     <div class="card mb-xl">
-                        <h3 class="card-title">Recently Active Users</h3>
+                        <h3 class="card-title">Recently Active Users 👤</h3>
                         @include('common.activity-list', ['activity' => $activeUsers])
+                        <a href="{{ url('/users/all') }}"
+                            class="card-footer-link">{{ trans('common.view_all') }}</a>
                     </div>
                 </div>
                 <div id="recent-pages" class="card mb-xl">
-                    <h3 class="card-title">Latest Community Drafts</h3>
+                    <h3 class="card-title">Latest Drafts 📝</h3>
                     <div id="recently-updated-pages" class="px-m">
                         @include('entities.list', [
                             'entities' => $latestDrafts,
@@ -81,7 +95,7 @@
                         class="card-footer-link">{{ trans('common.view_all') }}</a>
                 </div>
                 <div id="recent-pages" class="card mb-xl">
-                    <h3 class="card-title">Recently Edited Symbols</h3>
+                    <h3 class="card-title">Recently Edited Symbols ✏️</h3>
                     <div id="recently-updated-pages" class="px-m">
                         @include('entities.list', [
                             'entities' => $recentUpdates,

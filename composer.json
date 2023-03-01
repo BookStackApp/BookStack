@@ -40,6 +40,7 @@
         "socialiteproviders/okta": "^4.1",
         "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
+        "spatie/laravel-collection-macros": "^7.6",
         "ssddanbrown/htmldiff": "^1.0.2"
     },
     "require-dev": {
