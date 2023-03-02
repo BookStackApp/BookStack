@@ -1,0 +1,14 @@
+{
+    "require": {
+        "minicli/minicli": "^3.2",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "platform": {
+            "php": "8.0.2"
+        }
+    }
+}
