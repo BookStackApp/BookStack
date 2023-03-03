@@ -8,6 +8,7 @@ if (php_sapi_name() !== 'cli') {
 require __DIR__ . '/vendor/autoload.php';
 
 use Cli\Commands\BackupCommand;
+use Cli\Commands\CommandError;
 use Minicli\App;
 
 // Get the directory of the CLI "entrypoint", adjusted to be the real
@@ -28,4 +29,10 @@ $app->setSignature('./run');
 
 $app->registerCommand('backup', [new BackupCommand($bsDir), 'handle']);
 
-$app->runCommand($argv);
+try {
+    $app->runCommand($argv);
+} catch (CommandError $error) {
+    fwrite(STDERR, "An error occurred when attempting to run a command:\n");
+    fwrite(STDERR, $error->getMessage() . "\n");
+    exit(1);
+}
