@@ -150,6 +150,11 @@ final class BackupCommand
             'database' => ($_SERVER['DB_DATABASE'] ?? ''),
         ];
 
+        $port = $_SERVER['DB_PORT'] ?? '';
+        if ($port) {
+            $dbOptions['host'] .= ':' . $port;
+        }
+
         foreach ($dbOptions as $name => $option) {
             if (!$option) {
                 throw new CommandError("Could not find a value for the database {$name}");
