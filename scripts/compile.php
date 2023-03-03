@@ -30,6 +30,7 @@ try {
     // Add the rest of the apps files
     $phar->addFile(__DIR__ . '/run', 'run');
     $phar->buildFromDirectory(__DIR__, '/vendor(.*)/');
+    $phar->buildFromDirectory(__DIR__, '/Commands(.*)/');
 
     // Customize the stub to add the shebang
     $stub = "#!/usr/bin/env php \n" . $defaultStub;

@@ -1,7 +1,13 @@
 {
     "require": {
         "minicli/minicli": "^3.2",
+        "symfony/process": "^6.0",
         "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cli\\Commands\\": "Commands/"
+        }
     },
     "config": {
         "optimize-autoloader": true,

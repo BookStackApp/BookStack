@@ -7,8 +7,8 @@ if (php_sapi_name() !== 'cli') {
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Cli\Commands\BackupCommand;
 use Minicli\App;
-use Minicli\Command\CommandCall;
 
 // Get the directory of the CLI "entrypoint", adjusted to be the real
 // location where running via a phar.
@@ -16,22 +16,16 @@ $scriptDir = __DIR__;
 if (str_starts_with($scriptDir, 'phar://')) {
     $scriptDir = dirname(Phar::running(false));
 }
+$bsDir = dirname($scriptDir);
 
 // Load in our .env file from the parent directory
-$dotenv = Dotenv\Dotenv::createImmutable(dirname($scriptDir));
+$dotenv = Dotenv\Dotenv::createImmutable($bsDir);
 $dotenv->safeLoad();
 
 // Setup our CLI
 $app = new App();
-$app->setSignature('./run mycommand');
+$app->setSignature('./run');
 
-$app->registerCommand('mycommand', function (CommandCall $input) use ($scriptDir) {
-    echo "My Command!";
-    echo "BS URL is: " . ($_SERVER['BS_URL'] ?? '') . "\n";
-    echo "DB HOST is: " . ($_SERVER['DB_HOST'] ?? '') . "\n";
-    echo dirname($scriptDir);
-
-//    var_dump($input);
-});
+$app->registerCommand('backup', [new BackupCommand($bsDir), 'handle']);
 
 $app->runCommand($argv);
