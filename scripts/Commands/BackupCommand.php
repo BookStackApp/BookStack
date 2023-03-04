@@ -66,7 +66,7 @@ final class BackupCommand
         $zip->close();
         rename($zipTempFile, $zipOutFile);
 
-        // Announce end and display errors
+        // Announce end
         echo "Backup finished.\nOutput ZIP saved to: {$zipOutFile}\n";
     }
 

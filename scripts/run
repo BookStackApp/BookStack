@@ -9,6 +9,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Cli\Commands\BackupCommand;
 use Cli\Commands\CommandError;
+use Cli\Commands\InitCommand;
 use Minicli\App;
 
 // Get the directory of the CLI "entrypoint", adjusted to be the real
@@ -28,6 +29,7 @@ $app = new App();
 $app->setSignature('./run');
 
 $app->registerCommand('backup', [new BackupCommand($bsDir), 'handle']);
+$app->registerCommand('init', [new InitCommand(), 'handle']);
 
 try {
     $app->runCommand($argv);
