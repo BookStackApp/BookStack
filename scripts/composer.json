@@ -6,7 +6,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Cli\\Commands\\": "Commands/"
+            "Cli\\Commands\\": "Commands/",
+            "Cli\\Services\\": "Services/"
         }
     },
     "config": {

@@ -8,7 +8,6 @@ if (php_sapi_name() !== 'cli') {
 require __DIR__ . '/vendor/autoload.php';
 
 use Cli\Commands\BackupCommand;
-use Cli\Commands\CommandError;
 use Cli\Commands\InitCommand;
 use Minicli\App;
 
@@ -33,7 +32,7 @@ $app->registerCommand('init', [new InitCommand(), 'handle']);
 
 try {
     $app->runCommand($argv);
-} catch (CommandError $error) {
+} catch (Exception $error) {
     fwrite(STDERR, "An error occurred when attempting to run a command:\n");
     fwrite(STDERR, $error->getMessage() . "\n");
     exit(1);

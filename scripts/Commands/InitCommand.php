@@ -2,9 +2,8 @@
 
 namespace Cli\Commands;
 
+use Cli\Services\ProgramRunner;
 use Minicli\Command\CommandCall;
-use Symfony\Component\Process\ExecutableFinder;
-use Symfony\Component\Process\Process;
 
 class InitCommand
 {
@@ -15,7 +14,6 @@ class InitCommand
     {
         $this->ensureRequiredExtensionInstalled(); // TODO - Ensure bookstack install deps are met?
 
-        // TODO - Dedupe the command stuff going on.
         // TODO - Check composer and git exists before running
         // TODO - Look at better way of handling env usage, on demand maybe where needed?
         //   Env loading in main `run` script if confilicting with certain bits here (app key generate, hence APP_KEY overload)
@@ -67,27 +65,14 @@ class InitCommand
 
     protected function generateAppKey(string $installDir): void
     {
-        // Find reference to php
-        $executableFinder = new ExecutableFinder();
-        $phpPath = $executableFinder->find('php', '/usr/bin/php');
-        if (!is_file($phpPath)) {
-            throw new CommandError('Could not locate "php" program.');
-        }
-
-        $process = new Process([
-            $phpPath,
-            $installDir . DIRECTORY_SEPARATOR . 'artisan',
-            'key:generate', '--force', '-n', '-q'
-        ], null, ['APP_KEY' => 'SomeRandomString']);
-        $process->setTimeout(240);
-        $process->setIdleTimeout(5);
-        $process->start();
-
-        $errors = '';
-        foreach ($process as $type => $data) {
-            // Errors are on stdout for artisan
-            $errors .= $data . "\n";
-        }
+        $errors = (new ProgramRunner('php', '/usr/bin/php'))
+            ->withTimeout(60)
+            ->withIdleTimeout(5)
+            ->withEnvironment(['APP_KEY' => 'SomeRandomString'])
+            ->runCapturingAllOutput([
+                $installDir . DIRECTORY_SEPARATOR . 'artisan',
+                'key:generate', '--force', '-n', '-q'
+            ]);
 
         if ($errors) {
             throw new CommandError("Failed 'php artisan key:generate' with errors:\n" . $errors);
@@ -100,28 +85,14 @@ class InitCommand
      */
     protected function installComposerDependencies(string $installDir): void
     {
-        // Find reference to composer
-        $executableFinder = new ExecutableFinder();
-        $composerPath = $executableFinder->find('composer', '/usr/local/bin/composer');
-        if (!is_file($composerPath)) {
-            throw new CommandError('Could not locate "composer" program.');
-        }
-
-        $process = new Process([
-            $composerPath, 'install',
-            '--no-dev', '-n', '-q', '--no-progress',
-            '-d', $installDir
-        ]);
-        $process->setTimeout(240);
-        $process->setIdleTimeout(15);
-        $process->start();
-
-        $errors = '';
-        foreach ($process as $type => $data) {
-            if ($process::ERR === $type) {
-                $errors .= $data . "\n";
-            }
-        }
+        $errors = (new ProgramRunner('composer', '/usr/local/bin/composer'))
+            ->withTimeout(300)
+            ->withIdleTimeout(15)
+            ->runCapturingStdErr([
+                'install',
+                '--no-dev', '-n', '-q', '--no-progress',
+                '-d', $installDir
+            ]);
 
         if ($errors) {
             throw new CommandError("Failed composer install with errors:\n" . $errors);
@@ -134,30 +105,16 @@ class InitCommand
      */
     protected function cloneBookStackViaGit(string $installDir): void
     {
-        // Find reference to git
-        $executableFinder = new ExecutableFinder();
-        $gitPath = $executableFinder->find('git', '/usr/bin/bit');
-        if (!is_file($gitPath)) {
-            throw new CommandError('Could not locate "git" program.');
-        }
-
-        $process = new Process([
-            $gitPath, 'clone', '-q',
-            '--branch', 'release',
-            '--single-branch',
-            'https://github.com/BookStackApp/BookStack.git',
-            $installDir
-        ]);
-        $process->setTimeout(240);
-        $process->setIdleTimeout(15);
-        $process->start();
-
-        $errors = '';
-        foreach ($process as $type => $data) {
-            if ($process::ERR === $type) {
-                $errors .= $data . "\n";
-            }
-        }
+        $errors = (new ProgramRunner('git', '/usr/bin/git'))
+            ->withTimeout(240)
+            ->withIdleTimeout(15)
+            ->runCapturingStdErr([
+                'clone', '-q',
+                '--branch', 'release',
+                '--single-branch',
+                'https://github.com/BookStackApp/BookStack.git',
+                $installDir
+            ]);
 
         if ($errors) {
             throw new CommandError("Failed git clone with errors:\n" . $errors);

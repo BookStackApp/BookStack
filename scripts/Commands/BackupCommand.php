@@ -2,12 +2,11 @@
 
 namespace Cli\Commands;
 
+use Cli\Services\ProgramRunner;
 use Minicli\Command\CommandCall;
 use RecursiveDirectoryIterator;
 use SplFileInfo;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
-use Symfony\Component\Process\ExecutableFinder;
-use Symfony\Component\Process\Process;
 use ZipArchive;
 
 final class BackupCommand
@@ -36,6 +35,7 @@ final class BackupCommand
 
         // Create a new ZIP file
         $zipTempFile = tempnam(sys_get_temp_dir(), 'bsbackup');
+        $dumpTempFile = '';
         $zip = new ZipArchive();
         $zip->open($zipTempFile, ZipArchive::CREATE);
 
@@ -48,8 +48,6 @@ final class BackupCommand
             $dumpTempFile = $this->createDatabaseDump();
             echo "Adding database dump to backup archive...\n";
             $zip->addFile($dumpTempFile, 'db.sql');
-            // Delete our temporary DB dump file
-            unlink($dumpTempFile);
         }
 
         if ($handleUploads) {
@@ -64,6 +62,11 @@ final class BackupCommand
 
         // Close off our zip and move it to the required location
         $zip->close();
+        // Delete our temporary DB dump file if exists. Must be done after zip close.
+        if ($dumpTempFile) {
+            unlink($dumpTempFile);
+        }
+        // Move the zip into the target location
         rename($zipTempFile, $zipOutFile);
 
         // Announce end
@@ -161,48 +164,39 @@ final class BackupCommand
             }
         }
 
-        // Create a mysqldump for the BookStack database
-        $executableFinder = new ExecutableFinder();
-        $mysqldumpPath = $executableFinder->find('mysqldump', '/usr/bin/mysqldump');
-
-        if (!is_file($mysqldumpPath)) {
-            throw new CommandError('Could not locate "mysqldump" program');
-        }
-
-        $process = new Process([
-            $mysqldumpPath,
-            '-h', $dbOptions['host'],
-            '-u', $dbOptions['username'],
-            '-p' . $dbOptions['password'],
-            '--single-transaction',
-            '--no-tablespaces',
-            $dbOptions['database'],
-        ]);
-        $process->setTimeout(240);
-        $process->setIdleTimeout(5);
-        $process->start();
-
         $errors = "";
         $hasOutput = false;
-        $dumpTempFile = tempnam(sys_get_temp_dir(), 'bsbackup');
+        $dumpTempFile = tempnam(sys_get_temp_dir(), 'bsdbdump');
         $dumpTempFileResource = fopen($dumpTempFile, 'w');
+
         try {
-            foreach ($process as $type => $data) {
-                if ($process::OUT === $type) {
+            (new ProgramRunner('mysqldump', '/usr/bin/mysqldump'))
+                ->withTimeout(240)
+                ->withIdleTimeout(15)
+                ->runWithoutOutputCallbacks([
+                    '-h', $dbOptions['host'],
+                    '-u', $dbOptions['username'],
+                    '-p' . $dbOptions['password'],
+                    '--single-transaction',
+                    '--no-tablespaces',
+                    $dbOptions['database'],
+                ], function ($data) use (&$dumpTempFileResource, &$hasOutput) {
                     fwrite($dumpTempFileResource, $data);
                     $hasOutput = true;
-                } else { // $process::ERR === $type
-                    $errors .= $data . "\n";
-                }
-            }
-        } catch (ProcessTimedOutException $timedOutException) {
+                }, function ($error) use (&$errors) {
+                    $errors .= $error . "\n";
+                });
+        } catch (\Exception $exception) {
             fclose($dumpTempFileResource);
             unlink($dumpTempFile);
-            if (!$hasOutput) {
-                throw new CommandError("mysqldump operation timed-out.\nNo data has been received so the connection to your database may have failed.");
-            } else {
-                throw new CommandError("mysqldump operation timed-out after data was received.");
+            if ($exception instanceof ProcessTimedOutException) {
+                if (!$hasOutput) {
+                    throw new CommandError("mysqldump operation timed-out.\nNo data has been received so the connection to your database may have failed.");
+                } else {
+                    throw new CommandError("mysqldump operation timed-out after data was received.");
+                }
             }
+            throw new CommandError($exception->getMessage());
         }
 
         fclose($dumpTempFileResource);
