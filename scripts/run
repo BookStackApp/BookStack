@@ -19,10 +19,6 @@ if (str_starts_with($scriptDir, 'phar://')) {
 }
 $bsDir = dirname($scriptDir);
 
-// Load in our .env file from the parent directory
-$dotenv = Dotenv\Dotenv::createImmutable($bsDir);
-$dotenv->safeLoad();
-
 // Setup our CLI
 $app = new App();
 $app->setSignature('./run');

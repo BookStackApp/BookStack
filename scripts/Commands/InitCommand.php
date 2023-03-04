@@ -2,6 +2,7 @@
 
 namespace Cli\Commands;
 
+use Cli\Services\EnvironmentLoader;
 use Cli\Services\ProgramRunner;
 use Minicli\Command\CommandCall;
 
@@ -15,10 +16,6 @@ class InitCommand
         $this->ensureRequiredExtensionInstalled(); // TODO - Ensure bookstack install deps are met?
 
         // TODO - Check composer and git exists before running
-        // TODO - Look at better way of handling env usage, on demand maybe where needed?
-        //   Env loading in main `run` script if confilicting with certain bits here (app key generate, hence APP_KEY overload)
-        //   See dotenv's Dotenv::createArrayBacked as way to go this.
-        //   (More of a change for 'backup' command).
         // TODO - Potentially download composer?
 
         $suggestedOutPath = $input->subcommand;
@@ -68,7 +65,7 @@ class InitCommand
         $errors = (new ProgramRunner('php', '/usr/bin/php'))
             ->withTimeout(60)
             ->withIdleTimeout(5)
-            ->withEnvironment(['APP_KEY' => 'SomeRandomString'])
+            ->withEnvironment(EnvironmentLoader::load($installDir))
             ->runCapturingAllOutput([
                 $installDir . DIRECTORY_SEPARATOR . 'artisan',
                 'key:generate', '--force', '-n', '-q'

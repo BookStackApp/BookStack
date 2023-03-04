@@ -2,6 +2,7 @@
 
 namespace Cli\Commands;
 
+use Cli\Services\EnvironmentLoader;
 use Cli\Services\ProgramRunner;
 use Minicli\Command\CommandCall;
 use RecursiveDirectoryIterator;
@@ -146,14 +147,15 @@ final class BackupCommand
      */
     protected function createDatabaseDump(): string
     {
+        $envOptions = EnvironmentLoader::loadMergedWithCurrentEnv($this->appDir);
         $dbOptions = [
-            'host' => ($_SERVER['DB_HOST'] ?? ''),
-            'username' => ($_SERVER['DB_USERNAME'] ?? ''),
-            'password' => ($_SERVER['DB_PASSWORD'] ?? ''),
-            'database' => ($_SERVER['DB_DATABASE'] ?? ''),
+            'host' => ($envOptions['DB_HOST'] ?? ''),
+            'username' => ($envOptions['DB_USERNAME'] ?? ''),
+            'password' => ($envOptions['DB_PASSWORD'] ?? ''),
+            'database' => ($envOptions['DB_DATABASE'] ?? ''),
         ];
 
-        $port = $_SERVER['DB_PORT'] ?? '';
+        $port = $envOptions['DB_PORT'] ?? '';
         if ($port) {
             $dbOptions['host'] .= ':' . $port;
         }
