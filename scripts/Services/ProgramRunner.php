@@ -10,6 +10,7 @@ class ProgramRunner
     protected int $timeout = 240;
     protected int $idleTimeout = 15;
     protected array $environment = [];
+    protected array $additionalProgramDirectories = [];
 
     public function __construct(
         protected string $program,
@@ -35,6 +36,12 @@ class ProgramRunner
         return $this;
     }
 
+    public function withAdditionalPathLocation(string $directoryPath): static
+    {
+        $this->additionalProgramDirectories[] = $directoryPath;
+        return $this;
+    }
+
     public function runCapturingAllOutput(array $args): string
     {
         $output = '';
@@ -55,16 +62,30 @@ class ProgramRunner
         return $err;
     }
 
-    public function runWithoutOutputCallbacks(array $args, callable $stdOutCallback, callable $stdErrCallback): void
+    public function runWithoutOutputCallbacks(array $args, callable $stdOutCallback = null, callable $stdErrCallback = null): int
     {
         $process = $this->startProcess($args);
         foreach ($process as $type => $data) {
             if ($type === $process::ERR) {
-                $stdErrCallback($data);
+                if ($stdErrCallback) {
+                    $stdErrCallback($data);
+                }
             } else {
-                $stdOutCallback($data);
+                if ($stdOutCallback) {
+                    $stdOutCallback($data);
+                }
             }
         }
+
+        return $process->getExitCode() ?? 1;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function ensureFound(): void
+    {
+        $this->resolveProgramPath();
     }
 
     protected function startProcess(array $args): Process
@@ -80,7 +101,7 @@ class ProgramRunner
     protected function resolveProgramPath(): string
     {
         $executableFinder = new ExecutableFinder();
-        $path = $executableFinder->find($this->program, $this->defaultPath);
+        $path = $executableFinder->find($this->program, $this->defaultPath, $this->additionalProgramDirectories);
 
         if (is_null($path) || !is_file($path)) {
             throw new \Exception("Could not locate \"{$this->program}\" program.");

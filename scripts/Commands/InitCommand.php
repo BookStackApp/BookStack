@@ -13,10 +13,8 @@ class InitCommand
      */
     public function handle(CommandCall $input)
     {
-        $this->ensureRequiredExtensionInstalled(); // TODO - Ensure bookstack install deps are met?
-
-        // TODO - Check composer and git exists before running
-        // TODO - Potentially download composer?
+        echo "Checking system requirements...\n";
+        $this->ensureRequirementsMet();
 
         $suggestedOutPath = $input->subcommand;
         if ($suggestedOutPath === 'default') {
@@ -25,13 +23,22 @@ class InitCommand
 
         echo "Locating and checking install directory...\n";
         $installDir = $this->getInstallDir($suggestedOutPath);
-        $this->ensureInstallDirEmpty($installDir);
+        $this->ensureInstallDirEmptyAndWritable($installDir);
 
         echo "Cloning down BookStack project to install directory...\n";
         $this->cloneBookStackViaGit($installDir);
 
+        echo "Checking composer exists...\n";
+        $composer = $this->getComposerProgram($installDir);
+        try {
+            $composer->ensureFound();
+        } catch (\Exception $exception) {
+            echo "Composer does not exist, downloading a local copy...\n";
+            $this->downloadComposerToInstall($installDir);
+        }
+
         echo "Installing application dependencies using composer...\n";
-        $this->installComposerDependencies($installDir);
+        $this->installComposerDependencies($composer, $installDir);
 
         echo "Creating .env file from .env.example...\n";
         copy($installDir . DIRECTORY_SEPARATOR . '.env.example', $installDir . DIRECTORY_SEPARATOR . '.env');
@@ -53,11 +60,68 @@ class InitCommand
      * Ensure the required PHP extensions are installed for this command.
      * @throws CommandError
      */
-    protected function ensureRequiredExtensionInstalled(): void
+    protected function ensureRequirementsMet(): void
     {
-//        if (!extension_loaded('zip')) {
-//            throw new CommandError('The "zip" PHP extension is required to run this command');
-//        }
+        $errors = [];
+
+        if (version_compare(PHP_VERSION, '8.0.2') < 0) {
+            $errors[] = "PHP >= 8.0.2 is required to install BookStack.";
+        }
+
+        $requiredExtensions = ['bcmath', 'curl', 'gd', 'iconv', 'libxml', 'mbstring', 'mysqlnd', 'xml'];
+        foreach ($requiredExtensions as $extension) {
+            if (!extension_loaded($extension)) {
+                $errors[] = "The \"{$extension}\" PHP extension is required by not active.";
+            }
+        }
+
+        try {
+            (new ProgramRunner('git', '/usr/bin/git'))->ensureFound();
+            (new ProgramRunner('php', '/usr/bin/php'))->ensureFound();
+        } catch (\Exception $exception) {
+            $errors[] = $exception->getMessage();
+        }
+
+        if (count($errors) > 0) {
+            throw new CommandError("Requirements failed with following errors:\n" . implode("\n", $errors));
+        }
+    }
+
+    protected function downloadComposerToInstall(string $installDir): void
+    {
+        $setupPath = $installDir . DIRECTORY_SEPARATOR . 'composer-setup.php';
+        $signature = file_get_contents('https://composer.github.io/installer.sig');
+        copy('https://getcomposer.org/installer', $setupPath);
+        $checksum = hash_file('sha384', $setupPath);
+
+        if ($signature !== $checksum) {
+            unlink($setupPath);
+            throw new CommandError("Could not install composer, checksum validation failed.");
+        }
+
+        $status = (new ProgramRunner('php', '/usr/bin/php'))
+            ->runWithoutOutputCallbacks([
+                $setupPath, '--quiet',
+                "--install-dir={$installDir}",
+                "--filename=composer",
+            ]);
+
+        unlink($setupPath);
+
+        if ($status !== 0) {
+            throw new CommandError("Could not install composer, composer-setup script run failed.");
+        }
+    }
+
+    /**
+     * Get the composer program.
+     */
+    protected function getComposerProgram(string $installDir): ProgramRunner
+    {
+        return (new ProgramRunner('composer', '/usr/local/bin/composer'))
+            ->withTimeout(300)
+            ->withIdleTimeout(15)
+            ->withAdditionalPathLocation($installDir);
     }
 
     protected function generateAppKey(string $installDir): void
@@ -80,12 +144,9 @@ class InitCommand
      * Run composer install to download PHP dependencies.
      * @throws CommandError
      */
-    protected function installComposerDependencies(string $installDir): void
+    protected function installComposerDependencies(ProgramRunner $composer, string $installDir): void
     {
-        $errors = (new ProgramRunner('composer', '/usr/local/bin/composer'))
-            ->withTimeout(300)
-            ->withIdleTimeout(15)
-            ->runCapturingStdErr([
+        $errors = $composer->runCapturingStdErr([
                 'install',
                 '--no-dev', '-n', '-q', '--no-progress',
                 '-d', $installDir
@@ -122,11 +183,15 @@ class InitCommand
      * Ensure that the installation directory is completely empty to avoid potential conflicts or issues.
      * @throws CommandError
      */
-    protected function ensureInstallDirEmpty(string $installDir): void
+    protected function ensureInstallDirEmptyAndWritable(string $installDir): void
     {
         $contents = array_diff(scandir($installDir), ['..', '.']);
         if (count($contents) > 0) {
             throw new CommandError("Expected install directory to be empty but existing files found in [{$installDir}] target location.");
+        }
+
+        if (!is_writable($installDir)) {
+            throw new CommandError("Target install directory [{$installDir}] is not writable.");
         }
     }
 
@@ -148,7 +213,7 @@ class InitCommand
                 if (!$created) {
                     throw new CommandError("Could not create directory [{$suggestedDir}] for install.");
                 }
-                $dir = $suggestedDir;
+                $dir = realpath($suggestedDir);
             } else {
                 throw new CommandError("Could not resolve provided [{$suggestedDir}] path to an existing folder.");
             }
