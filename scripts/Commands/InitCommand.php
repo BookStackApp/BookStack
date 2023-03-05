@@ -4,56 +4,65 @@ namespace Cli\Commands;
 
 use Cli\Services\EnvironmentLoader;
 use Cli\Services\ProgramRunner;
-use Minicli\Command\CommandCall;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class InitCommand
+class InitCommand extends Command
 {
+    protected function configure(): void
+    {
+        $this->setName('init');
+        $this->setDescription('Initialise a new BookStack install. Does not configure the webserver or database.');
+        $this->addArgument('target-directory', InputArgument::OPTIONAL, 'The directory to create the BookStack install within. Must be empty.', '');
+    }
+
     /**
      * @throws CommandError
      */
-    public function handle(CommandCall $input)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        echo "Checking system requirements...\n";
+        $output->writeln("<info>Checking system requirements...</info>");
         $this->ensureRequirementsMet();
 
-        $suggestedOutPath = $input->subcommand;
-        if ($suggestedOutPath === 'default') {
-            $suggestedOutPath = '';
-        }
+        $suggestedOutPath = $input->getArgument('target-directory');
 
-        echo "Locating and checking install directory...\n";
+        $output->writeln("<info>Locating and checking install directory...</info>");
         $installDir = $this->getInstallDir($suggestedOutPath);
         $this->ensureInstallDirEmptyAndWritable($installDir);
 
-        echo "Cloning down BookStack project to install directory...\n";
+        $output->writeln("<info>Cloning down BookStack project to install directory...</info>");
         $this->cloneBookStackViaGit($installDir);
 
-        echo "Checking composer exists...\n";
+        $output->writeln("<info>Checking composer exists...</info>");
         $composer = $this->getComposerProgram($installDir);
         try {
             $composer->ensureFound();
         } catch (\Exception $exception) {
-            echo "Composer does not exist, downloading a local copy...\n";
+            $output->writeln("<info>Composer does not exist, downloading a local copy...</info>");
             $this->downloadComposerToInstall($installDir);
         }
 
-        echo "Installing application dependencies using composer...\n";
+        $output->writeln("<info>Installing application dependencies using composer...</info>");
         $this->installComposerDependencies($composer, $installDir);
 
-        echo "Creating .env file from .env.example...\n";
+        $output->writeln("<info>Creating .env file from .env.example...</info>");
         copy($installDir . DIRECTORY_SEPARATOR . '.env.example', $installDir . DIRECTORY_SEPARATOR . '.env');
         sleep(1);
 
-        echo "Generating app key...\n";
+        $output->writeln("<info>Generating app key...</info>");
         $this->generateAppKey($installDir);
 
         // Announce end
-        echo "A BookStack install has been initialized at: {$installDir}\n\n";
-        echo "You will still need to:\n";
-        echo "- Update the .env file in the install with correct URL, database and email details.\n";
-        echo "- Run 'php artisan migrate' to set-up the database.\n";
-        echo "- Configure your webserver for use with BookStack.\n";
-        echo "- Ensure the required directories (storage/ bootstrap/cache public/uploads) are web-server writable.\n";
+        $output->writeln("<info>A BookStack install has been initialized at: {$installDir}\n</info>");
+        $output->writeln("<info>You will still need to:</info>");
+        $output->writeln("<info>- Update the .env file in the install with correct URL, database and email details.</info>");
+        $output->writeln("<info>- Run 'php artisan migrate' to set-up the database.</info>");
+        $output->writeln("<info>- Configure your webserver for use with BookStack.</info>");
+        $output->writeln("<info>- Ensure the required directories (storage/ bootstrap/cache public/uploads) are web-server writable.</info>");
+
+        return Command::SUCCESS;
     }
 
     /**

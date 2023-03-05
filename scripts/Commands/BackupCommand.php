@@ -4,33 +4,44 @@ namespace Cli\Commands;
 
 use Cli\Services\EnvironmentLoader;
 use Cli\Services\ProgramRunner;
-use Minicli\Command\CommandCall;
 use RecursiveDirectoryIterator;
 use SplFileInfo;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use ZipArchive;
 
-final class BackupCommand
+final class BackupCommand extends Command
 {
     public function __construct(
         protected string $appDir
     ) {
+        parent::__construct();
+    }
+
+    protected function configure(): void
+    {
+        $this->setName('backup');
+        $this->setDescription('Backup a BookStack installation to a single compressed ZIP file.');
+        $this->addArgument('backup-path', InputArgument::OPTIONAL, 'Outfile file or directory to store the resulting backup file.', '');
+        $this->addOption('no-database', null, null, "Skip adding a database dump to the backup");
+        $this->addOption('no-uploads', null, null, "Skip adding uploaded files to the backup");
+        $this->addOption('no-themes', null, null, "Skip adding the themes folder to the backup");
     }
 
     /**
      * @throws CommandError
      */
-    public function handle(CommandCall $input)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->ensureRequiredExtensionInstalled();
 
-        $handleDatabase = !$input->hasFlag('no-database');
-        $handleUploads = !$input->hasFlag('no-uploads');
-        $handleThemes = !$input->hasFlag('no-themes');
-        $suggestedOutPath = $input->subcommand;
-        if ($suggestedOutPath === 'default') {
-            $suggestedOutPath = '';
-        }
+        $handleDatabase = !$input->getOption('no-database');
+        $handleUploads = !$input->getOption('no-uploads');
+        $handleThemes = !$input->getOption('no-themes');
+        $suggestedOutPath = $input->getArgument('backup-path');
 
         $zipOutFile = $this->buildZipFilePath($suggestedOutPath);
 
@@ -45,19 +56,19 @@ final class BackupCommand
         $zip->addFile($this->appDir . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR . 'run', 'run');
 
         if ($handleDatabase) {
-            echo "Dumping the database via mysqldump...\n";
+            $output->writeln("<info>Dumping the database via mysqldump...</info>");
             $dumpTempFile = $this->createDatabaseDump();
-            echo "Adding database dump to backup archive...\n";
+            $output->writeln("<info>Adding database dump to backup archive...</info>");
             $zip->addFile($dumpTempFile, 'db.sql');
         }
 
         if ($handleUploads) {
-            echo "Adding BookStack upload folders to backup archive...\n";
+            $output->writeln("<info>Adding BookStack upload folders to backup archive...</info>");
             $this->addUploadFoldersToZip($zip);
         }
 
         if ($handleThemes) {
-            echo "Adding BookStack theme folders to backup archive...\n";
+            $output->writeln("<info>Adding BookStack theme folders to backup archive...</info>");
             $this->addFolderToZipRecursive($zip, implode(DIRECTORY_SEPARATOR, [$this->appDir, 'themes']), 'themes');
         }
 
@@ -71,7 +82,10 @@ final class BackupCommand
         rename($zipTempFile, $zipOutFile);
 
         // Announce end
-        echo "Backup finished.\nOutput ZIP saved to: {$zipOutFile}\n";
+        $output->writeln("<info>Backup finished.</info>");
+        $output->writeln("Output ZIP saved to: {$zipOutFile}");
+
+        return Command::SUCCESS;
     }
 
     /**

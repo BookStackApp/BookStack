@@ -1,6 +1,6 @@
 {
     "require": {
-        "minicli/minicli": "^3.2",
+        "symfony/console": "^6.0",
         "symfony/process": "^6.0",
         "vlucas/phpdotenv": "^5.5"
     },
