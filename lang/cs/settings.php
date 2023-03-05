@@ -50,7 +50,7 @@ return [
 
     // Color settings
     'color_scheme' => 'Barevné schéma aplikace',
-    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'color_scheme_desc' => 'Nastavte barvy pro uživatelské rozhraní. Barvy mohou být konfigurovány samostatně pro tmavý a světlý režim, aby co nejlépe odpovídaly tématu a zajistily čitelnost.',
     'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
     'app_color' => 'Hlavní barva',
     'link_color' => 'Výchozí barva odkazu',
