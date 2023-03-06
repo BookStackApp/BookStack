@@ -11,28 +11,23 @@ use Symfony\Component\Console\Application;
 use Cli\Commands\BackupCommand;
 use Cli\Commands\InitCommand;
 use Cli\Commands\UpdateCommand;
-
-// Get the directory of the CLI "entrypoint", adjusted to be the real
-// location where running via a phar.
-$scriptDir = __DIR__;
-if (str_starts_with($scriptDir, 'phar://')) {
-    $scriptDir = dirname(Phar::running(false));
-}
-// TODO - Add smarter strategy for locating install
-//   (working directory or directory of running script or maybe passed option?)
-$bsDir = dirname($scriptDir);
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 // Setup our CLI
 $app = new Application('bookstack-system');
+$app->setCatchExceptions(false);
 
-$app->add(new BackupCommand($bsDir));
-$app->add(new UpdateCommand($bsDir));
+$app->add(new BackupCommand());
+$app->add(new UpdateCommand());
 $app->add(new InitCommand());
 
 try {
     $app->run();
 } catch (Exception $error) {
-    fwrite(STDERR, "An error occurred when attempting to run a command:\n");
-    fwrite(STDERR, $error->getMessage() . "\n");
+    $output = (new ConsoleOutput())->getErrorOutput();
+    $output->getFormatter()->setStyle('error', new OutputFormatterStyle('red'));
+    $output->writeln("<error>\nAn error occurred when attempting to run a command:\n</error>");
+    $output->writeln($error->getMessage());
     exit(1);
 }

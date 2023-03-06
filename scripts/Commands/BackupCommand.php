@@ -2,6 +2,7 @@
 
 namespace Cli\Commands;
 
+use Cli\Services\AppLocator;
 use Cli\Services\EnvironmentLoader;
 use Cli\Services\ProgramRunner;
 use RecursiveDirectoryIterator;
@@ -15,12 +16,6 @@ use ZipArchive;
 
 final class BackupCommand extends Command
 {
-    public function __construct(
-        protected string $appDir
-    ) {
-        parent::__construct();
-    }
-
     protected function configure(): void
     {
         $this->setName('backup');
@@ -36,6 +31,8 @@ final class BackupCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $appDir = AppLocator::require($input->getOption('app-directory'));
+        $output->writeln("<info>Checking system requirements...</info>");
         $this->ensureRequiredExtensionInstalled();
 
         $handleDatabase = !$input->getOption('no-database');
@@ -43,7 +40,7 @@ final class BackupCommand extends Command
         $handleThemes = !$input->getOption('no-themes');
         $suggestedOutPath = $input->getArgument('backup-path');
 
-        $zipOutFile = $this->buildZipFilePath($suggestedOutPath);
+        $zipOutFile = $this->buildZipFilePath($suggestedOutPath, $appDir);
 
         // Create a new ZIP file
         $zipTempFile = tempnam(sys_get_temp_dir(), 'bsbackup');
@@ -52,24 +49,24 @@ final class BackupCommand extends Command
         $zip->open($zipTempFile, ZipArchive::CREATE);
 
         // Add default files (.env config file and this CLI)
-        $zip->addFile($this->appDir . DIRECTORY_SEPARATOR . '.env', '.env');
-        $zip->addFile($this->appDir . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR . 'run', 'run');
+        $zip->addFile($appDir . DIRECTORY_SEPARATOR . '.env', '.env');
+        $zip->addFile($appDir . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR . 'run', 'run');
 
         if ($handleDatabase) {
             $output->writeln("<info>Dumping the database via mysqldump...</info>");
-            $dumpTempFile = $this->createDatabaseDump();
+            $dumpTempFile = $this->createDatabaseDump($appDir);
             $output->writeln("<info>Adding database dump to backup archive...</info>");
             $zip->addFile($dumpTempFile, 'db.sql');
         }
 
         if ($handleUploads) {
             $output->writeln("<info>Adding BookStack upload folders to backup archive...</info>");
-            $this->addUploadFoldersToZip($zip);
+            $this->addUploadFoldersToZip($zip, $appDir);
         }
 
         if ($handleThemes) {
             $output->writeln("<info>Adding BookStack theme folders to backup archive...</info>");
-            $this->addFolderToZipRecursive($zip, implode(DIRECTORY_SEPARATOR, [$this->appDir, 'themes']), 'themes');
+            $this->addFolderToZipRecursive($zip, implode(DIRECTORY_SEPARATOR, [$appDir, 'themes']), 'themes');
         }
 
         // Close off our zip and move it to the required location
@@ -104,9 +101,9 @@ final class BackupCommand extends Command
      * a path to a folder, or a path to a file in relative or absolute form.
      * @throws CommandError
      */
-    protected function buildZipFilePath(string $suggestedOutPath): string
+    protected function buildZipFilePath(string $suggestedOutPath, string $appDir): string
     {
-        $zipDir = getcwd() ?: $this->appDir;
+        $zipDir = getcwd() ?: $appDir;
         $zipName = "bookstack-backup-" . date('Y-m-d-His') . '.zip';
 
         if ($suggestedOutPath) {
@@ -133,10 +130,10 @@ final class BackupCommand extends Command
      * Add app-relative upload folders to the provided zip archive.
      * Will recursively go through all directories to add all files.
      */
-    protected function addUploadFoldersToZip(ZipArchive $zip): void
+    protected function addUploadFoldersToZip(ZipArchive $zip, string $appDir): void
     {
-        $this->addFolderToZipRecursive($zip, implode(DIRECTORY_SEPARATOR, [$this->appDir, 'public', 'uploads']), 'public/uploads');
-        $this->addFolderToZipRecursive($zip, implode(DIRECTORY_SEPARATOR, [$this->appDir, 'storage', 'uploads']), 'storage/uploads');
+        $this->addFolderToZipRecursive($zip, implode(DIRECTORY_SEPARATOR, [$appDir, 'public', 'uploads']), 'public/uploads');
+        $this->addFolderToZipRecursive($zip, implode(DIRECTORY_SEPARATOR, [$appDir, 'storage', 'uploads']), 'storage/uploads');
     }
 
     /**
@@ -159,9 +156,9 @@ final class BackupCommand extends Command
      * Create a database dump and return the path to the dumped SQL output.
      * @throws CommandError
      */
-    protected function createDatabaseDump(): string
+    protected function createDatabaseDump(string $appDir): string
     {
-        $envOptions = EnvironmentLoader::loadMergedWithCurrentEnv($this->appDir);
+        $envOptions = EnvironmentLoader::loadMergedWithCurrentEnv($appDir);
         $dbOptions = [
             'host' => ($envOptions['DB_HOST'] ?? ''),
             'username' => ($envOptions['DB_USERNAME'] ?? ''),

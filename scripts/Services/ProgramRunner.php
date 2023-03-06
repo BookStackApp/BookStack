@@ -46,7 +46,7 @@ class ProgramRunner
     {
         $output = '';
         $callable = function ($data) use (&$output) {
-            $output .= $data . "\n";
+            $output .= $data;
         };
 
         $this->runWithoutOutputCallbacks($args, $callable, $callable);
@@ -57,7 +57,7 @@ class ProgramRunner
     {
         $err = '';
         $this->runWithoutOutputCallbacks($args, fn() => '', function ($data) use (&$err) {
-            $err .= $data . "\n";
+            $err .= $data;
         });
         return $err;
     }
