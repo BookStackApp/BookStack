@@ -2,8 +2,10 @@
 
 namespace Cli\Commands;
 
+use Cli\Services\ComposerLocator;
 use Cli\Services\EnvironmentLoader;
 use Cli\Services\ProgramRunner;
+use Cli\Services\RequirementsValidator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +26,7 @@ class InitCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln("<info>Checking system requirements...</info>");
-        $this->ensureRequirementsMet();
+        RequirementsValidator::validate();
 
         $suggestedOutPath = $input->getArgument('target-directory');
 
@@ -36,12 +38,11 @@ class InitCommand extends Command
         $this->cloneBookStackViaGit($installDir);
 
         $output->writeln("<info>Checking composer exists...</info>");
-        $composer = $this->getComposerProgram($installDir);
-        try {
-            $composer->ensureFound();
-        } catch (\Exception $exception) {
+        $composerLocator = new ComposerLocator($installDir);
+        $composer = $composerLocator->getProgram();
+        if (!$composer->isFound()) {
             $output->writeln("<info>Composer does not exist, downloading a local copy...</info>");
-            $this->downloadComposerToInstall($installDir);
+            $composerLocator->download();
         }
 
         $output->writeln("<info>Installing application dependencies using composer...</info>");
@@ -63,74 +64,6 @@ class InitCommand extends Command
         $output->writeln("<info>- Ensure the required directories (storage/ bootstrap/cache public/uploads) are web-server writable.</info>");
 
         return Command::SUCCESS;
-    }
-
-    /**
-     * Ensure the required PHP extensions are installed for this command.
-     * @throws CommandError
-     */
-    protected function ensureRequirementsMet(): void
-    {
-        $errors = [];
-
-        if (version_compare(PHP_VERSION, '8.0.2') < 0) {
-            $errors[] = "PHP >= 8.0.2 is required to install BookStack.";
-        }
-
-        $requiredExtensions = ['bcmath', 'curl', 'gd', 'iconv', 'libxml', 'mbstring', 'mysqlnd', 'xml'];
-        foreach ($requiredExtensions as $extension) {
-            if (!extension_loaded($extension)) {
-                $errors[] = "The \"{$extension}\" PHP extension is required by not active.";
-            }
-        }
-
-        try {
-            (new ProgramRunner('git', '/usr/bin/git'))->ensureFound();
-            (new ProgramRunner('php', '/usr/bin/php'))->ensureFound();
-        } catch (\Exception $exception) {
-            $errors[] = $exception->getMessage();
-        }
-
-        if (count($errors) > 0) {
-            throw new CommandError("Requirements failed with following errors:\n" . implode("\n", $errors));
-        }
-    }
-
-    protected function downloadComposerToInstall(string $installDir): void
-    {
-        $setupPath = $installDir . DIRECTORY_SEPARATOR . 'composer-setup.php';
-        $signature = file_get_contents('https://composer.github.io/installer.sig');
-        copy('https://getcomposer.org/installer', $setupPath);
-        $checksum = hash_file('sha384', $setupPath);
-
-        if ($signature !== $checksum) {
-            unlink($setupPath);
-            throw new CommandError("Could not install composer, checksum validation failed.");
-        }
-
-        $status = (new ProgramRunner('php', '/usr/bin/php'))
-            ->runWithoutOutputCallbacks([
-                $setupPath, '--quiet',
-                "--install-dir={$installDir}",
-                "--filename=composer",
-            ]);
-
-        unlink($setupPath);
-
-        if ($status !== 0) {
-            throw new CommandError("Could not install composer, composer-setup script run failed.");
-        }
-    }
-
-    /**
-     * Get the composer program.
-     */
-    protected function getComposerProgram(string $installDir): ProgramRunner
-    {
-        return (new ProgramRunner('composer', '/usr/local/bin/composer'))
-            ->withTimeout(300)
-            ->withIdleTimeout(15)
-            ->withAdditionalPathLocation($installDir);
     }
 
     protected function generateAppKey(string $installDir): void

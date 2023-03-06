@@ -88,6 +88,16 @@ class ProgramRunner
         $this->resolveProgramPath();
     }
 
+    public function isFound(): bool
+    {
+        try {
+            $this->ensureFound();
+            return true;
+        } catch (\Exception $exception) {
+            return false;
+        }
+    }
+
     protected function startProcess(array $args): Process
     {
         $programPath = $this->resolveProgramPath();
