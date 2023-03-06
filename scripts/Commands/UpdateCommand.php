@@ -3,8 +3,8 @@
 namespace Cli\Commands;
 
 use Cli\Services\AppLocator;
+use Cli\Services\ArtisanRunner;
 use Cli\Services\ComposerLocator;
-use Cli\Services\EnvironmentLoader;
 use Cli\Services\ProgramRunner;
 use Cli\Services\RequirementsValidator;
 use Symfony\Component\Console\Command\Command;
@@ -45,12 +45,13 @@ class UpdateCommand extends Command
         $this->installComposerDependencies($composer, $appDir);
 
         $output->writeln("<info>Running database migrations...</info>");
-        $this->runArtisanCommand(['migrate', '--force'], $appDir);
+        $artisan = (new ArtisanRunner($appDir));
+        $artisan->run(['migrate', '--force']);
 
         $output->writeln("<info>Clearing app caches...</info>");
-        $this->runArtisanCommand(['cache:clear'], $appDir);
-        $this->runArtisanCommand(['config:clear'], $appDir);
-        $this->runArtisanCommand(['view:clear'], $appDir);
+        $artisan->run(['cache:clear']);
+        $artisan->run(['config:clear']);
+        $artisan->run(['view:clear']);
 
         return Command::SUCCESS;
     }
@@ -86,24 +87,6 @@ class UpdateCommand extends Command
 
         if ($errors) {
             throw new CommandError("Failed composer install with errors:\n" . $errors);
-        }
-    }
-
-    protected function runArtisanCommand(array $commandArgs, string $appDir): void
-    {
-        $errors = (new ProgramRunner('php', '/usr/bin/php'))
-            ->withTimeout(60)
-            ->withIdleTimeout(5)
-            ->withEnvironment(EnvironmentLoader::load($appDir))
-            ->runCapturingAllOutput([
-                $appDir . DIRECTORY_SEPARATOR . 'artisan',
-                '-n', '-q',
-                ...$commandArgs
-            ]);
-
-        if ($errors) {
-            $cmdString = implode(' ', $commandArgs);
-            throw new CommandError("Failed 'php artisan {$cmdString}' with errors:\n" . $errors);
         }
     }
 }
