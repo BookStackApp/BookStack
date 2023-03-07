@@ -4,14 +4,14 @@ namespace Cli\Commands;
 
 use Cli\Services\AppLocator;
 use Cli\Services\EnvironmentLoader;
-use Cli\Services\ProgramRunner;
+use Cli\Services\MySqlRunner;
 use RecursiveDirectoryIterator;
 use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use ZipArchive;
 
 final class BackupCommand extends Command
@@ -24,6 +24,7 @@ final class BackupCommand extends Command
         $this->addOption('no-database', null, null, "Skip adding a database dump to the backup");
         $this->addOption('no-uploads', null, null, "Skip adding uploaded files to the backup");
         $this->addOption('no-themes', null, null, "Skip adding the themes folder to the backup");
+        $this->addOption('app-directory', null, InputOption::VALUE_OPTIONAL, 'BookStack install directory to backup', '');
     }
 
     /**
@@ -159,64 +160,15 @@ final class BackupCommand extends Command
     protected function createDatabaseDump(string $appDir): string
     {
         $envOptions = EnvironmentLoader::loadMergedWithCurrentEnv($appDir);
-        $dbOptions = [
-            'host' => ($envOptions['DB_HOST'] ?? ''),
-            'username' => ($envOptions['DB_USERNAME'] ?? ''),
-            'password' => ($envOptions['DB_PASSWORD'] ?? ''),
-            'database' => ($envOptions['DB_DATABASE'] ?? ''),
-        ];
+        $mysql = MySqlRunner::fromEnvOptions($envOptions);
+        $mysql->ensureOptionsSet();
 
-        $port = $envOptions['DB_PORT'] ?? '';
-        if ($port) {
-            $dbOptions['host'] .= ':' . $port;
-        }
-
-        foreach ($dbOptions as $name => $option) {
-            if (!$option) {
-                throw new CommandError("Could not find a value for the database {$name}");
-            }
-        }
-
-        $errors = "";
-        $hasOutput = false;
         $dumpTempFile = tempnam(sys_get_temp_dir(), 'bsdbdump');
-        $dumpTempFileResource = fopen($dumpTempFile, 'w');
-
         try {
-            (new ProgramRunner('mysqldump', '/usr/bin/mysqldump'))
-                ->withTimeout(240)
-                ->withIdleTimeout(15)
-                ->runWithoutOutputCallbacks([
-                    '-h', $dbOptions['host'],
-                    '-u', $dbOptions['username'],
-                    '-p' . $dbOptions['password'],
-                    '--single-transaction',
-                    '--no-tablespaces',
-                    $dbOptions['database'],
-                ], function ($data) use (&$dumpTempFileResource, &$hasOutput) {
-                    fwrite($dumpTempFileResource, $data);
-                    $hasOutput = true;
-                }, function ($error) use (&$errors) {
-                    $errors .= $error . "\n";
-                });
+            $mysql->runDumpToFile($dumpTempFile);
         } catch (\Exception $exception) {
-            fclose($dumpTempFileResource);
             unlink($dumpTempFile);
-            if ($exception instanceof ProcessTimedOutException) {
-                if (!$hasOutput) {
-                    throw new CommandError("mysqldump operation timed-out.\nNo data has been received so the connection to your database may have failed.");
-                } else {
-                    throw new CommandError("mysqldump operation timed-out after data was received.");
-                }
-            }
             throw new CommandError($exception->getMessage());
-        }
-
-        fclose($dumpTempFileResource);
-
-        if ($errors) {
-            unlink($dumpTempFile);
-            throw new CommandError("Failed mysqldump with errors:\n" . $errors);
         }
 
         return $dumpTempFile;

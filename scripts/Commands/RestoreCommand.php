@@ -7,7 +7,11 @@ use Cli\Services\ArtisanRunner;
 use Cli\Services\BackupZip;
 use Cli\Services\EnvironmentLoader;
 use Cli\Services\InteractiveConsole;
+use Cli\Services\MySqlRunner;
+use Cli\Services\ProgramRunner;
 use Cli\Services\RequirementsValidator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,9 +44,11 @@ class RestoreCommand extends Command
         $appDir = AppLocator::require($input->getOption('app-directory'));
         $output->writeln("<info>Checking system requirements...</info>");
         RequirementsValidator::validate();
+        (new ProgramRunner('mysql', '/usr/bin/mysql'))->ensureFound();
 
         $zipPath = realpath($input->getArgument('backup-zip'));
         $zip = new BackupZip($zipPath);
+        // TODO - Fix folders not being picked up here:
         $contents = $zip->getContentsOverview();
 
         $output->writeln("\n<info>Contents found in the backup ZIP:</info>");
@@ -60,7 +66,6 @@ class RestoreCommand extends Command
 
         $output->writeln("<info>The checked elements will be restored into [{$appDir}].</info>");
         $output->writeln("<info>Existing content may be overwritten.</info>");
-        $output->writeln("<info>Do you want to continue?</info>");
 
         if (!$interactions->confirm("Do you want to continue?")) {
             $output->writeln("<info>Stopping restore operation.</info>");
@@ -74,21 +79,29 @@ class RestoreCommand extends Command
         }
         $zip->extractInto($extractDir);
 
-        // TODO - Cleanup temp extract dir
+        if ($contents['env']['exists']) {
+            $output->writeln("<info>Restoring and merging .env file...</info>");
+            $this->restoreEnv($extractDir, $appDir);
+        }
 
-        // TODO - Environment handling
-        //  - Restore of old .env
-        //  - Prompt for correct DB details (Test before serving?)
-        //  - Prompt for correct URL (Allow entry of new?)
+        $folderLocations = ['themes', 'public/uploads', 'storage/uploads'];
+        foreach ($folderLocations as $folderSubPath) {
+            if ($contents[$folderSubPath]['exists']) {
+                $output->writeln("<info>Restoring {$folderSubPath} folder...</info>");
+                $this->restoreFolder($folderSubPath, $appDir, $extractDir);
+            }
+        }
 
-        // TODO - Restore folders from backup
+        if ($contents['db']['exists']) {
+            $output->writeln("<info>Restoring database from SQL dump...</info>");
+            $this->restoreDatabase($appDir, $extractDir);
 
-        // TODO - Restore database from backup
+            $output->writeln("<info>Running database migrations...</info>");
+            $artisan = (new ArtisanRunner($appDir));
+            $artisan->run(['migrate', '--force']);
+        }
 
-        $output->writeln("<info>Running database migrations...</info>");
-        $artisan = (new ArtisanRunner($appDir));
-        $artisan->run(['migrate', '--force']);
-
+        // TODO - Handle change of URL?
         // TODO - Update system URL (via BookStack artisan command) if
         //   there's been a change from old backup env
 
@@ -97,16 +110,75 @@ class RestoreCommand extends Command
         $artisan->run(['config:clear']);
         $artisan->run(['view:clear']);
 
+        $output->writeln("<info>Cleaning up extract directory...</info>");
+        $this->deleteDirectoryAndContents($extractDir);
+
+        $output->writeln("<info>\nRestore operation complete!</info>");
+
         return Command::SUCCESS;
     }
 
-    protected function restoreEnv(string $extractDir, string $appDir, InteractiveConsole $interactions)
+    protected function restoreEnv(string $extractDir, string $appDir)
     {
-        $extractEnv = EnvironmentLoader::load($extractDir);
-        $appEnv = EnvironmentLoader::load($appDir); // TODO - Probably pass in since we'll need the APP_URL later on.
+        $oldEnv = EnvironmentLoader::load($extractDir);
+        $currentEnv = EnvironmentLoader::load($appDir);
+        $envContents = file_get_contents($extractDir . DIRECTORY_SEPARATOR . '.env');
+        $appEnvPath = $appDir . DIRECTORY_SEPARATOR . '.env';
 
-        // TODO - Create mysql runner to take variables to a programrunner instance.
-        //  Then test each, backup existing env, then replace env with old then overwrite
-        //  db options if the new app env options are the valid ones.
+        $mysqlCurrent = MySqlRunner::fromEnvOptions($currentEnv);
+        $mysqlOld = MySqlRunner::fromEnvOptions($oldEnv);
+        if (!$mysqlOld->testConnection()) {
+            $currentWorking = $mysqlCurrent->testConnection();
+            if (!$currentWorking) {
+                throw new CommandError("Could not find a working database configuration");
+            }
+
+            // Copy across new env details to old env
+            $currentEnvContents = file_get_contents($appEnvPath);
+            $currentEnvDbLines = array_values(array_filter(explode("\n", $currentEnvContents), function (string $line) {
+                return str_starts_with($line, 'DB_');
+            }));
+            $oldEnvLines = array_values(array_filter(explode("\n", $currentEnvContents), function (string $line) {
+                return !str_starts_with($line, 'DB_');
+            }));
+            $envContents = implode("\n", [
+                '# Database credentials merged from existing .env file',
+                ...$currentEnvDbLines,
+                ...$oldEnvLines
+            ]);
+            copy($appEnvPath, $appEnvPath . '.backup');
+        }
+
+        file_put_contents($appDir . DIRECTORY_SEPARATOR . '.env', $envContents);
+    }
+
+    protected function restoreFolder(string $folderSubPath, string $appDir, string $extractDir): void
+    {
+        $fullAppFolderPath = $appDir . DIRECTORY_SEPARATOR . $folderSubPath;
+        $this->deleteDirectoryAndContents($fullAppFolderPath);
+        rename($extractDir . DIRECTORY_SEPARATOR . $folderSubPath, $fullAppFolderPath);
+    }
+
+    protected function deleteDirectoryAndContents(string $dir)
+    {
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($files as $fileinfo) {
+            $path = $fileinfo->getRealPath();
+            $fileinfo->isDir() ? rmdir($path) : unlink($path);
+        }
+
+        rmdir($dir);
+    }
+
+    protected function restoreDatabase(string $appDir, string $extractDir): void
+    {
+        $dbDump = $extractDir . DIRECTORY_SEPARATOR . 'db.sql';
+        $currentEnv = EnvironmentLoader::load($appDir);
+        $mysql = MySqlRunner::fromEnvOptions($currentEnv);
+        $mysql->importSqlFile($dbDump);
     }
 }

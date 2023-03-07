@@ -2,7 +2,7 @@
 
 namespace Cli\Services;
 
-use Illuminate\Console\QuestionHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
@@ -21,7 +21,7 @@ class InteractiveConsole
 
     public function confirm(string $text): bool
     {
-        $question = new ConfirmationQuestion($text, false);
+        $question = new ConfirmationQuestion($text . " (y/n)\n", false);
         return $this->helper->ask($this->input, $this->output, $question);
     }
 }

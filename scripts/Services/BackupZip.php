@@ -18,6 +18,9 @@ class BackupZip
         }
     }
 
+    /**
+     * @return array<string, array{desc: string, exists: bool}>
+     */
     public function getContentsOverview(): array
     {
         return [
@@ -27,15 +30,15 @@ class BackupZip
             ],
             'themes' => [
                 'desc' => 'Themes Folder',
-                'exists' => boolval($this->zip->statName('themes')),
+                'exists' => $this->zip->locateName('/themes/') !== false,
             ],
-            'public-uploads' => [
+            'public/uploads' => [
                 'desc' => 'Public File Uploads',
-                'exists' => boolval($this->zip->statName('public/uploads')),
+                'exists' => $this->zip->locateName('/public/uploads/') !== false,
             ],
-            'storage-uploads' => [
+            'storage/uploads' => [
                 'desc' => 'Private File Uploads',
-                'exists' => boolval($this->zip->statName('storage/uploads')),
+                'exists' => $this->zip->locateName('/storage/uploads/') !== false,
             ],
             'db' => [
                 'desc' => 'Database Dump',
