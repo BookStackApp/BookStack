@@ -249,7 +249,7 @@ return [
     // Webhooks
     'webhooks' => 'Webhooks',
     'webhooks_index_desc' => 'Webhooks são uma maneira de enviar dados para URLs externas quando certas ações e eventos ocorrem no sistema. Isto permite uma integração baseada em eventos com plataformas externas como mensagens ou sistemas de notificação.',
-    'webhooks_x_trigger_events' => ':count trigger event|:count trigger events',
+    'webhooks_x_trigger_events' => ':count acionador|:count acionadores',
     'webhooks_create' => 'Criar um novo webhook',
     'webhooks_none_created' => 'Ainda nenhum webhooks foi criado.',
     'webhooks_edit' => 'Editar Webhook',
