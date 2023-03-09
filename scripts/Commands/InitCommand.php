@@ -105,10 +105,11 @@ class InitCommand extends Command
      */
     protected function cloneBookStackViaGit(string $installDir): void
     {
-        $errors = (new ProgramRunner('git', '/usr/bin/git'))
+        $git = (new ProgramRunner('git', '/usr/bin/git'))
             ->withTimeout(240)
-            ->withIdleTimeout(15)
-            ->runCapturingStdErr([
+            ->withIdleTimeout(15);
+
+        $errors = $git->runCapturingStdErr([
                 'clone', '-q',
                 '--branch', 'release',
                 '--single-branch',
@@ -119,6 +120,12 @@ class InitCommand extends Command
         if ($errors) {
             throw new CommandError("Failed git clone with errors:\n" . $errors);
         }
+
+        // Disable file permission tracking for git repo
+        $git->runCapturingStdErr([
+            '-C', $installDir,
+            'config', 'core.fileMode', 'false'
+        ]);
     }
 
     /**

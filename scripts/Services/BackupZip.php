@@ -30,15 +30,15 @@ class BackupZip
             ],
             'themes' => [
                 'desc' => 'Themes Folder',
-                'exists' => $this->zip->locateName('/themes/') !== false,
+                'exists' => $this->hasFolder('themes/'),
             ],
             'public/uploads' => [
                 'desc' => 'Public File Uploads',
-                'exists' => $this->zip->locateName('/public/uploads/') !== false,
+                'exists' => $this->hasFolder('public/uploads/'),
             ],
             'storage/uploads' => [
                 'desc' => 'Private File Uploads',
-                'exists' => $this->zip->locateName('/storage/uploads/') !== false,
+                'exists' => $this->hasFolder('storage/uploads/'),
             ],
             'db' => [
                 'desc' => 'Database Dump',
@@ -53,5 +53,16 @@ class BackupZip
         if (!$result) {
             throw new \Exception("Failed extraction of ZIP into [{$directoryPath}].");
         }
+    }
+
+    protected function hasFolder($folderPath): bool
+    {
+        for ($i = 0; $i < $this->zip->numFiles; $i++) {
+            $filePath = $this->zip->getNameIndex($i);
+            if (str_starts_with($filePath, $folderPath)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

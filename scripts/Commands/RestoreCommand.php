@@ -48,7 +48,6 @@ class RestoreCommand extends Command
 
         $zipPath = realpath($input->getArgument('backup-zip'));
         $zip = new BackupZip($zipPath);
-        // TODO - Fix folders not being picked up here:
         $contents = $zip->getContentsOverview();
 
         $output->writeln("\n<info>Contents found in the backup ZIP:</info>");
@@ -79,9 +78,10 @@ class RestoreCommand extends Command
         }
         $zip->extractInto($extractDir);
 
+        $envChanges = [];
         if ($contents['env']['exists']) {
             $output->writeln("<info>Restoring and merging .env file...</info>");
-            $this->restoreEnv($extractDir, $appDir);
+            $envChanges = $this->restoreEnv($extractDir, $appDir, $output, $interactions);
         }
 
         $folderLocations = ['themes', 'public/uploads', 'storage/uploads'];
@@ -92,18 +92,22 @@ class RestoreCommand extends Command
             }
         }
 
+        $artisan = (new ArtisanRunner($appDir));
         if ($contents['db']['exists']) {
             $output->writeln("<info>Restoring database from SQL dump...</info>");
             $this->restoreDatabase($appDir, $extractDir);
 
             $output->writeln("<info>Running database migrations...</info>");
-            $artisan = (new ArtisanRunner($appDir));
             $artisan->run(['migrate', '--force']);
         }
 
-        // TODO - Handle change of URL?
-        // TODO - Update system URL (via BookStack artisan command) if
-        //   there's been a change from old backup env
+        if ($envChanges && $envChanges['old_url'] !== $envChanges['new_url']) {
+            $output->writeln("<info>App URL change made, Updating database with URL change...</info>");
+            $artisan->run([
+                'bookstack:update-url',
+                $envChanges['old_url'], $envChanges['new_url'],
+            ]);
+        }
 
         $output->writeln("<info>Clearing app caches...</info>");
         $artisan->run(['cache:clear']);
@@ -118,7 +122,7 @@ class RestoreCommand extends Command
         return Command::SUCCESS;
     }
 
-    protected function restoreEnv(string $extractDir, string $appDir)
+    protected function restoreEnv(string $extractDir, string $appDir, OutputInterface $output, InteractiveConsole $interactions): array
     {
         $oldEnv = EnvironmentLoader::load($extractDir);
         $currentEnv = EnvironmentLoader::load($appDir);
@@ -149,7 +153,23 @@ class RestoreCommand extends Command
             copy($appEnvPath, $appEnvPath . '.backup');
         }
 
+        $oldUrl = $oldEnv['APP_URL'] ?? '';
+        $newUrl = $currentEnv['APP_URL'] ?? '';
+        $returnData = [
+            'old_url' => $oldUrl,
+            'new_url' => $oldUrl,
+        ];
+
+        if ($oldUrl !== $newUrl) {
+            $output->writeln("Found different APP_URL values:");
+            $changedUrl = $interactions->choice('Which would you like to use?', array_filter([$oldUrl, $newUrl]));
+            $envContents = preg_replace('/^APP_URL=.*?$/', 'APP_URL="' . $changedUrl . '"', $envContents);
+            $returnData['new_url'] = $changedUrl;
+        }
+
         file_put_contents($appDir . DIRECTORY_SEPARATOR . '.env', $envContents);
+
+        return $returnData;
     }
 
     protected function restoreFolder(string $folderSubPath, string $appDir, string $extractDir): void

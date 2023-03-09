@@ -39,7 +39,7 @@ class MySqlRunner
                 '-u', $this->user,
                 '-p' . $this->password,
                 $this->database,
-                '-e' . "'show tables;'"
+                '-e', "show tables;"
             ]);
 
         return !$output;
