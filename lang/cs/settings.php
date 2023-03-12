@@ -51,7 +51,7 @@ return [
     // Color settings
     'color_scheme' => 'Barevné schéma aplikace',
     'color_scheme_desc' => 'Nastavte barvy pro uživatelské rozhraní. Barvy mohou být konfigurovány samostatně pro tmavý a světlý režim, aby co nejlépe odpovídaly tématu a zajistily čitelnost.',
-    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
+    'ui_colors_desc' => 'Nastavte primární barvu aplikace a výchozí barvu odkazu. Primární barva je použitá hlavně na banneru hlavičky, tlačítkách a ozdobách rozhraní. Výchozí barva odkazu se používá pro odkazy a akce napříč psaným textem a rozhraním aplikace.',
     'app_color' => 'Hlavní barva',
     'link_color' => 'Výchozí barva odkazu',
     'content_colors_desc' => 'Nastaví barvy pro všechny prvky v organizační struktuře stránky. Pro lepší čitelnost doporučujeme zvolit barvy s podobným jasem, jakou mají výchozí barvy.',
@@ -138,7 +138,7 @@ return [
     'roles' => 'Role',
     'role_user_roles' => 'Uživatelské role',
     'roles_index_desc' => 'Role se používají ke sdružování uživatelů a k poskytování systémových oprávnění jejich členům. Pokud je uživatel členem více rolí, udělená oprávnění budou uložena a uživatel zdědí všechny schopnosti.',
-    'roles_x_users_assigned' => ':count user assigned|:count users assigned',
+    'roles_x_users_assigned' => '1 přiřazený uživatel|:count přiřazených uživatelů',
     'roles_x_permissions_provided' => ':count permission|:count permissions',
     'roles_assigned_users' => 'Přiřazení uživatelé',
     'roles_permissions_provided' => 'Poskytnutá oprávnění',
