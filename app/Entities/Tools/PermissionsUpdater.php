@@ -44,18 +44,18 @@ class PermissionsUpdater
      */
     public function updateFromApiRequestData(Entity $entity, array $data): void
     {
-        if (isset($data['override_role_permissions'])) {
+        if (isset($data['role_permissions'])) {
             $entity->permissions()->where('role_id', '!=', 0)->delete();
-            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions($data['override_role_permissions'] ?? [], false);
+            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions($data['role_permissions'] ?? [], false);
             $entity->permissions()->createMany($rolePermissionData);
         }
 
-        if (array_key_exists('override_fallback_permissions', $data)) {
+        if (array_key_exists('fallback_permissions', $data)) {
             $entity->permissions()->where('role_id', '=', 0)->delete();
         }
 
-        if (isset($data['override_fallback_permissions'])) {
-            $data = $data['override_fallback_permissions'];
+        if (isset($data['fallback_permissions']['inheriting']) && $data['fallback_permissions']['inheriting'] !== true) {
+            $data = $data['fallback_permissions'];
             $data['role_id'] = 0;
             $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions([$data], true);
             $entity->permissions()->createMany($rolePermissionData);
