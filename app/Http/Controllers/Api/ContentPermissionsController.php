@@ -54,13 +54,13 @@ class ContentPermissionsController extends ApiController
     }
 
     /**
-     * Update the configured content-level permissions for the item of the given type and ID.
+     * Update the configured content-level permission overrides for the item of the given type and ID.
      * 'contentType' should be one of: page, book, chapter, bookshelf.
      * 'contentId' should be the relevant ID of that item type you'd like to handle permissions for.
      * Providing an empty `role_permissions` array will remove any existing configured role permissions,
      * so you may want to fetch existing permissions beforehand if just adding/removing a single item.
      * You should completely omit the `owner_id`, `role_permissions` and/or the `fallback_permissions` properties
-     * if you don't wish to update details within those categories.
+     * from your request data if you don't wish to update details within those categories.
      */
     public function update(Request $request, string $contentType, string $contentId)
     {
