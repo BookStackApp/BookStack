@@ -19,18 +19,19 @@ class ContentPermissionsController extends ApiController
         'update' => [
             'owner_id'  => ['int'],
 
-            'override_role_permissions' => ['array'],
-            'override_role_permissions.*.role_id' => ['required', 'int'],
-            'override_role_permissions.*.view' => ['required', 'boolean'],
-            'override_role_permissions.*.create' => ['required', 'boolean'],
-            'override_role_permissions.*.update' => ['required', 'boolean'],
-            'override_role_permissions.*.delete' => ['required', 'boolean'],
+            'role_permissions' => ['array'],
+            'role_permissions.*.role_id' => ['required', 'int', 'exists:roles,id'],
+            'role_permissions.*.view' => ['required', 'boolean'],
+            'role_permissions.*.create' => ['required', 'boolean'],
+            'role_permissions.*.update' => ['required', 'boolean'],
+            'role_permissions.*.delete' => ['required', 'boolean'],
 
-            'override_fallback_permissions' => ['nullable'],
-            'override_fallback_permissions.view' => ['required', 'boolean'],
-            'override_fallback_permissions.create' => ['required', 'boolean'],
-            'override_fallback_permissions.update' => ['required', 'boolean'],
-            'override_fallback_permissions.delete' => ['required', 'boolean'],
+            'fallback_permissions' => ['nullable'],
+            'fallback_permissions.inheriting' => ['required_with:fallback_permissions', 'boolean'],
+            'fallback_permissions.view' => ['required_if:fallback_permissions.inheriting,false', 'boolean'],
+            'fallback_permissions.create' => ['required_if:fallback_permissions.inheriting,false', 'boolean'],
+            'fallback_permissions.update' => ['required_if:fallback_permissions.inheriting,false', 'boolean'],
+            'fallback_permissions.delete' => ['required_if:fallback_permissions.inheriting,false', 'boolean'],
         ]
     ];
 
@@ -38,6 +39,9 @@ class ContentPermissionsController extends ApiController
      * Read the configured content-level permissions for the item of the given type and ID.
      * 'contentType' should be one of: page, book, chapter, bookshelf.
      * 'contentId' should be the relevant ID of that item type you'd like to handle permissions for.
+     * The permissions shown are those that override the default for just the specified item, they do not show the
+     * full evaluated permission for a role, nor do they reflect permissions inherited from other items in the hierarchy.
+     * Fallback permission values may be `null` when inheriting is active.
      */
     public function read(string $contentType, string $contentId)
     {
@@ -53,6 +57,10 @@ class ContentPermissionsController extends ApiController
      * Update the configured content-level permissions for the item of the given type and ID.
      * 'contentType' should be one of: page, book, chapter, bookshelf.
      * 'contentId' should be the relevant ID of that item type you'd like to handle permissions for.
+     * Providing an empty `role_permissions` array will remove any existing configured role permissions,
+     * so you may want to fetch existing permissions beforehand if just adding/removing a single item.
+     * You should completely omit the `owner_id`, `role_permissions` and/or the `fallback_permissions` properties
+     * if you don't wish to update details within those categories.
      */
     public function update(Request $request, string $contentType, string $contentId)
     {
@@ -75,13 +83,18 @@ class ContentPermissionsController extends ApiController
             ->get();
 
         $fallback = $entity->permissions()->where('role_id', '=', 0)->first();
-        $fallback?->makeHidden('role_id');
+        $fallbackData = [
+            'inheriting' => is_null($fallback),
+            'view' => $fallback->view ?? null,
+            'create' => $fallback->create ?? null,
+            'update' => $fallback->update ?? null,
+            'delete' => $fallback->delete ?? null,
+        ];
 
         return [
             'owner' => $entity->ownedBy()->first(),
-            'override_role_permissions' => $rolePermissions,
-            'override_fallback_permissions' => $fallback,
-            'inheriting' => is_null($fallback),
+            'role_permissions' => $rolePermissions,
+            'fallback_permissions' => $fallbackData,
         ];
     }
 }
