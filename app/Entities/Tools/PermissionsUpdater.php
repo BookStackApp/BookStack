@@ -4,20 +4,20 @@ namespace BookStack\Entities\Tools;
 
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Permissions\EntityPermission;
+use BookStack\Auth\Role;
 use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class PermissionsUpdater
 {
     /**
      * Update an entities permissions from a permission form submit request.
      */
-    public function updateFromPermissionsForm(Entity $entity, Request $request)
+    public function updateFromPermissionsForm(Entity $entity, Request $request): void
     {
         $permissions = $request->get('permissions', null);
         $ownerId = $request->get('owned_by', null);
@@ -40,11 +40,43 @@ class PermissionsUpdater
     }
 
     /**
+     * Update permissions from API request data.
+     */
+    public function updateFromApiRequestData(Entity $entity, array $data): void
+    {
+        if (isset($data['override_role_permissions'])) {
+            $entity->permissions()->where('role_id', '!=', 0)->delete();
+            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions($data['override_role_permissions'] ?? [], false);
+            $entity->permissions()->createMany($rolePermissionData);
+        }
+
+        if (array_key_exists('override_fallback_permissions', $data)) {
+            $entity->permissions()->where('role_id', '=', 0)->delete();
+        }
+
+        if (isset($data['override_fallback_permissions'])) {
+            $data = $data['override_fallback_permissions'];
+            $data['role_id'] = 0;
+            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions([$data], true);
+            $entity->permissions()->createMany($rolePermissionData);
+        }
+
+        if (isset($data['owner_id'])) {
+            $this->updateOwnerFromId($entity, intval($data['owner_id']));
+        }
+
+        $entity->save();
+        $entity->rebuildPermissions();
+
+        Activity::add(ActivityType::PERMISSIONS_UPDATE, $entity);
+    }
+
+    /**
      * Update the owner of the given entity.
      * Checks the user exists in the system first.
      * Does not save the model, just updates it.
      */
-    protected function updateOwnerFromId(Entity $entity, int $newOwnerId)
+    protected function updateOwnerFromId(Entity $entity, int $newOwnerId): void
     {
         $newOwner = User::query()->find($newOwnerId);
         if (!is_null($newOwner)) {
@@ -67,7 +99,41 @@ class PermissionsUpdater
             $formatted[] = $entityPermissionData;
         }
 
-        return $formatted;
+        return $this->filterEntityPermissionDataUponRole($formatted, true);
+    }
+
+    protected function formatPermissionsFromApiRequestToEntityPermissions(array $permissions, bool $allowFallback): array
+    {
+        $formatted = [];
+
+        foreach ($permissions as $requestPermissionData) {
+            $entityPermissionData = ['role_id' => $requestPermissionData['role_id']];
+            foreach (EntityPermission::PERMISSIONS as $permission) {
+                $entityPermissionData[$permission] = boolval($requestPermissionData[$permission] ?? false);
+            }
+            $formatted[] = $entityPermissionData;
+        }
+
+        return $this->filterEntityPermissionDataUponRole($formatted, $allowFallback);
+    }
+
+    protected function filterEntityPermissionDataUponRole(array $entityPermissionData, bool $allowFallback): array
+    {
+        $roleIds = [];
+        foreach ($entityPermissionData as $permissionEntry) {
+            $roleIds[] = intval($permissionEntry['role_id']);
+        }
+
+        $actualRoleIds = array_unique(array_values(array_filter($roleIds)));
+        $rolesById = Role::query()->whereIn('id', $actualRoleIds)->get('id')->keyBy('id');
+
+        return array_values(array_filter($entityPermissionData, function ($data) use ($rolesById, $allowFallback) {
+            if (intval($data['role_id']) === 0) {
+                return $allowFallback;
+            }
+
+            return $rolesById->has($data['role_id']);
+        }));
     }
 
     /**
