@@ -13,6 +13,7 @@ use BookStack\Http\Controllers\Api\BookExportApiController;
 use BookStack\Http\Controllers\Api\BookshelfApiController;
 use BookStack\Http\Controllers\Api\ChapterApiController;
 use BookStack\Http\Controllers\Api\ChapterExportApiController;
+use BookStack\Http\Controllers\Api\ContentPermissionsController;
 use BookStack\Http\Controllers\Api\PageApiController;
 use BookStack\Http\Controllers\Api\PageExportApiController;
 use BookStack\Http\Controllers\Api\RecycleBinApiController;
@@ -85,3 +86,6 @@ Route::delete('roles/{id}', [RoleApiController::class, 'delete']);
 Route::get('recycle-bin', [RecycleBinApiController::class, 'list']);
 Route::put('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'restore']);
 Route::delete('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'destroy']);
+
+Route::get('content-permissions/{contentType}/{contentId}', [ContentPermissionsController::class, 'read']);
+Route::put('content-permissions/{contentType}/{contentId}', [ContentPermissionsController::class, 'update']);
