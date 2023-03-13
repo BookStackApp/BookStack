@@ -5,7 +5,6 @@ namespace BookStack\Auth\Permissions;
 use BookStack\Auth\Role;
 use BookStack\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property int $id
@@ -23,14 +22,14 @@ class EntityPermission extends Model
 
     protected $fillable = ['role_id', 'view', 'create', 'update', 'delete'];
     public $timestamps = false;
-
-    /**
-     * Get this restriction's attached entity.
-     */
-    public function restrictable(): MorphTo
-    {
-        return $this->morphTo('restrictable');
-    }
+    protected $hidden = ['entity_id', 'entity_type', 'id'];
+    protected $casts = [
+        'view' => 'boolean',
+        'create' => 'boolean',
+        'read' => 'boolean',
+        'update' => 'boolean',
+        'delete' => 'boolean',
+    ];
 
     /**
      * Get the role assigned to this entity permission.
