@@ -3,9 +3,11 @@
 namespace BookStack\Uploads;
 
 use BookStack\Auth\Permissions\JointPermission;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -31,6 +33,15 @@ class Image extends Model
     {
         return $this->hasMany(JointPermission::class, 'entity_id', 'uploaded_to')
             ->where('joint_permissions.entity_type', '=', 'page');
+    }
+
+    /**
+     * Scope the query to just the images visible to the user based upon the
+     * user visibility of the uploaded_to page.
+     */
+    public function scopeVisible(Builder $query): Builder
+    {
+        return app()->make(PermissionApplicator::class)->restrictPageRelationQuery($query, 'images', 'uploaded_to');
     }
 
     /**
