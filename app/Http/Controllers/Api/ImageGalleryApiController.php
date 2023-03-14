@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Controllers\Api;
 
+use BookStack\Entities\Models\Page;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class ImageGalleryApiController extends ApiController
         return [
             'create' => [
                 'type'  => ['required', 'string', 'in:gallery,drawio'],
-                'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
+                'uploaded_to' => ['required', 'integer'],
                 'image' => ['required', 'file', ...$this->getImageValidationRules()],
                 'name'  => ['string', 'max:180'],
             ],
@@ -52,9 +53,16 @@ class ImageGalleryApiController extends ApiController
      */
     public function create(Request $request)
     {
+        $this->checkPermission('image-create-all');
         $data = $this->validate($request, $this->rules()['create']);
+        Page::visible()->findOrFail($data['uploaded_to']);
 
         $image = $this->imageRepo->saveNew($data['image'], $data['type'], $data['uploaded_to']);
+
+        if (isset($data['name'])) {
+            $image->refresh();
+            $image->update(['name' => $data['name']]);
+        }
 
         return response()->json($this->formatForSingleResponse($image));
     }
@@ -64,8 +72,7 @@ class ImageGalleryApiController extends ApiController
      */
     public function read(string $id)
     {
-        $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission('page-view', $image->getPage());
+        $image = Image::query()->scopes(['visible'])->findOrFail($id);
 
         return response()->json($this->formatForSingleResponse($image));
     }

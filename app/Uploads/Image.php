@@ -49,7 +49,7 @@ class Image extends Model
      *
      * @throws \Exception
      */
-    public function getThumb(int $width, int $height, bool $keepRatio = false): string
+    public function getThumb(?int $width, ?int $height, bool $keepRatio = false): string
     {
         return app()->make(ImageService::class)->getThumbnail($this, $width, $height, $keepRatio);
     }
