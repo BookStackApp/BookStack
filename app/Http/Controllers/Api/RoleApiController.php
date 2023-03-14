@@ -88,10 +88,10 @@ class RoleApiController extends ApiController
      */
     public function read(string $id)
     {
-        $user = $this->permissionsRepo->getRoleById($id);
-        $this->singleFormatter($user);
+        $role = $this->permissionsRepo->getRoleById($id);
+        $this->singleFormatter($role);
 
-        return response()->json($user);
+        return response()->json($role);
     }
 
     /**

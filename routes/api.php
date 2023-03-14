@@ -13,7 +13,8 @@ use BookStack\Http\Controllers\Api\BookExportApiController;
 use BookStack\Http\Controllers\Api\BookshelfApiController;
 use BookStack\Http\Controllers\Api\ChapterApiController;
 use BookStack\Http\Controllers\Api\ChapterExportApiController;
-use BookStack\Http\Controllers\Api\ContentPermissionsController;
+use BookStack\Http\Controllers\Api\ContentPermissionApiController;
+use BookStack\Http\Controllers\Api\ImageGalleryApiController;
 use BookStack\Http\Controllers\Api\PageApiController;
 use BookStack\Http\Controllers\Api\PageExportApiController;
 use BookStack\Http\Controllers\Api\RecycleBinApiController;
@@ -63,6 +64,12 @@ Route::get('pages/{id}/export/pdf', [PageExportApiController::class, 'exportPdf'
 Route::get('pages/{id}/export/plaintext', [PageExportApiController::class, 'exportPlainText']);
 Route::get('pages/{id}/export/markdown', [PageExportApiController::class, 'exportMarkdown']);
 
+Route::get('image-gallery', [ImageGalleryApiController::class, 'list']);
+Route::post('image-gallery', [ImageGalleryApiController::class, 'create']);
+Route::get('image-gallery/{id}', [ImageGalleryApiController::class, 'read']);
+Route::put('image-gallery/{id}', [ImageGalleryApiController::class, 'update']);
+Route::delete('image-gallery/{id}', [ImageGalleryApiController::class, 'delete']);
+
 Route::get('search', [SearchApiController::class, 'all']);
 
 Route::get('shelves', [BookshelfApiController::class, 'list']);
@@ -87,5 +94,5 @@ Route::get('recycle-bin', [RecycleBinApiController::class, 'list']);
 Route::put('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'restore']);
 Route::delete('recycle-bin/{deletionId}', [RecycleBinApiController::class, 'destroy']);
 
-Route::get('content-permissions/{contentType}/{contentId}', [ContentPermissionsController::class, 'read']);
-Route::put('content-permissions/{contentType}/{contentId}', [ContentPermissionsController::class, 'update']);
+Route::get('content-permissions/{contentType}/{contentId}', [ContentPermissionApiController::class, 'read']);
+Route::put('content-permissions/{contentType}/{contentId}', [ContentPermissionApiController::class, 'update']);
