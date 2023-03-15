@@ -7,7 +7,7 @@ use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use Illuminate\Http\Request;
 
-class ContentPermissionsController extends ApiController
+class ContentPermissionApiController extends ApiController
 {
     public function __construct(
         protected PermissionsUpdater $permissionsUpdater,
