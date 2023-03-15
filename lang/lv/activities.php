@@ -45,7 +45,7 @@ return [
     'bookshelf_update'                 => 'atjaunoja plauktu',
     'bookshelf_update_notification'    => 'Plaukts veiksmīgi atjaunināts',
     'bookshelf_delete'                 => 'izdzēsa plauktu',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Plaukts veiksmīgi dzēsts',
 
     // Favourites
     'favourite_add_notification' => '":name" ir pievienots jūsu favorītiem',
@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'Lietotājs veiksmīgi dzēsts',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'Loma veiksmīgi izveidota',
+    'role_update_notification' => 'Loma veiksmīgi atjaunināta',
+    'role_delete_notification' => 'Loma veiksmīgi dzēsta',
 
     // Other
     'commented_on'                => 'komentēts',
