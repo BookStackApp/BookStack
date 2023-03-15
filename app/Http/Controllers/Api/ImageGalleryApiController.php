@@ -34,8 +34,8 @@ class ImageGalleryApiController extends ApiController
     }
 
     /**
-     * Get a listing of gallery images and drawings in the system.
-     * Requires visibility of the content they're originally uploaded to.
+     * Get a listing of images in the system. Includes gallery (page content) images and drawings.
+     * Requires visibility of the page they're originally uploaded to.
      */
     public function list()
     {
@@ -50,6 +50,11 @@ class ImageGalleryApiController extends ApiController
 
     /**
      * Create a new image in the system.
+     * Since "image" is expected to be a file, this needs to be a 'multipart/form-data' type request.
+     * The provided "uploaded_to" should be an existing page ID in the system.
+     * If the "name" parameter is omitted, the filename of the provided image file will be used instead.
+     * The "type" parameter should be 'gallery' for page content images, and 'drawio' should only be used
+     * when the file is a PNG file with diagrams.net image data embedded within.
      */
     public function create(Request $request)
     {
@@ -69,6 +74,10 @@ class ImageGalleryApiController extends ApiController
 
     /**
      * View the details of a single image.
+     * The "thumbs" response property contains links to scaled variants that BookStack may use in its UI.
+     * The "content" response property provides HTML and Markdown content, in the format that BookStack
+     * would typically use by default to add the image in page content, as a convenience.
+     * Actual image file data is not provided but can be fetched via the "url" response property.
      */
     public function read(string $id)
     {
@@ -78,7 +87,8 @@ class ImageGalleryApiController extends ApiController
     }
 
     /**
-     * Update an existing image in the system.
+     * Update the details of an existing image in the system.
+     * Only allows updating of the image name at this time.
      */
     public function update(Request $request, string $id)
     {
@@ -94,6 +104,8 @@ class ImageGalleryApiController extends ApiController
 
     /**
      * Delete an image from the system.
+     * Will also delete thumbnails for the image.
+     * Does not check or handle image usage so this could leave pages with broken image references.
      */
     public function delete(string $id)
     {
