@@ -25,7 +25,7 @@ return [
     'actions' => 'Darbības',
     'view' => 'Skatīt',
     'view_all' => 'Skatīt visus',
-    'new' => 'New',
+    'new' => 'Jauns',
     'create' => 'Izveidot',
     'update' => 'Atjaunināt',
     'edit' => 'Rediģēt',
@@ -48,8 +48,8 @@ return [
     'previous' => 'Iepriekšējais',
     'filter_active' => 'Aktīvais filtrs:',
     'filter_clear' => 'Notīrīt filtru',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => 'Lejupielādēt',
+    'open_in_tab' => 'Atvērt cilnē',
 
     // Sort Options
     'sort_options' => 'Kārtošanas Opcijas',
@@ -81,14 +81,14 @@ return [
     'none' => 'Neviens',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Sākumlapa',
     'header_menu_expand' => 'Izvērst galvenes izvēlni',
     'profile_menu' => 'Profila izvēlne',
     'view_profile' => 'Apskatīt profilu',
     'edit_profile' => 'Rediģēt profilu',
     'dark_mode' => 'Tumšais režīms',
     'light_mode' => 'Gaišais režīms',
-    'global_search' => 'Global Search',
+    'global_search' => 'Vispārējā meklēšana',
 
     // Layout tabs
     'tab_info' => 'Informācija',
