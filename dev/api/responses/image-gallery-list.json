@@ -1,0 +1,41 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "My cat scribbles",
+      "url": "https:\/\/bookstack.example.com\/uploads\/images\/gallery\/2023-02\/scribbles.jpg",
+      "path": "\/uploads\/images\/gallery\/2023-02\/scribbles.jpg",
+      "type": "gallery",
+      "uploaded_to": 1,
+      "created_by": 1,
+      "updated_by": 1,
+      "created_at": "2023-02-12T16:34:57.000000Z",
+      "updated_at": "2023-02-12T16:34:57.000000Z"
+    },
+    {
+      "id": 2,
+      "name": "Drawing-1.png",
+      "url": "https:\/\/bookstack.example.com\/uploads\/images\/drawio\/2023-02\/drawing-1.png",
+      "path": "\/uploads\/images\/drawio\/2023-02\/drawing-1.png",
+      "type": "drawio",
+      "uploaded_to": 2,
+      "created_by": 2,
+      "updated_by": 2,
+      "created_at": "2023-02-12T16:39:19.000000Z",
+      "updated_at": "2023-02-12T16:39:19.000000Z"
+    },
+    {
+      "id": 8,
+      "name": "beans.jpg",
+      "url": "https:\/\/bookstack.example.com\/uploads\/images\/gallery\/2023-02\/beans.jpg",
+      "path": "\/uploads\/images\/gallery\/2023-02\/beans.jpg",
+      "type": "gallery",
+      "uploaded_to": 6,
+      "created_by": 1,
+      "updated_by": 1,
+      "created_at": "2023-02-15T19:37:44.000000Z",
+      "updated_at": "2023-02-15T19:37:44.000000Z"
+    }
+  ],
+  "total": 3
+}
