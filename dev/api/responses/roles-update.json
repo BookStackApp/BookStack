@@ -1,0 +1,26 @@
+{
+  "id": 26,
+  "display_name": "Book & Shelf Maintainers",
+  "description": "All those who maintain books & shelves",
+  "created_at": "2023-02-19T15:38:40.000000Z",
+  "updated_at": "2023-02-19T15:49:13.000000Z",
+  "system_name": "",
+  "external_auth_id": "",
+  "mfa_enforced": false,
+  "permissions": [
+    "book-delete-all",
+    "book-update-all",
+    "book-view-all",
+    "bookshelf-delete-all",
+    "bookshelf-update-all",
+    "bookshelf-view-all",
+    "restrictions-manage-all"
+  ],
+  "users": [
+    {
+      "id": 11,
+      "name": "Barry Scott",
+      "slug": "barry-scott"
+    }
+  ]
+}

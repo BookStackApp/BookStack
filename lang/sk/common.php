@@ -25,7 +25,7 @@ return [
     'actions' => 'Akcie',
     'view' => 'Zobraziť',
     'view_all' => 'Zobraziť všetko',
-    'new' => 'New',
+    'new' => 'Nový',
     'create' => 'Vytvoriť',
     'update' => 'Aktualizovať',
     'edit' => 'Editovať',
@@ -48,8 +48,8 @@ return [
     'previous' => 'Späť',
     'filter_active' => 'Aktívny filter:',
     'filter_clear' => 'Bez filtrovania',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => 'Stiahnuť',
+    'open_in_tab' => 'Otvoriť na novej karte',
 
     // Sort Options
     'sort_options' => 'Možnosti triedenia',
@@ -74,21 +74,21 @@ return [
     'list_view' => 'Zobraziť ako zoznam',
     'default' => 'Predvolené',
     'breadcrumb' => 'Breadcrumb',
-    'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
-    'never' => 'Never',
-    'none' => 'None',
+    'status' => 'Stav',
+    'status_active' => 'Aktívny',
+    'status_inactive' => 'Neaktívny',
+    'never' => 'Nikdy',
+    'none' => 'Žiadne',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Domovská stránka',
     'header_menu_expand' => 'Rozbaliť menu v záhlaví',
     'profile_menu' => 'Menu profilu',
     'view_profile' => 'Zobraziť profil',
     'edit_profile' => 'Upraviť profil',
     'dark_mode' => 'Tmavý režim',
     'light_mode' => 'Svetlý režim',
-    'global_search' => 'Global Search',
+    'global_search' => 'Globálne vyhľadávanie',
 
     // Layout tabs
     'tab_info' => 'Informácie',

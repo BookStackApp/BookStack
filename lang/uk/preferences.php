@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'Ярлики',
+    'shortcuts_interface' => 'Комбінації клавіш інтерфейсу',
+    'shortcuts_toggle_desc' => 'Тут ви можете увімкнути або вимкнути ярлики інтерфейсу клавіатури, які використовуються для навігації та дій.',
+    'shortcuts_customize_desc' => 'Ви можете налаштувати кожен з ярликів нижче. Просто натисніть на комбінацію бажаного ключа після вибору вводу для ярлика.',
+    'shortcuts_toggle_label' => 'Клавіатурні скорочення увімкнено',
+    'shortcuts_section_navigation' => 'Навігація',
+    'shortcuts_section_actions' => 'Загальні дії',
+    'shortcuts_save' => 'Зберегти ярлики',
+    'shortcuts_overlay_desc' => 'Примітка: якщо ярлики ввімкнено, допоміжне накладання доступне, натиснувши "?" який виділить доступні ярлики для дій, які зараз видно на екрані.',
+    'shortcuts_update_success' => 'Налаштування ярликів оновлено!',
 ];

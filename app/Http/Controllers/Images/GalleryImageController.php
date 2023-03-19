@@ -10,14 +10,9 @@ use Illuminate\Validation\ValidationException;
 
 class GalleryImageController extends Controller
 {
-    protected $imageRepo;
-
-    /**
-     * GalleryImageController constructor.
-     */
-    public function __construct(ImageRepo $imageRepo)
-    {
-        $this->imageRepo = $imageRepo;
+    public function __construct(
+        protected ImageRepo $imageRepo
+    ) {
     }
 
     /**

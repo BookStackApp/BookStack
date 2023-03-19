@@ -23,7 +23,7 @@ return [
     'meta_updated' => '수정함 :timeLength',
     'meta_updated_name' => '수정함 :timeLength, :user',
     'meta_owned_name' => '소유함 :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => '항목 선택',
     'entity_select_lack_permission' => '이 항목을 선택하기 위해 필요한 권한이 없습니다',
     'images' => '이미지',

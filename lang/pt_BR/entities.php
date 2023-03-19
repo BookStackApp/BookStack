@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Atualizado :timeLength',
     'meta_updated_name' => 'Atualizado :timeLength por :user',
     'meta_owned_name' => 'De :user',
-    'meta_reference_page_count' => 'Referenciado em 1 página|Referenciado em :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Seleção de Entidade',
     'entity_select_lack_permission' => 'Você não tem as permissões necessárias para selecionar este item',
     'images' => 'Imagens',

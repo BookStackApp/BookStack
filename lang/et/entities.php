@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Muudetud :timeLength',
     'meta_updated_name' => 'Muudetud :timeLength kasutaja :user poolt',
     'meta_owned_name' => 'Kuulub kasutajale :user',
-    'meta_reference_page_count' => 'Viidatud 1 lehel|Viidatud :count lehel',
+    'meta_reference_page_count' => 'Viidatud :count lehel|Viidatud :count lehel',
     'entity_select' => 'Objekti valik',
     'entity_select_lack_permission' => 'Sul pole õiguseid selle objekti valimiseks',
     'images' => 'Pildid',

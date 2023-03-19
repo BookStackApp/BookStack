@@ -21,7 +21,7 @@ return [
     'email' => 'E-post',
     'password' => 'Passord',
     'password_confirm' => 'Bekreft passord',
-    'password_hint' => 'Must be at least 8 characters',
+    'password_hint' => 'Må være minst 8 tegn',
     'forgot_password' => 'Glemt passord?',
     'remember_me' => 'Husk meg',
     'ldap_email_hint' => 'Oppgi en e-post for denne kontoen.',
@@ -39,9 +39,9 @@ return [
     'register_success' => 'Takk for registreringen! Du kan nå logge inn på tjenesten.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Forsøker innlogging',
+    'auto_init_starting_desc' => 'Vi kontakter autentiseringssystemet ditt for å påbegynne innloggingsprosessen. Dersom det ikke er noe fremdrift i løpet av fem sekunder kan du trykke på lenken under.',
+    'auto_init_start_link' => 'Fortsett med autentisering',
 
     // Password Reset
     'reset_password' => 'Nullstille passord',
@@ -59,10 +59,10 @@ return [
     'email_confirm_text' => 'Bekreft e-posten din ved å trykke på knappen nedenfor:',
     'email_confirm_action' => 'Bekreft e-post',
     'email_confirm_send_error' => 'Bekreftelse er krevd av systemet, men systemet kan ikke sende disse. Kontakt admin for å løse problemet.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Epost-adressen din er verifisert! Du kan nå logge inn ved å bruke denne ved innlogging.',
     'email_confirm_resent' => 'Bekreftelsespost ble sendt, sjekk innboksen din.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'Takk for verifiseringen!',
+    'email_confirm_thanks_desc' => 'Vent et øyeblikk mens verifiseringen blir utført. Om du ikke blir videresendt i løpet av tre sekunder kan du trykke «Fortsett» nedenfor.',
 
     'email_not_confirmed' => 'E-posten er ikke bekreftet.',
     'email_not_confirmed_text' => 'Epost-adressen er ennå ikke bekreftet.',
@@ -78,7 +78,7 @@ return [
     'user_invite_page_welcome' => 'Velkommen til :appName!',
     'user_invite_page_text' => 'For å fullføre prosessen må du oppgi et passord som sikrer din konto på :appName for fremtidige besøk.',
     'user_invite_page_confirm_button' => 'Bekreft passord',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Passordet ble satt, du skal nå kunne logge inn med ditt nye passord for å få tilgang til :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Konfigurer flerfaktor-autentisering',

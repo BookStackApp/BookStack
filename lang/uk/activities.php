@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'створив сторінку',
+    'page_create'                 => 'створено сторінку',
     'page_create_notification'    => 'Сторінка успішно створена',
     'page_update'                 => 'оновив сторінку',
     'page_update_notification'    => 'Сторінка успішно оновлена',
@@ -66,6 +66,11 @@ return [
     // Users
     'user_update_notification' => 'Користувача було успішно оновлено',
     'user_delete_notification' => 'Користувача успішно видалено',
+
+    // Roles
+    'role_create_notification' => 'Роль успішно створена',
+    'role_update_notification' => 'Роль успішно оновлена',
+    'role_delete_notification' => 'Роль успішно видалена',
 
     // Other
     'commented_on'                => 'прокоментував',

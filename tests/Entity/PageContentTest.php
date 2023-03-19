@@ -732,4 +732,23 @@ class PageContentTest extends TestCase
 
         $this->assertStringContainsString('<p id="bkmrk-%C2%A0">&nbsp;</p>', $page->refresh()->html);
     }
+
+    public function test_page_save_with_many_headers_and_links_is_reasonable()
+    {
+        $page = $this->entities->page();
+
+        $content = '';
+        for ($i = 0; $i < 500; $i++) {
+            $content .= "<table><tbody><tr><td><h5 id='header-{$i}'>Simple Test</h5><a href='#header-{$i}'></a></td></tr></tbody></table>";
+        }
+
+        $time = time();
+        $this->asEditor()->put($page->getUrl(), [
+            'name'    => $page->name,
+            'html'    => $content,
+        ])->assertRedirect();
+
+        $timeElapsed = time() - $time;
+        $this->assertLessThan(3, $timeElapsed);
+    }
 }

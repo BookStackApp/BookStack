@@ -111,6 +111,29 @@ class AttachmentTest extends TestCase
         $this->files->deleteAllAttachmentFiles();
     }
 
+    public function test_attaching_long_links_to_a_page()
+    {
+        $page = $this->entities->page();
+
+        $link = 'https://example.com?query=' . str_repeat('catsIScool', 195);
+        $linkReq = $this->asAdmin()->post('attachments/link', [
+            'attachment_link_url'         => $link,
+            'attachment_link_name'        => 'Example Attachment Link',
+            'attachment_link_uploaded_to' => $page->id,
+        ]);
+
+        $linkReq->assertStatus(200);
+        $this->assertDatabaseHas('attachments', [
+            'uploaded_to' => $page->id,
+            'path' => $link,
+            'external' => true,
+        ]);
+
+        $attachment = $page->attachments()->where('external', '=', true)->first();
+        $resp = $this->get($attachment->getUrl());
+        $resp->assertRedirect($link);
+    }
+
     public function test_attachment_updating()
     {
         $page = $this->entities->page();

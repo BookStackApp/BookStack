@@ -18,7 +18,7 @@ class UserRoleProvider
     {
         if (is_null($this->admin)) {
             $adminRole = Role::getSystemRole('admin');
-            $this->admin = $adminRole->users->first();
+            $this->admin = $adminRole->users()->first();
         }
 
         return $this->admin;
@@ -90,7 +90,7 @@ class UserRoleProvider
     {
         $permissionRepo = app(PermissionsRepo::class);
         $roleData = Role::factory()->make()->toArray();
-        $roleData['permissions'] = array_flip($rolePermissions);
+        $roleData['permissions'] = $rolePermissions;
 
         return $permissionRepo->saveNewRole($roleData);
     }

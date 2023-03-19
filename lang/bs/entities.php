@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Ažurirana :timeLength',
     'meta_updated_name' => 'Ažurirana :timeLength od :user',
     'meta_owned_name' => 'Vlasnik je :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Odaberi entitet',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Slike',

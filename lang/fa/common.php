@@ -25,7 +25,7 @@ return [
     'actions' => 'عملیات',
     'view' => 'نمایش',
     'view_all' => 'نمایش همه',
-    'new' => 'New',
+    'new' => 'جدید',
     'create' => 'ایجاد',
     'update' => 'به‌روز رسانی',
     'edit' => 'ويرايش',
@@ -81,7 +81,7 @@ return [
     'none' => 'هیچکدام',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'صفحه اصلی',
     'header_menu_expand' => 'گسترش منو',
     'profile_menu' => 'منو پروفایل',
     'view_profile' => 'مشاهده پروفایل',

@@ -15,9 +15,9 @@ class UsersApiTest extends TestCase
 {
     use TestsApi;
 
-    protected $baseEndpoint = '/api/users';
+    protected string $baseEndpoint = '/api/users';
 
-    protected $endpointMap = [
+    protected array $endpointMap = [
         ['get', '/api/users'],
         ['post', '/api/users'],
         ['get', '/api/users/1'],
@@ -47,7 +47,7 @@ class UsersApiTest extends TestCase
         }
     }
 
-    public function test_index_endpoint_returns_expected_shelf()
+    public function test_index_endpoint_returns_expected_user()
     {
         $this->actingAsApiAdmin();
         /** @var User $firstUser */

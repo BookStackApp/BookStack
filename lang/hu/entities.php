@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Frissítve :timeLength',
     'meta_updated_name' => ':user frissítette :timeLength',
     'meta_owned_name' => ':user tulajdona',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Entitás kiválasztása',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Képek',

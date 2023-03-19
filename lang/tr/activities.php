@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Kullanıcı başarıyla güncellendi',
     'user_delete_notification' => 'Kullanıcı başarıyla silindi',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'yorum yaptı',
     'permissions_update'          => 'güncellenmiş izinler',

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Được cập nhật :timeLength',
     'meta_updated_name' => 'Được cập nhật :timeLength bởi :user',
     'meta_owned_name' => 'Được sở hữu bởi :user',
-    'meta_reference_page_count' => 'Được tham chiếu trên 1 trang | Được tham chiếu trên :count trang',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Chọn thực thể',
     'entity_select_lack_permission' => 'Bạn không có quyền để chọn mục này',
     'images' => 'Ảnh',

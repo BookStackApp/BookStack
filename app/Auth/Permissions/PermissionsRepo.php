@@ -12,11 +12,8 @@ use Illuminate\Database\Eloquent\Collection;
 class PermissionsRepo
 {
     protected JointPermissionBuilder $permissionBuilder;
-    protected $systemRoles = ['admin', 'public'];
+    protected array $systemRoles = ['admin', 'public'];
 
-    /**
-     * PermissionsRepo constructor.
-     */
     public function __construct(JointPermissionBuilder $permissionBuilder)
     {
         $this->permissionBuilder = $permissionBuilder;
@@ -41,7 +38,7 @@ class PermissionsRepo
     /**
      * Get a role via its ID.
      */
-    public function getRoleById($id): Role
+    public function getRoleById(int $id): Role
     {
         return Role::query()->findOrFail($id);
     }
@@ -52,10 +49,10 @@ class PermissionsRepo
     public function saveNewRole(array $roleData): Role
     {
         $role = new Role($roleData);
-        $role->mfa_enforced = ($roleData['mfa_enforced'] ?? 'false') === 'true';
+        $role->mfa_enforced = boolval($roleData['mfa_enforced'] ?? false);
         $role->save();
 
-        $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
+        $permissions = $roleData['permissions'] ?? [];
         $this->assignRolePermissions($role, $permissions);
         $this->permissionBuilder->rebuildForRole($role);
 
@@ -66,42 +63,45 @@ class PermissionsRepo
 
     /**
      * Updates an existing role.
-     * Ensure Admin role always have core permissions.
+     * Ensures Admin system role always have core permissions.
      */
-    public function updateRole($roleId, array $roleData)
+    public function updateRole($roleId, array $roleData): Role
     {
         $role = $this->getRoleById($roleId);
 
-        $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
+        if (isset($roleData['permissions'])) {
+            $this->assignRolePermissions($role, $roleData['permissions']);
+        }
+
+        $role->fill($roleData);
+        $role->save();
+        $this->permissionBuilder->rebuildForRole($role);
+
+        Activity::add(ActivityType::ROLE_UPDATE, $role);
+
+        return $role;
+    }
+
+    /**
+     * Assign a list of permission names to the given role.
+     */
+    protected function assignRolePermissions(Role $role, array $permissionNameArray = []): void
+    {
+        $permissions = [];
+        $permissionNameArray = array_values($permissionNameArray);
+
+        // Ensure the admin system role retains vital system permissions
         if ($role->system_name === 'admin') {
-            $permissions = array_merge($permissions, [
+            $permissionNameArray = array_unique(array_merge($permissionNameArray, [
                 'users-manage',
                 'user-roles-manage',
                 'restrictions-manage-all',
                 'restrictions-manage-own',
                 'settings-manage',
-            ]);
+            ]));
         }
 
-        $this->assignRolePermissions($role, $permissions);
-
-        $role->fill($roleData);
-        $role->mfa_enforced = ($roleData['mfa_enforced'] ?? 'false') === 'true';
-        $role->save();
-        $this->permissionBuilder->rebuildForRole($role);
-
-        Activity::add(ActivityType::ROLE_UPDATE, $role);
-    }
-
-    /**
-     * Assign a list of permission names to a role.
-     */
-    protected function assignRolePermissions(Role $role, array $permissionNameArray = [])
-    {
-        $permissions = [];
-        $permissionNameArray = array_values($permissionNameArray);
-
-        if ($permissionNameArray) {
+        if (!empty($permissionNameArray)) {
             $permissions = RolePermission::query()
                 ->whereIn('name', $permissionNameArray)
                 ->pluck('id')
@@ -114,13 +114,13 @@ class PermissionsRepo
     /**
      * Delete a role from the system.
      * Check it's not an admin role or set as default before deleting.
-     * If an migration Role ID is specified the users assign to the current role
+     * If a migration Role ID is specified the users assign to the current role
      * will be added to the role of the specified id.
      *
      * @throws PermissionsException
      * @throws Exception
      */
-    public function deleteRole($roleId, $migrateRoleId)
+    public function deleteRole(int $roleId, int $migrateRoleId = 0): void
     {
         $role = $this->getRoleById($roleId);
 
@@ -131,7 +131,7 @@ class PermissionsRepo
             throw new PermissionsException(trans('errors.role_registration_default_cannot_delete'));
         }
 
-        if ($migrateRoleId) {
+        if ($migrateRoleId !== 0) {
             $newRole = Role::query()->find($migrateRoleId);
             if ($newRole) {
                 $users = $role->users()->pluck('id')->toArray();

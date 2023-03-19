@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Brugeren blev opdateret',
     'user_delete_notification' => 'Brugeren blev fjernet',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'kommenterede til',
     'permissions_update'          => 'Tilladelser opdateret',

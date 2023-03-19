@@ -1,0 +1,28 @@
+{
+  "id": 618,
+  "name": "cute-cat-image.png",
+  "url": "https:\/\/bookstack.example.com\/uploads\/images\/gallery\/2023-03\/cute-cat-image.png",
+  "created_at": "2023-03-15 08:17:37",
+  "updated_at": "2023-03-15 08:17:37",
+  "created_by": {
+    "id": 1,
+    "name": "Admin",
+    "slug": "admin"
+  },
+  "updated_by": {
+    "id": 1,
+    "name": "Admin",
+    "slug": "admin"
+  },
+  "path": "\/uploads\/images\/gallery\/2023-03\/cute-cat-image.png",
+  "type": "gallery",
+  "uploaded_to": 1,
+  "thumbs": {
+    "gallery": "https:\/\/bookstack.example.com\/uploads\/images\/gallery\/2023-03\/thumbs-150-150\/cute-cat-image.png",
+    "display": "https:\/\/bookstack.example.com\/uploads\/images\/gallery\/2023-03\/scaled-1680-\/cute-cat-image.png"
+  },
+  "content": {
+    "html": "<a href=\"https:\/\/bookstack.example.com\/uploads\/images\/gallery\/2023-03\/cute-cat-image.png\" target=\"_blank\"><img src=\"https:\/\/bookstack.example.com\/uploads\/images\/gallery\/2023-03\/scaled-1680-\/cute-cat-image.png\" alt=\"cute-cat-image.png\"><\/a>",
+    "markdown": "![cute-cat-image.png](https:\/\/bookstack.example.com\/uploads\/images\/gallery\/2023-03\/scaled-1680-\/cute-cat-image.png)"
+  }
+}

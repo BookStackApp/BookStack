@@ -24,6 +24,7 @@ class LanguageManager
         'bg'          => ['iso' => 'bg_BG', 'windows' => 'Bulgarian'],
         'bs'          => ['iso' => 'bs_BA', 'windows' => 'Bosnian (Latin)'],
         'ca'          => ['iso' => 'ca', 'windows' => 'Catalan'],
+        'cs'          => ['iso' => 'cs_CZ', 'windows' => 'Czech'],
         'da'          => ['iso' => 'da_DK', 'windows' => 'Danish'],
         'de'          => ['iso' => 'de_DE', 'windows' => 'German'],
         'de_informal' => ['iso' => 'de_DE', 'windows' => 'German'],
@@ -120,14 +121,14 @@ class LanguageManager
         $isoLang = $this->localeMap[$language]['iso'] ?? '';
         $isoLangPrefix = explode('_', $isoLang)[0];
 
-        $locales = array_filter([
+        $locales = array_values(array_filter([
             $isoLang ? $isoLang . '.utf8' : false,
             $isoLang ?: false,
             $isoLang ? str_replace('_', '-', $isoLang) : false,
             $isoLang ? $isoLangPrefix . '.UTF-8' : false,
             $this->localeMap[$language]['windows'] ?? false,
             $language,
-        ]);
+        ]));
 
         if (!empty($locales)) {
             setlocale(LC_TIME, $locales[0], ...array_slice($locales, 1));
