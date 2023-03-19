@@ -19,20 +19,15 @@ use Illuminate\Support\Str;
 
 class PageContent
 {
-    protected Page $page;
-
-    /**
-     * PageContent constructor.
-     */
-    public function __construct(Page $page)
-    {
-        $this->page = $page;
+    public function __construct(
+        protected Page $page
+    ) {
     }
 
     /**
      * Update the content of the page with new provided HTML.
      */
-    public function setNewHTML(string $html)
+    public function setNewHTML(string $html): void
     {
         $html = $this->extractBase64ImagesFromHtml($html);
         $this->page->html = $this->formatHtml($html);
@@ -43,7 +38,7 @@ class PageContent
     /**
      * Update the content of the page with new provided Markdown content.
      */
-    public function setNewMarkdown(string $markdown)
+    public function setNewMarkdown(string $markdown): void
     {
         $markdown = $this->extractBase64ImagesFromMarkdown($markdown);
         $this->page->markdown = $markdown;
@@ -57,7 +52,7 @@ class PageContent
      */
     protected function extractBase64ImagesFromHtml(string $htmlText): string
     {
-        if (empty($htmlText) || strpos($htmlText, 'data:image') === false) {
+        if (empty($htmlText) || !str_contains($htmlText, 'data:image')) {
             return $htmlText;
         }
 
@@ -91,7 +86,7 @@ class PageContent
      * Attempting to capture the whole data uri using regex can cause PHP
      * PCRE limits to be hit with larger, multi-MB, files.
      */
-    protected function extractBase64ImagesFromMarkdown(string $markdown)
+    protected function extractBase64ImagesFromMarkdown(string $markdown): string
     {
         $matches = [];
         $contentLength = strlen($markdown);
@@ -183,32 +178,13 @@ class PageContent
         $childNodes = $body->childNodes;
         $xPath = new DOMXPath($doc);
 
-        // Set ids on top-level nodes
+        // Map to hold used ID references
         $idMap = [];
-        foreach ($childNodes as $index => $childNode) {
-            [$oldId, $newId] = $this->setUniqueId($childNode, $idMap);
-            if ($newId && $newId !== $oldId) {
-                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
-            }
-        }
+        // Map to hold changing ID references
+        $changeMap = [];
 
-        // Set ids on nested header nodes
-        $nestedHeaders = $xPath->query('//body//*//h1|//body//*//h2|//body//*//h3|//body//*//h4|//body//*//h5|//body//*//h6');
-        foreach ($nestedHeaders as $nestedHeader) {
-            [$oldId, $newId] = $this->setUniqueId($nestedHeader, $idMap);
-            if ($newId && $newId !== $oldId) {
-                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
-            }
-        }
-
-        // Ensure no duplicate ids within child items
-        $idElems = $xPath->query('//body//*//*[@id]');
-        foreach ($idElems as $domElem) {
-            [$oldId, $newId] = $this->setUniqueId($domElem, $idMap);
-            if ($newId && $newId !== $oldId) {
-                $this->updateLinks($xPath, '#' . $oldId, '#' . $newId);
-            }
-        }
+        $this->updateIdsRecursively($body, 0, $idMap, $changeMap);
+        $this->updateLinks($xPath, $changeMap);
 
         // Generate inner html as a string
         $html = '';
@@ -223,20 +199,53 @@ class PageContent
     }
 
     /**
-     * Update the all links to the $old location to instead point to $new.
+     * For the given DOMNode, traverse its children recursively and update IDs
+     * where required (Top-level, headers & elements with IDs).
+     * Will update the provided $changeMap array with changes made, where keys are the old
+     * ids and the corresponding values are the new ids.
      */
-    protected function updateLinks(DOMXPath $xpath, string $old, string $new)
+    protected function updateIdsRecursively(DOMNode $element, int $depth, array &$idMap, array &$changeMap): void
     {
-        $old = str_replace('"', '', $old);
-        $matchingLinks = $xpath->query('//body//*//*[@href="' . $old . '"]');
-        foreach ($matchingLinks as $domElem) {
-            $domElem->setAttribute('href', $new);
+        /* @var DOMNode $child */
+        foreach ($element->childNodes as $child) {
+            if ($child instanceof DOMElement && ($depth === 0 || in_array($child->nodeName, ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']) || $child->getAttribute('id'))) {
+                [$oldId, $newId] = $this->setUniqueId($child, $idMap);
+                if ($newId && $newId !== $oldId && !isset($idMap[$oldId])) {
+                    $changeMap[$oldId] = $newId;
+                }
+            }
+
+            if ($child->hasChildNodes()) {
+                $this->updateIdsRecursively($child, $depth + 1, $idMap, $changeMap);
+            }
+        }
+    }
+
+    /**
+     * Update the all links in the given xpath to apply requires changes within the
+     * given $changeMap array.
+     */
+    protected function updateLinks(DOMXPath $xpath, array $changeMap): void
+    {
+        if (empty($changeMap)) {
+            return;
+        }
+
+        $links = $xpath->query('//body//*//*[@href]');
+        /** @var DOMElement $domElem */
+        foreach ($links as $domElem) {
+            $href = ltrim($domElem->getAttribute('href'), '#');
+            $newHref = $changeMap[$href] ?? null;
+            if ($newHref) {
+                $domElem->setAttribute('href', '#' . $newHref);
+            }
         }
     }
 
     /**
      * Set a unique id on the given DOMElement.
-     * A map for existing ID's should be passed in to check for current existence.
+     * A map for existing ID's should be passed in to check for current existence,
+     * and this will be updated with any new IDs set upon elements.
      * Returns a pair of strings in the format [old_id, new_id].
      */
     protected function setUniqueId(DOMNode $element, array &$idMap): array
@@ -247,7 +256,7 @@ class PageContent
 
         // Stop if there's an existing valid id that has not already been used.
         $existingId = $element->getAttribute('id');
-        if (strpos($existingId, 'bkmrk') === 0 && !isset($idMap[$existingId])) {
+        if (str_starts_with($existingId, 'bkmrk') && !isset($idMap[$existingId])) {
             $idMap[$existingId] = true;
 
             return [$existingId, $existingId];
@@ -258,7 +267,7 @@ class PageContent
         // the same content is passed through.
         $contentId = 'bkmrk-' . mb_substr(strtolower(preg_replace('/\s+/', '-', trim($element->nodeValue))), 0, 20);
         $newId = urlencode($contentId);
-        $loopIndex = 0;
+        $loopIndex = 1;
 
         while (isset($idMap[$newId])) {
             $newId = urlencode($contentId . '-' . $loopIndex);
@@ -440,8 +449,8 @@ class PageContent
     {
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
-        $html = '<body>' . $html . '</body>';
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
+        $doc->loadHTML($html);
 
         return $doc;
     }

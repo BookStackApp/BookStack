@@ -18,30 +18,11 @@ use BookStack\Entities\Models\PageRevision;
  */
 class EntityProvider
 {
-    /**
-     * @var Bookshelf
-     */
-    public $bookshelf;
-
-    /**
-     * @var Book
-     */
-    public $book;
-
-    /**
-     * @var Chapter
-     */
-    public $chapter;
-
-    /**
-     * @var Page
-     */
-    public $page;
-
-    /**
-     * @var PageRevision
-     */
-    public $pageRevision;
+    public Bookshelf $bookshelf;
+    public Book $book;
+    public Chapter $chapter;
+    public Page $page;
+    public PageRevision $pageRevision;
 
     public function __construct()
     {
@@ -69,13 +50,18 @@ class EntityProvider
     }
 
     /**
-     * Get an entity instance by it's basic name.
+     * Get an entity instance by its basic name.
      */
     public function get(string $type): Entity
     {
         $type = strtolower($type);
+        $instance = $this->all()[$type] ?? null;
 
-        return $this->all()[$type];
+        if (is_null($instance)) {
+            throw new \InvalidArgumentException("Provided type \"{$type}\" is not a valid entity type");
+        }
+
+        return $instance;
     }
 
     /**

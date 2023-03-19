@@ -869,7 +869,7 @@ class RolesTest extends TestCase
         $this->asAdmin()->put('/settings/roles/' . $viewerRole->id, [
             'display_name' => $viewerRole->display_name,
             'description'  => $viewerRole->description,
-            'permission'   => [],
+            'permissions'  => [],
         ])->assertStatus(302);
 
         $this->actingAs($viewer)->get($page->getUrl())->assertStatus(404);

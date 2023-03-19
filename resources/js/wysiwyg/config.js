@@ -185,11 +185,10 @@ function getSetupCallback(options) {
         });
 
         function editorChange() {
-            const content = editor.getContent();
             if (options.darkMode) {
                 editor.contentDocument.documentElement.classList.add('dark-mode');
             }
-            window.$events.emit('editor-html-change', content);
+            window.$events.emit('editor-html-change', '');
         }
 
         // Custom handler hook

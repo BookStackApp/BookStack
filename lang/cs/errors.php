@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Nastala chyba během nahrávání souboru',
     'image_upload_type_error' => 'Typ nahrávaného obrázku je neplatný.',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Data výkresu nelze načíst. Výkresový soubor již nemusí existovat nebo nemusí mít oprávnění k němu přistupovat.',
 
     // Attachments
     'attachment_not_found' => 'Příloha nenalezena',

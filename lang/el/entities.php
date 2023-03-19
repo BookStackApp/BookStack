@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Ενημερώθηκε :timeLength',
     'meta_updated_name' => 'Ενημερώθηκε :timeLength by :user',
     'meta_owned_name' => 'Ανήκει στον :user',
-    'meta_reference_page_count' => 'Αναφορά σε 1 σελίδα"Αναφερόμενη στο :count σελίδες',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Επιλογή Οντότητας',
     'entity_select_lack_permission' => 'Δεν έχετε τα απαιτούμενα δικαιώματα για να επιλέξετε αυτό το στοιχείο',
     'images' => 'Εικόνες',

@@ -13,11 +13,9 @@ use Illuminate\Validation\ValidationException;
 
 class AttachmentApiController extends ApiController
 {
-    protected $attachmentService;
-
-    public function __construct(AttachmentService $attachmentService)
-    {
-        $this->attachmentService = $attachmentService;
+    public function __construct(
+        protected AttachmentService $attachmentService
+    ) {
     }
 
     /**
@@ -174,13 +172,13 @@ class AttachmentApiController extends ApiController
                 'name'        => ['required', 'min:1', 'max:255', 'string'],
                 'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
                 'file'        => array_merge(['required_without:link'], $this->attachmentService->getFileValidationRules()),
-                'link'        => ['required_without:file', 'min:1', 'max:255', 'safe_url'],
+                'link'        => ['required_without:file', 'min:1', 'max:2000', 'safe_url'],
             ],
             'update' => [
                 'name'        => ['min:1', 'max:255', 'string'],
                 'uploaded_to' => ['integer', 'exists:pages,id'],
                 'file'        => $this->attachmentService->getFileValidationRules(),
-                'link'        => ['min:1', 'max:255', 'safe_url'],
+                'link'        => ['min:1', 'max:2000', 'safe_url'],
             ],
         ];
     }

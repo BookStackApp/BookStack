@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Korisnik je uspješno ažuriran',
     'user_delete_notification' => 'Korisnik je uspješno uklonjen',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'komentirano',
     'permissions_update'          => 'ažurirana dopuštenja',

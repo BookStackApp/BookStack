@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Актуализирано :timeLength',
     'meta_updated_name' => 'Актуализирано преди :timeLength от :user',
     'meta_owned_name' => 'Притежавано от :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Избор на обект',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Изображения',

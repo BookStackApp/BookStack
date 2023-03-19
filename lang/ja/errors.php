@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => '画像アップロード時にエラーが発生しました。',
     'image_upload_type_error' => 'アップロード中の画像の種類が無効です',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => '描画データを読み込めませんでした。描画ファイルが存在しないか、アクセス権限がありません。',
 
     // Attachments
     'attachment_not_found' => '添付ファイルが見つかりません',

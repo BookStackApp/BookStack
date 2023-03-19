@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Actualizat :timeLungime',
     'meta_updated_name' => 'Actualizat :timeLength de :user',
     'meta_owned_name' => 'Deținut de :user',
-    'meta_reference_page_count' => 'Referenced on 1 page|Referenced on :count pages',
+    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'Selectare entitate',
     'entity_select_lack_permission' => 'Nu ai drepturile necesare pentru a selecta acest element',
     'images' => 'Imagini',

@@ -15,25 +15,18 @@ class SearchIndex
 {
     /**
      * A list of delimiter characters used to break-up parsed content into terms for indexing.
-     *
-     * @var string
      */
-    public static $delimiters = " \n\t.,!?:;()[]{}<>`'\"";
+    public static string $delimiters = " \n\t.,!?:;()[]{}<>`'\"";
 
-    /**
-     * @var EntityProvider
-     */
-    protected $entityProvider;
-
-    public function __construct(EntityProvider $entityProvider)
-    {
-        $this->entityProvider = $entityProvider;
+    public function __construct(
+        protected EntityProvider $entityProvider
+    ) {
     }
 
     /**
      * Index the given entity.
      */
-    public function indexEntity(Entity $entity)
+    public function indexEntity(Entity $entity): void
     {
         $this->deleteEntityTerms($entity);
         $terms = $this->entityToTermDataArray($entity);
@@ -45,7 +38,7 @@ class SearchIndex
      *
      * @param Entity[] $entities
      */
-    public function indexEntities(array $entities)
+    public function indexEntities(array $entities): void
     {
         $terms = [];
         foreach ($entities as $entity) {
@@ -69,7 +62,7 @@ class SearchIndex
      *
      * @param callable(Entity, int, int):void|null $progressCallback
      */
-    public function indexAllEntities(?callable $progressCallback = null)
+    public function indexAllEntities(?callable $progressCallback = null): void
     {
         SearchTerm::query()->truncate();
 
@@ -101,7 +94,7 @@ class SearchIndex
     /**
      * Delete related Entity search terms.
      */
-    public function deleteEntityTerms(Entity $entity)
+    public function deleteEntityTerms(Entity $entity): void
     {
         $entity->searchTerms()->delete();
     }
@@ -145,12 +138,12 @@ class SearchIndex
             'h6' => 1.5,
         ];
 
-        $html = '<body>' . $html . '</body>';
+        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
         $html = str_ireplace(['<br>', '<br />', '<br/>'], "\n", $html);
 
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $doc->loadHTML($html);
 
         $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
         /** @var DOMNode $child */

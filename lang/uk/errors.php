@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Виникла помилка під час завантаження зображення',
     'image_upload_type_error' => 'Тип завантаженого зображення недійсний',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Не вдалося завантажити дані малюнка. Файл малюнка може більше не існувати або у вас немає дозволу на доступ до нього.',
 
     // Attachments
     'attachment_not_found' => 'Вкладення не знайдено',

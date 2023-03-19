@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Kniha úspešne znovu zoradená',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create'            => 'vytvoril(a) policu',
+    'bookshelf_create_notification'    => 'Polica úspešne vytvorená',
+    'bookshelf_create_from_book'    => 'kniha bola prevedená na policu',
     'bookshelf_create_from_book_notification'    => 'Kniha úspešne konvertovaná na poličku',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'aktualizoval(a) policu',
+    'bookshelf_update_notification'    => 'Polica bola úspešne aktualizovaná',
+    'bookshelf_delete'                 => 'odstránená polica',
+    'bookshelf_delete_notification'    => 'Polica bola úspešne odstránená',
 
     // Favourites
     'favourite_add_notification' => '":name" bol pridaný medzi obľúbené',
@@ -66,6 +66,11 @@ return [
     // Users
     'user_update_notification' => 'Používateľ úspešne upravený',
     'user_delete_notification' => 'Používateľ úspešne zmazaný',
+
+    // Roles
+    'role_create_notification' => 'Rola úspešne vytvorená',
+    'role_update_notification' => 'Rola úspešne aktualizovaná',
+    'role_delete_notification' => 'Rola úspešne zmazaná',
 
     // Other
     'commented_on'                => 'komentoval(a)',

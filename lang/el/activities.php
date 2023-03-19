@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Ο Χρήστης ενημερώθηκε με επιτυχία',
     'user_delete_notification' => 'Ο Χρήστης αφαιρέθηκε επιτυχώς',
 
+    // Roles
+    'role_create_notification' => 'Role successfully created',
+    'role_update_notification' => 'Role successfully updated',
+    'role_delete_notification' => 'Role successfully deleted',
+
     // Other
     'commented_on'                => 'σχολίασε',
     'permissions_update'          => 'ενημερωμένα δικαιώματα',

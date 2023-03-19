@@ -137,4 +137,13 @@ export class MarkdownEditor extends Component {
         return drawioAttrEl.getAttribute('drawio-url') || '';
     }
 
+    /**
+     * Get the content of this editor.
+     * Used by the parent page editor component.
+     * @return {{html: String, markdown: String}}
+     */
+    getContent() {
+        return this.editor.actions.getContent();
+    }
+
 }

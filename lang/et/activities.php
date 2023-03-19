@@ -67,6 +67,11 @@ return [
     'user_update_notification' => 'Kasutaja on muudetud',
     'user_delete_notification' => 'Kasutaja on kustutatud',
 
+    // Roles
+    'role_create_notification' => 'Roll on lisatud',
+    'role_update_notification' => 'Roll on muudetud',
+    'role_delete_notification' => 'Roll on kustutatud',
+
     // Other
     'commented_on'                => 'kommenteeris lehte',
     'permissions_update'          => 'muutis õiguseid',
