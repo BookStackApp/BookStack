@@ -9,8 +9,7 @@
  */
 
 return [
-
-    'app-name'             => 'BookStack',
+    'app-name'             => 'Anially',
     'app-logo'             => '',
     'app-name-header'      => true,
     'app-editor'           => 'wysiwyg',
