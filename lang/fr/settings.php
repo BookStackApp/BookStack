@@ -138,7 +138,7 @@ return [
     'roles' => 'Rôles',
     'role_user_roles' => 'Rôles des utilisateurs',
     'roles_index_desc' => 'Les rôles sont utilisés pour regrouper les utilisateurs et fournir une autorisation système à leurs membres. Lorsqu\'un utilisateur est membre de plusieurs rôles, les privilèges accordés se cumulent et l\'utilisateur hérite de tous les droits d\'accès.',
-    'roles_x_users_assigned' => ':count user assigned|:count users assigned',
+    'roles_x_users_assigned' => ':count utilisateur assigné|:count utilisateurs assignés',
     'roles_x_permissions_provided' => ':count permission|:count permissions',
     'roles_assigned_users' => 'Utilisateurs assignés',
     'roles_permissions_provided' => 'Permissions accordées',
