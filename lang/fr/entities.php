@@ -63,7 +63,7 @@ return [
     'search_terms' => 'Mot-clé',
     'search_content_type' => 'Type de contenu',
     'search_exact_matches' => 'Correspondances exactes',
-    'search_tags' => 'Recherche par tags',
+    'search_tags' => 'Recherche par mots-clés',
     'search_options' => 'Options',
     'search_viewed_by_me' => 'Vu par moi',
     'search_not_viewed_by_me' => 'Non vu par moi',
