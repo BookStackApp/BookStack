@@ -23,15 +23,16 @@ import {ruby} from '@codemirror/legacy-modes/mode/ruby';
 import {rust} from '@codemirror/legacy-modes/mode/rust';
 import {scheme} from '@codemirror/legacy-modes/mode/scheme';
 import {shell} from '@codemirror/legacy-modes/mode/shell';
+import {smarty} from "@ssddanbrown/codemirror-lang-smarty";
 import {standardSQL, pgSQL, msSQL, mySQL, sqlite, plSQL} from '@codemirror/legacy-modes/mode/sql';
 import {stex} from '@codemirror/legacy-modes/mode/stex';
+import {swift} from "@codemirror/legacy-modes/mode/swift";
 import {toml} from '@codemirror/legacy-modes/mode/toml';
-// import {twig, smarty} from '@codemirror/legacy-modes/mode/php'; // TODO
+import {twig} from "@ssddanbrown/codemirror-lang-twig";
 import {vb} from '@codemirror/legacy-modes/mode/vb';
 import {vbScript} from '@codemirror/legacy-modes/mode/vbscript';
 import {xml, html} from '@codemirror/legacy-modes/mode/xml';
 import {yaml} from '@codemirror/legacy-modes/mode/yaml';
-import {swift} from "@codemirror/legacy-modes/mode/swift";
 
 
 // Mapping of possible languages or formats from user input to their codemirror modes.
@@ -97,10 +98,12 @@ const modeMap = {
     scheme: () => StreamLanguage.define(scheme),
     shell: () => StreamLanguage.define(shell),
     sh: () => StreamLanguage.define(shell),
+    smarty: () => StreamLanguage.define(smarty),
     stext: () => StreamLanguage.define(stex),
     swift: () => StreamLanguage.define(swift),
     toml: () => StreamLanguage.define(toml),
     ts: () => StreamLanguage.define(typescript),
+    twig: () => twig(),
     typescript: () => StreamLanguage.define(typescript),
     sql: () => StreamLanguage.define(standardSQL),
     sqlite: () => StreamLanguage.define(sqlite),

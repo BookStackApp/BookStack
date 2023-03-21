@@ -15,6 +15,7 @@
     "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads"
   },
   "devDependencies": {
+    "@lezer/generator": "^1.2.2",
     "chokidar-cli": "^3.0",
     "esbuild": "^0.17.3",
     "livereload": "^0.9.3",
@@ -31,6 +32,8 @@
     "@codemirror/state": "^6.1.0",
     "@codemirror/theme-one-dark": "^6.0.0",
     "@codemirror/view": "^6.1.2",
+    "@ssddanbrown/codemirror-lang-smarty": "^1.0.0",
+    "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
     "clipboard": "^2.0.11",
     "codemirror": "^6.0.1",
     "dropzone": "^5.9.3",

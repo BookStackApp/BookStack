@@ -24,7 +24,7 @@ export function createView(config) {
 }
 
 /**
- * Ge the theme extension to use for editor view instance.
+ * Get the theme extension to use for editor view instance.
  * @returns {Extension}
  */
 function getTheme(viewParentEl) {

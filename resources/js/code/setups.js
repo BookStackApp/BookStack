@@ -6,6 +6,8 @@ import {defaultHighlightStyle, syntaxHighlighting, bracketMatching,
 import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
 import {EditorState} from "@codemirror/state"
 
+import {defaultLight} from "./themes";
+
 export function viewer() {
     return [
         lineNumbers(),
@@ -14,7 +16,7 @@ export function viewer() {
         history(),
         drawSelection(),
         dropCursor(),
-        syntaxHighlighting(defaultHighlightStyle, {fallback: true}),
+        syntaxHighlighting(defaultLight, {fallback: true}),
         bracketMatching(),
         rectangularSelection(),
         highlightActiveLine(),
