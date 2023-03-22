@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => 'Nukopijuokite knygą šioje lentynoje',
+    'book_add_shelves' => 'Pridėkite lentynų, kad nukopijuotumėte šią knygą',
+    'book_grag_shelves' => 'Vilkite toliau esančias lentynas, kad pridėtumėte prie jų šią knygą',
 
     // Chapters
     'chapter' => 'Skyrius',

@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => 'Copy Book on this shelves',
+    'book_add_shelves' => 'Add shelves to copy this book',
+    'book_grag_shelves' => 'Drag shelves below to add this book to them',
 
     // Chapters
     'chapter' => 'Chapter',

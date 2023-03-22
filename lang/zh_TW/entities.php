@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => '這個架子上的複印書',
+    'book_add_shelves' => '添加書架以復制此書',
+    'book_grag_shelves' => '拖动下面的书架将这本书添加到它们',
 
     // Chapters
     'chapter' => '章節',

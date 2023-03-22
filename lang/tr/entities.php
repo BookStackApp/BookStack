@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Kitabı Kopyala',
     'books_copy_success' => 'Kitap başarıyla kopyalandı',
+    'books_copy_shelves' => 'Bu raflarda Kitap Kopyala',
+    'book_add_shelves' => 'Bu kitabı kopyalamak için rafları ekleyin',
+    'book_grag_shelves' => 'Bu kitabı kopyalamak için rafları ekleyin',
 
     // Chapters
     'chapter' => 'Bölüm',

@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'انتقال به بعد فصل',
     'books_copy' => 'کپی کتاب',
     'books_copy_success' => 'کتاب با موفقیت کپی شد',
+    'books_copy_shelves' => 'کتاب را در این قفسه کپی کنید',
+    'book_add_shelves' => 'برای کپی کردن این کتاب قفسه هایی اضافه کنید',
+    'book_grag_shelves' => 'قفسه‌ها را به زیر بکشید تا این کتاب را به آن‌ها اضافه کنید',
 
     // Chapters
     'chapter' => 'فصل',

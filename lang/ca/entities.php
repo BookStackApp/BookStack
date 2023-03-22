@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => 'Copieu el llibre en aquests prestatges',
+    'book_add_shelves' => 'Afegeix prestatges per copiar aquest llibre',
+    'book_grag_shelves' => 'Arrossegueu els prestatges a continuació per afegir-hi aquest llibre',
 
     // Chapters
     'chapter' => 'Capítol',

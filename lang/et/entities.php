@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Liiguta peatüki järele',
     'books_copy' => 'Kopeeri raamat',
     'books_copy_success' => 'Raamat on kopeeritud',
+    'books_copy_shelves' => 'Kopeeri raamat sellel riiulil',
+    'book_add_shelves' => 'Selle raamatu kopeerimiseks lisage riiuleid',
+    'book_grag_shelves' => 'Selle raamatu lisamiseks lohistage allpool olevaid riiuleid',
 
     // Chapters
     'chapter' => 'Peatükk',

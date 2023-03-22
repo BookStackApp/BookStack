@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Копирай книгата',
     'books_copy_success' => 'Книгата е копирана успешно',
+    'books_copy_shelves' => 'Копирайте книгата на тези рафтове',
+    'book_add_shelves' => 'Добавете рафтове, за да копирате тази книга',
+    'book_grag_shelves' => 'Плъзнете рафтовете по-долу, за да добавите тази книга към тях',
 
     // Chapters
     'chapter' => 'Глава',

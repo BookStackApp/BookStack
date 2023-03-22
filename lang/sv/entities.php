@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Kopiera bok',
     'books_copy_success' => 'Boken har kopierats',
+    'books_copy_shelves' => 'Kopiera boken på dessa hyllor',
+    'book_add_shelves' => 'Lägg till hyllor för att kopiera den här boken',
+    'book_grag_shelves' => 'Dra hyllorna nedan för att lägga till den här boken till dem',
 
     // Chapters
     'chapter' => 'Kapitel',

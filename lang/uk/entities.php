@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Перехід в кінець розділу',
     'books_copy' => 'Копіювати книгу',
     'books_copy_success' => 'Сторінка успішно скопійована',
+    'books_copy_shelves' => 'Копіюйте книгу на цій полиці',
+    'book_add_shelves' => 'Додайте полиці, щоб скопіювати цю книгу',
+    'book_grag_shelves' => 'Додайте полиці, щоб скопіювати цю книгу',
 
     // Chapters
     'chapter' => 'Розділ',

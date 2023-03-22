@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Könyv másolása',
     'books_copy_success' => 'Könyv sikeresen lemásolva',
+    'books_copy_shelves' => 'Könyv másolása ezen a polcon',
+    'book_add_shelves' => 'Adjon hozzá polcokat a könyv másolásához',
+    'book_grag_shelves' => 'Húzza az alábbi polcokat a könyv hozzáadásához',
 
     // Chapters
     'chapter' => 'Fejezet',

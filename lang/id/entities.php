@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => 'Salin Buku di rak ini',
+    'book_add_shelves' => 'Tambahkan rak untuk menyalin buku ini',
+    'book_grag_shelves' => 'Seret rak ke bawah untuk menambahkan buku ini kepada mereka',
 
     // Chapters
     'chapter' => 'Bab',

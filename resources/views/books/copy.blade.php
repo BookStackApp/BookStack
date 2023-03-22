@@ -5,13 +5,15 @@
     <div class="container small">
 
         <div class="my-s">
-            @include('entities.breadcrumbs', ['crumbs' => [
-                $book,
-                $book->getUrl('/copy') => [
-                    'text' => trans('entities.books_copy'),
-                    'icon' => 'copy',
-                ]
-            ]])
+            @include('entities.breadcrumbs', [
+                'crumbs' => [
+                    $book,
+                    $book->getUrl('/copy') => [
+                        'text' => trans('entities.books_copy'),
+                        'icon' => 'copy',
+                    ],
+                ],
+            ])
         </div>
 
         <div class="card content-wrap auto-height">
@@ -26,6 +28,14 @@
                     @include('form.text', ['name' => 'name'])
                 </div>
 
+                @include('common.shelf-sort', [
+                    'shelf' => null,
+                    'books' => $bookshelf,
+                    'shelfLabelOne' => 'entities.books_copy_shelves',
+                    'shelfLabelOneDrag' => 'entities.book_grag_shelves',
+                    'shelfLabelTwo' => 'entities.book_add_shelves',
+                ])
+
                 @include('entities.copy-considerations')
 
                 <div class="form-group text-right">
@@ -38,3 +48,4 @@
     </div>
 
 @stop
+

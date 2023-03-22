@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Passare al capitolo successivo',
     'books_copy' => 'Copia Libro',
     'books_copy_success' => 'Libro copiato con successo',
+    'books_copy_shelves' => 'Copia il libro su questi scaffali',
+    'book_add_shelves' => 'Aggiungi scaffali per copiare questo libro',
+    'book_grag_shelves' => 'Trascina gli scaffali in basso per aggiungere questo libro',
 
     // Chapters
     'chapter' => 'Capitolo',

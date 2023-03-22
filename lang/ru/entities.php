@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Переместить после главы',
     'books_copy' => 'Копировать книгу',
     'books_copy_success' => 'Книга успешно скопирована',
+    'books_copy_shelves' => 'Скопируйте книгу на этой полке',
+    'book_add_shelves' => 'Добавьте полки, чтобы скопировать эту книгу',
+    'book_grag_shelves' => 'Перетащите полки ниже, чтобы добавить к ним эту книгу',
 
     // Chapters
     'chapter' => 'Глава',

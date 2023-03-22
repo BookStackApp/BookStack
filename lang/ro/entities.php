@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copiază cartea',
     'books_copy_success' => 'Carte copiată cu succes',
+    'books_copy_shelves' => 'Copiați cartea pe aceste rafturi',
+    'book_add_shelves' => 'Adăugați rafturi pentru a copia această carte',
+    'book_grag_shelves' => 'Trageți rafturile de mai jos pentru a adăuga această carte la ele',
 
     // Chapters
     'chapter' => 'Capitol',

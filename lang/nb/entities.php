@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Flytt etter kapittel',
     'books_copy' => 'Kopiér bok',
     'books_copy_success' => 'Boken ble kopiert',
+    'books_copy_shelves' => 'Kopier bok i denne hyllen',
+    'book_add_shelves' => 'Legg til hyller for å kopiere denne boken',
+    'book_grag_shelves' => 'Dra hyllene nedenfor for å legge denne boken til dem',
 
     // Chapters
     'chapter' => 'Kapittel',

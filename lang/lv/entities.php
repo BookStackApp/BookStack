@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Kopēt grāmatu',
     'books_copy_success' => 'Grāmata veiksmīgi nokopēta',
+    'books_copy_shelves' => 'Kopēt grāmatu šajā plauktā',
+    'book_add_shelves' => 'Pievienojiet plauktus, lai kopētu šo grāmatu',
+    'book_grag_shelves' => 'Velciet tālāk esošos plauktus, lai tiem pievienotu šo grāmatu',
 
     // Chapters
     'chapter' => 'Nodaļa',

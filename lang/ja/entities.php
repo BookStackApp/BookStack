@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'チャプターの後に移動',
     'books_copy' => 'ブックをコピー',
     'books_copy_success' => 'ブックが正常にコピーされました',
+    'books_copy_shelves' => 'この棚のコピーブック',
+    'book_add_shelves' => 'この本をコピーするには本棚を追加してください',
+    'book_grag_shelves' => 'この本を追加するには、本棚を下にドラッグします',
 
     // Chapters
     'chapter' => 'チャプター',

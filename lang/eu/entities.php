@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Kopiatu liburua',
     'books_copy_success' => 'Ondo kopiatu da',
+    'books_copy_shelves' => 'Kopiatu liburua apal hauetan',
+    'book_add_shelves' => 'Gehitu apalategiak liburu hau kopiatzeko',
+    'book_grag_shelves' => 'Arrastatu apalak behean liburu hau gehitzeko',
 
     // Chapters
     'chapter' => 'Kapitulua',

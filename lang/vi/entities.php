@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => 'Sao chép Sách trên kệ này',
+    'book_add_shelves' => 'Thêm kệ để sao chép cuốn sách này',
+    'book_grag_shelves' => 'Kéo các giá bên dưới để thêm sách này vào chúng',
 
     // Chapters
     'chapter' => 'Chương',

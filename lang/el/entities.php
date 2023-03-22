@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Αντιγραφή Βιβλίου',
     'books_copy_success' => 'Το βιβλίο αντιγράφηκε επιτυχώς',
+    'books_copy_shelves' => 'Αντιγραφή βιβλίου σε αυτά τα ράφια',
+    'book_add_shelves' => 'Προσθέστε ράφια για να αντιγράψετε αυτό το βιβλίο',
+    'book_grag_shelves' => 'Σύρετε τα ράφια παρακάτω για να προσθέσετε αυτό το βιβλίο σε αυτά',
 
     // Chapters
     'chapter' => 'Κεφάλαιο',

@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => 'نسخ الكتاب على هذه الرفوف',
+    'book_add_shelves' => 'أضف أرففًا لنسخ هذا الكتاب',
+    'book_grag_shelves' => 'اسحب الرفوف أدناه لإضافة هذا الكتاب إليها',
 
     // Chapters
     'chapter' => 'فصل',

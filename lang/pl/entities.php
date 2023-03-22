@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Przenieś za rozdział',
     'books_copy' => 'Skopiuj Książkę',
     'books_copy_success' => 'Książka skopiowana pomyślnie',
+    'books_copy_shelves' => 'Skopiuj książkę na tej półce',
+    'book_add_shelves' => 'Dodaj półki, aby skopiować tę książkę',
+    'book_grag_shelves' => 'Przeciągnij półki poniżej, aby dodać do nich tę książkę',
 
     // Chapters
     'chapter' => 'Rozdział',

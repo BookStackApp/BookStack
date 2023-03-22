@@ -221,10 +221,13 @@ class BookController extends Controller
         $book = $this->bookRepo->getBySlug($bookSlug);
         $this->checkOwnablePermission('book-view', $book);
 
+        $bookshelf = Bookshelf::visible()->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
+
         session()->flashInput(['name' => $book->name]);
 
         return view('books.copy', [
             'book' => $book,
+            'bookshelf' => $bookshelf,
         ]);
     }
 
@@ -240,7 +243,8 @@ class BookController extends Controller
         $this->checkPermission('book-create-all');
 
         $newName = $request->get('name') ?: $book->name;
-        $bookCopy = $cloner->cloneBook($book, $newName);
+        $newShelves = $request->get('books') ?: null;
+        $bookCopy = $cloner->cloneBook($book, $newName, $newShelves);
         $this->showSuccessNotification(trans('entities.books_copy_success'));
 
         return redirect($bookCopy->getUrl());

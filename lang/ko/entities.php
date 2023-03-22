@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => '책 복사하기',
     'books_copy_success' => '책 복사함',
+    'books_copy_shelves' => '이 서가에 책 복사',
+    'book_add_shelves' => '이 책을 복사하려면 서가를 추가하세요.',
+    'book_grag_shelves' => '이 책을 추가하려면 아래 서가를 드래그하세요.',
 
     // Chapters
     'chapter' => '챕터',

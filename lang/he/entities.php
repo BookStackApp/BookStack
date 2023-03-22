@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'העתק ספר',
     'books_copy_success' => 'ספר הועתק בהצלחה',
+    'books_copy_shelves' => 'העתק ספר על המדפים',
+    'book_add_shelves' => 'הוסף מדפים כדי להעתיק את הספר הזה',
+    'book_grag_shelves' => 'גרור את המדפים למטה כדי להוסיף את הספר הזה אליהם',
 
     // Chapters
     'chapter' => 'פרק',

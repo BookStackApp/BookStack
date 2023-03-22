@@ -68,11 +68,46 @@ class Cloner
      * Clone the given book.
      * Clones all child chapters & pages.
      */
-    public function cloneBook(Book $original, string $newName): Book
+    public function cloneBook(Book $original, string $newName, string $newShelves = null): Book
     {
         $bookDetails = $this->entityToInputData($original);
         $bookDetails['name'] = $newName;
 
+        // Clone bookshelf relationships
+        /** @var Bookshelf $shelf */
+        if ($newShelves == null) {
+
+            // Clone book content
+            $copyBook = $this->cloneBookContent($original, $bookDetails);
+
+            foreach ($original->shelves as $shelf) {
+                if (userCan('bookshelf-update', $shelf)) {
+                    $shelf->appendBook($copyBook);
+                }
+            }
+        } else {
+            $shelvesId = explode(',', $newShelves);
+            $bookshelf = Bookshelf::visible()->whereIn('id', $shelvesId)->get();
+            foreach ($bookshelf as $shelf) {
+                if (userCan('bookshelf-update', $shelf)) {
+
+                    // Clone book content
+                    $copyBook = $this->cloneBookContent($original, $bookDetails);
+
+                    $shelf->appendBook($copyBook);
+                }
+            }
+        }
+
+        return $copyBook;
+    }
+
+    /**
+     * Clone the given page and content into the given parent using the provided name.
+     * Clones all child pages.
+     */
+    public function cloneBookContent(Book $original, array $bookDetails): Book
+    {
         // Clone book
         $copyBook = $this->bookRepo->create($bookDetails);
 
@@ -85,14 +120,6 @@ class Cloner
 
             if ($child instanceof Page && !$child->draft && userCan('page-create', $copyBook)) {
                 $this->clonePage($child, $copyBook, $child->name);
-            }
-        }
-
-        // Clone bookshelf relationships
-        /** @var Bookshelf $shelf */
-        foreach ($original->shelves as $shelf) {
-            if (userCan('bookshelf-update', $shelf)) {
-                $shelf->appendBook($copyBook);
             }
         }
 

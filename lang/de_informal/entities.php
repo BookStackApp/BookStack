@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Nach Kapitel verschieben',
     'books_copy' => 'Buch kopieren',
     'books_copy_success' => 'Buch erfolgreich kopiert',
+    'books_copy_shelves' => 'Kopieren Sie Buch in diesen Regalen',
+    'book_add_shelves' => 'Fügen Sie Regale hinzu, um dieses Buch zu kopieren',
+    'book_grag_shelves' => 'Ziehen Sie Regale nach unten, um dieses Buch hinzuzufügen',
 
     // Chapters
     'chapter' => 'Kapitel',

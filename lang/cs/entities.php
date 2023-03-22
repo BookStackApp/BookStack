@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Přesunout se za kapitolu',
     'books_copy' => 'Kopírovat knihu',
     'books_copy_success' => 'Kniha byla úspěšně zkopírována',
+    'books_copy_shelves' => 'Kopírovat knihu na těchto policích',
+    'book_add_shelves' => 'Chcete-li tuto knihu zkopírovat, přidejte police',
+    'book_grag_shelves' => 'Přetáhněte police níže a přidejte k nim tuto knihu',
 
     // Chapters
     'chapter' => 'Kapitola',

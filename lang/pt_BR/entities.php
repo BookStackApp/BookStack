@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copiar Livro',
     'books_copy_success' => 'Livro criado com sucesso',
+    'books_copy_shelves' => 'Copiar livro nesta prateleira',
+    'book_add_shelves' => 'Adicione prateleiras para copiar este livro',
+    'book_grag_shelves' => 'Arraste as prateleiras abaixo para adicionar este livro a elas',
 
     // Chapters
     'chapter' => 'Capítulo',

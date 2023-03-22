@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Kopieer Boek',
     'books_copy_success' => 'Boek succesvol gekopieerd',
+    'books_copy_shelves' => 'Kopieer Boek op deze planken',
+    'book_add_shelves' => 'Voeg planken toe om dit boek te kopiëren',
+    'book_grag_shelves' => 'Sleep de planken eronder om dit boek eraan toe te voegen',
 
     // Chapters
     'chapter' => 'Hoofdstuk',

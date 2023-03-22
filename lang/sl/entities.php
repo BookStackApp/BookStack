@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => 'Kopiraj knjigu na ovim policama',
+    'book_add_shelves' => 'Dodajte police za kopiranje ove knjige',
+    'book_grag_shelves' => 'Povucite police ispod kako biste im dodali ovu knjigu',
 
     // Chapters
     'chapter' => 'Poglavje',

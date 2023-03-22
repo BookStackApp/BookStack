@@ -163,6 +163,9 @@ return [
     'books_sort_move_after_chapter' => 'Move to After Chapter',
     'books_copy' => 'Copy Book',
     'books_copy_success' => 'Book successfully copied',
+    'books_copy_shelves' => 'Kitobni ushbu javonlarda nusxalash',
+    'book_add_shelves' => 'Ushbu kitobni nusxalash uchun javonlar qo\'shing',
+    'book_grag_shelves' => 'Bu kitobni ularga qo‘shish uchun javonlarni pastga torting',
 
     // Chapters
     'chapter' => 'Chapter',
