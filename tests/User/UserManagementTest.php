@@ -145,6 +145,7 @@ class UserManagementTest extends TestCase
 
         $resp = $this->asEditor()->get("settings/users/{$editor->id}/delete");
         $resp->assertSee('Migrate Ownership');
+        $this->withHtml($resp)->assertElementExists('form input[name="new_owner_id"]');
         $resp->assertSee('new_owner_id');
     }
 
