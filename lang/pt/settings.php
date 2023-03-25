@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Esquema de cores da aplicação',
-    'color_scheme_desc' => 'Define as cores a serem usadas na interface do BookStack. As cores podem ser configuradas separadamente para modos escuro e claro para melhor se adequar ao tema e garantir a legibilidade.',
-    'ui_colors_desc' => 'Defina a cor primária e a cor padrão do link para o BookStack. A cor primária é usada principalmente para o banner do cabeçalho, botões e decorações da interface. A cor padrão do link é usada para links e ações baseados em texto, tanto no conteúdo escrito quanto na interface do BookStack.',
+    'color_scheme_desc' => 'Defina as cores a serem utilizadas na aplicação. As cores podem ser configuradas separadamente para modos escuro e claro para melhor se adequar ao tema e garantir legibilidade.',
+    'ui_colors_desc' => 'Defina a cor primária e a cor padrão para links da aplicação. A cor principal é utilizada principalmente para o banner do cabeçalho, botões e decorações da interface. A cor padrão do link é usada para links e ações baseados em texto, tanto dentro do conteúdo escrito quanto na interface da aplicação.',
     'app_color' => 'Cor primária',
     'link_color' => 'Cor padrão do link',
     'content_colors_desc' => 'Definir cores para todos os elementos na hierarquia da organização da página. Escolher cores com um brilho semelhante às cores padrão é recomendado para a legibilidade.',
@@ -138,8 +138,8 @@ return [
     'roles' => 'Cargos',
     'role_user_roles' => 'Cargos de Utilizador',
     'roles_index_desc' => 'Papéis são usados para agrupar utilizadores & fornecer permissão ao sistema para os seus membros. Quando um utilizador é membro de múltiplas funções, os privilégios concedidos irão acumular e o utilizador herdará todas as habilidades.',
-    'roles_x_users_assigned' => ':count user assigned|:count users assigned',
-    'roles_x_permissions_provided' => ':count permission|:count permissions',
+    'roles_x_users_assigned' => ':count utilizadores atribuído|:count utilizadores atribuídos',
+    'roles_x_permissions_provided' => ':count permissão|:count permissões',
     'roles_assigned_users' => 'Utilizadores atribuídos',
     'roles_permissions_provided' => 'Permissões fornecidas',
     'role_create' => 'Criar novo Cargo',
@@ -249,7 +249,7 @@ return [
     // Webhooks
     'webhooks' => 'Webhooks',
     'webhooks_index_desc' => 'Webhooks são uma maneira de enviar dados para URLs externas quando certas ações e eventos ocorrem no sistema. Isto permite uma integração baseada em eventos com plataformas externas como mensagens ou sistemas de notificação.',
-    'webhooks_x_trigger_events' => ':count trigger event|:count trigger events',
+    'webhooks_x_trigger_events' => ':count acionador|:count acionadores',
     'webhooks_create' => 'Criar um novo webhook',
     'webhooks_none_created' => 'Ainda nenhum webhooks foi criado.',
     'webhooks_edit' => 'Editar Webhook',
