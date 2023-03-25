@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Barevné schéma aplikace',
-    'color_scheme_desc' => 'Nastavte barvy pro použití v rozhraní BookStack. Barvy mohou být nastaveny samostatně pro tmavé a světlé režimy, aby se nejlépe vešly do motivu a zajistila čitelnost.',
-    'ui_colors_desc' => 'Nastavte primární barvu a výchozí barvu odkazů pro BookStack. Hlavní barva se používá hlavně pro banner hlavičky, tlačítka a dekorace rozhraní. Výchozí barva odkazu se používá pro textové odkazy a akce, a to jak v psaném obsahu, tak v rozhraní Bookstack.',
+    'color_scheme_desc' => 'Nastavte barvy pro uživatelské rozhraní. Barvy mohou být konfigurovány samostatně pro tmavý a světlý režim, aby co nejlépe odpovídaly tématu a zajistily čitelnost.',
+    'ui_colors_desc' => 'Nastavte primární barvu aplikace a výchozí barvu odkazu. Primární barva je použitá hlavně na banneru hlavičky, tlačítkách a ozdobách rozhraní. Výchozí barva odkazu se používá pro odkazy a akce napříč psaným textem a rozhraním aplikace.',
     'app_color' => 'Hlavní barva',
     'link_color' => 'Výchozí barva odkazu',
     'content_colors_desc' => 'Nastaví barvy pro všechny prvky v organizační struktuře stránky. Pro lepší čitelnost doporučujeme zvolit barvy s podobným jasem, jakou mají výchozí barvy.',
@@ -138,8 +138,8 @@ return [
     'roles' => 'Role',
     'role_user_roles' => 'Uživatelské role',
     'roles_index_desc' => 'Role se používají ke sdružování uživatelů a k poskytování systémových oprávnění jejich členům. Pokud je uživatel členem více rolí, udělená oprávnění budou uložena a uživatel zdědí všechny schopnosti.',
-    'roles_x_users_assigned' => ':count user assigned|:count users assigned',
-    'roles_x_permissions_provided' => ':count permission|:count permissions',
+    'roles_x_users_assigned' => '1 přiřazený uživatel|:count přiřazených uživatelů',
+    'roles_x_permissions_provided' => '1 oprávnění|:count oprávnění',
     'roles_assigned_users' => 'Přiřazení uživatelé',
     'roles_permissions_provided' => 'Poskytnutá oprávnění',
     'role_create' => 'Vytvořit novou roli',
@@ -249,7 +249,7 @@ return [
     // Webhooks
     'webhooks' => 'Webhooky',
     'webhooks_index_desc' => 'Webhooks jsou způsob, jak odeslat data na externí URL, pokud se vyskytnou určité akce a události v systému, které umožňují integraci událostí s externími platformami, jako jsou systémy zasílání zpráv nebo oznámení.',
-    'webhooks_x_trigger_events' => ':count trigger event|:count trigger events',
+    'webhooks_x_trigger_events' => '1 spouštěcí událost|:count spouštěcích událostí',
     'webhooks_create' => 'Vytvořit nový webhook',
     'webhooks_none_created' => 'Žádné webhooky nebyly doposud vytvořeny.',
     'webhooks_edit' => 'Upravit webhook',

@@ -41,7 +41,7 @@ return [
     'bookshelf_create'            => 'created shelf',
     'bookshelf_create_notification'    => 'Shelf successfully created',
     'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
+    'bookshelf_create_from_book_notification'    => 'הספר הוסב בהצלחה למדף',
     'bookshelf_update'                 => 'updated shelf',
     'bookshelf_update_notification'    => 'Shelf successfully updated',
     'bookshelf_delete'                 => 'deleted shelf',

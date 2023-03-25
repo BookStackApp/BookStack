@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'Ο Χρήστης αφαιρέθηκε επιτυχώς',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'Ο Ρόλος δημιουργήθηκε με επιτυχία',
+    'role_update_notification' => 'Ο Ρόλος ενημερώθηκε με επιτυχία',
+    'role_delete_notification' => 'Ο Ρόλος διαγράφηκε επιτυχώς',
 
     // Other
     'commented_on'                => 'σχολίασε',

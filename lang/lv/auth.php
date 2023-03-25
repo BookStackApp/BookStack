@@ -39,9 +39,9 @@ return [
     'register_success' => 'Paldies par reģistrēšanos! Tagad varat pieslēgties.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Mēģina pierakstīties',
+    'auto_init_starting_desc' => 'Sazināmies ar jūsu autentifikācijas sistēmu, lai uzsāktu pierakstīšanās procesu. Ja 5 sekunžu laikā nekas nav noticis, mēģiniet klikšķināt zemāk esošo saiti.',
+    'auto_init_start_link' => 'Turpināt autentifikāciju',
 
     // Password Reset
     'reset_password' => 'Atiestatīt paroli',
@@ -61,8 +61,8 @@ return [
     'email_confirm_send_error' => 'E-pasta apriprināšana ir nepieciešama, bet sistēma nevarēja e-pastu nosūtīt. Lūdzu sazinaties ar administratoru, lai pārliecinātos, ka e-pasts ir iestatīts pareizi.',
     'email_confirm_success' => 'Jūsu epasta adrese ir apstiprināta! Jums tagad jābūt iespējai pieslēgties, izmantojot šo epasta adresi.',
     'email_confirm_resent' => 'Apstiprinājuma vēstule tika nosūtīta. Lūdzu, pārbaudiet jūsu e-pastu.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'Paldies par apstiprinājumu!',
+    'email_confirm_thanks_desc' => 'Lūdzu uzgaidiet, kamēr jūsu apstiprinājums tiek apstrādāts. Ja netiekat novirzīts 3 sekunžu laikā, spiediet saiti "Turpināt", lai dotos tālāk.',
 
     'email_not_confirmed' => 'E-pasts nav apstiprināts',
     'email_not_confirmed_text' => 'Jūsu e-pasta adrese vēl nav apstiprināta.',

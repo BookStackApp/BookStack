@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'Gebruiker succesvol verwijderd',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'Rol succesvol aangemaakt',
+    'role_update_notification' => 'Rol succesvol bijgewerkt',
+    'role_delete_notification' => 'Rol succesvol verwijderd',
 
     // Other
     'commented_on'                => 'reageerde op',
