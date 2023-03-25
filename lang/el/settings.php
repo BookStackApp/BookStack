@@ -33,9 +33,9 @@ return [
     'app_custom_html_desc' => 'Οποιοδήποτε περιεχόμενο προστίθεται εδώ θα εισαχθεί στο κάτω μέρος της ενότητας <head> κάθε σελίδας. Αυτό είναι βολικό για την παράκαμψη ή προσθήκη στυλ καθώς και την προσθήκη κώδικα αναλυτικών στοιχείων.',
     'app_custom_html_disabled_notice' => 'Το προσαρμοσμένο περιεχόμενο κεφαλίδας HTML είναι απενεργοποιημένο σε αυτήν τη σελίδα ρυθμίσεων, για να διασφαλιστεί ότι τυχόν αλλαγές που θα πραγματοποιηθούν και θα προκαλέσουν δυσλειτουργία στην ιστοσελίδα σας, μπορούν να επαναφερθούν.',
     'app_logo' => 'Λογότυπο εφαρμογής',
-    'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
-    'app_icon' => 'Application Icon',
-    'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
+    'app_logo_desc' => 'Αυτό χρησιμοποιείται στη γραμμή κεφαλίδας εφαρμογής, μεταξύ άλλων περιοχών. Αυτή η εικόνα θα πρέπει να είναι 86px σε ύψος. Οι μεγάλες εικόνες θα κλιμακωθούν.',
+    'app_icon' => 'Εικονίδιο Εφαρμογής',
+    'app_icon_desc' => 'Αυτό το εικονίδιο χρησιμοποιείται για τις καρτέλες περιηγητή και τα εικονίδια συντομεύσεων. Αυτό πρέπει να είναι μια τετράγωνη εικόνα 256px σε μορφή PNG.',
     'app_homepage' => 'Αρχική σελίδα εφαρμογής',
     'app_homepage_desc' => 'Επιλέξτε μια προβολή για εμφάνιση στην αρχική σελίδα αντί για την προεπιλεγμένη προβολή. Τα δικαιώματα σελίδων αγνοούνται για επιλεγμένες σελίδες.',
     'app_homepage_select' => 'Επιλέξτε μια σελίδα',
@@ -49,12 +49,12 @@ return [
     'app_disable_comments_desc' => 'Απενεργοποιεί τα σχόλια σε όλες τις σελίδες της εφαρμογής. <br> Τα υπάρχοντα σχόλια δεν εμφανίζονται.',
 
     // Color settings
-    'color_scheme' => 'Application Color Scheme',
-    'color_scheme_desc' => 'Set the colors to use in the BookStack interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the primary color and default link color for BookStack. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the Bookstack interface.',
-    'app_color' => 'Primary Color',
-    'link_color' => 'Default Link Color',
-    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'color_scheme' => 'Θέμα Χρωμάτων Εφαρμογής',
+    'color_scheme_desc' => 'Ορίστε τα χρώματα που θα χρησιμοποιηθούν στο περιβάλλον χρήστη της εφαρμογής. Τα χρώματα μπορούν να ρυθμιστούν ξεχωριστά για τις λειτουργίες Σκούρο ή Λευκό, για να ταιριάζει καλύτερα στο θέμα και να εξασφαλίσει αναγνωσιμότητα.',
+    'ui_colors_desc' => 'Ορίστε το πρωτεύον χρώμα της εφαρμογής και το προεπιλεγμένο χρώμα συνδέσμου. Το πρωτεύον χρώμα χρησιμοποιείται κυρίως για την κεφαλίδα, τα κουμπιά και τις διακοσμήσεις διεπαφής. Το προεπιλεγμένο χρώμα συνδέσμου χρησιμοποιείται για συνδέσμους και ενέργειες που βασίζονται στο κείμενο, τόσο μέσα στο γραπτό περιεχόμενο όσο και στη διεπαφή της εφαρμογής.',
+    'app_color' => 'Κυρίως χρώμα',
+    'link_color' => 'Κυρίως χρώμα Συνδέσμου',
+    'content_colors_desc' => 'Ορίζει τα χρώματα για όλα τα στοιχεία στην ιεραρχία οργάνωσης της ιστοσελίδας. Συνιστάται η επιλογή χρωμάτων με παρόμοια φωτεινότητα με τα προεπιλεγμένα, για μέγιστη αναγνωσιμότητα.',
     'bookshelf_color' => 'Χρώμα Ραφιού',
     'book_color' => 'Χρώμα Βιβλίων',
     'chapter_color' => 'Χρώμα Κεφαλαίων Βιβλίων',
@@ -137,9 +137,9 @@ return [
     // Role Settings
     'roles' => 'Ρόλοι',
     'role_user_roles' => 'Ρόλοι Χρηστών',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => ':count user assigned|:count users assigned',
-    'roles_x_permissions_provided' => ':count permission|:count permissions',
+    'roles_index_desc' => 'Οι Ρόλοι χρησιμοποιούνται για την ομαδοποίηση των χρηστών και παρέχουν δικαιώματα για το σύστημα στα μέλη τους. Όταν ένας χρήστης είναι μέλος πολλαπλών Ρόλων, ο χρήστης θα κληρονομεί όλες τις ιδιότητες από όλους τους Ρόλους που ανήκει.',
+    'roles_x_users_assigned' => ':count εκχωρημένος χρήστης|:count εκχωρημένοι χρήστες',
+    'roles_x_permissions_provided' => ':count άδεια|:count άδειες',
     'roles_assigned_users' => 'Εκχωρημένοι χρήστες',
     'roles_permissions_provided' => 'Παρεχόμενα Δικαιώματα',
     'role_create' => 'Δημιουργία νέου ρόλου',
@@ -178,7 +178,7 @@ return [
 
     // Users
     'users' => 'Χρήστες',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => 'Δημιουργία & διαχείριση μεμονωμένων λογαριασμών χρήστη μέσα στο σύστημα. Οι λογαριασμοί χρήστη χρησιμοποιούνται για τη σύνδεση και την απόδοση του περιεχομένου & δραστηριότητα. Τα δικαιώματα πρόσβασης βασίζονται κυρίως σε Ρόλους, αλλά η κυριότητα του περιεχομένου του χρήστη, μεταξύ άλλων παραγόντων, μπορεί επίσης να επηρεάσει τα δικαιώματα & την πρόσβαση.',
     'user_profile' => 'Προφίλ Χρήστη',
     'users_add_new' => 'Προσθήκη νέου Χρήστη',
     'users_search' => 'Αναζήτηση Χρηστών',
@@ -222,7 +222,7 @@ return [
     'users_api_tokens_docs' => 'Τεκμηρίωση API',
     'users_mfa' => 'Έλεγχος Ταυτοτητας Πολλαπλων Παραγοντων',
     'users_mfa_desc' => 'Ρυθμίστε τον έλεγχο ταυτότητας πολλαπλών παραγόντων ως ένα επιπλέον επίπεδο ασφάλειας για τον λογαριασμό χρήστη σας.',
-    'users_mfa_x_methods' => ':count μέθοδος έχει ρυθμιστεί:count μέθοδοι',
+    'users_mfa_x_methods' => 'Έχει ρυθμιστεί :count μέθοδος|Έχουν ρυθμιστεί :count μέθοδοι',
     'users_mfa_configure' => 'Ρύθμιση Μεθόδων',
 
     // API Tokens
@@ -248,8 +248,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
-    'webhooks_x_trigger_events' => ':count trigger event|:count trigger events',
+    'webhooks_index_desc' => 'Τα Webhooks είναι ένας τρόπος αποστολής δεδομένων σε εξωτερικές διευθύνσεις URL όταν ορισμένες ενέργειες και συμβάντα συμβαίνουν στο σύστημα που επιτρέπει την ενσωμάτωση με εξωτερικές πλατφόρμες όπως συστήματα μηνυμάτων ή ειδοποιήσεων.',
+    'webhooks_x_trigger_events' => ':count συμβάν ενεργοποίησης|:count συμβάντα ενεργοποίησης',
     'webhooks_create' => 'Δημιουργία νέου Webhook',
     'webhooks_none_created' => 'Δεν έχουν δημιουργηθεί ακόμη webhook.',
     'webhooks_edit' => 'Επεξεργασία Webhook',

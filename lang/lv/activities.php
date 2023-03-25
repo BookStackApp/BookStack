@@ -28,8 +28,8 @@ return [
     // Books
     'book_create'                 => 'izveidoja grāmatu',
     'book_create_notification'    => 'Grāmata veiksmīgi izveidota',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'pārveidojā nodaļu par grāmatu',
+    'book_create_from_chapter_notification' => 'Nodaļa veiksmīgi pārveidota par grāmatu',
     'book_update'                 => 'atjaunoja grāmatu',
     'book_update_notification'    => 'Grāmata veiksmīgi atjaunināta',
     'book_delete'                 => 'izdzēsa grāmatu',
@@ -38,14 +38,14 @@ return [
     'book_sort_notification'      => 'Grāmata veiksmīgi pārkārtota',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create'            => 'izveidoja plauktu',
+    'bookshelf_create_notification'    => 'Plaukts veiksmīgi izveidots',
+    'bookshelf_create_from_book'    => 'pārveidoja grāmatu par plauktu',
+    'bookshelf_create_from_book_notification'    => 'Grāmata veiksmīgi pārveidota par plauktu',
+    'bookshelf_update'                 => 'atjaunoja plauktu',
+    'bookshelf_update_notification'    => 'Plaukts veiksmīgi atjaunināts',
+    'bookshelf_delete'                 => 'izdzēsa plauktu',
+    'bookshelf_delete_notification'    => 'Plaukts veiksmīgi dzēsts',
 
     // Favourites
     'favourite_add_notification' => '":name" ir pievienots jūsu favorītiem',
@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'Lietotājs veiksmīgi dzēsts',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'Loma veiksmīgi izveidota',
+    'role_update_notification' => 'Loma veiksmīgi atjaunināta',
+    'role_delete_notification' => 'Loma veiksmīgi dzēsta',
 
     // Other
     'commented_on'                => 'komentēts',

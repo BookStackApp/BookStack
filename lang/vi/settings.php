@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Ứng dụng bảng màu',
-    'color_scheme_desc' => 'Đặt các màu sẽ sử dụng trong giao diện BookStack. Màu sắc có thể được định cấu hình riêng cho chế độ tối và sáng để phù hợp nhất với chủ đề và đảm bảo mức độ rõ ràng.',
-    'ui_colors_desc' => 'Thiết lập màu chính và màu liên kết mặc định cho BookStack. Màu cơ bản được sử dụng chủ yếu cho banner tiêu đề, các nút và trang trí giao diện. Màu liên kết mặc định được sử dụng cho các liên kết và hành động dựa trên văn bản, cả trong nội dung bằng văn bản và trong giao diện Ngăn xếp sách.',
+    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
     'app_color' => 'Màu cơ bản',
     'link_color' => 'Màu liên kết mặc định',
     'content_colors_desc' => 'Đặt màu cho tất cả các thành phần trong phân cấp tổ chức trang. Nên chọn màu có độ sáng tương tự với màu mặc định để có thể đọc được.',
