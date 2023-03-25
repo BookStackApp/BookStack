@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Παρουσιάστηκε σφάλμα κατά το ανέβασμα της εικόνας.',
     'image_upload_type_error' => 'Ο τύπος εικόνας που μεταφορτώθηκε δεν είναι έγκυρος',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Δεν ήταν δυνατή η φόρτωση δεδομένων σχεδίασης. Το αρχείο σχεδίασης ενδέχεται να μην υπάρχει πλέον ή ενδέχεται να μην έχετε άδεια πρόσβασης σε αυτά.',
 
     // Attachments
     'attachment_not_found' => 'Το συνημμένο δεν βρέθηκε',

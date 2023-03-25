@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Rakenduse värvid',
-    'color_scheme_desc' => 'Määra BookStack\'i kasutajaliidese värvid. Tumeda ja heleda režiimi värve saab sobivuse ja loetavuse huvides eraldi seadistada.',
-    'ui_colors_desc' => 'Määra BookStack\'i põhivärv ja vaikimisi linkide värv. Põhivärvi kasutatakse peamiselt päise, nuppude ning kasutajaliidese dekoratsioonide jaoks. Vaikimisi linkide värvi kasutatakse tekstipõhiste linkide ja tegevuste jaoks, nii kirjalikus sisus kui BookStack\'i kasutajaliideses.',
+    'color_scheme_desc' => 'Määra rakenduse kasutajaliidese värvid. Tumeda ja heleda režiimi värve saab sobivuse ja loetavuse huvides eraldi seadistada.',
+    'ui_colors_desc' => 'Määra rakenduse põhivärv ja vaikimisi linkide värv. Põhivärvi kasutatakse peamiselt päise, nuppude ning kasutajaliidese dekoratsioonide jaoks. Vaikimisi linkide värvi kasutatakse tekstipõhiste linkide ja tegevuste jaoks, nii kirjalikus sisus kui rakenduse kasutajaliideses.',
     'app_color' => 'Põhivärv',
     'link_color' => 'Vaikimisi linkide värv',
     'content_colors_desc' => 'Määra värvid erinevatele sisuelementidele. Loetavuse huvides on soovituslik valida värvid, mille heledus on sarnane vaikimisi värvidele.',

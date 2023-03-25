@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Er is een fout opgetreden bij het uploaden van de afbeelding',
     'image_upload_type_error' => 'Het geüploade afbeeldingstype is ongeldig',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'De gegevens van de tekening konden niet worden geladen. Het tekenbestand bestaat misschien niet meer of u hebt geen machtiging om het te openen.',
 
     // Attachments
     'attachment_not_found' => 'Bijlage niet gevonden',
