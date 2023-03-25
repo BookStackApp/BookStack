@@ -151,7 +151,8 @@ class RoleController extends Controller
         $this->checkPermission('user-roles-manage');
 
         try {
-            $this->permissionsRepo->deleteRole($id, $request->get('migrate_role_id', 0));
+            $migrateRoleId = intval($request->get('migrate_role_id') ?: "0");
+            $this->permissionsRepo->deleteRole($id, $migrateRoleId);
         } catch (PermissionsException $e) {
             $this->showErrorNotification($e->getMessage());
 
