@@ -14,13 +14,6 @@
                     <a href="{{ url('/settings/customization') }}" class="{{ $category === 'customization' ? 'active' : '' }}">@icon('palette') {{ trans('settings.app_customization') }}</a>
                     <a href="{{ url('/settings/registration') }}" class="{{ $category === 'registration' ? 'active' : '' }}">@icon('lock') {{ trans('settings.reg_settings') }}</a>
                 </nav>
-
-                <h5 class="mt-xl">{{ trans('settings.system_version') }}</h5>
-                <div class="py-xs">
-                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
-                        @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
-                    </a>
-                </div>
             </div>
 
             <div>
