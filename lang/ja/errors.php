@@ -62,11 +62,11 @@ return [
     // Entities
     'entity_not_found' => 'エンティティが見つかりません',
     'bookshelf_not_found' => '大分類が見つかりません',
-    'book_not_found' => 'ブックが見つかりません',
+    'book_not_found' => '中分類が見つかりません',
     'page_not_found' => 'ページが見つかりません',
     'chapter_not_found' => 'チャプターが見つかりません',
-    'selected_book_not_found' => '選択されたブックが見つかりません',
-    'selected_book_chapter_not_found' => '選択されたブック、またはチャプターが見つかりません',
+    'selected_book_not_found' => '選択された中分類が見つかりません',
+    'selected_book_chapter_not_found' => '選択された中分類、またはチャプターが見つかりません',
     'guests_cannot_save_drafts' => 'ゲストは下書きを保存できません',
 
     // Users

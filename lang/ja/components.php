@@ -8,7 +8,7 @@ return [
     'image_select' => '画像を選択',
     'image_all' => 'すべて',
     'image_all_title' => '全ての画像を表示',
-    'image_book_title' => 'このブックにアップロードされた画像を表示',
+    'image_book_title' => 'この中分類にアップロードされた画像を表示',
     'image_page_title' => 'このページにアップロードされた画像を表示',
     'image_search_hint' => '画像名で検索',
     'image_uploaded' => 'アップロード日時: :uploadedDate',
