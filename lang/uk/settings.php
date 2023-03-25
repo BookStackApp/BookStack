@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Колірна схема застосунку',
-    'color_scheme_desc' => 'Встановлює колір для інтерфейсу закладок. Кольори можуть бути налаштовані окремо для темних та світлих режимів, щоб пристосуватися до теми та забезпечити роздільну здатність.',
-    'ui_colors_desc' => 'Установіть основний колір і колір посилання за замовчуванням для BookStack. Основний колір в основному використовується для банера заголовка, кнопок і декорацій інтерфейсу. Стандартний колір посилання використовується для текстових посилань і дій як у письмовому вмісті, так і в інтерфейсі Bookstack.',
+    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
     'app_color' => 'Головний колір',
     'link_color' => 'Колір посилання за замовчуванням',
     'content_colors_desc' => 'Установіть кольори для всіх елементів в ієрархії організації сторінки. Для зручності читання рекомендується вибирати кольори з такою ж яскравістю, як і кольори за замовчуванням.',
