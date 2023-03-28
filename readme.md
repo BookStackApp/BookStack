@@ -25,7 +25,7 @@ A platform for storing and organising information and documentation. Details for
 
 ## 📚 Project Definition
 
-BookStack is an opinionated wiki system that provides a pleasant and simple out-of-the-box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it but they should not interfere with the core simple user experience.
+BookStack is a user-friendly and opinionated wiki platform that offers a seamless and straightforward experience for new users. The intuitive interface allows users to create content without requiring advanced technical skills, with only basic word-processing abilities needed to get started. While the platform provides advanced features for power users, these features are designed not to compromise the core simplicity of the user experience. BookStack aims to strike a balance between ease of use and powerful functionality, offering a solution that can cater to both beginners and experts alike.
 
 BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above.
 
@@ -65,7 +65,7 @@ Note: Listed services are not tested, vetted nor supported by the official BookS
 
 ## 🛣️ Road Map
 
-Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in our [Release Process](dev/docs/release-process.md) documentation.
+We've provided a high-level roadmap for BookStack to give you an idea of where the project is headed. Please note that this roadmap is subject to change and is not a comprehensive list of all the features and improvements that will be included in the project. As we continue on this roadmap journey, we will be adding many other exciting features and enhancements that are not explicitly mentioned here. If you're interested in more detailed information about upcoming releases, we recommend that you review the project milestones defined in our [Release Process](dev/docs/release-process.md) documentation. These milestones provide granular details on what features and improvements are planned for each release, giving you a better sense of what to expect in the future.
 
 - **Platform REST API** - *(Most actions implemented, maturing)*
     - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
@@ -76,7 +76,7 @@ Below is a high-level road map view for BookStack to provide a sense of directio
 
 Please see our [development docs](dev/docs/development.md) for full details regarding work on the BookStack source code.
 
-If you're just looking to customize or extend your own BookStack instance, take a look at our [Hacking BookStack documentation page](https://www.bookstackapp.com/docs/admin/hacking-bookstack/) for details on various options to achieve this without altering the BookStack source code.
+If you want to modify or enhance your BookStack instance to suit your specific needs, we recommend that you check out our [Hacking BookStack documentation page](https://www.bookstackapp.com/docs/admin/hacking-bookstack/) This page contains valuable information and resources that will help you customize and extend your BookStack installation according to your requirements. Whether you're a developer or a system administrator, the Hacking BookStack documentation can provide you with the guidance and tools you need to get started with customization and extension.
 
 Details about BookStack's versioning scheme and the general release process [can be found here](dev/docs/release-process.md).
 
@@ -92,7 +92,7 @@ Please note, translations in BookStack are provided to the "Crowdin Global Trans
 
 Feel free to create issues to request new features or to report bugs & problems. Just please follow the template given when creating the issue.
 
-Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit into the project and plan out the merge. Just because a feature request exists, or is tagged, does not mean that feature would be accepted into the core project.
+We welcome pull requests from contributors who would like to improve BookStack. However, we recommend that you follow a few guidelines to ensure that your changes can be merged smoothly. If your change is more than a small tweak or language update, we suggest that you open a pull request early or create an issue to discuss your intended change and how it fits into the project. This will allow us to work with you to plan out the merge and ensure that the change aligns with the project's goals and roadmap. Please note that just because a feature request exists or is tagged, it does not necessarily mean that the feature will be accepted into the core project. We evaluate each feature request on a case-by-case basis and consider various factors, such as technical feasibility, user impact, and maintenance overhead, before making a decision.
 
 Pull requests should be created from the `development` branch since they will be merged back into `development` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases. If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
 
@@ -108,7 +108,7 @@ If you would like to report a security concern, details of doing so can [can be 
 
 ## ♿ Accessibility
 
-We want BookStack to remain accessible to as many people as possible. We aim for at least WCAG 2.1 Level A standards where possible although we do not strictly test this upon each release. If you come across any accessibility issues please feel free to open an issue.
+Our goal for BookStack is to make it accessible to as many people as possible. Whenever possible, we strive to meet the WCAG 2.1 Level A standards for accessibility, although we do not perform strict testing on every release. If you encounter any accessibility issues while using BookStack, please do not hesitate to open an issue to report them. We value your feedback and will work to address any issues as quickly as possible. By working together, we can help ensure that BookStack remains an inclusive and accessible platform for all users.
 
 ## 🖥️ Website, Docs & Blog
 
