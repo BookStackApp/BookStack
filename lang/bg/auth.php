@@ -40,7 +40,7 @@ return [
 
     // Login auto-initiation
     'auto_init_starting' => 'Опит за вход в системата',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_starting_desc' => 'Свързахме системата ви за удостоверяване към началото на процеса при влизане. Ако няма напредък след 5 секунди, то може да опитате да щракнете върху долната връзка.',
     'auto_init_start_link' => 'Продължаване с удостоверяването',
 
     // Password Reset
@@ -56,11 +56,11 @@ return [
     // Email Confirmation
     'email_confirm_subject' => 'Потвърди емейла си за :appName',
     'email_confirm_greeting' => 'Благодарим Ви, че се присъединихте към :appName!',
-    'email_confirm_text' => 'Моля, потвърдете вашия имейл адрес, като следвате връзката по-долу:',
+    'email_confirm_text' => 'Потвърдете адреса на имейла си, щраквайки върху връзката по-долу:',
     'email_confirm_action' => 'Потвърдете имейл',
     'email_confirm_send_error' => 'Нужно ви е потвърждение чрез емейл, но системата не успя да го изпрати. Моля свържете се с администратора, за да проверите дали вашият емейл адрес е конфигуриран правилно.',
     'email_confirm_success' => 'Имейлът ти е потвърден! Вече би трябвало да можеш да се впишеш с този имейл адрес.',
-    'email_confirm_resent' => 'Беше изпратен имейл с потвърждение, Моля, проверете кутията си.',
+    'email_confirm_resent' => 'Е-писмо за потвърждение е изпратено пак, проверете кутията си.',
     'email_confirm_thanks' => 'Благодарности за потвърждаването!',
     'email_confirm_thanks_desc' => 'Почакайте малко, обработвайки потвърждението ви. Ако не сте пренасочени след 3 секунди, то натиснете долу връзката "Продължаване", за да продължите.',
 
