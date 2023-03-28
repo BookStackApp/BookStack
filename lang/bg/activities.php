@@ -68,8 +68,8 @@ return [
     'user_delete_notification' => 'Потребителят е премахнат успешно',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
+    'role_create_notification' => 'Успешна създадена роля',
+    'role_update_notification' => 'Успешно обновена роля',
     'role_delete_notification' => 'Role successfully deleted',
 
     // Other
