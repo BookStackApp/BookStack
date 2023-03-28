@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'میانبرها',
+    'shortcuts_interface' => 'میانبرهای صفحه کلید',
+    'shortcuts_toggle_desc' => 'در اینجا می توانید میانبرهای سیستم را که برای پیمایش و ... استفاده می شود، فعال یا غیرفعال کنید.',
+    'shortcuts_customize_desc' => 'می توانید هر یک از میانبرهای زیر را سفارشی کنید. کافی است پس از انتخاب ورودی برای میانبر، کلید ترکیبی مورد نظر خود را فشار دهید.',
+    'shortcuts_toggle_label' => 'میانبرهای صفحه کلید فعال شد',
+    'shortcuts_section_navigation' => 'ناوبری و پیمایش',
+    'shortcuts_section_actions' => 'فعالیت/اقدامات مرسوم',
+    'shortcuts_save' => 'ذخیره کلیدهای میانبر',
+    'shortcuts_overlay_desc' => 'توجه: هنگامی که میانبرها فعال هستند، یک رابط کمکی با فشار دادن "؟" در دسترس است که میانبرهای موجود برای اقداماتی که در حال حاضر روی صفحه قابل مشاهده است را برجسته می‌کند.',
+    'shortcuts_update_success' => 'تنظیمات میانبر به روز شده است!',
 ];
