@@ -173,19 +173,26 @@ class OidcIdToken
 
         // 2. The Client MUST validate that the aud (audience) Claim contains its client_id value registered
         // at the Issuer identified by the iss (issuer) Claim as an audience. The ID Token MUST be rejected
-        // if the ID Token does not list the Client as a valid audience, or if it contains additional
-        // audiences not trusted by the Client.
+        // if the ID Token does not list the Client as a valid audience.
         if (empty($this->payload['aud'])) {
             throw new OidcInvalidTokenException('Missing token audience value');
         }
 
         $aud = is_string($this->payload['aud']) ? [$this->payload['aud']] : $this->payload['aud'];
 
-        // 3. If the ID Token contains multiple audiences, the Client SHOULD verify that an azp Claim is present.
-        // NOTE: Addressed by enforcing a count of 1 above.
+        if (count($aud) > 1 && !in_array($clientId, $aud)) {
+            throw new OidcInvalidTokenException('Token audience value did not match the expected client_id');
+        }
 
+        // 3. If the ID Token contains multiple audiences, the Client SHOULD verify that an azp Claim is present.
         // 4. If an azp (authorized party) Claim is present, the Client SHOULD verify that its client_id
         // is the Claim Value.
+        if (count($aud) > 0 && isset($this->payload['azp']) && $this->payload['azp'] !== $clientId) {
+            throw new OidcInvalidTokenException('Token authorized party exists but does not match the expected client_id');
+        }
+
+
+
         if (count($aud) !== 1) {
             if (isset($this->payload['azp']) && $this->payload['azp'] !== $clientId) {
                 throw new OidcInvalidTokenException('Token authorized party exists but does not match the expected client_id');
