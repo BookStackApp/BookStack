@@ -186,6 +186,11 @@ class OidcService
             return [];
         }
 
+        // Use keys of nested arrays as values here
+        if (gettype(reset($groupsList)) === "array") {
+            $groupsList = array_keys($groupsList);
+        }
+
         return array_values(array_filter($groupsList, function ($val) {
             return is_string($val);
         }));
