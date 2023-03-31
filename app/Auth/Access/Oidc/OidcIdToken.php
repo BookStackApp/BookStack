@@ -180,21 +180,20 @@ class OidcIdToken
         }
 
         $aud = is_string($this->payload['aud']) ? [$this->payload['aud']] : $this->payload['aud'];
-        if (count($aud) !== 1) {
-            throw new OidcInvalidTokenException('Token audience value has ' . count($aud) . ' values, Expected 1');
-        }
-
-        if ($aud[0] !== $clientId) {
-            throw new OidcInvalidTokenException('Token audience value did not match the expected client_id');
-        }
 
         // 3. If the ID Token contains multiple audiences, the Client SHOULD verify that an azp Claim is present.
         // NOTE: Addressed by enforcing a count of 1 above.
 
         // 4. If an azp (authorized party) Claim is present, the Client SHOULD verify that its client_id
         // is the Claim Value.
-        if (isset($this->payload['azp']) && $this->payload['azp'] !== $clientId) {
-            throw new OidcInvalidTokenException('Token authorized party exists but does not match the expected client_id');
+        if (count($aud) !== 1) {
+            if (isset($this->payload['azp']) && $this->payload['azp'] !== $clientId) {
+                throw new OidcInvalidTokenException('Token authorized party exists but does not match the expected client_id');
+            } elseif (!isset($this->payload['azp'])) {
+                throw new OidcInvalidTokenException('Token audience value has ' . count($aud) . ' values, expected 1');
+            }
+        } else {
+            throw new OidcInvalidTokenException('Token audience value did not match the expected client_id');
         }
 
         // 5. The current time MUST be before the time represented by the exp Claim
