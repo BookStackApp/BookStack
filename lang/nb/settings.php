@@ -51,10 +51,10 @@ return [
     // Color settings
     'color_scheme' => 'Applikasjonens farge oppsett',
     'color_scheme_desc' => 'Sett farger for å bruke i programmets brukergrensesnitt. Farger kan konfigureres separat for mørke og lysmoduser for å passe best inn temaet og sørge for lesbarhet.',
-    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
+    'ui_colors_desc' => 'Angi primær farge for programmet og standard link farge. Primær farge brukes hovedsakelig for toppbanner, knapper og grensesnittets dekorasjoner. Standardfargen for koblinger brukes for tekstbaserte lenker og handlinger, både i skriftlig innhold og i programgrensesnittet.',
     'app_color' => 'Primær farge',
     'link_color' => 'Standard koblingsfarge',
-    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'content_colors_desc' => 'Angi farger for alle elementer i organiseringshierarkiet. Velger du farger med lik lysstyrke til standard farger anbefales for lesbarhet.',
     'bookshelf_color' => 'Hyllefarge',
     'book_color' => 'Bokfarge',
     'chapter_color' => 'Kapittelfarge',
@@ -94,9 +94,9 @@ return [
     'maint_recycle_bin_desc' => 'Slettede hyller, bøker, kapitler og sider kastes i papirkurven så de kan bli gjenopprettet eller slettet permanent. Eldre utgaver i papirkurven kan slettes automatisk etter en stund, avhengig av systemkonfigurasjonen.',
     'maint_recycle_bin_open' => 'Åpne papirkurven',
     'maint_regen_references' => 'Regenerer referanser',
-    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
+    'maint_regen_references_desc' => 'Denne handlingen gjenoppbygger referanseindeksen for krysselement i databasen. Dette håndteres vanligvis automatisk, men denne handlingen kan være nyttig for å indeksere gammelt innhold eller innhold lagt til via uoffisielle metoder.',
     'maint_regen_references_success' => 'Referanseindeksen har blitt regenerert!',
-    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
+    'maint_timeout_command_note' => 'Merk: Denne handlingen kan ta tid å kjøre, noe som kan føre til tidsavbruddsmessige problemer i noen webomgivelser. Dette gjøres som et alternativ ved hjelp av en terminalkommando.',
 
     // Recycle Bin
     'recycle_bin' => 'Papirkurven',
@@ -137,9 +137,9 @@ return [
     // Role Settings
     'roles' => 'Roller',
     'role_user_roles' => 'Kontoroller',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
-    'roles_x_users_assigned' => ':count user assigned|:count users assigned',
-    'roles_x_permissions_provided' => ':count permission|:count permissions',
+    'roles_index_desc' => 'Roller brukes til å gruppere brukere og gi systemtilgang til medlemmene. Når en bruker er medlem av flere roller, vil de tildelte rettighetene samles inn, og brukeren vil arve alle evner.',
+    'roles_x_users_assigned' => ':count bruker tildelt|:count brukere tildelt',
+    'roles_x_permissions_provided' => ':count tillatelse|:count tillatelser',
     'roles_assigned_users' => 'Tilordnede brukere',
     'roles_permissions_provided' => 'Tilbudte rettigheter',
     'role_create' => 'Opprett ny rolle',
@@ -168,7 +168,7 @@ return [
     'roles_system_warning' => 'Vær oppmerksom på at tilgang til noen av de ovennevnte tre tillatelsene kan tillate en bruker å endre sine egne rettigheter eller rettighetene til andre i systemet. Bare tildel roller med disse tillatelsene til pålitelige brukere.',
     'role_asset_desc' => 'Disse tillatelsene kontrollerer standard tilgang til eiendelene i systemet. Tillatelser til bøker, kapitler og sider overstyrer disse tillatelsene.',
     'role_asset_admins' => 'Administratorer får automatisk tilgang til alt innhold, men disse alternativene kan vise eller skjule UI-alternativer.',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'Dette gjelder synlighet innenfor bilde-administrasjonen. Faktisk tilgang på opplastede bildefiler vil være avhengig av valget for systemlagring av bildet.',
     'role_all' => 'Alle',
     'role_own' => 'Egne',
     'role_controlled_by_asset' => 'Kontrollert av eiendelen de er lastet opp til',
@@ -178,7 +178,7 @@ return [
 
     // Users
     'users' => 'Brukere',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => 'Opprett og administrer individuelle brukerkontoer innenfor systemet. Brukerkontoer brukes for innlogging og navngivelse av innhold og aktivitet. Tilgangstillatelser er primært rollebasert, men brukerinnhold eierskap, blant andre faktorer, kan også påvirke tillatelser og tilgang.',
     'user_profile' => 'Profil',
     'users_add_new' => 'Register ny konto',
     'users_search' => 'Søk i kontoer',
@@ -189,7 +189,7 @@ return [
     'users_role' => 'Roller',
     'users_role_desc' => 'Velg hvilke roller denne kontoholderen vil bli tildelt. Hvis en kontoholderen er tildelt flere roller, vil tillatelsene fra disse rollene stable seg, og de vil motta alle evnene til de tildelte rollene.',
     'users_password' => 'Passord',
-    'users_password_desc' => 'Set a password used to log-in to the application. This must be at least 8 characters long.',
+    'users_password_desc' => 'Angi et passord som brukes til å logge inn til programmet. Dette må være minst 8 tegn langt.',
     'users_send_invite_text' => 'Du kan velge å sende denne kontoholderen en invitasjons-e-post som lar dem angi sitt eget passord, ellers kan du selv angi passordet.',
     'users_send_invite_option' => 'Send invitasjonsmelding',
     'users_external_auth_id' => 'Ekstern godkjennings-ID',
@@ -248,8 +248,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhooks',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
-    'webhooks_x_trigger_events' => ':count trigger event|:count trigger events',
+    'webhooks_index_desc' => 'Webhooks er en måte å sende data til eksterne nettadresser når bestemte handlinger og hendelser oppstår i systemet som gjør det mulig å integrer med eksterne plattformer som meldingssystemer eller varslingssystemer.',
+    'webhooks_x_trigger_events' => ':count utløsende hendelse:count utløsende hendelser',
     'webhooks_create' => 'Lag ny Webhook',
     'webhooks_none_created' => 'Ingen webhooks er opprettet ennå.',
     'webhooks_edit' => 'Rediger webhook',
