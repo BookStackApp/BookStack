@@ -14,41 +14,29 @@ class UserTokenService
 {
     /**
      * Name of table where user tokens are stored.
-     *
-     * @var string
      */
-    protected $tokenTable = 'user_tokens';
+    protected string $tokenTable = 'user_tokens';
 
     /**
      * Token expiry time in hours.
-     *
-     * @var int
      */
-    protected $expiryTime = 24;
+    protected int $expiryTime = 24;
 
     /**
-     * Delete all email confirmations that belong to a user.
-     *
-     * @param User $user
-     *
-     * @return mixed
+     * Delete all tokens that belong to a user.
      */
-    public function deleteByUser(User $user)
+    public function deleteByUser(User $user): void
     {
-        return DB::table($this->tokenTable)
+        DB::table($this->tokenTable)
             ->where('user_id', '=', $user->id)
             ->delete();
     }
 
     /**
-     * Get the user id from a token, while check the token exists and has not expired.
-     *
-     * @param string $token
+     * Get the user id from a token, while checking the token exists and has not expired.
      *
      * @throws UserTokenNotFoundException
      * @throws UserTokenExpiredException
-     *
-     * @return int
      */
     public function checkTokenAndGetUserId(string $token): int
     {
@@ -67,8 +55,6 @@ class UserTokenService
 
     /**
      * Creates a unique token within the email confirmation database.
-     *
-     * @return string
      */
     protected function generateToken(): string
     {
@@ -82,10 +68,6 @@ class UserTokenService
 
     /**
      * Generate and store a token for the given user.
-     *
-     * @param User $user
-     *
-     * @return string
      */
     protected function createTokenForUser(User $user): string
     {
@@ -102,10 +84,6 @@ class UserTokenService
 
     /**
      * Check if the given token exists.
-     *
-     * @param string $token
-     *
-     * @return bool
      */
     protected function tokenExists(string $token): bool
     {
@@ -115,12 +93,8 @@ class UserTokenService
 
     /**
      * Get a token entry for the given token.
-     *
-     * @param string $token
-     *
-     * @return object|null
      */
-    protected function getEntryByToken(string $token)
+    protected function getEntryByToken(string $token): ?stdClass
     {
         return DB::table($this->tokenTable)
             ->where('token', '=', $token)
@@ -129,10 +103,6 @@ class UserTokenService
 
     /**
      * Check if the given token entry has expired.
-     *
-     * @param stdClass $tokenEntry
-     *
-     * @return bool
      */
     protected function entryExpired(stdClass $tokenEntry): bool
     {

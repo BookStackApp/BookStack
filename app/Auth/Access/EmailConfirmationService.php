@@ -8,8 +8,8 @@ use BookStack\Notifications\ConfirmEmail;
 
 class EmailConfirmationService extends UserTokenService
 {
-    protected $tokenTable = 'email_confirmations';
-    protected $expiryTime = 24;
+    protected string $tokenTable = 'email_confirmations';
+    protected int $expiryTime = 24;
 
     /**
      * Create new confirmation for a user,
