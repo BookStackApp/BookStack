@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Privatlivspolitik',
     'terms_of_service' => 'Tjenestevilkår',
+
+    'select_document' => 'Vælg dokumentfil',
+    'select_document_option' => 'Vælg venligst dokumentmulighed',
+    'append_to' => 'Tilføj til eksisterende sider',
+    'create_new_pages' => 'Opret nye sider',
 ];

@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'プライバシーポリシー',
     'terms_of_service' => '利用規約',
+
+    'select_document' => 'ドキュメントファイルを選択',
+    'select_document_option' => 'ドキュメントオプションを選択してください',
+    'append_to' => '既存のページに追加',
+    'create_new_pages' => '新しいページを作成する',
 ];

@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Politică de confidențialitate',
     'terms_of_service' => 'Termeni și condiții',
+
+    'select_document' => 'Selectați fișierul document',
+    'select_document_option' => 'Vă rugăm să selectați opțiunea documentului',
+    'append_to' => 'Adăugați la paginile existente',
+    'create_new_pages' => 'Creați pagini noi',
 ];

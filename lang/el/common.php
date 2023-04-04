@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Πολιτική Απορρήτου',
     'terms_of_service' => 'Όροι χρήσης',
+
+    'select_document' => 'Επιλέξτε αρχείο εγγράφου',
+    'select_document_option' => 'Επιλέξτε την επιλογή εγγράφου',
+    'append_to' => 'Προσθήκη σε υπάρχουσες σελίδες',
+    'create_new_pages' => 'Δημιουργήστε νέες σελίδες',
 ];

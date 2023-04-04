@@ -137,4 +137,17 @@ class BookRepo
 
         $trashCan->autoClearOld();
     }
+
+    /**
+     * Remove a book pages from the system.
+     *
+     * @throws Exception
+     */
+    public function destroyBookPages(Book $book)
+    {
+        $trashCan = new TrashCan();
+        $trashCan->softDestroyPages($book);
+        Activity::add(ActivityType::BOOK_PAGES_DELETE, $book);
+        $trashCan->autoClearOld();
+    }
 }

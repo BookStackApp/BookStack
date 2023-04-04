@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Політика приватності',
     'terms_of_service' => 'Умови використання',
+
+    'select_document' => 'Виберіть файл документа',
+    'select_document_option' => 'Виберіть варіант документа',
+    'append_to' => 'Додати до існуючих сторінок',
+    'create_new_pages' => 'Створюйте нові сторінки',
 ];

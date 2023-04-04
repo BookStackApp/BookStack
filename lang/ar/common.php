@@ -104,4 +104,8 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'سياسة الخصوصية',
     'terms_of_service' => 'اتفاقية شروط الخدمة',
+    'select_document' => 'حدد ملف المستند',
+    'select_document_option' => 'الرجاء تحديد خيار المستند',
+    'append_to' => 'إلحاق بصفحات موجودة',
+    'create_new_pages' => 'أنشئ صفحات جديدة',
 ];

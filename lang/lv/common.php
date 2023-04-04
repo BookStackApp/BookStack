@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Privātuma politika',
     'terms_of_service' => 'Pakalpojuma noteikumi',
+
+    'select_document' => 'Izvēlieties dokumenta failu',
+    'select_document_option' => 'Lūdzu, atlasiet dokumenta opciju',
+    'append_to' => 'Pievienot esošajām lapām',
+    'create_new_pages' => 'Izveidojiet jaunas lapas',
 ];

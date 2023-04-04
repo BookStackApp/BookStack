@@ -62,6 +62,8 @@ class ActivityType
     const WEBHOOK_CREATE = 'webhook_create';
     const WEBHOOK_UPDATE = 'webhook_update';
     const WEBHOOK_DELETE = 'webhook_delete';
+    const BOOK_PAGES_DELETE = 'book_pages_delete';
+
 
     /**
      * Get all the possible values.

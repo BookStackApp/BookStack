@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => '개인 정보 처리 방침',
     'terms_of_service' => '서비스 이용 약관',
+
+    'select_document' => '문서 파일 선택',
+    'select_document_option' => '문서 옵션을 선택하세요.',
+    'append_to' => '기존 페이지에 추가',
+    'create_new_pages' => '새 페이지 만들기',
 ];

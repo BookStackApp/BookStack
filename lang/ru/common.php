@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Политика конфиденциальности',
     'terms_of_service' => 'Условия использования',
+
+    'select_document' => 'Выберите файл документа',
+    'select_document_option' => 'Выберите вариант документа',
+    'append_to' => 'Добавить к существующим страницам',
+    'create_new_pages' => 'Создать новые страницы',
 ];

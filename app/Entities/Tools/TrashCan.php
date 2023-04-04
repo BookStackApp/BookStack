@@ -384,4 +384,16 @@ class TrashCan
             $imageService->destroy($entity->cover()->first());
         }
     }
+
+    /**
+     * Send a book pages to the recycle bin.
+     *
+     * @throws Exception
+     */
+    public function softDestroyPages(Book $book)
+    {
+        foreach ($book->pages as $page) {
+            $this->softDestroyPage($page, false);
+        }
+    }
 }

@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Kebijakan Privasi',
     'terms_of_service' => 'Ketentuan Layanan',
+
+    'select_document' => 'Pilih file dokumen',
+    'select_document_option' => 'Silakan pilih opsi dokumen',
+    'append_to' => 'Tambahkan ke halaman yang ada',
+    'create_new_pages' => 'Buat halaman baru',
 ];

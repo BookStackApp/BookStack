@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'سیاست حفظ حریم خصوصی',
     'terms_of_service' => 'شرایط خدمات',
+
+    'select_document' => 'فایل سند را انتخاب کنید',
+    'select_document_option' => 'لطفا گزینه سند را انتخاب کنید',
+    'append_to' => 'به صفحات موجود اضافه شود',
+    'create_new_pages' => 'صفحات جدید ایجاد کنید',
 ];

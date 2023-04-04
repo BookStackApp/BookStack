@@ -66,6 +66,10 @@
 
     @yield('bottom')
     <script src="{{ versioned_asset('dist/app.js') }}" nonce="{{ $cspNonce }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.5.1/mammoth.browser.min.js" nonce="{{ $cspNonce }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.5.1/mammoth.browser.js" nonce="{{ $cspNonce }}"></script>
+    <script src="{{ asset('mammoth/script.js') }}" nonce="{{ $cspNonce }}"></script>
+   
     @yield('scripts')
 
     @include('layouts.parts.base-body-end')

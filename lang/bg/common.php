@@ -104,4 +104,8 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Лични данни',
     'terms_of_service' => 'Общи условия',
+    'select_document' => 'Изберете файл с документ',
+    'select_document_option' => 'Моля, изберете опция за документ',
+    'append_to' => 'Добавяне към съществуващи страници',
+    'create_new_pages' => 'Създайте нови страници',
 ];

@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Adatvédelmi irányelvek',
     'terms_of_service' => 'Felhasználási feltételek',
+
+    'select_document' => 'Válassza ki a dokumentumfájlt',
+    'select_document_option' => 'Kérjük, válassza ki a dokumentum opciót',
+    'append_to' => 'Hozzáfűzés a meglévő oldalakhoz',
+    'create_new_pages' => 'Hozzon létre új oldalakat',
 ];

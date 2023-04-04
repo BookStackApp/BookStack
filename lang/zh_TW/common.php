@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => '隱私權政策',
     'terms_of_service' => '服務條款',
+
+    'select_document' => '选择文档文件',
+    'select_document_option' => '请选择文档选项',
+    'append_to' => '附加到现有页面',
+    'create_new_pages' => '创建新页面',
 ];

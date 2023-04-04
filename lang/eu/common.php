@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Pribatutasun politika',
     'terms_of_service' => 'Zerbitzu-baldintzak',
+
+    'select_document' => 'Hautatu dokumentu-fitxategia',
+    'select_document_option' => 'Mesedez, hautatu dokumentuaren aukera',
+    'append_to' => 'Erantsi lehendik dauden orrietara',
+    'create_new_pages' => 'Sortu orrialde berriak',
 ];

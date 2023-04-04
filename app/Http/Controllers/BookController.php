@@ -18,6 +18,7 @@ use BookStack\References\ReferenceFetcher;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use BookStack\Entities\Repos\PageRepo;
 use Throwable;
 
 class BookController extends Controller
@@ -25,12 +26,14 @@ class BookController extends Controller
     protected BookRepo $bookRepo;
     protected ShelfContext $shelfContext;
     protected ReferenceFetcher $referenceFetcher;
+    protected PageRepo $pageRepo;
 
-    public function __construct(ShelfContext $entityContextManager, BookRepo $bookRepo, ReferenceFetcher $referenceFetcher)
+    public function __construct(ShelfContext $entityContextManager, BookRepo $bookRepo, ReferenceFetcher $referenceFetcher, PageRepo $pageRepo)
     {
         $this->bookRepo = $bookRepo;
         $this->shelfContext = $entityContextManager;
         $this->referenceFetcher = $referenceFetcher;
+        $this->pageRepo = $pageRepo;
     }
 
     /**
@@ -98,6 +101,9 @@ class BookController extends Controller
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
             'tags'        => ['array'],
+            'document_file' => array_merge(['nullable','file','max:5120'],$this->getMimeTypes()),
+        ],[
+            'document_file.mimetypes' => 'The Document file is not supported.',
         ]);
 
         $bookshelf = null;
@@ -107,6 +113,10 @@ class BookController extends Controller
         }
 
         $book = $this->bookRepo->create($validated);
+        
+        if ($request->hasFile('document_file') && !empty($request->html_input)) {
+            $this->addPages($book,$request);
+        }
 
         if ($bookshelf) {
             $bookshelf->appendBook($book);
@@ -171,6 +181,10 @@ class BookController extends Controller
             'description' => ['string', 'max:1000'],
             'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
             'tags'        => ['array'],
+            'document_file' => array_merge(['nullable','file','max:5120'],$this->getMimeTypes()),
+            'document_option' => ['required_with:document_file','in:new,append'],
+        ],[
+            'document_file.mimetypes' => 'The Document file is not supported.',
         ]);
 
         if ($request->has('image_reset')) {
@@ -180,6 +194,12 @@ class BookController extends Controller
         }
 
         $book = $this->bookRepo->update($book, $validated);
+        if ($request->hasFile('document_file') && isset($request->html_input)) {
+            if (!empty($request->document_option) && $request->document_option == 'new') {
+                $this->bookRepo->destroyBookPages($book);
+            }
+            $this->addPages($book,$request);
+        }
 
         return redirect($book->getUrl());
     }
@@ -260,5 +280,68 @@ class BookController extends Controller
         $shelf = $transformer->transformBookToShelf($book);
 
         return redirect($shelf->getUrl());
+    }
+
+    /**
+     * Get heading tag and child content
+     */
+    public function addPages($book,$request) {
+
+        $dom = new \DomDocument();
+        $dom->loadHTML($request->html_input);
+        // Use XPath to get the first h1 element as the page title
+        $xpath = new \DOMXPath($dom);
+        $h1Elements = $xpath->query('//h1');
+        // Loop through the h1 elements and get the content below each h1 element until the next h1 element
+        $pageData = [];
+        foreach ($h1Elements as $h1Element) {
+        // Get the page title
+            $pageTitle = $h1Element->nodeValue;
+            // Get the content below the h1 element until the next h1 element
+            $content = '';
+            $nextElement = $h1Element->nextSibling;
+            while ($nextElement && $nextElement->tagName !== 'h1') {
+            $content .= $dom->saveHTML($nextElement);
+            $nextElement = $nextElement->nextSibling;
+            }
+            // Create an object for the page title and content
+            $page = [
+            'title' => $pageTitle,
+            'content' => $content,
+            ];
+            // Add the object to the page data array
+            $pageData[] = $page;
+        }
+
+        if (count($pageData) >= 1) {
+            foreach ($pageData as $page) {
+                $request->merge([
+                    'name' => $page['title'],
+                    'html' => $page['content'],
+                    'template' => false,
+                ]);
+               $this->createPage($book,$request);
+            }
+        } else {
+            $request->merge([
+                'name' => trans('entities.pages_initial_name'),
+                'html' => $request->html_input,
+                'template' => false,
+            ]);
+            $this->createPage($book,$request);
+        }
+    }
+
+    /**
+     * Create respective book page
+     */
+    public function createPage($book ,$request) {
+
+        $draft = $this->pageRepo->getNewDraftPage($book);
+        $draftPage = $this->pageRepo->getById($draft->id);
+        $this->checkOwnablePermission('page-create', $draftPage->getParent());
+       
+        return $this->pageRepo->publishDraft($draftPage, $request->all());
+
     }
 }

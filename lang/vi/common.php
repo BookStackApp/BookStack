@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Chính Sách Quyền Riêng Tư',
     'terms_of_service' => 'Điều khoản Dịch vụ',
+
+    'select_document' => 'Chọn tệp tài liệu',
+    'select_document_option' => 'Vui lòng chọn tùy chọn tài liệu',
+    'append_to' => 'Nối vào các trang hiện có',
+    'create_new_pages' => 'Tạo trang mới',
 ];

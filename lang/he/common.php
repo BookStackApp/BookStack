@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'מדיניות הפרטיות',
     'terms_of_service' => 'תנאי שימוש',
+
+    'select_document' => 'בחר קובץ מסמך',
+    'select_document_option' => 'אנא בחר באפשרות מסמך',
+    'append_to' => 'הוסף לדפים קיימים',
+    'create_new_pages' => 'צור דפים חדשים',
 ];

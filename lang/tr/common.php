@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Gizlilik Politikası',
     'terms_of_service' => 'Hizmet Şartları',
+
+    'select_document' => 'Belge dosyasını seçin',
+    'select_document_option' => 'Lütfen belge seçeneğini seçin',
+    'append_to' => 'Mevcut sayfalara ekle',
+    'create_new_pages' => 'Yeni sayfalar oluştur',
 ];

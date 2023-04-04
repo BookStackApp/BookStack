@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Pravilnik o zasebnosti',
     'terms_of_service' => 'Pogoji uporabe',
+
+    'select_document' => 'Izberite datoteko dokumenta',
+    'select_document_option' => 'Izberite možnost dokumenta',
+    'append_to' => 'Dodaj na obstoječe strani',
+    'create_new_pages' => 'Ustvarite nove strani',
 ];

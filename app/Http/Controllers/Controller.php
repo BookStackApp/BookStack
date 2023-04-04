@@ -156,4 +156,9 @@ abstract class Controller extends BaseController
     {
         return ['image_extension', 'mimes:jpeg,png,gif,webp', 'max:' . (config('app.upload_limit') * 1000)];
     }
+
+    protected function getMimeTypes(): array
+    {
+        return ['mimetypes:application/msword,application/vnd.ms-word.document,application/vnd.ms-word,application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    }
 }

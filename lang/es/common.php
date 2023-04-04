@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Política de privacidad',
     'terms_of_service' => 'Términos de Servicio',
+
+    'select_document' => 'Seleccionar archivo de documento',
+    'select_document_option' => 'Seleccione la opción del documento',
+    'append_to' => 'Agregar a páginas existentes',
+    'create_new_pages' => 'Crear nuevas páginas',
 ];

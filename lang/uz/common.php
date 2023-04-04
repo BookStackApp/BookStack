@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Privacy Policy',
     'terms_of_service' => 'Terms of Service',
+
+    'select_document' => 'Hujjat faylini tanlang',
+    'select_document_option' => 'Hujjat variantini tanlang',
+    'append_to' => "Mavjud sahifalarga qo'shing",
+    'create_new_pages' => 'Yangi sahifalar yarating',
 ];

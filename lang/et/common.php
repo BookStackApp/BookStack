@@ -104,4 +104,9 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Privaatsus',
     'terms_of_service' => 'Kasutustingimused',
+
+    'select_document' => 'Valige dokumendi fail',
+    'select_document_option' => 'Valige dokumendi valik',
+    'append_to' => 'Lisa olemasolevatele lehtedele',
+    'create_new_pages' => 'Looge uusi lehti',
 ];
