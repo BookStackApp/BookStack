@@ -42,14 +42,14 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Baimenak',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_desc' => 'Ezarri baimenak hemen, erabiltzaileen rolek ematen dituzten baimenak gainidazteko.',
     'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
     'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Gorde baimenak',
     'permissions_owner' => 'Jabea',
     'permissions_role_everyone_else' => 'Everyone Else',
     'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
+    'permissions_role_override' => 'Gainidatzi baimenak rol honi',
     'permissions_inherit_defaults' => 'Inherit defaults',
 
     // Search
@@ -102,13 +102,13 @@ return [
     'shelves_delete_named' => 'Delete Shelf :name',
     'shelves_delete_explain' => "This will delete the shelf with the name ':name'. Contained books will not be deleted.",
     'shelves_delete_confirmation' => 'Are you sure you want to delete this shelf?',
-    'shelves_permissions' => 'Shelf Permissions',
-    'shelves_permissions_updated' => 'Shelf Permissions Updated',
-    'shelves_permissions_active' => 'Shelf Permissions Active',
-    'shelves_permissions_cascade_warning' => 'Permissions on shelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions' => 'Apalategi baimenak',
+    'shelves_permissions_updated' => 'Apalategi baimenak eguneratuta',
+    'shelves_permissions_active' => 'Apalategi baimenak aktibatuta',
+    'shelves_permissions_cascade_warning' => 'Apaletako baimenak ez dira automatikoki hauen barneko liburuetan gordeko. Liburu bat apalategi askotan egon daitekeelako. Hala ere, baimenak apalategiko liburutara kopiatu daitezke, behean agertzen den aukera erabiliz.',
     'shelves_copy_permissions_to_books' => 'Kopiatu baimenak liburura',
     'shelves_copy_permissions' => 'Gorde baimenak',
-    'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this shelf to all books contained within. Before activating, ensure any changes to the permissions of this shelf have been saved.',
+    'shelves_copy_permissions_explain' => 'Honek apalategi honen egungo baimen-konfigurazioa aplikatuko die barruan dauden liburu guztiei. Aktibatu aurretik, ziurtatu apaletan aldaketak gorde direla.',
     'shelves_copy_permission_success' => 'Shelf permissions copied to :count books',
 
     // Books
