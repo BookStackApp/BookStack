@@ -40,8 +40,8 @@ return [
 
     // Login auto-initiation
     'auto_init_starting' => 'تلاش برای ورود',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting_desc' => 'برای شروع فرآیند ورود به سیستم با سیستم احراز هویت شما تماس می گیریم. اگر بعد از 5 ثانیه پیشرفتی حاصل نشد، می توانید روی لینک زیر کلیک کنید.',
+    'auto_init_start_link' => 'احراز هویت را ادامه دهید',
 
     // Password Reset
     'reset_password' => 'بازنشانی کلمه عبور',
@@ -61,8 +61,8 @@ return [
     'email_confirm_send_error' => 'تایید پست الکترونیک الزامی می باشد، اما سیستم قادر به ارسال پیام نمی باشد.',
     'email_confirm_success' => 'ایمیل شما تایید شد! اکنون باید بتوانید با استفاده از این آدرس ایمیل وارد شوید.',
     'email_confirm_resent' => 'پیام تایید پست الکترونیک مجدد ارسال گردید، لطفا صندوق ورودی خود را بررسی نمایید.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'تشکر بابت تایید!',
+    'email_confirm_thanks_desc' => 'لطفاً یک لحظه صبر کنید تا تأیید شما بررسی شود. اگر بعد از 3 ثانیه هدایت نشدید، بر روی لینک "ادامه" کلیک کنید تا ادامه دهید.',
 
     'email_not_confirmed' => 'پست الکترونیک تایید نشده است',
     'email_not_confirmed_text' => 'پست الکترونیک شما هنوز تایید نشده است.',

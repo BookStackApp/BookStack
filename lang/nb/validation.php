@@ -32,7 +32,7 @@ return [
     'digits_between'       => ':attribute må være mellomg :min og :max tall.',
     'email'                => ':attribute må være en gyldig e-post.',
     'ends_with' => ':attribute må slutte med en av verdiene: :values',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => 'Attributtet :attribute må angis som en gyldig fil.',
     'filled'               => ':attribute feltet er påkrevd.',
     'gt'                   => [
         'numeric' => ':attribute må være større enn :value.',

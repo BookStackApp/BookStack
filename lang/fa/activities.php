@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'کاربر با موفقیت حذف شد',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'نقش با موفقیت ایجاد شد',
+    'role_update_notification' => 'نقش با موفقیت به روز شد',
+    'role_delete_notification' => 'نقش با موفقیت حذف شد',
 
     // Other
     'commented_on'                => 'ثبت دیدگاه',

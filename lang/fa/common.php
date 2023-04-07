@@ -88,7 +88,7 @@ return [
     'edit_profile' => 'ویرایش پروفایل',
     'dark_mode' => 'حالت تاریک',
     'light_mode' => 'حالت روشن',
-    'global_search' => 'Global Search',
+    'global_search' => 'جستجوی سراسری',
 
     // Layout tabs
     'tab_info' => 'اطلاعات',
