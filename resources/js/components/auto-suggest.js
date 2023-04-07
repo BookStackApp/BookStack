@@ -110,7 +110,7 @@ export class AutoSuggest extends Component {
 
         // This used to use <button>s but was changed to div elements since Safari would not focus on buttons
         // on which causes a range of other complexities related to focus handling.
-        this.list.innerHTML = suggestions.map(value => `<li><div tabindex="-1" class="text-item">${escapeHtml(value)}</div></li>`).join('');
+        this.list.innerHTML = suggestions.map(value => `<li><div tabindex="0" class="text-item">${escapeHtml(value)}</div></li>`).join('');
         this.list.style.display = 'block';
         for (const button of this.list.querySelectorAll('.text-item')) {
             button.addEventListener('blur', this.hideSuggestionsIfFocusedLost.bind(this));
