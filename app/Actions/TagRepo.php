@@ -11,11 +11,9 @@ use Illuminate\Support\Facades\DB;
 
 class TagRepo
 {
-    protected PermissionApplicator $permissions;
-
-    public function __construct(PermissionApplicator $permissions)
-    {
-        $this->permissions = $permissions;
+    public function __construct(
+        protected PermissionApplicator $permissions
+    ) {
     }
 
     /**
@@ -90,6 +88,7 @@ class TagRepo
     {
         $query = Tag::query()
             ->select('*', DB::raw('count(*) as count'))
+            ->where('value', '!=', '')
             ->groupBy('value');
 
         if ($searchTerm) {

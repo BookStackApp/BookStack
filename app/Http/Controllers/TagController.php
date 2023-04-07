@@ -8,11 +8,9 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    protected TagRepo $tagRepo;
-
-    public function __construct(TagRepo $tagRepo)
-    {
-        $this->tagRepo = $tagRepo;
+    public function __construct(
+        protected TagRepo $tagRepo
+    ) {
     }
 
     /**
