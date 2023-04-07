@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Um erro aconteceu enquanto o servidor tentava efetuar o upload da imagem',
     'image_upload_type_error' => 'O tipo de imagem que está sendo enviada é inválido',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Dados de desenho não puderam ser carregados. Talvez o arquivo de desenho não exista mais ou você não tenha permissão para acessá-lo.',
 
     // Attachments
     'attachment_not_found' => 'Anexo não encontrado',

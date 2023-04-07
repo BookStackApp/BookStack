@@ -22,7 +22,7 @@ return [
     'meta_created_name' => 'ایجاد شده :timeLength توسط :user',
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
-    'meta_owned_name' => 'توسط :user ایجاد شده‌است',
+    'meta_owned_name' => 'متعلق به :user',
     'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'شما مجوزهای لازم برای انتخاب این مورد را ندارید',
