@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'Snarveier',
+    'shortcuts_interface' => 'Grensesnitt hurtigtaster',
+    'shortcuts_toggle_desc' => 'Her kan du aktivere eller deaktivere snarveier for tastatur system som brukes til navigasjon og handlinger.',
+    'shortcuts_customize_desc' => 'Du kan tilpasse hver av snarveiene nedenfor. Trykk på ønsket nøkkelkombinasjon etter å ha valgt inndata for en snarvei.',
+    'shortcuts_toggle_label' => 'Tastatursnarveier aktivert',
+    'shortcuts_section_navigation' => 'Navigasjon',
+    'shortcuts_section_actions' => 'Vanlige handlinger',
+    'shortcuts_save' => 'Lagre snarveier',
+    'shortcuts_overlay_desc' => 'Merk: Når snarveier er aktivert er et hjelperoverlegg tilgjengelig via å trykke "?" som vil fremheve de tilgjengelige snarveiene som for øyeblikket er synlige på skjermen.',
+    'shortcuts_update_success' => 'Snarvei innstillinger er oppdatert!',
 ];

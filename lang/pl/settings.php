@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Schemat kolorów aplikacji',
-    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
+    'color_scheme_desc' => 'Ustaw kolory używane w interfejsie aplikacji. Kolory można skonfigurować oddzielnie dla trybu ciemnego i jasnego, aby najlepiej pasowały do motywu i zapewniały czytelność.',
+    'ui_colors_desc' => 'Ustaw podstawowy kolor aplikacji i domyślny kolor linku. Podstawowy kolor jest używany głównie w banerze aplikacji, przyciskach i interfejsie. Domyślny kolor linku jest używany dla tekstowych linków i akcji, zarówno w napisanych treściach, jak i w interfejsie aplikacji.',
     'app_color' => 'Kolor podstawowy',
     'link_color' => 'Domyślny kolor linku',
     'content_colors_desc' => 'Ustaw kolory dla wszystkich elementów w hierarchii organizacji stron. Wybór kolorów o jasności podobnej do domyślnych kolorów jest zalecany dla czytelności.',
