@@ -197,7 +197,7 @@ class UserController extends Controller
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
-        $newOwnerId = $request->get('new_owner_id', null);
+        $newOwnerId = intval($request->get('new_owner_id')) ?: null;
 
         $this->userRepo->destroy($user, $newOwnerId);
 
