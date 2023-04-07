@@ -162,6 +162,16 @@ class UserManagementTest extends TestCase
         ]);
     }
 
+    public function test_delete_with_empty_owner_migration_id_works()
+    {
+        $user = $this->users->editor();
+
+        $resp = $this->asAdmin()->delete("settings/users/{$user->id}", ['new_owner_id' => '']);
+        $resp->assertRedirect('/settings/users');
+        $this->assertActivityExists(ActivityType::USER_DELETE);
+        $this->assertSessionHas('success');
+    }
+
     public function test_delete_removes_user_preferences()
     {
         $editor = $this->users->editor();
