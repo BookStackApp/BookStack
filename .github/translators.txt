@@ -311,3 +311,12 @@ m4tthi4s :: French
 toras9000 :: Japanese
 pathab :: German
 MichelSchoon85 :: Dutch
+Jøran Haugli (haugli92) :: Norwegian Bokmal
+Vasileios Kouvelis (VasilisKouvelis) :: Greek
+Dremski :: Bulgarian
+Frédéric SENE (nothingfr) :: French
+bendem :: French
+kostasdizas :: Greek
+Ricardo Schroeder (brownstone666) :: Portuguese, Brazilian
+Eitan MG (EitanMG) :: Hebrew
+Robin Flikkema (RobinFlikkema) :: Dutch
