@@ -17,18 +17,18 @@ return [
     'page_move'                   => 'преместена страница',
 
     // Chapters
-    'chapter_create'              => 'създадена страница',
-    'chapter_create_notification' => 'Главата е добавена успешно',
+    'chapter_create'              => 'създадена глава',
+    'chapter_create_notification' => 'Успешно създадена глава',
     'chapter_update'              => 'обновена глава',
-    'chapter_update_notification' => 'Главата е обновена успешно',
+    'chapter_update_notification' => 'Успешно обновена глава',
     'chapter_delete'              => 'изтрита глава',
-    'chapter_delete_notification' => 'Главата е изтрита успешно',
+    'chapter_delete_notification' => 'Успешно изтрита глава',
     'chapter_move'                => 'преместена глава',
 
     // Books
     'book_create'                 => 'създадена книга',
     'book_create_notification'    => 'Книгата е създадена успешно',
-    'book_create_from_chapter'              => 'converted chapter to book',
+    'book_create_from_chapter'              => 'превърната глава в книга',
     'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'обновена книга',
     'book_update_notification'    => 'Книгата е обновена успешно',
@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'Потребителят е премахнат успешно',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'Успешна създадена роля',
+    'role_update_notification' => 'Успешно обновена роля',
+    'role_delete_notification' => 'Успешно изтрита роля',
 
     // Other
     'commented_on'                => 'коментирано на',
