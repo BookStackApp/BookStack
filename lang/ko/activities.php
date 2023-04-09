@@ -14,7 +14,7 @@ return [
     'page_delete_notification'    => '페이지를 삭제했습니다',
     'page_restore'                => '문서 복원',
     'page_restore_notification'   => '페이지가 복원되었습니다',
-    'page_move'                   => '이동된 페이지',
+    'page_move'                   => '문서 이동',
 
     // Chapters
     'chapter_create'              => '챕터 만들기',
