@@ -2,7 +2,7 @@ import {EditorView} from "@codemirror/view"
 import Clipboard from "clipboard/dist/clipboard.min";
 
 // Modes
-import {viewer} from "./setups.js";
+import {viewer, editor} from "./setups.js";
 import {createView, updateViewLanguage} from "./views.js";
 
 /**
@@ -180,25 +180,31 @@ export function updateLayout(cmInstance) {
 /**
  * Get a CodeMirror instance to use for the markdown editor.
  * @param {HTMLElement} elem
+ * @param {function} onChange
+ * @param {object} domEventHandlers
  * @returns {*}
  */
-export function markdownEditor(elem) {
+export function markdownEditor(elem, onChange, domEventHandlers) {
     const content = elem.textContent;
-    const config = {
-        value: content,
-        mode: "markdown",
-        lineNumbers: true,
-        lineWrapping: true,
-        theme: getTheme(),
-        scrollPastEnd: true,
-    };
 
-    window.$events.emitPublic(elem, 'editor-markdown-cm::pre-init', {config});
+    // TODO - Change to pass something else that's useful, probably extension array?
+    // window.$events.emitPublic(elem, 'editor-markdown-cm::pre-init', {config});
 
-    return CodeMirror(function (elt) {
-        elem.parentNode.insertBefore(elt, elem);
-        elem.style.display = 'none';
-    }, config);
+    const ev = createView({
+        parent: elem.parentNode,
+        doc: content,
+        extensions: [
+            ...editor('markdown'),
+            EditorView.updateListener.of((v) => {
+                onChange(v);
+            }),
+            EditorView.domEventHandlers(domEventHandlers),
+        ],
+    });
+
+    elem.style.display = 'none';
+
+    return ev;
 }
 
 /**
@@ -206,6 +212,7 @@ export function markdownEditor(elem) {
  * @returns {string}
  */
 export function getMetaKey() {
-    let mac = CodeMirror.keyMap["default"] == CodeMirror.keyMap.macDefault;
+    // TODO - Redo, Is needed? No CodeMirror instance to use.
+    const mac = CodeMirror.keyMap["default"] == CodeMirror.keyMap.macDefault;
     return mac ? "Cmd" : "Ctrl";
 }

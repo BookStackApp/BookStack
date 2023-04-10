@@ -82,6 +82,10 @@
   flex-grow: 0;
 }
 
+.markdown-editor-wrap .cm-editor {
+  flex: 1;
+}
+
 .markdown-panel-divider {
   width: 2px;
   @include lightDark(background-color, #ddd, #000);

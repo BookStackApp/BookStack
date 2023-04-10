@@ -45,7 +45,8 @@ export class MarkdownEditor extends Component {
         window.$events.emitPublic(this.elem, 'editor-markdown::setup', {
             markdownIt: this.editor.markdown.getRenderer(),
             displayEl: this.display,
-            codeMirrorInstance: this.editor.cm,
+            // TODO
+            // codeMirrorInstance: this.editor.cm,
         });
     }
 
@@ -81,9 +82,10 @@ export class MarkdownEditor extends Component {
         });
 
         // Refresh CodeMirror on container resize
-        const resizeDebounced = debounce(() => this.editor.cm.refresh(), 100, false);
-        const observer = new ResizeObserver(resizeDebounced);
-        observer.observe(this.elem);
+        // TODO
+        // const resizeDebounced = debounce(() => this.editor.cm.refresh(), 100, false);
+        // const observer = new ResizeObserver(resizeDebounced);
+        // observer.observe(this.elem);
 
         this.handleDividerDrag();
     }
@@ -102,7 +104,8 @@ export class MarkdownEditor extends Component {
                 window.removeEventListener('pointerup', upListener);
                 this.display.style.pointerEvents = null;
                 document.body.style.userSelect = null;
-                this.editor.cm.refresh();
+                // TODO
+                // this.editor.cm.refresh();
             };
 
             this.display.style.pointerEvents = 'none';

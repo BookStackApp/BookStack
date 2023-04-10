@@ -13,7 +13,7 @@ export class Actions {
     }
 
     updateAndRender() {
-        const content = this.editor.cm.getValue();
+        const content = this.editor.cm.state.doc.toString();
         this.editor.config.inputEl.value = content;
 
         const html = this.editor.markdown.render(content);
@@ -411,17 +411,17 @@ export class Actions {
         });
     }
 
-    syncDisplayPosition() {
+    syncDisplayPosition(event) {
         // Thanks to http://liuhao.im/english/2015/11/10/the-sync-scroll-of-markdown-editor-in-javascript.html
-        const scroll = this.editor.cm.getScrollInfo();
-        const atEnd = scroll.top + scroll.clientHeight === scroll.height;
+        const scrollEl = event.target;
+        const atEnd = Math.abs(scrollEl.scrollHeight - scrollEl.clientHeight - scrollEl.scrollTop) < 1;
         if (atEnd) {
             this.editor.display.scrollToIndex(-1);
             return;
         }
 
-        const lineNum = this.editor.cm.lineAtHeight(scroll.top, 'local');
-        const range = this.editor.cm.getRange({line: 0, ch: null}, {line: lineNum, ch: null});
+        const blockInfo = this.editor.cm.lineBlockAtHeight(scrollEl.scrollTop);
+        const range = this.editor.cm.state.sliceDoc(0, blockInfo.from);
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.editor.markdown.render(range), 'text/html');
         const totalLines = doc.documentElement.querySelectorAll('body > *');
