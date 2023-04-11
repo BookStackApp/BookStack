@@ -1,4 +1,4 @@
-import {provide as provideShortcuts} from "./shortcuts";
+import {provideKeyBindings} from "./shortcuts";
 import {debounce} from "../services/util";
 import Clipboard from "../services/clipboard";
 
@@ -28,15 +28,17 @@ export async function init(editor) {
         scroll: (event) => syncActive && onScrollDebounced(event)
     }
 
-    const cm = Code.markdownEditor(editor.config.inputEl, onViewUpdate, domEventHandlers);
+    const cm = Code.markdownEditor(
+        editor.config.inputEl,
+        onViewUpdate,
+        domEventHandlers,
+        provideKeyBindings(editor),
+    );
     window.cm = cm;
 
     // Will force to remain as ltr for now due to issues when HTML is in editor.
     // TODO
     // cm.setOption('direction', 'ltr');
-    // Register shortcuts
-    // TODO
-    // cm.setOption('extraKeys', provideShortcuts(editor, Code.getMetaKey()));
 
 
     // Handle image paste

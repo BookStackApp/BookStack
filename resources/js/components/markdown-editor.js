@@ -45,7 +45,7 @@ export class MarkdownEditor extends Component {
         window.$events.emitPublic(this.elem, 'editor-markdown::setup', {
             markdownIt: this.editor.markdown.getRenderer(),
             displayEl: this.display,
-            // TODO
+            // TODO - change to codeMirrorView?
             // codeMirrorInstance: this.editor.cm,
         });
     }
@@ -58,7 +58,7 @@ export class MarkdownEditor extends Component {
             if (button === null) return;
 
             const action = button.getAttribute('data-action');
-            if (action === 'insertImage') this.editor.actions.insertImage();
+            if (action === 'insertImage') this.editor.actions.showImageInsert();
             if (action === 'insertLink') this.editor.actions.showLinkSelector();
             if (action === 'insertDrawing' && (event.ctrlKey || event.metaKey)) {
                 this.editor.actions.showImageManager();

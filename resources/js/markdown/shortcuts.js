@@ -1,48 +1,57 @@
 /**
- * Provide shortcuts for the given codemirror instance.
+ * Provide shortcuts for the editor instance.
  * @param {MarkdownEditor} editor
- * @param {String} metaKey
  * @returns {Object<String, Function>}
  */
-export function provide(editor, metaKey) {
+function provide(editor) {
     const shortcuts = {};
 
     // Insert Image shortcut
-    shortcuts[`${metaKey}-Alt-I`] = function(cm) {
-        const selectedText = cm.getSelection();
-        const newText = `![${selectedText}](http://)`;
-        const cursorPos = cm.getCursor('from');
-        cm.replaceSelection(newText);
-        cm.setCursor(cursorPos.line, cursorPos.ch + newText.length -1);
-    };
+    shortcuts['Mod-Alt-i'] = () => editor.actions.insertImage();
 
     // Save draft
-    shortcuts[`${metaKey}-S`] = cm => window.$events.emit('editor-save-draft');
+    shortcuts['Mod-s'] = cm => window.$events.emit('editor-save-draft');
 
     // Save page
-    shortcuts[`${metaKey}-Enter`] = cm => window.$events.emit('editor-save-page');
+    shortcuts['Mod-Enter'] = cm => window.$events.emit('editor-save-page');
 
     // Show link selector
-    shortcuts[`Shift-${metaKey}-K`] = cm => editor.actions.showLinkSelector();
+    shortcuts['Shift-Mod-k'] = cm => editor.actions.showLinkSelector();
 
     // Insert Link
-    shortcuts[`${metaKey}-K`] = cm => editor.actions.insertLink();
+    shortcuts['Mod-k'] = cm => editor.actions.insertLink();
 
     // FormatShortcuts
-    shortcuts[`${metaKey}-1`] = cm => editor.actions.replaceLineStart('##');
-    shortcuts[`${metaKey}-2`] = cm => editor.actions.replaceLineStart('###');
-    shortcuts[`${metaKey}-3`] = cm => editor.actions.replaceLineStart('####');
-    shortcuts[`${metaKey}-4`] = cm => editor.actions.replaceLineStart('#####');
-    shortcuts[`${metaKey}-5`] = cm => editor.actions.replaceLineStart('');
-    shortcuts[`${metaKey}-D`] = cm => editor.actions.replaceLineStart('');
-    shortcuts[`${metaKey}-6`] = cm => editor.actions.replaceLineStart('>');
-    shortcuts[`${metaKey}-Q`] = cm => editor.actions.replaceLineStart('>');
-    shortcuts[`${metaKey}-7`] = cm => editor.actions.wrapSelection('\n```\n', '\n```');
-    shortcuts[`${metaKey}-8`] = cm => editor.actions.wrapSelection('`', '`');
-    shortcuts[`Shift-${metaKey}-E`] = cm => editor.actions.wrapSelection('`', '`');
-    shortcuts[`${metaKey}-9`] = cm => editor.actions.cycleCalloutTypeAtSelection();
-    shortcuts[`${metaKey}-P`] = cm => editor.actions.replaceLineStart('-')
-    shortcuts[`${metaKey}-O`] = cm => editor.actions.replaceLineStartForOrderedList()
+    shortcuts['Mod-1'] = cm => editor.actions.replaceLineStart('##');
+    shortcuts['Mod-2'] = cm => editor.actions.replaceLineStart('###');
+    shortcuts['Mod-3'] = cm => editor.actions.replaceLineStart('####');
+    shortcuts['Mod-4'] = cm => editor.actions.replaceLineStart('#####');
+    shortcuts['Mod-5'] = cm => editor.actions.replaceLineStart('');
+    shortcuts['Mod-d'] = cm => editor.actions.replaceLineStart('');
+    shortcuts['Mod-6'] = cm => editor.actions.replaceLineStart('>');
+    shortcuts['Mod-q'] = cm => editor.actions.replaceLineStart('>');
+    shortcuts['Mod-7'] = cm => editor.actions.wrapSelection('\n```\n', '\n```');
+    shortcuts['Mod-8'] = cm => editor.actions.wrapSelection('`', '`');
+    shortcuts['Shift-Mod-e'] = cm => editor.actions.wrapSelection('`', '`');
+    shortcuts['Mod-9'] = cm => editor.actions.cycleCalloutTypeAtSelection();
+    shortcuts['Mod-p'] = cm => editor.actions.replaceLineStart('-')
+    shortcuts['Mod-o'] = cm => editor.actions.replaceLineStartForOrderedList()
 
     return shortcuts;
+}
+
+/**
+ * Get the editor shortcuts in CodeMirror keybinding format.
+ * @param {MarkdownEditor} editor
+ * @return {{key: String, run: function, preventDefault: boolean}[]}
+ */
+export function provideKeyBindings(editor) {
+    const shortcuts= provide(editor);
+    const keyBindings = [];
+
+    for (const [shortcut, action] of Object.entries(shortcuts)) {
+        keyBindings.push({key: shortcut, run: action, preventDefault: true});
+    }
+
+    return keyBindings;
 }

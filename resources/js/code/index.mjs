@@ -1,4 +1,4 @@
-import {EditorView} from "@codemirror/view"
+import {EditorView, keymap} from "@codemirror/view"
 import Clipboard from "clipboard/dist/clipboard.min";
 
 // Modes
@@ -182,9 +182,10 @@ export function updateLayout(cmInstance) {
  * @param {HTMLElement} elem
  * @param {function} onChange
  * @param {object} domEventHandlers
+ * @param {Array} keyBindings
  * @returns {*}
  */
-export function markdownEditor(elem, onChange, domEventHandlers) {
+export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
     const content = elem.textContent;
 
     // TODO - Change to pass something else that's useful, probably extension array?
@@ -199,20 +200,11 @@ export function markdownEditor(elem, onChange, domEventHandlers) {
                 onChange(v);
             }),
             EditorView.domEventHandlers(domEventHandlers),
+            keymap.of(keyBindings),
         ],
     });
 
     elem.style.display = 'none';
 
     return ev;
-}
-
-/**
- * Get the 'meta' key dependent on the user's system.
- * @returns {string}
- */
-export function getMetaKey() {
-    // TODO - Redo, Is needed? No CodeMirror instance to use.
-    const mac = CodeMirror.keyMap["default"] == CodeMirror.keyMap.macDefault;
-    return mac ? "Cmd" : "Ctrl";
 }
