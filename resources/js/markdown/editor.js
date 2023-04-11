@@ -49,6 +49,6 @@ export async function init(config) {
  * @property {Display} display
  * @property {Markdown} markdown
  * @property {Actions} actions
- * @property {CodeMirror} cm
+ * @property {EditorView} cm
  * @property {Settings} settings
  */
