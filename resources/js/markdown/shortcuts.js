@@ -7,7 +7,7 @@ function provide(editor) {
     const shortcuts = {};
 
     // Insert Image shortcut
-    shortcuts['Mod-Alt-i'] = () => editor.actions.insertImage();
+    shortcuts['Mod-Alt-i'] = cm => editor.actions.insertImage();
 
     // Save draft
     shortcuts['Mod-s'] = cm => window.$events.emit('editor-save-draft');
