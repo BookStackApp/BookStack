@@ -28,7 +28,8 @@ export class Actions {
         return this.lastContent;
     }
 
-    insertImage() {
+    showImageInsert() {
+        // TODO
         const cursorPos = this.editor.cm.getCursor('from');
         /** @type {ImageManager} **/
         const imageManager = window.$components.first('image-manager');
@@ -42,7 +43,17 @@ export class Actions {
         }, 'gallery');
     }
 
+    insertImage() {
+        // TODO
+        const selectedText = this.editor.cm.getSelection();
+        const newText = `![${selectedText}](http://)`;
+        const cursorPos = this.editor.cm.getCursor('from');
+        this.editor.cm.replaceSelection(newText);
+        this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length -1);
+    }
+
     insertLink() {
+        // TODO
         const cursorPos = this.editor.cm.getCursor('from');
         const selectedText = this.editor.cm.getSelection() || '';
         const newText = `[${selectedText}]()`;
@@ -53,6 +64,7 @@ export class Actions {
     }
 
     showImageManager() {
+        // TODO
         const cursorPos = this.editor.cm.getCursor('from');
         /** @type {ImageManager} **/
         const imageManager = window.$components.first('image-manager');
@@ -63,6 +75,7 @@ export class Actions {
 
     // Show the popup link selector and insert a link when finished
     showLinkSelector() {
+        // TODO
         const cursorPos = this.editor.cm.getCursor('from');
         /** @type {EntitySelectorPopup} **/
         const selector = window.$components.first('entity-selector-popup');
@@ -77,6 +90,7 @@ export class Actions {
 
     // Show draw.io if enabled and handle save.
     startDrawing() {
+        // TODO
         const url = this.editor.config.drawioUrl;
         if (!url) return;
 
@@ -101,6 +115,7 @@ export class Actions {
     }
 
     insertDrawing(image, originalCursor) {
+        // TODO
         const newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
         this.editor.cm.focus();
         this.editor.cm.replaceSelection(newText);
@@ -109,6 +124,7 @@ export class Actions {
 
     // Show draw.io if enabled and handle save.
     editDrawing(imgContainer) {
+        // TODO
         const drawioUrl = this.editor.config.drawioUrl;
         if (!drawioUrl) {
             return;
@@ -145,6 +161,7 @@ export class Actions {
     }
 
     handleDrawingUploadError(error) {
+        // TODO
         if (error.status === 413) {
             window.$events.emit('error', this.editor.config.text.serverUploadLimit);
         } else {
@@ -155,6 +172,7 @@ export class Actions {
 
     // Make the editor full screen
     fullScreen() {
+        // TODO
         const container = this.editor.config.container;
         const alreadyFullscreen = container.classList.contains('fullscreen');
         container.classList.toggle('fullscreen', !alreadyFullscreen);
@@ -163,6 +181,7 @@ export class Actions {
 
     // Scroll to a specified text
     scrollToText(searchText) {
+        // TODO
         if (!searchText) {
             return;
         }
@@ -189,6 +208,7 @@ export class Actions {
     }
 
     focus() {
+        // TODO
         this.editor.cm.focus();
     }
 
@@ -197,6 +217,7 @@ export class Actions {
      * @param {String} content
      */
     insertContent(content) {
+        // TODO
         this.editor.cm.replaceSelection(content);
     }
 
@@ -205,6 +226,7 @@ export class Actions {
      * @param {String} content
      */
     prependContent(content) {
+        // TODO
         const cursorPos = this.editor.cm.getCursor('from');
         const newContent = content + '\n' + this.editor.cm.getValue();
         this.editor.cm.setValue(newContent);
@@ -217,6 +239,7 @@ export class Actions {
      * @param {String} content
      */
     appendContent(content) {
+        // TODO
         const cursorPos = this.editor.cm.getCursor('from');
         const newContent = this.editor.cm.getValue() + '\n' + content;
         this.editor.cm.setValue(newContent);
@@ -228,6 +251,7 @@ export class Actions {
      * @param {String} content
      */
     replaceContent(content) {
+        // TODO
         this.editor.cm.setValue(content);
     }
 
@@ -236,6 +260,7 @@ export class Actions {
      * @param {String} replace
      */
     findAndReplaceContent(search, replace) {
+        // TODO
         const text = this.editor.cm.getValue();
         const cursor = this.editor.cm.listSelections();
         this.editor.cm.setValue(text.replace(search, replace));
@@ -247,6 +272,7 @@ export class Actions {
      * @param {String} newStart
      */
     replaceLineStart(newStart) {
+        // TODO
         const cursor = this.editor.cm.getCursor();
         let lineContent = this.editor.cm.getLine(cursor.line);
         const lineLen = lineContent.length;
@@ -279,6 +305,7 @@ export class Actions {
      * @param {String} end
      */
     wrapLine(start, end) {
+        // TODO
         const cursor = this.editor.cm.getCursor();
         const lineContent = this.editor.cm.getLine(cursor.line);
         const lineLen = lineContent.length;
@@ -300,6 +327,7 @@ export class Actions {
      * @param {String} end
      */
     wrapSelection(start, end) {
+        // TODO
         const selection = this.editor.cm.getSelection();
         if (selection === '') return this.wrapLine(start, end);
 
@@ -324,6 +352,7 @@ export class Actions {
     }
 
     replaceLineStartForOrderedList() {
+        // TODO
         const cursor = this.editor.cm.getCursor();
         const prevLineContent = this.editor.cm.getLine(cursor.line - 1) || '';
         const listMatch = prevLineContent.match(/^(\s*)(\d)([).])\s/) || [];
@@ -341,6 +370,7 @@ export class Actions {
      * Creates a callout block if none existing, and removes it if cycling past the danger type.
      */
     cycleCalloutTypeAtSelection() {
+        // TODO
         const selectionRange = this.editor.cm.listSelections()[0];
         const lineContent = this.editor.cm.getLine(selectionRange.anchor.line);
         const lineLength = lineContent.length;
@@ -379,6 +409,7 @@ export class Actions {
      * @param {File} file
      */
     uploadImage(file) {
+        // TODO
         if (file === null || file.type.indexOf('image') !== 0) return;
         let ext = 'png';
 
@@ -436,6 +467,7 @@ export class Actions {
      * @param {Number} posY
      */
     insertTemplate(templateId, posX, posY) {
+        // TODO
         const cursorPos = this.editor.cm.coordsChar({left: posX, top: posY});
         this.editor.cm.setCursor(cursorPos);
         window.$http.get(`/templates/${templateId}`).then(resp => {
@@ -449,6 +481,7 @@ export class Actions {
      * @param {File[]} images
      */
     insertClipboardImages(images) {
+        // TODO
         const cursorPos = this.editor.cm.coordsChar({left: event.pageX, top: event.pageY});
         this.editor.cm.setCursor(cursorPos);
         for (const image of images) {
