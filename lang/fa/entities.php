@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'متعلق به :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_page_count' => 'ارجاع شده در :count صفخه|ارجاع شده در :count صفخه',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'شما مجوزهای لازم برای انتخاب این مورد را ندارید',
     'images' => 'عکس‌ها',
@@ -236,8 +236,8 @@ return [
     'pages_md_insert_image' => 'درج تصویر',
     'pages_md_insert_link' => 'پیوند نهاد را درج کنید',
     'pages_md_insert_drawing' => 'درج طرح',
-    'pages_md_show_preview' => 'Show preview',
-    'pages_md_sync_scroll' => 'Sync preview scroll',
+    'pages_md_show_preview' => 'دیدن پیش نمایش',
+    'pages_md_sync_scroll' => 'هماهنگ سازی اسکرول پیش نمایش',
     'pages_not_in_chapter' => 'صفحه در یک فصل نیست',
     'pages_move' => 'انتقال صفحه',
     'pages_move_success' => 'صفحه به ":parentName" منتقل شد',
@@ -292,7 +292,7 @@ return [
     'shelf_tags' => 'برچسب های قفسه',
     'tag' => 'برچسب',
     'tags' =>  'برچسب ها',
-    'tags_index_desc' => 'Tags can be applied to content within the system to apply a flexible form of categorization. Tags can have both a key and value, with the value being optional. Once applied, content can then be queried using the tag name and value.',
+    'tags_index_desc' => 'تگ ها را میتوان به محتوای داخل سیستم اعمال کرد تا فرم هماهنگی از طبقه‌بندی ایجاد شود. تگ ها می توانند شامل یک کلید و یک مقدار باشند، که مقدار آن انتخابی یا قابل خذف است. بعد از ایجاد تگ، محتوا را می توان توسط کلید یا مقدار هر تگ جستجو نمود.',
     'tag_name' =>  'نام برچسب',
     'tag_value' => 'مقدار برچسب (اختیاری)',
     'tags_explain' => "برای دسته بندی بهتر مطالب خود چند برچسب اضافه کنید.\nمی توانید برای سازماندهی عمیق‌تر، یک مقدار به یک برچسب اختصاص دهید.",
@@ -395,6 +395,6 @@ return [
 
     // References
     'references' => 'مراجع',
-    'references_none' => 'There are no tracked references to this item.',
+    'references_none' => 'هیچ رفرنسی برای این قلم یافت نشد.',
     'references_to_desc' => 'در زیر تمام صفحات شناخته شده در سیستم که به این مورد پیوند دارند، نشان داده شده است.',
 ];
