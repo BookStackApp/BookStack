@@ -10,8 +10,8 @@ return [
     'settings' => 'Nastavenia',
     'settings_save' => 'Uložiť nastavenia',
     'settings_save_success' => 'Nastavenia uložené',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => 'Verzia systému',
+    'categories' => 'Kategórie',
 
     // App Settings
     'app_customization' => 'Prispôsobenia',
@@ -27,7 +27,7 @@ return [
     'app_secure_images' => 'Povoliť nahrávanie súborov so zvýšeným zabezpečením?',
     'app_secure_images_toggle' => 'Povoliť nahrávanie obrázkov s vyšším zabezpečením',
     'app_secure_images_desc' => 'Kvôli výkonu sú všetky obrázky verejné. Táto možnosť pridá pred URL obrázka náhodný, ťažko uhádnuteľný reťazec. Aby ste zabránili jednoduchému prístupu, uistite sa, že indexy priečinkov nie sú povolené.',
-    'app_default_editor' => 'Default Page Editor',
+    'app_default_editor' => 'Predvolený editor stránky',
     'app_default_editor_desc' => 'Select which editor will be used by default when editing new pages. This can be overridden at a page level where permissions allow.',
     'app_custom_html' => 'Vlastný HTML obsah hlavičky',
     'app_custom_html_desc' => 'Všetok text pridaný sem bude vložený naspodok <head> sekcie na každej stránke. Môže sa to zísť pri zmene štýlu alebo pre pridanie analytického kódu.',
