@@ -296,10 +296,11 @@ export class Actions {
     }
 
     replaceLineStartForOrderedList() {
-        // TODO
-        const cursor = this.editor.cm.getCursor();
-        const prevLineContent = this.editor.cm.getLine(cursor.line - 1) || '';
-        const listMatch = prevLineContent.match(/^(\s*)(\d)([).])\s/) || [];
+        const selectionRange = this.#getSelectionRange();
+        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
+        const prevLine = this.editor.cm.state.doc.line(line.number - 1);
+
+        const listMatch = prevLine.text.match(/^(\s*)(\d)([).])\s/) || [];
 
         const number = (Number(listMatch[2]) || 0) + 1;
         const whiteSpace = listMatch[1] || '';
@@ -314,37 +315,28 @@ export class Actions {
      * Creates a callout block if none existing, and removes it if cycling past the danger type.
      */
     cycleCalloutTypeAtSelection() {
-        // TODO
-        const selectionRange = this.editor.cm.listSelections()[0];
-        const lineContent = this.editor.cm.getLine(selectionRange.anchor.line);
-        const lineLength = lineContent.length;
-        const contentRange = {
-            anchor: {line: selectionRange.anchor.line, ch: 0},
-            head: {line: selectionRange.anchor.line, ch: lineLength},
-        };
+        const selectionRange = this.#getSelectionRange();
+        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
 
         const formats = ['info', 'success', 'warning', 'danger'];
         const joint = formats.join('|');
         const regex = new RegExp(`class="((${joint})\\s+callout|callout\\s+(${joint}))"`, 'i');
-        const matches = regex.exec(lineContent);
+        const matches = regex.exec(line.text);
         const format = (matches ? (matches[2] || matches[3]) : '').toLowerCase();
 
         if (format === formats[formats.length - 1]) {
-            this.wrapLine(`<p class="callout ${formats[formats.length - 1]}">`, '</p>');
+            this.#wrapLine(`<p class="callout ${formats[formats.length - 1]}">`, '</p>');
         } else if (format === '') {
-            this.wrapLine('<p class="callout info">', '</p>');
+            this.#wrapLine('<p class="callout info">', '</p>');
         } else {
             const newFormatIndex = formats.indexOf(format) + 1;
             const newFormat = formats[newFormatIndex];
-            const newContent = lineContent.replace(matches[0], matches[0].replace(format, newFormat));
-            this.editor.cm.replaceRange(newContent, contentRange.anchor, contentRange.head);
-
-            const chDiff = newContent.length - lineContent.length;
-            selectionRange.anchor.ch += chDiff;
-            if (selectionRange.anchor !== selectionRange.head) {
-                selectionRange.head.ch += chDiff;
-            }
-            this.editor.cm.setSelection(selectionRange.anchor, selectionRange.head);
+            const newContent = line.text.replace(matches[0], matches[0].replace(format, newFormat));
+            const lineDiff = newContent.length - line.text.length;
+            this.editor.cm.dispatch({
+                changes: {from: line.from, to: line.to, insert: newContent},
+                selection: {anchor: selectionRange.anchor + lineDiff, head: selectionRange.head + lineDiff},
+            });
         }
     }
 
@@ -372,37 +364,42 @@ export class Actions {
      * @param {Number} posX
      * @param {Number} posY
      */
-    insertTemplate(templateId, posX, posY) {
-        // TODO
-        const cursorPos = this.editor.cm.coordsChar({left: posX, top: posY});
-        this.editor.cm.setCursor(cursorPos);
-        window.$http.get(`/templates/${templateId}`).then(resp => {
-            const content = resp.data.markdown || resp.data.html;
-            this.editor.cm.replaceSelection(content);
+    async insertTemplate(templateId, posX, posY) {
+        const cursorPos = this.editor.cm.posAtCoords({x: posX, y: posY}, false);
+        const {data} = await window.$http.get(`/templates/${templateId}`);
+        const content = data.markdown || data.html;
+        this.editor.cm.dispatch({
+            changes: {from: cursorPos, to: cursorPos, insert: content},
+            selection: {anchor: cursorPos},
         });
     }
 
     /**
-     * Insert multiple images from the clipboard.
+     * Insert multiple images from the clipboard from an event at the provided
+     * screen coordinates (Typically form a paste event).
      * @param {File[]} images
+     * @param {Number} posX
+     * @param {Number} posY
      */
-    insertClipboardImages(images) {
-        // TODO
-        const cursorPos = this.editor.cm.coordsChar({left: event.pageX, top: event.pageY});
-        this.editor.cm.setCursor(cursorPos);
+    insertClipboardImages(images, posX, posY) {
+        const cursorPos = this.editor.cm.posAtCoords({x: posX, y: posY}, false);
         for (const image of images) {
-            this.#uploadImage(image);
+            this.uploadImage(image, cursorPos);
         }
     }
 
     /**
      * Handle image upload and add image into markdown content
      * @param {File} file
+     * @param {?Number} position
      */
-    #uploadImage(file) {
-        // TODO
+    async uploadImage(file, position= null) {
         if (file === null || file.type.indexOf('image') !== 0) return;
         let ext = 'png';
+
+        if (position === null) {
+            position = this.#getSelectionRange().from;
+        }
 
         if (file.name) {
             let fileNameMatches = file.name.match(/\.(.+)$/);
@@ -412,25 +409,26 @@ export class Actions {
         // Insert image into markdown
         const id = "image-" + Math.random().toString(16).slice(2);
         const placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
-        const selectedText = this.editor.cm.getSelection();
-        const placeHolderText = `![${selectedText}](${placeholderImage})`;
-        const cursor = this.editor.cm.getCursor();
-        this.editor.cm.replaceSelection(placeHolderText);
-        this.editor.cm.setCursor({line: cursor.line, ch: cursor.ch + selectedText.length + 3});
+        const placeHolderText = `![](${placeholderImage})`;
+        this.editor.cm.dispatch({
+            changes: {from: position, to: position, insert: placeHolderText},
+            selection: {anchor: position},
+        });
 
         const remoteFilename = "image-" + Date.now() + "." + ext;
         const formData = new FormData();
         formData.append('file', file, remoteFilename);
         formData.append('uploaded_to', this.editor.config.pageId);
 
-        window.$http.post('/images/gallery', formData).then(resp => {
-            const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
+        try {
+            const {data} = await window.$http.post('/images/gallery', formData);
+            const newContent = `[![](${data.thumbs.display})](${data.url})`;
             this.#findAndReplaceContent(placeHolderText, newContent);
-        }).catch(err => {
+        } catch (err) {
             window.$events.emit('error', this.editor.config.text.imageUploadError);
-            this.#findAndReplaceContent(placeHolderText, selectedText);
+            this.#findAndReplaceContent(placeHolderText, '');
             console.log(err);
-        });
+        }
     }
 
     /**

@@ -25,7 +25,37 @@ export async function init(editor) {
 
     const domEventHandlers = {
         // Handle scroll to sync display view
-        scroll: (event) => syncActive && onScrollDebounced(event)
+        scroll: (event) => syncActive && onScrollDebounced(event),
+        // Handle image & content drag n drop
+        drop: (event) => {
+            const templateId = event.dataTransfer.getData('bookstack/template');
+            if (templateId) {
+                event.preventDefault();
+                editor.actions.insertTemplate(templateId, event.pageX, event.pageY);
+            }
+
+            const clipboard = new Clipboard(event.dataTransfer);
+            const clipboardImages = clipboard.getImages();
+            if (clipboardImages.length > 0) {
+                event.stopPropagation();
+                event.preventDefault();
+                editor.actions.insertClipboardImages(clipboardImages, event.pageX, event.pageY);
+            }
+        },
+        // Handle image paste
+        paste: (event) => {
+            const clipboard = new Clipboard(event.clipboardData || event.dataTransfer);
+
+            // Don't handle the event ourselves if no items exist of contains table-looking data
+            if (!clipboard.hasItems() || clipboard.containsTabularData()) {
+                return;
+            }
+
+            const images = clipboard.getImages();
+            for (const image of images) {
+                editor.actions.uploadImage(image);
+            }
+        }
     }
 
     const cm = Code.markdownEditor(
@@ -39,43 +69,6 @@ export async function init(editor) {
     // Will force to remain as ltr for now due to issues when HTML is in editor.
     // TODO
     // cm.setOption('direction', 'ltr');
-
-
-    // Handle image paste
-    // TODO
-    // cm.on('paste', (cm, event) => {
-    //     const clipboard = new Clipboard(event.clipboardData || event.dataTransfer);
-    //
-    //     // Don't handle the event ourselves if no items exist of contains table-looking data
-    //     if (!clipboard.hasItems() || clipboard.containsTabularData()) {
-    //         return;
-    //     }
-    //
-    //     const images = clipboard.getImages();
-    //     for (const image of images) {
-    //         editor.actions.uploadImage(image);
-    //     }
-    // });
-
-    // Handle image & content drag n drop
-    // TODO
-    // cm.on('drop', (cm, event) => {
-    //
-    //     const templateId = event.dataTransfer.getData('bookstack/template');
-    //     if (templateId) {
-    //         event.preventDefault();
-    //         editor.actions.insertTemplate(templateId, event.pageX, event.pageY);
-    //     }
-    //
-    //     const clipboard = new Clipboard(event.dataTransfer);
-    //     const clipboardImages = clipboard.getImages();
-    //     if (clipboardImages.length > 0) {
-    //         event.stopPropagation();
-    //         event.preventDefault();
-    //         editor.actions.insertClipboardImages(clipboardImages);
-    //     }
-    //
-    // });
 
     return cm;
 }
