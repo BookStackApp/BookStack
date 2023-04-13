@@ -13,7 +13,7 @@ export class Actions {
     }
 
     updateAndRender() {
-        const content = this.editor.cm.state.doc.toString();
+        const content = this.#getText();
         this.editor.config.inputEl.value = content;
 
         const html = this.editor.markdown.render(content);
@@ -106,13 +106,12 @@ export class Actions {
 
     // Show draw.io if enabled and handle save.
     editDrawing(imgContainer) {
-        // TODO
         const drawioUrl = this.editor.config.drawioUrl;
         if (!drawioUrl) {
             return;
         }
 
-        const cursorPos = this.editor.cm.getCursor('from');
+        const selectionRange = this.#getSelectionRange();
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
         DrawIO.show(drawioUrl, () => {
@@ -126,15 +125,13 @@ export class Actions {
 
             window.$http.post("/images/drawio", data).then(resp => {
                 const newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
-                const newContent = this.editor.cm.getValue().split('\n').map(line => {
+                const newContent = this.#getText().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
                         return newText;
                     }
                     return line;
                 }).join('\n');
-                this.editor.cm.setValue(newContent);
-                this.editor.cm.setCursor(cursorPos);
-                this.editor.cm.focus();
+                this.#setText(newContent, selectionRange);
                 DrawIO.close();
             }).catch(err => {
                 this.handleDrawingUploadError(err);
@@ -207,12 +204,13 @@ export class Actions {
      * @param {String} content
      */
     prependContent(content) {
-        // TODO
-        const cursorPos = this.editor.cm.getCursor('from');
-        const newContent = content + '\n' + this.editor.cm.getValue();
-        this.editor.cm.setValue(newContent);
-        const prependLineCount = content.split('\n').length;
-        this.editor.cm.setCursor(cursorPos.line + prependLineCount, cursorPos.ch);
+        content = this.#cleanTextForEditor(content);
+        const selectionRange = this.#getSelectionRange();
+        this.editor.cm.dispatch({
+            changes: {from: 0, to: 0, insert: content + '\n'},
+            selection: {anchor: selectionRange.from + content.length + 1}
+        });
+        this.focus();
     }
 
     /**
@@ -220,11 +218,11 @@ export class Actions {
      * @param {String} content
      */
     appendContent(content) {
-        // TODO
-        const cursorPos = this.editor.cm.getCursor('from');
-        const newContent = this.editor.cm.getValue() + '\n' + content;
-        this.editor.cm.setValue(newContent);
-        this.editor.cm.setCursor(cursorPos.line, cursorPos.ch);
+        content = this.#cleanTextForEditor(content);
+        this.editor.cm.dispatch({
+            changes: {from: this.editor.cm.state.doc.length, insert: '\n' + content},
+        });
+        this.focus();
     }
 
     /**
@@ -232,20 +230,7 @@ export class Actions {
      * @param {String} content
      */
     replaceContent(content) {
-        // TODO
-        this.editor.cm.setValue(content);
-    }
-
-    /**
-     * @param {String|RegExp} search
-     * @param {String} replace
-     */
-    findAndReplaceContent(search, replace) {
-        // TODO
-        const text = this.editor.cm.getValue();
-        const cursor = this.editor.cm.listSelections();
-        this.editor.cm.setValue(text.replace(search, replace));
-        this.editor.cm.setSelections(cursor);
+        this.#setText(content)
     }
 
     /**
@@ -253,53 +238,34 @@ export class Actions {
      * @param {String} newStart
      */
     replaceLineStart(newStart) {
-        // TODO
-        const cursor = this.editor.cm.getCursor();
-        let lineContent = this.editor.cm.getLine(cursor.line);
-        const lineLen = lineContent.length;
+        const selectionRange = this.#getSelectionRange();
+        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
+
+        const lineContent = line.text;
         const lineStart = lineContent.split(' ')[0];
 
         // Remove symbol if already set
         if (lineStart === newStart) {
-            lineContent = lineContent.replace(`${newStart} `, '');
-            this.editor.cm.replaceRange(lineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-            this.editor.cm.setCursor({line: cursor.line, ch: cursor.ch - (newStart.length + 1)});
+            const newLineContent = lineContent.replace(`${newStart} `, '');
+            this.editor.cm.dispatch({
+                changes: {from: line.from, to: line.to, insert: newLineContent},
+                selection: {anchor: selectionRange.from + (newLineContent.length - lineContent.length)}
+            });
             return;
         }
 
-        const alreadySymbol = /^[#>`]/.test(lineStart);
-        let posDif = 0;
-        if (alreadySymbol) {
-            posDif = newStart.length - lineStart.length;
-            lineContent = lineContent.replace(lineStart, newStart).trim();
-        } else if (newStart !== '') {
-            posDif = newStart.length + 1;
-            lineContent = newStart + ' ' + lineContent;
-        }
-        this.editor.cm.replaceRange(lineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-        this.editor.cm.setCursor({line: cursor.line, ch: cursor.ch + posDif});
-    }
-
-    /**
-     * Wrap the line in the given start and end contents.
-     * @param {String} start
-     * @param {String} end
-     */
-    wrapLine(start, end) {
-        // TODO
-        const cursor = this.editor.cm.getCursor();
-        const lineContent = this.editor.cm.getLine(cursor.line);
-        const lineLen = lineContent.length;
         let newLineContent = lineContent;
-
-        if (lineContent.indexOf(start) === 0 && lineContent.slice(-end.length) === end) {
-            newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
-        } else {
-            newLineContent = `${start}${lineContent}${end}`;
+        const alreadySymbol = /^[#>`]/.test(lineStart);
+        if (alreadySymbol) {
+            newLineContent = lineContent.replace(lineStart, newStart).trim();
+        } else if (newStart !== '') {
+            newLineContent = newStart + ' ' + lineContent;
         }
 
-        this.editor.cm.replaceRange(newLineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-        this.editor.cm.setCursor({line: cursor.line, ch: cursor.ch + start.length});
+        this.editor.cm.dispatch({
+            changes: {from: line.from, to: line.to, insert: newLineContent},
+            selection: {anchor: selectionRange.from + (newLineContent.length - lineContent.length)}
+        });
     }
 
     /**
@@ -308,28 +274,25 @@ export class Actions {
      * @param {String} end
      */
     wrapSelection(start, end) {
-        // TODO
-        const selection = this.editor.cm.getSelection();
-        if (selection === '') return this.wrapLine(start, end);
+        const selectionRange = this.#getSelectionRange();
+        const selectionText = this.#getSelectionText(selectionRange);
+        if (!selectionText) return this.#wrapLine(start, end);
 
-        let newSelection = selection;
-        const frontDiff = 0;
-        let endDiff;
+        let newSelectionText = selectionText;
+        let newRange;
 
-        if (selection.indexOf(start) === 0 && selection.slice(-end.length) === end) {
-            newSelection = selection.slice(start.length, selection.length - end.length);
-            endDiff = -(end.length + start.length);
+        if (selectionText.startsWith(start) && selectionText.endsWith(end)) {
+            newSelectionText = selectionText.slice(start.length, selectionText.length - end.length);
+            newRange = selectionRange.extend(selectionRange.from, selectionRange.to - (start.length + end.length));
         } else {
-            newSelection = `${start}${selection}${end}`;
-            endDiff = start.length + end.length;
+            newSelectionText = `${start}${selectionText}${end}`;
+            newRange = selectionRange.extend(selectionRange.from, selectionRange.to + (start.length + end.length));
         }
 
-        const selections = this.editor.cm.listSelections()[0];
-        this.editor.cm.replaceSelection(newSelection);
-        const headFirst = selections.head.ch <= selections.anchor.ch;
-        selections.head.ch += headFirst ? frontDiff : endDiff;
-        selections.anchor.ch += headFirst ? endDiff : frontDiff;
-        this.editor.cm.setSelections([selections]);
+        this.editor.cm.dispatch({
+            changes: {from: selectionRange.from, to: selectionRange.to, insert: newSelectionText},
+            selection: {anchor: newRange.anchor, head: newRange.head},
+        });
     }
 
     replaceLineStartForOrderedList() {
@@ -462,12 +425,35 @@ export class Actions {
 
         window.$http.post('/images/gallery', formData).then(resp => {
             const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
-            this.findAndReplaceContent(placeHolderText, newContent);
+            this.#findAndReplaceContent(placeHolderText, newContent);
         }).catch(err => {
             window.$events.emit('error', this.editor.config.text.imageUploadError);
-            this.findAndReplaceContent(placeHolderText, selectedText);
+            this.#findAndReplaceContent(placeHolderText, selectedText);
             console.log(err);
         });
+    }
+
+    /**
+     * Get the current text of the editor instance.
+     * @return {string}
+     */
+    #getText() {
+        return this.editor.cm.state.doc.toString();
+    }
+
+    /**
+     * Set the text of the current editor instance.
+     * @param {String} text
+     * @param {?SelectionRange} selectionRange
+     */
+    #setText(text, selectionRange = null) {
+        selectionRange = selectionRange || this.#getSelectionRange();
+        this.editor.cm.dispatch({
+            changes: {from: 0, to: this.editor.cm.state.doc.length, insert: text},
+            selection: {anchor: selectionRange.from},
+        });
+
+        this.focus();
     }
 
     /**
@@ -498,7 +484,57 @@ export class Actions {
         return this.editor.cm.state.sliceDoc(selectionRange.from, selectionRange.to);
     }
 
+    /**
+     * Get the range of the current main selection.
+     * @return {SelectionRange}
+     */
     #getSelectionRange() {
         return this.editor.cm.state.selection.main;
+    }
+
+    /**
+     * Cleans the given text to work with the editor.
+     * Standardises line endings to what's expected.
+     * @param {String} text
+     * @return {String}
+     */
+    #cleanTextForEditor(text) {
+        return text.replace(/\r\n|\r/g, "\n");
+    }
+
+    /**
+     * Find and replace the first occurrence of [search] with [replace]
+     * @param {String} search
+     * @param {String} replace
+     */
+    #findAndReplaceContent(search, replace) {
+        const newText = this.#getText().replace(search, replace);
+        this.#setText(newText);
+    }
+
+    /**
+     * Wrap the line in the given start and end contents.
+     * @param {String} start
+     * @param {String} end
+     */
+    #wrapLine(start, end) {
+        const selectionRange = this.#getSelectionRange();
+        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
+        const lineContent = line.text;
+        let newLineContent;
+        let lineOffset = 0;
+
+        if (lineContent.startsWith(start) && lineContent.endsWith(end)) {
+            newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
+            lineOffset = -(start.length);
+        } else {
+            newLineContent = `${start}${lineContent}${end}`;
+            lineOffset = start.length;
+        }
+
+        this.editor.cm.dispatch({
+            changes: {from: line.from, to: line.to, insert: newLineContent},
+            selection: {anchor: selectionRange.from + lineOffset}
+        });
     }
 }

@@ -75,6 +75,7 @@
   @include lightDark(border-color, #ddd, #000);
   position: relative;
   flex: 1;
+  min-width: 0;
 }
 .markdown-editor-wrap + .markdown-editor-wrap {
   flex-basis: 50%;
@@ -84,6 +85,7 @@
 
 .markdown-editor-wrap .cm-editor {
   flex: 1;
+  max-width: 100%;
 }
 
 .markdown-panel-divider {
