@@ -178,10 +178,7 @@ export class Actions {
         }
 
         const line = text.line(scrollToLine);
-        this.editor.cm.dispatch({
-            selection: {anchor: line.from, head: line.to},
-            scrollIntoView: true,
-        });
+        this.#setSelection(line.from, line.to, true);
         this.focus();
     }
 
@@ -206,10 +203,8 @@ export class Actions {
     prependContent(content) {
         content = this.#cleanTextForEditor(content);
         const selectionRange = this.#getSelectionRange();
-        this.editor.cm.dispatch({
-            changes: {from: 0, to: 0, insert: content + '\n'},
-            selection: {anchor: selectionRange.from + content.length + 1}
-        });
+        const selectFrom = selectionRange.from + content.length + 1;
+        this.#dispatchChange(0, 0, content + '\n', selectFrom);
         this.focus();
     }
 
@@ -219,9 +214,7 @@ export class Actions {
      */
     appendContent(content) {
         content = this.#cleanTextForEditor(content);
-        this.editor.cm.dispatch({
-            changes: {from: this.editor.cm.state.doc.length, insert: '\n' + content},
-        });
+        this.#dispatchChange(this.editor.cm.state.doc.length, '\n' + content);
         this.focus();
     }
 
@@ -247,10 +240,8 @@ export class Actions {
         // Remove symbol if already set
         if (lineStart === newStart) {
             const newLineContent = lineContent.replace(`${newStart} `, '');
-            this.editor.cm.dispatch({
-                changes: {from: line.from, to: line.to, insert: newLineContent},
-                selection: {anchor: selectionRange.from + (newLineContent.length - lineContent.length)}
-            });
+            const selectFrom = selectionRange.from + (newLineContent.length - lineContent.length);
+            this.#dispatchChange(line.from, line.to, newLineContent, selectFrom);
             return;
         }
 
@@ -262,10 +253,8 @@ export class Actions {
             newLineContent = newStart + ' ' + lineContent;
         }
 
-        this.editor.cm.dispatch({
-            changes: {from: line.from, to: line.to, insert: newLineContent},
-            selection: {anchor: selectionRange.from + (newLineContent.length - lineContent.length)}
-        });
+        const selectFrom = selectionRange.from + (newLineContent.length - lineContent.length);
+        this.#dispatchChange(line.from, line.to, newLineContent, selectFrom);
     }
 
     /**
@@ -289,10 +278,7 @@ export class Actions {
             newRange = selectionRange.extend(selectionRange.from, selectionRange.to + (start.length + end.length));
         }
 
-        this.editor.cm.dispatch({
-            changes: {from: selectionRange.from, to: selectionRange.to, insert: newSelectionText},
-            selection: {anchor: newRange.anchor, head: newRange.head},
-        });
+        this.#dispatchChange(selectionRange.from, selectionRange.to, newSelectionText, newRange.anchor, newRange.head);
     }
 
     replaceLineStartForOrderedList() {
@@ -333,10 +319,7 @@ export class Actions {
             const newFormat = formats[newFormatIndex];
             const newContent = line.text.replace(matches[0], matches[0].replace(format, newFormat));
             const lineDiff = newContent.length - line.text.length;
-            this.editor.cm.dispatch({
-                changes: {from: line.from, to: line.to, insert: newContent},
-                selection: {anchor: selectionRange.anchor + lineDiff, head: selectionRange.head + lineDiff},
-            });
+            this.#dispatchChange(line.from, line.to, newContent, selectionRange.anchor + lineDiff, selectionRange.head + lineDiff);
         }
     }
 
@@ -368,10 +351,7 @@ export class Actions {
         const cursorPos = this.editor.cm.posAtCoords({x: posX, y: posY}, false);
         const {data} = await window.$http.get(`/templates/${templateId}`);
         const content = data.markdown || data.html;
-        this.editor.cm.dispatch({
-            changes: {from: cursorPos, to: cursorPos, insert: content},
-            selection: {anchor: cursorPos},
-        });
+        this.#dispatchChange(cursorPos, cursorPos, content, cursorPos);
     }
 
     /**
@@ -410,10 +390,7 @@ export class Actions {
         const id = "image-" + Math.random().toString(16).slice(2);
         const placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
         const placeHolderText = `![](${placeholderImage})`;
-        this.editor.cm.dispatch({
-            changes: {from: position, to: position, insert: placeHolderText},
-            selection: {anchor: position},
-        });
+        this.#dispatchChange(position, position, placeHolderText, position);
 
         const remoteFilename = "image-" + Date.now() + "." + ext;
         const formData = new FormData();
@@ -446,11 +423,7 @@ export class Actions {
      */
     #setText(text, selectionRange = null) {
         selectionRange = selectionRange || this.#getSelectionRange();
-        this.editor.cm.dispatch({
-            changes: {from: 0, to: this.editor.cm.state.doc.length, insert: text},
-            selection: {anchor: selectionRange.from},
-        });
-
+        this.#dispatchChange(0, this.editor.cm.state.doc.length, text, selectionRange.from);
         this.focus();
     }
 
@@ -464,11 +437,7 @@ export class Actions {
      */
     #replaceSelection(newContent, cursorOffset = 0, selectionRange = null) {
         selectionRange = selectionRange || this.editor.cm.state.selection.main;
-        this.editor.cm.dispatch({
-            changes: {from: selectionRange.from, to: selectionRange.to, insert: newContent},
-            selection: {anchor: selectionRange.from + cursorOffset},
-        });
-
+        this.#dispatchChange(selectionRange.from, selectionRange.to, newContent, selectionRange.from + cursorOffset);
         this.focus();
     }
 
@@ -530,9 +499,38 @@ export class Actions {
             lineOffset = start.length;
         }
 
+        this.#dispatchChange(line.from, line.to, newLineContent, selectionRange.from + lineOffset);
+    }
+
+    /**
+     * Dispatch changes to the editor.
+     * @param {Number} from
+     * @param {?Number} to
+     * @param {?String} text
+     * @param {?Number} selectFrom
+     * @param {?Number} selectTo
+     */
+    #dispatchChange(from, to = null, text = null, selectFrom = null, selectTo = null) {
+        const tr = {changes: {from, to: to, insert: text}};
+
+        if (selectFrom) {
+            tr.selection = {anchor: selectFrom};
+        }
+
+        this.editor.cm.dispatch(tr);
+    }
+
+    /**
+     * Set the current selection range.
+     * Optionally will scroll the new range into view.
+     * @param {Number} from
+     * @param {Number} to
+     * @param {Boolean} scrollIntoView
+     */
+    #setSelection(from, to, scrollIntoView = false) {
         this.editor.cm.dispatch({
-            changes: {from: line.from, to: line.to, insert: newLineContent},
-            selection: {anchor: selectionRange.from + lineOffset}
+            selection: {anchor: from, head: to},
+            scrollIntoView,
         });
     }
 }
