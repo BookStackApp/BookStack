@@ -6,7 +6,6 @@ import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
 import {EditorState} from "@codemirror/state"
 
 import {defaultLight} from "./themes";
-import {getLanguageExtension} from "./languages";
 
 export function viewer() {
     return [
@@ -44,7 +43,6 @@ export function editor(language) {
             ...defaultKeymap,
             ...historyKeymap,
         ]),
-        getLanguageExtension(language, ''),
         EditorView.lineWrapping,
     ];
 }

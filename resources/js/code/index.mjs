@@ -200,6 +200,7 @@ export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
 
     // Create editor view, hide original input
     const ev = createView(config);
+    setMode(ev, 'markdown', '');
     elem.style.display = 'none';
 
     return ev;
