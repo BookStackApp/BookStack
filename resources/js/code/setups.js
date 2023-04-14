@@ -45,5 +45,6 @@ export function editor(language) {
             ...historyKeymap,
         ]),
         getLanguageExtension(language, ''),
+        EditorView.lineWrapping,
     ];
 }

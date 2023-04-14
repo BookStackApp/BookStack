@@ -1,5 +1,5 @@
-import {EditorView, keymap} from "@codemirror/view"
-import Clipboard from "clipboard/dist/clipboard.min";
+import {EditorView, keymap} from "@codemirror/view";
+import {copyTextToClipboard} from "../services/clipboard.js"
 
 // Modes
 import {viewer, editor} from "./setups.js";
@@ -57,28 +57,23 @@ function highlightElem(elem) {
 
 /**
  * Add a button to a CodeMirror instance which copies the contents to the clipboard upon click.
- * @param cmInstance
+ * @param {EditorView} editorView
  */
-function addCopyIcon(cmInstance) {
-    // TODO
-    // const copyIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
-    // const copyButton = document.createElement('div');
-    // copyButton.classList.add('CodeMirror-copy');
-    // copyButton.innerHTML = copyIcon;
-    // cmInstance.display.wrapper.appendChild(copyButton);
-    //
-    // const clipboard = new Clipboard(copyButton, {
-    //     text: function(trigger) {
-    //         return cmInstance.getValue()
-    //     }
-    // });
-    //
-    // clipboard.on('success', event => {
-    //     copyButton.classList.add('success');
-    //     setTimeout(() => {
-    //         copyButton.classList.remove('success');
-    //     }, 240);
-    // });
+function addCopyIcon(editorView) {
+    const copyIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+    const copyButton = document.createElement('button');
+    copyButton.setAttribute('type', 'button')
+    copyButton.classList.add('cm-copy-button');
+    copyButton.innerHTML = copyIcon;
+    editorView.dom.appendChild(copyButton);
+
+    copyButton.addEventListener('click', event => {
+        copyTextToClipboard(editorView.state.doc.toString());
+        copyButton.classList.add('success');
+        setTimeout(() => {
+            copyButton.classList.remove('success');
+        }, 240);
+    });
 }
 
 /**
@@ -187,11 +182,7 @@ export function updateLayout(cmInstance) {
  */
 export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
     const content = elem.textContent;
-
-    // TODO - Change to pass something else that's useful, probably extension array?
-    // window.$events.emitPublic(elem, 'editor-markdown-cm::pre-init', {config});
-
-    const ev = createView({
+    const config = {
         parent: elem.parentNode,
         doc: content,
         extensions: [
@@ -202,8 +193,13 @@ export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
             EditorView.domEventHandlers(domEventHandlers),
             keymap.of(keyBindings),
         ],
-    });
+    };
 
+    // Emit a pre-event public event to allow tweaking of the configure before view creation.
+    window.$events.emitPublic(elem, 'editor-markdown-cm::pre-init', {cmEditorViewConfig: config});
+
+    // Create editor view, hide original input
+    const ev = createView(config);
     elem.style.display = 'none';
 
     return ev;
