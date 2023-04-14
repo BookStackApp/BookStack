@@ -1,5 +1,5 @@
 
-class Clipboard {
+export class Clipboard {
 
     /**
      * Constructor
@@ -49,6 +49,10 @@ class Clipboard {
 
         return images;
     }
+}
+
+export function copyTextToClipboard(text) {
+    return navigator.clipboard.writeText(text);
 }
 
 export default Clipboard;

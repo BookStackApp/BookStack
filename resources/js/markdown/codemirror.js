@@ -64,11 +64,10 @@ export async function init(editor) {
         domEventHandlers,
         provideKeyBindings(editor),
     );
-    window.cm = cm;
 
-    // Will force to remain as ltr for now due to issues when HTML is in editor.
-    // TODO
-    // cm.setOption('direction', 'ltr');
+    // Add editor view to window for easy access/debugging.
+    // Not part of official API/Docs
+    window.mdEditorView = cm;
 
     return cm;
 }

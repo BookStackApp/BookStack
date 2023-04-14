@@ -34,7 +34,6 @@
     "@codemirror/view": "^6.1.2",
     "@ssddanbrown/codemirror-lang-smarty": "^1.0.0",
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
-    "clipboard": "^2.0.11",
     "codemirror": "^6.0.1",
     "dropzone": "^5.9.3",
     "markdown-it": "^13.0.1",

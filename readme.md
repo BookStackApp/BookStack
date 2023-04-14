@@ -134,7 +134,6 @@ Note: This is not an exhaustive list of all libraries and projects that would be
 * [Sortable](https://github.com/SortableJS/Sortable) - _[MIT](https://github.com/SortableJS/Sortable/blob/master/LICENSE)_
 * [Google Material Icons](https://github.com/google/material-design-icons) - _[Apache-2.0](https://github.com/google/material-design-icons/blob/master/LICENSE)_
 * [Dropzone.js](http://www.dropzonejs.com/) - _[MIT](https://github.com/dropzone/dropzone/blob/main/LICENSE)_
-* [clipboard.js](https://clipboardjs.com/) - _[MIT](https://github.com/zenorocha/clipboard.js/blob/master/LICENSE)_
 * [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists) - _[MIT](https://github.com/markdown-it/markdown-it/blob/master/LICENSE) and [ISC](https://github.com/revin/markdown-it-task-lists/blob/master/LICENSE)_
 * [Dompdf](https://github.com/dompdf/dompdf) - _[LGPL v2.1](https://github.com/dompdf/dompdf/blob/master/LICENSE.LGPL)_
 * [BarryVD/Dompdf](https://github.com/barryvdh/laravel-dompdf) - _[MIT](https://github.com/barryvdh/laravel-dompdf/blob/master/LICENSE)_

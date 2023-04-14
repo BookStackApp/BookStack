@@ -1,4 +1,3 @@
-import {debounce} from "../services/util";
 import {Component} from "./component";
 import {init as initEditor} from "../markdown/editor";
 
@@ -45,8 +44,7 @@ export class MarkdownEditor extends Component {
         window.$events.emitPublic(this.elem, 'editor-markdown::setup', {
             markdownIt: this.editor.markdown.getRenderer(),
             displayEl: this.display,
-            // TODO - change to codeMirrorView?
-            // codeMirrorInstance: this.editor.cm,
+            cmEditorView: this.editor.cm,
         });
     }
 
@@ -81,12 +79,6 @@ export class MarkdownEditor extends Component {
             toolbarLabel.closest('.markdown-editor-wrap').classList.add('active');
         });
 
-        // Refresh CodeMirror on container resize
-        // TODO
-        // const resizeDebounced = debounce(() => this.editor.cm.refresh(), 100, false);
-        // const observer = new ResizeObserver(resizeDebounced);
-        // observer.observe(this.elem);
-
         this.handleDividerDrag();
     }
 
@@ -104,8 +96,6 @@ export class MarkdownEditor extends Component {
                 window.removeEventListener('pointerup', upListener);
                 this.display.style.pointerEvents = null;
                 document.body.style.userSelect = null;
-                // TODO
-                // this.editor.cm.refresh();
             };
 
             this.display.style.pointerEvents = 'none';

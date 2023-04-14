@@ -450,7 +450,7 @@ html.dark-mode .CodeMirror pre {
 /**
  * Custom Copy Button
  */
-.CodeMirror-copy {
+.cm-copy-button {
   position: absolute;
   top: -1px;
   right: -1px;
@@ -478,7 +478,7 @@ html.dark-mode .CodeMirror pre {
     }
   }
 }
-.CodeMirror:hover .CodeMirror-copy {
+.cm-editor:hover .cm-copy-button  {
   user-select: all;
   opacity: 1;
   pointer-events: all;
