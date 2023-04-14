@@ -12,6 +12,7 @@ const isProd = process.argv[2] === 'production';
 const entryPoints = {
     app: path.join(__dirname, '../../resources/js/app.js'),
     code: path.join(__dirname, '../../resources/js/code/index.mjs'),
+    'legacy-modes': path.join(__dirname, '../../resources/js/code/legacy-modes.mjs'),
 };
 
 // Locate our output directory

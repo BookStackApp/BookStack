@@ -47,9 +47,9 @@ function getTheme(viewParentEl) {
  * @param {string} modeSuggestion
  * @param {string} content
  */
-export function updateViewLanguage(ev, modeSuggestion, content) {
+export async function updateViewLanguage(ev, modeSuggestion, content) {
     const compartment = viewLangCompartments.get(ev);
-    const language = getLanguageExtension(modeSuggestion, content);
+    const language = await getLanguageExtension(modeSuggestion, content);
 
     ev.dispatch({
         effects: compartment.reconfigure(language ? language : [])
