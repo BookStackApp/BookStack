@@ -49,6 +49,7 @@ function highlightElem(elem) {
         extensions: viewer(),
     });
     setMode(ev, langName, content);
+    window.cm = ev;
 
     elem.remove();
 
@@ -81,6 +82,7 @@ function addCopyIcon(editorView) {
  * @returns {*|string}
  */
 function getTheme() {
+    // TODO - Remove
     const darkMode = document.documentElement.classList.contains('dark-mode');
     return window.codeTheme || (darkMode ? 'darcula' : 'default');
 }

@@ -412,10 +412,6 @@ span.CodeMirror-selectedtext { background: none; }
 /**
  * Custom BookStack overrides
  */
-.cm-editor {
-  @include lightDark(background-color, #FFF, #000);
-}
-
 // TODO - All below are old
 .CodeMirror, .CodeMirror pre {
   font-size: 12px;
