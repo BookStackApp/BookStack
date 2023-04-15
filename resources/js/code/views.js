@@ -1,7 +1,9 @@
 import {getLanguageExtension} from "./languages"
+import {HighlightStyle, syntaxHighlighting} from "@codemirror/language";
 import {Compartment} from "@codemirror/state"
 import {EditorView} from "@codemirror/view"
-import {oneDark} from "@codemirror/theme-one-dark"
+import {oneDarkTheme, oneDarkHighlightStyle} from "@codemirror/theme-one-dark"
+import {tags} from "@lezer/highlight"
 
 const viewLangCompartments = new WeakMap();
 
@@ -25,19 +27,33 @@ export function createView(config) {
 
 /**
  * Get the theme extension to use for editor view instance.
- * @returns {Extension}
+ * @returns {Extension[]}
  */
 function getTheme(viewParentEl) {
     const darkMode = document.documentElement.classList.contains('dark-mode');
+    let viewTheme = darkMode ? oneDarkTheme : [];
+    let highlightStyle = darkMode ? oneDarkHighlightStyle : null;
 
     const eventData = {
-        darkMode: darkMode,
-        theme: null,
+        darkModeActive: darkMode,
+        registerViewTheme(builder) {
+            const spec = builder();
+            if (spec) {
+                viewTheme = EditorView.theme(spec);
+            }
+        },
+        registerHighlightStyle(builder) {
+            const tagStyles = builder(tags) || [];
+            console.log('called', tagStyles);
+            if (tagStyles.length) {
+                highlightStyle = HighlightStyle.define(tagStyles);
+            }
+        }
     };
 
     window.$events.emitPublic(viewParentEl, 'library-cm6::configure-theme', eventData);
 
-    return eventData.theme || (darkMode ? oneDark : []);
+    return [viewTheme, highlightStyle ? syntaxHighlighting(highlightStyle) : []];
 }
 
 /**

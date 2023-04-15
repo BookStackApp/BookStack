@@ -1,5 +1,5 @@
 
-import {EditorView, keymap, highlightSpecialChars, drawSelection, highlightActiveLine, dropCursor,
+import {EditorView, keymap, drawSelection, highlightActiveLine, dropCursor,
     rectangularSelection, lineNumbers, highlightActiveLineGutter} from "@codemirror/view"
 import {syntaxHighlighting, bracketMatching} from "@codemirror/language"
 import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
@@ -11,17 +11,14 @@ export function viewer() {
     return [
         lineNumbers(),
         highlightActiveLineGutter(),
-        highlightSpecialChars(),
-        history(),
         drawSelection(),
         dropCursor(),
-        syntaxHighlighting(defaultLight, {fallback: true}),
+        // syntaxHighlighting(defaultLight, {fallback: false}),
         bracketMatching(),
         rectangularSelection(),
         highlightActiveLine(),
         keymap.of([
             ...defaultKeymap,
-            ...historyKeymap,
         ]),
         EditorState.readOnly.of(true),
     ];
@@ -31,7 +28,6 @@ export function editor(language) {
     return [
         lineNumbers(),
         highlightActiveLineGutter(),
-        highlightSpecialChars(),
         history(),
         drawSelection(),
         dropCursor(),
