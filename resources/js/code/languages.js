@@ -3,9 +3,11 @@ import {StreamLanguage} from "@codemirror/language"
 import {css} from '@codemirror/lang-css';
 import {json} from '@codemirror/lang-json';
 import {javascript} from '@codemirror/lang-javascript';
+import {html} from "@codemirror/lang-html";
 import {markdown} from '@codemirror/lang-markdown';
 import {php} from '@codemirror/lang-php';
-export {twig} from "@ssddanbrown/codemirror-lang-twig";
+import {twig} from "@ssddanbrown/codemirror-lang-twig";
+import {xml} from "@codemirror/lang-xml";
 
 const legacyLoad = async (mode) => {
     const modes = await window.importVersioned('legacy-modes');
@@ -32,7 +34,7 @@ const modeMap = {
     go: () => legacyLoad('go'),
     haskell: () => legacyLoad('haskell'),
     hs: () => legacyLoad('haskell'),
-    html: () => legacyLoad('html'),
+    html: async () => html(),
     ini: () => legacyLoad('properties'),
     java: () => legacyLoad('java'),
     javascript: async () => javascript(),
@@ -89,7 +91,7 @@ const modeMap = {
     vbscript: () => legacyLoad('vbScript'),
     'vb.net': () => legacyLoad('vb'),
     vbnet: () => legacyLoad('vb'),
-    xml: () => legacyLoad('xml'),
+    xml: async () => xml(),
     yaml: () => legacyLoad('yaml'),
     yml: () => legacyLoad('yaml'),
 };

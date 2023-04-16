@@ -1,22 +1,34 @@
-
 import {EditorView, keymap, drawSelection, highlightActiveLine, dropCursor,
     rectangularSelection, lineNumbers, highlightActiveLineGutter} from "@codemirror/view"
-import {syntaxHighlighting, bracketMatching} from "@codemirror/language"
+import {bracketMatching} from "@codemirror/language"
 import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
 import {EditorState} from "@codemirror/state"
+import {getTheme} from "./themes";
 
-import {defaultLight} from "./themes";
-
-export function viewer() {
+/**
+ * @param {Element} parentEl
+ * @return {(Extension[]|{extension: Extension}|readonly Extension[])[]}
+ */
+function common(parentEl) {
     return [
+        getTheme(parentEl),
         lineNumbers(),
         highlightActiveLineGutter(),
         drawSelection(),
         dropCursor(),
-        // syntaxHighlighting(defaultLight, {fallback: false}),
         bracketMatching(),
         rectangularSelection(),
         highlightActiveLine(),
+    ];
+}
+
+/**
+ * @param {Element} parentEl
+ * @return {*[]}
+ */
+export function viewer(parentEl) {
+    return [
+        ...common(parentEl),
         keymap.of([
             ...defaultKeymap,
         ]),
@@ -24,17 +36,14 @@ export function viewer() {
     ];
 }
 
-export function editor(language) {
+/**
+ * @param {Element} parentEl
+ * @return {*[]}
+ */
+export function editor(parentEl) {
     return [
-        lineNumbers(),
-        highlightActiveLineGutter(),
+        ...common(parentEl),
         history(),
-        drawSelection(),
-        dropCursor(),
-        syntaxHighlighting(defaultLight, {fallback: true}),
-        bracketMatching(),
-        rectangularSelection(),
-        highlightActiveLine(),
         keymap.of([
             ...defaultKeymap,
             ...historyKeymap,

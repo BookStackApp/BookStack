@@ -1,7 +1,6 @@
 import {EditorView, keymap} from "@codemirror/view";
-import {copyTextToClipboard} from "../services/clipboard.js"
 
-// Modes
+import {copyTextToClipboard} from "../services/clipboard.js"
 import {viewer, editor} from "./setups.js";
 import {createView, updateViewLanguage} from "./views.js";
 
@@ -46,13 +45,11 @@ function highlightElem(elem) {
     const ev = createView({
         parent: wrapper,
         doc: content,
-        extensions: viewer(),
+        extensions: viewer(wrapper),
     });
+
     setMode(ev, langName, content);
-    window.cm = ev;
-
     elem.remove();
-
     addCopyIcon(ev);
 }
 
@@ -61,19 +58,31 @@ function highlightElem(elem) {
  * @param {EditorView} editorView
  */
 function addCopyIcon(editorView) {
-    const copyIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+    const copyIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+    const checkIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
     const copyButton = document.createElement('button');
     copyButton.setAttribute('type', 'button')
     copyButton.classList.add('cm-copy-button');
     copyButton.innerHTML = copyIcon;
     editorView.dom.appendChild(copyButton);
 
+    const notifyTime = 620;
+    const transitionTime = 60;
     copyButton.addEventListener('click', event => {
         copyTextToClipboard(editorView.state.doc.toString());
         copyButton.classList.add('success');
+
+        setTimeout(() => {
+            copyButton.innerHTML = checkIcon;
+        }, transitionTime / 2);
+
         setTimeout(() => {
             copyButton.classList.remove('success');
-        }, 240);
+        }, notifyTime);
+
+        setTimeout(() => {
+            copyButton.innerHTML = copyIcon;
+        }, notifyTime + (transitionTime / 2));
     });
 }
 
@@ -93,17 +102,18 @@ function getTheme() {
  * @param {HTMLElement} cmContainer
  * @param {String} content
  * @param {String} language
- * @returns {{wrap: Element, editor: *}}
+ * @returns {EditorView}
  */
 export function wysiwygView(cmContainer, content, language) {
-    return CodeMirror(cmContainer, {
-        value: content,
-        mode: getMode(language, content),
-        lineNumbers: true,
-        lineWrapping: false,
-        theme: getTheme(),
-        readOnly: true
+    const ev = createView({
+        parent: cmContainer,
+        doc: content,
+        extensions: viewer(cmContainer),
     });
+
+    setMode(ev, language, content);
+
+    return ev;
 }
 
 
@@ -132,15 +142,29 @@ export function popupEditor(elem, modeSuggestion) {
  * Create an inline editor to replace the given textarea.
  * @param {HTMLTextAreaElement} textArea
  * @param {String} mode
- * @returns {CodeMirror3}
+ * @returns {EditorView}
  */
 export function inlineEditor(textArea, mode) {
-    return CodeMirror.fromTextArea(textArea, {
-        mode: getMode(mode, textArea.value),
-        lineNumbers: true,
-        lineWrapping: false,
-        theme: getTheme(),
-    });
+    const content = textArea.value;
+    const config = {
+        parent: textArea.parentNode,
+        doc: content,
+        extensions: [
+            ...editor(textArea.parentElement),
+            EditorView.updateListener.of((v) => {
+                if (v.docChanged) {
+                    textArea.value = v.state.doc.toString();
+                }
+            }),
+        ],
+    };
+
+    // Create editor view, hide original input
+    const ev = createView(config);
+    setMode(ev, mode, content);
+    textArea.style.display = 'none';
+
+    return ev;
 }
 
 /**
@@ -188,7 +212,7 @@ export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
         parent: elem.parentNode,
         doc: content,
         extensions: [
-            ...editor('markdown'),
+            ...editor(elem.parentElement),
             EditorView.updateListener.of((v) => {
                 onChange(v);
             }),
