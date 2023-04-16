@@ -87,30 +87,29 @@ function addCopyIcon(editorView) {
 }
 
 /**
- * Ge the theme to use for CodeMirror instances.
- * @returns {*|string}
- */
-function getTheme() {
-    // TODO - Remove
-    const darkMode = document.documentElement.classList.contains('dark-mode');
-    return window.codeTheme || (darkMode ? 'darcula' : 'default');
-}
-
-/**
  * Create a CodeMirror instance for showing inside the WYSIWYG editor.
  *  Manages a textarea element to hold code content.
  * @param {HTMLElement} cmContainer
+ * @param {ShadowRoot} shadowRoot
  * @param {String} content
  * @param {String} language
  * @returns {EditorView}
  */
-export function wysiwygView(cmContainer, content, language) {
+export function wysiwygView(cmContainer, shadowRoot, content, language) {
+    // Monkey-patch so that the container document window "CSSStyleSheet" is used instead of the outer window document.
+    // Needed otherwise codemirror fails to apply styles due to a window mismatch when creating a new "CSSStyleSheet" instance.
+    // Opened: https://github.com/codemirror/dev/issues/1133
+    const originalCSSStyleSheetReference = window.CSSStyleSheet;
+    window.CSSStyleSheet = cmContainer.ownerDocument.defaultView.CSSStyleSheet;
+
     const ev = createView({
         parent: cmContainer,
         doc: content,
         extensions: viewer(cmContainer),
+        root: shadowRoot,
     });
 
+    window.CSSStyleSheet = originalCSSStyleSheetReference;
     setMode(ev, language, content);
 
     return ev;
@@ -180,22 +179,12 @@ export function setMode(ev, modeSuggestion, content) {
 
 /**
  * Set the content of a cm instance.
- * @param cmInstance
+ * @param {EditorView} ev
  * @param codeContent
  */
-export function setContent(cmInstance, codeContent) {
-    cmInstance.setValue(codeContent);
-    setTimeout(() => {
-        updateLayout(cmInstance);
-    }, 10);
-}
-
-/**
- * Update the layout (codemirror refresh) of a cm instance.
- * @param cmInstance
- */
-export function updateLayout(cmInstance) {
-    cmInstance.refresh();
+export function setContent(ev, codeContent) {
+    const doc = ev.state.doc;
+    doc.replace(0, doc.length, codeContent);
 }
 
 /**

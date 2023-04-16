@@ -127,7 +127,6 @@ export class CodeEditor extends Component {
 
         this.loadHistory();
         this.getPopup().show(() => {
-            Code.updateLayout(this.editor);
             this.editor.focus();
         }, () => {
             this.addHistory()
