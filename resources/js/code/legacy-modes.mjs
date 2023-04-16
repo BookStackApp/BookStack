@@ -23,6 +23,5 @@ export {swift} from "@codemirror/legacy-modes/mode/swift";
 export {toml} from '@codemirror/legacy-modes/mode/toml';
 export {vb} from '@codemirror/legacy-modes/mode/vb';
 export {vbScript} from '@codemirror/legacy-modes/mode/vbscript';
-export {xml, html} from '@codemirror/legacy-modes/mode/xml';
 export {yaml} from '@codemirror/legacy-modes/mode/yaml';
 export {smarty} from "@ssddanbrown/codemirror-lang-smarty";
