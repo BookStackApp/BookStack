@@ -110,8 +110,7 @@ function defineCodeBlockCustomElement(editor) {
 
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
             const renderCodeMirror = (Code) => {
-                this.cm = Code.wysiwygView(container, content, this.getLanguage());
-                setTimeout(() => Code.updateLayout(this.cm), 10);
+                this.cm = Code.wysiwygView(container, this.shadowRoot, content, this.getLanguage());
                 setTimeout(() => this.style.height = null, 12);
             };
 
