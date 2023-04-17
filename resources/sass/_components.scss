@@ -730,7 +730,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .code-editor-main {
   flex: 1;
   min-width: 0;
-  .CodeMirror {
+  .cm-editor {
     margin-bottom: 0;
     z-index: 1;
     max-width: 100%;

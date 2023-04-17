@@ -36,6 +36,12 @@ function defineCodeBlockCustomElement(editor) {
     const win = doc.defaultView;
 
     class CodeBlockElement extends win.HTMLElement {
+
+        /**
+         * @type {?SimpleEditorInterface}
+         */
+        editor = null;
+
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
@@ -63,11 +69,9 @@ function defineCodeBlockCustomElement(editor) {
         }
 
         setContent(content, language) {
-            if (this.cm) {
-                importVersioned('code').then(Code => {
-                    Code.setContent(this.cm, content);
-                    Code.setMode(this.cm, language, content);
-                });
+            if (this.editor) {
+                this.editor.setContent(content);
+                this.editor.setMode(language, content);
             }
 
             let pre = this.querySelector('pre');
@@ -98,7 +102,7 @@ function defineCodeBlockCustomElement(editor) {
 
         connectedCallback() {
             const connectedTime = Date.now();
-            if (this.cm) {
+            if (this.editor) {
                 return;
             }
 
@@ -109,14 +113,14 @@ function defineCodeBlockCustomElement(editor) {
             this.style.height = `${height}px`;
 
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
-            const renderCodeMirror = (Code) => {
-                this.cm = Code.wysiwygView(container, this.shadowRoot, content, this.getLanguage());
+            const renderEditor = (Code) => {
+                this.editor = Code.wysiwygView(container, this.shadowRoot, content, this.getLanguage());
                 setTimeout(() => this.style.height = null, 12);
             };
 
             window.importVersioned('code').then((Code) => {
                 const timeout = (Date.now() - connectedTime < 20) ? 20 : 0;
-                setTimeout(() => renderCodeMirror(Code), timeout);
+                setTimeout(() => renderEditor(Code), timeout);
             });
         }
 
