@@ -1,8 +1,9 @@
 import {EditorView, keymap} from "@codemirror/view";
 
 import {copyTextToClipboard} from "../services/clipboard.js"
-import {viewer, editor} from "./setups.js";
-import {createView, updateViewLanguage} from "./views.js";
+import {viewerExtensions, editorExtensions} from "./setups.js";
+import {createView} from "./views.js";
+import {SimpleEditorInterface} from "./simple-editor-interface.js";
 
 /**
  * Highlight pre elements on a page
@@ -45,10 +46,12 @@ function highlightElem(elem) {
     const ev = createView({
         parent: wrapper,
         doc: content,
-        extensions: viewer(wrapper),
+        extensions: viewerExtensions(wrapper),
     });
 
-    setMode(ev, langName, content);
+    const editor = new SimpleEditorInterface(ev);
+    editor.setMode(langName, content);
+
     elem.remove();
     addCopyIcon(ev);
 }
@@ -88,31 +91,25 @@ function addCopyIcon(editorView) {
 
 /**
  * Create a CodeMirror instance for showing inside the WYSIWYG editor.
- *  Manages a textarea element to hold code content.
+ * Manages a textarea element to hold code content.
  * @param {HTMLElement} cmContainer
  * @param {ShadowRoot} shadowRoot
  * @param {String} content
  * @param {String} language
- * @returns {EditorView}
+ * @returns {SimpleEditorInterface}
  */
 export function wysiwygView(cmContainer, shadowRoot, content, language) {
-    // Monkey-patch so that the container document window "CSSStyleSheet" is used instead of the outer window document.
-    // Needed otherwise codemirror fails to apply styles due to a window mismatch when creating a new "CSSStyleSheet" instance.
-    // Opened: https://github.com/codemirror/dev/issues/1133
-    const originalCSSStyleSheetReference = window.CSSStyleSheet;
-    window.CSSStyleSheet = cmContainer.ownerDocument.defaultView.CSSStyleSheet;
-
     const ev = createView({
         parent: cmContainer,
         doc: content,
-        extensions: viewer(cmContainer),
+        extensions: viewerExtensions(cmContainer),
         root: shadowRoot,
     });
 
-    window.CSSStyleSheet = originalCSSStyleSheetReference;
-    setMode(ev, language, content);
+    const editor = new SimpleEditorInterface(ev);
+    editor.setMode(language, content);
 
-    return ev;
+    return editor;
 }
 
 
@@ -120,36 +117,44 @@ export function wysiwygView(cmContainer, shadowRoot, content, language) {
  * Create a CodeMirror instance to show in the WYSIWYG pop-up editor
  * @param {HTMLElement} elem
  * @param {String} modeSuggestion
- * @returns {*}
+ * @returns {SimpleEditorInterface}
  */
 export function popupEditor(elem, modeSuggestion) {
     const content = elem.textContent;
+    const config = {
+        parent: elem.parentElement,
+        doc: content,
+        extensions: [
+            ...editorExtensions(elem.parentElement),
+            EditorView.updateListener.of((v) => {
+                if (v.docChanged) {
+                    // textArea.value = v.state.doc.toString();
+                }
+            }),
+        ],
+    };
 
-    return CodeMirror(function(elt) {
-        elem.parentNode.insertBefore(elt, elem);
-        elem.style.display = 'none';
-    }, {
-        value: content,
-        mode:  getMode(modeSuggestion, content),
-        lineNumbers: true,
-        lineWrapping: false,
-        theme: getTheme()
-    });
+    // Create editor, hide original input
+    const editor = new SimpleEditorInterface(createView(config));
+    editor.setMode(modeSuggestion, content);
+    elem.style.display = 'none';
+
+    return editor;
 }
 
 /**
  * Create an inline editor to replace the given textarea.
  * @param {HTMLTextAreaElement} textArea
  * @param {String} mode
- * @returns {EditorView}
+ * @returns {SimpleEditorInterface}
  */
 export function inlineEditor(textArea, mode) {
     const content = textArea.value;
     const config = {
-        parent: textArea.parentNode,
+        parent: textArea.parentElement,
         doc: content,
         extensions: [
-            ...editor(textArea.parentElement),
+            ...editorExtensions(textArea.parentElement),
             EditorView.updateListener.of((v) => {
                 if (v.docChanged) {
                     textArea.value = v.state.doc.toString();
@@ -160,31 +165,11 @@ export function inlineEditor(textArea, mode) {
 
     // Create editor view, hide original input
     const ev = createView(config);
-    setMode(ev, mode, content);
+    const editor = new SimpleEditorInterface(ev);
+    editor.setMode(mode, content);
     textArea.style.display = 'none';
 
-    return ev;
-}
-
-/**
- * Set the language mode of a codemirror EditorView.
- *
- * @param {EditorView} ev
- * @param {string} modeSuggestion
- * @param {string} content
- */
-export function setMode(ev, modeSuggestion, content) {
-    updateViewLanguage(ev, modeSuggestion, content);
-}
-
-/**
- * Set the content of a cm instance.
- * @param {EditorView} ev
- * @param codeContent
- */
-export function setContent(ev, codeContent) {
-    const doc = ev.state.doc;
-    doc.replace(0, doc.length, codeContent);
+    return editor;
 }
 
 /**
@@ -193,15 +178,15 @@ export function setContent(ev, codeContent) {
  * @param {function} onChange
  * @param {object} domEventHandlers
  * @param {Array} keyBindings
- * @returns {*}
+ * @returns {EditorView}
  */
 export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
     const content = elem.textContent;
     const config = {
-        parent: elem.parentNode,
+        parent: elem.parentElement,
         doc: content,
         extensions: [
-            ...editor(elem.parentElement),
+            ...editorExtensions(elem.parentElement),
             EditorView.updateListener.of((v) => {
                 onChange(v);
             }),
@@ -215,7 +200,7 @@ export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
 
     // Create editor view, hide original input
     const ev = createView(config);
-    setMode(ev, 'markdown', '');
+    (new SimpleEditorInterface(ev)).setMode('markdown', '');
     elem.style.display = 'none';
 
     return ev;

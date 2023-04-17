@@ -26,7 +26,7 @@ function common(parentEl) {
  * @param {Element} parentEl
  * @return {*[]}
  */
-export function viewer(parentEl) {
+export function viewerExtensions(parentEl) {
     return [
         ...common(parentEl),
         keymap.of([
@@ -40,7 +40,7 @@ export function viewer(parentEl) {
  * @param {Element} parentEl
  * @return {*[]}
  */
-export function editor(parentEl) {
+export function editorExtensions(parentEl) {
     return [
         ...common(parentEl),
         history(),
