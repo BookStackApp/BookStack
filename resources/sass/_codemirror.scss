@@ -5,8 +5,12 @@
 .cm-editor {
   font-size: 12px;
   border: 1px solid #ddd;
-  margin-bottom: $-l;
   line-height: 1.4;
+}
+
+.page-content .cm-editor,
+.CodeMirrorContainer .cm-editor {
+  margin-bottom: $-l;
   border-radius: 4px;
 }
 

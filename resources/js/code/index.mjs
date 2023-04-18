@@ -186,12 +186,12 @@ export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
         parent: elem.parentElement,
         doc: content,
         extensions: [
+            keymap.of(keyBindings),
             ...editorExtensions(elem.parentElement),
             EditorView.updateListener.of((v) => {
                 onChange(v);
             }),
             EditorView.domEventHandlers(domEventHandlers),
-            keymap.of(keyBindings),
         ],
     };
 
