@@ -6,11 +6,11 @@
   font-size: 12px;
   border: 1px solid #ddd;
   line-height: 1.4;
+  margin-bottom: $-l;
 }
 
 .page-content .cm-editor,
 .CodeMirrorContainer .cm-editor {
-  margin-bottom: $-l;
   border-radius: 4px;
 }
 
