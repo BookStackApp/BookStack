@@ -178,18 +178,19 @@ sub, .subscript {
 pre {
   font-size: 12px;
   border: 1px solid #DDD;
-  @include lightDark(background-color, #f5f5f5, #2B2B2B);
+  @include lightDark(background-color, #FFF, #2B2B2B);
   @include lightDark(border-color, #DDD, #111);
-  padding-left: 31px;
+  border-radius: 4px;
+  padding-left: 26px;
   position: relative;
   padding-top: 3px;
   padding-bottom: 3px;
-  &:after {
+  &:before {
     content: '';
     display: block;
     position: absolute;
     top: 0;
-    width: 29px;
+    width: 22.4px;
     left: 0;
     height: 100%;
     @include lightDark(background-color, #f5f5f5, #313335);

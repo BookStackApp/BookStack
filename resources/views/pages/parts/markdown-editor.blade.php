@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div markdown-input class="flex flex-fill">
+        <div class="flex flex-fill" dir="ltr">
             <textarea id="markdown-editor-input"
                       refs="markdown-editor@input"
                       @if($errors->has('markdown')) class="text-neg" @endif

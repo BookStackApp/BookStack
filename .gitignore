@@ -21,8 +21,10 @@ yarn.lock
 nbproject
 .buildpath
 .project
+.nvmrc
 .settings/
 webpack-stats.json
 .phpunit.result.cache
 .DS_Store
 phpstan.neon
+esbuild-meta.json

@@ -4,6 +4,15 @@ import {Component} from "./component";
 
 export class CodeEditor extends Component {
 
+    /**
+     * @type {null|SimpleEditorInterface}
+     */
+    editor = null;
+
+    callback = null;
+    history = {};
+    historyKey = 'code_history';
+
     setup() {
         this.container = this.$refs.container;
         this.popup = this.$el;
@@ -16,10 +25,6 @@ export class CodeEditor extends Component {
         this.historyList = this.$refs.historyList;
         this.favourites = new Set(this.$opts.favourites.split(','));
 
-        this.callback = null;
-        this.editor = null;
-        this.history = {};
-        this.historyKey = 'code_history';
         this.setupListeners();
         this.setupFavourites();
     }
@@ -45,7 +50,7 @@ export class CodeEditor extends Component {
             event.preventDefault();
             const historyTime = elem.dataset.time;
             if (this.editor) {
-                this.editor.setValue(this.history[historyTime]);
+                this.editor.setContent(this.history[historyTime]);
             }
         });
     }
@@ -104,19 +109,18 @@ export class CodeEditor extends Component {
 
     save() {
         if (this.callback) {
-            this.callback(this.editor.getValue(), this.languageInput.value);
+            this.callback(this.editor.getContent(), this.languageInput.value);
         }
         this.hide();
     }
 
-    open(code, language, callback) {
+    async open(code, language, callback) {
         this.languageInput.value = language;
         this.callback = callback;
 
-        this.show()
-            .then(() => this.languageInputChange(language))
-            .then(() => window.importVersioned('code'))
-            .then(Code => Code.setContent(this.editor, code));
+        await this.show();
+        this.languageInputChange(language);
+        this.editor.setContent(code);
     }
 
     async show() {
@@ -127,7 +131,6 @@ export class CodeEditor extends Component {
 
         this.loadHistory();
         this.getPopup().show(() => {
-            Code.updateLayout(this.editor);
             this.editor.focus();
         }, () => {
             this.addHistory()
@@ -147,8 +150,7 @@ export class CodeEditor extends Component {
     }
 
     async updateEditorMode(language) {
-        const Code = await window.importVersioned('code');
-        Code.setMode(this.editor, language, this.editor.getValue());
+        this.editor.setMode(language, this.editor.getContent());
     }
 
     languageInputChange(language) {
@@ -177,7 +179,7 @@ export class CodeEditor extends Component {
 
     addHistory() {
         if (!this.editor) return;
-        const code = this.editor.getValue();
+        const code = this.editor.getContent();
         if (!code) return;
 
         // Stop if we'd be storing the same as the last item
