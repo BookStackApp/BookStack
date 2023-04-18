@@ -15,7 +15,7 @@ export function fadeIn(element, animTime = 400, onComplete = null) {
     cleanupExistingElementAnimation(element);
     element.style.display = 'block';
     animateStyles(element, {
-        opacity: ['0', '1']
+        opacity: ['0', '1'],
     }, animTime, () => {
         if (onComplete) onComplete();
     });
@@ -30,7 +30,7 @@ export function fadeIn(element, animTime = 400, onComplete = null) {
 export function fadeOut(element, animTime = 400, onComplete = null) {
     cleanupExistingElementAnimation(element);
     animateStyles(element, {
-        opacity: ['1', '0']
+        opacity: ['1', '0'],
     }, animTime, () => {
         element.style.display = 'none';
         if (onComplete) onComplete();
@@ -125,12 +125,12 @@ export function transitionHeight(element, animTime = 400) {
  */
 function animateStyles(element, styles, animTime = 400, onComplete = null) {
     const styleNames = Object.keys(styles);
-    for (let style of styleNames) {
+    for (const style of styleNames) {
         element.style[style] = styles[style][0];
     }
 
     const cleanup = () => {
-        for (let style of styleNames) {
+        for (const style of styleNames) {
             element.style[style] = null;
         }
         element.style.transition = null;
@@ -141,7 +141,7 @@ function animateStyles(element, styles, animTime = 400, onComplete = null) {
 
     setTimeout(() => {
         element.style.transition = `all ease-in-out ${animTime}ms`;
-        for (let style of styleNames) {
+        for (const style of styleNames) {
             element.style[style] = styles[style][1];
         }
 

@@ -13,7 +13,7 @@ export function getPrimaryToolbar(options) {
         'bullist numlist listoverflow',
         textDirPlugins,
         'link table imagemanager-insert insertoverflow',
-        'code about fullscreen'
+        'code about fullscreen',
     ];
 
     return toolbar.filter(row => Boolean(row)).join(' | ');
@@ -26,17 +26,17 @@ function registerPrimaryToolbarGroups(editor) {
     editor.ui.registry.addGroupToolbarButton('formatoverflow', {
         icon: 'more-drawer',
         tooltip: 'More',
-        items: 'strikethrough superscript subscript inlinecode removeformat'
+        items: 'strikethrough superscript subscript inlinecode removeformat',
     });
     editor.ui.registry.addGroupToolbarButton('listoverflow', {
         icon: 'more-drawer',
         tooltip: 'More',
-        items: 'tasklist outdent indent'
+        items: 'tasklist outdent indent',
     });
     editor.ui.registry.addGroupToolbarButton('insertoverflow', {
         icon: 'more-drawer',
         tooltip: 'More',
-        items: 'customhr codeeditor drawio media details'
+        items: 'customhr codeeditor drawio media details',
     });
 }
 
@@ -50,7 +50,7 @@ function registerLinkContextToolbar(editor) {
         },
         position: 'node',
         scope: 'node',
-        items: 'link unlink openlink'
+        items: 'link unlink openlink',
     });
 }
 
@@ -64,7 +64,7 @@ function registerImageContextToolbar(editor) {
         },
         position: 'node',
         scope: 'node',
-        items: 'image'
+        items: 'image',
     });
 }
 

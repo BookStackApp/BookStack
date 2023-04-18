@@ -1,4 +1,3 @@
-
 /**
  * Perform a HTTP GET request.
  * Can easily pass query parameters as the second parameter.
@@ -63,7 +62,7 @@ async function performDelete(url, data = null) {
  */
 async function dataRequest(method, url, data = null) {
     const options = {
-        method: method,
+        method,
         body: data,
     };
 
@@ -84,7 +83,7 @@ async function dataRequest(method, url, data = null) {
         options.method = 'post';
     }
 
-    return request(url, options)
+    return request(url, options);
 }
 
 /**
@@ -101,7 +100,7 @@ async function request(url, options = {}) {
 
     if (options.params) {
         const urlObj = new URL(url);
-        for (let paramName of Object.keys(options.params)) {
+        for (const paramName of Object.keys(options.params)) {
             const value = options.params[paramName];
             if (typeof value !== 'undefined' && value !== null) {
                 urlObj.searchParams.set(paramName, value);
@@ -111,13 +110,12 @@ async function request(url, options = {}) {
     }
 
     const csrfToken = document.querySelector('meta[name=token]').getAttribute('content');
-    options = Object.assign({}, options, {
-        'credentials': 'same-origin',
-    });
-    options.headers = Object.assign({}, options.headers || {}, {
-        'baseURL': window.baseUrl(''),
+    options = {...options, credentials: 'same-origin'};
+    options.headers = {
+        ...options.headers || {},
+        baseURL: window.baseUrl(''),
         'X-CSRF-TOKEN': csrfToken,
-    });
+    };
 
     const response = await fetch(url, options);
     const content = await getResponseContent(response);
@@ -160,6 +158,7 @@ async function getResponseContent(response) {
 }
 
 class HttpError extends Error {
+
     constructor(response, content) {
         super(response.statusText);
         this.data = content;
@@ -170,13 +169,14 @@ class HttpError extends Error {
         this.url = response.url;
         this.original = response;
     }
+
 }
 
 export default {
-    get: get,
-    post: post,
-    put: put,
-    patch: patch,
+    get,
+    post,
+    put,
+    patch,
     delete: performDelete,
-    HttpError: HttpError,
+    HttpError,
 };

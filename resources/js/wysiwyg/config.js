@@ -1,32 +1,35 @@
-import {register as registerShortcuts} from "./shortcuts";
-import {listen as listenForCommonEvents} from "./common-events";
-import {scrollToQueryString} from "./scrolling";
-import {listenForDragAndPaste} from "./drop-paste-handling";
-import {getPrimaryToolbar, registerAdditionalToolbars} from "./toolbars";
-import {registerCustomIcons} from "./icons";
+import {register as registerShortcuts} from './shortcuts';
+import {listen as listenForCommonEvents} from './common-events';
+import {scrollToQueryString} from './scrolling';
+import {listenForDragAndPaste} from './drop-paste-handling';
+import {getPrimaryToolbar, registerAdditionalToolbars} from './toolbars';
+import {registerCustomIcons} from './icons';
 
-import {getPlugin as getCodeeditorPlugin} from "./plugin-codeeditor";
-import {getPlugin as getDrawioPlugin} from "./plugin-drawio";
-import {getPlugin as getCustomhrPlugin} from "./plugins-customhr";
-import {getPlugin as getImagemanagerPlugin} from "./plugins-imagemanager";
-import {getPlugin as getAboutPlugin} from "./plugins-about";
-import {getPlugin as getDetailsPlugin} from "./plugins-details";
-import {getPlugin as getTasklistPlugin} from "./plugins-tasklist";
+import {getPlugin as getCodeeditorPlugin} from './plugin-codeeditor';
+import {getPlugin as getDrawioPlugin} from './plugin-drawio';
+import {getPlugin as getCustomhrPlugin} from './plugins-customhr';
+import {getPlugin as getImagemanagerPlugin} from './plugins-imagemanager';
+import {getPlugin as getAboutPlugin} from './plugins-about';
+import {getPlugin as getDetailsPlugin} from './plugins-details';
+import {getPlugin as getTasklistPlugin} from './plugins-tasklist';
 
 const style_formats = [
-    {title: "Large Header", format: "h2", preview: 'color: blue;'},
-    {title: "Medium Header", format: "h3"},
-    {title: "Small Header", format: "h4"},
-    {title: "Tiny Header", format: "h5"},
-    {title: "Paragraph", format: "p", exact: true, classes: ''},
-    {title: "Blockquote", format: "blockquote"},
+    {title: 'Large Header', format: 'h2', preview: 'color: blue;'},
+    {title: 'Medium Header', format: 'h3'},
+    {title: 'Small Header', format: 'h4'},
+    {title: 'Tiny Header', format: 'h5'},
     {
-        title: "Callouts", items: [
-            {title: "Information", format: 'calloutinfo'},
-            {title: "Success", format: 'calloutsuccess'},
-            {title: "Warning", format: 'calloutwarning'},
-            {title: "Danger", format: 'calloutdanger'}
-        ]
+        title: 'Paragraph', format: 'p', exact: true, classes: '',
+    },
+    {title: 'Blockquote', format: 'blockquote'},
+    {
+        title: 'Callouts',
+        items: [
+            {title: 'Information', format: 'calloutinfo'},
+            {title: 'Success', format: 'calloutsuccess'},
+            {title: 'Warning', format: 'calloutwarning'},
+            {title: 'Danger', format: 'calloutdanger'},
+        ],
     },
 ];
 
@@ -37,7 +40,7 @@ const formats = {
     calloutsuccess: {block: 'p', exact: true, attributes: {class: 'callout success'}},
     calloutinfo: {block: 'p', exact: true, attributes: {class: 'callout info'}},
     calloutwarning: {block: 'p', exact: true, attributes: {class: 'callout warning'}},
-    calloutdanger: {block: 'p', exact: true, attributes: {class: 'callout danger'}}
+    calloutdanger: {block: 'p', exact: true, attributes: {class: 'callout danger'}},
 };
 
 const color_map = [
@@ -66,14 +69,13 @@ const color_map = [
     '#34495E', '',
 
     '#000000', '',
-    '#ffffff', ''
+    '#ffffff', '',
 ];
 
 function file_picker_callback(callback, value, meta) {
-
     // field_name, url, type, win
     if (meta.filetype === 'file') {
-        /** @type {EntitySelectorPopup} **/
+        /** @type {EntitySelectorPopup} * */
         const selector = window.$components.first('entity-selector-popup');
         selector.show(entity => {
             callback(entity.link, {
@@ -85,13 +87,12 @@ function file_picker_callback(callback, value, meta) {
 
     if (meta.filetype === 'image') {
         // Show image manager
-        /** @type {ImageManager} **/
+        /** @type {ImageManager} * */
         const imageManager = window.$components.first('image-manager');
-        imageManager.show(function (image) {
+        imageManager.show(image => {
             callback(image.url, {alt: image.name});
         }, 'gallery');
     }
-
 }
 
 /**
@@ -100,21 +101,21 @@ function file_picker_callback(callback, value, meta) {
  */
 function gatherPlugins(options) {
     const plugins = [
-        "image",
-        "table",
-        "link",
-        "autolink",
-        "fullscreen",
-        "code",
-        "customhr",
-        "autosave",
-        "lists",
-        "codeeditor",
-        "media",
-        "imagemanager",
-        "about",
-        "details",
-        "tasklist",
+        'image',
+        'table',
+        'link',
+        'autolink',
+        'fullscreen',
+        'code',
+        'customhr',
+        'autosave',
+        'lists',
+        'codeeditor',
+        'media',
+        'imagemanager',
+        'about',
+        'details',
+        'tasklist',
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
@@ -137,11 +138,11 @@ function gatherPlugins(options) {
  * Fetch custom HTML head content from the parent page head into the editor.
  */
 function fetchCustomHeadContent() {
-    const headContentLines = document.head.innerHTML.split("\n");
+    const headContentLines = document.head.innerHTML.split('\n');
     const startLineIndex = headContentLines.findIndex(line => line.trim() === '<!-- Start: custom user content -->');
     const endLineIndex = headContentLines.findIndex(line => line.trim() === '<!-- End: custom user content -->');
     if (startLineIndex === -1 || endLineIndex === -1) {
-        return ''
+        return '';
     }
     return headContentLines.slice(startLineIndex + 1, endLineIndex).join('\n');
 }
@@ -152,7 +153,7 @@ function fetchCustomHeadContent() {
  * @param {Editor} editor
  */
 function setupBrFilter(editor) {
-    editor.serializer.addNodeFilter('br', function(nodes) {
+    editor.serializer.addNodeFilter('br', nodes => {
         for (const node of nodes) {
             if (node.parent && node.parent.name === 'code') {
                 const newline = tinymce.html.Node.create('#text');
@@ -200,9 +201,9 @@ function getSetupCallback(options) {
             icon: 'sourcecode',
             onAction() {
                 editor.execCommand('mceToggleFormat', false, 'code');
-            }
-        })
-    }
+            },
+        });
+    };
 }
 
 /**
@@ -229,7 +230,6 @@ body {
  * @return {Object}
  */
 export function build(options) {
-
     // Set language
     window.tinymce.addI18n(options.language, options.translationMap);
 
@@ -241,7 +241,7 @@ export function build(options) {
         width: '100%',
         height: '100%',
         selector: '#html-editor',
-        cache_suffix: '?version=' + version,
+        cache_suffix: `?version=${version}`,
         content_css: [
             window.baseUrl('/dist/styles.css'),
         ],
@@ -263,12 +263,12 @@ export function build(options) {
         automatic_uploads: false,
         custom_elements: 'doc-root,code-block',
         valid_children: [
-            "-div[p|h1|h2|h3|h4|h5|h6|blockquote|code-block]",
-            "+div[pre|img]",
-            "-doc-root[doc-root|#text]",
-            "-li[details]",
-            "+code-block[pre]",
-            "+doc-root[p|h1|h2|h3|h4|h5|h6|blockquote|code-block|div]"
+            '-div[p|h1|h2|h3|h4|h5|h6|blockquote|code-block]',
+            '+div[pre|img]',
+            '-doc-root[doc-root|#text]',
+            '-li[details]',
+            '+code-block[pre]',
+            '+doc-root[p|h1|h2|h3|h4|h5|h6|blockquote|code-block|div]',
         ].join(','),
         plugins: gatherPlugins(options),
         contextmenu: false,
@@ -285,7 +285,7 @@ export function build(options) {
         color_map,
         file_picker_callback,
         paste_preprocess(plugin, args) {
-            const content = args.content;
+            const {content} = args;
             if (content.indexOf('<img src="file://') !== -1) {
                 args.content = '';
             }

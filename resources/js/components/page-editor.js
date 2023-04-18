@@ -1,9 +1,10 @@
-import * as Dates from "../services/dates";
-import {onSelect} from "../services/dom";
-import {debounce} from "../services/util";
-import {Component} from "./component";
+import * as Dates from '../services/dates';
+import {onSelect} from '../services/dom';
+import {debounce} from '../services/util';
+import {Component} from './component';
 
 export class PageEditor extends Component {
+
     setup() {
         // Options
         this.draftsEnabled = this.$opts.draftsEnabled === 'true';
@@ -93,12 +94,12 @@ export class PageEditor extends Component {
 
     runAutoSave() {
         // Stop if manually saved recently to prevent bombarding the server
-        const savedRecently = (Date.now() - this.autoSave.last < (this.autoSave.frequency)/2);
+        const savedRecently = (Date.now() - this.autoSave.last < (this.autoSave.frequency) / 2);
         if (savedRecently || !this.autoSave.pendingChange) {
             return;
         }
 
-        this.saveDraft()
+        this.saveDraft();
     }
 
     savePage() {
@@ -172,7 +173,6 @@ export class PageEditor extends Component {
             this.startAutoSave();
         }, 1000);
         window.$events.emit('success', this.draftDiscardedText);
-
     }
 
     updateChangelogDisplay() {
@@ -180,7 +180,7 @@ export class PageEditor extends Component {
         if (summary.length === 0) {
             summary = this.setChangelogText;
         } else if (summary.length > 16) {
-            summary = summary.slice(0, 16) + '...';
+            summary = `${summary.slice(0, 16)}...`;
         }
         this.changelogDisplay.innerText = summary;
     }
@@ -193,7 +193,7 @@ export class PageEditor extends Component {
         event.preventDefault();
 
         const link = event.target.closest('a').href;
-        /** @var {ConfirmDialog} **/
+        /** @var {ConfirmDialog} * */
         const dialog = window.$components.firstOnElement(this.switchDialogContainer, 'confirm-dialog');
         const [saved, confirmed] = await Promise.all([this.saveDraft(), dialog.show()]);
 

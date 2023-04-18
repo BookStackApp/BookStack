@@ -1,5 +1,5 @@
-import {onChildEvent} from "../services/dom";
-import {Component} from "./component";
+import {onChildEvent} from '../services/dom';
+import {Component} from './component';
 
 /**
  * Entity Selector
@@ -65,13 +65,13 @@ export class EntitySelector extends Component {
             if (e.code === 'ArrowDown') {
                 this.focusAdjacent(true);
             }
-        })
+        });
     }
 
     focusAdjacent(forward = true) {
         const items = Array.from(this.resultsContainer.querySelectorAll('[data-entity-type]'));
         const selectedIndex = items.indexOf(document.activeElement);
-        const newItem = items[selectedIndex+ (forward ? 1 : -1)] || items[0];
+        const newItem = items[selectedIndex + (forward ? 1 : -1)] || items[0];
         if (newItem) {
             newItem.focus();
         }
@@ -101,7 +101,7 @@ export class EntitySelector extends Component {
         window.$http.get(this.searchUrl()).then(resp => {
             this.resultsContainer.innerHTML = resp.data;
             this.hideLoading();
-        })
+        });
     }
 
     searchUrl() {
@@ -144,13 +144,13 @@ export class EntitySelector extends Component {
 
         const link = item.getAttribute('href');
         const name = item.querySelector('.entity-list-item-name').textContent;
-        const data = {id: Number(id), name: name, link: link};
+        const data = {id: Number(id), name, link};
 
         if (isSelected) {
             item.classList.add('selected');
             this.selectedItemData = data;
         } else {
-            window.$events.emit('entity-select-change', null)
+            window.$events.emit('entity-select-change', null);
         }
 
         if (!isDblClick && !isSelected) return;
@@ -159,7 +159,7 @@ export class EntitySelector extends Component {
             this.confirmSelection(data);
         }
         if (isSelected) {
-            window.$events.emit('entity-select-change', data)
+            window.$events.emit('entity-select-change', data);
         }
     }
 

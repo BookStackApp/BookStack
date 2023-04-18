@@ -1,9 +1,16 @@
+import events from './services/events';
+import httpInstance from './services/http';
+import Translations from './services/translations';
+
+import * as components from './services/components';
+import * as componentMap from './components';
+
 // Url retrieval function
 window.baseUrl = function(path) {
     let basePath = document.querySelector('meta[name="base-url"]').getAttribute('content');
-    if (basePath[basePath.length-1] === '/') basePath = basePath.slice(0, basePath.length-1);
+    if (basePath[basePath.length - 1] === '/') basePath = basePath.slice(0, basePath.length - 1);
     if (path[0] === '/') path = path.slice(1);
-    return basePath + '/' + path;
+    return `${basePath}/${path}`;
 };
 
 window.importVersioned = function(moduleName) {
@@ -13,22 +20,17 @@ window.importVersioned = function(moduleName) {
 };
 
 // Set events and http services on window
-import events from "./services/events"
-import httpInstance from "./services/http"
 window.$http = httpInstance;
 window.$events = events;
 
 // Translation setup
-// Creates a global function with name 'trans' to be used in the same way as Laravel's translation system
-import Translations from "./services/translations"
+// Creates a global function with name 'trans' to be used in the same way as the Laravel translation system
 const translator = new Translations();
 window.trans = translator.get.bind(translator);
 window.trans_choice = translator.getPlural.bind(translator);
 window.trans_plural = translator.parsePlural.bind(translator);
 
-// Load Components
-import * as components from "./services/components"
-import * as componentMap from "./components";
+// Load & initialise components
 components.register(componentMap);
 window.$components = components;
 components.init();

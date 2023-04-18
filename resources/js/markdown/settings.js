@@ -59,4 +59,5 @@ export class Settings {
         listeners.push(callback);
         this.changeListeners[key] = listeners;
     }
+
 }

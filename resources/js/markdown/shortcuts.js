@@ -34,8 +34,8 @@ function provide(editor) {
     shortcuts['Mod-8'] = cm => editor.actions.wrapSelection('`', '`');
     shortcuts['Shift-Mod-e'] = cm => editor.actions.wrapSelection('`', '`');
     shortcuts['Mod-9'] = cm => editor.actions.cycleCalloutTypeAtSelection();
-    shortcuts['Mod-p'] = cm => editor.actions.replaceLineStart('-')
-    shortcuts['Mod-o'] = cm => editor.actions.replaceLineStartForOrderedList()
+    shortcuts['Mod-p'] = cm => editor.actions.replaceLineStart('-');
+    shortcuts['Mod-o'] = cm => editor.actions.replaceLineStartForOrderedList();
 
     return shortcuts;
 }
@@ -46,14 +46,12 @@ function provide(editor) {
  * @return {{key: String, run: function, preventDefault: boolean}[]}
  */
 export function provideKeyBindings(editor) {
-    const shortcuts= provide(editor);
+    const shortcuts = provide(editor);
     const keyBindings = [];
 
-    const wrapAction = (action) => {
-        return () => {
-            action();
-            return true;
-        };
+    const wrapAction = action => () => {
+        action();
+        return true;
     };
 
     for (const [shortcut, action] of Object.entries(shortcuts)) {

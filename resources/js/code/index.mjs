@@ -1,9 +1,9 @@
-import {EditorView, keymap} from "@codemirror/view";
+import {EditorView, keymap} from '@codemirror/view';
 
-import {copyTextToClipboard} from "../services/clipboard.js"
-import {viewerExtensions, editorExtensions} from "./setups.js";
-import {createView} from "./views.js";
-import {SimpleEditorInterface} from "./simple-editor-interface.js";
+import {copyTextToClipboard} from '../services/clipboard';
+import {viewerExtensions, editorExtensions} from './setups';
+import {createView} from './views';
+import {SimpleEditorInterface} from './simple-editor-interface';
 
 /**
  * Highlight pre elements on a page
@@ -32,7 +32,7 @@ export function highlightWithin(parent) {
  */
 function highlightElem(elem) {
     const innerCodeElem = elem.querySelector('code[class^=language-]');
-    elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi ,'\n');
+    elem.innerHTML = elem.innerHTML.replace(/<br\s*[\/]?>/gi, '\n');
     const content = elem.textContent.trimEnd();
 
     let langName = '';
@@ -61,10 +61,10 @@ function highlightElem(elem) {
  * @param {EditorView} editorView
  */
 function addCopyIcon(editorView) {
-    const copyIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
-    const checkIcon = `<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`;
+    const copyIcon = '<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
+    const checkIcon = '<svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
     const copyButton = document.createElement('button');
-    copyButton.setAttribute('type', 'button')
+    copyButton.setAttribute('type', 'button');
     copyButton.classList.add('cm-copy-button');
     copyButton.innerHTML = copyIcon;
     editorView.dom.appendChild(copyButton);
@@ -112,7 +112,6 @@ export function wysiwygView(cmContainer, shadowRoot, content, language) {
     return editor;
 }
 
-
 /**
  * Create a CodeMirror instance to show in the WYSIWYG pop-up editor
  * @param {HTMLElement} elem
@@ -126,7 +125,7 @@ export function popupEditor(elem, modeSuggestion) {
         doc: content,
         extensions: [
             ...editorExtensions(elem.parentElement),
-            EditorView.updateListener.of((v) => {
+            EditorView.updateListener.of(v => {
                 if (v.docChanged) {
                     // textArea.value = v.state.doc.toString();
                 }
@@ -155,7 +154,7 @@ export function inlineEditor(textArea, mode) {
         doc: content,
         extensions: [
             ...editorExtensions(textArea.parentElement),
-            EditorView.updateListener.of((v) => {
+            EditorView.updateListener.of(v => {
                 if (v.docChanged) {
                     textArea.value = v.state.doc.toString();
                 }
@@ -188,7 +187,7 @@ export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
         extensions: [
             keymap.of(keyBindings),
             ...editorExtensions(elem.parentElement),
-            EditorView.updateListener.of((v) => {
+            EditorView.updateListener.of(v => {
                 onChange(v);
             }),
             EditorView.domEventHandlers(domEventHandlers),

@@ -1,6 +1,6 @@
-import * as DOM from "../services/dom";
-import {scrollAndHighlightElement} from "../services/util";
-import {Component} from "./component";
+import * as DOM from '../services/dom';
+import {scrollAndHighlightElement} from '../services/util';
+import {Component} from './component';
 
 export class PageDisplay extends Component {
 
@@ -26,7 +26,7 @@ export class PageDisplay extends Component {
                 window.$components.first('tri-layout').showContent();
                 const contentId = child.getAttribute('href').substr(1);
                 this.goToText(contentId);
-                window.history.pushState(null, null, '#' + contentId);
+                window.history.pushState(null, null, `#${contentId}`);
             });
         }
     }
@@ -63,7 +63,7 @@ export class PageDisplay extends Component {
             // Setup the intersection observer.
             const intersectOpts = {
                 rootMargin: '0px 0px 0px 0px',
-                threshold: 1.0
+                threshold: 1.0,
             };
             const pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
 
@@ -81,7 +81,7 @@ export class PageDisplay extends Component {
         }
 
         function toggleAnchorHighlighting(elementId, shouldHighlight) {
-            DOM.forEach('a[href="#' + elementId + '"]', anchor => {
+            DOM.forEach(`a[href="#${elementId}"]`, anchor => {
                 anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
             });
         }
@@ -96,4 +96,5 @@ export class PageDisplay extends Component {
         const details = [...this.container.querySelectorAll('details')];
         details.forEach(detail => detail.addEventListener('toggle', onToggle));
     }
+
 }

@@ -19,7 +19,7 @@ class Translator {
      */
     parseTranslations() {
         const translationMetaTags = document.querySelectorAll('meta[name="translation"]');
-        for (let tag of translationMetaTags) {
+        for (const tag of translationMetaTags) {
             const key = tag.getAttribute('key');
             const value = tag.getAttribute('value');
             this.store.set(key, value);
@@ -64,7 +64,7 @@ class Translator {
         const rangeRegex = /^\[([0-9]+),([0-9*]+)]/;
         let result = null;
 
-        for (let t of splitText) {
+        for (const t of splitText) {
             // Parse exact matches
             const exactMatches = t.match(exactCountRegex);
             if (exactMatches !== null && Number(exactMatches[1]) === count) {

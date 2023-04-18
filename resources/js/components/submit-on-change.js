@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 /**
  * Submit on change
@@ -9,8 +9,7 @@ export class SubmitOnChange extends Component {
     setup() {
         this.filter = this.$opts.filter;
 
-        this.$el.addEventListener('change', (event) => {
-
+        this.$el.addEventListener('change', event => {
             if (this.filter && !event.target.matches(this.filter)) {
                 return;
             }

@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class DetailsHighlighter extends Component {
 
@@ -19,4 +19,5 @@ export class DetailsHighlighter extends Component {
         }
         this.dealtWith = true;
     }
+
 }

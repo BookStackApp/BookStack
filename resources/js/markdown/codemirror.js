@@ -1,6 +1,6 @@
-import {provideKeyBindings} from "./shortcuts";
-import {debounce} from "../services/util";
-import Clipboard from "../services/clipboard";
+import {provideKeyBindings} from './shortcuts';
+import {debounce} from '../services/util';
+import Clipboard from '../services/clipboard';
 
 /**
  * Initiate the codemirror instance for the markdown editor.
@@ -25,9 +25,9 @@ export async function init(editor) {
 
     const domEventHandlers = {
         // Handle scroll to sync display view
-        scroll: (event) => syncActive && onScrollDebounced(event),
+        scroll: event => syncActive && onScrollDebounced(event),
         // Handle image & content drag n drop
-        drop: (event) => {
+        drop: event => {
             const templateId = event.dataTransfer.getData('bookstack/template');
             if (templateId) {
                 event.preventDefault();
@@ -43,7 +43,7 @@ export async function init(editor) {
             }
         },
         // Handle image paste
-        paste: (event) => {
+        paste: event => {
             const clipboard = new Clipboard(event.clipboardData || event.dataTransfer);
 
             // Don't handle the event ourselves if no items exist of contains table-looking data
@@ -55,8 +55,8 @@ export async function init(editor) {
             for (const image of images) {
                 editor.actions.uploadImage(image);
             }
-        }
-    }
+        },
+    };
 
     const cm = Code.markdownEditor(
         editor.config.inputEl,

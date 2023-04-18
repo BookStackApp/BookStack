@@ -1,5 +1,5 @@
-import {slideUp, slideDown} from "../services/animations";
-import {Component} from "./component";
+import {slideUp, slideDown} from '../services/animations';
+import {Component} from './component';
 
 export class ExpandToggle extends Component {
 
@@ -24,8 +24,8 @@ export class ExpandToggle extends Component {
         event.preventDefault();
 
         const matchingElems = document.querySelectorAll(this.targetSelector);
-        for (let match of matchingElems) {
-            this.isOpen ?  this.close(match) : this.open(match);
+        for (const match of matchingElems) {
+            this.isOpen ? this.close(match) : this.open(match);
         }
 
         this.isOpen = !this.isOpen;
@@ -34,7 +34,7 @@ export class ExpandToggle extends Component {
 
     updateSystemAjax(isOpen) {
         window.$http.patch(this.updateEndpoint, {
-            expand: isOpen ? 'true' : 'false'
+            expand: isOpen ? 'true' : 'false',
         });
     }
 

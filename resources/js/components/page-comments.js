@@ -1,6 +1,6 @@
-import {scrollAndHighlightElement} from "../services/util";
-import {Component} from "./component";
-import {htmlToDom} from "../services/dom";
+import {scrollAndHighlightElement} from '../services/util';
+import {Component} from './component';
+import {htmlToDom} from '../services/dom';
 
 export class PageComments extends Component {
 
@@ -36,11 +36,11 @@ export class PageComments extends Component {
     }
 
     handleAction(event) {
-        let actionElem = event.target.closest('[action]');
+        const actionElem = event.target.closest('[action]');
 
         if (event.target.matches('a[href^="#"]')) {
             const id = event.target.href.split('#')[1];
-            scrollAndHighlightElement(document.querySelector('#' + id));
+            scrollAndHighlightElement(document.querySelector(`#${id}`));
         }
 
         if (actionElem === null) return;
@@ -68,24 +68,24 @@ export class PageComments extends Component {
         if (this.editingComment) this.closeUpdateForm();
         commentElem.querySelector('[comment-content]').style.display = 'none';
         commentElem.querySelector('[comment-edit-container]').style.display = 'block';
-        let textArea = commentElem.querySelector('[comment-edit-container] textarea');
-        let lineCount = textArea.value.split('\n').length;
-        textArea.style.height = ((lineCount * 20) + 40) + 'px';
+        const textArea = commentElem.querySelector('[comment-edit-container] textarea');
+        const lineCount = textArea.value.split('\n').length;
+        textArea.style.height = `${(lineCount * 20) + 40}px`;
         this.editingComment = commentElem;
     }
 
     updateComment(event) {
-        let form = event.target;
+        const form = event.target;
         event.preventDefault();
-        let text = form.querySelector('textarea').value;
-        let reqData = {
-            text: text,
+        const text = form.querySelector('textarea').value;
+        const reqData = {
+            text,
             parent_id: this.parentId || null,
         };
         this.showLoading(form);
-        let commentId = this.editingComment.getAttribute('comment');
+        const commentId = this.editingComment.getAttribute('comment');
         window.$http.put(`/comment/${commentId}`, reqData).then(resp => {
-            let newComment = document.createElement('div');
+            const newComment = document.createElement('div');
             newComment.innerHTML = resp.data;
             this.editingComment.innerHTML = newComment.children[0].innerHTML;
             window.$events.success(this.updatedText);
@@ -98,7 +98,7 @@ export class PageComments extends Component {
     }
 
     deleteComment(commentElem) {
-        let id = commentElem.getAttribute('comment');
+        const id = commentElem.getAttribute('comment');
         this.showLoading(commentElem.querySelector('[comment-content]'));
         window.$http.delete(`/comment/${id}`).then(resp => {
             commentElem.parentNode.removeChild(commentElem);
@@ -111,9 +111,9 @@ export class PageComments extends Component {
     saveComment(event) {
         event.preventDefault();
         event.stopPropagation();
-        let text = this.formInput.value;
-        let reqData = {
-            text: text,
+        const text = this.formInput.value;
+        const reqData = {
+            text,
             parent_id: this.parentId || null,
         };
         this.showLoading(this.form);
@@ -131,7 +131,7 @@ export class PageComments extends Component {
     }
 
     updateCount() {
-        let count = this.container.children.length;
+        const count = this.container.children.length;
         this.elem.querySelector('[comments-title]').textContent = window.trans_plural(this.countText, count, {count});
     }
 
@@ -148,14 +148,14 @@ export class PageComments extends Component {
         this.formContainer.parentNode.style.display = 'block';
         this.addButtonContainer.style.display = 'none';
         this.formInput.focus();
-        this.formInput.scrollIntoView({behavior: "smooth"});
+        this.formInput.scrollIntoView({behavior: 'smooth'});
     }
 
     hideForm() {
         this.formContainer.style.display = 'none';
         this.formContainer.parentNode.style.display = 'none';
         if (this.getCommentCount() > 0) {
-            this.elem.appendChild(this.addButtonContainer)
+            this.elem.appendChild(this.addButtonContainer);
         } else {
             this.commentCountBar.appendChild(this.addButtonContainer);
         }
@@ -182,7 +182,7 @@ export class PageComments extends Component {
 
     showLoading(formElem) {
         const groups = formElem.querySelectorAll('.form-group');
-        for (let group of groups) {
+        for (const group of groups) {
             group.style.display = 'none';
         }
         formElem.querySelector('.form-group.loading').style.display = 'block';
@@ -190,7 +190,7 @@ export class PageComments extends Component {
 
     hideLoading(formElem) {
         const groups = formElem.querySelectorAll('.form-group');
-        for (let group of groups) {
+        for (const group of groups) {
             group.style.display = 'block';
         }
         formElem.querySelector('.form-group.loading').style.display = 'none';

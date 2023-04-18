@@ -1,7 +1,7 @@
-import {updateViewLanguage} from "./views";
-
+import {updateViewLanguage} from './views';
 
 export class SimpleEditorInterface {
+
     /**
      * @param {EditorView} editorView
      */
@@ -22,9 +22,9 @@ export class SimpleEditorInterface {
      * @param content
      */
     setContent(content) {
-        const doc = this.ev.state.doc;
+        const {doc} = this.ev.state;
         this.ev.dispatch({
-            changes: {from: 0, to: doc.length, insert: content}
+            changes: {from: 0, to: doc.length, insert: content},
         });
     }
 
@@ -43,4 +43,5 @@ export class SimpleEditorInterface {
     setMode(mode, content = '') {
         updateViewLanguage(this.ev, mode, content);
     }
+
 }

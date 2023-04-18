@@ -9,9 +9,9 @@ const stack = [];
 function emit(eventName, eventData) {
     stack.push({name: eventName, data: eventData});
     if (typeof listeners[eventName] === 'undefined') return this;
-    let eventsToStart = listeners[eventName];
+    const eventsToStart = listeners[eventName];
     for (let i = 0; i < eventsToStart.length; i++) {
-        let event = eventsToStart[i];
+        const event = eventsToStart[i];
         event(eventData);
     }
 }
@@ -37,7 +37,7 @@ function listen(eventName, callback) {
 function emitPublic(targetElement, eventName, eventData) {
     const event = new CustomEvent(eventName, {
         detail: eventData,
-        bubbles: true
+        bubbles: true,
     });
     targetElement.dispatchEvent(event);
 }
@@ -69,8 +69,8 @@ export default {
     emit,
     emitPublic,
     listen,
-    success: (msg) => emit('success', msg),
-    error: (msg) => emit('error', msg),
+    success: msg => emit('success', msg),
+    error: msg => emit('error', msg),
     showValidationErrors,
     showResponseError,
-}
+};

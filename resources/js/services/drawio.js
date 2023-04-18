@@ -1,6 +1,7 @@
 let iFrame = null;
 let lastApprovedOrigin;
-let onInit, onSave;
+let onInit; let
+    onSave;
 
 /**
  * Show the draw.io editor.
@@ -55,13 +56,15 @@ function drawEventExport(message) {
 }
 
 function drawEventSave(message) {
-    drawPostMessage({action: 'export', format: 'xmlpng', xml: message.xml, spin: 'Updating drawing'});
+    drawPostMessage({
+        action: 'export', format: 'xmlpng', xml: message.xml, spin: 'Updating drawing',
+    });
 }
 
 function drawEventInit() {
     if (!onInit) return;
     onInit().then(xml => {
-        drawPostMessage({action: 'load', autosave: 1, xml: xml});
+        drawPostMessage({action: 'load', autosave: 1, xml});
     });
 }
 
@@ -81,11 +84,11 @@ function drawPostMessage(data) {
 }
 
 async function upload(imageData, pageUploadedToId) {
-    let data = {
+    const data = {
         image: imageData,
         uploaded_to: pageUploadedToId,
     };
-    const resp = await window.$http.post(window.baseUrl(`/images/drawio`), data);
+    const resp = await window.$http.post(window.baseUrl('/images/drawio'), data);
     return resp.data;
 }
 
@@ -107,4 +110,6 @@ async function load(drawingId) {
     }
 }
 
-export default {show, close, upload, load};
+export default {
+    show, close, upload, load,
+};

@@ -1,5 +1,7 @@
-import {onChildEvent, onSelect, removeLoading, showLoading} from "../services/dom";
-import {Component} from "./component";
+import {
+    onChildEvent, onSelect, removeLoading, showLoading,
+} from '../services/dom';
+import {Component} from './component';
 
 export class ImageManager extends Component {
 

@@ -1,19 +1,18 @@
-import {StreamLanguage} from "@codemirror/language"
+import {StreamLanguage} from '@codemirror/language';
 
 import {css} from '@codemirror/lang-css';
 import {json} from '@codemirror/lang-json';
 import {javascript} from '@codemirror/lang-javascript';
-import {html} from "@codemirror/lang-html";
+import {html} from '@codemirror/lang-html';
 import {markdown} from '@codemirror/lang-markdown';
 import {php} from '@codemirror/lang-php';
-import {twig} from "@ssddanbrown/codemirror-lang-twig";
-import {xml} from "@codemirror/lang-xml";
+import {twig} from '@ssddanbrown/codemirror-lang-twig';
+import {xml} from '@codemirror/lang-xml';
 
-const legacyLoad = async (mode) => {
+const legacyLoad = async mode => {
     const modes = await window.importVersioned('legacy-modes');
     return StreamLanguage.define(modes[mode]);
 };
-
 
 // Mapping of possible languages or formats from user input to their codemirror modes.
 // Value can be a mode string or a function that will receive the code content & return the mode string.
@@ -58,7 +57,7 @@ const modeMap = {
     pascal: () => legacyLoad('pascal'),
     perl: () => legacyLoad('perl'),
     pgsql: () => legacyLoad('pgSQL'),
-    php: async (code) => {
+    php: async code => {
         const hasTags = code.includes('<?php');
         return php({plain: !hasTags});
     },

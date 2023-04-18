@@ -3,10 +3,10 @@
  * @param {String} url
  */
 function register(editor, url) {
-    editor.addCommand('InsertHorizontalRule', function () {
-        let hrElem = document.createElement('hr');
-        let cNode = editor.selection.getNode();
-        let parentNode = cNode.parentNode;
+    editor.addCommand('InsertHorizontalRule', () => {
+        const hrElem = document.createElement('hr');
+        const cNode = editor.selection.getNode();
+        const {parentNode} = cNode;
         parentNode.insertBefore(hrElem, cNode);
     });
 
@@ -15,10 +15,9 @@ function register(editor, url) {
         tooltip: 'Insert horizontal line',
         onAction() {
             editor.execCommand('InsertHorizontalRule');
-        }
+        },
     });
 }
-
 
 /**
  * @param {WysiwygConfigOptions} options
