@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class PagePicker extends Component {
 
@@ -24,7 +24,7 @@ export class PagePicker extends Component {
     }
 
     showPopup() {
-        /** @type {EntitySelectorPopup} **/
+        /** @type {EntitySelectorPopup} * */
         const selectorPopup = window.$components.first('entity-selector-popup');
         selectorPopup.show(entity => {
             this.setValue(entity.id, entity.name);
@@ -44,7 +44,7 @@ export class PagePicker extends Component {
         toggleElem(this.defaultDisplay, !hasValue);
         toggleElem(this.display, hasValue);
         if (hasValue) {
-            let id = this.getAssetIdFromVal();
+            const id = this.getAssetIdFromVal();
             this.display.textContent = `#${id}, ${name}`;
             this.display.href = window.baseUrl(`/link/${id}`);
         }

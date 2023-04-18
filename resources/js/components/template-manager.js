@@ -1,5 +1,5 @@
-import * as DOM from "../services/dom";
-import {Component} from "./component";
+import * as DOM from '../services/dom';
+import {Component} from './component';
 
 export class TemplateManager extends Component {
 
@@ -66,7 +66,7 @@ export class TemplateManager extends Component {
 
     async insertTemplate(templateId, action = 'replace') {
         const resp = await window.$http.get(`/templates/${templateId}`);
-        const eventName = 'editor::' + action;
+        const eventName = `editor::${action}`;
         window.$events.emit(eventName, resp.data);
     }
 
@@ -79,10 +79,11 @@ export class TemplateManager extends Component {
 
     async performSearch() {
         const searchTerm = this.searchInput.value;
-        const resp = await window.$http.get(`/templates`, {
-            search: searchTerm
+        const resp = await window.$http.get('/templates', {
+            search: searchTerm,
         });
         this.searchCancel.style.display = searchTerm ? 'block' : 'none';
         this.list.innerHTML = resp.data;
     }
+
 }

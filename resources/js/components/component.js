@@ -51,8 +51,9 @@ export class Component {
         const componentName = this.$name;
         const event = new CustomEvent(`${componentName}-${eventName}`, {
             bubbles: true,
-            detail: data
+            detail: data,
         });
         this.$el.dispatchEvent(event);
     }
+
 }

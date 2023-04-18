@@ -9,19 +9,18 @@ function register(editor, url) {
         icon: 'image',
         tooltip: 'Insert image',
         onAction() {
-            /** @type {ImageManager} **/
+            /** @type {ImageManager} * */
             const imageManager = window.$components.first('image-manager');
-            imageManager.show(function (image) {
+            imageManager.show(image => {
                 const imageUrl = image.thumbs.display || image.url;
                 let html = `<a href="${image.url}" target="_blank">`;
                 html += `<img src="${imageUrl}" alt="${image.name}">`;
                 html += '</a>';
                 editor.execCommand('mceInsertContent', false, html);
             }, 'gallery');
-        }
+        },
     });
 }
-
 
 /**
  * @param {WysiwygConfigOptions} options

@@ -1,9 +1,13 @@
-import {EditorView, keymap, drawSelection, highlightActiveLine, dropCursor,
-    rectangularSelection, lineNumbers, highlightActiveLineGutter} from "@codemirror/view"
-import {bracketMatching} from "@codemirror/language"
-import {defaultKeymap, history, historyKeymap, indentWithTab} from "@codemirror/commands"
-import {EditorState} from "@codemirror/state"
-import {getTheme} from "./themes";
+import {
+    EditorView, keymap, drawSelection, highlightActiveLine, dropCursor,
+    rectangularSelection, lineNumbers, highlightActiveLineGutter,
+} from '@codemirror/view';
+import {bracketMatching} from '@codemirror/language';
+import {
+    defaultKeymap, history, historyKeymap, indentWithTab,
+} from '@codemirror/commands';
+import {EditorState} from '@codemirror/state';
+import {getTheme} from './themes';
 
 /**
  * @param {Element} parentEl

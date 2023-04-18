@@ -1,5 +1,5 @@
-import {showLoading} from "../services/dom";
-import {Component} from "./component";
+import {showLoading} from '../services/dom';
+import {Component} from './component';
 
 export class Attachments extends Component {
 

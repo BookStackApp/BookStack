@@ -4,7 +4,7 @@
 export function register(editor) {
     // Headers
     for (let i = 1; i < 5; i++) {
-        editor.shortcuts.add('meta+' + i, '', ['FormatBlock', false, 'h' + (i+1)]);
+        editor.shortcuts.add(`meta+${i}`, '', ['FormatBlock', false, `h${i + 1}`]);
     }
 
     // Other block shortcuts
@@ -30,7 +30,7 @@ export function register(editor) {
     });
 
     // Loop through callout styles
-    editor.shortcuts.add('meta+9', '', function() {
+    editor.shortcuts.add('meta+9', '', () => {
         const selectedNode = editor.selection.getNode();
         const callout = selectedNode ? selectedNode.closest('.callout') : null;
 
@@ -39,15 +39,14 @@ export function register(editor) {
         const newFormatIndex = (currentFormatIndex + 1) % formats.length;
         const newFormat = formats[newFormatIndex];
 
-        editor.formatter.apply('callout' + newFormat);
+        editor.formatter.apply(`callout${newFormat}`);
     });
 
     // Link selector shortcut
-    editor.shortcuts.add('meta+shift+K', '', function() {
-        /** @var {EntitySelectorPopup} **/
+    editor.shortcuts.add('meta+shift+K', '', () => {
+        /** @var {EntitySelectorPopup} * */
         const selectorPopup = window.$components.first('entity-selector-popup');
-        selectorPopup.show(function(entity) {
-
+        selectorPopup.show(entity => {
             if (editor.selection.isCollapsed()) {
                 editor.insertContent(editor.dom.createHTML('a', {href: entity.link}, editor.dom.encode(entity.name)));
             } else {
@@ -56,6 +55,6 @@ export function register(editor) {
 
             editor.selection.collapse(false);
             editor.focus();
-        })
+        });
     });
 }

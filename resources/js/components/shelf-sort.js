@@ -1,5 +1,5 @@
-import Sortable from "sortablejs";
-import {Component} from "./component";
+import Sortable from 'sortablejs';
+import {Component} from './component';
 
 /**
  * @type {Object<string, function(HTMLElement, HTMLElement, HTMLElement)>}
@@ -66,7 +66,7 @@ export class ShelfSort extends Component {
             this.filterBooksByName(this.bookSearchInput.value);
         });
 
-        this.sortButtonContainer.addEventListener('click' , event => {
+        this.sortButtonContainer.addEventListener('click', event => {
             const button = event.target.closest('button[data-sort]');
             if (button) {
                 this.sortShelfBooks(button.dataset.sort);
@@ -78,11 +78,10 @@ export class ShelfSort extends Component {
      * @param {String} filterVal
      */
     filterBooksByName(filterVal) {
-
         // Set height on first search, if not already set, to prevent the distraction
         // of the list height jumping around
         if (!this.allBookList.style.height) {
-            this.allBookList.style.height = this.allBookList.getBoundingClientRect().height + 'px';
+            this.allBookList.style.height = `${this.allBookList.getBoundingClientRect().height}px`;
         }
 
         const books = this.allBookList.children;
@@ -100,7 +99,7 @@ export class ShelfSort extends Component {
      */
     sortItemActionClick(sortItemAction) {
         const sortItem = sortItemAction.closest('.scroll-box-item');
-        const action = sortItemAction.dataset.action;
+        const {action} = sortItemAction.dataset;
 
         const actionFunction = itemActions[action];
         actionFunction(sortItem, this.shelfBookList, this.allBookList);

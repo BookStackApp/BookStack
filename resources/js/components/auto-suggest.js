@@ -1,7 +1,7 @@
-import {escapeHtml} from "../services/util";
-import {onChildEvent} from "../services/dom";
-import {Component} from "./component";
-import {KeyboardNavigationHandler} from "../services/keyboard-navigation";
+import {escapeHtml} from '../services/util';
+import {onChildEvent} from '../services/dom';
+import {Component} from './component';
+import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
 
 const ajaxCache = {};
 
@@ -9,6 +9,7 @@ const ajaxCache = {};
  * AutoSuggest
  */
 export class AutoSuggest extends Component {
+
     setup() {
         this.parent = this.$el.parentElement;
         this.container = this.$el;
@@ -67,9 +68,7 @@ export class AutoSuggest extends Component {
         const search = this.input.value.toLowerCase();
         const suggestions = await this.loadSuggestions(search, nameFilter);
 
-        const toShow = suggestions.filter(val => {
-            return search === '' || val.toLowerCase().startsWith(search);
-        }).slice(0, 10);
+        const toShow = suggestions.filter(val => search === '' || val.toLowerCase().startsWith(search)).slice(0, 10);
 
         this.displaySuggestions(toShow);
     }
@@ -126,4 +125,5 @@ export class AutoSuggest extends Component {
             this.hideSuggestions();
         }
     }
+
 }

@@ -1,4 +1,6 @@
-export {c, cpp, csharp, java, kotlin, scala, dart} from '@codemirror/legacy-modes/mode/clike';
+export {
+    c, cpp, csharp, java, kotlin, scala, dart,
+} from '@codemirror/legacy-modes/mode/clike';
 export {diff} from '@codemirror/legacy-modes/mode/diff';
 export {fortran} from '@codemirror/legacy-modes/mode/fortran';
 export {go} from '@codemirror/legacy-modes/mode/go';
@@ -17,11 +19,13 @@ export {ruby} from '@codemirror/legacy-modes/mode/ruby';
 export {rust} from '@codemirror/legacy-modes/mode/rust';
 export {scheme} from '@codemirror/legacy-modes/mode/scheme';
 export {shell} from '@codemirror/legacy-modes/mode/shell';
-export {standardSQL, pgSQL, msSQL, mySQL, sqlite, plSQL} from '@codemirror/legacy-modes/mode/sql';
+export {
+    standardSQL, pgSQL, msSQL, mySQL, sqlite, plSQL,
+} from '@codemirror/legacy-modes/mode/sql';
 export {stex} from '@codemirror/legacy-modes/mode/stex';
-export {swift} from "@codemirror/legacy-modes/mode/swift";
+export {swift} from '@codemirror/legacy-modes/mode/swift';
 export {toml} from '@codemirror/legacy-modes/mode/toml';
 export {vb} from '@codemirror/legacy-modes/mode/vb';
 export {vbScript} from '@codemirror/legacy-modes/mode/vbscript';
 export {yaml} from '@codemirror/legacy-modes/mode/yaml';
-export {smarty} from "@ssddanbrown/codemirror-lang-smarty";
+export {smarty} from '@ssddanbrown/codemirror-lang-smarty';

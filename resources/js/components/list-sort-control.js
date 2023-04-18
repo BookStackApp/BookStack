@@ -2,7 +2,7 @@
  * ListSortControl
  * Manages the logic for the control which provides list sorting options.
  */
-import {Component} from "./component";
+import {Component} from './component';
 
 export class ListSortControl extends Component {
 

@@ -1,4 +1,4 @@
-import {kebabToCamel, camelToKebab} from "./text";
+import {kebabToCamel, camelToKebab} from './text';
 
 /**
  * A mapping of active components keyed by name, with values being arrays of component
@@ -25,12 +25,12 @@ const elementComponentMap = new WeakMap();
  * @param {Element} element
  */
 function initComponent(name, element) {
-    /** @type {Function<Component>|undefined} **/
+    /** @type {Function<Component>|undefined} * */
     const componentModel = componentModelMap[name];
     if (componentModel === undefined) return;
 
     // Create our component instance
-    /** @type {Component} **/
+    /** @type {Component} * */
     let instance;
     try {
         instance = new componentModel();
@@ -46,7 +46,7 @@ function initComponent(name, element) {
     }
 
     // Add to global listing
-    if (typeof components[name] === "undefined") {
+    if (typeof components[name] === 'undefined') {
         components[name] = [];
     }
     components[name].push(instance);
@@ -67,7 +67,7 @@ function parseRefs(name, element) {
     const refs = {};
     const manyRefs = {};
 
-    const prefix = `${name}@`
+    const prefix = `${name}@`;
     const selector = `[refs*="${prefix}"]`;
     const refElems = [...element.querySelectorAll(selector)];
     if (element.matches(selector)) {
@@ -114,7 +114,7 @@ function parseOpts(name, element) {
  * @param {Element|Document} parentElement
  */
 export function init(parentElement = document) {
-    const componentElems = parentElement.querySelectorAll(`[component],[components]`);
+    const componentElems = parentElement.querySelectorAll('[component],[components]');
 
     for (const el of componentElems) {
         const componentNames = `${el.getAttribute('component') || ''} ${(el.getAttribute('components'))}`.toLowerCase().split(' ').filter(Boolean);

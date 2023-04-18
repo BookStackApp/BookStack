@@ -57,7 +57,6 @@ export class KeyboardNavigationHandler {
      * @param {KeyboardEvent} event
      */
     #keydownHandler(event) {
-
         // Ignore certain key events in inputs to allow text editing.
         if (event.target.matches('input') && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
             return;
@@ -72,7 +71,7 @@ export class KeyboardNavigationHandler {
         } else if (event.key === 'Escape') {
             if (this.onEscape) {
                 this.onEscape(event);
-            } else if  (document.activeElement) {
+            } else if (document.activeElement) {
                 document.activeElement.blur();
             }
         } else if (event.key === 'Enter' && this.onEnter) {
@@ -88,8 +87,9 @@ export class KeyboardNavigationHandler {
         const focusable = [];
         const selector = '[tabindex]:not([tabindex="-1"]),[href],button:not([tabindex="-1"],[disabled]),input:not([type=hidden])';
         for (const container of this.containers) {
-            focusable.push(...container.querySelectorAll(selector))
+            focusable.push(...container.querySelectorAll(selector));
         }
         return focusable;
     }
+
 }

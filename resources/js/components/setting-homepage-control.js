@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class SettingHomepageControl extends Component {
 
@@ -14,4 +14,5 @@ export class SettingHomepageControl extends Component {
         const showPagePicker = this.typeControl.value === 'page';
         this.pagePickerContainer.style.display = (showPagePicker ? 'block' : 'none');
     }
+
 }

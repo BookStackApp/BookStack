@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 /**
  * Keys to ignore when recording shortcuts.
@@ -18,16 +18,16 @@ export class ShortcutInput extends Component {
         this.listenerRecordKey = this.listenerRecordKey.bind(this);
 
         this.input.addEventListener('focus', () => {
-             this.startListeningForInput();
+            this.startListeningForInput();
         });
 
         this.input.addEventListener('blur', () => {
             this.stopListeningForInput();
-        })
+        });
     }
 
     startListeningForInput() {
-        this.input.addEventListener('keydown', this.listenerRecordKey)
+        this.input.addEventListener('keydown', this.listenerRecordKey);
     }
 
     /**

@@ -1,6 +1,6 @@
-import {Compartment} from "@codemirror/state";
-import {EditorView} from "@codemirror/view";
-import {getLanguageExtension} from "./languages";
+import {Compartment} from '@codemirror/state';
+import {EditorView} from '@codemirror/view';
+import {getLanguageExtension} from './languages';
 
 const viewLangCompartments = new WeakMap();
 
@@ -33,6 +33,6 @@ export async function updateViewLanguage(ev, modeSuggestion, content) {
     const language = await getLanguageExtension(modeSuggestion, content);
 
     ev.dispatch({
-        effects: compartment.reconfigure(language ? language : [])
+        effects: compartment.reconfigure(language || []),
     });
 }
