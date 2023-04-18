@@ -7,7 +7,7 @@ function provide(editor) {
     const shortcuts = {};
 
     // Insert Image shortcut
-    shortcuts['Mod-Alt-i'] = cm => editor.actions.insertImage();
+    shortcuts['Shift-Mod-i'] = cm => editor.actions.insertImage();
 
     // Save draft
     shortcuts['Mod-s'] = cm => window.$events.emit('editor-save-draft');
@@ -49,8 +49,15 @@ export function provideKeyBindings(editor) {
     const shortcuts= provide(editor);
     const keyBindings = [];
 
+    const wrapAction = (action) => {
+        return () => {
+            action();
+            return true;
+        };
+    };
+
     for (const [shortcut, action] of Object.entries(shortcuts)) {
-        keyBindings.push({key: shortcut, run: action, preventDefault: true});
+        keyBindings.push({key: shortcut, run: wrapAction(action), preventDefault: true});
     }
 
     return keyBindings;

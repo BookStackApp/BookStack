@@ -49,6 +49,7 @@ const defaultLightHighlightStyle = HighlightStyle.define([
 
 const defaultThemeSpec = {
     "&": {
+        backgroundColor: "#FFF",
         color: "#000",
     },
     "&.cm-focused": {
