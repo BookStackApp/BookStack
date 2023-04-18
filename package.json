@@ -12,12 +12,17 @@
     "dev": "npm-run-all --parallel watch livereload",
     "watch": "npm-run-all --parallel build:*:watch",
     "livereload": "livereload ./public/dist/",
-    "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads"
+    "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads",
+    "lint": "eslint \"resources/**/*.js\" \"resources/**/*.mjs\"",
+    "fix": "eslint --fix \"resources/**/*.js\" \"resources/**/*.mjs\""
   },
   "devDependencies": {
     "@lezer/generator": "^1.2.2",
     "chokidar-cli": "^3.0",
     "esbuild": "^0.17.16",
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
     "livereload": "^0.9.3",
     "npm-run-all": "^4.1.5",
     "punycode": "^2.3.0",
@@ -45,5 +50,33 @@
     "markdown-it-task-lists": "^2.1.1",
     "snabbdom": "^3.5.1",
     "sortablejs": "^1.15.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": "airbnb-base",
+    "overrides": [
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {
+      "indent": ["error", 4],
+      "arrow-parens": ["error", "as-needed"],
+      "padded-blocks": ["error", {
+          "blocks": "never",
+          "classes": "always"
+      }],
+      "object-curly-spacing": ["error", "never"],
+      "space-before-function-paren": ["error", {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }]
+    }
   }
 }
