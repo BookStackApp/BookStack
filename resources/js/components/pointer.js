@@ -1,12 +1,14 @@
 import * as DOM from "../services/dom";
-import Clipboard from "clipboard/dist/clipboard.min";
 import {Component} from "./component";
+import {copyTextToClipboard} from "../services/clipboard";
 
 
 export class Pointer extends Component {
 
     setup() {
         this.container = this.$el;
+        this.input = this.$refs.input;
+        this.button = this.$refs.button;
         this.pageId = this.$opts.pageId;
 
         // Instance variables
@@ -16,15 +18,17 @@ export class Pointer extends Component {
         this.pointerSectionId = '';
 
         this.setupListeners();
-
-        // Set up clipboard
-        new Clipboard(this.container.querySelector('button'));
     }
 
     setupListeners() {
+        // Copy on copy button click
+        this.button.addEventListener('click', event => {
+            copyTextToClipboard(this.input.value);
+        });
+
         // Select all contents on input click
-        DOM.onChildEvent(this.container, 'input', 'click', (event, input) => {
-            input.select();
+        this.input.addEventListener('click', event => {
+            this.input.select();
             event.stopPropagation();
         });
 
@@ -112,7 +116,7 @@ export class Pointer extends Component {
             inputText = window.location.protocol + "//" + window.location.host + inputText;
         }
 
-        this.container.querySelector('input').value = inputText;
+        this.input.value = inputText;
 
         // Update anchor if present
         const editAnchor = this.container.querySelector('#pointer-edit');

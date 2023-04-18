@@ -1,4 +1,3 @@
-import {debounce} from "../services/util";
 import {Component} from "./component";
 import {init as initEditor} from "../markdown/editor";
 
@@ -45,7 +44,7 @@ export class MarkdownEditor extends Component {
         window.$events.emitPublic(this.elem, 'editor-markdown::setup', {
             markdownIt: this.editor.markdown.getRenderer(),
             displayEl: this.display,
-            codeMirrorInstance: this.editor.cm,
+            cmEditorView: this.editor.cm,
         });
     }
 
@@ -57,7 +56,7 @@ export class MarkdownEditor extends Component {
             if (button === null) return;
 
             const action = button.getAttribute('data-action');
-            if (action === 'insertImage') this.editor.actions.insertImage();
+            if (action === 'insertImage') this.editor.actions.showImageInsert();
             if (action === 'insertLink') this.editor.actions.showLinkSelector();
             if (action === 'insertDrawing' && (event.ctrlKey || event.metaKey)) {
                 this.editor.actions.showImageManager();
@@ -80,11 +79,6 @@ export class MarkdownEditor extends Component {
             toolbarLabel.closest('.markdown-editor-wrap').classList.add('active');
         });
 
-        // Refresh CodeMirror on container resize
-        const resizeDebounced = debounce(() => this.editor.cm.refresh(), 100, false);
-        const observer = new ResizeObserver(resizeDebounced);
-        observer.observe(this.elem);
-
         this.handleDividerDrag();
     }
 
@@ -102,7 +96,6 @@ export class MarkdownEditor extends Component {
                 window.removeEventListener('pointerup', upListener);
                 this.display.style.pointerEvents = null;
                 document.body.style.userSelect = null;
-                this.editor.cm.refresh();
             };
 
             this.display.style.pointerEvents = 'none';
