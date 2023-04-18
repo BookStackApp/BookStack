@@ -196,7 +196,7 @@ export function markdownEditor(elem, onChange, domEventHandlers, keyBindings) {
     };
 
     // Emit a pre-event public event to allow tweaking of the configure before view creation.
-    window.$events.emitPublic(elem, 'editor-markdown-cm::pre-init', {cmEditorViewConfig: config});
+    window.$events.emitPublic(elem, 'editor-markdown-cm6::pre-init', {editorViewConfig: config});
 
     // Create editor view, hide original input
     const ev = createView(config);
