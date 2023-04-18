@@ -53,6 +53,7 @@ function defineCodeBlockCustomElement(editor) {
             cmContainer.style.pointerEvents = 'none';
             cmContainer.contentEditable = 'false';
             cmContainer.classList.add('CodeMirrorContainer');
+            cmContainer.classList.toggle('dark-mode', document.documentElement.classList.contains('dark-mode'));
 
             this.shadowRoot.append(...copiedStyles, cmContainer);
         }
