@@ -1,4 +1,4 @@
-import {patchDomFromHtmlString} from "../services/vdom";
+import {patchDomFromHtmlString} from '../services/vdom';
 
 export class Display {
 
@@ -81,7 +81,7 @@ export class Display {
      * @param {String} html
      */
     patchWithHtml(html) {
-        const body = this.doc.body;
+        const {body} = this.doc;
 
         if (body.children.length === 0) {
             const wrap = document.createElement('div');
@@ -102,8 +102,8 @@ export class Display {
         const elems = this.doc.body?.children[0]?.children;
         if (elems && elems.length <= index) return;
 
-        const topElem = (index === -1) ? elems[elems.length-1] : elems[index];
-        topElem.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth'});
+        const topElem = (index === -1) ? elems[elems.length - 1] : elems[index];
+        topElem.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'});
     }
 
 }

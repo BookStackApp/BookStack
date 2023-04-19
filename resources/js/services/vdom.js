@@ -1,8 +1,8 @@
 import {
     init,
     attributesModule,
-    toVNode
-} from "snabbdom";
+    toVNode,
+} from 'snabbdom';
 
 let patcher;
 
@@ -11,7 +11,6 @@ let patcher;
  */
 function getPatcher() {
     if (patcher) return patcher;
-
 
     patcher = init([
         attributesModule,

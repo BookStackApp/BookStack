@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class ImagePicker extends Component {
 
@@ -31,7 +31,7 @@ export class ImagePicker extends Component {
             this.removeInput.setAttribute('disabled', 'disabled');
         }
 
-        for (let file of this.imageInput.files) {
+        for (const file of this.imageInput.files) {
             this.imageElem.src = window.URL.createObjectURL(file);
         }
         this.imageElem.classList.remove('none');

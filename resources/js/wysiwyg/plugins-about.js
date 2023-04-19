@@ -1,9 +1,7 @@
 /**
  * @param {Editor} editor
- * @param {String} url
  */
-function register(editor, url) {
-
+function register(editor) {
     const aboutDialog = {
         title: 'About the WYSIWYG Editor',
         url: window.baseUrl('/help/wysiwyg'),
@@ -13,17 +11,14 @@ function register(editor, url) {
         icon: 'help',
         tooltip: 'About the editor',
         onAction() {
-            tinymce.activeEditor.windowManager.openUrl(aboutDialog);
-        }
+            window.tinymce.activeEditor.windowManager.openUrl(aboutDialog);
+        },
     });
-
 }
 
-
 /**
- * @param {WysiwygConfigOptions} options
  * @return {register}
  */
-export function getPlugin(options) {
+export function getPlugin() {
     return register;
 }

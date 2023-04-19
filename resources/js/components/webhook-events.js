@@ -2,7 +2,7 @@
  * Webhook Events
  * Manages dynamic selection control in the webhook form interface.
  */
-import {Component} from "./component";
+import {Component} from './component';
 
 export class WebhookEvents extends Component {
 

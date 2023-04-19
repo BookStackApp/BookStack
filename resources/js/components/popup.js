@@ -1,6 +1,6 @@
-import {fadeIn, fadeOut} from "../services/animations";
-import {onSelect} from "../services/dom";
-import {Component} from "./component";
+import {fadeIn, fadeOut} from '../services/animations';
+import {onSelect} from '../services/dom';
+import {Component} from './component';
 
 /**
  * Popup window that will contain other content.
@@ -26,11 +26,11 @@ export class Popup extends Component {
 
         this.container.addEventListener('click', event => {
             if (event.target === this.container && lastMouseDownTarget === this.container) {
-                return this.hide();
+                this.hide();
             }
         });
 
-        onSelect(this.hideButtons, e => this.hide());
+        onSelect(this.hideButtons, () => this.hide());
     }
 
     hide(onComplete = null) {
@@ -47,7 +47,7 @@ export class Popup extends Component {
     show(onComplete = null, onHide = null) {
         fadeIn(this.container, 120, onComplete);
 
-        this.onkeyup = (event) => {
+        this.onkeyup = event => {
             if (event.key === 'Escape') {
                 this.hide();
             }

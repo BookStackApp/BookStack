@@ -1,5 +1,7 @@
-import {onChildEvent, onSelect, removeLoading, showLoading} from "../services/dom";
-import {Component} from "./component";
+import {
+    onChildEvent, onSelect, removeLoading, showLoading,
+} from '../services/dom';
+import {Component} from './component';
 
 export class ImageManager extends Component {
 
@@ -48,20 +50,20 @@ export class ImageManager extends Component {
             event.preventDefault();
         });
 
-        onSelect(this.cancelSearch, event => {
+        onSelect(this.cancelSearch, () => {
             this.resetListView();
             this.resetSearchView();
             this.loadGallery();
             this.cancelSearch.classList.remove('active');
         });
 
-        this.searchInput.addEventListener('input', event => {
+        this.searchInput.addEventListener('input', () => {
             this.cancelSearch.classList.toggle('active', this.searchInput.value.trim());
         });
 
         onChildEvent(this.listContainer, '.load-more', 'click', async event => {
             showLoading(event.target);
-            this.page++;
+            this.page += 1;
             await this.loadGallery();
             event.target.remove();
         });
@@ -69,7 +71,7 @@ export class ImageManager extends Component {
         this.listContainer.addEventListener('event-emit-select-image', this.onImageSelectEvent.bind(this));
 
         this.listContainer.addEventListener('error', event => {
-            event.target.src = baseUrl('loading_error.png');
+            event.target.src = window.baseUrl('loading_error.png');
         }, true);
 
         onSelect(this.selectButton, () => {
@@ -79,7 +81,7 @@ export class ImageManager extends Component {
             this.hide();
         });
 
-        onChildEvent(this.formContainer, '#image-manager-delete', 'click', event => {
+        onChildEvent(this.formContainer, '#image-manager-delete', 'click', () => {
             if (this.lastSelected) {
                 this.loadImageEditForm(this.lastSelected.id, true);
             }

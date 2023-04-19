@@ -1,9 +1,10 @@
-import * as Dates from "../services/dates";
-import {onSelect} from "../services/dom";
-import {debounce} from "../services/util";
-import {Component} from "./component";
+import * as Dates from '../services/dates';
+import {onSelect} from '../services/dom';
+import {debounce} from '../services/util';
+import {Component} from './component';
 
 export class PageEditor extends Component {
+
     setup() {
         // Options
         this.draftsEnabled = this.$opts.draftsEnabled === 'true';
@@ -58,7 +59,9 @@ export class PageEditor extends Component {
         window.$events.listen('editor-save-page', this.savePage.bind(this));
 
         // Listen to content changes from the editor
-        const onContentChange = () => this.autoSave.pendingChange = true;
+        const onContentChange = () => {
+            this.autoSave.pendingChange = true;
+        };
         window.$events.listen('editor-html-change', onContentChange);
         window.$events.listen('editor-markdown-change', onContentChange);
 
@@ -79,7 +82,8 @@ export class PageEditor extends Component {
 
     setInitialFocus() {
         if (this.hasDefaultTitle) {
-            return this.titleElem.select();
+            this.titleElem.select();
+            return;
         }
 
         window.setTimeout(() => {
@@ -93,12 +97,12 @@ export class PageEditor extends Component {
 
     runAutoSave() {
         // Stop if manually saved recently to prevent bombarding the server
-        const savedRecently = (Date.now() - this.autoSave.last < (this.autoSave.frequency)/2);
+        const savedRecently = (Date.now() - this.autoSave.last < (this.autoSave.frequency) / 2);
         if (savedRecently || !this.autoSave.pendingChange) {
             return;
         }
 
-        this.saveDraft()
+        this.saveDraft();
     }
 
     savePage() {
@@ -132,7 +136,9 @@ export class PageEditor extends Component {
             try {
                 const saveKey = `draft-save-fail-${(new Date()).toISOString()}`;
                 window.localStorage.setItem(saveKey, JSON.stringify(data));
-            } catch (err) {}
+            } catch (lsErr) {
+                console.error(lsErr);
+            }
 
             window.$events.emit('error', this.autosaveFailText);
         }
@@ -153,7 +159,8 @@ export class PageEditor extends Component {
         try {
             response = await window.$http.get(`/ajax/page/${this.pageId}`);
         } catch (e) {
-            return console.error(e);
+            console.error(e);
+            return;
         }
 
         if (this.autoSave.interval) {
@@ -172,7 +179,6 @@ export class PageEditor extends Component {
             this.startAutoSave();
         }, 1000);
         window.$events.emit('success', this.draftDiscardedText);
-
     }
 
     updateChangelogDisplay() {
@@ -180,7 +186,7 @@ export class PageEditor extends Component {
         if (summary.length === 0) {
             summary = this.setChangelogText;
         } else if (summary.length > 16) {
-            summary = summary.slice(0, 16) + '...';
+            summary = `${summary.slice(0, 16)}...`;
         }
         this.changelogDisplay.innerText = summary;
     }
@@ -193,7 +199,7 @@ export class PageEditor extends Component {
         event.preventDefault();
 
         const link = event.target.closest('a').href;
-        /** @var {ConfirmDialog} **/
+        /** @var {ConfirmDialog} * */
         const dialog = window.$components.firstOnElement(this.switchDialogContainer, 'confirm-dialog');
         const [saved, confirmed] = await Promise.all([this.saveDraft(), dialog.show()]);
 

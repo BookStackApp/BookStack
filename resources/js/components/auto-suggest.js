@@ -1,7 +1,7 @@
-import {escapeHtml} from "../services/util";
-import {onChildEvent} from "../services/dom";
-import {Component} from "./component";
-import {KeyboardNavigationHandler} from "../services/keyboard-navigation";
+import {escapeHtml} from '../services/util';
+import {onChildEvent} from '../services/dom';
+import {Component} from './component';
+import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
 
 const ajaxCache = {};
 
@@ -9,6 +9,7 @@ const ajaxCache = {};
  * AutoSuggest
  */
 export class AutoSuggest extends Component {
+
     setup() {
         this.parent = this.$el.parentElement;
         this.container = this.$el;
@@ -24,7 +25,7 @@ export class AutoSuggest extends Component {
     setupListeners() {
         const navHandler = new KeyboardNavigationHandler(
             this.list,
-            event => {
+            () => {
                 this.input.focus();
                 setTimeout(() => this.hideSuggestions(), 1);
             },
@@ -67,9 +68,7 @@ export class AutoSuggest extends Component {
         const search = this.input.value.toLowerCase();
         const suggestions = await this.loadSuggestions(search, nameFilter);
 
-        const toShow = suggestions.filter(val => {
-            return search === '' || val.toLowerCase().startsWith(search);
-        }).slice(0, 10);
+        const toShow = suggestions.filter(val => search === '' || val.toLowerCase().startsWith(search)).slice(0, 10);
 
         this.displaySuggestions(toShow);
     }
@@ -105,7 +104,8 @@ export class AutoSuggest extends Component {
      */
     displaySuggestions(suggestions) {
         if (suggestions.length === 0) {
-            return this.hideSuggestions();
+            this.hideSuggestions();
+            return;
         }
 
         // This used to use <button>s but was changed to div elements since Safari would not focus on buttons
@@ -126,4 +126,5 @@ export class AutoSuggest extends Component {
             this.hideSuggestions();
         }
     }
+
 }

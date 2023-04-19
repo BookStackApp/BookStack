@@ -1,7 +1,6 @@
-import * as DOM from "../services/dom";
-import {Component} from "./component";
-import {copyTextToClipboard} from "../services/clipboard";
-
+import * as DOM from '../services/dom';
+import {Component} from './component';
+import {copyTextToClipboard} from '../services/clipboard';
 
 export class Pointer extends Component {
 
@@ -22,7 +21,7 @@ export class Pointer extends Component {
 
     setupListeners() {
         // Copy on copy button click
-        this.button.addEventListener('click', event => {
+        this.button.addEventListener('click', () => {
             copyTextToClipboard(this.input.value);
         });
 
@@ -47,7 +46,7 @@ export class Pointer extends Component {
         });
 
         // Hide pointer when clicking away
-        DOM.onEvents(document.body, ['click', 'focus'], event => {
+        DOM.onEvents(document.body, ['click', 'focus'], () => {
             if (!this.showing || this.isSelection) return;
             this.hidePointer();
         });
@@ -113,7 +112,7 @@ export class Pointer extends Component {
     updateForTarget(element) {
         let inputText = this.pointerModeLink ? window.baseUrl(`/link/${this.pageId}#${this.pointerSectionId}`) : `{{@${this.pageId}#${this.pointerSectionId}}}`;
         if (this.pointerModeLink && !inputText.startsWith('http')) {
-            inputText = window.location.protocol + "//" + window.location.host + inputText;
+            inputText = `${window.location.protocol}//${window.location.host}${inputText}`;
         }
 
         this.input.value = inputText;
@@ -121,7 +120,7 @@ export class Pointer extends Component {
         // Update anchor if present
         const editAnchor = this.container.querySelector('#pointer-edit');
         if (editAnchor && element) {
-            const editHref = editAnchor.dataset.editHref;
+            const {editHref} = editAnchor.dataset;
             const elementId = element.id;
 
             // get the first 50 characters.
@@ -129,4 +128,5 @@ export class Pointer extends Component {
             editAnchor.href = `${editHref}?content-id=${elementId}&content-text=${encodeURIComponent(queryContent)}`;
         }
     }
+
 }
