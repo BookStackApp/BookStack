@@ -12,12 +12,17 @@
     "dev": "npm-run-all --parallel watch livereload",
     "watch": "npm-run-all --parallel build:*:watch",
     "livereload": "livereload ./public/dist/",
-    "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads"
+    "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads",
+    "lint": "eslint \"resources/**/*.js\" \"resources/**/*.mjs\"",
+    "fix": "eslint --fix \"resources/**/*.js\" \"resources/**/*.mjs\""
   },
   "devDependencies": {
     "@lezer/generator": "^1.2.2",
     "chokidar-cli": "^3.0",
     "esbuild": "^0.17.16",
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
     "livereload": "^0.9.3",
     "npm-run-all": "^4.1.5",
     "punycode": "^2.3.0",
@@ -37,6 +42,7 @@
     "@codemirror/state": "^6.2.0",
     "@codemirror/theme-one-dark": "^6.1.1",
     "@codemirror/view": "^6.9.4",
+    "@lezer/highlight": "^1.1.4",
     "@ssddanbrown/codemirror-lang-smarty": "^1.0.0",
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
     "codemirror": "^6.0.1",
@@ -45,5 +51,85 @@
     "markdown-it-task-lists": "^2.1.1",
     "snabbdom": "^3.5.1",
     "sortablejs": "^1.15.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": "airbnb-base",
+    "ignorePatterns": [
+      "resources/**/*-stub.js"
+    ],
+    "overrides": [],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {
+      "indent": [
+        "error",
+        4
+      ],
+      "arrow-parens": [
+        "error",
+        "as-needed"
+      ],
+      "padded-blocks": [
+        "error",
+        {
+          "blocks": "never",
+          "classes": "always"
+        }
+      ],
+      "object-curly-spacing": [
+        "error",
+        "never"
+      ],
+      "space-before-function-paren": [
+        "error",
+        {
+          "anonymous": "never",
+          "named": "never",
+          "asyncArrow": "always"
+        }
+      ],
+      "import/prefer-default-export": "off",
+      "no-plusplus": [
+        "error",
+        {
+          "allowForLoopAfterthoughts": true
+        }
+      ],
+      "arrow-body-style": "off",
+      "no-restricted-syntax": "off",
+      "no-continue": "off",
+      "prefer-destructuring": "off",
+      "class-methods-use-this": "off",
+      "no-param-reassign": "off",
+      "no-console": [
+        "warn",
+        {
+          "allow": [
+            "error",
+            "warn"
+          ]
+        }
+      ],
+      "no-new": "off",
+      "max-len": [
+        "error",
+        {
+          "code": 110,
+          "tabWidth": 4,
+          "ignoreUrls": true,
+          "ignoreComments": false,
+          "ignoreRegExpLiterals": true,
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true
+        }
+      ]
+    }
   }
 }

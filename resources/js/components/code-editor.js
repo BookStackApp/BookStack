@@ -1,6 +1,5 @@
-import {onChildEvent, onEnterPress, onSelect} from "../services/dom";
-import {Component} from "./component";
-
+import {onChildEvent, onEnterPress, onSelect} from '../services/dom';
+import {Component} from './component';
 
 export class CodeEditor extends Component {
 
@@ -10,7 +9,9 @@ export class CodeEditor extends Component {
     editor = null;
 
     callback = null;
+
     history = {};
+
     historyKey = 'code_history';
 
     setup() {
@@ -42,9 +43,9 @@ export class CodeEditor extends Component {
             this.languageInputChange(language);
         });
 
-        onEnterPress(this.languageInput, e => this.save());
-        this.languageInput.addEventListener('input', e => this.languageInputChange(this.languageInput.value));
-        onSelect(this.saveButton, e => this.save());
+        onEnterPress(this.languageInput, () => this.save());
+        this.languageInput.addEventListener('input', () => this.languageInputChange(this.languageInput.value));
+        onSelect(this.saveButton, () => this.save());
 
         onChildEvent(this.historyList, 'button', 'click', (event, elem) => {
             event.preventDefault();
@@ -73,17 +74,18 @@ export class CodeEditor extends Component {
 
         onChildEvent(button.parentElement, '.lang-option-favorite-toggle', 'click', () => {
             isFavorite = !isFavorite;
-            isFavorite ? this.favourites.add(language) : this.favourites.delete(language);
+            const action = isFavorite ? this.favourites.add : this.favourites.delete;
+            action(language);
             button.setAttribute('data-favourite', isFavorite ? 'true' : 'false');
 
             window.$http.patch('/preferences/update-code-language-favourite', {
-                language: language,
-                active: isFavorite
+                language,
+                active: isFavorite,
             });
 
             this.sortLanguageList();
             if (isFavorite) {
-                button.scrollIntoView({block: "center", behavior: "smooth"});
+                button.scrollIntoView({block: 'center', behavior: 'smooth'});
             }
         });
     }
@@ -95,7 +97,7 @@ export class CodeEditor extends Component {
 
             if (aFav && !bFav) {
                 return -1;
-            } else if (bFav && !aFav) {
+            } if (bFav && !aFav) {
                 return 1;
             }
 
@@ -133,7 +135,7 @@ export class CodeEditor extends Component {
         this.getPopup().show(() => {
             this.editor.focus();
         }, () => {
-            this.addHistory()
+            this.addHistory();
         });
     }
 
@@ -162,7 +164,7 @@ export class CodeEditor extends Component {
             const isMatch = inputLang === lang;
             link.classList.toggle('active', isMatch);
             if (isMatch) {
-                link.scrollIntoView({block: "center", behavior: "smooth"});
+                link.scrollIntoView({block: 'center', behavior: 'smooth'});
             }
         }
     }
@@ -172,8 +174,8 @@ export class CodeEditor extends Component {
         const historyKeys = Object.keys(this.history).reverse();
         this.historyDropDown.classList.toggle('hidden', historyKeys.length === 0);
         this.historyList.innerHTML = historyKeys.map(key => {
-             const localTime = (new Date(parseInt(key))).toLocaleTimeString();
-             return `<li><button type="button" data-time="${key}" class="text-item">${localTime}</button></li>`;
+            const localTime = (new Date(parseInt(key, 10))).toLocaleTimeString();
+            return `<li><button type="button" data-time="${key}" class="text-item">${localTime}</button></li>`;
         }).join('');
     }
 

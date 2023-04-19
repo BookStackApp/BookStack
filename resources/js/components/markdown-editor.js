@@ -1,5 +1,5 @@
-import {Component} from "./component";
-import {init as initEditor} from "../markdown/editor";
+import {Component} from './component';
+import {init as initEditor} from '../markdown/editor';
 
 export class MarkdownEditor extends Component {
 
@@ -16,7 +16,7 @@ export class MarkdownEditor extends Component {
         this.divider = this.$refs.divider;
         this.displayWrap = this.$refs.displayWrap;
 
-        const settingContainer = this.$refs.settingContainer;
+        const {settingContainer} = this.$refs;
         const settingInputs = settingContainer.querySelectorAll('input[type="checkbox"]');
 
         this.editor = null;
@@ -49,10 +49,9 @@ export class MarkdownEditor extends Component {
     }
 
     setupListeners() {
-
         // Button actions
         this.elem.addEventListener('click', event => {
-            let button = event.target.closest('button[data-action]');
+            const button = event.target.closest('button[data-action]');
             if (button === null) return;
 
             const action = button.getAttribute('data-action');
@@ -83,15 +82,15 @@ export class MarkdownEditor extends Component {
     }
 
     handleDividerDrag() {
-        this.divider.addEventListener('pointerdown', event => {
+        this.divider.addEventListener('pointerdown', () => {
             const wrapRect = this.elem.getBoundingClientRect();
-            const moveListener = (event) => {
+            const moveListener = event => {
                 const xRel = event.pageX - wrapRect.left;
                 const xPct = Math.min(Math.max(20, Math.floor((xRel / wrapRect.width) * 100)), 80);
-                this.displayWrap.style.flexBasis = `${100-xPct}%`;
+                this.displayWrap.style.flexBasis = `${100 - xPct}%`;
                 this.editor.settings.set('editorWidth', xPct);
             };
-            const upListener = (event) => {
+            const upListener = () => {
                 window.removeEventListener('pointermove', moveListener);
                 window.removeEventListener('pointerup', upListener);
                 this.display.style.pointerEvents = null;
@@ -105,7 +104,7 @@ export class MarkdownEditor extends Component {
         });
         const widthSetting = this.editor.settings.get('editorWidth');
         if (widthSetting) {
-            this.displayWrap.style.flexBasis = `${100-widthSetting}%`;
+            this.displayWrap.style.flexBasis = `${100 - widthSetting}%`;
         }
     }
 

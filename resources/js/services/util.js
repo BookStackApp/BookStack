@@ -1,5 +1,3 @@
-
-
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
  * be triggered. The function will be called after it stops being called for
@@ -13,9 +11,9 @@
  */
 export function debounce(func, wait, immediate) {
     let timeout;
-    return function() {
-        const context = this, args = arguments;
-        const later = function() {
+    return function debouncedWrapper(...args) {
+        const context = this;
+        const later = function debouncedTimeout() {
             timeout = null;
             if (!immediate) func.apply(context, args);
         };
@@ -24,7 +22,7 @@ export function debounce(func, wait, immediate) {
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
     };
-};
+}
 
 /**
  * Scroll and highlight an element.
@@ -55,11 +53,11 @@ export function scrollAndHighlightElement(element) {
  */
 export function escapeHtml(unsafe) {
     return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }
 
 /**
@@ -68,6 +66,7 @@ export function escapeHtml(unsafe) {
  * @returns {string}
  */
 export function uniqueId() {
-    const S4 = () => (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    // eslint-disable-next-line no-bitwise
+    const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    return (`${S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`);
 }

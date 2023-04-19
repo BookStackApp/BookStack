@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class PermissionsTable extends Component {
 
@@ -41,7 +41,7 @@ export class PermissionsTable extends Component {
         const tableRows = this.container.querySelectorAll(this.rowSelector);
         const inputsToToggle = [];
 
-        for (let row of tableRows) {
+        for (const row of tableRows) {
             const targetCell = row.children[colIndex];
             if (targetCell) {
                 inputsToToggle.push(...targetCell.querySelectorAll('input[type=checkbox]'));
@@ -57,7 +57,7 @@ export class PermissionsTable extends Component {
 
     toggleAllInputs(inputsToToggle) {
         const currentState = inputsToToggle.length > 0 ? inputsToToggle[0].checked : false;
-        for (let checkbox of inputsToToggle) {
+        for (const checkbox of inputsToToggle) {
             checkbox.checked = !currentState;
             checkbox.dispatchEvent(new Event('change'));
         }

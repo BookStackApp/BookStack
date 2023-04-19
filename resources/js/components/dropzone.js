@@ -1,8 +1,9 @@
-import DropZoneLib from "dropzone";
-import {fadeOut} from "../services/animations";
-import {Component} from "./component";
+import DropZoneLib from 'dropzone';
+import {fadeOut} from '../services/animations';
+import {Component} from './component';
 
 export class Dropzone extends Component {
+
     setup() {
         this.container = this.$el;
         this.url = this.$opts.url;
@@ -12,7 +13,7 @@ export class Dropzone extends Component {
         this.uploadLimitMessage = this.$opts.uploadLimitMessage;
         this.timeoutMessage = this.$opts.timeoutMessage;
 
-        const _this = this;
+        const component = this;
         this.dz = new DropZoneLib(this.container, {
             addRemoveLinks: true,
             dictRemoveFile: this.removeMessage,
@@ -22,22 +23,21 @@ export class Dropzone extends Component {
             withCredentials: true,
             init() {
                 this.dz = this;
-                this.dz.on('sending', _this.onSending.bind(_this));
-                this.dz.on('success', _this.onSuccess.bind(_this));
-                this.dz.on('error', _this.onError.bind(_this));
-            }
+                this.dz.on('sending', component.onSending.bind(component));
+                this.dz.on('success', component.onSuccess.bind(component));
+                this.dz.on('error', component.onError.bind(component));
+            },
         });
     }
 
     onSending(file, xhr, data) {
-
         const token = window.document.querySelector('meta[name=token]').getAttribute('content');
         data.append('_token', token);
 
-        xhr.ontimeout = (e) => {
+        xhr.ontimeout = () => {
             this.dz.emit('complete', file);
             this.dz.emit('error', file, this.timeoutMessage);
-        }
+        };
     }
 
     onSuccess(file, data) {
@@ -55,10 +55,10 @@ export class Dropzone extends Component {
     onError(file, errorMessage, xhr) {
         this.$emit('error', {file, errorMessage, xhr});
 
-        const setMessage = (message) => {
+        const setMessage = message => {
             const messsageEl = file.previewElement.querySelector('[data-dz-errormessage]');
             messsageEl.textContent = message;
-        }
+        };
 
         if (xhr && xhr.status === 413) {
             setMessage(this.uploadLimitMessage);
@@ -70,4 +70,5 @@ export class Dropzone extends Component {
     removeAll() {
         this.dz.removeAllFiles(true);
     }
+
 }

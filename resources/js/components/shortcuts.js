@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 function reverseMap(map) {
     const reversed = {};
@@ -7,7 +7,6 @@ function reverseMap(map) {
     }
     return reversed;
 }
-
 
 export class Shortcuts extends Component {
 
@@ -25,7 +24,6 @@ export class Shortcuts extends Component {
 
     setupListeners() {
         window.addEventListener('keydown', event => {
-
             if (event.target.closest('input, select, textarea')) {
                 return;
             }
@@ -35,7 +33,8 @@ export class Shortcuts extends Component {
 
         window.addEventListener('keydown', event => {
             if (event.key === '?') {
-                this.hintsShowing ? this.hideHints() : this.showHints();
+                const action = this.hintsShowing ? this.hideHints : this.showHints;
+                action();
             }
         });
     }
@@ -44,7 +43,6 @@ export class Shortcuts extends Component {
      * @param {KeyboardEvent} event
      */
     handleShortcutPress(event) {
-
         const keys = [
             event.ctrlKey ? 'Ctrl' : '',
             event.metaKey ? 'Cmd' : '',
@@ -90,7 +88,7 @@ export class Shortcuts extends Component {
             return true;
         }
 
-        console.error(`Shortcut attempted to be ran for element type that does not have handling setup`, el);
+        console.error('Shortcut attempted to be ran for element type that does not have handling setup', el);
 
         return false;
     }
@@ -135,10 +133,10 @@ export class Shortcuts extends Component {
 
         const linkage = document.createElement('div');
         linkage.classList.add('shortcut-linkage');
-        linkage.style.left = targetBounds.x + 'px';
-        linkage.style.top = targetBounds.y + 'px';
-        linkage.style.width = targetBounds.width + 'px';
-        linkage.style.height = targetBounds.height + 'px';
+        linkage.style.left = `${targetBounds.x}px`;
+        linkage.style.top = `${targetBounds.y}px`;
+        linkage.style.width = `${targetBounds.width}px`;
+        linkage.style.height = `${targetBounds.height}px`;
 
         wrapper.append(label, linkage);
 
@@ -159,4 +157,5 @@ export class Shortcuts extends Component {
 
         this.hintsShowing = false;
     }
+
 }

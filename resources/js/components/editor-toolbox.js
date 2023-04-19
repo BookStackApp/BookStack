@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class EditorToolbox extends Component {
 
@@ -35,11 +35,10 @@ export class EditorToolbox extends Component {
     }
 
     setActiveTab(tabName, openToolbox = false) {
-
         // Set button visibility
         for (const button of this.buttons) {
             button.classList.remove('active');
-            const bName =  button.dataset.tab;
+            const bName = button.dataset.tab;
             if (bName === tabName) button.classList.add('active');
         }
 

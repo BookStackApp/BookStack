@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class HeaderMobileToggle extends Component {
 
@@ -19,10 +19,10 @@ export class HeaderMobileToggle extends Component {
         this.toggleButton.setAttribute('aria-expanded', this.open ? 'true' : 'false');
         if (this.open) {
             this.elem.addEventListener('keydown', this.onKeyDown);
-            window.addEventListener('click', this.onWindowClick)
+            window.addEventListener('click', this.onWindowClick);
         } else {
             this.elem.removeEventListener('keydown', this.onKeyDown);
-            window.removeEventListener('click', this.onWindowClick)
+            window.removeEventListener('click', this.onWindowClick);
         }
         event.stopPropagation();
     }

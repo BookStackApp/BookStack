@@ -1,4 +1,3 @@
-
 export class Clipboard {
 
     /**
@@ -21,7 +20,7 @@ export class Clipboard {
      * @return {boolean}
      */
     containsTabularData() {
-        const rtfData = this.data.getData( 'text/rtf');
+        const rtfData = this.data.getData('text/rtf');
         return rtfData && rtfData.includes('\\trowd');
     }
 
@@ -30,8 +29,8 @@ export class Clipboard {
      * @return {Array<File>}
      */
     getImages() {
-        const types = this.data.types;
-        const files = this.data.files;
+        const {types} = this.data;
+        const {files} = this.data;
         const images = [];
 
         for (const type of types) {
@@ -49,6 +48,7 @@ export class Clipboard {
 
         return images;
     }
+
 }
 
 export async function copyTextToClipboard(text) {
@@ -58,13 +58,11 @@ export async function copyTextToClipboard(text) {
     }
 
     // Backup option where we can't use the navigator.clipboard API
-    const tempInput = document.createElement("textarea");
-    tempInput.style = "position: absolute; left: -1000px; top: -1000px;";
+    const tempInput = document.createElement('textarea');
+    tempInput.style = 'position: absolute; left: -1000px; top: -1000px;';
     tempInput.value = text;
     document.body.appendChild(tempInput);
     tempInput.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     document.body.removeChild(tempInput);
 }
-
-export default Clipboard;

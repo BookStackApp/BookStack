@@ -1,6 +1,6 @@
-import {onSelect} from "../services/dom";
-import {KeyboardNavigationHandler} from "../services/keyboard-navigation";
-import {Component} from "./component";
+import {onSelect} from '../services/dom';
+import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
+import {Component} from './component';
 
 /**
  * Dropdown
@@ -41,7 +41,11 @@ export class Dropdown extends Component {
             this.menu.style.position = 'fixed';
             this.menu.style.width = `${menuOriginalRect.width}px`;
             this.menu.style.left = `${menuOriginalRect.left}px`;
-            heightOffset = dropUpwards ? (window.innerHeight - menuOriginalRect.top  - toggleHeight / 2) : menuOriginalRect.top;
+            if (dropUpwards) {
+                heightOffset = (window.innerHeight - menuOriginalRect.top - toggleHeight / 2);
+            } else {
+                heightOffset = menuOriginalRect.top;
+            }
         }
 
         // Adjust menu to display upwards if near the bottom of the screen
@@ -55,8 +59,8 @@ export class Dropdown extends Component {
 
         // Set listener to hide on mouse leave or window click
         this.menu.addEventListener('mouseleave', this.hide);
-        window.addEventListener('click', event => {
-            if (!this.menu.contains(event.target)) {
+        window.addEventListener('click', clickEvent => {
+            if (!this.menu.contains(clickEvent.target)) {
                 this.hide();
             }
         });
@@ -76,7 +80,7 @@ export class Dropdown extends Component {
     }
 
     hideAll() {
-        for (let dropdown of window.$components.get('dropdown')) {
+        for (const dropdown of window.$components.get('dropdown')) {
             dropdown.hide();
         }
     }
@@ -100,13 +104,13 @@ export class Dropdown extends Component {
     }
 
     setupListeners() {
-        const keyboardNavHandler = new KeyboardNavigationHandler(this.container, (event) => {
+        const keyboardNavHandler = new KeyboardNavigationHandler(this.container, event => {
             this.hide();
             this.toggle.focus();
             if (!this.bubbleEscapes) {
                 event.stopPropagation();
             }
-        }, (event) => {
+        }, event => {
             if (event.target.nodeName === 'INPUT') {
                 event.preventDefault();
                 event.stopPropagation();
@@ -120,10 +124,10 @@ export class Dropdown extends Component {
 
         // Hide menu on option click
         this.container.addEventListener('click', event => {
-             const possibleChildren = Array.from(this.menu.querySelectorAll('a'));
-             if (possibleChildren.includes(event.target)) {
-                 this.hide();
-             }
+            const possibleChildren = Array.from(this.menu.querySelectorAll('a'));
+            if (possibleChildren.includes(event.target)) {
+                this.hide();
+            }
         });
 
         onSelect(this.toggle, event => {

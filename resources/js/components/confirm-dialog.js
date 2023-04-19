@@ -1,5 +1,5 @@
-import {onSelect} from "../services/dom";
-import {Component} from "./component";
+import {onSelect} from '../services/dom';
+import {Component} from './component';
 
 /**
  * Custom equivalent of window.confirm() using our popup component.
@@ -25,8 +25,8 @@ export class ConfirmDialog extends Component {
             this.sendResult(false);
         });
 
-        return new Promise((res, rej) => {
-           this.res = res;
+        return new Promise(res => {
+            this.res = res;
         });
     }
 
@@ -42,7 +42,7 @@ export class ConfirmDialog extends Component {
      */
     sendResult(result) {
         if (this.res) {
-            this.res(result)
+            this.res(result);
             this.res = null;
         }
     }

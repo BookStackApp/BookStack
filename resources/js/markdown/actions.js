@@ -1,6 +1,7 @@
-import DrawIO from "../services/drawio";
+import * as DrawIO from '../services/drawio';
 
 export class Actions {
+
     /**
      * @param {MarkdownEditor} editor
      */
@@ -29,13 +30,13 @@ export class Actions {
     }
 
     showImageInsert() {
-        /** @type {ImageManager} **/
+        /** @type {ImageManager} * */
         const imageManager = window.$components.first('image-manager');
 
         imageManager.show(image => {
             const imageUrl = image.thumbs.display || image.url;
             const selectedText = this.#getSelectionText();
-            const newText = "[![" + (selectedText || image.name) + "](" + imageUrl + ")](" + image.url + ")";
+            const newText = `[![${selectedText || image.name}](${imageUrl})](${image.url})`;
             this.#replaceSelection(newText, newText.length);
         }, 'gallery');
     }
@@ -49,12 +50,12 @@ export class Actions {
         const selectedText = this.#getSelectionText();
         const newText = `[${selectedText}]()`;
         const cursorPosDiff = (selectedText === '') ? -3 : -1;
-        this.#replaceSelection(newText, newText.length+cursorPosDiff);
+        this.#replaceSelection(newText, newText.length + cursorPosDiff);
     }
 
     showImageManager() {
         const selectionRange = this.#getSelectionRange();
-        /** @type {ImageManager} **/
+        /** @type {ImageManager} * */
         const imageManager = window.$components.first('image-manager');
         imageManager.show(image => {
             this.#insertDrawing(image, selectionRange);
@@ -65,7 +66,7 @@ export class Actions {
     showLinkSelector() {
         const selectionRange = this.#getSelectionRange();
 
-        /** @type {EntitySelectorPopup} **/
+        /** @type {EntitySelectorPopup} * */
         const selector = window.$components.first('entity-selector-popup');
         selector.show(entity => {
             const selectedText = this.#getSelectionText(selectionRange) || entity.name;
@@ -81,16 +82,13 @@ export class Actions {
 
         const selectionRange = this.#getSelectionRange();
 
-        DrawIO.show(url,() => {
-            return Promise.resolve('');
-        }, (pngData) => {
-
+        DrawIO.show(url, () => Promise.resolve(''), pngData => {
             const data = {
                 image: pngData,
                 uploaded_to: Number(this.editor.config.pageId),
             };
 
-            window.$http.post("/images/drawio", data).then(resp => {
+            window.$http.post('/images/drawio', data).then(resp => {
                 this.#insertDrawing(resp.data, selectionRange);
                 DrawIO.close();
             }).catch(err => {
@@ -106,7 +104,7 @@ export class Actions {
 
     // Show draw.io if enabled and handle save.
     editDrawing(imgContainer) {
-        const drawioUrl = this.editor.config.drawioUrl;
+        const {drawioUrl} = this.editor.config;
         if (!drawioUrl) {
             return;
         }
@@ -114,16 +112,13 @@ export class Actions {
         const selectionRange = this.#getSelectionRange();
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
-        DrawIO.show(drawioUrl, () => {
-            return DrawIO.load(drawingId);
-        }, (pngData) => {
-
+        DrawIO.show(drawioUrl, () => DrawIO.load(drawingId), pngData => {
             const data = {
                 image: pngData,
                 uploaded_to: Number(this.editor.config.pageId),
             };
 
-            window.$http.post("/images/drawio", data).then(resp => {
+            window.$http.post('/images/drawio', data).then(resp => {
                 const newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
                 const newContent = this.#getText().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
@@ -145,12 +140,12 @@ export class Actions {
         } else {
             window.$events.emit('error', this.editor.config.text.imageUploadError);
         }
-        console.log(error);
+        console.error(error);
     }
 
     // Make the editor full screen
     fullScreen() {
-        const container = this.editor.config.container;
+        const {container} = this.editor.config;
         const alreadyFullscreen = container.classList.contains('fullscreen');
         container.classList.toggle('fullscreen', !alreadyFullscreen);
         document.body.classList.toggle('markdown-fullscreen', !alreadyFullscreen);
@@ -170,7 +165,7 @@ export class Actions {
                 scrollToLine = lineCount;
                 break;
             }
-            lineCount++;
+            lineCount += 1;
         }
 
         if (scrollToLine === -1) {
@@ -204,7 +199,7 @@ export class Actions {
         content = this.#cleanTextForEditor(content);
         const selectionRange = this.#getSelectionRange();
         const selectFrom = selectionRange.from + content.length + 1;
-        this.#dispatchChange(0, 0, content + '\n', selectFrom);
+        this.#dispatchChange(0, 0, `${content}\n`, selectFrom);
         this.focus();
     }
 
@@ -214,7 +209,7 @@ export class Actions {
      */
     appendContent(content) {
         content = this.#cleanTextForEditor(content);
-        this.#dispatchChange(this.editor.cm.state.doc.length, '\n' + content);
+        this.#dispatchChange(this.editor.cm.state.doc.length, `\n${content}`);
         this.focus();
     }
 
@@ -223,7 +218,7 @@ export class Actions {
      * @param {String} content
      */
     replaceContent(content) {
-        this.#setText(content)
+        this.#setText(content);
     }
 
     /**
@@ -250,7 +245,7 @@ export class Actions {
         if (alreadySymbol) {
             newLineContent = lineContent.replace(lineStart, newStart).trim();
         } else if (newStart !== '') {
-            newLineContent = newStart + ' ' + lineContent;
+            newLineContent = `${newStart} ${lineContent}`;
         }
 
         const selectFrom = selectionRange.from + (newLineContent.length - lineContent.length);
@@ -263,22 +258,31 @@ export class Actions {
      * @param {String} end
      */
     wrapSelection(start, end) {
-        const selectionRange = this.#getSelectionRange();
-        const selectionText = this.#getSelectionText(selectionRange);
-        if (!selectionText) return this.#wrapLine(start, end);
+        const selectRange = this.#getSelectionRange();
+        const selectionText = this.#getSelectionText(selectRange);
+        if (!selectionText) {
+            this.#wrapLine(start, end);
+            return;
+        }
 
         let newSelectionText = selectionText;
         let newRange;
 
         if (selectionText.startsWith(start) && selectionText.endsWith(end)) {
             newSelectionText = selectionText.slice(start.length, selectionText.length - end.length);
-            newRange = selectionRange.extend(selectionRange.from, selectionRange.to - (start.length + end.length));
+            newRange = selectRange.extend(selectRange.from, selectRange.to - (start.length + end.length));
         } else {
             newSelectionText = `${start}${selectionText}${end}`;
-            newRange = selectionRange.extend(selectionRange.from, selectionRange.to + (start.length + end.length));
+            newRange = selectRange.extend(selectRange.from, selectRange.to + (start.length + end.length));
         }
 
-        this.#dispatchChange(selectionRange.from, selectionRange.to, newSelectionText, newRange.anchor, newRange.head);
+        this.#dispatchChange(
+            selectRange.from,
+            selectRange.to,
+            newSelectionText,
+            newRange.anchor,
+            newRange.head,
+        );
     }
 
     replaceLineStartForOrderedList() {
@@ -290,7 +294,7 @@ export class Actions {
 
         const number = (Number(listMatch[2]) || 0) + 1;
         const whiteSpace = listMatch[1] || '';
-        const listMark = listMatch[3] || '.'
+        const listMark = listMatch[3] || '.';
 
         const prefix = `${whiteSpace}${number}${listMark}`;
         return this.replaceLineStart(prefix);
@@ -319,7 +323,13 @@ export class Actions {
             const newFormat = formats[newFormatIndex];
             const newContent = line.text.replace(matches[0], matches[0].replace(format, newFormat));
             const lineDiff = newContent.length - line.text.length;
-            this.#dispatchChange(line.from, line.to, newContent, selectionRange.anchor + lineDiff, selectionRange.head + lineDiff);
+            this.#dispatchChange(
+                line.from,
+                line.to,
+                newContent,
+                selectionRange.anchor + lineDiff,
+                selectionRange.head + lineDiff,
+            );
         }
     }
 
@@ -373,7 +383,7 @@ export class Actions {
      * @param {File} file
      * @param {?Number} position
      */
-    async uploadImage(file, position= null) {
+    async uploadImage(file, position = null) {
         if (file === null || file.type.indexOf('image') !== 0) return;
         let ext = 'png';
 
@@ -382,17 +392,17 @@ export class Actions {
         }
 
         if (file.name) {
-            let fileNameMatches = file.name.match(/\.(.+)$/);
+            const fileNameMatches = file.name.match(/\.(.+)$/);
             if (fileNameMatches.length > 1) ext = fileNameMatches[1];
         }
 
         // Insert image into markdown
-        const id = "image-" + Math.random().toString(16).slice(2);
+        const id = `image-${Math.random().toString(16).slice(2)}`;
         const placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
         const placeHolderText = `![](${placeholderImage})`;
         this.#dispatchChange(position, position, placeHolderText, position);
 
-        const remoteFilename = "image-" + Date.now() + "." + ext;
+        const remoteFilename = `image-${Date.now()}.${ext}`;
         const formData = new FormData();
         formData.append('file', file, remoteFilename);
         formData.append('uploaded_to', this.editor.config.pageId);
@@ -404,7 +414,7 @@ export class Actions {
         } catch (err) {
             window.$events.emit('error', this.editor.config.text.imageUploadError);
             this.#findAndReplaceContent(placeHolderText, '');
-            console.log(err);
+            console.error(err);
         }
     }
 
@@ -437,7 +447,8 @@ export class Actions {
      */
     #replaceSelection(newContent, cursorOffset = 0, selectionRange = null) {
         selectionRange = selectionRange || this.editor.cm.state.selection.main;
-        this.#dispatchChange(selectionRange.from, selectionRange.to, newContent, selectionRange.from + cursorOffset);
+        const selectFrom = selectionRange.from + cursorOffset;
+        this.#dispatchChange(selectionRange.from, selectionRange.to, newContent, selectFrom);
         this.focus();
     }
 
@@ -466,7 +477,7 @@ export class Actions {
      * @return {String}
      */
     #cleanTextForEditor(text) {
-        return text.replace(/\r\n|\r/g, "\n");
+        return text.replace(/\r\n|\r/g, '\n');
     }
 
     /**
@@ -511,10 +522,13 @@ export class Actions {
      * @param {?Number} selectTo
      */
     #dispatchChange(from, to = null, text = null, selectFrom = null, selectTo = null) {
-        const tr = {changes: {from, to: to, insert: text}};
+        const tr = {changes: {from, to, insert: text}};
 
         if (selectFrom) {
             tr.selection = {anchor: selectFrom};
+            if (selectTo) {
+                tr.selection.head = selectTo;
+            }
         }
 
         this.editor.cm.dispatch(tr);
@@ -533,4 +547,5 @@ export class Actions {
             scrollIntoView,
         });
     }
+
 }

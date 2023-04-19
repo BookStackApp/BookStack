@@ -1,5 +1,5 @@
-import {build as buildEditorConfig} from "../wysiwyg/config";
-import {Component} from "./component";
+import {build as buildEditorConfig} from '../wysiwyg/config';
+import {Component} from './component';
 
 export class WysiwygEditor extends Component {
 
@@ -45,7 +45,7 @@ export class WysiwygEditor extends Component {
      */
     getContent() {
         return {
-            html: this.editor.getContent()
+            html: this.editor.getContent(),
         };
     }
 

@@ -21,7 +21,7 @@ export class Settings {
 
     listenToInputChanges(inputs) {
         for (const input of inputs) {
-            input.addEventListener('change', event => {
+            input.addEventListener('change', () => {
                 const name = input.getAttribute('name').replace('md-', '');
                 this.set(name, input.checked);
             });
@@ -59,4 +59,5 @@ export class Settings {
         listeners.push(callback);
         this.changeListeners[key] = listeners;
     }
+
 }

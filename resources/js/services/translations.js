@@ -5,11 +5,7 @@
  */
 class Translator {
 
-    /**
-     * Create an instance, Passing in the required translations
-     * @param translations
-     */
-    constructor(translations) {
+    constructor() {
         this.store = new Map();
         this.parseTranslations();
     }
@@ -19,7 +15,7 @@ class Translator {
      */
     parseTranslations() {
         const translationMetaTags = document.querySelectorAll('meta[name="translation"]');
-        for (let tag of translationMetaTags) {
+        for (const tag of translationMetaTags) {
             const key = tag.getAttribute('key');
             const value = tag.getAttribute('value');
             this.store.set(key, value);
@@ -27,7 +23,7 @@ class Translator {
     }
 
     /**
-     * Get a translation, Same format as laravel's 'trans' helper
+     * Get a translation, Same format as Laravel's 'trans' helper
      * @param key
      * @param replacements
      * @returns {*}
@@ -38,8 +34,8 @@ class Translator {
     }
 
     /**
-     * Get pluralised text, Dependant on the given count.
-     * Same format at laravel's 'trans_choice' helper.
+     * Get pluralised text, Dependent on the given count.
+     * Same format at Laravel's 'trans_choice' helper.
      * @param key
      * @param count
      * @param replacements
@@ -52,7 +48,7 @@ class Translator {
 
     /**
      * Parse the given translation and find the correct plural option
-     * to use. Similar format at laravel's 'trans_choice' helper.
+     * to use. Similar format at Laravel's 'trans_choice' helper.
      * @param {String} translation
      * @param {Number} count
      * @param {Object} replacements
@@ -64,7 +60,7 @@ class Translator {
         const rangeRegex = /^\[([0-9]+),([0-9*]+)]/;
         let result = null;
 
-        for (let t of splitText) {
+        for (const t of splitText) {
             // Parse exact matches
             const exactMatches = t.match(exactCountRegex);
             if (exactMatches !== null && Number(exactMatches[1]) === count) {
@@ -117,14 +113,17 @@ class Translator {
      */
     performReplacements(string, replacements) {
         if (!replacements) return string;
-        const replaceMatches = string.match(/:([\S]+)/g);
+        const replaceMatches = string.match(/:(\S+)/g);
         if (replaceMatches === null) return string;
+        let updatedString = string;
+
         replaceMatches.forEach(match => {
             const key = match.substring(1);
             if (typeof replacements[key] === 'undefined') return;
-            string = string.replace(match, replacements[key]);
+            updatedString = updatedString.replace(match, replacements[key]);
         });
-        return string;
+
+        return updatedString;
     }
 
 }

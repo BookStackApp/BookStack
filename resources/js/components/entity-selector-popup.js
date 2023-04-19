@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class EntitySelectorPopup extends Component {
 
@@ -57,4 +57,5 @@ export class EntitySelectorPopup extends Component {
         this.getSelector().reset();
         if (this.callback && entity) this.callback(entity);
     }
+
 }

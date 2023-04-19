@@ -1,4 +1,4 @@
-import {kebabToCamel, camelToKebab} from "./text";
+import {kebabToCamel, camelToKebab} from './text';
 
 /**
  * A mapping of active components keyed by name, with values being arrays of component
@@ -20,44 +20,6 @@ const componentModelMap = {};
 const elementComponentMap = new WeakMap();
 
 /**
- * Initialize a component instance on the given dom element.
- * @param {String} name
- * @param {Element} element
- */
-function initComponent(name, element) {
-    /** @type {Function<Component>|undefined} **/
-    const componentModel = componentModelMap[name];
-    if (componentModel === undefined) return;
-
-    // Create our component instance
-    /** @type {Component} **/
-    let instance;
-    try {
-        instance = new componentModel();
-        instance.$name = name;
-        instance.$el = element;
-        const allRefs = parseRefs(name, element);
-        instance.$refs = allRefs.refs;
-        instance.$manyRefs = allRefs.manyRefs;
-        instance.$opts = parseOpts(name, element);
-        instance.setup();
-    } catch (e) {
-        console.error('Failed to create component', e, name, element);
-    }
-
-    // Add to global listing
-    if (typeof components[name] === "undefined") {
-        components[name] = [];
-    }
-    components[name].push(instance);
-
-    // Add to element mapping
-    const elComponents = elementComponentMap.get(element) || {};
-    elComponents[name] = instance;
-    elementComponentMap.set(element, elComponents);
-}
-
-/**
  * Parse out the element references within the given element
  * for the given component name.
  * @param {String} name
@@ -67,7 +29,7 @@ function parseRefs(name, element) {
     const refs = {};
     const manyRefs = {};
 
-    const prefix = `${name}@`
+    const prefix = `${name}@`;
     const selector = `[refs*="${prefix}"]`;
     const refElems = [...element.querySelectorAll(selector)];
     if (element.matches(selector)) {
@@ -93,13 +55,13 @@ function parseRefs(name, element) {
 
 /**
  * Parse out the element component options.
- * @param {String} name
+ * @param {String} componentName
  * @param {Element} element
  * @return {Object<String, String>}
  */
-function parseOpts(name, element) {
+function parseOpts(componentName, element) {
     const opts = {};
-    const prefix = `option:${name}:`;
+    const prefix = `option:${componentName}:`;
     for (const {name, value} of element.attributes) {
         if (name.startsWith(prefix)) {
             const optName = name.replace(prefix, '');
@@ -110,11 +72,49 @@ function parseOpts(name, element) {
 }
 
 /**
+ * Initialize a component instance on the given dom element.
+ * @param {String} name
+ * @param {Element} element
+ */
+function initComponent(name, element) {
+    /** @type {Function<Component>|undefined} * */
+    const ComponentModel = componentModelMap[name];
+    if (ComponentModel === undefined) return;
+
+    // Create our component instance
+    /** @type {Component} * */
+    let instance;
+    try {
+        instance = new ComponentModel();
+        instance.$name = name;
+        instance.$el = element;
+        const allRefs = parseRefs(name, element);
+        instance.$refs = allRefs.refs;
+        instance.$manyRefs = allRefs.manyRefs;
+        instance.$opts = parseOpts(name, element);
+        instance.setup();
+    } catch (e) {
+        console.error('Failed to create component', e, name, element);
+    }
+
+    // Add to global listing
+    if (typeof components[name] === 'undefined') {
+        components[name] = [];
+    }
+    components[name].push(instance);
+
+    // Add to element mapping
+    const elComponents = elementComponentMap.get(element) || {};
+    elComponents[name] = instance;
+    elementComponentMap.set(element, elComponents);
+}
+
+/**
  * Initialize all components found within the given element.
  * @param {Element|Document} parentElement
  */
 export function init(parentElement = document) {
-    const componentElems = parentElement.querySelectorAll(`[component],[components]`);
+    const componentElems = parentElement.querySelectorAll('[component],[components]');
 
     for (const el of componentElems) {
         const componentNames = `${el.getAttribute('component') || ''} ${(el.getAttribute('components'))}`.toLowerCase().split(' ').filter(Boolean);

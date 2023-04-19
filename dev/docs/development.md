@@ -33,6 +33,10 @@ If the codebase needs to be tested with deprecations, this can be done via uncom
 
 ## Code Standards
 
+We use tools to manage code standards and formatting within the project. If submitting a PR, formatting as per our project standards would help for clarity but don't worry too much about using/understanding these tools as we can always address issues at a later stage when they're picked up by our automated tools.
+
+### PHP
+
 PHP code standards are managed by [using PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer).
 Static analysis is in place using [PHPStan](https://phpstan.org/) & [Larastan](https://github.com/nunomaduro/larastan).
 The below commands can be used to utilise these tools:
@@ -51,7 +55,19 @@ composer format
 composer check-static
 ```
 
-If submitting a PR, formatting as per our project standards would help for clarity but don't worry too much about using/understanding these tools as we can always address issues at a later stage when they're picked up by our automated tools.
+### JavaScript
+
+JavaScript code standards use managed using [ESLint](https://eslint.org/).
+The ESLint rule configuration is managed within the `package.json` file.
+The below commands can be used to lint and format:
+
+```bash
+# Run code linting using ESLint
+npm run lint
+
+# Fix code where possible using ESLint
+npm run fix
+```
 
 ## Development using Docker
 

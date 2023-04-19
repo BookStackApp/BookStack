@@ -1,5 +1,5 @@
-import {onChildEvent} from "../services/dom";
-import {Component} from "./component";
+import {onChildEvent} from '../services/dom';
+import {Component} from './component';
 
 /**
  * Entity Selector
@@ -29,7 +29,7 @@ export class EntitySelector extends Component {
         this.elem.addEventListener('click', this.onClick.bind(this));
 
         let lastSearch = 0;
-        this.searchInput.addEventListener('input', event => {
+        this.searchInput.addEventListener('input', () => {
             lastSearch = Date.now();
             this.showLoading();
             setTimeout(() => {
@@ -43,35 +43,35 @@ export class EntitySelector extends Component {
         });
 
         // Keyboard navigation
-        onChildEvent(this.$el, '[data-entity-type]', 'keydown', (e, el) => {
-            if (e.ctrlKey && e.code === 'Enter') {
+        onChildEvent(this.$el, '[data-entity-type]', 'keydown', event => {
+            if (event.ctrlKey && event.code === 'Enter') {
                 const form = this.$el.closest('form');
                 if (form) {
                     form.submit();
-                    e.preventDefault();
+                    event.preventDefault();
                     return;
                 }
             }
 
-            if (e.code === 'ArrowDown') {
+            if (event.code === 'ArrowDown') {
                 this.focusAdjacent(true);
             }
-            if (e.code === 'ArrowUp') {
+            if (event.code === 'ArrowUp') {
                 this.focusAdjacent(false);
             }
         });
 
-        this.searchInput.addEventListener('keydown', e => {
-            if (e.code === 'ArrowDown') {
+        this.searchInput.addEventListener('keydown', event => {
+            if (event.code === 'ArrowDown') {
                 this.focusAdjacent(true);
             }
-        })
+        });
     }
 
     focusAdjacent(forward = true) {
         const items = Array.from(this.resultsContainer.querySelectorAll('[data-entity-type]'));
         const selectedIndex = items.indexOf(document.activeElement);
-        const newItem = items[selectedIndex+ (forward ? 1 : -1)] || items[0];
+        const newItem = items[selectedIndex + (forward ? 1 : -1)] || items[0];
         if (newItem) {
             newItem.focus();
         }
@@ -101,7 +101,7 @@ export class EntitySelector extends Component {
         window.$http.get(this.searchUrl()).then(resp => {
             this.resultsContainer.innerHTML = resp.data;
             this.hideLoading();
-        })
+        });
     }
 
     searchUrl() {
@@ -144,13 +144,13 @@ export class EntitySelector extends Component {
 
         const link = item.getAttribute('href');
         const name = item.querySelector('.entity-list-item-name').textContent;
-        const data = {id: Number(id), name: name, link: link};
+        const data = {id: Number(id), name, link};
 
         if (isSelected) {
             item.classList.add('selected');
             this.selectedItemData = data;
         } else {
-            window.$events.emit('entity-select-change', null)
+            window.$events.emit('entity-select-change', null);
         }
 
         if (!isDblClick && !isSelected) return;
@@ -159,7 +159,7 @@ export class EntitySelector extends Component {
             this.confirmSelection(data);
         }
         if (isSelected) {
-            window.$events.emit('entity-select-change', data)
+            window.$events.emit('entity-select-change', data);
         }
     }
 

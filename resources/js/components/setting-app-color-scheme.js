@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class SettingAppColorScheme extends Component {
 
@@ -14,7 +14,7 @@ export class SettingAppColorScheme extends Component {
             this.handleModeChange(newMode);
         });
 
-        const onInputChange = (event) => {
+        const onInputChange = event => {
             this.updateAppColorsFromInputs();
 
             if (event.target.name.startsWith('setting-app-color')) {
@@ -44,7 +44,7 @@ export class SettingAppColorScheme extends Component {
                 cssId = 'primary';
             }
 
-            const varName = '--color-' + cssId;
+            const varName = `--color-${cssId}`;
             document.body.style.setProperty(varName, input.value);
         }
     }
@@ -57,9 +57,8 @@ export class SettingAppColorScheme extends Component {
         const lightName = input.name.replace('-color', '-color-light');
         const hexVal = input.value;
         const rgb = this.hexToRgb(hexVal);
-        const rgbLightVal = 'rgba('+ [rgb.r, rgb.g, rgb.b, '0.15'].join(',') +')';
+        const rgbLightVal = `rgba(${[rgb.r, rgb.g, rgb.b, '0.15'].join(',')})`;
 
-        console.log(input.name, lightName, hexVal, rgbLightVal)
         const lightColorInput = this.container.querySelector(`input[name="${lightName}"][type="hidden"]`);
         lightColorInput.value = rgbLightVal;
     }
@@ -75,7 +74,7 @@ export class SettingAppColorScheme extends Component {
         return {
             r: result ? parseInt(result[1], 16) : 0,
             g: result ? parseInt(result[2], 16) : 0,
-            b: result ? parseInt(result[3], 16) : 0
+            b: result ? parseInt(result[3], 16) : 0,
         };
     }
 

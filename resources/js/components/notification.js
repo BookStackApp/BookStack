@@ -1,13 +1,13 @@
-import {Component} from "./component";
+import {Component} from './component';
 
-export class Notification  extends Component {
+export class Notification extends Component {
 
     setup() {
         this.container = this.$el;
         this.type = this.$opts.type;
         this.textElem = this.container.querySelector('span');
         this.autoHide = this.$opts.autoHide === 'true';
-        this.initialShow = this.$opts.show === 'true'
+        this.initialShow = this.$opts.show === 'true';
         this.container.style.display = 'grid';
 
         window.$events.listen(this.type, text => {
