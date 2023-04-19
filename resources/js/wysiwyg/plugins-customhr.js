@@ -1,8 +1,7 @@
 /**
  * @param {Editor} editor
- * @param {String} url
  */
-function register(editor, url) {
+function register(editor) {
     editor.addCommand('InsertHorizontalRule', () => {
         const hrElem = document.createElement('hr');
         const cNode = editor.selection.getNode();
@@ -20,9 +19,8 @@ function register(editor, url) {
 }
 
 /**
- * @param {WysiwygConfigOptions} options
  * @return {register}
  */
-export function getPlugin(options) {
+export function getPlugin() {
     return register;
 }

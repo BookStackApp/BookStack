@@ -1,17 +1,4 @@
 /**
- * Scroll to a section dictated by the current URL query string, if present.
- * Used when directly editing a specific section of the page.
- * @param {Editor} editor
- */
-export function scrollToQueryString(editor) {
-    const queryParams = (new URL(window.location)).searchParams;
-    const scrollId = queryParams.get('content-id');
-    if (scrollId) {
-        scrollToText(editor, scrollId);
-    }
-}
-
-/**
  * @param {Editor} editor
  * @param {String} scrollId
  */
@@ -26,4 +13,17 @@ function scrollToText(editor, scrollId) {
     editor.selection.select(element, true);
     editor.selection.collapse(false);
     editor.focus();
+}
+
+/**
+ * Scroll to a section dictated by the current URL query string, if present.
+ * Used when directly editing a specific section of the page.
+ * @param {Editor} editor
+ */
+export function scrollToQueryString(editor) {
+    const queryParams = (new URL(window.location)).searchParams;
+    const scrollId = queryParams.get('content-id');
+    if (scrollId) {
+        scrollToText(editor, scrollId);
+    }
 }

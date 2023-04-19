@@ -11,10 +11,9 @@
  */
 export function debounce(func, wait, immediate) {
     let timeout;
-    return function() {
-        const context = this; const
-            args = arguments;
-        const later = function() {
+    return function debouncedWrapper(...args) {
+        const context = this;
+        const later = function debouncedTimeout() {
             timeout = null;
             if (!immediate) func.apply(context, args);
         };
@@ -67,6 +66,7 @@ export function escapeHtml(unsafe) {
  * @returns {string}
  */
 export function uniqueId() {
+    // eslint-disable-next-line no-bitwise
     const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     return (`${S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`);
 }

@@ -70,9 +70,8 @@ function registerImageContextToolbar(editor) {
 
 /**
  * @param {Editor} editor
- * @param {WysiwygConfigOptions} options
  */
-export function registerAdditionalToolbars(editor, options) {
+export function registerAdditionalToolbars(editor) {
     registerPrimaryToolbarGroups(editor);
     registerLinkContextToolbar(editor);
     registerImageContextToolbar(editor);
