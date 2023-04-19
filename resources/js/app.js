@@ -1,4 +1,4 @@
-import events from './services/events';
+import * as events from './services/events';
 import * as httpInstance from './services/http';
 import Translations from './services/translations';
 

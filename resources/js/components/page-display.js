@@ -2,6 +2,33 @@ import * as DOM from '../services/dom';
 import {scrollAndHighlightElement} from '../services/util';
 import {Component} from './component';
 
+function toggleAnchorHighlighting(elementId, shouldHighlight) {
+    DOM.forEach(`a[href="#${elementId}"]`, anchor => {
+        anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
+    });
+}
+
+function headingVisibilityChange(entries) {
+    for (const entry of entries) {
+        const isVisible = (entry.intersectionRatio === 1);
+        toggleAnchorHighlighting(entry.target.id, isVisible);
+    }
+}
+
+function addNavObserver(headings) {
+    // Setup the intersection observer.
+    const intersectOpts = {
+        rootMargin: '0px 0px 0px 0px',
+        threshold: 1.0,
+    };
+    const pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
+
+    // observe each heading
+    for (const heading of headings) {
+        pageNavObserver.observe(heading);
+    }
+}
+
 export class PageDisplay extends Component {
 
     setup() {
@@ -57,33 +84,6 @@ export class PageDisplay extends Component {
         // if headings are present, add observers.
         if (headings.length > 0 && pageNav !== null) {
             addNavObserver(headings);
-        }
-
-        function addNavObserver(headings) {
-            // Setup the intersection observer.
-            const intersectOpts = {
-                rootMargin: '0px 0px 0px 0px',
-                threshold: 1.0,
-            };
-            const pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
-
-            // observe each heading
-            for (const heading of headings) {
-                pageNavObserver.observe(heading);
-            }
-        }
-
-        function headingVisibilityChange(entries, observer) {
-            for (const entry of entries) {
-                const isVisible = (entry.intersectionRatio === 1);
-                toggleAnchorHighlighting(entry.target.id, isVisible);
-            }
-        }
-
-        function toggleAnchorHighlighting(elementId, shouldHighlight) {
-            DOM.forEach(`a[href="#${elementId}"]`, anchor => {
-                anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
-            });
         }
     }
 

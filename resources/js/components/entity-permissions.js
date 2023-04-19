@@ -34,7 +34,7 @@ export class EntityPermissions extends Component {
         });
 
         // Role select change
-        this.roleSelect.addEventListener('change', event => {
+        this.roleSelect.addEventListener('change', () => {
             const roleId = this.roleSelect.value;
             if (roleId) {
                 this.addRoleRow(roleId);

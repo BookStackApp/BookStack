@@ -27,7 +27,11 @@ export class ChapterContents extends Component {
 
     click(event) {
         event.preventDefault();
-        this.isOpen ? this.close() : this.open();
+        if (this.isOpen) {
+            this.close();
+        } else {
+            this.open();
+        }
     }
 
 }

@@ -29,7 +29,7 @@ export class EntitySelector extends Component {
         this.elem.addEventListener('click', this.onClick.bind(this));
 
         let lastSearch = 0;
-        this.searchInput.addEventListener('input', event => {
+        this.searchInput.addEventListener('input', () => {
             lastSearch = Date.now();
             this.showLoading();
             setTimeout(() => {
@@ -43,26 +43,26 @@ export class EntitySelector extends Component {
         });
 
         // Keyboard navigation
-        onChildEvent(this.$el, '[data-entity-type]', 'keydown', (e, el) => {
-            if (e.ctrlKey && e.code === 'Enter') {
+        onChildEvent(this.$el, '[data-entity-type]', 'keydown', event => {
+            if (event.ctrlKey && event.code === 'Enter') {
                 const form = this.$el.closest('form');
                 if (form) {
                     form.submit();
-                    e.preventDefault();
+                    event.preventDefault();
                     return;
                 }
             }
 
-            if (e.code === 'ArrowDown') {
+            if (event.code === 'ArrowDown') {
                 this.focusAdjacent(true);
             }
-            if (e.code === 'ArrowUp') {
+            if (event.code === 'ArrowUp') {
                 this.focusAdjacent(false);
             }
         });
 
-        this.searchInput.addEventListener('keydown', e => {
-            if (e.code === 'ArrowDown') {
+        this.searchInput.addEventListener('keydown', event => {
+            if (event.code === 'ArrowDown') {
                 this.focusAdjacent(true);
             }
         });

@@ -1,4 +1,4 @@
-import DrawIO from '../services/drawio';
+import * as DrawIO from '../services/drawio';
 
 let pageEditor = null;
 let currentNode = null;

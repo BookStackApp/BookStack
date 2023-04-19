@@ -19,7 +19,7 @@ export class TriLayout extends Component {
 
         // Watch layout changes
         this.updateLayout();
-        window.addEventListener('resize', event => {
+        window.addEventListener('resize', () => {
             this.updateLayout();
         }, {passive: true});
     }

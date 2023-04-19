@@ -59,7 +59,9 @@ export class PageEditor extends Component {
         window.$events.listen('editor-save-page', this.savePage.bind(this));
 
         // Listen to content changes from the editor
-        const onContentChange = () => this.autoSave.pendingChange = true;
+        const onContentChange = () => {
+            this.autoSave.pendingChange = true;
+        };
         window.$events.listen('editor-html-change', onContentChange);
         window.$events.listen('editor-markdown-change', onContentChange);
 
@@ -80,7 +82,8 @@ export class PageEditor extends Component {
 
     setInitialFocus() {
         if (this.hasDefaultTitle) {
-            return this.titleElem.select();
+            this.titleElem.select();
+            return;
         }
 
         window.setTimeout(() => {
@@ -133,7 +136,9 @@ export class PageEditor extends Component {
             try {
                 const saveKey = `draft-save-fail-${(new Date()).toISOString()}`;
                 window.localStorage.setItem(saveKey, JSON.stringify(data));
-            } catch (err) {}
+            } catch (lsErr) {
+                console.error(lsErr);
+            }
 
             window.$events.emit('error', this.autosaveFailText);
         }
@@ -154,7 +159,8 @@ export class PageEditor extends Component {
         try {
             response = await window.$http.get(`/ajax/page/${this.pageId}`);
         } catch (e) {
-            return console.error(e);
+            console.error(e);
+            return;
         }
 
         if (this.autoSave.interval) {

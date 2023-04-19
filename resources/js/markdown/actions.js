@@ -1,4 +1,4 @@
-import DrawIO from '../services/drawio';
+import * as DrawIO from '../services/drawio';
 
 export class Actions {
 
@@ -140,7 +140,7 @@ export class Actions {
         } else {
             window.$events.emit('error', this.editor.config.text.imageUploadError);
         }
-        console.log(error);
+        console.error(error);
     }
 
     // Make the editor full screen
@@ -165,7 +165,7 @@ export class Actions {
                 scrollToLine = lineCount;
                 break;
             }
-            lineCount++;
+            lineCount += 1;
         }
 
         if (scrollToLine === -1) {
@@ -258,22 +258,31 @@ export class Actions {
      * @param {String} end
      */
     wrapSelection(start, end) {
-        const selectionRange = this.#getSelectionRange();
-        const selectionText = this.#getSelectionText(selectionRange);
-        if (!selectionText) return this.#wrapLine(start, end);
+        const selectRange = this.#getSelectionRange();
+        const selectionText = this.#getSelectionText(selectRange);
+        if (!selectionText) {
+            this.#wrapLine(start, end);
+            return;
+        }
 
         let newSelectionText = selectionText;
         let newRange;
 
         if (selectionText.startsWith(start) && selectionText.endsWith(end)) {
             newSelectionText = selectionText.slice(start.length, selectionText.length - end.length);
-            newRange = selectionRange.extend(selectionRange.from, selectionRange.to - (start.length + end.length));
+            newRange = selectRange.extend(selectRange.from, selectRange.to - (start.length + end.length));
         } else {
             newSelectionText = `${start}${selectionText}${end}`;
-            newRange = selectionRange.extend(selectionRange.from, selectionRange.to + (start.length + end.length));
+            newRange = selectRange.extend(selectRange.from, selectRange.to + (start.length + end.length));
         }
 
-        this.#dispatchChange(selectionRange.from, selectionRange.to, newSelectionText, newRange.anchor, newRange.head);
+        this.#dispatchChange(
+            selectRange.from,
+            selectRange.to,
+            newSelectionText,
+            newRange.anchor,
+            newRange.head,
+        );
     }
 
     replaceLineStartForOrderedList() {
@@ -314,7 +323,13 @@ export class Actions {
             const newFormat = formats[newFormatIndex];
             const newContent = line.text.replace(matches[0], matches[0].replace(format, newFormat));
             const lineDiff = newContent.length - line.text.length;
-            this.#dispatchChange(line.from, line.to, newContent, selectionRange.anchor + lineDiff, selectionRange.head + lineDiff);
+            this.#dispatchChange(
+                line.from,
+                line.to,
+                newContent,
+                selectionRange.anchor + lineDiff,
+                selectionRange.head + lineDiff,
+            );
         }
     }
 
@@ -399,7 +414,7 @@ export class Actions {
         } catch (err) {
             window.$events.emit('error', this.editor.config.text.imageUploadError);
             this.#findAndReplaceContent(placeHolderText, '');
-            console.log(err);
+            console.error(err);
         }
     }
 
@@ -432,7 +447,8 @@ export class Actions {
      */
     #replaceSelection(newContent, cursorOffset = 0, selectionRange = null) {
         selectionRange = selectionRange || this.editor.cm.state.selection.main;
-        this.#dispatchChange(selectionRange.from, selectionRange.to, newContent, selectionRange.from + cursorOffset);
+        const selectFrom = selectionRange.from + cursorOffset;
+        this.#dispatchChange(selectionRange.from, selectionRange.to, newContent, selectFrom);
         this.focus();
     }
 
@@ -510,6 +526,9 @@ export class Actions {
 
         if (selectFrom) {
             tr.selection = {anchor: selectFrom};
+            if (selectTo) {
+                tr.selection.head = selectTo;
+            }
         }
 
         this.editor.cm.dispatch(tr);

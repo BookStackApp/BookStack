@@ -27,7 +27,7 @@ export class Attachments extends Component {
             this.startEdit(event.detail.id);
         });
 
-        this.container.addEventListener('event-emit-select-edit-back', event => {
+        this.container.addEventListener('event-emit-select-edit-back', () => {
             this.stopEdit();
         });
 

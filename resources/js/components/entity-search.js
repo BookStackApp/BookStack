@@ -31,7 +31,8 @@ export class EntitySearch extends Component {
     runSearch() {
         const term = this.searchInput.value.trim();
         if (term.length === 0) {
-            return this.clearSearch();
+            this.clearSearch();
+            return;
         }
 
         this.searchView.classList.remove('hidden');
