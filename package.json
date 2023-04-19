@@ -58,6 +58,7 @@
       "es2021": true
     },
     "extends": "airbnb-base",
+    "ignorePatterns": ["resources/**/*-stub.js"],
     "overrides": [
     ],
     "parserOptions": {
@@ -76,6 +77,28 @@
         "anonymous": "never",
         "named": "never",
         "asyncArrow": "always"
+      }],
+      "import/prefer-default-export": "off",
+      "no-plusplus": ["error", {
+        "allowForLoopAfterthoughts": true
+      }],
+      "arrow-body-style": "off",
+      "no-restricted-syntax": "off",
+      "no-continue": "off",
+      "no-console": ["warn", {
+        "allow": ["error"]
+      }],
+      "max-len": ["error", {
+        "code": 110,
+        "tabWidth": 4,
+        "ignoreUrls": true,
+        "ignoreComments": false,
+        "ignoreRegExpLiterals": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }],
+      "no-param-reassign": ["error", {
+        "props": false
       }]
     }
   }

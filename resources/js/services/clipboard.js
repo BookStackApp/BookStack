@@ -66,5 +66,3 @@ export async function copyTextToClipboard(text) {
     document.execCommand('copy');
     document.body.removeChild(tempInput);
 }
-
-export default Clipboard;

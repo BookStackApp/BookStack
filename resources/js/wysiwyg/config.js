@@ -13,7 +13,7 @@ import {getPlugin as getAboutPlugin} from './plugins-about';
 import {getPlugin as getDetailsPlugin} from './plugins-details';
 import {getPlugin as getTasklistPlugin} from './plugins-tasklist';
 
-const style_formats = [
+const styleFormats = [
     {title: 'Large Header', format: 'h2', preview: 'color: blue;'},
     {title: 'Medium Header', format: 'h3'},
     {title: 'Small Header', format: 'h4'},
@@ -43,7 +43,7 @@ const formats = {
     calloutdanger: {block: 'p', exact: true, attributes: {class: 'callout danger'}},
 };
 
-const color_map = [
+const colorMap = [
     '#BFEDD2', '',
     '#FBEEB8', '',
     '#F8CAC6', '',
@@ -72,7 +72,7 @@ const color_map = [
     '#ffffff', '',
 ];
 
-function file_picker_callback(callback, value, meta) {
+function filePickerCallback(callback, value, meta) {
     // field_name, url, type, win
     if (meta.filetype === 'file') {
         /** @type {EntitySelectorPopup} * */
@@ -119,12 +119,12 @@ function gatherPlugins(options) {
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
-    window.tinymce.PluginManager.add('codeeditor', getCodeeditorPlugin(options));
-    window.tinymce.PluginManager.add('customhr', getCustomhrPlugin(options));
-    window.tinymce.PluginManager.add('imagemanager', getImagemanagerPlugin(options));
-    window.tinymce.PluginManager.add('about', getAboutPlugin(options));
-    window.tinymce.PluginManager.add('details', getDetailsPlugin(options));
-    window.tinymce.PluginManager.add('tasklist', getTasklistPlugin(options));
+    window.tinymce.PluginManager.add('codeeditor', getCodeeditorPlugin());
+    window.tinymce.PluginManager.add('customhr', getCustomhrPlugin());
+    window.tinymce.PluginManager.add('imagemanager', getImagemanagerPlugin());
+    window.tinymce.PluginManager.add('about', getAboutPlugin());
+    window.tinymce.PluginManager.add('details', getDetailsPlugin());
+    window.tinymce.PluginManager.add('tasklist', getTasklistPlugin());
 
     if (options.drawioUrl) {
         window.tinymce.PluginManager.add('drawio', getDrawioPlugin(options));
@@ -156,7 +156,7 @@ function setupBrFilter(editor) {
     editor.serializer.addNodeFilter('br', nodes => {
         for (const node of nodes) {
             if (node.parent && node.parent.name === 'code') {
-                const newline = tinymce.html.Node.create('#text');
+                const newline = window.tinymce.html.Node.create('#text');
                 newline.value = '\n';
                 node.replace(newline);
             }
@@ -169,7 +169,14 @@ function setupBrFilter(editor) {
  * @return {function(Editor)}
  */
 function getSetupCallback(options) {
-    return function(editor) {
+    return function setupCallback(editor) {
+        function editorChange() {
+            if (options.darkMode) {
+                editor.contentDocument.documentElement.classList.add('dark-mode');
+            }
+            window.$events.emit('editor-html-change', '');
+        }
+
         editor.on('ExecCommand change input NodeChange ObjectResized', editorChange);
         listenForCommonEvents(editor);
         listenForDragAndPaste(editor, options);
@@ -184,13 +191,6 @@ function getSetupCallback(options) {
         editor.on('PreInit', () => {
             setupBrFilter(editor);
         });
-
-        function editorChange() {
-            if (options.darkMode) {
-                editor.contentDocument.documentElement.classList.add('dark-mode');
-            }
-            window.$events.emit('editor-html-change', '');
-        }
 
         // Custom handler hook
         window.$events.emitPublic(options.containerElement, 'editor-tinymce::setup', {editor});
@@ -274,7 +274,7 @@ export function build(options) {
         contextmenu: false,
         toolbar: getPrimaryToolbar(options),
         content_style: getContentStyle(options),
-        style_formats,
+        style_formats: styleFormats,
         style_formats_merge: false,
         media_alt_source: false,
         media_poster: false,
@@ -282,8 +282,8 @@ export function build(options) {
         table_style_by_css: true,
         table_use_colgroups: true,
         file_picker_types: 'file image',
-        color_map,
-        file_picker_callback,
+        color_map: colorMap,
+        file_picker_callback: filePickerCallback,
         paste_preprocess(plugin, args) {
             const {content} = args;
             if (content.indexOf('<img src="file://') !== -1) {
@@ -296,7 +296,7 @@ export function build(options) {
         },
         setup(editor) {
             registerCustomIcons(editor);
-            registerAdditionalToolbars(editor, options);
+            registerAdditionalToolbars(editor);
             getSetupCallback(options)(editor);
         },
     };

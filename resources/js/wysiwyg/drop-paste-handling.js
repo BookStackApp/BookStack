@@ -1,10 +1,29 @@
-import Clipboard from '../services/clipboard';
+import {Clipboard} from '../services/clipboard';
 
 let wrap;
 let draggedContentEditable;
 
 function hasTextContent(node) {
     return node && !!(node.textContent || node.innerText);
+}
+
+/**
+ * Upload an image file to the server
+ * @param {File} file
+ * @param {int} pageId
+ */
+async function uploadImageFile(file, pageId) {
+    if (file === null || file.type.indexOf('image') !== 0) {
+        throw new Error('Not an image file');
+    }
+
+    const remoteFilename = file.name || `image-${Date.now()}.png`;
+    const formData = new FormData();
+    formData.append('file', file, remoteFilename);
+    formData.append('uploaded_to', pageId);
+
+    const resp = await window.$http.post(window.baseUrl('/images/gallery'), formData);
+    return resp.data;
 }
 
 /**
@@ -43,36 +62,16 @@ function paste(editor, options, event) {
             }).catch(err => {
                 editor.dom.remove(id);
                 window.$events.emit('error', options.translations.imageUploadErrorText);
-                console.log(err);
+                console.error(err);
             });
         }, 10);
     }
 }
 
 /**
- * Upload an image file to the server
- * @param {File} file
- * @param {int} pageId
- */
-async function uploadImageFile(file, pageId) {
-    if (file === null || file.type.indexOf('image') !== 0) {
-        throw new Error('Not an image file');
-    }
-
-    const remoteFilename = file.name || `image-${Date.now()}.png`;
-    const formData = new FormData();
-    formData.append('file', file, remoteFilename);
-    formData.append('uploaded_to', pageId);
-
-    const resp = await window.$http.post(window.baseUrl('/images/gallery'), formData);
-    return resp.data;
-}
-
-/**
  * @param {Editor} editor
- * @param {WysiwygConfigOptions} options
  */
-function dragStart(editor, options) {
+function dragStart(editor) {
     const node = editor.selection.getNode();
 
     if (node.nodeName === 'IMG') {
@@ -96,7 +95,11 @@ function dragStart(editor, options) {
  */
 function drop(editor, options, event) {
     const {dom} = editor;
-    const rng = tinymce.dom.RangeUtils.getCaretRangeFromPoint(event.clientX, event.clientY, editor.getDoc());
+    const rng = window.tinymce.dom.RangeUtils.getCaretRangeFromPoint(
+        event.clientX,
+        event.clientY,
+        editor.getDoc(),
+    );
 
     // Template insertion
     const templateId = event.dataTransfer && event.dataTransfer.getData('bookstack/template');
@@ -151,7 +154,7 @@ function drop(editor, options, event) {
  * @param {WysiwygConfigOptions} options
  */
 export function listenForDragAndPaste(editor, options) {
-    editor.on('dragstart', () => dragStart(editor, options));
+    editor.on('dragstart', () => dragStart(editor));
     editor.on('drop', event => drop(editor, options, event));
     editor.on('paste', event => paste(editor, options, event));
 }

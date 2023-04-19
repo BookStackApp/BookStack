@@ -1,55 +1,100 @@
 /**
- * Perform a HTTP GET request.
- * Can easily pass query parameters as the second parameter.
- * @param {String} url
- * @param {Object} params
- * @returns {Promise<{headers: Headers, original: Response, data: (Object|String), redirected: boolean, statusText: string, url: string, status: number}>}
+ * @typedef FormattedResponse
+ * @property {Headers} headers
+ * @property {Response} original
+ * @property {Object|String} data
+ * @property {Boolean} redirected
+ * @property {Number} status
+ * @property {string} statusText
+ * @property {string} url
  */
-async function get(url, params = {}) {
-    return request(url, {
-        method: 'GET',
-        params,
-    });
+
+/**
+ * Get the content from a fetch response.
+ * Checks the content-type header to determine the format.
+ * @param {Response} response
+ * @returns {Promise<Object|String>}
+ */
+async function getResponseContent(response) {
+    if (response.status === 204) {
+        return null;
+    }
+
+    const responseContentType = response.headers.get('Content-Type') || '';
+    const subType = responseContentType.split(';')[0].split('/').pop();
+
+    if (subType === 'javascript' || subType === 'json') {
+        return response.json();
+    }
+
+    return response.text();
+}
+
+export class HttpError extends Error {
+
+    constructor(response, content) {
+        super(response.statusText);
+        this.data = content;
+        this.headers = response.headers;
+        this.redirected = response.redirected;
+        this.status = response.status;
+        this.statusText = response.statusText;
+        this.url = response.url;
+        this.original = response;
+    }
+
 }
 
 /**
- * Perform a HTTP POST request.
+ * Create a new HTTP request, setting the required CSRF information
+ * to communicate with the back-end. Parses & formats the response.
  * @param {String} url
- * @param {Object} data
- * @returns {Promise<{headers: Headers, original: Response, data: (Object|String), redirected: boolean, statusText: string, url: string, status: number}>}
+ * @param {Object} options
+ * @returns {Promise<FormattedResponse>}
  */
-async function post(url, data = null) {
-    return dataRequest('POST', url, data);
-}
+async function request(url, options = {}) {
+    let requestUrl = url;
 
-/**
- * Perform a HTTP PUT request.
- * @param {String} url
- * @param {Object} data
- * @returns {Promise<{headers: Headers, original: Response, data: (Object|String), redirected: boolean, statusText: string, url: string, status: number}>}
- */
-async function put(url, data = null) {
-    return dataRequest('PUT', url, data);
-}
+    if (!requestUrl.startsWith('http')) {
+        requestUrl = window.baseUrl(requestUrl);
+    }
 
-/**
- * Perform a HTTP PATCH request.
- * @param {String} url
- * @param {Object} data
- * @returns {Promise<{headers: Headers, original: Response, data: (Object|String), redirected: boolean, statusText: string, url: string, status: number}>}
- */
-async function patch(url, data = null) {
-    return dataRequest('PATCH', url, data);
-}
+    if (options.params) {
+        const urlObj = new URL(requestUrl);
+        for (const paramName of Object.keys(options.params)) {
+            const value = options.params[paramName];
+            if (typeof value !== 'undefined' && value !== null) {
+                urlObj.searchParams.set(paramName, value);
+            }
+        }
+        requestUrl = urlObj.toString();
+    }
 
-/**
- * Perform a HTTP DELETE request.
- * @param {String} url
- * @param {Object} data
- * @returns {Promise<{headers: Headers, original: Response, data: (Object|String), redirected: boolean, statusText: string, url: string, status: number}>}
- */
-async function performDelete(url, data = null) {
-    return dataRequest('DELETE', url, data);
+    const csrfToken = document.querySelector('meta[name=token]').getAttribute('content');
+    const requestOptions = {...options, credentials: 'same-origin'};
+    requestOptions.headers = {
+        ...requestOptions.headers || {},
+        baseURL: window.baseUrl(''),
+        'X-CSRF-TOKEN': csrfToken,
+    };
+
+    const response = await fetch(requestUrl, requestOptions);
+    const content = await getResponseContent(response);
+    const returnData = {
+        data: content,
+        headers: response.headers,
+        redirected: response.redirected,
+        status: response.status,
+        statusText: response.statusText,
+        url: response.url,
+        original: response,
+    };
+
+    if (!response.ok) {
+        throw new HttpError(response, content);
+    }
+
+    return returnData;
 }
 
 /**
@@ -58,7 +103,7 @@ async function performDelete(url, data = null) {
  * @param {String} method
  * @param {String} url
  * @param {Object} data
- * @returns {Promise<{headers: Headers, original: Response, data: (Object|String), redirected: boolean, statusText: string, url: string, status: number}>}
+ * @returns {Promise<FormattedResponse>}
  */
 async function dataRequest(method, url, data = null) {
     const options = {
@@ -87,96 +132,57 @@ async function dataRequest(method, url, data = null) {
 }
 
 /**
- * Create a new HTTP request, setting the required CSRF information
- * to communicate with the back-end. Parses & formats the response.
+ * Perform a HTTP GET request.
+ * Can easily pass query parameters as the second parameter.
  * @param {String} url
- * @param {Object} options
- * @returns {Promise<{headers: Headers, original: Response, data: (Object|String), redirected: boolean, statusText: string, url: string, status: number}>}
+ * @param {Object} params
+ * @returns {Promise<FormattedResponse>}
  */
-async function request(url, options = {}) {
-    if (!url.startsWith('http')) {
-        url = window.baseUrl(url);
-    }
-
-    if (options.params) {
-        const urlObj = new URL(url);
-        for (const paramName of Object.keys(options.params)) {
-            const value = options.params[paramName];
-            if (typeof value !== 'undefined' && value !== null) {
-                urlObj.searchParams.set(paramName, value);
-            }
-        }
-        url = urlObj.toString();
-    }
-
-    const csrfToken = document.querySelector('meta[name=token]').getAttribute('content');
-    options = {...options, credentials: 'same-origin'};
-    options.headers = {
-        ...options.headers || {},
-        baseURL: window.baseUrl(''),
-        'X-CSRF-TOKEN': csrfToken,
-    };
-
-    const response = await fetch(url, options);
-    const content = await getResponseContent(response);
-    const returnData = {
-        data: content,
-        headers: response.headers,
-        redirected: response.redirected,
-        status: response.status,
-        statusText: response.statusText,
-        url: response.url,
-        original: response,
-    };
-
-    if (!response.ok) {
-        throw new HttpError(response, content);
-    }
-
-    return returnData;
+export async function get(url, params = {}) {
+    return request(url, {
+        method: 'GET',
+        params,
+    });
 }
 
 /**
- * Get the content from a fetch response.
- * Checks the content-type header to determine the format.
- * @param {Response} response
- * @returns {Promise<Object|String>}
+ * Perform a HTTP POST request.
+ * @param {String} url
+ * @param {Object} data
+ * @returns {Promise<FormattedResponse>}
  */
-async function getResponseContent(response) {
-    if (response.status === 204) {
-        return null;
-    }
-
-    const responseContentType = response.headers.get('Content-Type') || '';
-    const subType = responseContentType.split(';')[0].split('/').pop();
-
-    if (subType === 'javascript' || subType === 'json') {
-        return await response.json();
-    }
-
-    return await response.text();
+export async function post(url, data = null) {
+    return dataRequest('POST', url, data);
 }
 
-class HttpError extends Error {
-
-    constructor(response, content) {
-        super(response.statusText);
-        this.data = content;
-        this.headers = response.headers;
-        this.redirected = response.redirected;
-        this.status = response.status;
-        this.statusText = response.statusText;
-        this.url = response.url;
-        this.original = response;
-    }
-
+/**
+ * Perform a HTTP PUT request.
+ * @param {String} url
+ * @param {Object} data
+ * @returns {Promise<FormattedResponse>}
+ */
+export async function put(url, data = null) {
+    return dataRequest('PUT', url, data);
 }
 
-export default {
-    get,
-    post,
-    put,
-    patch,
-    delete: performDelete,
-    HttpError,
-};
+/**
+ * Perform a HTTP PATCH request.
+ * @param {String} url
+ * @param {Object} data
+ * @returns {Promise<FormattedResponse>}
+ */
+export async function patch(url, data = null) {
+    return dataRequest('PATCH', url, data);
+}
+
+/**
+ * Perform a HTTP DELETE request.
+ * @param {String} url
+ * @param {Object} data
+ * @returns {Promise<FormattedResponse>}
+ */
+async function performDelete(url, data = null) {
+    return dataRequest('DELETE', url, data);
+}
+
+export {performDelete as delete};

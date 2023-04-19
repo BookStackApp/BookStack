@@ -35,7 +35,9 @@ export function register(editor) {
         const callout = selectedNode ? selectedNode.closest('.callout') : null;
 
         const formats = ['info', 'success', 'warning', 'danger'];
-        const currentFormatIndex = formats.findIndex(format => callout && callout.classList.contains(format));
+        const currentFormatIndex = formats.findIndex(format => {
+            return callout && callout.classList.contains(format);
+        });
         const newFormatIndex = (currentFormatIndex + 1) % formats.length;
         const newFormat = formats[newFormatIndex];
 

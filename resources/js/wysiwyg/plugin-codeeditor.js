@@ -116,7 +116,9 @@ function defineCodeBlockCustomElement(editor) {
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
             const renderEditor = Code => {
                 this.editor = Code.wysiwygView(container, this.shadowRoot, content, this.getLanguage());
-                setTimeout(() => this.style.height = null, 12);
+                setTimeout(() => {
+                    this.style.height = null;
+                }, 12);
             };
 
             window.importVersioned('code').then(Code => {
@@ -143,9 +145,8 @@ function defineCodeBlockCustomElement(editor) {
 
 /**
  * @param {Editor} editor
- * @param {String} url
  */
-function register(editor, url) {
+function register(editor) {
     editor.ui.registry.addIcon('codeblock', '<svg width="24" height="24"><path d="M4 3h16c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1V4c0-.6.4-1 1-1Zm1 2v14h14V5Z"/><path d="M11.103 15.423c.277.277.277.738 0 .922a.692.692 0 0 1-1.106 0l-4.057-3.78a.738.738 0 0 1 0-1.107l4.057-3.872c.276-.277.83-.277 1.106 0a.724.724 0 0 1 0 1.014L7.6 12.012ZM12.897 8.577c-.245-.312-.2-.675.08-.955.28-.281.727-.27 1.027.033l4.057 3.78a.738.738 0 0 1 0 1.107l-4.057 3.872c-.277.277-.83.277-1.107 0a.724.724 0 0 1 0-1.014l3.504-3.412z"/></svg>');
 
     editor.ui.registry.addButton('codeeditor', {
@@ -183,7 +184,7 @@ function register(editor, url) {
         }
     });
 
-    editor.on('dblclick', event => {
+    editor.on('dblclick', () => {
         const selectedNode = editor.selection.getNode();
         if (elemIsCodeBlock(selectedNode)) {
             showPopupForCodeBlock(editor, selectedNode);
@@ -193,7 +194,7 @@ function register(editor, url) {
     editor.on('PreInit', () => {
         editor.parser.addNodeFilter('pre', elms => {
             for (const el of elms) {
-                const wrapper = tinymce.html.Node.create('code-block', {
+                const wrapper = window.tinymce.html.Node.create('code-block', {
                     contenteditable: 'false',
                 });
 
@@ -234,9 +235,8 @@ function register(editor, url) {
 }
 
 /**
- * @param {WysiwygConfigOptions} options
  * @return {register}
  */
-export function getPlugin(options) {
+export function getPlugin() {
     return register;
 }

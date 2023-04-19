@@ -1,8 +1,7 @@
 /**
  * @param {Editor} editor
- * @param {String} url
  */
-function register(editor, url) {
+function register(editor) {
     // Custom Image picker button
     editor.ui.registry.addButton('imagemanager-insert', {
         title: 'Insert image',
@@ -23,9 +22,8 @@ function register(editor, url) {
 }
 
 /**
- * @param {WysiwygConfigOptions} options
  * @return {register}
  */
-export function getPlugin(options) {
+export function getPlugin() {
     return register;
 }
