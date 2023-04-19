@@ -25,7 +25,7 @@ export class AutoSuggest extends Component {
     setupListeners() {
         const navHandler = new KeyboardNavigationHandler(
             this.list,
-            event => {
+            () => {
                 this.input.focus();
                 setTimeout(() => this.hideSuggestions(), 1);
             },
@@ -104,7 +104,8 @@ export class AutoSuggest extends Component {
      */
     displaySuggestions(suggestions) {
         if (suggestions.length === 0) {
-            return this.hideSuggestions();
+            this.hideSuggestions();
+            return;
         }
 
         // This used to use <button>s but was changed to div elements since Safari would not focus on buttons

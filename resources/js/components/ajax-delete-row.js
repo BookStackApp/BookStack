@@ -20,7 +20,7 @@ export class AjaxDeleteRow extends Component {
                 window.$events.emit('success', resp.data.message);
             }
             this.row.remove();
-        }).catch(err => {
+        }).catch(() => {
             this.row.style.opacity = null;
             this.row.style.pointerEvents = null;
         });

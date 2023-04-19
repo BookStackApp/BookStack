@@ -5,13 +5,13 @@ import {Component} from './component';
  * @type {Object<string, function(HTMLElement, HTMLElement, HTMLElement)>}
  */
 const itemActions = {
-    move_up(item, shelfBooksList, allBooksList) {
+    move_up(item) {
         const list = item.parentNode;
         const index = Array.from(list.children).indexOf(item);
         const newIndex = Math.max(index - 1, 0);
         list.insertBefore(item, list.children[newIndex] || null);
     },
-    move_down(item, shelfBooksList, allBooksList) {
+    move_down(item) {
         const list = item.parentNode;
         const index = Array.from(list.children).indexOf(item);
         const newIndex = Math.min(index + 2, list.children.length);
@@ -20,7 +20,7 @@ const itemActions = {
     remove(item, shelfBooksList, allBooksList) {
         allBooksList.appendChild(item);
     },
-    add(item, shelfBooksList, allBooksList) {
+    add(item, shelfBooksList) {
         shelfBooksList.appendChild(item);
     },
 };
@@ -62,7 +62,7 @@ export class ShelfSort extends Component {
             }
         });
 
-        this.bookSearchInput.addEventListener('input', event => {
+        this.bookSearchInput.addEventListener('input', () => {
             this.filterBooksByName(this.bookSearchInput.value);
         });
 
@@ -121,10 +121,10 @@ export class ShelfSort extends Component {
             const bProp = bookB.dataset[sortProperty].toLowerCase();
 
             if (reverse) {
-                return aProp < bProp ? (aProp === bProp ? 0 : 1) : -1;
+                return bProp.localeCompare(aProp);
             }
 
-            return aProp < bProp ? (aProp === bProp ? 0 : -1) : 1;
+            return aProp.localeCompare(bProp);
         });
 
         for (const book of books) {

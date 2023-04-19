@@ -6,6 +6,53 @@
 const animateStylesCleanupMap = new WeakMap();
 
 /**
+ * Animate the css styles of an element using FLIP animation techniques.
+ * Styles must be an object where the keys are style properties, camelcase, and the values
+ * are an array of two items in the format [initialValue, finalValue]
+ * @param {Element} element
+ * @param {Object} styles
+ * @param {Number} animTime
+ * @param {Function} onComplete
+ */
+function animateStyles(element, styles, animTime = 400, onComplete = null) {
+    const styleNames = Object.keys(styles);
+    for (const style of styleNames) {
+        element.style[style] = styles[style][0];
+    }
+
+    const cleanup = () => {
+        for (const style of styleNames) {
+            element.style[style] = null;
+        }
+        element.style.transition = null;
+        element.removeEventListener('transitionend', cleanup);
+        animateStylesCleanupMap.delete(element);
+        if (onComplete) onComplete();
+    };
+
+    setTimeout(() => {
+        element.style.transition = `all ease-in-out ${animTime}ms`;
+        for (const style of styleNames) {
+            element.style[style] = styles[style][1];
+        }
+
+        element.addEventListener('transitionend', cleanup);
+        animateStylesCleanupMap.set(element, cleanup);
+    }, 15);
+}
+
+/**
+ * Run the active cleanup action for the given element.
+ * @param {Element} element
+ */
+function cleanupExistingElementAnimation(element) {
+    if (animateStylesCleanupMap.has(element)) {
+        const oldCleanup = animateStylesCleanupMap.get(element);
+        oldCleanup();
+    }
+}
+
+/**
  * Fade in the given element.
  * @param {Element} element
  * @param {Number} animTime
@@ -112,51 +159,4 @@ export function transitionHeight(element, animTime = 400) {
 
         animateStyles(element, animStyles, animTime);
     };
-}
-
-/**
- * Animate the css styles of an element using FLIP animation techniques.
- * Styles must be an object where the keys are style properties, camelcase, and the values
- * are an array of two items in the format [initialValue, finalValue]
- * @param {Element} element
- * @param {Object} styles
- * @param {Number} animTime
- * @param {Function} onComplete
- */
-function animateStyles(element, styles, animTime = 400, onComplete = null) {
-    const styleNames = Object.keys(styles);
-    for (const style of styleNames) {
-        element.style[style] = styles[style][0];
-    }
-
-    const cleanup = () => {
-        for (const style of styleNames) {
-            element.style[style] = null;
-        }
-        element.style.transition = null;
-        element.removeEventListener('transitionend', cleanup);
-        animateStylesCleanupMap.delete(element);
-        if (onComplete) onComplete();
-    };
-
-    setTimeout(() => {
-        element.style.transition = `all ease-in-out ${animTime}ms`;
-        for (const style of styleNames) {
-            element.style[style] = styles[style][1];
-        }
-
-        element.addEventListener('transitionend', cleanup);
-        animateStylesCleanupMap.set(element, cleanup);
-    }, 15);
-}
-
-/**
- * Run the active cleanup action for the given element.
- * @param {Element} element
- */
-function cleanupExistingElementAnimation(element) {
-    if (animateStylesCleanupMap.has(element)) {
-        const oldCleanup = animateStylesCleanupMap.get(element);
-        oldCleanup();
-    }
 }

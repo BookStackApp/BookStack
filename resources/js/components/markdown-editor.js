@@ -82,7 +82,7 @@ export class MarkdownEditor extends Component {
     }
 
     handleDividerDrag() {
-        this.divider.addEventListener('pointerdown', event => {
+        this.divider.addEventListener('pointerdown', () => {
             const wrapRect = this.elem.getBoundingClientRect();
             const moveListener = event => {
                 const xRel = event.pageX - wrapRect.left;
@@ -90,7 +90,7 @@ export class MarkdownEditor extends Component {
                 this.displayWrap.style.flexBasis = `${100 - xPct}%`;
                 this.editor.settings.set('editorWidth', xPct);
             };
-            const upListener = event => {
+            const upListener = () => {
                 window.removeEventListener('pointermove', moveListener);
                 window.removeEventListener('pointerup', upListener);
                 this.display.style.pointerEvents = null;

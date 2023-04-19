@@ -100,7 +100,7 @@ export class PageComments extends Component {
     deleteComment(commentElem) {
         const id = commentElem.getAttribute('comment');
         this.showLoading(commentElem.querySelector('[comment-content]'));
-        window.$http.delete(`/comment/${id}`).then(resp => {
+        window.$http.delete(`/comment/${id}`).then(() => {
             commentElem.parentNode.removeChild(commentElem);
             window.$events.success(this.deletedText);
             this.updateCount();

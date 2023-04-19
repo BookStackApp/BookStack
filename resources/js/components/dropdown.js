@@ -41,7 +41,11 @@ export class Dropdown extends Component {
             this.menu.style.position = 'fixed';
             this.menu.style.width = `${menuOriginalRect.width}px`;
             this.menu.style.left = `${menuOriginalRect.left}px`;
-            heightOffset = dropUpwards ? (window.innerHeight - menuOriginalRect.top - toggleHeight / 2) : menuOriginalRect.top;
+            if (dropUpwards) {
+                heightOffset = (window.innerHeight - menuOriginalRect.top - toggleHeight / 2);
+            } else {
+                heightOffset = menuOriginalRect.top;
+            }
         }
 
         // Adjust menu to display upwards if near the bottom of the screen
@@ -55,8 +59,8 @@ export class Dropdown extends Component {
 
         // Set listener to hide on mouse leave or window click
         this.menu.addEventListener('mouseleave', this.hide);
-        window.addEventListener('click', event => {
-            if (!this.menu.contains(event.target)) {
+        window.addEventListener('click', clickEvent => {
+            if (!this.menu.contains(clickEvent.target)) {
                 this.hide();
             }
         });

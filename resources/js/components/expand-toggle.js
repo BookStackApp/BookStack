@@ -3,7 +3,7 @@ import {Component} from './component';
 
 export class ExpandToggle extends Component {
 
-    setup(elem) {
+    setup() {
         this.targetSelector = this.$opts.targetSelector;
         this.isOpen = this.$opts.isOpen === 'true';
         this.updateEndpoint = this.$opts.updateEndpoint;
@@ -25,7 +25,8 @@ export class ExpandToggle extends Component {
 
         const matchingElems = document.querySelectorAll(this.targetSelector);
         for (const match of matchingElems) {
-            this.isOpen ? this.close(match) : this.open(match);
+            const action = this.isOpen ? this.close : this.open;
+            action(match);
         }
 
         this.isOpen = !this.isOpen;

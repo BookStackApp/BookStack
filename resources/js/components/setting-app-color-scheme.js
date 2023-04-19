@@ -59,7 +59,6 @@ export class SettingAppColorScheme extends Component {
         const rgb = this.hexToRgb(hexVal);
         const rgbLightVal = `rgba(${[rgb.r, rgb.g, rgb.b, '0.15'].join(',')})`;
 
-        console.log(input.name, lightName, hexVal, rgbLightVal);
         const lightColorInput = this.container.querySelector(`input[name="${lightName}"][type="hidden"]`);
         lightColorInput.value = rgbLightVal;
     }

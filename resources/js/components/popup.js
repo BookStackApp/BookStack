@@ -26,11 +26,11 @@ export class Popup extends Component {
 
         this.container.addEventListener('click', event => {
             if (event.target === this.container && lastMouseDownTarget === this.container) {
-                return this.hide();
+                this.hide();
             }
         });
 
-        onSelect(this.hideButtons, e => this.hide());
+        onSelect(this.hideButtons, () => this.hide());
     }
 
     hide(onComplete = null) {

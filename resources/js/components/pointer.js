@@ -21,7 +21,7 @@ export class Pointer extends Component {
 
     setupListeners() {
         // Copy on copy button click
-        this.button.addEventListener('click', event => {
+        this.button.addEventListener('click', () => {
             copyTextToClipboard(this.input.value);
         });
 
@@ -46,7 +46,7 @@ export class Pointer extends Component {
         });
 
         // Hide pointer when clicking away
-        DOM.onEvents(document.body, ['click', 'focus'], event => {
+        DOM.onEvents(document.body, ['click', 'focus'], () => {
             if (!this.showing || this.isSelection) return;
             this.hidePointer();
         });

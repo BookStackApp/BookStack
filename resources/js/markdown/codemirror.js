@@ -21,7 +21,9 @@ export async function init(editor) {
 
     const onScrollDebounced = debounce(editor.actions.syncDisplayPosition.bind(editor.actions), 100, false);
     let syncActive = editor.settings.get('scrollSync');
-    editor.settings.onChange('scrollSync', val => syncActive = val);
+    editor.settings.onChange('scrollSync', val => {
+        syncActive = val;
+    });
 
     const domEventHandlers = {
         // Handle scroll to sync display view

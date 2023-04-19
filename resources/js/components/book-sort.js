@@ -45,19 +45,19 @@ const sortOperations = {
  */
 const moveActions = {
     up: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return !(elem.previousElementSibling === null && !parent);
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             const newSibling = elem.previousElementSibling || parent;
             newSibling.insertAdjacentElement('beforebegin', elem);
         },
     },
     down: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return !(elem.nextElementSibling === null && !parent);
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             const newSibling = elem.nextElementSibling || parent;
             newSibling.insertAdjacentElement('afterend', elem);
         },
@@ -81,10 +81,10 @@ const moveActions = {
         },
     },
     next_chapter: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return elem.dataset.type === 'page' && this.getNextChapter(elem, parent);
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             const nextChapter = this.getNextChapter(elem, parent);
             nextChapter.querySelector('ul').prepend(elem);
         },
@@ -92,14 +92,14 @@ const moveActions = {
             const topLevel = (parent || elem);
             const topItems = Array.from(topLevel.parentElement.children);
             const index = topItems.indexOf(topLevel);
-            return topItems.slice(index + 1).find(elem => elem.dataset.type === 'chapter');
+            return topItems.slice(index + 1).find(item => item.dataset.type === 'chapter');
         },
     },
     prev_chapter: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return elem.dataset.type === 'page' && this.getPrevChapter(elem, parent);
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             const prevChapter = this.getPrevChapter(elem, parent);
             prevChapter.querySelector('ul').append(elem);
         },
@@ -107,11 +107,11 @@ const moveActions = {
             const topLevel = (parent || elem);
             const topItems = Array.from(topLevel.parentElement.children);
             const index = topItems.indexOf(topLevel);
-            return topItems.slice(0, index).reverse().find(elem => elem.dataset.type === 'chapter');
+            return topItems.slice(0, index).reverse().find(item => item.dataset.type === 'chapter');
         },
     },
     book_end: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return parent || (parent === null && elem.nextElementSibling);
         },
         run(elem, parent, book) {
@@ -119,7 +119,7 @@ const moveActions = {
         },
     },
     book_start: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return parent || (parent === null && elem.previousElementSibling);
         },
         run(elem, parent, book) {
@@ -127,18 +127,18 @@ const moveActions = {
         },
     },
     before_chapter: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return parent;
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             parent.insertAdjacentElement('beforebegin', elem);
         },
     },
     after_chapter: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return parent;
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             parent.insertAdjacentElement('afterend', elem);
         },
     },
@@ -196,7 +196,7 @@ export class BookSort extends Component {
             reverse = (lastSort === sort) ? !reverse : false;
             let sortFunction = sortOperations[sort];
             if (reverse && reversibleTypes.includes(sort)) {
-                sortFunction = function(a, b) {
+                sortFunction = function reverseSortOperation(a, b) {
                     return 0 - sortOperations[sort](a, b);
                 };
             }
@@ -260,7 +260,7 @@ export class BookSort extends Component {
                 animation: 150,
                 fallbackOnBody: true,
                 swapThreshold: 0.65,
-                onSort: event => {
+                onSort: () => {
                     this.ensureNoNestedChapters();
                     this.updateMapInput();
                     this.updateMoveActionStateForAll();

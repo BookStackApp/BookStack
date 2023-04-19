@@ -36,10 +36,10 @@ export class TemplateManager extends Component {
         });
 
         // Search submit button press
-        this.searchButton.addEventListener('click', event => this.performSearch());
+        this.searchButton.addEventListener('click', () => this.performSearch());
 
         // Search cancel button press
-        this.searchCancel.addEventListener('click', event => {
+        this.searchCancel.addEventListener('click', () => {
             this.searchInput.value = '';
             this.performSearch();
         });

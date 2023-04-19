@@ -33,7 +33,8 @@ export class Shortcuts extends Component {
 
         window.addEventListener('keydown', event => {
             if (event.key === '?') {
-                this.hintsShowing ? this.hideHints() : this.showHints();
+                const action = this.hintsShowing ? this.hideHints : this.showHints;
+                action();
             }
         });
     }

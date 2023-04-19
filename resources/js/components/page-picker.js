@@ -1,5 +1,9 @@
 import {Component} from './component';
 
+function toggleElem(elem, show) {
+    elem.style.display = show ? null : 'none';
+}
+
 export class PagePicker extends Component {
 
     setup() {
@@ -18,7 +22,7 @@ export class PagePicker extends Component {
         this.selectButton.addEventListener('click', this.showPopup.bind(this));
         this.display.parentElement.addEventListener('click', this.showPopup.bind(this));
 
-        this.resetButton.addEventListener('click', event => {
+        this.resetButton.addEventListener('click', () => {
             this.setValue('', '');
         });
     }
@@ -54,8 +58,4 @@ export class PagePicker extends Component {
         return Number(this.value);
     }
 
-}
-
-function toggleElem(elem, show) {
-    elem.style.display = show ? null : 'none';
 }

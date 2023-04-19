@@ -25,7 +25,7 @@ export class ConfirmDialog extends Component {
             this.sendResult(false);
         });
 
-        return new Promise((res, rej) => {
+        return new Promise(res => {
             this.res = res;
         });
     }
