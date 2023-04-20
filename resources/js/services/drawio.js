@@ -1,3 +1,5 @@
+// Docs: https://www.diagrams.net/doc/faq/embed-mode
+
 let iFrame = null;
 let lastApprovedOrigin;
 let onInit; let
