@@ -1,7 +1,7 @@
 # JavaScript Public Events
 
-There are a range of available events that are emitted as part of a public & supported API for accessing or extending JavaScript libraries and components used in the system.
-These are emitted via standard DOM events so can be listened to using standard APIs like so:
+There are a range of available events emitted as part of a public & [supported](#support) API for accessing or extending JavaScript libraries and components used in the system.
+These are emitted via standard DOM events so can be consumed using standard DOM APIs like so:
 
 ```javascript
 window.addEventListener('event-name', event => {
@@ -15,8 +15,8 @@ For most use-cases you can probably just listen on the `window` as shown above.
 ## Support
 
 This event system, and the events emitted, are considered semi-supported.
-Breaking changes of the event API, event names or event properties, will be documented in update notes but may change.
-Upon that, the detail provided within the events, and the libraries made accessible, are not considered supported nor stable, and changes to these won't be clearly documented within changelogs.
+Breaking changes of the event API, event names, or event properties, are possible but will be documented in update notes.
+The detail provided within the events, and the libraries made accessible, are not considered supported nor stable, and changes to these won't be clearly documented changelogs.
 
 ## Event Naming Scheme
 
@@ -30,9 +30,9 @@ editor-tinymce::setup
 library-cm6::configure-theme
 ```
 
-If the event is generic in use but specific to a library, the name `<context>` will start with `library-` followed by the library name. Otherwise `<context>` may reflect the UI context/component.
+If the event is generic in use but specific to a library, the `<context>` will start with `library-` followed by the library name. Otherwise `<context>` may reflect the UI context/component.
 
-The `<action/lifecycle>` reflects the lifecycle stage of the context, or a specific action to perform if the event is very specific to a certain use-case.
+The `<action/lifecycle>` reflects the lifecycle stage of the context, or a specific action to perform if the event is specific to a certain use-case.
 
 ## Event Listing
 
@@ -61,7 +61,7 @@ This event is called when the markdown editor loads, post configuration but befo
 #### Event Data
 
 - `markdownIt` - A references to the [MarkdownIt](https://markdown-it.github.io/markdown-it/#MarkdownIt) instance used to render markdown to HTML (Just for the preview).
-- `displayEl` - The DOM Element that wraps the HTML preview display.
+- `displayEl` - The IFrame Element that wraps the HTML preview display.
 - `cmEditorView` - The CodeMirror [EditorView](https://codemirror.net/docs/ref/#view.EditorView) instance used for the markdown input editor.
 
 ##### Example
@@ -70,14 +70,13 @@ This event is called when the markdown editor loads, post configuration but befo
 // Set all text in the display to be red by default.
 window.addEventListener('editor-markdown::setup', event => {
     const display = event.detail.displayEl;
-    display.style.color = 'red';
+    display.contentDocument.body.style.color = 'red';
 });
 ```
 
 ### `editor-drawio::configure`
 
-This event is called as the embedded diagrams.net drawing editor loads, as a means to allow configuration of the diagrams.net interface.
-
+This event is called as the embedded diagrams.net drawing editor loads, to allow configuration of the diagrams.net interface.
 See [this diagrams.net page](https://www.diagrams.net/doc/faq/configure-diagram-editor) for details on the available options for the configure event.
 
 If using a custom diagrams.net instance, via the `DRAWIO` option, you will need to ensure  your DRAWIO option URL has the `configure=1` query parameter.
@@ -93,7 +92,7 @@ If using a custom diagrams.net instance, via the `DRAWIO` option, you will need 
 // Set only the "general" and "android" libraries to show by default
 window.addEventListener('editor-drawio::configure', event => {
     const config = event.detail.config;
-    config.defaultLibraries = "general;android";
+    config.enabledLibraries = ["general", "android"];
 });
 ```
 
@@ -117,7 +116,7 @@ window.addEventListener('editor-tinymce::pre-init', event => {
 
 ### `editor-tinymce::setup`
 
-This event is called during the `setup` lifecycle stage of the TinyMCE editor used as the BookStack WYSIWYG editor. This is post configuration, but before the editor is typically visible. 
+This event is called during the `setup` lifecycle stage of the TinyMCE editor used as the BookStack WYSIWYG editor. This is after configuration, but before the editor is fully loaded and ready to use. 
 
 ##### Event Data
 
