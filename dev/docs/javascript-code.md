@@ -115,6 +115,7 @@ There are various global helper libraries in BookStack which can be accessed via
 
 ```js
 // HTTP service
+// Relative URLs will be resolved against the instance BASE_URL
 window.$http.get(url, params);
 window.$http.post(url, data);
 window.$http.put(url, data);
@@ -154,3 +155,9 @@ window.$components.get(name);
 // created on the given element.
 window.$components.firstOnElement(element, name);
 ```
+
+## Public Events
+
+There are a range of available events that are emitted as part of a public & supported API for accessing or extending JavaScript libraries and components used in the system.
+
+Details on these events can be found in the [JavaScript Public Events file](javascript-public-events.md).
