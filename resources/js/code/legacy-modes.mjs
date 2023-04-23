@@ -1,6 +1,7 @@
 export {
     c, cpp, csharp, java, kotlin, scala, dart,
 } from '@codemirror/legacy-modes/mode/clike';
+export {clojure} from '@codemirror/legacy-modes/mode/clojure';
 export {diff} from '@codemirror/legacy-modes/mode/diff';
 export {fortran} from '@codemirror/legacy-modes/mode/fortran';
 export {go} from '@codemirror/legacy-modes/mode/go';
