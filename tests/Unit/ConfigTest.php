@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Tests\TestCase;
 
 /**
@@ -96,9 +98,28 @@ class ConfigTest extends TestCase
         $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'a4', 'snappy.pdf.options.page-size', 'A4');
     }
 
-    public function test_sendmail_command_is_configurage()
+    public function test_sendmail_command_is_configurable()
     {
         $this->checkEnvConfigResult('MAIL_SENDMAIL_COMMAND', '/var/sendmail -o', 'mail.mailers.sendmail.path', '/var/sendmail -o');
+    }
+
+    public function test_mail_disable_ssl_verification_alters_mailer()
+    {
+        $getStreamOptions = function (): array {
+            /** @var EsmtpTransport $transport */
+            $transport = Mail::mailer('smtp')->getSymfonyTransport();
+            return $transport->getStream()->getStreamOptions();
+        };
+
+        $this->assertEmpty($getStreamOptions());
+
+
+        $this->runWithEnv('MAIL_VERIFY_SSL', 'false', function () use ($getStreamOptions) {
+            $options = $getStreamOptions();
+            $this->assertArrayHasKey('ssl', $options);
+            $this->assertFalse($options['ssl']['verify_peer']);
+            $this->assertFalse($options['ssl']['verify_peer_name']);
+        });
     }
 
     /**
