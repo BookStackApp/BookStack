@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'متعلق به :user',
-    'meta_reference_page_count' => 'ارجاع شده در :count صفخه|ارجاع شده در :count صفخه',
+    'meta_reference_page_count' => 'در 1 صفحه به آن ارجاع داده شده|در :count صفحه به آن ارجاع داده شده',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'شما مجوزهای لازم برای انتخاب این مورد را ندارید',
     'images' => 'عکس‌ها',
