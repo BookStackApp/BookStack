@@ -46,6 +46,27 @@ export class HttpError extends Error {
 }
 
 /**
+ * @param {String} method
+ * @param {String} url
+ * @param {Object} events
+ * @return {XMLHttpRequest}
+ */
+export function createXMLHttpRequest(method, url, events = {}) {
+    const csrfToken = document.querySelector('meta[name=token]').getAttribute('content');
+    const req = new XMLHttpRequest();
+
+    for (const [eventName, callback] of Object.entries(events)) {
+        req.addEventListener(eventName, callback.bind(req));
+    }
+
+    req.open(method, url);
+    req.withCredentials = true;
+    req.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+
+    return req;
+}
+
+/**
  * Create a new HTTP request, setting the required CSRF information
  * to communicate with the back-end. Parses & formats the response.
  * @param {String} url
