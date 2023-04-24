@@ -1,16 +1,22 @@
 import {Component} from './component';
 import {Clipboard} from '../services/clipboard';
+import {
+    elem, getLoading, removeLoading,
+} from '../services/dom';
 
 export class Dropzone extends Component {
 
     setup() {
         this.container = this.$el;
+        this.statusArea = this.$refs.statusArea;
+
         this.url = this.$opts.url;
         this.successMessage = this.$opts.successMessage;
         this.removeMessage = this.$opts.removeMessage;
         this.uploadLimit = Number(this.$opts.uploadLimit); // TODO - Use
         this.uploadLimitMessage = this.$opts.uploadLimitMessage; // TODO - Use
         this.timeoutMessage = this.$opts.timeoutMessage; // TODO - Use
+        this.zoneText = this.$opts.zoneText;
         // window.uploadTimeout // TODO - Use
         // TODO - Click-to-upload buttons/areas
         // TODO - Drop zone highlighting of existing element
@@ -20,9 +26,15 @@ export class Dropzone extends Component {
     }
 
     setupListeners() {
+        let depth = 0;
+
         this.container.addEventListener('dragenter', event => {
-            this.container.style.border = '1px dotted tomato';
             event.preventDefault();
+            depth += 1;
+
+            if (depth === 1) {
+                this.showOverlay();
+            }
         });
 
         this.container.addEventListener('dragover', event => {
@@ -30,7 +42,8 @@ export class Dropzone extends Component {
         });
 
         const reset = () => {
-            this.container.style.border = null;
+            this.hideOverlay();
+            depth = 0;
         };
 
         this.container.addEventListener('dragend', event => {
@@ -38,17 +51,36 @@ export class Dropzone extends Component {
         });
 
         this.container.addEventListener('dragleave', event => {
-            reset();
+            depth -= 1;
+            if (depth === 0) {
+                reset();
+            }
         });
 
         this.container.addEventListener('drop', event => {
             event.preventDefault();
+            reset();
             const clipboard = new Clipboard(event.dataTransfer);
             const files = clipboard.getFiles();
             for (const file of files) {
                 this.createUploadFromFile(file);
             }
         });
+    }
+
+    showOverlay() {
+        const overlay = this.container.querySelector('.dropzone-overlay');
+        if (!overlay) {
+            const zoneElem = elem('div', {class: 'dropzone-overlay'}, [this.zoneText]);
+            this.container.append(zoneElem);
+        }
+    }
+
+    hideOverlay() {
+        const overlay = this.container.querySelector('.dropzone-overlay');
+        if (overlay) {
+            overlay.remove();
+        }
     }
 
     /**
@@ -70,10 +102,12 @@ export class Dropzone extends Component {
             markError(message) {
                 status.setAttribute('data-status', 'error');
                 status.textContent = message;
+                removeLoading(dom);
             },
             markSuccess(message) {
                 status.setAttribute('data-status', 'success');
                 status.textContent = message;
+                removeLoading(dom);
             },
         };
 
@@ -119,26 +153,27 @@ export class Dropzone extends Component {
      * @return {{image: Element, dom: Element, progress: Element, label: Element, status: Element}}
      */
     createDomForFile(file) {
-        const dom = document.createElement('div');
-        const label = document.createElement('div');
-        const status = document.createElement('div');
-        const progress = document.createElement('div');
-        const image = document.createElement('img');
+        const image = elem('img', {src: ''});
+        const status = elem('div', {class: 'dropzone-file-item-status'}, []);
+        const progress = elem('div', {class: 'dropzone-file-item-progress'});
+        const imageWrap = elem('div', {class: 'dropzone-file-item-image-wrap'}, [image]);
 
-        dom.classList.add('dropzone-file-item');
-        status.classList.add('dropzone-file-item-status');
-        progress.classList.add('dropzone-file-item-progress');
-
-        image.src = ''; // TODO - file icon
-        label.innerText = file.name;
+        const dom = elem('div', {class: 'dropzone-file-item'}, [
+            imageWrap,
+            elem('div', {class: 'dropzone-file-item-text-wrap'}, [
+                elem('div', {class: 'dropzone-file-item-label'}, [file.name]),
+                getLoading(),
+                status,
+            ]),
+            progress,
+        ]);
 
         if (file.type.startsWith('image/')) {
             image.src = URL.createObjectURL(file);
         }
 
-        dom.append(image, label, progress, status);
         return {
-            dom, label, image, progress, status,
+            dom, progress, status,
         };
     }
 

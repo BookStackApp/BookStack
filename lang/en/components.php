@@ -18,6 +18,7 @@ return [
     'image_delete_confirm_text' => 'Are you sure you want to delete this image?',
     'image_select_image' => 'Select Image',
     'image_dropzone' => 'Drop images or click here to upload',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'Images Deleted',
     'image_preview' => 'Image Preview',
     'image_upload_success' => 'Image uploaded successfully',
