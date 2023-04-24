@@ -301,13 +301,13 @@ class PageContent
             $content = HtmlContentFilter::removeScripts($content);
         }
 
-        if ($blankIncludes) {
+        if ($blankIncludes) {
             $content = $this->blankPageIncludes($content);
             } else {
-                for ($includeDepth = 0; $includeDepth <= 3; $includeDepth++){
-                    $content = $this->parsePageIncludes($content);
+                for ($includeDepth = 0; $includeDepth <= 3; $includeDepth++) {
+                    $content = $this->parsePageIncludes($content);
                 }
-            }
+        }
 
         return $content;
     }
