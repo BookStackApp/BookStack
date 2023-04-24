@@ -49,7 +49,7 @@ return [
     'permissions_owner' => 'مالک',
     'permissions_role_everyone_else' => 'سایر کاربران',
     'permissions_role_everyone_else_desc' => 'مجوزها را برای نقش‌هایی تنظیم کنید که به طور خاص لغو نشده‌اند.',
-    'permissions_role_override' => 'لغو مجوز برای نقش',
+    'permissions_role_override' => 'تنظیم مجدد مجوز برای نقش',
     'permissions_inherit_defaults' => 'ارث بردن از مجوزهای پیش‌فرض',
 
     // Search
