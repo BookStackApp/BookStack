@@ -116,6 +116,7 @@
   z-index: 999;
   display: flex;
   flex-direction: column;
+  position: relative;
   &.small {
     margin: 2% auto;
     width: 800px;
@@ -200,6 +201,117 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager-body {
   min-height: 70vh;
+}
+
+.dropzone-overlay {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  width: 98%;
+  height: 98%;
+  left: 1%;
+  top: 1%;
+  background-color: var(--color-primary);
+  border: 4px dashed rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: #FFF;
+  opacity: .8;
+  z-index: 9;
+  box-sizing: border-box;
+  pointer-events: none;
+  animation: dzAnimIn 240ms ease-in-out;
+}
+
+@keyframes dzAnimIn {
+  0% {
+    opacity: 0;
+    transform: scale(.7);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: .8;
+  }
+}
+
+@keyframes dzFileItemIn {
+  0% {
+    opacity: .5;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropzone-file-item {
+  width: 260px;
+  height: 80px;
+  position: relative;
+  display: flex;
+  margin: 1rem;
+  flex-direction: row;
+  background-color: #FFF;
+  box-shadow: $bs-large;
+  border-radius: 4px;
+  overflow: hidden;
+  padding-bottom: 3px;
+  animation: dzFileItemIn ease-in-out 240ms;
+}
+.dropzone-file-item .loading-container {
+  text-align: start !important;
+  margin: 0;
+}
+.dropzone-file-item-image-wrap {
+  width: 80px;
+  position: relative;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+  }
+}
+.dropzone-file-item-text-wrap {
+  flex: 1;
+  display: block;
+  padding: 1rem;
+  overflow: auto;
+}
+.dropzone-file-item-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 0;
+  height: 3px;
+  background-color: var(--color-primary);
+  transition: width ease-in-out 240ms;
+}
+.dropzone-file-item-label,
+.dropzone-file-item-status {
+  align-items: center;
+  font-size: .9rem;
+  font-weight: 700;
+}
+.dropzone-file-item-status[data-status] {
+  display: flex;
+  font-size: .8rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.dropzone-file-item-status[data-status="success"] {
+  color: $positive;
+}
+.dropzone-file-item-status[data-status="error"] {
+  color: $negative;
+}
+.dropzone-file-item-status[data-status] + .dropzone-file-item-label {
+  display: none;
 }
 
 .dropzone-container {
