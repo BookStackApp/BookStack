@@ -1,6 +1,5 @@
-import DropZoneLib from 'dropzone';
-import {fadeOut} from '../services/animations';
 import {Component} from './component';
+import {Clipboard} from '../services/clipboard';
 
 export class Dropzone extends Component {
 
@@ -9,66 +8,119 @@ export class Dropzone extends Component {
         this.url = this.$opts.url;
         this.successMessage = this.$opts.successMessage;
         this.removeMessage = this.$opts.removeMessage;
-        this.uploadLimit = Number(this.$opts.uploadLimit);
-        this.uploadLimitMessage = this.$opts.uploadLimitMessage;
-        this.timeoutMessage = this.$opts.timeoutMessage;
+        this.uploadLimit = Number(this.$opts.uploadLimit); // TODO - Use
+        this.uploadLimitMessage = this.$opts.uploadLimitMessage; // TODO - Use
+        this.timeoutMessage = this.$opts.timeoutMessage; // TODO - Use
+        // window.uploadTimeout // TODO - Use
+        // TODO - Click-to-upload buttons/areas
+        // TODO - Drop zone highlighting of existing element
+        //   (Add overlay via additional temp element).
 
-        const component = this;
-        this.dz = new DropZoneLib(this.container, {
-            addRemoveLinks: true,
-            dictRemoveFile: this.removeMessage,
-            timeout: Number(window.uploadTimeout) || 60000,
-            maxFilesize: this.uploadLimit,
-            url: this.url,
-            withCredentials: true,
-            init() {
-                this.dz = this;
-                this.dz.on('sending', component.onSending.bind(component));
-                this.dz.on('success', component.onSuccess.bind(component));
-                this.dz.on('error', component.onError.bind(component));
+        this.setupListeners();
+    }
+
+    setupListeners() {
+        this.container.addEventListener('dragenter', event => {
+            this.container.style.border = '1px dotted tomato';
+            event.preventDefault();
+        });
+
+        this.container.addEventListener('dragover', event => {
+            event.preventDefault();
+        });
+
+        const reset = () => {
+            this.container.style.border = null;
+        };
+
+        this.container.addEventListener('dragend', event => {
+            reset();
+        });
+
+        this.container.addEventListener('dragleave', event => {
+            reset();
+        });
+
+        this.container.addEventListener('drop', event => {
+            event.preventDefault();
+            const clipboard = new Clipboard(event.dataTransfer);
+            const files = clipboard.getFiles();
+            for (const file of files) {
+                this.createUploadFromFile(file);
+            }
+        });
+    }
+
+    /**
+     * @param {File} file
+     * @return {Upload}
+     */
+    createUploadFromFile(file) {
+        const {dom, status} = this.createDomForFile(file);
+        this.container.append(dom);
+
+        const formData = new FormData();
+        formData.append('file', file, file.name);
+
+        // TODO - Change to XMLHTTPRequest so we can track progress.
+        const uploadPromise = window.$http.post(this.url, formData);
+
+        const upload = {
+            file,
+            dom,
+            markError(message) {
+                status.setAttribute('data-status', 'error');
+                status.textContent = message;
             },
-        });
-    }
-
-    onSending(file, xhr, data) {
-        const token = window.document.querySelector('meta[name=token]').getAttribute('content');
-        data.append('_token', token);
-
-        xhr.ontimeout = () => {
-            this.dz.emit('complete', file);
-            this.dz.emit('error', file, this.timeoutMessage);
-        };
-    }
-
-    onSuccess(file, data) {
-        this.$emit('success', {file, data});
-
-        if (this.successMessage) {
-            window.$events.emit('success', this.successMessage);
-        }
-
-        fadeOut(file.previewElement, 800, () => {
-            this.dz.removeFile(file);
-        });
-    }
-
-    onError(file, errorMessage, xhr) {
-        this.$emit('error', {file, errorMessage, xhr});
-
-        const setMessage = message => {
-            const messsageEl = file.previewElement.querySelector('[data-dz-errormessage]');
-            messsageEl.textContent = message;
+            markSuccess(message) {
+                status.setAttribute('data-status', 'success');
+                status.textContent = message;
+            },
         };
 
-        if (xhr && xhr.status === 413) {
-            setMessage(this.uploadLimitMessage);
-        } else if (errorMessage.file) {
-            setMessage(errorMessage.file);
-        }
+        uploadPromise.then(returnData => {
+            upload.markSuccess(returnData.statusText);
+        }).catch(err => {
+            upload.markError(err?.data?.message || err.message);
+        });
+
+        return upload;
     }
 
-    removeAll() {
-        this.dz.removeAllFiles(true);
+    /**
+     * @param {File} file
+     * @return {{image: Element, dom: Element, progress: Element, label: Element, status: Element}}
+     */
+    createDomForFile(file) {
+        const dom = document.createElement('div');
+        const label = document.createElement('div');
+        const status = document.createElement('div');
+        const progress = document.createElement('div');
+        const image = document.createElement('img');
+
+        dom.classList.add('dropzone-file-item');
+        status.classList.add('dropzone-file-item-status');
+        progress.classList.add('dropzone-file-item-progress');
+
+        image.src = ''; // TODO - file icon
+        label.innerText = file.name;
+
+        if (file.type.startsWith('image/')) {
+            image.src = URL.createObjectURL(file);
+        }
+
+        dom.append(image, label, progress, status);
+        return {
+            dom, label, image, progress, status,
+        };
     }
 
 }
+
+/**
+ * @typedef Upload
+ * @property {File} file
+ * @property {Element} dom
+ * @property {function(String)} markError
+ * @property {function(String)} markSuccess
+ */

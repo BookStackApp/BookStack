@@ -42,9 +42,15 @@ class GalleryImageController extends Controller
     public function create(Request $request)
     {
         $this->checkPermission('image-create-all');
-        $this->validate($request, [
-            'file' => $this->getImageValidationRules(),
-        ]);
+
+        try {
+            $this->validate($request, [
+                'file' => $this->getImageValidationRules(),
+            ]);
+        } catch (ValidationException $exception) {
+            // TODO - Check potential other upload locations?
+            return $this->jsonError(implode("\n", $exception->errors()['file']));
+        }
 
         try {
             $imageUpload = $request->file('file');

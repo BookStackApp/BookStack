@@ -34,6 +34,11 @@ export class ImageManager extends Component {
         this.resetState();
 
         this.setupListeners();
+
+        window.setTimeout(() => {
+            this.show(() => {
+            }, 'gallery');
+        }, 500);
     }
 
     setupListeners() {
