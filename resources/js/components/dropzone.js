@@ -56,18 +56,17 @@ export class Dropzone extends Component {
      * @return {Upload}
      */
     createUploadFromFile(file) {
-        const {dom, status} = this.createDomForFile(file);
+        const {dom, status, progress} = this.createDomForFile(file);
         this.container.append(dom);
-
-        const formData = new FormData();
-        formData.append('file', file, file.name);
-
-        // TODO - Change to XMLHTTPRequest so we can track progress.
-        const uploadPromise = window.$http.post(this.url, formData);
 
         const upload = {
             file,
             dom,
+            updateProgress(percentComplete) {
+                console.log(`progress: ${percentComplete}%`);
+                progress.textContent = `${percentComplete}%`;
+                progress.style.width = `${percentComplete}%`;
+            },
             markError(message) {
                 status.setAttribute('data-status', 'error');
                 status.textContent = message;
@@ -78,13 +77,41 @@ export class Dropzone extends Component {
             },
         };
 
-        uploadPromise.then(returnData => {
-            upload.markSuccess(returnData.statusText);
-        }).catch(err => {
-            upload.markError(err?.data?.message || err.message);
-        });
+        this.startXhrForUpload(upload);
 
         return upload;
+    }
+
+    /**
+     * @param {Upload} upload
+     */
+    startXhrForUpload(upload) {
+        const formData = new FormData();
+        formData.append('file', upload.file, upload.file.name);
+
+        const req = window.$http.createXMLHttpRequest('POST', this.url, {
+            error() {
+                upload.markError('Upload failed'); // TODO - Update text
+            },
+            readystatechange() {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    upload.markSuccess('Finished upload!');
+                } else if (this.readyState === XMLHttpRequest.DONE && this.status >= 400) {
+                    const content = this.responseText;
+                    const data = content.startsWith('{') ? JSON.parse(content) : {message: content};
+                    const message = data?.message || content;
+                    upload.markError(message);
+                }
+            },
+        });
+
+        req.upload.addEventListener('progress', evt => {
+            const percent = Math.min(Math.ceil((evt.loaded / evt.total) * 100), 100);
+            upload.updateProgress(percent);
+        });
+
+        req.setRequestHeader('Accept', 'application/json');
+        req.send(formData);
     }
 
     /**
@@ -121,6 +148,7 @@ export class Dropzone extends Component {
  * @typedef Upload
  * @property {File} file
  * @property {Element} dom
+ * @property {function(Number)} updateProgress
  * @property {function(String)} markError
  * @property {function(String)} markSuccess
  */
