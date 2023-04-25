@@ -19,6 +19,7 @@ export class ImageManager extends Component {
         this.filterTabs = this.$manyRefs.filterTabs;
         this.selectButton = this.$refs.selectButton;
         this.formContainer = this.$refs.formContainer;
+        this.formContainerPlaceholder = this.$refs.formContainerPlaceholder;
         this.dropzoneContainer = this.$refs.dropzoneContainer;
 
         // Instance data
@@ -92,8 +93,11 @@ export class ImageManager extends Component {
             }
         });
 
-        this.formContainer.addEventListener('ajax-form-success', this.refreshGallery.bind(this));
-        this.container.addEventListener('dropzone-success', this.refreshGallery.bind(this));
+        this.formContainer.addEventListener('ajax-form-success', () => {
+            this.refreshGallery();
+            this.resetEditForm();
+        });
+        this.container.addEventListener('dropzone-upload-success', this.refreshGallery.bind(this));
     }
 
     show(callback, type = 'gallery') {
@@ -168,6 +172,7 @@ export class ImageManager extends Component {
 
     resetEditForm() {
         this.formContainer.innerHTML = '';
+        this.formContainerPlaceholder.removeAttribute('hidden');
     }
 
     resetListView() {
@@ -214,6 +219,7 @@ export class ImageManager extends Component {
         const params = requestDelete ? {delete: true} : {};
         const {data: formHtml} = await window.$http.get(`/images/edit/${imageId}`, params);
         this.formContainer.innerHTML = formHtml;
+        this.formContainerPlaceholder.setAttribute('hidden', '');
         window.$components.init(this.formContainer);
     }
 

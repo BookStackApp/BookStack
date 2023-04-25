@@ -1,7 +1,7 @@
 import {Component} from './component';
 import {Clipboard} from '../services/clipboard';
 import {
-    elem, getLoading, removeLoading,
+    elem, getLoading, onSelect, removeLoading,
 } from '../services/dom';
 
 export class Dropzone extends Component {
@@ -9,6 +9,8 @@ export class Dropzone extends Component {
     setup() {
         this.container = this.$el;
         this.statusArea = this.$refs.statusArea;
+        this.dropTarget = this.$refs.dropTarget;
+        this.selectButtons = this.$manyRefs.selectButton || [];
 
         this.url = this.$opts.url;
         this.successMessage = this.$opts.successMessage;
@@ -18,17 +20,16 @@ export class Dropzone extends Component {
         this.timeoutMessage = this.$opts.timeoutMessage; // TODO - Use
         this.zoneText = this.$opts.zoneText;
         // window.uploadTimeout // TODO - Use
-        // TODO - Click-to-upload buttons/areas
-        // TODO - Drop zone highlighting of existing element
-        //   (Add overlay via additional temp element).
 
         this.setupListeners();
     }
 
     setupListeners() {
+        onSelect(this.selectButtons, this.manualSelectHandler.bind(this));
+
         let depth = 0;
 
-        this.container.addEventListener('dragenter', event => {
+        this.dropTarget.addEventListener('dragenter', event => {
             event.preventDefault();
             depth += 1;
 
@@ -37,7 +38,7 @@ export class Dropzone extends Component {
             }
         });
 
-        this.container.addEventListener('dragover', event => {
+        this.dropTarget.addEventListener('dragover', event => {
             event.preventDefault();
         });
 
@@ -46,18 +47,18 @@ export class Dropzone extends Component {
             depth = 0;
         };
 
-        this.container.addEventListener('dragend', event => {
+        this.dropTarget.addEventListener('dragend', event => {
             reset();
         });
 
-        this.container.addEventListener('dragleave', event => {
+        this.dropTarget.addEventListener('dragleave', event => {
             depth -= 1;
             if (depth === 0) {
                 reset();
             }
         });
 
-        this.container.addEventListener('drop', event => {
+        this.dropTarget.addEventListener('drop', event => {
             event.preventDefault();
             reset();
             const clipboard = new Clipboard(event.dataTransfer);
@@ -68,16 +69,28 @@ export class Dropzone extends Component {
         });
     }
 
+    manualSelectHandler() {
+        const input = elem('input', {type: 'file', style: 'left: -400px; visibility: hidden; position: fixed;'});
+        this.container.append(input);
+        input.click();
+        input.addEventListener('change', event => {
+            for (const file of input.files) {
+                this.createUploadFromFile(file);
+            }
+            input.remove();
+        });
+    }
+
     showOverlay() {
-        const overlay = this.container.querySelector('.dropzone-overlay');
+        const overlay = this.dropTarget.querySelector('.dropzone-overlay');
         if (!overlay) {
             const zoneElem = elem('div', {class: 'dropzone-overlay'}, [this.zoneText]);
-            this.container.append(zoneElem);
+            this.dropTarget.append(zoneElem);
         }
     }
 
     hideOverlay() {
-        const overlay = this.container.querySelector('.dropzone-overlay');
+        const overlay = this.dropTarget.querySelector('.dropzone-overlay');
         if (overlay) {
             overlay.remove();
         }
@@ -88,14 +101,14 @@ export class Dropzone extends Component {
      * @return {Upload}
      */
     createUploadFromFile(file) {
-        const {dom, status, progress} = this.createDomForFile(file);
-        this.container.append(dom);
+        const {dom, status, progress, dismiss} = this.createDomForFile(file);
+        this.statusArea.append(dom);
+        const component = this;
 
         const upload = {
             file,
             dom,
             updateProgress(percentComplete) {
-                console.log(`progress: ${percentComplete}%`);
                 progress.textContent = `${percentComplete}%`;
                 progress.style.width = `${percentComplete}%`;
             },
@@ -108,6 +121,10 @@ export class Dropzone extends Component {
                 status.setAttribute('data-status', 'success');
                 status.textContent = message;
                 removeLoading(dom);
+                setTimeout(dismiss, 2400);
+                component.$emit('upload-success', {
+                    name: file.name,
+                });
             },
         };
 
@@ -150,7 +167,7 @@ export class Dropzone extends Component {
 
     /**
      * @param {File} file
-     * @return {{image: Element, dom: Element, progress: Element, label: Element, status: Element}}
+     * @return {{image: Element, dom: Element, progress: Element, status: Element, dismiss: function}}
      */
     createDomForFile(file) {
         const image = elem('img', {src: ''});
@@ -172,8 +189,17 @@ export class Dropzone extends Component {
             image.src = URL.createObjectURL(file);
         }
 
+        const dismiss = () => {
+            dom.classList.add('dismiss');
+            dom.addEventListener('animationend', event => {
+                dom.remove();
+            });
+        };
+
+        dom.addEventListener('click', dismiss);
+
         return {
-            dom, progress, status,
+            dom, progress, status, dismiss,
         };
     }
 

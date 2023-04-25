@@ -1,4 +1,11 @@
-<div component="image-manager"
+<div components="image-manager dropzone"
+     option:dropzone:url="{{ url('/images/gallery?' . http_build_query(['uploaded_to' => $uploaded_to ?? 0])) }}"
+     option:dropzone:success-message="{{ trans('components.image_upload_success') }}"
+     option:dropzone:remove-message="{{ trans('components.image_upload_remove') }}"
+     option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
+     option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
+     option:dropzone:timeout-message="{{ trans('errors.file_upload_timeout') }}"
+     option:dropzone:zone-text="{{ trans('components.image_dropzone_drop') }}"
      option:image-manager:uploaded-to="{{ $uploaded_to ?? 0 }}"
      class="image-manager">
 
@@ -9,18 +16,14 @@
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
+                <button refs="dropzone@selectButton" type="button">
+                    <span>@icon('upload')</span>
+                    <span>{{ trans('components.image_upload') }}</span>
+                </button>
                 <button refs="popup@hide" type="button" class="popup-header-close">@icon('close')</button>
             </div>
 
-            <div component="dropzone"
-                 option:dropzone:url="{{ url('/images/gallery?' . http_build_query(['uploaded_to' => $uploaded_to ?? 0])) }}"
-                 option:dropzone:success-message="{{ trans('components.image_upload_success') }}"
-                 option:dropzone:remove-message="{{ trans('components.image_upload_remove') }}"
-                 option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
-                 option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
-                 option:dropzone:timeout-message="{{ trans('errors.file_upload_timeout') }}"
-                 option:dropzone:zone-text="{{ trans('components.image_dropzone_drop') }}"
-                 class="flex-fill image-manager-body">
+            <div refs="dropzone@drop-target" class="flex-fill image-manager-body">
 
                 <div class="image-manager-content">
                     <div role="tablist" class="image-manager-header primary-background-light grid third no-gap">
@@ -58,13 +61,18 @@
 
                 <div class="image-manager-sidebar flex-container-column">
 
-                    <div refs="image-manager@dropzoneContainer dropzone@statusArea">
-                        @include('form.dropzone', [
-                            'placeholder' => trans('components.image_dropzone'),
-                        ])
+                    <div refs="image-manager@dropzoneContainer">
+                        <div refs="dropzone@status-area"></div>
                     </div>
 
-                    <div refs="image-manager@formContainer" class="inner flex"></div>
+                    <div refs="image-manager@form-container-placeholder" class="p-m text-small text-muted">
+                        <p>Here you can manage or select images that have been previously uploaded to the system.</p>
+                        <p>Upload a new image by dragging an image file into this window,
+                            or by using the "Upload Image" button above.</p>
+                    </div>
+
+                    <div refs="image-manager@formContainer" class="inner flex">
+                    </div>
                 </div>
 
             </div>
