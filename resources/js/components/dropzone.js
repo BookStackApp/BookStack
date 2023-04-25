@@ -14,20 +14,27 @@ export class Dropzone extends Component {
 
         this.url = this.$opts.url;
         this.successMessage = this.$opts.successMessage;
-        this.removeMessage = this.$opts.removeMessage;
-        this.uploadLimit = Number(this.$opts.uploadLimit); // TODO - Use
-        this.uploadLimitMessage = this.$opts.uploadLimitMessage; // TODO - Use
-        this.timeoutMessage = this.$opts.timeoutMessage; // TODO - Use
+        this.errorMessage = this.$opts.errorMessage;
+        this.uploadLimitMb = Number(this.$opts.uploadLimit);
+        this.uploadLimitMessage = this.$opts.uploadLimitMessage;
         this.zoneText = this.$opts.zoneText;
-        // window.uploadTimeout // TODO - Use
+        this.fileAcceptTypes = this.$opts.fileAccept;
 
         this.setupListeners();
     }
 
     setupListeners() {
         onSelect(this.selectButtons, this.manualSelectHandler.bind(this));
+        this.setupDropTargetHandlers();
+    }
 
+    setupDropTargetHandlers() {
         let depth = 0;
+
+        const reset = () => {
+            this.hideOverlay();
+            depth = 0;
+        };
 
         this.dropTarget.addEventListener('dragenter', event => {
             event.preventDefault();
@@ -42,22 +49,13 @@ export class Dropzone extends Component {
             event.preventDefault();
         });
 
-        const reset = () => {
-            this.hideOverlay();
-            depth = 0;
-        };
-
-        this.dropTarget.addEventListener('dragend', event => {
-            reset();
-        });
-
-        this.dropTarget.addEventListener('dragleave', event => {
+        this.dropTarget.addEventListener('dragend', reset);
+        this.dropTarget.addEventListener('dragleave', () => {
             depth -= 1;
             if (depth === 0) {
                 reset();
             }
         });
-
         this.dropTarget.addEventListener('drop', event => {
             event.preventDefault();
             reset();
@@ -70,10 +68,10 @@ export class Dropzone extends Component {
     }
 
     manualSelectHandler() {
-        const input = elem('input', {type: 'file', style: 'left: -400px; visibility: hidden; position: fixed;'});
+        const input = elem('input', {type: 'file', style: 'left: -400px; visibility: hidden; position: fixed;', accept: this.fileAcceptTypes});
         this.container.append(input);
         input.click();
-        input.addEventListener('change', event => {
+        input.addEventListener('change', () => {
             for (const file of input.files) {
                 this.createUploadFromFile(file);
             }
@@ -101,7 +99,9 @@ export class Dropzone extends Component {
      * @return {Upload}
      */
     createUploadFromFile(file) {
-        const {dom, status, progress, dismiss} = this.createDomForFile(file);
+        const {
+            dom, status, progress, dismiss,
+        } = this.createDomForFile(file);
         this.statusArea.append(dom);
         const component = this;
 
@@ -116,6 +116,7 @@ export class Dropzone extends Component {
                 status.setAttribute('data-status', 'error');
                 status.textContent = message;
                 removeLoading(dom);
+                this.updateProgress(100);
             },
             markSuccess(message) {
                 status.setAttribute('data-status', 'success');
@@ -128,6 +129,12 @@ export class Dropzone extends Component {
             },
         };
 
+        // Enforce early upload filesize limit
+        if (file.size > (this.uploadLimitMb * 1000000)) {
+            upload.markError(this.uploadLimitMessage);
+            return upload;
+        }
+
         this.startXhrForUpload(upload);
 
         return upload;
@@ -139,14 +146,15 @@ export class Dropzone extends Component {
     startXhrForUpload(upload) {
         const formData = new FormData();
         formData.append('file', upload.file, upload.file.name);
+        const component = this;
 
         const req = window.$http.createXMLHttpRequest('POST', this.url, {
             error() {
-                upload.markError('Upload failed'); // TODO - Update text
+                upload.markError(component.errorMessage);
             },
             readystatechange() {
                 if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    upload.markSuccess('Finished upload!');
+                    upload.markSuccess(component.successMessage);
                 } else if (this.readyState === XMLHttpRequest.DONE && this.status >= 400) {
                     const content = this.responseText;
                     const data = content.startsWith('{') ? JSON.parse(content) : {message: content};
@@ -170,7 +178,7 @@ export class Dropzone extends Component {
      * @return {{image: Element, dom: Element, progress: Element, status: Element, dismiss: function}}
      */
     createDomForFile(file) {
-        const image = elem('img', {src: ''});
+        const image = elem('img', {src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.224 7.373a.924.924 0 0 0-.92.925l-.006 7.404c0 .509.412.925.921.925h5.557a.928.928 0 0 0 .926-.925v-5.553l-2.777-2.776Zm3.239 3.239V8.067l2.545 2.545z' style='fill:%23000;fill-opacity:.75'/%3E%3C/svg%3E"});
         const status = elem('div', {class: 'dropzone-file-item-status'}, []);
         const progress = elem('div', {class: 'dropzone-file-item-progress'});
         const imageWrap = elem('div', {class: 'dropzone-file-item-image-wrap'}, [image]);
@@ -191,7 +199,7 @@ export class Dropzone extends Component {
 
         const dismiss = () => {
             dom.classList.add('dismiss');
-            dom.addEventListener('animationend', event => {
+            dom.addEventListener('animationend', () => {
                 dom.remove();
             });
         };

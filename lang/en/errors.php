@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
-    'file_upload_timeout' => 'The file upload has timed out.',
 
     // Drawing & Images
     'image_upload_error' => 'An error occurred uploading the image',
