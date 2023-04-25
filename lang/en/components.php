@@ -6,6 +6,7 @@ return [
 
     // Image Manager
     'image_select' => 'Image Select',
+    'image_upload' => 'Upload Image',
     'image_all' => 'All',
     'image_all_title' => 'View all images',
     'image_book_title' => 'View images uploaded to this book',
