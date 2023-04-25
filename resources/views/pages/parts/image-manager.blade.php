@@ -1,11 +1,11 @@
 <div components="image-manager dropzone"
      option:dropzone:url="{{ url('/images/gallery?' . http_build_query(['uploaded_to' => $uploaded_to ?? 0])) }}"
      option:dropzone:success-message="{{ trans('components.image_upload_success') }}"
-     option:dropzone:remove-message="{{ trans('components.image_upload_remove') }}"
+     option:dropzone:error-message="{{ trans('components.image_upload_failure') }}"
      option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
      option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
-     option:dropzone:timeout-message="{{ trans('errors.file_upload_timeout') }}"
      option:dropzone:zone-text="{{ trans('components.image_dropzone_drop') }}"
+     option:dropzone:file-accept="image/*"
      option:image-manager:uploaded-to="{{ $uploaded_to ?? 0 }}"
      class="image-manager">
 
@@ -66,9 +66,8 @@
                     </div>
 
                     <div refs="image-manager@form-container-placeholder" class="p-m text-small text-muted">
-                        <p>Here you can manage or select images that have been previously uploaded to the system.</p>
-                        <p>Upload a new image by dragging an image file into this window,
-                            or by using the "Upload Image" button above.</p>
+                        <p>{{ trans('components.image_intro') }}</p>
+                        <p>{{ trans('components.image_intro_upload') }}</p>
                     </div>
 
                     <div refs="image-manager@formContainer" class="inner flex">

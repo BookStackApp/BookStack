@@ -7,6 +7,8 @@ return [
     // Image Manager
     'image_select' => 'Image Select',
     'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'All',
     'image_all_title' => 'View all images',
     'image_book_title' => 'View images uploaded to this book',
@@ -23,9 +25,9 @@ return [
     'images_deleted' => 'Images Deleted',
     'image_preview' => 'Image Preview',
     'image_upload_success' => 'Image uploaded successfully',
+    'image_upload_failure' => 'Image failed to upload',
     'image_update_success' => 'Image details successfully updated',
     'image_delete_success' => 'Image successfully deleted',
-    'image_upload_remove' => 'Remove',
 
     // Code Editor
     'code_editor' => 'Edit Code',

@@ -145,6 +145,7 @@
   box-shadow: none;
   color: #FFF;
   padding: $-xs $-m;
+  cursor: pointer;
 }
 
 .popup-header button:not(.popup-header-close) {
@@ -292,6 +293,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .dropzone-file-item-image-wrap {
   width: 80px;
   position: relative;
+  background-color: var(--color-primary-light);
   img {
     object-fit: cover;
     width: 100%;
@@ -322,7 +324,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 .dropzone-file-item-status[data-status] {
   display: flex;
-  font-size: .8rem;
+  font-size: .6rem;
   font-weight: 500;
   line-height: 1.2;
 }
@@ -407,7 +409,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     min-height: auto;
     padding: $-m;
   }
-  img {
+  .image-manager-viewer img {
     max-width: 100%;
     max-height: 180px;
     display: block;
