@@ -50,7 +50,7 @@ return [
     // Drawing & Images
     'image_upload_error' => '上傳圖片時發生錯誤',
     'image_upload_type_error' => '上傳圖片類型無效',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => '無法載入繪圖資料，繪圖檔案可能不存在，或您可能沒有權限存取它。',
 
     // Attachments
     'attachment_not_found' => '找不到附件',
