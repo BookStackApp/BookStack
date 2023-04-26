@@ -25,7 +25,6 @@ return [
     'images_deleted' => 'Images Deleted',
     'image_preview' => 'Image Preview',
     'image_upload_success' => 'Image uploaded successfully',
-    'image_upload_failure' => 'Image failed to upload',
     'image_update_success' => 'Image details successfully updated',
     'image_delete_success' => 'Image successfully deleted',
 

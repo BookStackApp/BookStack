@@ -253,6 +253,15 @@ body.flexbox {
   position: relative;
 }
 
+.fixed {
+  position: fixed;
+  z-index: 20;
+  &.top-right {
+    top: 0;
+    right: 0;
+  }
+}
+
 .hidden {
   display: none !important;
 }

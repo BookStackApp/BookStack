@@ -13,6 +13,10 @@ export class EditorToolbox extends Component {
 
         // Set the first tab as active on load
         this.setActiveTab(this.contentElements[0].dataset.tabContent);
+
+        setTimeout(() => {
+            this.setActiveTab('files', true);
+        }, 500);
     }
 
     setupListeners() {

@@ -1,7 +1,7 @@
 <div components="image-manager dropzone"
      option:dropzone:url="{{ url('/images/gallery?' . http_build_query(['uploaded_to' => $uploaded_to ?? 0])) }}"
      option:dropzone:success-message="{{ trans('components.image_upload_success') }}"
-     option:dropzone:error-message="{{ trans('components.image_upload_failure') }}"
+     option:dropzone:error-message="{{ trans('errors.image_upload_error') }}"
      option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
      option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
      option:dropzone:zone-text="{{ trans('components.image_dropzone_drop') }}"

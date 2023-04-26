@@ -53,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Attachment not found',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
