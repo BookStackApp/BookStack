@@ -228,6 +228,15 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   animation: dzAnimIn 240ms ease-in-out;
 }
 
+.dropzone-landing-area {
+  background-color: var(--color-primary-light);
+  padding: $-m $-l;
+  width: 100%;
+  border: 1px dashed var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 4px;
+}
+
 @keyframes dzAnimIn {
   0% {
     opacity: 0;
@@ -319,7 +328,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .dropzone-file-item-label,
 .dropzone-file-item-status {
   align-items: center;
-  font-size: .9rem;
+  font-size: .8rem;
   font-weight: 700;
 }
 .dropzone-file-item-status[data-status] {

@@ -22,6 +22,9 @@
             <div class="text-neg text-small">{{ $errors->first('attachment_link_url') }}</div>
         @endif
     </div>
+    <button component="event-emit-select"
+            option:event-emit-select:name="edit-back"
+            type="button" class="button outline">{{ trans('common.cancel') }}</button>
     <button refs="ajax-form@submit"
             type="button"
             class="button">{{ trans('entities.attach') }}</button>
