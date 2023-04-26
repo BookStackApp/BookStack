@@ -16,7 +16,7 @@
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
-                <button refs="dropzone@selectButton" type="button">
+                <button refs="dropzone@selectButton image-manager@uploadButton" type="button">
                     <span>@icon('upload')</span>
                     <span>{{ trans('components.image_upload') }}</span>
                 </button>
@@ -26,7 +26,7 @@
             <div refs="dropzone@drop-target" class="flex-fill image-manager-body">
 
                 <div class="image-manager-content">
-                    <div role="tablist" class="image-manager-header primary-background-light grid third no-gap">
+                    <div role="tablist" class="image-manager-header grid third no-gap">
                         <button refs="image-manager@filterTabs"
                                 data-filter="all"
                                 role="tab"
@@ -67,7 +67,7 @@
 
                     <div refs="image-manager@form-container-placeholder" class="p-m text-small text-muted">
                         <p>{{ trans('components.image_intro') }}</p>
-                        <p>{{ trans('components.image_intro_upload') }}</p>
+                        <p refs="image-manager@upload-hint">{{ trans('components.image_intro_upload') }}</p>
                     </div>
 
                     <div refs="image-manager@formContainer" class="inner flex">

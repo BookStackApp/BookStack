@@ -12,6 +12,8 @@ export class Dropzone extends Component {
         this.dropTarget = this.$refs.dropTarget;
         this.selectButtons = this.$manyRefs.selectButton || [];
 
+        this.isActive = true;
+
         this.url = this.$opts.url;
         this.successMessage = this.$opts.successMessage;
         this.errorMessage = this.$opts.errorMessage;
@@ -21,6 +23,14 @@ export class Dropzone extends Component {
         this.fileAcceptTypes = this.$opts.fileAccept;
 
         this.setupListeners();
+    }
+
+    /**
+     * Public method to allow external disabling/enabling of this drag+drop dropzone.
+     * @param {Boolean} active
+     */
+    toggleActive(active) {
+        this.isActive = active;
     }
 
     setupListeners() {
@@ -40,7 +50,7 @@ export class Dropzone extends Component {
             event.preventDefault();
             depth += 1;
 
-            if (depth === 1) {
+            if (depth === 1 && this.isActive) {
                 this.showOverlay();
             }
         });
@@ -59,6 +69,11 @@ export class Dropzone extends Component {
         this.dropTarget.addEventListener('drop', event => {
             event.preventDefault();
             reset();
+
+            if (!this.isActive) {
+                return;
+            }
+
             const clipboard = new Clipboard(event.dataTransfer);
             const files = clipboard.getFiles();
             for (const file of files) {
@@ -158,7 +173,7 @@ export class Dropzone extends Component {
                 } else if (this.readyState === XMLHttpRequest.DONE && this.status >= 400) {
                     const content = this.responseText;
                     const data = content.startsWith('{') ? JSON.parse(content) : {message: content};
-                    const message = data?.message || content;
+                    const message = data?.message || data?.error || content;
                     upload.markError(message);
                 }
             },

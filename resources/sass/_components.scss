@@ -386,13 +386,11 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .image-manager .load-more {
   display: block;
   text-align: center;
-  @include lightDark(background-color, #EEE, #444);
   padding: $-s $-m;
-  color: #AAA;
   clear: both;
-  font-size: 20px;
-  cursor: pointer;
-  font-style: italic;
+  .loading-container {
+    margin: 0;
+  }
 }
 
 .image-manager .loading-container {
@@ -442,6 +440,17 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   .full-tab {
     text-align: center;
   }
+}
+
+.image-manager [role="tablist"] button[role="tab"] {
+  border-right: 1px solid #DDD;
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.image-manager-header {
+  z-index: 4;
 }
 
 .tab-container [role="tablist"] {
