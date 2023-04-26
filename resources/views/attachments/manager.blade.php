@@ -38,12 +38,12 @@
             </div>
 
         </div>
-
-        <div refs="attachments@links-container" hidden class="link-form-container">
-            @include('attachments.manager-link-form', ['pageId' => $page->id])
-        </div>
-
-        <div refs="attachments@edit-container" hidden class="attachment-edit-container"></div>
-
     </div>
+
+    <div id="link-form-container" refs="attachments@links-container" hidden class="px-l">
+        @include('attachments.manager-link-form', ['pageId' => $page->id])
+    </div>
+
+    <div id="edit-form-container" refs="attachments@edit-container" hidden class="px-l"></div>
+
 </div>
