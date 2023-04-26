@@ -218,7 +218,7 @@ class SearchRunner
         $subQuery->where('entity_type', '=', $entity->getMorphClass());
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
-                $inputTerm == "\\"?$inputTerm = str_repeat($inputTerm, 2):"";
+                $inputTerm = ($inputTerm == "\\") ? str_repeat($inputTerm, 2) : $inputTerm;
                 $query->orWhere('term', 'like',"%$inputTerm%");
             }
         });
