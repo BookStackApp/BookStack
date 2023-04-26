@@ -12,7 +12,7 @@
      option:dropzone:zone-text="{{ trans('entities.attachments_dropzone') }}"
      option:dropzone:file-accept="*"
      class="relative">
-    <div refs="dropzone@status-area" class="fixed top-right px-m py-m"></div>
+    <div refs="dropzone@status-area"></div>
     <button type="button"
             refs="dropzone@select-button dropzone@drop-target"
             class="dropzone-landing-area text-center">

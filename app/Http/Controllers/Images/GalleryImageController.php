@@ -48,7 +48,6 @@ class GalleryImageController extends Controller
                 'file' => $this->getImageValidationRules(),
             ]);
         } catch (ValidationException $exception) {
-            // TODO - Check potential other upload locations?
             return $this->jsonError(implode("\n", $exception->errors()['file']));
         }
 
