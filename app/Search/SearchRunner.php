@@ -218,7 +218,8 @@ class SearchRunner
         $subQuery->where('entity_type', '=', $entity->getMorphClass());
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
-                $query->orWhere('term', 'like', $inputTerm . '%');
+                $inputTerm == "\\"?$inputTerm = str_repeat($inputTerm, 2):"";
+                $query->orWhere('term', 'like',"%$inputTerm%");
             }
         });
         $subQuery->groupBy('entity_type', 'entity_id');
