@@ -18,6 +18,7 @@ export class Shortcuts extends Component {
         this.hintsShowing = false;
 
         this.hideHints = this.hideHints.bind(this);
+        this.hintAbortController = null;
 
         this.setupListeners();
     }
@@ -33,8 +34,11 @@ export class Shortcuts extends Component {
 
         window.addEventListener('keydown', event => {
             if (event.key === '?') {
-                const action = this.hintsShowing ? this.hideHints : this.showHints;
-                action();
+                if (this.hintsShowing) {
+                    this.hideHints();
+                } else {
+                    this.showHints();
+                }
             }
         });
     }
@@ -111,10 +115,12 @@ export class Shortcuts extends Component {
             displayedIds.add(id);
         }
 
-        window.addEventListener('scroll', this.hideHints);
-        window.addEventListener('focus', this.hideHints);
-        window.addEventListener('blur', this.hideHints);
-        window.addEventListener('click', this.hideHints);
+        this.hintAbortController = new AbortController();
+        const signal = this.hintAbortController.signal;
+        window.addEventListener('scroll', this.hideHints, {signal});
+        window.addEventListener('focus', this.hideHints, {signal});
+        window.addEventListener('blur', this.hideHints, {signal});
+        window.addEventListener('click', this.hideHints, {signal});
 
         this.hintsShowing = true;
     }
@@ -149,12 +155,7 @@ export class Shortcuts extends Component {
     hideHints() {
         const wrapper = this.container.querySelector('.shortcut-container');
         wrapper.remove();
-
-        window.removeEventListener('scroll', this.hideHints);
-        window.removeEventListener('focus', this.hideHints);
-        window.removeEventListener('blur', this.hideHints);
-        window.removeEventListener('click', this.hideHints);
-
+        this.hintAbortController?.abort();
         this.hintsShowing = false;
     }
 
