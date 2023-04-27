@@ -224,7 +224,7 @@ class SearchRunner
                     $query->orWhere('term', 'like', "%$inputTerm%");
                     $inputTerm = str_repeat($inputTerm, 2);
                     $query->where('term', 'not like', "%$inputTerm%");
-                }else{
+                } else {
                     $query->orWhere('term', 'like', "$inputTerm%");
                 }
             }
