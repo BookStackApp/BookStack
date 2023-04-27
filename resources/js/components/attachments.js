@@ -8,15 +8,16 @@ export class Attachments extends Component {
         this.pageId = this.$opts.pageId;
         this.editContainer = this.$refs.editContainer;
         this.listContainer = this.$refs.listContainer;
-        this.mainTabs = this.$refs.mainTabs;
-        this.list = this.$refs.list;
+        this.linksContainer = this.$refs.linksContainer;
+        this.listPanel = this.$refs.listPanel;
+        this.attachLinkButton = this.$refs.attachLinkButton;
 
         this.setupListeners();
     }
 
     setupListeners() {
         const reloadListBound = this.reloadList.bind(this);
-        this.container.addEventListener('dropzone-success', reloadListBound);
+        this.container.addEventListener('dropzone-upload-success', reloadListBound);
         this.container.addEventListener('ajax-form-success', reloadListBound);
 
         this.container.addEventListener('sortable-list-sort', event => {
@@ -39,16 +40,29 @@ export class Attachments extends Component {
                 markdown: contentTypes['text/plain'],
             });
         });
+
+        this.attachLinkButton.addEventListener('click', () => {
+            this.showSection('links');
+        });
+    }
+
+    showSection(section) {
+        const sectionMap = {
+            links: this.linksContainer,
+            edit: this.editContainer,
+            list: this.listContainer,
+        };
+
+        for (const [name, elem] of Object.entries(sectionMap)) {
+            elem.toggleAttribute('hidden', name !== section);
+        }
     }
 
     reloadList() {
         this.stopEdit();
-        /** @var {Tabs} */
-        const tabs = window.$components.firstOnElement(this.mainTabs, 'tabs');
-        tabs.show('attachment-panel-items');
         window.$http.get(`/attachments/get/page/${this.pageId}`).then(resp => {
-            this.list.innerHTML = resp.data;
-            window.$components.init(this.list);
+            this.listPanel.innerHTML = resp.data;
+            window.$components.init(this.listPanel);
         });
     }
 
@@ -59,8 +73,7 @@ export class Attachments extends Component {
     }
 
     async startEdit(id) {
-        this.editContainer.classList.remove('hidden');
-        this.listContainer.classList.add('hidden');
+        this.showSection('edit');
 
         showLoading(this.editContainer);
         const resp = await window.$http.get(`/attachments/edit/${id}`);
@@ -69,8 +82,7 @@ export class Attachments extends Component {
     }
 
     stopEdit() {
-        this.editContainer.classList.add('hidden');
-        this.listContainer.classList.remove('hidden');
+        this.showSection('list');
     }
 
 }

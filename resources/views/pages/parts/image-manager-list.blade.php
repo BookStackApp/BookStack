@@ -19,5 +19,7 @@
 </div>
 @endforeach
 @if($hasMore)
-    <div class="load-more">{{ trans('components.image_load_more') }}</div>
+    <div class="load-more">
+        <button type="button" class="button small outline">{{ trans('components.image_load_more') }}</button>
+    </div>
 @endif

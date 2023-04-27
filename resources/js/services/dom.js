@@ -1,4 +1,30 @@
 /**
+ * Create a new element with the given attrs and children.
+ * Children can be a string for text nodes or other elements.
+ * @param {String} tagName
+ * @param {Object<String, String>} attrs
+ * @param {Element[]|String[]}children
+ * @return {*}
+ */
+export function elem(tagName, attrs = {}, children = []) {
+    const el = document.createElement(tagName);
+
+    for (const [key, val] of Object.entries(attrs)) {
+        el.setAttribute(key, val);
+    }
+
+    for (const child of children) {
+        if (typeof child === 'string') {
+            el.append(document.createTextNode(child));
+        } else {
+            el.append(child);
+        }
+    }
+
+    return el;
+}
+
+/**
  * Run the given callback against each element that matches the given selector.
  * @param {String} selector
  * @param {Function<Element>} callback
@@ -106,6 +132,17 @@ export function findText(selector, text) {
  */
 export function showLoading(element) {
     element.innerHTML = '<div class="loading-container"><div></div><div></div><div></div></div>';
+}
+
+/**
+ * Get a loading element indicator element.
+ * @returns {Element}
+ */
+export function getLoading() {
+    const wrap = document.createElement('div');
+    wrap.classList.add('loading-container');
+    wrap.innerHTML = '<div></div><div></div><div></div>';
+    return wrap;
 }
 
 /**

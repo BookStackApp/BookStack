@@ -46,7 +46,6 @@
     "@ssddanbrown/codemirror-lang-smarty": "^1.0.0",
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
     "codemirror": "^6.0.1",
-    "dropzone": "^5.9.3",
     "markdown-it": "^13.0.1",
     "markdown-it-task-lists": "^2.1.1",
     "snabbdom": "^3.5.1",

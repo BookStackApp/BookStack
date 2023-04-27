@@ -1,4 +1,11 @@
-<div component="image-manager"
+<div components="image-manager dropzone"
+     option:dropzone:url="{{ url('/images/gallery?' . http_build_query(['uploaded_to' => $uploaded_to ?? 0])) }}"
+     option:dropzone:success-message="{{ trans('components.image_upload_success') }}"
+     option:dropzone:error-message="{{ trans('errors.image_upload_error') }}"
+     option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
+     option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
+     option:dropzone:zone-text="{{ trans('components.image_dropzone_drop') }}"
+     option:dropzone:file-accept="image/*"
      option:image-manager:uploaded-to="{{ $uploaded_to ?? 0 }}"
      class="image-manager">
 
@@ -9,13 +16,17 @@
 
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
+                <button refs="dropzone@selectButton image-manager@uploadButton" type="button">
+                    <span>@icon('upload')</span>
+                    <span>{{ trans('components.image_upload') }}</span>
+                </button>
                 <button refs="popup@hide" type="button" class="popup-header-close">@icon('close')</button>
             </div>
 
-            <div class="flex-fill image-manager-body">
+            <div refs="dropzone@drop-target" class="flex-fill image-manager-body">
 
                 <div class="image-manager-content">
-                    <div role="tablist" class="image-manager-header primary-background-light grid third no-gap">
+                    <div role="tablist" class="image-manager-header grid third no-gap">
                         <button refs="image-manager@filterTabs"
                                 data-filter="all"
                                 role="tab"
@@ -51,14 +62,16 @@
                 <div class="image-manager-sidebar flex-container-column">
 
                     <div refs="image-manager@dropzoneContainer">
-                        @include('form.dropzone', [
-                            'placeholder' => trans('components.image_dropzone'),
-                            'successMessage' => trans('components.image_upload_success'),
-                            'url' => url('/images/gallery?' . http_build_query(['uploaded_to' => $uploaded_to ?? 0]))
-                        ])
+                        <div refs="dropzone@status-area"></div>
                     </div>
 
-                    <div refs="image-manager@formContainer" class="inner flex"></div>
+                    <div refs="image-manager@form-container-placeholder" class="p-m text-small text-muted">
+                        <p>{{ trans('components.image_intro') }}</p>
+                        <p refs="image-manager@upload-hint">{{ trans('components.image_intro_upload') }}</p>
+                    </div>
+
+                    <div refs="image-manager@formContainer" class="inner flex">
+                    </div>
                 </div>
 
             </div>

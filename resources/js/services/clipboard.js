@@ -30,7 +30,6 @@ export class Clipboard {
      */
     getImages() {
         const {types} = this.data;
-        const {files} = this.data;
         const images = [];
 
         for (const type of types) {
@@ -40,13 +39,19 @@ export class Clipboard {
             }
         }
 
-        for (const file of files) {
-            if (file.type.includes('image')) {
-                images.push(file);
-            }
-        }
+        const imageFiles = this.getFiles().filter(f => f.type.includes('image'));
+        images.push(...imageFiles);
 
         return images;
+    }
+
+    /**
+     * Get the files included in the clipboard data.
+     * @return {File[]}
+     */
+    getFiles() {
+        const {files} = this.data;
+        return [...files];
     }
 
 }

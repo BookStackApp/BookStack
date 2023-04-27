@@ -120,28 +120,35 @@ $loadingSize: 10px;
 .contained-search-box {
   display: flex;
   height: 38px;
+  z-index: -1;
   input, button {
+    height: 100%;
     border-radius: 0;
     border: 1px solid #ddd;
     @include lightDark(border-color, #ddd, #000);
     margin-inline-start: -1px;
+    &:last-child {
+      border-inline-end: 0;
+    }
   }
   input {
     flex: 5;
     padding: $-xs $-s;
     &:focus, &:active {
-      outline: 0;
+      outline: 1px dotted var(--color-primary);
+      outline-offset: -2px;
+      border: 1px solid #ddd;
+      @include lightDark(border-color, #ddd, #000);
     }
   }
   button {
     width: 60px;
   }
+  button.primary-background {
+    border-color: var(--color-primary);
+  }
   button i {
     padding: 0;
-  }
-  button.cancel.active {
-    background-color: $negative;
-    color: #EEE;
   }
   svg {
     margin: 0;
