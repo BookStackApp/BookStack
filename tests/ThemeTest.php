@@ -23,8 +23,8 @@ use League\CommonMark\Environment\Environment;
 
 class ThemeTest extends TestCase
 {
-    protected $themeFolderName;
-    protected $themeFolderPath;
+    protected string $themeFolderName;
+    protected string $themeFolderPath;
 
     public function test_translation_text_can_be_overridden_via_theme()
     {

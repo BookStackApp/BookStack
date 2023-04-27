@@ -71,6 +71,19 @@ class ThemeEvents
     const COMMONMARK_ENVIRONMENT_CONFIGURE = 'commonmark_environment_configure';
 
     /**
+     * OIDC ID token pre-validate event.
+     * Runs just before BookStack validates the user ID token data upon login.
+     * Provides the existing found set of claims for the user as a key-value array,
+     * along with an array of the proceeding access token data provided by the identity platform.
+     * If the listener returns a non-null value, that will replace the existing ID token claim data.
+     *
+     * @param array $idTokenData
+     * @param array $accessTokenData
+     * @returns array|null
+     */
+    const OIDC_ID_TOKEN_PRE_VALIDATE = 'oidc_id_token_pre_validate';
+
+    /**
      * Page include parse event.
      * Runs when a page include tag is being parsed, typically when page content is being processed for viewing.
      * Provides the "include tag" reference string, the default BookStack replacement content for the tag,

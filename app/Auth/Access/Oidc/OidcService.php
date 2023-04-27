@@ -9,6 +9,8 @@ use BookStack\Auth\User;
 use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
@@ -21,24 +23,12 @@ use Psr\Http\Client\ClientInterface as HttpClient;
  */
 class OidcService
 {
-    protected RegistrationService $registrationService;
-    protected LoginService $loginService;
-    protected HttpClient $httpClient;
-    protected GroupSyncService $groupService;
-
-    /**
-     * OpenIdService constructor.
-     */
     public function __construct(
-        RegistrationService $registrationService,
-        LoginService $loginService,
-        HttpClient $httpClient,
-        GroupSyncService $groupService
+        protected RegistrationService $registrationService,
+        protected LoginService $loginService,
+        protected HttpClient $httpClient,
+        protected GroupSyncService $groupService
     ) {
-        $this->registrationService = $registrationService;
-        $this->loginService = $loginService;
-        $this->httpClient = $httpClient;
-        $this->groupService = $groupService;
     }
 
     /**
@@ -225,6 +215,16 @@ class OidcService
             $settings->issuer,
             $settings->keys,
         );
+
+        $returnClaims = Theme::dispatch(ThemeEvents::OIDC_ID_TOKEN_PRE_VALIDATE, $idToken->getAllClaims(), [
+            'access_token' => $accessToken->getToken(),
+            'expires_in' => $accessToken->getExpires(),
+            'refresh_token' => $accessToken->getRefreshToken(),
+        ]);
+
+        if (!is_null($returnClaims)) {
+            $idToken->replaceClaims($returnClaims);
+        }
 
         if ($this->config()['dump_user_details']) {
             throw new JsonDebugException($idToken->getAllClaims());
