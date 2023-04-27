@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Attēla izvēle',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Visi',
     'image_all_title' => 'Skatīt visus attēlus',
     'image_book_title' => 'Apskatīt augšupielādētos attēlus šajā grāmatā',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'Vai tiešām vēlaties dzēst šo attēlu?',
     'image_select_image' => 'Atlasīt attēlu',
     'image_dropzone' => 'Ievilkt attēlu vai klikšķinat šeit, lai augšupielādētu',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'Dzēstie attēli',
     'image_preview' => 'Attēla priekšskatījums',
     'image_upload_success' => 'Attēls ir veiksmīgi augšupielādēts',
     'image_update_success' => 'Attēlā informācija ir veiksmīgi atjunināta',
     'image_delete_success' => 'Attēls veiksmīgi dzēsts',
-    'image_upload_remove' => 'Noņemt',
 
     // Code Editor
     'code_editor' => 'Rediģēt kodu',
