@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Il server non può creare thumbnail. Controlla che l\'estensione GD sia installata.',
     'server_upload_limit' => 'Il server non permette un upload di questa grandezza. Prova con un file più piccolo.',
     'uploaded'  => 'Il server non consente upload di questa grandezza. Prova un file più piccolo.',
-    'file_upload_timeout' => 'Il caricamento del file è andato in timeout.',
 
     // Drawing & Images
     'image_upload_error' => 'C\'è stato un errore caricando l\'immagine',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Allegato non trovato',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Impossibile salvare la bozza. Controlla di essere connesso ad internet prima di salvare questa pagina',
