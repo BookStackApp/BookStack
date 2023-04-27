@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'No se encontró el adjunto',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Ha ocurrido un error al subir el archivo adjunto',
 
     // Pages
     'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegúrese de que tiene conexión a Internet antes de guardar este borrador',
