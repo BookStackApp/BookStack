@@ -279,7 +279,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: flex;
   margin: 1rem;
   flex-direction: row;
-  background-color: #FFF;
+  @include lightDark(background, #FFF, #444);
   box-shadow: $bs-large;
   border-radius: 4px;
   overflow: hidden;
@@ -453,6 +453,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager [role="tablist"] button[role="tab"] {
   border-right: 1px solid #DDD;
+  @include lightDark(border-color, #DDD, #000);
   &:last-child {
     border-right: none;
   }
