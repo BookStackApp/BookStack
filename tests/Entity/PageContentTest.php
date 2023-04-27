@@ -108,6 +108,17 @@ class PageContentTest extends TestCase
         $htmlContent->assertSee('my cat is awesome and scratchy');
     }
 
+    public function test_page_includes_can_be_nested_up_to_three_times()
+    {
+        $page = $this->entities->page();
+        $tag = "{{@{$page->id}#bkmrk-test}}";
+        $page->html = '<p id="bkmrk-test">Hello Barry ' . $tag . '</p>';
+        $page->save();
+
+        $pageResp = $this->asEditor()->get($page->getUrl());
+        $this->withHtml($pageResp)->assertElementContains('#bkmrk-test', 'Hello Barry Hello Barry Hello Barry ' . $tag);
+    }
+
     public function test_page_content_scripts_removed_by_default()
     {
         $this->asEditor();
