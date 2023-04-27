@@ -173,6 +173,7 @@ class SearchRunner
         // Handle exact term matching
         foreach ($searchOpts->exacts as $inputTerm) {
             $entityQuery->where(function (EloquentBuilder $query) use ($inputTerm, $entityModelInstance) {
+                $inputTerm = str_replace('\\', '\\\\', $inputTerm);
                 $query->where('name', 'like', '%' . $inputTerm . '%')
                     ->orWhere($entityModelInstance->textField, 'like', '%' . $inputTerm . '%');
             });
@@ -218,7 +219,7 @@ class SearchRunner
         $subQuery->where('entity_type', '=', $entity->getMorphClass());
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
-                $inputTerm = (strpos($inputTerm, "\\") !== false) ? str_replace("\\", "\\\\", $inputTerm) : $inputTerm;
+                $inputTerm = str_replace('\\', '\\\\', $inputTerm);
                 $query->orWhere('term', 'like', $inputTerm . '%');
             }
         });
@@ -355,6 +356,9 @@ class SearchRunner
                     $tagValue = (float) trim($connection->getPdo()->quote($tagValue), "'");
                     $query->whereRaw("value {$tagOperator} {$tagValue}");
                 } else {
+                    if ($tagOperator === 'like') {
+                        $tagValue = str_replace('\\', '\\\\', $tagValue);
+                    }
                     $query->where('value', $tagOperator, $tagValue);
                 }
             } else {

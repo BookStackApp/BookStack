@@ -444,6 +444,26 @@ class EntitySearchTest extends TestCase
         $search->assertSee($page->getUrl(), false);
     }
 
+    public function test_backslashes_can_be_searched_upon()
+    {
+        $page = $this->entities->newPage(['name' => 'TermA', 'html' => '
+            <p>More info is at the path \\\\cat\\dog\\badger</p>
+        ']);
+        $page->tags()->save(new Tag(['name' => '\\Category', 'value' => '\\animals\\fluffy']));
+
+        $search = $this->asEditor()->get('/search?term=' . urlencode('\\\\cat\\dog'));
+        $search->assertSee($page->getUrl(), false);
+
+        $search = $this->asEditor()->get('/search?term=' . urlencode('"\\dog\\"'));
+        $search->assertSee($page->getUrl(), false);
+
+        $search = $this->asEditor()->get('/search?term=' . urlencode('"\\badger\\"'));
+        $search->assertDontSee($page->getUrl(), false);
+
+        $search = $this->asEditor()->get('/search?term=' . urlencode('[\\Categorylike%\\fluffy]'));
+        $search->assertSee($page->getUrl(), false);
+    }
+
     public function test_searches_with_user_filters_adds_them_into_advanced_search_form()
     {
         $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:dan} {created_by:dan}'));
