@@ -147,7 +147,7 @@ function icon(string $name, array $attrs = []): string
 }
 
 /**
- * Generate a url with multiple parameters for sorting purposes.
+ * Generate a URL with multiple parameters for sorting purposes.
  * Works out the logic to set the correct sorting direction
  * Discards empty parameters and allows overriding.
  */
@@ -172,7 +172,7 @@ function sortUrl(string $path, array $data, array $overrideData = []): string
     }
 
     if (count($queryStringSections) === 0) {
-        return $path;
+        return url($path);
     }
 
     return url($path . '?' . implode('&', $queryStringSections));
