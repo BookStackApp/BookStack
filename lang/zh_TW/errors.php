@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => '伺服器無法建立縮圖。請檢查您是否安裝了 PHP 的 GD 擴充程式。',
     'server_upload_limit' => '伺服器不允許上傳這個大的檔案。請嘗試較小的檔案。',
     'uploaded'  => '伺服器不允許上傳這個大的檔案。請嘗試較小的檔案。',
-    'file_upload_timeout' => '檔案上傳逾時。',
 
     // Drawing & Images
     'image_upload_error' => '上傳圖片時發生錯誤',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => '找不到附件',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => '無法儲存草稿。請確保您在儲存此頁面前已連線至網際網路',
