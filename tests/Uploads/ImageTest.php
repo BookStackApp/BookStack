@@ -163,7 +163,8 @@ class ImageTest extends TestCase
 
         $file = $this->files->imageFromBase64File('bad-php.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
-        $upload->assertStatus(302);
+        $upload->assertStatus(500);
+        $this->assertStringContainsString('The file must have a valid & supported image extension', $upload->json('message'));
 
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded php file was uploaded but should have been stopped');
 
@@ -185,7 +186,8 @@ class ImageTest extends TestCase
 
         $file = $this->files->imageFromBase64File('bad-phtml.base64', $fileName);
         $upload = $this->withHeader('Content-Type', 'image/jpeg')->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], []);
-        $upload->assertStatus(302);
+        $upload->assertStatus(500);
+        $this->assertStringContainsString('The file must have a valid & supported image extension', $upload->json('message'));
 
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded php file was uploaded but should have been stopped');
     }
