@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Servern kan inte skapa miniatyrer. Kontrollera att du har PHPs GD-tillägg aktiverat.',
     'server_upload_limit' => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
     'uploaded'  => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
-    'file_upload_timeout' => 'Filuppladdningen har tagits ut.',
 
     // Drawing & Images
     'image_upload_error' => 'Ett fel inträffade vid uppladdningen',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Bilagan hittades ej',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Kunde inte spara utkastet. Kontrollera att du är ansluten till internet.',
