@@ -182,6 +182,10 @@ body.tox-fullscreen, body.markdown-fullscreen {
   .cm-editor {
     margin-bottom: 1.375em;
   }
+
+  video {
+    max-width: 100%;
+  }
 }
 
 // Page content pointers
