@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Server nedokáže vytvoriť náhľady. Skontrolujte prosím, či máte nainštalované GD rozšírenie PHP.',
     'server_upload_limit' => 'Server nedovoľuje nahrávanie súborov s takouto veľkosťou. Skúste prosím menší súbor.',
     'uploaded'  => 'Server nedovoľuje nahrávanie súborov s takouto veľkosťou. Skúste prosím menší súbor.',
-    'file_upload_timeout' => 'Nahrávanie súboru vypršalo.',
 
     // Drawing & Images
     'image_upload_error' => 'Pri nahrávaní obrázka nastala chyba',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Príloha nenájdená',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Koncept nemohol byť uložený. Uistite sa, že máte pripojenie k internetu pre uložením tejto stránky',
