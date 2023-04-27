@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Biraj sliku',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Sve',
     'image_all_title' => 'Pogledaj sve slike',
     'image_book_title' => 'Pogledaj slike prenesene u ovu knjigu',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'Jeste li sigurni da želite obrisati ovu sliku?',
     'image_select_image' => 'Odaberi sliku',
     'image_dropzone' => 'Ostavi slike ili pritisnite ovdje da ih prenesete',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'Slike su izbrisane',
     'image_preview' => 'Pregled Slike',
     'image_upload_success' => 'Slika uspješno učitana',
     'image_update_success' => 'Detalji slike uspješno ažurirani',
     'image_delete_success' => 'Slika uspješno izbrisana',
-    'image_upload_remove' => 'Ukloni',
 
     // Code Editor
     'code_editor' => 'Uredi Kod',
