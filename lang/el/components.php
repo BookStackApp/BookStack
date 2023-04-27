@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Επιλογή εικόνας',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Όλες',
     'image_all_title' => 'Δείτε όλες τις εικόνες που υπάρχουν στο Server',
     'image_book_title' => 'Προβολή εικόνων που έχουν μεταφορτωθεί σε αυτό το βιβλίο',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'Είστε σίγουροι ότι θέλετε να διαγράψετε αυτήν την εικόνα;',
     'image_select_image' => 'Επιλέξτε Εικόνα',
     'image_dropzone' => 'Σύρτε ή κάντε κλικ εδώ για μεταφόρτωση εικόνων',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'Οι εικόνες διαγράφηκαν',
     'image_preview' => 'Προεπισκόπηση εικόνας',
     'image_upload_success' => 'Η εικόνα μεταφορτώθηκε με επιτυχία',
     'image_update_success' => 'Τα στοιχεία της εικόνας ενημερώθηκαν με επιτυχία',
     'image_delete_success' => 'Η εικόνα διαγράφηκε επιτυχώς',
-    'image_upload_remove' => 'Αφαίρεση',
 
     // Code Editor
     'code_editor' => 'Επεξεργασία κώδικα',
