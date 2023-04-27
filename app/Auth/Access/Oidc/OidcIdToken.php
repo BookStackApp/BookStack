@@ -4,35 +4,16 @@ namespace BookStack\Auth\Access\Oidc;
 
 class OidcIdToken
 {
-    /**
-     * @var array
-     */
-    protected $header;
-
-    /**
-     * @var array
-     */
-    protected $payload;
-
-    /**
-     * @var string
-     */
-    protected $signature;
+    protected array $header;
+    protected array $payload;
+    protected string $signature;
+    protected string $issuer;
+    protected array $tokenParts = [];
 
     /**
      * @var array[]|string[]
      */
-    protected $keys;
-
-    /**
-     * @var string
-     */
-    protected $issuer;
-
-    /**
-     * @var array
-     */
-    protected $tokenParts = [];
+    protected array $keys;
 
     public function __construct(string $token, string $issuer, array $keys)
     {
@@ -104,6 +85,14 @@ class OidcIdToken
     public function getAllClaims(): array
     {
         return $this->payload;
+    }
+
+    /**
+     * Replace the existing claim data of this token with that provided.
+     */
+    public function replaceClaims(array $claims): void
+    {
+        $this->payload = $claims;
     }
 
     /**
