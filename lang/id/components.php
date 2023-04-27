@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Pilih Gambar',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Semua',
     'image_all_title' => 'Lihat semua gambar',
     'image_book_title' => 'Lihat gambar yang diunggah ke buku ini',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'Anda yakin ingin menghapus gambar ini?',
     'image_select_image' => 'Pilih gambar',
     'image_dropzone' => 'Lepaskan gambar atau klik di sini untuk mengunggah',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'Gambar Dihapus',
     'image_preview' => 'Pratinjau Gambar',
     'image_upload_success' => 'Gambar berhasil diunggah',
     'image_update_success' => 'Detail gambar berhasil diperbarui',
     'image_delete_success' => 'Gambar berhasil dihapus',
-    'image_upload_remove' => 'Menghapus',
 
     // Code Editor
     'code_editor' => 'Edit Kode',
