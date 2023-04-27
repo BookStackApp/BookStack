@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Manust ei leitud',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Manuse faili üleslaadimisel tekkis viga',
 
     // Pages
     'page_draft_autosave_fail' => 'Mustandi salvestamine ebaõnnestus. Kontrolli oma internetiühendust',
