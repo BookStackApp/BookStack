@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Serveren kan ikke oprette miniaturer. Kontroller, at GD PHP-udvidelsen er installeret.',
     'server_upload_limit' => 'Serveren tillader ikke uploads af denne størrelse. Prøv en mindre filstørrelse.',
     'uploaded'  => 'Serveren tillader ikke uploads af denne størrelse. Prøv en mindre filstørrelse.',
-    'file_upload_timeout' => 'Filuploaden udløb.',
 
     // Drawing & Images
     'image_upload_error' => 'Der opstod en fejl ved upload af billedet',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Vedhæftning ikke fundet',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Kunne ikke gemme kladde. Tjek at du har internetforbindelse før du gemmer siden',
