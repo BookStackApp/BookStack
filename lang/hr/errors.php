@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Provjerite imate li instaliranu GD PHP ekstenziju.',
     'server_upload_limit' => 'Prevelika količina za server. Pokušajte prenijeti manju veličinu.',
     'uploaded'  => 'Prevelika količina za server. Pokušajte prenijeti manju veličinu.',
-    'file_upload_timeout' => 'Isteklo vrijeme za prijenos datoteke.',
 
     // Drawing & Images
     'image_upload_error' => 'Problem s prenosom slike',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Prilozi nisu pronađeni',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Problem sa spremanjem nacrta. Osigurajte stabilnu internetsku vezu.',
