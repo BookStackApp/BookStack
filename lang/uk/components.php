@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Вибрати зображення',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Всі',
     'image_all_title' => 'Переглянути всі зображення',
     'image_book_title' => 'Переглянути зображення, завантажені в цю книгу',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'Ви дійсно хочете видалити це зображення?',
     'image_select_image' => 'Вибрати зображення',
     'image_dropzone' => 'Перетягніть зображення, або натисніть тут для завантаження',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'Зображень видалено',
     'image_preview' => 'Попередній перегляд зображення',
     'image_upload_success' => 'Зображення завантажено успішно',
     'image_update_success' => 'Деталі зображення успішно оновлені',
     'image_delete_success' => 'Зображення успішно видалено',
-    'image_upload_remove' => 'Видалити',
 
     // Code Editor
     'code_editor' => 'Редагувати код',
