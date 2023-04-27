@@ -218,10 +218,8 @@ class SearchRunner
         $subQuery->where('entity_type', '=', $entity->getMorphClass());
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
-                $inputTerm = (strpos($inputTerm, "\\") !== false) ? str_repeat($inputTerm, 2) : $inputTerm;
-                $query->orWhere('term', 'like', ($inputTerm . '%'))->where(function ($query) use ($inputTerm) {
-                    $query->where('term', 'not like', ($inputTerm . '%'))->orWhere('term', 'like', ("%" . $inputTerm . "%"));
-                });
+                $inputTerm = (strpos($inputTerm, "\\") !== false) ? str_replace("\\", "\\\\", $inputTerm) : $inputTerm;
+                $query->orWhere('term', 'like', $inputTerm . '%');
             }
         });
         $subQuery->groupBy('entity_type', 'entity_id');
