@@ -18,7 +18,10 @@ export class ImageManager extends Component {
         this.listContainer = this.$refs.listContainer;
         this.filterTabs = this.$manyRefs.filterTabs;
         this.selectButton = this.$refs.selectButton;
+        this.uploadButton = this.$refs.uploadButton;
+        this.uploadHint = this.$refs.uploadHint;
         this.formContainer = this.$refs.formContainer;
+        this.formContainerPlaceholder = this.$refs.formContainerPlaceholder;
         this.dropzoneContainer = this.$refs.dropzoneContainer;
 
         // Instance data
@@ -54,18 +57,14 @@ export class ImageManager extends Component {
             this.resetListView();
             this.resetSearchView();
             this.loadGallery();
-            this.cancelSearch.classList.remove('active');
         });
 
-        this.searchInput.addEventListener('input', () => {
-            this.cancelSearch.classList.toggle('active', this.searchInput.value.trim());
-        });
-
-        onChildEvent(this.listContainer, '.load-more', 'click', async event => {
-            showLoading(event.target);
+        onChildEvent(this.listContainer, '.load-more button', 'click', async event => {
+            const wrapper = event.target.closest('.load-more');
+            showLoading(wrapper);
             this.page += 1;
             await this.loadGallery();
-            event.target.remove();
+            wrapper.remove();
         });
 
         this.listContainer.addEventListener('event-emit-select-image', this.onImageSelectEvent.bind(this));
@@ -87,8 +86,11 @@ export class ImageManager extends Component {
             }
         });
 
-        this.formContainer.addEventListener('ajax-form-success', this.refreshGallery.bind(this));
-        this.container.addEventListener('dropzone-success', this.refreshGallery.bind(this));
+        this.formContainer.addEventListener('ajax-form-success', () => {
+            this.refreshGallery();
+            this.resetEditForm();
+        });
+        this.container.addEventListener('dropzone-upload-success', this.refreshGallery.bind(this));
     }
 
     show(callback, type = 'gallery') {
@@ -97,7 +99,15 @@ export class ImageManager extends Component {
         this.callback = callback;
         this.type = type;
         this.getPopup().show();
-        this.dropzoneContainer.classList.toggle('hidden', type !== 'gallery');
+
+        const hideUploads = type !== 'gallery';
+        this.dropzoneContainer.classList.toggle('hidden', hideUploads);
+        this.uploadButton.classList.toggle('hidden', hideUploads);
+        this.uploadHint.classList.toggle('hidden', hideUploads);
+
+        /** @var {Dropzone} * */
+        const dropzone = window.$components.firstOnElement(this.container, 'dropzone');
+        dropzone.toggleActive(!hideUploads);
 
         if (!this.hasData) {
             this.loadGallery();
@@ -163,6 +173,7 @@ export class ImageManager extends Component {
 
     resetEditForm() {
         this.formContainer.innerHTML = '';
+        this.formContainerPlaceholder.removeAttribute('hidden');
     }
 
     resetListView() {
@@ -209,6 +220,7 @@ export class ImageManager extends Component {
         const params = requestDelete ? {delete: true} : {};
         const {data: formHtml} = await window.$http.get(`/images/edit/${imageId}`, params);
         this.formContainer.innerHTML = formHtml;
+        this.formContainerPlaceholder.setAttribute('hidden', '');
         window.$components.init(this.formContainer);
     }
 
