@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Сервер не может создавать эскизы. Убедитесь, что у вас установлено расширение GD PHP.',
     'server_upload_limit' => 'Сервер не разрешает загрузку файлов такого размера. Попробуйте уменьшить размер файла.',
     'uploaded'  => 'Сервер не позволяет загружать файлы такого размера. Пожалуйста, попробуйте файл меньше.',
-    'file_upload_timeout' => 'Время загрузки файла истекло.',
 
     // Drawing & Images
     'image_upload_error' => 'Произошла ошибка при загрузке изображения',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Вложение не найдено',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Не удалось сохранить черновик. Перед сохранением этой страницы убедитесь, что у вас есть подключение к Интернету.',
