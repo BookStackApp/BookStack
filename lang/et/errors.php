@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Server ei saa piltide eelvaateid tekitada. Veendu, et PHP GD laiendus on paigaldatud.',
     'server_upload_limit' => 'Server ei luba nii suurte failide üleslaadimist. Proovi väiksema failiga.',
     'uploaded'  => 'Server ei luba nii suurte failide üleslaadimist. Proovi väiksema failiga.',
-    'file_upload_timeout' => 'Faili üleslaadimine aegus.',
 
     // Drawing & Images
     'image_upload_error' => 'Pildi üleslaadimisel tekkis viga',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Manust ei leitud',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Mustandi salvestamine ebaõnnestus. Kontrolli oma internetiühendust',
