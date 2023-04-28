@@ -67,7 +67,7 @@ class Saml2Service
                 $returnRoute,
                 [],
                 $user->email,
-                null,
+                session()->get('saml2_session_index'),
                 true,
                 Constants::NAMEID_EMAIL_ADDRESS
             );
@@ -118,6 +118,7 @@ class Saml2Service
 
         $attrs = $toolkit->getAttributes();
         $id = $toolkit->getNameId();
+        session()->put('saml2_session_index', $toolkit->getSessionIndex());
 
         return $this->processLoginCallback($id, $attrs);
     }
