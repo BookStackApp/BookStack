@@ -39,9 +39,9 @@ return [
     'register_success' => 'Terima kasih telah mendaftar! Anda sekarang terdaftar dan masuk.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Mencoba masuk',
+    'auto_init_starting_desc' => 'Kami sedang menghubungi sistem autentikasi Anda untuk memulai proses login. Jika tidak ada kemajuan setelah 5 detik, Anda dapat mencoba mengklik link di bawah ini.',
+    'auto_init_start_link' => 'Lanjutkan dengan otentikasi',
 
     // Password Reset
     'reset_password' => 'Atur ulang kata sandi',
