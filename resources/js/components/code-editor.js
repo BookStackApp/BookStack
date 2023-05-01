@@ -74,8 +74,13 @@ export class CodeEditor extends Component {
 
         onChildEvent(button.parentElement, '.lang-option-favorite-toggle', 'click', () => {
             isFavorite = !isFavorite;
-            const action = isFavorite ? this.favourites.add : this.favourites.delete;
-            action(language);
+
+            if (isFavorite) {
+                this.favourites.add(language);
+            } else {
+                this.favourites.delete(language);
+            }
+
             button.setAttribute('data-favourite', isFavorite ? 'true' : 'false');
 
             window.$http.patch('/preferences/update-code-language-favourite', {
