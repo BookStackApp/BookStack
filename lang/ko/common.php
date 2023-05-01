@@ -42,8 +42,8 @@ return [
     'add' => '추가',
     'configure' => '설정',
     'fullscreen' => '전체화면',
-    'favourite' => '북마크',
-    'unfavourite' => '좋아하지 않음',
+    'favourite' => '즐겨찾기',
+    'unfavourite' => '즐겨찾기 해제',
     'next' => '다음',
     'previous' => '이전',
     'filter_active' => '적용 중:',
@@ -54,8 +54,8 @@ return [
     // Sort Options
     'sort_options' => '정렬 기준',
     'sort_direction_toggle' => '순서 반전',
-    'sort_ascending' => '오름차 순서',
-    'sort_descending' => '내림차 순서',
+    'sort_ascending' => '오름차순',
+    'sort_descending' => '내림차순',
     'sort_name' => '제목',
     'sort_default' => '기본값',
     'sort_created_at' => '만든 날짜',
@@ -81,20 +81,20 @@ return [
     'none' => '없음',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => '홈페이지',
     'header_menu_expand' => '헤더 메뉴 펼치기',
     'profile_menu' => '프로필',
     'view_profile' => '프로필 보기',
     'edit_profile' => '프로필 바꾸기',
     'dark_mode' => '어두운 테마',
     'light_mode' => '밝은 테마',
-    'global_search' => 'Global Search',
+    'global_search' => '전역 검색',
 
     // Layout tabs
     'tab_info' => '정보',
-    'tab_info_label' => 'Tab: 보조 정보 보이기',
+    'tab_info_label' => '탭: 보조 정보 보이기',
     'tab_content' => '내용',
-    'tab_content_label' => 'Tab: 우선 항목 보이기',
+    'tab_content_label' => '탭: 우선 항목 보이기',
 
     // Email Content
     'email_action_help' => ':actionText를 클릭할 수 없을 때는 웹 브라우저에서 다음 링크로 접속할 수 있습니다.',

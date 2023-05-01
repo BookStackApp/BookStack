@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => '画像を選択',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'すべて',
     'image_all_title' => '全ての画像を表示',
     'image_book_title' => 'このブックにアップロードされた画像を表示',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'この画像を削除してもよろしいですか？',
     'image_select_image' => '画像を選択',
     'image_dropzone' => '画像をドロップするか、クリックしてアップロード',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => '画像を削除しました',
     'image_preview' => '画像プレビュー',
     'image_upload_success' => '画像がアップロードされました',
     'image_update_success' => '画像が更新されました',
     'image_delete_success' => '画像が削除されました',
-    'image_upload_remove' => '削除',
 
     // Code Editor
     'code_editor' => 'コードを編集する',

@@ -39,9 +39,9 @@ return [
     'register_success' => 'Terima kasih telah mendaftar! Anda sekarang terdaftar dan masuk.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Mencoba masuk',
+    'auto_init_starting_desc' => 'Kami sedang menghubungi sistem autentikasi Anda untuk memulai proses login. Jika tidak ada kemajuan setelah 5 detik, Anda dapat mencoba mengklik link di bawah ini.',
+    'auto_init_start_link' => 'Lanjutkan dengan otentikasi',
 
     // Password Reset
     'reset_password' => 'Atur ulang kata sandi',
@@ -59,10 +59,10 @@ return [
     'email_confirm_text' => 'Silakan konfirmasi alamat email Anda dengan mengklik tombol di bawah ini:',
     'email_confirm_action' => 'Konfirmasi email',
     'email_confirm_send_error' => 'Konfirmasi email diperlukan tetapi sistem tidak dapat mengirim email. Hubungi admin untuk memastikan email disiapkan dengan benar.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'Email Anda sudah terkonfirmasi! Anda seharusnya sudah bisa masuk menggunakan email ini.',
     'email_confirm_resent' => 'Email konfirmasi dikirim ulang, Harap periksa kotak masuk Anda.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'Terima kasih untuk mengkonfirmasi!',
+    'email_confirm_thanks_desc' => 'Harap tunggu sebentar, konfirmasi Anda sedang ditangani. Jika Anda tidak dipindahkan setelah 3 detik, tekan link "Selanjutnya" dibawah ini untuk melanjutkan.',
 
     'email_not_confirmed' => 'Alamat Email Tidak Dikonfirmasi',
     'email_not_confirmed_text' => 'Alamat email Anda belum dikonfirmasi.',
@@ -78,12 +78,12 @@ return [
     'user_invite_page_welcome' => 'Selamat datang di :appName!',
     'user_invite_page_text' => 'Untuk menyelesaikan akun Anda dan mendapatkan akses, Anda perlu mengatur kata sandi yang akan digunakan untuk masuk ke :appName pada kunjungan berikutnya.',
     'user_invite_page_confirm_button' => 'Konfirmasi Kata sandi',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'Kata sandi diset, Anda seharusnya sudah bisa masuk menggunakan kata sandi yang sudah diset untuk mengakses :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
-    'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'mfa_setup_configured' => 'Already configured',
+    'mfa_setup' => 'Atur Multi-Factor Otentikasi',
+    'mfa_setup_desc' => 'Mengatur multi-factor otentikasi sebagai tambahan ekstra keamanan untuk akun Anda.',
+    'mfa_setup_configured' => 'Sudah dikonfigurasi',
     'mfa_setup_reconfigure' => 'Konfigurasi ulang',
     'mfa_setup_remove_confirmation' => 'Apakah Anda yakin ingin menghapus metode autentikasi multi-faktor ini?',
     'mfa_setup_action' => 'Setup',

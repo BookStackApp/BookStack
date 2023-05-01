@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Bild auswählen',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Alle',
     'image_all_title' => 'Alle Bilder anzeigen',
     'image_book_title' => 'Zeige alle Bilder, die in dieses Buch hochgeladen wurden',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'Möchten Sie dieses Bild wirklich löschen?',
     'image_select_image' => 'Bild auswählen',
     'image_dropzone' => 'Ziehen Sie Bilder hierher oder klicken Sie hier, um ein Bild auszuwählen',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'Bilder gelöscht',
     'image_preview' => 'Bildvorschau',
     'image_upload_success' => 'Bild erfolgreich hochgeladen',
     'image_update_success' => 'Bilddetails erfolgreich aktualisiert',
     'image_delete_success' => 'Bild erfolgreich gelöscht',
-    'image_upload_remove' => 'Entfernen',
 
     // Code Editor
     'code_editor' => 'Code editieren',

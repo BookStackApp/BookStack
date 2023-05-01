@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Ni all y gweinydd greu mân-luniau. Gwiriwch fod gennych yr estyniad GD PHP wedi\'i osod.',
     'server_upload_limit' => 'Nid yw\'r gweinydd yn caniatáu uwchlwythiadau o\'r maint hwn. Rhowch gynnig ar faint ffeil llai.',
     'uploaded'  => 'Nid yw\'r gweinydd yn caniatáu uwchlwythiadau o\'r maint hwn. Rhowch gynnig ar faint ffeil llai.',
-    'file_upload_timeout' => 'Mae\'r amser uwchlwytho ffeil wedi dod i ben.',
 
     // Drawing & Images
     'image_upload_error' => 'Bu gwall wrth uwchlwytho\'r ddelwedd',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Ni chanfuwyd yr atodiad',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Wedi methu cadw\'r drafft. Sicrhewch fod gennych gysylltiad rhyngrwyd cyn cadw\'r dudalen hon',

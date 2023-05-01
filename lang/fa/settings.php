@@ -50,11 +50,11 @@ return [
 
     // Color settings
     'color_scheme' => 'ترکیب رنگی برنامه',
-    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
-    'app_color' => 'Primary Color',
-    'link_color' => 'Default Link Color',
-    'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
+    'color_scheme_desc' => 'رنگهایی که در رابط کاربری نرم‌افزار استفاده می شوند را انتخاب کنید. رنگها را میتوان برای حالت روشن یا تیره به صورت جداگانه تنظیم کرد تا هم با تم مورد استفاده سازگار بوده و هم خوانا باشند.',
+    'ui_colors_desc' => 'رنگ اصلی نرم‌افزار و رنگ پیش فرض پیوندها را انتخاب کنید. رنگ اصلی بیشتر برای بنر، کلیدها و عناصر تزیینی رابط کاربری استفاده می شوند. رنگ پیش فرض پیوند برای پیوندهای متنی و اکشن ها بکار میرود، هم در محتوای متنی و هم در رابط کاربری.',
+    'app_color' => 'رنگ اصلی',
+    'link_color' => 'رنگ پیش فرض پیوند',
+    'content_colors_desc' => 'رنگهای عناصر سلسه مراتب صفحه را انتخاب کنید. پیشنهاد می شود رنگهایی انتخاب گردند که با رنگ پیش فرض دارای روشنی مشابه باشند، تا به خوانایی کمک شود.',
     'bookshelf_color' => 'رنگ قفسه',
     'book_color' => 'رنگ کتاب',
     'chapter_color' => 'رنگ فصل',
@@ -93,10 +93,10 @@ return [
     'maint_send_test_email_mail_text' => 'تبریک می گویم! با دریافت این اعلان ایمیل، به نظر می رسد تنظیمات ایمیل شما به درستی پیکربندی شده است.',
     'maint_recycle_bin_desc' => 'قفسه‌ها، کتاب‌ها، فصل‌ها و صفحات حذف‌شده به سطل بازیافت فرستاده می‌شوند تا بتوان آن‌ها را بازیابی کرد یا برای همیشه حذف کرد. بسته به پیکربندی سیستم، اقلام قدیمی در سطل بازیافت ممکن است پس از مدتی به طور خودکار حذف شوند.',
     'maint_recycle_bin_open' => 'سطل بازیافت را باز کنید',
-    'maint_regen_references' => 'Regenerate References',
-    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
-    'maint_regen_references_success' => 'Reference index has been regenerated!',
-    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
+    'maint_regen_references' => 'تولید مجدد رفرنس ها',
+    'maint_regen_references_desc' => 'این عمل اندیس رفرنس های میان اقلامی موجود در دیتابیس را بازسازی خواهد کرد. چنین کاری معمولا به صورت خودکار انجام میشود، ولی این عمل برای اندیس گذاری محتویات قدیمی یا محتویایی که از طرق غیرمعمول اضافه شده اند مفید است.',
+    'maint_regen_references_success' => 'اندیس رفرنس ها بازسازی شدند!',
+    'maint_timeout_command_note' => 'توجه: این عملیات زمان بر خواهد بود، که ممکن در برخی محیطهای وب باعث از دسترس خارج شدن شوند. به عنوان گزینه جایگزین، این عمل را میتوان با استفاده از یک دستور ترمینال انجام داد.',
 
     // Recycle Bin
     'recycle_bin' => 'سطل زباله',
@@ -141,7 +141,7 @@ return [
     'roles_x_users_assigned' => ':count کاربر اختصاص داده شده|:count کاربر اختصاص داده شده',
     'roles_x_permissions_provided' => ':count مجوز|:count مجوز',
     'roles_assigned_users' => 'کاربران اختصاص داده شده',
-    'roles_permissions_provided' => 'Provided Permissions',
+    'roles_permissions_provided' => 'دسترسی های موجود',
     'role_create' => 'نقش جدید ایجاد کنید',
     'role_delete' => 'حذف نقش',
     'role_delete_confirm' => 'با این کار نقش با نام \':roleName\' حذف می شود.',
@@ -168,7 +168,7 @@ return [
     'roles_system_warning' => 'توجه داشته باشید که دسترسی به هر یک از سه مجوز فوق می‌تواند به کاربر اجازه دهد تا امتیازات خود یا امتیازات دیگران را در سیستم تغییر دهد. فقط نقش هایی را با این مجوزها به کاربران مورد اعتماد اختصاص دهید.',
     'role_asset_desc' => 'این مجوزها دسترسی پیش‌فرض به دارایی‌های درون سیستم را کنترل می‌کنند. مجوزهای مربوط به کتاب‌ها، فصل‌ها و صفحات این مجوزها را لغو می‌کنند.',
     'role_asset_admins' => 'به ادمین‌ها به‌طور خودکار به همه محتوا دسترسی داده می‌شود، اما این گزینه‌ها ممکن است گزینه‌های UI را نشان داده یا پنهان کنند.',
-    'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_image_view_note' => 'این مربوط به مرئی بودن در بخش مدیر تصاویر است. دسترسی عملی به تصاویر آپلود شده بستگی به گزینه ذخیره‌سازی تصویر سیستم دارد.',
     'role_all' => 'همه',
     'role_own' => 'صاحب',
     'role_controlled_by_asset' => 'توسط دارایی که در آن آپلود می شود کنترل می شود',
@@ -178,7 +178,7 @@ return [
 
     // Users
     'users' => 'کاربران',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => 'ساخت و مدیریت حساب های کاربری درون سیستم. حساب های کاربری برای ورود به سیستم و تخصیص محتوا و فعالیت ها به کار می روند. اجازه های دسترسی عموما بر مبنای نقش کاربر هستند، ولی مالکیت محتوای کاربر (در کنار سایر عوامل) روی اجازه و دسترسی تاثیر گذارند.',
     'user_profile' => 'پرونده کاربر',
     'users_add_new' => 'افزودن کاربر جدید',
     'users_search' => 'جستجوی کاربران',
@@ -248,7 +248,7 @@ return [
 
     // Webhooks
     'webhooks' => 'وب‌هوک‌ها',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
+    'webhooks_index_desc' => 'وب هوک ها روشی برای ارسال داده به آدرس های اینترنتی خارج از سیستم، بر اساس اتفاقات خاصی درون سیستم هستند که امکان یکپارچه سازی مبتنی بر وقایع را با سایر سیستم ها، مثل سیستم پیام رسانی یا اطلاع رسانی، فراهم می کنند.',
     'webhooks_x_trigger_events' => ':count trigger event|:count trigger events',
     'webhooks_create' => 'ایجاد وب هوک جدید',
     'webhooks_none_created' => 'هنوز هیچ وب هوکی ایجاد نشده است.',

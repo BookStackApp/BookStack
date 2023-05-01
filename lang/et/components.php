@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Pildifaili valik',
+    'image_upload' => 'Laadi pilt üles',
+    'image_intro' => 'Siin saad valida ja hallata pilte, mis on eelnevalt süsteemi üles laaditud.',
+    'image_intro_upload' => 'Laadi uus pilt üles pildifaili sellesse aknasse lohistades või ülal "Laadi pilt üles" nupu abil.',
     'image_all' => 'Kõik',
     'image_all_title' => 'Vaata kõiki pildifaile',
     'image_book_title' => 'Vaata sellesse raamatusse laaditud pildifaile',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'Kas oled kindel, et soovid selle pildifaili kustutada?',
     'image_select_image' => 'Vali pildifail',
     'image_dropzone' => 'Üleslaadimiseks lohista pildid või klõpsa siin',
+    'image_dropzone_drop' => 'Üleslaadimiseks lohista pildid siia',
     'images_deleted' => 'Pildifailid kustutatud',
     'image_preview' => 'Pildi eelvaade',
     'image_upload_success' => 'Pildifail üles laaditud',
     'image_update_success' => 'Pildifaili andmed muudetud',
     'image_delete_success' => 'Pildifail kustutatud',
-    'image_upload_remove' => 'Eemalda',
 
     // Code Editor
     'code_editor' => 'Muuda koodi',

@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Serwer nie może utworzyć miniaturek. Upewnij się że rozszerzenie GD PHP zostało zainstalowane.',
     'server_upload_limit' => 'Serwer nie pozwala na przyjęcie pliku o tym rozmiarze. Spróbuj przesłać plik o mniejszym rozmiarze.',
     'uploaded'  => 'Serwer nie pozwala na przyjęcie pliku o tym rozmiarze. Spróbuj przesłać plik o mniejszym rozmiarze.',
-    'file_upload_timeout' => 'Przesyłanie pliku przekroczyło limit czasu.',
 
     // Drawing & Images
     'image_upload_error' => 'Wystąpił błąd podczas przesyłania obrazka',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Nie znaleziono załącznika',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Zapis wersji roboczej nie powiódł się. Upewnij się, że posiadasz połączenie z internetem.',

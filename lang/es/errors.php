@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'El servidor no puede crear la miniatura de la imagen. Compruebe que tiene la extensión PHP GD instalada.',
     'server_upload_limit' => 'El servidor no permite la subida de ficheros de este tamaño. Intente subir un fichero de menor tamaño.',
     'uploaded'  => 'El servidor no permite la subida de ficheros de este tamaño. Intente subir un fichero de menor tamaño.',
-    'file_upload_timeout' => 'La carga del archivo ha caducado.',
 
     // Drawing & Images
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'No se encontró el adjunto',
+    'attachment_upload_error' => 'Ha ocurrido un error al subir el archivo adjunto',
 
     // Pages
     'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegúrese de que tiene conexión a Internet antes de guardar este borrador',

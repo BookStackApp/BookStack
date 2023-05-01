@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Kan ikke opprette miniatyrbilder. GD PHP er ikke installert.',
     'server_upload_limit' => 'Vedlegget er for stort, forsøk med et mindre vedlegg.',
     'uploaded'  => 'Tjenesten aksepterer ikke vedlegg som er så stor.',
-    'file_upload_timeout' => 'Opplastingen gikk ut på tid.',
 
     // Drawing & Images
     'image_upload_error' => 'Bildet kunne ikke lastes opp, forsøk igjen.',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Vedlegget ble ikke funnet',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Kunne ikke lagre utkastet, forsikre deg om at du er tilkoblet tjeneren (Har du nettilgang?)',

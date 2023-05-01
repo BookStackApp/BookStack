@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Serveris negali sukurti miniatiūros. Prašome patikrinkite, ar turite įdiegtą GD PHP plėtinį.',
     'server_upload_limit' => 'Serveris neleidžia įkelti tokio dydžio failų. Prašome bandykite mažesnį failo dydį.',
     'uploaded'  => 'Serveris neleidžia įkelti tokio dydžio failų. Prašome bandykite mažesnį failo dydį.',
-    'file_upload_timeout' => 'Failo įkėlimo laikas baigėsi',
 
     // Drawing & Images
     'image_upload_error' => 'Įvyko klaida įkeliant vaizdą',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Priedas nerastas',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Juodraščio išsaugoti nepavyko. Įsitikinkite, jog turite interneto ryšį prieš išsaugant šį paslapį.',

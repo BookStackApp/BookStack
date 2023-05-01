@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => '選取圖片',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => '全部',
     'image_all_title' => '檢視所有圖片',
     'image_book_title' => '檢視上傳到此書本的圖片',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => '您確認想要刪除這個圖片？',
     'image_select_image' => '選取圖片',
     'image_dropzone' => '拖曳圖片或點擊此處上傳',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => '圖片已刪除',
     'image_preview' => '圖片預覽',
     'image_upload_success' => '圖片上傳成功',
     'image_update_success' => '圖片詳細資訊更新成功',
     'image_delete_success' => '圖片刪除成功',
-    'image_upload_remove' => '移除',
 
     // Code Editor
     'code_editor' => '編輯程式碼',

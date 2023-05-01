@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'O servidor não pôde criar as miniaturas de imagem. Por favor, verifique se a extensão GD PHP está instalada.',
     'server_upload_limit' => 'O servidor não permite o carregamento de arquivos com esse tamanho. Por favor, tente fazer o carregamento de arquivos mais pequenos.',
     'uploaded'  => 'O servidor não permite o carregamento de arquivos com esse tamanho. Por favor, tente fazer o carregamento de arquivos mais pequenos.',
-    'file_upload_timeout' => 'O carregamento do arquivo expirou.',
 
     // Drawing & Images
     'image_upload_error' => 'Ocorreu um erro no carregamento da imagem',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Anexo não encontrado',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Falha ao tentar guardar o rascunho. Certifique-se que a conexão de Internet está funcional antes de tentar guardar esta página',

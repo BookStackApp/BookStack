@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => '服务器无法创建缩略图，请检查您是否安装了GD PHP扩展。',
     'server_upload_limit' => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
     'uploaded'  => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
-    'file_upload_timeout' => '文件上传已超时。',
 
     // Drawing & Images
     'image_upload_error' => '上传图片时发生错误',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => '找不到附件',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => '无法保存草稿，确保您在保存页面之前已经连接到互联网',

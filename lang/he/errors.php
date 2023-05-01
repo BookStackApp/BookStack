@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'השרת אינו מרשה העלאת קבצים במשקל זה. אנא נסה להעלות קובץ קטן יותר.',
     'uploaded'  => 'השרת אינו מרשה העלאת קבצים במשקל זה. אנא נסה להעלות קובץ קטן יותר.',
-    'file_upload_timeout' => 'The file upload has timed out.',
 
     // Drawing & Images
     'image_upload_error' => 'התרחשה שגיאה במהלך העלאת התמונה',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'קובץ מצורף לא נמצא',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'שגיאה בשמירת הטיוטה. אנא ודא כי חיבור האינטרנט תקין לפני שמירת דף זה.',

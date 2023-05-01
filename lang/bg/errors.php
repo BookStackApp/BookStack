@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Сървърът не може да създаде малки изображения. Моля, увери се, че разширението GD PHP е инсталирано.',
     'server_upload_limit' => 'Сървърът не позволява качвания с такъв размер. Моля, пробвайте файл с по-малък размер.',
     'uploaded'  => 'Сървърът не позволява качвания с такъв размер. Моля, пробвайте файл с по-малък размер.',
-    'file_upload_timeout' => 'Качването на файла изтече.',
 
     // Drawing & Images
     'image_upload_error' => 'Възникна грешка при качването на изображението',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Прикачения файл не е намерен',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Неуспешно запазване на черновата. Увери се, че имаш свързаност с интернет преди да запазиш страницата',

@@ -7,13 +7,13 @@ return [
 
     // Pages
     'page_create'                 => '문서 만들기',
-    'page_create_notification'    => '문서 생성함',
+    'page_create_notification'    => '페이지를 생성했습니다',
     'page_update'                 => '문서 수정',
-    'page_update_notification'    => '문서 수정함',
+    'page_update_notification'    => '페이지를 수정했습니다',
     'page_delete'                 => '삭제 된 페이지',
-    'page_delete_notification'    => '문서 삭제함',
+    'page_delete_notification'    => '페이지를 삭제했습니다',
     'page_restore'                => '문서 복원',
-    'page_restore_notification'   => '문서 복원함',
+    'page_restore_notification'   => '페이지가 복원되었습니다',
     'page_move'                   => '문서 이동',
 
     // Chapters
@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => '사용자가 삭제되었습니다',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => '역할이 생성되었습니다',
+    'role_update_notification' => '역할이 수정되었습니다',
+    'role_delete_notification' => '역할이 삭제되었습니다',
 
     // Other
     'commented_on'                => '댓글 쓰기',

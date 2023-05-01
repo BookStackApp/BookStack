@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'تحديد صورة',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'الكل',
     'image_all_title' => 'عرض جميع الصور',
     'image_book_title' => 'عرض الصور المرفوعة لهذا الكتاب',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'هل أنت متأكد من أنك تريد حذف هذه الصورة؟',
     'image_select_image' => 'تحديد الصورة',
     'image_dropzone' => 'قم بإسقاط الصورة أو اضغط هنا للرفع',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'تم حذف الصور',
     'image_preview' => 'معاينة الصور',
     'image_upload_success' => 'تم رفع الصورة بنجاح',
     'image_update_success' => 'تم تحديث تفاصيل الصورة بنجاح',
     'image_delete_success' => 'تم حذف الصورة بنجاح',
-    'image_upload_remove' => 'إزالة',
 
     // Code Editor
     'code_editor' => 'تعديل الشفرة',

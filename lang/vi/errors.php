@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Máy chủ không thể tạo ảnh nhỏ. Vui lòng kiểm tra bạn đã cài đặt tiện ích mở rộng GD PHP.',
     'server_upload_limit' => 'Máy chủ không cho phép tải lên kích thước này. Vui lòng thử lại với tệp tin nhỏ hơn.',
     'uploaded'  => 'Máy chủ không cho phép tải lên kích thước này. Vui lòng thử lại với tệp tin nhỏ hơn.',
-    'file_upload_timeout' => 'Đã quá thời gian tải lên tệp tin.',
 
     // Drawing & Images
     'image_upload_error' => 'Đã xảy ra lỗi khi đang tải lên ảnh',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Không tìm thấy đính kèm',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Lưu bản nháp thất bại. Đảm bảo rằng bạn có kết nối đến internet trước khi lưu trang này',

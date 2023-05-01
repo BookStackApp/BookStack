@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Serveris nevar izveidot samazinātus attēlus. Lūdzu pārbaudiet, vai ir uzstādīts PHP GD paplašinājums.',
     'server_upload_limit' => 'Serveris neatļauj šāda izmēra failu ielādi. Lūdzu mēģiniet mazāka izmēra failu.',
     'uploaded'  => 'Serveris neatļauj šāda izmēra failu ielādi. Lūdzu mēģiniet mazāka izmēra failu.',
-    'file_upload_timeout' => 'Faila augšupielādē ir iestājies noilgums.',
 
     // Drawing & Images
     'image_upload_error' => 'Radās kļūda augšupielādējot attēlu',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Pielikums nav atrasts',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Neizdevās saglabāt uzmetumu. Pārliecinieties, ka jūsu interneta pieslēgums ir aktīvs pirms saglabājiet šo lapu',
