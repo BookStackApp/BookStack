@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Server ne može kreirati sličice. Provjerite da imate instaliranu GD PHP ekstenziju.',
     'server_upload_limit' => 'Server ne dopušta učitavanja ove veličine. Pokušajte sa manjom veličinom fajla.',
     'uploaded'  => 'Server ne dopušta učitavanja ove veličine. Pokušajte sa manjom veličinom fajla.',
-    'file_upload_timeout' => 'Vrijeme učitavanja fajla je isteklo.',
 
     // Drawing & Images
     'image_upload_error' => 'Desila se greška prilikom učitavanja slike',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Prilog nije pronađen',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Snimanje skice nije uspjelo. Provjerite da ste povezani na internet prije snimanja ove stranice',

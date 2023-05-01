@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'A kiszolgáló nem tud létrehozni bélyegképeket. Ellenőrizni kell, hogy telepítve van-a a GD PHP kiterjesztés.',
     'server_upload_limit' => 'A kiszolgáló nem engedélyez ilyen méretű feltöltéseket. Kisebb fájlmérettel kell próbálkozni.',
     'uploaded'  => 'A kiszolgáló nem engedélyez ilyen méretű feltöltéseket. Kisebb fájlmérettel kell próbálkozni.',
-    'file_upload_timeout' => 'A fáj feltöltése időtúllépést okozott.',
 
     // Drawing & Images
     'image_upload_error' => 'Hiba történt a kép feltöltése közben',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Csatolmány nem található',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Nem sikerült a vázlat mentése. Mentés előtt meg kell róla győződni, hogy van internetkapcsolat',

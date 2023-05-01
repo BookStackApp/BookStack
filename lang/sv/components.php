@@ -6,6 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Val av bild',
+    'image_upload' => 'Upload Image',
+    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Alla',
     'image_all_title' => 'Visa alla bilder',
     'image_book_title' => 'Visa bilder som laddats upp till den aktuella boken',
@@ -18,12 +21,12 @@ return [
     'image_delete_confirm_text' => 'Är du säker på att du vill radera denna bild?',
     'image_select_image' => 'Välj bild',
     'image_dropzone' => 'Släpp bilder här eller klicka för att ladda upp',
+    'image_dropzone_drop' => 'Drop images here to upload',
     'images_deleted' => 'Bilder borttagna',
     'image_preview' => 'Förhandsgranskning',
     'image_upload_success' => 'Bilden har laddats upp',
     'image_update_success' => 'Bildens uppgifter har ändrats',
     'image_delete_success' => 'Bilden har tagits bort',
-    'image_upload_remove' => 'Radera',
 
     // Code Editor
     'code_editor' => 'Redigera kod',

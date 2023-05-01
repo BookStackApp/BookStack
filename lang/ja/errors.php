@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'このサーバはサムネイルを作成できません。GD PHP extensionがインストールされていることを確認してください。',
     'server_upload_limit' => 'このサイズの画像をアップロードすることは許可されていません。ファイルサイズを小さくし、再試行してください。',
     'uploaded'  => 'このサイズの画像をアップロードすることは許可されていません。ファイルサイズを小さくし、再試行してください。',
-    'file_upload_timeout' => 'ファイルのアップロードがタイムアウトしました。',
 
     // Drawing & Images
     'image_upload_error' => '画像アップロード時にエラーが発生しました。',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => '添付ファイルが見つかりません',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => '下書きの保存に失敗しました。インターネットへ接続してください。',
