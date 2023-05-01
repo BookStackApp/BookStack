@@ -1,6 +1,7 @@
 /vendor
 /node_modules
 /.vscode
+/composer
 Homestead.yaml
 .env
 .idea
