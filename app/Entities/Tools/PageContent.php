@@ -304,7 +304,7 @@ class PageContent
         if ($blankIncludes) {
             $content = $this->blankPageIncludes($content);
         } else {
-            for ($includeDepth = 0; $includeDepth <= 3; $includeDepth++) {
+            for ($includeDepth = 0; $includeDepth < 3; $includeDepth++) {
                 $content = $this->parsePageIncludes($content);
             }
         }

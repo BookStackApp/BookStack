@@ -116,7 +116,8 @@ class PageContentTest extends TestCase
         $page->save();
 
         $pageResp = $this->asEditor()->get($page->getUrl());
-        $this->withHtml($pageResp)->assertElementContains('#bkmrk-test', 'Hello Barry Hello Barry Hello Barry ' . $tag);
+        $this->withHtml($pageResp)->assertElementContains('#bkmrk-test', 'Hello Barry Hello Barry Hello Barry Hello Barry ' . $tag);
+        $this->withHtml($pageResp)->assertElementNotContains('#bkmrk-test', 'Hello Barry Hello Barry Hello Barry Hello Barry Hello Barry ' . $tag);
     }
 
     public function test_page_content_scripts_removed_by_default()
