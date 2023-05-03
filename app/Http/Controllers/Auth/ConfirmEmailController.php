@@ -14,21 +14,11 @@ use Illuminate\Http\Request;
 
 class ConfirmEmailController extends Controller
 {
-    protected EmailConfirmationService $emailConfirmationService;
-    protected LoginService $loginService;
-    protected UserRepo $userRepo;
-
-    /**
-     * Create a new controller instance.
-     */
     public function __construct(
-        EmailConfirmationService $emailConfirmationService,
-        LoginService $loginService,
-        UserRepo $userRepo
+        protected EmailConfirmationService $emailConfirmationService,
+        protected LoginService $loginService,
+        protected UserRepo $userRepo
     ) {
-        $this->emailConfirmationService = $emailConfirmationService;
-        $this->loginService = $loginService;
-        $this->userRepo = $userRepo;
     }
 
     /**

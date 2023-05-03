@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Sunucu, görsel ön izlemelerini oluşturamadı. Lütfen GD PHP eklentisinin kurulu olduğundan emin olun.',
     'server_upload_limit' => 'Sunucu bu boyutta dosya yüklemenize izin vermiyor. Lütfen daha küçük bir dosya deneyin.',
     'uploaded'  => 'Sunucu bu boyutta dosya yüklemenize izin vermiyor. Lütfen daha küçük bir dosya deneyin.',
-    'file_upload_timeout' => 'Dosya yüklemesi zaman aşımına uğradı',
 
     // Drawing & Images
     'image_upload_error' => 'Görsel yüklenirken bir hata meydana geldi',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Ek bulunamadı',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Taslak kaydetme başarısız oldu. Bu sayfayı kaydetmeden önce internet bağlantınız olduğundan emin olun',

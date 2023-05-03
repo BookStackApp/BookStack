@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'De server kon geen miniaturen maken. Controleer of je de GD PHP extensie geïnstalleerd hebt.',
     'server_upload_limit' => 'De server staat geen uploads van deze grootte toe. Probeer een kleinere bestandsgrootte.',
     'uploaded'  => 'De server staat geen uploads van deze grootte toe. Probeer een kleinere bestandsgrootte.',
-    'file_upload_timeout' => 'Het uploaden van het bestand is verlopen.',
 
     // Drawing & Images
     'image_upload_error' => 'Er is een fout opgetreden bij het uploaden van de afbeelding',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Bijlage niet gevonden',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Kon het concept niet opslaan. Zorg ervoor dat je een werkende internetverbinding hebt',

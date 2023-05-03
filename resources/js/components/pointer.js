@@ -1,12 +1,13 @@
-import * as DOM from "../services/dom";
-import Clipboard from "clipboard/dist/clipboard.min";
-import {Component} from "./component";
-
+import * as DOM from '../services/dom';
+import {Component} from './component';
+import {copyTextToClipboard} from '../services/clipboard';
 
 export class Pointer extends Component {
 
     setup() {
         this.container = this.$el;
+        this.input = this.$refs.input;
+        this.button = this.$refs.button;
         this.pageId = this.$opts.pageId;
 
         // Instance variables
@@ -16,15 +17,17 @@ export class Pointer extends Component {
         this.pointerSectionId = '';
 
         this.setupListeners();
-
-        // Set up clipboard
-        new Clipboard(this.container.querySelector('button'));
     }
 
     setupListeners() {
+        // Copy on copy button click
+        this.button.addEventListener('click', () => {
+            copyTextToClipboard(this.input.value);
+        });
+
         // Select all contents on input click
-        DOM.onChildEvent(this.container, 'input', 'click', (event, input) => {
-            input.select();
+        this.input.addEventListener('click', event => {
+            this.input.select();
             event.stopPropagation();
         });
 
@@ -43,7 +46,7 @@ export class Pointer extends Component {
         });
 
         // Hide pointer when clicking away
-        DOM.onEvents(document.body, ['click', 'focus'], event => {
+        DOM.onEvents(document.body, ['click', 'focus'], () => {
             if (!this.showing || this.isSelection) return;
             this.hidePointer();
         });
@@ -109,15 +112,15 @@ export class Pointer extends Component {
     updateForTarget(element) {
         let inputText = this.pointerModeLink ? window.baseUrl(`/link/${this.pageId}#${this.pointerSectionId}`) : `{{@${this.pageId}#${this.pointerSectionId}}}`;
         if (this.pointerModeLink && !inputText.startsWith('http')) {
-            inputText = window.location.protocol + "//" + window.location.host + inputText;
+            inputText = `${window.location.protocol}//${window.location.host}${inputText}`;
         }
 
-        this.container.querySelector('input').value = inputText;
+        this.input.value = inputText;
 
         // Update anchor if present
         const editAnchor = this.container.querySelector('#pointer-edit');
         if (editAnchor && element) {
-            const editHref = editAnchor.dataset.editHref;
+            const {editHref} = editAnchor.dataset;
             const elementId = element.id;
 
             // get the first 50 characters.
@@ -125,4 +128,5 @@ export class Pointer extends Component {
             editAnchor.href = `${editHref}?content-id=${elementId}&content-text=${encodeURIComponent(queryContent)}`;
         }
     }
+
 }

@@ -3,9 +3,11 @@
 namespace BookStack\Uploads;
 
 use BookStack\Auth\Permissions\JointPermission;
+use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Models\Page;
 use BookStack\Model;
 use BookStack\Traits\HasCreatorAndUpdater;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -34,11 +36,20 @@ class Image extends Model
     }
 
     /**
+     * Scope the query to just the images visible to the user based upon the
+     * user visibility of the uploaded_to page.
+     */
+    public function scopeVisible(Builder $query): Builder
+    {
+        return app()->make(PermissionApplicator::class)->restrictPageRelationQuery($query, 'images', 'uploaded_to');
+    }
+
+    /**
      * Get a thumbnail for this image.
      *
      * @throws \Exception
      */
-    public function getThumb(int $width, int $height, bool $keepRatio = false): string
+    public function getThumb(?int $width, ?int $height, bool $keepRatio = false): string
     {
         return app()->make(ImageService::class)->getThumbnail($this, $width, $height, $keepRatio);
     }

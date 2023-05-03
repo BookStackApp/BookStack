@@ -5,6 +5,8 @@ namespace Tests\Auth;
 use BookStack\Actions\ActivityType;
 use BookStack\Auth\Role;
 use BookStack\Auth\User;
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Testing\TestResponse;
@@ -397,7 +399,6 @@ class OidcTest extends TestCase
         config()->set([
             'oidc.external_id_claim' => 'super_awesome_id',
         ]);
-        $roleA = Role::factory()->create(['display_name' => 'Wizards']);
 
         $resp = $this->runLogin([
             'email'            => 'benny@example.com',
@@ -462,6 +463,60 @@ class OidcTest extends TestCase
         /** @var User $user */
         $user = User::query()->where('email', '=', 'benny@example.com')->first();
         $this->assertTrue($user->hasRole($roleA->id));
+    }
+
+    public function test_oidc_id_token_pre_validate_theme_event_without_return()
+    {
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+        };
+        Theme::listen(ThemeEvents::OIDC_ID_TOKEN_PRE_VALIDATE, $callback);
+
+        $resp = $this->runLogin([
+            'email' => 'benny@example.com',
+            'sub'   => 'benny1010101',
+            'name'  => 'Benny',
+        ]);
+        $resp->assertRedirect('/');
+
+        $this->assertDatabaseHas('users', [
+            'external_auth_id' => 'benny1010101',
+        ]);
+
+        $this->assertArrayHasKey('iss', $args[0]);
+        $this->assertArrayHasKey('sub', $args[0]);
+        $this->assertEquals('Benny', $args[0]['name']);
+        $this->assertEquals('benny1010101', $args[0]['sub']);
+
+        $this->assertArrayHasKey('access_token', $args[1]);
+        $this->assertArrayHasKey('expires_in', $args[1]);
+        $this->assertArrayHasKey('refresh_token', $args[1]);
+    }
+
+    public function test_oidc_id_token_pre_validate_theme_event_with_return()
+    {
+        $callback = function (...$eventArgs) {
+            return array_merge($eventArgs[0], [
+                'email' => 'lenny@example.com',
+                'sub' => 'lenny1010101',
+                'name' => 'Lenny',
+            ]);
+        };
+        Theme::listen(ThemeEvents::OIDC_ID_TOKEN_PRE_VALIDATE, $callback);
+
+        $resp = $this->runLogin([
+            'email' => 'benny@example.com',
+            'sub'   => 'benny1010101',
+            'name'  => 'Benny',
+        ]);
+        $resp->assertRedirect('/');
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'lenny@example.com',
+            'external_auth_id' => 'lenny1010101',
+            'name' => 'Lenny',
+        ]);
     }
 
     protected function withAutodiscovery()

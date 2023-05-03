@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Server tidak dapat membuat thumbnail. Harap periksa apakah Anda telah memasang ekstensi GD PHP.',
     'server_upload_limit' => 'Server tidak mengizinkan unggahan dengan ukuran ini. Harap coba ukuran berkas yang lebih kecil.',
     'uploaded'  => 'Server tidak mengizinkan unggahan dengan ukuran ini. Harap coba ukuran berkas yang lebih kecil.',
-    'file_upload_timeout' => 'Unggahan berkas telah habis waktu.',
 
     // Drawing & Images
     'image_upload_error' => 'Terjadi kesalahan saat mengunggah gambar',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Lampiran tidak ditemukan',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Gagal menyimpan draf. Pastikan Anda memiliki koneksi internet sebelum menyimpan halaman ini',

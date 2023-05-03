@@ -2,7 +2,6 @@
  * @param {Editor} editor
  */
 export function listen(editor) {
-
     // Replace editor content
     window.$events.listen('editor::replace', ({html}) => {
         editor.setContent(html);

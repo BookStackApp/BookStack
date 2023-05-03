@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Serverul nu poate crea miniaturi. Verifică dacă este instalată extensia GD PHP.',
     'server_upload_limit' => 'Serverul nu permite încărcarea acestei dimensiuni. Te rog să încerci o dimensiune mai mică a fișierului.',
     'uploaded'  => 'Serverul nu permite încărcarea acestei dimensiuni. Te rog să încerci o dimensiune mai mică a fișierului.',
-    'file_upload_timeout' => 'Încărcarea fișierului a expirat.',
 
     // Drawing & Images
     'image_upload_error' => 'A apărut o eroare la încărcarea imaginii',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Atașamentul nu a fost găsit',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Nu s-a reușit salvarea ciornei. Asigură-te că ai conexiune la internet înainte de a salva această pagină',

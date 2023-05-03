@@ -10,14 +10,9 @@ use Illuminate\Validation\ValidationException;
 
 class GalleryImageController extends Controller
 {
-    protected $imageRepo;
-
-    /**
-     * GalleryImageController constructor.
-     */
-    public function __construct(ImageRepo $imageRepo)
-    {
-        $this->imageRepo = $imageRepo;
+    public function __construct(
+        protected ImageRepo $imageRepo
+    ) {
     }
 
     /**
@@ -47,9 +42,14 @@ class GalleryImageController extends Controller
     public function create(Request $request)
     {
         $this->checkPermission('image-create-all');
-        $this->validate($request, [
-            'file' => $this->getImageValidationRules(),
-        ]);
+
+        try {
+            $this->validate($request, [
+                'file' => $this->getImageValidationRules(),
+            ]);
+        } catch (ValidationException $exception) {
+            return $this->jsonError(implode("\n", $exception->errors()['file']));
+        }
 
         try {
             $imageUpload = $request->file('file');

@@ -1,25 +1,25 @@
-import Sortable, {MultiDrag} from "sortablejs";
-import {Component} from "./component";
-import {htmlToDom} from "../services/dom";
+import Sortable, {MultiDrag} from 'sortablejs';
+import {Component} from './component';
+import {htmlToDom} from '../services/dom';
 
 // Auto sort control
 const sortOperations = {
-    name: function(a, b) {
+    name(a, b) {
         const aName = a.getAttribute('data-name').trim().toLowerCase();
         const bName = b.getAttribute('data-name').trim().toLowerCase();
         return aName.localeCompare(bName);
     },
-    created: function(a, b) {
+    created(a, b) {
         const aTime = Number(a.getAttribute('data-created'));
         const bTime = Number(b.getAttribute('data-created'));
         return bTime - aTime;
     },
-    updated: function(a, b) {
+    updated(a, b) {
         const aTime = Number(a.getAttribute('data-updated'));
         const bTime = Number(b.getAttribute('data-updated'));
         return bTime - aTime;
     },
-    chaptersFirst: function(a, b) {
+    chaptersFirst(a, b) {
         const aType = a.getAttribute('data-type');
         const bType = b.getAttribute('data-type');
         if (aType === bType) {
@@ -27,7 +27,7 @@ const sortOperations = {
         }
         return (aType === 'chapter' ? -1 : 1);
     },
-    chaptersLast: function(a, b) {
+    chaptersLast(a, b) {
         const aType = a.getAttribute('data-type');
         const bType = b.getAttribute('data-type');
         if (aType === bType) {
@@ -45,22 +45,22 @@ const sortOperations = {
  */
 const moveActions = {
     up: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return !(elem.previousElementSibling === null && !parent);
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             const newSibling = elem.previousElementSibling || parent;
             newSibling.insertAdjacentElement('beforebegin', elem);
-        }
+        },
     },
     down: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return !(elem.nextElementSibling === null && !parent);
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             const newSibling = elem.nextElementSibling || parent;
             newSibling.insertAdjacentElement('afterend', elem);
-        }
+        },
     },
     next_book: {
         active(elem, parent, book) {
@@ -69,7 +69,7 @@ const moveActions = {
         run(elem, parent, book) {
             const newList = book.nextElementSibling.querySelector('ul');
             newList.prepend(elem);
-        }
+        },
     },
     prev_book: {
         active(elem, parent, book) {
@@ -78,13 +78,13 @@ const moveActions = {
         run(elem, parent, book) {
             const newList = book.previousElementSibling.querySelector('ul');
             newList.appendChild(elem);
-        }
+        },
     },
     next_chapter: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return elem.dataset.type === 'page' && this.getNextChapter(elem, parent);
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             const nextChapter = this.getNextChapter(elem, parent);
             nextChapter.querySelector('ul').prepend(elem);
         },
@@ -92,14 +92,14 @@ const moveActions = {
             const topLevel = (parent || elem);
             const topItems = Array.from(topLevel.parentElement.children);
             const index = topItems.indexOf(topLevel);
-            return topItems.slice(index + 1).find(elem => elem.dataset.type === 'chapter');
-        }
+            return topItems.slice(index + 1).find(item => item.dataset.type === 'chapter');
+        },
     },
     prev_chapter: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return elem.dataset.type === 'page' && this.getPrevChapter(elem, parent);
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             const prevChapter = this.getPrevChapter(elem, parent);
             prevChapter.querySelector('ul').append(elem);
         },
@@ -107,40 +107,40 @@ const moveActions = {
             const topLevel = (parent || elem);
             const topItems = Array.from(topLevel.parentElement.children);
             const index = topItems.indexOf(topLevel);
-            return topItems.slice(0, index).reverse().find(elem => elem.dataset.type === 'chapter');
-        }
+            return topItems.slice(0, index).reverse().find(item => item.dataset.type === 'chapter');
+        },
     },
     book_end: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return parent || (parent === null && elem.nextElementSibling);
         },
         run(elem, parent, book) {
             book.querySelector('ul').append(elem);
-        }
+        },
     },
     book_start: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return parent || (parent === null && elem.previousElementSibling);
         },
         run(elem, parent, book) {
             book.querySelector('ul').prepend(elem);
-        }
+        },
     },
     before_chapter: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return parent;
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             parent.insertAdjacentElement('beforebegin', elem);
-        }
+        },
     },
     after_chapter: {
-        active(elem, parent, book) {
+        active(elem, parent) {
             return parent;
         },
-        run(elem, parent, book) {
+        run(elem, parent) {
             parent.insertAdjacentElement('afterend', elem);
-        }
+        },
     },
 };
 
@@ -196,12 +196,12 @@ export class BookSort extends Component {
             reverse = (lastSort === sort) ? !reverse : false;
             let sortFunction = sortOperations[sort];
             if (reverse && reversibleTypes.includes(sort)) {
-                sortFunction = function(a, b) {
-                    return 0 - sortOperations[sort](a, b)
+                sortFunction = function reverseSortOperation(a, b) {
+                    return 0 - sortOperations[sort](a, b);
                 };
             }
 
-            for (let list of sortLists) {
+            for (const list of sortLists) {
                 const directItems = Array.from(list.children).filter(child => child.matches('li'));
                 directItems.sort(sortFunction).forEach(sortedItem => {
                     list.appendChild(sortedItem);
@@ -221,7 +221,7 @@ export class BookSort extends Component {
         const alreadyAdded = this.container.querySelector(`[data-type="book"][data-id="${entityInfo.id}"]`) !== null;
         if (alreadyAdded) return;
 
-        const entitySortItemUrl = entityInfo.link + '/sort-item';
+        const entitySortItemUrl = `${entityInfo.link}/sort-item`;
         window.$http.get(entitySortItemUrl).then(resp => {
             const newBookContainer = htmlToDom(resp.data);
             this.sortContainer.append(newBookContainer);
@@ -249,9 +249,9 @@ export class BookSort extends Component {
         const chapterGroupConfig = {
             name: 'chapter',
             pull: ['book', 'chapter'],
-            put: function(toList, fromList, draggedElem) {
+            put(toList, fromList, draggedElem) {
                 return draggedElem.getAttribute('data-type') === 'page';
-            }
+            },
         };
 
         for (const sortElem of sortElems) {
@@ -260,8 +260,8 @@ export class BookSort extends Component {
                 animation: 150,
                 fallbackOnBody: true,
                 swapThreshold: 0.65,
-                onSort: (event) => {
-                    this.ensureNoNestedChapters()
+                onSort: () => {
+                    this.ensureNoNestedChapters();
                     this.updateMapInput();
                     this.updateMoveActionStateForAll();
                 },
@@ -304,7 +304,7 @@ export class BookSort extends Component {
         const entityMap = [];
         const lists = this.container.querySelectorAll('.sort-list');
 
-        for (let list of lists) {
+        for (const list of lists) {
             const bookId = list.closest('[data-type="book"]').getAttribute('data-id');
             const directChildren = Array.from(list.children)
                 .filter(elem => elem.matches('[data-type="page"], [data-type="chapter"]'));
@@ -332,9 +332,9 @@ export class BookSort extends Component {
         entityMap.push({
             id: childId,
             sort: index,
-            parentChapter: parentChapter,
-            type: type,
-            book: bookId
+            parentChapter,
+            type,
+            book: bookId,
         });
 
         const subPages = childElem.querySelectorAll('[data-type="page"]');
@@ -344,7 +344,7 @@ export class BookSort extends Component {
                 sort: i,
                 parentChapter: childId,
                 type: 'page',
-                book: bookId
+                book: bookId,
             });
         }
     }
@@ -383,4 +383,5 @@ export class BookSort extends Component {
             this.updateMoveActionState(item);
         }
     }
+
 }

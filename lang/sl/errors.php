@@ -45,7 +45,6 @@ return [
     'cannot_create_thumbs' => 'Strežnik ne more izdelati sličice. Prosimo preverite če imate GD PHP razširitev nameščeno.',
     'server_upload_limit' => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite z manjšo velikostjo datoteke.',
     'uploaded'  => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite zmanjšati velikost datoteke.',
-    'file_upload_timeout' => 'Čas nalaganjanja datoteke je potekel.',
 
     // Drawing & Images
     'image_upload_error' => 'Prišlo je do napake med nalaganjem slike',
@@ -54,6 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Priloga ni najdena',
+    'attachment_upload_error' => 'An error occurred uploading the attachment file',
 
     // Pages
     'page_draft_autosave_fail' => 'Osnutka ni bilo mogoče shraniti. Pred shranjevanjem te strani se prepričajte, da imate internetno povezavo',
