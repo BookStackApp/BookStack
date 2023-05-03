@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Nie znaleziono załącznika',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Wystąpił błąd podczas przesyłania pliku załącznika',
 
     // Pages
     'page_draft_autosave_fail' => 'Zapis wersji roboczej nie powiódł się. Upewnij się, że posiadasz połączenie z internetem.',
