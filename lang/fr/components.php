@@ -6,8 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Sélectionner une image',
-    'image_upload' => 'Upload Image',
-    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_upload' => 'Charger une image',
+    'image_intro' => 'Ici, vous pouvez sélectionner et gérer les images qui ont été précédemment téléchargées sur le système.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Toutes',
     'image_all_title' => 'Voir toutes les images',
