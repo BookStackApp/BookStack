@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => '添付ファイルが見つかりません',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => '添付ファイルのアップロード中にエラーが発生しました',
 
     // Pages
     'page_draft_autosave_fail' => '下書きの保存に失敗しました。インターネットへ接続してください。',
