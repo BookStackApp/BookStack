@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => '找不到附件',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => '上传附件时出错',
 
     // Pages
     'page_draft_autosave_fail' => '无法保存草稿，确保您在保存页面之前已经连接到互联网',
