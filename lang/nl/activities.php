@@ -12,9 +12,9 @@ return [
     'page_update_notification'    => 'Pagina succesvol bijgewerkt',
     'page_delete'                 => 'verwijderde pagina',
     'page_delete_notification'    => 'Pagina succesvol verwijderd',
-    'page_restore'                => 'pagina hersteld',
+    'page_restore'                => 'herstelde pagina',
     'page_restore_notification'   => 'Pagina succesvol hersteld',
-    'page_move'                   => 'pagina verplaatst',
+    'page_move'                   => 'verplaatste pagina',
 
     // Chapters
     'chapter_create'              => 'maakte hoofdstuk',
@@ -23,18 +23,18 @@ return [
     'chapter_update_notification' => 'Hoofdstuk succesvol bijgewerkt',
     'chapter_delete'              => 'verwijderde hoofdstuk',
     'chapter_delete_notification' => 'Hoofdstuk succesvol verwijderd',
-    'chapter_move'                => 'hoofdstuk verplaatst',
+    'chapter_move'                => 'verplaatste hoofdstuk',
 
     // Books
     'book_create'                 => 'maakte boek',
     'book_create_notification'    => 'Boek succesvol aangemaakt',
-    'book_create_from_chapter'              => 'hoofdstuk omzetten naar boek',
-    'book_create_from_chapter_notification' => 'Hoofdstuk is omgezet naar een boek',
+    'book_create_from_chapter'              => 'heeft hoofdstuk geconverteerd naar boek',
+    'book_create_from_chapter_notification' => 'Hoofdstuk is succesvol geconverteerd naar boekenplank',
     'book_update'                 => 'wijzigde boek',
     'book_update_notification'    => 'Boek succesvol bijgewerkt',
     'book_delete'                 => 'verwijderde boek',
     'book_delete_notification'    => 'Boek succesvol verwijderd',
-    'book_sort'                   => 'boek gesorteerd',
+    'book_sort'                   => 'sorteerde boek',
     'book_sort_notification'      => 'Boek succesvol opnieuw gesorteerd',
 
     // Bookshelves
