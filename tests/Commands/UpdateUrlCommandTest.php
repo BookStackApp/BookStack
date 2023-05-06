@@ -2,6 +2,7 @@
 
 namespace Tests\Commands;
 
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Tests\TestCase;
 
@@ -32,6 +33,13 @@ class UpdateUrlCommandTest extends TestCase
 
         $this->expectException(RuntimeException::class);
         $this->artisan('bookstack:update-url https://cats.example.com');
+    }
+
+    public function test_command_force_option_skips_prompt()
+    {
+        $this->artisan('bookstack:update-url --force https://cats.example.com/donkey https://cats.example.com/monkey')
+            ->expectsOutputToContain('URL update procedure complete')
+            ->assertSuccessful();
     }
 
     public function test_command_updates_settings()
