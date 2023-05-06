@@ -14,7 +14,8 @@ class UpdateUrl extends Command
      */
     protected $signature = 'bookstack:update-url
                             {oldUrl : URL to replace}
-                            {newUrl : URL to use as the replacement}';
+                            {newUrl : URL to use as the replacement}
+                            {--force : Force the operation to run, ignoring confirmations}';
 
     /**
      * The console command description.
@@ -23,25 +24,12 @@ class UpdateUrl extends Command
      */
     protected $description = 'Find and replace the given URLs in your BookStack database';
 
-    protected $db;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(Connection $db)
-    {
-        $this->db = $db;
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(Connection $db)
     {
         $oldUrl = str_replace("'", '', $this->argument('oldUrl'));
         $newUrl = str_replace("'", '', $this->argument('newUrl'));
@@ -67,7 +55,7 @@ class UpdateUrl extends Command
 
         foreach ($columnsToUpdateByTable as $table => $columns) {
             foreach ($columns as $column) {
-                $changeCount = $this->replaceValueInTable($table, $column, $oldUrl, $newUrl);
+                $changeCount = $this->replaceValueInTable($db, $table, $column, $oldUrl, $newUrl);
                 $this->info("Updated {$changeCount} rows in {$table}->{$column}");
             }
         }
@@ -80,7 +68,7 @@ class UpdateUrl extends Command
             foreach ($columns as $column) {
                 $oldJson = trim(json_encode($oldUrl), '"');
                 $newJson = trim(json_encode($newUrl), '"');
-                $changeCount = $this->replaceValueInTable($table, $column, $oldJson, $newJson);
+                $changeCount = $this->replaceValueInTable($db, $table, $column, $oldJson, $newJson);
                 $this->info("Updated {$changeCount} JSON encoded rows in {$table}->{$column}");
             }
         }
@@ -97,13 +85,18 @@ class UpdateUrl extends Command
      * Perform a find+replace operations in the provided table and column.
      * Returns the count of rows changed.
      */
-    protected function replaceValueInTable(string $table, string $column, string $oldUrl, string $newUrl): int
-    {
-        $oldQuoted = $this->db->getPdo()->quote($oldUrl);
-        $newQuoted = $this->db->getPdo()->quote($newUrl);
+    protected function replaceValueInTable(
+        Connection $db,
+        string     $table,
+        string     $column,
+        string     $oldUrl,
+        string     $newUrl
+    ): int {
+        $oldQuoted = $db->getPdo()->quote($oldUrl);
+        $newQuoted = $db->getPdo()->quote($newUrl);
 
-        return $this->db->table($table)->update([
-            $column => $this->db->raw("REPLACE({$column}, {$oldQuoted}, {$newQuoted})"),
+        return $db->table($table)->update([
+            $column => $db->raw("REPLACE({$column}, {$oldQuoted}, {$newQuoted})"),
         ]);
     }
 
@@ -113,6 +106,10 @@ class UpdateUrl extends Command
      */
     protected function checkUserOkayToProceed(string $oldUrl, string $newUrl): bool
     {
+        if ($this->option('force')) {
+            return true;
+        }
+
         $dangerWarning = "This will search for \"{$oldUrl}\" in your database and replace it with  \"{$newUrl}\".\n";
         $dangerWarning .= 'Are you sure you want to proceed?';
         $backupConfirmation = 'This operation could cause issues if used incorrectly. Have you made a backup of your existing database?';
