@@ -9,9 +9,16 @@ function elemIsCodeBlock(elem) {
  * @param {function(string, string)} callback (Receives (code: string,language: string)
  */
 function showPopup(editor, code, language, callback) {
-    window.$components.first('code-editor').open(code, language, (newCode, newLang) => {
+    /** @var {CodeEditor} codeEditor * */
+    const codeEditor = window.$components.first('code-editor');
+    const bookMark = editor.selection.getBookmark();
+    codeEditor.open(code, language, (newCode, newLang) => {
         callback(newCode, newLang);
         editor.focus();
+        editor.selection.moveToBookmark(bookMark);
+    }, () => {
+        editor.focus();
+        editor.selection.moveToBookmark(bookMark);
     });
 }
 

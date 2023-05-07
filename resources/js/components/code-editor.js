@@ -8,7 +8,15 @@ export class CodeEditor extends Component {
      */
     editor = null;
 
-    callback = null;
+    /**
+     * @type {?Function}
+     */
+    saveCallback = null;
+
+    /**
+     * @type {?Function}
+     */
+    cancelCallback = null;
 
     history = {};
 
@@ -115,15 +123,16 @@ export class CodeEditor extends Component {
     }
 
     save() {
-        if (this.callback) {
-            this.callback(this.editor.getContent(), this.languageInput.value);
+        if (this.saveCallback) {
+            this.saveCallback(this.editor.getContent(), this.languageInput.value);
         }
         this.hide();
     }
 
-    async open(code, language, callback) {
+    async open(code, language, saveCallback, cancelCallback) {
         this.languageInput.value = language;
-        this.callback = callback;
+        this.saveCallback = saveCallback;
+        this.cancelCallback = cancelCallback;
 
         await this.show();
         this.languageInputChange(language);
@@ -141,6 +150,9 @@ export class CodeEditor extends Component {
             this.editor.focus();
         }, () => {
             this.addHistory();
+            if (this.cancelCallback) {
+                this.cancelCallback();
+            }
         });
     }
 
