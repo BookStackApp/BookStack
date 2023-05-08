@@ -14,4 +14,5 @@ export const blockElementTypes = [
     'ul',
     'ol',
     'table',
+    'hr',
 ];
