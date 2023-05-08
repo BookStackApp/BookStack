@@ -53,8 +53,8 @@ function defineCodeBlockCustomElement(editor) {
             super();
             this.attachShadow({mode: 'open'});
 
-            const stylesToCopy = document.querySelectorAll('link[rel="stylesheet"]:not([media="print"])');
-            const copiedStyles = Array.from(stylesToCopy).map(styleEl => styleEl.cloneNode(false));
+            const stylesToCopy = document.head.querySelectorAll('link[rel="stylesheet"]:not([media="print"]),style');
+            const copiedStyles = Array.from(stylesToCopy).map(styleEl => styleEl.cloneNode(true));
 
             const cmContainer = document.createElement('div');
             cmContainer.style.pointerEvents = 'none';
