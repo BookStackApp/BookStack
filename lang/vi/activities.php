@@ -68,9 +68,9 @@ return [
     'user_delete_notification' => 'Người dùng đã được xóa thành công',
 
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create_notification' => 'Vai trò mới đã được tạo thành công',
+    'role_update_notification' => 'Vai trò đã được cập nhật thành công',
+    'role_delete_notification' => 'Vai trò đã được xóa thành công',
 
     // Other
     'commented_on'                => 'đã bình luận về',

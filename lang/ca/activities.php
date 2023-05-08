@@ -7,27 +7,27 @@ return [
 
     // Pages
     'page_create'                 => 'ha creat la pàgina',
-    'page_create_notification'    => 'Page successfully created',
+    'page_create_notification'    => 'Pàgina creada correctament',
     'page_update'                 => 'ha actualitzat la pàgina',
-    'page_update_notification'    => 'Page successfully updated',
+    'page_update_notification'    => 'Pàgina actualitzada correctament',
     'page_delete'                 => 'ha suprimit una pàgina',
-    'page_delete_notification'    => 'Page successfully deleted',
+    'page_delete_notification'    => 'Imatge esborrada correctament',
     'page_restore'                => 'ha restaurat la pàgina',
-    'page_restore_notification'   => 'Page successfully restored',
+    'page_restore_notification'   => 'Pàgina restaurada correctament',
     'page_move'                   => 'ha mogut la pàgina',
 
     // Chapters
     'chapter_create'              => 'ha creat el capítol',
-    'chapter_create_notification' => 'Chapter successfully created',
+    'chapter_create_notification' => 'Capítol creat correctament',
     'chapter_update'              => 'ha actualitzat el capítol',
-    'chapter_update_notification' => 'Chapter successfully updated',
+    'chapter_update_notification' => 'Capítol actualitzat correctament',
     'chapter_delete'              => 'ha suprimit un capítol',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
+    'chapter_delete_notification' => 'Capítol esborrat correctament',
     'chapter_move'                => 'ha mogut el capítol',
 
     // Books
     'book_create'                 => 'ha creat el llibre',
-    'book_create_notification'    => 'Book successfully created',
+    'book_create_notification'    => 'Llibre creat correctament',
     'book_create_from_chapter'              => 'converted chapter to book',
     'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
     'book_update'                 => 'ha actualitzat el llibre',
