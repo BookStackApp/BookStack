@@ -6,9 +6,9 @@ return [
 
     // Image Manager
     'image_select' => '画像を選択',
-    'image_upload' => 'Upload Image',
-    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
-    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
+    'image_upload' => '画像をアップロード',
+    'image_intro' => 'ここでは、システムに以前アップロードされた画像を選択して管理できます。',
+    'image_intro_upload' => 'このウィンドウに画像ファイルをドラッグするか、上の「画像をアップロード」ボタンを使用して新しい画像をアップロードします。',
     'image_all' => 'すべて',
     'image_all_title' => '全ての画像を表示',
     'image_book_title' => 'このブックにアップロードされた画像を表示',
@@ -21,7 +21,7 @@ return [
     'image_delete_confirm_text' => 'この画像を削除してもよろしいですか？',
     'image_select_image' => '画像を選択',
     'image_dropzone' => '画像をドロップするか、クリックしてアップロード',
-    'image_dropzone_drop' => 'Drop images here to upload',
+    'image_dropzone_drop' => 'アップロードする画像をここにドロップ',
     'images_deleted' => '画像を削除しました',
     'image_preview' => '画像プレビュー',
     'image_upload_success' => '画像がアップロードされました',

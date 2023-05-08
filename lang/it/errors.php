@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Allegato non trovato',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Si è verificato un errore durante il caricamento del file allegato',
 
     // Pages
     'page_draft_autosave_fail' => 'Impossibile salvare la bozza. Controlla di essere connesso ad internet prima di salvare questa pagina',

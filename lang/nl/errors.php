@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Bijlage niet gevonden',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Er is een fout opgetreden bij het uploaden van het bestand',
 
     // Pages
     'page_draft_autosave_fail' => 'Kon het concept niet opslaan. Zorg ervoor dat je een werkende internetverbinding hebt',

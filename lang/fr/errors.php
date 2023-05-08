@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Fichier joint non trouvé',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Une erreur s\'est produite avec le téléversement du fichier joint',
 
     // Pages
     'page_draft_autosave_fail' => 'Le brouillon n\'a pas pu être enregistré. Vérifiez votre connexion internet',
