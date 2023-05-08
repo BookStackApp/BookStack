@@ -87,10 +87,10 @@ class UpdateUrl extends Command
      */
     protected function replaceValueInTable(
         Connection $db,
-        string     $table,
-        string     $column,
-        string     $oldUrl,
-        string     $newUrl
+        string $table,
+        string $column,
+        string $oldUrl,
+        string $newUrl
     ): int {
         $oldQuoted = $db->getPdo()->quote($oldUrl);
         $newQuoted = $db->getPdo()->quote($newUrl);
