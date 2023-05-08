@@ -9,9 +9,16 @@ function elemIsCodeBlock(elem) {
  * @param {function(string, string)} callback (Receives (code: string,language: string)
  */
 function showPopup(editor, code, language, callback) {
-    window.$components.first('code-editor').open(code, language, (newCode, newLang) => {
+    /** @var {CodeEditor} codeEditor * */
+    const codeEditor = window.$components.first('code-editor');
+    const bookMark = editor.selection.getBookmark();
+    codeEditor.open(code, language, (newCode, newLang) => {
         callback(newCode, newLang);
         editor.focus();
+        editor.selection.moveToBookmark(bookMark);
+    }, () => {
+        editor.focus();
+        editor.selection.moveToBookmark(bookMark);
     });
 }
 
@@ -46,8 +53,8 @@ function defineCodeBlockCustomElement(editor) {
             super();
             this.attachShadow({mode: 'open'});
 
-            const stylesToCopy = document.querySelectorAll('link[rel="stylesheet"]:not([media="print"])');
-            const copiedStyles = Array.from(stylesToCopy).map(styleEl => styleEl.cloneNode(false));
+            const stylesToCopy = document.head.querySelectorAll('link[rel="stylesheet"]:not([media="print"]),style');
+            const copiedStyles = Array.from(stylesToCopy).map(styleEl => styleEl.cloneNode(true));
 
             const cmContainer = document.createElement('div');
             cmContainer.style.pointerEvents = 'none';

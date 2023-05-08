@@ -268,7 +268,7 @@ export function build(options) {
             '-doc-root[doc-root|#text]',
             '-li[details]',
             '+code-block[pre]',
-            '+doc-root[p|h1|h2|h3|h4|h5|h6|blockquote|code-block|div]',
+            '+doc-root[p|h1|h2|h3|h4|h5|h6|blockquote|code-block|div|hr]',
         ].join(','),
         plugins: gatherPlugins(options),
         contextmenu: false,

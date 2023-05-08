@@ -25,7 +25,7 @@ export class Shortcuts extends Component {
 
     setupListeners() {
         window.addEventListener('keydown', event => {
-            if (event.target.closest('input, select, textarea')) {
+            if (event.target.closest('input, select, textarea, .cm-editor')) {
                 return;
             }
 

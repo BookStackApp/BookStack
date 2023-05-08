@@ -17,7 +17,7 @@ return [
     // Form Labels
     'name' => 'Tên',
     'description' => 'Mô tả',
-    'role' => 'Quyền',
+    'role' => 'Vai trò',
     'cover_image' => 'Ảnh bìa',
     'cover_image_description' => 'Ảnh nên có kích thước 440x250px.',
 
