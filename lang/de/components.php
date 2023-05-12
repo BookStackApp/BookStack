@@ -7,7 +7,7 @@ return [
     // Image Manager
     'image_select' => 'Bild auswählen',
     'image_upload' => 'Bild hochladen',
-    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro' => 'Hier können Sie die zuvor hochgeladenen Bilder auswählen und verwalten.',
     'image_intro_upload' => 'Laden Sie ein neues Bild hoch, indem Sie eine Bilddatei in dieses Fenster ziehen oder über die Schaltfläche "Bild hochladen" oben klicken.',
     'image_all' => 'Alle',
     'image_all_title' => 'Alle Bilder anzeigen',
