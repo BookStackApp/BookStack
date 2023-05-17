@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Auth;
 
-use BookStack\Auth\User;
+use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

@@ -2,7 +2,7 @@
 
 namespace Tests\User;
 
-use BookStack\Auth\User;
+use BookStack\Users\Models\User;
 use Tests\TestCase;
 
 class UserSearchTest extends TestCase

@@ -2,12 +2,12 @@
 
 namespace Tests\Auth;
 
-use BookStack\Auth\Access\LoginService;
-use BookStack\Auth\Access\Mfa\MfaValue;
-use BookStack\Auth\Access\Mfa\TotpService;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Access\LoginService;
+use BookStack\Access\Mfa\MfaValue;
+use BookStack\Access\Mfa\TotpService;
 use BookStack\Exceptions\StoppedAuthenticationException;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
 use Tests\TestCase;

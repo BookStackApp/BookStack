@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Auth\Permissions\JointPermissionBuilder;
+use BookStack\Permissions\JointPermissionBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 

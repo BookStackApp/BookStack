@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Actions;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Actions\Webhook;
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Webhook;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WebhookTrackedEventFactory extends Factory

@@ -2,9 +2,9 @@
 
 namespace Tests\Auth;
 
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
 use BookStack\Notifications\ConfirmEmail;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;

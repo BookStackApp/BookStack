@@ -2,11 +2,11 @@
 
 namespace Tests;
 
-use BookStack\Auth\Permissions\RolePermission;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Permissions\Models\RolePermission;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 

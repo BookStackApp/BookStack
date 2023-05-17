@@ -2,9 +2,9 @@
 
 namespace Tests\Api;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Activity\ActivityType;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Tests\TestCase;
 
 class RolesApiTest extends TestCase

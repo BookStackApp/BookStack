@@ -1,39 +1,38 @@
 <?php
 
-use BookStack\Http\Controllers\Api;
-use BookStack\Http\Controllers\AttachmentController;
-use BookStack\Http\Controllers\AuditLogController;
+use BookStack\Activity\Controllers\AuditLogController;
+use BookStack\Activity\Controllers\CommentController;
+use BookStack\Activity\Controllers\FavouriteController;
+use BookStack\Activity\Controllers\TagController;
+use BookStack\Activity\Controllers\WebhookController;
+use BookStack\Api\UserApiTokenController;
+use BookStack\Entities\Controllers\BookController;
+use BookStack\Entities\Controllers\BookExportController;
+use BookStack\Entities\Controllers\BookshelfController;
+use BookStack\Entities\Controllers\BookSortController;
+use BookStack\Entities\Controllers\ChapterController;
+use BookStack\Entities\Controllers\ChapterExportController;
+use BookStack\Entities\Controllers\PageController;
+use BookStack\Entities\Controllers\PageExportController;
+use BookStack\Entities\Controllers\PageRevisionController;
+use BookStack\Entities\Controllers\PageTemplateController;
+use BookStack\Entities\Controllers\RecycleBinController;
 use BookStack\Http\Controllers\Auth;
-use BookStack\Http\Controllers\BookController;
-use BookStack\Http\Controllers\BookExportController;
-use BookStack\Http\Controllers\BookshelfController;
-use BookStack\Http\Controllers\BookSortController;
-use BookStack\Http\Controllers\ChapterController;
-use BookStack\Http\Controllers\ChapterExportController;
-use BookStack\Http\Controllers\CommentController;
-use BookStack\Http\Controllers\FavouriteController;
 use BookStack\Http\Controllers\HomeController;
 use BookStack\Http\Controllers\Images;
-use BookStack\Http\Controllers\MaintenanceController;
-use BookStack\Http\Controllers\PageController;
-use BookStack\Http\Controllers\PageExportController;
-use BookStack\Http\Controllers\PageRevisionController;
-use BookStack\Http\Controllers\PageTemplateController;
-use BookStack\Http\Controllers\PermissionsController;
-use BookStack\Http\Controllers\RecycleBinController;
-use BookStack\Http\Controllers\ReferenceController;
-use BookStack\Http\Controllers\RoleController;
-use BookStack\Http\Controllers\SearchController;
-use BookStack\Http\Controllers\SettingController;
-use BookStack\Http\Controllers\StatusController;
-use BookStack\Http\Controllers\TagController;
-use BookStack\Http\Controllers\UserApiTokenController;
-use BookStack\Http\Controllers\UserController;
-use BookStack\Http\Controllers\UserPreferencesController;
-use BookStack\Http\Controllers\UserProfileController;
-use BookStack\Http\Controllers\UserSearchController;
-use BookStack\Http\Controllers\WebhookController;
 use BookStack\Http\Middleware\VerifyCsrfToken;
+use BookStack\Permissions\PermissionsController;
+use BookStack\References\ReferenceController;
+use BookStack\Search\SearchController;
+use BookStack\Settings\MaintenanceController;
+use BookStack\Settings\SettingController;
+use BookStack\Settings\StatusController;
+use BookStack\Uploads\Controllers\AttachmentController;
+use BookStack\Users\Controllers\RoleController;
+use BookStack\Users\Controllers\UserController;
+use BookStack\Users\Controllers\UserPreferencesController;
+use BookStack\Users\Controllers\UserProfileController;
+use BookStack\Users\Controllers\UserSearchController;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -46,12 +45,12 @@ Route::get('/favicon.ico', [HomeController::class, 'favicon']);
 Route::middleware('auth')->group(function () {
 
     // Secure images routing
-    Route::get('/uploads/images/{path}', [Images\ImageController::class, 'showImage'])
+    Route::get('/uploads/images/{path}', [\BookStack\Uploads\Controllers\ImageController::class, 'showImage'])
         ->where('path', '.*$');
 
     // API docs routes
     Route::redirect('/api', '/api/docs');
-    Route::get('/api/docs', [Api\ApiDocsController::class, 'display']);
+    Route::get('/api/docs', [\BookStack\Api\ApiDocsController::class, 'display']);
 
     Route::get('/pages/recently-updated', [PageController::class, 'showRecentlyUpdated']);
 
@@ -155,14 +154,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/{slug}', [UserProfileController::class, 'show']);
 
     // Image routes
-    Route::get('/images/gallery', [Images\GalleryImageController::class, 'list']);
-    Route::post('/images/gallery', [Images\GalleryImageController::class, 'create']);
-    Route::get('/images/drawio', [Images\DrawioImageController::class, 'list']);
-    Route::get('/images/drawio/base64/{id}', [Images\DrawioImageController::class, 'getAsBase64']);
-    Route::post('/images/drawio', [Images\DrawioImageController::class, 'create']);
-    Route::get('/images/edit/{id}', [Images\ImageController::class, 'edit']);
-    Route::put('/images/{id}', [Images\ImageController::class, 'update']);
-    Route::delete('/images/{id}', [Images\ImageController::class, 'destroy']);
+    Route::get('/images/gallery', [\BookStack\Uploads\Controllers\GalleryImageController::class, 'list']);
+    Route::post('/images/gallery', [\BookStack\Uploads\Controllers\GalleryImageController::class, 'create']);
+    Route::get('/images/drawio', [\BookStack\Uploads\Controllers\DrawioImageController::class, 'list']);
+    Route::get('/images/drawio/base64/{id}', [\BookStack\Uploads\Controllers\DrawioImageController::class, 'getAsBase64']);
+    Route::post('/images/drawio', [\BookStack\Uploads\Controllers\DrawioImageController::class, 'create']);
+    Route::get('/images/edit/{id}', [\BookStack\Uploads\Controllers\ImageController::class, 'edit']);
+    Route::put('/images/{id}', [\BookStack\Uploads\Controllers\ImageController::class, 'update']);
+    Route::delete('/images/{id}', [\BookStack\Uploads\Controllers\ImageController::class, 'destroy']);
 
     // Attachments routes
     Route::get('/attachments/{id}', [AttachmentController::class, 'get']);
@@ -291,64 +290,64 @@ Route::middleware('auth')->group(function () {
 
 // MFA routes
 Route::middleware('mfa-setup')->group(function () {
-    Route::get('/mfa/setup', [Auth\MfaController::class, 'setup']);
-    Route::get('/mfa/totp/generate', [Auth\MfaTotpController::class, 'generate']);
-    Route::post('/mfa/totp/confirm', [Auth\MfaTotpController::class, 'confirm']);
-    Route::get('/mfa/backup_codes/generate', [Auth\MfaBackupCodesController::class, 'generate']);
-    Route::post('/mfa/backup_codes/confirm', [Auth\MfaBackupCodesController::class, 'confirm']);
+    Route::get('/mfa/setup', [\BookStack\Access\Controllers\MfaController::class, 'setup']);
+    Route::get('/mfa/totp/generate', [\BookStack\Access\Controllers\MfaTotpController::class, 'generate']);
+    Route::post('/mfa/totp/confirm', [\BookStack\Access\Controllers\MfaTotpController::class, 'confirm']);
+    Route::get('/mfa/backup_codes/generate', [\BookStack\Access\Controllers\MfaBackupCodesController::class, 'generate']);
+    Route::post('/mfa/backup_codes/confirm', [\BookStack\Access\Controllers\MfaBackupCodesController::class, 'confirm']);
 });
 Route::middleware('guest')->group(function () {
-    Route::get('/mfa/verify', [Auth\MfaController::class, 'verify']);
-    Route::post('/mfa/totp/verify', [Auth\MfaTotpController::class, 'verify']);
-    Route::post('/mfa/backup_codes/verify', [Auth\MfaBackupCodesController::class, 'verify']);
+    Route::get('/mfa/verify', [\BookStack\Access\Controllers\MfaController::class, 'verify']);
+    Route::post('/mfa/totp/verify', [\BookStack\Access\Controllers\MfaTotpController::class, 'verify']);
+    Route::post('/mfa/backup_codes/verify', [\BookStack\Access\Controllers\MfaBackupCodesController::class, 'verify']);
 });
-Route::delete('/mfa/{method}/remove', [Auth\MfaController::class, 'remove'])->middleware('auth');
+Route::delete('/mfa/{method}/remove', [\BookStack\Access\Controllers\MfaController::class, 'remove'])->middleware('auth');
 
 // Social auth routes
-Route::get('/login/service/{socialDriver}', [Auth\SocialController::class, 'login']);
-Route::get('/login/service/{socialDriver}/callback', [Auth\SocialController::class, 'callback']);
-Route::post('/login/service/{socialDriver}/detach', [Auth\SocialController::class, 'detach'])->middleware('auth');
-Route::get('/register/service/{socialDriver}', [Auth\SocialController::class, 'register']);
+Route::get('/login/service/{socialDriver}', [\BookStack\Access\Controllers\SocialController::class, 'login']);
+Route::get('/login/service/{socialDriver}/callback', [\BookStack\Access\Controllers\SocialController::class, 'callback']);
+Route::post('/login/service/{socialDriver}/detach', [\BookStack\Access\Controllers\SocialController::class, 'detach'])->middleware('auth');
+Route::get('/register/service/{socialDriver}', [\BookStack\Access\Controllers\SocialController::class, 'register']);
 
 // Login/Logout routes
-Route::get('/login', [Auth\LoginController::class, 'getLogin']);
-Route::post('/login', [Auth\LoginController::class, 'login']);
-Route::post('/logout', [Auth\LoginController::class, 'logout']);
-Route::get('/register', [Auth\RegisterController::class, 'getRegister']);
-Route::get('/register/confirm', [Auth\ConfirmEmailController::class, 'show']);
-Route::get('/register/confirm/awaiting', [Auth\ConfirmEmailController::class, 'showAwaiting']);
-Route::post('/register/confirm/resend', [Auth\ConfirmEmailController::class, 'resend']);
-Route::get('/register/confirm/{token}', [Auth\ConfirmEmailController::class, 'showAcceptForm']);
-Route::post('/register/confirm/accept', [Auth\ConfirmEmailController::class, 'confirm']);
-Route::post('/register', [Auth\RegisterController::class, 'postRegister']);
+Route::get('/login', [\BookStack\Access\Controllers\LoginController::class, 'getLogin']);
+Route::post('/login', [\BookStack\Access\Controllers\LoginController::class, 'login']);
+Route::post('/logout', [\BookStack\Access\Controllers\LoginController::class, 'logout']);
+Route::get('/register', [\BookStack\Access\Controllers\RegisterController::class, 'getRegister']);
+Route::get('/register/confirm', [\BookStack\Access\Controllers\ConfirmEmailController::class, 'show']);
+Route::get('/register/confirm/awaiting', [\BookStack\Access\Controllers\ConfirmEmailController::class, 'showAwaiting']);
+Route::post('/register/confirm/resend', [\BookStack\Access\Controllers\ConfirmEmailController::class, 'resend']);
+Route::get('/register/confirm/{token}', [\BookStack\Access\Controllers\ConfirmEmailController::class, 'showAcceptForm']);
+Route::post('/register/confirm/accept', [\BookStack\Access\Controllers\ConfirmEmailController::class, 'confirm']);
+Route::post('/register', [\BookStack\Access\Controllers\RegisterController::class, 'postRegister']);
 
 // SAML routes
-Route::post('/saml2/login', [Auth\Saml2Controller::class, 'login']);
-Route::post('/saml2/logout', [Auth\Saml2Controller::class, 'logout']);
-Route::get('/saml2/metadata', [Auth\Saml2Controller::class, 'metadata']);
-Route::get('/saml2/sls', [Auth\Saml2Controller::class, 'sls']);
-Route::post('/saml2/acs', [Auth\Saml2Controller::class, 'startAcs'])->withoutMiddleware([
+Route::post('/saml2/login', [\BookStack\Access\Controllers\Saml2Controller::class, 'login']);
+Route::post('/saml2/logout', [\BookStack\Access\Controllers\Saml2Controller::class, 'logout']);
+Route::get('/saml2/metadata', [\BookStack\Access\Controllers\Saml2Controller::class, 'metadata']);
+Route::get('/saml2/sls', [\BookStack\Access\Controllers\Saml2Controller::class, 'sls']);
+Route::post('/saml2/acs', [\BookStack\Access\Controllers\Saml2Controller::class, 'startAcs'])->withoutMiddleware([
     StartSession::class,
     ShareErrorsFromSession::class,
     VerifyCsrfToken::class,
 ]);
-Route::get('/saml2/acs', [Auth\Saml2Controller::class, 'processAcs']);
+Route::get('/saml2/acs', [\BookStack\Access\Controllers\Saml2Controller::class, 'processAcs']);
 
 // OIDC routes
-Route::post('/oidc/login', [Auth\OidcController::class, 'login']);
-Route::get('/oidc/callback', [Auth\OidcController::class, 'callback']);
+Route::post('/oidc/login', [\BookStack\Access\Controllers\OidcController::class, 'login']);
+Route::get('/oidc/callback', [\BookStack\Access\Controllers\OidcController::class, 'callback']);
 
 // User invitation routes
-Route::get('/register/invite/{token}', [Auth\UserInviteController::class, 'showSetPassword']);
-Route::post('/register/invite/{token}', [Auth\UserInviteController::class, 'setPassword']);
+Route::get('/register/invite/{token}', [\BookStack\Access\Controllers\UserInviteController::class, 'showSetPassword']);
+Route::post('/register/invite/{token}', [\BookStack\Access\Controllers\UserInviteController::class, 'setPassword']);
 
 // Password reset link request routes
-Route::get('/password/email', [Auth\ForgotPasswordController::class, 'showLinkRequestForm']);
-Route::post('/password/email', [Auth\ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::get('/password/email', [\BookStack\Access\Controllers\ForgotPasswordController::class, 'showLinkRequestForm']);
+Route::post('/password/email', [\BookStack\Access\Controllers\ForgotPasswordController::class, 'sendResetLinkEmail']);
 
 // Password reset routes
-Route::get('/password/reset/{token}', [Auth\ResetPasswordController::class, 'showResetForm']);
-Route::post('/password/reset', [Auth\ResetPasswordController::class, 'reset']);
+Route::get('/password/reset/{token}', [\BookStack\Access\Controllers\ResetPasswordController::class, 'showResetForm']);
+Route::post('/password/reset', [\BookStack\Access\Controllers\ResetPasswordController::class, 'reset']);
 
 // Metadata routes
 Route::view('/help/wysiwyg', 'help.wysiwyg');

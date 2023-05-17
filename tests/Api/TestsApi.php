@@ -2,7 +2,7 @@
 
 namespace Tests\Api;
 
-use BookStack\Auth\User;
+use BookStack\Users\Models\User;
 
 trait TestsApi
 {

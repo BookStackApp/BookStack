@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Queries;
 
-use BookStack\Actions\View;
+use BookStack\Activity\Models\View;
 use Illuminate\Support\Collection;
 
 class RecentlyViewed extends EntityQuery
