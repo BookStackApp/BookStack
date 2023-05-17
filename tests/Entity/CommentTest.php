@@ -2,7 +2,7 @@
 
 namespace Tests\Entity;
 
-use BookStack\Actions\Comment;
+use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 

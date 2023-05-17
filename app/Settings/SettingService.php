@@ -2,7 +2,7 @@
 
 namespace BookStack\Settings;
 
-use BookStack\Auth\User;
+use BookStack\Users\Models\User;
 
 /**
  * Class SettingService

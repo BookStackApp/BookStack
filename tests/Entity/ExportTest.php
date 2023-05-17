@@ -2,7 +2,6 @@
 
 namespace Tests\Entity;
 
-use BookStack\Auth\Role;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;

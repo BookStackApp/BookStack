@@ -2,7 +2,7 @@
 
 namespace BookStack\Http\Middleware;
 
-use BookStack\Util\LanguageManager;
+use BookStack\Translation\LanguageManager;
 use Carbon\Carbon;
 use Closure;
 

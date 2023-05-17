@@ -2,8 +2,8 @@
 
 namespace Tests\Auth;
 
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Tests\TestCase;
 
 class Saml2Test extends TestCase

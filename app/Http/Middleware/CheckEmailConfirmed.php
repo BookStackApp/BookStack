@@ -2,8 +2,8 @@
 
 namespace BookStack\Http\Middleware;
 
-use BookStack\Auth\Access\EmailConfirmationService;
-use BookStack\Auth\User;
+use BookStack\Access\EmailConfirmationService;
+use BookStack\Users\Models\User;
 use Closure;
 
 /**

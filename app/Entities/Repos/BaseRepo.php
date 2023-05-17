@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Repos;
 
-use BookStack\Actions\TagRepo;
+use BookStack\Activity\TagRepo;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Exceptions\ImageUploadException;

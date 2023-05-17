@@ -3,8 +3,8 @@
 namespace Tests\User;
 
 use Activity;
-use BookStack\Actions\ActivityType;
-use BookStack\Auth\User;
+use BookStack\Activity\ActivityType;
+use BookStack\Users\Models\User;
 use Tests\TestCase;
 
 class UserProfileTest extends TestCase

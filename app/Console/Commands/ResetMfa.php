@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Auth\User;
+use BookStack\Users\Models\User;
 use Illuminate\Console\Command;
 
 class ResetMfa extends Command

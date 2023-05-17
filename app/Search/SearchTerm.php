@@ -2,7 +2,7 @@
 
 namespace BookStack\Search;
 
-use BookStack\Model;
+use BookStack\App\Model;
 
 class SearchTerm extends Model
 {

@@ -2,11 +2,11 @@
 
 namespace BookStack\Http\Controllers;
 
+use BookStack\Activity\Models\Loggable;
+use BookStack\App\Model;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Http\Responses\DownloadResponseFactory;
-use BookStack\Interfaces\Loggable;
-use BookStack\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;

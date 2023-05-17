@@ -2,11 +2,11 @@
 
 namespace Tests\Helpers;
 
-use BookStack\Auth\Permissions\EntityPermission;
-use BookStack\Auth\Permissions\RolePermission;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
+use BookStack\Permissions\Models\EntityPermission;
+use BookStack\Permissions\Models\RolePermission;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 
 class PermissionsProvider
 {

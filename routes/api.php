@@ -6,21 +6,21 @@
  * Controllers are all within app/Http/Controllers/Api.
  */
 
-use BookStack\Http\Controllers\Api\ApiDocsController;
-use BookStack\Http\Controllers\Api\AttachmentApiController;
-use BookStack\Http\Controllers\Api\BookApiController;
-use BookStack\Http\Controllers\Api\BookExportApiController;
-use BookStack\Http\Controllers\Api\BookshelfApiController;
-use BookStack\Http\Controllers\Api\ChapterApiController;
-use BookStack\Http\Controllers\Api\ChapterExportApiController;
-use BookStack\Http\Controllers\Api\ContentPermissionApiController;
-use BookStack\Http\Controllers\Api\ImageGalleryApiController;
-use BookStack\Http\Controllers\Api\PageApiController;
-use BookStack\Http\Controllers\Api\PageExportApiController;
-use BookStack\Http\Controllers\Api\RecycleBinApiController;
-use BookStack\Http\Controllers\Api\RoleApiController;
-use BookStack\Http\Controllers\Api\SearchApiController;
-use BookStack\Http\Controllers\Api\UserApiController;
+use BookStack\Api\ApiDocsController;
+use BookStack\Entities\Controllers\BookApiController;
+use BookStack\Entities\Controllers\BookExportApiController;
+use BookStack\Entities\Controllers\BookshelfApiController;
+use BookStack\Entities\Controllers\ChapterApiController;
+use BookStack\Entities\Controllers\ChapterExportApiController;
+use BookStack\Entities\Controllers\PageApiController;
+use BookStack\Entities\Controllers\PageExportApiController;
+use BookStack\Entities\Controllers\RecycleBinApiController;
+use BookStack\Permissions\ContentPermissionApiController;
+use BookStack\Search\SearchApiController;
+use BookStack\Uploads\Controllers\AttachmentApiController;
+use BookStack\Uploads\Controllers\ImageGalleryApiController;
+use BookStack\Users\Controllers\RoleApiController;
+use BookStack\Users\Controllers\UserApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('docs.json', [ApiDocsController::class, 'json']);

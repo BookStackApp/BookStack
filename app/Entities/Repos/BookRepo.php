@@ -2,8 +2,8 @@
 
 namespace BookStack\Entities\Repos;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Actions\TagRepo;
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\TagRepo;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\ImageUploadException;

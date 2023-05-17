@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Actions;
 
-use BookStack\Actions\Webhook;
+use BookStack\Activity\Models\Webhook;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WebhookFactory extends Factory

@@ -11,7 +11,7 @@ class CommentFactory extends Factory
      *
      * @var string
      */
-    protected $model = \BookStack\Actions\Comment::class;
+    protected $model = \BookStack\Activity\Models\Comment::class;
 
     /**
      * Define the model's default state.

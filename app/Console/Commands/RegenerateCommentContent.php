@@ -2,8 +2,8 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Actions\Comment;
-use BookStack\Actions\CommentRepo;
+use BookStack\Activity\CommentRepo;
+use BookStack\Activity\Models\Comment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 

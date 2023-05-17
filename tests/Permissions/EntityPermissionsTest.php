@@ -2,13 +2,13 @@
 
 namespace Tests\Permissions;
 
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Exception;
 use Illuminate\Support\Str;
 use Tests\TestCase;

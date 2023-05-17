@@ -2,8 +2,8 @@
 
 namespace Tests\Actions;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Actions\Webhook;
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Webhook;
 use Tests\TestCase;
 
 class WebhookManagementTest extends TestCase

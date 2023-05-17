@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Repos;
 
-use BookStack\Actions\ActivityType;
+use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Facades\Activity;

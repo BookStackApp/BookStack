@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Actions\View;
+use BookStack\Activity\Models\View;
 use Illuminate\Console\Command;
 
 class ClearViews extends Command
