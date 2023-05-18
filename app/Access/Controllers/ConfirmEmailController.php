@@ -7,7 +7,7 @@ use BookStack\Access\LoginService;
 use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Exceptions\UserTokenExpiredException;
 use BookStack\Exceptions\UserTokenNotFoundException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Users\UserRepo;
 use Exception;
 use Illuminate\Http\Request;

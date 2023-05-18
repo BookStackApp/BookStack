@@ -4,7 +4,7 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
 class PageTemplateController extends Controller

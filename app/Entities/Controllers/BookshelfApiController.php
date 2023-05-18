@@ -4,7 +4,7 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Repos\BookshelfRepo;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;

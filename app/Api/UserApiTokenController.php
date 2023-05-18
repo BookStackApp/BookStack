@@ -3,7 +3,7 @@
 namespace BookStack\Api;
 
 use BookStack\Activity\ActivityType;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Users\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

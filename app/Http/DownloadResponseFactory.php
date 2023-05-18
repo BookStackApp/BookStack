@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Http\Responses;
+namespace BookStack\Http;
 
 use BookStack\Util\WebSafeMimeSniffer;
 use Illuminate\Http\Request;

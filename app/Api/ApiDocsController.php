@@ -2,7 +2,7 @@
 
 namespace BookStack\Api;
 
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 
 class ApiDocsController extends ApiController
 {

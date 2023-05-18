@@ -9,7 +9,7 @@ use BookStack\Access\Mfa\TotpService;
 use BookStack\Access\Mfa\TotpValidationRule;
 use BookStack\Activity\ActivityType;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 

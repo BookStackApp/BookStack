@@ -1,12 +1,11 @@
 <?php
 
-namespace BookStack\Http\Controllers;
+namespace BookStack\Http;
 
 use BookStack\Activity\Models\Loggable;
 use BookStack\App\Model;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
-use BookStack\Http\Responses\DownloadResponseFactory;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;

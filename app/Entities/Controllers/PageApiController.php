@@ -7,7 +7,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\PermissionsException;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use Exception;
 use Illuminate\Http\Request;
 

@@ -6,7 +6,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 
 class ReferenceController extends Controller
 {

@@ -2,7 +2,7 @@
 
 namespace BookStack\Users\Controllers;
 
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Settings\UserShortcutMap;
 use BookStack\Users\UserRepo;
 use Illuminate\Http\Request;

@@ -14,7 +14,7 @@ use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\References\ReferenceFetcher;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;

@@ -3,7 +3,7 @@
 namespace BookStack\Uploads\Controllers;
 
 use BookStack\Exceptions\ImageUploadException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;

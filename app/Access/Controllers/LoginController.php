@@ -7,7 +7,7 @@ use BookStack\Access\SocialAuthService;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Facades\Activity;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

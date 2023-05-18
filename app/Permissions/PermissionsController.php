@@ -7,7 +7,7 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PermissionsUpdater;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Users\Models\Role;
 use Illuminate\Http\Request;

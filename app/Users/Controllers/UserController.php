@@ -5,7 +5,7 @@ namespace BookStack\Users\Controllers;
 use BookStack\Access\SocialAuthService;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\UserUpdateException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Queries\UsersAllPaginatedAndSorted;

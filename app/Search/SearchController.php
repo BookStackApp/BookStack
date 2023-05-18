@@ -4,7 +4,7 @@ namespace BookStack\Search;
 
 use BookStack\Entities\Queries\Popular;
 use BookStack\Entities\Tools\SiblingFetcher;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller

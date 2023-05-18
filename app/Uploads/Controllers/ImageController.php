@@ -4,7 +4,7 @@ namespace BookStack\Uploads\Controllers;
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;

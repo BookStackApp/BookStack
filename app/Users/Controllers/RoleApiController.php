@@ -2,7 +2,7 @@
 
 namespace BookStack\Users\Controllers;
 
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use BookStack\Permissions\PermissionsRepo;
 use BookStack\Users\Models\Role;
 use Illuminate\Http\Request;

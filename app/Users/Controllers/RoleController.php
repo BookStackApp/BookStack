@@ -3,7 +3,7 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Exceptions\PermissionsException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Permissions\PermissionsRepo;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Queries\RolesAllPaginatedAndSorted;
