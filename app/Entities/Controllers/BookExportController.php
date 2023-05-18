@@ -4,7 +4,7 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\ExportFormatter;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Throwable;
 
 class BookExportController extends Controller

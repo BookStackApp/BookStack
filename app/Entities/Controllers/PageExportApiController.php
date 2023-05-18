@@ -4,7 +4,7 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\ExportFormatter;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use Throwable;
 
 class PageExportApiController extends ApiController

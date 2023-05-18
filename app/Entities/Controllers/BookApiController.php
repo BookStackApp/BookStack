@@ -8,7 +8,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 

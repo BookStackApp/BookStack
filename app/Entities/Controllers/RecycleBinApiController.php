@@ -7,7 +7,7 @@ use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Repos\DeletionRepo;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 

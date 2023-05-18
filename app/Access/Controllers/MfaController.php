@@ -4,7 +4,7 @@ namespace BookStack\Access\Controllers;
 
 use BookStack\Access\Mfa\MfaValue;
 use BookStack\Activity\ActivityType;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
 class MfaController extends Controller

@@ -3,7 +3,7 @@
 namespace BookStack\Activity\Controllers;
 
 use BookStack\Activity\TagRepo;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 

@@ -4,7 +4,7 @@ namespace BookStack\Uploads\Controllers;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\FileUploadException;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;
 use Exception;

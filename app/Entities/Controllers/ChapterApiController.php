@@ -5,7 +5,7 @@ namespace BookStack\Entities\Controllers;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Repos\ChapterRepo;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 

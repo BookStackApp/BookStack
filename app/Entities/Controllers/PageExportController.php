@@ -6,7 +6,7 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Throwable;
 
 class PageExportController extends Controller

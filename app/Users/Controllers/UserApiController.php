@@ -3,7 +3,7 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Exceptions\UserUpdateException;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use BookStack\Users\Models\User;
 use BookStack\Users\UserRepo;
 use Closure;

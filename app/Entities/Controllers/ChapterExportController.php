@@ -5,7 +5,7 @@ namespace BookStack\Entities\Controllers;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Throwable;
 
 class ChapterExportController extends Controller

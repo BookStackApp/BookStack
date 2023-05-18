@@ -3,7 +3,7 @@
 namespace BookStack\Uploads\Controllers;
 
 use BookStack\Entities\Models\Page;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;

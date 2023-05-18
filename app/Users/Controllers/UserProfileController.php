@@ -3,7 +3,7 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Activity\ActivityQueries;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Users\Queries\UserContentCounts;
 use BookStack\Users\Queries\UserRecentlyCreatedContent;
 use BookStack\Users\UserRepo;

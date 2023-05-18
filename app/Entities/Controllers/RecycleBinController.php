@@ -7,7 +7,7 @@ use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Repos\DeletionRepo;
 use BookStack\Entities\Tools\TrashCan;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 
 class RecycleBinController extends Controller
 {

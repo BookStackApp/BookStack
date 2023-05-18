@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Http\Controllers;
+namespace BookStack\Http;
 
 use BookStack\Api\ListingResponseBuilder;
 use Illuminate\Database\Eloquent\Builder;

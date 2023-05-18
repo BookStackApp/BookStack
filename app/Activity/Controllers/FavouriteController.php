@@ -6,7 +6,7 @@ use BookStack\Activity\Models\Favouritable;
 use BookStack\App\Model;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Queries\TopFavourites;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
 class FavouriteController extends Controller

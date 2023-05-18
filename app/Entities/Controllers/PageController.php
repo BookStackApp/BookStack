@@ -13,7 +13,7 @@ use BookStack\Entities\Tools\PageEditActivity;
 use BookStack\Entities\Tools\PageEditorData;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\References\ReferenceFetcher;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

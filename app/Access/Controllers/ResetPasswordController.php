@@ -4,7 +4,7 @@ namespace BookStack\Access\Controllers;
 
 use BookStack\Access\LoginService;
 use BookStack\Activity\ActivityType;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use BookStack\Users\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

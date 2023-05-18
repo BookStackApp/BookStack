@@ -5,7 +5,7 @@ namespace BookStack\Permissions;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\PermissionsUpdater;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use Illuminate\Http\Request;
 
 class ContentPermissionApiController extends ApiController

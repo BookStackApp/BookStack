@@ -4,7 +4,7 @@ namespace BookStack\Access\Controllers;
 
 use BookStack\Access\Oidc\OidcException;
 use BookStack\Access\Oidc\OidcService;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
 class OidcController extends Controller

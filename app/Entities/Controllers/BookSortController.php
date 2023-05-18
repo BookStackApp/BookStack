@@ -7,7 +7,7 @@ use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\BookSortMap;
 use BookStack\Facades\Activity;
-use BookStack\Http\Controllers\Controller;
+use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
 class BookSortController extends Controller

@@ -4,7 +4,7 @@ namespace BookStack\Search;
 
 use BookStack\Api\ApiEntityListFormatter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Http\Controllers\ApiController;
+use BookStack\Http\ApiController;
 use Illuminate\Http\Request;
 
 class SearchApiController extends ApiController
