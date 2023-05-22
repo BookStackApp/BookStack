@@ -14,6 +14,7 @@
          option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
          option:dropzone:zone-text="{{ trans('entities.attachments_dropzone') }}"
          option:dropzone:file-accept="*"
+         option:dropzone:allow-multiple="true"
          class="px-l files">
 
         <div refs="attachments@list-container dropzone@drop-target" class="relative">

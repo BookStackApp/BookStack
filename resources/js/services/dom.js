@@ -10,7 +10,11 @@ export function elem(tagName, attrs = {}, children = []) {
     const el = document.createElement(tagName);
 
     for (const [key, val] of Object.entries(attrs)) {
-        el.setAttribute(key, val);
+        if (val === null) {
+            el.removeAttribute(key);
+        } else {
+            el.setAttribute(key, val);
+        }
     }
 
     for (const child of children) {
