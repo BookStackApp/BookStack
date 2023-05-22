@@ -6,9 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Bild auswählen',
-    'image_upload' => 'Upload Image',
-    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
-    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
+    'image_upload' => 'Bild hochladen',
+    'image_intro' => 'Hier können Sie die zuvor hochgeladenen Bilder auswählen und verwalten.',
+    'image_intro_upload' => 'Laden Sie ein neues Bild hoch, indem Sie eine Bilddatei in dieses Fenster ziehen oder über die Schaltfläche "Bild hochladen" oben klicken.',
     'image_all' => 'Alle',
     'image_all_title' => 'Alle Bilder anzeigen',
     'image_book_title' => 'Zeige alle Bilder, die in dieses Buch hochgeladen wurden',
@@ -21,7 +21,7 @@ return [
     'image_delete_confirm_text' => 'Bist Du sicher, dass Du diese Seite löschen möchtest?',
     'image_select_image' => 'Bild auswählen',
     'image_dropzone' => 'Ziehe Bilder hierher oder klicke hier, um ein Bild auszuwählen',
-    'image_dropzone_drop' => 'Drop images here to upload',
+    'image_dropzone_drop' => 'Ziehe Dateien hierher, um sie hochzuladen',
     'images_deleted' => 'Bilder gelöscht',
     'image_preview' => 'Bildvorschau',
     'image_upload_success' => 'Bild erfolgreich hochgeladen',

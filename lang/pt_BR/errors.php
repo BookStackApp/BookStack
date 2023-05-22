@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Anexo não encontrado',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Um erro ocorreu ao efetuar o upload do arquivo anexado',
 
     // Pages
     'page_draft_autosave_fail' => 'Falha ao tentar salvar o rascunho. Certifique-se que a conexão de internet está funcional antes de tentar salvar essa página',

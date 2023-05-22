@@ -8,7 +8,7 @@ return [
     'image_select' => 'Sélectionner une image',
     'image_upload' => 'Téléverser une image',
     'image_intro' => 'Ici, vous pouvez sélectionner et gérer les images qui ont été précédemment téléversées sur le système.',
-    'image_intro_upload' => 'Téléverser une nouvelle image en glissant un fichier image dans cette fenêtre, ou en utilisant le bouton "Téléverser une image" ci-dessus.',
+    'image_intro_upload' => 'Téléversez une nouvelle image en glissant un fichier image dans cette fenêtre, ou en utilisant le bouton "Téléverser une image" ci-dessus.',
     'image_all' => 'Toutes',
     'image_all_title' => 'Voir toutes les images',
     'image_book_title' => 'Voir les images ajoutées à ce livre',

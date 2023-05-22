@@ -6,9 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Selecionar Imagem',
-    'image_upload' => 'Upload Image',
-    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
-    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
+    'image_upload' => 'Fazer upload de imagem',
+    'image_intro' => 'Aqui você pode selecionar e gerenciar imagens que foram previamente enviadas para o sistema.',
+    'image_intro_upload' => 'Faça upload de uma imagem arrastando um arquivo de imagem para esta janela, ou usando o botão "Fazer upload de imagem" acima.',
     'image_all' => 'Todas',
     'image_all_title' => 'Visualizar todas as imagens',
     'image_book_title' => 'Visualizar imagens relacionadas a esse livro',
@@ -21,7 +21,7 @@ return [
     'image_delete_confirm_text' => 'Tem certeza de que deseja excluir essa imagem?',
     'image_select_image' => 'Selecionar Imagem',
     'image_dropzone' => 'Arraste imagens ou clique aqui para fazer upload',
-    'image_dropzone_drop' => 'Drop images here to upload',
+    'image_dropzone_drop' => 'Arrastar imagens até aqui para fazer upload',
     'images_deleted' => 'Imagens Excluídas',
     'image_preview' => 'Pré-Visualização de Imagem',
     'image_upload_success' => 'Upload de imagem efetuado com sucesso',

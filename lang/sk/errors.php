@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Príloha nenájdená',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Pri nahrávaní súboru prílohy nastala chyba',
 
     // Pages
     'page_draft_autosave_fail' => 'Koncept nemohol byť uložený. Uistite sa, že máte pripojenie k internetu pre uložením tejto stránky',
