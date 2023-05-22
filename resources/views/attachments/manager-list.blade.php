@@ -1,4 +1,5 @@
-<div component="sortable-list" option:sortable-list:handle-selector=".handle">
+<div component="sortable-list"
+     option:sortable-list:handle-selector=".handle, a">
     @foreach($attachments as $attachment)
         <div component="ajax-delete-row"
              option:ajax-delete-row:url="{{ url('/attachments/' . $attachment->id) }}"
