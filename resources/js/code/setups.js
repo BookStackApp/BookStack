@@ -6,7 +6,7 @@ import {bracketMatching} from '@codemirror/language';
 import {
     defaultKeymap, history, historyKeymap, indentWithTab,
 } from '@codemirror/commands';
-import {EditorState} from '@codemirror/state';
+import {Compartment, EditorState} from '@codemirror/state';
 import {getTheme} from './themes';
 
 /**
@@ -17,12 +17,37 @@ function common(parentEl) {
     return [
         getTheme(parentEl),
         lineNumbers(),
-        highlightActiveLineGutter(),
         drawSelection(),
         dropCursor(),
         bracketMatching(),
         rectangularSelection(),
-        highlightActiveLine(),
+    ];
+}
+
+/**
+ * @returns {({extension: Extension}|readonly Extension[])[]}
+ */
+function getDynamicActiveLineHighlighter() {
+    const highlightingCompartment = new Compartment();
+    const domEvents = {
+        focus(event, view) {
+            view.dispatch({
+                effects: highlightingCompartment.reconfigure([
+                    highlightActiveLineGutter(),
+                    highlightActiveLine(),
+                ]),
+            });
+        },
+        blur(event, view) {
+            view.dispatch({
+                effects: highlightingCompartment.reconfigure([]),
+            });
+        },
+    };
+
+    return [
+        highlightingCompartment.of([]),
+        EditorView.domEventHandlers(domEvents),
     ];
 }
 
@@ -33,6 +58,7 @@ function common(parentEl) {
 export function viewerExtensions(parentEl) {
     return [
         ...common(parentEl),
+        getDynamicActiveLineHighlighter(),
         keymap.of([
             ...defaultKeymap,
         ]),
@@ -47,6 +73,8 @@ export function viewerExtensions(parentEl) {
 export function editorExtensions(parentEl) {
     return [
         ...common(parentEl),
+        highlightActiveLineGutter(),
+        highlightActiveLine(),
         history(),
         keymap.of([
             ...defaultKeymap,
