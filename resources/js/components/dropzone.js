@@ -21,6 +21,7 @@ export class Dropzone extends Component {
         this.uploadLimitMessage = this.$opts.uploadLimitMessage;
         this.zoneText = this.$opts.zoneText;
         this.fileAcceptTypes = this.$opts.fileAccept;
+        this.allowMultiple = this.$opts.allowMultiple === 'true';
 
         this.setupListeners();
     }
@@ -83,7 +84,12 @@ export class Dropzone extends Component {
     }
 
     manualSelectHandler() {
-        const input = elem('input', {type: 'file', style: 'left: -400px; visibility: hidden; position: fixed;', accept: this.fileAcceptTypes});
+        const input = elem('input', {
+            type: 'file',
+            style: 'left: -400px; visibility: hidden; position: fixed;',
+            accept: this.fileAcceptTypes,
+            multiple: this.allowMultiple ? '' : null,
+        });
         this.container.append(input);
         input.click();
         input.addEventListener('change', () => {
