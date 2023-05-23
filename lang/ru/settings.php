@@ -50,8 +50,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Цветовая схема приложения',
-    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
+    'color_scheme_desc' => 'Установите цвета для использования в пользовательском интерфейсе. Цвета могут быть настроены отдельно для темных и светлых режимов, чтобы наилучшим образом соответствовать теме и обеспечить разборчивость.',
+    'ui_colors_desc' => 'Задайте основной цвет приложения и цвет ссылок по умолчанию. Основной цвет используется в основном для баннера заголовка, кнопок и декораций интерфейса. Цвет ссылок по умолчанию используется для текстовых ссылок и действий как в письменном содержании, так и в прикладном интерфейсе.',
     'app_color' => 'Основной цвет',
     'link_color' => 'Цвет ссылки',
     'content_colors_desc' => 'Задает цвета для всех элементов организационной иерархии страницы. Для удобства чтения рекомендуется выбирать цвета, яркость которых близка к цветам по умолчанию.',
@@ -138,7 +138,7 @@ return [
     'roles' => 'Роли',
     'role_user_roles' => 'Роли пользователей',
     'roles_index_desc' => 'Роли используются для группировки пользователей и предоставления системных разрешений их участникам. Когда пользователь является членом нескольких ролей, предоставленные разрешения объединяются, и пользователь наследует все возможности.',
-    'roles_x_users_assigned' => ':count user assigned|:count users assigned',
+    'roles_x_users_assigned' => ':count пользователь назначен|:count назначенных пользователей',
     'roles_x_permissions_provided' => ':count разрешение|:count разрешений',
     'roles_assigned_users' => 'Назначенные пользователи',
     'roles_permissions_provided' => 'Предоставленные разрешения',
