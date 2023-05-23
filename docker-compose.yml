@@ -34,6 +34,7 @@ services:
       MAIL_DRIVER: smtp
       MAIL_HOST: mailhog
       MAIL_PORT: 1025
+      APP_TIMEZONE=UTC 
     ports:
       - ${DEV_PORT:-8080}:80
     volumes:
