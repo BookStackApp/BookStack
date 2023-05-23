@@ -8,7 +8,7 @@ return [
     'image_select' => '选择图片',
     'image_upload' => '上传图片',
     'image_intro' => '您可以在此选择和管理以前上传到系统的图片。',
-    'image_intro_upload' => '上传一张新图片，通过拖放图片到这个窗口，或者使用上面的“上传图片”按钮',
+    'image_intro_upload' => '通过将图片文件拖到此窗口或使用上面的“上传图片”按钮来上传新图片。',
     'image_all' => '全部',
     'image_all_title' => '查看所有图片',
     'image_book_title' => '查看上传到本书的图片',

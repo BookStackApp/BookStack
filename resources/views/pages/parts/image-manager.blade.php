@@ -6,6 +6,7 @@
      option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
      option:dropzone:zone-text="{{ trans('components.image_dropzone_drop') }}"
      option:dropzone:file-accept="image/*"
+     option:dropzone:allow-multiple="true"
      option:image-manager:uploaded-to="{{ $uploaded_to ?? 0 }}"
      class="image-manager">
 

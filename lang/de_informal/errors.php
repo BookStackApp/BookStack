@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Anhang konnte nicht gefunden werden.',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Beim Hochladen des Anhangs trat ein Fehler auf',
 
     // Pages
     'page_draft_autosave_fail' => 'Fehler beim Speichern des Entwurfs. Stelle sicher, dass du mit dem Internet verbunden bist, bevor du den Entwurf dieser Seite speicherst.',
