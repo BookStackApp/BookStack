@@ -53,7 +53,7 @@ return [
 
     // Attachments
     'attachment_not_found' => 'Вложение не найдено',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Произошла ошибка при загрузке вложенного файла',
 
     // Pages
     'page_draft_autosave_fail' => 'Не удалось сохранить черновик. Перед сохранением этой страницы убедитесь, что у вас есть подключение к Интернету.',
