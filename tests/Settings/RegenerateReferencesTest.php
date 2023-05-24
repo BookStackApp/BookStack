@@ -2,7 +2,7 @@
 
 namespace Tests\Settings;
 
-use BookStack\Actions\ActivityType;
+use BookStack\Activity\ActivityType;
 use BookStack\References\ReferenceStore;
 use Tests\TestCase;
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Entity;
 
-use BookStack\Actions\Tag;
+use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;

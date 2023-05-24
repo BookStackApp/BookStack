@@ -2,8 +2,8 @@
 
 namespace BookStack\Http\Middleware;
 
-use BookStack\Auth\Access\LoginService;
-use BookStack\Auth\Access\Mfa\MfaSession;
+use BookStack\Access\LoginService;
+use BookStack\Access\Mfa\MfaSession;
 use Closure;
 
 class AuthenticatedOrPendingMfa

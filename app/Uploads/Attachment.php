@@ -2,13 +2,13 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Auth\Permissions\JointPermission;
-use BookStack\Auth\Permissions\PermissionApplicator;
-use BookStack\Auth\User;
+use BookStack\App\Model;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use BookStack\Model;
-use BookStack\Traits\HasCreatorAndUpdater;
+use BookStack\Permissions\Models\JointPermission;
+use BookStack\Permissions\PermissionApplicator;
+use BookStack\Users\Models\HasCreatorAndUpdater;
+use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

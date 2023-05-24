@@ -59,12 +59,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => \BookStack\Auth\User::class,
+            'model'  => \BookStack\Users\Models\User::class,
         ],
 
         'external' => [
             'driver' => 'external-users',
-            'model'  => \BookStack\Auth\User::class,
+            'model'  => \BookStack\Users\Models\User::class,
         ],
 
         // 'users' => [

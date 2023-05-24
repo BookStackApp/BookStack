@@ -2,8 +2,8 @@
 
 namespace BookStack\Api;
 
-use BookStack\Auth\User;
-use BookStack\Interfaces\Loggable;
+use BookStack\Activity\Models\Loggable;
+use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;

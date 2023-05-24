@@ -2,8 +2,8 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Auth\User;
-use BookStack\Auth\UserRepo;
+use BookStack\Users\Models\User;
+use BookStack\Users\UserRepo;
 use Illuminate\Console\Command;
 
 class DeleteUsers extends Command

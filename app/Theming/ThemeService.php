@@ -2,7 +2,7 @@
 
 namespace BookStack\Theming;
 
-use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Access\SocialAuthService;
 use Illuminate\Console\Application;
 use Illuminate\Console\Application as Artisan;
 use Symfony\Component\Console\Command\Command;

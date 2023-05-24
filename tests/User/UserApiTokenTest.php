@@ -2,7 +2,7 @@
 
 namespace Tests\User;
 
-use BookStack\Actions\ActivityType;
+use BookStack\Activity\ActivityType;
 use BookStack\Api\ApiToken;
 use Carbon\Carbon;
 use Tests\TestCase;

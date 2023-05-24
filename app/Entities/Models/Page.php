@@ -2,8 +2,8 @@
 
 namespace BookStack\Entities\Models;
 
-use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Tools\PageContent;
+use BookStack\Permissions\PermissionApplicator;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

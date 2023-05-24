@@ -2,7 +2,7 @@
 
 namespace BookStack\References;
 
-use BookStack\Auth\Permissions\JointPermission;
+use BookStack\Permissions\Models\JointPermission;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;

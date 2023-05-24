@@ -26,7 +26,7 @@ class ThemeEvents
      * the type before making use of this parameter.
      *
      * @param string                                $type
-     * @param string|\BookStack\Interfaces\Loggable $detail
+     * @param string|\BookStack\Activity\Models\Loggable $detail
      */
     const ACTIVITY_LOGGED = 'activity_logged';
 
@@ -34,7 +34,7 @@ class ThemeEvents
      * Application boot-up.
      * After main services are registered.
      *
-     * @param \BookStack\Application $app
+     * @param \BookStack\App\Application $app
      */
     const APP_BOOT = 'app_boot';
 
@@ -45,7 +45,7 @@ class ThemeEvents
      * after registration. This is not emitted upon API usage.
      *
      * @param string               $authSystem
-     * @param \BookStack\Auth\User $user
+     * @param \BookStack\Users\Models\User $user
      */
     const AUTH_LOGIN = 'auth_login';
 
@@ -56,7 +56,7 @@ class ThemeEvents
      * by LDAP, SAML and social systems. It only includes self-registrations.
      *
      * @param string               $authSystem
-     * @param \BookStack\Auth\User $user
+     * @param \BookStack\Users\Models\User $user
      */
     const AUTH_REGISTER = 'auth_register';
 
@@ -133,9 +133,9 @@ class ThemeEvents
      * of the system default.
      *
      * @param string                                $event
-     * @param \BookStack\Actions\Webhook            $webhook
-     * @param string|\BookStack\Interfaces\Loggable $detail
-     * @param \BookStack\Auth\User                  $initiator
+     * @param \BookStack\Activity\Models\Webhook            $webhook
+     * @param string|\BookStack\Activity\Models\Loggable $detail
+     * @param \BookStack\Users\Models\User                  $initiator
      * @param int                                   $initiatedTime
      */
     const WEBHOOK_CALL_BEFORE = 'webhook_call_before';

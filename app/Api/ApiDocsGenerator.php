@@ -2,7 +2,7 @@
 
 namespace BookStack\Api;
 
-use BookStack\Http\Controllers\Api\ApiController;
+use BookStack\Http\ApiController;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Collection;

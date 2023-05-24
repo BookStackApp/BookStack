@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Queries;
 
-use BookStack\Actions\Favourite;
+use BookStack\Activity\Models\Favourite;
 use Illuminate\Database\Query\JoinClause;
 
 class TopFavourites extends EntityQuery

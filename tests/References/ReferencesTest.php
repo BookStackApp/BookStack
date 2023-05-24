@@ -2,9 +2,9 @@
 
 namespace Tests\References;
 
+use BookStack\App\Model;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
-use BookStack\Model;
 use BookStack\References\Reference;
 use Tests\TestCase;
 
