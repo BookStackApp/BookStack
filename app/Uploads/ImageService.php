@@ -462,6 +462,7 @@ class ImageService
 
         Image::query()->whereIn('type', $types)
             ->chunk(1000, function ($images) use ($checkRevisions, &$deletedPaths, $dryRun) {
+                /** @var Image $image */
                 foreach ($images as $image) {
                     $searchQuery = '%' . basename($image->path) . '%';
                     $inPage = DB::table('pages')
