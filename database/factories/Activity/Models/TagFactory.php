@@ -1,17 +1,17 @@
 <?php
 
-namespace Database\Factories\Auth;
+namespace Database\Factories\Activity\Models;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RoleFactory extends Factory
+class TagFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = \BookStack\Users\Models\Role::class;
+    protected $model = \BookStack\Activity\Models\Tag::class;
 
     /**
      * Define the model's default state.
@@ -21,9 +21,8 @@ class RoleFactory extends Factory
     public function definition()
     {
         return [
-            'display_name'     => $this->faker->sentence(3),
-            'description'      => $this->faker->sentence(10),
-            'external_auth_id' => '',
+            'name'  => $this->faker->city(),
+            'value' => $this->faker->sentence(3),
         ];
     }
 }

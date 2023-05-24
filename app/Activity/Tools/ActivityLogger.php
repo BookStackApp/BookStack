@@ -2,6 +2,7 @@
 
 namespace BookStack\Activity\Tools;
 
+use BookStack\Activity\DispatchWebhookJob;
 use BookStack\Activity\Models\Activity;
 use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Models\Webhook;
