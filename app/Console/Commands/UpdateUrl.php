@@ -26,10 +26,8 @@ class UpdateUrl extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle(Connection $db)
+    public function handle(Connection $db): int
     {
         $oldUrl = str_replace("'", '', $this->argument('oldUrl'));
         $newUrl = str_replace("'", '', $this->argument('newUrl'));

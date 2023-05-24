@@ -2,7 +2,6 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Exceptions\NotFoundException;
 use BookStack\Users\Models\Role;
 use BookStack\Users\UserRepo;
 use Illuminate\Console\Command;
@@ -10,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rules\Unique;
-use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
 class CreateAdmin extends Command
 {
@@ -32,25 +30,10 @@ class CreateAdmin extends Command
      */
     protected $description = 'Add a new admin user to the system';
 
-    protected $userRepo;
-
-    /**
-     * Create a new command instance.
-     */
-    public function __construct(UserRepo $userRepo)
-    {
-        $this->userRepo = $userRepo;
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
-     *
-     * @throws NotFoundException
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(UserRepo $userRepo): int
     {
         $details = $this->snakeCaseOptions();
 
@@ -82,17 +65,17 @@ class CreateAdmin extends Command
                 $this->error($error);
             }
 
-            return SymfonyCommand::FAILURE;
+            return 1;
         }
 
-        $user = $this->userRepo->createWithoutActivity($validator->validated());
+        $user = $userRepo->createWithoutActivity($validator->validated());
         $user->attachRole(Role::getSystemRole('admin'));
         $user->email_confirmed = true;
         $user->save();
 
         $this->info("Admin account with email \"{$user->email}\" successfully created!");
 
-        return SymfonyCommand::SUCCESS;
+        return 0;
     }
 
     protected function snakeCaseOptions(): array

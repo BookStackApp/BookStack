@@ -14,7 +14,8 @@ class RegenerateSearch extends Command
      *
      * @var string
      */
-    protected $signature = 'bookstack:regenerate-search {--database= : The database connection to use.}';
+    protected $signature = 'bookstack:regenerate-search 
+                            {--database= : The database connection to use}';
 
     /**
      * The console command description.
@@ -24,32 +25,16 @@ class RegenerateSearch extends Command
     protected $description = 'Re-index all content for searching';
 
     /**
-     * @var SearchIndex
-     */
-    protected $searchIndex;
-
-    /**
-     * Create a new command instance.
-     */
-    public function __construct(SearchIndex $searchIndex)
-    {
-        parent::__construct();
-        $this->searchIndex = $searchIndex;
-    }
-
-    /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(SearchIndex $searchIndex): int
     {
         $connection = DB::getDefaultConnection();
         if ($this->option('database') !== null) {
             DB::setDefaultConnection($this->option('database'));
         }
 
-        $this->searchIndex->indexAllEntities(function (Entity $model, int $processed, int $total): void {
+        $searchIndex->indexAllEntities(function (Entity $model, int $processed, int $total): void {
             $this->info('Indexed ' . class_basename($model) . ' entries (' . $processed . '/' . $total . ')');
         });
 

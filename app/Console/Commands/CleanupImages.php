@@ -25,38 +25,23 @@ class CleanupImages extends Command
      */
     protected $description = 'Cleanup images and drawings';
 
-    protected $imageService;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param \BookStack\Uploads\ImageService $imageService
-     */
-    public function __construct(ImageService $imageService)
-    {
-        $this->imageService = $imageService;
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(ImageService $imageService): int
     {
-        $checkRevisions = $this->option('all') ? false : true;
-        $dryRun = $this->option('force') ? false : true;
+        $checkRevisions = !$this->option('all');
+        $dryRun = !$this->option('force');
 
         if (!$dryRun) {
             $this->warn("This operation is destructive and is not guaranteed to be fully accurate.\nEnsure you have a backup of your images.\n");
             $proceed = $this->confirm("Are you sure you want to proceed?");
             if (!$proceed) {
-                return;
+                return 0;
             }
         }
 
-        $deleted = $this->imageService->deleteUnusedImages($checkRevisions, $dryRun);
+        $deleted = $imageService->deleteUnusedImages($checkRevisions, $dryRun);
         $deleteCount = count($deleted);
 
         if ($dryRun) {
@@ -65,21 +50,24 @@ class CleanupImages extends Command
             $this->showDeletedImages($deleted);
             $this->comment('Run with -f or --force to perform deletions');
 
-            return;
+            return 0;
         }
 
         $this->showDeletedImages($deleted);
         $this->comment($deleteCount . ' images deleted');
+        return 0;
     }
 
-    protected function showDeletedImages($paths)
+    protected function showDeletedImages($paths): void
     {
         if ($this->getOutput()->getVerbosity() <= OutputInterface::VERBOSITY_NORMAL) {
             return;
         }
+
         if (count($paths) > 0) {
             $this->line('Images to delete:');
         }
+
         foreach ($paths as $path) {
             $this->line($path);
         }
