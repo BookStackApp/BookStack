@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\Auth;
+namespace Database\Factories\Users\Models;
 
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
