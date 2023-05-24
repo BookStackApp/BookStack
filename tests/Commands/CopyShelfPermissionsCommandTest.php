@@ -11,7 +11,7 @@ class CopyShelfPermissionsCommandTest extends TestCase
     {
         $this->artisan('bookstack:copy-shelf-permissions')
             ->expectsOutput('Either a --slug or --all option must be provided.')
-            ->assertExitCode(0);
+            ->assertExitCode(1);
     }
 
     public function test_copy_shelf_permissions_command_using_slug()

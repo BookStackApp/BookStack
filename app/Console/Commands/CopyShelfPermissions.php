@@ -25,25 +25,10 @@ class CopyShelfPermissions extends Command
      */
     protected $description = 'Copy shelf permissions to all child books';
 
-    protected PermissionsUpdater $permissionsUpdater;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(PermissionsUpdater $permissionsUpdater)
-    {
-        $this->permissionsUpdater = $permissionsUpdater;
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(PermissionsUpdater $permissionsUpdater): int
     {
         $shelfSlug = $this->option('slug');
         $cascadeAll = $this->option('all');
@@ -52,7 +37,7 @@ class CopyShelfPermissions extends Command
         if (!$cascadeAll && !$shelfSlug) {
             $this->error('Either a --slug or --all option must be provided.');
 
-            return;
+            return 1;
         }
 
         if ($cascadeAll) {
@@ -63,7 +48,7 @@ class CopyShelfPermissions extends Command
             );
 
             if (!$continue && !$this->hasOption('no-interaction')) {
-                return;
+                return 0;
             }
 
             $shelves = Bookshelf::query()->get(['id']);
@@ -77,10 +62,11 @@ class CopyShelfPermissions extends Command
         }
 
         foreach ($shelves as $shelf) {
-            $this->permissionsUpdater->updateBookPermissionsFromShelf($shelf, false);
+            $permissionsUpdater->updateBookPermissionsFromShelf($shelf, false);
             $this->info('Copied permissions for shelf [' . $shelf->id . ']');
         }
 
         $this->info('Permissions copied for ' . $shelves->count() . ' shelves.');
+        return 0;
     }
 }

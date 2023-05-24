@@ -15,7 +15,7 @@ class DeleteUsersCommandTest extends TestCase
 
         $normalUserCount = $userCount - count($normalUsers);
         $this->artisan('bookstack:delete-users')
-            ->expectsQuestion('This will delete all users from the system that are not "admin" or system users. Are you sure you want to continue? (Type "yes" to continue)', 'yes')
+            ->expectsConfirmation('Are you sure you want to continue?', 'yes')
             ->expectsOutputToContain("Deleted $normalUserCount of $userCount total users.")
             ->assertExitCode(0);
 
@@ -27,7 +27,7 @@ class DeleteUsersCommandTest extends TestCase
         $normalUsers = $this->getNormalUsers();
 
         $this->artisan('bookstack:delete-users')
-            ->expectsQuestion('This will delete all users from the system that are not "admin" or system users. Are you sure you want to continue? (Type "yes" to continue)', 'no')
+            ->expectsConfirmation('Are you sure you want to continue?', 'no')
             ->assertExitCode(0);
 
         $this->assertDatabaseHas('users', ['id' => $normalUsers->first()->id]);

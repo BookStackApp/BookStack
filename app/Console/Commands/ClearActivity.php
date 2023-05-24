@@ -21,27 +21,13 @@ class ClearActivity extends Command
      */
     protected $description = 'Clear user activity from the system';
 
-    protected $activity;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param Activity $activity
-     */
-    public function __construct(Activity $activity)
-    {
-        $this->activity = $activity;
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
-        $this->activity->newQuery()->truncate();
+        Activity::query()->truncate();
         $this->comment('System activity cleared');
+        return 0;
     }
 }

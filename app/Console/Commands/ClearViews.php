@@ -22,21 +22,12 @@ class ClearViews extends Command
     protected $description = 'Clear all view-counts for all entities';
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
-        View::clearAll();
+        View::query()->truncate();
         $this->comment('Views cleared');
+        return 0;
     }
 }

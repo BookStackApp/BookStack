@@ -14,7 +14,8 @@ class RegenerateCommentContent extends Command
      *
      * @var string
      */
-    protected $signature = 'bookstack:regenerate-comment-content {--database= : The database connection to use.}';
+    protected $signature = 'bookstack:regenerate-comment-content
+                            {--database= : The database connection to use}';
 
     /**
      * The console command description.
@@ -24,34 +25,18 @@ class RegenerateCommentContent extends Command
     protected $description = 'Regenerate the stored HTML of all comments';
 
     /**
-     * @var CommentRepo
-     */
-    protected $commentRepo;
-
-    /**
-     * Create a new command instance.
-     */
-    public function __construct(CommentRepo $commentRepo)
-    {
-        $this->commentRepo = $commentRepo;
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(CommentRepo $commentRepo): int
     {
         $connection = DB::getDefaultConnection();
         if ($this->option('database') !== null) {
             DB::setDefaultConnection($this->option('database'));
         }
 
-        Comment::query()->chunk(100, function ($comments) {
+        Comment::query()->chunk(100, function ($comments) use ($commentRepo) {
             foreach ($comments as $comment) {
-                $comment->html = $this->commentRepo->commentToHtml($comment->text);
+                $comment->html = $commentRepo->commentToHtml($comment->text);
                 $comment->save();
             }
         });

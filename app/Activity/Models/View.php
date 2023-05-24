@@ -54,12 +54,4 @@ class View extends Model
 
         return $view->views;
     }
-
-    /**
-     * Clear all views from the system.
-     */
-    public static function clearAll()
-    {
-        static::query()->truncate();
-    }
 }
