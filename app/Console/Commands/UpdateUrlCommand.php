@@ -5,7 +5,7 @@ namespace BookStack\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connection;
 
-class UpdateUrl extends Command
+class UpdateUrlCommand extends Command
 {
     /**
      * The name and signature of the console command.

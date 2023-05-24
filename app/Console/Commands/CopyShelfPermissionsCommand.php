@@ -6,7 +6,7 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use Illuminate\Console\Command;
 
-class CopyShelfPermissions extends Command
+class CopyShelfPermissionsCommand extends Command
 {
     /**
      * The name and signature of the console command.

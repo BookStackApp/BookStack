@@ -5,7 +5,7 @@ namespace BookStack\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class UpgradeDatabaseEncoding extends Command
+class UpgradeDatabaseEncodingCommand extends Command
 {
     /**
      * The name and signature of the console command.

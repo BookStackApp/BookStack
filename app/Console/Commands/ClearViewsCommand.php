@@ -2,32 +2,32 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Activity\Models\Activity;
+use BookStack\Activity\Models\View;
 use Illuminate\Console\Command;
 
-class ClearActivity extends Command
+class ClearViewsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'bookstack:clear-activity';
+    protected $signature = 'bookstack:clear-views';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Clear user activity from the system';
+    protected $description = 'Clear all view-counts for all entities';
 
     /**
      * Execute the console command.
      */
     public function handle(): int
     {
-        Activity::query()->truncate();
-        $this->comment('System activity cleared');
+        View::query()->truncate();
+        $this->comment('Views cleared');
         return 0;
     }
 }

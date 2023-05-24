@@ -7,7 +7,7 @@ use BookStack\Activity\Models\Comment;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class RegenerateCommentContent extends Command
+class RegenerateCommentContentCommand extends Command
 {
     /**
      * The name and signature of the console command.

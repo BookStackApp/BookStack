@@ -6,7 +6,7 @@ use BookStack\References\ReferenceStore;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class RegenerateReferences extends Command
+class RegenerateReferencesCommand extends Command
 {
     /**
      * The name and signature of the console command.

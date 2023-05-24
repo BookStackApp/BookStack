@@ -7,7 +7,7 @@ use BookStack\Search\SearchIndex;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class RegenerateSearch extends Command
+class RegenerateSearchCommand extends Command
 {
     /**
      * The name and signature of the console command.
