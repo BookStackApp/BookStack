@@ -5,7 +5,7 @@ namespace BookStack\Console\Commands;
 use BookStack\Activity\Models\Activity;
 use Illuminate\Console\Command;
 
-class ClearActivity extends Command
+class ClearActivityCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -21,27 +21,13 @@ class ClearActivity extends Command
      */
     protected $description = 'Clear user activity from the system';
 
-    protected $activity;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param Activity $activity
-     */
-    public function __construct(Activity $activity)
-    {
-        $this->activity = $activity;
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
-        $this->activity->newQuery()->truncate();
+        Activity::query()->truncate();
         $this->comment('System activity cleared');
+        return 0;
     }
 }
