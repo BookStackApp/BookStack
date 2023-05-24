@@ -5,7 +5,7 @@ namespace BookStack\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Database\Connection;
 
-class UpdateUrl extends Command
+class UpdateUrlCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -26,10 +26,8 @@ class UpdateUrl extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle(Connection $db)
+    public function handle(Connection $db): int
     {
         $oldUrl = str_replace("'", '', $this->argument('oldUrl'));
         $newUrl = str_replace("'", '', $this->argument('newUrl'));

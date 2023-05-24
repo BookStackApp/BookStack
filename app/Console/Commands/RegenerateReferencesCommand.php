@@ -6,14 +6,15 @@ use BookStack\References\ReferenceStore;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class RegenerateReferences extends Command
+class RegenerateReferencesCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'bookstack:regenerate-references {--database= : The database connection to use.}';
+    protected $signature = 'bookstack:regenerate-references
+                            {--database= : The database connection to use}';
 
     /**
      * The console command description.
@@ -22,25 +23,10 @@ class RegenerateReferences extends Command
      */
     protected $description = 'Regenerate all the cross-item model reference index';
 
-    protected ReferenceStore $references;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(ReferenceStore $references)
-    {
-        $this->references = $references;
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(ReferenceStore $references): int
     {
         $connection = DB::getDefaultConnection();
 
@@ -48,7 +34,7 @@ class RegenerateReferences extends Command
             DB::setDefaultConnection($this->option('database'));
         }
 
-        $this->references->updateForAllPages();
+        $references->updateForAllPages();
 
         DB::setDefaultConnection($connection);
 

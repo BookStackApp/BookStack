@@ -5,7 +5,7 @@ namespace BookStack\Console\Commands;
 use BookStack\Users\Models\User;
 use Illuminate\Console\Command;
 
-class ResetMfa extends Command
+class ResetMfaCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -25,21 +25,9 @@ class ResetMfa extends Command
     protected $description = 'Reset & Clear any configured MFA methods for the given user';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $id = $this->option('id');
         $email = $this->option('email');
@@ -66,13 +54,13 @@ class ResetMfa extends Command
         $this->info("This will delete any configure multi-factor authentication methods for user: \n- ID: {$user->id}\n- Name: {$user->name}\n- Email: {$user->email}\n");
         $this->info('If multi-factor authentication is required for this user they will be asked to reconfigure their methods on next login.');
         $confirm = $this->confirm('Are you sure you want to proceed?');
-        if ($confirm) {
-            $user->mfaValues()->delete();
-            $this->info('User MFA methods have been reset.');
-
-            return 0;
+        if (!$confirm) {
+            return 1;
         }
 
-        return 1;
+        $user->mfaValues()->delete();
+        $this->info('User MFA methods have been reset.');
+
+        return 0;
     }
 }

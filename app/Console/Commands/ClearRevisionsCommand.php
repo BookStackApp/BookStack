@@ -5,7 +5,7 @@ namespace BookStack\Console\Commands;
 use BookStack\Entities\Models\PageRevision;
 use Illuminate\Console\Command;
 
-class ClearRevisions extends Command
+class ClearRevisionsCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -23,28 +23,14 @@ class ClearRevisions extends Command
      */
     protected $description = 'Clear page revisions';
 
-    protected $pageRevision;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param PageRevision $pageRevision
-     */
-    public function __construct(PageRevision $pageRevision)
-    {
-        $this->pageRevision = $pageRevision;
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $deleteTypes = $this->option('all') ? ['version', 'update_draft'] : ['version'];
-        $this->pageRevision->newQuery()->whereIn('type', $deleteTypes)->delete();
+        PageRevision::query()->whereIn('type', $deleteTypes)->delete();
         $this->comment('Revisions deleted');
+        return 0;
     }
 }
