@@ -1,6 +1,6 @@
 @foreach($images as $index => $image)
 <div>
-    <div component="event-emit-select"
+    <button component="event-emit-select"
          option:event-emit-select:name="image"
          option:event-emit-select:data="{{ json_encode($image) }}"
          class="image anim fadeIn text-link"
@@ -13,9 +13,9 @@
              title="{{ $image->name }}">
         <div class="image-meta">
             <span class="name">{{ $image->name }}</span>
-            <span class="date">{{ trans('components.image_uploaded', ['uploadedDate' => $image->created_at->format('Y-m-d H:i:s')]) }}</span>
+            <span class="date">{{ trans('components.image_uploaded', ['uploadedDate' => $image->created_at->format('Y-m-d')]) }}</span>
         </div>
-    </div>
+    </button>
 </div>
 @endforeach
 @if($hasMore)
