@@ -2,9 +2,9 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Auth\Role;
-use BookStack\Auth\UserRepo;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Users\Models\Role;
+use BookStack\Users\UserRepo;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;

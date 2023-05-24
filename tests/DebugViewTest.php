@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use BookStack\Auth\Access\SocialAuthService;
+use BookStack\Access\SocialAuthService;
 use Illuminate\Testing\TestResponse;
 
 class DebugViewTest extends TestCase

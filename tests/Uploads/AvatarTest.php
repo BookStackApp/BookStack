@@ -2,9 +2,9 @@
 
 namespace Tests\Uploads;
 
-use BookStack\Auth\User;
 use BookStack\Exceptions\HttpFetchException;
 use BookStack\Uploads\HttpFetcher;
+use BookStack\Users\Models\User;
 use Tests\TestCase;
 
 class AvatarTest extends TestCase

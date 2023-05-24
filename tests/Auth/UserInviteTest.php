@@ -2,9 +2,9 @@
 
 namespace Tests\Auth;
 
-use BookStack\Auth\Access\UserInviteService;
-use BookStack\Auth\User;
+use BookStack\Access\UserInviteService;
 use BookStack\Notifications\UserInvite;
+use BookStack\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\DB;

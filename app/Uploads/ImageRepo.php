@@ -2,9 +2,9 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Permissions\PermissionApplicator;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

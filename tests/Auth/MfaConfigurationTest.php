@@ -2,10 +2,10 @@
 
 namespace Tests\Auth;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Auth\Access\Mfa\MfaValue;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Access\Mfa\MfaValue;
+use BookStack\Activity\ActivityType;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use PragmaRX\Google2FA\Google2FA;
 use Tests\TestCase;
 

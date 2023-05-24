@@ -2,8 +2,8 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Auth\User;
 use BookStack\Exceptions\HttpFetchException;
+use BookStack\Users\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;

@@ -2,8 +2,8 @@
 
 namespace BookStack\Exceptions;
 
-use BookStack\Auth\Access\LoginService;
-use BookStack\Auth\User;
+use BookStack\Access\LoginService;
+use BookStack\Users\Models\User;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Request;
 

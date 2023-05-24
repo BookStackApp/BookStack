@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 
 class HomepageTest extends TestCase
 {

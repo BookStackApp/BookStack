@@ -2,7 +2,6 @@
 
 namespace Tests\Helpers;
 
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
@@ -12,6 +11,7 @@ use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 /**

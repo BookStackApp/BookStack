@@ -2,11 +2,11 @@
 
 namespace Tests\Actions;
 
-use BookStack\Actions\ActivityLogger;
-use BookStack\Actions\ActivityType;
-use BookStack\Actions\DispatchWebhookJob;
-use BookStack\Actions\Webhook;
-use BookStack\Auth\User;
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\DispatchWebhookJob;
+use BookStack\Activity\Models\Webhook;
+use BookStack\Activity\Tools\ActivityLogger;
+use BookStack\Users\Models\User;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Http;

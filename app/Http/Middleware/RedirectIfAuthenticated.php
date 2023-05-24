@@ -2,7 +2,7 @@
 
 namespace BookStack\Http\Middleware;
 
-use BookStack\Providers\RouteServiceProvider;
+use BookStack\App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

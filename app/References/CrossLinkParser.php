@@ -2,7 +2,7 @@
 
 namespace BookStack\References;
 
-use BookStack\Model;
+use BookStack\App\Model;
 use BookStack\References\ModelResolvers\BookLinkModelResolver;
 use BookStack\References\ModelResolvers\BookshelfLinkModelResolver;
 use BookStack\References\ModelResolvers\ChapterLinkModelResolver;
