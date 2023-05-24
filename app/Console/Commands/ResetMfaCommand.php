@@ -5,7 +5,7 @@ namespace BookStack\Console\Commands;
 use BookStack\Users\Models\User;
 use Illuminate\Console\Command;
 
-class ResetMfa extends Command
+class ResetMfaCommand extends Command
 {
     /**
      * The name and signature of the console command.

@@ -5,7 +5,7 @@ namespace BookStack\Console\Commands;
 use BookStack\Entities\Models\PageRevision;
 use Illuminate\Console\Command;
 
-class ClearRevisions extends Command
+class ClearRevisionsCommand extends Command
 {
     /**
      * The name and signature of the console command.

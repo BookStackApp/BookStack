@@ -6,7 +6,7 @@ use BookStack\Permissions\JointPermissionBuilder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class RegeneratePermissions extends Command
+class RegeneratePermissionsCommand extends Command
 {
     /**
      * The name and signature of the console command.

@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rules\Unique;
 
-class CreateAdmin extends Command
+class CreateAdminCommand extends Command
 {
     /**
      * The name and signature of the console command.

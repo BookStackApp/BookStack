@@ -6,7 +6,7 @@ use BookStack\Uploads\ImageService;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CleanupImages extends Command
+class CleanupImagesCommand extends Command
 {
     /**
      * The name and signature of the console command.

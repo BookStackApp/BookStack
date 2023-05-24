@@ -6,7 +6,7 @@ use BookStack\Users\Models\User;
 use BookStack\Users\UserRepo;
 use Illuminate\Console\Command;
 
-class DeleteUsers extends Command
+class DeleteUsersCommand extends Command
 {
     /**
      * The name and signature of the console command.
