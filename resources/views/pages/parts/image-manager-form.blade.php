@@ -14,6 +14,11 @@
                      title="{{ $image->name }}">
             </a>
         </div>
+        <div>
+            <p class="text-muted text-small">
+                <span class="date">{{ trans('components.image_uploaded', ['uploadedDate' => $image->created_at->format('Y-m-d H:i:s')]) }}</span>
+            </p>
+        </div>
         <div class="form-group stretch-inputs">
             <label for="name">{{ trans('components.image_image_name') }}</label>
             <input id="name" class="input-base" type="text" name="name" value="{{ $image->name }}">
