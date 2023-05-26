@@ -18,6 +18,9 @@
     </button>
 </div>
 @endforeach
+@if(count($images) === 0)
+    <p class="m-m text-bigger italic text-muted">{{ trans('common.no_items') }}</p>
+@endif
 @if($hasMore)
     <div class="load-more">
         <button type="button" class="button small outline">{{ trans('components.image_load_more') }}</button>

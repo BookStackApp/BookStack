@@ -25,39 +25,49 @@
             </div>
 
             <div refs="dropzone@drop-target" class="flex-fill image-manager-body">
-
                 <div class="image-manager-content">
-                    <div role="tablist" class="image-manager-header grid third no-gap">
-                        <button refs="image-manager@filterTabs"
-                                data-filter="all"
-                                role="tab"
-                                aria-selected="true"
-                                type="button" class="tab-item" title="{{ trans('components.image_all_title') }}">@icon('images') {{ trans('components.image_all') }}</button>
-                        <button refs="image-manager@filterTabs"
-                                data-filter="book"
-                                role="tab"
-                                aria-selected="false"
-                                type="button" class="tab-item" title="{{ trans('components.image_book_title') }}">@icon('book', ['class' => 'svg-icon']) {{ trans('entities.book') }}</button>
-                        <button refs="image-manager@filterTabs"
-                                data-filter="page"
-                                role="tab"
-                                aria-selected="false"
-                                type="button" class="tab-item" title="{{ trans('components.image_page_title') }}">@icon('page', ['class' => 'svg-icon']) {{ trans('entities.page') }}</button>
-                    </div>
-                    <div>
-                        <form refs="image-manager@searchForm" class="contained-search-box">
-                            <input refs="image-manager@searchInput"
-                                   placeholder="{{ trans('components.image_search_hint') }}"
-                                   type="text">
-                            <button refs="image-manager@cancelSearch"
-                                    title="{{ trans('common.search_clear') }}"
-                                    type="button"
-                                    class="cancel">@icon('close')</button>
-                            <button type="submit" class="primary-background text-white"
-                                    title="{{ trans('common.search') }}">@icon('search')</button>
-                        </form>
+                    <div class="image-manager-filter-bar flex-container-row justify-space-between">
+                        <div class="primary-background image-manager-filter-bar-bg"></div>
+                        <div>
+                            <form refs="image-manager@searchForm" class="contained-search-box">
+                                <input refs="image-manager@searchInput"
+                                       placeholder="{{ trans('components.image_search_hint') }}"
+                                       type="text">
+                                <button refs="image-manager@cancelSearch"
+                                        title="{{ trans('common.search_clear') }}"
+                                        type="button"
+                                        class="cancel">@icon('close')</button>
+                                <button type="submit"
+                                        title="{{ trans('common.search') }}">@icon('search')</button>
+                            </form>
+                        </div>
+                        <div class="tab-container bordered tab-primary">
+                            <div role="tablist" class="image-manager-filters flex-container-row">
+                                <button refs="image-manager@filterTabs"
+                                        data-filter="all"
+                                        role="tab"
+                                        aria-selected="true"
+                                        type="button"
+                                        title="{{ trans('components.image_all_title') }}">@icon('images')</button>
+                                <button refs="image-manager@filterTabs"
+                                        data-filter="book"
+                                        role="tab"
+                                        aria-selected="false"
+                                        type="button"
+                                        title="{{ trans('components.image_book_title') }}">@icon('book', ['class' => 'svg-icon'])</button>
+                                <button refs="image-manager@filterTabs"
+                                        data-filter="page"
+                                        role="tab"
+                                        aria-selected="false"
+                                        type="button"
+                                        title="{{ trans('components.image_page_title') }}">@icon('page', ['class' => 'svg-icon'])</button>
+                            </div>
+                        </div>
                     </div>
                     <div refs="image-manager@listContainer" class="image-manager-list"></div>
+                    <div refs="image-manager@loadMore" class="load-more" hidden>
+                        <button type="button" class="button small outline">Load More</button>
+                    </div>
                 </div>
 
                 <div class="image-manager-sidebar flex-container-column">
