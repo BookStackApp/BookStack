@@ -23,6 +23,7 @@ export class ImageManager extends Component {
         this.formContainer = this.$refs.formContainer;
         this.formContainerPlaceholder = this.$refs.formContainerPlaceholder;
         this.dropzoneContainer = this.$refs.dropzoneContainer;
+        this.loadMore = this.$refs.loadMore;
 
         // Instance data
         this.type = 'gallery';
@@ -59,12 +60,11 @@ export class ImageManager extends Component {
             this.loadGallery();
         });
 
-        onChildEvent(this.listContainer, '.load-more button', 'click', async event => {
+        onChildEvent(this.container, '.load-more button', 'click', async event => {
             const wrapper = event.target.closest('.load-more');
             showLoading(wrapper);
             this.page += 1;
             await this.loadGallery();
-            wrapper.remove();
         });
 
         this.listContainer.addEventListener('event-emit-select-image', this.onImageSelectEvent.bind(this));
@@ -145,6 +145,14 @@ export class ImageManager extends Component {
     addReturnedHtmlElementsToList(html) {
         const el = document.createElement('div');
         el.innerHTML = html;
+
+        const loadMore = el.querySelector('.load-more');
+        if (loadMore) {
+            loadMore.remove();
+            this.loadMore.innerHTML = loadMore.innerHTML;
+        }
+        this.loadMore.toggleAttribute('hidden', !loadMore);
+
         window.$components.init(el);
         for (const child of [...el.children]) {
             this.listContainer.appendChild(child);
