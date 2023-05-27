@@ -380,6 +380,12 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     background-color: #FFF;
   }
 }
+
+@include smaller-than($s) {
+  .image-manager-filter-bar .contained-search-box input {
+    width: 180px;
+  }
+}
 .image-manager-filters {
   box-shadow: $bs-med;
   border-radius: 4px;
@@ -475,6 +481,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager-sidebar {
   width: 300px;
+  margin: 0 auto;
   overflow-y: auto;
   overflow-x: hidden;
   border-inline-start: 1px solid #DDD;
@@ -498,6 +505,11 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     a {
       display: inline-block;
     }
+  }
+}
+@include smaller-than($m) {
+  .image-manager-sidebar {
+    border-inline-start: 0;
   }
 }
 
