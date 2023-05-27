@@ -21,15 +21,23 @@ export class Tabs extends Component {
 
     setup() {
         this.container = this.$el;
-        this.tabs = Array.from(this.container.querySelectorAll('[role="tab"]'));
-        this.panels = Array.from(this.container.querySelectorAll('[role="tabpanel"]'));
+        this.tabList = this.container.querySelector('[role="tablist"]');
+        this.tabs = Array.from(this.tabList.querySelectorAll('[role="tab"]'));
+        this.panels = Array.from(this.container.querySelectorAll(':scope > [role="tabpanel"], :scope > * > [role="tabpanel"]'));
+        this.activeUnder = this.$opts.activeUnder ? Number(this.$opts.activeUnder) : 10000;
+        this.active = null;
 
         this.container.addEventListener('click', event => {
-            const button = event.target.closest('[role="tab"]');
-            if (button) {
-                this.show(button.getAttribute('aria-controls'));
+            const tab = event.target.closest('[role="tab"]');
+            if (tab && this.tabs.includes(tab)) {
+                this.show(tab.getAttribute('aria-controls'));
             }
         });
+
+        window.addEventListener('resize', this.updateActiveState.bind(this), {
+            passive: true,
+        });
+        this.updateActiveState();
     }
 
     show(sectionId) {
@@ -44,6 +52,36 @@ export class Tabs extends Component {
         }
 
         this.$emit('change', {showing: sectionId});
+    }
+
+    updateActiveState() {
+        const active = window.innerWidth < this.activeUnder;
+        if (active === this.active) {
+            return;
+        }
+
+        if (active) {
+            this.activate();
+        } else {
+            this.deactivate();
+        }
+
+        this.active = active;
+    }
+
+    activate() {
+        this.show(this.panels[0].id);
+        this.tabList.toggleAttribute('hidden', false);
+    }
+
+    deactivate() {
+        for (const panel of this.panels) {
+            panel.removeAttribute('hidden');
+        }
+        for (const tab of this.tabs) {
+            tab.setAttribute('aria-selected', 'false');
+        }
+        this.tabList.toggleAttribute('hidden', true);
     }
 
 }
