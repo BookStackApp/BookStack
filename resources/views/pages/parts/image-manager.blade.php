@@ -33,11 +33,11 @@
                         <button id="image-manager-list-tab"
                                 aria-selected="true"
                                 aria-controls="image-manager-list"
-                                role="tab">Image List</button>
+                                role="tab">{{ trans('components.image_list') }}</button>
                         <button id="image-manager-info-tab"
                                 aria-selected="true"
                                 aria-controls="image-manager-info"
-                                role="tab">Image Details</button>
+                                role="tab">{{ trans('components.image_details') }}</button>
                     </div>
                 </div>
                 <div class="flex-container-row flex-fill">
@@ -56,6 +56,7 @@
                                     <button refs="image-manager@cancelSearch"
                                             title="{{ trans('common.search_clear') }}"
                                             type="button"
+                                            hidden="hidden"
                                             class="cancel">@icon('close')</button>
                                     <button type="submit"
                                             title="{{ trans('common.search') }}">@icon('search')</button>

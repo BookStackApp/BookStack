@@ -4,7 +4,7 @@
          option:event-emit-select:name="image"
          option:event-emit-select:data="{{ json_encode($image) }}"
          class="image anim fadeIn text-link"
-         style="animation-delay: {{ $index > 26 ? '160ms' : ($index * 25) . 'ms' }};">
+         style="animation-delay: {{ min($index * 10, 260) . 'ms' }};">
         <img src="{{ $image->thumbs['gallery'] }}"
              alt="{{ $image->name }}"
              width="150"

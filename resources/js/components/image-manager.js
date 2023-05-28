@@ -53,6 +53,7 @@ export class ImageManager extends Component {
         this.searchForm.addEventListener('submit', event => {
             this.resetListView();
             this.loadGallery();
+            this.cancelSearch.toggleAttribute('hidden', !this.searchInput.value);
             event.preventDefault();
         });
 
@@ -201,6 +202,7 @@ export class ImageManager extends Component {
 
     resetSearchView() {
         this.searchInput.value = '';
+        this.cancelSearch.toggleAttribute('hidden', true);
     }
 
     resetEditForm() {
