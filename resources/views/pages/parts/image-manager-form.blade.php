@@ -1,4 +1,14 @@
-<div class="image-manager-details">
+<div component="dropzone"
+     option:dropzone:url="{{ url("/images/{$image->id}/file") }}"
+     option:dropzone:method="PUT"
+     option:dropzone:success-message="{{ trans('components.image_update_success') }}"
+     option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
+     option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
+     option:dropzone:zone-text="{{ trans('entities.attachments_dropzone') }}"
+     option:dropzone:file-accept="image/*"
+     class="image-manager-details">
+
+    <div refs="dropzone@status-area dropzone@drop-target"></div>
 
     <form component="ajax-form"
           option:ajax-form:success-message="{{ trans('components.image_update_success') }}"
@@ -19,22 +29,32 @@
             <input id="name" class="input-base" type="text" name="name" value="{{ $image->name }}">
         </div>
         <div class="flex-container-row justify-space-between gap-m">
-            <div>
-                @if(userCan('image-delete', $image))
-                    <button type="button"
-                        id="image-manager-delete"
-                        title="{{ trans('common.delete') }}"
-                        class="button icon outline">@icon('delete')</button>
-                @endif
-            </div>
-            <div>
+            @if(userCan('image-delete', $image) || userCan('image-update', $image))
+                <div component="dropdown"
+                     class="dropdown-container">
+                    <button refs="dropdown@toggle" type="button" class="button icon outline">@icon('more')</button>
+                    <div refs="dropdown@menu" class="dropdown-menu anchor-left">
+                        @if(userCan('image-delete', $image))
+                            <button type="button"
+                                    id="image-manager-delete"
+                                    class="text-item">{{ trans('common.delete') }}</button>
+                        @endif
+                        @if(userCan('image-update', $image))
+                            <button type="button"
+                                    id="image-manager-replace"
+                                    refs="dropzone@select-button"
+                                    class="text-item">{{ trans('components.image_replace') }}</button>
+                        @endif
+                    </div>
+                </div>
+            @endif
                 <button type="submit"
                         class="button icon outline">{{ trans('common.save') }}</button>
-            </div>
         </div>
     </form>
 
     @if(!is_null($dependantPages))
+        <hr>
         @if(count($dependantPages) > 0)
             <p class="text-neg mb-xs mt-m">{{ trans('components.image_delete_used') }}</p>
             <ul class="text-neg">

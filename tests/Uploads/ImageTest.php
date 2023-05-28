@@ -92,6 +92,45 @@ class ImageTest extends TestCase
         ]);
     }
 
+    public function test_image_file_update()
+    {
+        $page = $this->entities->page();
+        $this->asEditor();
+
+        $imgDetails = $this->files->uploadGalleryImageToPage($this, $page);
+        $relPath = $imgDetails['path'];
+
+        $newUpload = $this->files->uploadedImage('updated-image.png', 'compressed.png');
+        $this->assertFileEquals($this->files->testFilePath('test-image.png'), public_path($relPath));
+
+        $imageId = $imgDetails['response']->id;
+        $this->call('PUT', "/images/{$imageId}/file", [], [], ['file' => $newUpload])
+            ->assertOk();
+
+        $this->assertFileEquals($this->files->testFilePath('compressed.png'), public_path($relPath));
+
+        $this->files->deleteAtRelativePath($relPath);
+    }
+
+    public function test_image_file_update_does_not_allow_change_in_image_extension()
+    {
+        $page = $this->entities->page();
+        $this->asEditor();
+
+        $imgDetails = $this->files->uploadGalleryImageToPage($this, $page);
+        $relPath = $imgDetails['path'];
+        $newUpload = $this->files->uploadedImage('updated-image.jpg', 'compressed.png');
+
+        $imageId = $imgDetails['response']->id;
+        $this->call('PUT', "/images/{$imageId}/file", [], [], ['file' => $newUpload])
+            ->assertJson([
+                "message" => "Image file replacements must be of the same type",
+                "status" => "error",
+            ]);
+
+        $this->files->deleteAtRelativePath($relPath);
+    }
+
     public function test_gallery_get_list_format()
     {
         $this->asEditor();

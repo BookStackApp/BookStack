@@ -32,6 +32,8 @@ return [
     'image_upload_success' => 'Image uploaded successfully',
     'image_update_success' => 'Image details successfully updated',
     'image_delete_success' => 'Image successfully deleted',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'Edit Code',

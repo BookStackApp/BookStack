@@ -194,6 +194,14 @@ class ImageService
         return $image;
     }
 
+    public function replaceExistingFromUpload(string $path, string $type, UploadedFile $file): void
+    {
+        $imageData = file_get_contents($file->getRealPath());
+        $storage = $this->getStorageDisk($type);
+        $adjustedPath = $this->adjustPathForStorageDisk($path, $type);
+        $storage->put($adjustedPath, $imageData);
+    }
+
     /**
      * Save image data for the given path in the public space, if possible,
      * for the provided storage mechanism.
@@ -262,7 +270,7 @@ class ImageService
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false): string
+    public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false, bool $forceCreate = false): string
     {
         // Do not resize GIF images where we're not cropping
         if ($keepRatio && $this->isGif($image)) {
@@ -277,13 +285,13 @@ class ImageService
 
         // Return path if in cache
         $cachedThumbPath = $this->cache->get($thumbCacheKey);
-        if ($cachedThumbPath) {
+        if ($cachedThumbPath && !$forceCreate) {
             return $this->getPublicUrl($cachedThumbPath);
         }
 
         // If thumbnail has already been generated, serve that and cache path
         $storage = $this->getStorageDisk($image->type);
-        if ($storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
+        if (!$forceCreate && $storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
             $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
 
             return $this->getPublicUrl($thumbFilePath);
