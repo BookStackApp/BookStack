@@ -14,16 +14,11 @@
                      title="{{ $image->name }}">
             </a>
         </div>
-        <div>
-            <p class="text-muted text-small">
-                <span class="date">{{ trans('components.image_uploaded', ['uploadedDate' => $image->created_at->format('Y-m-d H:i:s')]) }}</span>
-            </p>
-        </div>
         <div class="form-group stretch-inputs">
             <label for="name">{{ trans('components.image_image_name') }}</label>
             <input id="name" class="input-base" type="text" name="name" value="{{ $image->name }}">
         </div>
-        <div class="grid half">
+        <div class="flex-container-row justify-space-between gap-m">
             <div>
                 @if(userCan('image-delete', $image))
                     <button type="button"
@@ -32,7 +27,7 @@
                         class="button icon outline">@icon('delete')</button>
                 @endif
             </div>
-            <div class="text-right">
+            <div>
                 <button type="submit"
                         class="button icon outline">{{ trans('common.save') }}</button>
             </div>
@@ -64,5 +59,28 @@
             </button>
         </form>
     @endif
+
+    <div class="text-muted text-small">
+        <hr class="my-m">
+        <div title="{{ $image->created_at->format('Y-m-d H:i:s') }}">
+            @icon('star') {{ trans('components.image_uploaded', ['uploadedDate' => $image->created_at->diffForHumans()]) }}
+        </div>
+        @if($image->created_at->valueOf() !== $image->updated_at->valueOf())
+            <div title="{{ $image->updated_at->format('Y-m-d H:i:s') }}">
+                @icon('edit') {{ trans('components.image_updated', ['updateDate' => $image->updated_at->diffForHumans()]) }}
+            </div>
+        @endif
+        @if($image->createdBy)
+            <div>@icon('user') {{ trans('components.image_uploaded_by', ['userName' => $image->createdBy->name]) }}</div>
+        @endif
+        @if(($page = $image->getPage()) && userCan('view', $page))
+            <div>
+                @icon('page')
+                {!! trans('components.image_uploaded_to', [
+                    'pageLink' => '<a class="text-page" href="' . e($page->getUrl()) . '" target="_blank">' . e($page->name) . '</a>'
+                ]) !!}
+            </div>
+        @endif
+    </div>
 
 </div>
