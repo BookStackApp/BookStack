@@ -7,9 +7,9 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'settings_save_success' => 'Settings saved',
+    'settings' => 'הגדרות',
+    'settings_save' => 'שמור הגדרות',
+    'settings_save_success' => 'הגדרות נשמרו',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
