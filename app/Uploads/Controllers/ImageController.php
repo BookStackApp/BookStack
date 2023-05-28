@@ -14,13 +14,10 @@ use Illuminate\Validation\ValidationException;
 
 class ImageController extends Controller
 {
-    protected ImageRepo $imageRepo;
-    protected ImageService $imageService;
-
-    public function __construct(ImageRepo $imageRepo, ImageService $imageService)
-    {
-        $this->imageRepo = $imageRepo;
-        $this->imageService = $imageService;
+    public function __construct(
+        protected ImageRepo $imageRepo,
+        protected ImageService $imageService
+    ) {
     }
 
     /**
@@ -63,6 +60,29 @@ class ImageController extends Controller
             'image'          => $image,
             'dependantPages' => null,
         ]);
+    }
+
+    /**
+     * Update the file for an existing image.
+     */
+    public function updateFile(Request $request, string $id)
+    {
+        $this->validate($request, [
+            'file' => ['required', 'file', ...$this->getImageValidationRules()],
+        ]);
+
+        $image = $this->imageRepo->getById($id);
+        $this->checkImagePermission($image);
+        $this->checkOwnablePermission('image-update', $image);
+        $file = $request->file('file');
+
+        try {
+            $this->imageRepo->updateImageFile($image, $file);
+        } catch (ImageUploadException $exception) {
+            return $this->jsonError($exception->getMessage());
+        }
+
+        return response('');
     }
 
     /**
