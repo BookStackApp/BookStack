@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Radās kļūda augšupielādējot attēlu',
     'image_upload_type_error' => 'Ielādējamā attēla tips nav derīgs',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Attēla datus nevarēja ielādēt. Attēla fails, iespējams, vairs neeksistē, vai arī jums varētu nebūt piekļuves tiesības tam.',
 
     // Attachments
