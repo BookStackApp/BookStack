@@ -28,4 +28,12 @@ class ApiDocsController extends ApiController
 
         return response()->json($docs);
     }
+
+    /**
+     * Redirect to the API docs page.
+     */
+    public function redirect()
+    {
+        return redirect('/api/docs');
+    }
 }
