@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Huỷ',
+    'close' => 'Close',
     'confirm' => 'Xác nhận',
     'back' => 'Quay lại',
     'save' => 'Lưu',
