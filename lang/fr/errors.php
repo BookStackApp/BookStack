@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Une erreur est survenue pendant l\'envoi de l\'image',
     'image_upload_type_error' => 'Le format de l\'image envoyée n\'est pas valide',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Les données de dessin n\'ont pas pu être chargées. Le fichier de dessin peut ne plus exister ou vous n\'avez pas la permission d\'y accéder.',
 
     // Attachments
