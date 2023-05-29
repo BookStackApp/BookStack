@@ -6,8 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Seleccionar Imagen',
-    'image_list' => 'Image List',
-    'image_details' => 'Image Details',
+    'image_list' => 'Lista de imágenes',
+    'image_details' => 'Detalles de la imagen',
     'image_upload' => 'Subir imagen',
     'image_intro' => 'Aquí puede seleccionar y administrar las imágenes que se han subido previamente al sistema.',
     'image_intro_upload' => 'Suba una nueva imagen arrastrando un archivo de imagen en esta ventana, o usando el botón "Subir imagen" de arriba.',
@@ -17,9 +17,9 @@ return [
     'image_page_title' => 'Ver las imágenes subidas a esta página',
     'image_search_hint' => 'Buscar por nombre de imagen',
     'image_uploaded' => 'Subido el :uploadedDate',
-    'image_uploaded_by' => 'Uploaded by :userName',
-    'image_uploaded_to' => 'Uploaded to :pageLink',
-    'image_updated' => 'Updated :updateDate',
+    'image_uploaded_by' => 'Subida por :userName',
+    'image_uploaded_to' => 'Subida a :pageLink',
+    'image_updated' => 'Actualizado :updateDate',
     'image_load_more' => 'Cargar más',
     'image_image_name' => 'Nombre de imagen',
     'image_delete_used' => 'Esta imagen está siendo utilizada en las páginas mostradas a continuación.',
@@ -32,8 +32,8 @@ return [
     'image_upload_success' => 'Imagen subida éxitosamente',
     'image_update_success' => 'Detalles de la imagen actualizados exitosamente',
     'image_delete_success' => 'Imagen borrada exitosamente',
-    'image_replace' => 'Replace Image',
-    'image_replace_success' => 'Image file successfully updated',
+    'image_replace' => 'Sustituir imagen',
+    'image_replace_success' => 'Imagen actualizada correctamente',
 
     // Code Editor
     'code_editor' => 'Editar Código',
