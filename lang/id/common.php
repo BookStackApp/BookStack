@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Batal',
+    'close' => 'Close',
     'confirm' => 'Konfirmasi',
     'back' => 'Kembali',
     'save' => 'Simpan',
