@@ -21,7 +21,10 @@
                     <span>@icon('upload')</span>
                     <span>{{ trans('components.image_upload') }}</span>
                 </button>
-                <button refs="popup@hide" type="button" class="popup-header-close">@icon('close')</button>
+                <button refs="popup@hide"
+                        type="button"
+                        title="{{ trans('common.close') }}"
+                        class="popup-header-close">@icon('close')</button>
             </div>
 
             <div component="tabs"
@@ -49,10 +52,10 @@
                         <div class="image-manager-filter-bar flex-container-row wrap justify-space-between">
                             <div class="primary-background image-manager-filter-bar-bg"></div>
                             <div>
-                                <form refs="image-manager@searchForm" class="contained-search-box floating mx-m my-s">
+                                <form refs="image-manager@searchForm" role="search" class="contained-search-box floating mx-m my-s">
                                     <input refs="image-manager@searchInput"
                                            placeholder="{{ trans('components.image_search_hint') }}"
-                                           type="text">
+                                           type="search">
                                     <button refs="image-manager@cancelSearch"
                                             title="{{ trans('common.search_clear') }}"
                                             type="button"
