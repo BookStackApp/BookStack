@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Prekliči',
+    'close' => 'Close',
     'confirm' => 'Potrdi',
     'back' => 'Nazaj',
     'save' => 'Shrani',
