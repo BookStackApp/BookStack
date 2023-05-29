@@ -532,15 +532,15 @@ class ImageTest extends TestCase
         $image = Image::first();
 
         $resp = $this->get("/images/edit/{$image->id}");
-        $this->withHtml($resp)->assertElementExists('button#image-manager-delete[title="Delete"]');
+        $this->withHtml($resp)->assertElementExists('button#image-manager-delete');
 
         $resp = $this->actingAs($viewer)->get("/images/edit/{$image->id}");
-        $this->withHtml($resp)->assertElementNotExists('button#image-manager-delete[title="Delete"]');
+        $this->withHtml($resp)->assertElementNotExists('button#image-manager-delete');
 
         $this->permissions->grantUserRolePermissions($viewer, ['image-delete-all']);
 
         $resp = $this->actingAs($viewer)->get("/images/edit/{$image->id}");
-        $this->withHtml($resp)->assertElementExists('button#image-manager-delete[title="Delete"]');
+        $this->withHtml($resp)->assertElementExists('button#image-manager-delete');
 
         $this->files->deleteAtRelativePath($relPath);
     }
