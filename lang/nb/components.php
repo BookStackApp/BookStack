@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Velg bilde',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => 'Upload Image',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'Vis bilder lastet opp til denne siden',
     'image_search_hint' => 'Søk på bilder etter navn',
     'image_uploaded' => 'Opplastet :uploadedDate',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'Last in flere',
     'image_image_name' => 'Bildenavn',
     'image_delete_used' => 'Dette bildet er brukt på sidene nedenfor.',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => 'Bilde ble lastet opp',
     'image_update_success' => 'Bildedetaljer ble oppdatert',
     'image_delete_success' => 'Bilde ble slettet',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'Endre kode',
