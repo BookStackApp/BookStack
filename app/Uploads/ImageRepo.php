@@ -175,6 +175,7 @@ class ImageRepo
             throw new ImageUploadException(trans('errors.image_upload_replace_type'));
         }
 
+        $image->refresh();
         $image->updated_by = user()->id;
         $image->save();
         $this->imageService->replaceExistingFromUpload($image->path, $image->type, $file);
