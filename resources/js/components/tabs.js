@@ -70,7 +70,8 @@ export class Tabs extends Component {
     }
 
     activate() {
-        this.show(this.panels[0].id);
+        const panelToShow = this.panels.find(p => !p.hasAttribute('hidden')) || this.panels[0];
+        this.show(panelToShow.id);
         this.tabList.toggleAttribute('hidden', false);
     }
 

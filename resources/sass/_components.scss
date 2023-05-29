@@ -350,7 +350,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   position: sticky;
   top: 0;
   z-index: 5;
-  background-color: rgba(255, 255, 255, 0.85);
+  @include lightDark(background-color, rgba(255, 255, 255, 0.85), rgba(80, 80, 80, 0.85));
 }
 .image-manager-filter-bar-bg {
   position: absolute;
@@ -361,40 +361,18 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   opacity: .15;
   z-index: -1;
 }
-.image-manager-filter-bar .contained-search-box {
-  box-shadow: $bs-med;
-  border-radius: 4px;
-  margin: $-s $-m;
-  overflow: hidden;
-  input, button {
-    border: 0;
-  }
-  input:focus, input:active {
-    border: 0;
-    outline: 1px dotted var(--color-primary);
-  }
-  button {
-    width: 48px;
-    color: #444;
-    border-left: 1px solid #DDD;
-    background-color: #FFF;
-  }
-}
 
-@include smaller-than($s) {
-  .image-manager-filter-bar .contained-search-box input {
-    width: 180px;
-  }
-}
 .image-manager-filters {
   box-shadow: $bs-med;
   border-radius: 4px;
-  margin: $-s $-m;
   overflow: hidden;
   border-bottom: 0 !important;
+  @include whenDark {
+    border: 1px solid #000 !important;
+  }
   button {
     line-height: 0;
-    background-color: #FFF;
+    @include lightDark(background-color, #FFF, #333);
   }
   svg {
     margin: 0;
@@ -527,10 +505,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .tab-container.bordered [role="tablist"] button[role="tab"] {
-  border-right: 1px solid #DDD;
-  @include lightDark(border-right-color, #DDD, #000);
+  border-inline-end: 1px solid #DDD;
+  @include lightDark(border-inline-end-color, #DDD, #000);
   &:last-child {
-    border-right: none;
+    border-inline-end: none;
   }
 }
 
@@ -554,15 +532,16 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   &[aria-selected="true"] {
     color: var(--color-link) !important;
     border-bottom-color: var(--color-link) !important;
+    outline: 0 !important;
   }
   &:hover, &:focus {
     @include lightDark(color, rgba(0, 0, 0, .8), rgba(255, 255, 255, .8));
     @include lightDark(border-bottom-color,  rgba(0, 0, 0, .2), rgba(255, 255, 255, .2));
   }
-}
-.tab-container.tab-primary [role="tablist"] button[role="tab"][aria-selected="true"] {
-  color: var(--color-primary) !important;
-  border-bottom-color: var(--color-primary) !important;
+  &:focus {
+    outline: 1px dotted var(--color-primary);
+    outline-offset: -2px;
+  }
 }
 .tab-container [role="tablist"].controls-card {
   margin-bottom: 0;
