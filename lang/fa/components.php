@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'انتخاب تصویر',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => 'Upload Image',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'تصاویر بارگذاری شده در این صفحه را مشاهده کنید',
     'image_search_hint' => 'جستجو بر اساس نام تصویر',
     'image_uploaded' => 'بارگذاری شده :uploadedDate',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'بارگذاری بیشتر',
     'image_image_name' => 'نام تصویر',
     'image_delete_used' => 'این تصویر در صفحات زیر استفاده شده است.',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => 'تصویر با موفقیت بارگذاری شد',
     'image_update_success' => 'جزئیات تصویر با موفقیت به روز شد',
     'image_delete_success' => 'تصویر با موفقیت حذف شد',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'ویرایش کد',
