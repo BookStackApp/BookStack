@@ -30,6 +30,7 @@ class ImageGalleryApiController extends ApiController
             ],
             'update' => [
                 'name'  => ['string', 'max:180'],
+                'image' => ['file', ...$this->getImageValidationRules()],
             ]
         ];
     }
@@ -89,7 +90,8 @@ class ImageGalleryApiController extends ApiController
 
     /**
      * Update the details of an existing image in the system.
-     * Only allows updating of the image name at this time.
+     * Since "image" is expected to be a file, this needs to be a 'multipart/form-data' type request if providing a
+     * new image file. Updated image files should be of the same file type as the original image.
      */
     public function update(Request $request, string $id)
     {
@@ -99,6 +101,9 @@ class ImageGalleryApiController extends ApiController
         $this->checkOwnablePermission('image-update', $image);
 
         $this->imageRepo->updateImageDetails($image, $data);
+        if (isset($data['image'])) {
+            $this->imageRepo->updateImageFile($image, $data['image']);
+        }
 
         return response()->json($this->formatForSingleResponse($image));
     }

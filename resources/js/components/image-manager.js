@@ -23,6 +23,7 @@ export class ImageManager extends Component {
         this.formContainer = this.$refs.formContainer;
         this.formContainerPlaceholder = this.$refs.formContainerPlaceholder;
         this.dropzoneContainer = this.$refs.dropzoneContainer;
+        this.loadMore = this.$refs.loadMore;
 
         // Instance data
         this.type = 'gallery';
@@ -40,6 +41,7 @@ export class ImageManager extends Component {
     }
 
     setupListeners() {
+        // Filter tab click
         onSelect(this.filterTabs, e => {
             this.resetAll();
             this.filter = e.target.dataset.filter;
@@ -47,32 +49,33 @@ export class ImageManager extends Component {
             this.loadGallery();
         });
 
+        // Search submit
         this.searchForm.addEventListener('submit', event => {
             this.resetListView();
             this.loadGallery();
+            this.cancelSearch.toggleAttribute('hidden', !this.searchInput.value);
             event.preventDefault();
         });
 
+        // Cancel search button
         onSelect(this.cancelSearch, () => {
             this.resetListView();
             this.resetSearchView();
             this.loadGallery();
         });
 
-        onChildEvent(this.listContainer, '.load-more button', 'click', async event => {
-            const wrapper = event.target.closest('.load-more');
-            showLoading(wrapper);
-            this.page += 1;
-            await this.loadGallery();
-            wrapper.remove();
-        });
+        // Load more button click
+        onChildEvent(this.container, '.load-more button', 'click', this.runLoadMore.bind(this));
 
+        // Select image event
         this.listContainer.addEventListener('event-emit-select-image', this.onImageSelectEvent.bind(this));
 
+        // Image load error handling
         this.listContainer.addEventListener('error', event => {
             event.target.src = window.baseUrl('loading_error.png');
         }, true);
 
+        // Footer select button click
         onSelect(this.selectButton, () => {
             if (this.callback) {
                 this.callback(this.lastSelected);
@@ -80,17 +83,39 @@ export class ImageManager extends Component {
             this.hide();
         });
 
+        // Delete button click
         onChildEvent(this.formContainer, '#image-manager-delete', 'click', () => {
             if (this.lastSelected) {
                 this.loadImageEditForm(this.lastSelected.id, true);
             }
         });
 
+        // Edit form submit
         this.formContainer.addEventListener('ajax-form-success', () => {
             this.refreshGallery();
             this.resetEditForm();
         });
+
+        // Image upload success
         this.container.addEventListener('dropzone-upload-success', this.refreshGallery.bind(this));
+
+        // Auto load-more on scroll
+        const scrollZone = this.listContainer.parentElement;
+        let scrollEvents = [];
+        scrollZone.addEventListener('wheel', event => {
+            const scrollOffset = Math.ceil(scrollZone.scrollHeight - scrollZone.scrollTop);
+            const bottomedOut = scrollOffset === scrollZone.clientHeight;
+            if (!bottomedOut || event.deltaY < 1) {
+                return;
+            }
+
+            const secondAgo = Date.now() - 1000;
+            scrollEvents.push(Date.now());
+            scrollEvents = scrollEvents.filter(d => d >= secondAgo);
+            if (scrollEvents.length > 5 && this.canLoadMore()) {
+                this.runLoadMore();
+            }
+        });
     }
 
     show(callback, type = 'gallery') {
@@ -145,6 +170,14 @@ export class ImageManager extends Component {
     addReturnedHtmlElementsToList(html) {
         const el = document.createElement('div');
         el.innerHTML = html;
+
+        const loadMore = el.querySelector('.load-more');
+        if (loadMore) {
+            loadMore.remove();
+            this.loadMore.innerHTML = loadMore.innerHTML;
+        }
+        this.loadMore.toggleAttribute('hidden', !loadMore);
+
         window.$components.init(el);
         for (const child of [...el.children]) {
             this.listContainer.appendChild(child);
@@ -169,6 +202,7 @@ export class ImageManager extends Component {
 
     resetSearchView() {
         this.searchInput.value = '';
+        this.cancelSearch.toggleAttribute('hidden', true);
     }
 
     resetEditForm() {
@@ -222,6 +256,16 @@ export class ImageManager extends Component {
         this.formContainer.innerHTML = formHtml;
         this.formContainerPlaceholder.setAttribute('hidden', '');
         window.$components.init(this.formContainer);
+    }
+
+    runLoadMore() {
+        showLoading(this.loadMore);
+        this.page += 1;
+        this.loadGallery();
+    }
+
+    canLoadMore() {
+        return this.loadMore.querySelector('button') && !this.loadMore.hasAttribute('hidden');
     }
 
 }

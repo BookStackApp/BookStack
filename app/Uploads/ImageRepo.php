@@ -11,16 +11,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageRepo
 {
-    protected ImageService $imageService;
-    protected PermissionApplicator $permissions;
-
-    /**
-     * ImageRepo constructor.
-     */
-    public function __construct(ImageService $imageService, PermissionApplicator $permissions)
-    {
-        $this->imageService = $imageService;
-        $this->permissions = $permissions;
+    public function __construct(
+        protected ImageService $imageService,
+        protected PermissionApplicator $permissions
+    ) {
     }
 
     /**
@@ -164,10 +158,28 @@ class ImageRepo
     public function updateImageDetails(Image $image, $updateDetails): Image
     {
         $image->fill($updateDetails);
+        $image->updated_by = user()->id;
         $image->save();
         $this->loadThumbs($image);
 
         return $image;
+    }
+
+    /**
+     * Update the image file of an existing image in the system.
+     * @throws ImageUploadException
+     */
+    public function updateImageFile(Image $image, UploadedFile $file): void
+    {
+        if ($file->getClientOriginalExtension() !== pathinfo($image->path, PATHINFO_EXTENSION)) {
+            throw new ImageUploadException(trans('errors.image_upload_replace_type'));
+        }
+
+        $image->refresh();
+        $image->updated_by = user()->id;
+        $image->save();
+        $this->imageService->replaceExistingFromUpload($image->path, $image->type, $file);
+        $this->loadThumbs($image, true);
     }
 
     /**
@@ -202,11 +214,11 @@ class ImageRepo
     /**
      * Load thumbnails onto an image object.
      */
-    public function loadThumbs(Image $image): void
+    public function loadThumbs(Image $image, bool $forceCreate = false): void
     {
         $image->setAttribute('thumbs', [
-            'gallery' => $this->getThumbnail($image, 150, 150, false),
-            'display' => $this->getThumbnail($image, 1680, null, true),
+            'gallery' => $this->getThumbnail($image, 150, 150, false, $forceCreate),
+            'display' => $this->getThumbnail($image, 1680, null, true, $forceCreate),
         ]);
     }
 
@@ -215,10 +227,10 @@ class ImageRepo
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
      */
-    protected function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio): ?string
+    protected function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio, bool $forceCreate): ?string
     {
         try {
-            return $this->imageService->getThumbnail($image, $width, $height, $keepRatio);
+            return $this->imageService->getThumbnail($image, $width, $height, $keepRatio, $forceCreate);
         } catch (Exception $exception) {
             return null;
         }

@@ -298,6 +298,10 @@ body.flexbox {
   }
 }
 
+[hidden] {
+  display: none !important;
+}
+
 /**
  * Border radiuses
  */

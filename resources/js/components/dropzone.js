@@ -15,6 +15,7 @@ export class Dropzone extends Component {
         this.isActive = true;
 
         this.url = this.$opts.url;
+        this.method = (this.$opts.method || 'post').toUpperCase();
         this.successMessage = this.$opts.successMessage;
         this.errorMessage = this.$opts.errorMessage;
         this.uploadLimitMb = Number(this.$opts.uploadLimit);
@@ -167,6 +168,9 @@ export class Dropzone extends Component {
     startXhrForUpload(upload) {
         const formData = new FormData();
         formData.append('file', upload.file, upload.file.name);
+        if (this.method !== 'POST') {
+            formData.append('_method', this.method);
+        }
         const component = this;
 
         const req = window.$http.createXMLHttpRequest('POST', this.url, {
