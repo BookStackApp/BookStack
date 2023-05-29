@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Pri nahrávaní obrázka nastala chyba',
     'image_upload_type_error' => 'Typ nahrávaného obrázka je neplatný',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Údaje výkresu sa nepodarilo načítať. Súbor výkresu už možno neexistuje alebo nemáte povolenie na prístup k nemu.',
 
     // Attachments
