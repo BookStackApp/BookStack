@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Įvyko klaida įkeliant vaizdą',
     'image_upload_type_error' => 'Vaizdo tipas, kurį norima įkelti, yra neteisingas',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
