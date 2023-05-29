@@ -7,10 +7,10 @@
          style="animation-delay: {{ min($index * 10, 260) . 'ms' }};">
         <img src="{{ $image->thumbs['gallery'] }}"
              alt="{{ $image->name }}"
+             role="none"
              width="150"
              height="150"
-             loading="lazy"
-             title="{{ $image->name }}">
+             loading="lazy">
         <div class="image-meta">
             <span class="name">{{ $image->name }}</span>
             <span class="date">{{ trans('components.image_uploaded', ['uploadedDate' => $image->created_at->format('Y-m-d')]) }}</span>
