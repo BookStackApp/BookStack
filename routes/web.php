@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
         ->where('path', '.*$');
 
     // API docs routes
-    Route::redirect('/api', '/api/docs');
+    Route::get('/api', [ApiDocsController::class, 'redirect']);
     Route::get('/api/docs', [ApiDocsController::class, 'display']);
 
     Route::get('/pages/recently-updated', [EntityControllers\PageController::class, 'showRecentlyUpdated']);
