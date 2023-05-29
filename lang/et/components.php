@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Pildifaili valik',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => 'Laadi pilt üles',
     'image_intro' => 'Siin saad valida ja hallata pilte, mis on eelnevalt süsteemi üles laaditud.',
     'image_intro_upload' => 'Laadi uus pilt üles pildifaili sellesse aknasse lohistades või ülal "Laadi pilt üles" nupu abil.',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'Vaata sellele lehele laaditud pildifaile',
     'image_search_hint' => 'Otsi pildifaili nime järgi',
     'image_uploaded' => 'Üles laaditud :uploadedDate',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'Lae rohkem',
     'image_image_name' => 'Pildifaili nimi',
     'image_delete_used' => 'Seda pildifaili kasutavad järgmised lehed.',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => 'Pildifail üles laaditud',
     'image_update_success' => 'Pildifaili andmed muudetud',
     'image_delete_success' => 'Pildifail kustutatud',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'Muuda koodi',
