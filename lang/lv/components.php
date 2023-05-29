@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Attēla izvēle',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => 'Upload Image',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'Apskatīt augšupielādētos attēlus šajā lapā',
     'image_search_hint' => 'Meklēt pēc attēla vārda',
     'image_uploaded' => 'Augšupielādēts :uploadedDate',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'Ielādēt vairāk',
     'image_image_name' => 'Attēla nosaukums',
     'image_delete_used' => 'Šis attēls ir ievietots zemāk redzamajās lapās.',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => 'Attēls ir veiksmīgi augšupielādēts',
     'image_update_success' => 'Attēlā informācija ir veiksmīgi atjunināta',
     'image_delete_success' => 'Attēls veiksmīgi dzēsts',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'Rediģēt kodu',
