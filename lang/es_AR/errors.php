@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen subida es inválido.',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'No se han podido cargar los datos del dibujo. Puede que el archivo de dibujo ya no exista o que no tenga permiso para acceder a él.',
 
     // Attachments
