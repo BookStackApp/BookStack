@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => '이미지를 올리다 문제가 생겼습니다.',
     'image_upload_type_error' => '유효하지 않은 이미지 형식입니다.',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
