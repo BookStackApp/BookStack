@@ -17,9 +17,4 @@
     @include('pages.parts.image-manager', ['uploaded_to' => $page->id])
     @include('pages.parts.code-editor')
     @include('entities.selector-popup')
-    <script nonce="{{ $cspNonce }}" type="module">
-        window.$components.first('image-manager').show((image) => {
-            console.log(image);
-        }, 'gallery');
-    </script>
 @stop
