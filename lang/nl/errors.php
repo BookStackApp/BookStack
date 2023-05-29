@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Er is een fout opgetreden bij het uploaden van de afbeelding',
     'image_upload_type_error' => 'Het geüploade afbeeldingstype is ongeldig',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'De gegevens van de tekening konden niet worden geladen. Het tekenbestand bestaat misschien niet meer of u hebt geen machtiging om het te openen.',
 
     // Attachments
