@@ -40,7 +40,7 @@
                                 role="tab">{{ trans('components.image_details') }}</button>
                     </div>
                 </div>
-                <div class="flex-container-row flex-fill">
+                <div class="flex-container-row flex-fill flex">
                     <div id="image-manager-list"
                          tabindex="0"
                          role="tabpanel"
@@ -49,7 +49,7 @@
                         <div class="image-manager-filter-bar flex-container-row wrap justify-space-between">
                             <div class="primary-background image-manager-filter-bar-bg"></div>
                             <div>
-                                <form refs="image-manager@searchForm" class="contained-search-box">
+                                <form refs="image-manager@searchForm" class="contained-search-box floating mx-m my-s">
                                     <input refs="image-manager@searchInput"
                                            placeholder="{{ trans('components.image_search_hint') }}"
                                            type="text">
@@ -62,8 +62,8 @@
                                             title="{{ trans('common.search') }}">@icon('search')</button>
                                 </form>
                             </div>
-                            <div class="tab-container bordered tab-primary">
-                                <div role="tablist" class="image-manager-filters flex-container-row">
+                            <div class="tab-container bordered mx-m my-s">
+                                <div role="tablist" class="image-manager-filters flex-container-row mb-none">
                                     <button refs="image-manager@filterTabs"
                                             data-filter="all"
                                             role="tab"
