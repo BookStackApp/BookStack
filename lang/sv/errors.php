@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Ett fel inträffade vid uppladdningen',
     'image_upload_type_error' => 'Filtypen du försöker ladda upp är ogiltig',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
