@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Đã xảy ra lỗi khi đang tải lên ảnh',
     'image_upload_type_error' => 'Ảnh đang được tải lên không hợp lệ',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
