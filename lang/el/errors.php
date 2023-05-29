@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Παρουσιάστηκε σφάλμα κατά το ανέβασμα της εικόνας.',
     'image_upload_type_error' => 'Ο τύπος εικόνας που μεταφορτώθηκε δεν είναι έγκυρος',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Δεν ήταν δυνατή η φόρτωση δεδομένων σχεδίασης. Το αρχείο σχεδίασης ενδέχεται να μην υπάρχει πλέον ή ενδέχεται να μην έχετε άδεια πρόσβασης σε αυτά.',
 
     // Attachments
