@@ -674,6 +674,10 @@ ul.pagination {
   text-align: start !important;
   max-height: 500px;
   overflow-y: auto;
+  &.anchor-left {
+    inset-inline-end: auto;
+    inset-inline-start: 0;
+  }
   &.wide {
     min-width: 220px;
   }

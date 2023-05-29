@@ -200,10 +200,6 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   flex: 1;
 }
 
-.image-manager-body {
-  min-height: 70vh;
-}
-
 .dropzone-overlay {
   position: absolute;
   display: flex;
@@ -347,43 +343,99 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: none;
 }
 
+.image-manager-body {
+  min-height: 70vh;
+}
+.image-manager-filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  @include lightDark(background-color, rgba(255, 255, 255, 0.85), rgba(80, 80, 80, 0.85));
+}
+.image-manager-filter-bar-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .15;
+  z-index: -1;
+}
+
+.image-manager-filters {
+  box-shadow: $bs-med;
+  border-radius: 4px;
+  overflow: hidden;
+  border-bottom: 0 !important;
+  @include whenDark {
+    border: 1px solid #000 !important;
+  }
+  button {
+    line-height: 0;
+    @include lightDark(background-color, #FFF, #333);
+  }
+  svg {
+    margin: 0;
+  }
+}
+
+.image-manager-list {
+  padding: 3px;
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(140px, 1fr) );
+  gap: 3px;
+  z-index: 3;
+  > div {
+    aspect-ratio: 1;
+  }
+}
+
 .image-manager-list .image {
   display: block;
   position: relative;
   border-radius: 0;
-  float: left;
   margin: 0;
+  width: 100%;
+  text-align: start;
+  padding: 0;
   cursor: pointer;
-  width: math.div(100%, 6);
-  height: auto;
+  aspect-ratio: 1;
   @include lightDark(border-color, #ddd, #000);
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  transition: all cubic-bezier(.4, 0, 1, 1) 160ms;
+  transition: all linear 80ms;
   overflow: hidden;
   &.selected {
-    transform: scale3d(0.92, 0.92, 0.92);
-    outline: currentColor 2px solid;
+    background-color: var(--color-primary-light);
+    outline: currentColor 3px solid;
+    border-radius: 3px;
+    transform: scale3d(0.95, 0.95, 0.95);
   }
   img {
     width: 100%;
     max-width: 100%;
     display: block;
+    object-fit: cover;
+    height: auto;
   }
   .image-meta {
+    opacity: 0;
     position: absolute;
     width: 100%;
     bottom: 0;
     left: 0;
     color: #EEE;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.7);
     font-size: 10px;
     padding: 3px 4px;
+    pointer-events: none;
+    transition: opacity ease-in-out 80ms;
     span {
       display: block;
     }
   }
-  @include smaller-than($xl) {
-    width: math.div(100%, 4);
+  &.selected .image-meta,
+  &:hover .image-meta,
+  &:focus .image-meta {
+    opacity: 1;
   }
   @include smaller-than($m) {
     .image-meta {
@@ -393,7 +445,6 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .image-manager .load-more {
-  display: block;
   text-align: center;
   padding: $-s $-m;
   clear: both;
@@ -408,6 +459,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager-sidebar {
   width: 300px;
+  margin: 0 auto;
   overflow-y: auto;
   overflow-x: hidden;
   border-inline-start: 1px solid #DDD;
@@ -433,16 +485,17 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     }
   }
 }
-
-.image-manager-list {
-  overflow-y: scroll;
-  flex: 1;
+@include smaller-than($m) {
+  .image-manager-sidebar {
+    border-inline-start: 0;
+  }
 }
 
 .image-manager-content {
   display: flex;
   flex-direction: column;
   flex: 1;
+  overflow-y: scroll;
   .container {
     width: 100%;
   }
@@ -451,16 +504,12 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
-.image-manager [role="tablist"] button[role="tab"] {
-  border-right: 1px solid #DDD;
-  @include lightDark(border-color, #DDD, #000);
+.tab-container.bordered [role="tablist"] button[role="tab"] {
+  border-inline-end: 1px solid #DDD;
+  @include lightDark(border-inline-end-color, #DDD, #000);
   &:last-child {
-    border-right: none;
+    border-inline-end: none;
   }
-}
-
-.image-manager-header {
-  z-index: 4;
 }
 
 .tab-container [role="tablist"] {
@@ -473,8 +522,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   margin-bottom: $-m;
 }
 
-.tab-container [role="tablist"] button[role="tab"],
-.image-manager [role="tablist"] button[role="tab"] {
+.tab-container [role="tablist"] button[role="tab"] {
   display: inline-block;
   padding: $-s;
   @include lightDark(color, rgba(0, 0, 0, .5), rgba(255, 255, 255, .5));
@@ -484,10 +532,15 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   &[aria-selected="true"] {
     color: var(--color-link) !important;
     border-bottom-color: var(--color-link) !important;
+    outline: 0 !important;
   }
   &:hover, &:focus {
     @include lightDark(color, rgba(0, 0, 0, .8), rgba(255, 255, 255, .8));
     @include lightDark(border-bottom-color,  rgba(0, 0, 0, .2), rgba(255, 255, 255, .2));
+  }
+  &:focus {
+    outline: 1px dotted var(--color-primary);
+    outline-offset: -2px;
   }
 }
 .tab-container [role="tablist"].controls-card {
