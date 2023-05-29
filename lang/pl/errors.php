@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Wystąpił błąd podczas przesyłania obrazka',
     'image_upload_type_error' => 'Typ przesłanego obrazka jest nieprwidłowy.',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Nie można załadować danych rysunku. Plik rysunku może już nie istnieć lub nie masz uprawnień dostępu do niego.',
 
     // Attachments
