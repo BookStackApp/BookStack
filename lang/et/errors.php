@@ -49,7 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Pildi üleslaadimisel tekkis viga',
     'image_upload_type_error' => 'Pildifaili tüüp ei ole korrektne',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_replace_type' => 'Pildifaili asendused peavad olema sama tüüpi',
     'drawing_data_not_found' => 'Joonise andmeid ei õnnestunud laadida. Joonist ei pruugi enam eksisteerida, või sul puuduvad õigused selle vaatamiseks.',
 
     // Attachments
