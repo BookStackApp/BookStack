@@ -213,18 +213,14 @@ abstract class TestCase extends BaseTestCase
      */
     private function isPermissionError($response): bool
     {
+        if ($response->status() === 403 && $response instanceof JsonResponse) {
+            $errMessage = $response->getData(true)['error']['message'] ?? '';
+            return $errMessage === 'You do not have permission to perform the requested action.';
+        }
+
         return $response->status() === 302
-            && (
-                (
-                    $response->headers->get('Location') === url('/')
-                    && strpos(session()->pull('error', ''), 'You do not have permission to access') === 0
-                )
-                ||
-                (
-                    $response instanceof JsonResponse &&
-                    $response->json(['error' => 'You do not have permission to perform the requested action.'])
-                )
-            );
+            && $response->headers->get('Location') === url('/')
+            && str_starts_with(session()->pull('error', ''), 'You do not have permission to access');
     }
 
     /**
