@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Tühista',
-    'close' => 'Close',
+    'close' => 'Sulge',
     'confirm' => 'Kinnita',
     'back' => 'Tagasi',
     'save' => 'Salvesta',
