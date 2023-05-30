@@ -5,14 +5,14 @@ namespace BookStack\Entities\Controllers;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Repos\ChapterRepo;
+use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\ApiController;
+use Exception;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class ChapterApiController extends ApiController
 {
-    protected $chapterRepo;
-
     protected $rules = [
         'create' => [
             'book_id'     => ['required', 'integer'],
@@ -28,12 +28,9 @@ class ChapterApiController extends ApiController
         ],
     ];
 
-    /**
-     * ChapterController constructor.
-     */
-    public function __construct(ChapterRepo $chapterRepo)
-    {
-        $this->chapterRepo = $chapterRepo;
+    public function __construct(
+        protected ChapterRepo $chapterRepo
+    ) {
     }
 
     /**
@@ -54,13 +51,13 @@ class ChapterApiController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->validate($request, $this->rules['create']);
+        $requestData = $this->validate($request, $this->rules['create']);
 
         $bookId = $request->get('book_id');
         $book = Book::visible()->findOrFail($bookId);
         $this->checkOwnablePermission('chapter-create', $book);
 
-        $chapter = $this->chapterRepo->create($request->all(), $book);
+        $chapter = $this->chapterRepo->create($requestData, $book);
 
         return response()->json($chapter->load(['tags']));
     }
@@ -79,13 +76,30 @@ class ChapterApiController extends ApiController
 
     /**
      * Update the details of a single chapter.
+     * Providing a 'book_id' property will essentially move the chapter
+     * into that parent element if you have permissions to do so.
      */
     public function update(Request $request, string $id)
     {
+        $requestData = $this->validate($request, $this->rules()['update']);
         $chapter = Chapter::visible()->findOrFail($id);
         $this->checkOwnablePermission('chapter-update', $chapter);
 
-        $updatedChapter = $this->chapterRepo->update($chapter, $request->all());
+        if ($request->has('book_id') && $chapter->book_id !== intval($requestData['book_id'])) {
+            $this->checkOwnablePermission('chapter-delete', $chapter);
+
+            try {
+                $this->chapterRepo->move($chapter, "book:{$requestData['book_id']}");
+            } catch (Exception $exception) {
+                if ($exception instanceof  PermissionsException) {
+                    $this->showPermissionError();
+                }
+
+                return $this->jsonError(trans('errors.selected_book_not_found'));
+            }
+        }
+
+        $updatedChapter = $this->chapterRepo->update($chapter, $requestData);
 
         return response()->json($updatedChapter->load(['tags']));
     }
