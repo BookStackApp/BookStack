@@ -15,26 +15,19 @@ use Illuminate\Support\Facades\Log;
  */
 class LdapService
 {
-    protected Ldap $ldap;
-    protected GroupSyncService $groupSyncService;
-    protected UserAvatars $userAvatars;
-
     /**
-     * @var resource
+     * @var resource|\LDAP\Connection
      */
     protected $ldapConnection;
 
     protected array $config;
     protected bool $enabled;
 
-    /**
-     * LdapService constructor.
-     */
-    public function __construct(Ldap $ldap, UserAvatars $userAvatars, GroupSyncService $groupSyncService)
-    {
-        $this->ldap = $ldap;
-        $this->userAvatars = $userAvatars;
-        $this->groupSyncService = $groupSyncService;
+    public function __construct(
+        protected Ldap $ldap,
+        protected UserAvatars $userAvatars,
+        protected GroupSyncService $groupSyncService
+    ) {
         $this->config = config('services.ldap');
         $this->enabled = config('auth.method') === 'ldap';
     }
@@ -59,7 +52,7 @@ class LdapService
 
         // Clean attributes
         foreach ($attributes as $index => $attribute) {
-            if (strpos($attribute, 'BIN;') === 0) {
+            if (str_starts_with($attribute, 'BIN;')) {
                 $attributes[$index] = substr($attribute, strlen('BIN;'));
             }
         }
@@ -82,7 +75,7 @@ class LdapService
      * Get the details of a user from LDAP using the given username.
      * User found via configurable user filter.
      *
-     * @throws LdapException
+     * @throws LdapException|JsonDebugException
      */
     public function getUserDetails(string $userName): ?array
     {
@@ -126,7 +119,7 @@ class LdapService
      */
     protected function getUserResponseProperty(array $userDetails, string $propertyKey, $defaultValue)
     {
-        $isBinary = strpos($propertyKey, 'BIN;') === 0;
+        $isBinary = str_starts_with($propertyKey, 'BIN;');
         $propertyKey = strtolower($propertyKey);
         $value = $defaultValue;
 
@@ -170,11 +163,11 @@ class LdapService
      * Bind the system user to the LDAP connection using the given credentials
      * otherwise anonymous access is attempted.
      *
-     * @param resource $connection
+     * @param resource|\LDAP\Connection $connection
      *
      * @throws LdapException
      */
-    protected function bindSystemUser($connection)
+    protected function bindSystemUser($connection): void
     {
         $ldapDn = $this->config['dn'];
         $ldapPass = $this->config['pass'];
@@ -197,7 +190,7 @@ class LdapService
      *
      * @throws LdapException
      *
-     * @return resource
+     * @return resource|\LDAP\Connection
      */
     protected function getConnection()
     {
@@ -216,8 +209,8 @@ class LdapService
             $this->ldap->setOption(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }
 
-        $serverDetails = $this->parseServerString($this->config['server']);
-        $ldapConnection = $this->ldap->connect($serverDetails['host'], $serverDetails['port']);
+        $ldapHost = $this->parseServerString($this->config['server']);
+        $ldapConnection = $this->ldap->connect($ldapHost);
 
         if ($ldapConnection === false) {
             throw new LdapException(trans('errors.ldap_cannot_connect'));
@@ -242,23 +235,16 @@ class LdapService
     }
 
     /**
-     * Parse a LDAP server string and return the host and port for a connection.
+     * Parse an LDAP server string and return the host suitable for a connection.
      * Is flexible to formats such as 'ldap.example.com:8069' or 'ldaps://ldap.example.com'.
      */
-    protected function parseServerString(string $serverString): array
+    protected function parseServerString(string $serverString): string
     {
-        $serverNameParts = explode(':', $serverString);
-
-        // If we have a protocol just return the full string since PHP will ignore a separate port.
-        if ($serverNameParts[0] === 'ldaps' || $serverNameParts[0] === 'ldap') {
-            return ['host' => $serverString, 'port' => 389];
+        if (str_starts_with($serverString, 'ldaps://') || str_starts_with($serverString, 'ldap://')) {
+            return $serverString;
         }
 
-        // Otherwise, extract the port out
-        $hostName = $serverNameParts[0];
-        $ldapPort = (count($serverNameParts) > 1) ? intval($serverNameParts[1]) : 389;
-
-        return ['host' => $hostName, 'port' => $ldapPort];
+        return "ldap://{$serverString}";
     }
 
     /**
@@ -386,7 +372,7 @@ class LdapService
      * @throws LdapException
      * @throws JsonDebugException
      */
-    public function syncGroups(User $user, string $username)
+    public function syncGroups(User $user, string $username): void
     {
         $userLdapGroups = $this->getUserGroups($username);
         $this->groupSyncService->syncUserWithFoundGroups($user, $userLdapGroups, $this->config['remove_from_groups']);
