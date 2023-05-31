@@ -3,7 +3,7 @@ import {scrollAndHighlightElement} from '../services/util';
 import {Component} from './component';
 
 function toggleAnchorHighlighting(elementId, shouldHighlight) {
-    DOM.forEach(`a[href="#${elementId}"]`, anchor => {
+    DOM.forEach(`#page-navigation a[href="#${elementId}"]`, anchor => {
         anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
     });
 }
