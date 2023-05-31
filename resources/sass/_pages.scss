@@ -198,10 +198,6 @@ body.tox-fullscreen, body.markdown-fullscreen {
 .pointer {
   border: 1px solid #CCC;
   @include lightDark(border-color, #ccc, #000);
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  padding: $-s $-s;
   border-radius: 4px;
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
   @include lightDark(background-color, #fff, #333);
@@ -241,16 +237,12 @@ body.tox-fullscreen, body.markdown-fullscreen {
     border: 1px solid #DDD;
     @include lightDark(border-color, #ddd, #000);
     color: #666;
-    width: 172px;
+    width: 160px;
     z-index: 40;
     padding: 5px 10px;
   }
-  span.icon {
-    fill: #444;
-    cursor: pointer;
-    user-select: none;
-    display: inline-block;
-    line-height: 1;
+  .text-button {
+    @include lightDark(color, #444, #AAA);
   }
   .input-group .button {
     line-height: 1;
