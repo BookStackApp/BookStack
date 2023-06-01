@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Avbryt',
-    'close' => 'Close',
+    'close' => 'Lukk',
     'confirm' => 'Bekreft',
     'back' => 'Tilbake',
     'save' => 'Lagre',
