@@ -18,8 +18,8 @@ return [
     'image_search_hint' => 'Nach Bildnamen suchen',
     'image_uploaded' => 'Hochgeladen am :uploadedDate',
     'image_uploaded_by' => 'Hochgeladen von :userName',
-    'image_uploaded_to' => 'Uploaded to :pageLink',
-    'image_updated' => 'Updated :updateDate',
+    'image_uploaded_to' => 'Hochgeladen auf :pageLink',
+    'image_updated' => 'Aktualisiert am :updateDate',
     'image_load_more' => 'Mehr',
     'image_image_name' => 'Bildname',
     'image_delete_used' => 'Dieses Bild wird auf den folgenden Seiten benutzt. ',
@@ -32,8 +32,8 @@ return [
     'image_upload_success' => 'Bild erfolgreich hochgeladen',
     'image_update_success' => 'Bilddetails erfolgreich aktualisiert',
     'image_delete_success' => 'Bild erfolgreich gelöscht',
-    'image_replace' => 'Replace Image',
-    'image_replace_success' => 'Image file successfully updated',
+    'image_replace' => 'Bild ersetzen',
+    'image_replace_success' => 'Bild erfolgreich aktualisiert',
 
     // Code Editor
     'code_editor' => 'Code editieren',
