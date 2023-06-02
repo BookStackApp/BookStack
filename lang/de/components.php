@@ -6,8 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Bild auswählen',
-    'image_list' => 'Image List',
-    'image_details' => 'Image Details',
+    'image_list' => 'Bilderliste',
+    'image_details' => 'Bilddetails',
     'image_upload' => 'Bild hochladen',
     'image_intro' => 'Hier können Sie die zuvor hochgeladenen Bilder auswählen und verwalten.',
     'image_intro_upload' => 'Laden Sie ein neues Bild hoch, indem Sie eine Bilddatei in dieses Fenster ziehen oder über die Schaltfläche "Bild hochladen" oben klicken.',
@@ -17,7 +17,7 @@ return [
     'image_page_title' => 'Zeige alle Bilder, die auf diese Seite hochgeladen wurden',
     'image_search_hint' => 'Nach Bildnamen suchen',
     'image_uploaded' => 'Hochgeladen am :uploadedDate',
-    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_by' => 'Hochgeladen von :userName',
     'image_uploaded_to' => 'Uploaded to :pageLink',
     'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'Mehr',
