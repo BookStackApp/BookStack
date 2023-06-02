@@ -10,9 +10,9 @@ return [
     'page_create_notification'    => 'Seite erfolgreich erstellt',
     'page_update'                 => 'aktualisierte Seite',
     'page_update_notification'    => 'Seite erfolgreich aktualisiert',
-    'page_delete'                 => 'gelöschte Seite',
+    'page_delete'                 => 'hat die Seite gelöscht',
     'page_delete_notification'    => 'Seite erfolgreich gelöscht',
-    'page_restore'                => 'wiederhergestellte Seite',
+    'page_restore'                => 'hat die Seite wiederhergestellt',
     'page_restore_notification'   => 'Seite erfolgreich wiederhergestellt',
     'page_move'                   => 'Seite verschoben',
 
@@ -56,11 +56,11 @@ return [
     'mfa_remove_method_notification' => 'Multi-Faktor-Methode erfolgreich entfernt',
 
     // Webhooks
-    'webhook_create' => 'erstellter Webhook',
+    'webhook_create' => 'erstellte Webhook',
     'webhook_create_notification' => 'Webhook wurde erfolgreich eingerichtet',
-    'webhook_update' => 'aktualisierter Webhook',
+    'webhook_update' => 'aktualisierte Webhook',
     'webhook_update_notification' => 'Webhook wurde erfolgreich aktualisiert',
-    'webhook_delete' => 'gelöschter Webhook',
+    'webhook_delete' => 'löschte Webhook',
     'webhook_delete_notification' => 'Webhook erfolgreich gelöscht',
 
     // Users
