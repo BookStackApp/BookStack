@@ -6,9 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Selecionar Imagem',
-    'image_list' => 'Image List',
-    'image_details' => 'Image Details',
-    'image_upload' => 'Upload Image',
+    'image_list' => 'Lista de Imagens',
+    'image_details' => 'Detalhes da Imagem',
+    'image_upload' => 'Carregar Imagem',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Todas',
