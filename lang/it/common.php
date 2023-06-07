@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Annulla',
-    'close' => 'Close',
+    'close' => 'Chiudi',
     'confirm' => 'Conferma',
     'back' => 'Indietro',
     'save' => 'Salva',
