@@ -266,7 +266,7 @@ return [
     'pages_revisions_restore' => '恢复',
     'pages_revisions_none' => '此页面没有修订',
     'pages_copy_link' => '复制链接',
-    'pages_edit_content_link' => 'Jump to section in editor',
+    'pages_edit_content_link' => '跳转到编辑器中的部分',
     'pages_pointer_enter_mode' => 'Enter section select mode',
     'pages_pointer_label' => 'Page Section Options',
     'pages_pointer_permalink' => 'Page Section Permalink',
