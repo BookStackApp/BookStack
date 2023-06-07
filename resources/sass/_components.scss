@@ -704,6 +704,13 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
+.comment-thread-indicator {
+  border-inline-start: 3px dotted #DDD;
+  @include lightDark(border-color, #DDD, #444);
+  margin-inline-start: $-xs;
+  width: $-l;
+}
+
 #tag-manager .drag-card {
   max-width: 500px;
 }
