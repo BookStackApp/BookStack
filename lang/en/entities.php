@@ -362,8 +362,6 @@ return [
     'comment_placeholder' => 'Leave a comment here',
     'comment_count' => '{0} No Comments|{1} 1 Comment|[2,*] :count Comments',
     'comment_save' => 'Save Comment',
-    'comment_saving' => 'Saving comment...',
-    'comment_deleting' => 'Deleting comment...',
     'comment_new' => 'New Comment',
     'comment_created' => 'commented :createDiff',
     'comment_updated' => 'Updated :updateDiff by :username',
