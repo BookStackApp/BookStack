@@ -1,4 +1,11 @@
-<div class="comment-box" comment="{{ $comment->id }}" local-id="{{$comment->local_id}}" parent-id="{{$comment->parent_id}}" id="comment{{$comment->local_id}}">
+<div component="page-comment"
+     option:page-comment:comment-id="{{ $comment->id }}"
+     option:page-comment:comment-local-id="{{ $comment->local_id }}"
+     option:page-comment:comment-parent-id="{{ $comment->parent_id }}"
+     option:page-comment:updated-text="{{ trans('entities.comment_updated_success') }}"
+     option:page-comment:deleted-text="{{ trans('entities.comment_deleted_success') }}"
+     id="comment{{$comment->local_id}}"
+     class="comment-box">
     <div class="header p-s">
         <div class="grid half left-focus no-gap v-center">
             <div class="meta text-muted text-small">
@@ -21,10 +28,10 @@
             </div>
             <div class="actions text-right">
                 @if(userCan('comment-update', $comment))
-                    <button type="button" class="text-button" action="edit" aria-label="{{ trans('common.edit') }}" title="{{ trans('common.edit') }}">@icon('edit')</button>
+                    <button refs="page-comment@edit-button" type="button" class="text-button"  aria-label="{{ trans('common.edit') }}" title="{{ trans('common.edit') }}">@icon('edit')</button>
                 @endif
                 @if(userCan('comment-create-all'))
-                    <button type="button" class="text-button" action="reply" aria-label="{{ trans('common.reply') }}" title="{{ trans('common.reply') }}">@icon('reply')</button>
+                    <button refs="page-comment@reply-button" type="button" class="text-button" aria-label="{{ trans('common.reply') }}" title="{{ trans('common.reply') }}">@icon('reply')</button>
                 @endif
                 @if(userCan('comment-delete', $comment))
                     <div component="dropdown" class="dropdown-container">
@@ -32,7 +39,7 @@
                         <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                             <li class="px-m text-small text-muted pb-s">{{trans('entities.comment_delete_confirm')}}</li>
                             <li>
-                                <button action="delete" type="button" class="text-button text-neg icon-item">
+                                <button refs="page-comment@delete-button" type="button" class="text-button text-neg icon-item">
                                     @icon('delete')
                                     <div>{{ trans('common.delete') }}</div>
                                 </button>
@@ -51,28 +58,20 @@
         </div>
     @endif
 
-    <div comment-content class="content px-s pb-s">
-        <div class="form-group loading" style="display: none;">
-            @include('common.loading-icon', ['text' => trans('entities.comment_deleting')])
-        </div>
+    <div refs="page-comment@content-container" class="content px-s pb-s">
         {!! $comment->html  !!}
     </div>
 
     @if(userCan('comment-update', $comment))
-        <div comment-edit-container style="display: none;" class="content px-s">
-            <form novalidate>
-                <div class="form-group description-input">
-                    <textarea name="markdown" rows="3" placeholder="{{ trans('entities.comment_placeholder') }}">{{ $comment->text }}</textarea>
-                </div>
-                <div class="form-group text-right">
-                    <button type="button" class="button outline" action="closeUpdateForm">{{ trans('common.cancel') }}</button>
-                    <button type="submit" class="button">{{ trans('entities.comment_save') }}</button>
-                </div>
-                <div class="form-group loading" style="display: none;">
-                    @include('common.loading-icon', ['text' => trans('entities.comment_saving')])
-                </div>
-            </form>
-        </div>
+        <form novalidate refs="page-comment@form" hidden class="content px-s block">
+            <div class="form-group description-input">
+                <textarea refs="page-comment@input" name="markdown" rows="3" placeholder="{{ trans('entities.comment_placeholder') }}">{{ $comment->text }}</textarea>
+            </div>
+            <div class="form-group text-right">
+                <button type="button" class="button outline" refs="page-comment@form-cancel">{{ trans('common.cancel') }}</button>
+                <button type="submit" class="button">{{ trans('entities.comment_save') }}</button>
+            </div>
+        </form>
     @endif
 
 </div>

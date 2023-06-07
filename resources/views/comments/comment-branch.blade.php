@@ -1,4 +1,4 @@
-<div>
+<div class="comment-branch">
     <div class="mb-m">
         @include('comments.comment', ['comment' => $branch['comment']])
     </div>
