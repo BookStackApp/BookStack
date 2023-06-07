@@ -1,4 +1,4 @@
-<div class="comment-box mb-m" comment="{{ $comment->id }}" local-id="{{$comment->local_id}}" parent-id="{{$comment->parent_id}}" id="comment{{$comment->local_id}}">
+<div class="comment-box" comment="{{ $comment->id }}" local-id="{{$comment->local_id}}" parent-id="{{$comment->parent_id}}" id="comment{{$comment->local_id}}">
     <div class="header p-s">
         <div class="grid half left-focus no-gap v-center">
             <div class="meta text-muted text-small">
