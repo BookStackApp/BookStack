@@ -159,6 +159,27 @@ class PagesApiTest extends TestCase
         $this->assertStringContainsString('testing', $html);
     }
 
+    public function test_read_endpoint_returns_not_found()
+    {
+        $this->actingAsApiEditor();
+        // get an id that is not used
+        $id = Page::orderBy('id', 'desc')->first()->id + 1;
+        $this->assertNull(Page::find($id));
+
+        $resp = $this->getJson($this->baseEndpoint . "/$id");
+
+        $resp->assertNotFound();
+        $this->assertNull($resp->json('id'));
+        $resp->assertJsonIsObject('error');
+        $resp->assertJsonStructure([
+            'error' => [
+                'code',
+                'message',
+            ],
+        ]);
+        $this->assertSame(404, $resp->json('error')['code']);
+    }
+
     public function test_update_endpoint()
     {
         $this->actingAsApiEditor();
