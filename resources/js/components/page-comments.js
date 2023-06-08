@@ -41,7 +41,7 @@ export class PageComments extends Component {
         });
 
         this.elem.addEventListener('page-comment-reply', event => {
-            this.setReply(event.detail.id);
+            this.setReply(event.detail.id, event.detail.element);
         });
 
         if (this.form) {
@@ -66,15 +66,16 @@ export class PageComments extends Component {
 
         window.$http.post(`/comment/${this.pageId}`, reqData).then(resp => {
             const newElem = htmlToDom(resp.data);
-            this.container.appendChild(newElem);
+            this.formContainer.after(newElem);
             window.$events.success(this.createdText);
-            this.resetForm();
+            this.hideForm();
             this.updateCount();
         }).catch(err => {
             this.form.toggleAttribute('hidden', false);
             window.$events.showValidationErrors(err);
         });
 
+        this.form.toggleAttribute('hidden', false);
         loading.remove();
     }
 
@@ -85,32 +86,38 @@ export class PageComments extends Component {
 
     resetForm() {
         this.formInput.value = '';
-        this.hideForm();
         this.removeReplyTo();
+        this.container.append(this.formContainer);
     }
 
     showForm() {
         this.formContainer.toggleAttribute('hidden', false);
         this.addButtonContainer.toggleAttribute('hidden', true);
-        this.formInput.focus();
+        setTimeout(() => {
+            this.formInput.focus();
+        }, 100);
     }
 
     hideForm() {
+        this.resetForm();
         this.formContainer.toggleAttribute('hidden', true);
         if (this.getCommentCount() > 0) {
-            this.elem.appendChild(this.addButtonContainer);
+            this.elem.append(this.addButtonContainer);
         } else {
-            this.commentCountBar.appendChild(this.addButtonContainer);
+            this.commentCountBar.append(this.addButtonContainer);
         }
         this.addButtonContainer.toggleAttribute('hidden', false);
     }
 
     getCommentCount() {
-        return this.container.querySelectorAll('[compontent="page-comment"]').length;
+        return this.container.querySelectorAll('[component="page-comment"]').length;
     }
 
-    setReply(commentLocalId) {
+    setReply(commentLocalId, commentElement) {
+        const targetFormLocation = commentElement.closest('.comment-branch').querySelector('.comment-branch-children');
         this.showForm();
+        targetFormLocation.append(this.formContainer);
+        this.formContainer.scrollIntoView({behavior: 'smooth', block: 'nearest'});
         this.parentId = commentLocalId;
         this.replyToRow.toggleAttribute('hidden', false);
         const replyLink = this.replyToRow.querySelector('a');
