@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
      */
     protected function renderApiException(Throwable $e): JsonResponse
     {
-        $code = 500;
+        $code = $e->getCode() === 0 ? 500 : $e->getCode();
         $headers = [];
 
         if ($e instanceof HttpException) {
