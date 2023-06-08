@@ -682,6 +682,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   &:hover .actions, &:focus-within .actions {
     opacity: 1;
   }
+  .actions button:focus {
+    outline: 1px dotted var(--color-primary);
+  }
 }
 
 .comment-box .header {
@@ -709,6 +712,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   @include lightDark(border-color, #DDD, #444);
   margin-inline-start: $-xs;
   width: $-l;
+  height: calc(100% - $-m);
 }
 
 #tag-manager .drag-card {

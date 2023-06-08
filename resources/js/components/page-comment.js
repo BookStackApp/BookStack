@@ -25,7 +25,10 @@ export class PageComment extends Component {
     }
 
     setupListeners() {
-        this.replyButton.addEventListener('click', () => this.$emit('reply', {id: this.commentLocalId}));
+        this.replyButton.addEventListener('click', () => this.$emit('reply', {
+            id: this.commentLocalId,
+            element: this.container,
+        }));
         this.editButton.addEventListener('click', this.startEdit.bind(this));
         this.deleteButton.addEventListener('click', this.delete.bind(this));
         this.form.addEventListener('submit', this.update.bind(this));

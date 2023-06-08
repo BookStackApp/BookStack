@@ -28,14 +28,14 @@
             </div>
             <div class="actions text-right">
                 @if(userCan('comment-update', $comment))
-                    <button refs="page-comment@edit-button" type="button" class="text-button"  aria-label="{{ trans('common.edit') }}" title="{{ trans('common.edit') }}">@icon('edit')</button>
+                    <button refs="page-comment@edit-button" type="button" class="text-button icon p-xs"  aria-label="{{ trans('common.edit') }}" title="{{ trans('common.edit') }}">@icon('edit')</button>
                 @endif
                 @if(userCan('comment-create-all'))
-                    <button refs="page-comment@reply-button" type="button" class="text-button" aria-label="{{ trans('common.reply') }}" title="{{ trans('common.reply') }}">@icon('reply')</button>
+                    <button refs="page-comment@reply-button" type="button" class="text-button icon p-xs" aria-label="{{ trans('common.reply') }}" title="{{ trans('common.reply') }}">@icon('reply')</button>
                 @endif
                 @if(userCan('comment-delete', $comment))
                     <div component="dropdown" class="dropdown-container">
-                        <button type="button" refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" class="text-button" title="{{ trans('common.delete') }}">@icon('delete')</button>
+                        <button type="button" refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" class="text-button icon p-xs" title="{{ trans('common.delete') }}">@icon('delete')</button>
                         <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                             <li class="px-m text-small text-muted pb-s">{{trans('entities.comment_delete_confirm')}}</li>
                             <li>
