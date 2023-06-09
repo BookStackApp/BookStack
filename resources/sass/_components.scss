@@ -663,6 +663,12 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
+.comments-container {
+  padding-inline: $-xl;
+  @include smaller-than($m) {
+    padding-inline: $-xs;
+  }
+}
 .comment-box {
   border-radius: 4px;
   border: 1px solid #DDD;
@@ -713,6 +719,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   margin-inline-start: $-xs;
   width: $-l;
   height: calc(100% - $-m);
+}
+
+.comment-branch .comment-branch .comment-branch .comment-branch .comment-thread-indicator {
+  display: none;
 }
 
 #tag-manager .drag-card {

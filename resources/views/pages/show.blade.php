@@ -34,7 +34,7 @@
             </div>
         @endif
 
-        <div class="px-xl comments-container mb-l print-hidden">
+        <div class="comments-container mb-l print-hidden">
             @include('comments.comments', ['commentTree' => $commentTree, 'page' => $page])
             <div class="clearfix"></div>
         </div>
