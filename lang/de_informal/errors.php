@@ -49,7 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Beim Hochladen des Bildes trat ein Fehler auf.',
     'image_upload_type_error' => 'Der Bildtyp der hochgeladenen Datei ist ungültig.',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_replace_type' => 'Bild-Ersetzungen müssen vom gleichen Typ sein',
     'drawing_data_not_found' => 'Zeichnungsdaten konnten nicht geladen werden. Die Zeichnungsdatei existiert möglicherweise nicht mehr oder du hast nicht die Berechtigung, darauf zuzugreifen.',
 
     // Attachments
