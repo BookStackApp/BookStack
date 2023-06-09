@@ -65,7 +65,7 @@ class CommentTree
         }
 
         $tree = [];
-        foreach ($childMap[0] as $childId) {
+        foreach ($childMap[0] ?? [] as $childId) {
             $tree[] = $this->createTreeForId($childId, 0, $byId, $childMap);
         }
 
