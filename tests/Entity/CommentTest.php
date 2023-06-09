@@ -114,4 +114,25 @@ class CommentTest extends TestCase
         $pageView->assertDontSee($script, false);
         $pageView->assertSee('sometextinthecommentupdated');
     }
+
+    public function test_reply_comments_are_nested()
+    {
+        $this->asAdmin();
+        $page = $this->entities->page();
+
+        $this->postJson("/comment/$page->id", ['text' => 'My new comment']);
+        $this->postJson("/comment/$page->id", ['text' => 'My new comment']);
+
+        $respHtml = $this->withHtml($this->get($page->getUrl()));
+        $respHtml->assertElementCount('.comment-branch', 3);
+        $respHtml->assertElementNotExists('.comment-branch .comment-branch');
+
+        $comment = $page->comments()->first();
+        $resp = $this->postJson("/comment/$page->id", ['text' => 'My nested comment', 'parent_id' => $comment->local_id]);
+        $resp->assertStatus(200);
+
+        $respHtml = $this->withHtml($this->get($page->getUrl()));
+        $respHtml->assertElementCount('.comment-branch', 4);
+        $respHtml->assertElementContains('.comment-branch .comment-branch', 'My nested comment');
+    }
 }
