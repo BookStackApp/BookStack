@@ -16,6 +16,7 @@ export class PageComments extends Component {
         this.formContainer = this.$refs.formContainer;
         this.form = this.$refs.form;
         this.formInput = this.$refs.formInput;
+        this.formReplyLink = this.$refs.formReplyLink;
         this.addCommentButton = this.$refs.addCommentButton;
         this.hideFormButton = this.$refs.hideFormButton;
         this.removeReplyToButton = this.$refs.removeReplyToButton;
@@ -26,6 +27,7 @@ export class PageComments extends Component {
 
         // Internal State
         this.parentId = null;
+        this.formReplyText = this.formReplyLink.textContent;
 
         this.setupListeners();
     }
@@ -86,13 +88,15 @@ export class PageComments extends Component {
 
     resetForm() {
         this.formInput.value = '';
-        this.removeReplyTo();
+        this.parentId = null;
+        this.replyToRow.toggleAttribute('hidden', true);
         this.container.append(this.formContainer);
     }
 
     showForm() {
         this.formContainer.toggleAttribute('hidden', false);
         this.addButtonContainer.toggleAttribute('hidden', true);
+        this.formContainer.scrollIntoView({behavior: 'smooth', block: 'nearest'});
         setTimeout(() => {
             this.formInput.focus();
         }, 100);
@@ -115,19 +119,20 @@ export class PageComments extends Component {
 
     setReply(commentLocalId, commentElement) {
         const targetFormLocation = commentElement.closest('.comment-branch').querySelector('.comment-branch-children');
-        this.showForm();
         targetFormLocation.append(this.formContainer);
-        this.formContainer.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+        this.showForm();
         this.parentId = commentLocalId;
         this.replyToRow.toggleAttribute('hidden', false);
         const replyLink = this.replyToRow.querySelector('a');
-        replyLink.textContent = `#${this.parentId}`;
+        replyLink.textContent = this.formReplyText.replace('1234', this.parentId);
         replyLink.href = `#comment${this.parentId}`;
     }
 
     removeReplyTo() {
         this.parentId = null;
         this.replyToRow.toggleAttribute('hidden', true);
+        this.container.append(this.formContainer);
+        this.showForm();
     }
 
 }

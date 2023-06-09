@@ -365,6 +365,7 @@ return [
     'comment_new' => 'New Comment',
     'comment_created' => 'commented :createDiff',
     'comment_updated' => 'Updated :updateDiff by :username',
+    'comment_updated_indicator' => 'Updated',
     'comment_deleted_success' => 'Comment deleted',
     'comment_created_success' => 'Comment added',
     'comment_updated_success' => 'Comment updated',
