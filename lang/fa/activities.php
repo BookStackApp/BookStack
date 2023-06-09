@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'ایجاد صفحه',
+    'page_create'                 => 'تاریخ ایجاد',
     'page_create_notification'    => 'صفحه با موفقیت ایجاد شد',
     'page_update'                 => 'به روزرسانی صفحه',
     'page_update_notification'    => 'صفحه با موفقیت به روزرسانی شد',
