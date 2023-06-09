@@ -2,10 +2,10 @@
     <div class="comment-box">
 
         <div class="header p-s">{{ trans('entities.comment_new') }}</div>
-        <div refs="page-comments@reply-to-row" hidden class="primary-background-light text-muted px-s py-xs mb-s">
+        <div refs="page-comments@reply-to-row" hidden class="primary-background-light text-muted px-s py-xs">
             <div class="grid left-focus v-center">
                 <div>
-                    {!! trans('entities.comment_in_reply_to', ['commentId' => '<a href=""></a>']) !!}
+                    <a refs="page-comments@form-reply-link" href="#">{{ trans('entities.comment_in_reply_to', ['commentId' => '1234']) }}</a>
                 </div>
                 <div class="text-right">
                     <button refs="page-comments@remove-reply-to-button" class="text-button">{{ trans('common.remove') }}</button>
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="content px-s">
+        <div class="content px-s pt-s">
             <form refs="page-comments@form" novalidate>
                 <div class="form-group description-input">
                 <textarea refs="page-comments@form-input" name="markdown"

@@ -7,63 +7,68 @@
      id="comment{{$comment->local_id}}"
      class="comment-box">
     <div class="header p-s">
-        <div class="grid half left-focus no-gap v-center">
-            <div class="meta text-muted text-small">
-                <a href="#comment{{$comment->local_id}}">#{{$comment->local_id}}</a>
-                &nbsp;&nbsp;
+        <div class="flex-container-row justify-space-between wrap">
+            <div class="meta text-muted flex-container-row items-center">
                 @if ($comment->createdBy)
-                    <img width="50" src="{{ $comment->createdBy->getAvatar(50) }}" class="avatar" alt="{{ $comment->createdBy->name }}">
+                    <img width="50" src="{{ $comment->createdBy->getAvatar(50) }}" class="avatar mx-xs" alt="{{ $comment->createdBy->name }}">
                     &nbsp;
-                    <a href="{{ $comment->createdBy->getProfileUrl() }}">{{ $comment->createdBy->name }}</a>
+                    <a href="{{ $comment->createdBy->getProfileUrl() }}">{{ $comment->createdBy->getShortName(16) }}</a>
                 @else
-                    <span>{{ trans('common.deleted_user') }}</span>
+                    {{ trans('common.deleted_user') }}
                 @endif
-                <span title="{{ $comment->created_at }}">{{ trans('entities.comment_created', ['createDiff' => $comment->created]) }}</span>
+                <span title="{{ $comment->created_at }}">&nbsp;{{ trans('entities.comment_created', ['createDiff' => $comment->created]) }}</span>
                 @if($comment->isUpdated())
-                    <span title="{{ $comment->updated_at }}">
-                &bull;&nbsp;
-                    {{ trans('entities.comment_updated', ['updateDiff' => $comment->updated, 'username' => $comment->updatedBy? $comment->updatedBy->name : trans('common.deleted_user')]) }}
-            </span>
+                    <span class="mx-xs">&bull;</span>
+                    <span title="{{ trans('entities.comment_updated', ['updateDiff' => $comment->updated_at, 'username' => $comment->updatedBy->name ?? trans('common.deleted_user')]) }}">
+                 {{ trans('entities.comment_updated_indicator') }}
+                    </span>
                 @endif
             </div>
-            <div class="actions text-right">
-                @if(userCan('comment-update', $comment))
-                    <button refs="page-comment@edit-button" type="button" class="text-button icon p-xs"  aria-label="{{ trans('common.edit') }}" title="{{ trans('common.edit') }}">@icon('edit')</button>
-                @endif
-                @if(userCan('comment-create-all'))
-                    <button refs="page-comment@reply-button" type="button" class="text-button icon p-xs" aria-label="{{ trans('common.reply') }}" title="{{ trans('common.reply') }}">@icon('reply')</button>
-                @endif
-                @if(userCan('comment-delete', $comment))
-                    <div component="dropdown" class="dropdown-container">
-                        <button type="button" refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" class="text-button icon p-xs" title="{{ trans('common.delete') }}">@icon('delete')</button>
-                        <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
-                            <li class="px-m text-small text-muted pb-s">{{trans('entities.comment_delete_confirm')}}</li>
-                            <li>
-                                <button refs="page-comment@delete-button" type="button" class="text-button text-neg icon-item">
-                                    @icon('delete')
-                                    <div>{{ trans('common.delete') }}</div>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                @endif
+            <div class="right-meta flex-container-row justify-flex-end items-center px-s">
+                <div class="actions mr-s">
+                    @if(userCan('comment-create-all'))
+                        <button refs="page-comment@reply-button" type="button" class="text-button text-muted hover-underline p-xs">@icon('reply') {{ trans('common.reply') }}</button>
+                    @endif
+                    @if(userCan('comment-update', $comment))
+                        <button refs="page-comment@edit-button" type="button" class="text-button text-muted hover-underline p-xs">@icon('edit') {{ trans('common.edit') }}</button>
+                    @endif
+                    @if(userCan('comment-delete', $comment))
+                        <div component="dropdown" class="dropdown-container">
+                            <button type="button" refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" class="text-button text-muted hover-underline p-xs">@icon('delete') {{ trans('common.delete') }}</button>
+                            <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
+                                <li class="px-m text-small text-muted pb-s">{{trans('entities.comment_delete_confirm')}}</li>
+                                <li>
+                                    <button refs="page-comment@delete-button" type="button" class="text-button text-neg icon-item">
+                                        @icon('delete')
+                                        <div>{{ trans('common.delete') }}</div>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
+                    <span class="text-muted">
+                        &nbsp;&bull;&nbsp;
+                    </span>
+                </div>
+                <div>
+                    <a class="bold text-muted" href="#comment{{$comment->local_id}}">#{{$comment->local_id}}</a>
+                </div>
             </div>
         </div>
 
     </div>
 
-    @if ($comment->parent_id)
-        <div class="reply-row primary-background-light text-muted px-s py-xs mb-s">
-            {!! trans('entities.comment_in_reply_to', ['commentId' => '<a href="#comment'.$comment->parent_id.'">#'.$comment->parent_id.'</a>']) !!}
-        </div>
-    @endif
-
-    <div refs="page-comment@content-container" class="content px-s pb-s">
+    <div refs="page-comment@content-container" class="content px-m py-s">
+        @if ($comment->parent_id)
+            <p class="comment-reply mb-xxs">
+                <a class="text-muted text-small" href="#comment{{ $comment->parent_id }}">@icon('reply'){{ trans('entities.comment_in_reply_to', ['commentId' => '#' . $comment->parent_id]) }}</a>
+            </p>
+        @endif
         {!! $comment->html  !!}
     </div>
 
     @if(userCan('comment-update', $comment))
-        <form novalidate refs="page-comment@form" hidden class="content px-s block">
+        <form novalidate refs="page-comment@form" hidden class="content pt-s px-s block">
             <div class="form-group description-input">
                 <textarea refs="page-comment@input" name="markdown" rows="3" placeholder="{{ trans('entities.comment_placeholder') }}">{{ $comment->text }}</textarea>
             </div>
