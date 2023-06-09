@@ -7,27 +7,14 @@ use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity as ActivityService;
 use League\CommonMark\CommonMarkConverter;
 
-/**
- * Class CommentRepo.
- */
 class CommentRepo
 {
-    /**
-     * @var Comment
-     */
-    protected $comment;
-
-    public function __construct(Comment $comment)
-    {
-        $this->comment = $comment;
-    }
-
     /**
      * Get a comment by ID.
      */
     public function getById(int $id): Comment
     {
-        return $this->comment->newQuery()->findOrFail($id);
+        return Comment::query()->findOrFail($id);
     }
 
     /**
@@ -36,7 +23,7 @@ class CommentRepo
     public function create(Entity $entity, string $text, ?int $parent_id): Comment
     {
         $userId = user()->id;
-        $comment = $this->comment->newInstance();
+        $comment = new Comment();
 
         $comment->text = $text;
         $comment->html = $this->commentToHtml($text);
@@ -83,7 +70,7 @@ class CommentRepo
             'allow_unsafe_links' => false,
         ]);
 
-        return $converter->convertToHtml($commentText);
+        return $converter->convert($commentText);
     }
 
     /**
@@ -91,9 +78,8 @@ class CommentRepo
      */
     protected function getNextLocalId(Entity $entity): int
     {
-        /** @var Comment $comment */
-        $comment = $entity->comments(false)->orderBy('local_id', 'desc')->first();
+        $currentMaxId = $entity->comments()->max('local_id');
 
-        return ($comment->local_id ?? 0) + 1;
+        return $currentMaxId + 1;
     }
 }

@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\Models\View;
+use BookStack\Activity\Tools\CommentTree;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\BookContents;
@@ -140,15 +141,10 @@ class PageController extends Controller
 
         $pageContent = (new PageContent($page));
         $page->html = $pageContent->render();
-        $sidebarTree = (new BookContents($page->book))->getTree();
         $pageNav = $pageContent->getNavigation($page->html);
 
-        // Check if page comments are enabled
-        $commentsEnabled = !setting('app-disable-comments');
-        if ($commentsEnabled) {
-            $page->load(['comments.createdBy']);
-        }
-
+        $sidebarTree = (new BookContents($page->book))->getTree();
+        $commentTree = (new CommentTree($page));
         $nextPreviousLocator = new NextPreviousContentLocator($page, $sidebarTree);
 
         View::incrementFor($page);
@@ -159,7 +155,7 @@ class PageController extends Controller
             'book'            => $page->book,
             'current'         => $page,
             'sidebarTree'     => $sidebarTree,
-            'commentsEnabled' => $commentsEnabled,
+            'commentTree'     => $commentTree,
             'pageNav'         => $pageNav,
             'next'            => $nextPreviousLocator->getNext(),
             'previous'        => $nextPreviousLocator->getPrevious(),
