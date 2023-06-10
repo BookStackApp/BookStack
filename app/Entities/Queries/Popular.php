@@ -3,6 +3,10 @@
 namespace BookStack\Entities\Queries;
 
 use BookStack\Activity\Models\View;
+use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Models\Entity;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class Popular extends EntityQuery
@@ -19,11 +23,24 @@ class Popular extends EntityQuery
             $query->whereIn('viewable_type', $this->entityProvider()->getMorphClasses($filterModels));
         }
 
-        return $query->with('viewable')
+        $entities = $query->with('viewable')
             ->skip($count * ($page - 1))
             ->take($count)
             ->get()
             ->pluck('viewable')
             ->filter();
+
+        $this->loadBooksForChildren($entities);
+
+        return $entities;
+    }
+
+    protected function loadBooksForChildren(Collection $entities)
+    {
+        $bookChildren = $entities->filter(fn(Entity $entity) => $entity instanceof BookChild);
+        $eloquent = (new \Illuminate\Database\Eloquent\Collection($bookChildren));
+        $eloquent->load(['book' => function (BelongsTo $query) {
+            $query->scopes('visible');
+        }]);
     }
 }
