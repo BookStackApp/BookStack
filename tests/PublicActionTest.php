@@ -193,4 +193,18 @@ class PublicActionTest extends TestCase
         $resp->assertRedirect($book->getUrl());
         $this->followRedirects($resp)->assertSee($book->name);
     }
+
+    public function test_public_view_can_take_on_other_roles()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $newRole = $this->users->attachNewRole(User::getDefault(), []);
+        $page = $this->entities->page();
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->addEntityPermission($page, ['view', 'update'], $newRole);
+
+        $resp = $this->get($page->getUrl());
+        $resp->assertOk();
+
+        $this->withHtml($resp)->assertLinkExists($page->getUrl('/edit'));
+    }
 }
