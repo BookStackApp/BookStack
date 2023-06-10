@@ -183,10 +183,6 @@ class PermissionApplicator
      */
     protected function getCurrentUserRoleIds(): array
     {
-        if (auth()->guest()) {
-            return [Role::getSystemRole('public')->id];
-        }
-
         return $this->currentUser()->roles->pluck('id')->values()->all();
     }
 
