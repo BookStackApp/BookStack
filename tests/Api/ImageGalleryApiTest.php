@@ -232,6 +232,8 @@ class ImageGalleryApiTest extends TestCase
                 'html' => "<a href=\"{$image->url}\" target=\"_blank\"><img src=\"{$displayUrl}\" alt=\"{$image->name}\"></a>",
                 'markdown' => "![{$image->name}]({$displayUrl})",
             ],
+            'created_at' => $image->created_at->toISOString(),
+            'updated_at' => $image->updated_at->toISOString(),
         ]);
         $this->assertStringStartsWith('http://', $resp->json('thumbs.gallery'));
         $this->assertStringStartsWith('http://', $resp->json('thumbs.display'));
