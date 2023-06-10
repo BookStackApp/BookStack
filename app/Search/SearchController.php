@@ -9,11 +9,9 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    protected SearchRunner $searchRunner;
-
-    public function __construct(SearchRunner $searchRunner)
-    {
-        $this->searchRunner = $searchRunner;
+    public function __construct(
+        protected SearchRunner $searchRunner
+    ) {
     }
 
     /**
