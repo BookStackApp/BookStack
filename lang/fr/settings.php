@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Préférences',
     'settings_save' => 'Enregistrer les préférences',
-    'settings_save_success' => 'Préférences enregistrées',
     'system_version' => 'Version du système',
     'categories' => 'Catégories',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Date d\'expiration',
     'user_api_token_expiry_desc' => 'Définissez une date à laquelle ce jeton expire. Après cette date, les demandes effectuées à l\'aide de ce jeton ne fonctionneront plus. Le fait de laisser ce champ vide entraînera une expiration dans 100 ans.',
     'user_api_token_create_secret_message' => 'Immédiatement après la création de ce jeton, un "ID de jeton" "et" Secret de jeton "sera généré et affiché. Le secret ne sera affiché qu\'une seule fois, alors assurez-vous de copier la valeur dans un endroit sûr et sécurisé avant de continuer.',
-    'user_api_token_create_success' => 'Le jeton API a été créé avec succès',
-    'user_api_token_update_success' => 'Le jeton API a été mis à jour avec succès',
     'user_api_token' => 'Jeton API',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Il s\'agit d\'un identifiant généré par le système non modifiable pour ce jeton qui devra être fourni dans les demandes d\'API.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Supprimer le jeton',
     'user_api_token_delete_warning' => 'Cela supprimera complètement le jeton d\'API avec le nom \':tokenName\'.',
     'user_api_token_delete_confirm' => 'Souhaitez-vous vraiment effacer ce jeton API ?',
-    'user_api_token_delete_success' => 'Le jeton API a été supprimé avec succès',
 
     // Webhooks
     'webhooks' => 'Webhooks',
