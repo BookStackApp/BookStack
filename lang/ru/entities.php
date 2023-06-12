@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Сохранить главу',
     'chapters_move' => 'Переместить главу',
     'chapters_move_named' => 'Переместить главу :chapterName',
-    'chapter_move_success' => 'Глава перемещена в :bookName',
     'chapters_copy' => 'Копировать главу',
     'chapters_copy_success' => 'Глава успешно скопирована',
     'chapters_permissions' => 'Разрешения главы',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Синхронизировать прокрутку',
     'pages_not_in_chapter' => 'Страница не находится в главе',
     'pages_move' => 'Переместить страницу',
-    'pages_move_success' => 'Страница перемещена в \':parentName\'',
     'pages_copy' => 'Скопировать страницу',
     'pages_copy_desination' => 'Скопировать в',
     'pages_copy_success' => 'Страница скопирована',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Удалить эту версию?',
     'revision_restore_confirm' => 'Вы уверены, что хотите восстановить эту версию? Текущее содержимое страницы будет заменено.',
-    'revision_delete_success' => 'Версия удалена',
     'revision_cannot_delete_latest' => 'Нельзя удалить последнюю версию.',
 
     // Copy view
