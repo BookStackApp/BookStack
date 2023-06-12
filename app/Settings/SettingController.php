@@ -52,9 +52,7 @@ class SettingController extends Controller
         ]);
 
         $store->storeFromUpdateRequest($request, $category);
-
         $this->logActivity(ActivityType::SETTINGS_UPDATE, $category);
-        $this->showSuccessNotification(trans('settings.settings_save_success'));
 
         return redirect("/settings/{$category}");
     }

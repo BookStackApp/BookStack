@@ -15,11 +15,9 @@ use Ssddanbrown\HtmlDiff\Diff;
 
 class PageRevisionController extends Controller
 {
-    protected PageRepo $pageRepo;
-
-    public function __construct(PageRepo $pageRepo)
-    {
-        $this->pageRepo = $pageRepo;
+    public function __construct(
+        protected PageRepo $pageRepo
+    ) {
     }
 
     /**
@@ -153,7 +151,6 @@ class PageRevisionController extends Controller
 
         $revision->delete();
         Activity::add(ActivityType::REVISION_DELETE, $revision);
-        $this->showSuccessNotification(trans('entities.revision_delete_success'));
 
         return redirect($page->getUrl('/revisions'));
     }
