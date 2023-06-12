@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'ذخیره فصل',
     'chapters_move' => 'انتقال فصل',
     'chapters_move_named' => 'انتقال فصل :chapterName',
-    'chapter_move_success' => 'فصل به :bookName منتقل شد',
     'chapters_copy' => 'کپی فصل',
     'chapters_copy_success' => 'فصل با موفقیت کپی شد',
     'chapters_permissions' => 'مجوزهای فصل',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'هماهنگ سازی اسکرول پیش نمایش',
     'pages_not_in_chapter' => 'صفحه در یک فصل نیست',
     'pages_move' => 'انتقال صفحه',
-    'pages_move_success' => 'صفحه به ":parentName" منتقل شد',
     'pages_copy' => 'کپی صفحه',
     'pages_copy_desination' => 'مقصد را کپی کنید',
     'pages_copy_success' => 'صفحه با موفقیت کپی شد',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'آیا مطمئن هستید که می خواهید این ویرایش را حذف کنید؟',
     'revision_restore_confirm' => 'آیا مطمئن هستید که می خواهید این ویرایش را بازیابی کنید؟ محتوای صفحه فعلی جایگزین خواهد شد.',
-    'revision_delete_success' => 'ویرایش حذف شد',
     'revision_cannot_delete_latest' => 'نمی توان آخرین نسخه را حذف کرد.',
 
     // Copy view
