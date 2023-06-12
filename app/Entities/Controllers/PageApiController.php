@@ -23,6 +23,7 @@ class PageApiController extends ApiController
             'html'       => ['required_without:markdown', 'string'],
             'markdown'   => ['required_without:html', 'string'],
             'tags'       => ['array'],
+            'priority'   => ['integer'],
         ],
         'update' => [
             'book_id'    => ['integer'],
@@ -31,6 +32,7 @@ class PageApiController extends ApiController
             'html'       => ['string'],
             'markdown'   => ['string'],
             'tags'       => ['array'],
+            'priority'   => ['integer'],
         ],
     ];
 
