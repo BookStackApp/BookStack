@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Hoofdstuk opslaan',
     'chapters_move' => 'Hoofdstuk verplaatsen',
     'chapters_move_named' => 'Verplaatst hoofdstuk :chapterName',
-    'chapter_move_success' => 'Hoofdstuk verplaatst naar :bookName',
     'chapters_copy' => 'Kopieer Hoofdstuk',
     'chapters_copy_success' => 'Hoofdstuk succesvol gekopieerd',
     'chapters_permissions' => 'Hoofdstuk Machtigingen',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Synchroniseer preview scroll',
     'pages_not_in_chapter' => 'Deze pagina staat niet in een hoofdstuk',
     'pages_move' => 'Pagina verplaatsten',
-    'pages_move_success' => 'Pagina verplaatst naar ":parentName"',
     'pages_copy' => 'Pagina kopiëren',
     'pages_copy_desination' => 'Kopieër bestemming',
     'pages_copy_success' => 'Pagina succesvol gekopieërd',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Weet u zeker dat u deze revisie wilt verwijderen?',
     'revision_restore_confirm' => 'Weet u zeker dat u deze revisie wilt herstellen? De huidige pagina-inhoud wordt vervangen.',
-    'revision_delete_success' => 'Revisie verwijderd',
     'revision_cannot_delete_latest' => 'Kan de laatste revisie niet verwijderen.',
 
     // Copy view
