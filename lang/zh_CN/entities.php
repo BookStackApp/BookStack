@@ -180,7 +180,6 @@ return [
     'chapters_save' => '保存章节',
     'chapters_move' => '移动章节',
     'chapters_move_named' => '移动章节「:chapterName」',
-    'chapter_move_success' => '章节移动到「:bookName」',
     'chapters_copy' => '复制章节',
     'chapters_copy_success' => '章节已成功复制',
     'chapters_permissions' => '章节权限',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => '同步预览滚动',
     'pages_not_in_chapter' => '本页面不在某章节中',
     'pages_move' => '移动页面',
-    'pages_move_success' => '页面已移动到「:parentName」',
     'pages_copy' => '复制页面',
     'pages_copy_desination' => '复制目的地',
     'pages_copy_success' => '页面复制完成',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => '您确定要删除此修订版吗？',
     'revision_restore_confirm' => '您确定要恢复到此修订版吗？恢复后当前页面内容将被替换。',
-    'revision_delete_success' => '修订删除',
     'revision_cannot_delete_latest' => '无法删除最新版本。',
 
     // Copy view
