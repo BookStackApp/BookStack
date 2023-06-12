@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Nastavení',
     'settings_save' => 'Uložit nastavení',
-    'settings_save_success' => 'Nastavení uloženo',
     'system_version' => 'Verze systému: ',
     'categories' => 'Kategorie',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Platný do',
     'user_api_token_expiry_desc' => 'Zadejte datum, kdy platnost tokenu vyprší. Po tomto datu nebudou požadavky, které používají tento token, fungovat. Pokud ponecháte pole prázdné, bude tokenu nastavena platnost na dalších 100 let.',
     'user_api_token_create_secret_message' => 'Ihned po vytvoření tokenu Vám bude vygenerován a zobrazen "Token ID" a "Token Secret". Upozorňujeme, že "Token Secret" bude možné zobrazit pouze jednou, ujistěte se, že si jej poznamenáte a uložíte na bezpečné místo před tím, než budete pokračovat dále.',
-    'user_api_token_create_success' => 'API Token byl vytvořen',
-    'user_api_token_update_success' => 'API Token byl aktualizován',
     'user_api_token' => 'API Token',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Toto je neupravitelný systémový identifikátor generovaný pro tento Token, který musí být uveden v API requestu.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Odstranit Token',
     'user_api_token_delete_warning' => 'Tímto plně odstraníte tento API Token s názvem \':tokenName\' ze systému.',
     'user_api_token_delete_confirm' => 'Opravdu chcete odstranit tento API Token?',
-    'user_api_token_delete_success' => 'API Token byl odstraněn',
 
     // Webhooks
     'webhooks' => 'Webhooky',
