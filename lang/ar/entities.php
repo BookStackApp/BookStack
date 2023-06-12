@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'حفظ الفصل',
     'chapters_move' => 'نقل الفصل',
     'chapters_move_named' => 'نقل فصل :chapterName',
-    'chapter_move_success' => 'تم نقل الفصل إلى :bookName',
     'chapters_copy' => 'Copy Chapter',
     'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'أذونات الفصل',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'صفحة ليست في فصل',
     'pages_move' => 'نقل الصفحة',
-    'pages_move_success' => 'تم نقل الصفحة إلى ":parentName"',
     'pages_copy' => 'نسخ الصفحة',
     'pages_copy_desination' => 'نسخ مكان الوصول',
     'pages_copy_success' => 'تم نسخ الصفحة بنجاح',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف هذه المراجعة؟',
     'revision_restore_confirm' => 'هل أنت متأكد من أنك تريد استعادة هذه المراجعة؟ سيتم استبدال محتوى الصفحة الحالية.',
-    'revision_delete_success' => 'تم حذف المراجعة',
     'revision_cannot_delete_latest' => 'لايمكن حذف آخر مراجعة.',
 
     // Copy view
