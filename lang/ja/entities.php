@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'チャプターを保存',
     'chapters_move' => 'チャプターを移動',
     'chapters_move_named' => 'チャプター「:chapterName」を移動',
-    'chapter_move_success' => 'チャプターを「:bookName」に移動しました',
     'chapters_copy' => 'チャプターをコピー',
     'chapters_copy_success' => 'チャプターが正常にコピーされました',
     'chapters_permissions' => 'チャプター権限',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'プレビューとスクロールを同期',
     'pages_not_in_chapter' => 'チャプターが設定されていません',
     'pages_move' => 'ページを移動',
-    'pages_move_success' => 'ページを ":parentName" へ移動しました',
     'pages_copy' => 'ページをコピー',
     'pages_copy_desination' => 'コピー先',
     'pages_copy_success' => 'ページが正常にコピーされました',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'このリビジョンを削除しますか？',
     'revision_restore_confirm' => 'このリビジョンを復元してよろしいですか？現在のページの内容が置換されます。',
-    'revision_delete_success' => 'リビジョンを削除しました',
     'revision_cannot_delete_latest' => '最新のリビジョンを削除できません。',
 
     // Copy view
