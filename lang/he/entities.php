@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'שמור פרק',
     'chapters_move' => 'העבר פרק',
     'chapters_move_named' => 'העבר פרק :chapterName',
-    'chapter_move_success' => 'הפרק הועבר אל :bookName',
     'chapters_copy' => 'העתק פרק',
     'chapters_copy_success' => 'פרק הועתק בהצלחה',
     'chapters_permissions' => 'הרשאות פרק',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'דף אינו חלק מפרק',
     'pages_move' => 'העבר דף',
-    'pages_move_success' => 'הדף הועבר אל ":parentName"',
     'pages_copy' => 'העתק דף',
     'pages_copy_desination' => 'העתק יעד',
     'pages_copy_success' => 'הדף הועתק בהצלחה',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'האם ברצונך למחוק נוסח זה?',
     'revision_restore_confirm' => 'האם ברצונך לשחזר נוסח זה? תוכן הדף הנוכחי יעודכן לנוסח זה.',
-    'revision_delete_success' => 'נוסח נמחק',
     'revision_cannot_delete_latest' => 'לא ניתן למחוק את הנוסח האחרון',
 
     // Copy view
