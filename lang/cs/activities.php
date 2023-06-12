@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'obnovil/a stránku',
     'page_restore_notification'   => 'Stránka byla úspěšně obnovena',
     'page_move'                   => 'přesunul/a stránku',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'vytvořil/a kapitolu',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'odstranila/a kapitolu',
     'chapter_delete_notification' => 'Kapitola byla úspěšně odstraněna',
     'chapter_move'                => 'přesunul/a kapitolu',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'vytvořil/a knihu',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'odstranit knihovnu',
     'bookshelf_delete_notification'    => 'Knihovna byla úspěšně smazána',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name" byla přidána do Vašich oblíbených',
     'favourite_remove_notification' => '":name" byla odstraněna z Vašich oblíbených',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Vícefaktorová metoda byla úspěšně nakonfigurována',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Vícefaktorová metoda byla úspěšně odstraněna',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'vytvořil/a webhook',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook byl úspěšně odstraněn',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Uživatel byl úspěšně aktualizován',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Uživatel byl úspěšně odstraněn',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'Role byla úspěšně vytvořena',
+    'role_update' => 'updated role',
     'role_update_notification' => 'Role byla úspěšně aktualizována',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'Role byla odstraněna',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'okomentoval/a',
