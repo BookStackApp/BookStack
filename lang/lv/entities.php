@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Saglabāt nodaļu',
     'chapters_move' => 'Pārvietot nodaļu',
     'chapters_move_named' => 'Pārvietot nodaļu :chapterName',
-    'chapter_move_success' => 'Nodaļa pārviedota uz :bookName',
     'chapters_copy' => 'Kopēt nodaļu',
     'chapters_copy_success' => 'Nodaļa veiksmīgi nokopēta',
     'chapters_permissions' => 'Nodaļas atļaujas',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Lapa nav nodaļā',
     'pages_move' => 'Pārvietot lapu',
-    'pages_move_success' => 'Lapa pārvietota uz ":parentName"',
     'pages_copy' => 'Kopēt lapu',
     'pages_copy_desination' => 'Kopijas mērķa vieta',
     'pages_copy_success' => 'Lapa veiksmīgi nokopēta',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo revīziju?',
     'revision_restore_confirm' => 'Vai tiešām vēlaties atjaunot šo revīziju? Pašreizējais lapas saturs tiks aizvietots.',
-    'revision_delete_success' => 'Revīzija dzēsta',
     'revision_cannot_delete_latest' => 'Nevar dzēst pašreizējo revīziju.',
 
     // Copy view
