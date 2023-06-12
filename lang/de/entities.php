@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Kapitel speichern',
     'chapters_move' => 'Kapitel verschieben',
     'chapters_move_named' => 'Kapitel ":chapterName" verschieben',
-    'chapter_move_success' => 'Das Kapitel wurde in das Buch ":bookName" verschoben.',
     'chapters_copy' => 'Kapitel kopieren',
     'chapters_copy_success' => 'Kapitel erfolgreich kopiert',
     'chapters_permissions' => 'Kapitel-Berechtigungen',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Vorschau synchronisieren',
     'pages_not_in_chapter' => 'Seite ist in keinem Kapitel',
     'pages_move' => 'Seite verschieben',
-    'pages_move_success' => 'Seite nach ":parentName" verschoben',
     'pages_copy' => 'Seite kopieren',
     'pages_copy_desination' => 'Ziel',
     'pages_copy_success' => 'Seite erfolgreich kopiert',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Sind Sie sicher, dass Sie diese Revision löschen wollen?',
     'revision_restore_confirm' => 'Sind Sie sicher, dass Sie diese Revision wiederherstellen wollen? Der aktuelle Seiteninhalt wird ersetzt.',
-    'revision_delete_success' => 'Revision gelöscht',
     'revision_cannot_delete_latest' => 'Die letzte Version kann nicht gelöscht werden.',
 
     // Copy view
