@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Išsaugoti skyrių',
     'chapters_move' => 'Perkelti skyrių',
     'chapters_move_named' => 'Perkelti skyrių :chapterName',
-    'chapter_move_success' => 'Skyrius perkeltas į :bookName',
     'chapters_copy' => 'Copy Chapter',
     'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Skyriaus leidimai',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Puslapio nėra skyriuje',
     'pages_move' => 'Perkelti puslapį',
-    'pages_move_success' => 'Puslapis perkeltas į ":parentName"',
     'pages_copy' => 'Nukopijuoti puslapį',
     'pages_copy_desination' => 'Nukopijuoti tikslą',
     'pages_copy_success' => 'Puslapis sėkmingai nukopijuotas',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Esate tikri, kad norite ištrinti šią peržiūrą?',
     'revision_restore_confirm' => 'Esate tikri, kad norite atkurti šią peržiūrą? Dabartinis puslapio turinys bus pakeistas.',
-    'revision_delete_success' => 'Peržiūra ištrinta',
     'revision_cannot_delete_latest' => 'Negalima išrinti vėliausios peržiūros',
 
     // Copy view
