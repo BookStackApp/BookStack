@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Зберегти розділ',
     'chapters_move' => 'Перемістити розділ',
     'chapters_move_named' => 'Перемістити розділ :chapterName',
-    'chapter_move_success' => 'Розділ переміщено до :bookName',
     'chapters_copy' => 'Копіювати розділ',
     'chapters_copy_success' => 'Розділ успішно скопійовано',
     'chapters_permissions' => 'Дозволи розділу',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Синхронізація прокручування попереднього перегляду',
     'pages_not_in_chapter' => 'Сторінка не знаходиться в розділі',
     'pages_move' => 'Перемістити сторінку',
-    'pages_move_success' => 'Сторінку переміщено до ":parentName"',
     'pages_copy' => 'Копіювати сторінку',
     'pages_copy_desination' => 'Ціль копіювання',
     'pages_copy_success' => 'Сторінка успішно скопійована',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Ви впевнені, що хочете видалити цю версію?',
     'revision_restore_confirm' => 'Дійсно відновити цю версію? Вміст поточної сторінки буде замінено.',
-    'revision_delete_success' => 'Версія видалена',
     'revision_cannot_delete_latest' => 'Неможливо видалити останню версію.',
 
     // Copy view
