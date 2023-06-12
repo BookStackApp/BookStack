@@ -22,6 +22,7 @@ class ApiEntityListFormatter
     protected $fields = [
         'id', 'name', 'slug', 'book_id', 'chapter_id',
         'draft', 'template', 'created_at', 'updated_at',
+        'priority'
     ];
 
     public function __construct(array $list)
