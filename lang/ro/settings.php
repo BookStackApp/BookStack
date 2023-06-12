@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Setări',
     'settings_save' => 'Salvează setările',
-    'settings_save_success' => 'Setări salvate',
     'system_version' => 'Versiune sistem',
     'categories' => 'Categorii',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Data expirării',
     'user_api_token_expiry_desc' => 'Setează o dată la care acest token expiră. După această dată, cererile făcute folosind acest token nu vor mai funcționa. Lăsând acest câmp necompletat se va stabili un termen de expirare de 100 de ani în viitor.',
     'user_api_token_create_secret_message' => 'Imediat după crearea acestui token, va fi generat și afișat un "ID" și "Secret". Secretul va fi afișat o singură dată, așa că fiți siguri să copiați valoarea într-un loc sigur și sigur înainte de a continua.',
-    'user_api_token_create_success' => 'Token API creat cu succes',
-    'user_api_token_update_success' => 'Token API actualizat cu succes',
     'user_api_token' => 'Token API',
     'user_api_token_id' => 'ID Token',
     'user_api_token_id_desc' => 'Acesta este un identificator de sistem needitabil generat pentru acest token, care va trebui furnizat în cereri API.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Șterge token',
     'user_api_token_delete_warning' => 'Acest lucru va șterge complet acest token API cu numele \':tokenName\' din sistem.',
     'user_api_token_delete_confirm' => 'Sigur dorești să ștergi acest token API?',
-    'user_api_token_delete_success' => 'Token API șters cu succes',
 
     // Webhooks
     'webhooks' => 'Webhook-uri',
