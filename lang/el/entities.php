@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Αποθήκευση Κεφαλαίου',
     'chapters_move' => 'Μετακίνηση Κεφαλαίου',
     'chapters_move_named' => 'Μετακίνηση Κεφαλαίου :chapterName',
-    'chapter_move_success' => 'Το κεφάλαιο μεταφέρθηκε στο:bookName',
     'chapters_copy' => 'Αντιγραφή Κεφαλαίου',
     'chapters_copy_success' => 'Το κεφάλαιο αντιγράφηκε επιτυχώς',
     'chapters_permissions' => 'Δικαιώματα Κεφαλαίου',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Συγχρονισμός προεπισκόπησης',
     'pages_not_in_chapter' => 'Η σελίδα δεν είναι σε κεφάλαιο',
     'pages_move' => 'Μετακίνηση Σελίδας',
-    'pages_move_success' => 'Η σελίδα μετακινήθηκε στο ":parentName"',
     'pages_copy' => 'Αντιγραφή Σελίδας',
     'pages_copy_desination' => 'Αντιγραφή Προορισμού',
     'pages_copy_success' => 'Η σελίδα αντιγράφηκε επιτυχώς',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την αναθεώρηση;',
     'revision_restore_confirm' => 'Είστε βέβαιοι ότι θέλετε να επαναφέρετε αυτή την αναθεώρηση; Τα τρέχοντα περιεχόμενα της σελίδας θα αντικατασταθούν.',
-    'revision_delete_success' => 'Η Αναθεώρηση διαγράφηκε',
     'revision_cannot_delete_latest' => 'Δεν είναι δυνατή η διαγραφή της τελευταίας αναθεώρησης.',
 
     // Copy view
