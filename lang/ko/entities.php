@@ -180,7 +180,6 @@ return [
     'chapters_save' => '저장',
     'chapters_move' => '챕터 이동하기',
     'chapters_move_named' => ':chapterName 이동하기',
-    'chapter_move_success' => ':bookName(으)로 옮김',
     'chapters_copy' => '챕터 복사하기',
     'chapters_copy_success' => '챕터 복사함',
     'chapters_permissions' => '챕터 권한',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => '챕터에 있는 문서가 아닙니다.',
     'pages_move' => '문서 이동하기',
-    'pages_move_success' => ':parentName(으)로 옮김',
     'pages_copy' => '문서 복제',
     'pages_copy_desination' => '복제할 위치',
     'pages_copy_success' => '복제함',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => '이 수정본을 지울 건가요?',
     'revision_restore_confirm' => '이 수정본을 되돌릴 건가요? 현재 판본을 바꿉니다.',
-    'revision_delete_success' => '수정본 지움',
     'revision_cannot_delete_latest' => '현재 판본은 지울 수 없습니다.',
 
     // Copy view
