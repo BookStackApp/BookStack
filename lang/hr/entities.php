@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Spremi poglavlje',
     'chapters_move' => 'Premjesti poglavlje',
     'chapters_move_named' => 'Premjesti poglavlje :chapterName',
-    'chapter_move_success' => 'Poglavlje premješteno u :bookName',
     'chapters_copy' => 'Copy Chapter',
     'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Dopuštenja za poglavlje',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Stranica nije u poglavlju',
     'pages_move' => 'Premjesti stranicu',
-    'pages_move_success' => 'Stranica premještena u ":parentName"',
     'pages_copy' => 'Kopiraj stranicu',
     'pages_copy_desination' => 'Kopiraj odredište',
     'pages_copy_success' => 'Stranica je uspješno kopirana',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Jeste li sigurni da želite izbrisati ovaj ispravak?',
     'revision_restore_confirm' => 'Jeste li sigurni da želite vratiti ovaj ispravak? Trenutni sadržaj će biti zamijenjen.',
-    'revision_delete_success' => 'Izbrisani ispravak',
     'revision_cannot_delete_latest' => 'Posljednji ispravak se ne može izbrisati.',
 
     // Copy view
