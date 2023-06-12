@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Gem kapitel',
     'chapters_move' => 'Flyt kapitel',
     'chapters_move_named' => 'Flyt kapitel :chapterName',
-    'chapter_move_success' => 'Kapitel flyttet til :bookName',
     'chapters_copy' => 'Kopier Kapitel',
     'chapters_copy_success' => 'Kapitlet blev kopieret',
     'chapters_permissions' => 'Kapiteltilladelser',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Side er ikke i et kapitel',
     'pages_move' => 'Flyt side',
-    'pages_move_success' => 'Flyt side til ":parentName"',
     'pages_copy' => 'Kopier side',
     'pages_copy_desination' => 'Kopier destination',
     'pages_copy_success' => 'Side kopieret succesfuldt',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Er du sikker på at du vil slette denne revision?',
     'revision_restore_confirm' => 'Er du sikker på at du ønsker at gendanne denne revision? Nuværende sideindhold vil blive erstattet.',
-    'revision_delete_success' => 'Revision slettet',
     'revision_cannot_delete_latest' => 'Kan ikke slette seneste revision.',
 
     // Copy view
