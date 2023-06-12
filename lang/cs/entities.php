@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Uložit kapitolu',
     'chapters_move' => 'Přesunout kapitolu',
     'chapters_move_named' => 'Přesunout kapitolu :chapterName',
-    'chapter_move_success' => 'Kapitola přesunuta do knihy :bookName',
     'chapters_copy' => 'Kopírovat kapitolu',
     'chapters_copy_success' => 'Kapitola byla úspěšně zkopírována',
     'chapters_permissions' => 'Oprávnění kapitoly',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Synchronizovat náhled',
     'pages_not_in_chapter' => 'Stránka není v kapitole',
     'pages_move' => 'Přesunout stránku',
-    'pages_move_success' => 'Stránka přesunuta do ":parentName"',
     'pages_copy' => 'Kopírovat stránku',
     'pages_copy_desination' => 'Cíl kopírování',
     'pages_copy_success' => 'Stránka byla zkopírována',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Opravdu chcete odstranit tuto revizi?',
     'revision_restore_confirm' => 'Jste si jisti, že chcete obnovit tuto revizi? Aktuální obsah stránky bude nahrazen.',
-    'revision_delete_success' => 'Revize odstraněna',
     'revision_cannot_delete_latest' => 'Nelze odstranit poslední revizi.',
 
     // Copy view
