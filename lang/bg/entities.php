@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Запази глава',
     'chapters_move' => 'Премести глава',
     'chapters_move_named' => 'Премести глава :chapterName',
-    'chapter_move_success' => 'Главата беше преместена в :bookName',
     'chapters_copy' => 'Копирай главата',
     'chapters_copy_success' => 'Главата е копирана успешно',
     'chapters_permissions' => 'Настойки за достъп на главата',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Страницата не принадлежи в никоя глава',
     'pages_move' => 'Премести страницата',
-    'pages_move_success' => 'Страницата беше преместена в ":parentName"',
     'pages_copy' => 'Копиране на страницата',
     'pages_copy_desination' => 'Копиране на дестинацията',
     'pages_copy_success' => 'Страницата беше успешно копирана',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Наистина ли искате да изтриете тази версия?',
     'revision_restore_confirm' => 'Сигурни ли сте, че искате да изтриете тази версия? Настоящата страница ще бъде заместена.',
-    'revision_delete_success' => 'Версията беше изтрита',
     'revision_cannot_delete_latest' => 'Не може да изтриете последната версия.',
 
     // Copy view
