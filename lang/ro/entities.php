@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Salvează capitolul',
     'chapters_move' => 'Mută capitolul',
     'chapters_move_named' => 'Mutați capitolul :chapterName',
-    'chapter_move_success' => 'Capitol mutat la :bookName',
     'chapters_copy' => 'Copiază capitolul',
     'chapters_copy_success' => 'Capitolul a fost copiat',
     'chapters_permissions' => 'Permisiuni capitol',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Pagina nu este într-un capitol',
     'pages_move' => 'Mută pagina',
-    'pages_move_success' => 'Pagina mutată la ":parentName"',
     'pages_copy' => 'Copiază pagina',
     'pages_copy_desination' => 'Destinație copiere',
     'pages_copy_success' => 'Pagină copiată cu succes',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Ești sigur că vrei să ștergi această revizuire?',
     'revision_restore_confirm' => 'Ești sigur că vei să restaurezi această revizuire? Conținutul paginii curente va fi înlocuit.',
-    'revision_delete_success' => 'Revizuire ștearsă',
     'revision_cannot_delete_latest' => 'Nu se poate șterge ultima revizuire.',
 
     // Copy view
