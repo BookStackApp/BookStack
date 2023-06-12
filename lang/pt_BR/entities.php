@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Salvar Capítulo',
     'chapters_move' => 'Mover Capítulo',
     'chapters_move_named' => 'Mover Capítulo :chapterName',
-    'chapter_move_success' => 'Capítulo movido para :bookName',
     'chapters_copy' => 'Copiar Capítulo',
     'chapters_copy_success' => 'Página copiada com sucesso',
     'chapters_permissions' => 'Permissões do Capítulo',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sincronizar pré-visualização',
     'pages_not_in_chapter' => 'Página não está dentro de um capítulo',
     'pages_move' => 'Mover Página',
-    'pages_move_success' => 'Pagina movida para ":parentName"',
     'pages_copy' => 'Copiar Página',
     'pages_copy_desination' => 'Destino da Cópia',
     'pages_copy_success' => 'Página copiada com sucesso',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Tem certeza de que deseja excluir esta revisão?',
     'revision_restore_confirm' => 'Tem certeza que deseja restaurar esta revisão? O conteúdo atual da página será substituído.',
-    'revision_delete_success' => 'Revisão excluída',
     'revision_cannot_delete_latest' => 'Não é possível excluir a revisão mais recente.',
 
     // Copy view
