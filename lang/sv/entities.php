@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Spara kapitel',
     'chapters_move' => 'Flytta kapitel',
     'chapters_move_named' => 'Flytta kapitel :chapterName',
-    'chapter_move_success' => 'Kapitel flyttat till :bookName',
     'chapters_copy' => 'Kopiera kapitel',
     'chapters_copy_success' => 'Kapitel har kopierats',
     'chapters_permissions' => 'Rättigheter för kapitel',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Sidan ligger inte i något kapitel',
     'pages_move' => 'Flytta sida',
-    'pages_move_success' => 'Sidan har flyttats till ":parentName"',
     'pages_copy' => 'Kopiera sida',
     'pages_copy_desination' => 'Destination',
     'pages_copy_success' => 'Sidan har kopierats',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Är du säker på att du vill radera den här versionen?',
     'revision_restore_confirm' => 'Är du säker på att du vill använda denna revision? Det nuvarande innehållet kommer att ersättas.',
-    'revision_delete_success' => 'Revisionen raderad',
     'revision_cannot_delete_latest' => 'Det går inte att ta bort den senaste versionen.',
 
     // Copy view
