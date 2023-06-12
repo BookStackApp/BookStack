@@ -180,7 +180,6 @@ return [
     'chapters_save' => '儲存章節',
     'chapters_move' => '移動章節',
     'chapters_move_named' => '移動章節 :chapterName',
-    'chapter_move_success' => '章節移動到 :bookName',
     'chapters_copy' => 'Copy Chapter',
     'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => '章節權限',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => '頁面不在章節中',
     'pages_move' => '移動頁面',
-    'pages_move_success' => '頁面已移動到「:parentName」',
     'pages_copy' => '複製頁面',
     'pages_copy_desination' => '複製的目的地',
     'pages_copy_success' => '頁面已成功複製',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => '您確定要刪除此修訂版本嗎？',
     'revision_restore_confirm' => '您確定要還原此修訂版本嗎？ 目前頁面內容將被替換。',
-    'revision_delete_success' => '修訂版本已刪除',
     'revision_cannot_delete_latest' => '無法刪除最新修訂版本。',
 
     // Copy view
