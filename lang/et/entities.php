@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Salvesta peatükk',
     'chapters_move' => 'Liiguta peatükk',
     'chapters_move_named' => 'Liiguta peatükk :chapterName',
-    'chapter_move_success' => 'Peatükk liigutatud raamatusse :bookName',
     'chapters_copy' => 'Kopeeri peatükk',
     'chapters_copy_success' => 'Peatükk on kopeeritud',
     'chapters_permissions' => 'Peatüki õigused',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sünkrooni eelvaate kerimine',
     'pages_not_in_chapter' => 'Leht ei kuulu peatüki alla',
     'pages_move' => 'Liiguta leht',
-    'pages_move_success' => 'Leht liigutatud ":parentName" alla',
     'pages_copy' => 'Kopeeri leht',
     'pages_copy_desination' => 'Kopeerimise sihtpunkt',
     'pages_copy_success' => 'Leht on kopeeritud',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Kas oled kindel, et soovid selle redaktsiooni kustutada?',
     'revision_restore_confirm' => 'Kas oled kindel, et soovid selle redaktsiooni taastada? Lehe praegune sisu asendatakse.',
-    'revision_delete_success' => 'Redaktsioon kustutatud',
     'revision_cannot_delete_latest' => 'Kõige viimast redaktsiooni ei saa kustutada.',
 
     // Copy view
