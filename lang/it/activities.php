@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'ha ripristinato la pagina',
     'page_restore_notification'   => 'Pagina ripristinata con successo',
     'page_move'                   => 'ha mosso la pagina',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'ha creato il capitolo',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'ha eliminato il capitolo',
     'chapter_delete_notification' => 'Capitolo eliminato con successo',
     'chapter_move'                => 'ha spostato il capitolo',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'ha creato il libro',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'Iibreria eliminata',
     'bookshelf_delete_notification'    => 'Libreria eliminata con successo',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name" è stato aggiunto ai tuoi preferiti',
     'favourite_remove_notification' => '":name" è stato rimosso dai tuoi preferiti',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Metodo multi-fattore impostato con successo',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Metodo multi-fattore rimosso con successo',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'webhook creato',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook eliminato con successo',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Utente aggiornato con successo',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Utente rimosso con successo',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'Ruolo creato con successo',
+    'role_update' => 'updated role',
     'role_update_notification' => 'Ruolo aggiornato con successo',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'Ruolo eliminato con successo',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'ha commentato in',
