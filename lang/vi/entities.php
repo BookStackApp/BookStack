@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Lưu Chương',
     'chapters_move' => 'Di chuyển Chương',
     'chapters_move_named' => 'Di chuyển Chương :chapterName',
-    'chapter_move_success' => 'Chương được di chuyển đến :bookName',
     'chapters_copy' => 'Copy Chapter',
     'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Quyền hạn Chương',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Trang không nằm trong một chương',
     'pages_move' => 'Di chuyển Trang',
-    'pages_move_success' => 'Trang đã chuyển tới ":parentName"',
     'pages_copy' => 'Sao chép Trang',
     'pages_copy_desination' => 'Sao lưu đến',
     'pages_copy_success' => 'Trang được sao chép thành công',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Bạn có chắc bạn muốn xóa phiên bản này?',
     'revision_restore_confirm' => 'Bạn có chắc bạn muốn khôi phục phiên bản này? Nội dung trang hiện tại sẽ được thay thế.',
-    'revision_delete_success' => 'Phiên bản đã được xóa',
     'revision_cannot_delete_latest' => 'Không thể xóa phiên bản mới nhất.',
 
     // Copy view
