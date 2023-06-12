@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Bölümü Kaydet',
     'chapters_move' => 'Bölümü Taşı',
     'chapters_move_named' => ':chapterName Bölümünü Taşı',
-    'chapter_move_success' => 'Bölüm, :bookName kitabına taşındı',
     'chapters_copy' => 'Bölümü kopyala',
     'chapters_copy_success' => 'Bölüm başarıyla kopyalandı',
     'chapters_permissions' => 'Bölüm İzinleri',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Bu sayfa, bir bölüme ait değil',
     'pages_move' => 'Sayfayı Taşı',
-    'pages_move_success' => 'Sayfa şuraya taşındı: :parentName',
     'pages_copy' => 'Sayfayı Kopyala',
     'pages_copy_desination' => 'Kopyalama Hedefi',
     'pages_copy_success' => 'Sayfa başarıyla kopyalandı',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Bu revizyonu silmek istediğinize emin misiniz?',
     'revision_restore_confirm' => 'Bu revizyonu yeniden yüklemek istediğinize emin misiniz? Sayfanın şu anki içeriği değiştirilecektir.',
-    'revision_delete_success' => 'Revizyon silindi',
     'revision_cannot_delete_latest' => 'Son revizyonu silemezsiniz.',
 
     // Copy view
