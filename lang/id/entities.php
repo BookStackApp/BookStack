@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Simpan Bab',
     'chapters_move' => 'Pindahkan Bab',
     'chapters_move_named' => 'Pindahkan Bab :chapterName',
-    'chapter_move_success' => 'Bab dipindahkan ke :bookName',
     'chapters_copy' => 'Copy Chapter',
     'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Izin Bab',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Halaman tidak dalam satu bab',
     'pages_move' => 'Pindahkan Halaman',
-    'pages_move_success' => 'Halaman dipindahkan ke ":parentName"',
     'pages_copy' => 'Salin Halaman',
     'pages_copy_desination' => 'Salin Tujuan',
     'pages_copy_success' => 'Halaman berhasil disalin',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Anda yakin ingin menghapus revisi ini?',
     'revision_restore_confirm' => 'Apakah Anda yakin ingin memulihkan revisi ini? Konten halaman saat ini akan diganti.',
-    'revision_delete_success' => 'Revisi dihapus',
     'revision_cannot_delete_latest' => 'Tidak dapat menghapus revisi terakhir.',
 
     // Copy view
