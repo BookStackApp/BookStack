@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Fejezet mentése',
     'chapters_move' => 'Fejezet áthelyezése',
     'chapters_move_named' => ':chapterName fejezet áthelyezése',
-    'chapter_move_success' => 'Fejezet áthelyezve :bookName könyvbe',
     'chapters_copy' => 'Fejezet másolása',
     'chapters_copy_success' => 'Fejezet sikeresen lemásolva',
     'chapters_permissions' => 'Fejezet jogosultságok',
@@ -240,7 +239,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Az oldal nincs fejezetben',
     'pages_move' => 'Oldal áthelyezése',
-    'pages_move_success' => 'Oldal áthelyezve ide: ":parentName"',
     'pages_copy' => 'Oldal másolása',
     'pages_copy_desination' => 'Másolás célja',
     'pages_copy_success' => 'Oldal sikeresen lemásolva',
@@ -375,7 +373,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Biztosan törölhető ez a változat?',
     'revision_restore_confirm' => 'Biztosan visszaállítható ez a változat? A oldal jelenlegi tartalma le lesz cserélve.',
-    'revision_delete_success' => 'Változat törölve',
     'revision_cannot_delete_latest' => 'A legutolsó változat nem törölhető.',
 
     // Copy view
