@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Juodraščio išsaugoti nepavyko. Įsitikinkite, jog turite interneto ryšį prieš išsaugant šį paslapį.',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Negalima ištrinti šio puslapio, kol jis yra nustatytas kaip pagrindinis puslapis',
 
     // Entities
