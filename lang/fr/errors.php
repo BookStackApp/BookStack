@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Le brouillon n\'a pas pu être enregistré. Vérifiez votre connexion internet',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Impossible de supprimer une page définie comme page d\'accueil',
 
     // Entities
