@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Lưu bản nháp thất bại. Đảm bảo rằng bạn có kết nối đến internet trước khi lưu trang này',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Không thể xóa trang khi nó đang được đặt là trang chủ',
 
     // Entities
