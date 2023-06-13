@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => '正在編輯頁面',
     'pages_edit_draft_save_at' => '草稿儲存於 ',
     'pages_edit_delete_draft' => '刪除草稿',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => '放棄草稿',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => '在最近:minCount分鐘',
         'message' => ':start :time。注意不要覆寫其他人的更新！',
     ],
-    'pages_draft_discarded' => '草稿已丟棄。編輯器已更新到目前頁面內容',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => '特定頁面',
     'pages_is_template' => '頁面模板',
 
