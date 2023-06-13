@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegúrese de que tiene conexión a Internet antes de guardar este borrador',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'No se puede borrar una página mientras esté configurada como página de inicio',
 
     // Entities
