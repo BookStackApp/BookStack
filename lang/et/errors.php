@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Mustandi salvestamine ebaõnnestus. Kontrolli oma internetiühendust',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Ei saa kustutada lehte, mis on määratud avaleheks',
 
     // Entities
