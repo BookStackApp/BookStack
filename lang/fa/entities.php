@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'در حال ویرایش صفحه',
     'pages_edit_draft_save_at' => 'پیش نویس ذخیره شده در',
     'pages_edit_delete_draft' => 'حذف پیش نویس',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'دور انداختن پیش نویس',
     'pages_edit_switch_to_markdown' => 'به ویرایشگر Markdown بروید',
     'pages_edit_switch_to_markdown_clean' => '(مطالب تمیز)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'در آخرین دقیقه :minCount',
         'message' => ':start :time. مراقب باشید به روز رسانی های یکدیگر را بازنویسی نکنید!',
     ],
-    'pages_draft_discarded' => 'پیش نویس حذف شد، ویرایشگر با محتوای صفحه فعلی به روز شده است',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'صفحه خاص',
     'pages_is_template' => 'الگوی صفحه',
 
