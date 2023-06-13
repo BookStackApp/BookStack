@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Nu s-a reușit salvarea ciornei. Asigură-te că ai conexiune la internet înainte de a salva această pagină',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Nu se poate șterge o pagină în timp ce este setată ca primă pagină',
 
     // Entities
