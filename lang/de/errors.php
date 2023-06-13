@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Fehler beim Speichern des Entwurfs. Stellen Sie sicher, dass Sie mit dem Internet verbunden sind, bevor Sie den Entwurf dieser Seite speichern.',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Eine als Startseite gesetzte Seite kann nicht gelöscht werden',
 
     // Entities
