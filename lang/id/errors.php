@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Gagal menyimpan draf. Pastikan Anda memiliki koneksi internet sebelum menyimpan halaman ini',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Tidak dapat menghapus sebuah halaman saat diatur sebagai sebuah halaman beranda',
 
     // Entities
