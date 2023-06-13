@@ -3,7 +3,7 @@
  * Callouts
  */
 .callout {
-  border-inline-start: 3px solid #BBB;
+  border-left: 3px solid #BBB;
   background-color: #EEE;
   padding: $-s $-s $-s $-xl;
   display: block;
@@ -24,30 +24,30 @@
     opacity: 0.8;
   }
   &.success {
-    border-left-color: $positive;
-    @include lightDark(background-color, lighten($positive, 68%), darken($positive, 22%));
-    @include lightDark(color, darken($positive, 16%), lighten($positive, 5%));
+    @include lightDark(border-left-color, $positive, $positive-dark);
+    @include lightDark(background-color, lighten($positive, 68%), darken($positive-dark, 36%));
+    @include lightDark(color, darken($positive, 16%), $positive-dark);
   }
   &.success:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMzNzZjMzkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bS0yIDE1bC01LTUgMS40MS0xLjQxTDEwIDE0LjE3bDcuNTktNy41OUwxOSA4bC05IDl6Ii8+PC9zdmc+");
   }
   &.danger {
-    border-left-color: $negative;
-    @include lightDark(background-color, lighten($negative, 56%), darken($negative, 30%));
-    @include lightDark(color, darken($negative, 20%), lighten($negative, 5%));
+    @include lightDark(border-left-color, $negative, $negative-dark);
+    @include lightDark(background-color, lighten($negative, 56%), darken($negative-dark, 55%));
+    @include lightDark(color, darken($negative, 20%), $negative-dark);
   }
   &.danger:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNiOTE4MTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0xNS43MyAzSDguMjdMMyA4LjI3djcuNDZMOC4yNyAyMWg3LjQ2TDIxIDE1LjczVjguMjdMMTUuNzMgM3pNMTIgMTcuM2MtLjcyIDAtMS4zLS41OC0xLjMtMS4zIDAtLjcyLjU4LTEuMyAxLjMtMS4zLjcyIDAgMS4zLjU4IDEuMyAxLjMgMCAuNzItLjU4IDEuMy0xLjMgMS4zem0xLTQuM2gtMlY3aDJ2NnoiLz4gICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==");
   }
   &.info {
-    border-left-color: $info;
-    @include lightDark(color, darken($info, 20%), lighten($info, 10%));
-    @include lightDark(background-color, lighten($info, 50%), darken($info, 35%));
+    @include lightDark(border-left-color, $info, $info-dark);
+    @include lightDark(color, darken($info, 20%), $info-dark);
+    @include lightDark(background-color, lighten($info, 50%), darken($info-dark, 34%));
   }
   &.warning {
-    border-left-color: $warning;
-    @include lightDark(background-color, lighten($warning, 50%), darken($warning, 36%));
-    @include lightDark(color, darken($warning, 20%), $warning);
+    @include lightDark(border-left-color, $warning, $warning-dark);
+    @include lightDark(background-color, lighten($warning, 50%), darken($warning-dark, 50%));
+    @include lightDark(color, darken($warning, 20%), $warning-dark);
   }
   &.warning:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNiNjUzMWMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEgMjFoMjJMMTIgMiAxIDIxem0xMi0zaC0ydi0yaDJ2MnptMC00aC0ydi00aDJ2NHoiLz48L3N2Zz4=");

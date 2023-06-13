@@ -50,7 +50,7 @@
     fill: currentColor;
   }
   &.success {
-    background: $positive;
+    background: var(--color-positive);
     color: #FFF;
   }
   &:focus {
