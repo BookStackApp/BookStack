@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'עריכת דף',
     'pages_edit_draft_save_at' => 'טיוטה נשמרה ב ',
     'pages_edit_delete_draft' => 'מחק טיוטה',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'התעלם מהטיוטה',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'ב :minCount דקות האחרונות',
         'message' => ':start :time. יש לשים לב לא לדרוס שינויים של משתמשים אחרים!',
     ],
-    'pages_draft_discarded' => 'הסקיצה נמחקה, העורך עודכן עם תוכן הדף העכשוי',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'דף ספציפי',
     'pages_is_template' => 'תבנית דף',
 
