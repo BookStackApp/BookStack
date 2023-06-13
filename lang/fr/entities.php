@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Modification de la page',
     'pages_edit_draft_save_at' => 'Brouillon enregistré le ',
     'pages_edit_delete_draft' => 'Supprimer le brouillon',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Jeter le brouillon',
     'pages_edit_switch_to_markdown' => 'Basculer vers l\'éditeur Markdown',
     'pages_edit_switch_to_markdown_clean' => '(Contenu nettoyé)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'dans les :minCount dernières minutes',
         'message' => ':start :time. Attention à ne pas écraser les mises à jour de quelqu\'un d\'autre !',
     ],
-    'pages_draft_discarded' => 'Brouillon écarté, la page est dans sa version actuelle.',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Page spécifique',
     'pages_is_template' => 'Modèle de page',
 
