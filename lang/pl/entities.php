@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Edytowanie strony',
     'pages_edit_draft_save_at' => 'Wersja robocza zapisana ',
     'pages_edit_delete_draft' => 'Usuń wersje roboczą',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Porzuć wersje roboczą',
     'pages_edit_switch_to_markdown' => 'Przełącz na edytor Markdown',
     'pages_edit_switch_to_markdown_clean' => '(Czysta zawartość)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'w ciągu ostatnich :minCount minut',
         'message' => ':start :time. Pamiętaj by nie nadpisywać czyichś zmian!',
     ],
-    'pages_draft_discarded' => 'Wersja robocza odrzucona, edytor został uzupełniony najnowszą wersją strony',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Określona strona',
     'pages_is_template' => 'Szablon strony',
 
