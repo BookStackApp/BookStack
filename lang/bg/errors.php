@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Неуспешно запазване на черновата. Увери се, че имаш свързаност с интернет преди да запазиш страницата',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Не мога да изтрия страницата, докато е настроена като начална',
 
     // Entities
