@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Αποτυχία αποθήκευσης προσχέδιου. Βεβαιωθείτε ότι έχετε σύνδεση στο διαδίκτυο πριν την αποθήκευση αυτής της σελίδας',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Δεν μπορεί να διαγραφεί μια σελίδα ενώ έχει οριστεί ως αρχική σελίδα',
 
     // Entities
