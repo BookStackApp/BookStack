@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Zapis wersji roboczej nie powiódł się. Upewnij się, że posiadasz połączenie z internetem.',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Nie można usunąć strony, jeśli jest ona ustawiona jako strona główna',
 
     // Entities
