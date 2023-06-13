@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Đang chỉnh sửa Trang',
     'pages_edit_draft_save_at' => 'Bản nháp đã lưu lúc ',
     'pages_edit_delete_draft' => 'Xóa Bản nháp',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Hủy bỏ Bản nháp',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'trong :minCount phút cuối',
         'message' => ':start :time. Hãy cẩn thận đừng ghi đè vào các bản cập nhật của nhau!',
     ],
-    'pages_draft_discarded' => 'Bản nháp đã được loại bỏ, Người sửa đã cập nhật trang với nội dung hiện tại',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Trang cụ thể',
     'pages_is_template' => 'Biểu mẫu trang',
 
