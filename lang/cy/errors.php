@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Wedi methu cadw\'r drafft. Sicrhewch fod gennych gysylltiad rhyngrwyd cyn cadw\'r dudalen hon',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Methu dileu tudalen tra ei bod wedi\'i gosod fel hafan',
 
     // Entities
