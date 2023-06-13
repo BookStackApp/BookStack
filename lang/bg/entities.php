@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Редактиране на страница',
     'pages_edit_draft_save_at' => 'Черновата е запазена в ',
     'pages_edit_delete_draft' => 'Изтрий чернова',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Отхвърляне на черновата',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'в последните :minCount минути',
         'message' => ':start :time. Внимавайте да не попречите на актуализацията на другия!',
     ],
-    'pages_draft_discarded' => 'Черновата беше отхърлена, Редактора беше обновен с актуалното съдържание на страницата',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Определена страница',
     'pages_is_template' => 'Шаблон на страницата',
 
