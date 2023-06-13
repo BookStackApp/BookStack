@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'الصفحة قيد التعديل',
     'pages_edit_draft_save_at' => 'تم خفظ المسودة في ',
     'pages_edit_delete_draft' => 'حذف المسودة',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'التخلص من المسودة',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'في آخر :minCount دقيقة/دقائق',
         'message' => 'وقت البدء: احرص على عدم الكتابة فوق تحديثات بعضنا البعض!',
     ],
-    'pages_draft_discarded' => 'تم التخلص من المسودة وتحديث المحرر بمحتوى الصفحة الحالي',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'صفحة محددة',
     'pages_is_template' => 'قالب الصفحة',
 
