@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Concept bewerken',
     'pages_edit_draft_save_at' => 'Concept opgeslagen op ',
     'pages_edit_delete_draft' => 'Concept verwijderen',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Concept verwijderen',
     'pages_edit_switch_to_markdown' => 'Verander naar Markdown Bewerker',
     'pages_edit_switch_to_markdown_clean' => '(Schoongemaakte Inhoud)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'in de laatste :minCount minuten',
         'message' => ':start :time. Let op om elkaars updates niet te overschrijven!',
     ],
-    'pages_draft_discarded' => 'Concept verwijderd, de editor is bijgewerkt met de huidige paginainhoud',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Specifieke pagina',
     'pages_is_template' => 'Paginasjabloon',
 
