@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Osnutka ni bilo mogoče shraniti. Pred shranjevanjem te strani se prepričajte, da imate internetno povezavo',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Ne morem izbrisati strani, ki je nastavljena kot domača stran',
 
     // Entities
