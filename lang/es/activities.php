@@ -106,9 +106,9 @@ return [
     'role_delete_notification' => 'Rol eliminado correctamente',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'papelera de reciclaje vaciada',
+    'recycle_bin_restore' => 'restaurado de la papelera de reciclaje',
+    'recycle_bin_destroy' => 'eliminado de la papelera de reciclaje',
 
     // Other
     'commented_on'                => 'comentada el',
