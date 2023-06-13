@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Editing Page',
     'pages_edit_draft_save_at' => 'Draft saved at ',
     'pages_edit_delete_draft' => 'Delete Draft',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Discard Draft',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'in the last :minCount minutes',
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
-    'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Specific Page',
     'pages_is_template' => 'Page Template',
 
