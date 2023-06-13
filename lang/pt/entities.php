@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'A Editar Página',
     'pages_edit_draft_save_at' => 'Rascunho guardado em ',
     'pages_edit_delete_draft' => 'Eliminar Rascunho',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Descartar Rascunho',
     'pages_edit_switch_to_markdown' => 'Alternar para o editor Markdown',
     'pages_edit_switch_to_markdown_clean' => '(Conteúdo Limitado)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'nos últimos :minCount minutos',
         'message' => ':start :time. Tenha cuidado para não sobrescrever atualizações de outras pessoas!',
     ],
-    'pages_draft_discarded' => 'Rascunho descartado. O editor foi atualizado com o conteúdo atual da página',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Página Específica',
     'pages_is_template' => 'Modelo de Página',
 
