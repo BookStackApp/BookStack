@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Modifica Pagina',
     'pages_edit_draft_save_at' => 'Bozza salvata alle ',
     'pages_edit_delete_draft' => 'Elimina Bozza',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Scarta Bozza',
     'pages_edit_switch_to_markdown' => 'Passa all\'editor Markdown',
     'pages_edit_switch_to_markdown_clean' => '(Contenuto Chiaro)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'negli ultimi :minCount minuti',
         'message' => ':start :time. Assicurati di non sovrascrivere le modifiche degli altri!',
     ],
-    'pages_draft_discarded' => 'Bozza scartata, l\'editor è stato aggiornato con il contenuto corrente della pagina',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Pagina Specifica',
     'pages_is_template' => 'Template Pagina',
 
