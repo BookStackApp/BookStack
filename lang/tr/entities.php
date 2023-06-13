@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Sayfa Düzenleniyor',
     'pages_edit_draft_save_at' => 'Taslak kaydedildi ',
     'pages_edit_delete_draft' => 'Taslağı Sil',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Taslağı Yoksay',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'son :minCount dakikada',
         'message' => ':start :time. Düzenlemelerinizin çakışmamasına dikkat edin!',
     ],
-    'pages_draft_discarded' => 'Taslak yok sayıldı. Düzenleyici, mevcut sayfa içeriği kullanılarak güncellendi',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Spesifik Sayfa',
     'pages_is_template' => 'Sayfa Şablonu',
 
