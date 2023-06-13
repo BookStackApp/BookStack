@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Neizdevās saglabāt uzmetumu. Pārliecinieties, ka jūsu interneta pieslēgums ir aktīvs pirms saglabājiet šo lapu',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Nav iespējams izdzēst lapu kamēr tā ir uzstādīta kā sākumlapa',
 
     // Entities
