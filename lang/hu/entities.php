@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Oldal szerkesztése',
     'pages_edit_draft_save_at' => 'Vázlat elmentve:',
     'pages_edit_delete_draft' => 'Vázlat törlése',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Vázlat elvetése',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'az utolsó :minCount percben',
         'message' => ':start :time. Ügyeljen arra, hogy ne írjuk felül egymás frissítéseit!',
     ],
-    'pages_draft_discarded' => 'Vázlat elvetve, a szerkesztő frissítve lesz az oldal aktuális tartalmával',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Egy bizonyos oldal',
     'pages_is_template' => 'Oldalsablon',
 
