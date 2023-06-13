@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => '초안 문서를 유실했습니다. 인터넷 연결 상태를 확인하세요.',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => '처음 페이지는 지울 수 없습니다.',
 
     // Entities
