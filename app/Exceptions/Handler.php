@@ -9,7 +9,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -79,10 +79,10 @@ class Handler extends ExceptionHandler
      */
     protected function renderApiException(Throwable $e): JsonResponse
     {
-        $code = $e->getCode() === 0 ? 500 : $e->getCode();
+        $code = 500;
         $headers = [];
 
-        if ($e instanceof HttpException) {
+        if ($e instanceof HttpExceptionInterface) {
             $code = $e->getStatusCode();
             $headers = $e->getHeaders();
         }
