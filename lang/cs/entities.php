@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Úpravy stránky',
     'pages_edit_draft_save_at' => 'Koncept uložen v ',
     'pages_edit_delete_draft' => 'Odstranit koncept',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Zahodit koncept',
     'pages_edit_switch_to_markdown' => 'Přepnout na Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Vytvořený obsah)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'v posledních minutách (:minCount min.)',
         'message' => ':start :time. Dávejte pozor abyste nepřepsali změny ostatním!',
     ],
-    'pages_draft_discarded' => 'Koncept zahozen. Editor nyní obsahuje aktuální verzi stránky.',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Konkrétní stránka',
     'pages_is_template' => 'Šablona stránky',
 
