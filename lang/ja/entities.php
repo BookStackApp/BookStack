@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'ページを編集中',
     'pages_edit_draft_save_at' => '下書きを保存済み: ',
     'pages_edit_delete_draft' => '下書きを削除',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => '下書きを破棄',
     'pages_edit_switch_to_markdown' => 'Markdownエディタに切り替え',
     'pages_edit_switch_to_markdown_clean' => '(クリーンなコンテンツ)',
@@ -285,7 +286,8 @@ return [
         'time_b' => ':minCount分前に保存されました',
         'message' => ':start :time. 他のユーザによる更新を上書きしないよう注意してください。',
     ],
-    'pages_draft_discarded' => '下書きが破棄されました。エディタは現在の内容へ復元されています。',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => '特定のページ',
     'pages_is_template' => 'ページテンプレート',
 
