@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => '下書きの保存に失敗しました。インターネットへ接続してください。',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'ホームページに設定されているページは削除できません',
 
     // Entities
