@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => '無法儲存草稿。請確保您在儲存此頁面前已連線至網際網路',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => '無法刪除被設定為首頁的頁面',
 
     // Entities
