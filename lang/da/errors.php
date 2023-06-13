@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Kunne ikke gemme kladde. Tjek at du har internetforbindelse før du gemmer siden',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Kan ikke slette en side der er sat som forside',
 
     // Entities
