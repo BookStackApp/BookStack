@@ -46,13 +46,13 @@
     }
   }
   &.pos {
-    color: $positive;
+    color: var(--color-positive);
   }
   &.neg {
-    color: $negative;
+    color: var(--color-negative);
   }
   &.warning {
-    color: $warning;
+    color: var(--color-warning);
   }
   &.showing {
     transform: translateX(0);
@@ -334,10 +334,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   line-height: 1.2;
 }
 .dropzone-file-item-status[data-status="success"] {
-  color: $positive;
+  color: var(--color-positive);
 }
 .dropzone-file-item-status[data-status="error"] {
-  color: $negative;
+  color: var(--color-negative);
 }
 .dropzone-file-item-status[data-status] + .dropzone-file-item-label {
   display: none;
@@ -921,10 +921,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: inline-block;
 }
 .status-indicator-active {
-  background-color: $positive;
+  background-color: var(--color-positive);
 }
 .status-indicator-inactive {
-  background-color: $negative;
+  background-color: var(--color-negative);
 }
 
 .shortcut-container {
