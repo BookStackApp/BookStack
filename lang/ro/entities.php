@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Editare pagină',
     'pages_edit_draft_save_at' => 'Ciornă salvată la ',
     'pages_edit_delete_draft' => 'Șterge ciorna',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Renunță la ciornă',
     'pages_edit_switch_to_markdown' => 'Comută la editorul Markdown',
     'pages_edit_switch_to_markdown_clean' => '(Curăță conținut)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'în ultimele :minCount minute',
         'message' => ':start :time. Aveți grijă să nu vă suprascrieți reciproc actualizările!',
     ],
-    'pages_draft_discarded' => 'Schiță eliminată, editorul a fost actualizat cu conținutul paginii curente',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Pagina specifică',
     'pages_is_template' => 'Şablon pagină',
 
