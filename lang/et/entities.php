@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Lehe muutmine',
     'pages_edit_draft_save_at' => 'Mustand salvestatud ',
     'pages_edit_delete_draft' => 'Kustuta mustand',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Loobu mustandist',
     'pages_edit_switch_to_markdown' => 'Kasuta Markdown redaktorit',
     'pages_edit_switch_to_markdown_clean' => '(Puhas sisu)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'viimase :minCount minuti jooksul',
         'message' => ':start :time. Ärge teineteise muudatusi üle kirjutage!',
     ],
-    'pages_draft_discarded' => 'Mustand ära visatud, redaktorisse laeti lehe värske sisu',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Spetsiifiline leht',
     'pages_is_template' => 'Lehe mall',
 
