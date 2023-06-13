@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Taslak kaydetme başarısız oldu. Bu sayfayı kaydetmeden önce internet bağlantınız olduğundan emin olun',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Bu sayfa, "Ana Sayfa" olarak ayarlandığı için silinemez',
 
     // Entities
