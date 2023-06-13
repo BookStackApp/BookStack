@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Snimanje skice nije uspjelo. Provjerite da ste povezani na internet prije snimanja ove stranice',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Stranicu nije moguće izbrisati dok se koristi kao početna stranica',
 
     // Entities
