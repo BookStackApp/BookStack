@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Impossibile salvare la bozza. Controlla di essere connesso ad internet prima di salvare questa pagina',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Impossibile eliminare una pagina quando è impostata come homepage',
 
     // Entities
