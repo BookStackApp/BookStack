@@ -22,18 +22,18 @@
  * Status text colors
  */
 .text-pos, .text-pos:hover, .text-pos-hover:hover {
-  color: $positive !important;
-  fill: $positive !important;
+  color: var(--color-positive) !important;
+  fill: var(--color-positive) !important;
 }
 
 .text-warn, .text-warn:hover, .text-warn-hover:hover {
-  color: $warning !important;
-  fill: $warning !important;
+  color: var(--color-warning) !important;
+  fill: var(--color-warning) !important;
 }
 
 .text-neg, .text-neg:hover, .text-neg-hover:hover  {
-  color: $negative !important;
-  fill: $negative !important;
+  color: var(--color-negative) !important;
+  fill: var(--color-negative) !important;
 }
 
 /*
