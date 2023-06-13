@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => '문서 수정',
     'pages_edit_draft_save_at' => '보관함: ',
     'pages_edit_delete_draft' => '초안 삭제',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => '폐기',
     'pages_edit_switch_to_markdown' => '마크다운 편집기로 전환',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => '(:minCount분 전)',
         'message' => ':start :time. 다른 사용자의 수정본을 덮어쓰지 않도록 주의하세요.',
     ],
-    'pages_draft_discarded' => '초안 문서를 지웠습니다. 에디터에 현재 판본이 나타납니다.',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => '특정한 문서',
     'pages_is_template' => '템플릿',
 
