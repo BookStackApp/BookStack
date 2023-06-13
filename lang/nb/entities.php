@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Redigerer side',
     'pages_edit_draft_save_at' => 'Sist lagret ',
     'pages_edit_delete_draft' => 'Slett utkast',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Tilbakestill endring',
     'pages_edit_switch_to_markdown' => 'Bytt til Markdown tekstredigering',
     'pages_edit_switch_to_markdown_clean' => '(Renset innhold)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'i løpet av de siste :minCount minuttene',
         'message' => ':start :time. Prøv å ikke overskriv hverandres endringer!',
     ],
-    'pages_draft_discarded' => 'Forkastet, viser nå siste endringer fra siden slik den er lagret.',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Bestemt side',
     'pages_is_template' => 'Sidemal',
 
