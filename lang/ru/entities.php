@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Редактирование страницы',
     'pages_edit_draft_save_at' => 'Черновик сохранён в ',
     'pages_edit_delete_draft' => 'Удалить черновик',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Отменить черновик',
     'pages_edit_switch_to_markdown' => 'Переключиться на Markdown',
     'pages_edit_switch_to_markdown_clean' => 'Только Markdown (с возможными потерями форматирования)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'за последние :minCount минут',
         'message' => ':start :time. Будьте осторожны, чтобы не перезаписывать друг друга!',
     ],
-    'pages_draft_discarded' => 'Черновик сброшен, редактор обновлен текущим содержимым страницы',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Конкретная страница',
     'pages_is_template' => 'Шаблон страницы',
 
