@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Редагування сторінки',
     'pages_edit_draft_save_at' => 'Чернетка збережена о ',
     'pages_edit_delete_draft' => 'Видалити чернетку',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Відхилити чернетку',
     'pages_edit_switch_to_markdown' => 'Змінити редактор на Markdown',
     'pages_edit_switch_to_markdown_clean' => '(Очистити вміст)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'за останні :minCount хвилин',
         'message' => ':start :time. Будьте обережні, щоб не перезаписати оновлення інших!',
     ],
-    'pages_draft_discarded' => 'Чернетка відхилена, редактор оновлено з поточним вмістом сторінки',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Конкретна сторінка',
     'pages_is_template' => 'Шаблон сторінки',
 
