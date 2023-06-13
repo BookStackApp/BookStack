@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Redaguojamas puslapis',
     'pages_edit_draft_save_at' => 'Juodraštis išsaugotas',
     'pages_edit_delete_draft' => 'Ištrinti juodraštį',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Išmesti juodraštį',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'paskutinėmis :minCount minutėmis',
         'message' => ':start :time. Pasistenkite neperrašyti vienas kito atnaujinimų!',
     ],
-    'pages_draft_discarded' => 'Juodraštis atmestas, redaguotojas atnaujintas dabartinis puslapio turinys',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Specifinis puslapis',
     'pages_is_template' => 'Puslapio šablonas',
 
