@@ -58,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'پیش نویس ذخیره نشد. قبل از ذخیره این صفحه مطمئن شوید که به اینترنت متصل هستید',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'وقتی صفحه ای به عنوان صفحه اصلی تنظیم شده است، نمی توان آن را حذف کرد',
 
     // Entities
