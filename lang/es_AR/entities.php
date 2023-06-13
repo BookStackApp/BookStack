@@ -213,6 +213,7 @@ return [
     'pages_editing_page' => 'Editando página',
     'pages_edit_draft_save_at' => 'Borrador guardado el ',
     'pages_edit_delete_draft' => 'Borrar borrador',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Descartar borrador',
     'pages_edit_switch_to_markdown' => 'Cambiar a Editor Markdown',
     'pages_edit_switch_to_markdown_clean' => '(Limpiar Contenido)',
@@ -285,7 +286,8 @@ return [
         'time_b' => 'en los últimos :minCount minutos',
         'message' => ':start :time. Ten cuidado de no sobreescribir los cambios del otro usuario',
     ],
-    'pages_draft_discarded' => 'Borrador descartado, el editor ha sido actualizado con el contenido de la página actual',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Página Específica',
     'pages_is_template' => 'Plantilla de Página',
 
