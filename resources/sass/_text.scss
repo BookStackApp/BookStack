@@ -211,7 +211,8 @@ pre {
 blockquote {
   display: block;
   position: relative;
-  border-left: 4px solid var(--color-primary);
+  border-left: 4px solid transparent;
+  border-left-color: var(--color-primary);
   @include lightDark(background-color, #f8f8f8, #333);
   padding: $-s $-m $-s $-xl;
   overflow: auto;
