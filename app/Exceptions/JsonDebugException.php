@@ -4,8 +4,9 @@ namespace BookStack\Exceptions;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Support\Responsable;
 
-class JsonDebugException extends Exception
+class JsonDebugException extends Exception implements Responsable
 {
     protected array $data;
 
@@ -21,8 +22,10 @@ class JsonDebugException extends Exception
     /**
      * Convert this exception into a response.
      * We add a manual data conversion to UTF8 to ensure any binary data is presentable as a JSON string.
+     *
+     * {@inheritDoc}
      */
-    public function render(): JsonResponse
+    public function toResponse($request): JsonResponse
     {
         $cleaned = mb_convert_encoding($this->data, 'UTF-8');
 
