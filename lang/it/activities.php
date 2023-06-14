@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'ha ripristinato la pagina',
     'page_restore_notification'   => 'Pagina ripristinata con successo',
     'page_move'                   => 'ha mosso la pagina',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Pagina spostata con successo',
 
     // Chapters
     'chapter_create'              => 'ha creato il capitolo',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'ha eliminato il capitolo',
     'chapter_delete_notification' => 'Capitolo eliminato con successo',
     'chapter_move'                => 'ha spostato il capitolo',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Capitolo spostato con successo',
 
     // Books
     'book_create'                 => 'ha creato il libro',
@@ -50,26 +50,26 @@ return [
     'bookshelf_delete_notification'    => 'Libreria eliminata con successo',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'revisione ripristinata',
+    'revision_delete' => 'revisione eliminata',
+    'revision_delete_notification' => 'Revisione eliminata con successo',
 
     // Favourites
     'favourite_add_notification' => '":name" è stato aggiunto ai tuoi preferiti',
     'favourite_remove_notification' => '":name" è stato rimosso dai tuoi preferiti',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'connesso',
+    'auth_register' => 'registrato come nuovo utente',
+    'auth_password_reset_request' => 'richiesta di reimpostazione della password utente',
+    'auth_password_reset_update' => 'reimposta password utente',
+    'mfa_setup_method' => 'metodo MFA configurato',
     'mfa_setup_method_notification' => 'Metodo multi-fattore impostato con successo',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'metodo MFA rimosso',
     'mfa_remove_method_notification' => 'Metodo multi-fattore rimosso con successo',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => 'impostazioni aggiornate',
     'settings_update_notification' => 'Settings successfully updated',
     'maintenance_action_run' => 'ran maintenance action',
 
