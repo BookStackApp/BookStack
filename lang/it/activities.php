@@ -70,8 +70,8 @@ return [
 
     // Settings
     'settings_update' => 'impostazioni aggiornate',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update_notification' => 'Impostazioni aggiornate con successo',
+    'maintenance_action_run' => 'eseguita azione di manutenzione',
 
     // Webhooks
     'webhook_create' => 'webhook creato',
@@ -82,33 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook eliminato con successo',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'utente creato',
+    'user_create_notification' => 'Utente creato con successo',
+    'user_update' => 'utente aggiornato',
     'user_update_notification' => 'Utente aggiornato con successo',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'utente eliminato',
     'user_delete_notification' => 'Utente rimosso con successo',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'token api creato',
+    'api_token_create_notification' => 'Token API creato con successo',
+    'api_token_update' => 'token api aggiornato',
+    'api_token_update_notification' => 'Token API aggiornato correttamente',
+    'api_token_delete' => 'token api eliminato',
+    'api_token_delete_notification' => 'Token API eliminato con successo',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'creato ruolo',
     'role_create_notification' => 'Ruolo creato con successo',
-    'role_update' => 'updated role',
+    'role_update' => 'aggiornato ruolo',
     'role_update_notification' => 'Ruolo aggiornato con successo',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'eliminato ruolo',
     'role_delete_notification' => 'Ruolo eliminato con successo',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'cestino svuotato',
+    'recycle_bin_restore' => 'ripristinato dal cestino',
+    'recycle_bin_destroy' => 'rimosso dal cestino',
 
     // Other
     'commented_on'                => 'ha commentato in',
