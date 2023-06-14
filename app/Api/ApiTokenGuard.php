@@ -26,13 +26,6 @@ class ApiTokenGuard implements Guard
     protected $loginService;
 
     /**
-     * The last auth exception thrown in this request.
-     *
-     * @var ApiAuthException
-     */
-    protected $lastAuthException;
-
-    /**
      * ApiTokenGuard constructor.
      */
     public function __construct(Request $request, LoginService $loginService)
@@ -43,6 +36,10 @@ class ApiTokenGuard implements Guard
 
     /**
      * {@inheritdoc}
+     *
+     * @throws ApiAuthException
+     *
+     * @return Authenticatable
      */
     public function user()
     {
@@ -52,17 +49,10 @@ class ApiTokenGuard implements Guard
             return $this->user;
         }
 
-        $user = null;
+        // Attempt to get an authorized user, will throw error on failure
+        $this->user = $this->getAuthorisedUserFromRequest();
 
-        try {
-            $user = $this->getAuthorisedUserFromRequest();
-        } catch (ApiAuthException $exception) {
-            $this->lastAuthException = $exception;
-        }
-
-        $this->user = $user;
-
-        return $user;
+        return $this->user;
     }
 
     /**
@@ -74,15 +64,8 @@ class ApiTokenGuard implements Guard
      */
     public function authenticate()
     {
-        if (!is_null($user = $this->user())) {
-            return $user;
-        }
-
-        if ($this->lastAuthException) {
-            throw $this->lastAuthException;
-        }
-
-        throw new ApiAuthException('Unauthorized');
+        // Will always return a User or throw an ApiAuthException
+        return $this->user();
     }
 
     /**
