@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'a restabilit pagina',
     'page_restore_notification'   => 'Pagina a fost restaurată cu succes',
     'page_move'                   => 'a mutat pagina',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Pagină mutată cu succes',
 
     // Chapters
     'chapter_create'              => 'a creat capitolul',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'a șters capitolul',
     'chapter_delete_notification' => 'Capitolul a fost șters cu succes',
     'chapter_move'                => 'a mutat capitolul',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Capitolul a fost mutat cu succes',
 
     // Books
     'book_create'                 => 'a creat cartea',
@@ -50,28 +50,28 @@ return [
     'bookshelf_delete_notification'    => 'Raftul a fost șters cu succes',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'versiune restabilită',
+    'revision_delete' => 'revizie ștearsă',
+    'revision_delete_notification' => 'Revizuirea a fost ștearsă',
 
     // Favourites
     'favourite_add_notification' => '":name" a fost adăugat la favorite',
     'favourite_remove_notification' => '":name" a fost eliminat din favorite',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'autentificat',
+    'auth_register' => 'înregistrat ca utilizator nou',
+    'auth_password_reset_request' => 'solicită utilizatorului resetarea parolei',
+    'auth_password_reset_update' => 'resetează parola utilizatorului',
+    'mfa_setup_method' => 'metoda MFA configurată',
     'mfa_setup_method_notification' => 'Metoda multi-factor a fost configurată cu succes',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'metoda MFA eliminată',
     'mfa_remove_method_notification' => 'Metoda multi-factor a fost configurată cu succes',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'setări actualizate',
+    'settings_update_notification' => 'Setările au fost actualizate',
+    'maintenance_action_run' => 'rulează acțiunea de întreținere',
 
     // Webhooks
     'webhook_create' => 'a creat webhook',
@@ -82,33 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook șters cu succes',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'utilizator creat',
+    'user_create_notification' => 'Utilizator creat cu succes',
+    'user_update' => 'utilizator actualizat',
     'user_update_notification' => 'Utilizator actualizat cu succes',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'utilizator șters',
     'user_delete_notification' => 'Utilizator eliminat cu succes',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'token api creat',
+    'api_token_create_notification' => 'Token API creat cu succes',
+    'api_token_update' => 'token api actualizat',
+    'api_token_update_notification' => 'Token API actualizat cu succes',
+    'api_token_delete' => 'token api șters',
+    'api_token_delete_notification' => 'Token API șters cu succes',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'rol creat',
+    'role_create_notification' => 'Rol creat cu succes',
+    'role_update' => 'rol actualizat',
+    'role_update_notification' => 'Rol actualizat cu succes',
+    'role_delete' => 'rol șters',
+    'role_delete_notification' => 'Rol şters cu succes',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'golește cos de gunoi',
+    'recycle_bin_restore' => 'restaurat din coșul de gunoi',
+    'recycle_bin_destroy' => 'eliminat din coșul de gunoi',
 
     // Other
     'commented_on'                => 'a comentat la',
