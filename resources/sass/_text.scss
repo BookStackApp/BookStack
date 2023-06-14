@@ -3,10 +3,10 @@
  */
 
 body, button, input, select, label, textarea {
-  font-family: $text;
+  font-family: var(--font-body);
 }
-.Codemirror, pre, #markdown-editor-input, .text-mono, .code-base {
-  font-family: $mono;
+pre, #markdown-editor-input, .text-mono, .code-base {
+  font-family: var(--font-code);
 }
 
 /*
@@ -42,6 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   position: relative;
   display: block;
+  font-family: var(--font-heading);
   @include lightDark(color, #222, #BBB);
   .subheader {
     font-size: 0.5em;
@@ -226,7 +227,7 @@ blockquote {
 }
 
 .text-mono {
-  font-family: $mono;
+  font-family: var(--font-code);
 }
 
 .text-uppercase {
