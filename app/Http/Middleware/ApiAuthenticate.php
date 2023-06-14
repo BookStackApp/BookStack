@@ -3,7 +3,6 @@
 namespace BookStack\Http\Middleware;
 
 use BookStack\Exceptions\ApiAuthException;
-use BookStack\Exceptions\UnauthorizedException;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -11,15 +10,13 @@ class ApiAuthenticate
 {
     /**
      * Handle an incoming request.
+     *
+     * @throws ApiAuthException
      */
     public function handle(Request $request, Closure $next)
     {
         // Validate the token and it's users API access
-        try {
-            $this->ensureAuthorizedBySessionOrToken();
-        } catch (UnauthorizedException $exception) {
-            return $this->unauthorisedResponse($exception->getMessage(), $exception->getCode());
-        }
+        $this->ensureAuthorizedBySessionOrToken();
 
         return $next($request);
     }
@@ -28,7 +25,7 @@ class ApiAuthenticate
      * Ensure the current user can access authenticated API routes, either via existing session
      * authentication or via API Token authentication.
      *
-     * @throws UnauthorizedException
+     * @throws ApiAuthException
      */
     protected function ensureAuthorizedBySessionOrToken(): void
     {
@@ -57,18 +54,5 @@ class ApiAuthenticate
         $hasApiPermission = user()->can('access-api');
 
         return $hasApiPermission && hasAppAccess();
-    }
-
-    /**
-     * Provide a standard API unauthorised response.
-     */
-    protected function unauthorisedResponse(string $message, int $code)
-    {
-        return response()->json([
-            'error' => [
-                'code'    => $code,
-                'message' => $message,
-            ],
-        ], $code);
     }
 }
