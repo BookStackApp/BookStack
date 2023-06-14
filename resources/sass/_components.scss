@@ -574,7 +574,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   cursor: pointer;
   width: 100%;
   text-align: left;
-  font-family: $mono;
+  font-family: var(--font-code);
   font-size: 0.7rem;
   padding-left: 24px + $-xs;
   &:hover, &.active {

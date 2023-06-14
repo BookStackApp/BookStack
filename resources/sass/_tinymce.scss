@@ -110,7 +110,7 @@ body.page-content.mce-content-body  {
   border-left: 3px solid currentColor !important;
 }
 .tox-menu .tox-collection__item[title^="<"] > div > div {
-  font-family: $mono !important;
+  font-family: var(--font-code) !important;
   border: 1px solid #DDD !important;
   background-color: #EEE !important;
   padding: 4px 6px !important;

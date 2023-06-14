@@ -27,11 +27,11 @@ $-xxs: 3px;
 $spacing: (('none', 0), ('xxs', $-xxs), ('xs', $-xs), ('s', $-s), ('m', $-m), ('l', $-l), ('xl', $-xl), ('xxl', $-xxl), ('auto', auto));
 
 // Fonts
-$text: -apple-system, BlinkMacSystemFont,
+$font-body: -apple-system, BlinkMacSystemFont,
 "Segoe UI", "Oxygen", "Ubuntu", "Roboto", "Cantarell",
 "Fira Sans", "Droid Sans", "Helvetica Neue",
 sans-serif;
-$mono: "Lucida Console", "DejaVu Sans Mono", "Ubuntu Mono", Monaco, monospace;
+$font-mono: "Lucida Console", "DejaVu Sans Mono", "Ubuntu Mono", Monaco, monospace;
 $fs-m: 14px;
 $fs-s: 12px;
 
@@ -45,7 +45,25 @@ $negative-dark: #e85c5b;
 $info-dark: #0288D1;
 $warning-dark: #de8a5a;
 
+// Text colours
+$text-dark: #444;
+
+// Shadows
+$bs-light: 0 0 4px 1px #CCC;
+$bs-dark: 0 0 4px 1px rgba(0, 0, 0, 0.5);
+$bs-med: 0 1px 3px 1px rgba(76, 76, 76, 0.26);
+$bs-large: 0 1px 6px 1px rgba(22, 22, 22, 0.2);
+$bs-card: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
+$bs-card-dark: 0 1px 6px -1px rgba(0, 0, 0, 0.5);
+$bs-hover: 0 2px 2px 1px rgba(0,0,0,.13);
+
+// CSS root variables
 :root {
+  --font-body: #{$font-body};
+  --font-heading: #{$font-body};
+  --font-code: #{$font-mono};
+
+
   --color-primary: #206ea7;
   --color-primary-light: rgba(32,110,167,0.15);
   --color-link: #206ea7;
@@ -75,15 +93,3 @@ $warning-dark: #de8a5a;
 :root:not(.dark-mode) {
   color-scheme: only light;
 }
-
-// Text colours
-$text-dark: #444;
-
-// Shadows
-$bs-light: 0 0 4px 1px #CCC;
-$bs-dark: 0 0 4px 1px rgba(0, 0, 0, 0.5);
-$bs-med: 0 1px 3px 1px rgba(76, 76, 76, 0.26);
-$bs-large: 0 1px 6px 1px rgba(22, 22, 22, 0.2);
-$bs-card: 0 1px 6px -1px rgba(0, 0, 0, 0.1);
-$bs-card-dark: 0 1px 6px -1px rgba(0, 0, 0, 0.5);
-$bs-hover: 0 2px 2px 1px rgba(0,0,0,.13);
