@@ -9,13 +9,8 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 class NotifyException extends Exception implements Responsable, HttpExceptionInterface
 {
     public $message;
-    public $redirectLocation;
-    protected $status;
-
-    /**
-     * @var array<mixed>
-     */
-    protected array $headers = [];
+    public string $redirectLocation;
+    protected int $status;
 
     public function __construct(string $message, string $redirectLocation = '/', int $status = 500)
     {
@@ -23,18 +18,11 @@ class NotifyException extends Exception implements Responsable, HttpExceptionInt
         $this->redirectLocation = $redirectLocation;
         $this->status = $status;
 
-        if ($status >= 300 && $status < 400) {
-            // add redirect header only when a matching HTTP status is given
-            $this->headers = ['location' => $redirectLocation];
-        }
-
         parent::__construct();
     }
 
     /**
      * Get the desired HTTP status code for this exception.
-     *
-     * {@inheritdoc}
      */
     public function getStatusCode(): int
     {
@@ -43,20 +31,10 @@ class NotifyException extends Exception implements Responsable, HttpExceptionInt
 
     /**
      * Get the desired HTTP headers for this exception.
-     *
-     * {@inheritdoc}
      */
     public function getHeaders(): array
     {
-        return $this->headers;
-    }
-
-    /**
-     * @param array<mixed> $headers
-     */
-    public function setHeaders(array $headers): void
-    {
-        $this->headers = $headers;
+        return [];
     }
 
     /**

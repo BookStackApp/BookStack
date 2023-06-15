@@ -8,20 +8,8 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class PrettyException extends Exception implements Responsable, HttpExceptionInterface
 {
-    /**
-     * @var ?string
-     */
-    protected $subtitle = null;
-
-    /**
-     * @var ?string
-     */
-    protected $details = null;
-
-    /**
-     * @var array
-     */
-    protected $headers = [];
+    protected ?string $subtitle = null;
+    protected ?string $details = null;
 
     /**
      * Render a response for when this exception occurs.
@@ -63,19 +51,9 @@ class PrettyException extends Exception implements Responsable, HttpExceptionInt
 
     /**
      * Get the desired HTTP headers for this exception.
-     * @return array<mixed>
      */
     public function getHeaders(): array
     {
-        return $this->headers;
-    }
-
-    /**
-     * Set the desired HTTP headers for this exception.
-     * @param array<mixed> $headers
-     */
-    public function setHeaders(array $headers): void
-    {
-        $this->headers = $headers;
+        return [];
     }
 }
