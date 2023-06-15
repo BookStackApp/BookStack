@@ -2,9 +2,11 @@
 
 namespace Tests\Auth;
 
+use BookStack\Access\EmailConfirmationService;
 use BookStack\Notifications\ConfirmEmail;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -61,6 +63,61 @@ class RegistrationTest extends TestCase
         $this->get('/login')->assertSee('Your email has been confirmed! You should now be able to login using this email address.');
         $this->assertDatabaseMissing('email_confirmations', ['token' => $emailConfirmation->token]);
         $this->assertDatabaseHas('users', ['name' => $dbUser->name, 'email' => $dbUser->email, 'email_confirmed' => true]);
+    }
+
+    public function test_confirm_accept_with_non_existing_token(): void
+    {
+        // Prepare settings
+        $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
+
+        // Attempt to confirm a non-existing token
+        $resp = $this->post('/register/confirm/accept', ['token' => 'this_is_not_a_valid_token!']);
+        $resp->assertRedirect('/register');
+        $resp->assertSessionHas('error', trans('errors.email_confirmation_invalid'));
+    }
+
+    public function test_confirm_accept_with_expired_token(): void
+    {
+        // Prepare settings and user
+        $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
+        $user = User::factory()->make();
+        $user->email_confirmed = false;
+        $user->save();
+
+        // Create a token, move it back in the past
+        $service = app(EmailConfirmationService::class);
+        $service->sendConfirmation($user);
+        $tokenEntry = DB::table('email_confirmations')->where('user_id', '=', $user->id)->first();
+        DB::table('email_confirmations')->update(['created_at' => Carbon::now()->subDays(14)->subHour(1)]);
+
+        // Send request and validate
+        $resp = $this->post('/register/confirm/accept', ['token' => $tokenEntry->token]);
+        $resp->assertRedirect('/register/confirm');
+        $resp->assertSessionHas('error', trans('errors.email_confirmation_expired'));
+    }
+
+    public function test_confirm_when_already_confirmed(): void
+    {
+        // Prepare settings and user
+        $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
+        $user = User::factory()->make();
+        $user->email_confirmed = false;
+        $user->save();
+
+        // Create a token
+        $service = app(EmailConfirmationService::class);
+        $service->sendConfirmation($user);
+        $tokenEntry = DB::table('email_confirmations')->where('user_id', '=', $user->id)->first();
+
+        // Send request and validate
+        $resp = $this->post('/register/confirm/accept', ['token' => $tokenEntry->token]);
+        $resp->assertRedirect('/login');
+        $resp->assertSessionHas('success', trans('auth.email_confirm_success'));
+
+        // Now try to confirm again
+        $resp = $this->post('/register/confirm/accept', ['token' => $tokenEntry->token]);
+        $resp->assertRedirect('/register');
+        $resp->assertSessionHas('error', trans('errors.email_confirmation_invalid'));
     }
 
     public function test_restricted_registration()
