@@ -9,7 +9,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -82,7 +82,7 @@ class Handler extends ExceptionHandler
         $code = 500;
         $headers = [];
 
-        if ($e instanceof HttpException) {
+        if ($e instanceof HttpExceptionInterface) {
             $code = $e->getStatusCode();
             $headers = $e->getHeaders();
         }
@@ -101,10 +101,6 @@ class Handler extends ExceptionHandler
             $responseData['error']['message'] = 'The given data was invalid.';
             $responseData['error']['validation'] = $e->errors();
             $code = $e->status;
-        }
-
-        if (method_exists($e, 'getStatus')) {
-            $code = $e->getStatus();
         }
 
         $responseData['error']['code'] = $code;
