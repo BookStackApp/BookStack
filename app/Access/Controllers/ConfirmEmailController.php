@@ -5,6 +5,7 @@ namespace BookStack\Access\Controllers;
 use BookStack\Access\EmailConfirmationService;
 use BookStack\Access\LoginService;
 use BookStack\Exceptions\ConfirmationEmailException;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\UserTokenExpiredException;
 use BookStack\Exceptions\UserTokenNotFoundException;
 use BookStack\Http\Controller;
@@ -66,15 +67,12 @@ class ConfirmEmailController extends Controller
         try {
             $userId = $this->emailConfirmationService->checkTokenAndGetUserId($token);
         } catch (UserTokenNotFoundException $exception) {
-            $this->showErrorNotification(trans('errors.email_confirmation_invalid'));
-
-            return redirect('/register');
+            throw new NotifyException(trans('errors.email_confirmation_invalid'), '/register', 500, $exception);
         } catch (UserTokenExpiredException $exception) {
             $user = $this->userRepo->getById($exception->userId);
             $this->emailConfirmationService->sendConfirmation($user);
-            $this->showErrorNotification(trans('errors.email_confirmation_expired'));
 
-            return redirect('/register/confirm');
+            throw new NotifyException(trans('errors.email_confirmation_expired'), '/register/confirm', 500, $exception);
         }
 
         $user = $this->userRepo->getById($userId);
@@ -100,9 +98,7 @@ class ConfirmEmailController extends Controller
         try {
             $this->emailConfirmationService->sendConfirmation($user);
         } catch (Exception $e) {
-            $this->showErrorNotification(trans('auth.email_confirm_send_error'));
-
-            return redirect('/register/confirm');
+            throw new NotifyException(trans('auth.email_confirm_send_error'), '/register/confirm', 500, $e);
         }
 
         $this->showSuccessNotification(trans('auth.email_confirm_resent'));

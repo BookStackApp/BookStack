@@ -3,9 +3,13 @@
 namespace BookStack\Exceptions;
 
 use Exception;
+use Throwable;
 use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
+/**
+ * Exception that is supposed flash the error notification to the user after redirecting to a specified page.
+ */
 class NotifyException extends Exception implements Responsable, HttpExceptionInterface
 {
     public $message;
@@ -17,9 +21,8 @@ class NotifyException extends Exception implements Responsable, HttpExceptionInt
      */
     protected array $headers = [];
 
-    public function __construct(string $message, string $redirectLocation = '/', int $status = 500)
+    public function __construct(string $message, string $redirectLocation = '/', int $status = 500, ?Throwable $previous = null)
     {
-        $this->message = $message;
         $this->redirectLocation = $redirectLocation;
         $this->status = $status;
 
@@ -28,7 +31,7 @@ class NotifyException extends Exception implements Responsable, HttpExceptionInt
             $this->headers = ['location' => $redirectLocation];
         }
 
-        parent::__construct();
+        parent::__construct($message, $status, $previous);
     }
 
     /**

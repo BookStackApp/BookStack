@@ -6,6 +6,9 @@ use Exception;
 use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
+/**
+ * Exception that is supposed to show a pretty message to the user on the current page.
+ */
 class PrettyException extends Exception implements Responsable, HttpExceptionInterface
 {
     /**

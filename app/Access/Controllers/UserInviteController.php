@@ -3,14 +3,13 @@
 namespace BookStack\Access\Controllers;
 
 use BookStack\Access\UserInviteService;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\UserTokenExpiredException;
 use BookStack\Exceptions\UserTokenNotFoundException;
 use BookStack\Http\Controller;
 use BookStack\Users\UserRepo;
 use Exception;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -82,20 +81,14 @@ class UserInviteController extends Controller
      *
      * @throws Exception
      *
-     * @return RedirectResponse|Redirector
+     * @return never
      */
     protected function handleTokenException(Exception $exception)
     {
-        if ($exception instanceof UserTokenNotFoundException) {
-            return redirect('/');
-        }
-
-        if ($exception instanceof UserTokenExpiredException) {
-            $this->showErrorNotification(trans('errors.invite_token_expired'));
-
-            return redirect('/password/email');
-        }
-
-        throw $exception;
+        throw match (get_class($exception)) {
+            UserTokenNotFoundException::class => new NotifyException('', '/', 500, $exception),
+            UserTokenExpiredException::class => new NotifyException(trans('errors.invite_token_expired'), '/password/email', 500, $exception),
+            default => $exception,
+        };
     }
 }
