@@ -19,13 +19,10 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    protected UserRepo $userRepo;
-    protected ImageRepo $imageRepo;
-
-    public function __construct(UserRepo $userRepo, ImageRepo $imageRepo)
-    {
-        $this->userRepo = $userRepo;
-        $this->imageRepo = $imageRepo;
+    public function __construct(
+        protected UserRepo $userRepo,
+        protected ImageRepo $imageRepo
+    ) {
     }
 
     /**

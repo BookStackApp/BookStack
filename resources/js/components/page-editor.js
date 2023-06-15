@@ -19,18 +19,23 @@ export class PageEditor extends Component {
         this.saveDraftButton = this.$refs.saveDraft;
         this.discardDraftButton = this.$refs.discardDraft;
         this.discardDraftWrap = this.$refs.discardDraftWrap;
+        this.deleteDraftButton = this.$refs.deleteDraft;
+        this.deleteDraftWrap = this.$refs.deleteDraftWrap;
         this.draftDisplay = this.$refs.draftDisplay;
         this.draftDisplayIcon = this.$refs.draftDisplayIcon;
         this.changelogInput = this.$refs.changelogInput;
         this.changelogDisplay = this.$refs.changelogDisplay;
         this.changeEditorButtons = this.$manyRefs.changeEditor || [];
         this.switchDialogContainer = this.$refs.switchDialog;
+        this.deleteDraftDialogContainer = this.$refs.deleteDraftDialog;
 
         // Translations
         this.draftText = this.$opts.draftText;
         this.autosaveFailText = this.$opts.autosaveFailText;
         this.editingPageText = this.$opts.editingPageText;
         this.draftDiscardedText = this.$opts.draftDiscardedText;
+        this.draftDeleteText = this.$opts.draftDeleteText;
+        this.draftDeleteFailText = this.$opts.draftDeleteFailText;
         this.setChangelogText = this.$opts.setChangelogText;
 
         // State data
@@ -75,6 +80,7 @@ export class PageEditor extends Component {
         // Draft Controls
         onSelect(this.saveDraftButton, this.saveDraft.bind(this));
         onSelect(this.discardDraftButton, this.discardDraft.bind(this));
+        onSelect(this.deleteDraftButton, this.deleteDraft.bind(this));
 
         // Change editor controls
         onSelect(this.changeEditorButtons, this.changeEditor.bind(this));
@@ -119,7 +125,8 @@ export class PageEditor extends Component {
         try {
             const resp = await window.$http.put(`/ajax/page/${this.pageId}/save-draft`, data);
             if (!this.isNewDraft) {
-                this.toggleDiscardDraftVisibility(true);
+                this.discardDraftWrap.toggleAttribute('hidden', false);
+                this.deleteDraftWrap.toggleAttribute('hidden', false);
             }
 
             this.draftNotifyChange(`${resp.data.message} ${Dates.utcTimeStampToLocalTime(resp.data.timestamp)}`);
@@ -154,7 +161,7 @@ export class PageEditor extends Component {
         }, 2000);
     }
 
-    async discardDraft() {
+    async discardDraft(notify = true) {
         let response;
         try {
             response = await window.$http.get(`/ajax/page/${this.pageId}`);
@@ -168,7 +175,7 @@ export class PageEditor extends Component {
         }
 
         this.draftDisplay.innerText = this.editingPageText;
-        this.toggleDiscardDraftVisibility(false);
+        this.discardDraftWrap.toggleAttribute('hidden', true);
         window.$events.emit('editor::replace', {
             html: response.data.html,
             markdown: response.data.markdown,
@@ -178,7 +185,30 @@ export class PageEditor extends Component {
         window.setTimeout(() => {
             this.startAutoSave();
         }, 1000);
-        window.$events.emit('success', this.draftDiscardedText);
+
+        if (notify) {
+            window.$events.success(this.draftDiscardedText);
+        }
+    }
+
+    async deleteDraft() {
+        /** @var {ConfirmDialog} * */
+        const dialog = window.$components.firstOnElement(this.deleteDraftDialogContainer, 'confirm-dialog');
+        const confirmed = await dialog.show();
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+            const discard = this.discardDraft(false);
+            const draftDelete = window.$http.delete(`/page-revisions/user-drafts/${this.pageId}`);
+            await Promise.all([discard, draftDelete]);
+            window.$events.success(this.draftDeleteText);
+            this.deleteDraftWrap.toggleAttribute('hidden', true);
+        } catch (err) {
+            console.error(err);
+            window.$events.error(this.draftDeleteFailText);
+        }
     }
 
     updateChangelogDisplay() {
@@ -189,10 +219,6 @@ export class PageEditor extends Component {
             summary = `${summary.slice(0, 16)}...`;
         }
         this.changelogDisplay.innerText = summary;
-    }
-
-    toggleDiscardDraftVisibility(show) {
-        this.discardDraftWrap.classList.toggle('hidden', !show);
     }
 
     async changeEditor(event) {

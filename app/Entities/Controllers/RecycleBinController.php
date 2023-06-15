@@ -11,7 +11,7 @@ use BookStack\Http\Controller;
 
 class RecycleBinController extends Controller
 {
-    protected $recycleBinBaseUrl = '/settings/recycle-bin';
+    protected string $recycleBinBaseUrl = '/settings/recycle-bin';
 
     /**
      * On each request to a method of this controller check permissions

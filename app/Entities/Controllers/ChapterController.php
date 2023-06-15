@@ -191,8 +191,6 @@ class ChapterController extends Controller
             return redirect()->back();
         }
 
-        $this->showSuccessNotification(trans('entities.chapter_move_success', ['bookName' => $newBook->name]));
-
         return redirect($chapter->getUrl());
     }
 

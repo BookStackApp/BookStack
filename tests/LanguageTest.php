@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use BookStack\Activity\ActivityType;
+
 class LanguageTest extends TestCase
 {
     protected array $langs;
@@ -89,5 +91,13 @@ class LanguageTest extends TestCase
         $loginReq = $this->get('/login', ['Accept-Language' => 'zz']);
         $loginReq->assertOk();
         $loginReq->assertSee('Log In');
+    }
+
+    public function test_all_activity_types_have_activity_text()
+    {
+        foreach (ActivityType::all() as $activityType) {
+            $langKey = 'activities.' . $activityType;
+            $this->assertNotEquals($langKey, trans($langKey, [], 'en'));
+        }
     }
 }
