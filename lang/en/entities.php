@@ -18,6 +18,7 @@ return [
     'create_now' => 'Create one now',
     'revisions' => 'Revisions',
     'meta_revision' => 'Revision #:revisionCount',
+    'meta_id_name' => ':resourceName #:id',
     'meta_created' => 'Created :timeLength',
     'meta_created_name' => 'Created :timeLength by :user',
     'meta_updated' => 'Updated :timeLength',

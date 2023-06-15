@@ -1,4 +1,19 @@
 <div class="entity-meta">
+    @if ($entity->id)
+        <div class="entity-meta-item">
+            @icon('info')
+            <div>
+                @php
+                    $classPathArray = explode('\\',get_class($entity));
+                    $objectType = "entities.".strtolower(end($classPathArray));
+                @endphp
+                {!! trans('entities.meta_id_name', [
+                    'id' => '<span title="'. $entity->id . '">' . $entity->id. '</span>',
+                    'resourceName' => '<span title="'. trans($objectType) . '">' . trans($objectType) . '</span>',
+                ]) !!}
+            </div>
+        </div>
+    @endif
     @if($entity->isA('revision'))
         <div class="entity-meta-item">
             @icon('history')
