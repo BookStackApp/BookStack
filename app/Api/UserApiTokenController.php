@@ -58,7 +58,6 @@ class UserApiTokenController extends Controller
         $token->save();
 
         session()->flash('api-token-secret:' . $token->id, $secret);
-        $this->showSuccessNotification(trans('settings.user_api_token_create_success'));
         $this->logActivity(ActivityType::API_TOKEN_CREATE, $token);
 
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
@@ -96,7 +95,6 @@ class UserApiTokenController extends Controller
             'expires_at' => $request->get('expires_at') ?: ApiToken::defaultExpiry(),
         ])->save();
 
-        $this->showSuccessNotification(trans('settings.user_api_token_update_success'));
         $this->logActivity(ActivityType::API_TOKEN_UPDATE, $token);
 
         return redirect($user->getEditUrl('/api-tokens/' . $token->id));
@@ -123,7 +121,6 @@ class UserApiTokenController extends Controller
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
         $token->delete();
 
-        $this->showSuccessNotification(trans('settings.user_api_token_delete_success'));
         $this->logActivity(ActivityType::API_TOKEN_DELETE, $token);
 
         return redirect($user->getEditUrl('#api_tokens'));

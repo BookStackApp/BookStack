@@ -13,6 +13,8 @@
      option:page-editor:autosave-fail-text="{{ trans('errors.page_draft_autosave_fail') }}"
      option:page-editor:editing-page-text="{{ trans('entities.pages_editing_page') }}"
      option:page-editor:draft-discarded-text="{{ trans('entities.pages_draft_discarded') }}"
+     option:page-editor:draft-delete-text="{{ trans('entities.pages_draft_deleted') }}"
+     option:page-editor:draft-delete-fail-text="{{ trans('errors.page_draft_delete_fail') }}"
      option:page-editor:set-changelog-text="{{ trans('entities.pages_edit_set_changelog') }}">
 
     {{--Header Toolbar--}}
@@ -47,7 +49,7 @@
             class="text-link text-button hide-over-m page-save-mobile-button">@icon('save')</button>
 
     {{--Editor Change Dialog--}}
-    @component('common.confirm-dialog', ['title' => trans('entities.pages_editor_switch_title'), 'ref' => 'page-editor@switchDialog'])
+    @component('common.confirm-dialog', ['title' => trans('entities.pages_editor_switch_title'), 'ref' => 'page-editor@switch-dialog'])
         <p>
             {{ trans('entities.pages_editor_switch_are_you_sure') }}
             <br>
@@ -59,5 +61,12 @@
             <li>{{ trans('entities.pages_editor_switch_consideration_b') }}</li>
             <li>{{ trans('entities.pages_editor_switch_consideration_c') }}</li>
         </ul>
+    @endcomponent
+
+    {{--Delete Draft Dialog--}}
+    @component('common.confirm-dialog', ['title' => trans('entities.pages_edit_delete_draft'), 'ref' => 'page-editor@delete-draft-dialog'])
+        <p>
+            {{ trans('entities.pages_edit_delete_draft_confirm') }}
+        </p>
     @endcomponent
 </div>

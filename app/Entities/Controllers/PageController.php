@@ -389,7 +389,7 @@ class PageController extends Controller
         }
 
         try {
-            $parent = $this->pageRepo->move($page, $entitySelection);
+            $this->pageRepo->move($page, $entitySelection);
         } catch (PermissionsException $exception) {
             $this->showPermissionError();
         } catch (Exception $exception) {
@@ -397,8 +397,6 @@ class PageController extends Controller
 
             return redirect()->back();
         }
-
-        $this->showSuccessNotification(trans('entities.pages_move_success', ['parentName' => $parent->name]));
 
         return redirect($page->getUrl());
     }

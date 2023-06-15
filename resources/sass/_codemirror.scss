@@ -14,6 +14,10 @@
   border-radius: 4px;
 }
 
+.cm-editor .cm-line, .cm-editor .cm-gutter {
+  font-family: var(--font-code);
+}
+
 // Manual dark-mode definition so that it applies to code blocks within the shadow
 // dom which are used within the WYSIWYG editor, as the .dark-mode on the parent
 // <html> node are not applies so instead we have the class on the parent element.
@@ -50,7 +54,7 @@
     fill: currentColor;
   }
   &.success {
-    background: $positive;
+    background: var(--color-positive);
     color: #FFF;
   }
   &:focus {

@@ -27,13 +27,22 @@
                             </a>
                         </li>
                     @endif
-                    <li refs="page-editor@discardDraftWrap" class="{{ $isDraftRevision ? '' : 'hidden' }}">
-                        <button refs="page-editor@discardDraft" type="button" class="text-neg icon-item">
+                    <li refs="page-editor@discard-draft-wrap" {{ $isDraftRevision ? '' : 'hidden' }}>
+                        <button refs="page-editor@discard-draft" type="button" class="text-warn icon-item">
                             @icon('cancel')
                             <div>{{ trans('entities.pages_edit_discard_draft') }}</div>
                         </button>
                     </li>
+                    <li refs="page-editor@delete-draft-wrap" {{ $isDraftRevision ? '' : 'hidden' }}>
+                        <button refs="page-editor@delete-draft" type="button" class="text-neg icon-item">
+                            @icon('delete')
+                            <div>{{ trans('entities.pages_edit_delete_draft') }}</div>
+                        </button>
+                    </li>
                     @if(userCan('editor-change'))
+                        <li>
+                            <hr>
+                        </li>
                         <li>
                             @if($editor === 'wysiwyg')
                                 <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-clean" refs="page-editor@changeEditor" class="icon-item">
