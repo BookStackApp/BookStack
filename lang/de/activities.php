@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'hat die Seite wiederhergestellt',
     'page_restore_notification'   => 'Seite erfolgreich wiederhergestellt',
     'page_move'                   => 'Seite verschoben',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Seite erfolgreich verschoben',
 
     // Chapters
     'chapter_create'              => 'erstellte Kapitel',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'löschte Kapitel',
     'chapter_delete_notification' => 'Kapitel erfolgreich gelöscht',
     'chapter_move'                => 'verschob Kapitel',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Kapitel erfolgreich verschoben',
 
     // Books
     'book_create'                 => 'erstellte Buch',
@@ -50,9 +50,9 @@ return [
     'bookshelf_delete_notification'    => 'Regal erfolgreich gelöscht',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'stellte Revision wieder her:',
+    'revision_delete' => 'löschte Revision',
+    'revision_delete_notification' => 'Revision erfolgreich gelöscht',
 
     // Favourites
     'favourite_add_notification' => '":name" wurde zu Ihren Favoriten hinzugefügt',
