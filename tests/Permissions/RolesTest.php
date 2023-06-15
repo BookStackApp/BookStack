@@ -301,7 +301,7 @@ class RolesTest extends TestCase
         $resp = $this->post('/settings/features', []);
         $resp->assertRedirect('/settings/features');
         $resp = $this->get('/settings/features');
-        $resp->assertSee('Settings saved');
+        $resp->assertSee('Settings successfully updated');
     }
 
     public function test_restrictions_manage_all_permission()

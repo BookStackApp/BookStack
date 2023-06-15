@@ -433,7 +433,9 @@ export class Actions {
      */
     #setText(text, selectionRange = null) {
         selectionRange = selectionRange || this.#getSelectionRange();
-        this.#dispatchChange(0, this.editor.cm.state.doc.length, text, selectionRange.from);
+        const newDoc = this.editor.cm.state.toText(text);
+        const newSelectFrom = Math.min(selectionRange.from, newDoc.length);
+        this.#dispatchChange(0, this.editor.cm.state.doc.length, text, newSelectFrom);
         this.focus();
     }
 

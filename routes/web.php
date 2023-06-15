@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', [EntityControllers\PageRevisionController::class, 'changes']);
     Route::put('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', [EntityControllers\PageRevisionController::class, 'restore']);
     Route::delete('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', [EntityControllers\PageRevisionController::class, 'destroy']);
+    Route::delete('/page-revisions/user-drafts/{pageId}', [EntityControllers\PageRevisionController::class, 'destroyUserDraft']);
 
     // Chapters
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/create-page', [EntityControllers\PageController::class, 'create']);

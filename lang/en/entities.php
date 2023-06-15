@@ -180,7 +180,6 @@ return [
     'chapters_save' => 'Save Chapter',
     'chapters_move' => 'Move Chapter',
     'chapters_move_named' => 'Move Chapter :chapterName',
-    'chapter_move_success' => 'Chapter moved to :bookName',
     'chapters_copy' => 'Copy Chapter',
     'chapters_copy_success' => 'Chapter successfully copied',
     'chapters_permissions' => 'Chapter Permissions',
@@ -214,6 +213,7 @@ return [
     'pages_editing_page' => 'Editing Page',
     'pages_edit_draft_save_at' => 'Draft saved at ',
     'pages_edit_delete_draft' => 'Delete Draft',
+    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => 'Discard Draft',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
@@ -240,7 +240,6 @@ return [
     'pages_md_sync_scroll' => 'Sync preview scroll',
     'pages_not_in_chapter' => 'Page is not in a chapter',
     'pages_move' => 'Move Page',
-    'pages_move_success' => 'Page moved to ":parentName"',
     'pages_copy' => 'Copy Page',
     'pages_copy_desination' => 'Copy Destination',
     'pages_copy_success' => 'Page successfully copied',
@@ -287,7 +286,8 @@ return [
         'time_b' => 'in the last :minCount minutes',
         'message' => ':start :time. Take care not to overwrite each other\'s updates!',
     ],
-    'pages_draft_discarded' => 'Draft discarded, The editor has been updated with the current page content',
+    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
+    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
     'pages_specific' => 'Specific Page',
     'pages_is_template' => 'Page Template',
 
@@ -375,7 +375,6 @@ return [
     // Revision
     'revision_delete_confirm' => 'Are you sure you want to delete this revision?',
     'revision_restore_confirm' => 'Are you sure you want to restore this revision? The current page contents will be replaced.',
-    'revision_delete_success' => 'Revision deleted',
     'revision_cannot_delete_latest' => 'Cannot delete the latest revision.',
 
     // Copy view

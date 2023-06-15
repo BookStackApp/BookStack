@@ -13,10 +13,10 @@
   max-width: 100%;
 
   &.neg, &.invalid {
-    border: 1px solid $negative;
+    border: 1px solid var(--color-negative);
   }
   &.pos, &.valid {
-    border: 1px solid $positive;
+    border: 1px solid var(--color-positive);
   }
   &.disabled, &[disabled] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMUlEQVQIW2NkwAGuXbv2nxGbHEhCS0uLEUMSJgHShCKJLIEiiS4Bl8QmAZbEJQGSBAC62BuJ+tt7zgAAAABJRU5ErkJggg==);

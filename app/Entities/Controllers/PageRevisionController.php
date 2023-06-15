@@ -5,6 +5,7 @@ namespace BookStack\Entities\Controllers;
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
@@ -15,11 +16,10 @@ use Ssddanbrown\HtmlDiff\Diff;
 
 class PageRevisionController extends Controller
 {
-    protected PageRepo $pageRepo;
-
-    public function __construct(PageRepo $pageRepo)
-    {
-        $this->pageRepo = $pageRepo;
+    public function __construct(
+        protected PageRepo $pageRepo,
+        protected RevisionRepo $revisionRepo,
+    ) {
     }
 
     /**
@@ -153,8 +153,18 @@ class PageRevisionController extends Controller
 
         $revision->delete();
         Activity::add(ActivityType::REVISION_DELETE, $revision);
-        $this->showSuccessNotification(trans('entities.revision_delete_success'));
 
         return redirect($page->getUrl('/revisions'));
+    }
+
+    /**
+     * Destroys existing drafts, belonging to the current user, for the given page.
+     */
+    public function destroyUserDraft(string $pageId)
+    {
+        $page = $this->pageRepo->getById($pageId);
+        $this->revisionRepo->deleteDraftsForCurrentUser($page);
+
+        return response('', 200);
     }
 }
