@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'نظر به روز شد',
     'comment_delete_confirm' => 'آیا مطمئن هستید که می خواهید این نظر را حذف کنید؟',
     'comment_in_reply_to' => 'در پاسخ به :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'آیا مطمئن هستید که می خواهید این ویرایش را حذف کنید؟',
