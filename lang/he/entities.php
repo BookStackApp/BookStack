@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'התגובה עודכנה',
     'comment_delete_confirm' => 'האם ברצונך למחוק תגובה זו?',
     'comment_in_reply_to' => 'בתגובה ל :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'האם ברצונך למחוק נוסח זה?',
