@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Komentar Telah diperbaharui',
     'comment_delete_confirm' => 'Anda yakin ingin menghapus komentar ini?',
     'comment_in_reply_to' => 'Sebagai balasan untuk :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Anda yakin ingin menghapus revisi ini?',
