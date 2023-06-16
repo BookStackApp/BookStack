@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Yorum güncellendi',
     'comment_delete_confirm' => 'Bu yorumu silmek istediğinize emin misiniz?',
     'comment_in_reply_to' => ':commentId yorumuna yanıt olarak',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Bu revizyonu silmek istediğinize emin misiniz?',
