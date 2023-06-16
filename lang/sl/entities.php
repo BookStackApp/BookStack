@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Komentar posodobljen',
     'comment_delete_confirm' => 'Ste prepričani, da želite izbrisati ta komentar?',
     'comment_in_reply_to' => 'Odgovor na :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Ali ste prepričani, da želite izbrisati to revizijo?',
