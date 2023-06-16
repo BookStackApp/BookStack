@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Comentario actualizado',
     'comment_delete_confirm' => '¿Está seguro de que quiere borrar este comentario?',
     'comment_in_reply_to' => 'En respuesta a :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => '¿Está seguro de que desea eliminar esta revisión?',
