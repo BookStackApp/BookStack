@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Bình luận đã được cập nhật',
     'comment_delete_confirm' => 'Bạn có chắc bạn muốn xóa bình luận này?',
     'comment_in_reply_to' => 'Trả lời cho :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Bạn có chắc bạn muốn xóa phiên bản này?',
