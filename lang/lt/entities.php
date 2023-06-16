@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Komentaras atnaujintas',
     'comment_delete_confirm' => 'Esate tikri, kad norite ištrinti šį komentarą?',
     'comment_in_reply_to' => 'Atsakydamas į :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Esate tikri, kad norite ištrinti šią peržiūrą?',
