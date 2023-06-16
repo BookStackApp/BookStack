@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Коментарът е обновен',
     'comment_delete_confirm' => 'Наистина ли искате да изтриете този коментар?',
     'comment_in_reply_to' => 'В отговор на :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Наистина ли искате да изтриете тази версия?',
