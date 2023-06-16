@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Komentář aktualizován',
     'comment_delete_confirm' => 'Opravdu chcete odstranit tento komentář?',
     'comment_in_reply_to' => 'Odpověď na :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Opravdu chcete odstranit tuto revizi?',
