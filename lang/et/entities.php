@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Kommentaar muudetud',
     'comment_delete_confirm' => 'Kas oled kindel, et soovid selle kommentaari kustutada?',
     'comment_in_reply_to' => 'Vastus kommentaarile :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Kas oled kindel, et soovid selle redaktsiooni kustutada?',
