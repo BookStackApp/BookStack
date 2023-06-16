@@ -365,12 +365,13 @@ return [
     'comment_new' => 'Neuer Kommentar',
     'comment_created' => ':createDiff kommentiert',
     'comment_updated' => ':updateDiff aktualisiert von :username',
-    'comment_updated_indicator' => 'Updated',
+    'comment_updated_indicator' => 'Aktualisiert',
     'comment_deleted_success' => 'Kommentar gelöscht',
     'comment_created_success' => 'Kommentar hinzugefügt',
     'comment_updated_success' => 'Kommentar aktualisiert',
     'comment_delete_confirm' => 'Möchtst du diesen Kommentar wirklich löschen?',
     'comment_in_reply_to' => 'Antwort auf :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Bist du sicher, dass du diese Revision löschen möchtest?',
