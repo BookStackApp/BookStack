@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Kommentar endret',
     'comment_delete_confirm' => 'Er du sikker på at du vil fjerne kommentaren?',
     'comment_in_reply_to' => 'Som svar til :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Vil du slette revisjonen?',
