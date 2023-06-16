@@ -70,7 +70,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => 'Einstellungen erfolgreich aktualisiert',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -83,7 +83,7 @@ return [
 
     // Users
     'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
+    'user_create_notification' => 'Benutzer erfolgreich erstellt',
     'user_update' => 'updated user',
     'user_update_notification' => 'Benutzer erfolgreich aktualisiert',
     'user_delete' => 'deleted user',
@@ -91,11 +91,11 @@ return [
 
     // API Tokens
     'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
+    'api_token_create_notification' => 'API-Token erfolgreich erstellt',
     'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_update_notification' => 'API-Token erfolgreich aktualisiert',
     'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete_notification' => 'API-Token erfolgreich gelöscht',
 
     // Roles
     'role_create' => 'created role',
