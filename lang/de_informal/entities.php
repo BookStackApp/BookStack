@@ -213,7 +213,7 @@ return [
     'pages_editing_page' => 'Seite bearbeiten',
     'pages_edit_draft_save_at' => 'Entwurf gespeichert um ',
     'pages_edit_delete_draft' => 'Entwurf löschen',
-    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
+    'pages_edit_delete_draft_confirm' => 'Bist du sicher, dass du deinen Entwurf löschen möchtest? Alle deine Änderungen seit dem letzten vollständigen Speichern gehen verloren und der Editor wird mit dem letzten Speicherzustand aktualisiert, der kein Entwurf ist.',
     'pages_edit_discard_draft' => 'Entwurf verwerfen',
     'pages_edit_switch_to_markdown' => 'Zum Markdown Editor wechseln',
     'pages_edit_switch_to_markdown_clean' => '(Sauberer Inhalt)',
@@ -286,8 +286,8 @@ return [
         'time_b' => 'in den letzten :minCount Minuten',
         'message' => ':start :time. Achte darauf, keine Änderungen von anderen Benutzern zu überschreiben!',
     ],
-    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
-    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
+    'pages_draft_discarded' => 'Entwurf verworfen! Der aktuelle Seiteninhalt wurde geladen',
+    'pages_draft_deleted' => 'Entwurf gelöscht. Der aktuelle Seiteninhalt wurde geladen',
     'pages_specific' => 'Spezifische Seite',
     'pages_is_template' => 'Seitenvorlage',
 
@@ -319,7 +319,7 @@ return [
     'attachments_explain_instant_save' => 'Änderungen werden direkt gespeichert.',
     'attachments_upload' => 'Datei hochladen',
     'attachments_link' => 'Link hinzufügen',
-    'attachments_upload_drop' => 'Alternativ können Sie eine Datei per Drag & Drop hier hochladen, um sie als Anhang hochzuladen.',
+    'attachments_upload_drop' => 'Alternativ kannst du eine Datei per Drag & Drop hier als Anhang hochladen.',
     'attachments_set_link' => 'Link setzen',
     'attachments_delete' => 'Bist du sicher, dass du diesen Anhang löschen möchtest?',
     'attachments_dropzone' => 'Ziehe Dateien hierher, um sie hochzuladen',
@@ -371,7 +371,7 @@ return [
     'comment_updated_success' => 'Kommentar aktualisiert',
     'comment_delete_confirm' => 'Möchtst du diesen Kommentar wirklich löschen?',
     'comment_in_reply_to' => 'Antwort auf :commentId',
-    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
+    'comment_editor_explain' => 'Hier sind die Kommentare, die auf dieser Seite hinterlassen wurden. Kommentare können hinzugefügt und verwaltet werden, wenn die gespeicherte Seite angezeigt wird.',
 
     // Revision
     'revision_delete_confirm' => 'Bist du sicher, dass du diese Revision löschen möchtest?',
