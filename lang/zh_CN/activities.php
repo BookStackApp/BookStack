@@ -15,7 +15,7 @@ return [
     'page_restore'                => '页面已恢复',
     'page_restore_notification'   => '页面恢复成功',
     'page_move'                   => '页面已移动',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => '页面移动成功',
 
     // Chapters
     'chapter_create'              => '章节已创建',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => '章节已删除',
     'chapter_delete_notification' => '章节删除成功',
     'chapter_move'                => '章节已移动',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => '章节移动成功',
 
     // Books
     'book_create'                 => '图书已创建',
@@ -70,7 +70,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => '设置更新成功',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -83,7 +83,7 @@ return [
 
     // Users
     'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
+    'user_create_notification' => '用户创建成功',
     'user_update' => 'updated user',
     'user_update_notification' => '用户更新成功',
     'user_delete' => 'deleted user',
