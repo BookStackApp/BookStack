@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Iruzkina gehituta',
     'comment_delete_confirm' => 'Ziur zaude iruzkin hau ezabatu nahi duzula?',
     'comment_in_reply_to' => 'In reply to :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Ziur zaude hau ezabatu nahi duzula?',
