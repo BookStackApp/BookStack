@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'تم تحديث التعليق',
     'comment_delete_confirm' => 'تأكيد حذف التعليق؟',
     'comment_in_reply_to' => 'رداً على :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف هذه المراجعة؟',
