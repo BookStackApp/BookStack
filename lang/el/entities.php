@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Το σχόλιο ενημερώθηκε',
     'comment_delete_confirm' => 'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σχόλιο;',
     'comment_in_reply_to' => 'Σε απάντηση στο :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την αναθεώρηση;',
