@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Reactie bijgewerkt',
     'comment_delete_confirm' => 'Weet je zeker dat je deze reactie wilt verwijderen?',
     'comment_in_reply_to' => 'Als antwoord op :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Weet u zeker dat u deze revisie wilt verwijderen?',
