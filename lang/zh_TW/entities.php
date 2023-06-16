@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => '評論已更新',
     'comment_delete_confirm' => '您確定要刪除這則評論？',
     'comment_in_reply_to' => '回覆 :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => '您確定要刪除此修訂版本嗎？',
