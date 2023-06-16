@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Comentariu actualizat',
     'comment_delete_confirm' => 'Ești sigur că vrei să ștergi acest comentariu?',
     'comment_in_reply_to' => 'Ca răspuns la :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Ești sigur că vrei să ștergi această revizuire?',
