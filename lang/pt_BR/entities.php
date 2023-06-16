@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Comentário editado',
     'comment_delete_confirm' => 'Você tem certeza de que deseja excluir este comentário?',
     'comment_in_reply_to' => 'Em resposta à :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Tem certeza de que deseja excluir esta revisão?',
