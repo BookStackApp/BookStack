@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Komentārs ir atjaunināts',
     'comment_delete_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo komentāru?',
     'comment_in_reply_to' => 'Atbildēt uz :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo revīziju?',
