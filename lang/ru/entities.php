@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Комментарий обновлен',
     'comment_delete_confirm' => 'Удалить этот комментарий?',
     'comment_in_reply_to' => 'В ответ на :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Удалить эту версию?',
