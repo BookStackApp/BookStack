@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => '댓글 수정함',
     'comment_delete_confirm' => '이 댓글을 지울 건가요?',
     'comment_in_reply_to' => ':commentId(을)를 향한 답글',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => '이 수정본을 지울 건가요?',
