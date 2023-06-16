@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Comentari actualitzat',
     'comment_delete_confirm' => 'Segur que voleu suprimir aquest comentari?',
     'comment_in_reply_to' => 'En resposta a :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Segur que voleu suprimir aquesta revisió?',
