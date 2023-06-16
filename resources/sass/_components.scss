@@ -676,6 +676,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   @include lightDark(background-color, #FFF, #222);
   .content {
     font-size: 0.666em;
+    padding: $-m $-s;
     p, ul, ol {
       font-size: $fs-m;
       margin: .5em 0;
@@ -700,6 +701,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .comment-box .header {
   border-bottom: 1px solid #DDD;
+  padding: $-s;
   @include lightDark(border-color, #DDD, #000);
   button {
     font-size: .8rem;
@@ -709,6 +711,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
   .text-muted {
     color: #999;
+  }
+  .meta a, .meta span {
+    white-space: nowrap;
   }
   .right-meta .text-muted {
     opacity: .8;
@@ -733,6 +738,24 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .comment-branch .comment-branch .comment-branch .comment-branch .comment-reply {
   display: block;
+}
+
+.comment-container-compact .comment-box {
+  .meta {
+    font-size: 0.8rem;
+  }
+  .header {
+    padding: $-xs;
+  }
+  .right-meta {
+    display: none;
+  }
+  .content {
+    padding: $-xs $-s;
+  }
+}
+.comment-container-compact .comment-thread-indicator {
+  width: $-m;
 }
 
 #tag-manager .drag-card {
