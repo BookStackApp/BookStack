@@ -371,6 +371,7 @@ return [
     'comment_updated_success' => 'Коментар оновлено',
     'comment_delete_confirm' => 'Ви впевнені, що хочете видалити цей коментар?',
     'comment_in_reply_to' => 'У відповідь на :commentId',
+    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
     // Revision
     'revision_delete_confirm' => 'Ви впевнені, що хочете видалити цю версію?',
