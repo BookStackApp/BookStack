@@ -213,7 +213,7 @@ return [
     'pages_editing_page' => 'Seite bearbeiten',
     'pages_edit_draft_save_at' => 'Entwurf gespeichert um ',
     'pages_edit_delete_draft' => 'Entwurf löschen',
-    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
+    'pages_edit_delete_draft_confirm' => 'Sind Sie sicher, dass Sie Ihren Entwurf löschen möchten? Alle Ihre Änderungen seit dem letzten vollständigen Speichern gehen verloren und der Editor wird mit dem letzten Speicherzustand aktualisiert, der kein Entwurf ist.',
     'pages_edit_discard_draft' => 'Entwurf verwerfen',
     'pages_edit_switch_to_markdown' => 'Zum Markdown Editor wechseln',
     'pages_edit_switch_to_markdown_clean' => '(gesäuberter Output)',
