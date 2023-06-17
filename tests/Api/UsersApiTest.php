@@ -3,7 +3,9 @@
 namespace Tests\Api;
 
 use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Activity as ActivityModel;
 use BookStack\Entities\Models\Entity;
+use BookStack\Facades\Activity;
 use BookStack\Notifications\UserInvite;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
@@ -63,6 +65,27 @@ class UsersApiTest extends TestCase
                 'profile_url' => $firstUser->getProfileUrl(),
                 'edit_url'    => $firstUser->getEditUrl(),
                 'avatar_url'  => $firstUser->getAvatar(),
+            ],
+        ]]);
+    }
+
+    public function test_index_endpoint_has_correct_created_and_last_activity_dates()
+    {
+        $user = $this->users->editor();
+        $user->created_at = now()->subYear();
+        $user->save();
+
+        $this->actingAs($user);
+        Activity::add(ActivityType::AUTH_LOGIN, 'test login activity');
+        /** @var ActivityModel $activity */
+        $activity = ActivityModel::query()->where('user_id', '=', $user->id)->latest()->first();
+
+        $resp = $this->asAdmin()->getJson($this->baseEndpoint . '?filter[id]=3');
+        $resp->assertJson(['data' => [
+            [
+                'id'          => $user->id,
+                'created_at' => $user->created_at->toJSON(),
+                'last_activity_at' => $activity->created_at->toJson(),
             ],
         ]]);
     }
