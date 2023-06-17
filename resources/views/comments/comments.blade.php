@@ -18,7 +18,7 @@
 
     <div refs="page-comments@commentContainer" class="comment-container">
         @foreach($commentTree->get() as $branch)
-            @include('comments.comment-branch', ['branch' => $branch])
+            @include('comments.comment-branch', ['branch' => $branch, 'readOnly' => false])
         @endforeach
     </div>
 
