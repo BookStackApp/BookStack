@@ -24,16 +24,10 @@ use Throwable;
 
 class PageController extends Controller
 {
-    protected PageRepo $pageRepo;
-    protected ReferenceFetcher $referenceFetcher;
-
-    /**
-     * PageController constructor.
-     */
-    public function __construct(PageRepo $pageRepo, ReferenceFetcher $referenceFetcher)
-    {
-        $this->pageRepo = $pageRepo;
-        $this->referenceFetcher = $referenceFetcher;
+    public function __construct(
+        protected PageRepo $pageRepo,
+        protected ReferenceFetcher $referenceFetcher
+    ) {
     }
 
     /**
