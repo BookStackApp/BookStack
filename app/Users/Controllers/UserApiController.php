@@ -73,7 +73,7 @@ class UserApiController extends ApiController
      */
     public function list()
     {
-        $users = User::query()->select(['*'])
+        $users = User::query()->select(['users.*'])
             ->scopes('withLastActivityAt')
             ->with(['avatar']);
 
