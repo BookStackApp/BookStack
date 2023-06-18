@@ -365,7 +365,7 @@ return [
     'comment_new' => '新评论',
     'comment_created' => '评论于 :createDiff',
     'comment_updated' => '更新于 :updateDiff (:username)',
-    'comment_updated_indicator' => 'Updated',
+    'comment_updated_indicator' => '已更新',
     'comment_deleted_success' => '评论已删除',
     'comment_created_success' => '评论已添加',
     'comment_updated_success' => '评论已更新',
