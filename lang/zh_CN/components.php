@@ -6,7 +6,7 @@ return [
 
     // Image Manager
     'image_select' => '选择图片',
-    'image_list' => 'Image List',
+    'image_list' => '图片列表',
     'image_details' => '图片详情',
     'image_upload' => '上传图片',
     'image_intro' => '您可以在此选择和管理以前上传到系统的图片。',
@@ -32,8 +32,8 @@ return [
     'image_upload_success' => '图片上传成功',
     'image_update_success' => '图片详细信息更新成功',
     'image_delete_success' => '图片删除成功',
-    'image_replace' => 'Replace Image',
-    'image_replace_success' => 'Image file successfully updated',
+    'image_replace' => '替换图片',
+    'image_replace_success' => '图片文件更新成功',
 
     // Code Editor
     'code_editor' => '编辑代码',
