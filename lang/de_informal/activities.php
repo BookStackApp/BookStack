@@ -61,17 +61,17 @@ return [
     // Auth
     'auth_login' => 'hat sich eingeloggt',
     'auth_register' => 'hat sich als neuer Benutzer registriert',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_password_reset_request' => 'hat eine Rücksetzung des Benutzerpassworts beantragt',
+    'auth_password_reset_update' => 'hat Benutzerpasswort zurückgesetzt',
+    'mfa_setup_method' => 'hat MFA-Methode konfiguriert',
     'mfa_setup_method_notification' => 'Multi-Faktor-Methode erfolgreich konfiguriert',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'hat MFA-Methode entfernt',
     'mfa_remove_method_notification' => 'Multi-Faktor-Methode erfolgreich entfernt',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => 'hat Einstellungen aktualisiert',
     'settings_update_notification' => 'Einstellungen erfolgreich aktualisiert',
-    'maintenance_action_run' => 'ran maintenance action',
+    'maintenance_action_run' => 'hat Wartungsarbeiten ausgeführt',
 
     // Webhooks
     'webhook_create' => 'erstellter Webhook',
@@ -82,33 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook erfolgreich gelöscht',
 
     // Users
-    'user_create' => 'created user',
+    'user_create' => 'hat Benutzer erzeugt:',
     'user_create_notification' => 'Benutzer erfolgreich erstellt',
-    'user_update' => 'updated user',
+    'user_update' => 'hat Benutzer aktualisiert:',
     'user_update_notification' => 'Benutzer erfolgreich aktualisiert',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'hat Benutzer gelöscht: ',
     'user_delete_notification' => 'Benutzer erfolgreich entfernt',
 
     // API Tokens
-    'api_token_create' => 'created api token',
+    'api_token_create' => 'hat API-Token erzeugt:',
     'api_token_create_notification' => 'API-Token erfolgreich erstellt',
-    'api_token_update' => 'updated api token',
+    'api_token_update' => 'hat API-Token aktualisiert:',
     'api_token_update_notification' => 'API-Token erfolgreich aktualisiert',
-    'api_token_delete' => 'deleted api token',
+    'api_token_delete' => 'hat API-Token gelöscht:',
     'api_token_delete_notification' => 'API-Token erfolgreich gelöscht',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'hat Rolle erzeugt:',
     'role_create_notification' => 'Rolle erfolgreich erstellt',
-    'role_update' => 'updated role',
+    'role_update' => 'hat Rolle aktualisiert:',
     'role_update_notification' => 'Rolle erfolgreich aktualisiert',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'hat Rolle gelöscht:',
     'role_delete_notification' => 'Rolle erfolgreich gelöscht',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'hat den Papierkorb geleert',
+    'recycle_bin_restore' => 'aus dem Papierkorb wiederhergestellt',
+    'recycle_bin_destroy' => 'aus dem Papierkorb gelöscht',
 
     // Other
     'commented_on'                => 'kommentiert',
