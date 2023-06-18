@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'stellt Seite wieder her',
     'page_restore_notification'   => 'Seite erfolgreich wiederhergestellt',
     'page_move'                   => 'verschiebt Seite',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Seite erfolgreich verschoben',
 
     // Chapters
     'chapter_create'              => 'erstellt Kapitel',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'löscht Kapitel',
     'chapter_delete_notification' => 'Kapitel erfolgreich gelöscht',
     'chapter_move'                => 'verschiebt Kapitel',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Kapitel erfolgreich verschoben',
 
     // Books
     'book_create'                 => 'erstellt Buch',
@@ -50,17 +50,17 @@ return [
     'bookshelf_delete_notification'    => 'Regal erfolgreich gelöscht',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'stellte Revision wieder her:',
+    'revision_delete' => 'löschte Revision',
+    'revision_delete_notification' => 'Revision erfolgreich gelöscht',
 
     // Favourites
     'favourite_add_notification' => '":name" wurde zu deinen Favoriten hinzugefügt',
     'favourite_remove_notification' => '":name" wurde aus deinen Favoriten entfernt',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
+    'auth_login' => 'hat sich eingeloggt',
+    'auth_register' => 'hat sich als neuer Benutzer registriert',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
     'mfa_setup_method' => 'configured MFA method',
@@ -70,7 +70,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => 'Einstellungen erfolgreich aktualisiert',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -83,7 +83,7 @@ return [
 
     // Users
     'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
+    'user_create_notification' => 'Benutzer erfolgreich erstellt',
     'user_update' => 'updated user',
     'user_update_notification' => 'Benutzer erfolgreich aktualisiert',
     'user_delete' => 'deleted user',
@@ -91,11 +91,11 @@ return [
 
     // API Tokens
     'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
+    'api_token_create_notification' => 'API-Token erfolgreich erstellt',
     'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_update_notification' => 'API-Token erfolgreich aktualisiert',
     'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete_notification' => 'API-Token erfolgreich gelöscht',
 
     // Roles
     'role_create' => 'created role',
