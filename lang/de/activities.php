@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" wurde aus Ihren Favoriten entfernt',
 
     // Auth
-    'auth_login' => 'loggte sich ein',
+    'auth_login' => 'hat sich eingeloggt',
     'auth_register' => 'hat sich als neuer Benutzer registriert',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
