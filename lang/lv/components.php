@@ -6,9 +6,9 @@ return [
 
     // Image Manager
     'image_select' => 'Attēla izvēle',
-    'image_list' => 'Image List',
-    'image_details' => 'Image Details',
-    'image_upload' => 'Upload Image',
+    'image_list' => 'Attēlu saraksts',
+    'image_details' => 'Attēla dati',
+    'image_upload' => 'Augšuplādēt attēlu',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Visi',
@@ -32,7 +32,7 @@ return [
     'image_upload_success' => 'Attēls ir veiksmīgi augšupielādēts',
     'image_update_success' => 'Attēlā informācija ir veiksmīgi atjunināta',
     'image_delete_success' => 'Attēls veiksmīgi dzēsts',
-    'image_replace' => 'Replace Image',
+    'image_replace' => 'Nomainīt bildi',
     'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
