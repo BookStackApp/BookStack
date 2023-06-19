@@ -33,7 +33,7 @@ class UserAvatars
             $avatar = $this->saveAvatarImage($user);
             $user->avatar()->associate($avatar);
             $user->save();
-        } catch (HttpFetchException $e) {
+        } catch (Exception $e) {
             Log::error('Failed to save user avatar image', ['exception' => $e]);
         }
     }
@@ -48,7 +48,7 @@ class UserAvatars
             $avatar = $this->createAvatarImageFromData($user, $imageData, $extension);
             $user->avatar()->associate($avatar);
             $user->save();
-        } catch (HttpFetchException $e) {
+        } catch (Exception $e) {
             Log::error('Failed to save user avatar image', ['exception' => $e]);
         }
     }
