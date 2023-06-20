@@ -82,7 +82,6 @@ class PageApiController extends ApiController
 
     /**
      * View the details of a single page.
-     *
      * Pages will always have HTML content. They may have markdown content
      * if the markdown editor was used to last update the page.
      *
