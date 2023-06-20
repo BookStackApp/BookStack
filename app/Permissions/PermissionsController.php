@@ -136,6 +136,11 @@ class PermissionsController extends Controller
 
         $this->permissionsUpdater->updateFromPermissionsForm($shelf, $request);
 
+        if(setting()->get('app-force-books-to-shelf'))
+        {
+            $this->copyShelfPermissionsToBooks($slug);
+        }
+
         $this->showSuccessNotification(trans('entities.shelves_permissions_updated'));
 
         return redirect($shelf->getUrl());

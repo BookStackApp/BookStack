@@ -70,6 +70,7 @@ return [
     'selected_book_not_found' => 'The selected book was not found',
     'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
     'guests_cannot_save_drafts' => 'Guests cannot save drafts',
+    'force_book_to_shelf' => 'Books must be created on a shelf',
 
     // Users
     'users_cannot_delete_only_admin' => 'You cannot delete the only admin',

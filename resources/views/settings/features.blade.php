@@ -56,6 +56,20 @@
                 </div>
             </div>
 
+            <div class="grid half gap-xl">
+                <div>
+                    <label class="setting-list-label">{{ trans('settings.app_force_book_belong_to_shelf') }}</label>
+                    <p class="small">{!! trans('settings.app_force_book_belong_to_shelf_desc') !!}</p>
+                </div>
+                <div>
+                    @include('form.toggle-switch', [
+                        'name' => 'setting-app-force-books-to-shelf',
+                        'value' => setting('app-force-books-to-shelf'),
+                        'label' => trans('settings.app_force_book_belong_to_shelf_toggle'),
+                    ])
+                </div>
+            </div>
+
 
         </div>
 

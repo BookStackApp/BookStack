@@ -46,6 +46,9 @@ return [
     'app_disable_comments' => 'Disable Comments',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
+    'app_force_book_belong_to_shelf' => 'Force books to belong to a shelf',
+    'app_force_book_belong_to_shelf_toggle' => 'Force books to belong to a shelf',
+    'app_force_book_belong_to_shelf_desc' => 'This setting will force all books to belong to a single shelf. Newly created books will inherit the permissions of the shelf they are created under.',
 
     // Color settings
     'color_scheme' => 'Application Color Scheme',

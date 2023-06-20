@@ -124,7 +124,7 @@
                     <span>{{ trans('common.copy') }}</span>
                 </a>
             @endif
-            @if(userCan('restrictions-manage', $book))
+            @if(userCan('restrictions-manage', $book) && !setting('app-force-books-to-shelf'))
                 <a href="{{ $book->getUrl('/permissions') }}" data-shortcut="permissions" class="icon-list-item">
                     <span>@icon('lock')</span>
                     <span>{{ trans('entities.permissions') }}</span>

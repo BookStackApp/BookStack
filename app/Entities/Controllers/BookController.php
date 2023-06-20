@@ -78,6 +78,12 @@ class BookController extends Controller
             $this->checkOwnablePermission('bookshelf-update', $bookshelf);
         }
 
+        if(!$bookshelf && setting()->get('app-force-books-to-shelf'))
+        {
+            $this->showErrorNotification(trans('errors.force_book_to_shelf'));
+            return redirect('/');
+        }
+
         $this->setPageTitle(trans('entities.books_create'));
 
         return view('books.create', [
@@ -112,6 +118,15 @@ class BookController extends Controller
         if ($bookshelf) {
             $bookshelf->appendBook($book);
             Activity::add(ActivityType::BOOKSHELF_UPDATE, $bookshelf);
+        }
+
+        if(setting()->get('app-force-books-to-shelf'))
+        {
+            $shelfPermissions = $bookshelf->permissions()->get(['role_id', 'view', 'create', 'update', 'delete'])->toArray();
+
+            $book->permissions()->delete();
+            $book->permissions()->createMany($shelfPermissions);
+            $book->rebuildPermissions();
         }
 
         return redirect($book->getUrl());
