@@ -55,9 +55,9 @@ class PermissionsUpdater
         }
 
         if (isset($data['fallback_permissions']['inheriting']) && $data['fallback_permissions']['inheriting'] !== true) {
-            $data = $data['fallback_permissions'];
-            $data['role_id'] = 0;
-            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions([$data], true);
+            $fallbackData = $data['fallback_permissions'];
+            $fallbackData['role_id'] = 0;
+            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions([$fallbackData], true);
             $entity->permissions()->createMany($rolePermissionData);
         }
 
