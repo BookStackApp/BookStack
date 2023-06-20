@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 
 class PageApiController extends ApiController
 {
-    protected PageRepo $pageRepo;
-
     protected $rules = [
         'create' => [
             'book_id'    => ['required_without:chapter_id', 'integer'],
@@ -34,9 +32,9 @@ class PageApiController extends ApiController
         ],
     ];
 
-    public function __construct(PageRepo $pageRepo)
-    {
-        $this->pageRepo = $pageRepo;
+    public function __construct(
+        protected PageRepo $pageRepo
+    ) {
     }
 
     /**
