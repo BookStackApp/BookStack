@@ -52,8 +52,10 @@ class ImageGalleryApiController extends ApiController
 
     /**
      * Create a new image in the system.
+     *
      * Since "image" is expected to be a file, this needs to be a 'multipart/form-data' type request.
      * The provided "uploaded_to" should be an existing page ID in the system.
+     *
      * If the "name" parameter is omitted, the filename of the provided image file will be used instead.
      * The "type" parameter should be 'gallery' for page content images, and 'drawio' should only be used
      * when the file is a PNG file with diagrams.net image data embedded within.
