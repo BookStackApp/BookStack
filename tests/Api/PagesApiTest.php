@@ -159,6 +159,20 @@ class PagesApiTest extends TestCase
         $this->assertStringContainsString('testing', $html);
     }
 
+    public function test_read_endpoint_provides_raw_html()
+    {
+        $html = "<p>testing</p><script>alert('danger')</script><h1>Hello</h1>";
+
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $page->html = $html;
+        $page->save();
+
+        $resp = $this->getJson($this->baseEndpoint . "/{$page->id}");
+        $this->assertEquals($html, $resp->json('raw_html'));
+        $this->assertNotEquals($html, $resp->json('html'));
+    }
+
     public function test_read_endpoint_returns_not_found()
     {
         $this->actingAsApiEditor();

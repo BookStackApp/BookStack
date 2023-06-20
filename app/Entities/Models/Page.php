@@ -139,6 +139,7 @@ class Page extends BookChild
     {
         $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
         $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
+        $refreshed->setAttribute('raw_html', $refreshed->html);
         $refreshed->html = (new PageContent($refreshed))->render();
 
         return $refreshed;
