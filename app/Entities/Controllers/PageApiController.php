@@ -86,6 +86,11 @@ class PageApiController extends ApiController
      * Pages will always have HTML content. They may have markdown content
      * if the markdown editor was used to last update the page.
      *
+     * The 'html' property is the fully rendered & escaped HTML content that BookStack
+     * would show on page view, with page includes handled.
+     * The 'raw_html' property is the direct database stored HTML content, which would be
+     * what BookStack shows on page edit.
+     *
      * See the "Content Security" section of these docs for security considerations when using
      * the page content returned from this endpoint.
      */
