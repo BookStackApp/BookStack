@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'キャンセル',
-    'close' => 'Close',
+    'close' => '閉じる',
     'confirm' => '確認',
     'back' => '戻る',
     'save' => '保存',
