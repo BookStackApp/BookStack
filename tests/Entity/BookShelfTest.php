@@ -196,6 +196,31 @@ class BookShelfTest extends TestCase
         $this->withHtml($resp)->assertElementContains('.book-content a.grid-card:nth-child(3)', 'adsfsdfsdfsd');
     }
 
+    public function test_shelf_view_sorts_by_name_case_insensitively()
+    {
+        $shelf = Bookshelf::query()->whereHas('books')->with('books')->first();
+        $books = Book::query()->take(3)->get(['id', 'name']);
+        $books[0]->fill(['name' => 'Book Ab'])->save();
+        $books[1]->fill(['name' => 'Book ac'])->save();
+        $books[2]->fill(['name' => 'Book AD'])->save();
+
+        // Set book ordering
+        $this->asAdmin()->put($shelf->getUrl(), [
+            'books' => $books->implode('id', ','),
+            'tags'  => [], 'description' => 'abc', 'name' => 'abc',
+        ]);
+        $this->assertEquals(3, $shelf->books()->count());
+        $shelf->refresh();
+
+        setting()->putUser($this->users->editor(), 'shelf_books_sort', 'name');
+        setting()->putUser($this->users->editor(), 'shelf_books_sort_order', 'asc');
+        $html = $this->withHtml($this->asEditor()->get($shelf->getUrl()));
+
+        $html->assertElementContains('.book-content a.grid-card:nth-child(1)', 'Book Ab');
+        $html->assertElementContains('.book-content a.grid-card:nth-child(2)', 'Book ac');
+        $html->assertElementContains('.book-content a.grid-card:nth-child(3)', 'Book AD');
+    }
+
     public function test_shelf_edit()
     {
         $shelf = $this->entities->shelf();
