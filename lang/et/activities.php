@@ -50,9 +50,9 @@ return [
     'bookshelf_delete_notification'    => 'Riiul on kustutatud',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'taastas redaktsiooni',
+    'revision_delete' => 'kustutas redaktsiooni',
+    'revision_delete_notification' => 'Redaktsioon on kustutatud',
 
     // Favourites
     'favourite_add_notification' => '":name" lisati su lemmikute hulka',
@@ -63,9 +63,9 @@ return [
     'auth_register' => 'registreerus uue kasutajana',
     'auth_password_reset_request' => 'soovis parooli lähtestamist',
     'auth_password_reset_update' => 'lähtestas kasutaja parooli',
-    'mfa_setup_method' => 'configured MFA method',
+    'mfa_setup_method' => 'seadistas mitmeastmelise autentimise meetodi',
     'mfa_setup_method_notification' => 'Mitmeastmeline autentimine seadistatud',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'eemaldas mitmeastmelise autentimise meetodi',
     'mfa_remove_method_notification' => 'Mitmeastmeline autentimine eemaldatud',
 
     // Settings
@@ -90,12 +90,12 @@ return [
     'user_delete_notification' => 'Kasutaja on kustutatud',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'lisas API tunnuse',
+    'api_token_create_notification' => 'API tunnus on lisatud',
+    'api_token_update' => 'muutis API tunnust',
+    'api_token_update_notification' => 'API tunnus on muudetud',
+    'api_token_delete' => 'kustutas API tunnuse',
+    'api_token_delete_notification' => 'API tunnus on kustutatud',
 
     // Roles
     'role_create' => 'lisas rolli',
@@ -108,7 +108,7 @@ return [
     // Recycle Bin
     'recycle_bin_empty' => 'tühjendas prügikasti',
     'recycle_bin_restore' => 'taastas prügikastist',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_destroy' => 'eemaldas prügikastist',
 
     // Other
     'commented_on'                => 'kommenteeris lehte',
