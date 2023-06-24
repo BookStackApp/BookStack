@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'taastas lehe',
     'page_restore_notification'   => 'Leht on taastatud',
     'page_move'                   => 'liigutas lehte',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Leht on liigutatud',
 
     // Chapters
     'chapter_create'              => 'lisas peatüki',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'kustutas peatüki',
     'chapter_delete_notification' => 'Peatükk on kustutatud',
     'chapter_move'                => 'liigutas peatükki',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Peatükk on liigutatud',
 
     // Books
     'book_create'                 => 'lisas raamatu',
@@ -59,19 +59,19 @@ return [
     'favourite_remove_notification' => '":name" eemaldati su lemmikute hulgast',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
+    'auth_login' => 'logis sisse',
+    'auth_register' => 'registreerus uue kasutajana',
+    'auth_password_reset_request' => 'soovis parooli lähtestamist',
+    'auth_password_reset_update' => 'lähtestas kasutaja parooli',
     'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Mitmeastmeline autentimine seadistatud',
     'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Mitmeastmeline autentimine eemaldatud',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'uuendas seadeid',
+    'settings_update_notification' => 'Seaded uuendatud',
+    'maintenance_action_run' => 'käivitas hooldustegevuse',
 
     // Webhooks
     'webhook_create' => 'lisas veebihaagi',
@@ -82,11 +82,11 @@ return [
     'webhook_delete_notification' => 'Veebihaak on kustutatud',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'lisas kasutaja',
+    'user_create_notification' => 'Kasutaja on lisatud',
+    'user_update' => 'muutis kasutajat',
     'user_update_notification' => 'Kasutaja on muudetud',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'kustutas kasutaja',
     'user_delete_notification' => 'Kasutaja on kustutatud',
 
     // API Tokens
@@ -98,16 +98,16 @@ return [
     'api_token_delete_notification' => 'API token successfully deleted',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'lisas rolli',
     'role_create_notification' => 'Roll on lisatud',
-    'role_update' => 'updated role',
+    'role_update' => 'muutis rolli',
     'role_update_notification' => 'Roll on muudetud',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'kustutas rolli',
     'role_delete_notification' => 'Roll on kustutatud',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_empty' => 'tühjendas prügikasti',
+    'recycle_bin_restore' => 'taastas prügikastist',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
