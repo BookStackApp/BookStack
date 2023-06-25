@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'восстановил страницу',
     'page_restore_notification'   => 'Страница успешно восстановлена',
     'page_move'                   => 'переместил страницу',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Страница успешно перемещена',
 
     // Chapters
     'chapter_create'              => 'создал главу',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'удалил главу',
     'chapter_delete_notification' => 'Глава успешно удалена',
     'chapter_move'                => 'переместил главу',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Глава успешно перемещена',
 
     // Books
     'book_create'                 => 'создал книгу',
@@ -52,7 +52,7 @@ return [
     // Revisions
     'revision_restore' => 'restored revision',
     'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_delete_notification' => 'Версия успешно удалена',
 
     // Favourites
     'favourite_add_notification' => '":name" добавлено в избранное',
@@ -60,7 +60,7 @@ return [
 
     // Auth
     'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
+    'auth_register' => 'зарегистрировался как новый пользователь',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
     'mfa_setup_method' => 'configured MFA method',
@@ -70,7 +70,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => 'Настройки успешно обновлены',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -83,7 +83,7 @@ return [
 
     // Users
     'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
+    'user_create_notification' => 'Пользователь успешно создан',
     'user_update' => 'updated user',
     'user_update_notification' => 'Пользователь успешно обновлен',
     'user_delete' => 'deleted user',
@@ -91,11 +91,11 @@ return [
 
     // API Tokens
     'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
+    'api_token_create_notification' => 'API токен успешно создан',
     'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_update_notification' => 'API токен успешно обновлен',
     'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete_notification' => 'API токен успешно удален',
 
     // Roles
     'role_create' => 'created role',
