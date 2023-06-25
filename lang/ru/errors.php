@@ -58,7 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Не удалось сохранить черновик. Перед сохранением этой страницы убедитесь, что у вас есть подключение к Интернету.',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Не удалось удалить черновик страницы и получить текущее сохраненное содержимое страницы',
     'page_custom_home_deletion' => 'Невозможно удалить страницу, пока она установлена как домашняя страница',
 
     // Entities
