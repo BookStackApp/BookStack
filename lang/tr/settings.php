@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Ayarlar',
     'settings_save' => 'Ayarları Kaydet',
-    'settings_save_success' => 'Ayarlar kaydedildi',
     'system_version' => 'Sistem Sürümü',
     'categories' => 'Kategoriler',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Bitiş Tarihi',
     'user_api_token_expiry_desc' => 'Bu anahtarın süresinin dolduğu bir tarih belirleyin. Bu tarihten sonra, bu anahtar kullanılarak yapılan istekler artık çalışmaz. Bu alanı boş bırakmak, bitiş tarihini 100 yıl sonrası yapar.',
     'user_api_token_create_secret_message' => 'Bu anahtar oluşturulduktan hemen sonra bir "ID Anahtarı" ve "Gizli Anahtar" üretilip görüntülenecektir. Gizli anahtar sadece bir defa gösterilecektir, bu yüzden devam etmeden önce bu değeri güvenli bir yere kopyaladığınızdan emin olun.',
-    'user_api_token_create_success' => 'API anahtarı başarıyla oluşturuldu',
-    'user_api_token_update_success' => 'API anahtarı başarıyla güncellendi',
     'user_api_token' => 'API Erişim Anahtarı',
     'user_api_token_id' => 'Anahtar ID',
     'user_api_token_id_desc' => 'Bu, API isteklerini karşılamak için sistem tarafından oluşturulmuş ve sonradan düzenlenemeyen bir tanımlayıcıdır.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Anahtarı Sil',
     'user_api_token_delete_warning' => 'Bu işlem \':tokenName\' adındaki API anahtarını sistemden tamamen silecektir.',
     'user_api_token_delete_confirm' => 'Bu API anahtarını silmek istediğinize emin misiniz?',
-    'user_api_token_delete_success' => 'API anahtarı başarıyla silindi',
 
     // Webhooks
     'webhooks' => 'Webhooks',

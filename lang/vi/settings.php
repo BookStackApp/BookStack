@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Cài đặt',
     'settings_save' => 'Lưu Cài đặt',
-    'settings_save_success' => 'Đã lưu cài đặt',
     'system_version' => 'Phiên bản Hệ thống',
     'categories' => 'Danh mục',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Ngày hết hạn',
     'user_api_token_expiry_desc' => 'Đặt một ngày hết hạn cho token này. Sau ngày này, các yêu cầu được tạo khi sử dụng token này sẽ không còn hoạt động. Để trống trường này sẽ đặt ngày hết hạn sau 100 năm tới.',
     'user_api_token_create_secret_message' => 'Ngay sau khi tạo token này một "Mã Token" & "Mật khẩu Token" sẽ được tạo và hiển thị. Mật khẩu sẽ chỉ được hiện một lần duy nhất nên hãy chắc rằng bạn sao lưu giá trị của nó ở nơi an toàn và bảo mật trước khi tiếp tục.',
-    'user_api_token_create_success' => 'Token API đã được tạo thành công',
-    'user_api_token_update_success' => 'Token API đã được cập nhật thành công',
     'user_api_token' => 'Token API',
     'user_api_token_id' => 'Mã Token',
     'user_api_token_id_desc' => 'Đây là hệ thống sinh ra định danh không thể chỉnh sửa cho token này, thứ mà sẽ cần phải cung cấp khi yêu cầu API.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Xóa Token',
     'user_api_token_delete_warning' => 'Chức năng này sẽ hoàn toàn xóa token API với tên \':tokenName\' từ hệ thống.',
     'user_api_token_delete_confirm' => 'Bạn có chắc rằng muốn xóa token API này?',
-    'user_api_token_delete_success' => 'Token API đã được xóa thành công',
 
     // Webhooks
     'webhooks' => 'Webhooks',

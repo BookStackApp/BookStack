@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Configuració',
     'settings_save' => 'Desa la configuració',
-    'settings_save_success' => 'S\'ha desat la configuració',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Data de caducitat',
     'user_api_token_expiry_desc' => 'Definiu una data en què aquest testimoni caducarà. Després d\'aquesta data, les peticions fetes amb aquest testimoni deixaran de funcionar. Si deixeu aquest camp en blanc, es definirà una caducitat d\'aquí a 100 anys..',
     'user_api_token_create_secret_message' => 'Just després de crear aquest testimoni, es generaran i es mostraran un "Identificador del testimoni" i un "Secret del testimoni". El secret només es mostrarà una única vegada, assegureu-vos de copiar-lo a un lloc segur abans de continuar.',
-    'user_api_token_create_success' => 'Testimoni d\'API creat correctament',
-    'user_api_token_update_success' => 'Testimoni d\'API actualitzat correctament',
     'user_api_token' => 'Testimoni d\'API',
     'user_api_token_id' => 'Identificador del testimoni',
     'user_api_token_id_desc' => 'Aquest identificador és generat pel sistema per a aquest testimoni i no és editable, caldrà que el proporcioneu a les peticions a l\'API.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Suprimeix el testimoni',
     'user_api_token_delete_warning' => 'Se suprimirà completament del sistema aquest testimoni d\'API amb el nom \':tokenName\'.',
     'user_api_token_delete_confirm' => 'Segur que voleu suprimir aquest testimoni d\'API?',
-    'user_api_token_delete_success' => 'Testimoni d\'API suprimit correctament',
 
     // Webhooks
     'webhooks' => 'Webhooks',

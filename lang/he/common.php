@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'ביטול',
+    'close' => 'Close',
     'confirm' => 'אישור',
     'back' => 'אחורה',
     'save' => 'שמור',

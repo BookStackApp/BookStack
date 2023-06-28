@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Terjadi kesalahan saat mengunggah gambar',
     'image_upload_type_error' => 'Jenis gambar yang diunggah tidak valid',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Gagal menyimpan draf. Pastikan Anda memiliki koneksi internet sebelum menyimpan halaman ini',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Tidak dapat menghapus sebuah halaman saat diatur sebagai sebuah halaman beranda',
 
     // Entities

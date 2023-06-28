@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Beim Hochladen des Bildes trat ein Fehler auf.',
     'image_upload_type_error' => 'Der Bildtyp der hochgeladenen Datei ist ungültig.',
+    'image_upload_replace_type' => 'Bild-Ersetzungen müssen vom gleichen Typ sein',
     'drawing_data_not_found' => 'Zeichnungsdaten konnten nicht geladen werden. Die Zeichnungsdatei existiert möglicherweise nicht mehr oder du hast nicht die Berechtigung, darauf zuzugreifen.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Fehler beim Speichern des Entwurfs. Stelle sicher, dass du mit dem Internet verbunden bist, bevor du den Entwurf dieser Seite speicherst.',
+    'page_draft_delete_fail' => 'Fehler beim Löschen des Seitenentwurfs und beim Abrufen des gespeicherten Inhalts der aktuellen Seite',
     'page_custom_home_deletion' => 'Eine als Startseite gesetzte Seite kann nicht gelöscht werden.',
 
     // Entities

@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'S\'ha produït un error en pujar la imatge',
     'image_upload_type_error' => 'El tipus d\'imatge que heu pujat no és vàlid',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'No s\'ha pogut desar l\'esborrany. Assegureu-vos que tingueu connexió a Internet abans de desar la pàgina',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'No es pot suprimir una pàgina mentre estigui definida com a pàgina d\'inici',
 
     // Entities

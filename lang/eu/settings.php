@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Ezarpenak',
     'settings_save' => 'Gorde aldaketak',
-    'settings_save_success' => 'Aldaketak gordeta',
     'system_version' => 'Sistema bertsioa',
     'categories' => 'Kategoriak',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Iraungitze data',
     'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
     'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
-    'user_api_token_create_success' => 'API token successfully created',
-    'user_api_token_update_success' => 'API token successfully updated',
     'user_api_token' => 'API Token',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'This is a non-editable system generated identifier for this token which will need to be provided in API requests.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Delete Token',
     'user_api_token_delete_warning' => 'This will fully delete this API token with the name \':tokenName\' from the system.',
     'user_api_token_delete_confirm' => 'Are you sure you want to delete this API token?',
-    'user_api_token_delete_success' => 'API token successfully deleted',
 
     // Webhooks
     'webhooks' => 'Webhooks',

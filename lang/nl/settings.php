@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Instellingen',
     'settings_save' => 'Instellingen opslaan',
-    'settings_save_success' => 'Instellingen Opgeslagen',
     'system_version' => 'Systeem versie',
     'categories' => 'Categorieën',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Vervaldatum',
     'user_api_token_expiry_desc' => 'Stel een datum in waarop deze token verloopt. Na deze datum zullen aanvragen die met deze token zijn ingediend niet langer werken. Als dit veld leeg blijft, wordt een vervaldatum van 100 jaar in de toekomst ingesteld.',
     'user_api_token_create_secret_message' => 'Onmiddellijk na het aanmaken van dit token zal een "Token ID" en "Token Geheim" worden gegenereerd en weergegeven. Het geheim zal slechts één keer getoond worden. Kopieer de waarde dus eerst op een veilige plaats voordat u doorgaat.',
-    'user_api_token_create_success' => 'API token succesvol aangemaakt',
-    'user_api_token_update_success' => 'API token succesvol bijgewerkt',
     'user_api_token' => 'API Token',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Dit is een niet-wijzigbare, door het systeem gegenereerde identificatiecode voor dit token, die in API-verzoeken moet worden verstrekt.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Token Verwijderen',
     'user_api_token_delete_warning' => 'Dit zal de API-token met de naam \':tokenName\' volledig uit het systeem verwijderen.',
     'user_api_token_delete_confirm' => 'Weet u zeker dat u deze API-token wilt verwijderen?',
-    'user_api_token_delete_success' => 'API-token succesvol verwijderd',
 
     // Webhooks
     'webhooks' => 'Webhooks',
