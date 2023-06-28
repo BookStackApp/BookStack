@@ -676,7 +676,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   @include lightDark(background-color, #FFF, #222);
   .content {
     font-size: 0.666em;
-    padding: $-m $-s;
+    padding: $-xs $-s;
     p, ul, ol {
       font-size: $fs-m;
       margin: .5em 0;
@@ -701,11 +701,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .comment-box .header {
   border-bottom: 1px solid #DDD;
-  padding: $-s;
+  padding: $-xs $-s;
   @include lightDark(border-color, #DDD, #000);
-  button {
-    font-size: .8rem;
-  }
   a {
     color: inherit;
   }
@@ -734,6 +731,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .comment-reply {
   display: none;
+  margin: 0 !important;
+  margin-bottom: -$-xxs !important;
 }
 
 .comment-branch .comment-branch .comment-branch .comment-branch .comment-reply {
