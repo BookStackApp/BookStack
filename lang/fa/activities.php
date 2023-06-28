@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'ایجاد صفحه',
+    'page_create'                 => 'تاریخ ایجاد',
     'page_create_notification'    => 'صفحه با موفقیت ایجاد شد',
     'page_update'                 => 'به روزرسانی صفحه',
     'page_update_notification'    => 'صفحه با موفقیت به روزرسانی شد',
@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'بازیابی صفحه',
     'page_restore_notification'   => 'صفحه با موفقیت بازیابی شد',
     'page_move'                   => 'انتقال صفحه',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'ایجاد فصل',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'حذف فصل',
     'chapter_delete_notification' => 'فصل با موفقیت حذف شد',
     'chapter_move'                => 'انتقال فصل',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'ایجاد کتاب',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'قفسه حذف شده',
     'bookshelf_delete_notification'    => 'قفسه کتاب با موفقیت حذف شد',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name" به علاقه مندی های شما اضافه شد',
     'favourite_remove_notification' => '":name" از علاقه مندی های شما حذف شد',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'روش چند فاکتوری با موفقیت پیکربندی شد',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'روش چند فاکتوری با موفقیت حذف شد',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'ایجاد وب هوک',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'وب هوک با موفقیت حذف شد',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'کاربر با موفقیت به روز شد',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'کاربر با موفقیت حذف شد',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'نقش با موفقیت ایجاد شد',
+    'role_update' => 'updated role',
     'role_update_notification' => 'نقش با موفقیت به روز شد',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'نقش با موفقیت حذف شد',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'ثبت دیدگاه',

@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'がページを復元:',
     'page_restore_notification'   => 'ページを復元しました',
     'page_move'                   => 'がページを移動:',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'がチャプターを作成:',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'がチャプターを削除:',
     'chapter_delete_notification' => 'チャプターを削除しました',
     'chapter_move'                => 'がチャプターを移動:',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'がブックを作成:',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'が本棚を削除:',
     'bookshelf_delete_notification'    => '本棚を削除しました',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name"がお気に入りに追加されました',
     'favourite_remove_notification' => '":name"がお気に入りから削除されました',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => '多要素認証を設定しました',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => '多要素認証を解除しました',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'がWebhookを作成:',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhookを削除しました',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'ユーザーを更新しました',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'ユーザーを削除しました',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => '役割を作成しました',
+    'role_update' => 'updated role',
     'role_update_notification' => '役割を更新しました',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => '役割を削除しました',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'がコメント:',

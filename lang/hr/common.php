@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Odustani',
+    'close' => 'Close',
     'confirm' => 'Potvrdi',
     'back' => 'Natrag',
     'save' => 'Spremi',

@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Rasmni tanlash',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => 'Upload Image',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'Ushbu sahifaga yuklangan barcha rasmlarni ko\'rish',
     'image_search_hint' => 'Rasmni nomi bo\'yicha izlash',
     'image_uploaded' => ':uploadedDate sanada yuklangan',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'Yana yuklash',
     'image_image_name' => 'Rasm nomi',
     'image_delete_used' => 'This image is used in the pages below.',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => 'Image uploaded successfully',
     'image_update_success' => 'Image details successfully updated',
     'image_delete_success' => 'Image successfully deleted',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'Kodni tahrirlash',

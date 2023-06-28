@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Ezeztatu',
+    'close' => 'Close',
     'confirm' => 'Berretsi',
     'back' => 'Itzuli',
     'save' => 'Gorde',

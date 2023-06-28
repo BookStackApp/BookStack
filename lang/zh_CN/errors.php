@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => '上传图片时发生错误',
     'image_upload_type_error' => '上传的图像类型无效',
+    'image_upload_replace_type' => '图片文件替换必须为相同的类型',
     'drawing_data_not_found' => '无法加载绘图数据。绘图文件可能不再存在，或者您可能没有权限访问它。',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => '无法保存草稿，确保您在保存页面之前已经连接到互联网',
+    'page_draft_delete_fail' => '无法删除页面草稿并获取当前页面已保存的内容',
     'page_custom_home_deletion' => '无法删除一个被设置为主页的页面',
 
     // Entities

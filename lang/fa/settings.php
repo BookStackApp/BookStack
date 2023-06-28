@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'تنظیمات',
     'settings_save' => 'تنظیمات را ذخیره کن',
-    'settings_save_success' => 'تنظیمات ذخیره شد',
     'system_version' => 'نسخه سیستم',
     'categories' => 'دسته بندی ها',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'تاریخ انقضا',
     'user_api_token_expiry_desc' => 'تاریخی را تعیین کنید که در آن این توکن منقضی شود. پس از این تاریخ، درخواست‌هایی که با استفاده از این رمز انجام می‌شوند دیگر کار نمی‌کنند. خالی گذاشتن این فیلد باعث انقضای 100 سال آینده می شود.',
     'user_api_token_create_secret_message' => 'بلافاصله پس از ایجاد این توکن یک "شناسه رمز" و "رمز رمز" تولید و نمایش داده می شود. راز فقط یک بار نشان داده می‌شود، بنابراین قبل از ادامه، حتماً مقدار را در جایی امن و مطمئن کپی کنید.',
-    'user_api_token_create_success' => 'توکن API با موفقیت ایجاد شد',
-    'user_api_token_update_success' => 'توکن API با موفقیت به روز شد',
     'user_api_token' => 'توکن API',
     'user_api_token_id' => 'شناسه توکن',
     'user_api_token_id_desc' => 'این یک شناسه غیرقابل ویرایش است که برای این نشانه ایجاد شده است که باید در درخواست‌های API ارائه شود.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'توکن را حذف کنید',
     'user_api_token_delete_warning' => 'با این کار این نشانه API با نام \':tokenName\' به طور کامل از سیستم حذف می شود.',
     'user_api_token_delete_confirm' => 'آیا مطمئن هستید که می خواهید این نشانه API را حذف کنید؟',
-    'user_api_token_delete_success' => 'توکن API با موفقیت حذف شد',
 
     // Webhooks
     'webhooks' => 'وب‌هوک‌ها',

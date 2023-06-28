@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'página restaurada',
     'page_restore_notification'   => 'Página restaurada correctamente',
     'page_move'                   => 'página movida',
+    'page_move_notification'      => 'Página movida correctamente',
 
     // Chapters
     'chapter_create'              => 'capítulo creado',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'capítulo eliminado',
     'chapter_delete_notification' => 'Capítulo eliminado correctamente',
     'chapter_move'                => 'capítulo movido',
+    'chapter_move_notification' => 'Capítulo movido correctamente',
 
     // Books
     'book_create'                 => 'libro creado',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'estante eliminado',
     'bookshelf_delete_notification'    => 'Estante eliminado correctamente',
 
+    // Revisions
+    'revision_restore' => 'revisión restaurada',
+    'revision_delete' => 'revisión eliminada',
+    'revision_delete_notification' => 'Revisión eliminada correctamente',
+
     // Favourites
     'favourite_add_notification' => '".name" ha sido añadido a sus favoritos',
     'favourite_remove_notification' => '".name" ha sido eliminado de sus favoritos',
 
-    // MFA
+    // Auth
+    'auth_login' => 'conectado',
+    'auth_register' => 'registrado como nuevo usuario',
+    'auth_password_reset_request' => 'solicitado cambio de contraseña de usuario',
+    'auth_password_reset_update' => 'restablecer contraseña de usuario',
+    'mfa_setup_method' => 'método MFA configurado',
     'mfa_setup_method_notification' => 'Método de Autenticación en Dos Pasos configurado correctamente',
+    'mfa_remove_method' => 'método MFA eliminado',
     'mfa_remove_method_notification' => 'Método de Autenticación en Dos Pasos eliminado correctamente',
+
+    // Settings
+    'settings_update' => 'ajustes actualizados',
+    'settings_update_notification' => 'Configuración actualizada correctamente',
+    'maintenance_action_run' => 'ejecutada acción de mantenimiento',
 
     // Webhooks
     'webhook_create' => 'webhook creado',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook eliminado correctamente',
 
     // Users
+    'user_create' => 'usuario creado',
+    'user_create_notification' => 'Usuario creado correctamente',
+    'user_update' => 'usuario actualizado',
     'user_update_notification' => 'Usuario actualizado correctamente',
+    'user_delete' => 'usuario eliminado',
     'user_delete_notification' => 'Usuario eliminado correctamente',
 
+    // API Tokens
+    'api_token_create' => 'token de api creado',
+    'api_token_create_notification' => 'Token API creado correctamente',
+    'api_token_update' => 'token de api actualizado',
+    'api_token_update_notification' => 'Token API actualizado correctamente',
+    'api_token_delete' => 'token de api borrado',
+    'api_token_delete_notification' => 'Token API borrado correctamente',
+
     // Roles
+    'role_create' => 'rol creado',
     'role_create_notification' => 'Rol creado correctamente',
+    'role_update' => 'rol actualizado',
     'role_update_notification' => 'Rol actualizado correctamente',
+    'role_delete' => 'rol borrado',
     'role_delete_notification' => 'Rol eliminado correctamente',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'papelera de reciclaje vaciada',
+    'recycle_bin_restore' => 'restaurado de la papelera de reciclaje',
+    'recycle_bin_destroy' => 'eliminado de la papelera de reciclaje',
 
     // Other
     'commented_on'                => 'comentada el',

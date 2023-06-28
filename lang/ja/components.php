@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => '画像を選択',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => '画像をアップロード',
     'image_intro' => 'ここでは、システムに以前アップロードされた画像を選択して管理できます。',
     'image_intro_upload' => 'このウィンドウに画像ファイルをドラッグするか、上の「画像をアップロード」ボタンを使用して新しい画像をアップロードします。',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'このページにアップロードされた画像を表示',
     'image_search_hint' => '画像名で検索',
     'image_uploaded' => 'アップロード日時: :uploadedDate',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'さらに読み込む',
     'image_image_name' => '画像名',
     'image_delete_used' => 'この画像は以下のページで利用されています。',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => '画像がアップロードされました',
     'image_update_success' => '画像が更新されました',
     'image_delete_success' => '画像が削除されました',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'コードを編集する',

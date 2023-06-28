@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen que se quiere subir no es válido',
+    'image_upload_replace_type' => 'Las imágenes para sustituir deben ser del mismo tipo',
     'drawing_data_not_found' => 'No se han podido cargar los datos del dibujo. Puede que el archivo de dibujo ya no exista o que no tenga permiso para acceder a él.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegúrese de que tiene conexión a Internet antes de guardar este borrador',
+    'page_draft_delete_fail' => 'Error al eliminar el borrador de la página y obtener el último contenido guardado',
     'page_custom_home_deletion' => 'No se puede borrar una página mientras esté configurada como página de inicio',
 
     // Entities

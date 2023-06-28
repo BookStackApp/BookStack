@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Postavke',
     'settings_save' => 'Spremi postavke',
-    'settings_save_success' => 'Postavke spremljene',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Datum isteka',
     'user_api_token_expiry_desc' => 'Postavite datum kada token istječe. Ostavljanjem ovog polja praznim automatski se postavlja dugoročno razdoblje.',
     'user_api_token_create_secret_message' => 'Odmah nakon kreiranja tokena prikazat će se "Token ID" i "Token Secret". To će se prikazati samo jednom i zato preporučujemo da ga spremite na sigurno.',
-    'user_api_token_create_success' => 'API token uspješno kreiran',
-    'user_api_token_update_success' => 'API token uspješno ažuriran',
     'user_api_token' => 'API token',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Ovaj sistemski generiran identifikator ne može se uređivati i bit će potreban pri API zahtjevima.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Izbriši token',
     'user_api_token_delete_warning' => 'Ovo će potpuno izbrisati API token naziva \':tokenName\' iz našeg sustava.',
     'user_api_token_delete_confirm' => 'Jeste li sigurni da želite izbrisati ovaj API token?',
-    'user_api_token_delete_success' => 'API token uspješno izbrisan',
 
     // Webhooks
     'webhooks' => 'Webhooks',

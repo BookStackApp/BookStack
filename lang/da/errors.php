@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Der opstod en fejl ved upload af billedet',
     'image_upload_type_error' => 'Billedtypen, der uploades, er ugyldig',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Kunne ikke gemme kladde. Tjek at du har internetforbindelse før du gemmer siden',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Kan ikke slette en side der er sat som forside',
 
     // Entities

@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Vybrať obrázok',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => 'Nahrať obrázok',
     'image_intro' => 'Tu môžete vybrať a spravovať obrázky, ktoré boli predtým nahrané do systému.',
     'image_intro_upload' => 'Nahrajte nový obrázok pretiahnutím súboru obrázka do tohto okna alebo pomocou vyššie uvedeného tlačidla „Nahrať obrázok“.',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'Zobraziť obrázky nahrané do tejto stránky',
     'image_search_hint' => 'Hľadať obrázok podľa názvu',
     'image_uploaded' => 'Nahrané :uploadedDate',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'Načítať viac',
     'image_image_name' => 'Názov obrázka',
     'image_delete_used' => 'Tento obrázok je použitý na stránkach uvedených nižšie.',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => 'Obrázok úspešne nahraný',
     'image_update_success' => 'Detaily obrázka úspešne aktualizované',
     'image_delete_success' => 'Obrázok úspešne zmazaný',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'Upraviť kód',

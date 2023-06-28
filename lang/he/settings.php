@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'הגדרות',
     'settings_save' => 'שמור הגדרות',
-    'settings_save_success' => 'ההגדרות נשמרו',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'תאריך תפוגה',
     'user_api_token_expiry_desc' => 'הגדירו תאריך בו יפוג תוקף אסימון זה. לאחר תאריך זה, בקשות שיעשו באמצעות אסימון זה לא יעבדו יותר. במידה ושדה זה יושאר ריק, תאריך התפוגה יוגדר לבעוד 100 שנים.',
     'user_api_token_create_secret_message' => 'מיד לאחר יצירת אסימון זה, יווצרו ויוצגו "ID אסימון" ו"סוד אסימון". הסוד יוצג פעם אחת בלבד, לכן וודאו להעתיק את הערך למקום שמור ובטוח לפני שתמשיכו הלאה.',
-    'user_api_token_create_success' => 'אסימון API נוצר בהצלחה',
-    'user_api_token_update_success' => 'אסימון API עודכן בהצלחה',
     'user_api_token' => 'אסימון API',
     'user_api_token_id' => 'ID האסימון',
     'user_api_token_id_desc' => 'זהו מזהה בלתי ניתן לעריכה לאסימון זה הנוצר על ידי המערכת, אשר יסופק בבקשות API.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'מחק אסימון',
     'user_api_token_delete_warning' => 'פעולה זו תמחק לחלוטין את אסימון ה-API בשם \':tokenName\' מהמערכת.',
     'user_api_token_delete_confirm' => 'האם אתם בטוחים שאתם מעוניינים למחוק אסימון API זה?',
-    'user_api_token_delete_success' => 'אסימון API נמחק בהצלחה',
 
     // Webhooks
     'webhooks' => 'Webhooks',

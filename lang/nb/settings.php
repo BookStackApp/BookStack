@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Innstillinger',
     'settings_save' => 'Lagre innstillinger',
-    'settings_save_success' => 'Innstillinger lagret',
     'system_version' => 'System versjon',
     'categories' => 'Kategorier',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Utløpsdato',
     'user_api_token_expiry_desc' => 'Angi en dato da denne nøkkelen utløper. Etter denne datoen vil forespørsler som er gjort med denne nøkkelen ikke lenger fungere. Å la dette feltet stå tomt vil sette utløpsdato 100 år inn i fremtiden.',
     'user_api_token_create_secret_message' => 'Umiddelbart etter å ha opprettet denne nøkkelen vil en identifikator og hemmelighet bli generert og vist. Hemmeligheten vil bare vises en gang, så husk å kopiere verdien til et trygt sted før du fortsetter.',
-    'user_api_token_create_success' => 'API-nøkkel ble opprettet',
-    'user_api_token_update_success' => 'API-nøkkel ble oppdatert',
     'user_api_token' => 'API-nøkkel',
     'user_api_token_id' => 'Identifikator',
     'user_api_token_id_desc' => 'Dette er en ikke-redigerbar systemgenerert identifikator for denne nøkkelen som må oppgis i API-forespørsler.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Slett nøkkel',
     'user_api_token_delete_warning' => 'Dette vil slette API-nøkkelen \':tokenName\' fra systemet.',
     'user_api_token_delete_confirm' => 'Sikker på at du vil slette nøkkelen?',
-    'user_api_token_delete_success' => 'API-nøkkelen ble slettet',
 
     // Webhooks
     'webhooks' => 'Webhooks',

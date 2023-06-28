@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'herstelde pagina',
     'page_restore_notification'   => 'Pagina succesvol hersteld',
     'page_move'                   => 'verplaatste pagina',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'maakte hoofdstuk',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'verwijderde hoofdstuk',
     'chapter_delete_notification' => 'Hoofdstuk succesvol verwijderd',
     'chapter_move'                => 'verplaatste hoofdstuk',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'maakte boek',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'heeft boekenplank verwijderd',
     'bookshelf_delete_notification'    => 'Boekenplank is succesvol verwijderd',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name" is toegevoegd aan je favorieten',
     'favourite_remove_notification' => '":name" is verwijderd uit je favorieten',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Meervoudige verificatie methode is succesvol geconfigureerd',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Meervoudige verificatie methode is succesvol verwijderd',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'webhook aangemaakt',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook succesvol verwijderd',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Gebruiker succesvol bijgewerkt',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Gebruiker succesvol verwijderd',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'Rol succesvol aangemaakt',
+    'role_update' => 'updated role',
     'role_update_notification' => 'Rol succesvol bijgewerkt',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'Rol succesvol verwijderd',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'reageerde op',

@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Настройки',
     'settings_save' => 'Запази настройките',
-    'settings_save_success' => 'Настройките са записани',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Дата на изтичане',
     'user_api_token_expiry_desc' => 'Настрой дата на изтичане на този маркер. След тази дата, заявки направени с този маркер вече няма да работят. Ако оставиш това поле празно, маркерът ще изтече след 100 години.',
     'user_api_token_create_secret_message' => 'Веднага след създаването на този маркер ще се генерират и покажат "Номер на маркер" и "Тайна на маркер". Тайната ще бъде показана само веднъж, така че се увери, че си я копирал на сигурно място, преди да продължиш.',
-    'user_api_token_create_success' => 'API маркерът е създаден успешно',
-    'user_api_token_update_success' => 'API маркерът е редактиран успешно',
     'user_api_token' => 'API маркер',
     'user_api_token_id' => 'Номер на маркер',
     'user_api_token_id_desc' => 'Това е нередактируем, системно генериран идентификатор за този маркер, който ще бъде необходимо да бъде предоставян в API заявките.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Изтрий маркер',
     'user_api_token_delete_warning' => 'Това ще изтрие напълно API маркерът с име \':tokenName\' от системата.',
     'user_api_token_delete_confirm' => 'Сигурен/на ли си, че искаш да изтриеш този API маркер?',
-    'user_api_token_delete_success' => 'API маркерът е изтрит успешно',
 
     // Webhooks
     'webhooks' => 'Уебкука',

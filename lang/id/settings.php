@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Pengaturan',
     'settings_save' => 'Simpan Pengaturan',
-    'settings_save_success' => 'Pengaturan disimpan',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Tanggal kadaluarsa',
     'user_api_token_expiry_desc' => 'Setel tanggal token ini kedaluwarsa. Setelah tanggal ini, permintaan yang dibuat menggunakan token ini tidak akan berfungsi lagi. Mengosongkan bidang ini akan menetapkan masa berlaku 100 tahun ke depan.',
     'user_api_token_create_secret_message' => 'Segera setelah membuat token ini, "Token ID" & "Token Secret" akan dibuat dan ditampilkan. Rahasianya hanya akan ditampilkan satu kali jadi pastikan untuk menyalin nilainya ke tempat yang aman dan terlindungi sebelum melanjutkan.',
-    'user_api_token_create_success' => 'Token API berhasil dibuat',
-    'user_api_token_update_success' => 'Token API berhasil diperbarui',
     'user_api_token' => 'Token API',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Ini adalah sebuah pengenal yang dihasilkan oleh sistem yang tidak dapat disunting untuk token ini yang perlu untuk disediakan dalam permintaan API.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Hapus Token',
     'user_api_token_delete_warning' => 'Ini akan sepenuhnya menghapus token API ini dengan nama \': tokenName\' dari sistem.',
     'user_api_token_delete_confirm' => 'Anda yakin ingin menghapus token API ini?',
-    'user_api_token_delete_success' => 'Token API berhasil dihapus',
 
     // Webhooks
     'webhooks' => 'Webhooks',

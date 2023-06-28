@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Abbrechen',
+    'close' => 'Schließen',
     'confirm' => 'Bestätigen',
     'back' => 'Zurück',
     'save' => 'Speichern',
@@ -19,7 +20,7 @@ return [
     'description' => 'Beschreibung',
     'role' => 'Rolle',
     'cover_image' => 'Titelbild',
-    'cover_image_description' => 'Das Bild sollte eine Auflösung von 440x250px haben.',
+    'cover_image_description' => 'Das Bild sollte eine Auflösung von ca. 440x250px haben.',
 
     // Actions
     'actions' => 'Aktionen',
