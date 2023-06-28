@@ -60,9 +60,7 @@ $bs-hover: 0 2px 2px 1px rgba(0,0,0,.13);
 // CSS root variables
 :root {
   --font-body: #{$font-body};
-  --font-heading: #{$font-body};
   --font-code: #{$font-mono};
-
 
   --color-primary: #206ea7;
   --color-primary-light: rgba(32,110,167,0.15);
