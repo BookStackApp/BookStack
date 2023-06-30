@@ -76,118 +76,6 @@ body.tox-fullscreen, body.markdown-fullscreen {
   padding: 0 !important;
 }
 
-.page-content {
-  width: 100%;
-  max-width: 840px;
-  margin: 0 auto;
-  overflow-wrap: break-word;
-  .align-left {
-    text-align: left;
-  }
-  img.align-left, table.align-left {
-    float: left !important;
-    margin: $-xs $-m $-m 0;
-  }
-  .align-right {
-    text-align: right !important;
-  }
-  img.align-right, table.align-right {
-    float: right !important;
-    margin: $-xs 0 $-xs $-s;
-  }
-  .align-center {
-    text-align: center;
-  }
-  img.align-center {
-    display: block;
-  }
-  img.align-center, table.align-center {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  img {
-    max-width: 100%;
-    height:auto;
-  }
-  h1, h2, h3, h4, h5, h6, pre {
-    clear: left;
-  }
-  hr {
-    clear: both;
-    margin: $-m 0;
-  }
-  table {
-    hyphens: auto;
-    table-layout: fixed;
-    max-width: 100%;
-    height: auto !important;
-  }
-
-  // diffs
-  ins,
-  del {
-    text-decoration: none;
-  }
-  ins {
-    background: #dbffdb;
-  }
-  del {
-    background: #FFECEC;
-  }
-
-  details {
-    border: 1px solid;
-    @include lightDark(border-color, #DDD, #555);
-    margin-bottom: 1em;
-    padding: $-s;
-  }
-  details > summary {
-    margin-top: -$-s;
-    margin-left: -$-s;
-    margin-right: -$-s;
-    margin-bottom: -$-s;
-    font-weight: bold;
-    @include lightDark(background-color, #EEE, #333);
-    padding: $-xs $-s;
-  }
-  details[open] > summary {
-    margin-bottom: $-s;
-    border-bottom: 1px solid;
-    @include lightDark(border-color, #DDD, #555);
-  }
-  details > summary + * {
-    margin-top: .2em;
-  }
-  details:after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-
-  li > input[type="checkbox"] {
-    vertical-align: top;
-    margin-top: 0.3em;
-  }
-
-  p:empty {
-    min-height: 1.6em;
-  }
-
-  &.page-revision {
-    pre code {
-      white-space: pre-wrap;
-    }
-  }
-
-  .cm-editor {
-    margin-bottom: 1.375em;
-  }
-
-  video {
-    max-width: 100%;
-  }
-}
-
 // Page content pointers
 .pointer-container {
   position: fixed;
@@ -198,10 +86,6 @@ body.tox-fullscreen, body.markdown-fullscreen {
 .pointer {
   border: 1px solid #CCC;
   @include lightDark(border-color, #ccc, #000);
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  padding: $-s $-s;
   border-radius: 4px;
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
   @include lightDark(background-color, #fff, #333);
@@ -241,16 +125,12 @@ body.tox-fullscreen, body.markdown-fullscreen {
     border: 1px solid #DDD;
     @include lightDark(border-color, #ddd, #000);
     color: #666;
-    width: 172px;
+    width: 160px;
     z-index: 40;
     padding: 5px 10px;
   }
-  span.icon {
-    fill: #444;
-    cursor: pointer;
-    user-select: none;
-    display: inline-block;
-    line-height: 1;
+  .text-button {
+    @include lightDark(color, #444, #AAA);
   }
   .input-group .button {
     line-height: 1;

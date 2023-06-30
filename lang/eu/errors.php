@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Errorea gertatu da irudia igotzerakoan',
     'image_upload_type_error' => 'The image type being uploaded is invalid',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
 
     // Entities

@@ -2,12 +2,12 @@
 
 namespace Tests\Actions;
 
-use BookStack\Actions\Activity;
-use BookStack\Actions\ActivityLogger;
-use BookStack\Actions\ActivityType;
-use BookStack\Auth\UserRepo;
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Activity;
+use BookStack\Activity\Tools\ActivityLogger;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
+use BookStack\Users\UserRepo;
 use Carbon\Carbon;
 use Tests\TestCase;
 

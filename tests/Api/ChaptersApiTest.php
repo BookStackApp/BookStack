@@ -2,6 +2,7 @@
 
 namespace Tests\Api;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -161,6 +162,33 @@ class ChaptersApiTest extends TestCase
         $this->putJson($this->baseEndpoint . "/{$chapter->id}", $details);
         $chapter->refresh();
         $this->assertGreaterThan(Carbon::now()->subDay()->unix(), $chapter->updated_at->unix());
+    }
+
+    public function test_update_with_book_id_moves_chapter()
+    {
+        $this->actingAsApiEditor();
+        $chapter = $this->entities->chapterHasPages();
+        $page = $chapter->pages()->first();
+        $newBook = Book::query()->where('id', '!=', $chapter->book_id)->first();
+
+        $resp = $this->putJson($this->baseEndpoint . "/{$chapter->id}", ['book_id' => $newBook->id]);
+        $resp->assertOk();
+        $chapter->refresh();
+
+        $this->assertDatabaseHas('chapters', ['id' => $chapter->id, 'book_id' => $newBook->id]);
+        $this->assertDatabaseHas('pages', ['id' => $page->id, 'book_id' => $newBook->id, 'chapter_id' => $chapter->id]);
+    }
+
+    public function test_update_with_new_book_id_requires_delete_permission()
+    {
+        $editor = $this->users->editor();
+        $this->permissions->removeUserRolePermissions($editor, ['chapter-delete-all', 'chapter-delete-own']);
+        $this->actingAs($editor);
+        $chapter = $this->entities->chapterHasPages();
+        $newBook = Book::query()->where('id', '!=', $chapter->book_id)->first();
+
+        $resp = $this->putJson($this->baseEndpoint . "/{$chapter->id}", ['book_id' => $newBook->id]);
+        $this->assertPermissionError($resp);
     }
 
     public function test_delete_endpoint()

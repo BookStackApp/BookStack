@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'αποκατεστημένη σελίδα',
     'page_restore_notification'   => 'Η σελίδα αποκαταστάθηκε με επιτυχία',
     'page_move'                   => 'Η σελίδα μετακινήθηκε',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'δημιουργήθηκε κεφάλαιο',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'διαγραμμένο κεφάλαιο',
     'chapter_delete_notification' => 'Το κεφάλαιο διαγράφηκε επιτυχώς',
     'chapter_move'                => 'το κεφάλαιο μετακινήθηκε',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'το βιβλίο δημιουργήθηκε',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'διαγραμμένο ράφι',
     'bookshelf_delete_notification'    => 'Το ράφι ενημερώθηκε επιτυχώς',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name" προστέθηκε στα αγαπημένα σας',
     'favourite_remove_notification' => '":name" προστέθηκε στα αγαπημένα σας',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Η μέθοδος πολλαπλών παραγόντων διαμορφώθηκε επιτυχώς',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Η μέθοδος πολλαπλών παραγόντων καταργήθηκε με επιτυχία',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'Το webhook δημιουργήθηκε',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Το Webhook διαγράφηκε επιτυχώς',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Ο Χρήστης ενημερώθηκε με επιτυχία',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Ο Χρήστης αφαιρέθηκε επιτυχώς',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'Ο Ρόλος δημιουργήθηκε με επιτυχία',
+    'role_update' => 'updated role',
     'role_update_notification' => 'Ο Ρόλος ενημερώθηκε με επιτυχία',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'Ο Ρόλος διαγράφηκε επιτυχώς',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'σχολίασε',

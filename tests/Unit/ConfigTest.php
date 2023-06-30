@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
+use Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream;
 use Tests\TestCase;
 
 /**
@@ -120,6 +121,45 @@ class ConfigTest extends TestCase
             $this->assertFalse($options['ssl']['verify_peer']);
             $this->assertFalse($options['ssl']['verify_peer_name']);
         });
+    }
+
+    public function test_non_null_mail_encryption_options_enforce_smtp_scheme()
+    {
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'tls', 'mail.mailers.smtp.scheme', 'smtps');
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'ssl', 'mail.mailers.smtp.scheme', 'smtps');
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'null', 'mail.mailers.smtp.scheme', null);
+    }
+
+    public function test_smtp_scheme_and_certain_port_forces_tls_usage()
+    {
+        $isMailTlsForcedEnabled = function () {
+            $transport = Mail::mailer('smtp')->getSymfonyTransport();
+            /** @var SocketStream $stream */
+            $stream = $transport->getStream();
+            Mail::purge('smtp');
+            return $stream->isTLS();
+        };
+
+        config()->set([
+            'mail.mailers.smtp.scheme' => null,
+            'mail.mailers.smtp.port' => 587,
+        ]);
+
+        $this->assertFalse($isMailTlsForcedEnabled());
+
+        config()->set([
+            'mail.mailers.smtp.scheme' => 'smtps',
+            'mail.mailers.smtp.port' => 587,
+        ]);
+
+        $this->assertTrue($isMailTlsForcedEnabled());
+
+        config()->set([
+            'mail.mailers.smtp.scheme' => '',
+            'mail.mailers.smtp.port' => 465,
+        ]);
+
+        $this->assertTrue($isMailTlsForcedEnabled());
     }
 
     /**

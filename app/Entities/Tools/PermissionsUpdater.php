@@ -2,14 +2,14 @@
 
 namespace BookStack\Entities\Tools;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Auth\Permissions\EntityPermission;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity;
+use BookStack\Permissions\Models\EntityPermission;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Illuminate\Http\Request;
 
 class PermissionsUpdater
@@ -55,9 +55,9 @@ class PermissionsUpdater
         }
 
         if (isset($data['fallback_permissions']['inheriting']) && $data['fallback_permissions']['inheriting'] !== true) {
-            $data = $data['fallback_permissions'];
-            $data['role_id'] = 0;
-            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions([$data], true);
+            $fallbackData = $data['fallback_permissions'];
+            $fallbackData['role_id'] = 0;
+            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions([$fallbackData], true);
             $entity->permissions()->createMany($rolePermissionData);
         }
 

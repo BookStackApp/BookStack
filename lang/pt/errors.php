@@ -49,14 +49,16 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Ocorreu um erro no carregamento da imagem',
     'image_upload_type_error' => 'O tipo de imagem enviada é inválida',
+    'image_upload_replace_type' => 'A imagem de substituição deverá ser do mesmo tipo que a anterior',
     'drawing_data_not_found' => 'Dados de desenho não puderam ser carregados. Talvez o arquivo de desenho não exista mais ou não tenha permissão para aceder-lhe.',
 
     // Attachments
     'attachment_not_found' => 'Anexo não encontrado',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Ocorreu um erro no carregamento do ficheiro',
 
     // Pages
     'page_draft_autosave_fail' => 'Falha ao tentar guardar o rascunho. Certifique-se que a conexão de Internet está funcional antes de tentar guardar esta página',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Não é possível eliminar uma página que está definida como página inicial',
 
     // Entities

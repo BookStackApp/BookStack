@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Seaded',
     'settings_save' => 'Salvesta seaded',
-    'settings_save_success' => 'Seaded salvestatud',
     'system_version' => 'Süsteemi versioon',
     'categories' => 'Kategooriad',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Kehtiv kuni',
     'user_api_token_expiry_desc' => 'Määra kuupäev, millal see tunnus aegub. Pärast seda kuupäeva ei saa selle tunnusega enam päringuid teha. Välja tühjaks jätmine määrab aegumiskuupäeva 100 aastat tulevikku.',
     'user_api_token_create_secret_message' => 'Kohe pärast selle tunnuse loomist genereeritakse ja kuvatakse tunnuse ID ja salajane võti. Võtit kuvatakse ainult ühe korra, seega kopeeri selle väärtus enne jätkamist turvalisse kohta.',
-    'user_api_token_create_success' => 'API tunnus on lisatud',
-    'user_api_token_update_success' => 'API tunnus on muudetud',
     'user_api_token' => 'API tunnus',
     'user_api_token_id' => 'Tunnuse ID',
     'user_api_token_id_desc' => 'See on API tunnuse süsteemne mittemuudetav identifikaator, mis tuleb API päringutele kaasa panna.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Kustuta tunnus',
     'user_api_token_delete_warning' => 'See kustutab API tunnuse nimega \':tokenName\' süsteemist.',
     'user_api_token_delete_confirm' => 'Kas oled kindel, et soovid selle API tunnuse kustutada?',
-    'user_api_token_delete_success' => 'API tunnus on kustutatud',
 
     // Webhooks
     'webhooks' => 'Veebihaagid',

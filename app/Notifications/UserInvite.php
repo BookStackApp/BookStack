@@ -2,7 +2,7 @@
 
 namespace BookStack\Notifications;
 
-use BookStack\Auth\User;
+use BookStack\Users\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class UserInvite extends MailNotification

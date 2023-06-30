@@ -50,6 +50,13 @@ class PageTest extends TestCase
         $resp->assertSeeText('Owned by ' . $owner->name);
     }
 
+    public function test_page_show_includes_pointer_section_select_mode_button()
+    {
+        $page = $this->entities->page();
+        $resp = $this->asEditor()->get($page->getUrl());
+        $this->withHtml($resp)->assertElementContains('.content-wrap button.screen-reader-only', 'Enter section select mode');
+    }
+
     public function test_page_creation_with_markdown_content()
     {
         $this->setSettings(['app-editor' => 'markdown']);

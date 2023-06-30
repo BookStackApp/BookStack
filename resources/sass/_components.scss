@@ -46,13 +46,13 @@
     }
   }
   &.pos {
-    color: $positive;
+    color: var(--color-positive);
   }
   &.neg {
-    color: $negative;
+    color: var(--color-negative);
   }
   &.warning {
-    color: $warning;
+    color: var(--color-warning);
   }
   &.showing {
     transform: translateX(0);
@@ -200,10 +200,6 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   flex: 1;
 }
 
-.image-manager-body {
-  min-height: 70vh;
-}
-
 .dropzone-overlay {
   position: absolute;
   display: flex;
@@ -338,52 +334,108 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   line-height: 1.2;
 }
 .dropzone-file-item-status[data-status="success"] {
-  color: $positive;
+  color: var(--color-positive);
 }
 .dropzone-file-item-status[data-status="error"] {
-  color: $negative;
+  color: var(--color-negative);
 }
 .dropzone-file-item-status[data-status] + .dropzone-file-item-label {
   display: none;
+}
+
+.image-manager-body {
+  min-height: 70vh;
+}
+.image-manager-filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  @include lightDark(background-color, rgba(255, 255, 255, 0.85), rgba(80, 80, 80, 0.85));
+}
+.image-manager-filter-bar-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .15;
+  z-index: -1;
+}
+
+.image-manager-filters {
+  box-shadow: $bs-med;
+  border-radius: 4px;
+  overflow: hidden;
+  border-bottom: 0 !important;
+  @include whenDark {
+    border: 1px solid #000 !important;
+  }
+  button {
+    line-height: 0;
+    @include lightDark(background-color, #FFF, #333);
+  }
+  svg {
+    margin: 0;
+  }
+}
+
+.image-manager-list {
+  padding: 3px;
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(140px, 1fr) );
+  gap: 3px;
+  z-index: 3;
+  > div {
+    aspect-ratio: 1;
+  }
 }
 
 .image-manager-list .image {
   display: block;
   position: relative;
   border-radius: 0;
-  float: left;
   margin: 0;
+  width: 100%;
+  text-align: start;
+  padding: 0;
   cursor: pointer;
-  width: math.div(100%, 6);
-  height: auto;
+  aspect-ratio: 1;
   @include lightDark(border-color, #ddd, #000);
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  transition: all cubic-bezier(.4, 0, 1, 1) 160ms;
+  transition: all linear 80ms;
   overflow: hidden;
   &.selected {
-    transform: scale3d(0.92, 0.92, 0.92);
-    outline: currentColor 2px solid;
+    background-color: var(--color-primary-light);
+    outline: currentColor 3px solid;
+    border-radius: 3px;
+    transform: scale3d(0.95, 0.95, 0.95);
   }
   img {
     width: 100%;
     max-width: 100%;
     display: block;
+    object-fit: cover;
+    height: auto;
   }
   .image-meta {
+    opacity: 0;
     position: absolute;
     width: 100%;
     bottom: 0;
     left: 0;
     color: #EEE;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.7);
     font-size: 10px;
     padding: 3px 4px;
+    pointer-events: none;
+    transition: opacity ease-in-out 80ms;
     span {
       display: block;
     }
   }
-  @include smaller-than($xl) {
-    width: math.div(100%, 4);
+  &.selected .image-meta,
+  &:hover .image-meta,
+  &:focus .image-meta {
+    opacity: 1;
   }
   @include smaller-than($m) {
     .image-meta {
@@ -393,7 +445,6 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .image-manager .load-more {
-  display: block;
   text-align: center;
   padding: $-s $-m;
   clear: both;
@@ -408,6 +459,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager-sidebar {
   width: 300px;
+  margin: 0 auto;
   overflow-y: auto;
   overflow-x: hidden;
   border-inline-start: 1px solid #DDD;
@@ -433,16 +485,17 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     }
   }
 }
-
-.image-manager-list {
-  overflow-y: scroll;
-  flex: 1;
+@include smaller-than($m) {
+  .image-manager-sidebar {
+    border-inline-start: 0;
+  }
 }
 
 .image-manager-content {
   display: flex;
   flex-direction: column;
   flex: 1;
+  overflow-y: scroll;
   .container {
     width: 100%;
   }
@@ -451,16 +504,12 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
-.image-manager [role="tablist"] button[role="tab"] {
-  border-right: 1px solid #DDD;
-  @include lightDark(border-color, #DDD, #000);
+.tab-container.bordered [role="tablist"] button[role="tab"] {
+  border-inline-end: 1px solid #DDD;
+  @include lightDark(border-inline-end-color, #DDD, #000);
   &:last-child {
-    border-right: none;
+    border-inline-end: none;
   }
-}
-
-.image-manager-header {
-  z-index: 4;
 }
 
 .tab-container [role="tablist"] {
@@ -473,8 +522,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   margin-bottom: $-m;
 }
 
-.tab-container [role="tablist"] button[role="tab"],
-.image-manager [role="tablist"] button[role="tab"] {
+.tab-container [role="tablist"] button[role="tab"] {
   display: inline-block;
   padding: $-s;
   @include lightDark(color, rgba(0, 0, 0, .5), rgba(255, 255, 255, .5));
@@ -484,10 +532,15 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   &[aria-selected="true"] {
     color: var(--color-link) !important;
     border-bottom-color: var(--color-link) !important;
+    outline: 0 !important;
   }
   &:hover, &:focus {
     @include lightDark(color, rgba(0, 0, 0, .8), rgba(255, 255, 255, .8));
     @include lightDark(border-bottom-color,  rgba(0, 0, 0, .2), rgba(255, 255, 255, .2));
+  }
+  &:focus {
+    outline: 1px dotted var(--color-primary);
+    outline-offset: -2px;
   }
 }
 .tab-container [role="tablist"].controls-card {
@@ -521,7 +574,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   cursor: pointer;
   width: 100%;
   text-align: left;
-  font-family: $mono;
+  font-family: var(--font-code);
   font-size: 0.7rem;
   padding-left: 24px + $-xs;
   &:hover, &.active {
@@ -610,6 +663,12 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
+.comments-container {
+  padding-inline: $-xl;
+  @include smaller-than($m) {
+    padding-inline: $-xs;
+  }
+}
 .comment-box {
   border-radius: 4px;
   border: 1px solid #DDD;
@@ -617,6 +676,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   @include lightDark(background-color, #FFF, #222);
   .content {
     font-size: 0.666em;
+    padding: $-xs $-s;
     p, ul, ol {
       font-size: $fs-m;
       margin: .5em 0;
@@ -629,26 +689,72 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   &:hover .actions, &:focus-within .actions {
     opacity: 1;
   }
+  .actions button:focus {
+    outline: 1px dotted var(--color-primary);
+  }
+  @include smaller-than($m) {
+    .actions {
+      opacity: 1;
+    }
+  }
 }
 
 .comment-box .header {
-  .meta {
-    img, a, span {
-      display: inline-block;
-      vertical-align: top;
-    }
-    a, span {
-      padding: $-xxs 0 $-xxs 0;
-      line-height: 1.6;
-    }
-    a { color: #666; }
-    span {
-      padding-inline-start: $-xxs;
-    }
+  border-bottom: 1px solid #DDD;
+  padding: $-xs $-s;
+  @include lightDark(border-color, #DDD, #000);
+  a {
+    color: inherit;
   }
   .text-muted {
     color: #999;
   }
+  .meta a, .meta span {
+    white-space: nowrap;
+  }
+  .right-meta .text-muted {
+    opacity: .8;
+  }
+}
+
+.comment-thread-indicator {
+  border-inline-start: 3px dotted #DDD;
+  @include lightDark(border-color, #DDD, #444);
+  margin-inline-start: $-xs;
+  width: $-l;
+  height: calc(100% - $-m);
+}
+
+.comment-branch .comment-branch .comment-branch .comment-branch .comment-thread-indicator {
+  display: none;
+}
+
+.comment-reply {
+  display: none;
+  margin: 0 !important;
+  margin-bottom: -$-xxs !important;
+}
+
+.comment-branch .comment-branch .comment-branch .comment-branch .comment-reply {
+  display: block;
+}
+
+.comment-container-compact .comment-box {
+  .meta {
+    font-size: 0.8rem;
+  }
+  .header {
+    padding: $-xs;
+  }
+  .right-meta {
+    display: none;
+  }
+  .content {
+    padding: $-xs $-s;
+  }
+}
+.comment-container-compact .comment-thread-indicator {
+  width: $-m;
 }
 
 #tag-manager .drag-card {
@@ -837,10 +943,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: inline-block;
 }
 .status-indicator-active {
-  background-color: $positive;
+  background-color: var(--color-positive);
 }
 .status-indicator-inactive {
-  background-color: $negative;
+  background-color: var(--color-negative);
 }
 
 .shortcut-container {

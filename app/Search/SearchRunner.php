@@ -2,12 +2,12 @@
 
 namespace BookStack\Search;
 
-use BookStack\Auth\Permissions\PermissionApplicator;
-use BookStack\Auth\User;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Permissions\PermissionApplicator;
+use BookStack\Users\Models\User;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;

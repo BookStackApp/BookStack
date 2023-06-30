@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Annuler',
+    'close' => 'Fermer',
     'confirm' => 'Confirmer',
     'back' => 'Retour',
     'save' => 'Enregistrer',

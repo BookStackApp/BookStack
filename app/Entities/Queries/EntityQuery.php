@@ -2,8 +2,8 @@
 
 namespace BookStack\Entities\Queries;
 
-use BookStack\Auth\Permissions\PermissionApplicator;
 use BookStack\Entities\EntityProvider;
+use BookStack\Permissions\PermissionApplicator;
 
 abstract class EntityQuery
 {

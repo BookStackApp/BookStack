@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Nustatymai',
     'settings_save' => 'Išsaugoti nustatymus',
-    'settings_save_success' => 'Nustatymai išsaugoti',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Galiojimo laikas',
     'user_api_token_expiry_desc' => 'Nustatykite datą kada šis prieigos raktas baigs galioti. Po šios datos, prašymai, atlikti naudojant šį prieigos raktą daugiau nebeveiks. Jeigu šį laukelį paliksite tuščią, galiojimo laikas bus nustatytas 100 metų į ateitį.',
     'user_api_token_create_secret_message' => 'Iš karto sukūrus šį prieigos raktą, bus sukurtas ir rodomas "Priegos rakto ID" ir "Prieigos rakto slėpinys". Prieigos rakto slėpinys bus rodomas tik vieną kartą, todėl būtinai nukopijuokite jį kur nors saugioje vietoje.',
-    'user_api_token_create_success' => 'API sąsajos prieigos raktas sėkmingai sukurtas',
-    'user_api_token_update_success' => 'API sąsajos prieigos raktas sėkmingai atnaujintas',
     'user_api_token' => 'API sąsajos prieigos raktas',
     'user_api_token_id' => 'Prieigos rakto ID',
     'user_api_token_id_desc' => 'Tai neredaguojamas sistemos sugeneruotas identifikatorius šiam prieigos raktui, kurį reikės pateikti API užklausose.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Ištrinti prieigos raktą',
     'user_api_token_delete_warning' => 'Tai pilnai ištrins šį API sąsajos prieigos raktą pavadinimu \':tokenName\' iš sistemos.',
     'user_api_token_delete_confirm' => 'Ar esate tikri, jog norite ištrinti šį API sąsajos prieigos raktą?',
-    'user_api_token_delete_success' => 'API sąsajos prieigos raktas sėkmingai ištrintas',
 
     // Webhooks
     'webhooks' => 'Webhooks',

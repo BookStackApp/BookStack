@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Configurações',
     'settings_save' => 'Salvar Configurações',
-    'settings_save_success' => 'Configurações salvas',
     'system_version' => 'Versão do Sistema',
     'categories' => 'Categorias',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Data de Expiração',
     'user_api_token_expiry_desc' => 'Defina uma data em que este token expira. Depois desta data, as requisições feitas usando este token não funcionarão mais. Deixar este campo em branco definirá um prazo de 100 anos futuros.',
     'user_api_token_create_secret_message' => 'Imediatamente após a criação deste token, um "ID de token" e "Secreto de token" serão gerados e exibidos. O segredo só será mostrado uma única vez, portanto, certifique-se de copiar o valor para algum lugar seguro antes de prosseguir.',
-    'user_api_token_create_success' => 'Token de API criado com sucesso',
-    'user_api_token_update_success' => 'Token de API atualizado com sucesso',
     'user_api_token' => 'Token de API',
     'user_api_token_id' => 'ID do Token',
     'user_api_token_id_desc' => 'Este é um identificador de sistema não editável, gerado para este token, que precisará ser fornecido em solicitações de API.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Excluir Token',
     'user_api_token_delete_warning' => 'Isto irá excluir completamente este token de API com o nome \':tokenName\' do sistema.',
     'user_api_token_delete_confirm' => 'Você tem certeza que deseja excluir este token de API?',
-    'user_api_token_delete_success' => 'Token de API excluído com sucesso',
 
     // Webhooks
     'webhooks' => 'Webhooks',

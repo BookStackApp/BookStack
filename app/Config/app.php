@@ -139,14 +139,14 @@ return [
         SocialiteProviders\Manager\ServiceProvider::class,
 
         // BookStack custom service providers
-        BookStack\Providers\ThemeServiceProvider::class,
-        BookStack\Providers\AppServiceProvider::class,
-        BookStack\Providers\AuthServiceProvider::class,
-        BookStack\Providers\EventServiceProvider::class,
-        BookStack\Providers\RouteServiceProvider::class,
-        BookStack\Providers\TranslationServiceProvider::class,
-        BookStack\Providers\ValidationRuleServiceProvider::class,
-        BookStack\Providers\ViewTweaksServiceProvider::class,
+        \BookStack\App\Providers\ThemeServiceProvider::class,
+        \BookStack\App\Providers\AppServiceProvider::class,
+        \BookStack\App\Providers\AuthServiceProvider::class,
+        \BookStack\App\Providers\EventServiceProvider::class,
+        \BookStack\App\Providers\RouteServiceProvider::class,
+        \BookStack\App\Providers\TranslationServiceProvider::class,
+        \BookStack\App\Providers\ValidationRuleServiceProvider::class,
+        \BookStack\App\Providers\ViewTweaksServiceProvider::class,
     ],
 
     // Class Aliases

@@ -232,6 +232,8 @@ class ImageGalleryApiTest extends TestCase
                 'html' => "<a href=\"{$image->url}\" target=\"_blank\"><img src=\"{$displayUrl}\" alt=\"{$image->name}\"></a>",
                 'markdown' => "![{$image->name}]({$displayUrl})",
             ],
+            'created_at' => $image->created_at->toISOString(),
+            'updated_at' => $image->updated_at->toISOString(),
         ]);
         $this->assertStringStartsWith('http://', $resp->json('thumbs.gallery'));
         $this->assertStringStartsWith('http://', $resp->json('thumbs.display'));
@@ -295,7 +297,24 @@ class ImageGalleryApiTest extends TestCase
         ]);
     }
 
-    public function test_update_endpoint_requires_image_delete_permission()
+    public function test_update_existing_image_file()
+    {
+        $this->actingAsApiAdmin();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage);
+        $image = Image::findOrFail($data['response']->id);
+
+        $this->assertFileEquals($this->files->testFilePath('test-image.png'), public_path($data['path']));
+
+        $resp = $this->call('PUT', $this->baseEndpoint . "/{$image->id}", [], [], [
+            'image' => $this->files->uploadedImage('my-cool-image.png', 'compressed.png'),
+        ]);
+
+        $resp->assertStatus(200);
+        $this->assertFileEquals($this->files->testFilePath('compressed.png'), public_path($data['path']));
+    }
+
+    public function test_update_endpoint_requires_image_update_permission()
     {
         $user = $this->users->editor();
         $this->actingAsForApi($user);

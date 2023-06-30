@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'a restauré la page',
     'page_restore_notification'   => 'Page restaurée avec succès',
     'page_move'                   => 'a déplacé la page',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'a créé le chapitre',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'a supprimé le chapitre',
     'chapter_delete_notification' => 'Chapitre supprimé avec succès',
     'chapter_move'                => 'a déplacé le chapitre',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'a créé un livre',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'étagère supprimée',
     'bookshelf_delete_notification'    => 'Étagère supprimée avec succès',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name" a été ajouté dans vos favoris',
     'favourite_remove_notification' => '":name" a été supprimé de vos favoris',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Méthode multi-facteurs configurée avec succès',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Méthode multi-facteurs supprimée avec succès',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'Créer un Webhook',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook supprimé avec succès',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Utilisateur mis à jour avec succès',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Utilisateur supprimé avec succès',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'Rôle créé avec succès',
+    'role_update' => 'updated role',
     'role_update_notification' => 'Rôle mis à jour avec succès',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'Rôle supprimé avec succès',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'a commenté',

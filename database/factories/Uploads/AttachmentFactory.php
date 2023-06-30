@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Uploads;
 
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Page;
+use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

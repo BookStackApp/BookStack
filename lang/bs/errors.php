@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Desila se greška prilikom učitavanja slike',
     'image_upload_type_error' => 'Vrsta slike koja se učitava je neispravna',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Snimanje skice nije uspjelo. Provjerite da ste povezani na internet prije snimanja ove stranice',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Stranicu nije moguće izbrisati dok se koristi kao početna stranica',
 
     // Entities

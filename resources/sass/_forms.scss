@@ -13,10 +13,10 @@
   max-width: 100%;
 
   &.neg, &.invalid {
-    border: 1px solid $negative;
+    border: 1px solid var(--color-negative);
   }
   &.pos, &.valid {
-    border: 1px solid $positive;
+    border: 1px solid var(--color-positive);
   }
   &.disabled, &[disabled] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMUlEQVQIW2NkwAGuXbv2nxGbHEhCS0uLEUMSJgHShCKJLIEiiS4Bl8QmAZbEJQGSBAC62BuJ+tt7zgAAAABJRU5ErkJggg==);
@@ -464,6 +464,58 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   .search-box-cancel {
     left: auto;
     right: 0;
+  }
+}
+
+.contained-search-box {
+  display: flex;
+  height: 38px;
+  z-index: -1;
+  &.floating {
+    box-shadow: $bs-med;
+    border-radius: 4px;
+    overflow: hidden;
+    @include whenDark {
+      border: 1px solid #000;
+    }
+  }
+  input, button {
+    height: 100%;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    @include lightDark(border-color, #ddd, #000);
+    margin-inline-start: -1px;
+    &:last-child {
+      border-inline-end: 0;
+    }
+  }
+  input {
+    border: 0;
+    flex: 5;
+    padding: $-xs $-s;
+    &:focus, &:active {
+      outline: 1px dotted var(--color-primary);
+      outline-offset: -2px;
+      border: 0;
+    }
+  }
+  button {
+    border: 0;
+    width: 48px;
+    border-inline-start: 1px solid #DDD;
+    background-color: #FFF;
+    @include lightDark(background-color, #FFF, #333);
+    @include lightDark(color, #444, #AAA);
+  }
+  button:focus {
+    outline: 1px dotted var(--color-primary);
+    outline-offset: -2px;
+  }
+  svg {
+    margin: 0;
+  }
+  @include smaller-than($s) {
+    width: 180px;
   }
 }
 

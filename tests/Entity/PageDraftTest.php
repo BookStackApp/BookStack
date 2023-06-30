@@ -166,6 +166,30 @@ class PageDraftTest extends TestCase
         ]);
     }
 
+    public function test_user_draft_removed_on_user_drafts_delete_call()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+
+        $this->actingAs($editor)->put('/ajax/page/' . $page->id . '/save-draft', [
+            'name' => $page->name,
+            'html' => '<p>updated draft again</p>',
+        ]);
+
+        $revisionData = [
+            'type' => 'update_draft',
+            'created_by' => $editor->id,
+            'page_id' => $page->id,
+        ];
+
+        $this->assertDatabaseHas('page_revisions', $revisionData);
+
+        $resp = $this->delete("/page-revisions/user-drafts/{$page->id}");
+
+        $resp->assertOk();
+        $this->assertDatabaseMissing('page_revisions', $revisionData);
+    }
+
     public function test_updating_page_draft_with_markdown_retains_markdown_content()
     {
         $book = $this->entities->book();

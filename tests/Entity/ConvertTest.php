@@ -2,8 +2,8 @@
 
 namespace Tests\Entity;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Actions\Tag;
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;

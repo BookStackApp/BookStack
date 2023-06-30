@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Beállítások',
     'settings_save' => 'Beállítások mentése',
-    'settings_save_success' => 'Beállítások elmentve',
     'system_version' => 'Rendszerverzió',
     'categories' => 'Kategóriák',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Lejárati dátum',
     'user_api_token_expiry_desc' => 'Dátum megadása ameddig a vezérjel érvényes. Ez után a dátum után az ezzel a vezérjellel történő kérések nem fognak működni. Üresen hagyva a lejárati idő 100 évre lesz beállítva.',
     'user_api_token_create_secret_message' => 'Immediately after creating this token a "Token ID" & "Token Secret" will be generated and displayed. The secret will only be shown a single time so be sure to copy the value to somewhere safe and secure before proceeding.',
-    'user_api_token_create_success' => 'API vezérjel sikeresen létrehozva',
-    'user_api_token_update_success' => 'API vezérjel sikeresen frissítve',
     'user_api_token' => 'API vezérjel',
     'user_api_token_id' => 'Vezérjel azonosító',
     'user_api_token_id_desc' => 'Ez egy nem szerkeszthető, a rendszer által létrehozott azonosító ehhez a vezérjelhez amire API kérésekben lehet szükség.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Vezérjel törlése',
     'user_api_token_delete_warning' => '\':tokenName\' nevű API vezérjel teljesen törölve lesz a rendszerből.',
     'user_api_token_delete_confirm' => 'Biztosan törölhető ez az API vezérjel?',
-    'user_api_token_delete_success' => 'API vezérjel sikeresen törölve',
 
     // Webhooks
     'webhooks' => 'Webhook-ok',

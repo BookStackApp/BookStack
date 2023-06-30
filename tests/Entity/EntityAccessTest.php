@@ -2,8 +2,8 @@
 
 namespace Tests\Entity;
 
-use BookStack\Auth\UserRepo;
 use BookStack\Entities\Models\Entity;
+use BookStack\Users\UserRepo;
 use Tests\TestCase;
 
 class EntityAccessTest extends TestCase
