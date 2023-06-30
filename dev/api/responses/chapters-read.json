@@ -9,15 +9,18 @@
   "updated_at": "2019-09-28T11:24:23.000000Z",
   "created_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
   "updated_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
   "owned_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
   "tags": [
     {

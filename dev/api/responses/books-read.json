@@ -7,15 +7,18 @@
   "updated_at": "2020-01-12T14:11:51.000000Z",
   "created_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
   "updated_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
   "owned_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
   "contents": [
     {
