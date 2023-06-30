@@ -24,16 +24,12 @@
     {
       "name": "Category",
       "value": "Top Content",
-      "order": 0,
-      "created_at": "2020-05-22T22:59:55.000000Z",
-      "updated_at": "2020-05-22T22:59:55.000000Z"
+      "order": 0
     },
     {
       "name": "Rating",
       "value": "Highest",
-      "order": 0,
-      "created_at": "2020-05-22T22:59:55.000000Z",
-      "updated_at": "2020-05-22T22:59:55.000000Z"
+      "order": 1
     }
   ]
 }
