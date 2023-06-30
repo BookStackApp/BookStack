@@ -365,7 +365,7 @@ return [
     'comment_new' => 'Nowy komentarz',
     'comment_created' => 'Skomentowano :createDiff',
     'comment_updated' => 'Zaktualizowano :updateDiff przez :username',
-    'comment_updated_indicator' => 'Updated',
+    'comment_updated_indicator' => 'Zaktualizowano',
     'comment_deleted_success' => 'Komentarz usunięty',
     'comment_created_success' => 'Komentarz dodany',
     'comment_updated_success' => 'Komentarz zaktualizowany',
