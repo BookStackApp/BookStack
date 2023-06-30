@@ -43,17 +43,35 @@
     {
       "id": 5,
       "name": "Sint explicabo alias sunt.",
-      "slug": "jbsQrzuaXe"
+      "slug": "jbsQrzuaXe",
+      "description": "Hic forum est.",
+      "created_at": "2020-04-10T13:31:04.000000Z",
+      "updated_at": "2020-04-10T13:31:04.000000Z",
+      "created_by": 1,
+      "updated_by": 1,
+      "owned_by": 1
     },
     {
       "id": 1,
       "name": "BookStack User Guide",
-      "slug": "bookstack-user-guide"
+      "slug": "bookstack-user-guide",
+      "description": "The Bookstack User Guide Book.",
+      "created_at": "2020-04-10T15:30:32.000000Z",
+      "updated_at": "2020-04-13T09:01:04.000000Z",
+      "created_by": 1,
+      "updated_by": 2,
+      "owned_by": 1
     },
     {
       "id": 3,
       "name": "Molestiae doloribus sint velit suscipit dolorem.",
-      "slug": "H99QxALaoG"
+      "slug": "H99QxALaoG",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "created_at": "2020-04-10T13:31:04.000000Z",
+      "updated_at": "2020-04-10T13:31:04.000000Z",
+      "created_by": 1,
+      "updated_by": 1,
+      "owned_by": 1
     }
   ]
 }
