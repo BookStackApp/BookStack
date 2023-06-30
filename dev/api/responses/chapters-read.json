@@ -45,6 +45,7 @@
       "draft": false,
       "revision_count": 2,
       "template": false,
+      "editor": "wysiwyg",
       "book_slug": "example-book"
     },
     {
@@ -61,6 +62,7 @@
       "draft": false,
       "revision_count": 1,
       "template": false,
+      "editor": "wysiwyg",
       "book_slug": "example-book"
     }
   ]
