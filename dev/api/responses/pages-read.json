@@ -28,6 +28,7 @@
 	"markdown": "# How this is built\r\n\r\nThis page is written in markdown. BookStack stores the page data in HTML.\r\n\r\nHere's a cute picture of my cat:\r\n\r\n[![yXSrubes.jpg](http://example.com/uploads/images/gallery/2020-04/scaled-1680-/yXSrubes.jpg)](http://example.com/uploads/images/gallery/2020-04/yXSrubes.jpg)",
 	"revision_count": 5,
 	"template": false,
+	"editor": "wysiwyg",
 	"tags": [
 		{
 			"name": "Category",
