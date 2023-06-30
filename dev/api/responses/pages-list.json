@@ -13,7 +13,8 @@
 			"updated_at": "2020-07-04T15:50:58.000000Z",
 			"created_by": 1,
 			"updated_by": 1,
-			"owned_by": 1
+			"owned_by": 1,
+			"book_slug": "example-book"
 		},
 		{
 			"id": 2,
@@ -28,7 +29,8 @@
 			"updated_at": "2019-06-06T12:03:04.000000Z",
 			"created_by": 1,
 			"updated_by": 1,
-			"owned_by": 1
+			"owned_by": 1,
+			"book_slug": "example-book"
 		},
 		{
 			"id": 3,
@@ -43,7 +45,8 @@
 			"updated_at": "2019-12-18T21:56:52.000000Z",
 			"created_by": 1,
 			"updated_by": 1,
-			"owned_by": 1
+			"owned_by": 1,
+			"book_slug": "example-book"
 		}
 	],
 	"total": 322
