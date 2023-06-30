@@ -11,7 +11,8 @@
       "updated_at": "2019-09-28T11:24:23.000000Z",
       "created_by": 1,
       "updated_by": 1,
-      "owned_by": 1
+      "owned_by": 1,
+      "book_slug": "example-book"
     },
     {
       "id": 2,
@@ -24,7 +25,8 @@
       "updated_at": "2019-10-17T15:05:34.000000Z",
       "created_by": 3,
       "updated_by": 3,
-      "owned_by": 3
+      "owned_by": 3,
+      "book_slug": "example-book"
     }
   ],
   "total": 40

@@ -22,6 +22,7 @@
     "name": "Admin",
     "slug": "admin"
   },
+  "book_slug": "example-book",
   "tags": [
     {
       "name": "Category",
@@ -43,7 +44,8 @@
       "updated_by": 1,
       "draft": false,
       "revision_count": 2,
-      "template": false
+      "template": false,
+      "book_slug": "example-book"
     },
     {
       "id": 7,
@@ -58,7 +60,8 @@
       "updated_by": 3,
       "draft": false,
       "revision_count": 1,
-      "template": false
+      "template": false,
+      "book_slug": "example-book"
     }
   ]
 }
