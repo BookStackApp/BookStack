@@ -11,15 +11,18 @@
 	"updated_at": "2020-11-28T15:01:39.000000Z",
 	"created_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"updated_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"owned_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"draft": false,
 	"markdown": "",
