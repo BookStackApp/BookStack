@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'がページを復元:',
     'page_restore_notification'   => 'ページを復元しました',
     'page_move'                   => 'がページを移動:',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'ページを移動しました',
 
     // Chapters
     'chapter_create'              => 'がチャプターを作成:',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'がチャプターを削除:',
     'chapter_delete_notification' => 'チャプターを削除しました',
     'chapter_move'                => 'がチャプターを移動:',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'チャプタを移動しました',
 
     // Books
     'book_create'                 => 'がブックを作成:',
@@ -52,7 +52,7 @@ return [
     // Revisions
     'revision_restore' => 'restored revision',
     'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_delete_notification' => 'リビジョンを削除しました',
 
     // Favourites
     'favourite_add_notification' => '":name"がお気に入りに追加されました',
@@ -70,7 +70,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => '設定を更新しました',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -83,7 +83,7 @@ return [
 
     // Users
     'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
+    'user_create_notification' => 'ユーザーを作成しました',
     'user_update' => 'updated user',
     'user_update_notification' => 'ユーザーを更新しました',
     'user_delete' => 'deleted user',
@@ -91,11 +91,11 @@ return [
 
     // API Tokens
     'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
+    'api_token_create_notification' => 'APIトークンを作成しました',
     'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_update_notification' => 'APIトークンを更新しました',
     'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete_notification' => 'APIトークンを削除しました',
 
     // Roles
     'role_create' => 'created role',
