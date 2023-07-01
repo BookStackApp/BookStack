@@ -17,9 +17,9 @@ return [
     'image_page_title' => 'このページにアップロードされた画像を表示',
     'image_search_hint' => '画像名で検索',
     'image_uploaded' => 'アップロード日時: :uploadedDate',
-    'image_uploaded_by' => 'Uploaded by :userName',
-    'image_uploaded_to' => 'Uploaded to :pageLink',
-    'image_updated' => 'Updated :updateDate',
+    'image_uploaded_by' => 'アップロードユーザ: :userName',
+    'image_uploaded_to' => 'アップロード先: :pageLink',
+    'image_updated' => '更新日時: :updateDate',
     'image_load_more' => 'さらに読み込む',
     'image_image_name' => '画像名',
     'image_delete_used' => 'この画像は以下のページで利用されています。',
@@ -32,7 +32,7 @@ return [
     'image_upload_success' => '画像がアップロードされました',
     'image_update_success' => '画像が更新されました',
     'image_delete_success' => '画像が削除されました',
-    'image_replace' => 'Replace Image',
+    'image_replace' => '画像の差し替え',
     'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
