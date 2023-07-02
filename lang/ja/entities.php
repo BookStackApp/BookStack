@@ -365,7 +365,7 @@ return [
     'comment_new' => '新規コメント作成',
     'comment_created' => 'コメントを作成しました :createDiff',
     'comment_updated' => ':username により更新しました :updateDiff',
-    'comment_updated_indicator' => 'Updated',
+    'comment_updated_indicator' => '編集済み',
     'comment_deleted_success' => 'コメントを削除しました',
     'comment_created_success' => 'コメントを追加しました',
     'comment_updated_success' => 'コメントを更新しました',
