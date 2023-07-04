@@ -63,7 +63,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Nije pronađeno',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Polica nije pronađena',
     'book_not_found' => 'Knjiga nije pronađena',
     'page_not_found' => 'Stranica nije pronađena',
     'chapter_not_found' => 'Poglavlje nije pronađeno',
@@ -92,9 +92,9 @@ return [
     '404_page_not_found' => 'Stranica nije pronađena',
     'sorry_page_not_found' => 'Žao nam je, stranica koju tražite nije pronađena.',
     'sorry_page_not_found_permission_warning' => 'Ako smatrate da ova stranica još postoji, ali je ne vidite, moguće je da nemate omogućen pristup.',
-    'image_not_found' => 'Image Not Found',
-    'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
-    'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
+    'image_not_found' => 'Slika Nije Pronađena',
+    'image_not_found_subtitle' => 'Žao nam je, slikovna datoteka koju tražite nije pronađena.',
+    'image_not_found_details' => 'Ako ste očekivali da ova slika postoji, moguće je da je izbrisana.',
     'return_home' => 'Povratak na početno',
     'error_occurred' => 'Došlo je do pogreške',
     'app_down' => ':appName trenutno nije dostupna',
