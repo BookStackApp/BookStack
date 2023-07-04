@@ -260,4 +260,30 @@ class RoleManagementTest extends TestCase
 
         $this->actingAs($viewer)->get($page->getUrl())->assertStatus(404);
     }
+
+    public function test_index_listing_sorting()
+    {
+        $this->asAdmin();
+        $role = $this->users->createRole();
+        $role->display_name = 'zz test role';
+        $role->created_at = now()->addDays(1);
+        $role->save();
+
+        $runTest = function (string $order, string $direction, bool $expectFirstResult) use ($role) {
+            setting()->putForCurrentUser('roles_sort', $order);
+            setting()->putForCurrentUser('roles_sort_order', $direction);
+            $html = $this->withHtml($this->get('/settings/roles'));
+            $selector = ".item-list-row:first-child a[href$=\"/roles/{$role->id}\"]";
+            if ($expectFirstResult) {
+                $html->assertElementExists($selector);
+            } else {
+                $html->assertElementNotExists($selector);
+            }
+        };
+
+        $runTest('name', 'asc', false);
+        $runTest('name', 'desc', true);
+        $runTest('created_at', 'desc', true);
+        $runTest('created_at', 'asc', false);
+    }
 }
