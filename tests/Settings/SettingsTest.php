@@ -6,6 +6,11 @@ use Tests\TestCase;
 
 class SettingsTest extends TestCase
 {
+    public function test_admin_can_see_settings()
+    {
+        $this->asAdmin()->get('/settings/features')->assertSee('Settings');
+    }
+
     public function test_settings_endpoint_redirects_to_settings_view()
     {
         $resp = $this->asAdmin()->get('/settings');
