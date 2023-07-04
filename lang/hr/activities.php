@@ -52,26 +52,26 @@ return [
     // Revisions
     'revision_restore' => 'obnovljena revizija',
     'revision_delete' => 'izbrisana revizija',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_delete_notification' => 'Revizija uspješno obrisana',
 
     // Favourites
     'favourite_add_notification' => '".ime" će biti dodano u tvoje favorite',
     'favourite_remove_notification' => '".ime" je uspješno maknuta iz tvojih favorita',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'prijavljen',
+    'auth_register' => 'registriran kao novi korisnik',
+    'auth_password_reset_request' => 'zahtjev za resetiranje korisničke lozinke',
+    'auth_password_reset_update' => 'resetiraj korisničku lozinku',
+    'mfa_setup_method' => 'konfiguriran MFA način',
     'mfa_setup_method_notification' => 'Metoda više-čimbenika je uspješno konfigurirana',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'uklonjen MFA način',
     'mfa_remove_method_notification' => 'Metoda više-čimbenika je uspješno izbrisana',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'ažurirane postavke',
+    'settings_update_notification' => 'Postavke uspješno ažurirane',
+    'maintenance_action_run' => 'izvršena akcija održavanja',
 
     // Webhooks
     'webhook_create' => 'web knjiga je kreirana',
