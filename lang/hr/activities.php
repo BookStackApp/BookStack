@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'obnovljena stranica',
     'page_restore_notification'   => 'Stranica je uspješno obnovljena',
     'page_move'                   => 'premještena stranica',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Stranica je uspješno premještene',
 
     // Chapters
     'chapter_create'              => 'stvoreno poglavlje',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'izbrisano poglavlje',
     'chapter_delete_notification' => 'Poglavlje je uspješno izbrisano',
     'chapter_move'                => 'premiješteno poglavlje',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Poglavlje je uspješno premješteno',
 
     // Books
     'book_create'                 => 'stvorena knjiga',
@@ -40,18 +40,18 @@ return [
     'book_sort_notification'      => 'Knjiga je uspješno razvrstana',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create'            => 'kreirana polica',
+    'bookshelf_create_notification'    => 'Polica uspješno kreirana',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Poglavlje je uspješno pretvoreno u knjigu',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'ažurirana polica',
+    'bookshelf_update_notification'    => 'Polica je uspješno ažurirana',
+    'bookshelf_delete'                 => 'izbrisana polica',
+    'bookshelf_delete_notification'    => 'Polica je uspješno izbrisana',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
+    'revision_restore' => 'obnovljena revizija',
+    'revision_delete' => 'izbrisana revizija',
     'revision_delete_notification' => 'Revision successfully deleted',
 
     // Favourites
