@@ -11,20 +11,24 @@
 	"updated_at": "2020-11-28T15:13:03.000000Z",
 	"created_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"updated_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"owned_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"draft": false,
 	"markdown": "",
 	"revision_count": 5,
 	"template": false,
+	"editor": "wysiwyg",
 	"tags": [
 		{
 			"name": "Category",

@@ -11,20 +11,24 @@
 	"updated_at": "2020-11-28T14:43:20.000000Z",
 	"created_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"updated_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"owned_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"draft": false,
 	"markdown": "# How this is built\r\n\r\nThis page is written in markdown. BookStack stores the page data in HTML.\r\n\r\nHere's a cute picture of my cat:\r\n\r\n[![yXSrubes.jpg](http://example.com/uploads/images/gallery/2020-04/scaled-1680-/yXSrubes.jpg)](http://example.com/uploads/images/gallery/2020-04/yXSrubes.jpg)",
 	"revision_count": 5,
 	"template": false,
+	"editor": "wysiwyg",
 	"tags": [
 		{
 			"name": "Category",
