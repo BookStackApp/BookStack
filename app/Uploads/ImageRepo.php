@@ -177,6 +177,7 @@ class ImageRepo
 
         $image->refresh();
         $image->updated_by = user()->id;
+        $image->touch();
         $image->save();
         $this->imageService->replaceExistingFromUpload($image->path, $image->type, $file);
         $this->loadThumbs($image, true);
