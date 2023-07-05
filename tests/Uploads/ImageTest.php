@@ -104,10 +104,17 @@ class ImageTest extends TestCase
         $this->assertFileEquals($this->files->testFilePath('test-image.png'), public_path($relPath));
 
         $imageId = $imgDetails['response']->id;
+        $image = Image::findOrFail($imageId);
+        $image->updated_at = now()->subMonth();
+        $image->save();
+
         $this->call('PUT', "/images/{$imageId}/file", [], [], ['file' => $newUpload])
             ->assertOk();
 
         $this->assertFileEquals($this->files->testFilePath('compressed.png'), public_path($relPath));
+
+        $image->refresh();
+        $this->assertTrue($image->updated_at->gt(now()->subMinute()));
 
         $this->files->deleteAtRelativePath($relPath);
     }

@@ -31,7 +31,7 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'scheme' => ($mailEncryption === 'tls' || $mailEncryption === 'ssl') ? 'smtps' : null,
+            'scheme' => null,
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
             'port' => env('MAIL_PORT', 587),
             'username' => env('MAIL_USERNAME'),
@@ -39,6 +39,7 @@ return [
             'verify_peer' => env('MAIL_VERIFY_SSL', true),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'tls_required' => ($mailEncryption === 'tls' || $mailEncryption === 'ssl'),
         ],
 
         'sendmail' => [
