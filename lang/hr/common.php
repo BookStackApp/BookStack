@@ -60,7 +60,7 @@ return [
     'sort_name' => 'Ime',
     'sort_default' => 'Zadano',
     'sort_created_at' => 'Datum',
-    'sort_updated_at' => 'Ažuriraj datum',
+    'sort_updated_at' => 'Datum Ažuriranja',
 
     // Misc
     'deleted_user' => 'Izbrisani korisnik',
