@@ -111,11 +111,11 @@
                                 <div>{{ $activity->detail }}</div>
                             @endif
                         </div>
-                        <div class="flex-container-row flex-3">
-                            <div class="flex px-m py-xxs min-width-xs"><strong
+                        <div class="flex-container-row flex-3 min-width-m">
+                            <div class="flex-2 px-m py-xxs min-width-xs break-text"><strong
                                         class="mr-xs hide-over-m">{{ trans('settings.audit_table_ip') }}
                                     :<br></strong> {{ $activity->ip }}</div>
-                            <div class="flex-2 px-m py-xxs text-m-right min-width-xs"><strong
+                            <div class="flex-3 px-m py-xxs text-m-right min-width-xs"><strong
                                         class="mr-xs hide-over-m">{{ trans('settings.audit_table_date') }}
                                     :<br></strong> {{ $activity->created_at }}</div>
                         </div>
