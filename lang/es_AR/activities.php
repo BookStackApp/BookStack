@@ -59,9 +59,9 @@ return [
     'favourite_remove_notification' => '".name" se eliminó de sus favoritos',
 
     // Auth
-    'auth_login' => 'conectado',
-    'auth_register' => 'registrado como nuevo usuario',
-    'auth_password_reset_request' => 'solicitado cambio de contraseña de usuario',
+    'auth_login' => 'sesión iniciada',
+    'auth_register' => 'registrado como usuario nuevo',
+    'auth_password_reset_request' => 'cambio de contraseña de usuario solicitado',
     'auth_password_reset_update' => 'restablecer contraseña de usuario',
     'mfa_setup_method' => 'método MFA configurado',
     'mfa_setup_method_notification' => 'Método de autenticación de múltiples factores configurado satisfactoriamente',
@@ -70,8 +70,8 @@ return [
 
     // Settings
     'settings_update' => 'ajustes actualizados',
-    'settings_update_notification' => 'Configuración actualizada correctamente',
-    'maintenance_action_run' => 'ejecutada acción de mantenimiento',
+    'settings_update_notification' => 'Configuraciones actualizadas correctamente',
+    'maintenance_action_run' => 'ejecutar acción de mantenimiento',
 
     // Webhooks
     'webhook_create' => 'webhook creado',
@@ -90,24 +90,24 @@ return [
     'user_delete_notification' => 'El usuario fue eliminado correctamente',
 
     // API Tokens
-    'api_token_create' => 'token de api creado',
-    'api_token_create_notification' => 'Token API creado correctamente',
-    'api_token_update' => 'token de api actualizado',
-    'api_token_update_notification' => 'Token API actualizado correctamente',
-    'api_token_delete' => 'token de api borrado',
-    'api_token_delete_notification' => 'Token API borrado correctamente',
+    'api_token_create' => 'token de API creado',
+    'api_token_create_notification' => 'Token de API creado correctamente',
+    'api_token_update' => 'token de API actualizado',
+    'api_token_update_notification' => 'Token de API actualizado correctamente',
+    'api_token_delete' => 'token de API eliminado',
+    'api_token_delete_notification' => 'Token de API eliminado correctamente',
 
     // Roles
     'role_create' => 'rol creado',
     'role_create_notification' => 'Rol creado correctamente',
     'role_update' => 'rol actualizado',
     'role_update_notification' => 'Rol actualizado correctamente',
-    'role_delete' => 'rol borrado',
+    'role_delete' => 'rol eliminado',
     'role_delete_notification' => 'Rol eliminado correctamente',
 
     // Recycle Bin
     'recycle_bin_empty' => 'papelera de reciclaje vaciada',
-    'recycle_bin_restore' => 'restaurado de la papelera de reciclaje',
+    'recycle_bin_restore' => 'restaurado desde la papelera de reciclaje',
     'recycle_bin_destroy' => 'eliminado de la papelera de reciclaje',
 
     // Other
