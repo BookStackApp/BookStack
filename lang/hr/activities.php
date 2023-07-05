@@ -74,12 +74,12 @@ return [
     'maintenance_action_run' => 'izvršena akcija održavanja',
 
     // Webhooks
-    'webhook_create' => 'web knjiga je kreirana',
-    'webhook_create_notification' => 'Web knjiga je uspješno kreirana',
-    'webhook_update' => 'web knjiga je ažurirana',
-    'webhook_update_notification' => 'Web knjiga je uspješno ažurirana',
-    'webhook_delete' => 'web knjiga je izbrisana',
-    'webhook_delete_notification' => 'Web knjga je uspješno izbrisana',
+    'webhook_create' => 'web-dojavnik je kreiran',
+    'webhook_create_notification' => 'Web-dojavnik je uspješno kreiran',
+    'webhook_update' => 'web-dojavnik je ažuriran',
+    'webhook_update_notification' => 'Web- dojavnik je uspješno ažuriran',
+    'webhook_delete' => 'web- dojavnik izbrisan',
+    'webhook_delete_notification' => 'Web-dojavnik je uspješno izbrisan',
 
     // Users
     'user_create' => 'kreirani korisnik',
@@ -107,8 +107,8 @@ return [
 
     // Recycle Bin
     'recycle_bin_empty' => 'koš za smeće ispražnjen',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_restore' => 'reciklirano iz koša za smeće',
+    'recycle_bin_destroy' => 'uklonjeno iz koša za smeće',
 
     // Other
     'commented_on'                => 'komentirano',
