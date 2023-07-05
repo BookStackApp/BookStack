@@ -42,7 +42,7 @@ return [
     // Bookshelves
     'bookshelf_create'            => 'kreirana polica',
     'bookshelf_create_notification'    => 'Polica uspješno kreirana',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create_from_book'    => 'pretvorena knjiga u policu',
     'bookshelf_create_from_book_notification'    => 'Poglavlje je uspješno pretvoreno u knjigu',
     'bookshelf_update'                 => 'ažurirana polica',
     'bookshelf_update_notification'    => 'Polica je uspješno ažurirana',
@@ -82,31 +82,31 @@ return [
     'webhook_delete_notification' => 'Web knjga je uspješno izbrisana',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'kreirani korisnik',
+    'user_create_notification' => 'Korisnik je uspješno kreiran',
+    'user_update' => 'ažurirani korisnik',
     'user_update_notification' => 'Korisnik je uspješno ažuriran',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'izbrisani korisnik',
     'user_delete_notification' => 'Korisnik je uspješno uklonjen',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'kreirani API token',
+    'api_token_create_notification' => 'API token uspješno kreiran',
+    'api_token_update' => 'ažurirani API token',
+    'api_token_update_notification' => 'API token uspješno ažuriran',
+    'api_token_delete' => 'obrisan API token',
+    'api_token_delete_notification' => 'API token uspješno izbrisan',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'kreirana uloga',
+    'role_create_notification' => 'Uloga uspješno stvorena',
+    'role_update' => 'ažurirana uloga',
+    'role_update_notification' => 'Uloga uspješno ažurirana',
+    'role_delete' => 'izbrisana uloga',
+    'role_delete_notification' => 'Uloga je uspješno izbrisana',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_empty' => 'koš za smeće ispražnjen',
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
