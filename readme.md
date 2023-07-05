@@ -45,9 +45,6 @@ Note: Listed services are not tested, vetted nor supported by the official BookS
 <td><a href="https://www.diagrams.net/" target="_blank">
     <img width="400" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/diagramsnet.png" alt="Diagrams.net">
 </a></td>
-<td><a href="https://cloudabove.com/hosting" target="_blank">
-    <img height="100" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/cloudabove.png" alt="Cloudabove">
-</a></td>
 </tr></tbody></table>
 
 #### Bronze Sponsors
