@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'Prečaci',
+    'shortcuts_interface' => 'Prečaci tipkovnice u Sučelju',
+    'shortcuts_toggle_desc' => 'Ovdje možete omogućiti ili onemogućiti prečace tastature u korisničkom sučelju sustava koji se koriste za navigaciju i akcije.',
+    'shortcuts_customize_desc' => 'Možete prilagoditi svaki od prečaca u nastavku. Samo pritisnite željenu kombinaciju tipki nakon odabira polja za unos prečaca.',
+    'shortcuts_toggle_label' => 'Prečaci tipkovnice omogućeni',
+    'shortcuts_section_navigation' => 'Navigacija',
+    'shortcuts_section_actions' => 'Uobičajene radnje',
+    'shortcuts_save' => 'Spremi prečace',
+    'shortcuts_overlay_desc' => 'Napomena: Kada su prečaci tastature omogućeni, dostupan je pomoćni prikaz preko pritiska na znak "?" koji će istaknuti dostupne prečace za radnje trenutno vidljive na zaslonu.',
+    'shortcuts_update_success' => 'Postavke prečaca su ažurirane!',
 ];
