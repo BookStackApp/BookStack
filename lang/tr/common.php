@@ -93,9 +93,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Bilgi',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Sekme: İkincil Bilgileri Göster',
     'tab_content' => 'İçerik',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Sekme: Birincil Bilgileri Göster',
 
     // Email Content
     'email_action_help' => 'Eğer ":actionText" butonuna tıklamakta zorluk çekiyorsanız, aşağıda bulunan linki kopyalayıp tarayıcınıza yapıştırabilirsiniz.',
