@@ -160,7 +160,7 @@ return [
     'about' => 'Editör hakkında',
     'about_title' => 'WYSIWYG editor hakkında',
     'editor_license' => 'Editor Lisans ve Telif Hakkı',
-    'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
+    'editor_tiny_license' => 'Bu düzenleyici, MIT lisansı altında sağlanan :tinyLink kullanılarak oluşturulmuştur.',
     'editor_tiny_license_link' => 'TinyMCE telif ve lisans bilgilerini burada bulabilirsiniz.',
     'save_continue' => 'Kaydet & Devam Et',
     'callouts_cycle' => '(Türler arasında geçiş için basmaya devam ediniz)',
