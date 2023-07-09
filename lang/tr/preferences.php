@@ -6,7 +6,7 @@
 
 return [
     'shortcuts' => 'Kısayollar',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
+    'shortcuts_interface' => 'Klavye Kısayollarını Görüntüle',
     'shortcuts_toggle_desc' => 'Burada, gezinme ve eylemler için kullanılan klavye sistem arayüzü kısayollarını etkinleştirebilir veya devre dışı bırakabilirsiniz.',
     'shortcuts_customize_desc' => 'Aşağıdaki kısayolların her birini özelleştirebilirsiniz. Bir kısayol için girişi seçtikten sonra istediğiniz tuş kombinasyonuna basmanız yeterlidir.',
     'shortcuts_toggle_label' => 'Klavye kısayolları etkinleştirildi',
