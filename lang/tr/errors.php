@@ -23,10 +23,10 @@ return [
     'saml_no_email_address' => 'Harici kimlik doğrulama sisteminden gelen veriler, bu kullanıcının e-posta adresini içermiyor',
     'saml_invalid_response_id' => 'Harici doğrulama sistemi tarafından sağlanan bir veri talebi, bu uygulama tarafından başlatılan bir işlem tarafından tanınamadı. Giriş yaptıktan sonra geri dönmek bu soruna yol açmış olabilir.',
     'saml_fail_authed' => ':system kullanarak giriş yapma başarısız oldu; sistem, başarılı bir kimlik doğrulama sağlayamadı',
-    'oidc_already_logged_in' => 'Already logged in',
-    'oidc_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
-    'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'oidc_already_logged_in' => 'Zaten oturum açılmış',
+    'oidc_user_not_registered' => ':name adlı kullanıcı kayıtlı değil ve otomatik kaydolma devre dışı bırakılmış',
+    'oidc_no_email_address' => 'Harici kimlik doğrulama sisteminden gelen veriler, bu kullanıcının e-posta adresini içermiyor',
+    'oidc_fail_authed' => ':system kullanarak giriş yapma başarısız oldu; sistem, başarılı bir kimlik doğrulama sağlayamadı',
     'social_no_action_defined' => 'Herhangi bir eylem tanımlanmamış',
     'social_login_bad_response' => ":socialAccount girişi sırasında bir hata meydana geldi: \n:error",
     'social_account_in_use' => 'Bu :socialAccount zaten kullanımda, :socialAccount hesabıyla giriş yapmayı deneyin.',
@@ -49,12 +49,12 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Görsel yüklenirken bir hata meydana geldi',
     'image_upload_type_error' => 'Yüklemeye çalıştığınız dosya türü geçersizdir',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_replace_type' => 'Görsel dosyası değişimleri, aynı dosya uzantı tipinde olmalı',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
     'attachment_not_found' => 'Ek bulunamadı',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Ekler yüklenirken bir hata oluştu',
 
     // Pages
     'page_draft_autosave_fail' => 'Taslak kaydetme başarısız oldu. Bu sayfayı kaydetmeden önce internet bağlantınız olduğundan emin olun',
@@ -63,7 +63,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Öge bulunamadı',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Kitaplık bulunamadı',
     'book_not_found' => 'Kitap bulunamadı',
     'page_not_found' => 'Sayfa bulunamadı',
     'chapter_not_found' => 'Bölüm bulunamadı',
