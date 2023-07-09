@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'sayfayı eski haline getirdi',
     'page_restore_notification'   => 'Sayfa Başarıyla Eski Haline Getirildi',
     'page_move'                   => 'sayfa taşındı',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Sayfa başarıyla taşındı',
 
     // Chapters
     'chapter_create'              => 'bölüm oluşturdu',
@@ -25,13 +25,13 @@ return [
     'chapter_delete'              => 'bölümü sildi',
     'chapter_delete_notification' => 'Bölüm başarıyla silindi',
     'chapter_move'                => 'bölümü taşıdı',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Bölüm başarıyla taşındı',
 
     // Books
     'book_create'                 => 'kitap oluşturdu',
     'book_create_notification'    => 'Kitap başarıyla oluşturuldu',
     'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter_notification' => 'Bölüm başarıyla kitaba dönüştürüldü',
     'book_update'                 => 'kitabı güncelledi',
     'book_update_notification'    => 'Kitap başarıyla güncellendi',
     'book_delete'                 => 'kitabı sildi',
@@ -41,7 +41,7 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'kitaplık oluşturuldu',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_notification'    => 'Kitaplık başarıyla oluşturuldu',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'updated shelf',
