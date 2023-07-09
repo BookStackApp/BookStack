@@ -36,8 +36,8 @@ return [
     'book_update_notification'    => 'ブックを更新しました',
     'book_delete'                 => 'がブックを削除:',
     'book_delete_notification'    => 'ブックを削除しました',
-    'book_sort'                   => 'がブックの並び順を変更:',
-    'book_sort_notification'      => 'ブックが再度並び変えられました',
+    'book_sort'                   => 'がブック内の並び順を変更:',
+    'book_sort_notification'      => 'ブック内の並び順を変更しました',
 
     // Bookshelves
     'bookshelf_create'            => 'が本棚を作成:',
