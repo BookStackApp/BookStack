@@ -50,7 +50,7 @@ return [
     'image_upload_error' => 'Görsel yüklenirken bir hata meydana geldi',
     'image_upload_type_error' => 'Yüklemeye çalıştığınız dosya türü geçersizdir',
     'image_upload_replace_type' => 'Görsel dosyası değişimleri, aynı dosya uzantı tipinde olmalı',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Çizim verileri yüklenemedi. Çizim dosyası artık mevcut olmayabilir veya erişim izniniz olmayabilir.',
 
     // Attachments
     'attachment_not_found' => 'Ek bulunamadı',
@@ -58,7 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Taslak kaydetme başarısız oldu. Bu sayfayı kaydetmeden önce internet bağlantınız olduğundan emin olun',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Sayfa taslağı silinemedi ve geçerli sayfanın kayıtlı içeriği getirilemedi',
     'page_custom_home_deletion' => 'Bu sayfa, "Ana Sayfa" olarak ayarlandığı için silinemez',
 
     // Entities
@@ -92,9 +92,9 @@ return [
     '404_page_not_found' => 'Sayfa Bulunamadı',
     'sorry_page_not_found' => 'Üzgünüz, aradığınız sayfa bulunamıyor.',
     'sorry_page_not_found_permission_warning' => 'Bu sayfanın var olduğunu düşünüyorsanız, görüntüleme iznine sahip olmayabilirsiniz.',
-    'image_not_found' => 'Image Not Found',
-    'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
-    'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
+    'image_not_found' => 'Görsel Bulunamadı',
+    'image_not_found_subtitle' => 'Üzgünüz, aradığınız görsel dosyası bulunamadı.',
+    'image_not_found_details' => 'Bu resmin var olmasını bekliyorsanız silinmiş olabilir.',
     'return_home' => 'Ana sayfaya dön',
     'error_occurred' => 'Bir Hata Oluştu',
     'app_down' => ':appName şu anda erişilemez durumda',
