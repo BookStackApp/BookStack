@@ -60,9 +60,9 @@ return [
 
     // Auth
     'auth_login' => 'がログイン',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
+    'auth_register' => 'が新規ユーザ登録',
+    'auth_password_reset_request' => 'がパスワードリセットを要求',
+    'auth_password_reset_update' => 'がパスワードをリセット',
     'mfa_setup_method' => 'が多要素認証を設定',
     'mfa_setup_method_notification' => '多要素認証を設定しました',
     'mfa_remove_method' => 'が多要素認証を削除',
