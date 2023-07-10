@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'a restauré la page',
     'page_restore_notification'   => 'Page restaurée avec succès',
     'page_move'                   => 'a déplacé la page',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Page déplacée avec succès',
 
     // Chapters
     'chapter_create'              => 'a créé le chapitre',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'a supprimé le chapitre',
     'chapter_delete_notification' => 'Chapitre supprimé avec succès',
     'chapter_move'                => 'a déplacé le chapitre',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Chapitre déplacé avec succès',
 
     // Books
     'book_create'                 => 'a créé un livre',
@@ -50,26 +50,26 @@ return [
     'bookshelf_delete_notification'    => 'Étagère supprimée avec succès',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'révision restaurée',
+    'revision_delete' => 'révision supprimée',
+    'revision_delete_notification' => 'Révision supprimée avec succès',
 
     // Favourites
     'favourite_add_notification' => '":name" a été ajouté dans vos favoris',
     'favourite_remove_notification' => '":name" a été supprimé de vos favoris',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'connecté',
+    'auth_register' => 'enregistré en tant que nouvel utilisateur',
+    'auth_password_reset_request' => 'demande de réinitialisation du mot de passe utilisateur',
+    'auth_password_reset_update' => 'réinitialiser le mot de passe de l\'utilisateur',
+    'mfa_setup_method' => 'méthode MFA configurée',
     'mfa_setup_method_notification' => 'Méthode multi-facteurs configurée avec succès',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'méthode MFA supprimée',
     'mfa_remove_method_notification' => 'Méthode multi-facteurs supprimée avec succès',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => 'paramètres mis à jour',
     'settings_update_notification' => 'Settings successfully updated',
     'maintenance_action_run' => 'ran maintenance action',
 
