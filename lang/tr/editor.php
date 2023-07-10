@@ -150,7 +150,7 @@ return [
     'open_link_new' => 'Yeni pencere',
     'remove_link' => 'Bağlantıyı kaldır',
     'insert_collapsible' => 'Küçültülebilir blok ekle',
-    'collapsible_unwrap' => 'Unwrap',
+    'collapsible_unwrap' => 'Aç',
     'edit_label' => 'Etiketi düzenle',
     'toggle_open_closed' => 'Değiştir açık/kapalı',
     'collapsible_edit' => 'Küçültülebilir bloğu düzenle',
