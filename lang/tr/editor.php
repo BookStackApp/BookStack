@@ -129,10 +129,10 @@ return [
     'cell_border_dotted' => 'Noktalı',
     'cell_border_dashed' => 'Kesik çizgili',
     'cell_border_double' => 'Çift',
-    'cell_border_groove' => 'Groove',
-    'cell_border_ridge' => 'Ridge',
-    'cell_border_inset' => 'Inset',
-    'cell_border_outset' => 'Outset',
+    'cell_border_groove' => 'Oyuk',
+    'cell_border_ridge' => 'Sırt',
+    'cell_border_inset' => 'İçe Dönük',
+    'cell_border_outset' => 'Dışa Dönük',
     'cell_border_none' => 'Hiçbiri',
     'cell_border_hidden' => 'Gizli',
 
@@ -152,7 +152,7 @@ return [
     'insert_collapsible' => 'Küçültülebilir blok ekle',
     'collapsible_unwrap' => 'Unwrap',
     'edit_label' => 'Etiketi düzenle',
-    'toggle_open_closed' => 'Toggle open/closed',
+    'toggle_open_closed' => 'Değiştir açık/kapalı',
     'collapsible_edit' => 'Küçültülebilir bloğu düzenle',
     'toggle_label' => 'Etiketleri aç/kapa',
 
