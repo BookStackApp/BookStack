@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Mégsem',
+    'close' => 'Close',
     'confirm' => 'Megerősítés',
     'back' => 'Vissza',
     'save' => 'Mentés',

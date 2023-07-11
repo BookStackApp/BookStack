@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'taastas lehe',
     'page_restore_notification'   => 'Leht on taastatud',
     'page_move'                   => 'liigutas lehte',
+    'page_move_notification'      => 'Leht on liigutatud',
 
     // Chapters
     'chapter_create'              => 'lisas peatüki',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'kustutas peatüki',
     'chapter_delete_notification' => 'Peatükk on kustutatud',
     'chapter_move'                => 'liigutas peatükki',
+    'chapter_move_notification' => 'Peatükk on liigutatud',
 
     // Books
     'book_create'                 => 'lisas raamatu',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'kustutas riiuli',
     'bookshelf_delete_notification'    => 'Riiul on kustutatud',
 
+    // Revisions
+    'revision_restore' => 'taastas redaktsiooni',
+    'revision_delete' => 'kustutas redaktsiooni',
+    'revision_delete_notification' => 'Redaktsioon on kustutatud',
+
     // Favourites
     'favourite_add_notification' => '":name" lisati su lemmikute hulka',
     'favourite_remove_notification' => '":name" eemaldati su lemmikute hulgast',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logis sisse',
+    'auth_register' => 'registreerus uue kasutajana',
+    'auth_password_reset_request' => 'soovis parooli lähtestamist',
+    'auth_password_reset_update' => 'lähtestas kasutaja parooli',
+    'mfa_setup_method' => 'seadistas mitmeastmelise autentimise meetodi',
     'mfa_setup_method_notification' => 'Mitmeastmeline autentimine seadistatud',
+    'mfa_remove_method' => 'eemaldas mitmeastmelise autentimise meetodi',
     'mfa_remove_method_notification' => 'Mitmeastmeline autentimine eemaldatud',
+
+    // Settings
+    'settings_update' => 'uuendas seadeid',
+    'settings_update_notification' => 'Seaded uuendatud',
+    'maintenance_action_run' => 'käivitas hooldustegevuse',
 
     // Webhooks
     'webhook_create' => 'lisas veebihaagi',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Veebihaak on kustutatud',
 
     // Users
+    'user_create' => 'lisas kasutaja',
+    'user_create_notification' => 'Kasutaja on lisatud',
+    'user_update' => 'muutis kasutajat',
     'user_update_notification' => 'Kasutaja on muudetud',
+    'user_delete' => 'kustutas kasutaja',
     'user_delete_notification' => 'Kasutaja on kustutatud',
 
+    // API Tokens
+    'api_token_create' => 'lisas API tunnuse',
+    'api_token_create_notification' => 'API tunnus on lisatud',
+    'api_token_update' => 'muutis API tunnust',
+    'api_token_update_notification' => 'API tunnus on muudetud',
+    'api_token_delete' => 'kustutas API tunnuse',
+    'api_token_delete_notification' => 'API tunnus on kustutatud',
+
     // Roles
+    'role_create' => 'lisas rolli',
     'role_create_notification' => 'Roll on lisatud',
+    'role_update' => 'muutis rolli',
     'role_update_notification' => 'Roll on muudetud',
+    'role_delete' => 'kustutas rolli',
     'role_delete_notification' => 'Roll on kustutatud',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'tühjendas prügikasti',
+    'recycle_bin_restore' => 'taastas prügikastist',
+    'recycle_bin_destroy' => 'eemaldas prügikastist',
 
     // Other
     'commented_on'                => 'kommenteeris lehte',

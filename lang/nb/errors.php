@@ -49,14 +49,16 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Bildet kunne ikke lastes opp, forsøk igjen.',
     'image_upload_type_error' => 'Bildeformatet støttes ikke, forsøk med et annet format.',
+    'image_upload_replace_type' => 'Bildeerstatning må være av samme type',
     'drawing_data_not_found' => 'Tegningsdata kunne ikke lastes. Det er mulig at tegningsfilen ikke finnes lenger, eller du har ikke rettigheter til å få tilgang til den.',
 
     // Attachments
     'attachment_not_found' => 'Vedlegget ble ikke funnet',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'En feil har oppstått ved opplasting av vedleggsfil',
 
     // Pages
     'page_draft_autosave_fail' => 'Kunne ikke lagre utkastet, forsikre deg om at du er tilkoblet tjeneren (Har du nettilgang?)',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Kan ikke slette en side som er satt som forside.',
 
     // Entities

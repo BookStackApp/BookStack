@@ -42,6 +42,7 @@ class CommentController extends Controller
         $comment = $this->commentRepo->create($page, $request->get('text'), $request->get('parent_id'));
 
         return view('comments.comment-branch', [
+            'readOnly' => false,
             'branch' => [
                 'comment' => $comment,
                 'children' => [],
@@ -66,7 +67,7 @@ class CommentController extends Controller
 
         $comment = $this->commentRepo->update($comment, $request->get('text'));
 
-        return view('comments.comment', ['comment' => $comment]);
+        return view('comments.comment', ['comment' => $comment, 'readOnly' => false]);
     }
 
     /**

@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Annuller',
+    'close' => 'Close',
     'confirm' => 'Bekræft',
     'back' => 'Tilbage',
     'save' => 'Gem',

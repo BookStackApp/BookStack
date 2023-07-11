@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Wystąpił błąd podczas przesyłania obrazka',
     'image_upload_type_error' => 'Typ przesłanego obrazka jest nieprwidłowy.',
+    'image_upload_replace_type' => 'Zamienniki plików graficznych muszą być tego samego typu',
     'drawing_data_not_found' => 'Nie można załadować danych rysunku. Plik rysunku może już nie istnieć lub nie masz uprawnień dostępu do niego.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Zapis wersji roboczej nie powiódł się. Upewnij się, że posiadasz połączenie z internetem.',
+    'page_draft_delete_fail' => 'Nie udało się usunąć wersji roboczej strony i pobrać bieżącej zawartości strony',
     'page_custom_home_deletion' => 'Nie można usunąć strony, jeśli jest ona ustawiona jako strona główna',
 
     // Entities

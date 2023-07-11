@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Chọn Ảnh',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => 'Tải ảnh lên',
     'image_intro' => 'Bạn có thể lựa chọn và quản lý các hình ảnh đã được tải lên hệ thống từ trước ở đây.',
     'image_intro_upload' => 'Tải lên ảnh mới bằng cách kéo và thả nó vào cửa sổ này, hoặc sử dụng nút tải ảnh ở bên trên.',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'Xem các ảnh đã được tải lên trong trang này',
     'image_search_hint' => 'Tìm kiếm ảnh bằng tên',
     'image_uploaded' => 'Đã tải lên :uploadedDate',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'Hiện thêm',
     'image_image_name' => 'Tên Ảnh',
     'image_delete_used' => 'Ảnh này được sử dụng trong các trang dưới đây.',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => 'Ảnh đã tải lên thành công',
     'image_update_success' => 'Chi tiết ảnh được cập nhật thành công',
     'image_delete_success' => 'Ảnh đã được xóa thành công',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'Sửa Mã',

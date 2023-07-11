@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Iestatījumi',
     'settings_save' => 'Saglabāt iestatījumus',
-    'settings_save_success' => 'Iestatījumi saglabāti',
     'system_version' => 'Sistēmas versija',
     'categories' => 'Kategorijas',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'Derīgs līdz',
     'user_api_token_expiry_desc' => 'Uzstādiet datumu, kad beidzas žetona derīguma termiņš. Pieprasījumi, kas veikti pēc šī datuma ar šo žetonu vairs nedarbosies. Atstājot lauku tukšu, tiks uzstādīts derīguma termiņš 100 gadu nākotnē.',
     'user_api_token_create_secret_message' => 'Uzreiz pēc žetona izveidošanas tiks parādīts žetona ID un žetona noslēpums. Šis noslēpums tiks attēlots tikai vienreiz, tāpēc pārliecinieties, ka tā vērtība ir nokopēta uz kādu citu drošu vietu pirms turpināšanas.',
-    'user_api_token_create_success' => 'API žetons veiksmīgi izveidots',
-    'user_api_token_update_success' => 'API žetons veiksmīgi atjaunināts',
     'user_api_token' => 'API žetons',
     'user_api_token_id' => 'Žetona ID',
     'user_api_token_id_desc' => 'Šis ir neizmaināms sistēmas ģenerēts identifikators šim žetonam, kas būs jānorāda API pieprasījumos.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'Dzēst žetonu',
     'user_api_token_delete_warning' => 'Šī darbība pilnībā izdzēsīs API žetonu \':tokenName\' no sistēmas.',
     'user_api_token_delete_confirm' => 'Vai tiešām vēlaties dzēst šo API žetonu?',
-    'user_api_token_delete_success' => 'API žetons veiksmīgi dzēsts',
 
     // Webhooks
     'webhooks' => 'Webhook',

@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'tudalen wedi\'i hadfer',
     'page_restore_notification'   => 'Cafodd y dudalen ei hadfer yn llwyddiannus',
     'page_move'                   => 'symwyd tudalen',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'pennod creu',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'pennod wedi dileu',
     'chapter_delete_notification' => 'Pennod wedi\'i dileu\'n llwyddiannus',
     'chapter_move'                => 'pennod wedi symud',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'llyfr wedi creu',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'deleted shelf',
     'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => 'Mae ":name" wedi\'i ychwanegu at eich ffefrynnau',
     'favourite_remove_notification' => 'Mae ":name" wedi\'i tynnu o\'ch ffefrynnau',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Dull aml-ffactor wedi\'i ffurfweddu\'n llwyddiannus',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Llwyddwyd i ddileu dull aml-ffactor',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'webhook wedi creu',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook wedi\'i dileu\'n llwyddiannus',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Diweddarwyd y defnyddiwr yn llwyddiannus',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Tynnwyd y defnyddiwr yn llwyddiannus',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'Role successfully created',
+    'role_update' => 'updated role',
     'role_update_notification' => 'Role successfully updated',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'Role successfully deleted',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'gwnaeth sylwadau ar',

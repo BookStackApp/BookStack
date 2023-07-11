@@ -30,7 +30,7 @@ class BookshelfController extends Controller
     }
 
     /**
-     * Display a listing of the book.
+     * Display a listing of bookshelves.
      */
     public function index(Request $request)
     {
@@ -111,8 +111,9 @@ class BookshelfController extends Controller
         ]);
 
         $sort = $listOptions->getSort();
-        $sortedVisibleShelfBooks = $shelf->visibleBooks()->get()
-            ->sortBy($sort === 'default' ? 'pivot.order' : $sort, SORT_REGULAR, $listOptions->getOrder() === 'desc')
+        $sortedVisibleShelfBooks = $shelf->visibleBooks()
+            ->reorder($sort === 'default' ? 'order' : $sort, $listOptions->getOrder())
+            ->get()
             ->values()
             ->all();
 

@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => '设置',
     'settings_save' => '保存设置',
-    'settings_save_success' => '设置已保存',
     'system_version' => '系统版本',
     'categories' => '类别',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => '过期期限',
     'user_api_token_expiry_desc' => '请设置一个此令牌的过期时间，过期后此令牌所给出的请求将失效，若将此处留为空白将自动设置过期时间为100年。',
     'user_api_token_create_secret_message' => '创建此令牌后会立即生成“令牌ID”和“令牌密钥”。该密钥只会显示一次，所以请确保在继续操作之前将密钥记录或复制到一个安全的地方。',
-    'user_api_token_create_success' => '成功创建API令牌。',
-    'user_api_token_update_success' => '成功更新API令牌。',
     'user_api_token' => 'API令牌',
     'user_api_token_id' => '令牌ID',
     'user_api_token_id_desc' => '这是系统生成的一个不可编辑的令牌标识符，需要在API请求中才能提供。',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => '删除令牌',
     'user_api_token_delete_warning' => '这将会从系统中完全删除名为 “:tokenName” 的 API 令牌',
     'user_api_token_delete_confirm' => '您确定要删除此API令牌吗？',
-    'user_api_token_delete_success' => '成功删除API令牌',
 
     // Webhooks
     'webhooks' => 'Webhooks',

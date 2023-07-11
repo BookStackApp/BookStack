@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 
 class PageApiController extends ApiController
 {
-    protected PageRepo $pageRepo;
-
     protected $rules = [
         'create' => [
             'book_id'    => ['required_without:chapter_id', 'integer'],
@@ -36,9 +34,9 @@ class PageApiController extends ApiController
         ],
     ];
 
-    public function __construct(PageRepo $pageRepo)
-    {
-        $this->pageRepo = $pageRepo;
+    public function __construct(
+        protected PageRepo $pageRepo
+    ) {
     }
 
     /**
@@ -86,9 +84,13 @@ class PageApiController extends ApiController
 
     /**
      * View the details of a single page.
-     *
      * Pages will always have HTML content. They may have markdown content
      * if the markdown editor was used to last update the page.
+     *
+     * The 'html' property is the fully rendered & escaped HTML content that BookStack
+     * would show on page view, with page includes handled.
+     * The 'raw_html' property is the direct database stored HTML content, which would be
+     * what BookStack shows on page edit.
      *
      * See the "Content Security" section of these docs for security considerations when using
      * the page content returned from this endpoint.

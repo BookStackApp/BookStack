@@ -413,6 +413,15 @@ class EntityPermissionsTest extends TestCase
         $this->entityRestrictionFormTest(Page::class, 'Page Permissions', 'delete', '2');
     }
 
+    public function test_shelf_create_permission_not_visible()
+    {
+        $shelf = $this->entities->shelf();
+
+        $resp = $this->asAdmin()->get($shelf->getUrl('/permissions'));
+        $html = $this->withHtml($resp);
+        $html->assertElementNotExists('input[name$="[create]"]');
+    }
+
     public function test_restricted_pages_not_visible_in_book_navigation_on_pages()
     {
         $chapter = $this->entities->chapter();

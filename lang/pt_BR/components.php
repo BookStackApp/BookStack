@@ -6,6 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Selecionar Imagem',
+    'image_list' => 'Image List',
+    'image_details' => 'Image Details',
     'image_upload' => 'Fazer upload de imagem',
     'image_intro' => 'Aqui você pode selecionar e gerenciar imagens que foram previamente enviadas para o sistema.',
     'image_intro_upload' => 'Faça upload de uma imagem arrastando um arquivo de imagem para esta janela, ou usando o botão "Fazer upload de imagem" acima.',
@@ -15,6 +17,9 @@ return [
     'image_page_title' => 'visualizar imagens relacionadas a essa página',
     'image_search_hint' => 'Pesquisar imagem por nome',
     'image_uploaded' => 'Adicionada em :uploadedDate',
+    'image_uploaded_by' => 'Uploaded by :userName',
+    'image_uploaded_to' => 'Uploaded to :pageLink',
+    'image_updated' => 'Updated :updateDate',
     'image_load_more' => 'Carregar Mais',
     'image_image_name' => 'Nome da Imagem',
     'image_delete_used' => 'Essa imagem é usada nas páginas abaixo.',
@@ -27,6 +32,8 @@ return [
     'image_upload_success' => 'Upload de imagem efetuado com sucesso',
     'image_update_success' => 'Detalhes da imagem atualizados com sucesso',
     'image_delete_success' => 'Imagem excluída com sucesso',
+    'image_replace' => 'Replace Image',
+    'image_replace_success' => 'Image file successfully updated',
 
     // Code Editor
     'code_editor' => 'Editar Código',

@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'восстановил страницу',
     'page_restore_notification'   => 'Страница успешно восстановлена',
     'page_move'                   => 'переместил страницу',
+    'page_move_notification'      => 'Страница успешно перемещена',
 
     // Chapters
     'chapter_create'              => 'создал главу',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'удалил главу',
     'chapter_delete_notification' => 'Глава успешно удалена',
     'chapter_move'                => 'переместил главу',
+    'chapter_move_notification' => 'Глава успешно перемещена',
 
     // Books
     'book_create'                 => 'создал книгу',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'удалил полку',
     'bookshelf_delete_notification'    => 'Полка успешно удалена',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Версия успешно удалена',
+
     // Favourites
     'favourite_add_notification' => '":name" добавлено в избранное',
     'favourite_remove_notification' => '":name" удалено из избранного',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'зарегистрировался как новый пользователь',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Двухфакторный метод авторизации успешно настроен',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Двухфакторный метод авторизации успешно удален',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Настройки успешно обновлены',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'создал вебхук',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Вебхук успешно удален',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'Пользователь успешно создан',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Пользователь успешно обновлен',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Пользователь успешно удален',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API токен успешно создан',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API токен успешно обновлен',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API токен успешно удален',
+
     // Roles
-    'role_create_notification' => 'Role successfully created',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'created role',
+    'role_create_notification' => 'Роль успешно создана',
+    'role_update' => 'updated role',
+    'role_update_notification' => 'Роль успешно обновлена',
+    'role_delete' => 'deleted role',
+    'role_delete_notification' => 'Роль успешно удалена',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'прокомментировал',

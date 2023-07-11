@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'الإعدادات',
     'settings_save' => 'حفظ الإعدادات',
-    'settings_save_success' => 'تم حفظ الإعدادات',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => 'تاريخ انتهاء الصلاحية',
     'user_api_token_expiry_desc' => 'حدد التاريخ الذي تنتهي فيه صلاحية هذا الرمز. بعد هذا التاريخ ، لن تعمل الطلبات المقدمة باستخدام هذا الرمز. سيؤدي ترك هذا الحقل فارغًا إلى تعيين انتهاء صلاحية لمدة 100 عام في المستقبل.',
     'user_api_token_create_secret_message' => 'عقب إنشاء هذا الرمز مباشرة، سيتم إنشاء "مُعرّف الرمز" و "رمز سري" وعرضهما. وسيتم عرض الرمز السري لمرة واحدة فقط ، لذا تأكد من نسخ قيمة هذا الرمز إلى مكان آمن ومضمون قبل المتابعة.',
-    'user_api_token_create_success' => 'تم إنشاء رمز الـ API بنجاح',
-    'user_api_token_update_success' => 'تم تحديث رمز الـ API بنجاح',
     'user_api_token' => 'رمز الـ API',
     'user_api_token_id' => 'مُعرّف الرمز',
     'user_api_token_id_desc' => 'هذا مُعرّف تم إنشاؤه بواسطة النظام غير قابل للتحرير لهذا الرمز والذي يجب توفيره في طلبات API.',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => 'حذف الرمز',
     'user_api_token_delete_warning' => 'سيؤدي هذا إلى حذف رمز API المُشار إليه بالكامل باسم \'اسم الرمز\' من النظام.',
     'user_api_token_delete_confirm' => 'هل أنت متأكد من أنك تريد حذف رمز API؟',
-    'user_api_token_delete_success' => 'تم حذف رمز الـ API بنجاح',
 
     // Webhooks
     'webhooks' => 'Webhooks',

@@ -135,4 +135,14 @@ class CommentTest extends TestCase
         $respHtml->assertElementCount('.comment-branch', 4);
         $respHtml->assertElementContains('.comment-branch .comment-branch', 'My nested comment');
     }
+
+    public function test_comments_are_visible_in_the_page_editor()
+    {
+        $page = $this->entities->page();
+
+        $this->asAdmin()->postJson("/comment/$page->id", ['text' => 'My great comment to see in the editor']);
+
+        $respHtml = $this->withHtml($this->get($page->getUrl('/edit')));
+        $respHtml->assertElementContains('.comment-box .content', 'My great comment to see in the editor');
+    }
 }

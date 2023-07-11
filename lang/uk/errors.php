@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Виникла помилка під час завантаження зображення',
     'image_upload_type_error' => 'Тип завантаженого зображення недійсний',
+    'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'drawing_data_not_found' => 'Не вдалося завантажити дані малюнка. Файл малюнка може більше не існувати або у вас немає дозволу на доступ до нього.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Не вдалося зберегти чернетку. Перед збереженням цієї сторінки переконайтеся, що у вас є зв\'язок з сервером.',
+    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Неможливо видалити сторінку, коли вона встановлена як домашня сторінка',
 
     // Entities

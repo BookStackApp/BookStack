@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'đã khôi phục trang',
     'page_restore_notification'   => 'Trang đã được khôi phục thành công',
     'page_move'                   => 'đã di chuyển trang',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'đã tạo chương',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'đã xóa chương',
     'chapter_delete_notification' => 'Chương đã được xóa thành công',
     'chapter_move'                => 'đã di chuyển chương',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'đã tạo sách',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'xoá giá sách',
     'bookshelf_delete_notification'    => 'Xoá giá sách thành công',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name" đã được thêm vào danh sách yêu thích của bạn',
     'favourite_remove_notification' => '":name" đã được gỡ khỏi danh sách yêu thích của bạn',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Cấu hình xác thực nhiều bước thành công',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Đã gỡ xác thực nhiều bước',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'đã tạo webhook',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Webhook đã được xóa thành công',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Người dùng được cập nhật thành công',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Người dùng đã được xóa thành công',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'Vai trò mới đã được tạo thành công',
+    'role_update' => 'updated role',
     'role_update_notification' => 'Vai trò đã được cập nhật thành công',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'Vai trò đã được xóa thành công',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'đã bình luận về',

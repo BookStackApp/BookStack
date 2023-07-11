@@ -9,16 +9,20 @@
   "updated_at": "2019-09-28T11:24:23.000000Z",
   "created_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
   "updated_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
   "owned_by": {
     "id": 1,
-    "name": "Admin"
+    "name": "Admin",
+    "slug": "admin"
   },
+  "book_slug": "example-book",
   "tags": [
     {
       "name": "Category",
@@ -38,9 +42,12 @@
       "updated_at": "2019-08-26T14:32:59.000000Z",
       "created_by": 1,
       "updated_by": 1,
+      "owned_by": 1,
       "draft": false,
       "revision_count": 2,
-      "template": false
+      "template": false,
+      "editor": "wysiwyg",
+      "book_slug": "example-book"
     },
     {
       "id": 7,
@@ -53,9 +60,12 @@
       "updated_at": "2019-06-06T12:03:04.000000Z",
       "created_by": 3,
       "updated_by": 3,
+      "owned_by": 1,
       "draft": false,
       "revision_count": 1,
-      "template": false
+      "template": false,
+      "editor": "wysiwyg",
+      "book_slug": "example-book"
     }
   ]
 }

@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => '取消',
+    'close' => '关闭',
     'confirm' => '确认',
     'back' => '返回',
     'save' => '保存',

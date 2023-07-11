@@ -1,39 +1,25 @@
 {
+  "id": 74,
   "book_id": 1,
-  "priority": 6,
+  "slug": "my-fantastic-new-chapter",
   "name": "My fantastic new chapter",
   "description": "This is a great new chapter that I've created via the API",
+  "priority": 6,
   "created_by": 1,
   "updated_by": 1,
   "owned_by": 1,
-  "slug": "my-fantastic-new-chapter",
   "updated_at": "2020-05-22T22:59:55.000000Z",
   "created_at": "2020-05-22T22:59:55.000000Z",
-  "id": 74,
-  "book": {
-    "id": 1,
-    "name": "BookStack User Guide",
-    "slug": "bookstack-user-guide",
-    "description": "This is a general guide on using BookStack on a day-to-day basis.",
-    "created_at": "2019-05-05T21:48:46.000000Z",
-    "updated_at": "2019-12-11T20:57:31.000000Z",
-    "created_by": 1,
-    "updated_by": 1
-  },
   "tags": [
     {
       "name": "Category",
       "value": "Top Content",
-      "order": 0,
-      "created_at": "2020-05-22T22:59:55.000000Z",
-      "updated_at": "2020-05-22T22:59:55.000000Z"
+      "order": 0
     },
     {
       "name": "Rating",
       "value": "Highest",
-      "order": 0,
-      "created_at": "2020-05-22T22:59:55.000000Z",
-      "updated_at": "2020-05-22T22:59:55.000000Z"
+      "order": 1
     }
   ]
 }

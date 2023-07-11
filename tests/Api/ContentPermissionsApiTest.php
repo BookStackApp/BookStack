@@ -259,4 +259,36 @@ class ContentPermissionsApiTest extends TestCase
             ],
         ]);
     }
+
+    public function test_update_can_both_provide_owner_and_fallback_permissions()
+    {
+        $user = $this->users->viewer();
+        $page = $this->entities->page();
+        $page->owned_by = null;
+        $page->save();
+
+        $this->actingAsApiAdmin();
+        $resp = $this->putJson($this->baseEndpoint . "/page/{$page->id}", [
+            "owner_id" => $user->id,
+            'fallback_permissions' => [
+                'inheriting' => false,
+                'view' => false,
+                'create' => false,
+                'update' => false,
+                'delete' => false,
+            ],
+        ]);
+
+        $resp->assertOk();
+        $this->assertDatabaseHas('pages', ['id' => $page->id, 'owned_by' => $user->id]);
+        $this->assertDatabaseHas('entity_permissions', [
+            'entity_id' => $page->id,
+            'entity_type' => 'page',
+            'role_id' => 0,
+            'view' => false,
+            'create' => false,
+            'update' => false,
+            'delete' => false,
+        ]);
+    }
 }

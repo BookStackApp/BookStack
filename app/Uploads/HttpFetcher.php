@@ -29,7 +29,8 @@ class HttpFetcher
         curl_close($ch);
 
         if ($err) {
-            throw new HttpFetchException($err);
+            $errno = curl_errno($ch);
+            throw new HttpFetchException($err, $errno);
         }
 
         return $data;

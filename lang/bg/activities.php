@@ -15,6 +15,7 @@ return [
     'page_restore'                => 'възстановена страница',
     'page_restore_notification'   => 'Страницата е възстановена успешно',
     'page_move'                   => 'преместена страница',
+    'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
     'chapter_create'              => 'създадена глава',
@@ -24,6 +25,7 @@ return [
     'chapter_delete'              => 'изтрита глава',
     'chapter_delete_notification' => 'Успешно изтрита глава',
     'chapter_move'                => 'преместена глава',
+    'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
     'book_create'                 => 'създадена книга',
@@ -47,13 +49,29 @@ return [
     'bookshelf_delete'                 => 'deleted shelf',
     'bookshelf_delete_notification'    => 'Shelf successfully deleted',
 
+    // Revisions
+    'revision_restore' => 'restored revision',
+    'revision_delete' => 'deleted revision',
+    'revision_delete_notification' => 'Revision successfully deleted',
+
     // Favourites
     'favourite_add_notification' => '":name" е добавен към любими успешно',
     'favourite_remove_notification' => '":name" е премахнат от любими успешно',
 
-    // MFA
+    // Auth
+    'auth_login' => 'logged in',
+    'auth_register' => 'registered as new user',
+    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_update' => 'reset user password',
+    'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Многофакторният метод е конфигуриран успешно',
+    'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => 'Многофакторният метод е премахнат успешно',
+
+    // Settings
+    'settings_update' => 'updated settings',
+    'settings_update_notification' => 'Settings successfully updated',
+    'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
     'webhook_create' => 'създадена уебкука',
@@ -64,13 +82,33 @@ return [
     'webhook_delete_notification' => 'Уебкуката е изтрита успешно',
 
     // Users
+    'user_create' => 'created user',
+    'user_create_notification' => 'User successfully created',
+    'user_update' => 'updated user',
     'user_update_notification' => 'Потребителят е обновен успешно',
+    'user_delete' => 'deleted user',
     'user_delete_notification' => 'Потребителят е премахнат успешно',
 
+    // API Tokens
+    'api_token_create' => 'created api token',
+    'api_token_create_notification' => 'API token successfully created',
+    'api_token_update' => 'updated api token',
+    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_delete' => 'deleted api token',
+    'api_token_delete_notification' => 'API token successfully deleted',
+
     // Roles
+    'role_create' => 'created role',
     'role_create_notification' => 'Успешна създадена роля',
+    'role_update' => 'updated role',
     'role_update_notification' => 'Успешно обновена роля',
+    'role_delete' => 'deleted role',
     'role_delete_notification' => 'Успешно изтрита роля',
+
+    // Recycle Bin
+    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
     'commented_on'                => 'коментирано на',

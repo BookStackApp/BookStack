@@ -15,7 +15,7 @@ class RolesAllPaginatedAndSorted
     {
         $sort = $listOptions->getSort();
         if ($sort === 'created_at') {
-            $sort = 'users.created_at';
+            $sort = 'roles.created_at';
         }
 
         $query = Role::query()->select(['*'])
