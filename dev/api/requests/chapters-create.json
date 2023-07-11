@@ -5,5 +5,7 @@
   "tags": [
     {"name": "Category", "value": "Top Content"},
     {"name": "Rating", "value": "Highest"}
-  ]
+  ],
+  "priority": 15
+}
 }

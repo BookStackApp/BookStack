@@ -5,5 +5,6 @@
 	"tags": [
 		{"name": "Category", "value": "API Examples"},
 		{"name": "Rating", "value": "Alright"}
-	]
+	],
+	"priority": 15
 }
