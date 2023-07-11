@@ -164,7 +164,7 @@ class PageRepo
 
         $draft->draft = false;
         $draft->revision_count = 1;
-        $draft->priority = $this->getNewPriority($draft);
+        $draft->priority = $draft->priority ?: $this->getNewPriority($draft);
         $draft->save();
 
         $this->revisionRepo->storeNewForPage($draft, trans('entities.pages_initial_revision'));
