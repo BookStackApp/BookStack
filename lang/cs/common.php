@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Zrušit',
+    'close' => 'Close',
     'confirm' => 'Potvrdit',
     'back' => 'Zpět',
     'save' => 'Uložit',

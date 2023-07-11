@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Einstellungen',
     'settings_save' => 'Einstellungen speichern',
-    'settings_save_success' => 'Einstellungen gespeichert',
     'system_version' => 'Systemversion',
     'categories' => 'Kategorien',
 
@@ -233,8 +232,6 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'user_api_token_expiry' => 'Ablaufdatum',
     'user_api_token_expiry_desc' => 'Legen Sie ein Datum fest, an dem dieser Token abläuft. Nach diesem Datum funktionieren Anfragen, die mit diesem Token gestellt werden, nicht mehr. Wenn Sie dieses Feld leer lassen, wird ein Ablaufdatum von 100 Jahren in der Zukunft festgelegt.',
     'user_api_token_create_secret_message' => 'Unmittelbar nach der Erstellung dieses Tokens wird eine "Token ID" & ein "Token Kennwort" generiert und angezeigt. Das Kennwort wird nur ein einziges Mal angezeigt. Stellen Sie also sicher, dass Sie den Inhalt an einen sicheren Ort kopieren, bevor Sie fortfahren.',
-    'user_api_token_create_success' => 'API-Token erfolgreich erstellt',
-    'user_api_token_update_success' => 'API-Token erfolgreich aktualisiert',
     'user_api_token' => 'API-Token',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Dies ist ein nicht editierbarer, vom System generierter Identifikator für diesen Token, welcher bei API-Anfragen angegeben werden muss.',
@@ -245,7 +242,6 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'user_api_token_delete' => 'Lösche Token',
     'user_api_token_delete_warning' => 'Dies löscht den API-Token mit dem Namen \':tokenName\' vollständig aus dem System.',
     'user_api_token_delete_confirm' => 'Sind Sie sicher, dass Sie diesen API-Token löschen möchten?',
-    'user_api_token_delete_success' => 'API-Token erfolgreich gelöscht',
 
     // Webhooks
     'webhooks' => 'Webhooks',

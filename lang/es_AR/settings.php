@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Ajustes',
     'settings_save' => 'Guardar ajustes',
-    'settings_save_success' => 'Ajustes guardados',
     'system_version' => 'Versión del Sistema',
     'categories' => 'Categorías',
 
@@ -33,9 +32,9 @@ return [
     'app_custom_html_desc' => 'Cualquier contenido agregado aquí será agregado al final de la sección <head> de cada página. Esto es útil para sobreescribir estilos o agregar código para analíticas.',
     'app_custom_html_disabled_notice' => 'El contenido personailzado para la cabecera HTML está deshabilitado en esta configuración para garantizar que cualquier cambio importante se pueda revertir.',
     'app_logo' => 'Logo de la aplicación',
-    'app_logo_desc' => 'Se utiliza en la cabecera de la aplicación, entre otras áreas. Esta imagen debe ser de 86px de altura. Las imágenes grandes serán reducidas en tamaño.',
+    'app_logo_desc' => 'Esto se utiliza en la cabecera de la aplicación, entre otras áreas. La imagen debe ser de 86px de altura. Se reducirá el tamaño de las imágenes grandes.',
     'app_icon' => 'Icono de la aplicación',
-    'app_icon_desc' => 'Se utiliza para las pestañas del navegador y los accesos directos. Debería ser una imagen PNG cuadrada de 256px.',
+    'app_icon_desc' => 'Este ícono se utiliza para las pestañas del navegador y los accesos directos. Debería ser una imagen cuadrada de 256px en formato PNG.',
     'app_homepage' => 'Página de inicio de la Aplicación',
     'app_homepage_desc' => 'Seleccione una página de inicio para mostrar en lugar de la vista por defecto. Se ignoran los permisos de página para las páginas seleccionadas.',
     'app_homepage_select' => 'Seleccione una página',
@@ -50,11 +49,11 @@ return [
 
     // Color settings
     'color_scheme' => 'Esquema de color de la aplicación',
-    'color_scheme_desc' => 'Establece los colores a usar en la interfaz de BookStack. Los colores pueden configurarse por separado para que los modos oscuros y claros se ajusten mejor al tema y garanticen la legibilidad.',
-    'ui_colors_desc' => 'Establece el color principal y el color de los enlaces para BookStack. El color principal se utiliza principalmente para la cabecera, botones y decoraciones de la interfaz. El color de los enlaces se utiliza para enlaces y acciones de texto, tanto dentro del contenido escrito como en la interfaz de Bookstack.',
+    'color_scheme_desc' => 'Establece los colores a usar en la interfaz de la aplicación. Los colores pueden configurar por separado para que los modos oscuros y claros se ajusten mejor al tema y garanticen la legibilidad.',
+    'ui_colors_desc' => 'Establece el color principal y el color por defecto de los enlaces de la aplicación. El color principal se usa principalmente para la cabecera, botones y decoraciones de la interfaz. El color por defecto de los enlaces se utiliza para enlaces y acciones de texto, tanto dentro del contenido escrito como en la interfaz de la aplicación.',
     'app_color' => 'Color principal',
-    'link_color' => 'Color de enlaces por defecto',
-    'content_colors_desc' => 'Establece los colores para todos los elementos en la jerarquía de la organización de la página. Se recomienda elegir colores con un brillo similar al predeterminado para mayor legibilidad.',
+    'link_color' => 'Color por defecto de los enlaces',
+    'content_colors_desc' => 'Establece los colores para todos los elementos en la jerarquía de organización de la página. Se recomienda elegir colores con un brillo similar al predeterminado para mayor legibilidad.',
     'bookshelf_color' => 'Color del estante',
     'book_color' => 'Color del libro',
     'chapter_color' => 'Color del capítulo',
@@ -233,8 +232,6 @@ return [
     'user_api_token_expiry' => 'Fecha de expiración',
     'user_api_token_expiry_desc' => 'Establece una fecha en la que este token expira. Después de esta fecha, las solicitudes realizadas usando este token ya no funcionarán. Dejar este campo en blanco fijará un vencimiento de 100 años en el futuro.',
     'user_api_token_create_secret_message' => 'Luego de crear este token, inmediatamente se generará y mostrará el "Token ID" y el "Token Secret" correspondientes. El "Token Secret" se mostrará por única vez, asegúrese de copiar el valor a un lugar seguro antes de continuar.',
-    'user_api_token_create_success' => 'Token API creado correctamente',
-    'user_api_token_update_success' => 'Token API actualizado correctamente',
     'user_api_token' => 'Token API',
     'user_api_token_id' => 'Token ID',
     'user_api_token_id_desc' => 'Este es un identificador no editable generado por el sistema y único para este token que necesitará ser proporcionado en solicitudes de API.',
@@ -245,12 +242,11 @@ return [
     'user_api_token_delete' => 'Borrar token',
     'user_api_token_delete_warning' => 'Esto eliminará completamente este token API con el nombre \':tokenName\' del sistema.',
     'user_api_token_delete_confirm' => '¿Está seguro de que desea borrar este API token?',
-    'user_api_token_delete_success' => 'Token API borrado correctamente',
 
     // Webhooks
     'webhooks' => 'Webhooks',
     'webhooks_index_desc' => 'Los Webhooks son una forma de enviar datos a URLs externas cuando ciertas acciones y eventos ocurren dentro del sistema, lo que permite la integración basada en eventos con plataformas externas como mensajería o sistemas de notificación.',
-    'webhooks_x_trigger_events' => ':count disparador de eventos|:count disparadores de eventos',
+    'webhooks_x_trigger_events' => ':count evento disparador|:count eventos disparadores',
     'webhooks_create' => 'Crear nuevo Webhook',
     'webhooks_none_created' => 'No hay webhooks creados.',
     'webhooks_edit' => 'Editar Webhook',

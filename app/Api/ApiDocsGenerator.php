@@ -16,8 +16,8 @@ use ReflectionMethod;
 
 class ApiDocsGenerator
 {
-    protected $reflectionClasses = [];
-    protected $controllerClasses = [];
+    protected array $reflectionClasses = [];
+    protected array $controllerClasses = [];
 
     /**
      * Load the docs form the cache if existing
@@ -139,9 +139,10 @@ class ApiDocsGenerator
     protected function parseDescriptionFromMethodComment(string $comment): string
     {
         $matches = [];
-        preg_match_all('/^\s*?\*\s((?![@\s]).*?)$/m', $comment, $matches);
+        preg_match_all('/^\s*?\*\s?($|((?![\/@\s]).*?))$/m', $comment, $matches);
 
-        return implode(' ', $matches[1] ?? []);
+        $text = implode(' ', $matches[1] ?? []);
+        return str_replace('  ', "\n", $text);
     }
 
     /**

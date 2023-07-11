@@ -122,6 +122,44 @@ class ConfigTest extends TestCase
         });
     }
 
+    public function test_non_null_mail_encryption_options_enforce_smtp_scheme()
+    {
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'tls', 'mail.mailers.smtp.tls_required', true);
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'ssl', 'mail.mailers.smtp.tls_required', true);
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'null', 'mail.mailers.smtp.tls_required', false);
+    }
+
+    public function test_smtp_scheme_and_certain_port_forces_tls_usage()
+    {
+        $isMailTlsRequired = function () {
+            /** @var \BookStack\App\Mail\EsmtpTransport $transport */
+            $transport = Mail::mailer('smtp')->getSymfonyTransport();
+            Mail::purge('smtp');
+            return $transport->getTlsRequirement();
+        };
+
+        config()->set([
+            'mail.mailers.smtp.tls_required' => null,
+            'mail.mailers.smtp.port' => 587,
+        ]);
+
+        $this->assertFalse($isMailTlsRequired());
+
+        config()->set([
+            'mail.mailers.smtp.tls_required' => 'tls',
+            'mail.mailers.smtp.port' => 587,
+        ]);
+
+        $this->assertTrue($isMailTlsRequired());
+
+        config()->set([
+            'mail.mailers.smtp.tls_required' => null,
+            'mail.mailers.smtp.port' => 465,
+        ]);
+
+        $this->assertTrue($isMailTlsRequired());
+    }
+
     /**
      * Set an environment variable of the given name and value
      * then check the given config key to see if it matches the given result.

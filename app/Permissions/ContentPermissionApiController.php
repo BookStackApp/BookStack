@@ -38,8 +38,10 @@ class ContentPermissionApiController extends ApiController
 
     /**
      * Read the configured content-level permissions for the item of the given type and ID.
+     *
      * 'contentType' should be one of: page, book, chapter, bookshelf.
      * 'contentId' should be the relevant ID of that item type you'd like to handle permissions for.
+     *
      * The permissions shown are those that override the default for just the specified item, they do not show the
      * full evaluated permission for a role, nor do they reflect permissions inherited from other items in the hierarchy.
      * Fallback permission values may be `null` when inheriting is active.
@@ -57,6 +59,7 @@ class ContentPermissionApiController extends ApiController
     /**
      * Update the configured content-level permission overrides for the item of the given type and ID.
      * 'contentType' should be one of: page, book, chapter, bookshelf.
+     *
      * 'contentId' should be the relevant ID of that item type you'd like to handle permissions for.
      * Providing an empty `role_permissions` array will remove any existing configured role permissions,
      * so you may want to fetch existing permissions beforehand if just adding/removing a single item.

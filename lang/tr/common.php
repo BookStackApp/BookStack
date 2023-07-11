@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'İptal',
+    'close' => 'Close',
     'confirm' => 'Onayla',
     'back' => 'Geri',
     'save' => 'Kaydet',

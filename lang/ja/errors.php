@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => '画像アップロード時にエラーが発生しました。',
     'image_upload_type_error' => 'アップロード中の画像の種類が無効です',
+    'image_upload_replace_type' => '画像ファイルの置き換えは同じ種類でなければなりません',
     'drawing_data_not_found' => '描画データを読み込めませんでした。描画ファイルが存在しないか、アクセス権限がありません。',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => '下書きの保存に失敗しました。インターネットへ接続してください。',
+    'page_draft_delete_fail' => '下書きページの削除および現在ページ内容の取得に失敗しました。',
     'page_custom_home_deletion' => 'ホームページに設定されているページは削除できません',
 
     // Entities

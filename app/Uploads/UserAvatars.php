@@ -34,7 +34,7 @@ class UserAvatars
             $user->avatar()->associate($avatar);
             $user->save();
         } catch (Exception $e) {
-            Log::error('Failed to save user avatar image');
+            Log::error('Failed to save user avatar image', ['exception' => $e]);
         }
     }
 
@@ -49,7 +49,7 @@ class UserAvatars
             $user->avatar()->associate($avatar);
             $user->save();
         } catch (Exception $e) {
-            Log::error('Failed to save user avatar image');
+            Log::error('Failed to save user avatar image', ['exception' => $e]);
         }
     }
 
@@ -107,14 +107,14 @@ class UserAvatars
     /**
      * Gets an image from url and returns it as a string of image data.
      *
-     * @throws Exception
+     * @throws HttpFetchException
      */
     protected function getAvatarImageData(string $url): string
     {
         try {
             $imageData = $this->http->fetch($url);
         } catch (HttpFetchException $exception) {
-            throw new Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
+            throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]), $exception->getCode(), $exception);
         }
 
         return $imageData;

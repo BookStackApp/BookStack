@@ -49,6 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Pildi üleslaadimisel tekkis viga',
     'image_upload_type_error' => 'Pildifaili tüüp ei ole korrektne',
+    'image_upload_replace_type' => 'Pildifaili asendused peavad olema sama tüüpi',
     'drawing_data_not_found' => 'Joonise andmeid ei õnnestunud laadida. Joonist ei pruugi enam eksisteerida, või sul puuduvad õigused selle vaatamiseks.',
 
     // Attachments
@@ -57,6 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Mustandi salvestamine ebaõnnestus. Kontrolli oma internetiühendust',
+    'page_draft_delete_fail' => 'Mustandi kustutamine ja lehe salvestatud seisu laadimine ebaõnnestus',
     'page_custom_home_deletion' => 'Ei saa kustutada lehte, mis on määratud avaleheks',
 
     // Entities

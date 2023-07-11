@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\Activity\Tools\CommentTree;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
@@ -9,19 +10,14 @@ use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 
 class PageEditorData
 {
-    protected Page $page;
-    protected PageRepo $pageRepo;
-    protected string $requestedEditor;
-
     protected array $viewData;
     protected array $warnings;
 
-    public function __construct(Page $page, PageRepo $pageRepo, string $requestedEditor)
-    {
-        $this->page = $page;
-        $this->pageRepo = $pageRepo;
-        $this->requestedEditor = $requestedEditor;
-
+    public function __construct(
+        protected Page $page,
+        protected PageRepo $pageRepo,
+        protected string $requestedEditor
+    ) {
         $this->viewData = $this->build();
     }
 
@@ -69,6 +65,7 @@ class PageEditorData
             'draftsEnabled'   => $draftsEnabled,
             'templates'       => $templates,
             'editor'          => $editorType,
+            'comments'        => new CommentTree($page),
         ];
     }
 

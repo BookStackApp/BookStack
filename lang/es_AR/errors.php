@@ -49,14 +49,16 @@ return [
     // Drawing & Images
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen subida es inválido.',
-    'drawing_data_not_found' => 'No se han podido cargar los datos del dibujo. Puede que el archivo de dibujo ya no exista o que no tenga permiso para acceder a él.',
+    'image_upload_replace_type' => 'Los reemplazos de archivos de imágenes deben ser del mismo tipo',
+    'drawing_data_not_found' => 'No se pudieron cargar los datos del dibujo. Es probable que el archivo de dibujo ya no exista o que no tenga permiso para acceder a él.',
 
     // Attachments
     'attachment_not_found' => 'No se encuentra el objeto adjunto',
-    'attachment_upload_error' => 'Ha ocurrido un error al subir el archivo adjunto',
+    'attachment_upload_error' => 'Ocurrió un error al subir el archivo adjunto',
 
     // Pages
     'page_draft_autosave_fail' => 'Fallo al guardar borrador. Asegurese de que tiene conexión a Internet antes de guardar este borrador',
+    'page_draft_delete_fail' => 'Error al eliminar el borrador de la página y obtener el último contenido guardado',
     'page_custom_home_deletion' => 'No se puede eliminar una página cuando está configurada como página de inicio',
 
     // Entities

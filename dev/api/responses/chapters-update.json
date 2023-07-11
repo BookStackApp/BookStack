@@ -10,30 +10,17 @@
   "created_by": 1,
   "updated_by": 1,
   "owned_by": 1,
-  "book": {
-    "id": 1,
-    "name": "BookStack User Guide",
-    "slug": "bookstack-user-guide",
-    "description": "This is a general guide on using BookStack on a day-to-day basis.",
-    "created_at": "2019-05-05T21:48:46.000000Z",
-    "updated_at": "2019-12-11T20:57:31.000000Z",
-    "created_by": 1,
-    "updated_by": 1
-  },
+  "book_slug": "bookstack-demo-site",
   "tags": [
     {
       "name": "Category",
       "value": "Kinda Good Content",
-      "order": 0,
-      "created_at": "2020-05-22T23:07:20.000000Z",
-      "updated_at": "2020-05-22T23:07:20.000000Z"
+      "order": 0
     },
     {
       "name": "Rating",
       "value": "Medium",
-      "order": 0,
-      "created_at": "2020-05-22T23:07:20.000000Z",
-      "updated_at": "2020-05-22T23:07:20.000000Z"
+      "order": 1
     }
   ]
 }

@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => '設定',
     'settings_save' => '儲存設定',
-    'settings_save_success' => '設定已儲存',
     'system_version' => '系統版本',
     'categories' => '分類',
 
@@ -232,8 +231,6 @@ return [
     'user_api_token_expiry' => '到期日',
     'user_api_token_expiry_desc' => '設定此權杖的到期日。在此日期後，使用此權杖發出的請求將不再起作用。若將此欄留空，將會設定在100年後過期。',
     'user_api_token_create_secret_message' => '建立此權杖後，將會立即生成並顯示「權杖 ID」與「權杖密碼」。該密碼將只會顯示一次，因此請在繼續操作前將其複製到安全的地方。',
-    'user_api_token_create_success' => '成功建立 API 權杖',
-    'user_api_token_update_success' => '成功更新 API 權杖',
     'user_api_token' => 'API 權杖',
     'user_api_token_id' => '權杖 ID',
     'user_api_token_id_desc' => '這是此權杖由系統生成的不可編輯識別字串，必須在 API 請求中提供。',
@@ -244,7 +241,6 @@ return [
     'user_api_token_delete' => '刪除權杖',
     'user_api_token_delete_warning' => '這將會從系統中完全刪除名為「:tokenName」的 API 權杖。',
     'user_api_token_delete_confirm' => '您確定要刪除此 API 權杖嗎？',
-    'user_api_token_delete_success' => 'API 權杖已成功刪除',
 
     // Webhooks
     'webhooks' => 'Webhooks',

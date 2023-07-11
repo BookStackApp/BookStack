@@ -9,7 +9,6 @@ return [
     // Common Messages
     'settings' => 'Nastavitve',
     'settings_save' => 'Shrani nastavitve',
-    'settings_save_success' => 'Nastavitve shranjene',
     'system_version' => 'System Version',
     'categories' => 'Categories',
 
@@ -233,8 +232,6 @@ return [
     'user_api_token_expiry_desc' => 'Določi datum izteka uporabnosti žetona. Po tem datumu, zahteve poslane s tem žetonom, ne bodo več delovale. 
 Če pustite to polje prazno, bo iztek uporabnosti 100.let .',
     'user_api_token_create_secret_message' => 'Takoj po ustvarjanju tega žetona se ustvari in prikaže "Token ID" "in" Token Secret ". Skrivnost bo prikazana samo enkrat, zato se pred nadaljevanjem prepričajte o varnosti kopirnega mesta.',
-    'user_api_token_create_success' => 'API žeton uspešno ustvarjen',
-    'user_api_token_update_success' => 'API žeton uspešno posodobljen',
     'user_api_token' => 'API žeton',
     'user_api_token_id' => 'Žeton ID',
     'user_api_token_id_desc' => 'To je sistemski identifikator, ki ga ni mogoče urejati za ta žeton in ga je treba navesti v zahtevah za API.',
@@ -245,7 +242,6 @@ return [
     'user_api_token_delete' => 'Briši žeton',
     'user_api_token_delete_warning' => 'Iz sistema se bo popolnoma  izbrisal API žeton z imenom \':tokenName\' ',
     'user_api_token_delete_confirm' => 'Ali ste prepričani, da želite izbrisati ta API žeton?',
-    'user_api_token_delete_success' => 'API žeton uspešno izbrisan',
 
     // Webhooks
     'webhooks' => 'Webhooks',

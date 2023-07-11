@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Atšaukti',
+    'close' => 'Close',
     'confirm' => 'Patvirtinti',
     'back' => 'Grįžti',
     'save' => 'Išsaugoti',

@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Скасувати',
+    'close' => 'Close',
     'confirm' => 'Застосувати',
     'back' => 'Назад',
     'save' => 'Зберегти',
