@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Bookshelf Permissions Updated',
     'shelves_permissions_active' => 'Bookshelf Permissions Active',
     'shelves_permissions_cascade_warning' => 'Permissions on bookshelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Αντιγραφή δικαιωμάτων στα βιβλία',
     'shelves_copy_permissions' => 'Αντιγραφή Δικαιωμάτων',
     'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this bookshelf to all books contained within. Before activating, ensure any changes to the permissions of this bookshelf have been saved.',
