@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Plaukta atļaujas atjauninātas',
     'shelves_permissions_active' => 'Plaukta atļaujas ir aktīvas',
     'shelves_permissions_cascade_warning' => 'Plauktu piekļuves tiesības netiek automātiski piešķirtas tajā esošajām grāmatām. Tas ir tāpēc, ka grāmata var vienlaicīgi atrasties vairākos plauktos. Tomēr piekļuves tiesības var nokopēt uz plauktam pievienotajām grāmatām, izmantojot zemāk atrodamo opciju.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopēt grāmatplaukta atļaujas uz grāmatām',
     'shelves_copy_permissions' => 'Kopēt atļaujas',
     'shelves_copy_permissions_explain' => 'Pašreizējās plaukta piekļuves tiesības tiks piemērotas visām tajā esošajām grāmatām. Pirms ieslēgšanas pārliecinieties, ka visas izmaiņas plaukta piekļuves tiesības ir saglabātas.',

@@ -58,7 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Falha ao tentar guardar o rascunho. Certifique-se que a conexão de Internet está funcional antes de tentar guardar esta página',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Eliminação do rascunho de página e importação do conteúdo salvo da página falhou',
     'page_custom_home_deletion' => 'Não é possível eliminar uma página que está definida como página inicial',
 
     // Entities

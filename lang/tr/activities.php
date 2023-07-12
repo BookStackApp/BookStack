@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'sayfayı eski haline getirdi',
     'page_restore_notification'   => 'Sayfa Başarıyla Eski Haline Getirildi',
     'page_move'                   => 'sayfa taşındı',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Sayfa başarıyla taşındı',
 
     // Chapters
     'chapter_create'              => 'bölüm oluşturdu',
@@ -25,13 +25,13 @@ return [
     'chapter_delete'              => 'bölümü sildi',
     'chapter_delete_notification' => 'Bölüm başarıyla silindi',
     'chapter_move'                => 'bölümü taşıdı',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Bölüm başarıyla taşındı',
 
     // Books
     'book_create'                 => 'kitap oluşturdu',
     'book_create_notification'    => 'Kitap başarıyla oluşturuldu',
     'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter_notification' => 'Bölüm başarıyla kitaba dönüştürüldü',
     'book_update'                 => 'kitabı güncelledi',
     'book_update_notification'    => 'Kitap başarıyla güncellendi',
     'book_delete'                 => 'kitabı sildi',
@@ -41,26 +41,26 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'kitaplık oluşturuldu',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_notification'    => 'Kitaplık başarıyla oluşturuldu',
     'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
+    'bookshelf_create_from_book_notification'    => 'Kitap başarıyla kitaplığa dönüştürüldü',
     'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
+    'bookshelf_update_notification'    => 'Kitaplık başarıyla güncellendi',
     'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_delete_notification'    => 'Kitaplık başarıyla silindi',
 
     // Revisions
     'revision_restore' => 'restored revision',
     'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_delete_notification' => 'Değişiklik başarıyla silindi',
 
     // Favourites
     'favourite_add_notification' => '":name" favorilerinize eklendi',
     'favourite_remove_notification' => '":name" favorilerinizden çıkarıldı',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
+    'auth_login' => 'oturum açıldı',
+    'auth_register' => 'yeni kullanıcı olarak kayıt yapıldı',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
     'mfa_setup_method' => 'configured MFA method',
@@ -70,7 +70,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => 'Ayarlar başarıyla güncellendi',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -83,7 +83,7 @@ return [
 
     // Users
     'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
+    'user_create_notification' => 'Kullanıcı başarıyla oluşturuldu',
     'user_update' => 'updated user',
     'user_update_notification' => 'Kullanıcı başarıyla güncellendi',
     'user_delete' => 'deleted user',
@@ -91,19 +91,19 @@ return [
 
     // API Tokens
     'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
+    'api_token_create_notification' => 'API anahtarı başarıyla oluşturuldu',
     'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_update_notification' => 'API anahtarı başarıyla güncellendi',
     'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete_notification' => 'API anahtarı başarıyla silindi',
 
     // Roles
     'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
+    'role_create_notification' => 'Rol başarıyla oluşturuldu',
     'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
+    'role_update_notification' => 'Rol başarıyla güncellendi',
     'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_delete_notification' => 'Rol başarıyla silindi',
 
     // Recycle Bin
     'recycle_bin_empty' => 'emptied recycle bin',

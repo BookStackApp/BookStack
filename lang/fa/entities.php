@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'مجوزهای کانال بروزرسانی شد',
     'shelves_permissions_active' => 'مجوزهای قفسه فعال است',
     'shelves_permissions_cascade_warning' => 'مجوزهای موجود در قفسه‌ها به طور خودکار به کتاب‌های حاوی اطلاق نمی‌شوند. دلیل آن این است که یک کتاب می تواند در چندین قفسه وجود داشته باشد. با این حال، مجوزها را می‌توان با استفاده از گزینه پایین همین صفحه در کتاب‌های فرزند کپی کرد.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'کپی مجوزها در کتابها',
     'shelves_copy_permissions' => 'کپی مجوزها',
     'shelves_copy_permissions_explain' => 'با این کار تنظیمات مجوز فعلی این قفسه برای همه کتاب‌های موجود در آن اعمال می‌شود. قبل از فعال کردن، مطمئن شوید که هر گونه تغییر در مجوزهای این قفسه، ذخیره شده است.',

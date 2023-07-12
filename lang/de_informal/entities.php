@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Regalberechtigungen aktualisiert',
     'shelves_permissions_active' => 'Regalberechtigungen aktiv',
     'shelves_permissions_cascade_warning' => 'Berechtigungen für Regale werden nicht automatisch auf die enthaltenen Bücher übertragen. Das liegt daran, dass ein Buch in mehreren Regalen vorhanden sein kann. Berechtigungen können jedoch auf untergeordnete Bücher kopiert werden, indem du die unten stehende Option verwendest.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopiere die Berechtigungen zum Buch',
     'shelves_copy_permissions' => 'Berechtigungen kopieren',
     'shelves_copy_permissions_explain' => 'Dadurch werden die aktuellen Berechtigungseinstellungen dieses Regals auf alle darin enthaltenen Bücher angewendet. Vergewissere dich vor der Aktivierung, dass alle Änderungen an den Berechtigungen für dieses Regal gespeichert wurden.',

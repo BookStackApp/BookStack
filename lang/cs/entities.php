@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Oprávnění knihovny byla aktualizována',
     'shelves_permissions_active' => 'Oprávnění knihovny byla aktivována',
     'shelves_permissions_cascade_warning' => 'Oprávnění v Knihovnách nejsou automaticky kaskádována do obsažených knih. To proto, že kniha může existovat ve více Knihovnách. Oprávnění však lze zkopírovat do podřízených knih pomocí níže uvedené možnosti.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopírovat oprávnění na knihy',
     'shelves_copy_permissions' => 'Kopírovat oprávnění',
     'shelves_copy_permissions_explain' => 'Toto použije aktuální nastavení oprávnění knihovny na všechny knihy v ní obsažené. Před aktivací se ujistěte, že byly uloženy všechny změny oprávnění této knihovny.',

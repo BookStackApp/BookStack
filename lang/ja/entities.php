@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => '本棚の権限を更新しました',
     'shelves_permissions_active' => '本棚の権限は有効です',
     'shelves_permissions_cascade_warning' => '本棚の権限は含まれる本には自動的に継承されません。これは、1つのブックが複数の本棚に存在する可能性があるためです。ただし、以下のオプションを使用すると権限を子ブックにコピーできます。',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'ブックに権限をコピー',
     'shelves_copy_permissions' => '権限をコピー',
     'shelves_copy_permissions_explain' => 'これにより、この本棚の現在の権限設定を本棚に含まれるすべてのブックに適用します。有効にする前に、この本棚の権限への変更が保存されていることを確認してください。',

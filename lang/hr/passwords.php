@@ -7,7 +7,7 @@
 return [
 
     'password' => 'Lozinka mora imati najmanje 8 znakova i biti potvrđena.',
-    'user' => "We can't find a user with that e-mail address.",
+    'user' => "Ne možemo pronaći korisnika s tom adresom e-pošte.",
     'token' => 'Ponovno postavljanje lozinke nemoguće putem ove adrese.',
     'sent' => 'Na vašu email adresu poslana je poveznica za ponovno postavljanje!',
     'reset' => 'Vaša je lozinka ponovno postavljena!',

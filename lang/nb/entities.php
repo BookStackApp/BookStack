@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Oppdaterte hyllerettigheter',
     'shelves_permissions_active' => 'Aktiverte hyllerettigheter',
     'shelves_permissions_cascade_warning' => 'Rettigheter på en hylle blir ikke automatisk arvet av bøker på hylla. Dette er fordi en bok kan finnes på flere hyller samtidig. Rettigheter kan likevel kopieres til bøker på hylla ved å bruke alternativene under.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopier tilganger til bøkene på hylla',
     'shelves_copy_permissions' => 'Kopier tilganger',
     'shelves_copy_permissions_explain' => 'Dette vil kopiere rettighetene på denne hylla til alle bøkene som er plassert på den. Før du starter kopieringen bør du sjekke at rettighetene på hylla er lagret først.',

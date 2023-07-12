@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Uprawnienia półki zostały zaktualizowane',
     'shelves_permissions_active' => 'Uprawnienia półki są aktywne',
     'shelves_permissions_cascade_warning' => 'Uprawnienia na półkach nie są automatycznie nakładane na zawartych w nich książkach. Dzieje się tak dlatego, że książka może istnieć na wielu półkach. Uprawnienia można jednak skopiować do książek podrzędnych, korzystając z opcji znajdującej się poniżej.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Skopiuj uprawnienia do książek',
     'shelves_copy_permissions' => 'Skopiuj uprawnienia',
     'shelves_copy_permissions_explain' => 'To spowoduje zastosowanie obecnych ustawień uprawnień tej półki na wszystkich książkach w niej zawartych. Przed aktywacją upewnij się, że wszelkie zmiany w uprawnieniach tej półki zostały zapisane.',

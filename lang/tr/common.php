@@ -6,13 +6,13 @@ return [
 
     // Buttons
     'cancel' => 'İptal',
-    'close' => 'Close',
+    'close' => 'Kapat',
     'confirm' => 'Onayla',
     'back' => 'Geri',
     'save' => 'Kaydet',
     'continue' => 'Devam',
     'select' => 'Seç',
-    'toggle_all' => 'Hepsini Aç/Kapat',
+    'toggle_all' => 'Tümünü Aç/Kapat',
     'more' => 'Daha Fazla',
 
     // Form Labels
@@ -26,7 +26,7 @@ return [
     'actions' => 'İşlemler',
     'view' => 'Görüntüle',
     'view_all' => 'Hepsini Göster',
-    'new' => 'New',
+    'new' => 'Yeni',
     'create' => 'Oluştur',
     'update' => 'Güncelle',
     'edit' => 'Düzenle',
@@ -47,10 +47,10 @@ return [
     'unfavourite' => 'Favorilerden çıkar',
     'next' => 'Sonraki',
     'previous' => 'Önceki',
-    'filter_active' => 'Aktif filtre:',
+    'filter_active' => 'Aktif Filtre:',
     'filter_clear' => 'Filtreyi Kaldır',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
+    'download' => 'İndir',
+    'open_in_tab' => 'Sekmede aç',
 
     // Sort Options
     'sort_options' => 'Sıralama Seçenekleri',
@@ -60,11 +60,11 @@ return [
     'sort_name' => 'İsim',
     'sort_default' => 'Varsayılan',
     'sort_created_at' => 'Oluşturulma Tarihi',
-    'sort_updated_at' => 'Güncelleme Tarihi',
+    'sort_updated_at' => 'Güncellenme Tarihi',
 
     // Misc
     'deleted_user' => 'Silinmiş Kullanıcı',
-    'no_activity' => 'Gösterilecek eylem bulunamadı',
+    'no_activity' => 'Gösterilecek aktivite yok',
     'no_items' => 'Herhangi bir öge bulunamadı',
     'back_to_top' => 'Başa dön',
     'skip_to_main_content' => 'Ana içeriğe geç',
@@ -76,29 +76,29 @@ return [
     'default' => 'Varsayılan',
     'breadcrumb' => 'Gezinti Menüsü',
     'status' => 'Durum',
-    'status_active' => 'Etkin',
-    'status_inactive' => 'Devre dışı',
+    'status_active' => 'Aktif',
+    'status_inactive' => 'Aktif değil',
     'never' => 'Hiçbir zaman',
     'none' => 'Hiçbiri',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Ana sayfa',
     'header_menu_expand' => 'Başlık Menüsünü Genişlet',
     'profile_menu' => 'Profil Menüsü',
     'view_profile' => 'Profili Görüntüle',
     'edit_profile' => 'Profili Düzenle',
-    'dark_mode' => 'Gece Modu',
+    'dark_mode' => 'Gece Teması',
     'light_mode' => 'Aydınlık Modu',
-    'global_search' => 'Global Search',
+    'global_search' => 'Genel Arama',
 
     // Layout tabs
     'tab_info' => 'Bilgi',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Sekme: İkincil Bilgileri Göster',
     'tab_content' => 'İçerik',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Sekme: Birincil Bilgileri Göster',
 
     // Email Content
-    'email_action_help' => '":actionText" butonuna tıklamada sorun yaşıyorsanız, aşağıda bulunan bağlantıyı kopyalayıp tarayıcınıza yapıştırın:',
+    'email_action_help' => 'Eğer ":actionText" butonuna tıklamakta zorluk çekiyorsanız, aşağıda bulunan linki kopyalayıp tarayıcınıza yapıştırabilirsiniz.',
     'email_rights' => 'Tüm hakları saklıdır',
 
     // Footer Link Options

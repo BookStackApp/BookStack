@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => '书架权限已更新',
     'shelves_permissions_active' => '书架权限已启用',
     'shelves_permissions_cascade_warning' => '书架上的权限不会自动应用到书架里的图书上，这是因为图书可以在多个书架上存在。使用下面的选项可以将权限复制到书架里的图书上。',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => '将权限复制到图书',
     'shelves_copy_permissions' => '复制权限',
     'shelves_copy_permissions_explain' => '此操作会将此书架的当前权限设置应用于其中包含的所有图书上。 启用前请确保已保存对此书架权限的任何更改。',
