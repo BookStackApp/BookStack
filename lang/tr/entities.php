@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Kitaplık İzinleri Güncellendi',
     'shelves_permissions_active' => 'Kitaplık İzinleri Aktif',
     'shelves_permissions_cascade_warning' => 'Kitaplıktaki izinler otomatik olarak içerilen kitaplara kademelendirilmez. Bunun nedeni, bir kitabın birden fazla kitaplıkta bulunabilmesidir. Ancak izinler, aşağıda bulunan seçenek kullanılarak alt kitaplara kopyalanabilir.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'İzinleri Kitaplara Kopyala',
     'shelves_copy_permissions' => 'İzinleri Kopyala',
     'shelves_copy_permissions_explain' => 'Bu işlem sonucunda kitaplığınızın izinleri, içerdiği kitaplara da aynen uygulanır. Aktifleştirmeden önce bu kitaplığa ait izinleri kaydettiğinizden emin olun.',
