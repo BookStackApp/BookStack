@@ -6,8 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Selecteer Afbeelding',
-    'image_list' => 'Image List',
-    'image_details' => 'Image Details',
+    'image_list' => 'Afbeeldingslijst',
+    'image_details' => 'Afbeelding details',
     'image_upload' => 'Upload afbeelding',
     'image_intro' => 'Hier kan je eerder geüploade afbeeldingen selecteren en beheren.',
     'image_intro_upload' => 'Sleep een afbeeldingsbestand naar dit venster of gebruik de "Upload afbeelding"-knop om een afbeelding te uploaden.',
@@ -17,9 +17,9 @@ return [
     'image_page_title' => 'Bekijk afbeeldingen geüpload naar deze pagina',
     'image_search_hint' => 'Zoek op afbeeldingsnaam',
     'image_uploaded' => 'Geüpload op :uploadedDate',
-    'image_uploaded_by' => 'Uploaded by :userName',
-    'image_uploaded_to' => 'Uploaded to :pageLink',
-    'image_updated' => 'Updated :updateDate',
+    'image_uploaded_by' => 'Geüpload door :userName',
+    'image_uploaded_to' => 'Geüpload naar :pageLink',
+    'image_updated' => ':updateDate bijgewerkt',
     'image_load_more' => 'Laad meer',
     'image_image_name' => 'Afbeeldingsnaam',
     'image_delete_used' => 'Deze afbeelding is op onderstaande pagina\'s in gebruik.',
@@ -32,8 +32,8 @@ return [
     'image_upload_success' => 'Afbeelding succesvol geüpload',
     'image_update_success' => 'Afbeeldingsdetails succesvol bijgewerkt',
     'image_delete_success' => 'Afbeelding succesvol verwijderd',
-    'image_replace' => 'Replace Image',
-    'image_replace_success' => 'Image file successfully updated',
+    'image_replace' => 'Vervang Afbeelding',
+    'image_replace_success' => 'Afbeelding succesvol bijgewerkt',
 
     // Code Editor
     'code_editor' => 'Bewerk Code',

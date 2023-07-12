@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Permisos del Estante Actualizados',
     'shelves_permissions_active' => 'Permisos Activos del Estante',
     'shelves_permissions_cascade_warning' => 'Los permisos en los estantes no se aplican automáticamente a los libros que contengan. Esto se debe a que un libro puede existir en múltiples estantes. Sin embargo, los permisos pueden ser aplicados a los libros del estante utilizando la opción de abajo.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Copiar Permisos a los Libros',
     'shelves_copy_permissions' => 'Copiar Permisos',
     'shelves_copy_permissions_explain' => 'Esta acción aplicará los permisos del estante a todos los libros dentro del mismo. Antes de activarlo, asegúrese de que todos los cambios de permisos para este estante fueron guardados.',
