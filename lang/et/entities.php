@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Riiuli õigused muudetud',
     'shelves_permissions_active' => 'Riiuli õigused on aktiivsed',
     'shelves_permissions_cascade_warning' => 'Riiuli õigused ei rakendu automaatselt sellel olevatele raamatutele, kuna raamat võib olla korraga mitmel riiulil. Alloleva valiku abil saab aga riiuli õigused kopeerida raamatutele.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopeeri õigused raamatutele',
     'shelves_copy_permissions' => 'Kopeeri õigused',
     'shelves_copy_permissions_explain' => 'See rakendab riiuli praegused õigused kõigile sellel olevatele raamatutele. Enne jätkamist veendu, et riiuli õiguste muudatused oleks salvestatud.',
