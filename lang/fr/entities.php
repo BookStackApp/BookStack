@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Permissions de l\'étagère mises à jour',
     'shelves_permissions_active' => 'Permissions de l\'étagère activées',
     'shelves_permissions_cascade_warning' => 'Les permissions sur les étagères ne sont pas automatiquement recopiées aux livres qu\'elles contiennent, car un livre peut exister dans plusieurs étagères. Les permissions peuvent cependant être recopiées vers les livres contenus en utilisant l\'option ci-dessous.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Copier les permissions vers les livres',
     'shelves_copy_permissions' => 'Copier les permissions',
     'shelves_copy_permissions_explain' => 'Ceci va appliquer les permissions actuelles de cette étagère à tous les livres qu\'elle contient. Avant de continuer, assurez-vous que toutes les permissions de cette étagère ont été sauvegardées.',
