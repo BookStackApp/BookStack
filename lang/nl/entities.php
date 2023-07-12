@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Boekenplank Machtigingen Bijgewerkt',
     'shelves_permissions_active' => 'Machtigingen op Boekenplank Actief',
     'shelves_permissions_cascade_warning' => 'De ingestelde machtigingen op deze boekenplank worden niet automatisch toegepast op de boeken van deze boekenplank. Dit is omdat een boek toegekend kan worden op meerdere boekenplanken. De machtigingen van deze boekenplank kunnen echter wel gekopieerd worden naar de boeken van deze boekenplank via de optie hieronder.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopieer Machtigingen naar Boeken',
     'shelves_copy_permissions' => 'Kopieer Machtigingen',
     'shelves_copy_permissions_explain' => 'Met deze actie worden de machtigingen van deze boekenplank gekopieërd naar alle boeken van deze boekenplank. Voor je deze actie uitvoert, moet je ervoor zorgen dat alle wijzigingen in de machtigingen van deze boekenplank zijn opgeslagen.',
