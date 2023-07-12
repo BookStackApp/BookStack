@@ -413,13 +413,14 @@ class EntityPermissionsTest extends TestCase
         $this->entityRestrictionFormTest(Page::class, 'Page Permissions', 'delete', '2');
     }
 
-    public function test_shelf_create_permission_not_visible()
+    public function test_shelf_create_permission_visible_with_notice()
     {
         $shelf = $this->entities->shelf();
 
         $resp = $this->asAdmin()->get($shelf->getUrl('/permissions'));
         $html = $this->withHtml($resp);
-        $html->assertElementNotExists('input[name$="[create]"]');
+        $html->assertElementExists('input[name$="[create]"]');
+        $resp->assertSee('Shelf create permissions are only used for copying permissions to child books using the action below.');
     }
 
     public function test_restricted_pages_not_visible_in_book_navigation_on_pages()

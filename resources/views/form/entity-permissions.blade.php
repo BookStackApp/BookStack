@@ -70,8 +70,17 @@
 
     <hr class="mb-m">
 
-    <div class="text-right">
-        <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-        <button type="submit" class="button">{{ trans('entities.permissions_save') }}</button>
+    <div class="flex-container-row justify-space-between gap-m wrap">
+        <div class="flex min-width-m">
+            @if($model instanceof \BookStack\Entities\Models\Bookshelf)
+                <p class="small text-muted mb-none">
+                    * {{ trans('entities.shelves_permissions_create') }}
+                </p>
+            @endif
+        </div>
+        <div class="text-right">
+            <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+            <button type="submit" class="button">{{ trans('entities.permissions_save') }}</button>
+        </div>
     </div>
 </form>
