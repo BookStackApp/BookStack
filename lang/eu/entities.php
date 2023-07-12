@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Apalategi baimenak eguneratuta',
     'shelves_permissions_active' => 'Apalategi baimenak aktibatuta',
     'shelves_permissions_cascade_warning' => 'Apaletako baimenak ez dira automatikoki hauen barneko liburuetan gordeko. Liburu bat apalategi askotan egon daitekeelako. Hala ere, baimenak apalategiko liburutara kopiatu daitezke, behean agertzen den aukera erabiliz.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopiatu baimenak liburura',
     'shelves_copy_permissions' => 'Gorde baimenak',
     'shelves_copy_permissions_explain' => 'Honek apalategi honen egungo baimen-konfigurazioa aplikatuko die barruan dauden liburu guztiei. Aktibatu aurretik, ziurtatu apaletan aldaketak gorde direla.',
