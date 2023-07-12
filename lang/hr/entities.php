@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Ažurirana dopuštenja za Policu',
     'shelves_permissions_active' => 'Aktivna Dopuštenja za Policu',
     'shelves_permissions_cascade_warning' => 'Dozvole na policama se automatski ne prenose na knjige koje se nalaze na njima. To je zato što se jedna knjiga može nalaziti na više polica. Međutim, dozvole se mogu kopirati na podređene knjige koristeći opciju koja se nalazi ispod.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopiraj dopuštenja za knjige',
     'shelves_copy_permissions' => 'Kopiraj dopuštenja',
     'shelves_copy_permissions_explain' => 'Ovo će primijeniti trenutne postavke dozvola ove police na sve knjige koje se nalaze na njoj. Prije aktiviranja, provjerite jeste li spremili sve promjene dozvola na ovoj polici.',
