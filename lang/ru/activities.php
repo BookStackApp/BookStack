@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" удалено из избранного',
 
     // Auth
-    'auth_login' => 'logged in',
+    'auth_login' => 'вошёл',
     'auth_register' => 'зарегистрировался как новый пользователь',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
@@ -69,7 +69,7 @@ return [
     'mfa_remove_method_notification' => 'Двухфакторный метод авторизации успешно удален',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => 'обновил настройки',
     'settings_update_notification' => 'Настройки успешно обновлены',
     'maintenance_action_run' => 'ran maintenance action',
 
@@ -82,32 +82,32 @@ return [
     'webhook_delete_notification' => 'Вебхук успешно удален',
 
     // Users
-    'user_create' => 'created user',
+    'user_create' => 'создал пользователя',
     'user_create_notification' => 'Пользователь успешно создан',
-    'user_update' => 'updated user',
+    'user_update' => 'обновил пользователя',
     'user_update_notification' => 'Пользователь успешно обновлен',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'удалил пользователя',
     'user_delete_notification' => 'Пользователь успешно удален',
 
     // API Tokens
-    'api_token_create' => 'created api token',
+    'api_token_create' => 'создал api token',
     'api_token_create_notification' => 'API токен успешно создан',
-    'api_token_update' => 'updated api token',
+    'api_token_update' => 'обновил api token',
     'api_token_update_notification' => 'API токен успешно обновлен',
-    'api_token_delete' => 'deleted api token',
+    'api_token_delete' => 'удалил api token',
     'api_token_delete_notification' => 'API токен успешно удален',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'создал роль',
     'role_create_notification' => 'Роль успешно создана',
-    'role_update' => 'updated role',
+    'role_update' => 'обновил роль',
     'role_update_notification' => 'Роль успешно обновлена',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'удалил роль',
     'role_delete_notification' => 'Роль успешно удалена',
 
     // Recycle Bin
     'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
+    'recycle_bin_restore' => 'восстановлено из корзины',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Other
