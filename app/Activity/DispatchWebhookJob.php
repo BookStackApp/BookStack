@@ -24,27 +24,23 @@ class DispatchWebhookJob implements ShouldQueue
     use SerializesModels;
 
     protected Webhook $webhook;
-    protected string $event;
     protected User $initiator;
     protected int $initiatedTime;
-
-    /**
-     * @var string|Loggable
-     */
-    protected $detail;
+    protected array $webhookData;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Webhook $webhook, string $event, $detail)
+    public function __construct(Webhook $webhook, string $event, Loggable|string $detail)
     {
         $this->webhook = $webhook;
-        $this->event = $event;
-        $this->detail = $detail;
         $this->initiator = user();
         $this->initiatedTime = time();
+
+        $themeResponse = Theme::dispatch(ThemeEvents::WEBHOOK_CALL_BEFORE, $event, $this->webhook, $detail, $this->initiator, $this->initiatedTime);
+        $this->webhookData =  $themeResponse ?? WebhookFormatter::getDefault($event, $this->webhook, $detail, $this->initiator, $this->initiatedTime)->format();
     }
 
     /**
@@ -54,15 +50,13 @@ class DispatchWebhookJob implements ShouldQueue
      */
     public function handle()
     {
-        $themeResponse = Theme::dispatch(ThemeEvents::WEBHOOK_CALL_BEFORE, $this->event, $this->webhook, $this->detail, $this->initiator, $this->initiatedTime);
-        $webhookData = $themeResponse ?? WebhookFormatter::getDefault($this->event, $this->webhook, $this->detail, $this->initiator, $this->initiatedTime)->format();
         $lastError = null;
 
         try {
             $response = Http::asJson()
                 ->withOptions(['allow_redirects' => ['strict' => true]])
                 ->timeout($this->webhook->timeout)
-                ->post($this->webhook->endpoint, $webhookData);
+                ->post($this->webhook->endpoint, $this->webhookData);
         } catch (\Exception $exception) {
             $lastError = $exception->getMessage();
             Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with error \"{$lastError}\"");

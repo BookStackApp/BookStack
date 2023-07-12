@@ -6,6 +6,8 @@ use BookStack\Activity\ActivityType;
 use BookStack\Activity\DispatchWebhookJob;
 use BookStack\Activity\Models\Webhook;
 use BookStack\Activity\Tools\ActivityLogger;
+use BookStack\Api\ApiToken;
+use BookStack\Entities\Models\PageRevision;
 use BookStack\Users\Models\User;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Bus;
@@ -44,6 +46,24 @@ class WebhookCallTest extends TestCase
         Bus::fake();
         $this->runEvent(ActivityType::ROLE_CREATE);
         Bus::assertNotDispatched(DispatchWebhookJob::class);
+    }
+
+    public function test_webhook_runs_for_delete_actions()
+    {
+        $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
+        Http::fake([
+            '*' => Http::response('', 500),
+        ]);
+
+        $user = $this->users->newUser();
+        $resp = $this->asAdmin()->delete($user->getEditUrl());
+        $resp->assertRedirect('/settings/users');
+
+        /** @var ApiToken $apiToken */
+        $editor = $this->users->editor();
+        $apiToken = ApiToken::factory()->create(['user_id' => $editor]);
+        $resp = $this->delete($editor->getEditUrl('/api-tokens/' . $apiToken->id));
+        $resp->assertRedirect($editor->getEditUrl('#api_tokens'));
     }
 
     public function test_failed_webhook_call_logs_error()
@@ -120,7 +140,7 @@ class WebhookCallTest extends TestCase
         $activityLogger->add($event, $detail);
     }
 
-    protected function newWebhook(array $attrs = [], array $events = ['all']): Webhook
+    protected function newWebhook(array $attrs, array $events): Webhook
     {
         /** @var Webhook $webhook */
         $webhook = Webhook::factory()->create($attrs);

@@ -17,18 +17,14 @@ class WebhookFormatter
     protected string $event;
     protected User $initiator;
     protected int $initiatedTime;
-
-    /**
-     * @var string|Loggable
-     */
-    protected $detail;
+    protected string|Loggable $detail;
 
     /**
      * @var array{condition: callable(string, Model):bool, format: callable(Model):void}[]
      */
     protected $modelFormatters = [];
 
-    public function __construct(string $event, Webhook $webhook, $detail, User $initiator, int $initiatedTime)
+    public function __construct(string $event, Webhook $webhook, string|Loggable $detail, User $initiator, int $initiatedTime)
     {
         $this->webhook = $webhook;
         $this->event = $event;
