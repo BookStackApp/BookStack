@@ -12,9 +12,10 @@ return new class extends Migration
      */
     public function up()
     {
-        DB::table('entity_permissions')
-            ->where('entity_type', '=', 'bookshelf')
-            ->update(['create' => 0]);
+        // Note: v23.06.2
+        // Migration removed since change to remove bookshelf create permissions was reverted.
+        // Create permissions were removed as incorrectly thought to be unused, but they did
+        // have a use via shelf permission copy-down to books.
     }
 
     /**
