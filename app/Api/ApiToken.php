@@ -4,6 +4,7 @@ namespace BookStack\Api;
 
 use BookStack\Activity\Models\Loggable;
 use BookStack\Users\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -20,6 +21,8 @@ use Illuminate\Support\Carbon;
  */
 class ApiToken extends Model implements Loggable
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'expires_at'];
     protected $casts = [
         'expires_at' => 'date:Y-m-d',

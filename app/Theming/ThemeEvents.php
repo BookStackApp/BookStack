@@ -132,11 +132,12 @@ class ThemeEvents
      * If the listener returns a non-null value, that will be used as the POST data instead
      * of the system default.
      *
-     * @param string                                $event
-     * @param \BookStack\Activity\Models\Webhook            $webhook
+     * @param string                                     $event
+     * @param \BookStack\Activity\Models\Webhook         $webhook
      * @param string|\BookStack\Activity\Models\Loggable $detail
-     * @param \BookStack\Users\Models\User                  $initiator
-     * @param int                                   $initiatedTime
+     * @param \BookStack\Users\Models\User               $initiator
+     * @param int                                        $initiatedTime
+     * @returns array|null
      */
     const WEBHOOK_CALL_BEFORE = 'webhook_call_before';
 }
