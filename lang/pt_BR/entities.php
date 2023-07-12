@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Permissões de prateleira atualizadas',
     'shelves_permissions_active' => 'Permissões de prateleira ativas',
     'shelves_permissions_cascade_warning' => 'As permissões nas prateleiras não são automaticamente em cascata para os livros contidos. Isso ocorre porque um livro pode existir em várias prateleiras. No entanto, as permissões podem ser copiadas para livros filhos usando a opção encontrada abaixo.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Copiar Permissões para Livros',
     'shelves_copy_permissions' => 'Copiar Permissões',
     'shelves_copy_permissions_explain' => 'Isso aplicará as configurações de permissão atuais desta estante a todos os livros contidos nela. Antes de ativar, verifique se todas as alterações nas permissões desta prateleira foram salvas.',
