@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Rättigheter för hylla uppdaterades',
     'shelves_permissions_active' => 'Rättigheter för hylla aktiverade',
     'shelves_permissions_cascade_warning' => 'Rättigheter för hyllor ärvs inte automatiskt ner till böckerna i hyllorna. Detta beror på att en bok kan finnas från flera hyllor. Rättigheter kan däremot kopieras ner till en bok i hyllan med hjälp av alternativet nedan.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopiera rättigheter till böcker',
     'shelves_copy_permissions' => 'Kopiera rättigheter',
     'shelves_copy_permissions_explain' => 'Detta kommer att tillämpa rättigheterna från den här hyllan på alla böcker den innehåller. Se till att eventuella ändringar sparats innan tillämpningen genomförs.',

@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Permessi Libreria Aggiornati',
     'shelves_permissions_active' => 'Permessi Libreria Attivi',
     'shelves_permissions_cascade_warning' => 'I permessi delle librerie non si estendono automaticamente ai libri contenuti. Questo perché un libro può essere presente su più scaffali. I permessi possono comunque essere copiati ai libri al suo interno usando l\'opzione sottostante.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Copia Permessi ai Libri',
     'shelves_copy_permissions' => 'Copia Permessi',
     'shelves_copy_permissions_explain' => 'Verranno applicati tutti i permessi della libreria ai libri al suo interno. Prima dell\'attivazione, assicurati che ogni permesso di questa libreria sia salvato.',

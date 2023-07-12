@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Дозволи полиці оновлено',
     'shelves_permissions_active' => 'Дозволи полиці активні',
     'shelves_permissions_cascade_warning' => 'Дозволи на полицях не каскадують автоматично до вміщених книг. Це тому, що книга може стояти на кількох полицях. Однак дозволи можна скопіювати до дочірніх книг за допомогою наведеної нижче опції.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Копіювати дозволи на книги',
     'shelves_copy_permissions' => 'Копіювати дозволи',
     'shelves_copy_permissions_explain' => 'Це застосує поточні налаштування дозволів цієї полиці до всіх книг, які містяться в ній. Перед активацією переконайтеся, що будь-які зміни в дозволах цієї полиці збережено.',

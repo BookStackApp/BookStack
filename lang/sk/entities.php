@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Povolenia police aktualizované',
     'shelves_permissions_active' => 'Povolenia police aktívne',
     'shelves_permissions_cascade_warning' => 'Povolenia na poličkách sa automaticky nepriraďujú k obsiahnutým knihám. Je to preto, že kniha môže existovať na viacerých poličkách. Povolenia však možno skopírovať do kníh pomocou možnosti uvedenej nižšie.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Kopírovať oprávnenia pre knihy',
     'shelves_copy_permissions' => 'Kopírovať oprávnenia',
     'shelves_copy_permissions_explain' => 'Týmto sa použijú aktuálne nastavenia povolení tejto police na všetky knihy, ktoré obsahuje. Pred aktiváciou sa uistite, že všetky zmeny povolení tejto police boli uložené.',

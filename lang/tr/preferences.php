@@ -5,14 +5,14 @@
  */
 
 return [
-    'shortcuts' => 'Shortcuts',
-    'shortcuts_interface' => 'Interface Keyboard Shortcuts',
-    'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
-    'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
-    'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
-    'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
-    'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
-    'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts' => 'Kısayollar',
+    'shortcuts_interface' => 'Klavye Kısayollarını Görüntüle',
+    'shortcuts_toggle_desc' => 'Burada, gezinme ve eylemler için kullanılan klavye sistem arayüzü kısayollarını etkinleştirebilir veya devre dışı bırakabilirsiniz.',
+    'shortcuts_customize_desc' => 'Aşağıdaki kısayolların her birini özelleştirebilirsiniz. Bir kısayol için girişi seçtikten sonra istediğiniz tuş kombinasyonuna basmanız yeterlidir.',
+    'shortcuts_toggle_label' => 'Klavye kısayolları etkinleştirildi',
+    'shortcuts_section_navigation' => 'Navigasyon',
+    'shortcuts_section_actions' => 'Ortak Eylemler',
+    'shortcuts_save' => 'Kısayolları Kaydet',
+    'shortcuts_overlay_desc' => 'Not: Kısayollar etkinleştirildiğinde, "?" tuşuna basılarak o anda ekranda görünen eylemler için mevcut kısayolları vurgulayan bir yardımcı yer paylaşımı kullanılabilir.',
+    'shortcuts_update_success' => 'Kısayol tercihleri güncellendi!',
 ];
