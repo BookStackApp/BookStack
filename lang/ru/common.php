@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Отмена',
-    'close' => 'Close',
+    'close' => 'Закрыть',
     'confirm' => 'Применить',
     'back' => 'Назад',
     'save' => 'Сохранить',
