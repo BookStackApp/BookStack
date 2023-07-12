@@ -106,6 +106,7 @@ return [
     'shelves_permissions_updated' => 'Permisiunile raftului au fost actualizate',
     'shelves_permissions_active' => 'Shelf Permissions Active',
     'shelves_permissions_cascade_warning' => 'Permissions on shelves do not automatically cascade to contained books. This is because a book can exist on multiple shelves. Permissions can however be copied down to child books using the option found below.',
+    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
     'shelves_copy_permissions_to_books' => 'Copiază permisiunile către cărți',
     'shelves_copy_permissions' => 'Copiază permisiunile',
     'shelves_copy_permissions_explain' => 'This will apply the current permission settings of this shelf to all books contained within. Before activating, ensure any changes to the permissions of this shelf have been saved.',
