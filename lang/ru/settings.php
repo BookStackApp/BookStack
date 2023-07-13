@@ -245,7 +245,7 @@ return [
     // Webhooks
     'webhooks' => 'Вебхуки',
     'webhooks_index_desc' => 'Webhooks - это способ посылать данные на внешние URL-адреса при возникновении определенных действий и событий в системе, которые позволяют интегрировать события с внешними платформами, такими как системы обмена сообщениями или уведомлениями.',
-    'webhooks_x_trigger_events' => ':count trigger event|:count trigger events',
+    'webhooks_x_trigger_events' => ':count событие триггера|:count событий триггера',
     'webhooks_create' => 'Создать вебхук',
     'webhooks_none_created' => 'Вебхуки еще не созданы.',
     'webhooks_edit' => 'Редактировать вебхук',
