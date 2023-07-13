@@ -50,8 +50,8 @@ return [
     'bookshelf_delete_notification'    => 'Полка успешно удалена',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
+    'revision_restore' => 'восстановил версию',
+    'revision_delete' => 'удалил версию',
     'revision_delete_notification' => 'Версия успешно удалена',
 
     // Favourites
@@ -61,8 +61,8 @@ return [
     // Auth
     'auth_login' => 'вошёл',
     'auth_register' => 'зарегистрировался как новый пользователь',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
+    'auth_password_reset_request' => 'запросил смену пароля пользователя',
+    'auth_password_reset_update' => 'сбросил пароль пользователя',
     'mfa_setup_method' => 'ностроил метод МФА',
     'mfa_setup_method_notification' => 'Многофакторный метод аутентификации успешно настроен',
     'mfa_remove_method' => 'удалил метод МФА',
@@ -71,7 +71,7 @@ return [
     // Settings
     'settings_update' => 'обновил настройки',
     'settings_update_notification' => 'Настройки успешно обновлены',
-    'maintenance_action_run' => 'ran maintenance action',
+    'maintenance_action_run' => 'запустил техническое обслуживание',
 
     // Webhooks
     'webhook_create' => 'создал вебхук',
