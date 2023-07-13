@@ -63,10 +63,10 @@ return [
     'auth_register' => 'зарегистрировался как новый пользователь',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
-    'mfa_setup_method_notification' => 'Двухфакторный метод авторизации успешно настроен',
-    'mfa_remove_method' => 'removed MFA method',
-    'mfa_remove_method_notification' => 'Двухфакторный метод авторизации успешно удален',
+    'mfa_setup_method' => 'ностроил метод МФА',
+    'mfa_setup_method_notification' => 'Многофакторный метод аутентификации успешно настроен',
+    'mfa_remove_method' => 'удалил метод МФА',
+    'mfa_remove_method_notification' => 'Многофакторный метод аутентификации успешно удален',
 
     // Settings
     'settings_update' => 'обновил настройки',
@@ -106,9 +106,9 @@ return [
     'role_delete_notification' => 'Роль успешно удалена',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_empty' => 'очистил корзину',
     'recycle_bin_restore' => 'восстановлено из корзины',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_destroy' => 'удалено из корзины',
 
     // Other
     'commented_on'                => 'прокомментировал',
