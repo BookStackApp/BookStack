@@ -287,8 +287,8 @@ return [
         'time_b' => '在最近 :minCount 分钟',
         'message' => ':time :start。注意不要覆盖他人的更新！',
     ],
-    'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
-    'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
+    'pages_draft_discarded' => '草稿已丢弃！编辑器已更新到当前页面内容',
+    'pages_draft_deleted' => '草稿已删除！编辑器已更新为当前页面内容',
     'pages_specific' => '具体页面',
     'pages_is_template' => '页面模板',
 
@@ -372,7 +372,7 @@ return [
     'comment_updated_success' => '评论已更新',
     'comment_delete_confirm' => '您确定要删除这条评论？',
     'comment_in_reply_to' => '回复 :commentId',
-    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
+    'comment_editor_explain' => '这里是此页面上留下的评论。查看已保存的页面时可以添加和管理评论。',
 
     // Revision
     'revision_delete_confirm' => '您确定要删除此修订版吗？',
