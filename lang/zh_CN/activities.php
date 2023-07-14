@@ -107,8 +107,8 @@ return [
 
     // Recycle Bin
     'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_restore' => '从回收站中恢复',
+    'recycle_bin_destroy' => '从回收站中移除',
 
     // Other
     'commented_on'                => '评论',
