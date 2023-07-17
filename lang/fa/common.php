@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'لغو',
-    'close' => 'Close',
+    'close' => 'خروج',
     'confirm' => 'تایید',
     'back' => 'بازگشت',
     'save' => 'ذخیره',
