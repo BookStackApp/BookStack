@@ -6,8 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'انتخاب تصویر',
-    'image_list' => 'Image List',
-    'image_details' => 'Image Details',
+    'image_list' => 'لیست تصاویر',
+    'image_details' => 'جزئیات تصویر',
     'image_upload' => 'بارگذاری تصویر',
     'image_intro' => 'در اینجا می توانید تصاویری که قبلاً در سیستم آپلود شده اند را انتخاب و مدیریت کنید.',
     'image_intro_upload' => 'با کشیدن یک فایل تصویری به این پنجره یا با استفاده از دکمه "بارگذاری تصویر" در بالا، یک تصویر جدید آپلود کنید.',
