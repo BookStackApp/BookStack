@@ -320,10 +320,10 @@ return [
     'attachments_explain_instant_save' => 'تغییرات در اینجا فورا ذخیره می شوند.',
     'attachments_upload' => 'آپلود فایل',
     'attachments_link' => 'پیوند را ضمیمه کنید',
-    'attachments_upload_drop' => 'Alternatively you can drag and drop a file here to upload it as an attachment.',
+    'attachments_upload_drop' => 'می‌توانید فایلی را در اینجا بکشید و رها کنید تا آن را به عنوان پیوست آپلود کنید.',
     'attachments_set_link' => 'پیوند را تنظیم کنید',
     'attachments_delete' => 'آیا مطمئن هستید که می خواهید این پیوست را حذف کنید؟',
-    'attachments_dropzone' => 'Drop files here to upload',
+    'attachments_dropzone' => 'فایل را برای بارگذاری به اینجا بکشید و رها کنید',
     'attachments_no_files' => 'هیچ فایلی آپلود نشده است',
     'attachments_explain_link' => 'اگر ترجیح می دهید فایلی را آپلود نکنید، می توانید پیوندی را پیوست کنید. این می تواند پیوندی به صفحه دیگر یا پیوندی به فایلی در فضای ابری باشد.',
     'attachments_link_name' => 'نام پیوند',
@@ -372,7 +372,7 @@ return [
     'comment_updated_success' => 'نظر به روز شد',
     'comment_delete_confirm' => 'آیا مطمئن هستید که می خواهید این نظر را حذف کنید؟',
     'comment_in_reply_to' => 'در پاسخ به :commentId',
-    'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
+    'comment_editor_explain' => 'در اینجا نظراتی که در این صفحه گذاشته شده است، مشاهده می‌شود. نظرات را می‌توان در هنگام مشاهده صفحه ذخیره شده، اضافه و مدیریت کرد.',
 
     // Revision
     'revision_delete_confirm' => 'آیا مطمئن هستید که می خواهید این ویرایش را حذف کنید؟',
