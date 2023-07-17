@@ -107,8 +107,8 @@ return [
 
     // Recycle Bin
     'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_restore' => 'از سطل بازیافت، بازآوری شده است',
+    'recycle_bin_destroy' => 'از سطل بازیافت حذف شده است',
 
     // Other
     'commented_on'                => 'ثبت دیدگاه',
