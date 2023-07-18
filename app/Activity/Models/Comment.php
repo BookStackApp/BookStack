@@ -13,8 +13,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string   $html
  * @property int|null $parent_id
  * @property int      $local_id
+ * @property string   $entity_type
+ * @property int      $entity_id
  */
-class Comment extends Model
+class Comment extends Model implements Loggable
 {
     use HasFactory;
     use HasCreatorAndUpdater;
@@ -56,5 +58,10 @@ class Comment extends Model
     public function getUpdatedAttribute()
     {
         return $this->updated_at->diffForHumans();
+    }
+
+    public function logDescriptor(): string
+    {
+        return "Comment #{$this->local_id} (ID: {$this->id}) for {$this->entity_type} (ID: {$this->entity_id})";
     }
 }

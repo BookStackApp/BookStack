@@ -27,6 +27,10 @@ class ActivityType
     const BOOKSHELF_DELETE = 'bookshelf_delete';
 
     const COMMENTED_ON = 'commented_on';
+    const COMMENT_CREATE = 'comment_create';
+    const COMMENT_UPDATE = 'comment_update';
+    const COMMENT_DELETE = 'comment_delete';
+
     const PERMISSIONS_UPDATE = 'permissions_update';
 
     const REVISION_RESTORE = 'revision_restore';
