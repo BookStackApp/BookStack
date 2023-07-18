@@ -33,6 +33,7 @@ class CommentRepo
         $comment->parent_id = $parent_id;
 
         $entity->comments()->save($comment);
+        ActivityService::add(ActivityType::COMMENT_CREATE, $comment);
         ActivityService::add(ActivityType::COMMENTED_ON, $entity);
 
         return $comment;
@@ -48,6 +49,8 @@ class CommentRepo
         $comment->html = $this->commentToHtml($text);
         $comment->save();
 
+        ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+
         return $comment;
     }
 
@@ -57,6 +60,8 @@ class CommentRepo
     public function delete(Comment $comment): void
     {
         $comment->delete();
+
+        ActivityService::add(ActivityType::COMMENT_DELETE, $comment);
     }
 
     /**
