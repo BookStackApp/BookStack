@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'ripristinato dal cestino',
     'recycle_bin_destroy' => 'rimosso dal cestino',
 
-    // Other
+    // Comments
     'commented_on'                => 'ha commentato in',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'autorizzazioni aggiornate',
 ];
