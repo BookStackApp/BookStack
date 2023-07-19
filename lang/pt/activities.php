@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'restaurado da reciclagem',
     'recycle_bin_destroy' => 'removido da reciclagem',
 
-    // Other
+    // Comments
     'commented_on'                => 'comentado a',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'permissões atualizadas',
 ];
