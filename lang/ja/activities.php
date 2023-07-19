@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'がゴミ箱から復元',
     'recycle_bin_destroy' => 'がゴミ箱から完全に削除',
 
-    // Other
+    // Comments
     'commented_on'                => 'がコメント:',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'が権限を更新:',
 ];
