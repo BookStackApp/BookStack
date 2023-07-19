@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => 'đã bình luận về',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'các quyền đã được cập nhật',
 ];
