@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => '댓글 쓰기',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => '권한 수정함',
 ];
