@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'restauré à partir de la corbeille',
     'recycle_bin_destroy' => 'supprimé de la corbeille',
 
-    // Other
+    // Comments
     'commented_on'                => 'a commenté',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'a mis à jour les autorisations sur',
 ];
