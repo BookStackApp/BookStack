@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'restaurado de la papelera de reciclaje',
     'recycle_bin_destroy' => 'eliminado de la papelera de reciclaje',
 
-    // Other
+    // Comments
     'commented_on'                => 'comentada el',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'permisos actualizados',
 ];
