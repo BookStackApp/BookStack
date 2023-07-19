@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'is van prullenbak hersteld',
     'recycle_bin_destroy' => 'is van prullenbak verwijderd',
 
-    // Other
+    // Comments
     'commented_on'                => 'reageerde op',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'wijzigde machtigingen',
 ];
