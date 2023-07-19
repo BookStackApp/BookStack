@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'taastas prügikastist',
     'recycle_bin_destroy' => 'eemaldas prügikastist',
 
-    // Other
+    // Comments
     'commented_on'                => 'kommenteeris lehte',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'muutis õiguseid',
 ];
