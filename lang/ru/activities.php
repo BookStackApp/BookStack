@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'восстановлено из корзины',
     'recycle_bin_destroy' => 'удалено из корзины',
 
-    // Other
+    // Comments
     'commented_on'                => 'прокомментировал',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'обновил разрешения',
 ];
