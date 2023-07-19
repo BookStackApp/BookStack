@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'از سطل بازیافت، بازآوری شده است',
     'recycle_bin_destroy' => 'از سطل بازیافت حذف شده است',
 
-    // Other
+    // Comments
     'commented_on'                => 'ثبت دیدگاه',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'به روزرسانی مجوزها',
 ];
