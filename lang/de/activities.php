@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => 'aus dem Papierkorb wiederhergestellt',
     'recycle_bin_destroy' => 'aus dem Papierkorb gelöscht',
 
-    // Other
+    // Comments
     'commented_on'                => 'hat einen Kommentar hinzugefügt',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'hat die Berechtigungen aktualisiert',
 ];
