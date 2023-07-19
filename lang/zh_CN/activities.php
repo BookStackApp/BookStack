@@ -110,7 +110,12 @@ return [
     'recycle_bin_restore' => '已从回收站中恢复',
     'recycle_bin_destroy' => '已从回收站中移除',
 
-    // Other
+    // Comments
     'commented_on'                => '评论',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => '权限已更新',
 ];
