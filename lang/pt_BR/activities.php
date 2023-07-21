@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'excluiu o capítulo',
     'chapter_delete_notification' => 'Capítulo excluída com sucesso',
     'chapter_move'                => 'moveu o capítulo',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Capítulo excluído com sucesso',
 
     // Books
     'book_create'                 => 'criou o livro',
@@ -95,14 +95,14 @@ return [
     'api_token_update' => 'updated api token',
     'api_token_update_notification' => 'API token successfully updated',
     'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete_notification' => 'Token de API excluído com sucesso',
 
     // Roles
     'role_create' => 'created role',
     'role_create_notification' => 'Perfil criado com sucesso',
     'role_update' => 'updated role',
     'role_update_notification' => 'Perfil atualizado com sucesso',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'Excluir papel',
     'role_delete_notification' => 'Perfil excluído com sucesso',
 
     // Recycle Bin
