@@ -112,9 +112,9 @@ return [
 
     // Comments
     'commented_on'                => 'comentou em',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'Adicionou comentário',
+    'comment_update'              => 'Atualizar descrição',
+    'comment_delete'              => 'Comentário deletado',
 
     // Other
     'permissions_update'          => 'atualizou permissões',
