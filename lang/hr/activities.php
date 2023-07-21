@@ -112,9 +112,9 @@ return [
 
     // Comments
     'commented_on'                => 'komentirano',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'dodani komentar',
+    'comment_update'              => 'ažurirani komentar',
+    'comment_delete'              => 'obrisani komentar',
 
     // Other
     'permissions_update'          => 'ažurirana dopuštenja',
