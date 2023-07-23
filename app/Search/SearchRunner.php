@@ -217,12 +217,26 @@ class SearchRunner
         $subQuery->addBinding($scoreSelect['bindings'], 'select');
 
         $subQuery->where('entity_type', '=', $entity->getMorphClass());
-        $subQuery->where(function (Builder $query) use ($terms) {
-            foreach ($terms as $inputTerm) {
-                $inputTerm = str_replace('\\', '\\\\', $inputTerm);
-                $query->orWhere('term', 'like', $inputTerm . '%');
-            }
-        });
+
+        // Normal search bar compatibility
+        if (config('app.enhance_search_bar_compatibility')) {
+          $subQuery->where(function (Builder $query) use ($terms) {
+              foreach ($terms as $inputTerm) {
+                  $inputTerm = str_replace('\\', '\\\\', $inputTerm);
+
+                  $query->orWhere('term', 'like', '%' . $inputTerm . '%');
+              }
+          });
+        } else {
+          $subQuery->where(function (Builder $query) use ($terms) {
+              foreach ($terms as $inputTerm) {
+                  $inputTerm = str_replace('\\', '\\\\', $inputTerm);
+
+                  $query->orWhere('term', 'like', $inputTerm . '%');
+              }
+          });
+        }
+
         $subQuery->groupBy('entity_type', 'entity_id');
 
         $entityQuery->joinSub($subQuery, 's', 'id', '=', 'entity_id');

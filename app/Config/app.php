@@ -166,4 +166,7 @@ return [
     // Proxy configuration
     'proxies' => env('APP_PROXIES', ''),
 
+    // Normal search bar configuration
+    'enhance_search_bar_compatibility' => env('ENHANCE_SEARCH_BAR_COMPATIBILITY', false),
+
 ];
