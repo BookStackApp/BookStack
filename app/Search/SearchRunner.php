@@ -218,24 +218,19 @@ class SearchRunner
 
         $subQuery->where('entity_type', '=', $entity->getMorphClass());
 
-        // Normal search bar compatibility
-        if (config('app.enhance_search_bar_compatibility')) {
-          $subQuery->where(function (Builder $query) use ($terms) {
-              foreach ($terms as $inputTerm) {
-                  $inputTerm = str_replace('\\', '\\\\', $inputTerm);
+        $subQuery->where(function (Builder $query) use ($terms) {
+            // Normal search bar compatibility
+            $normalSearchQueryString = '';
+            if (config('app.enhance_search_bar_compatibility')) {
+              $normalSearchQueryString = '%';
+            }
 
-                  $query->orWhere('term', 'like', '%' . $inputTerm . '%');
-              }
-          });
-        } else {
-          $subQuery->where(function (Builder $query) use ($terms) {
-              foreach ($terms as $inputTerm) {
-                  $inputTerm = str_replace('\\', '\\\\', $inputTerm);
+            foreach ($terms as $inputTerm) {
+                $inputTerm = str_replace('\\', '\\\\', $inputTerm);
 
-                  $query->orWhere('term', 'like', $inputTerm . '%');
-              }
-          });
-        }
+                $query->orWhere('term', 'like', $normalSearchQueryString . $inputTerm . '%');
+            }
+        });
 
         $subQuery->groupBy('entity_type', 'entity_id');
 
