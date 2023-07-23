@@ -220,10 +220,7 @@ class SearchRunner
 
         $subQuery->where(function (Builder $query) use ($terms) {
             // Normal search bar compatibility
-            $normalSearchQueryString = '';
-            if (config('app.enhance_search_bar_compatibility')) {
-              $normalSearchQueryString = '%';
-            }
+            $normalSearchQueryString = (config('app.enhance_search_bar_compatibility') ? '%' : '');
 
             foreach ($terms as $inputTerm) {
                 $inputTerm = str_replace('\\', '\\\\', $inputTerm);
