@@ -3,17 +3,16 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Http\Controller;
+use BookStack\Settings\UserNotificationPreferences;
 use BookStack\Settings\UserShortcutMap;
 use BookStack\Users\UserRepo;
 use Illuminate\Http\Request;
 
 class UserPreferencesController extends Controller
 {
-    protected UserRepo $userRepo;
-
-    public function __construct(UserRepo $userRepo)
-    {
-        $this->userRepo = $userRepo;
+    public function __construct(
+        protected UserRepo $userRepo
+    ) {
     }
 
     /**
@@ -45,6 +44,35 @@ class UserPreferencesController extends Controller
         $this->showSuccessNotification(trans('preferences.shortcuts_update_success'));
 
         return redirect('/preferences/shortcuts');
+    }
+
+    /**
+     * Show the notification preferences for the current user.
+     */
+    public function showNotifications()
+    {
+        $preferences = (new UserNotificationPreferences(user()));
+
+        return view('users.preferences.notifications', [
+            'preferences' => $preferences,
+        ]);
+    }
+
+    /**
+     * Update the notification preferences for the current user.
+     */
+    public function updateNotifications(Request $request)
+    {
+        $data = $this->validate($request, [
+           'preferences' => ['required', 'array'],
+           'preferences.*' => ['required', 'string'],
+        ]);
+
+        $preferences = (new UserNotificationPreferences(user()));
+        $preferences->updateFromSettingsArray($data['preferences']);
+        $this->showSuccessNotification(trans('preferences.notifications_update_success'));
+
+        return redirect('/preferences/notifications');
     }
 
     /**
@@ -123,7 +151,7 @@ class UserPreferencesController extends Controller
     {
         $validated = $this->validate($request, [
             'language' => ['required', 'string', 'max:20'],
-            'active'   => ['required', 'bool'],
+            'active' => ['required', 'bool'],
         ]);
 
         $currentFavoritesStr = setting()->getForCurrentUser('code-language-favourites', '');

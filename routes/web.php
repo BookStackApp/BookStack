@@ -231,6 +231,8 @@ Route::middleware('auth')->group(function () {
     Route::redirect('/preferences', '/');
     Route::get('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'showShortcuts']);
     Route::put('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'updateShortcuts']);
+    Route::get('/preferences/notifications', [UserControllers\UserPreferencesController::class, 'showNotifications']);
+    Route::put('/preferences/notifications', [UserControllers\UserPreferencesController::class, 'updateNotifications']);
     Route::patch('/preferences/change-view/{type}', [UserControllers\UserPreferencesController::class, 'changeView']);
     Route::patch('/preferences/change-sort/{type}', [UserControllers\UserPreferencesController::class, 'changeSort']);
     Route::patch('/preferences/change-expansion/{type}', [UserControllers\UserPreferencesController::class, 'changeExpansion']);
