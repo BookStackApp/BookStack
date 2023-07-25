@@ -15,4 +15,12 @@ return [
     'shortcuts_save' => 'Save Shortcuts',
     'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
     'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+
+    'notifications' => 'Notification Preferences',
+    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
+    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
+    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
+    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
+    'notifications_save' => 'Save Preferences',
+    'notifications_update_success' => 'Notification preferences have been updated!',
 ];

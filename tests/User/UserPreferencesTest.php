@@ -45,6 +45,31 @@ class UserPreferencesTest extends TestCase
         $this->withHtml($this->get('/'))->assertElementExists('body[component="shortcuts"]');
     }
 
+    public function test_notification_preferences_updating()
+    {
+        $this->asEditor();
+
+        // View preferences with defaults
+        $resp = $this->get('/preferences/notifications');
+        $resp->assertSee('Notification Preferences');
+
+        $html = $this->withHtml($resp);
+        $html->assertFieldHasValue('preferences[comment-replies]', 'false');
+
+        // Update preferences
+        $resp = $this->put('/preferences/notifications', [
+            'preferences' => ['comment-replies' => 'true'],
+        ]);
+
+        $resp->assertRedirect('/preferences/notifications');
+        $resp->assertSessionHas('success', 'Notification preferences have been updated!');
+
+        // View updates to preferences page
+        $resp = $this->get('/preferences/notifications');
+        $html = $this->withHtml($resp);
+        $html->assertFieldHasValue('preferences[comment-replies]', 'true');
+    }
+
     public function test_update_sort_preference()
     {
         $editor = $this->users->editor();
