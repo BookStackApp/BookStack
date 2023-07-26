@@ -112,9 +112,9 @@ return [
 
     // Comments
     'commented_on'                => 'прокомментировал',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'добавил комментарий',
+    'comment_update'              => 'обновил комментарий',
+    'comment_delete'              => 'удалил комментарий',
 
     // Other
     'permissions_update'          => 'обновил разрешения',
