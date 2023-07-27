@@ -67,7 +67,7 @@
 @stop
 
 @section('right')
-    <div class="mb-xl">
+    <div class="mb-xl" style="z-index: 1000; opacity: 1;">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
             @include('entities.meta', ['entity' => $book])

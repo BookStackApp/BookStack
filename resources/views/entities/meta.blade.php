@@ -68,4 +68,12 @@
             </div>
         </a>
     @endif
+
+    <div class="dropdown-container">
+        <div class="entity-meta-item">
+            @icon('watch')
+            <span>Watching with default preferences</span>
+        </div>
+        @include('entities.watch-controls', ['entity' => $entity])
+    </div>
 </div>

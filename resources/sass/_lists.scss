@@ -681,6 +681,9 @@ ul.pagination {
   &.wide {
     min-width: 220px;
   }
+  &.xl-limited {
+    width: 280px;
+  }
   .text-muted {
     color: #999;
     fill: #999;
