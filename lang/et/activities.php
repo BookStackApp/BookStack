@@ -112,9 +112,9 @@ return [
 
     // Comments
     'commented_on'                => 'kommenteeris lehte',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'lisas kommentaari',
+    'comment_update'              => 'muutis kommentaari',
+    'comment_delete'              => 'kustutas kommentaari',
 
     // Other
     'permissions_update'          => 'muutis õiguseid',
