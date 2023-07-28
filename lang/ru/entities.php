@@ -214,7 +214,7 @@ return [
     'pages_editing_page' => 'Редактирование страницы',
     'pages_edit_draft_save_at' => 'Черновик сохранён в ',
     'pages_edit_delete_draft' => 'Удалить черновик',
-    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
+    'pages_edit_delete_draft_confirm' => 'Вы уверены, что хотите удалить черновик с изменениями? Все изменения, внесенные вами с момента последнего полного сохранения, будут утеряны и редактор будет обновлен данными с последнего сохранения страницы.',
     'pages_edit_discard_draft' => 'Отменить черновик',
     'pages_edit_switch_to_markdown' => 'Переключиться на Markdown',
     'pages_edit_switch_to_markdown_clean' => 'Только Markdown (с возможными потерями форматирования)',
