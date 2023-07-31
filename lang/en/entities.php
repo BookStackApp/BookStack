@@ -403,4 +403,18 @@ return [
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
     'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+
+    // Watch Options
+    'watch' => 'Watch',
+    'watch_title_default' => 'Default Preferences',
+    'watch_desc_default' => 'Revert watching to just your default notification preferences.',
+    'watch_title_ignore' => 'Ignore',
+    'watch_desc_ignore' => 'Ignore all notifications, including those from user-level preferences.',
+    'watch_title_new' => 'New Pages',
+    'watch_desc_new' => 'Notify when any new page is created within this item.',
+    'watch_title_updates' => 'All Page Updates',
+    'watch_desc_updates' => 'Notify upon all new pages and page changes.',
+    'watch_title_comments' => 'All Page Updates & Comments',
+    'watch_desc_comments' => 'Notify upon all new pages, page changes and new comments.',
+    'watch_change_default' => 'Change default notification preferences',
 ];

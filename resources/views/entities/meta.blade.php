@@ -69,11 +69,12 @@
         </a>
     @endif
 
-    <div class="dropdown-container">
-        <div class="entity-meta-item">
+    <div component="dropdown"
+         class="dropdown-container my-xxs">
+        <a refs="dropdown@toggle" href="#" class="entity-meta-item my-none">
             @icon('watch')
             <span>Watching with default preferences</span>
-        </div>
+        </a>
         @include('entities.watch-controls', ['entity' => $entity])
     </div>
 </div>
