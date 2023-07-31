@@ -5,7 +5,7 @@
     <input type="hidden" name="id" value="{{ $entity->id }}">
 
     <ul refs="dropdown@menu" class="dropdown-menu xl-limited anchor-left pb-none">
-        @foreach(\BookStack\Users\UserWatchOptions::getAvailableOptionNames() as $option)
+        @foreach(\BookStack\Activity\Models\Watch::getAvailableOptionNames() as $option)
         <li>
             <button name="level" value="{{ $option }}" class="icon-item">
                 @if(request()->query('level') === $option)
