@@ -67,7 +67,7 @@
 @stop
 
 @section('right')
-    <div class="mb-xl" style="z-index: 1000; opacity: 1;">
+    <div class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
             @include('entities.meta', ['entity' => $book])
@@ -142,6 +142,7 @@
             @if(signedInUser())
                 @include('entities.favourite-action', ['entity' => $book])
             @endif
+            @include('entities.watch-action', ['entity' => $book])
             @if(userCan('content-export'))
                 @include('entities.export-menu', ['entity' => $book])
             @endif
