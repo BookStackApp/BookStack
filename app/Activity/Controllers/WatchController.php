@@ -3,6 +3,7 @@
 namespace BookStack\Activity\Controllers;
 
 use BookStack\Activity\Models\Watch;
+use BookStack\Activity\Tools\UserWatchOptions;
 use BookStack\App\Model;
 use BookStack\Entities\Models\Entity;
 use BookStack\Http\Controller;
@@ -19,13 +20,12 @@ class WatchController extends Controller
         ]);
 
         $watchable = $this->getValidatedModelFromRequest($request);
-        $newLevel = Watch::optionNameToLevel($requestData['level']);
+        $watchOptions = new UserWatchOptions(user());
+        $watchOptions->updateEntityWatchLevel($watchable, $requestData['level']);
 
-        if ($newLevel < 0) {
-            // TODO - Delete
-        } else {
-            // TODO - Upsert
-        }
+        $this->showSuccessNotification(trans('activities.watch_update_level_notification'));
+
+        return redirect()->back();
     }
 
     /**

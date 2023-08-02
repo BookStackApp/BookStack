@@ -18,13 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Watch extends Model
 {
-    protected static array $levelByOption = [
-        'default' => -1,
-        'ignore' => 0,
-        'new' => 1,
-        'updates' => 2,
-        'comments' => 3,
-    ];
+    protected $guarded = [];
 
     public function watchable()
     {
@@ -35,18 +29,5 @@ class Watch extends Model
     {
         return $this->hasMany(JointPermission::class, 'entity_id', 'watchable_id')
             ->whereColumn('favourites.watchable_type', '=', 'joint_permissions.entity_type');
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAvailableOptionNames(): array
-    {
-        return array_keys(static::$levelByOption);
-    }
-
-    public static function optionNameToLevel(string $option): int
-    {
-        return static::$levelByOption[$option] ?? -1;
     }
 }

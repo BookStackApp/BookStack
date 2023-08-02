@@ -194,6 +194,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/favourites/add', [ActivityControllers\FavouriteController::class, 'add']);
     Route::post('/favourites/remove', [ActivityControllers\FavouriteController::class, 'remove']);
 
+    // Watching
+    Route::put('/watching/update', [ActivityControllers\WatchController::class, 'update']);
+
     // Other Pages
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index']);
