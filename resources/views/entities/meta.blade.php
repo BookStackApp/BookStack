@@ -69,12 +69,17 @@
         </a>
     @endif
 
-    <div component="dropdown"
-         class="dropdown-container my-xxs">
-        <a refs="dropdown@toggle" href="#" class="entity-meta-item my-none">
-            @icon('watch')
-            <span>Watching with default preferences</span>
-        </a>
-        @include('entities.watch-controls', ['entity' => $entity])
-    </div>
+    @if($watchOptions?->canWatch() && $watchOptions->isWatching($entity))
+        @php
+            $watchLevel = $watchOptions->getEntityWatchLevel($entity);
+        @endphp
+        <div component="dropdown"
+             class="dropdown-container block my-xxs">
+            <a refs="dropdown@toggle" href="#" class="entity-meta-item my-none">
+                @icon(($watchLevel === 'ignore' ? 'watch-ignore' : 'watch'))
+                <span>{{ trans('entities.watch_detail_' . $watchLevel) }}</span>
+            </a>
+            @include('entities.watch-controls', ['entity' => $entity, 'watchLevel' => $watchLevel])
+        </div>
+    @endif
 </div>

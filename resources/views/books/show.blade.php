@@ -142,7 +142,9 @@
             @if(signedInUser())
                 @include('entities.favourite-action', ['entity' => $book])
             @endif
-            @include('entities.watch-action', ['entity' => $book])
+            @if($watchOptions->canWatch() && !$watchOptions->isWatching($book))
+                @include('entities.watch-action', ['entity' => $book])
+            @endif
             @if(userCan('content-export'))
                 @include('entities.export-menu', ['entity' => $book])
             @endif
