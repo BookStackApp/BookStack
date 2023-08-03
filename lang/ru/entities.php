@@ -106,7 +106,7 @@ return [
     'shelves_permissions_updated' => 'Доступы к полке обновлены',
     'shelves_permissions_active' => 'Действующие разрешения полки',
     'shelves_permissions_cascade_warning' => 'Разрешения на полки не наследуются автоматически содержащимся в них книгам. Это происходит потому, что книга может находиться на нескольких полках. Однако разрешения могут быть установлены для книг полки с помощью опции, приведенной ниже.',
-    'shelves_permissions_create' => 'Shelf create permissions are only used for copying permissions to child books using the action below. They do not control the ability to create books.',
+    'shelves_permissions_create' => 'Разрешения полки на создание используется только для копирования разрешений на дочерние книги с помощью действия, описанного ниже. Они не контролируют возможность создавать книги.',
     'shelves_copy_permissions_to_books' => 'Наследовать доступы книгам',
     'shelves_copy_permissions' => 'Копировать доступы',
     'shelves_copy_permissions_explain' => 'Это применит текущие настройки разрешений для этой полки ко всем книгам, содержащимся в ней. Перед активацией убедитесь, что все изменения разрешений этой полки были сохранены.',
