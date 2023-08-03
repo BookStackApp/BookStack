@@ -3,14 +3,31 @@ FROM php:8.1-apache
 ENV APACHE_DOCUMENT_ROOT /app/public
 WORKDIR /app
 
-# Install additional dependacnies and configure apache
-RUN apt-get update -y \
-    && apt-get install -y git zip unzip libpng-dev libldap2-dev libzip-dev wait-for-it \
-    && docker-php-ext-configure ldap --with-libdir="lib/$(gcc -dumpmachine)" \
-    && docker-php-ext-install pdo_mysql gd ldap zip \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && a2enmod rewrite \
+# Install additional dependencies
+RUN apt-get update -y && apt-get install -y \
+	git \
+	zip \
+	unzip \
+    wait-for-it \
+    libzip-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libmcrypt-dev \
+    libpng-dev  \
+    libldap2-dev  \
+    libtidy-dev  \
+    libxml2-dev
+
+# Install and configure php modules
+RUN docker-php-ext-install -j$(nproc) dom pdo pdo_mysql zip tidy && \
+    docker-php-ext-configure ldap && \
+    docker-php-ext-install -j$(nproc) ldap && \
+    docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
+    docker-php-ext-install -j$(nproc) gd
+
+# Configure the Apache
+RUN a2enmod rewrite \
     && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
