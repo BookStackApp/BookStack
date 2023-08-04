@@ -5,7 +5,7 @@
     <input type="hidden" name="id" value="{{ $entity->id }}">
 
     <ul refs="dropdown@menu" class="dropdown-menu xl-limited anchor-left pb-none">
-        @foreach(\BookStack\Activity\WatchLevels::all() as $option)
+        @foreach(\BookStack\Activity\WatchLevels::all() as $option => $value)
             <li>
                 <button name="level" value="{{ $option }}" class="icon-item">
                     @if($watchLevel === $option)
