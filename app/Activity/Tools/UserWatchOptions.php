@@ -3,20 +3,13 @@
 namespace BookStack\Activity\Tools;
 
 use BookStack\Activity\Models\Watch;
+use BookStack\Activity\WatchLevels;
 use BookStack\Entities\Models\Entity;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class UserWatchOptions
 {
-    protected static array $levelByName = [
-        'default' => -1,
-        'ignore' => 0,
-        'new' => 1,
-        'updates' => 2,
-        'comments' => 3,
-    ];
-
     public function __construct(
         protected User $user,
     ) {
@@ -30,7 +23,7 @@ class UserWatchOptions
     public function getEntityWatchLevel(Entity $entity): string
     {
         $levelValue = $this->entityQuery($entity)->first(['level'])->level ?? -1;
-        return $this->levelValueToName($levelValue);
+        return WatchLevels::levelValueToName($levelValue);
     }
 
     public function isWatching(Entity $entity): bool
@@ -40,7 +33,7 @@ class UserWatchOptions
 
     public function updateEntityWatchLevel(Entity $entity, string $level): void
     {
-        $levelValue = $this->levelNameToValue($level);
+        $levelValue = WatchLevels::levelNameToValue($level);
         if ($levelValue < 0) {
             $this->removeForEntity($entity);
             return;
@@ -70,29 +63,5 @@ class UserWatchOptions
         return Watch::query()->where('watchable_id', '=', $entity->id)
             ->where('watchable_type', '=', $entity->getMorphClass())
             ->where('user_id', '=', $this->user->id);
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAvailableLevelNames(): array
-    {
-        return array_keys(static::$levelByName);
-    }
-
-    protected static function levelNameToValue(string $level): int
-    {
-        return static::$levelByName[$level] ?? -1;
-    }
-
-    protected static function levelValueToName(int $level): string
-    {
-        foreach (static::$levelByName as $name => $value) {
-            if ($level === $value) {
-                return $name;
-            }
-        }
-
-        return 'default';
     }
 }
