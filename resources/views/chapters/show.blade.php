@@ -157,6 +157,9 @@
 
             <hr class="primary-background"/>
 
+            @if($watchOptions->canWatch() && !$watchOptions->isWatching($chapter))
+                @include('entities.watch-action', ['entity' => $chapter])
+            @endif
             @if(signedInUser())
                 @include('entities.favourite-action', ['entity' => $chapter])
             @endif
