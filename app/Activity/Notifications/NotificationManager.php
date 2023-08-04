@@ -8,6 +8,7 @@ use BookStack\Activity\Notifications\Handlers\CommentCreationNotificationHandler
 use BookStack\Activity\Notifications\Handlers\NotificationHandler;
 use BookStack\Activity\Notifications\Handlers\PageCreationNotificationHandler;
 use BookStack\Activity\Notifications\Handlers\PageUpdateNotificationHandler;
+use BookStack\Users\Models\User;
 
 class NotificationManager
 {
@@ -16,13 +17,13 @@ class NotificationManager
      */
     protected array $handlers = [];
 
-    public function handle(string $activityType, string|Loggable $detail): void
+    public function handle(string $activityType, string|Loggable $detail, User $user): void
     {
         $handlersToRun = $this->handlers[$activityType] ?? [];
         foreach ($handlersToRun as $handlerClass) {
             /** @var NotificationHandler $handler */
             $handler = app()->make($handlerClass);
-            $handler->handle($activityType, $detail);
+            $handler->handle($activityType, $detail, $user);
         }
     }
 
