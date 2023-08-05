@@ -32,6 +32,11 @@ class EntityWatchers
         return $this->watchers;
     }
 
+    public function isUserIgnoring(int $userId): bool
+    {
+        return in_array($userId, $this->ignorers);
+    }
+
     protected function build(): void
     {
         $watches = $this->getRelevantWatches();
