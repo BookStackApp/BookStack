@@ -112,9 +112,9 @@ return [
 
     // Comments
     'commented_on'                => '评论',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => '评论已添加',
+    'comment_update'              => '评论已更新',
+    'comment_delete'              => '评论已删除',
 
     // Other
     'permissions_update'          => '权限已更新',
