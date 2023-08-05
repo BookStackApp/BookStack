@@ -33,6 +33,14 @@ class Comment extends Model implements Loggable
     }
 
     /**
+     * Get the parent comment this is in reply to (if existing).
+     */
+    public function parent()
+    {
+        return $this->belongsTo(Comment::class);
+    }
+
+    /**
      * Check if a comment has been updated since creation.
      */
     public function isUpdated(): bool
