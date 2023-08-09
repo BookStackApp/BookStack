@@ -139,7 +139,7 @@
 
             <hr class="primary-background">
 
-            @if($watchOptions->canWatch() && !$watchOptions->isWatching($book))
+            @if($watchOptions->canWatch() && !$watchOptions->isWatching())
                 @include('entities.watch-action', ['entity' => $book])
             @endif
             @if(signedInUser())

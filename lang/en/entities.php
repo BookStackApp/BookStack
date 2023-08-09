@@ -421,4 +421,8 @@ return [
     'watch_detail_new' => 'Watching for new pages',
     'watch_detail_updates' => 'Watching new pages and updates',
     'watch_detail_comments' => 'Watching new pages, updates & comments',
+    'watch_detail_parent_book' => 'Watching via parent book',
+    'watch_detail_parent_book_ignore' => 'Ignoring via parent book',
+    'watch_detail_parent_chapter' => 'Watching via parent chapter',
+    'watch_detail_parent_chapter_ignore' => 'Ignoring via parent chapter',
 ];

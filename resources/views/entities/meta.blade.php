@@ -69,17 +69,21 @@
         </a>
     @endif
 
-    @if($watchOptions?->canWatch() && $watchOptions->isWatching($entity))
-        @php
-            $watchLevel = $watchOptions->getEntityWatchLevel($entity);
-        @endphp
-        <div component="dropdown"
-             class="dropdown-container block my-xxs">
-            <a refs="dropdown@toggle" href="#" class="entity-meta-item my-none">
-                @icon(($watchLevel === 'ignore' ? 'watch-ignore' : 'watch'))
-                <span>{{ trans('entities.watch_detail_' . $watchLevel) }}</span>
-            </a>
-            @include('entities.watch-controls', ['entity' => $entity, 'watchLevel' => $watchLevel])
-        </div>
+    @if($watchOptions?->canWatch())
+        @if($watchOptions->isWatching())
+            @include('entities.watch-controls', [
+                'entity' => $entity,
+                'watchLevel' => $watchOptions->getWatchLevel(),
+                'label' => trans('entities.watch_detail_' . $watchOptions->getWatchLevel()),
+                'ignoring' => $watchOptions->getWatchLevel() === 'ignore',
+            ])
+        @elseif($watchedParent = $watchOptions->getWatchedParent())
+            @include('entities.watch-controls', [
+                'entity' => $entity,
+                'watchLevel' => $watchOptions->getWatchLevel(),
+                'label' => trans('entities.watch_detail_parent_' . $watchedParent->type . ($watchedParent->ignoring() ? '_ignore' : '')),
+                'ignoring' => $watchedParent->ignoring(),
+            ])
+        @endif
     @endif
 </div>
