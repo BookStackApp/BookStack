@@ -148,13 +148,13 @@ class HomeController extends Controller
     public function manifest()
     {   
         $manifest = [
-            "name" => config('app.name' | 'BookStack'), 
+            "name" => (config('app.name' | 'BookStack') ??'BookStack' ), 
             "short_name" => "bookstack", 
-            "start_url" => "/", 
-            "scope" => "/", 
+            "start_url" => "./", 
+            "scope" => ".", 
             "display" => "standalone", 
             "background_color" => setting('app-color'), 
-            "description" => config('app.name' | 'BookStack'), 
+            "description" =>( config('app.name' | 'BookStack') ??'BookStack'), 
             "categories" => [
                 "productivity", 
                 "lifestyle" 
