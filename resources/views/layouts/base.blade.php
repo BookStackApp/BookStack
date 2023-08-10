@@ -29,6 +29,10 @@
     <link rel="icon" type="image/png" sizes="64x64" href="{{ setting('app-icon-64') ?: url('/icon-64.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ setting('app-icon-32') ?: url('/icon-32.png') }}">
 
+    <!-- PWA -->
+    <link rel="manifest" href="{{ url('/manifest.json') }}" />
+    <meta name="mobile-web-app-capable" content="yes" /> 
+
     @yield('head')
 
     <!-- Custom Styles & Head Content -->
