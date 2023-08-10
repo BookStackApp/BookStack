@@ -2,6 +2,7 @@
 
 namespace Tests\Entity;
 
+use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
@@ -29,6 +30,8 @@ class CommentTest extends TestCase
             'text'        => $comment->text,
             'parent_id'   => 2,
         ]);
+
+        $this->assertActivityExists(ActivityType::COMMENT_CREATE);
     }
 
     public function test_comment_edit()
@@ -53,6 +56,8 @@ class CommentTest extends TestCase
             'text'      => $newText,
             'entity_id' => $page->id,
         ]);
+
+        $this->assertActivityExists(ActivityType::COMMENT_UPDATE);
     }
 
     public function test_comment_delete()
@@ -71,6 +76,8 @@ class CommentTest extends TestCase
         $this->assertDatabaseMissing('comments', [
             'id' => $comment->id,
         ]);
+
+        $this->assertActivityExists(ActivityType::COMMENT_DELETE);
     }
 
     public function test_comments_converts_markdown_input_to_html()

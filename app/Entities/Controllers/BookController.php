@@ -112,6 +112,8 @@ class BookController extends Controller
         if ($bookshelf) {
             $bookshelf->appendBook($book);
             Activity::add(ActivityType::BOOKSHELF_UPDATE, $bookshelf);
+            $permissionsUpdater = new PermissionsUpdater();
+            $permissionsUpdater->updateSpecificBookPermissionsFromShelf($bookshelf, $book);
         }
 
         return redirect($book->getUrl());

@@ -158,4 +158,19 @@ class PermissionsUpdater
 
         return $updatedBookCount;
     }
+
+    /**
+     * Copy down the permissions of the given shelf to a given book.
+     */
+    public function updateSpecificBookPermissionsFromShelf(Bookshelf $shelf, Book $book): void
+    {
+        $shelfPermissions = $shelf->permissions()->get(['role_id', 'view', 'create', 'update', 'delete'])->toArray();
+        $shelfBooks = $shelf->books()->get(['id', 'owned_by']);
+
+        $book->permissions()->delete();
+        $book->permissions()->createMany($shelfPermissions);
+        $book->rebuildPermissions();
+
+        return;
+    }
 }
