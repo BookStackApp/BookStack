@@ -153,7 +153,7 @@ class HomeController extends Controller
             "start_url" => "/", 
             "scope" => "/", 
             "display" => "standalone", 
-            "background_color" => "#fff", 
+            "background_color" => setting('app-color'), 
             "description" => config('app.name' | 'BookStack'), 
             "categories" => [
                 "productivity", 
