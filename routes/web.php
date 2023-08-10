@@ -195,8 +195,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/favourites/remove', [ActivityControllers\FavouriteController::class, 'remove']);
 
     // Other Pages
-    Route::get('/', [HomeController::class, 'index']);
-    Route::get('/home', [HomeController::class, 'index']);
+    Route::get('/', [EntityControllers\BookshelfController::class, 'index']);
+    Route::get('/home', [EntityControllers\BookshelfController::class, 'index']);
+    Route::get('/dashboard', [HomeController::class, 'index']);
 
     // Permissions
     Route::get('/permissions/form-row/{entityType}/{roleId}', [PermissionsController::class, 'formRowForRole']);
