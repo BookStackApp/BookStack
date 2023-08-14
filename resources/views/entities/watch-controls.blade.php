@@ -11,7 +11,7 @@
         <input type="hidden" name="id" value="{{ $entity->id }}">
 
         <ul refs="dropdown@menu" class="dropdown-menu xl-limited anchor-left pb-none">
-            @foreach(\BookStack\Activity\WatchLevels::all() as $option => $value)
+            @foreach(\BookStack\Activity\WatchLevels::allSuitedFor($entity) as $option => $value)
                 <li>
                     <button name="level" value="{{ $option }}" class="icon-item">
                         @if($watchLevel === $option)
@@ -23,7 +23,11 @@
                         <div class="break-text">
                             <div class="mb-xxs"><strong>{{ trans('entities.watch_title_' . $option) }}</strong></div>
                             <div class="text-muted text-small">
-                                {{ trans('entities.watch_desc_' . $option) }}
+                                @if(trans()->has('entities.watch_desc_' . $option . '_' . $entity->getMorphClass()))
+                                    {{ trans('entities.watch_desc_' . $option . '_' . $entity->getMorphClass()) }}
+                                @else
+                                    {{ trans('entities.watch_desc_' . $option) }}
+                                @endif
                             </div>
                         </div>
                     </button>

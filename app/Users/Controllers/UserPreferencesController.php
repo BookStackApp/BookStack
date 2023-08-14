@@ -2,7 +2,9 @@
 
 namespace BookStack\Users\Controllers;
 
+use BookStack\Activity\Models\Watch;
 use BookStack\Http\Controller;
+use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\UserNotificationPreferences;
 use BookStack\Settings\UserShortcutMap;
 use BookStack\Users\UserRepo;
@@ -49,12 +51,17 @@ class UserPreferencesController extends Controller
     /**
      * Show the notification preferences for the current user.
      */
-    public function showNotifications()
+    public function showNotifications(PermissionApplicator $permissions)
     {
         $preferences = (new UserNotificationPreferences(user()));
 
+        $query = Watch::query()->where('user_id', '=', user()->id);
+        $query = $permissions->restrictEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
+        $watches = $query->with('watchable')->paginate(20);
+
         return view('users.preferences.notifications', [
             'preferences' => $preferences,
+            'watches' => $watches,
         ]);
     }
 

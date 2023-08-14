@@ -2,6 +2,10 @@
 
 namespace BookStack\Activity;
 
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
+
 class WatchLevels
 {
     /**
@@ -32,6 +36,7 @@ class WatchLevels
 
     /**
      * Get all the possible values as an option_name => value array.
+     * @returns array<string, int>
      */
     public static function all(): array
     {
@@ -43,11 +48,36 @@ class WatchLevels
         return $options;
     }
 
-    public static function levelNameToValue(string $level): int
+    /**
+     * Get the watch options suited for the given entity.
+     * @returns array<string, int>
+     */
+    public static function allSuitedFor(Entity $entity): array
     {
-        return static::all()[$level] ?? -1;
+        $options = static::all();
+
+        if ($entity instanceof Page) {
+            unset($options['new']);
+        } elseif ($entity instanceof Bookshelf) {
+            return [];
+        }
+
+        return $options;
     }
 
+    /**
+     * Convert the given name to a level value.
+     * Defaults to default value if the level does not exist.
+     */
+    public static function levelNameToValue(string $level): int
+    {
+        return static::all()[$level] ?? static::DEFAULT;
+    }
+
+    /**
+     * Convert the given int level value to a level name.
+     * Defaults to 'default' level name if not existing.
+     */
     public static function levelValueToName(int $level): string
     {
         foreach (static::all() as $name => $value) {

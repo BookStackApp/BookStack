@@ -95,13 +95,7 @@
                                 :</strong> {{ $activity->type }}</div>
                         <div class="flex-3 px-m py-xxs min-width-l">
                             @if($activity->entity)
-                                <a href="{{ $activity->entity->getUrl() }}" class="flex-container-row items-center">
-                                    <span role="presentation"
-                                          class="icon flex-none text-{{$activity->entity->getType()}}">@icon($activity->entity->getType())</span>
-                                    <div class="flex text-{{ $activity->entity->getType() }}">
-                                        {{ $activity->entity->name }}
-                                    </div>
-                                </a>
+                                @include('entities.icon-link', ['entity' => $activity->entity])
                             @elseif($activity->detail && $activity->isForEntity())
                                 <div>
                                     {{ trans('settings.audit_deleted_item') }} <br>

@@ -41,5 +41,30 @@
             </form>
         </section>
 
+        <section class="card content-wrap auto-height">
+            <h2 class="list-heading">{{ trans('preferences.notifications_watched') }}</h2>
+            <p class="text-small text-muted">{{ trans('preferences.notifications_watched_desc') }}</p>
+
+            @if($watches->isEmpty())
+                <p class="text-muted italic">{{ trans('common.no_items') }}</p>
+            @else
+                <div class="item-list">
+                    @foreach($watches as $watch)
+                        <div class="flex-container-row justify-space-between item-list-row items-center wrap px-m py-s">
+                            <div class="py-xs px-s min-width-m">
+                                @include('entities.icon-link', ['entity' => $watch->watchable])
+                            </div>
+                            <div class="py-xs min-width-m text-m-right px-m">
+                                @icon('watch' . ($watch->ignoring() ? '-ignore' : ''))
+                                {{ trans('entities.watch_title_' . $watch->getLevelName()) }}
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <div class="my-m">{{ $watches->links() }}</div>
+        </section>
+
     </div>
 @stop

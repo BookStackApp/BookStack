@@ -10,7 +10,7 @@ class TopFavourites extends EntityQuery
     public function run(int $count, int $skip = 0)
     {
         $user = user();
-        if (is_null($user) || $user->isDefault()) {
+        if ($user->isDefault()) {
             return collect();
         }
 

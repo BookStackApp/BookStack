@@ -23,4 +23,6 @@ return [
     'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
     'notifications_save' => 'Save Preferences',
     'notifications_update_success' => 'Notification preferences have been updated!',
+    'notifications_watched' => 'Watched & Ignored Items',
+    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 ];
