@@ -18,6 +18,14 @@ class UserPreferencesController extends Controller
     }
 
     /**
+     * Show the overview for user preferences.
+     */
+    public function index()
+    {
+        return view('users.preferences.index');
+    }
+
+    /**
      * Show the user-specific interface shortcuts.
      */
     public function showShortcuts()
@@ -53,6 +61,8 @@ class UserPreferencesController extends Controller
      */
     public function showNotifications(PermissionApplicator $permissions)
     {
+        $this->checkPermission('receive-notifications');
+
         $preferences = (new UserNotificationPreferences(user()));
 
         $query = Watch::query()->where('user_id', '=', user()->id);
@@ -70,6 +80,7 @@ class UserPreferencesController extends Controller
      */
     public function updateNotifications(Request $request)
     {
+        $this->checkPermission('receive-notifications');
         $data = $this->validate($request, [
            'preferences' => ['required', 'array'],
            'preferences.*' => ['required', 'string'],

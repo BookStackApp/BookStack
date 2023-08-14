@@ -5,6 +5,8 @@
  */
 
 return [
+    'preferences' => 'Preferences',
+
     'shortcuts' => 'Shortcuts',
     'shortcuts_interface' => 'Interface Keyboard Shortcuts',
     'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
@@ -15,6 +17,7 @@ return [
     'shortcuts_save' => 'Save Shortcuts',
     'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
     'shortcuts_update_success' => 'Shortcut preferences have been updated!',
+    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
 
     'notifications' => 'Notification Preferences',
     'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
@@ -25,4 +28,6 @@ return [
     'notifications_update_success' => 'Notification preferences have been updated!',
     'notifications_watched' => 'Watched & Ignored Items',
     'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+
+    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
 ];

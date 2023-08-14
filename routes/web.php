@@ -231,7 +231,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/users/{id}', [UserControllers\UserController::class, 'destroy']);
 
     // User Preferences
-    Route::redirect('/preferences', '/');
+    Route::get('/preferences', [UserControllers\UserPreferencesController::class, 'index']);
     Route::get('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'showShortcuts']);
     Route::put('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'updateShortcuts']);
     Route::get('/preferences/notifications', [UserControllers\UserPreferencesController::class, 'showNotifications']);
