@@ -6,6 +6,22 @@ use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
 {
+    public function test_index_view()
+    {
+        $resp = $this->asEditor()->get('/preferences');
+        $resp->assertOk();
+        $resp->assertSee('Interface Keyboard Shortcuts');
+        $resp->assertSee('Edit Profile');
+    }
+
+    public function test_index_view_accessible_but_without_profile_for_guest_user()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $resp = $this->get('/preferences');
+        $resp->assertOk();
+        $resp->assertSee('Interface Keyboard Shortcuts');
+        $resp->assertDontSee('Edit Profile');
+    }
     public function test_interface_shortcuts_updating()
     {
         $this->asEditor();
@@ -45,12 +61,28 @@ class UserPreferencesTest extends TestCase
         $this->withHtml($this->get('/'))->assertElementExists('body[component="shortcuts"]');
     }
 
+    public function test_notification_routes_requires_notification_permission()
+    {
+        $viewer = $this->users->viewer();
+        $resp = $this->actingAs($viewer)->get('/preferences/notifications');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->put('/preferences/notifications');
+        $this->assertPermissionError($resp);
+
+        $this->permissions->grantUserRolePermissions($viewer, ['receive-notifications']);
+        $resp = $this->get('/preferences/notifications');
+        $resp->assertOk();
+        $resp->assertSee('Notification Preferences');
+    }
+
     public function test_notification_preferences_updating()
     {
-        $this->asEditor();
+        $editor = $this->users->editor();
+        $this->permissions->grantUserRolePermissions($editor, ['receive-notifications']);
 
         // View preferences with defaults
-        $resp = $this->get('/preferences/notifications');
+        $resp = $this->actingAs($editor)->get('/preferences/notifications');
         $resp->assertSee('Notification Preferences');
 
         $html = $this->withHtml($resp);

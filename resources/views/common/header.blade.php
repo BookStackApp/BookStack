@@ -104,9 +104,9 @@
                         </li>
                         <li><hr></li>
                         <li>
-                            <a href="{{ url('/preferences/shortcuts') }}" class="icon-item">
-                                @icon('shortcuts')
-                                <div>{{ trans('preferences.shortcuts') }}</div>
+                            <a href="{{ url('/preferences') }}" class="icon-item">
+                                @icon('user-preferences')
+                                <div>{{ trans('preferences.preferences') }}</div>
                             </a>
                         </li>
                         <li>
