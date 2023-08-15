@@ -2,6 +2,7 @@
 
 namespace Tests\User;
 
+use BookStack\Activity\Tools\UserEntityWatchOptions;
 use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
@@ -79,7 +80,6 @@ class UserPreferencesTest extends TestCase
     public function test_notification_preferences_updating()
     {
         $editor = $this->users->editor();
-        $this->permissions->grantUserRolePermissions($editor, ['receive-notifications']);
 
         // View preferences with defaults
         $resp = $this->actingAs($editor)->get('/preferences/notifications');
@@ -100,6 +100,25 @@ class UserPreferencesTest extends TestCase
         $resp = $this->get('/preferences/notifications');
         $html = $this->withHtml($resp);
         $html->assertFieldHasValue('preferences[comment-replies]', 'true');
+    }
+
+    public function test_notification_preferences_show_watches()
+    {
+        $editor = $this->users->editor();
+        $book = $this->entities->book();
+
+        $options = new UserEntityWatchOptions($editor, $book);
+        $options->updateWatchLevel('comments');
+
+        $resp = $this->actingAs($editor)->get('/preferences/notifications');
+        $resp->assertSee($book->name);
+        $resp->assertSee('All Page Updates & Comments');
+
+        $options->updateWatchLevel('default');
+
+        $resp = $this->actingAs($editor)->get('/preferences/notifications');
+        $resp->assertDontSee($book->name);
+        $resp->assertDontSee('All Page Updates & Comments');
     }
 
     public function test_update_sort_preference()

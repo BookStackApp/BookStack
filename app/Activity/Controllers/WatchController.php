@@ -15,6 +15,7 @@ class WatchController extends Controller
 {
     public function update(Request $request)
     {
+        // TODO - Require notification permission
         $requestData = $this->validate($request, [
             'level' => ['required', 'string'],
         ]);
