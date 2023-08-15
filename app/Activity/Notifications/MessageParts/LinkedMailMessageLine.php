@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Activity\Notifications;
+namespace BookStack\Activity\Notifications\MessageParts;
 
 use Illuminate\Contracts\Support\Htmlable;
 

@@ -40,7 +40,7 @@ class ActivityLogger
 
         $this->setNotification($type);
         $this->dispatchWebhooks($type, $detail);
-        $this->notifications->handle($type, $detail, user());
+        $this->notifications->handle($activity, $detail, user());
         Theme::dispatch(ThemeEvents::ACTIVITY_LOGGED, $type, $detail);
     }
 

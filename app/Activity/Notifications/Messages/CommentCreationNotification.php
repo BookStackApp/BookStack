@@ -3,7 +3,7 @@
 namespace BookStack\Activity\Notifications\Messages;
 
 use BookStack\Activity\Models\Comment;
-use BookStack\Activity\Notifications\LinkedMailMessageLine;
+use BookStack\Activity\Notifications\MessageParts\ListMessageLine;
 use BookStack\Entities\Models\Page;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -17,16 +17,14 @@ class CommentCreationNotification extends BaseActivityNotification
         $page = $comment->entity;
 
         return (new MailMessage())
-            ->subject("New Comment on Page: " . $page->getShortName())
-            ->line("A user has commented on a page in " . setting('app-name') . ':')
-            ->line("Page Name: " . $page->name)
-            ->line("Commenter: " . $this->user->name)
-            ->line("Comment: " . strip_tags($comment->html))
-            ->action('View Comment', $page->getUrl('#comment' . $comment->local_id))
-            ->line(new LinkedMailMessageLine(
-                url('/preferences/notifications'),
-                'This notification was sent to you because :link cover this type of activity for this item.',
-                'your notification preferences',
-            ));
+            ->subject(trans('notifications.new_comment_subject', ['pageName' => $page->getShortName()]))
+            ->line(trans('notifications.new_comment_intro', ['appName' => setting('app-name')]))
+            ->line(new ListMessageLine([
+                trans('notifications.detail_page_name') => $page->name,
+                trans('notifications.detail_commenter') => $this->user->name,
+                trans('notifications.detail_comment') => strip_tags($comment->html),
+            ]))
+            ->action(trans('notifications.action_view_comment'), $page->getUrl('#comment' . $comment->local_id))
+            ->line($this->buildReasonFooterLine());
     }
 }

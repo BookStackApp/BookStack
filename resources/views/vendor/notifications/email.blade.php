@@ -30,7 +30,7 @@
 $style = [
     /* Layout ------------------------------ */
 
-    'body' => 'margin: 0; padding: 0; width: 100%; background-color: #F2F4F6;',
+    'body' => 'margin: 0; padding: 0; width: 100%; background-color: #F2F4F6;color:#444444;',
     'email-wrapper' => 'width: 100%; margin: 0; padding: 0; background-color: #F2F4F6;',
 
     /* Masthead ----------------------- */
@@ -54,8 +54,8 @@ $style = [
 
     'anchor' => 'color: '.setting('app-color').';overflow-wrap: break-word;word-wrap: break-word;word-break: break-all;word-break:break-word;',
     'header-1' => 'margin-top: 0; color: #2F3133; font-size: 19px; font-weight: bold; text-align: left;',
-    'paragraph' => 'margin-top: 0; color: #74787E; font-size: 16px; line-height: 1.5em;',
-    'paragraph-sub' => 'margin-top: 0; color: #74787E; font-size: 12px; line-height: 1.5em;',
+    'paragraph' => 'margin-top: 0; color: #444444; font-size: 16px; line-height: 1.5em;',
+    'paragraph-sub' => 'margin-top: 0; color: #444444; font-size: 12px; line-height: 1.5em;',
     'paragraph-center' => 'text-align: center;',
 
     /* Buttons ------------------------------ */
@@ -147,7 +147,7 @@ $style = [
 
                                                     <!-- Outro -->
                                                     @foreach ($outroLines as $line)
-                                                        <p style="{{ $style['paragraph'] }}">
+                                                        <p style="{{ $style['paragraph-sub'] }}">
                                                             {{ $line }}
                                                         </p>
                                                     @endforeach
