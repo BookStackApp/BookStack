@@ -2,6 +2,7 @@
 
 namespace BookStack\Activity\Notifications\Handlers;
 
+use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Notifications\Messages\BaseActivityNotification;
 use BookStack\Entities\Models\Entity;
 use BookStack\Permissions\PermissionApplicator;
@@ -18,7 +19,7 @@ abstract class BaseNotificationHandler implements NotificationHandler
      * @param class-string<BaseActivityNotification> $notification
      * @param int[] $userIds
      */
-    protected function sendNotificationToUserIds(string $notification, array $userIds, User $initiator, Entity $relatedModel): void
+    protected function sendNotificationToUserIds(string $notification, array $userIds, User $initiator, string|Loggable $detail, Entity $relatedModel): void
     {
         $users = User::query()->whereIn('id', array_unique($userIds))->get();
 
@@ -39,7 +40,7 @@ abstract class BaseNotificationHandler implements NotificationHandler
             }
 
             // Send the notification
-            $user->notify(new $notification($relatedModel, $initiator));
+            $user->notify(new $notification($detail, $initiator));
         }
     }
 }

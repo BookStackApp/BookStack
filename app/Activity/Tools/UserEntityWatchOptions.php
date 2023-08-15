@@ -76,14 +76,16 @@ class UserEntityWatchOptions
             $entities[] = $this->entity->chapter;
         }
 
-        $query = Watch::query()->where(function (Builder $subQuery) use ($entities) {
-            foreach ($entities as $entity) {
-                $subQuery->orWhere(function (Builder $whereQuery) use ($entity) {
-                    $whereQuery->where('watchable_type', '=', $entity->getMorphClass())
+        $query = Watch::query()
+            ->where('user_id', '=', $this->user->id)
+            ->where(function (Builder $subQuery) use ($entities) {
+                foreach ($entities as $entity) {
+                    $subQuery->orWhere(function (Builder $whereQuery) use ($entity) {
+                        $whereQuery->where('watchable_type', '=', $entity->getMorphClass())
                         ->where('watchable_id', '=', $entity->id);
-                });
-            }
-        });
+                    });
+                }
+            });
 
         $this->watchMap = $query->get(['watchable_type', 'level'])
             ->pluck('level', 'watchable_type')

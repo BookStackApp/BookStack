@@ -3,6 +3,7 @@
 namespace BookStack\Activity\Notifications;
 
 use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Activity;
 use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Notifications\Handlers\CommentCreationNotificationHandler;
 use BookStack\Activity\Notifications\Handlers\NotificationHandler;
@@ -17,13 +18,14 @@ class NotificationManager
      */
     protected array $handlers = [];
 
-    public function handle(string $activityType, string|Loggable $detail, User $user): void
+    public function handle(Activity $activity, string|Loggable $detail, User $user): void
     {
+        $activityType = $activity->type;
         $handlersToRun = $this->handlers[$activityType] ?? [];
         foreach ($handlersToRun as $handlerClass) {
             /** @var NotificationHandler $handler */
             $handler = app()->make($handlerClass);
-            $handler->handle($activityType, $detail, $user);
+            $handler->handle($activity, $detail, $user);
         }
     }
 
