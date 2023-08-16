@@ -62,6 +62,7 @@ class UserPreferencesController extends Controller
     public function showNotifications(PermissionApplicator $permissions)
     {
         $this->checkPermission('receive-notifications');
+        $this->preventGuestAccess();
 
         $preferences = (new UserNotificationPreferences(user()));
 
@@ -81,6 +82,7 @@ class UserPreferencesController extends Controller
     public function updateNotifications(Request $request)
     {
         $this->checkPermission('receive-notifications');
+        $this->preventGuestAccess();
         $data = $this->validate($request, [
            'preferences' => ['required', 'array'],
            'preferences.*' => ['required', 'string'],

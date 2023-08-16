@@ -51,6 +51,14 @@ class UserRoleProvider
     }
 
     /**
+     * Get the system "guest" user.
+     */
+    public function guest(): User
+    {
+        return User::where('system_name', '=', 'public')->firstOrFail();
+    }
+
+    /**
      * Create a new fresh user without any relations.
      */
     public function newUser(array $attrs = []): User
