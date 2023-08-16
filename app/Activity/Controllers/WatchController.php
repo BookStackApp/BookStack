@@ -2,7 +2,6 @@
 
 namespace BookStack\Activity\Controllers;
 
-use BookStack\Activity\Models\Watch;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\App\Model;
 use BookStack\Entities\Models\Entity;
@@ -15,7 +14,9 @@ class WatchController extends Controller
 {
     public function update(Request $request)
     {
-        // TODO - Require notification permission
+        $this->checkPermission('receive-notifications');
+        $this->preventGuestAccess();
+
         $requestData = $this->validate($request, [
             'level' => ['required', 'string'],
         ]);

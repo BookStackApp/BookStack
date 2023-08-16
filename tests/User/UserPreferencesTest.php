@@ -121,6 +121,21 @@ class UserPreferencesTest extends TestCase
         $resp->assertDontSee('All Page Updates & Comments');
     }
 
+    public function test_notification_preferences_not_accessible_to_guest()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $guest = $this->users->guest();
+        $this->permissions->grantUserRolePermissions($guest, ['receive-notifications']);
+
+        $resp = $this->get('/preferences/notifications');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->put('/preferences/notifications', [
+            'preferences' => ['comment-replies' => 'true'],
+        ]);
+        $this->assertPermissionError($resp);
+    }
+
     public function test_update_sort_preference()
     {
         $editor = $this->users->editor();

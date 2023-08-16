@@ -67,6 +67,16 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * Prevent access for guest users beyond this point.
+     */
+    protected function preventGuestAccess(): void
+    {
+        if (!signedInUser()) {
+            $this->showPermissionError();
+        }
+    }
+
+    /**
      * Check the current user's permissions against an ownable item otherwise throw an exception.
      */
     protected function checkOwnablePermission(string $permission, Model $ownable): void

@@ -27,7 +27,7 @@ class DummyContentSeeder extends Seeder
         // Create an editor user
         $editorUser = User::factory()->create();
         $editorRole = Role::getRole('editor');
-        $additionalEditorPerms = ['receive-notifications'];
+        $additionalEditorPerms = ['receive-notifications', 'comment-create-all'];
         $editorRole->permissions()->syncWithoutDetaching(RolePermission::whereIn('name', $additionalEditorPerms)->pluck('id'));
         $editorUser->attachRole($editorRole);
 

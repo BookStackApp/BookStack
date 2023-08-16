@@ -8,6 +8,7 @@ use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Notifications\Messages\CommentCreationNotification;
 use BookStack\Activity\Tools\EntityWatchers;
 use BookStack\Activity\WatchLevels;
+use BookStack\Entities\Models\Page;
 use BookStack\Settings\UserNotificationPreferences;
 use BookStack\Users\Models\User;
 
@@ -20,15 +21,16 @@ class CommentCreationNotificationHandler extends BaseNotificationHandler
         }
 
         // Main watchers
+        /** @var Page $page */
         $page = $detail->entity;
         $watchers = new EntityWatchers($page, WatchLevels::COMMENTS);
         $watcherIds = $watchers->getWatcherUserIds();
 
         // Page owner if user preferences allow
-        if (!$watchers->isUserIgnoring($detail->created_by) && $detail->createdBy) {
-            $userNotificationPrefs = new UserNotificationPreferences($detail->createdBy);
+        if (!$watchers->isUserIgnoring($page->owned_by) && $page->ownedBy) {
+            $userNotificationPrefs = new UserNotificationPreferences($page->ownedBy);
             if ($userNotificationPrefs->notifyOnOwnPageComments()) {
-                $watcherIds[] = $detail->created_by;
+                $watcherIds[] = $page->owned_by;
             }
         }
 
