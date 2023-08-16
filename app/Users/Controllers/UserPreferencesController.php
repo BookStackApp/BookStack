@@ -33,6 +33,8 @@ class UserPreferencesController extends Controller
         $shortcuts = UserShortcutMap::fromUserPreferences();
         $enabled = setting()->getForCurrentUser('ui-shortcuts-enabled', false);
 
+        $this->setPageTitle(trans('preferences.shortcuts_interface'));
+
         return view('users.preferences.shortcuts', [
             'shortcuts' => $shortcuts,
             'enabled' => $enabled,
@@ -70,6 +72,7 @@ class UserPreferencesController extends Controller
         $query = $permissions->restrictEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
         $watches = $query->with('watchable')->paginate(20);
 
+        $this->setPageTitle(trans('preferences.notifications'));
         return view('users.preferences.notifications', [
             'preferences' => $preferences,
             'watches' => $watches,

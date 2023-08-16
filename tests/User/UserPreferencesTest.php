@@ -15,13 +15,15 @@ class UserPreferencesTest extends TestCase
         $resp->assertSee('Edit Profile');
     }
 
-    public function test_index_view_accessible_but_without_profile_for_guest_user()
+    public function test_index_view_accessible_but_without_profile_and_notifications_for_guest_user()
     {
         $this->setSettings(['app-public' => 'true']);
+        $this->permissions->grantUserRolePermissions($this->users->guest(), ['receive-notifications']);
         $resp = $this->get('/preferences');
         $resp->assertOk();
         $resp->assertSee('Interface Keyboard Shortcuts');
         $resp->assertDontSee('Edit Profile');
+        $resp->assertDontSee('Notification');
     }
     public function test_interface_shortcuts_updating()
     {
