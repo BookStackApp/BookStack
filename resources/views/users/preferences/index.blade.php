@@ -13,7 +13,7 @@
             </div>
         </section>
 
-        @if(userCan('receive-notifications'))
+        @if(signedInUser() && userCan('receive-notifications'))
             <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row">
                 <div>
                     <h2 class="list-heading">{{ trans('preferences.notifications') }}</h2>
