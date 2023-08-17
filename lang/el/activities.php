@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" προστέθηκε στα αγαπημένα σας',
     'favourite_remove_notification' => '":name" προστέθηκε στα αγαπημένα σας',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'συνδεδεμένος',
     'auth_register' => 'εγγεγραμμένος ως νέος χρήστης',
