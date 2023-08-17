@@ -42,6 +42,7 @@ return [
     'remove' => 'Rimuovi',
     'add' => 'Aggiungi',
     'configure' => 'Configura',
+    'manage' => 'Manage',
     'fullscreen' => 'Schermo intero',
     'favourite' => 'Aggiungi ai Preferiti',
     'unfavourite' => 'Rimuovi dai preferiti',
