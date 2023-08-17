@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" به علاقه مندی های شما اضافه شد',
     'favourite_remove_notification' => '":name" از علاقه مندی های شما حذف شد',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
     'auth_register' => 'registered as new user',
