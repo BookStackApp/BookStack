@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => 'تم إضافة ":name" إلى المفضلة لديك',
     'favourite_remove_notification' => 'تم إزالة ":name" من المفضلة لديك',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
     'auth_register' => 'registered as new user',
