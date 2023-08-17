@@ -102,6 +102,7 @@ class WatchTest extends TestCase
         ]);
 
         $this->assertPermissionError($resp);
+        $guest->unsetRelations();
     }
 
     public function test_watch_detail_display_reflects_state()
