@@ -5,6 +5,7 @@ namespace Tests;
 use BookStack\Entities\Models\Entity;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
+use BookStack\Users\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -46,6 +47,7 @@ abstract class TestCase extends BaseTestCase
         $this->permissions = new PermissionsProvider($this->users);
         $this->files = new FileProvider();
 
+        User::clearDefault();
         parent::setUp();
 
         // We can uncomment the below to run tests with failings upon deprecations.

@@ -5,6 +5,7 @@ namespace BookStack\Activity\Models;
 use BookStack\App\Model;
 use BookStack\Users\Models\HasCreatorAndUpdater;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -33,6 +34,14 @@ class Comment extends Model implements Loggable
     }
 
     /**
+     * Get the parent comment this is in reply to (if existing).
+     */
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Comment::class);
+    }
+
+    /**
      * Check if a comment has been updated since creation.
      */
     public function isUpdated(): bool
@@ -42,20 +51,16 @@ class Comment extends Model implements Loggable
 
     /**
      * Get created date as a relative diff.
-     *
-     * @return mixed
      */
-    public function getCreatedAttribute()
+    public function getCreatedAttribute(): string
     {
         return $this->created_at->diffForHumans();
     }
 
     /**
      * Get updated date as a relative diff.
-     *
-     * @return mixed
      */
-    public function getUpdatedAttribute()
+    public function getUpdatedAttribute(): string
     {
         return $this->updated_at->diffForHumans();
     }

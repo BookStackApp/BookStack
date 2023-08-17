@@ -5,6 +5,7 @@ namespace BookStack\Entities\Controllers;
 use BookStack\Activity\ActivityQueries;
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\View;
+use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
@@ -138,6 +139,7 @@ class BookController extends Controller
             'current'           => $book,
             'bookChildren'      => $bookChildren,
             'bookParentShelves' => $bookParentShelves,
+            'watchOptions'      => new UserEntityWatchOptions(user(), $book),
             'activity'          => $activities->entityActivity($book, 20, 1),
             'referenceCount'    => $this->referenceFetcher->getPageReferenceCountToEntity($book),
         ]);

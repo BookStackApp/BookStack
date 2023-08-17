@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\Models\View;
+use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Tools\BookContents;
@@ -81,6 +82,7 @@ class ChapterController extends Controller
             'chapter'        => $chapter,
             'current'        => $chapter,
             'sidebarTree'    => $sidebarTree,
+            'watchOptions'   => new UserEntityWatchOptions(user(), $chapter),
             'pages'          => $pages,
             'next'           => $nextPreviousLocator->getNext(),
             'previous'       => $nextPreviousLocator->getPrevious(),

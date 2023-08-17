@@ -67,7 +67,7 @@
     <div class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
-            @include('entities.meta', ['entity' => $chapter])
+            @include('entities.meta', ['entity' => $chapter, 'watchOptions' => $watchOptions])
 
             @if($book->hasPermissions())
                 <div class="active-restriction">
@@ -157,6 +157,9 @@
 
             <hr class="primary-background"/>
 
+            @if($watchOptions->canWatch() && !$watchOptions->isWatching())
+                @include('entities.watch-action', ['entity' => $chapter])
+            @endif
             @if(signedInUser())
                 @include('entities.favourite-action', ['entity' => $chapter])
             @endif
