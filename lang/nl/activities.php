@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" is verwijderd uit je favorieten',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Kijkvoorkeuren succesvol aangepast',
 
     // Auth
     'auth_login' => 'heeft ingelogd',
@@ -115,9 +115,9 @@ return [
 
     // Comments
     'commented_on'                => 'reageerde op',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'heeft opmerking toegevoegd',
+    'comment_update'              => 'heeft opmerking aangepast',
+    'comment_delete'              => 'heeft opmerking verwijderd',
 
     // Other
     'permissions_update'          => 'wijzigde machtigingen',
