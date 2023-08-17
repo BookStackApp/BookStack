@@ -81,7 +81,7 @@
     <div id="page-details" class="entity-details mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
-            @include('entities.meta', ['entity' => $page])
+            @include('entities.meta', ['entity' => $page, 'watchOptions' => $watchOptions])
 
             @if($book->hasPermissions())
                 <div class="active-restriction">

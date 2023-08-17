@@ -55,7 +55,7 @@ class UserRoleProvider
      */
     public function guest(): User
     {
-        return User::where('system_name', '=', 'public')->firstOrFail();
+        return User::getDefault();
     }
 
     /**
