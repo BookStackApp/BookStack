@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" foi adicionado aos seus favoritos',
     'favourite_remove_notification' => '":name" foi removido dos seus favoritos',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'sessão iniciada',
     'auth_register' => 'registado como novo utilizador',
