@@ -26,7 +26,7 @@ class WatchTest extends TestCase
             $this->withHtml($resp)->assertElementContains('form[action$="/watching/update"] button.icon-list-item', 'Watch');
 
             $watchOptions = new UserEntityWatchOptions($editor, $entity);
-            $watchOptions->updateWatchLevel('comments');
+            $watchOptions->updateLevelByValue(WatchLevels::COMMENTS);
 
             $resp = $this->get($entity->getUrl());
             $this->withHtml($resp)->assertElementNotExists('form[action$="/watching/update"] button.icon-list-item');
@@ -112,17 +112,17 @@ class WatchTest extends TestCase
         $chapter = $book->chapters()->first();
         $page = $chapter->pages()->first();
 
-        (new UserEntityWatchOptions($editor, $book))->updateWatchLevel('updates');
+        (new UserEntityWatchOptions($editor, $book))->updateLevelByValue(WatchLevels::UPDATES);
 
         $this->actingAs($editor)->get($book->getUrl())->assertSee('Watching new pages and updates');
         $this->get($chapter->getUrl())->assertSee('Watching via parent book');
         $this->get($page->getUrl())->assertSee('Watching via parent book');
 
-        (new UserEntityWatchOptions($editor, $chapter))->updateWatchLevel('comments');
+        (new UserEntityWatchOptions($editor, $chapter))->updateLevelByValue(WatchLevels::COMMENTS);
         $this->get($chapter->getUrl())->assertSee('Watching new pages, updates & comments');
         $this->get($page->getUrl())->assertSee('Watching via parent chapter');
 
-        (new UserEntityWatchOptions($editor, $page))->updateWatchLevel('updates');
+        (new UserEntityWatchOptions($editor, $page))->updateLevelByValue(WatchLevels::UPDATES);
         $this->get($page->getUrl())->assertSee('Watching new pages and updates');
     }
 
@@ -130,7 +130,7 @@ class WatchTest extends TestCase
     {
         $editor = $this->users->editor();
         $book = $this->entities->bookHasChaptersAndPages();
-        (new UserEntityWatchOptions($editor, $book))->updateWatchLevel('ignore');
+        (new UserEntityWatchOptions($editor, $book))->updateLevelByValue(WatchLevels::IGNORE);
 
         $this->actingAs($editor)->get($book->getUrl())->assertSee('Ignoring notifications');
         $this->get($book->chapters()->first()->getUrl())->assertSee('Ignoring via parent book');
@@ -146,11 +146,11 @@ class WatchTest extends TestCase
         $respHtml = $this->withHtml($this->actingAs($editor)->get($book->getUrl()));
         $respHtml->assertElementNotExists('form[action$="/watching/update"] svg[data-icon="check-circle"]');
 
-        $options->updateWatchLevel('comments');
+        $options->updateLevelByValue(WatchLevels::COMMENTS);
         $respHtml = $this->withHtml($this->actingAs($editor)->get($book->getUrl()));
         $respHtml->assertElementExists('form[action$="/watching/update"] button[value="comments"] svg[data-icon="check-circle"]');
 
-        $options->updateWatchLevel('ignore');
+        $options->updateLevelByValue(WatchLevels::IGNORE);
         $respHtml = $this->withHtml($this->actingAs($editor)->get($book->getUrl()));
         $respHtml->assertElementExists('form[action$="/watching/update"] button[value="ignore"] svg[data-icon="check-circle"]');
     }
@@ -159,7 +159,7 @@ class WatchTest extends TestCase
     {
         $editor = $this->users->editor();
         $book = $this->entities->bookHasChaptersAndPages();
-        (new UserEntityWatchOptions($editor, $book))->updateWatchLevel('ignore');
+        (new UserEntityWatchOptions($editor, $book))->updateLevelByValue(WatchLevels::IGNORE);
 
         $respHtml = $this->withHtml($this->actingAs($editor)->get($book->getUrl()));
         $respHtml->assertElementExists('form[action$="/watching/update"] button[name="level"][value="new"]');
@@ -225,7 +225,7 @@ class WatchTest extends TestCase
         $entities = $this->entities->createChainBelongingToUser($editor);
         $watches = new UserEntityWatchOptions($editor, $entities['book']);
         $prefs = new UserNotificationPreferences($editor);
-        $watches->updateWatchLevel('ignore');
+        $watches->updateLevelByValue(WatchLevels::IGNORE);
         $prefs->updateFromSettingsArray(['own-page-changes' => 'true', 'own-page-comments' => true]);
 
         $notifications = Notification::fake();
@@ -244,7 +244,7 @@ class WatchTest extends TestCase
         $admin = $this->users->admin();
         $entities = $this->entities->createChainBelongingToUser($editor);
         $watches = new UserEntityWatchOptions($editor, $entities['book']);
-        $watches->updateWatchLevel('comments');
+        $watches->updateLevelByValue(WatchLevels::COMMENTS);
 
         // Comment post
         $this->actingAs($admin)->post("/comment/{$entities['page']->id}", [
@@ -269,7 +269,7 @@ class WatchTest extends TestCase
         $admin = $this->users->admin();
         $entities = $this->entities->createChainBelongingToUser($editor);
         $watches = new UserEntityWatchOptions($editor, $entities['book']);
-        $watches->updateWatchLevel('updates');
+        $watches->updateLevelByValue(WatchLevels::UPDATES);
 
         $this->actingAs($admin);
         $this->entities->updatePage($entities['page'], ['name' => 'Updated page', 'html' => 'new page content']);
@@ -297,7 +297,7 @@ class WatchTest extends TestCase
         $admin = $this->users->admin();
         $entities = $this->entities->createChainBelongingToUser($editor);
         $watches = new UserEntityWatchOptions($editor, $entities['book']);
-        $watches->updateWatchLevel('new');
+        $watches->updateLevelByValue(WatchLevels::NEW);
 
         $this->actingAs($admin)->get($entities['chapter']->getUrl('/create-page'));
         $page = $entities['chapter']->pages()->where('draft', '=', true)->first();
@@ -320,7 +320,7 @@ class WatchTest extends TestCase
         $page = $this->entities->page();
 
         $watches = new UserEntityWatchOptions($editor, $page);
-        $watches->updateWatchLevel('comments');
+        $watches->updateLevelByValue(WatchLevels::COMMENTS);
         $this->permissions->disableEntityInheritedPermissions($page);
 
         $this->asAdmin()->post("/comment/{$page->id}", [

@@ -3,6 +3,7 @@
 namespace Tests\User;
 
 use BookStack\Activity\Tools\UserEntityWatchOptions;
+use BookStack\Activity\WatchLevels;
 use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
@@ -110,13 +111,13 @@ class UserPreferencesTest extends TestCase
         $book = $this->entities->book();
 
         $options = new UserEntityWatchOptions($editor, $book);
-        $options->updateWatchLevel('comments');
+        $options->updateLevelByValue(WatchLevels::COMMENTS);
 
         $resp = $this->actingAs($editor)->get('/preferences/notifications');
         $resp->assertSee($book->name);
         $resp->assertSee('All Page Updates & Comments');
 
-        $options->updateWatchLevel('default');
+        $options->updateLevelByValue(WatchLevels::DEFAULT);
 
         $resp = $this->actingAs($editor)->get('/preferences/notifications');
         $resp->assertDontSee($book->name);
