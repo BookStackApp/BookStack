@@ -42,6 +42,7 @@ return [
     'remove' => 'Видалити',
     'add' => 'Додати',
     'configure' => 'Налаштувати',
+    'manage' => 'Manage',
     'fullscreen' => 'На весь екран',
     'favourite' => 'Улюблене',
     'unfavourite' => 'Прибрати з обраного',
