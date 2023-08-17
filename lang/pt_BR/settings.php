@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Gerenciar configurações da aplicação',
     'role_export_content' => 'Exportar conteúdo',
     'role_editor_change' => 'Alterar página de edição',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Permissões de Ativos',
     'roles_system_warning' => 'Esteja ciente de que o acesso a qualquer uma das três permissões acima pode permitir que um usuário altere seus próprios privilégios ou privilégios de outros usuários no sistema. Apenas atribua cargos com essas permissões para usuários confiáveis.',
     'role_asset_desc' => 'Essas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por essas permissões.',
