@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => 'Voorkeuren',
 
     'shortcuts' => 'Snelkoppelingen',
     'shortcuts_interface' => 'Toetsencombinaties voor de gebruikersinterface',
@@ -17,17 +17,17 @@ return [
     'shortcuts_save' => 'Sla Toetsencombinaties Op',
     'shortcuts_overlay_desc' => 'Opmerking: Wanneer toetsencombinaties zijn ingeschakeld, is een overlay beschikbaar door op "?" te drukken, die de momenteel beschikbare toetscombinaties voor acties op het scherm markeert.',
     'shortcuts_update_success' => 'Toetsencombinatievoorkeuren zijn bijgewerkt!',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => 'Beheer toetsenbordsnelkoppelingen om door de gebruikersinterface van het systeem te navigeren.',
 
-    'notifications' => 'Notification Preferences',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications' => 'Melding Voorkeuren',
+    'notifications_desc' => 'Bepaal welke e-mailmeldingen je ontvangt wanneer bepaalde activiteiten in het systeem worden uitgevoerd.',
+    'notifications_opt_own_page_changes' => 'Geef melding bij wijzigingen aan pagina\'s waarvan ik de eigenaar ben',
+    'notifications_opt_own_page_comments' => 'Geef melding van opmerkingen op pagina\'s waarvan ik de eigenaar ben',
+    'notifications_opt_comment_replies' => 'Geef melding van reacties op mijn opmerkingen',
+    'notifications_save' => 'Voorkeuren opslaan',
+    'notifications_update_success' => 'Voorkeuren voor meldingen zijn bijgewerkt!',
+    'notifications_watched' => 'Ingestelde Items',
+    'notifications_watched_desc' => ' Hieronder staan de items waarvoor aangepaste \'kijk\' voorkeuren zijn toegepast. Om je voorkeuren voor deze items bij te werken, bekijk je het item en zoek je naar de \'kijk\' opties in de zijbalk.',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' Beheer de details van je gebruikersprofiel, inclusief de voorkeurstaal en verificatieopties.',
 ];
