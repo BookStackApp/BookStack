@@ -59,6 +59,9 @@ return [
     'favourite_add_notification' => '«:name» ble lagt til i dine favoritter',
     'favourite_remove_notification' => '«:name» ble fjernet fra dine favoritter',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logget inn',
     'auth_register' => 'registrert som ny bruker',
