@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '".ime" će biti dodano u tvoje favorite',
     'favourite_remove_notification' => '".ime" je uspješno maknuta iz tvojih favorita',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'prijavljen',
     'auth_register' => 'registriran kao novi korisnik',
