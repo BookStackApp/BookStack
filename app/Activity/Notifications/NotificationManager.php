@@ -24,7 +24,7 @@ class NotificationManager
         $handlersToRun = $this->handlers[$activityType] ?? [];
         foreach ($handlersToRun as $handlerClass) {
             /** @var NotificationHandler $handler */
-            $handler = app()->make($handlerClass);
+            $handler = new $handlerClass();
             $handler->handle($activity, $detail, $user);
         }
     }
