@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" 북마크에 추가함',
     'favourite_remove_notification' => '":name" 북마크에서 삭제함',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
     'auth_register' => 'registered as new user',
