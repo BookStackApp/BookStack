@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" favorilerinize eklendi',
     'favourite_remove_notification' => '":name" favorilerinizden çıkarıldı',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'oturum açıldı',
     'auth_register' => 'yeni kullanıcı olarak kayıt yapıldı',
