@@ -10,11 +10,6 @@ use BookStack\Users\Models\User;
 
 abstract class BaseNotificationHandler implements NotificationHandler
 {
-    public function __construct(
-        protected PermissionApplicator $permissionApplicator
-    ) {
-    }
-
     /**
      * @param class-string<BaseActivityNotification> $notification
      * @param int[] $userIds
@@ -35,7 +30,8 @@ abstract class BaseNotificationHandler implements NotificationHandler
             }
 
             // Prevent sending if the user does not have access to the related content
-            if (!$this->permissionApplicator->checkOwnableUserAccess($relatedModel, 'view')) {
+            $permissions = new PermissionApplicator($user);
+            if (!$permissions->checkOwnableUserAccess($relatedModel, 'view')) {
                 continue;
             }
 

@@ -9,6 +9,7 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\BookStackExceptionHandlerPage;
+use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\SettingService;
 use BookStack\Util\CspService;
 use GuzzleHttp\Client;
@@ -78,6 +79,10 @@ class AppServiceProvider extends ServiceProvider
             return new Client([
                 'timeout' => 3,
             ]);
+        });
+
+        $this->app->singleton(PermissionApplicator::class, function ($app) {
+            return new PermissionApplicator(null);
         });
     }
 }

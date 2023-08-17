@@ -312,4 +312,21 @@ class WatchTest extends TestCase
                 && str_contains($mailContent, 'Created By: ' . $admin->name);
         });
     }
+
+    public function test_notifications_not_sent_if_lacking_view_permission_for_related_item()
+    {
+        $notifications = Notification::fake();
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+
+        $watches = new UserEntityWatchOptions($editor, $page);
+        $watches->updateWatchLevel('comments');
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $this->asAdmin()->post("/comment/{$page->id}", [
+            'text' => 'My new comment response',
+        ])->assertOk();
+
+        $notifications->assertNothingSentTo($editor);
+    }
 }
