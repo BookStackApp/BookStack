@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => 'Mae ":name" wedi\'i ychwanegu at eich ffefrynnau',
     'favourite_remove_notification' => 'Mae ":name" wedi\'i tynnu o\'ch ffefrynnau',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
     'auth_register' => 'registered as new user',
