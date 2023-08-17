@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" telah ditambahkan ke favorit Anda',
     'favourite_remove_notification' => '":name" telah dihapus dari favorit Anda',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
     'auth_register' => 'registered as new user',
