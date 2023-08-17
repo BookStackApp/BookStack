@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" 已添加到您的收藏',
     'favourite_remove_notification' => '":name" 已从您的收藏中删除',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => '已登录',
     'auth_register' => '已注册为新用户',
