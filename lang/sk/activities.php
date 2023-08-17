@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" bol pridaný medzi obľúbené',
     'favourite_remove_notification' => '":name" bol odstránený z obľúbených',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
     'auth_register' => 'registered as new user',
