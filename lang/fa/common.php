@@ -42,6 +42,7 @@ return [
     'remove' => 'حذف',
     'add' => 'ﺍﻓﺰﻭﺩﻥ',
     'configure' => 'پیکربندی کنید',
+    'manage' => 'Manage',
     'fullscreen' => 'تمام صفحه',
     'favourite' => 'علاقه‌مندی',
     'unfavourite' => 'حذف از علاقه‌مندی',
