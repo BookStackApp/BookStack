@@ -23,7 +23,7 @@ class WatchController extends Controller
 
         $watchable = $this->getValidatedModelFromRequest($request);
         $watchOptions = new UserEntityWatchOptions(user(), $watchable);
-        $watchOptions->updateWatchLevel($requestData['level']);
+        $watchOptions->updateLevelByName($requestData['level']);
 
         $this->showSuccessNotification(trans('activities.watch_update_level_notification'));
 

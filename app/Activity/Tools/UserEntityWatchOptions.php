@@ -51,15 +51,20 @@ class UserEntityWatchOptions
         return null;
     }
 
-    public function updateWatchLevel(string $level): void
+    public function updateLevelByName(string $level): void
     {
         $levelValue = WatchLevels::levelNameToValue($level);
-        if ($levelValue < 0) {
+        $this->updateLevelByValue($levelValue);
+    }
+
+    public function updateLevelByValue(int $level): void
+    {
+        if ($level < 0) {
             $this->remove();
             return;
         }
 
-        $this->updateLevel($levelValue);
+        $this->updateLevel($level);
     }
 
     public function getWatchMap(): array
