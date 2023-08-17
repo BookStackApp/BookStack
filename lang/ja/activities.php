@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name"がお気に入りに追加されました',
     'favourite_remove_notification' => '":name"がお気に入りから削除されました',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'がログイン',
     'auth_register' => 'が新規ユーザ登録',
