@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Gérer les préférences de l\'application',
     'role_export_content' => 'Exporter le contenu',
     'role_editor_change' => 'Changer l\'éditeur de page',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Permissions des ressources',
     'roles_system_warning' => 'Sachez que l\'accès à l\'une des trois permissions ci-dessus peut permettre à un utilisateur de modifier ses propres privilèges ou les privilèges des autres utilisateurs du système. N\'attribuez uniquement des rôles avec ces permissions qu\'à des utilisateurs de confiance.',
     'role_asset_desc' => 'Ces permissions contrôlent l\'accès par défaut des ressources dans le système. Les permissions dans les livres, les chapitres et les pages ignoreront ces permissions',
