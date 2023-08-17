@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" добавлено в избранное',
     'favourite_remove_notification' => '":name" удалено из избранного',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'вошёл',
     'auth_register' => 'зарегистрировался как новый пользователь',
