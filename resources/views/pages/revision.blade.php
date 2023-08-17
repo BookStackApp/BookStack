@@ -4,7 +4,7 @@
     <div id="revision-details" class="entity-details mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="body text-small text-muted">
-            @include('entities.meta', ['entity' => $revision])
+            @include('entities.meta', ['entity' => $revision, 'watchOptions' => null])
         </div>
     </div>
 @stop

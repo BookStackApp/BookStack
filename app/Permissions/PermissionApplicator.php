@@ -8,7 +8,6 @@ use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Users\Models\HasCreatorAndUpdater;
 use BookStack\Users\Models\HasOwner;
-use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -16,6 +15,11 @@ use InvalidArgumentException;
 
 class PermissionApplicator
 {
+    public function __construct(
+        protected ?User $user = null
+    ) {
+    }
+
     /**
      * Checks if an entity has a restriction set upon it.
      *
@@ -173,7 +177,7 @@ class PermissionApplicator
      */
     protected function currentUser(): User
     {
-        return user();
+        return $this->user ?? user();
     }
 
     /**

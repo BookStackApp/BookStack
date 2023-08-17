@@ -194,6 +194,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/favourites/add', [ActivityControllers\FavouriteController::class, 'add']);
     Route::post('/favourites/remove', [ActivityControllers\FavouriteController::class, 'remove']);
 
+    // Watching
+    Route::put('/watching/update', [ActivityControllers\WatchController::class, 'update']);
+
     // Other Pages
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index']);
@@ -228,9 +231,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/users/{id}', [UserControllers\UserController::class, 'destroy']);
 
     // User Preferences
-    Route::redirect('/preferences', '/');
+    Route::get('/preferences', [UserControllers\UserPreferencesController::class, 'index']);
     Route::get('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'showShortcuts']);
     Route::put('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'updateShortcuts']);
+    Route::get('/preferences/notifications', [UserControllers\UserPreferencesController::class, 'showNotifications']);
+    Route::put('/preferences/notifications', [UserControllers\UserPreferencesController::class, 'updateNotifications']);
     Route::patch('/preferences/change-view/{type}', [UserControllers\UserPreferencesController::class, 'changeView']);
     Route::patch('/preferences/change-sort/{type}', [UserControllers\UserPreferencesController::class, 'changeSort']);
     Route::patch('/preferences/change-expansion/{type}', [UserControllers\UserPreferencesController::class, 'changeExpansion']);

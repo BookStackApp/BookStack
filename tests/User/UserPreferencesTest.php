@@ -2,10 +2,30 @@
 
 namespace Tests\User;
 
+use BookStack\Activity\Tools\UserEntityWatchOptions;
+use BookStack\Activity\WatchLevels;
 use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
 {
+    public function test_index_view()
+    {
+        $resp = $this->asEditor()->get('/preferences');
+        $resp->assertOk();
+        $resp->assertSee('Interface Keyboard Shortcuts');
+        $resp->assertSee('Edit Profile');
+    }
+
+    public function test_index_view_accessible_but_without_profile_and_notifications_for_guest_user()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $this->permissions->grantUserRolePermissions($this->users->guest(), ['receive-notifications']);
+        $resp = $this->get('/preferences');
+        $resp->assertOk();
+        $resp->assertSee('Interface Keyboard Shortcuts');
+        $resp->assertDontSee('Edit Profile');
+        $resp->assertDontSee('Notification');
+    }
     public function test_interface_shortcuts_updating()
     {
         $this->asEditor();
@@ -43,6 +63,80 @@ class UserPreferencesTest extends TestCase
 
         setting()->putUser($editor, 'ui-shortcuts-enabled', 'true');
         $this->withHtml($this->get('/'))->assertElementExists('body[component="shortcuts"]');
+    }
+
+    public function test_notification_routes_requires_notification_permission()
+    {
+        $viewer = $this->users->viewer();
+        $resp = $this->actingAs($viewer)->get('/preferences/notifications');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->put('/preferences/notifications');
+        $this->assertPermissionError($resp);
+
+        $this->permissions->grantUserRolePermissions($viewer, ['receive-notifications']);
+        $resp = $this->get('/preferences/notifications');
+        $resp->assertOk();
+        $resp->assertSee('Notification Preferences');
+    }
+
+    public function test_notification_preferences_updating()
+    {
+        $editor = $this->users->editor();
+
+        // View preferences with defaults
+        $resp = $this->actingAs($editor)->get('/preferences/notifications');
+        $resp->assertSee('Notification Preferences');
+
+        $html = $this->withHtml($resp);
+        $html->assertFieldHasValue('preferences[comment-replies]', 'false');
+
+        // Update preferences
+        $resp = $this->put('/preferences/notifications', [
+            'preferences' => ['comment-replies' => 'true'],
+        ]);
+
+        $resp->assertRedirect('/preferences/notifications');
+        $resp->assertSessionHas('success', 'Notification preferences have been updated!');
+
+        // View updates to preferences page
+        $resp = $this->get('/preferences/notifications');
+        $html = $this->withHtml($resp);
+        $html->assertFieldHasValue('preferences[comment-replies]', 'true');
+    }
+
+    public function test_notification_preferences_show_watches()
+    {
+        $editor = $this->users->editor();
+        $book = $this->entities->book();
+
+        $options = new UserEntityWatchOptions($editor, $book);
+        $options->updateLevelByValue(WatchLevels::COMMENTS);
+
+        $resp = $this->actingAs($editor)->get('/preferences/notifications');
+        $resp->assertSee($book->name);
+        $resp->assertSee('All Page Updates & Comments');
+
+        $options->updateLevelByValue(WatchLevels::DEFAULT);
+
+        $resp = $this->actingAs($editor)->get('/preferences/notifications');
+        $resp->assertDontSee($book->name);
+        $resp->assertDontSee('All Page Updates & Comments');
+    }
+
+    public function test_notification_preferences_not_accessible_to_guest()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $guest = $this->users->guest();
+        $this->permissions->grantUserRolePermissions($guest, ['receive-notifications']);
+
+        $resp = $this->get('/preferences/notifications');
+        $this->assertPermissionError($resp);
+
+        $resp = $this->put('/preferences/notifications', [
+            'preferences' => ['comment-replies' => 'true'],
+        ]);
+        $this->assertPermissionError($resp);
     }
 
     public function test_update_sort_preference()
