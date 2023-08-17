@@ -42,6 +42,7 @@ return [
     'remove' => 'Radera',
     'add' => 'Lägg till',
     'configure' => 'Konfigurera',
+    'manage' => 'Manage',
     'fullscreen' => 'Helskärm',
     'favourite' => 'Favorit',
     'unfavourite' => 'Ta bort favorit',
