@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" đã được thêm vào danh sách yêu thích của bạn',
     'favourite_remove_notification' => '":name" đã được gỡ khỏi danh sách yêu thích của bạn',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'đăng nhập',
     'auth_register' => 'đã đăng ký như người dùng mới',
