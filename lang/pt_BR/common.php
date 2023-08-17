@@ -42,6 +42,7 @@ return [
     'remove' => 'Remover',
     'add' => 'Adicionar',
     'configure' => 'Configurar',
+    'manage' => 'Manage',
     'fullscreen' => 'Tela cheia',
     'favourite' => 'Favoritos',
     'unfavourite' => 'Remover dos Favoritos',
