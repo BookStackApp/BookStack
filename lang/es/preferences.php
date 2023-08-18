@@ -29,5 +29,5 @@ return [
     'notifications_watched' => 'Elementos vistos e ignorados',
     'notifications_watched_desc' => ' A continuación se muestran los elementos que tienen preferencias personalizadas de monitorización. Para actualizar sus preferencias, vea el artículo y las opciones se mostrarán en la barra lateral.',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' Gestione los detalles de su perfil de usuario, incluyendo las opciones de idioma y autenticación preferidas.',
 ];
