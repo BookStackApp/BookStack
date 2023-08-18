@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Cancelar',
-    'close' => 'Close',
+    'close' => 'Fechar',
     'confirm' => 'Confirmar',
     'back' => 'Voltar',
     'save' => 'Salvar',
@@ -42,7 +42,7 @@ return [
     'remove' => 'Remover',
     'add' => 'Adicionar',
     'configure' => 'Configurar',
-    'manage' => 'Manage',
+    'manage' => 'Administrar',
     'fullscreen' => 'Tela cheia',
     'favourite' => 'Favoritos',
     'unfavourite' => 'Remover dos Favoritos',
