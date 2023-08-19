@@ -3,7 +3,7 @@
 All development on BookStack is currently done on the `development` branch. 
 When it's time for a release the `development` branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
-* [Node.js](https://nodejs.org/en/) v16.0+
+* [Node.js](https://nodejs.org/en/) v18.0+
 
 ## Building CSS & JavaScript Assets
 
