@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Avbryt',
-    'close' => 'Close',
+    'close' => 'Stäng',
     'confirm' => 'Bekräfta',
     'back' => 'Bakåt',
     'save' => 'Spara',
@@ -42,7 +42,7 @@ return [
     'remove' => 'Radera',
     'add' => 'Lägg till',
     'configure' => 'Konfigurera',
-    'manage' => 'Manage',
+    'manage' => 'Hantera',
     'fullscreen' => 'Helskärm',
     'favourite' => 'Favorit',
     'unfavourite' => 'Ta bort favorit',
