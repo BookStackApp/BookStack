@@ -63,7 +63,7 @@ return [
 
     // Auth
     'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
+    'auth_register' => 'registrerad som ny användare',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
     'mfa_setup_method' => 'configured MFA method',
