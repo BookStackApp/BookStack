@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Salva Preferenze',
     'notifications_update_success' => 'Le preferenze di notifica sono state aggiornate!',
     'notifications_watched' => 'Oggetti Osservati E Ignorati',
-    'notifications_watched_desc' => 'Di seguito sono riportati gli articoli a cui sono state applicate le preferenze di orologio personalizzate. Per aggiornare le preferenze, visualizzare l\'articolo e trovare le opzioni dell\'orologio nella barra laterale.',
+    'notifications_watched_desc' => 'Di seguito sono riportati gli articoli a cui sono state applicate le preferenze di monitoraggio personalizzate. Per aggiornare le preferenze, visualizzare l\'articolo e trovare le opzioni di monitoraggio nella barra laterale.',
 
     'profile_overview_desc' => ' Gestisci i dettagli del tuo profilo utente, incluse la lingua preferita e le opzioni di autenticazione.',
 ];
