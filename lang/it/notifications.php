@@ -4,7 +4,7 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
+    'new_comment_subject' => 'Nuovo commento alla pagina: :pageName',
     'new_comment_intro' => 'A user has commented on a page in :appName:',
     'new_page_subject' => 'New page: :pageName',
     'new_page_intro' => 'A new page has been created in :appName:',
