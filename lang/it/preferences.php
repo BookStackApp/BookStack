@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => 'Preferenze',
 
     'shortcuts' => 'Scorciatoie',
     'shortcuts_interface' => 'Interfaccia scorciatoie da tastiera',
@@ -17,17 +17,17 @@ return [
     'shortcuts_save' => 'Salva Scorciatoie',
     'shortcuts_overlay_desc' => 'Nota: quando le scorciatoie sono abilitate, premendo "?" è possibile visualizzare le scorciatoie disponibili per le azioni attualmente visibili sullo schermo.',
     'shortcuts_update_success' => 'Le preferenze delle scorciatoie sono state aggiornate!',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => 'Gestisci le scorciatoie da tastiera che puoi usare per navigare nell\'interfaccia utente di sistema.',
 
-    'notifications' => 'Notification Preferences',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications' => 'Preferenze Di Notifica',
+    'notifications_desc' => 'Controlla le notifiche email che ricevi quando viene eseguita una determinata attività all\'interno del sistema.',
+    'notifications_opt_own_page_changes' => 'Notifica in caso di modifiche alle pagine che possiedo',
+    'notifications_opt_own_page_comments' => 'Notifica i commenti sulle pagine che possiedo',
+    'notifications_opt_comment_replies' => 'Notificare le risposte ai miei commenti',
+    'notifications_save' => 'Salva Preferenze',
+    'notifications_update_success' => 'Le preferenze di notifica sono state aggiornate!',
+    'notifications_watched' => 'Oggetti Osservati E Ignorati',
+    'notifications_watched_desc' => 'Di seguito sono riportati gli articoli a cui sono state applicate le preferenze di orologio personalizzate. Per aggiornare le preferenze, visualizzare l\'articolo e trovare le opzioni dell\'orologio nella barra laterale.',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' Gestisci i dettagli del tuo profilo utente, incluse la lingua preferita e le opzioni di autenticazione.',
 ];
