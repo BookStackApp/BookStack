@@ -45,6 +45,7 @@ class ChaptersApiTest extends TestCase
                     'value' => 'tagvalue',
                 ],
             ],
+            'priority' => 15,
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
@@ -137,6 +138,7 @@ class ChaptersApiTest extends TestCase
                     'value' => 'freshtagval',
                 ],
             ],
+            'priority'    => 15,
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$chapter->id}", $details);
