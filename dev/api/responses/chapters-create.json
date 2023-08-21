@@ -4,7 +4,7 @@
   "slug": "my-fantastic-new-chapter",
   "name": "My fantastic new chapter",
   "description": "This is a great new chapter that I've created via the API",
-  "priority": 6,
+  "priority": 15,
   "created_by": 1,
   "updated_by": 1,
   "owned_by": 1,
