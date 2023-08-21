@@ -2,9 +2,9 @@
   "book_id": 1,
   "name": "My fantastic updated chapter",
   "description": "This is an updated chapter that I've altered via the API",
+  "priority": 16,
   "tags": [
     {"name": "Category", "value": "Kinda Good Content"},
     {"name": "Rating", "value": "Medium"}
-  ],
-  "priority": 15
+  ]
 }

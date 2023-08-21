@@ -45,37 +45,7 @@ class ChaptersApiTest extends TestCase
                     'value' => 'tagvalue',
                 ],
             ],
-        ];
-
-        $resp = $this->postJson($this->baseEndpoint, $details);
-        $resp->assertStatus(200);
-        $newItem = Chapter::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
-        $resp->assertJson(array_merge($details, ['id' => $newItem->id, 'slug' => $newItem->slug]));
-        $this->assertDatabaseHas('tags', [
-            'entity_id'   => $newItem->id,
-            'entity_type' => $newItem->getMorphClass(),
-            'name'        => 'tagname',
-            'value'       => 'tagvalue',
-        ]);
-        $resp->assertJsonMissing(['pages' => []]);
-        $this->assertActivityExists('chapter_create', $newItem);
-    }
-
-    public function test_create_applies_correct_priority()
-    {
-        $this->actingAsApiEditor();
-        $book = $this->entities->book();
-        $details = [
-            'name'        => 'My API chapter',
-            'description' => 'A chapter created via the API',
-            'book_id'     => $book->id,
-            'tags'        => [
-                [
-                    'name'  => 'tagname',
-                    'value' => 'tagvalue',
-                ],
-            ],
-            'priority'     => 15,
+            'priority' => 15,
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);

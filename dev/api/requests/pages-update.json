@@ -2,9 +2,9 @@
 	"chapter_id": 1,
 	"name": "My updated API Page",
 	"html": "<p>my new API page - Updated</p>",
+	"priority": 16,
 	"tags": [
 		{"name": "Category", "value": "API Examples"},
 		{"name": "Rating", "value": "Alright"}
-	],
-	"priority": 15
+	]
 }

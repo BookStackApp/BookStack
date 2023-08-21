@@ -45,38 +45,6 @@ class PagesApiTest extends TestCase
                     'value' => 'tagvalue',
                 ],
             ],
-        ];
-
-        $resp = $this->postJson($this->baseEndpoint, $details);
-        unset($details['html']);
-        $resp->assertStatus(200);
-        $newItem = Page::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
-        $resp->assertJson(array_merge($details, ['id' => $newItem->id, 'slug' => $newItem->slug]));
-        $this->assertDatabaseHas('tags', [
-            'entity_id'   => $newItem->id,
-            'entity_type' => $newItem->getMorphClass(),
-            'name'        => 'tagname',
-            'value'       => 'tagvalue',
-        ]);
-        $resp->assertSeeText('My new page content');
-        $resp->assertJsonMissing(['book' => []]);
-        $this->assertActivityExists('page_create', $newItem);
-    }
-
-    public function test_create_applies_correct_priority()
-    {
-        $this->actingAsApiEditor();
-        $book = $this->entities->book();
-        $details = [
-            'name'    => 'My API page',
-            'book_id' => $book->id,
-            'html'    => '<p>My new page content</p>',
-            'tags'    => [
-                [
-                    'name'  => 'tagname',
-                    'value' => 'tagvalue',
-                ],
-            ],
             'priority' => 15,
         ];
 
