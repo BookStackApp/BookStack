@@ -1,17 +1,22 @@
 // Docs: https://www.diagrams.net/doc/faq/embed-mode
+import * as store from './store';
 
 let iFrame = null;
 let lastApprovedOrigin;
-let onInit; let
-    onSave;
+let onInit;
+let onSave;
+const saveBackupKey = 'last-drawing-save';
 
 function drawPostMessage(data) {
     iFrame.contentWindow.postMessage(JSON.stringify(data), lastApprovedOrigin);
 }
 
 function drawEventExport(message) {
+    store.set(saveBackupKey, message.data);
     if (onSave) {
-        onSave(message.data);
+        onSave(message.data).then(() => {
+            store.del(saveBackupKey);
+        });
     }
 }
 
@@ -64,9 +69,11 @@ function drawReceive(event) {
 
 /**
  * Show the draw.io editor.
+ * onSaveCallback must return a promise that resolves on successful save and errors on failure.
+ * onInitCallback must return a promise with the xml to load for the editor.
  * @param {String} drawioUrl
- * @param {Function} onInitCallback - Must return a promise with the xml to load for the editor.
- * @param {Function} onSaveCallback - Is called with the drawing data on save.
+ * @param {Function<Promise<String>>} onInitCallback
+ * @param {Function<Promise>} onSaveCallback - Is called with the drawing data on save.
  */
 export function show(drawioUrl, onInitCallback, onSaveCallback) {
     onInit = onInitCallback;
