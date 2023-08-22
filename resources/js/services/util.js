@@ -70,3 +70,14 @@ export function uniqueId() {
     const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     return (`${S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`);
 }
+
+/**
+ * Create a promise that resolves after the given time.
+ * @param {int} timeMs
+ * @returns {Promise}
+ */
+export function wait(timeMs) {
+    return new Promise(res => {
+        setTimeout(res, timeMs);
+    });
+}

@@ -1,4 +1,5 @@
 import * as DrawIO from '../services/drawio';
+import {wait} from '../services/util';
 
 let pageEditor = null;
 let currentNode = null;
@@ -57,24 +58,27 @@ async function updateContent(pngData) {
             });
         } catch (err) {
             handleUploadError(err);
+            throw new Error(`Failed to save image with error: ${err}`);
         }
         return;
     }
 
-    setTimeout(async () => {
-        pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
-        DrawIO.close();
-        try {
-            const img = await DrawIO.upload(pngData, options.pageId);
-            pageEditor.undoManager.transact(() => {
-                pageEditor.dom.setAttrib(id, 'src', img.url);
-                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
-            });
-        } catch (err) {
-            pageEditor.dom.remove(id);
-            handleUploadError(err);
-        }
-    }, 5);
+    await wait(5);
+
+    pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
+    DrawIO.close();
+
+    try {
+        const img = await DrawIO.upload(pngData, options.pageId);
+        pageEditor.undoManager.transact(() => {
+            pageEditor.dom.setAttrib(id, 'src', img.url);
+            pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
+        });
+    } catch (err) {
+        pageEditor.dom.remove(id);
+        handleUploadError(err);
+        throw new Error(`Failed to save image with error: ${err}`);
+    }
 }
 
 function drawingInit() {
