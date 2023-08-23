@@ -68,16 +68,41 @@ function drawReceive(event) {
 }
 
 /**
+ * Attempt to prompt and restore unsaved drawing content if existing.
+ * @returns {Promise<void>}
+ */
+async function attemptRestoreIfExists() {
+    const backupVal = await store.get(saveBackupKey);
+    const dialogEl = document.getElementById('unsaved-drawing-dialog');
+
+    if (!dialogEl) {
+        console.error('Missing expected unsaved-drawing dialog');
+    }
+
+    if (backupVal) {
+        /** @var {ConfirmDialog} */
+        const dialog = window.$components.firstOnElement(dialogEl, 'confirm-dialog');
+        const restore = await dialog.show();
+        if (restore) {
+            onInit = async () => backupVal;
+        }
+    }
+}
+
+/**
  * Show the draw.io editor.
  * onSaveCallback must return a promise that resolves on successful save and errors on failure.
  * onInitCallback must return a promise with the xml to load for the editor.
+ * Will attempt to provide an option to restore unsaved changes if found to exist.
  * @param {String} drawioUrl
  * @param {Function<Promise<String>>} onInitCallback
  * @param {Function<Promise>} onSaveCallback - Is called with the drawing data on save.
  */
-export function show(drawioUrl, onInitCallback, onSaveCallback) {
+export async function show(drawioUrl, onInitCallback, onSaveCallback) {
     onInit = onInitCallback;
     onSave = onSaveCallback;
+
+    await attemptRestoreIfExists();
 
     iFrame = document.createElement('iframe');
     iFrame.setAttribute('frameborder', '0');

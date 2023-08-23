@@ -69,4 +69,11 @@
             {{ trans('entities.pages_edit_delete_draft_confirm') }}
         </p>
     @endcomponent
+
+    {{--Saved Drawing--}}
+    @component('common.confirm-dialog', ['title' => trans('entities.pages_drawing_unsaved'), 'id' => 'unsaved-drawing-dialog'])
+        <p>
+            {{ trans('entities.pages_drawing_unsaved_confirm') }}
+        </p>
+    @endcomponent
 </div>
