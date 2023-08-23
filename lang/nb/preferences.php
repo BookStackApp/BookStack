@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => 'Innstillinger',
 
     'shortcuts' => 'Snarveier',
     'shortcuts_interface' => 'Grensesnitt hurtigtaster',
@@ -19,14 +19,14 @@ return [
     'shortcuts_update_success' => 'Snarvei innstillinger er oppdatert!',
     'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
 
-    'notifications' => 'Notification Preferences',
+    'notifications' => 'Innstillinger for varsling',
     'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
+    'notifications_opt_own_page_changes' => 'Varsle ved endringer til sider jeg eier',
+    'notifications_opt_own_page_comments' => 'Varsle om kommentarer på sider jeg eier',
+    'notifications_opt_comment_replies' => 'Varsle ved svar på mine kommentarer',
+    'notifications_save' => 'Lagre innstillinger',
+    'notifications_update_success' => 'Varslingsinnstillingene er oppdatert!',
+    'notifications_watched' => 'Overvåka & ignorerte elementer',
     'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
