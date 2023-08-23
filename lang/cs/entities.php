@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => 'Vložit kresbu',
     'pages_md_show_preview' => 'Zobrazit náhled',
     'pages_md_sync_scroll' => 'Synchronizovat náhled',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => 'Stránka není v kapitole',
     'pages_move' => 'Přesunout stránku',
     'pages_copy' => 'Kopírovat stránku',
