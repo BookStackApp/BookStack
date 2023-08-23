@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => '描画を追加',
     'pages_md_show_preview' => 'プレビューを表示',
     'pages_md_sync_scroll' => 'プレビューとスクロールを同期',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => 'チャプターが設定されていません',
     'pages_move' => 'ページを移動',
     'pages_copy' => 'ページをコピー',
