@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => 'Εισαγωγή Σχεδίου',
     'pages_md_show_preview' => 'Εμφάνιση προεπισκόπησης',
     'pages_md_sync_scroll' => 'Συγχρονισμός προεπισκόπησης',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => 'Η σελίδα δεν είναι σε κεφάλαιο',
     'pages_move' => 'Μετακίνηση Σελίδας',
     'pages_copy' => 'Αντιγραφή Σελίδας',
