@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => 'Rajz beillesztése',
     'pages_md_show_preview' => 'Show preview',
     'pages_md_sync_scroll' => 'Sync preview scroll',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => 'Az oldal nincs fejezetben',
     'pages_move' => 'Oldal áthelyezése',
     'pages_copy' => 'Oldal másolása',
