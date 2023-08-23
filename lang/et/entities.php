@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => 'Lisa joonis',
     'pages_md_show_preview' => 'Näita eelvaadet',
     'pages_md_sync_scroll' => 'Sünkrooni eelvaate kerimine',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => 'Leht ei kuulu peatüki alla',
     'pages_move' => 'Liiguta leht',
     'pages_copy' => 'Kopeeri leht',
