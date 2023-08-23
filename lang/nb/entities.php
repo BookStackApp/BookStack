@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => 'Sett inn tegning',
     'pages_md_show_preview' => 'Forhåndsvisning',
     'pages_md_sync_scroll' => 'Synkroniser forhåndsvisningsrulle',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => 'Siden tilhører ingen kapittel',
     'pages_move' => 'Flytt side',
     'pages_copy' => 'Kopiér side',
