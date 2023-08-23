@@ -1,1 +1,1 @@
-export { get, set, del } from 'idb-keyval';
+export {get, set, del} from 'idb-keyval';

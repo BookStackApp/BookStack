@@ -5,11 +5,11 @@
  * leading edge, instead of the trailing.
  * @attribution https://davidwalsh.name/javascript-debounce-function
  * @param {Function} func
- * @param {Number} wait
+ * @param {Number} waitMs
  * @param {Boolean} immediate
  * @returns {Function}
  */
-export function debounce(func, wait, immediate) {
+export function debounce(func, waitMs, immediate) {
     let timeout;
     return function debouncedWrapper(...args) {
         const context = this;
@@ -19,7 +19,7 @@ export function debounce(func, wait, immediate) {
         };
         const callNow = immediate && !timeout;
         clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+        timeout = setTimeout(later, waitMs);
         if (callNow) func.apply(context, args);
     };
 }
