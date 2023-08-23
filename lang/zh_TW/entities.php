@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => '插入繪圖',
     'pages_md_show_preview' => '顯示預覽',
     'pages_md_sync_scroll' => 'Sync preview scroll',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => '頁面不在章節中',
     'pages_move' => '移動頁面',
     'pages_copy' => '複製頁面',
