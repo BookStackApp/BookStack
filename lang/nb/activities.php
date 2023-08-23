@@ -60,7 +60,7 @@ return [
     'favourite_remove_notification' => '«:name» ble fjernet fra dine favoritter',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Overvåkingsinnstillingene ble oppdatert',
 
     // Auth
     'auth_login' => 'logget inn',
