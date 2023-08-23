@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => 'Inserir Desenho',
     'pages_md_show_preview' => 'Mostrar pré-visualização',
     'pages_md_sync_scroll' => 'Sincronizar pré-visualização',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => 'A página não está dentro de um capítulo',
     'pages_move' => 'Mover Página',
     'pages_copy' => 'Copiar Página',
