@@ -66,6 +66,15 @@ return [
     // Current host and source for the "DRAWIO" setting will be auto-appended to the sources configured.
     'iframe_sources' => env('ALLOWED_IFRAME_SOURCES', 'https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com'),
 
+    // A list of the sources/hostnames that can be reached by application SSR calls.
+    // This is used wherever users can provide URLs/hosts in-platform, like for webhooks.
+    // Host-specific functionality (usually controlled via other options) like auth
+    // or user avatars for example, won't use this list.
+    // Space seperated if multiple. Can use '*' as a wildcard.
+    // Values will be compared prefix-matched, case-insensitive, against called SSR urls.
+    // Defaults to allow all hosts.
+    'ssr_hosts' => env('ALLOWED_SSR_HOSTS', '*'),
+
     // Alter the precision of IP addresses stored by BookStack.
     // Integer value between 0 (IP hidden) to 4 (Full IP usage)
     'ip_address_precision' => env('IP_ADDRESS_PRECISION', 4),
