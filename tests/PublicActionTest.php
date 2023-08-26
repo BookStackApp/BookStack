@@ -207,4 +207,16 @@ class PublicActionTest extends TestCase
 
         $this->withHtml($resp)->assertLinkExists($page->getUrl('/edit'));
     }
+
+    public function test_public_user_cannot_view_or_update_their_profile()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $guest = $this->users->guest();
+
+        $resp = $this->get($guest->getEditUrl());
+        $this->assertPermissionError($resp);
+
+        $resp = $this->put($guest->getEditUrl(), ['name' => 'My new guest name']);
+        $this->assertPermissionError($resp);
+    }
 }
