@@ -41,7 +41,7 @@ class SsrUrlValidator
 
     protected function urlMatchesPattern($url, $pattern): bool
     {
-        $pattern = trim($pattern);
+        $pattern = rtrim(trim($pattern), '/');
         $url = trim($url);
 
         if (empty($pattern) || empty($url)) {
@@ -51,7 +51,7 @@ class SsrUrlValidator
         $quoted = preg_quote($pattern, '/');
         $regexPattern = str_replace('\*', '.*', $quoted);
 
-        return preg_match('/^' . $regexPattern . '.*$/i', $url);
+        return preg_match('/^' . $regexPattern . '($|\/.*$|#.*$)/i', $url);
     }
 
     /**
