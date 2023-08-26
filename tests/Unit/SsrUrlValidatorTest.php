@@ -25,6 +25,9 @@ class SsrUrlValidatorTest extends TestCase
             ['config' => 'https://*.example.com', 'url' => 'https://test.example.com', 'result' => true],
             ['config' => '*//example.com', 'url' => 'https://example.com', 'result' => true],
             ['config' => '*//example.com', 'url' => 'http://example.com', 'result' => true],
+            ['config' => '*//example.co', 'url' => 'http://example.co.uk', 'result' => false],
+            ['config' => '*//example.co/bookstack', 'url' => 'https://example.co/bookstack/a/path', 'result' => true],
+            ['config' => '*//example.co*', 'url' => 'https://example.co.uk/bookstack/a/path', 'result' => true],
             ['config' => 'https://example.com', 'url' => 'https://example.com/a/b/c?test=cat', 'result' => true],
             ['config' => 'https://example.com', 'url' => 'https://example.co.uk', 'result' => false],
 
