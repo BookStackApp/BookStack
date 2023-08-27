@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Rakenduse seadete haldamine',
     'role_export_content' => 'Sisu eksport',
     'role_editor_change' => 'Lehe redaktori muutmine',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Sisu õigused',
     'roles_system_warning' => 'Pane tähele, et ülalolevad kolm õigust võimaldavad kasutajal enda või teiste kasutajate õiguseid muuta. Määra nende õigustega roll ainult usaldusväärsetele kasutajatele.',
     'role_asset_desc' => 'Need load kontrollivad vaikimisi ligipääsu süsteemis olevale sisule. Raamatute, peatükkide ja lehtede õigused rakenduvad esmajärjekorras.',

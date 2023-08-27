@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Spravovať nastavenia aplikácie',
     'role_export_content' => 'Exportovať obsah',
     'role_editor_change' => 'Zmeniť editor stránky',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Oprávnenia majetku',
     'roles_system_warning' => 'Uvedomte si, že prístup ku ktorémukoľvek z vyššie uvedených troch povolení môže používateľovi umožniť zmeniť svoje vlastné privilégiá alebo privilégiá ostatných v systéme. Roly s týmito povoleniami priraďujte iba dôveryhodným používateľom.',
     'role_asset_desc' => 'Tieto oprávnenia regulujú prednastavený prístup k zdroju v systéme. Oprávnenia pre knihy, kapitoly a stránky majú vyššiu prioritu.',

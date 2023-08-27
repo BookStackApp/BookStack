@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => '管理應用程式設定',
     'role_export_content' => '匯出內容',
     'role_editor_change' => '重設頁面編輯器',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => '資源權限',
     'roles_system_warning' => '請注意，有上述三項權限中的任一項的使用者都可以更改自己或系統中其他人的權限。有這些權限的角色只應分配給受信任的使用者。',
     'role_asset_desc' => '對系統內資源的預設權限將由這裡的權限控制。若有單獨設定在書本、章節和頁面上的權限，將會覆寫這裡的權限設定。',

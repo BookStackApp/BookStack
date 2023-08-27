@@ -42,6 +42,7 @@ return [
     'remove' => 'Usuń',
     'add' => 'Dodaj',
     'configure' => 'Konfiguruj',
+    'manage' => 'Manage',
     'fullscreen' => 'Pełny ekran',
     'favourite' => 'Ulubione',
     'unfavourite' => 'Usuń z ulubionych',

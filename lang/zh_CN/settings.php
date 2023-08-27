@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => '管理 App 设置',
     'role_export_content' => '导出内容',
     'role_editor_change' => '更改页面编辑器',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => '资源许可',
     'roles_system_warning' => '请注意，拥有以上三个权限中的任何一个都会允许用户更改自己的权限或系统中其他人的权限。 请只将拥有这些权限的角色分配给你信任的用户。',
     'role_asset_desc' => '对系统内资源的默认访问许可将由这些权限控制。单独设置在书籍、章节和页面上的权限将覆盖这里的权限设定。',

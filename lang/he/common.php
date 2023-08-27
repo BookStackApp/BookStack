@@ -42,6 +42,7 @@ return [
     'remove' => 'הסר',
     'add' => 'הוסף',
     'configure' => 'הגדרות',
+    'manage' => 'Manage',
     'fullscreen' => 'מסך מלא',
     'favourite' => 'מועדף',
     'unfavourite' => 'בטל מועדף',

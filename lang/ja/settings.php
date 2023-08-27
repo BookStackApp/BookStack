@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'アプリケーション設定の管理',
     'role_export_content' => 'コンテンツのエクスポート',
     'role_editor_change' => 'ページエディタの変更',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'アセット権限',
     'roles_system_warning' => '上記の3つの権限のいずれかを付与することは、ユーザーが自分の特権またはシステム内の他のユーザーの特権を変更できる可能性があることに注意してください。これらの権限は信頼できるユーザーにのみ割り当ててください。',
     'role_asset_desc' => '各アセットに対するデフォルトの権限を設定します。ここで設定した権限が優先されます。',

@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Hantera appinställningar',
     'role_export_content' => 'Exportera innehåll',
     'role_editor_change' => 'Ändra sidredigerare',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Tillgång till innehåll',
     'roles_system_warning' => 'Var medveten om att åtkomst till någon av ovanstående tre behörigheter kan tillåta en användare att ändra sina egna rättigheter eller andras rättigheter i systemet. Tilldela endast roller med dessa behörigheter till betrodda användare.',
     'role_asset_desc' => 'Det här är standardinställningarna för allt innehåll i systemet. Eventuella anpassade rättigheter på böcker, kapitel och sidor skriver över dessa inställningar.',

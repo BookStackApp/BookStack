@@ -42,6 +42,7 @@ return [
     'remove' => 'Ezabatu',
     'add' => 'Gehitu',
     'configure' => 'Konfiguratu',
+    'manage' => 'Manage',
     'fullscreen' => 'Pantaila osoa',
     'favourite' => 'Gogokoa',
     'unfavourite' => 'Desatsegina',

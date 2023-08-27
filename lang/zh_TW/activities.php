@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" 已加入到你的最愛',
     'favourite_remove_notification' => '":name" 已從你的最愛移除',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
     'auth_register' => 'registered as new user',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => '評論',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => '更新權限',
 ];

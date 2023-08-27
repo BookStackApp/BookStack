@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Отмена',
-    'close' => 'Close',
+    'close' => 'Закрыть',
     'confirm' => 'Применить',
     'back' => 'Назад',
     'save' => 'Сохранить',
@@ -42,6 +42,7 @@ return [
     'remove' => 'Удалить',
     'add' => 'Добавить',
     'configure' => 'Настройка',
+    'manage' => 'Manage',
     'fullscreen' => 'На весь экран',
     'favourite' => 'Избранное',
     'unfavourite' => 'Убрать из избранного',

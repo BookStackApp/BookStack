@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'restaurou a página',
     'page_restore_notification'   => 'Página restaurada com sucesso',
     'page_move'                   => 'moveu a página',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Página movida com sucesso',
 
     // Chapters
     'chapter_create'              => 'criou o capítulo',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'excluiu o capítulo',
     'chapter_delete_notification' => 'Capítulo excluída com sucesso',
     'chapter_move'                => 'moveu o capítulo',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Capítulo excluído com sucesso',
 
     // Books
     'book_create'                 => 'criou o livro',
@@ -50,28 +50,31 @@ return [
     'bookshelf_delete_notification'    => 'Prateleira excluída com sucesso',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'revisão restaurada',
+    'revision_delete' => 'revisão excluída',
+    'revision_delete_notification' => 'Revisão excluída com sucesso',
 
     // Favourites
     'favourite_add_notification' => '":name" foi adicionada aos seus favoritos',
     'favourite_remove_notification' => '":name" foi removida dos seus favoritos',
 
+    // Watching
+    'watch_update_level_notification' => 'Preferências de Observação atualizadas com sucesso',
+
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'conectado',
+    'auth_register' => 'registrado como novo usuário',
+    'auth_password_reset_request' => 'redefinir senha do usuário solicitado',
+    'auth_password_reset_update' => 'redefinir senha do usuário',
+    'mfa_setup_method' => 'método MFA configurado',
     'mfa_setup_method_notification' => 'Método de multi-fatores configurado com sucesso',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'Método MFA removido',
     'mfa_remove_method_notification' => 'Método de multi-fatores removido com sucesso',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'configurações atualizadas',
+    'settings_update_notification' => 'Configurações atualizadas com sucesso',
+    'maintenance_action_run' => 'Ação de manutenção executada',
 
     // Webhooks
     'webhook_create' => 'webhook criado',
@@ -82,35 +85,40 @@ return [
     'webhook_delete_notification' => 'Webhook excluido com sucesso',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'usuário criado',
+    'user_create_notification' => 'Usuário criado com sucesso',
+    'user_update' => 'usuário atualizado',
     'user_update_notification' => 'Usuário atualizado com sucesso',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'usuário excluído',
     'user_delete_notification' => 'Usuário removido com sucesso',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'token de api criado',
+    'api_token_create_notification' => 'Token de API criado com sucesso',
+    'api_token_update' => 'token de API atualizado',
+    'api_token_update_notification' => 'Token de API atualizado com sucesso',
+    'api_token_delete' => 'token de api excluído',
+    'api_token_delete_notification' => 'Token de API excluído com sucesso',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'função criada',
     'role_create_notification' => 'Perfil criado com sucesso',
-    'role_update' => 'updated role',
+    'role_update' => 'função atualizada',
     'role_update_notification' => 'Perfil atualizado com sucesso',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'Excluir papel',
     'role_delete_notification' => 'Perfil excluído com sucesso',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'lixeira esvaziada',
+    'recycle_bin_restore' => 'restaurado da lixeira',
+    'recycle_bin_destroy' => 'removido da lixeira',
+
+    // Comments
+    'commented_on'                => 'comentou em',
+    'comment_create'              => 'Adicionou comentário',
+    'comment_update'              => 'Atualizar descrição',
+    'comment_delete'              => 'Comentário deletado',
 
     // Other
-    'commented_on'                => 'comentou em',
     'permissions_update'          => 'atualizou permissões',
 ];

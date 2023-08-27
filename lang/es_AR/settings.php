@@ -164,6 +164,7 @@ return [
     'role_manage_settings' => 'Gestionar ajustes de activos',
     'role_export_content' => 'Exportar contenido',
     'role_editor_change' => 'Cambiar editor de página',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Permisos de activos',
     'roles_system_warning' => 'Tenga en cuenta que el acceso a cualquiera de los tres permisos anteriores puede permitir a un usuario modificar sus propios privilegios o los privilegios de otros usuarios en el sistema. Asignar roles con estos permisos sólo a usuarios de comfianza.',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los activos del sistema. Permisos definidos en Libros, Capítulos y Páginas ignorarán estos permisos.',

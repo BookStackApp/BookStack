@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Quản lý cài đặt của ứng dụng',
     'role_export_content' => 'Export content',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Quyền tài sản (asset)',
     'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Các quyền này điều khiển truy cập mặc định tới tài sản (asset) nằm trong hệ thống. Quyền tại Sách, Chường và Trang se ghi đè các quyền này.',

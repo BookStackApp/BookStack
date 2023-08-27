@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" lisati su lemmikute hulka',
     'favourite_remove_notification' => '":name" eemaldati su lemmikute hulgast',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logis sisse',
     'auth_register' => 'registreerus uue kasutajana',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'taastas prügikastist',
     'recycle_bin_destroy' => 'eemaldas prügikastist',
 
-    // Other
+    // Comments
     'commented_on'                => 'kommenteeris lehte',
+    'comment_create'              => 'lisas kommentaari',
+    'comment_update'              => 'muutis kommentaari',
+    'comment_delete'              => 'kustutas kommentaari',
+
+    // Other
     'permissions_update'          => 'muutis õiguseid',
 ];

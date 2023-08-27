@@ -42,6 +42,7 @@ return [
     'remove' => 'Odebrat',
     'add' => 'Přidat',
     'configure' => 'Nastavit',
+    'manage' => 'Manage',
     'fullscreen' => 'Celá obrazovka',
     'favourite' => 'Přidat do oblíbených',
     'unfavourite' => 'Odebrat z oblíbených',

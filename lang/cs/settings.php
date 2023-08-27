@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Správa nastavení aplikace',
     'role_export_content' => 'Exportovat obsah',
     'role_editor_change' => 'Změnit editor stránek',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Obsahová oprávnění',
     'roles_system_warning' => 'Berte na vědomí, že přístup k některému ze tří výše uvedených oprávnění může uživateli umožnit změnit svá vlastní oprávnění nebo oprávnění ostatních uživatelů v systému. Přiřazujte role s těmito oprávněními pouze důvěryhodným uživatelům.',
     'role_asset_desc' => 'Tato oprávnění řídí přístup k obsahu napříč systémem. Specifická oprávnění na knihách, kapitolách a stránkách převáží tato nastavení.',
