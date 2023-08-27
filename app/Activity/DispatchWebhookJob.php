@@ -8,6 +8,7 @@ use BookStack\Activity\Tools\WebhookFormatter;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
+use BookStack\Util\SsrUrlValidator;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -53,6 +54,8 @@ class DispatchWebhookJob implements ShouldQueue
         $lastError = null;
 
         try {
+            (new SsrUrlValidator())->ensureAllowed($this->webhook->endpoint);
+
             $response = Http::asJson()
                 ->withOptions(['allow_redirects' => ['strict' => true]])
                 ->timeout($this->webhook->timeout)

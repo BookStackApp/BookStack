@@ -101,6 +101,20 @@ class WebhookCallTest extends TestCase
         $this->assertNotNull($webhook->last_errored_at);
     }
 
+    public function test_webhook_uses_ssr_hosts_option_if_set()
+    {
+        config()->set('app.ssr_hosts', 'https://*.example.com');
+        $http = Http::fake();
+
+        $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.co.uk'], ['all']);
+        $this->runEvent(ActivityType::ROLE_CREATE);
+        $http->assertNothingSent();
+
+        $webhook->refresh();
+        $this->assertEquals('The URL does not match the configured allowed SSR hosts', $webhook->last_error);
+        $this->assertNotNull($webhook->last_errored_at);
+    }
+
     public function test_webhook_call_data_format()
     {
         Http::fake([
