@@ -42,6 +42,7 @@ return [
     'remove' => 'Αφαίρεση',
     'add' => 'Προσθήκη',
     'configure' => 'Διαμόρφωση',
+    'manage' => 'Manage',
     'fullscreen' => 'Πλήρης οθόνη',
     'favourite' => 'Αγαπημένα',
     'unfavourite' => 'Αφαίρεση από Αγαπημένα',

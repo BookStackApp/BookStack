@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Administrer app-indstillinger',
     'role_export_content' => 'Eksporter indhold',
     'role_editor_change' => 'Skift side editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Tilladelser for medier og "assets"',
     'roles_system_warning' => 'Vær opmærksom på, at adgang til alle af de ovennævnte tre tilladelser, kan give en bruger mulighed for at ændre deres egne brugerrettigheder eller brugerrettigheder for andre i systemet. Tildel kun roller med disse tilladelser til betroede brugere.',
     'role_asset_desc' => 'Disse tilladelser kontrollerer standardadgang til medier og "assets" i systemet. Tilladelser til bøger, kapitler og sider tilsidesætter disse tilladelser.',

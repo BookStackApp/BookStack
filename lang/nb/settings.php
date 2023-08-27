@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Behandle applikasjonsinnstillinger',
     'role_export_content' => 'Eksporter innhold',
     'role_editor_change' => 'Endre sideredigering',
+    'role_notifications' => 'Motta og administrere varslinger',
     'role_asset' => 'Eiendomstillatelser',
     'roles_system_warning' => 'Vær oppmerksom på at tilgang til noen av de ovennevnte tre tillatelsene kan tillate en bruker å endre sine egne rettigheter eller rettighetene til andre i systemet. Bare tildel roller med disse tillatelsene til pålitelige brukere.',
     'role_asset_desc' => 'Disse tillatelsene kontrollerer standard tilgang til eiendelene i systemet. Tillatelser til bøker, kapitler og sider overstyrer disse tillatelsene.',

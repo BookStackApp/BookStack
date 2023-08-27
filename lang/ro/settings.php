@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Gestionează setările aplicației',
     'role_export_content' => 'Exportă conținut',
     'role_editor_change' => 'Schimbă editorul de pagină',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Permisiuni active',
     'roles_system_warning' => 'Fi conștient de faptul că accesul la oricare dintre cele trei permisiuni de mai sus poate permite unui utilizator să își modifice propriile privilegii sau privilegiile altor persoane din sistem. Atribuie doar roluri cu aceste permisiuni utilizatorilor de încredere.',
     'role_asset_desc' => 'Aceste permisiuni controlează accesul implicit la activele din sistem. Permisiunile pe Cărți, Capitole și Pagini vor suprascrie aceste permisiuni.',

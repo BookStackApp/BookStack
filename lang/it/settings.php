@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Gestire impostazioni app',
     'role_export_content' => 'Esporta contenuto',
     'role_editor_change' => 'Cambia editor di pagina',
+    'role_notifications' => 'Ricevi & gestisci le notifiche',
     'role_asset' => 'Permessi Entità',
     'roles_system_warning' => 'Siate consapevoli che l\'accesso a uno dei tre permessi qui sopra, può consentire a un utente di modificare i propri privilegi o i privilegi di altri nel sistema. Assegna ruoli con questi permessi solo ad utenti fidati.',
     'role_asset_desc' => 'Questi permessi controllano l\'accesso di default alle entità. I permessi nei Libri, Capitoli e Pagine sovrascriveranno questi.',

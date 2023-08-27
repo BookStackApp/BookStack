@@ -8,35 +8,35 @@ return [
     // Pages
     'page_create'                 => 'erstellt Seite',
     'page_create_notification'    => 'Seite erfolgreich erstellt',
-    'page_update'                 => 'aktualisiert Seite',
+    'page_update'                 => 'Seite aktualisiert',
     'page_update_notification'    => 'Seite erfolgreich aktualisiert',
-    'page_delete'                 => 'löscht Seite',
+    'page_delete'                 => 'Seite gelöscht',
     'page_delete_notification'    => 'Seite erfolgreich gelöscht',
-    'page_restore'                => 'stellt Seite wieder her',
+    'page_restore'                => 'Seite wiederhergestellt',
     'page_restore_notification'   => 'Seite erfolgreich wiederhergestellt',
-    'page_move'                   => 'verschiebt Seite',
+    'page_move'                   => 'Seite verschoben',
     'page_move_notification'      => 'Seite erfolgreich verschoben',
 
     // Chapters
-    'chapter_create'              => 'erstellt Kapitel',
+    'chapter_create'              => 'Kapitel erstellt',
     'chapter_create_notification' => 'Kapitel erfolgreich erstellt',
-    'chapter_update'              => 'aktualisiert Kapitel',
+    'chapter_update'              => 'Kapitel aktualisiert',
     'chapter_update_notification' => 'Kapitel erfolgreich aktualisiert',
-    'chapter_delete'              => 'löscht Kapitel',
+    'chapter_delete'              => 'Kapitel gelöscht',
     'chapter_delete_notification' => 'Kapitel erfolgreich gelöscht',
-    'chapter_move'                => 'verschiebt Kapitel',
+    'chapter_move'                => 'Kapitel verschoben',
     'chapter_move_notification' => 'Kapitel erfolgreich verschoben',
 
     // Books
-    'book_create'                 => 'erstellt Buch',
+    'book_create'                 => 'Buch erstellt',
     'book_create_notification'    => 'Buch erfolgreich erstellt',
     'book_create_from_chapter'              => 'Kapitel zu Buch umgewandelt',
     'book_create_from_chapter_notification' => 'Kapitel erfolgreich in ein Buch umgewandelt',
-    'book_update'                 => 'aktualisiert Buch',
+    'book_update'                 => 'Buch aktualisiert',
     'book_update_notification'    => 'Buch erfolgreich aktualisiert',
-    'book_delete'                 => 'löscht Buch',
+    'book_delete'                 => 'Buch gelöscht',
     'book_delete_notification'    => 'Buch erfolgreich gelöscht',
-    'book_sort'                   => 'sortiert Buch',
+    'book_sort'                   => 'Buch sortiert',
     'book_sort_notification'      => 'Buch erfolgreich umsortiert',
 
     // Bookshelves
@@ -50,19 +50,22 @@ return [
     'bookshelf_delete_notification'    => 'Regal erfolgreich gelöscht',
 
     // Revisions
-    'revision_restore' => 'stellte Revision wieder her:',
-    'revision_delete' => 'löschte Revision',
+    'revision_restore' => 'Revision wiederhergestellt',
+    'revision_delete' => 'Revision gelöscht',
     'revision_delete_notification' => 'Revision erfolgreich gelöscht',
 
     // Favourites
     'favourite_add_notification' => '":name" wurde zu deinen Favoriten hinzugefügt',
     'favourite_remove_notification' => '":name" wurde aus deinen Favoriten entfernt',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'hat sich eingeloggt',
     'auth_register' => 'hat sich als neuer Benutzer registriert',
     'auth_password_reset_request' => 'hat eine Rücksetzung des Benutzerpassworts beantragt',
-    'auth_password_reset_update' => 'hat Benutzerpasswort zurückgesetzt',
+    'auth_password_reset_update' => 'Benutzerpasswort zurückgesetzt',
     'mfa_setup_method' => 'hat MFA-Methode konfiguriert',
     'mfa_setup_method_notification' => 'Multi-Faktor-Methode erfolgreich konfiguriert',
     'mfa_remove_method' => 'hat MFA-Methode entfernt',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'aus dem Papierkorb wiederhergestellt',
     'recycle_bin_destroy' => 'aus dem Papierkorb gelöscht',
 
-    // Other
+    // Comments
     'commented_on'                => 'kommentiert',
+    'comment_create'              => 'Kommentar hinzugefügt',
+    'comment_update'              => 'Kommentar aktualisiert',
+    'comment_delete'              => 'Kommentar gelöscht',
+
+    // Other
     'permissions_update'          => 'aktualisierte Berechtigungen',
 ];

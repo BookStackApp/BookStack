@@ -58,7 +58,7 @@ return [
 
     // Pages
     'page_draft_autosave_fail' => 'Kunne ikke lagre utkastet, forsikre deg om at du er tilkoblet tjeneren (Har du nettilgang?)',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Kunne ikke slette sideutkast og hente gjeldende side lagret innhold',
     'page_custom_home_deletion' => 'Kan ikke slette en side som er satt som forside.',
 
     // Entities

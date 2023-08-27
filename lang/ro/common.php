@@ -42,6 +42,7 @@ return [
     'remove' => 'Elimină',
     'add' => 'Adaugă',
     'configure' => 'Configurează',
+    'manage' => 'Manage',
     'fullscreen' => 'Ecran complet',
     'favourite' => 'Adaugă la favorite',
     'unfavourite' => 'Șterge de la favorite',
