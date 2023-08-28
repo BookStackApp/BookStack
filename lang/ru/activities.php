@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" удалено из избранного',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Настройки просмотра успешно обновлены',
 
     // Auth
     'auth_login' => 'вошёл',
