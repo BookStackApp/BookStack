@@ -42,7 +42,7 @@ return [
     'remove' => 'Удалить',
     'add' => 'Добавить',
     'configure' => 'Настройка',
-    'manage' => 'Manage',
+    'manage' => 'Управлять',
     'fullscreen' => 'На весь экран',
     'favourite' => 'Избранное',
     'unfavourite' => 'Убрать из избранного',
