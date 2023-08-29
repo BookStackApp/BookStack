@@ -93,8 +93,22 @@
                             </a>
                         </li>
                         <li>
+<?php
+// OIDC Logout Feature: Use /oidc/logout if authentication method is oidc.
+if (config('auth.method') === 'oidc')  {
+?>
+                            <form action="/oidc/logout"
+                                  method="get">
+<?php
+// OIDC Logout Feature: Use /oidc/logout if authentication method is oidc.
+} else {
+?>
                             <form action="{{ url(config('auth.method') === 'saml2' ? '/saml2/logout' : '/logout') }}"
                                   method="post">
+<?php
+// OIDC Logout Feature: Use /oidc/logout if authentication method is oidc.
+}
+?>
                                 {{ csrf_field() }}
                                 <button class="icon-item" data-shortcut="logout">
                                     @icon('logout')
