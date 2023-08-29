@@ -301,7 +301,7 @@ class OidcService
     public function logout() {
 
         $config = $this->config();
-        $app_url = env('APP_URL', null);
+        $app_url = env('APP_URL', '');
         $end_session_endpoint = $config["end_session_endpoint"];
 
         $oidctoken = session()->get("oidctoken");
