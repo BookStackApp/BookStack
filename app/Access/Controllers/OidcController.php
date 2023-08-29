@@ -63,4 +63,18 @@ class OidcController extends Controller
 
         return redirect()->intended();
     }
+
+    /**
+     * OIDC Logout Feature: Start the authorization logout flow via OIDC.
+     */
+    public function logout()
+    {
+        try {
+            return $this->oidcService->logout();
+        } catch (OidcException $exception) {
+            $this->showErrorNotification($exception->getMessage());
+            return redirect('/logout');
+        }
+    }
+
 }

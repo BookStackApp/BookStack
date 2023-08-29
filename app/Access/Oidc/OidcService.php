@@ -216,6 +216,12 @@ class OidcService
             $settings->keys,
         );
 
+        // OIDC Logout Feature: Temporarily save token in session 
+        $access_token_for_logout = $idTokenText;
+        session()->put("oidctoken", $access_token_for_logout);
+
+
+
         $returnClaims = Theme::dispatch(ThemeEvents::OIDC_ID_TOKEN_PRE_VALIDATE, $idToken->getAllClaims(), [
             'access_token' => $accessToken->getToken(),
             'expires_in' => $accessToken->getExpires(),
@@ -283,4 +289,37 @@ class OidcService
     {
         return $this->config()['user_to_groups'] !== false;
     }
+
+
+    /**
+     * OIDC Logout Feature: Initiate a logout flow.
+     *
+     * @throws OidcException
+     *
+     * @return string
+     */
+    public function logout() {
+
+        $config = $this->config();
+        $app_url = env('APP_URL', null);
+        $end_session_endpoint = $config["end_session_endpoint"];
+
+        $oidctoken = session()->get("oidctoken");
+        session()->invalidate();
+
+        if (str_contains($app_url, 'https://')) { 
+             $protocol = 'https://';
+        } else {
+             $protocol = 'http://';
+        }
+
+
+
+        return redirect($end_session_endpoint.'?id_token_hint='.$oidctoken."&post_logout_redirect_uri=".$protocol.$_SERVER['HTTP_HOST']."/");
+
+
+    }
+
+
+
 }
