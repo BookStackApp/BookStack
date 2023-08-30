@@ -42,6 +42,7 @@ return [
     'remove' => 'Kaldır',
     'add' => 'Ekle',
     'configure' => 'Yapılandır',
+    'manage' => 'Manage',
     'fullscreen' => 'Tam Ekran',
     'favourite' => 'Favoriye ekle',
     'unfavourite' => 'Favorilerden çıkar',

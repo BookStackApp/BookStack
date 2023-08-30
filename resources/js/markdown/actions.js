@@ -82,18 +82,20 @@ export class Actions {
 
         const selectionRange = this.#getSelectionRange();
 
-        DrawIO.show(url, () => Promise.resolve(''), pngData => {
+        DrawIO.show(url, () => Promise.resolve(''), async pngData => {
             const data = {
                 image: pngData,
                 uploaded_to: Number(this.editor.config.pageId),
             };
 
-            window.$http.post('/images/drawio', data).then(resp => {
+            try {
+                const resp = await window.$http.post('/images/drawio', data);
                 this.#insertDrawing(resp.data, selectionRange);
                 DrawIO.close();
-            }).catch(err => {
+            } catch (err) {
                 this.handleDrawingUploadError(err);
-            });
+                throw new Error(`Failed to save image with error: ${err}`);
+            }
         });
     }
 
@@ -112,13 +114,14 @@ export class Actions {
         const selectionRange = this.#getSelectionRange();
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
-        DrawIO.show(drawioUrl, () => DrawIO.load(drawingId), pngData => {
+        DrawIO.show(drawioUrl, () => DrawIO.load(drawingId), async pngData => {
             const data = {
                 image: pngData,
                 uploaded_to: Number(this.editor.config.pageId),
             };
 
-            window.$http.post('/images/drawio', data).then(resp => {
+            try {
+                const resp = await window.$http.post('/images/drawio', data);
                 const newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
                 const newContent = this.#getText().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
@@ -128,9 +131,10 @@ export class Actions {
                 }).join('\n');
                 this.#setText(newContent, selectionRange);
                 DrawIO.close();
-            }).catch(err => {
+            } catch (err) {
                 this.handleDrawingUploadError(err);
-            });
+                throw new Error(`Failed to save image with error: ${err}`);
+            }
         });
     }
 

@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '".ime" će biti dodano u tvoje favorite',
     'favourite_remove_notification' => '".ime" je uspješno maknuta iz tvojih favorita',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'prijavljen',
     'auth_register' => 'registriran kao novi korisnik',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'reciklirano iz koša za smeće',
     'recycle_bin_destroy' => 'uklonjeno iz koša za smeće',
 
-    // Other
+    // Comments
     'commented_on'                => 'komentirano',
+    'comment_create'              => 'dodani komentar',
+    'comment_update'              => 'ažurirani komentar',
+    'comment_delete'              => 'obrisani komentar',
+
+    // Other
     'permissions_update'          => 'ažurirana dopuštenja',
 ];

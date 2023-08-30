@@ -42,6 +42,7 @@ return [
     'remove' => 'إزالة',
     'add' => 'إضافة',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'شاشة كاملة',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',

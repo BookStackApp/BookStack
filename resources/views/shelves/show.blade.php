@@ -79,7 +79,7 @@
     <div id="details" class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
-            @include('entities.meta', ['entity' => $shelf])
+            @include('entities.meta', ['entity' => $shelf, 'watchOptions' => null])
             @if($shelf->hasPermissions())
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $shelf))

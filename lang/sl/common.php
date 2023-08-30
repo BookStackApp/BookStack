@@ -42,6 +42,7 @@ return [
     'remove' => 'Odstrani',
     'add' => 'Dodaj',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'Celozaslonski način',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',

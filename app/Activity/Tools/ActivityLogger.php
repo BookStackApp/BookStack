@@ -6,6 +6,7 @@ use BookStack\Activity\DispatchWebhookJob;
 use BookStack\Activity\Models\Activity;
 use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Models\Webhook;
+use BookStack\Activity\Notifications\NotificationManager;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
@@ -14,12 +15,16 @@ use Illuminate\Support\Facades\Log;
 
 class ActivityLogger
 {
+    public function __construct(
+        protected NotificationManager $notifications
+    ) {
+        $this->notifications->loadDefaultHandlers();
+    }
+
     /**
      * Add a generic activity event to the database.
-     *
-     * @param string|Loggable $detail
      */
-    public function add(string $type, $detail = '')
+    public function add(string $type, string|Loggable $detail = ''): void
     {
         $detailToStore = ($detail instanceof Loggable) ? $detail->logDescriptor() : $detail;
 
@@ -35,6 +40,7 @@ class ActivityLogger
 
         $this->setNotification($type);
         $this->dispatchWebhooks($type, $detail);
+        $this->notifications->handle($activity, $detail, user());
         Theme::dispatch(ThemeEvents::ACTIVITY_LOGGED, $type, $detail);
     }
 
@@ -55,7 +61,7 @@ class ActivityLogger
      * and instead uses the 'extra' field with the entities name.
      * Used when an entity is deleted.
      */
-    public function removeEntity(Entity $entity)
+    public function removeEntity(Entity $entity): void
     {
         $entity->activity()->update([
             'detail'       => $entity->name,
@@ -76,10 +82,7 @@ class ActivityLogger
         }
     }
 
-    /**
-     * @param string|Loggable $detail
-     */
-    protected function dispatchWebhooks(string $type, $detail): void
+    protected function dispatchWebhooks(string $type, string|Loggable $detail): void
     {
         $webhooks = Webhook::query()
             ->whereHas('trackedEvents', function (Builder $query) use ($type) {
@@ -98,7 +101,7 @@ class ActivityLogger
      * Log out a failed login attempt, Providing the given username
      * as part of the message if the '%u' string is used.
      */
-    public function logFailedLogin(string $username)
+    public function logFailedLogin(string $username): void
     {
         $message = config('logging.failed_login.message');
         if (!$message) {

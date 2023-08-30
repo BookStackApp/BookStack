@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Upravljanje postavkama aplikacija',
     'role_export_content' => 'Izvoz sadržaja',
     'role_editor_change' => 'Promijeni uređivač stranica',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Upravljanje vlasništvom',
     'roles_system_warning' => 'Uzmite u obzir da pristup bilo kojem od ovih dopuštenja dozvoljavate korisniku upravljanje dopuštenjima ostalih u sustavu. Ova dopuštenja dodijelite pouzdanim korisnicima.',
     'role_asset_desc' => 'Ova dopuštenja kontroliraju zadane pristupe. Dopuštenja za knjige, poglavlja i stranice ih poništavaju.',

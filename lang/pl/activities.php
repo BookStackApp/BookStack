@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" został dodany do Twoich ulubionych',
     'favourite_remove_notification' => '":name" został usunięty z ulubionych',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'zalogował się',
     'auth_register' => 'zarejestrowany jako nowy użytkownik',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'przywrócił z kosza',
     'recycle_bin_destroy' => 'usunął z kosza',
 
-    // Other
+    // Comments
     'commented_on'                => 'skomentował',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'zaktualizował uprawnienia',
 ];

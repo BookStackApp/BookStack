@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" is toegevoegd aan je favorieten',
     'favourite_remove_notification' => '":name" is verwijderd uit je favorieten',
 
+    // Watching
+    'watch_update_level_notification' => 'Kijkvoorkeuren succesvol aangepast',
+
     // Auth
     'auth_login' => 'heeft ingelogd',
     'auth_register' => 'geregistreerd als nieuwe gebruiker',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'is van prullenbak hersteld',
     'recycle_bin_destroy' => 'is van prullenbak verwijderd',
 
-    // Other
+    // Comments
     'commented_on'                => 'reageerde op',
+    'comment_create'              => 'heeft opmerking toegevoegd',
+    'comment_update'              => 'heeft opmerking aangepast',
+    'comment_delete'              => 'heeft opmerking verwijderd',
+
+    // Other
     'permissions_update'          => 'wijzigde machtigingen',
 ];
