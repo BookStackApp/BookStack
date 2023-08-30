@@ -42,7 +42,7 @@ return [
     'remove' => 'Remover',
     'add' => 'Agregar',
     'configure' => 'Configurar',
-    'manage' => 'Manage',
+    'manage' => 'Gestionar',
     'fullscreen' => 'Pantalla completa',
     'favourite' => 'Favoritos',
     'unfavourite' => 'Eliminar de favoritos',
