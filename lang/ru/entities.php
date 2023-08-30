@@ -421,7 +421,7 @@ return [
     'watch_desc_comments' => 'Notify upon all new pages, page changes and new comments.',
     'watch_desc_comments_page' => 'Notify upon page changes and new comments.',
     'watch_change_default' => 'Change default notification preferences',
-    'watch_detail_ignore' => 'Ignoring notifications',
+    'watch_detail_ignore' => 'Игнорирование уведомлений',
     'watch_detail_new' => 'Watching for new pages',
     'watch_detail_updates' => 'Watching new pages and updates',
     'watch_detail_comments' => 'Watching new pages, updates & comments',

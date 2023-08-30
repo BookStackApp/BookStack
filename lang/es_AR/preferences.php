@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => 'Preferencias',
 
     'shortcuts' => 'Atajos',
     'shortcuts_interface' => 'Atajos del Teclado para la Interfaz',
@@ -17,17 +17,17 @@ return [
     'shortcuts_save' => 'Guardar atajos',
     'shortcuts_overlay_desc' => 'Nota: Cuando se activan los atajos de teclado se puede visualizar la ayuda presionando la tecla "?", que resaltará los atajos disponibles para las acciones visibles actualmente en la pantalla.',
     'shortcuts_update_success' => '¡Se actualizaron las preferencias de atajos de teclado!',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => 'Gestione los atajos de teclado que puede utilizar para navegar por la interfaz de usuario del sistema.',
 
-    'notifications' => 'Notification Preferences',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications' => 'Preferencias de notificaciones',
+    'notifications_desc' => 'Controle las notificaciones por correo electrónico que recibe cuando se realiza cierta actividad dentro del sistema.',
+    'notifications_opt_own_page_changes' => 'Notificar sobre los cambios en las páginas en las que soy propietario',
+    'notifications_opt_own_page_comments' => 'Notificar sobre comentarios en las páginas en las que soy propietario',
+    'notifications_opt_comment_replies' => 'Notificar sobre respuestas a mis comentarios',
+    'notifications_save' => 'Guardar preferencias',
+    'notifications_update_success' => '¡Se han actualizado las preferencias de notificaciones!',
+    'notifications_watched' => 'Elementos vistos e ignorados',
+    'notifications_watched_desc' => ' A continuación se muestran los elementos que tienen preferencias personalizadas de monitorización. Para actualizar sus preferencias, vea el artículo y las opciones se mostrarán en la barra lateral.',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' Gestione los detalles de su perfil de usuario, incluyendo las opciones de idioma y autenticación preferidas.',
 ];

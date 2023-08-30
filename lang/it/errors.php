@@ -111,4 +111,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Si è verificato un errore durante l\'invio di una e-mail di prova:',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
 ];

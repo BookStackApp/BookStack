@@ -111,4 +111,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => '메일을 발송하는 도중 문제가 생겼습니다:',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
 ];

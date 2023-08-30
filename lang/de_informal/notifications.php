@@ -4,23 +4,23 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'Neuer Kommentar auf Seite: :pageName',
+    'new_comment_intro' => 'Ein Benutzer hat eine Seite in :appName kommentiert:',
+    'new_page_subject' => 'Neue Seite: :pageName',
+    'new_page_intro' => 'Es wurde eine neue Seite in :appName erstellt:',
+    'updated_page_subject' => 'Aktualisierte Seite: :pageName',
+    'updated_page_intro' => 'Eine Seite wurde in :appName aktualisiert:',
+    'updated_page_debounce' => 'Um eine Flut von Benachrichtigungen zu vermeiden, werden Sie für eine gewisse Zeit keine Benachrichtigungen für weitere Bearbeitungen dieser Seite durch denselben Bearbeiter erhalten.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'Name der Seite:',
+    'detail_commenter' => 'Kommentator:',
+    'detail_comment' => 'Kommentar:',
+    'detail_created_by' => 'Erstellt von:',
+    'detail_updated_by' => 'Aktualisiert von:',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'Kommentar anzeigen',
+    'action_view_page' => 'Seite anzeigen',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'Diese Benachrichtigung wurde an Sie gesendet, weil :link diese Art von Aktivität für dieses Element abdeckt.',
+    'footer_reason_link' => 'ihre Benachrichtigungseinstellungen',
 ];
