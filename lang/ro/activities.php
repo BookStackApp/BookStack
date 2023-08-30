@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" a fost eliminat din favorite',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Preferințele de urmărire actualizate cu succes',
 
     // Auth
     'auth_login' => 'autentificat',
@@ -115,9 +115,9 @@ return [
 
     // Comments
     'commented_on'                => 'a comentat la',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'comentariu adăugat',
+    'comment_update'              => 'comentariu actualizat',
+    'comment_delete'              => 'comentariu șters',
 
     // Other
     'permissions_update'          => 'a actualizat permisiunile',

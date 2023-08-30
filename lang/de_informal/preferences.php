@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => 'Einstellungen',
 
     'shortcuts' => 'Kürzel',
     'shortcuts_interface' => 'Oberflächen-Tastaturkürzel',
@@ -17,17 +17,17 @@ return [
     'shortcuts_save' => 'Tastenkürzel speichern',
     'shortcuts_overlay_desc' => 'Hinweis: Wenn Tastenkürzel aktiviert sind, ist ein Hilfefähnchen durch Drücken von "?" verfügbar, welches die verfügbaren Tastenkürzel für Aktionen hervorhebt, die aktuell auf dem Bildschirm sichtbar sind.',
     'shortcuts_update_success' => 'Tastenkürzel Einstellungen wurden aktualisiert!',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => 'Verwalten von Tastenkombinationen, die zur Navigation der Benutzeroberfläche verwendet werden können.',
 
-    'notifications' => 'Notification Preferences',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications' => 'Benachrichtigungseinstellungen',
+    'notifications_desc' => 'Legen Sie fest, welche E-Mail-Benachrichtigungen Sie erhalten, wenn bestimmte Aktivitäten im System durchgeführt werden.',
+    'notifications_opt_own_page_changes' => 'Benachrichtigung bei Änderungen an eigenen Seiten',
+    'notifications_opt_own_page_comments' => 'Benachrichtigung bei Kommentaren an eigenen Seiten',
+    'notifications_opt_comment_replies' => 'Bei Antworten auf meine Kommentare benachrichtigen',
+    'notifications_save' => 'Einstellungen speichern',
+    'notifications_update_success' => 'Benachrichtigungseinstellungen wurden aktualisiert!',
+    'notifications_watched' => 'Beobachtete und ignorierte Elemente',
+    'notifications_watched_desc' => ' Nachfolgend finden Sie die Elemente, für die benutzerdefinierten Überwachungspräferenzen gelten. Um Ihre Einstellungen für diese Elemente zu aktualisieren, sehen Sie sich das Element an und suchen dann die Überwachungsoptionen in der Seitenleiste.',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' Verwalten Sie die Details Ihres Benutzerprofils einschließlich bevorzugter Sprache und Authentifizierungsoptionen.',
 ];

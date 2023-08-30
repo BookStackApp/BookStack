@@ -17,17 +17,17 @@ return [
     'shortcuts_save' => 'Lagre snarveier',
     'shortcuts_overlay_desc' => 'Merk: Når snarveier er aktivert er et hjelperoverlegg tilgjengelig via å trykke "?" som vil fremheve de tilgjengelige snarveiene som for øyeblikket er synlige på skjermen.',
     'shortcuts_update_success' => 'Snarvei innstillinger er oppdatert!',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => 'Behandle tastatursnarveier du kan bruke for å navigere i systembrukergrensesnittet.',
 
     'notifications' => 'Innstillinger for varsling',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
+    'notifications_desc' => 'Kontroller e-postvarslene du mottar når en bestemt aktivitet utføres i systemet.',
     'notifications_opt_own_page_changes' => 'Varsle ved endringer til sider jeg eier',
     'notifications_opt_own_page_comments' => 'Varsle om kommentarer på sider jeg eier',
     'notifications_opt_comment_replies' => 'Varsle ved svar på mine kommentarer',
     'notifications_save' => 'Lagre innstillinger',
     'notifications_update_success' => 'Varslingsinnstillingene er oppdatert!',
     'notifications_watched' => 'Overvåka & ignorerte elementer',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => ' Nedenfor er elementene som har egendefinerte varslingsinnstillinger i bruk. For å oppdatere innstillingene for disse, se elementet, finn varslingsalternativene i sidepanelet.',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' Behandle brukerprofildetaljene dine, inkludert foretrukne språk og autentiseringsalternativer.',
 ];
