@@ -164,7 +164,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_manage_settings' => 'Globaleinstellungen verwalten',
     'role_export_content' => 'Inhalt exportieren',
     'role_editor_change' => 'Seiteneditor ändern',
-    'role_notifications' => 'Receive & manage notifications',
+    'role_notifications' => 'Empfangen und Verwalten von Benachrichtigungen',
     'role_asset' => 'Berechtigungen',
     'roles_system_warning' => 'Beachte, dass der Zugriff auf eine der oben genannten drei Berechtigungen einem Benutzer erlauben kann, seine eigenen Berechtigungen oder die Rechte anderer im System zu ändern. Weise nur Rollen mit diesen Berechtigungen vertrauenswürdigen Benutzern zu.',
     'role_asset_desc' => 'Diese Berechtigungen gelten für den Standard-Zugriff innerhalb des Systems. Berechtigungen für Bücher, Kapitel und Seiten überschreiben diese Berechtigungen.',
