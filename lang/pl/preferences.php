@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => 'Preferencje',
 
     'shortcuts' => 'Skróty',
     'shortcuts_interface' => 'Interfejs Skrótów Klawiszowych',
@@ -17,17 +17,17 @@ return [
     'shortcuts_save' => 'Zapisz skróty',
     'shortcuts_overlay_desc' => 'Uwaga: Gdy skróty są włączone, przez naciśnięcie "?" może być otworzona nakładka pomocnicza, która podświetli dostępne skróty dla akcji widocznych obecnie na ekranie.',
     'shortcuts_update_success' => 'Ustawienia skrótów zostały zaktualizowane!',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => 'Zarządzaj skrótami klawiaturowymi, które możesz użyć do nawigacji interfejsu użytkownika systemu.',
 
-    'notifications' => 'Notification Preferences',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications' => 'Preferencje powiadomień',
+    'notifications_desc' => 'Kontroluj otrzymywane powiadomienia e-mail, gdy określona aktywność jest wykonywana w systemie.',
+    'notifications_opt_own_page_changes' => 'Powiadom o zmianach na stronach, których jestem właścicielem',
+    'notifications_opt_own_page_comments' => 'Powiadom o komentarzach na stronach, których jestem właścicielem',
+    'notifications_opt_comment_replies' => 'Powiadom o odpowiedziach na moje komentarze',
+    'notifications_save' => 'Zapisz preferencje',
+    'notifications_update_success' => 'Preferencje powiadomień zostały zaktualizowane!',
+    'notifications_watched' => 'Obserwowane i ignorowane elementy',
+    'notifications_watched_desc' => ' Poniżej znajdują się elementy, które mają własne preferencje obserwowania. Aby zaktualizować swoje preferencje, zobacz dany element, a następnie znajdź opcje obserwowania na pasku bocznym.',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' Zarządzaj szczegółami swojego profilu użytkownika, w tym preferowanym językiem i opcjami uwierzytelniania.',
 ];
