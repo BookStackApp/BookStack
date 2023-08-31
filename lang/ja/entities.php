@@ -363,7 +363,7 @@ return [
     'comments' => 'コメント',
     'comment_add' => 'コメント追加',
     'comment_placeholder' => 'コメントを記入してください',
-    'comment_count' => '{0} コメントはありません|[1,*] コメント:count件',
+    'comment_count' => '{0} コメントはありません|[1,*] :count 件のコメント',
     'comment_save' => 'コメントを保存',
     'comment_new' => '新規コメント作成',
     'comment_created' => 'コメントを作成しました :createDiff',
