@@ -4,12 +4,12 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => ':appName: でページが更新されました',
+    'new_comment_subject' => 'ページへのコメント追加： :pageName',
+    'new_comment_intro' => ':appName でページにコメントが追加されました',
+    'new_page_subject' => 'ページの作成： :pageName',
+    'new_page_intro' => ':appName でページが作成されました',
+    'updated_page_subject' => 'ページの更新： :pageName',
+    'updated_page_intro' => ':appName でページが更新されました',
     'updated_page_debounce' => '大量の通知を防ぐために、しばらくの間は同じユーザがこのページをさらに編集しても通知は送信されません。',
 
     'detail_page_name' => 'ページ名：',
@@ -21,6 +21,6 @@ return [
     'action_view_comment' => 'コメントを表示',
     'action_view_page' => 'ページを表示',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
+    'footer_reason' => 'この項目のアクティビティは :link による対象となっているため、この通知が送信されました。',
     'footer_reason_link' => '通知設定',
 ];
