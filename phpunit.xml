@@ -21,6 +21,7 @@
     <server name="APP_AUTO_LANG_PUBLIC" value="true"/>
     <server name="APP_URL" value="http://bookstack.dev"/>
     <server name="ALLOWED_IFRAME_HOSTS" value=""/>
+    <server name="ALLOWED_SSR_HOSTS" value="*"/>
     <server name="CACHE_DRIVER" value="array"/>
     <server name="SESSION_DRIVER" value="array"/>
     <server name="QUEUE_CONNECTION" value="sync"/>
