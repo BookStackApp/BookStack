@@ -2,9 +2,13 @@
 
 namespace Tests\Activity;
 
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Comment;
+use BookStack\Activity\Notifications\Messages\BaseActivityNotification;
 use BookStack\Activity\Notifications\Messages\CommentCreationNotification;
 use BookStack\Activity\Notifications\Messages\PageCreationNotification;
 use BookStack\Activity\Notifications\Messages\PageUpdateNotification;
+use BookStack\Activity\Tools\ActivityLogger;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Activity\WatchLevels;
 use BookStack\Entities\Models\Entity;
@@ -253,7 +257,7 @@ class WatchTest extends TestCase
 
         $notifications->assertSentTo($editor, function (CommentCreationNotification $notification) use ($editor, $admin, $entities) {
             $mail = $notification->toMail($editor);
-            $mailContent = html_entity_decode(strip_tags($mail->render()));
+            $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             return $mail->subject === 'New comment on page: ' . $entities['page']->getShortName()
                 && str_contains($mailContent, 'View Comment')
                 && str_contains($mailContent, 'Page Name: ' . $entities['page']->name)
@@ -276,7 +280,7 @@ class WatchTest extends TestCase
 
         $notifications->assertSentTo($editor, function (PageUpdateNotification $notification) use ($editor, $admin) {
             $mail = $notification->toMail($editor);
-            $mailContent = html_entity_decode(strip_tags($mail->render()));
+            $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             return $mail->subject === 'Updated page: Updated page'
                 && str_contains($mailContent, 'View Page')
                 && str_contains($mailContent, 'Page Name: Updated page')
@@ -305,12 +309,49 @@ class WatchTest extends TestCase
 
         $notifications->assertSentTo($editor, function (PageCreationNotification $notification) use ($editor, $admin) {
             $mail = $notification->toMail($editor);
-            $mailContent = html_entity_decode(strip_tags($mail->render()));
+            $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             return $mail->subject === 'New page: My new page'
                 && str_contains($mailContent, 'View Page')
                 && str_contains($mailContent, 'Page Name: My new page')
                 && str_contains($mailContent, 'Created By: ' . $admin->name);
         });
+    }
+
+    public function test_notifications_sent_in_right_language()
+    {
+        $editor = $this->users->editor();
+        $admin = $this->users->admin();
+        setting()->putUser($editor, 'language', 'de');
+        $entities = $this->entities->createChainBelongingToUser($editor);
+        $watches = new UserEntityWatchOptions($editor, $entities['book']);
+        $watches->updateLevelByValue(WatchLevels::COMMENTS);
+
+        $activities = [
+            ActivityType::PAGE_CREATE => $entities['page'],
+            ActivityType::PAGE_UPDATE => $entities['page'],
+            ActivityType::COMMENT_CREATE => (new Comment([]))->forceFill(['entity_id' => $entities['page']->id, 'entity_type' => $entities['page']->getMorphClass()]),
+        ];
+
+        $notifications = Notification::fake();
+        $logger = app()->make(ActivityLogger::class);
+        $this->actingAs($admin);
+
+        foreach ($activities as $activityType => $detail) {
+            $logger->add($activityType, $detail);
+        }
+
+        $sent = $notifications->sentNotifications()[get_class($editor)][$editor->id];
+        $this->assertCount(3, $sent);
+
+        foreach ($sent as $notificationInfo) {
+            $notification = $notificationInfo[0]['notification'];
+            $this->assertInstanceOf(BaseActivityNotification::class, $notification);
+            $mail = $notification->toMail($editor);
+            $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
+            $this->assertStringContainsString('Name der Seite:', $mailContent);
+            $this->assertStringContainsString('Diese Benachrichtigung wurde', $mailContent);
+            $this->assertStringContainsString('Sollte es beim Anklicken der Schaltfläche', $mailContent);
+        }
     }
 
     public function test_notifications_not_sent_if_lacking_view_permission_for_related_item()

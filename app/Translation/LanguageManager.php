@@ -2,6 +2,7 @@
 
 namespace BookStack\Translation;
 
+use BookStack\Users\Models\User;
 use Illuminate\Http\Request;
 
 class LanguageManager
@@ -77,6 +78,15 @@ class LanguageManager
             return $this->autoDetectLocale($request, $default);
         }
 
+        return setting()->getUser($user, 'language', $default);
+    }
+
+    /**
+     * Get the language for the given user.
+     */
+    public function getLanguageForUser(User $user): string
+    {
+        $default = config('app.locale');
         return setting()->getUser($user, 'language', $default);
     }
 
