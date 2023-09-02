@@ -11,6 +11,7 @@ use BookStack\App\Model;
 use BookStack\App\Sluggable;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Notifications\ResetPassword;
+use BookStack\Translation\LanguageManager;
 use BookStack\Uploads\Image;
 use Carbon\Carbon;
 use Exception;
@@ -336,6 +337,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
 
         return '';
+    }
+
+    /**
+     * Get the system language for this user.
+     */
+    public function getLanguage(): string
+    {
+        return app()->make(LanguageManager::class)->getLanguageForUser($this);
     }
 
     /**
