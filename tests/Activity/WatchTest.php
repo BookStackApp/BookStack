@@ -257,7 +257,7 @@ class WatchTest extends TestCase
 
         $notifications->assertSentTo($editor, function (CommentCreationNotification $notification) use ($editor, $admin, $entities) {
             $mail = $notification->toMail($editor);
-            $mailContent = html_entity_decode(strip_tags($mail->render()));
+            $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             return $mail->subject === 'New comment on page: ' . $entities['page']->getShortName()
                 && str_contains($mailContent, 'View Comment')
                 && str_contains($mailContent, 'Page Name: ' . $entities['page']->name)
@@ -280,7 +280,7 @@ class WatchTest extends TestCase
 
         $notifications->assertSentTo($editor, function (PageUpdateNotification $notification) use ($editor, $admin) {
             $mail = $notification->toMail($editor);
-            $mailContent = html_entity_decode(strip_tags($mail->render()));
+            $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             return $mail->subject === 'Updated page: Updated page'
                 && str_contains($mailContent, 'View Page')
                 && str_contains($mailContent, 'Page Name: Updated page')
@@ -309,7 +309,7 @@ class WatchTest extends TestCase
 
         $notifications->assertSentTo($editor, function (PageCreationNotification $notification) use ($editor, $admin) {
             $mail = $notification->toMail($editor);
-            $mailContent = html_entity_decode(strip_tags($mail->render()));
+            $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             return $mail->subject === 'New page: My new page'
                 && str_contains($mailContent, 'View Page')
                 && str_contains($mailContent, 'Page Name: My new page')
@@ -347,7 +347,7 @@ class WatchTest extends TestCase
             $notification = $notificationInfo[0]['notification'];
             $this->assertInstanceOf(BaseActivityNotification::class, $notification);
             $mail = $notification->toMail($editor);
-            $mailContent = html_entity_decode(strip_tags($mail->render()));
+            $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             $this->assertStringContainsString('Name der Seite:', $mailContent);
             $this->assertStringContainsString('Diese Benachrichtigung wurde', $mailContent);
             $this->assertStringContainsString('Sollte es beim Anklicken der Schaltfläche', $mailContent);
