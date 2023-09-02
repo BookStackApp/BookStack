@@ -7,25 +7,17 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class UserInvite extends MailNotification
 {
-    public $token;
-
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(string $token)
-    {
-        $this->token = $token;
+    public function __construct(
+        public string $token
+    ) {
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
     public function toMail(User $notifiable): MailMessage
     {
         $appName = ['appName' => setting('app-name')];
-        $language = setting()->getUser($notifiable, 'language');
+        $language = $notifiable->getLanguage();
 
-        return $this->newMailMessage()
+        return $this->newMailMessage($language)
                 ->subject(trans('auth.user_invite_email_subject', $appName, $language))
                 ->greeting(trans('auth.user_invite_email_greeting', $appName, $language))
                 ->line(trans('auth.user_invite_email_text', [], $language))

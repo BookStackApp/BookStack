@@ -2,28 +2,17 @@
 
 namespace BookStack\Notifications;
 
+use BookStack\Users\Models\User;
+use Illuminate\Notifications\Messages\MailMessage;
+
 class ConfirmEmail extends MailNotification
 {
-    public $token;
-
-    /**
-     * Create a new notification instance.
-     *
-     * @param string $token
-     */
-    public function __construct($token)
-    {
-        $this->token = $token;
+    public function __construct(
+        public string $token
+    ) {
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param mixed $notifiable
-     *
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
+    public function toMail(User $notifiable): MailMessage
     {
         $appName = ['appName' => setting('app-name')];
 

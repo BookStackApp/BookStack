@@ -159,7 +159,7 @@ $style = [
                                                             <tr>
                                                                 <td style="{{ $fontFamily }}">
                                                                     <p style="{{ $style['paragraph-sub'] }}">
-                                                                        {{ trans('common.email_action_help', ['actionText' => $actionText]) }}
+                                                                        {{ trans('common.email_action_help', ['actionText' => $actionText], $language) }}
                                                                     </p>
 
                                                                     <p style="{{ $style['paragraph-sub'] }}">
@@ -187,7 +187,7 @@ $style = [
                                                     <p style="{{ $style['paragraph-sub'] }}">
                                                         &copy; {{ date('Y') }}
                                                         <a style="{{ $style['anchor'] }}" href="{{ url('/') }}" target="_blank">{{ setting('app-name') }}</a>.
-                                                        {{ trans('common.email_rights') }}
+                                                        {{ trans('common.email_rights', [], $language) }}
                                                     </p>
                                                 </td>
                                             </tr>
