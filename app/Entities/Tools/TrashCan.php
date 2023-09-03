@@ -376,6 +376,7 @@ class TrashCan
         $entity->searchTerms()->delete();
         $entity->deletions()->delete();
         $entity->favourites()->delete();
+        $entity->watches()->delete();
         $entity->referencesTo()->delete();
         $entity->referencesFrom()->delete();
 

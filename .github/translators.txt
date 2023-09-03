@@ -355,3 +355,5 @@ Flip333 :: German Informal; German
 Paulo Henrique (paulohsantos114) :: Portuguese, Brazilian
 Dženan (Dzenan) :: Swedish
 Péter Péli (peter.peli) :: Hungarian
+TWME :: Chinese Traditional
+Sascha (Man-in-Black) :: German

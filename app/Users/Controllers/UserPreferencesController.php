@@ -2,7 +2,6 @@
 
 namespace BookStack\Users\Controllers;
 
-use BookStack\Activity\Models\Watch;
 use BookStack\Http\Controller;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\UserNotificationPreferences;
@@ -68,8 +67,9 @@ class UserPreferencesController extends Controller
 
         $preferences = (new UserNotificationPreferences(user()));
 
-        $query = Watch::query()->where('user_id', '=', user()->id);
+        $query = user()->watches()->getQuery();
         $query = $permissions->restrictEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
+        $query = $permissions->filterDeletedFromEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
         $watches = $query->with('watchable')->paginate(20);
 
         $this->setPageTitle(trans('preferences.notifications'));

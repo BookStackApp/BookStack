@@ -3,8 +3,8 @@
 @section('body')
     <div class="container small my-xl">
 
-        <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row">
-            <div>
+        <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row wrap">
+            <div class="flex min-width-m">
                 <h2 class="list-heading">{{ trans('preferences.shortcuts_interface') }}</h2>
                 <p class="text-muted">{{ trans('preferences.shortcuts_overview_desc') }}</p>
             </div>
@@ -14,8 +14,8 @@
         </section>
 
         @if(signedInUser() && userCan('receive-notifications'))
-            <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row">
-                <div>
+            <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row wrap">
+                <div class="flex min-width-m">
                     <h2 class="list-heading">{{ trans('preferences.notifications') }}</h2>
                     <p class="text-muted">{{ trans('preferences.notifications_desc') }}</p>
                 </div>
@@ -26,8 +26,8 @@
         @endif
 
         @if(signedInUser())
-            <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row">
-                <div>
+            <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row wrap">
+                <div class="flex min-width-m">
                     <h2 class="list-heading">{{ trans('settings.users_edit_profile') }}</h2>
                     <p class="text-muted">{{ trans('preferences.profile_overview_desc') }}</p>
                 </div>
