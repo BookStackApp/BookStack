@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => 'Předvolby',
 
     'shortcuts' => 'Zkratky',
     'shortcuts_interface' => 'Zobrazit klávesové zkratky',
