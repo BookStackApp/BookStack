@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => '設定',
 
     'shortcuts' => 'ショートカット',
     'shortcuts_interface' => 'インターフェイスのキーボードショートカット',
@@ -16,18 +16,18 @@ return [
     'shortcuts_section_actions' => '共通のアクション',
     'shortcuts_save' => 'ショートカットを保存',
     'shortcuts_overlay_desc' => '注：ショートカットが有効な場合はヘルパーオーバーレイが利用できます。「?」を押すと現在画面に表示されているアクションで利用可能なショートカットをハイライト表示します。',
-    'shortcuts_update_success' => 'ショートカットの設定が更新されました！',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_update_success' => 'ショートカットの設定を更新しました。',
+    'shortcuts_overview_desc' => 'システムのユーザーインターフェイスを操作するためのキーボードショートカットを管理します。',
 
-    'notifications' => 'Notification Preferences',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications' => '通知設定',
+    'notifications_desc' => 'システム内で特定のアクティビティが実行されたときに受信する電子メール通知を制御します。',
+    'notifications_opt_own_page_changes' => '自分が所有するページの変更を通知する',
+    'notifications_opt_own_page_comments' => '自分が所有するページへのコメントを通知する',
+    'notifications_opt_comment_replies' => '自分のコメントへの返信を通知する',
+    'notifications_save' => '設定を保存',
+    'notifications_update_success' => '通知設定を更新しました。',
+    'notifications_watched' => 'ウォッチ/通知無効 項目',
+    'notifications_watched_desc' => ' 以下はカスタムウォッチの設定が適用されている項目です。 これらの設定を更新するには、項目を表示してサイドバーのウォッチオプションを参照してください。',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' 言語や認証オプションを含むユーザープロファイルの詳細を管理します。',
 ];

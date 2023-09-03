@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Einstellungen',
+    'preferences' => 'Profil-Einstellungen',
 
     'shortcuts' => 'Tastenkürzel',
     'shortcuts_interface' => 'Oberflächen-Tastaturkürzel',

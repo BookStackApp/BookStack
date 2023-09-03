@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name"がお気に入りから削除されました',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'ウォッチ設定を更新しました',
 
     // Auth
     'auth_login' => 'がログイン',
@@ -115,9 +115,9 @@ return [
 
     // Comments
     'commented_on'                => 'がコメント:',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'がコメントを追加',
+    'comment_update'              => 'がコメントを更新',
+    'comment_delete'              => 'がコメントを削除',
 
     // Other
     'permissions_update'          => 'が権限を更新:',

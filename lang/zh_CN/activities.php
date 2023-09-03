@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" 已从您的收藏中删除',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => '关注偏好设置已更新成功',
 
     // Auth
     'auth_login' => '已登录',

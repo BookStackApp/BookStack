@@ -4,23 +4,23 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => '页面上有新评论：:pageName',
+    'new_comment_intro' => '一位用户在 :appName: 的页面上发表了评论',
+    'new_page_subject' => '新页面：:pageName',
+    'new_page_intro' => ':appName: 中创建了一个新页面',
+    'updated_page_subject' => '页面更新：:pageName',
+    'updated_page_intro' => ':appName: 中的一个页面已被更新',
+    'updated_page_debounce' => '为了防止出现大量通知，一段时间内您不会收到同一编辑者再次编辑本页面的通知。',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => '页面名称：',
+    'detail_commenter' => '评论者：',
+    'detail_comment' => '评论：',
+    'detail_created_by' => '创建者：',
+    'detail_updated_by' => '更新者：',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => '查看评论',
+    'action_view_page' => '查看页面',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => '向您发送此通知是因为 :link 涵盖了该项目的此类活动。',
+    'footer_reason_link' => '个人通知偏好设置',
 ];

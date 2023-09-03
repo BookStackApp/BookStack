@@ -4,23 +4,23 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'Nouveau commentaire sur la page : :pageName',
+    'new_comment_intro' => 'Un utilisateur a commenté une page dans :appName:',
+    'new_page_subject' => 'Nouvelle page : :pageName',
+    'new_page_intro' => 'Une nouvelle page a été créée dans :appName:',
+    'updated_page_subject' => 'Page mise à jour : :pageName',
+    'updated_page_intro' => 'Une page a été mise à jour dans :appName:',
+    'updated_page_debounce' => 'Pour éviter de nombreuses notifications, pendant un certain temps, vous ne recevrez pas de notifications pour d\'autres modifications de cette page par le même éditeur.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'Nom de la page :',
+    'detail_commenter' => 'Commenta·teur·trice :',
+    'detail_comment' => 'Commentaire :',
+    'detail_created_by' => 'Créé par :',
+    'detail_updated_by' => 'Mis à jour par :',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'Voir le commentaire',
+    'action_view_page' => 'Afficher la page',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'Cette notification vous a été envoyée car :link couvre ce type d\'activité pour cet élément.',
+    'footer_reason_link' => 'vos préférences de notification',
 ];

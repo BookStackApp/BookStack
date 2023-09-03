@@ -15,7 +15,7 @@ return [
     'page_restore'                => '已還原頁面',
     'page_restore_notification'   => '頁面已還原成功',
     'page_move'                   => '已移動頁面',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => '頁面已成功移動',
 
     // Chapters
     'chapter_create'              => '已建立章節',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => '已刪除章節',
     'chapter_delete_notification' => '章節已刪除成功',
     'chapter_move'                => '已移動章節',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => '章節已移動成功',
 
     // Books
     'book_create'                 => '已建立書本',
