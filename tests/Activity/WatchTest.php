@@ -12,6 +12,7 @@ use BookStack\Activity\Tools\ActivityLogger;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Activity\WatchLevels;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Tools\TrashCan;
 use BookStack\Settings\UserNotificationPreferences;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -369,5 +370,33 @@ class WatchTest extends TestCase
         ])->assertOk();
 
         $notifications->assertNothingSentTo($editor);
+    }
+
+    public function test_watches_deleted_on_user_delete()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+
+        $watches = new UserEntityWatchOptions($editor, $page);
+        $watches->updateLevelByValue(WatchLevels::COMMENTS);
+        $this->assertDatabaseHas('watches', ['user_id' => $editor->id]);
+
+        $this->asAdmin()->delete($editor->getEditUrl());
+
+        $this->assertDatabaseMissing('watches', ['user_id' => $editor->id]);
+    }
+
+    public function test_watches_deleted_on_item_delete()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+
+        $watches = new UserEntityWatchOptions($editor, $page);
+        $watches->updateLevelByValue(WatchLevels::COMMENTS);
+        $this->assertDatabaseHas('watches', ['watchable_type' => 'page', 'watchable_id' => $page->id]);
+
+        $this->entities->destroy($page);
+
+        $this->assertDatabaseMissing('watches', ['watchable_type' => 'page', 'watchable_id' => $page->id]);
     }
 }
