@@ -124,6 +124,23 @@ class UserPreferencesTest extends TestCase
         $resp->assertDontSee('All Page Updates & Comments');
     }
 
+    public function test_notification_preferences_dont_error_on_deleted_items()
+    {
+        $editor = $this->users->editor();
+        $book = $this->entities->book();
+
+        $options = new UserEntityWatchOptions($editor, $book);
+        $options->updateLevelByValue(WatchLevels::COMMENTS);
+
+        $this->actingAs($editor)->delete($book->getUrl());
+        $book->refresh();
+        $this->assertNotNull($book->deleted_at);
+
+        $resp = $this->actingAs($editor)->get('/preferences/notifications');
+        $resp->assertOk();
+        $resp->assertDontSee($book->name);
+    }
+
     public function test_notification_preferences_not_accessible_to_guest()
     {
         $this->setSettings(['app-public' => 'true']);

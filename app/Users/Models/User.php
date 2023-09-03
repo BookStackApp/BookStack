@@ -6,6 +6,7 @@ use BookStack\Access\Mfa\MfaValue;
 use BookStack\Access\SocialAccount;
 use BookStack\Activity\Models\Favourite;
 use BookStack\Activity\Models\Loggable;
+use BookStack\Activity\Models\Watch;
 use BookStack\Api\ApiToken;
 use BookStack\App\Model;
 use BookStack\App\Sluggable;
@@ -289,6 +290,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function mfaValues(): HasMany
     {
         return $this->hasMany(MfaValue::class);
+    }
+
+    /**
+     * Get the tracked entity watches for this user.
+     */
+    public function watches(): HasMany
+    {
+        return $this->hasMany(Watch::class);
     }
 
     /**
