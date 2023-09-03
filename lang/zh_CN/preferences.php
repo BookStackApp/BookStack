@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => '偏好设置',
 
     'shortcuts' => '快捷键',
     'shortcuts_interface' => '界面键盘快捷键',
@@ -17,17 +17,17 @@ return [
     'shortcuts_save' => '保存快捷键',
     'shortcuts_overlay_desc' => '注意：当快捷键启用时，可以按"?"键来打开帮助，它将突出显示当前屏幕上可见操作的快捷键。',
     'shortcuts_update_success' => '快捷键设置已更新！',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => '管理可用于导航系统用户界面的快捷键。',
 
-    'notifications' => 'Notification Preferences',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications' => '通知偏好',
+    'notifications_desc' => '控制在系统内发生某些活动时您会收到的电子邮件通知。',
+    'notifications_opt_own_page_changes' => '在我拥有的页面被修改时通知我',
+    'notifications_opt_own_page_comments' => '在我拥有的页面上有新评论时通知我',
+    'notifications_opt_comment_replies' => '在有人回复我的频率时通知我',
+    'notifications_save' => '保存偏好设置',
+    'notifications_update_success' => '通知偏好设置已更新！',
+    'notifications_watched' => '已关注和忽略的项目',
+    'notifications_watched_desc' => ' 下面是已应用自定义关注选项的项目。要更新您的关注设置，请查看该项目，然后在该项目的侧边栏中找到关注选项。',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' 管理用户个人资料信息，包括首选语言和验证选项。',
 ];

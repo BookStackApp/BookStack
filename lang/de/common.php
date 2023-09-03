@@ -99,7 +99,7 @@ return [
     'tab_content_label' => 'Tab: Hauptinhalt anzeigen',
 
     // Email Content
-    'email_action_help' => 'Sollte es beim Anklicken der Schaltfläche ":action_text" Probleme geben, öffnen Sie folgende URL in Ihrem Browser:',
+    'email_action_help' => 'Sollte es beim Anklicken der Schaltfläche ":actionText" Probleme geben, öffnen Sie folgende URL in Ihrem Browser:',
     'email_rights' => 'Alle Rechte vorbehalten',
 
     // Footer Link Options

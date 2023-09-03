@@ -163,7 +163,7 @@ return [
     'role_manage_settings' => 'Zarządzanie ustawieniami aplikacji',
     'role_export_content' => 'Eksportuj zawartość',
     'role_editor_change' => 'Zmień edytor strony',
-    'role_notifications' => 'Receive & manage notifications',
+    'role_notifications' => 'Odbieranie i zarządzanie powiadomieniami',
     'role_asset' => 'Zarządzanie zasobami',
     'roles_system_warning' => 'Pamiętaj, że dostęp do trzech powyższych uprawnień może pozwolić użytkownikowi na zmianę własnych uprawnień lub uprawnień innych osób w systemie. Przypisz tylko role z tymi uprawnieniami do zaufanych użytkowników.',
     'role_asset_desc' => 'Te ustawienia kontrolują zarządzanie zasobami systemu. Uprawnienia książek, rozdziałów i stron nadpisują te ustawienia.',
