@@ -112,5 +112,5 @@ return [
     'maintenance_test_email_failure' => 'Test e-kirja saatmisel tekkis viga:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'URL ei klapi ühegi lubatud SSR hostiga',
 ];

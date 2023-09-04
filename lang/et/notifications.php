@@ -4,23 +4,23 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'Uus kommentaar lehel: :pageName',
+    'new_comment_intro' => 'Rakenduses :appName kommenteeriti lehte:',
+    'new_page_subject' => 'Uus leht: :pageName',
+    'new_page_intro' => 'Rakenduses :appName lisati uus leht:',
+    'updated_page_subject' => 'Muudetud leht: :pageName',
+    'updated_page_intro' => 'Rakenduses :appName muudeti lehte:',
+    'updated_page_debounce' => 'Et vältida liigseid teavitusi, ei saadeta sulle mõnda aega teavitusi selle lehe muutmiste kohta sama kasutaja poolt.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'Lehe nimetus:',
+    'detail_commenter' => 'Kommenteerija:',
+    'detail_comment' => 'Kommentaar:',
+    'detail_created_by' => 'Autor:',
+    'detail_updated_by' => 'Muutja:',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'Vaata kommentaari',
+    'action_view_page' => 'Vaata lehte',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'See teavitus saadeti sulle, sest :link sisaldavad selle objekti kohta sellist tegevust.',
+    'footer_reason_link' => 'sinu teavituste eelistused',
 ];

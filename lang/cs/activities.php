@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'obnovil/a stránku',
     'page_restore_notification'   => 'Stránka byla úspěšně obnovena',
     'page_move'                   => 'přesunul/a stránku',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Strana byla úspěšně přesunuta',
 
     // Chapters
     'chapter_create'              => 'vytvořil/a kapitolu',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'odstranila/a kapitolu',
     'chapter_delete_notification' => 'Kapitola byla úspěšně odstraněna',
     'chapter_move'                => 'přesunul/a kapitolu',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Kapitola byla úspěšně přesunuta',
 
     // Books
     'book_create'                 => 'vytvořil/a knihu',
@@ -50,31 +50,31 @@ return [
     'bookshelf_delete_notification'    => 'Knihovna byla úspěšně smazána',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'obnovil revizi',
+    'revision_delete' => 'odstranil revizi',
+    'revision_delete_notification' => 'Revize byla úspěšně odstraněna',
 
     // Favourites
     'favourite_add_notification' => '":name" byla přidána do Vašich oblíbených',
     'favourite_remove_notification' => '":name" byla odstraněna z Vašich oblíbených',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Předvolby sledování úspěšně aktualizovány',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'se přihlásil',
+    'auth_register' => 'se zaregistroval jako nový uživatel',
+    'auth_password_reset_request' => 'zažádal o resetování hesla',
+    'auth_password_reset_update' => 'zresetoval uživatelské heslo',
+    'mfa_setup_method' => 'nastavil MFA metodu',
     'mfa_setup_method_notification' => 'Vícefaktorová metoda byla úspěšně nakonfigurována',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'odstranil MFA metodu',
     'mfa_remove_method_notification' => 'Vícefaktorová metoda byla úspěšně odstraněna',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'aktualizoval nastavení',
+    'settings_update_notification' => 'Nastavení bylo úspěšně aktualizováno',
+    'maintenance_action_run' => 'spustil údržbu',
 
     // Webhooks
     'webhook_create' => 'vytvořil/a webhook',
@@ -85,39 +85,39 @@ return [
     'webhook_delete_notification' => 'Webhook byl úspěšně odstraněn',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'vytvořil uživatele',
+    'user_create_notification' => 'Uživatel byl úspěšně vytvořen',
+    'user_update' => 'aktualizoval uživatele',
     'user_update_notification' => 'Uživatel byl úspěšně aktualizován',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'odstranil uživatele',
     'user_delete_notification' => 'Uživatel byl úspěšně odstraněn',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'vytvořil api token',
+    'api_token_create_notification' => 'API token úspěšně vytvořen',
+    'api_token_update' => 'aktualizoval api token',
+    'api_token_update_notification' => 'API token úspěšně aktualizován',
+    'api_token_delete' => 'odstranil api token',
+    'api_token_delete_notification' => 'API token úspěšně odstraněn',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'vytvořil roli',
     'role_create_notification' => 'Role byla úspěšně vytvořena',
-    'role_update' => 'updated role',
+    'role_update' => 'aktualizoval roli',
     'role_update_notification' => 'Role byla úspěšně aktualizována',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'odstranil roli',
     'role_delete_notification' => 'Role byla odstraněna',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'vyprázdnil koš',
+    'recycle_bin_restore' => 'obnovil z koše',
+    'recycle_bin_destroy' => 'odstranil z koše',
 
     // Comments
     'commented_on'                => 'okomentoval/a',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'přidal komentář',
+    'comment_update'              => 'aktualizoval komentář',
+    'comment_delete'              => 'odstranil komentář',
 
     // Other
     'permissions_update'          => 'oprávnění upravena',
