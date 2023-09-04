@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" eemaldati su lemmikute hulgast',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Jälgimise eelistused edukalt salvestatud',
 
     // Auth
     'auth_login' => 'logis sisse',
