@@ -24,7 +24,9 @@ function setupBrFilter(editor) {
 function setupPointerFilter(editor) {
     editor.parser.addNodeFilter('div', nodes => {
         for (const node of nodes) {
-            if (node.attr('id') === 'pointer' || node.attr('class').includes('pointer')) {
+            const id = node.attr('id') || '';
+            const nodeClass = node.attr('class') || '';
+            if (id === 'pointer' || nodeClass.includes('pointer')) {
                 node.remove();
             }
         }
