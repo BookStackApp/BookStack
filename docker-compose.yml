@@ -50,6 +50,7 @@ services:
       - ./:/app
     entrypoint: /app/dev/docker/entrypoint.node.sh
   mailhog:
+    platform: linux/amd64
     image: mailhog/mailhog
     ports:
       - ${DEV_MAIL_PORT:-8025}:8025
