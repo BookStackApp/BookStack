@@ -4,23 +4,25 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'Novi komentar na stranici: :pageName',
+    'new_comment_intro' => 'Korisnik je komentirao stranicu u :appName:',
+    'new_page_subject' => 'Nova stranica: :pageName',
+    'new_page_intro' => 'Nova stranica je stvorena u :appName:',
+    'updated_page_subject' => 'ChatGPT
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+Ažurirana stranica: :pageName',
+    'updated_page_intro' => 'Stranica je ažurirana u :appName:',
+    'updated_page_debounce' => 'Kako biste spriječili velik broj obavijesti, nećete primati obavijesti o daljnjim izmjenama ove stranice od istog urednika neko vrijeme.',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'detail_page_name' => 'Naziv Stranice:',
+    'detail_commenter' => 'Komentator:',
+    'detail_comment' => 'Komentar:',
+    'detail_created_by' => 'Kreirao Korisnik:',
+    'detail_updated_by' => 'Ažurirao Korisnik:',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'action_view_comment' => 'Pogledaj Komentar',
+    'action_view_page' => 'Pogledaj Stranicu',
+
+    'footer_reason' => 'Ova obavijest vam je poslana jer :link pokriva ovu vrstu aktivnosti za ovu stavku.',
+    'footer_reason_link' => 'vaše postavke obavijesti',
 ];

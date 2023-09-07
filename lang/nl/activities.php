@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" is verwijderd uit je favorieten',
 
     // Watching
-    'watch_update_level_notification' => 'Kijkvoorkeuren succesvol aangepast',
+    'watch_update_level_notification' => 'Volg voorkeuren succesvol aangepast',
 
     // Auth
     'auth_login' => 'heeft ingelogd',

@@ -10,9 +10,9 @@ return [
     'new_page_intro' => 'Es wurde eine neue Seite in :appName erstellt:',
     'updated_page_subject' => 'Aktualisierte Seite: :pageName',
     'updated_page_intro' => 'Eine Seite wurde in :appName aktualisiert:',
-    'updated_page_debounce' => 'Um eine Flut von Benachrichtigungen zu vermeiden, werden Sie für eine gewisse Zeit keine Benachrichtigungen für weitere Bearbeitungen dieser Seite durch denselben Bearbeiter erhalten.',
+    'updated_page_debounce' => 'Um eine Flut von Benachrichtigungen zu vermeiden, wirst du für eine gewisse Zeit keine Benachrichtigungen für weitere Bearbeitungen dieser Seite durch denselben Bearbeiter erhalten.',
 
-    'detail_page_name' => 'Name der Seite:',
+    'detail_page_name' => 'Seitenname:',
     'detail_commenter' => 'Kommentator:',
     'detail_comment' => 'Kommentar:',
     'detail_created_by' => 'Erstellt von:',
@@ -21,6 +21,6 @@ return [
     'action_view_comment' => 'Kommentar anzeigen',
     'action_view_page' => 'Seite anzeigen',
 
-    'footer_reason' => 'Diese Benachrichtigung wurde an Sie gesendet, weil :link diese Art von Aktivität für dieses Element abdeckt.',
-    'footer_reason_link' => 'ihre Benachrichtigungseinstellungen',
+    'footer_reason' => 'Diese Benachrichtigung wurde an dich gesendet, weil :link diese Art von Aktivität für dieses Element abdeckt.',
+    'footer_reason_link' => 'deine Benachrichtigungseinstellungen',
 ];

@@ -112,5 +112,5 @@ return [
     'maintenance_test_email_failure' => 'Feil kastet når du sendte en test-e-post:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'URLen samsvarer ikke med de konfigurerte SSR-vertene',
 ];

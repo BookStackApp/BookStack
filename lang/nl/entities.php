@@ -239,8 +239,8 @@ return [
     'pages_md_insert_drawing' => 'Tekening invoegen',
     'pages_md_show_preview' => 'Toon preview',
     'pages_md_sync_scroll' => 'Synchroniseer preview scroll',
-    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
-    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
+    'pages_drawing_unsaved' => 'Niet-opgeslagen Tekening Gevonden',
+    'pages_drawing_unsaved_confirm' => 'Er zijn niet-opgeslagen tekeninggegevens gevonden van een eerdere mislukte poging om de tekening op te slaan. Wilt u deze niet-opgeslagen tekening herstellen en verder bewerken?',
     'pages_not_in_chapter' => 'Deze pagina staat niet in een hoofdstuk',
     'pages_move' => 'Pagina verplaatsten',
     'pages_copy' => 'Pagina kopiëren',
@@ -407,7 +407,7 @@ return [
     'references_to_desc' => 'Hieronder staan alle gekende pagina\'s in het systeem die naar dit item linken.',
 
     // Watch Options
-    'watch' => 'Kijk',
+    'watch' => 'Volg',
     'watch_title_default' => 'Standaard Voorkeuren',
     'watch_desc_default' => 'Terugkeren naar alleen je standaardvoorkeuren voor meldingen.',
     'watch_title_ignore' => 'Negeer',

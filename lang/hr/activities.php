@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '".ime" je uspješno maknuta iz tvojih favorita',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Postavke gledanja uspješno ažurirane',
 
     // Auth
     'auth_login' => 'prijavljen',
