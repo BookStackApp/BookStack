@@ -50,8 +50,8 @@ Note: Listed services are not tested, vetted nor supported by the official BookS
 #### Bronze Sponsors
 
 <table><tbody><tr>
-<td><a href="https://www.stellarhosted.com/bookstack/" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted">
+<td><a href="https://cloudabove.com/hosting" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/cloudabove.png" alt="Cloudabove">
 </a></td>
 <td><a href="https://www.practicali.be" target="_blank">
     <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/practicali.png" alt="Practicali">
