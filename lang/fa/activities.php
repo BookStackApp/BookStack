@@ -97,27 +97,27 @@ return [
     'api_token_create_notification' => 'توکن api با موفقیت ایجاد شد',
     'api_token_update' => 'توکن api بروز شده',
     'api_token_update_notification' => 'توکن API با موفقیت بروزرسانی شد',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete' => 'توکن api حذف شده',
+    'api_token_delete_notification' => 'توکن API با موفقیت حذف شد',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'نقش ایجاد شده',
     'role_create_notification' => 'نقش با موفقیت ایجاد شد',
-    'role_update' => 'updated role',
+    'role_update' => 'نقش بروز شده',
     'role_update_notification' => 'نقش با موفقیت به روز شد',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'نقش حذف شده',
     'role_delete_notification' => 'نقش با موفقیت حذف شد',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_empty' => 'سطل زباله خالی',
     'recycle_bin_restore' => 'از سطل بازیافت، بازآوری شده است',
     'recycle_bin_destroy' => 'از سطل بازیافت حذف شده است',
 
     // Comments
     'commented_on'                => 'ثبت دیدگاه',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'نظر اضافه شده',
+    'comment_update'              => 'نظر به روز شده',
+    'comment_delete'              => 'نظر حذف شده',
 
     // Other
     'permissions_update'          => 'به روزرسانی مجوزها',
