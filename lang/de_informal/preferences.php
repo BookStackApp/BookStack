@@ -20,14 +20,14 @@ return [
     'shortcuts_overview_desc' => 'Verwalten von Tastenkombinationen, die zur Navigation der Benutzeroberfläche verwendet werden können.',
 
     'notifications' => 'Benachrichtigungseinstellungen',
-    'notifications_desc' => 'Legen Sie fest, welche E-Mail-Benachrichtigungen Sie erhalten, wenn bestimmte Aktivitäten im System durchgeführt werden.',
+    'notifications_desc' => 'Lege fest, welche E-Mail-Benachrichtigungen du erhältst, wenn bestimmte Aktivitäten im System durchgeführt werden.',
     'notifications_opt_own_page_changes' => 'Benachrichtigung bei Änderungen an eigenen Seiten',
     'notifications_opt_own_page_comments' => 'Benachrichtigung bei Kommentaren an eigenen Seiten',
     'notifications_opt_comment_replies' => 'Bei Antworten auf meine Kommentare benachrichtigen',
     'notifications_save' => 'Einstellungen speichern',
     'notifications_update_success' => 'Benachrichtigungseinstellungen wurden aktualisiert!',
     'notifications_watched' => 'Beobachtete und ignorierte Elemente',
-    'notifications_watched_desc' => ' Nachfolgend finden Sie die Elemente, für die benutzerdefinierten Überwachungspräferenzen gelten. Um Ihre Einstellungen für diese Elemente zu aktualisieren, sehen Sie sich das Element an und suchen dann die Überwachungsoptionen in der Seitenleiste.',
+    'notifications_watched_desc' => ' Nachfolgend finden Sie die Elemente, für die benutzerdefinierten Überwachungspräferenzen gelten. Um deine Einstellungen für diese Elemente zu aktualisieren, sieh dir das Element an und suche dann die Überwachungsoptionen in der Seitenleiste.',
 
-    'profile_overview_desc' => ' Verwalten Sie die Details Ihres Benutzerprofils einschließlich bevorzugter Sprache und Authentifizierungsoptionen.',
+    'profile_overview_desc' => ' Verwalte die Details deines Benutzerprofils, einschließlich bevorzugter Sprache und Authentifizierungsoptionen.',
 ];
