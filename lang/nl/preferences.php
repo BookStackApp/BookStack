@@ -26,8 +26,8 @@ return [
     'notifications_opt_comment_replies' => 'Geef melding van reacties op mijn opmerkingen',
     'notifications_save' => 'Voorkeuren opslaan',
     'notifications_update_success' => 'Voorkeuren voor meldingen zijn bijgewerkt!',
-    'notifications_watched' => 'Ingestelde Items',
-    'notifications_watched_desc' => ' Hieronder staan de items waarvoor aangepaste \'kijk\' voorkeuren zijn toegepast. Om je voorkeuren voor deze items bij te werken, bekijk je het item en zoek je naar de \'kijk\' opties in de zijbalk.',
+    'notifications_watched' => 'Gevolgde & Genegeerde Items',
+    'notifications_watched_desc' => ' Hieronder staan de items waarvoor aangepaste \'Volg\'-voorkeuren zijn toegepast. Om je voorkeuren voor deze items bij te werken, bekijk je het item en zoek je naar de \'Volg\' opties in de zijbalk.',
 
     'profile_overview_desc' => ' Beheer de details van je gebruikersprofiel, inclusief de voorkeurstaal en verificatieopties.',
 ];
