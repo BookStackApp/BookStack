@@ -20,15 +20,8 @@ class OidcOAuthProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    /**
-     * @var string
-     */
-    protected $authorizationEndpoint;
-
-    /**
-     * @var string
-     */
-    protected $tokenEndpoint;
+    protected string $authorizationEndpoint;
+    protected string $tokenEndpoint;
 
     /**
      * Scopes to use for the OIDC authorization call.
@@ -60,7 +53,7 @@ class OidcOAuthProvider extends AbstractProvider
     }
 
     /**
-     * Add an additional scope to this provider upon the default.
+     * Add another scope to this provider upon the default.
      */
     public function addScope(string $scope): void
     {

@@ -59,7 +59,7 @@ class OidcProviderSettings
             }
         }
 
-        if (strpos($this->issuer, 'https://') !== 0) {
+        if (!str_starts_with($this->issuer, 'https://')) {
             throw new InvalidArgumentException('Issuer value must start with https://');
         }
     }
