@@ -112,5 +112,5 @@ return [
     'maintenance_test_email_failure' => 'Ошибка при отправке тестового письма:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'URL-адрес не соответствует настроенным разрешенным хостам SSR',
 ];
