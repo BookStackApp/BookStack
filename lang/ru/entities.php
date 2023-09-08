@@ -410,7 +410,7 @@ return [
     'watch' => 'Watch',
     'watch_title_default' => 'Default Preferences',
     'watch_desc_default' => 'Revert watching to just your default notification preferences.',
-    'watch_title_ignore' => 'Ignore',
+    'watch_title_ignore' => 'Игнорировать',
     'watch_desc_ignore' => 'Ignore all notifications, including those from user-level preferences.',
     'watch_title_new' => 'New Pages',
     'watch_desc_new' => 'Notify when any new page is created within this item.',
