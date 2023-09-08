@@ -7,7 +7,6 @@ use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Testing\TestResponse;
 use Tests\Helpers\OidcJwtHelper;
@@ -137,7 +136,7 @@ class OidcTest extends TestCase
         $this->post('/oidc/login');
         $state = session()->get('oidc_state');
 
-        $transactions = &$this->mockHttpClient([$this->getMockAuthorizationResponse([
+        $transactions = $this->mockHttpClient([$this->getMockAuthorizationResponse([
             'email' => 'benny@example.com',
             'sub'   => 'benny1010101',
         ])]);
@@ -146,9 +145,8 @@ class OidcTest extends TestCase
         // App calls token endpoint to get id token
         $resp = $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
         $resp->assertRedirect('/');
-        $this->assertCount(1, $transactions);
-        /** @var Request $tokenRequest */
-        $tokenRequest = $transactions[0]['request'];
+        $this->assertEquals(1, $transactions->requestCount());
+        $tokenRequest = $transactions->latestRequest();
         $this->assertEquals('https://oidc.local/token', (string) $tokenRequest->getUri());
         $this->assertEquals('POST', $tokenRequest->getMethod());
         $this->assertEquals('Basic ' . base64_encode(OidcJwtHelper::defaultClientId() . ':testpass'), $tokenRequest->getHeader('Authorization')[0]);
@@ -279,7 +277,7 @@ class OidcTest extends TestCase
     {
         $this->withAutodiscovery();
 
-        $transactions = &$this->mockHttpClient([
+        $transactions = $this->mockHttpClient([
             $this->getAutoDiscoveryResponse(),
             $this->getJwksResponse(),
         ]);
@@ -289,11 +287,9 @@ class OidcTest extends TestCase
         $this->runLogin();
 
         $this->assertTrue(auth()->check());
-        /** @var Request $discoverRequest */
-        $discoverRequest = $transactions[0]['request'];
-        /** @var Request $discoverRequest */
-        $keysRequest = $transactions[1]['request'];
 
+        $discoverRequest = $transactions->requestAt(0);
+        $keysRequest = $transactions->requestAt(1);
         $this->assertEquals('GET', $keysRequest->getMethod());
         $this->assertEquals('GET', $discoverRequest->getMethod());
         $this->assertEquals(OidcJwtHelper::defaultIssuer() . '/.well-known/openid-configuration', $discoverRequest->getUri());
@@ -316,7 +312,7 @@ class OidcTest extends TestCase
     {
         $this->withAutodiscovery();
 
-        $transactions = &$this->mockHttpClient([
+        $transactions = $this->mockHttpClient([
             $this->getAutoDiscoveryResponse(),
             $this->getJwksResponse(),
             $this->getAutoDiscoveryResponse([
@@ -327,15 +323,15 @@ class OidcTest extends TestCase
 
         // Initial run
         $this->post('/oidc/login');
-        $this->assertCount(2, $transactions);
+        $this->assertEquals(2, $transactions->requestCount());
         // Second run, hits cache
         $this->post('/oidc/login');
-        $this->assertCount(2, $transactions);
+        $this->assertEquals(2, $transactions->requestCount());
 
         // Third run, different issuer, new cache key
         config()->set(['oidc.issuer' => 'https://auto.example.com']);
         $this->post('/oidc/login');
-        $this->assertCount(4, $transactions);
+        $this->assertEquals(4, $transactions->requestCount());
     }
 
     public function test_auth_login_with_autodiscovery_with_keys_that_do_not_have_alg_property()
