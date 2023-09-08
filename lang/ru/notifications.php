@@ -5,11 +5,11 @@
 return [
 
     'new_comment_subject' => 'Новый комментарий на странице: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
+    'new_comment_intro' => 'Пользователь прокомментировал страницу в :appName:',
     'new_page_subject' => 'Новая страница: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
+    'new_page_intro' => 'Новая страница была создана в :appName:',
+    'updated_page_subject' => 'Обновлена страница: :pageName',
+    'updated_page_intro' => 'Страница была обновлена в :appName:',
     'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
 
     'detail_page_name' => 'Имя страницы:',
