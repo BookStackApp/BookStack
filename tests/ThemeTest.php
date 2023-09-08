@@ -12,13 +12,10 @@ use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Http\Client\Request as HttpClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
-use League\CommonMark\ConfigurableEnvironmentInterface;
 use League\CommonMark\Environment\Environment;
 
 class ThemeTest extends TestCase
@@ -177,9 +174,7 @@ class ThemeTest extends TestCase
         };
         Theme::listen(ThemeEvents::WEBHOOK_CALL_BEFORE, $callback);
 
-        Http::fake([
-            '*' => Http::response('', 200),
-        ]);
+        $responses = $this->mockHttpClient([new \GuzzleHttp\Psr7\Response(200, [], '')]);
 
         $webhook = new Webhook(['name' => 'Test webhook', 'endpoint' => 'https://example.com']);
         $webhook->save();
@@ -193,9 +188,10 @@ class ThemeTest extends TestCase
         $this->assertEquals($webhook->id, $args[1]->id);
         $this->assertEquals($detail->id, $args[2]->id);
 
-        Http::assertSent(function (HttpClientRequest $request) {
-            return $request->isJson() && $request->data()['test'] === 'hello!';
-        });
+        $this->assertEquals(1, $responses->requestCount());
+        $request = $responses->latestRequest();
+        $reqData = json_decode($request->getBody(), true);
+        $this->assertEquals('hello!', $reqData['test']);
     }
 
     public function test_event_activity_logged()

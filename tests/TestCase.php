@@ -3,13 +3,11 @@
 namespace Tests;
 
 use BookStack\Entities\Models\Entity;
+use BookStack\Http\HttpClientHistory;
+use BookStack\Http\HttpRequestService;
 use BookStack\Settings\SettingService;
 use BookStack\Uploads\HttpFetcher;
 use BookStack\Users\Models\User;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -21,7 +19,6 @@ use Illuminate\Testing\Assert as PHPUnit;
 use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
-use Psr\Http\Client\ClientInterface;
 use Ssddanbrown\AssertHtml\TestsHtml;
 use Tests\Helpers\EntityProvider;
 use Tests\Helpers\FileProvider;
@@ -115,6 +112,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function mockHttpFetch($returnData, int $times = 1)
     {
+        // TODO - Remove
         $mockHttp = Mockery::mock(HttpFetcher::class);
         $this->app[HttpFetcher::class] = $mockHttp;
         $mockHttp->shouldReceive('fetch')
@@ -123,21 +121,11 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Mock the http client used in BookStack.
-     * Returns a reference to the container which holds all history of http transactions.
-     *
-     * @link https://docs.guzzlephp.org/en/stable/testing.html#history-middleware
+     * Mock the http client used in BookStack http calls.
      */
-    protected function &mockHttpClient(array $responses = []): array
+    protected function mockHttpClient(array $responses = []): HttpClientHistory
     {
-        $container = [];
-        $history = Middleware::history($container);
-        $mock = new MockHandler($responses);
-        $handlerStack = new HandlerStack($mock);
-        $handlerStack->push($history);
-        $this->app[ClientInterface::class] = new Client(['handler' => $handlerStack]);
-
-        return $container;
+        return $this->app->make(HttpRequestService::class)->mockClient($responses);
     }
 
     /**
