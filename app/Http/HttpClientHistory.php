@@ -25,4 +25,9 @@ class HttpClientHistory
     {
         return $this->requestAt($this->requestCount() - 1);
     }
+
+    public function all(): array
+    {
+        return $this->container;
+    }
 }

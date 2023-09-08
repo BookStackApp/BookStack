@@ -3,20 +3,20 @@
 namespace BookStack\Uploads;
 
 use BookStack\Exceptions\HttpFetchException;
+use BookStack\Http\HttpRequestService;
 use BookStack\Users\Models\User;
 use Exception;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class UserAvatars
 {
-    protected $imageService;
-    protected $http;
-
-    public function __construct(ImageService $imageService, HttpFetcher $http)
-    {
-        $this->imageService = $imageService;
-        $this->http = $http;
+    public function __construct(
+        protected ImageService $imageService,
+        protected HttpRequestService $http
+    ) {
     }
 
     /**
@@ -112,8 +112,10 @@ class UserAvatars
     protected function getAvatarImageData(string $url): string
     {
         try {
-            $imageData = $this->http->fetch($url);
-        } catch (HttpFetchException $exception) {
+            $client = $this->http->buildClient(5);
+            $response = $client->sendRequest(new Request('GET', $url));
+            $imageData = (string) $response->getBody();
+        } catch (ClientExceptionInterface $exception) {
             throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]), $exception->getCode(), $exception);
         }
 
@@ -127,7 +129,7 @@ class UserAvatars
     {
         $fetchUrl = $this->getAvatarUrl();
 
-        return is_string($fetchUrl) && strpos($fetchUrl, 'http') === 0;
+        return str_starts_with($fetchUrl, 'http');
     }
 
     /**

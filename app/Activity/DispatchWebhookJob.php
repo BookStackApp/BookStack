@@ -16,7 +16,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Psr\Http\Client\ClientExceptionInterface;
 
 class DispatchWebhookJob implements ShouldQueue
 {
@@ -69,7 +68,7 @@ class DispatchWebhookJob implements ShouldQueue
                 $lastError = "Response status from endpoint was {$statusCode}";
                 Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with status {$statusCode}");
             }
-        } catch (ClientExceptionInterface $error) {
+        } catch (\Exception $error) {
             $lastError = $error->getMessage();
             Log::error("Webhook call to endpoint {$this->webhook->endpoint} failed with error \"{$lastError}\"");
         }
