@@ -6,7 +6,6 @@ use BookStack\Entities\Models\Entity;
 use BookStack\Http\HttpClientHistory;
 use BookStack\Http\HttpRequestService;
 use BookStack\Settings\SettingService;
-use BookStack\Uploads\HttpFetcher;
 use BookStack\Users\Models\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -16,7 +15,6 @@ use Illuminate\Support\Env;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
-use Mockery;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Ssddanbrown\AssertHtml\TestsHtml;
@@ -105,19 +103,6 @@ abstract class TestCase extends BaseTestCase
         foreach ($settingsArray as $key => $value) {
             $settings->put($key, $value);
         }
-    }
-
-    /**
-     * Mock the HttpFetcher service and return the given data on fetch.
-     */
-    protected function mockHttpFetch($returnData, int $times = 1)
-    {
-        // TODO - Remove
-        $mockHttp = Mockery::mock(HttpFetcher::class);
-        $this->app[HttpFetcher::class] = $mockHttp;
-        $mockHttp->shouldReceive('fetch')
-            ->times($times)
-            ->andReturn($returnData);
     }
 
     /**
