@@ -49,16 +49,16 @@ return [
     // Drawing & Images
     'image_upload_error' => 'هنگام آپلود تصویر خطایی روی داد',
     'image_upload_type_error' => 'نوع تصویر در حال آپلود نامعتبر است',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_replace_type' => 'جایگزینی فایل تصویری باید از یک نوع باشد',
     'drawing_data_not_found' => 'داده های طرح قابل بارگذاری نیستند. ممکن است فایل طرح دیگر وجود نداشته باشد یا شما به آن دسترسی نداشته باشید.',
 
     // Attachments
     'attachment_not_found' => 'پیوست یافت نشد',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'هنگام آپلود فایل خطایی روی داد',
 
     // Pages
     'page_draft_autosave_fail' => 'پیش نویس ذخیره نشد. قبل از ذخیره این صفحه مطمئن شوید که به اینترنت متصل هستید',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'حذف پیش‌نویس و همچنین بازآوری محتوای صفحه فعلی، ناموفق بود',
     'page_custom_home_deletion' => 'وقتی صفحه ای به عنوان صفحه اصلی تنظیم شده است، نمی توان آن را حذف کرد',
 
     // Entities
