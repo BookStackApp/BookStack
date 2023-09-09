@@ -407,7 +407,7 @@ return [
     'references_to_desc' => 'در زیر تمام صفحات شناخته شده در سیستم که به این مورد پیوند دارند، نشان داده شده است.',
 
     // Watch Options
-    'watch' => 'Watch',
+    'watch' => 'نظارت',
     'watch_title_default' => 'Default Preferences',
     'watch_desc_default' => 'Revert watching to just your default notification preferences.',
     'watch_title_ignore' => 'Ignore',
