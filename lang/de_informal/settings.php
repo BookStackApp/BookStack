@@ -315,6 +315,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'sv' => 'Schwedisch',
         'tr' => 'Türkisch',
         'uk' => 'Ukrainisch',
+        'uz' => 'O‘zbekcha',
         'vi' => 'Vietnamesisch',
         'zh_CN' => 'Vereinfachtes Chinesisch',
         'zh_TW' => 'Traditionelles Chinesisch',

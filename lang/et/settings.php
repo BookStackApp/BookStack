@@ -314,6 +314,7 @@ return [
         'sv' => 'Rootsi',
         'tr' => 'Türgi',
         'uk' => 'Ukraina',
+        'uz' => 'O‘zbekcha',
         'vi' => 'Vietnami',
         'zh_CN' => 'Hiina (lihtsustatud)',
         'zh_TW' => 'Hiina (traditsiooniline)',
