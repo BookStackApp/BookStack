@@ -66,7 +66,7 @@ class WatchTest extends TestCase
 
         $this->actingAs($editor)->get($book->getUrl());
         $resp = $this->put('/watching/update', [
-            'type' => get_class($book),
+            'type' => $book->getMorphClass(),
             'id' => $book->id,
             'level' => 'comments'
         ]);
@@ -81,7 +81,7 @@ class WatchTest extends TestCase
         ]);
 
         $resp = $this->put('/watching/update', [
-            'type' => get_class($book),
+            'type' => $book->getMorphClass(),
             'id' => $book->id,
             'level' => 'default'
         ]);
@@ -101,7 +101,7 @@ class WatchTest extends TestCase
         $book = $this->entities->book();
 
         $resp = $this->put('/watching/update', [
-            'type' => get_class($book),
+            'type' => $book->getMorphClass(),
             'id' => $book->id,
             'level' => 'comments'
         ]);
