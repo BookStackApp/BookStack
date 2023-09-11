@@ -6,37 +6,36 @@
 return [
 
     // Pages
-    'page_create'                 => 'opprettet side',
-    'page_create_notification'    => 'Siden ble opprettet',
+    'page_create'                 => 'oppretta side',
+    'page_create_notification'    => 'Sida vart oppretta',
     'page_update'                 => 'oppdaterte side',
-    'page_update_notification'    => 'Siden ble oppdatert',
-    'page_delete'                 => 'slettet side',
-    'page_delete_notification'    => 'Siden ble slettet',
-    'page_restore'                => 'gjenopprettet side',
-    'page_restore_notification'   => 'Siden ble gjenopprettet',
-    'page_move'                   => 'flyttet side',
-    'page_move_notification'      => 'Siden ble flyttet',
+    'page_update_notification'    => 'Sida vart oppretta',
+    'page_delete'                 => 'sletta side',
+    'page_delete_notification'    => 'Sida vart sletta',
+    'page_restore'                => 'gjenoppretta side',
+    'page_restore_notification'   => 'Sida vart gjenoppretta',
+    'page_move'                   => 'flytta side',
+    'page_move_notification'      => 'Sida vart flytta',
 
     // Chapters
-    'chapter_create'              => 'opprettet kapittel',
-    'chapter_create_notification' => 'Kapittelet ble opprettet',
+    'chapter_create'              => 'oppretta kapittel',
+    'chapter_create_notification' => 'Kapittelet vart oppretta',
     'chapter_update'              => 'oppdaterte kapittel',
-    'chapter_update_notification' => 'Kapittelet ble oppdatert',
-    'chapter_delete'              => 'slettet kapittel',
-    'chapter_delete_notification' => 'Kapittelet ble slettet',
-    'chapter_move'                => 'flyttet kapittel
-    ',
-    'chapter_move_notification' => 'Kapitelet ble flyttet',
+    'chapter_update_notification' => 'Kapittelet vart oppdatert',
+    'chapter_delete'              => 'sletta kapittel',
+    'chapter_delete_notification' => 'Kapittelet vart sletta',
+    'chapter_move'                => 'flytta kapittel',
+    'chapter_move_notification' => 'Kapitelet vart flytta',
 
     // Books
-    'book_create'                 => 'opprettet bok',
-    'book_create_notification'    => 'Boken ble opprettet',
+    'book_create'                 => 'oppretta bok',
+    'book_create_notification'    => 'Boka vart oppretta',
     'book_create_from_chapter'              => 'konverterte kapittelet til bok',
-    'book_create_from_chapter_notification' => 'Kapittelet ble konvertert til en bok',
+    'book_create_from_chapter_notification' => 'Kapittelet vart konvertert til ei bok',
     'book_update'                 => 'oppdaterte bok',
-    'book_update_notification'    => 'Boken ble oppdatert',
-    'book_delete'                 => 'slettet bok',
-    'book_delete_notification'    => 'Boken ble slettet',
+    'book_update_notification'    => 'Boka vart oppdatert',
+    'book_delete'                 => 'sletta bok',
+    'book_delete_notification'    => 'Boka vart sletta',
     'book_sort'                   => 'sorterte bok',
     'book_sort_notification'      => 'Boken ble omsortert',
 
@@ -99,7 +98,7 @@ return [
     'api_token_update' => 'oppdatert api token',
     'api_token_update_notification' => 'API-token oppdatert',
     'api_token_delete' => 'slettet api token',
-    'api_token_delete_notification' => 'API-token ble slettet',
+    'api_token_delete_notification' => 'API-token vart sletta',
 
     // Roles
     'role_create' => 'opprettet rolle',
