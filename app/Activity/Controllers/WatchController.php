@@ -14,10 +14,9 @@ class WatchController extends Controller
         $this->checkPermission('receive-notifications');
         $this->preventGuestAccess();
 
-        $requestData = $this->validate($request, [
+        $requestData = $this->validate($request, array_merge([
             'level' => ['required', 'string'],
-            ...$entityHelper->validationRules()
-        ]);
+        ], $entityHelper->validationRules()));
 
         $watchable = $entityHelper->getVisibleEntityFromRequestData($requestData);
         $watchOptions = new UserEntityWatchOptions(user(), $watchable);
