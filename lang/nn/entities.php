@@ -94,7 +94,7 @@ return [
     'shelves_books' => 'Bøker på denne hyllen',
     'shelves_add_books' => 'Legg til bøker på denne hyllen',
     'shelves_drag_books' => 'Dra og slipp bøker nedenfor for å legge dem til i denne hyllen',
-    'shelves_empty_contents' => 'INgen bøker er stablet i denne hylla',
+    'shelves_empty_contents' => 'Ingen bøker er stabla i denne hylla',
     'shelves_edit_and_assign' => 'Endre hylla for å legge til bøker',
     'shelves_edit_named' => 'Rediger :name (hylle)',
     'shelves_edit' => 'Rediger hylle',
