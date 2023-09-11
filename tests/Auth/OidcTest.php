@@ -30,7 +30,7 @@ class OidcTest extends TestCase
             'auth.method'                 => 'oidc',
             'auth.defaults.guard'         => 'oidc',
             'oidc.name'                   => 'SingleSignOn-Testing',
-            'oidc.display_name_claims'    => ['name'],
+            'oidc.display_name_claims'    => 'name',
             'oidc.client_id'              => OidcJwtHelper::defaultClientId(),
             'oidc.client_secret'          => 'testpass',
             'oidc.jwt_public_key'         => $this->keyFilePath,
@@ -406,6 +406,23 @@ class OidcTest extends TestCase
         /** @var User $user */
         $user = User::query()->where('email', '=', 'benny@example.com')->first();
         $this->assertEquals('xXBennyTheGeezXx', $user->external_auth_id);
+    }
+
+    public function test_auth_uses_mulitple_display_name_claims_if_configured()
+    {
+        config()->set(['oidc.display_name_claims' => 'first_name|last_name']);
+
+        $this->runLogin([
+            'email'      => 'benny@example.com',
+            'sub'        => 'benny1010101',
+            'first_name' => 'Benny',
+            'last_name'  => 'Jenkins'
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'Benny Jenkins',
+            'email' => 'benny@example.com',
+        ]);
     }
 
     public function test_login_group_sync()

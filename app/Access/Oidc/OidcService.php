@@ -142,10 +142,11 @@ class OidcService
      */
     protected function getUserDisplayName(OidcIdToken $token, string $defaultValue): string
     {
-        $displayNameAttr = $this->config()['display_name_claims'];
+        $displayNameAttrString = $this->config()['display_name_claims'] ?? '';
+        $displayNameAttrs = explode('|', $displayNameAttrString);
 
         $displayName = [];
-        foreach ($displayNameAttr as $dnAttr) {
+        foreach ($displayNameAttrs as $dnAttr) {
             $dnComponent = $token->getClaim($dnAttr) ?? '';
             if ($dnComponent !== '') {
                 $displayName[] = $dnComponent;
