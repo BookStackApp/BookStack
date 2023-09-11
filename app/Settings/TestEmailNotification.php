@@ -1,11 +1,12 @@
 <?php
 
-namespace BookStack\Notifications;
+namespace BookStack\Settings;
 
+use BookStack\App\MailNotification;
 use BookStack\Users\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class TestEmail extends MailNotification
+class TestEmailNotification extends MailNotification
 {
     public function toMail(User $notifiable): MailMessage
     {

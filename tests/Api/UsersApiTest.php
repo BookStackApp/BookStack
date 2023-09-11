@@ -2,11 +2,11 @@
 
 namespace Tests\Api;
 
+use BookStack\Access\Notifications\UserInviteNotification;
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\Activity as ActivityModel;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity;
-use BookStack\Notifications\UserInvite;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -140,7 +140,7 @@ class UsersApiTest extends TestCase
         $resp->assertStatus(200);
         /** @var User $user */
         $user = User::query()->where('email', '=', 'bboris@example.com')->first();
-        Notification::assertSentTo($user, UserInvite::class);
+        Notification::assertSentTo($user, UserInviteNotification::class);
     }
 
     public function test_create_name_and_email_validation()
