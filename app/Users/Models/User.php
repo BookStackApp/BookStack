@@ -3,6 +3,7 @@
 namespace BookStack\Users\Models;
 
 use BookStack\Access\Mfa\MfaValue;
+use BookStack\Access\Notifications\ResetPasswordNotification;
 use BookStack\Access\SocialAccount;
 use BookStack\Activity\Models\Favourite;
 use BookStack\Activity\Models\Loggable;
@@ -11,7 +12,6 @@ use BookStack\Api\ApiToken;
 use BookStack\App\Model;
 use BookStack\App\Sluggable;
 use BookStack\Entities\Tools\SlugGenerator;
-use BookStack\Notifications\ResetPassword;
 use BookStack\Translation\LanguageManager;
 use BookStack\Uploads\Image;
 use Carbon\Carbon;
@@ -365,7 +365,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPassword($token));
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     /**

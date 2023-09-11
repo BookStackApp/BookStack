@@ -4,7 +4,7 @@ namespace BookStack\Activity\Notifications\Messages;
 
 use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Notifications\MessageParts\LinkedMailMessageLine;
-use BookStack\Notifications\MailNotification;
+use BookStack\App\MailNotification;
 use BookStack\Users\Models\User;
 use Illuminate\Bus\Queueable;
 

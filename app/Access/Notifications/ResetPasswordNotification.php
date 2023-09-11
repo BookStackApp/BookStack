@@ -1,11 +1,12 @@
 <?php
 
-namespace BookStack\Notifications;
+namespace BookStack\Access\Notifications;
 
+use BookStack\App\MailNotification;
 use BookStack\Users\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPassword extends MailNotification
+class ResetPasswordNotification extends MailNotification
 {
     public function __construct(
         public string $token

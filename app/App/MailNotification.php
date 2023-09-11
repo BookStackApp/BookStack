@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Notifications;
+namespace BookStack\App;
 
 use BookStack\Users\Models\User;
 use Illuminate\Bus\Queueable;

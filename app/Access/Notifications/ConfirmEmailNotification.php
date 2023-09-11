@@ -1,11 +1,12 @@
 <?php
 
-namespace BookStack\Notifications;
+namespace BookStack\Access\Notifications;
 
+use BookStack\App\MailNotification;
 use BookStack\Users\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ConfirmEmail extends MailNotification
+class ConfirmEmailNotification extends MailNotification
 {
     public function __construct(
         public string $token
