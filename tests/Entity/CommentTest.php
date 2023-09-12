@@ -152,4 +152,20 @@ class CommentTest extends TestCase
         $respHtml = $this->withHtml($this->get($page->getUrl('/edit')));
         $respHtml->assertElementContains('.comment-box .content', 'My great comment to see in the editor');
     }
+
+    public function test_comment_creator_name_truncated()
+    {   
+        $longNamedUser = $this->users->admin();
+        $longNamedUser->name = 'Wolfeschlegelsteinhausenbergerdorff';
+        $longNamedUser->save();
+        $this->actingAs($longNamedUser);
+
+        $page = $this->entities->page();
+
+        $comment = Comment::factory()->make();
+        $this->postJson("/comment/$page->id", $comment->getAttributes());
+
+        $pageResp = $this->get($page->getUrl());
+        $pageResp->assertSee('Wolfeschlegel…');
+    }
 }
