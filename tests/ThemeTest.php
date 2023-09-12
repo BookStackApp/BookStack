@@ -8,6 +8,7 @@ use BookStack\Activity\Models\Webhook;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
+use BookStack\Exceptions\ThemeException;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
@@ -48,6 +49,19 @@ class ThemeTest extends TestCase
             $this->runWithEnv('APP_THEME', $themeFolder, function () {
                 $this->assertEquals('cat', $this->app->getAlias('dog'));
             });
+        });
+    }
+
+    public function test_theme_functions_loads_errors_are_caught_and_logged()
+    {
+        $this->usingThemeFolder(function ($themeFolder) {
+            $functionsFile = theme_path('functions.php');
+            file_put_contents($functionsFile, "<?php\n\\BookStack\\Biscuits::eat();");
+
+            $this->expectException(ThemeException::class);
+            $this->expectExceptionMessageMatches('/Failed loading theme functions file at ".*?" with error: Class "BookStack\\\\Biscuits" not found/');
+
+            $this->runWithEnv('APP_THEME', $themeFolder, fn() => null);
         });
     }
 
