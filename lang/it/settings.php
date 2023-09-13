@@ -314,6 +314,7 @@ return [
         'sv' => 'Svedese',
         'tr' => 'Turco',
         'uk' => 'Ucraino',
+        'uz' => 'O‘zbekcha',
         'vi' => 'Vietnamita',
         'zh_CN' => 'Cinese semplificato',
         'zh_TW' => 'Cinese tradizionale',
