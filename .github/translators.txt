@@ -57,6 +57,7 @@ Name :: Languages
 @Jokuna :: Korean
 @smartshogu :: German; German Informal
 @samadha56 :: Persian
+@mrmuminov :: Uzbek
 cipi1965 :: Italian
 Mykola Ronik (Mantikor) :: Ukrainian
 furkanoyk :: Turkish
@@ -289,7 +290,7 @@ Ismael Mesquita (mesquitoliveira) :: Portuguese, Brazilian
 LiZerui (CNLiZerui) :: Chinese Traditional
 Fabrice Boyer (FabriceBoyer) :: French
 mikael (bitcanon) :: Swedish
-Matthias Mai (schnapsidee) :: German; German Informal
+Matthias Mai (schnapsidee) :: German Informal; German
 Ufuk Ayyıldız (ufukayyildiz) :: Turkish
 Jan Mitrof (jan.kachlik) :: Czech
 edwardsmirnov :: Russian
@@ -347,7 +348,7 @@ robing29 :: German
 Bruno Eduardo de Jesus Barroso (brunoejb) :: Portuguese, Brazilian
 Igor V Belousov (biv) :: Russian
 David Bauer (davbauer) :: German
-Guttorm Hveem (guttormhveem) :: Norwegian Bokmal
+Guttorm Hveem (guttormhveem) :: Norwegian Bokmal; Norwegian Nynorsk
 Minh Giang Truong (minhgiang1204) :: Vietnamese
 Ioannis Ioannides (i.ioannides) :: Greek
 Vadim (vadrozh) :: Russian
@@ -357,3 +358,5 @@ Dženan (Dzenan) :: Swedish
 Péter Péli (peter.peli) :: Hungarian
 TWME :: Chinese Traditional
 Sascha (Man-in-Black) :: German
+Mohammadreza Madadi (madadi.efl) :: Persian
+Konstantin Kovacheli (kkovacheli) :: Ukrainian
