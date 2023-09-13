@@ -314,6 +314,7 @@ return [
         'sv' => 'Svenska',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
+        'uz' => 'O‘zbekcha',
         'vi' => 'Tiếng Việt',
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',

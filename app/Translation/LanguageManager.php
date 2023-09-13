@@ -57,6 +57,7 @@ class LanguageManager
         'sl'          => ['iso' => 'sl_SI', 'windows' => 'Slovenian'],
         'sv'          => ['iso' => 'sv_SE', 'windows' => 'Swedish'],
         'uk'          => ['iso' => 'uk_UA', 'windows' => 'Ukrainian'],
+        'uz'          => ['iso' => 'uz_UZ', 'windows' => 'Uzbek'],
         'vi'          => ['iso' => 'vi_VN', 'windows' => 'Vietnamese'],
         'zh_CN'       => ['iso' => 'zh_CN', 'windows' => 'Chinese (Simplified)'],
         'zh_TW'       => ['iso' => 'zh_TW', 'windows' => 'Chinese (Traditional)'],
