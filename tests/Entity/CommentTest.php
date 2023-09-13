@@ -154,18 +154,14 @@ class CommentTest extends TestCase
     }
 
     public function test_comment_creator_name_truncated()
-    {   
-        $longNamedUser = $this->users->admin();
-        $longNamedUser->name = 'Wolfeschlegelsteinhausenbergerdorff';
-        $longNamedUser->save();
-        $this->actingAs($longNamedUser);
-
+    {
+        [$longNamedUser] = $this->users->newUserWithRole(['name' => 'Wolfeschlegelsteinhausenbergerdorff'], ['comment-create-all', 'page-view-all']);
         $page = $this->entities->page();
 
         $comment = Comment::factory()->make();
-        $this->postJson("/comment/$page->id", $comment->getAttributes());
+        $this->actingAs($longNamedUser)->postJson("/comment/$page->id", $comment->getAttributes());
 
-        $pageResp = $this->get($page->getUrl());
-        $pageResp->assertSee('Wolfeschlegel…');
+        $pageResp = $this->asAdmin()->get($page->getUrl());
+        $pageResp->assertSee('Wolfeschlegels…');
     }
 }
