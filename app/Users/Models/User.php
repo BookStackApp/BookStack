@@ -345,7 +345,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $splitName[0];
         }
 
-        return '';
+        return mb_substr($this->name, 0, max($chars - 2, 0)) . '…';
     }
 
     /**
