@@ -314,6 +314,7 @@ return [
         'sv' => 'Suédois',
         'tr' => 'Turc',
         'uk' => 'Ukrainien',
+        'uz' => 'O‘zbekcha',
         'vi' => 'Vietnamien',
         'zh_CN' => 'Chinois (simplifié)',
         'zh_TW' => 'Mandarin de Taïwan',
