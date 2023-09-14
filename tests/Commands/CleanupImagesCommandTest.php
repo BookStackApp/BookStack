@@ -14,7 +14,7 @@ class CleanupImagesCommandTest extends TestCase
 
         $this->artisan('bookstack:cleanup-images -v')
             ->expectsOutput('Dry run, no images have been deleted')
-            ->expectsOutput('1 images found that would have been deleted')
+            ->expectsOutput('1 image(s) found that would have been deleted')
             ->expectsOutputToContain($image->path)
             ->assertExitCode(0);
 
@@ -29,7 +29,7 @@ class CleanupImagesCommandTest extends TestCase
         $this->artisan('bookstack:cleanup-images --force')
             ->expectsOutputToContain('This operation is destructive and is not guaranteed to be fully accurate')
             ->expectsConfirmation('Are you sure you want to proceed?', 'yes')
-            ->expectsOutput('1 images deleted')
+            ->expectsOutput('1 image(s) deleted')
             ->assertExitCode(0);
 
         $this->assertDatabaseMissing('images', ['id' => $image->id]);
@@ -45,5 +45,18 @@ class CleanupImagesCommandTest extends TestCase
             ->assertExitCode(0);
 
         $this->assertDatabaseHas('images', ['id' => $image->id]);
+    }
+
+    public function test_command_force_no_interaction_run()
+    {
+        $page = $this->entities->page();
+        $image = Image::factory()->create(['uploaded_to' => $page->id]);
+
+        $this->artisan('bookstack:cleanup-images --force --no-interaction')
+            ->expectsOutputToContain('This operation is destructive and is not guaranteed to be fully accurate')
+            ->expectsOutput('1 image(s) deleted')
+            ->assertExitCode(0);
+
+        $this->assertDatabaseMissing('images', ['id' => $image->id]);
     }
 }
