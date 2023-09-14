@@ -242,6 +242,22 @@ class UserPreferencesTest extends TestCase
         $this->withHtml($home)->assertElementExists('.dark-mode');
     }
 
+    public function test_dark_mode_toggle_endpoint_changes_to_light_when_dark_by_default()
+    {
+        config()->set('setting-defaults.user.dark-mode-enabled', true);
+        $editor = $this->users->editor();
+
+        $this->assertEquals(true, setting()->getUser($editor, 'dark-mode-enabled'));
+        $prefChange = $this->actingAs($editor)->patch('/preferences/toggle-dark-mode');
+        $prefChange->assertRedirect();
+        $this->assertEquals(false, setting()->getUser($editor, 'dark-mode-enabled'));
+
+        $home = $this->get('/');
+        $this->withHtml($home)->assertElementNotExists('.dark-mode');
+        $home->assertDontSee('Light Mode');
+        $home->assertSee('Dark Mode');
+    }
+
     public function test_books_view_type_preferences_when_list()
     {
         $editor = $this->users->editor();

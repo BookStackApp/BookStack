@@ -145,7 +145,7 @@ class UserPreferencesController extends Controller
      */
     public function toggleDarkMode()
     {
-        $enabled = setting()->getForCurrentUser('dark-mode-enabled', false);
+        $enabled = setting()->getForCurrentUser('dark-mode-enabled');
         setting()->putForCurrentUser('dark-mode-enabled', $enabled ? 'false' : 'true');
 
         return redirect()->back();
