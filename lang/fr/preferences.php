@@ -22,7 +22,7 @@ return [
     'notifications' => 'Préférences de notification',
     'notifications_desc' => 'Contrôlez les notifications par e-mail que vous recevez lorsque certaines activités sont effectuées dans le système.',
     'notifications_opt_own_page_changes' => 'Notifier lors des modifications des pages que je possède',
-    'notifications_opt_own_page_comments' => 'Notifier lors des modifications des pages que je possède',
+    'notifications_opt_own_page_comments' => 'Notifier lorsque les pages que je possède sont commentées',
     'notifications_opt_comment_replies' => 'Notifier les réponses à mes commentaires',
     'notifications_save' => 'Enregistrer les préférences',
     'notifications_update_success' => 'Les préférences de notification ont été mises à jour !',

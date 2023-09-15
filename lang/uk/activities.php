@@ -117,7 +117,7 @@ return [
     'commented_on'                => 'прокоментував',
     'comment_create'              => 'added comment',
     'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_delete'              => 'видалений коментар',
 
     // Other
     'permissions_update'          => 'оновив дозволи',
