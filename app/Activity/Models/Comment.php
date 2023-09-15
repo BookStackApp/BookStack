@@ -12,10 +12,12 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int      $id
  * @property string   $text
  * @property string   $html
- * @property int|null $parent_id
+ * @property int|null $parent_id  - Relates to local_id, not id
  * @property int      $local_id
  * @property string   $entity_type
  * @property int      $entity_id
+ * @property int      $created_by
+ * @property int      $updated_by
  */
 class Comment extends Model implements Loggable
 {
@@ -38,7 +40,9 @@ class Comment extends Model implements Loggable
      */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Comment::class);
+        return $this->belongsTo(Comment::class, 'parent_id', 'local_id', 'parent')
+            ->where('entity_type', '=', $this->entity_type)
+            ->where('entity_id', '=', $this->entity_id);
     }
 
     /**
