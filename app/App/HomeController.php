@@ -78,14 +78,14 @@ class HomeController extends Controller
         }
 
         if ($homepageOption === 'bookshelves') {
-            $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
+            $shelves = app()->make(BookshelfRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
             $data = array_merge($commonData, ['shelves' => $shelves]);
 
             return view('home.shelves', $data);
         }
 
         if ($homepageOption === 'books') {
-            $books = app(BookRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
+            $books = app()->make(BookRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
             $data = array_merge($commonData, ['books' => $books]);
 
             return view('home.books', $data);

@@ -374,7 +374,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function refreshSlug(): string
     {
-        $this->slug = app(SlugGenerator::class)->generate($this);
+        $this->slug = app()->make(SlugGenerator::class)->generate($this);
 
         return $this->slug;
     }

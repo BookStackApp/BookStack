@@ -71,7 +71,7 @@ trait ThrottlesLogins
      */
     protected function limiter(): RateLimiter
     {
-        return app(RateLimiter::class);
+        return app()->make(RateLimiter::class);
     }
 
     /**
