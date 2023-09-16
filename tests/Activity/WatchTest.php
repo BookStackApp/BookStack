@@ -210,16 +210,22 @@ class WatchTest extends TestCase
         $prefs = new UserNotificationPreferences($editor);
         $prefs->updateFromSettingsArray(['comment-replies' => 'true']);
 
+        // Create some existing comments to pad IDs to help potentially error
+        // on mis-identification of parent via ids used.
+        Comment::factory()->count(5)
+            ->for($entities['page'], 'entity')
+            ->create(['created_by' => $this->users->admin()->id]);
+
         $notifications = Notification::fake();
 
         $this->actingAs($editor)->post("/comment/{$entities['page']->id}", [
             'text' => 'My new comment'
         ]);
-        $comment = $entities['page']->comments()->first();
+        $comment = $entities['page']->comments()->orderBy('id', 'desc')->first();
 
         $this->asAdmin()->post("/comment/{$entities['page']->id}", [
             'text' => 'My new comment response',
-            'parent_id' => $comment->id,
+            'parent_id' => $comment->local_id,
         ]);
         $notifications->assertSentTo($editor, CommentCreationNotification::class);
     }
