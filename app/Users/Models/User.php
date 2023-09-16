@@ -89,35 +89,28 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected string $avatarUrl = '';
 
     /**
-     * This holds the default user when loaded.
-     */
-    protected static ?User $defaultUser = null;
-
-    /**
      * Returns the default public user.
+     * Fetches from the container as a singleton to effectively cache at an app level.
      */
-    public static function getDefault(): self
+    public static function getGuest(): self
     {
-        if (!is_null(static::$defaultUser)) {
-            return static::$defaultUser;
-        }
-
-        static::$defaultUser = static::query()->where('system_name', '=', 'public')->first();
-
-        return static::$defaultUser;
-    }
-
-    public static function clearDefault(): void
-    {
-        static::$defaultUser = null;
+        return app()->make('users.default');
     }
 
     /**
      * Check if the user is the default public user.
      */
-    public function isDefault(): bool
+    public function isGuest(): bool
     {
         return $this->system_name === 'public';
+    }
+
+    /**
+     * Check if the user has general access to the application.
+     */
+    public function hasAppAccess(): bool
+    {
+        return !$this->isGuest() || setting('app-public');
     }
 
     /**
