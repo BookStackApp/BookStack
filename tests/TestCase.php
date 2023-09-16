@@ -42,7 +42,6 @@ abstract class TestCase extends BaseTestCase
         $this->permissions = new PermissionsProvider($this->users);
         $this->files = new FileProvider();
 
-        User::clearDefault();
         parent::setUp();
 
         // We can uncomment the below to run tests with failings upon deprecations.

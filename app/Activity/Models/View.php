@@ -41,7 +41,7 @@ class View extends Model
     public static function incrementFor(Viewable $viewable): int
     {
         $user = user();
-        if (is_null($user) || $user->isDefault()) {
+        if (is_null($user) || $user->isGuest()) {
             return 0;
         }
 

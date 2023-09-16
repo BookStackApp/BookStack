@@ -34,7 +34,7 @@ class SettingController extends Controller
         return view('settings.' . $category, [
             'category'  => $category,
             'version'   => $version,
-            'guestUser' => User::getDefault(),
+            'guestUser' => User::getGuest(),
         ]);
     }
 

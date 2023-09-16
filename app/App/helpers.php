@@ -35,23 +35,7 @@ function versioned_asset(string $file = ''): string
  */
 function user(): User
 {
-    return auth()->user() ?: User::getDefault();
-}
-
-/**
- * Check if current user is a signed in user.
- */
-function signedInUser(): bool
-{
-    return auth()->user() && !auth()->user()->isDefault();
-}
-
-/**
- * Check if the current user has general access.
- */
-function hasAppAccess(): bool
-{
-    return !auth()->guest() || setting('app-public');
+    return auth()->user() ?: User::getGuest();
 }
 
 /**
@@ -61,7 +45,7 @@ function hasAppAccess(): bool
 function userCan(string $permission, Model $ownable = null): bool
 {
     if ($ownable === null) {
-        return user() && user()->can($permission);
+        return user()->can($permission);
     }
 
     // Check permission on ownable item

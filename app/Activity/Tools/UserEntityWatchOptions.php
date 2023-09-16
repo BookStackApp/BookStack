@@ -22,7 +22,7 @@ class UserEntityWatchOptions
 
     public function canWatch(): bool
     {
-        return $this->user->can('receive-notifications') && !$this->user->isDefault();
+        return $this->user->can('receive-notifications') && !$this->user->isGuest();
     }
 
     public function getWatchLevel(): string
