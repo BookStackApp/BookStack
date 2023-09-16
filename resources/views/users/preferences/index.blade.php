@@ -13,7 +13,7 @@
             </div>
         </section>
 
-        @if(signedInUser() && userCan('receive-notifications'))
+        @if(!user()->isGuest() && userCan('receive-notifications'))
             <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row wrap">
                 <div class="flex min-width-m">
                     <h2 class="list-heading">{{ trans('preferences.notifications') }}</h2>
@@ -25,7 +25,7 @@
             </section>
         @endif
 
-        @if(signedInUser())
+        @if(!user()->isGuest())
             <section class="card content-wrap auto-height items-center justify-space-between gap-m flex-container-row wrap">
                 <div class="flex min-width-m">
                     <h2 class="list-heading">{{ trans('settings.users_edit_profile') }}</h2>

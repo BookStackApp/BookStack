@@ -71,7 +71,7 @@ abstract class Controller extends BaseController
      */
     protected function preventGuestAccess(): void
     {
-        if (!signedInUser()) {
+        if (user()->isGuest()) {
             $this->showPermissionError();
         }
     }

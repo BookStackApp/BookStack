@@ -143,7 +143,7 @@
                 </a>
             @endif
 
-            @if(signedInUser())
+            @if(!user()->isGuest())
                 <hr class="primary-background">
                 @include('entities.favourite-action', ['entity' => $shelf])
             @endif
