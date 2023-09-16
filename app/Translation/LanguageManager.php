@@ -75,7 +75,7 @@ class LanguageManager
             return $default;
         }
 
-        if ($user->isDefault() && config('app.auto_detect_locale')) {
+        if ($user->isGuest() && config('app.auto_detect_locale')) {
             return $this->autoDetectLocale($request, $default);
         }
 

@@ -20,7 +20,7 @@ class PreventAuthenticatedResponseCaching
         /** @var Response $response */
         $response = $next($request);
 
-        if (signedInUser()) {
+        if (!user()->isGuest()) {
             $response->headers->set('Cache-Control', 'max-age=0, no-store, private');
             $response->headers->set('Pragma', 'no-cache');
             $response->headers->set('Expires', 'Sun, 12 Jul 2015 19:01:00 GMT');
