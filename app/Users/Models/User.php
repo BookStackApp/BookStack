@@ -12,7 +12,7 @@ use BookStack\Api\ApiToken;
 use BookStack\App\Model;
 use BookStack\App\Sluggable;
 use BookStack\Entities\Tools\SlugGenerator;
-use BookStack\Translation\LanguageManager;
+use BookStack\Translation\LocaleManager;
 use BookStack\Uploads\Image;
 use Carbon\Carbon;
 use Exception;
@@ -346,7 +346,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getLanguage(): string
     {
-        return app()->make(LanguageManager::class)->getLanguageForUser($this);
+        return app()->make(LocaleManager::class)->getForUser($this)->appLocale();
     }
 
     /**

@@ -83,19 +83,16 @@ return [
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     // Default locale to use
+    // A default variant is also stored since Laravel can overwrite
+    // app.locale when dynamically setting the locale in-app.
     'locale' => env('APP_LANG', 'en'),
-
-    // Locales available
-    'locales' => ['en', 'ar', 'bg', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'de_informal', 'el', 'es', 'es_AR', 'et', 'eu', 'fa', 'fr', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ka', 'ko', 'lt', 'lv', 'nl', 'nb', 'pt', 'pt_BR', 'sk', 'sl', 'sv', 'pl',  'ro', 'ru', 'tr', 'uk', 'uz', 'vi', 'zh_CN', 'zh_TW'],
+    'default_locale' => env('APP_LANG', 'en'),
 
     //  Application Fallback Locale
     'fallback_locale' => 'en',
 
     // Faker Locale
     'faker_locale' => 'en_GB',
-
-    // Enable right-to-left text control.
-    'rtl' => false,
 
     // Auto-detect the locale for public users
     // For public users their locale can be guessed by headers sent by their

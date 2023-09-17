@@ -3,17 +3,18 @@
 namespace BookStack\Translation;
 
 use BookStack\Users\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class LanguageManager
+class LocaleManager
 {
     /**
-     * Array of right-to-left language options.
+     * Array of right-to-left locale options.
      */
-    protected array $rtlLanguages = ['ar', 'fa', 'he'];
+    protected array $rtlLocales = ['ar', 'fa', 'he'];
 
     /**
-     * Map of BookStack language names to best-estimate ISO and windows locale names.
+     * Map of BookStack locale names to best-estimate ISO and windows locale names.
      * Locales can often be found by running `locale -a` on a linux system.
      * Windows locales can be found at:
      * https://docs.microsoft.com/en-us/cpp/c-runtime-library/language-strings?view=msvc-170.
@@ -29,8 +30,8 @@ class LanguageManager
         'da'          => ['iso' => 'da_DK', 'windows' => 'Danish'],
         'de'          => ['iso' => 'de_DE', 'windows' => 'German'],
         'de_informal' => ['iso' => 'de_DE', 'windows' => 'German'],
-        'en'          => ['iso' => 'en_GB', 'windows' => 'English'],
         'el'          => ['iso' => 'el_GR', 'windows' => 'Greek'],
+        'en'          => ['iso' => 'en_GB', 'windows' => 'English'],
         'es'          => ['iso' => 'es_ES', 'windows' => 'Spanish'],
         'es_AR'       => ['iso' => 'es_AR', 'windows' => 'Spanish'],
         'et'          => ['iso' => 'et_EE', 'windows' => 'Estonian'],
@@ -46,8 +47,8 @@ class LanguageManager
         'ko'          => ['iso' => 'ko_KR', 'windows' => 'Korean'],
         'lt'          => ['iso' => 'lt_LT', 'windows' => 'Lithuanian'],
         'lv'          => ['iso' => 'lv_LV', 'windows' => 'Latvian'],
-        'nl'          => ['iso' => 'nl_NL', 'windows' => 'Dutch'],
         'nb'          => ['iso' => 'nb_NO', 'windows' => 'Norwegian (Bokmal)'],
+        'nl'          => ['iso' => 'nl_NL', 'windows' => 'Dutch'],
         'pl'          => ['iso' => 'pl_PL', 'windows' => 'Polish'],
         'pt'          => ['iso' => 'pt_PT', 'windows' => 'Portuguese'],
         'pt_BR'       => ['iso' => 'pt_BR', 'windows' => 'Portuguese'],
@@ -56,47 +57,40 @@ class LanguageManager
         'sk'          => ['iso' => 'sk_SK', 'windows' => 'Slovak'],
         'sl'          => ['iso' => 'sl_SI', 'windows' => 'Slovenian'],
         'sv'          => ['iso' => 'sv_SE', 'windows' => 'Swedish'],
+        'tr'          => ['iso' => 'tr_TR', 'windows' => 'Turkish'],
         'uk'          => ['iso' => 'uk_UA', 'windows' => 'Ukrainian'],
         'uz'          => ['iso' => 'uz_UZ', 'windows' => 'Uzbek'],
         'vi'          => ['iso' => 'vi_VN', 'windows' => 'Vietnamese'],
         'zh_CN'       => ['iso' => 'zh_CN', 'windows' => 'Chinese (Simplified)'],
         'zh_TW'       => ['iso' => 'zh_TW', 'windows' => 'Chinese (Traditional)'],
-        'tr'          => ['iso' => 'tr_TR', 'windows' => 'Turkish'],
     ];
 
     /**
-     * Get the language specifically for the currently logged-in user if available.
+     * Get the BookStack locale string for the given user.
      */
-    public function getUserLanguage(Request $request, string $default): string
+    protected function getLocaleForUser(User $user): string
     {
-        try {
-            $user = user();
-        } catch (\Exception $exception) {
-            return $default;
-        }
+        $default = config('app.default_locale');
 
         if ($user->isGuest() && config('app.auto_detect_locale')) {
-            return $this->autoDetectLocale($request, $default);
+            return $this->autoDetectLocale(request(), $default);
         }
 
         return setting()->getUser($user, 'language', $default);
     }
 
     /**
-     * Get the language for the given user.
+     * Get a locale definition for the current user.
      */
-    public function getLanguageForUser(User $user): string
+    public function getForUser(User $user): LocaleDefinition
     {
-        $default = config('app.locale');
-        return setting()->getUser($user, 'language', $default);
-    }
+        $localeString = $this->getLocaleForUser($user);
 
-    /**
-     * Check if the given BookStack language value is a right-to-left language.
-     */
-    public function isRTL(string $language): bool
-    {
-        return in_array($language, $this->rtlLanguages);
+        return new LocaleDefinition(
+            $localeString,
+            $this->getIsoName($localeString),
+            in_array($localeString, $this->rtlLocales),
+        );
     }
 
     /**
@@ -105,7 +99,8 @@ class LanguageManager
      */
     protected function autoDetectLocale(Request $request, string $default): string
     {
-        $availableLocales = config('app.locales');
+        $availableLocales = array_keys($this->localeMap);
+
         foreach ($request->getLanguages() as $lang) {
             if (in_array($lang, $availableLocales)) {
                 return $lang;
@@ -116,29 +111,40 @@ class LanguageManager
     }
 
     /**
-     * Get the ISO version of a BookStack language name.
+     * Get the ISO version of a BookStack locale.
      */
-    public function getIsoName(string $language): string
+    protected function getIsoName(string $locale): string
     {
-        return $this->localeMap[$language]['iso'] ?? $language;
+        return $this->localeMap[$locale]['iso'] ?? $locale;
+    }
+
+    /**
+     * Sets the active locale for system level components.
+     */
+    public function setAppLocale(LocaleDefinition $locale): void
+    {
+        app()->setLocale($locale->appLocale());
+        Carbon::setLocale($locale->isoLocale());
+        $this->setPhpDateTimeLocale($locale);
     }
 
     /**
      * Set the system date locale for localized date formatting.
      * Will try both the standard locale name and the UTF8 variant.
      */
-    public function setPhpDateTimeLocale(string $language): void
+    public function setPhpDateTimeLocale(LocaleDefinition $locale): void
     {
-        $isoLang = $this->localeMap[$language]['iso'] ?? '';
-        $isoLangPrefix = explode('_', $isoLang)[0];
+        $appLocale = $locale->appLocale();
+        $isoLocale = $this->localeMap[$appLocale]['iso'] ?? '';
+        $isoLocalePrefix = explode('_', $isoLocale)[0];
 
         $locales = array_values(array_filter([
-            $isoLang ? $isoLang . '.utf8' : false,
-            $isoLang ?: false,
-            $isoLang ? str_replace('_', '-', $isoLang) : false,
-            $isoLang ? $isoLangPrefix . '.UTF-8' : false,
-            $this->localeMap[$language]['windows'] ?? false,
-            $language,
+            $isoLocale ? $isoLocale . '.utf8' : false,
+            $isoLocale ?: false,
+            $isoLocale ? str_replace('_', '-', $isoLocale) : false,
+            $isoLocale ? $isoLocalePrefix . '.UTF-8' : false,
+            $this->localeMap[$appLocale]['windows'] ?? false,
+            $appLocale,
         ]));
 
         if (!empty($locales)) {
