@@ -3,7 +3,6 @@
 namespace BookStack\Translation;
 
 use BookStack\Users\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LocaleManager
@@ -14,57 +13,55 @@ class LocaleManager
     protected array $rtlLocales = ['ar', 'fa', 'he'];
 
     /**
-     * Map of BookStack locale names to best-estimate ISO and windows locale names.
+     * Map of BookStack locale names to best-estimate ISO locale names.
      * Locales can often be found by running `locale -a` on a linux system.
-     * Windows locales can be found at:
-     * https://docs.microsoft.com/en-us/cpp/c-runtime-library/language-strings?view=msvc-170.
      *
-     * @var array<string, array{iso: string, windows: string}>
+     * @var array<string, string>
      */
     protected array $localeMap = [
-        'ar'          => ['iso' => 'ar', 'windows' => 'Arabic'],
-        'bg'          => ['iso' => 'bg_BG', 'windows' => 'Bulgarian'],
-        'bs'          => ['iso' => 'bs_BA', 'windows' => 'Bosnian (Latin)'],
-        'ca'          => ['iso' => 'ca', 'windows' => 'Catalan'],
-        'cs'          => ['iso' => 'cs_CZ', 'windows' => 'Czech'],
-        'cy'          => ['iso' => 'cy_GB', 'windows' => 'Welsh'],
-        'da'          => ['iso' => 'da_DK', 'windows' => 'Danish'],
-        'de'          => ['iso' => 'de_DE', 'windows' => 'German'],
-        'de_informal' => ['iso' => 'de_DE', 'windows' => 'German'],
-        'el'          => ['iso' => 'el_GR', 'windows' => 'Greek'],
-        'en'          => ['iso' => 'en_GB', 'windows' => 'English'],
-        'es'          => ['iso' => 'es_ES', 'windows' => 'Spanish'],
-        'es_AR'       => ['iso' => 'es_AR', 'windows' => 'Spanish'],
-        'et'          => ['iso' => 'et_EE', 'windows' => 'Estonian'],
-        'eu'          => ['iso' => 'eu_ES', 'windows' => 'Basque'],
-        'fa'          => ['iso' => 'fa_IR', 'windows' => 'Persian'],
-        'fr'          => ['iso' => 'fr_FR', 'windows' => 'French'],
-        'he'          => ['iso' => 'he_IL', 'windows' => 'Hebrew'],
-        'hr'          => ['iso' => 'hr_HR', 'windows' => 'Croatian'],
-        'hu'          => ['iso' => 'hu_HU', 'windows' => 'Hungarian'],
-        'id'          => ['iso' => 'id_ID', 'windows' => 'Indonesian'],
-        'it'          => ['iso' => 'it_IT', 'windows' => 'Italian'],
-        'ja'          => ['iso' => 'ja', 'windows' => 'Japanese'],
-        'ka'          => ['iso' => 'ka_GE', 'windows' => 'Georgian'],
-        'ko'          => ['iso' => 'ko_KR', 'windows' => 'Korean'],
-        'lt'          => ['iso' => 'lt_LT', 'windows' => 'Lithuanian'],
-        'lv'          => ['iso' => 'lv_LV', 'windows' => 'Latvian'],
-        'nb'          => ['iso' => 'nb_NO', 'windows' => 'Norwegian (Bokmal)'],
-        'nl'          => ['iso' => 'nl_NL', 'windows' => 'Dutch'],
-        'pl'          => ['iso' => 'pl_PL', 'windows' => 'Polish'],
-        'pt'          => ['iso' => 'pt_PT', 'windows' => 'Portuguese'],
-        'pt_BR'       => ['iso' => 'pt_BR', 'windows' => 'Portuguese'],
-        'ro'          => ['iso' => 'ro_RO', 'windows' => 'Romanian'],
-        'ru'          => ['iso' => 'ru', 'windows' => 'Russian'],
-        'sk'          => ['iso' => 'sk_SK', 'windows' => 'Slovak'],
-        'sl'          => ['iso' => 'sl_SI', 'windows' => 'Slovenian'],
-        'sv'          => ['iso' => 'sv_SE', 'windows' => 'Swedish'],
-        'tr'          => ['iso' => 'tr_TR', 'windows' => 'Turkish'],
-        'uk'          => ['iso' => 'uk_UA', 'windows' => 'Ukrainian'],
-        'uz'          => ['iso' => 'uz_UZ', 'windows' => 'Uzbek'],
-        'vi'          => ['iso' => 'vi_VN', 'windows' => 'Vietnamese'],
-        'zh_CN'       => ['iso' => 'zh_CN', 'windows' => 'Chinese (Simplified)'],
-        'zh_TW'       => ['iso' => 'zh_TW', 'windows' => 'Chinese (Traditional)'],
+        'ar'          => 'ar',
+        'bg'          => 'bg_BG',
+        'bs'          => 'bs_BA',
+        'ca'          => 'ca',
+        'cs'          => 'cs_CZ',
+        'cy'          => 'cy_GB',
+        'da'          => 'da_DK',
+        'de'          => 'de_DE',
+        'de_informal' => 'de_DE',
+        'el'          => 'el_GR',
+        'en'          => 'en_GB',
+        'es'          => 'es_ES',
+        'es_AR'       => 'es_AR',
+        'et'          => 'et_EE',
+        'eu'          => 'eu_ES',
+        'fa'          => 'fa_IR',
+        'fr'          => 'fr_FR',
+        'he'          => 'he_IL',
+        'hr'          => 'hr_HR',
+        'hu'          => 'hu_HU',
+        'id'          => 'id_ID',
+        'it'          => 'it_IT',
+        'ja'          => 'ja',
+        'ka'          => 'ka_GE',
+        'ko'          => 'ko_KR',
+        'lt'          => 'lt_LT',
+        'lv'          => 'lv_LV',
+        'nb'          => 'nb_NO',
+        'nl'          => 'nl_NL',
+        'pl'          => 'pl_PL',
+        'pt'          => 'pt_PT',
+        'pt_BR'       => 'pt_BR',
+        'ro'          => 'ro_RO',
+        'ru'          => 'ru',
+        'sk'          => 'sk_SK',
+        'sl'          => 'sl_SI',
+        'sv'          => 'sv_SE',
+        'tr'          => 'tr_TR',
+        'uk'          => 'uk_UA',
+        'uz'          => 'uz_UZ',
+        'vi'          => 'vi_VN',
+        'zh_CN'       => 'zh_CN',
+        'zh_TW'       => 'zh_TW',
     ];
 
     /**
@@ -90,7 +87,7 @@ class LocaleManager
 
         return new LocaleDefinition(
             $localeString,
-            $this->getIsoName($localeString),
+            $this->localeMap[$localeString] ?? $localeString,
             in_array($localeString, $this->rtlLocales),
         );
     }
@@ -110,48 +107,6 @@ class LocaleManager
         }
 
         return $default;
-    }
-
-    /**
-     * Get the ISO version of a BookStack locale.
-     */
-    protected function getIsoName(string $locale): string
-    {
-        return $this->localeMap[$locale]['iso'] ?? $locale;
-    }
-
-    /**
-     * Sets the active locale for system level components.
-     */
-    public function setAppLocale(LocaleDefinition $locale): void
-    {
-        app()->setLocale($locale->appLocale());
-        Carbon::setLocale($locale->isoLocale());
-        $this->setPhpDateTimeLocale($locale);
-    }
-
-    /**
-     * Set the system date locale for localized date formatting.
-     * Will try both the standard locale name and the UTF8 variant.
-     */
-    public function setPhpDateTimeLocale(LocaleDefinition $locale): void
-    {
-        $appLocale = $locale->appLocale();
-        $isoLocale = $this->localeMap[$appLocale]['iso'] ?? '';
-        $isoLocalePrefix = explode('_', $isoLocale)[0];
-
-        $locales = array_values(array_filter([
-            $isoLocale ? $isoLocale . '.utf8' : false,
-            $isoLocale ?: false,
-            $isoLocale ? str_replace('_', '-', $isoLocale) : false,
-            $isoLocale ? $isoLocalePrefix . '.UTF-8' : false,
-            $this->localeMap[$appLocale]['windows'] ?? false,
-            $appLocale,
-        ]));
-
-        if (!empty($locales)) {
-            setlocale(LC_TIME, $locales[0], ...array_slice($locales, 1));
-        }
     }
 
     /**
