@@ -16,18 +16,11 @@ use Throwable;
 
 class ExportFormatter
 {
-    protected ImageService $imageService;
-    protected PdfGenerator $pdfGenerator;
-    protected CspService $cspService;
-
-    /**
-     * ExportService constructor.
-     */
-    public function __construct(ImageService $imageService, PdfGenerator $pdfGenerator, CspService $cspService)
-    {
-        $this->imageService = $imageService;
-        $this->pdfGenerator = $pdfGenerator;
-        $this->cspService = $cspService;
+    public function __construct(
+        protected ImageService $imageService,
+        protected PdfGenerator $pdfGenerator,
+        protected CspService $cspService
+    ) {
     }
 
     /**
@@ -36,13 +29,14 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function pageToContainedHtml(Page $page)
+    public function pageToContainedHtml(Page $page): string
     {
         $page->html = (new PageContent($page))->render();
         $pageHtml = view('exports.page', [
             'page'       => $page,
             'format'     => 'html',
             'cspContent' => $this->cspService->getCspMetaTagValue(),
+            'locale'     => user()->getLocale(),
         ])->render();
 
         return $this->containHtml($pageHtml);
@@ -53,7 +47,7 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function chapterToContainedHtml(Chapter $chapter)
+    public function chapterToContainedHtml(Chapter $chapter): string
     {
         $pages = $chapter->getVisiblePages();
         $pages->each(function ($page) {
@@ -64,6 +58,7 @@ class ExportFormatter
             'pages'      => $pages,
             'format'     => 'html',
             'cspContent' => $this->cspService->getCspMetaTagValue(),
+            'locale'     => user()->getLocale(),
         ])->render();
 
         return $this->containHtml($html);
@@ -74,7 +69,7 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function bookToContainedHtml(Book $book)
+    public function bookToContainedHtml(Book $book): string
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('exports.book', [
@@ -82,6 +77,7 @@ class ExportFormatter
             'bookChildren' => $bookTree,
             'format'       => 'html',
             'cspContent'   => $this->cspService->getCspMetaTagValue(),
+            'locale'       => user()->getLocale(),
         ])->render();
 
         return $this->containHtml($html);
@@ -92,13 +88,14 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function pageToPdf(Page $page)
+    public function pageToPdf(Page $page): string
     {
         $page->html = (new PageContent($page))->render();
         $html = view('exports.page', [
             'page'   => $page,
             'format' => 'pdf',
             'engine' => $this->pdfGenerator->getActiveEngine(),
+            'locale' => user()->getLocale(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -109,7 +106,7 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function chapterToPdf(Chapter $chapter)
+    public function chapterToPdf(Chapter $chapter): string
     {
         $pages = $chapter->getVisiblePages();
         $pages->each(function ($page) {
@@ -121,6 +118,7 @@ class ExportFormatter
             'pages'   => $pages,
             'format'  => 'pdf',
             'engine'  => $this->pdfGenerator->getActiveEngine(),
+            'locale'  => user()->getLocale(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -131,7 +129,7 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function bookToPdf(Book $book)
+    public function bookToPdf(Book $book): string
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('exports.book', [
@@ -139,6 +137,7 @@ class ExportFormatter
             'bookChildren' => $bookTree,
             'format'       => 'pdf',
             'engine'       => $this->pdfGenerator->getActiveEngine(),
+            'locale'       => user()->getLocale(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -194,7 +193,7 @@ class ExportFormatter
         /** @var DOMElement $iframe */
         foreach ($iframes as $iframe) {
             $link = $iframe->getAttribute('src');
-            if (strpos($link, '//') === 0) {
+            if (str_starts_with($link, '//')) {
                 $link = 'https:' . $link;
             }
 
@@ -240,7 +239,7 @@ class ExportFormatter
             foreach ($linksOutput[0] as $index => $linkMatch) {
                 $oldLinkString = $linkMatch;
                 $srcString = $linksOutput[2][$index];
-                if (strpos(trim($srcString), 'http') !== 0) {
+                if (!str_starts_with(trim($srcString), 'http')) {
                     $newSrcString = url($srcString);
                     $newLinkString = str_replace($srcString, $newSrcString, $oldLinkString);
                     $htmlContent = str_replace($oldLinkString, $newLinkString, $htmlContent);
