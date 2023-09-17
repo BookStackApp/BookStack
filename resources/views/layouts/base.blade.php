@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ $locale?->htmlLang() ?? config('app.default_locale') }}"
-      dir="{{ $locale?->htmlDirection() ?? 'auto' }}"
+<html lang="{{ isset($locale) ? $locale->htmlLang() : config('app.default_locale') }}"
+      dir="{{ isset($locale) ? $locale->htmlDirection() : 'auto' }}"
       class="{{ setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : '' }}">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
