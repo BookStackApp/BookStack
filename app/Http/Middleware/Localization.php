@@ -27,7 +27,7 @@ class Localization
         view()->share('locale', $userLocale);
 
         // Set locale for system components
-        $this->localeManager->setAppLocale($userLocale);
+        app()->setLocale($userLocale->appLocale());
 
         return $next($request);
     }
