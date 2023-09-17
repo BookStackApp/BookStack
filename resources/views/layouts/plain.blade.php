@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ $locale->htmlLang() }}"
-      dir="{{ $locale->htmlDirection() }}"
+<html lang="{{ $locale?->htmlLang() ?? config('app.default_locale') }}"
+      dir="{{ $locale?->htmlDirection() ?? 'auto' }}"
       class="@yield('document-class')">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>

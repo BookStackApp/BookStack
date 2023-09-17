@@ -2,6 +2,7 @@
 
 namespace BookStack\App;
 
+use BookStack\Translation\LocaleDefinition;
 use BookStack\Users\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,9 +33,9 @@ abstract class MailNotification extends Notification implements ShouldQueue
     /**
      * Create a new mail message.
      */
-    protected function newMailMessage(string $language = ''): MailMessage
+    protected function newMailMessage(?LocaleDefinition $locale = null): MailMessage
     {
-        $data = ['language' => $language ?: null];
+        $data = ['locale' => $locale ?? user()->getLocale()];
 
         return (new MailMessage())->view([
             'html' => 'vendor.notifications.email',

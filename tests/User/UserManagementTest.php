@@ -215,7 +215,7 @@ class UserManagementTest extends TestCase
     {
         $langs = ['en', 'fr', 'hr'];
         foreach ($langs as $lang) {
-            config()->set('app.locale', $lang);
+            config()->set('app.default_locale', $lang);
             $resp = $this->asAdmin()->get('/settings/users/create');
             $this->withHtml($resp)->assertElementExists('select[name="language"] option[value="' . $lang . '"][selected]');
         }
