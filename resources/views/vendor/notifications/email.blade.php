@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="{{ config('app.lang') }}">
+<html lang="{{ $locale->htmlLang() }}">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -159,7 +159,7 @@ $style = [
                                                             <tr>
                                                                 <td style="{{ $fontFamily }}">
                                                                     <p style="{{ $style['paragraph-sub'] }}">
-                                                                        {{ trans('common.email_action_help', ['actionText' => $actionText], $language) }}
+                                                                        {{ $locale->trans('common.email_action_help', ['actionText' => $actionText]) }}
                                                                     </p>
 
                                                                     <p style="{{ $style['paragraph-sub'] }}">
@@ -187,7 +187,7 @@ $style = [
                                                     <p style="{{ $style['paragraph-sub'] }}">
                                                         &copy; {{ date('Y') }}
                                                         <a style="{{ $style['anchor'] }}" href="{{ url('/') }}" target="_blank">{{ setting('app-name') }}</a>.
-                                                        {{ trans('common.email_rights', [], $language) }}
+                                                        {{ $locale->trans('common.email_rights') }}
                                                     </p>
                                                 </td>
                                             </tr>
