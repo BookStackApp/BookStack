@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.lang') }}"
-      dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
+<html lang="{{ $locale->htmlLang() }}"
+      dir="{{ $locale->htmlDirection() }}"
       class="{{ setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : '' }}">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>

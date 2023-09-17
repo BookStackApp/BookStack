@@ -33,7 +33,7 @@
                         </div>
                     </div>
 
-                    @include('users.parts.language-option-row', ['value' => setting()->getUser($user, 'language', config('app.default_locale'))])
+                    @include('users.parts.language-option-row', ['value' => $user->getLanguage())])
                 </div>
 
                 <div class="text-right">
