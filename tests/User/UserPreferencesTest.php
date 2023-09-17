@@ -156,6 +156,19 @@ class UserPreferencesTest extends TestCase
         $this->assertPermissionError($resp);
     }
 
+    public function test_notification_comment_options_only_exist_if_comments_active()
+    {
+        $resp = $this->asEditor()->get('/preferences/notifications');
+        $resp->assertSee('Notify upon comments');
+        $resp->assertSee('Notify upon replies');
+
+        setting()->put('app-disable-comments', true);
+
+        $resp = $this->get('/preferences/notifications');
+        $resp->assertDontSee('Notify upon comments');
+        $resp->assertDontSee('Notify upon replies');
+    }
+
     public function test_update_sort_preference()
     {
         $editor = $this->users->editor();

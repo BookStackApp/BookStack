@@ -20,20 +20,22 @@
                                 'label' => trans('preferences.notifications_opt_own_page_changes'),
                             ])
                         </div>
-                        <div>
-                            @include('form.toggle-switch', [
-                                'name' => 'preferences[own-page-comments]',
-                                'value' => $preferences->notifyOnOwnPageComments(),
-                                'label' => trans('preferences.notifications_opt_own_page_comments'),
-                            ])
-                        </div>
-                        <div>
-                            @include('form.toggle-switch', [
-                                'name' => 'preferences[comment-replies]',
-                                'value' => $preferences->notifyOnCommentReplies(),
-                                'label' => trans('preferences.notifications_opt_comment_replies'),
-                            ])
-                        </div>
+                        @if (!setting('app-disable-comments'))
+                            <div>
+                                @include('form.toggle-switch', [
+                                    'name' => 'preferences[own-page-comments]',
+                                    'value' => $preferences->notifyOnOwnPageComments(),
+                                    'label' => trans('preferences.notifications_opt_own_page_comments'),
+                                ])
+                            </div>
+                            <div>
+                                @include('form.toggle-switch', [
+                                    'name' => 'preferences[comment-replies]',
+                                    'value' => $preferences->notifyOnCommentReplies(),
+                                    'label' => trans('preferences.notifications_opt_comment_replies'),
+                                ])
+                            </div>
+                        @endif
                     </div>
 
                     <div class="mt-auto">
