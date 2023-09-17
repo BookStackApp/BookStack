@@ -156,6 +156,19 @@ class UserPreferencesTest extends TestCase
         $this->assertPermissionError($resp);
     }
 
+    public function test_notification_comment_options_only_exist_if_comments_active()
+    {
+        $resp = $this->asEditor()->get('/preferences/notifications');
+        $resp->assertSee('Notify upon comments');
+        $resp->assertSee('Notify upon replies');
+
+        setting()->put('app-disable-comments', true);
+
+        $resp = $this->get('/preferences/notifications');
+        $resp->assertDontSee('Notify upon comments');
+        $resp->assertDontSee('Notify upon replies');
+    }
+
     public function test_update_sort_preference()
     {
         $editor = $this->users->editor();
@@ -317,36 +330,5 @@ class UserPreferencesTest extends TestCase
 
         $resp = $this->get($page->getUrl('/edit'));
         $resp->assertSee('option:code-editor:favourites="javascript,ruby"', false);
-    }
-
-    public function test_comment_notifications_hidden_when_comments_disabled()
-    {
-        $editor = $this->users->editor();
-
-
-        setting()->putUser($editor, 'app-disable-comments', true);
-
-        $settingLabel1 = trans('preferences.notifications_opt_own_page_comments');
-        $settingLabel2 = trans('preferences.notifications_opt_comment_replies');
-
-        $resp = $this->actingAs($editor)->get('/preferences/notifications');
-
-        $resp->assertDontSee($settingLabel1, true);
-        $resp->assertDontSee($settingLabel2, true);
-    }
-
-    public function test_comment_notifications_visible_when_comments_enabled()
-    {
-        $editor = $this->users->editor();
-
-        setting()->putUser($editor, 'app-disable-comments', false);
-
-        $settingLabel1 = trans('preferences.notifications_opt_own_page_comments');
-        $settingLabel2 = trans('preferences.notifications_opt_comment_replies');
-
-        $resp = $this->actingAs($editor)->get('/preferences/notifications');
-
-        $resp->assertSee($settingLabel1, true);
-        $resp->assertSee($settingLabel2, true);
     }
 }
