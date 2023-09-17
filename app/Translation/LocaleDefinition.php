@@ -42,4 +42,12 @@ class LocaleDefinition
     {
         return $this->isRtl ? 'rtl' : 'ltr';
     }
+
+    /**
+     * Translate using this locate.
+     */
+    public function trans(string $key, array $replace = []): string
+    {
+        return trans($key, $replace, $this->appLocale());
+    }
 }

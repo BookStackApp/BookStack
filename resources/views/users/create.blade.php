@@ -14,7 +14,7 @@
 
                 <div class="setting-list">
                     @include('users.parts.form')
-                    @include('users.parts.language-option-row', ['value' => old('setting.language') ?? config('app.locale')])
+                    @include('users.parts.language-option-row', ['value' => old('language') ?? config('app.default_locale')])
                 </div>
 
                 <div class="form-group text-right">

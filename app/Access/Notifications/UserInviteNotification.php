@@ -16,12 +16,12 @@ class UserInviteNotification extends MailNotification
     public function toMail(User $notifiable): MailMessage
     {
         $appName = ['appName' => setting('app-name')];
-        $language = $notifiable->getLanguage();
+        $locale = $notifiable->getLocale();
 
-        return $this->newMailMessage($language)
-                ->subject(trans('auth.user_invite_email_subject', $appName, $language))
-                ->greeting(trans('auth.user_invite_email_greeting', $appName, $language))
-                ->line(trans('auth.user_invite_email_text', [], $language))
-                ->action(trans('auth.user_invite_email_action', [], $language), url('/register/invite/' . $this->token));
+        return $this->newMailMessage($locale)
+                ->subject($locale->trans('auth.user_invite_email_subject', $appName))
+                ->greeting($locale->trans('auth.user_invite_email_greeting', $appName))
+                ->line($locale->trans('auth.user_invite_email_text'))
+                ->action($locale->trans('auth.user_invite_email_action'), url('/register/invite/' . $this->token));
     }
 }

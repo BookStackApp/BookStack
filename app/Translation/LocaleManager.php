@@ -27,6 +27,7 @@ class LocaleManager
         'bs'          => ['iso' => 'bs_BA', 'windows' => 'Bosnian (Latin)'],
         'ca'          => ['iso' => 'ca', 'windows' => 'Catalan'],
         'cs'          => ['iso' => 'cs_CZ', 'windows' => 'Czech'],
+        'cy'          => ['iso' => 'cy_GB', 'windows' => 'Welsh'],
         'da'          => ['iso' => 'da_DK', 'windows' => 'Danish'],
         'de'          => ['iso' => 'de_DE', 'windows' => 'German'],
         'de_informal' => ['iso' => 'de_DE', 'windows' => 'German'],
@@ -44,6 +45,7 @@ class LocaleManager
         'id'          => ['iso' => 'id_ID', 'windows' => 'Indonesian'],
         'it'          => ['iso' => 'it_IT', 'windows' => 'Italian'],
         'ja'          => ['iso' => 'ja', 'windows' => 'Japanese'],
+        'ka'          => ['iso' => 'ka_GE', 'windows' => 'Georgian'],
         'ko'          => ['iso' => 'ko_KR', 'windows' => 'Korean'],
         'lt'          => ['iso' => 'lt_LT', 'windows' => 'Lithuanian'],
         'lv'          => ['iso' => 'lv_LV', 'windows' => 'Latvian'],
@@ -99,7 +101,7 @@ class LocaleManager
      */
     protected function autoDetectLocale(Request $request, string $default): string
     {
-        $availableLocales = array_keys($this->localeMap);
+        $availableLocales = $this->getAllAppLocales();
 
         foreach ($request->getLanguages() as $lang) {
             if (in_array($lang, $availableLocales)) {
@@ -150,5 +152,13 @@ class LocaleManager
         if (!empty($locales)) {
             setlocale(LC_TIME, $locales[0], ...array_slice($locales, 1));
         }
+    }
+
+    /**
+     * Get all the available app-specific level locale strings.
+     */
+    public function getAllAppLocales(): array
+    {
+        return array_keys($this->localeMap);
     }
 }

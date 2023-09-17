@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ $locale->htmlLang() }}">
+<html lang="{{ $locale?->htmlLang() ?? config('app.default_locale') }}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>@yield('title')</title>
