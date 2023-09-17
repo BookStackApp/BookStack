@@ -23,13 +23,13 @@ npm run production
 npm run dev
 ```
 
-BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the database name, username and password all defined as `bookstack-test`. You will have to create that database and that set of credentials before testing.
+Further details about the BookStack JavaScript codebase can be found in the [javascript-code.md document](javascript-code.md).
 
-The testing database will also need migrating and seeding beforehand. This can be done by running `composer refresh-test-database`.
+## Automated App Testing 
 
-Once done you can run `composer test` in the application root directory to run all tests. Tests can be ran in parallel by running them via `composer t`. This will use Laravel's built-in parallel testing functionality, and attempt to create and seed a database instance for each testing thread. If required these parallel testing instances can be reset, before testing again, by running `composer t-reset`.
+BookStack has a large suite of PHP tests to cover application functionality. We try to ensure that all additions and changes to the platform are covered with testing.
 
-If the codebase needs to be tested with deprecations, this can be done via uncommenting the relevant line within the TestCase@setUp function. 
+For details about setting-up, running and writing tests please see the [php-testing.md document](php-testing.md).
 
 ## Code Standards
 
