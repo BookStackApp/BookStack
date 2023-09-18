@@ -56,7 +56,7 @@ class UserAvatars
     /**
      * Destroy all user avatars uploaded to the given user.
      */
-    public function destroyAllForUser(User $user)
+    public function destroyAllForUser(User $user): void
     {
         $profileImages = Image::query()->where('type', '=', 'user')
             ->where('uploaded_to', '=', $user->id)
@@ -70,7 +70,7 @@ class UserAvatars
     /**
      * Save an avatar image from an external service.
      *
-     * @throws Exception
+     * @throws HttpFetchException
      */
     protected function saveAvatarImage(User $user, int $size = 500): Image
     {
@@ -114,12 +114,14 @@ class UserAvatars
         try {
             $client = $this->http->buildClient(5);
             $response = $client->sendRequest(new Request('GET', $url));
-            $imageData = (string) $response->getBody();
+            if ($response->getStatusCode() !== 200) {
+                throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]));
+            }
+
+            return (string) $response->getBody();
         } catch (ClientExceptionInterface $exception) {
             throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]), $exception->getCode(), $exception);
         }
-
-        return $imageData;
     }
 
     /**
