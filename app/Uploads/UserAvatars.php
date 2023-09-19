@@ -127,7 +127,7 @@ class UserAvatars
     /**
      * Check if fetching external avatars is enabled.
      */
-    protected function avatarFetchEnabled(): bool
+    public function avatarFetchEnabled(): bool
     {
         $fetchUrl = $this->getAvatarUrl();
 
@@ -137,7 +137,7 @@ class UserAvatars
     /**
      * Get the URL to fetch avatars from.
      */
-    protected function getAvatarUrl(): string
+    public function getAvatarUrl(): string
     {
         $configOption = config('services.avatar_url');
         if ($configOption === false) {

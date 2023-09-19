@@ -1,16 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
 namespace BookStack\Console\Commands;
 
 use BookStack\Users\Models\User;
+use Exception;
 use Illuminate\Console\Command;
 use BookStack\Uploads\UserAvatars;
-use Illuminate\Database\Eloquent\Collection;
 
-final class RefreshAvatarCommand extends Command
+class RefreshAvatarCommand extends Command
 {
+    use HandlesSingleUser;
+
     /**
      * The name and signature of the console command.
      *
@@ -20,126 +20,87 @@ final class RefreshAvatarCommand extends Command
                             {--id= : Numeric ID of the user to refresh avatar for}
                             {--email= : Email address of the user to refresh avatar for}
                             {--users-without-avatars : Refresh avatars for users that currently have no avatar}
-                            {--a|all : Refresh all user avatars}
-                            {--f|force : Actually run the update for --users-without-avatars, Defaults to a dry-run}';
+                            {--a|all : Refresh avatars for all users}
+                            {--f|force : Actually run the update, Defaults to a dry-run}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Refresh avatar for given user or users';
+    protected $description = 'Refresh avatar for the given user(s)';
 
     public function handle(UserAvatars $userAvatar): int
     {
-        $dryRun = !$this->option('force');
+        if (!$userAvatar->avatarFetchEnabled()) {
+            $this->error("Avatar fetching is disabled on this instance.");
+            return self::FAILURE;
+        }
 
         if ($this->option('users-without-avatars')) {
-            return $this->handleUpdateWithoutAvatars($userAvatar, $dryRun);
+            return $this->processUsers(User::query()->whereDoesntHave('avatar')->get()->all(), $userAvatar);
         }
 
         if ($this->option('all')) {
-            return $this->handleUpdateAllAvatars($userAvatar, $dryRun);
+            return $this->processUsers(User::query()->get()->all(), $userAvatar);
         }
 
-        return $this->handleSingleUserUpdate($userAvatar);
+        try {
+            $user = $this->fetchProvidedUser();
+            return $this->processUsers([$user], $userAvatar);
+        } catch (Exception $exception) {
+            $this->error($exception->getMessage());
+            return self::FAILURE;
+        }
     }
 
-    private function handleUpdateWithoutAvatars(UserAvatars $userAvatar, bool $dryRun): int
+    /**
+     * @param User[] $users
+     */
+    private function processUsers(array $users, UserAvatars $userAvatar): int
     {
-        $users = User::query()->where('image_id', '=', 0)->get();
-        $this->info(count($users) . ' user(s) found without avatars.');
+        $dryRun = !$this->option('force');
+        $this->info(count($users) . " user(s) found to update avatars for.");
+
+        if (count($users) === 0) {
+            return self::SUCCESS;
+        }
 
         if (!$dryRun) {
-            $proceed = !$this->input->isInteractive() || $this->confirm('Are you sure you want to refresh avatars of users that do not have one?');
+            $fetchHost = parse_url($userAvatar->getAvatarUrl(), PHP_URL_HOST);
+            $this->warn("This will destroy any existing avatar images these users have, and attempt to fetch new avatar images from {$fetchHost}.");
+            $proceed = !$this->input->isInteractive() || $this->confirm('Are you sure you want to proceed?');
             if (!$proceed) {
                 return self::SUCCESS;
             }
         }
 
-        return $this->processUsers($users, $userAvatar, $dryRun);
-    }
+        $this->info("");
 
-    private function handleUpdateAllAvatars(UserAvatars $userAvatar, bool $dryRun): int
-    {
-        $users = User::query()->get();
-        $this->info(count($users) . ' user(s) found.');
-
-        if (!$dryRun) {
-            $proceed = !$this->input->isInteractive() || $this->confirm('Are you sure you want to refresh avatars for ALL USERS?');
-            if (!$proceed) {
-                return self::SUCCESS;
-            }
-        }
-
-        return $this->processUsers($users, $userAvatar, $dryRun);
-    }
-
-    private function processUsers(Collection $users, UserAvatars $userAvatar, bool $dryRun): int
-    {
         $exitCode = self::SUCCESS;
         foreach ($users as $user) {
-            $this->getOutput()->write("ID {$user->id} - ", false);
+            $linePrefix = "[ID: {$user->id}] $user->email -";
 
             if ($dryRun) {
-                $this->warn('Not updated');
+                $this->warn("{$linePrefix} Not updated");
                 continue;
             }
 
             if ($this->fetchAvatar($userAvatar, $user)) {
-                $this->info('Updated');
+                $this->info("{$linePrefix} Updated");
             } else {
-                $this->error('Not updated');
+                $this->error("{$linePrefix} Not updated");
                 $exitCode = self::FAILURE;
             }
         }
 
-        $this->getOutput()->newLine();
         if ($dryRun) {
-            $this->comment('Dry run, no avatars have been updated');
-            $this->comment('Run with -f or --force to perform the update');
+            $this->comment("");
+            $this->comment("Dry run, no avatars were updated.");
+            $this->comment('Run with -f or --force to perform the update.');
         }
 
         return $exitCode;
-    }
-
-
-    private function handleSingleUserUpdate(UserAvatars $userAvatar): int
-    {
-        $id = $this->option('id');
-        $email = $this->option('email');
-        if (!$id && !$email) {
-            $this->error('Either a --id=<number> or --email=<email> option must be provided.');
-            $this->error('Run with `--help` to more options');
-
-            return self::FAILURE;
-        }
-
-        $field = $id ? 'id' : 'email';
-        $value = $id ?: $email;
-
-        $user = User::query()
-            ->where($field, '=', $value)
-            ->first();
-
-        if (!$user) {
-            $this->error("A user where {$field}={$value} could not be found.");
-
-            return self::FAILURE;
-        }
-
-        $this->info("This will refresh the avatar for user: \n- ID: {$user->id}\n- Name: {$user->name}\n- Email: {$user->email}\n");
-        $confirm = $this->confirm('Are you sure you want to proceed?');
-        if ($confirm) {
-            if ($this->fetchAvatar($userAvatar, $user)) {
-                $this->info('User avatar has been updated.');
-                return self::SUCCESS;
-            }
-
-            $this->info('Could not update avatar please review logs.');
-        }
-
-        return self::FAILURE;
     }
 
     private function fetchAvatar(UserAvatars $userAvatar, User $user): bool
