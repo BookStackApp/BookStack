@@ -391,6 +391,18 @@ body.flexbox {
     position: sticky;
     top: $-m;
   }
+  .tri-layout-left-contents {
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: scroll;
+    height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 @include larger-than($xxl) {
   .tri-layout-left-contents, .tri-layout-right-contents {
