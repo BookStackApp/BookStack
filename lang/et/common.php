@@ -42,6 +42,7 @@ return [
     'remove' => 'Eemalda',
     'add' => 'Lisa',
     'configure' => 'Seadista',
+    'manage' => 'Halda',
     'fullscreen' => 'Täisekraan',
     'favourite' => 'Lemmik',
     'unfavourite' => 'Eemalda lemmik',

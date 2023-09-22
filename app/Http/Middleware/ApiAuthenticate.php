@@ -31,7 +31,7 @@ class ApiAuthenticate
     {
         // Return if the user is already found to be signed in via session-based auth.
         // This is to make it easy to browser the API via browser after just logging into the system.
-        if (signedInUser() || session()->isStarted()) {
+        if (!user()->isGuest() || session()->isStarted()) {
             if (!$this->sessionUserHasApiAccess()) {
                 throw new ApiAuthException(trans('errors.api_user_no_api_permission'), 403);
             }
@@ -53,6 +53,6 @@ class ApiAuthenticate
     {
         $hasApiPermission = user()->can('access-api');
 
-        return $hasApiPermission && hasAppAccess();
+        return $hasApiPermission && user()->hasAppAccess();
     }
 }

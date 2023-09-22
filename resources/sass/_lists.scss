@@ -672,7 +672,7 @@ ul.pagination {
   @include lightDark(color, #555, #eee);
   fill: currentColor;
   text-align: start !important;
-  max-height: 500px;
+  max-height: 80vh;
   overflow-y: auto;
   &.anchor-left {
     inset-inline-end: auto;
@@ -680,6 +680,10 @@ ul.pagination {
   }
   &.wide {
     min-width: 220px;
+  }
+  &.xl-limited {
+    width: 280px;
+    max-width: 100%;
   }
   .text-muted {
     color: #999;
@@ -705,6 +709,11 @@ ul.pagination {
     white-space: nowrap;
     line-height: 1.4;
     cursor: pointer;
+    &.break-text {
+      white-space: normal;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
     &:hover, &:focus {
       text-decoration: none;
       background-color: var(--color-primary-light);

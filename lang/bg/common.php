@@ -42,6 +42,7 @@ return [
     'remove' => 'Премахване',
     'add' => 'Добавяне',
     'configure' => 'Конфигуриране',
+    'manage' => 'Manage',
     'fullscreen' => 'Цял екран',
     'favourite' => 'Любимо',
     'unfavourite' => 'Не е любимо',

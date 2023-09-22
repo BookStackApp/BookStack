@@ -3,17 +3,25 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Http\Controller;
+use BookStack\Permissions\PermissionApplicator;
+use BookStack\Settings\UserNotificationPreferences;
 use BookStack\Settings\UserShortcutMap;
 use BookStack\Users\UserRepo;
 use Illuminate\Http\Request;
 
 class UserPreferencesController extends Controller
 {
-    protected UserRepo $userRepo;
+    public function __construct(
+        protected UserRepo $userRepo
+    ) {
+    }
 
-    public function __construct(UserRepo $userRepo)
+    /**
+     * Show the overview for user preferences.
+     */
+    public function index()
     {
-        $this->userRepo = $userRepo;
+        return view('users.preferences.index');
     }
 
     /**
@@ -23,6 +31,8 @@ class UserPreferencesController extends Controller
     {
         $shortcuts = UserShortcutMap::fromUserPreferences();
         $enabled = setting()->getForCurrentUser('ui-shortcuts-enabled', false);
+
+        $this->setPageTitle(trans('preferences.shortcuts_interface'));
 
         return view('users.preferences.shortcuts', [
             'shortcuts' => $shortcuts,
@@ -45,6 +55,47 @@ class UserPreferencesController extends Controller
         $this->showSuccessNotification(trans('preferences.shortcuts_update_success'));
 
         return redirect('/preferences/shortcuts');
+    }
+
+    /**
+     * Show the notification preferences for the current user.
+     */
+    public function showNotifications(PermissionApplicator $permissions)
+    {
+        $this->checkPermission('receive-notifications');
+        $this->preventGuestAccess();
+
+        $preferences = (new UserNotificationPreferences(user()));
+
+        $query = user()->watches()->getQuery();
+        $query = $permissions->restrictEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
+        $query = $permissions->filterDeletedFromEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
+        $watches = $query->with('watchable')->paginate(20);
+
+        $this->setPageTitle(trans('preferences.notifications'));
+        return view('users.preferences.notifications', [
+            'preferences' => $preferences,
+            'watches' => $watches,
+        ]);
+    }
+
+    /**
+     * Update the notification preferences for the current user.
+     */
+    public function updateNotifications(Request $request)
+    {
+        $this->checkPermission('receive-notifications');
+        $this->preventGuestAccess();
+        $data = $this->validate($request, [
+           'preferences' => ['required', 'array'],
+           'preferences.*' => ['required', 'string'],
+        ]);
+
+        $preferences = (new UserNotificationPreferences(user()));
+        $preferences->updateFromSettingsArray($data['preferences']);
+        $this->showSuccessNotification(trans('preferences.notifications_update_success'));
+
+        return redirect('/preferences/notifications');
     }
 
     /**
@@ -94,7 +145,7 @@ class UserPreferencesController extends Controller
      */
     public function toggleDarkMode()
     {
-        $enabled = setting()->getForCurrentUser('dark-mode-enabled', false);
+        $enabled = setting()->getForCurrentUser('dark-mode-enabled');
         setting()->putForCurrentUser('dark-mode-enabled', $enabled ? 'false' : 'true');
 
         return redirect()->back();
@@ -123,7 +174,7 @@ class UserPreferencesController extends Controller
     {
         $validated = $this->validate($request, [
             'language' => ['required', 'string', 'max:20'],
-            'active'   => ['required', 'bool'],
+            'active' => ['required', 'bool'],
         ]);
 
         $currentFavoritesStr = setting()->getForCurrentUser('code-language-favourites', '');

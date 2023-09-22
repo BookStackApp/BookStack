@@ -12,12 +12,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class PermissionsRepo
 {
-    protected JointPermissionBuilder $permissionBuilder;
     protected array $systemRoles = ['admin', 'public'];
 
-    public function __construct(JointPermissionBuilder $permissionBuilder)
-    {
-        $this->permissionBuilder = $permissionBuilder;
+    public function __construct(
+        protected JointPermissionBuilder $permissionBuilder
+    ) {
     }
 
     /**

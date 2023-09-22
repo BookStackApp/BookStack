@@ -103,6 +103,7 @@ class UserController extends Controller
      */
     public function edit(int $id, SocialAuthService $socialAuthService)
     {
+        $this->preventGuestAccess();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
@@ -133,6 +134,7 @@ class UserController extends Controller
     public function update(Request $request, int $id)
     {
         $this->preventAccessInDemoMode();
+        $this->preventGuestAccess();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $validated = $this->validate($request, [
@@ -176,6 +178,7 @@ class UserController extends Controller
      */
     public function delete(int $id)
     {
+        $this->preventGuestAccess();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);
@@ -192,6 +195,7 @@ class UserController extends Controller
     public function destroy(Request $request, int $id)
     {
         $this->preventAccessInDemoMode();
+        $this->preventGuestAccess();
         $this->checkPermissionOrCurrentUser('users-manage', $id);
 
         $user = $this->userRepo->getById($id);

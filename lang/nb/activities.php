@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'gjenopprettet side',
     'page_restore_notification'   => 'Siden ble gjenopprettet',
     'page_move'                   => 'flyttet side',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Siden ble flyttet',
 
     // Chapters
     'chapter_create'              => 'opprettet kapittel',
@@ -26,7 +26,7 @@ return [
     'chapter_delete_notification' => 'Kapittelet ble slettet',
     'chapter_move'                => 'flyttet kapittel
     ',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Kapitelet ble flyttet',
 
     // Books
     'book_create'                 => 'opprettet bok',
@@ -51,28 +51,31 @@ return [
     'bookshelf_delete_notification'    => 'Hyllen ble slettet',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'gjenopprettet revisjon',
+    'revision_delete' => 'slettet revisjon',
+    'revision_delete_notification' => 'Revisjon slettet',
 
     // Favourites
     'favourite_add_notification' => '«:name» ble lagt til i dine favoritter',
     'favourite_remove_notification' => '«:name» ble fjernet fra dine favoritter',
 
+    // Watching
+    'watch_update_level_notification' => 'Overvåkingsinnstillingene ble oppdatert',
+
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'logget inn',
+    'auth_register' => 'registrert som ny bruker',
+    'auth_password_reset_request' => 'etterspurt tilbakestilling av passord',
+    'auth_password_reset_update' => 'tilbakestill bruker passord',
+    'mfa_setup_method' => 'konfigurert MFA-metode',
     'mfa_setup_method_notification' => 'Flerfaktor-metoden ble konfigurert',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'fjernet MFA-metode',
     'mfa_remove_method_notification' => 'Flerfaktor-metoden ble fjernet',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'oppdaterte innstillinger',
+    'settings_update_notification' => 'Innstillingene er oppdatert',
+    'maintenance_action_run' => 'kjørte vedlikeholdshandling',
 
     // Webhooks
     'webhook_create' => 'opprettet webhook',
@@ -83,35 +86,40 @@ return [
     'webhook_delete_notification' => 'Webhook ble slettet',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'opprettet bruker',
+    'user_create_notification' => 'Bruker ble opprettet',
+    'user_update' => 'oppdatert bruker',
     'user_update_notification' => 'Brukeren ble oppdatert',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'slettet bruker',
     'user_delete_notification' => 'Brukeren ble fjernet',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'opprettet api token',
+    'api_token_create_notification' => 'API-token er opprettet',
+    'api_token_update' => 'oppdatert api token',
+    'api_token_update_notification' => 'API-token oppdatert',
+    'api_token_delete' => 'slettet api token',
+    'api_token_delete_notification' => 'API-token ble slettet',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'opprettet rolle',
     'role_create_notification' => 'Rollen ble opprettet',
-    'role_update' => 'updated role',
+    'role_update' => 'oppdatert rolle',
     'role_update_notification' => 'Rollen ble oppdatert',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'slettet rolle',
     'role_delete_notification' => 'Rollen ble fjernet',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'tømt resirkulering bin',
+    'recycle_bin_restore' => 'gjenopprettet fra papirkurven',
+    'recycle_bin_destroy' => 'fjernet fra papirkurven',
+
+    // Comments
+    'commented_on'                => 'kommenterte på',
+    'comment_create'              => 'lagt til kommentar',
+    'comment_update'              => 'oppdatert kommentar',
+    'comment_delete'              => 'slettet kommentar',
 
     // Other
-    'commented_on'                => 'kommenterte på',
     'permissions_update'          => 'oppdaterte tilganger',
 ];

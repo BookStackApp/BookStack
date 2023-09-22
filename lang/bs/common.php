@@ -42,6 +42,7 @@ return [
     'remove' => 'Ukloni',
     'add' => 'Dodaj',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'Prikaz preko čitavog ekrana',
     'favourite' => 'Favorit',
     'unfavourite' => 'Ukloni favorit',

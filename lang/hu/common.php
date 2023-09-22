@@ -42,6 +42,7 @@ return [
     'remove' => 'Eltávolítás',
     'add' => 'Hozzáadás',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'Teljes képernyő',
     'favourite' => 'Kedvencekhez ad',
     'unfavourite' => 'Kedvencekből eltávolít',

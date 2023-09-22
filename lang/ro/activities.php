@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" a fost adăugat la favorite',
     'favourite_remove_notification' => '":name" a fost eliminat din favorite',
 
+    // Watching
+    'watch_update_level_notification' => 'Preferințele de urmărire actualizate cu succes',
+
     // Auth
     'auth_login' => 'autentificat',
     'auth_register' => 'înregistrat ca utilizator nou',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'restaurat din coșul de gunoi',
     'recycle_bin_destroy' => 'eliminat din coșul de gunoi',
 
-    // Other
+    // Comments
     'commented_on'                => 'a comentat la',
+    'comment_create'              => 'comentariu adăugat',
+    'comment_update'              => 'comentariu actualizat',
+    'comment_delete'              => 'comentariu șters',
+
+    // Other
     'permissions_update'          => 'a actualizat permisiunile',
 ];

@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'إدارة إعدادات التطبيق',
     'role_export_content' => 'Export content',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'أذونات الأصول',
     'roles_system_warning' => 'اعلم أن الوصول إلى أي من الأذونات الثلاثة المذكورة أعلاه يمكن أن يسمح للمستخدم بتغيير امتيازاته الخاصة أو امتيازات الآخرين في النظام. قم بتعيين الأدوار مع هذه الأذونات فقط للمستخدمين الموثوق بهم.',
     'role_asset_desc' => 'تتحكم هذه الأذونات في الوصول الافتراضي إلى الأصول داخل النظام. ستتجاوز الأذونات الخاصة بالكتب والفصول والصفحات هذه الأذونات.',

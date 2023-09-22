@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
@@ -27,12 +28,15 @@ class ApiDocsGenerator
     {
         $appVersion = trim(file_get_contents(base_path('version')));
         $cacheKey = 'api-docs::' . $appVersion;
-        if (Cache::has($cacheKey) && config('app.env') === 'production') {
-            $docs = Cache::get($cacheKey);
-        } else {
-            $docs = (new ApiDocsGenerator())->generate();
-            Cache::put($cacheKey, $docs, 60 * 24);
+        $isProduction = config('app.env') === 'production';
+        $cacheVal = $isProduction ? Cache::get($cacheKey) : null;
+
+        if (!is_null($cacheVal)) {
+            return $cacheVal;
         }
+
+        $docs = (new ApiDocsGenerator())->generate();
+        Cache::put($cacheKey, $docs, 60 * 24);
 
         return $docs;
     }

@@ -10,7 +10,7 @@ return [
     'image_details' => 'Detalii imagine',
     'image_upload' => 'Încarcă imaginea',
     'image_intro' => 'Aici puteţi selecta şi gestiona imaginile care au fost încărcate anterior în sistem.',
-    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
+    'image_intro_upload' => 'Încărcați o imagine nouă trăgând o imagine în această fereastră sau utilizând butonul "Încărcați Imaginea" de mai sus.',
     'image_all' => 'Tot',
     'image_all_title' => 'Vezi toate imaginile',
     'image_book_title' => 'Vezi imaginile încărcate în această carte',

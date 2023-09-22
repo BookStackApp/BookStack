@@ -1,5 +1,6 @@
 <div components="popup confirm-dialog"
-     refs="confirm-dialog@popup {{ $ref }}"
+     @if($id ?? false) id="{{ $id }}" @endif
+     refs="confirm-dialog@popup {{ $ref ?? false }}"
      class="popup-background">
     <div class="popup-body very-small" tabindex="-1">
 

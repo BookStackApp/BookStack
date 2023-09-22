@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'بازیابی صفحه',
     'page_restore_notification'   => 'صفحه با موفقیت بازیابی شد',
     'page_move'                   => 'انتقال صفحه',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'صفحه با موفقیت جابه‌جا شد',
 
     // Chapters
     'chapter_create'              => 'ایجاد فصل',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'حذف فصل',
     'chapter_delete_notification' => 'فصل با موفقیت حذف شد',
     'chapter_move'                => 'انتقال فصل',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'فصل با موفقیت جابه‌جا شد',
 
     // Books
     'book_create'                 => 'ایجاد کتاب',
@@ -52,11 +52,14 @@ return [
     // Revisions
     'revision_restore' => 'restored revision',
     'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_delete_notification' => 'نسخه مورد نظر با موفقیت حذف شد',
 
     // Favourites
     'favourite_add_notification' => '":name" به علاقه مندی های شما اضافه شد',
     'favourite_remove_notification' => '":name" از علاقه مندی های شما حذف شد',
+
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
 
     // Auth
     'auth_login' => 'logged in',
@@ -70,7 +73,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => 'تنظیمات با موفقیت به روز شد',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -83,7 +86,7 @@ return [
 
     // Users
     'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
+    'user_create_notification' => 'کاربر با موفقیت به ایجاد شد',
     'user_update' => 'updated user',
     'user_update_notification' => 'کاربر با موفقیت به روز شد',
     'user_delete' => 'deleted user',
@@ -107,10 +110,15 @@ return [
 
     // Recycle Bin
     'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_restore' => 'از سطل بازیافت، بازآوری شده است',
+    'recycle_bin_destroy' => 'از سطل بازیافت حذف شده است',
+
+    // Comments
+    'commented_on'                => 'ثبت دیدگاه',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
 
     // Other
-    'commented_on'                => 'ثبت دیدگاه',
     'permissions_update'          => 'به روزرسانی مجوزها',
 ];

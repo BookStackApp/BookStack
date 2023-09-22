@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Nastavitve za upravljanje',
     'role_export_content' => 'Export content',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Sistemska dovoljenja',
     'roles_system_warning' => 'Zavedajte se, da lahko dostop do kateregakoli od zgornjih treh dovoljenj uporabniku omogoči, da spremeni lastne privilegije ali privilegije drugih v sistemu. Vloge s temi dovoljenji dodelite samo zaupanja vrednim uporabnikom.',
     'role_asset_desc' => 'Ta dovoljenja nadzorujejo privzeti dostop do sredstev v sistemu. Dovoljenja za knjige, poglavja in strani bodo razveljavila ta dovoljenja.',

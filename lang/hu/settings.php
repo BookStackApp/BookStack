@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Alkalmazás beállításainak kezelése',
     'role_export_content' => 'Tartalom exportálása',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Eszköz jogosultságok',
     'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'Ezek a jogosultságok vezérlik az alapértelmezés szerinti hozzáférést a rendszerben található eszközökhöz. A könyvek, fejezetek és oldalak jogosultságai felülírják ezeket a jogosultságokat.',

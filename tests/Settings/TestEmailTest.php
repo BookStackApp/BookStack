@@ -2,7 +2,7 @@
 
 namespace Tests\Settings;
 
-use BookStack\Notifications\TestEmail;
+use BookStack\Settings\TestEmailNotification;
 use Illuminate\Contracts\Notifications\Dispatcher;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -26,7 +26,7 @@ class TestEmailTest extends TestCase
         $sendReq->assertRedirect('/settings/maintenance#image-cleanup');
         $this->assertSessionHas('success', 'Email sent to ' . $admin->email);
 
-        Notification::assertSentTo($admin, TestEmail::class);
+        Notification::assertSentTo($admin, TestEmailNotification::class);
     }
 
     public function test_send_test_email_failure_displays_error_notification()
@@ -57,6 +57,6 @@ class TestEmailTest extends TestCase
 
         $this->permissions->grantUserRolePermissions($user, ['settings-manage']);
         $sendReq = $this->actingAs($user)->post('/settings/maintenance/send-test-email');
-        Notification::assertSentTo($user, TestEmail::class);
+        Notification::assertSentTo($user, TestEmailNotification::class);
     }
 }
