@@ -20,13 +20,13 @@ class PwaManifestBuilder extends Controller
     private function GenerateManifest()
     {
         return [
-            "name" => config('app.name'),
-            "short_name" => config('app.name'),
+            "name" => setting('app-name'),
+            "short_name" => setting('app-name'),
             "start_url" => "./",
-            "scope" => ".",
+            "scope" => "/",
             "display" => "standalone",
             "background_color" => (setting()->getForCurrentUser('dark-mode-enabled') ? setting('app-color-dark') : setting('app-color')),
-            "description" => config('app.name'),
+            "description" => setting('app-name'),
             "theme_color" => setting('app-color'),
             "launch_handler" => [
                 "client_mode" => "focus-existing"
