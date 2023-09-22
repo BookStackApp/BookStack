@@ -5,6 +5,7 @@ use BookStack\Activity\Controllers as ActivityControllers;
 use BookStack\Api\ApiDocsController;
 use BookStack\Api\UserApiTokenController;
 use BookStack\App\HomeController;
+use BookStack\App\PwaManifestBuilder;
 use BookStack\Entities\Controllers as EntityControllers;
 use BookStack\Http\Middleware\VerifyCsrfToken;
 use BookStack\Permissions\PermissionsController;
@@ -20,7 +21,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 Route::get('/status', [SettingControllers\StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
 Route::get('/favicon.ico', [HomeController::class, 'favicon']);
-Route::get('/manifest.json', [HomeController::class, 'manifest']);
+Route::get('/manifest.json', [PwaManifestBuilder::class, 'manifest']);
 
 // Authenticated routes...
 Route::middleware('auth')->group(function () {
