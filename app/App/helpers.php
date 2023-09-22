@@ -35,23 +35,7 @@ function versioned_asset(string $file = ''): string
  */
 function user(): User
 {
-    return auth()->user() ?: User::getDefault();
-}
-
-/**
- * Check if current user is a signed in user.
- */
-function signedInUser(): bool
-{
-    return auth()->user() && !auth()->user()->isDefault();
-}
-
-/**
- * Check if the current user has general access.
- */
-function hasAppAccess(): bool
-{
-    return !auth()->guest() || setting('app-public');
+    return auth()->user() ?: User::getGuest();
 }
 
 /**
@@ -61,11 +45,11 @@ function hasAppAccess(): bool
 function userCan(string $permission, Model $ownable = null): bool
 {
     if ($ownable === null) {
-        return user() && user()->can($permission);
+        return user()->can($permission);
     }
 
     // Check permission on ownable item
-    $permissions = app(PermissionApplicator::class);
+    $permissions = app()->make(PermissionApplicator::class);
 
     return $permissions->checkOwnableUserAccess($ownable, $permission);
 }
@@ -76,7 +60,7 @@ function userCan(string $permission, Model $ownable = null): bool
  */
 function userCanOnAny(string $action, string $entityClass = ''): bool
 {
-    $permissions = app(PermissionApplicator::class);
+    $permissions = app()->make(PermissionApplicator::class);
 
     return $permissions->checkUserHasEntityPermissionOnAny($action, $entityClass);
 }
@@ -88,7 +72,7 @@ function userCanOnAny(string $action, string $entityClass = ''): bool
  */
 function setting(string $key = null, $default = null)
 {
-    $settingService = resolve(SettingService::class);
+    $settingService = app()->make(SettingService::class);
 
     if (is_null($key)) {
         return $settingService;
@@ -111,39 +95,6 @@ function theme_path(string $path = ''): ?string
     }
 
     return base_path('themes/' . $theme . ($path ? DIRECTORY_SEPARATOR . $path : $path));
-}
-
-/**
- * Get fetch an SVG icon as a string.
- * Checks for icons defined within a custom theme before defaulting back
- * to the 'resources/assets/icons' folder.
- *
- * Returns an empty string if icon file not found.
- */
-function icon(string $name, array $attrs = []): string
-{
-    $attrs = array_merge([
-        'class'     => 'svg-icon',
-        'data-icon' => $name,
-        'role'      => 'presentation',
-    ], $attrs);
-    $attrString = ' ';
-    foreach ($attrs as $attrName => $attr) {
-        $attrString .= $attrName . '="' . $attr . '" ';
-    }
-
-    $iconPath = resource_path('icons/' . $name . '.svg');
-    $themeIconPath = theme_path('icons/' . $name . '.svg');
-
-    if ($themeIconPath && file_exists($themeIconPath)) {
-        $iconPath = $themeIconPath;
-    } elseif (!file_exists($iconPath)) {
-        return '';
-    }
-
-    $fileContents = file_get_contents($iconPath);
-
-    return  str_replace('<svg', '<svg' . $attrString, $fileContents);
 }
 
 /**

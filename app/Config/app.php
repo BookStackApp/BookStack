@@ -66,6 +66,15 @@ return [
     // Current host and source for the "DRAWIO" setting will be auto-appended to the sources configured.
     'iframe_sources' => env('ALLOWED_IFRAME_SOURCES', 'https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com'),
 
+    // A list of the sources/hostnames that can be reached by application SSR calls.
+    // This is used wherever users can provide URLs/hosts in-platform, like for webhooks.
+    // Host-specific functionality (usually controlled via other options) like auth
+    // or user avatars for example, won't use this list.
+    // Space seperated if multiple. Can use '*' as a wildcard.
+    // Values will be compared prefix-matched, case-insensitive, against called SSR urls.
+    // Defaults to allow all hosts.
+    'ssr_hosts' => env('ALLOWED_SSR_HOSTS', '*'),
+
     // Alter the precision of IP addresses stored by BookStack.
     // Integer value between 0 (IP hidden) to 4 (Full IP usage)
     'ip_address_precision' => env('IP_ADDRESS_PRECISION', 4),
@@ -74,19 +83,16 @@ return [
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     // Default locale to use
+    // A default variant is also stored since Laravel can overwrite
+    // app.locale when dynamically setting the locale in-app.
     'locale' => env('APP_LANG', 'en'),
-
-    // Locales available
-    'locales' => ['en', 'ar', 'bg', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'de_informal', 'el', 'es', 'es_AR', 'et', 'eu', 'fa', 'fr', 'he', 'hr', 'hu', 'id', 'it', 'ja', 'ka', 'ko', 'lt', 'lv', 'nl', 'nb', 'pt', 'pt_BR', 'sk', 'sl', 'sv', 'pl',  'ro', 'ru', 'tr', 'uk', 'uz', 'vi', 'zh_CN', 'zh_TW'],
+    'default_locale' => env('APP_LANG', 'en'),
 
     //  Application Fallback Locale
     'fallback_locale' => 'en',
 
     // Faker Locale
     'faker_locale' => 'en_GB',
-
-    // Enable right-to-left text control.
-    'rtl' => false,
 
     // Auto-detect the locale for public users
     // For public users their locale can be guessed by headers sent by their

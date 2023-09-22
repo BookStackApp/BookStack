@@ -10,7 +10,7 @@ class ApiEntityListFormatter
      * The list to be formatted.
      * @var Entity[]
      */
-    protected $list = [];
+    protected array $list = [];
 
     /**
      * The fields to show in the formatted data.
@@ -19,9 +19,9 @@ class ApiEntityListFormatter
      * will be used for the resultant value. A null return value will omit the property.
      * @var array<string|int, string|callable>
      */
-    protected $fields = [
-        'id', 'name', 'slug', 'book_id', 'chapter_id',
-        'draft', 'template', 'created_at', 'updated_at',
+    protected array $fields = [
+        'id', 'name', 'slug', 'book_id', 'chapter_id', 'draft',
+        'template', 'priority', 'created_at', 'updated_at',
     ];
 
     public function __construct(array $list)

@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Kelola setelan aplikasi',
     'role_export_content' => 'Export content',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Izin Aset',
     'roles_system_warning' => 'Ketahuilah bahwa akses ke salah satu dari tiga izin di atas dapat memungkinkan pengguna untuk mengubah hak mereka sendiri atau orang lain dalam sistem. Hanya tetapkan peran dengan izin ini untuk pengguna tepercaya.',
     'role_asset_desc' => 'Izin ini mengontrol akses default ke aset dalam sistem. Izin pada Buku, Bab, dan Halaman akan menggantikan izin ini.',

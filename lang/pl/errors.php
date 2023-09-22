@@ -111,4 +111,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Błąd podczas wysyłania testowej wiadomości e-mail:',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'Adres URL nie pasuje do skonfigurowanych dozwolonych hostów SSR',
 ];

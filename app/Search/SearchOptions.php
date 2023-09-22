@@ -44,8 +44,8 @@ class SearchOptions
         $inputs = $request->only(['search', 'types', 'filters', 'exact', 'tags']);
 
         $parsedStandardTerms = static::parseStandardTermString($inputs['search'] ?? '');
-        $instance->searches = $parsedStandardTerms['terms'];
-        $instance->exacts = $parsedStandardTerms['exacts'];
+        $instance->searches = array_filter($parsedStandardTerms['terms']);
+        $instance->exacts = array_filter($parsedStandardTerms['exacts']);
 
         array_push($instance->exacts, ...array_filter($inputs['exact'] ?? []));
 
@@ -78,7 +78,7 @@ class SearchOptions
         ];
 
         $patterns = [
-            'exacts'  => '/"(.*?)"/',
+            'exacts'  => '/"(.*?)(?<!\\\)"/',
             'tags'    => '/\[(.*?)\]/',
             'filters' => '/\{(.*?)\}/',
         ];
@@ -91,6 +91,11 @@ class SearchOptions
                 $terms[$termType] = $matches[1];
                 $searchString = preg_replace($pattern, '', $searchString);
             }
+        }
+
+        // Unescape exacts
+        foreach ($terms['exacts'] as $index => $exact) {
+            $terms['exacts'][$index] = str_replace('\"', '"', $exact);
         }
 
         // Parse standard terms
@@ -106,12 +111,19 @@ class SearchOptions
         }
         $terms['filters'] = $splitFilters;
 
+        // Filter down terms where required
+        $terms['exacts'] = array_filter($terms['exacts']);
+        $terms['searches'] = array_filter($terms['searches']);
+
         return $terms;
     }
 
     /**
      * Parse a standard search term string into individual search terms and
-     * extract any exact terms searches to be made.
+     * convert any required terms to exact matches. This is done since some
+     * characters will never be in the standard index, since we use them as
+     * delimiters, and therefore we convert a term to be exact if it
+     * contains one of those delimiter characters.
      *
      * @return array{terms: array<string>, exacts: array<string>}
      */
@@ -129,8 +141,8 @@ class SearchOptions
                 continue;
             }
 
-            $parsedList = (strpbrk($searchTerm, $indexDelimiters) === false) ? 'terms' : 'exacts';
-            $parsed[$parsedList][] = $searchTerm;
+            $becomeExact = (strpbrk($searchTerm, $indexDelimiters) !== false);
+            $parsed[$becomeExact ? 'exacts' : 'terms'][] = $searchTerm;
         }
 
         return $parsed;
@@ -141,20 +153,21 @@ class SearchOptions
      */
     public function toString(): string
     {
-        $string = implode(' ', $this->searches ?? []);
+        $parts = $this->searches;
 
         foreach ($this->exacts as $term) {
-            $string .= ' "' . $term . '"';
+            $escaped = str_replace('"', '\"', $term);
+            $parts[] = '"' . $escaped . '"';
         }
 
         foreach ($this->tags as $term) {
-            $string .= " [{$term}]";
+            $parts[] = "[{$term}]";
         }
 
         foreach ($this->filters as $filterName => $filterVal) {
-            $string .= ' {' . $filterName . ($filterVal ? ':' . $filterVal : '') . '}';
+            $parts[] = '{' . $filterName . ($filterVal ? ':' . $filterVal : '') . '}';
         }
 
-        return $string;
+        return implode(' ', $parts);
     }
 }

@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Pārvaldīt iestatījumus',
     'role_export_content' => 'Eksportēt saturu',
     'role_editor_change' => 'Mainīt lapu redaktoru',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Resursa piekļuves tiesības',
     'roles_system_warning' => 'Jebkuras no trīs augstāk redzamajām atļaujām dod iespēju lietotājam mainīt savas un citu lietotāju sistēmas atļaujas. Pievieno šīs grupu atļaujas tikai tiem lietotājiem, kuriem uzticies.',
     'role_asset_desc' => 'Šīs piekļuves tiesības kontrolē noklusēto piekļuvi sistēmas resursiem. Grāmatām, nodaļām un lapām norādītās tiesības būs pārākas par šīm.',

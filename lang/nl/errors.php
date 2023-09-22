@@ -111,4 +111,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Fout opgetreden bij het verzenden van een test email:',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'De URL komt niet overeen met de geconfigureerde toegestane SSR-hosts',
 ];

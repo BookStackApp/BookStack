@@ -23,24 +23,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class PageRepo
 {
-    protected BaseRepo $baseRepo;
-    protected RevisionRepo $revisionRepo;
-    protected ReferenceStore $referenceStore;
-    protected ReferenceUpdater $referenceUpdater;
-
-    /**
-     * PageRepo constructor.
-     */
     public function __construct(
-        BaseRepo $baseRepo,
-        RevisionRepo $revisionRepo,
-        ReferenceStore $referenceStore,
-        ReferenceUpdater $referenceUpdater
+        protected BaseRepo $baseRepo,
+        protected RevisionRepo $revisionRepo,
+        protected ReferenceStore $referenceStore,
+        protected ReferenceUpdater $referenceUpdater
     ) {
-        $this->baseRepo = $baseRepo;
-        $this->revisionRepo = $revisionRepo;
-        $this->referenceStore = $referenceStore;
-        $this->referenceUpdater = $referenceUpdater;
     }
 
     /**
@@ -159,13 +147,11 @@ class PageRepo
      */
     public function publishDraft(Page $draft, array $input): Page
     {
-        $this->updateTemplateStatusAndContentFromInput($draft, $input);
-        $this->baseRepo->update($draft, $input);
-
         $draft->draft = false;
         $draft->revision_count = 1;
         $draft->priority = $this->getNewPriority($draft);
-        $draft->save();
+        $this->updateTemplateStatusAndContentFromInput($draft, $input);
+        $this->baseRepo->update($draft, $input);
 
         $this->revisionRepo->storeNewForPage($draft, trans('entities.pages_initial_revision'));
         $this->referenceStore->updateForPage($draft);

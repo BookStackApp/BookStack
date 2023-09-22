@@ -25,7 +25,7 @@ class ViewTweaksServiceProvider extends ServiceProvider
 
         // Custom blade view directives
         Blade::directive('icon', function ($expression) {
-            return "<?php echo icon($expression); ?>";
+            return "<?php echo (new \BookStack\Util\SvgIcon($expression))->toHtml(); ?>";
         });
     }
 }

@@ -58,9 +58,12 @@ return [
     'favourite_add_notification' => '":name" har lagts till i dina favoriter',
     'favourite_remove_notification' => '":name" har tagits bort från dina favoriter',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
+    'auth_register' => 'registrerad som ny användare',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
     'mfa_setup_method' => 'configured MFA method',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => 'kommenterade',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'uppdaterade behörigheter',
 ];

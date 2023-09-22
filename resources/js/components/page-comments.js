@@ -27,16 +27,12 @@ export class PageComments extends Component {
 
         // Internal State
         this.parentId = null;
-        this.formReplyText = this.formReplyLink.textContent;
+        this.formReplyText = this.formReplyLink?.textContent || '';
 
         this.setupListeners();
     }
 
     setupListeners() {
-        this.removeReplyToButton.addEventListener('click', this.removeReplyTo.bind(this));
-        this.hideFormButton.addEventListener('click', this.hideForm.bind(this));
-        this.addCommentButton.addEventListener('click', this.showForm.bind(this));
-
         this.elem.addEventListener('page-comment-delete', () => {
             this.updateCount();
             this.hideForm();
@@ -47,6 +43,9 @@ export class PageComments extends Component {
         });
 
         if (this.form) {
+            this.removeReplyToButton.addEventListener('click', this.removeReplyTo.bind(this));
+            this.hideFormButton.addEventListener('click', this.hideForm.bind(this));
+            this.addCommentButton.addEventListener('click', this.showForm.bind(this));
             this.form.addEventListener('submit', this.saveComment.bind(this));
         }
     }
@@ -123,9 +122,8 @@ export class PageComments extends Component {
         this.showForm();
         this.parentId = commentLocalId;
         this.replyToRow.toggleAttribute('hidden', false);
-        const replyLink = this.replyToRow.querySelector('a');
-        replyLink.textContent = this.formReplyText.replace('1234', this.parentId);
-        replyLink.href = `#comment${this.parentId}`;
+        this.formReplyLink.textContent = this.formReplyText.replace('1234', this.parentId);
+        this.formReplyLink.href = `#comment${this.parentId}`;
     }
 
     removeReplyTo() {

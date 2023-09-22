@@ -6,7 +6,7 @@ use BookStack\Activity\DispatchWebhookJob;
 use BookStack\Activity\Models\Activity;
 use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Models\Webhook;
-use BookStack\App\Model;
+use BookStack\Activity\Notifications\NotificationManager;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
@@ -15,10 +15,16 @@ use Illuminate\Support\Facades\Log;
 
 class ActivityLogger
 {
+    public function __construct(
+        protected NotificationManager $notifications
+    ) {
+        $this->notifications->loadDefaultHandlers();
+    }
+
     /**
      * Add a generic activity event to the database.
      */
-    public function add(string $type, $detail = '')
+    public function add(string $type, string|Loggable $detail = ''): void
     {
         $detailToStore = ($detail instanceof Loggable) ? $detail->logDescriptor() : $detail;
 
@@ -34,6 +40,7 @@ class ActivityLogger
 
         $this->setNotification($type);
         $this->dispatchWebhooks($type, $detail);
+        $this->notifications->handle($activity, $detail, user());
         Theme::dispatch(ThemeEvents::ACTIVITY_LOGGED, $type, $detail);
     }
 

@@ -42,6 +42,7 @@ return [
     'remove' => 'Verwijder',
     'add' => 'Voeg toe',
     'configure' => 'Configureer',
+    'manage' => 'Beheer',
     'fullscreen' => 'Volledig scherm',
     'favourite' => 'Favoriet',
     'unfavourite' => 'Verwijderen als favoriet',

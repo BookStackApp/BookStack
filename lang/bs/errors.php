@@ -111,4 +111,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Došlo je do greške prilikom slanja testnog e-maila:',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
 ];

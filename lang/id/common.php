@@ -42,6 +42,7 @@ return [
     'remove' => 'Hapus',
     'add' => 'Tambah',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'Layar Penuh',
     'favourite' => 'Favorit',
     'unfavourite' => 'Batal favorit',

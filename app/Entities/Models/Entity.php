@@ -10,6 +10,7 @@ use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Models\Tag;
 use BookStack\Activity\Models\View;
 use BookStack\Activity\Models\Viewable;
+use BookStack\Activity\Models\Watch;
 use BookStack\App\Model;
 use BookStack\App\Sluggable;
 use BookStack\Entities\Tools\SlugGenerator;
@@ -328,6 +329,14 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
         return $this->favourites()
             ->where('user_id', '=', user()->id)
             ->exists();
+    }
+
+    /**
+     * Get the related watches for this entity.
+     */
+    public function watches(): MorphMany
+    {
+        return $this->morphMany(Watch::class, 'watchable');
     }
 
     /**

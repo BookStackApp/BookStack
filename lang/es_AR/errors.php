@@ -111,4 +111,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Error al enviar un email de prueba:',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'La URL no coincide con los hosts SSR permitidos',
 ];
