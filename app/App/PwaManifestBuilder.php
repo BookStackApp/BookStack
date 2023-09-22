@@ -2,23 +2,16 @@
 
 namespace BookStack\App;
 
-use BookStack\Activity\ActivityQueries;
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Page;
-use BookStack\Entities\Queries\RecentlyViewed;
-use BookStack\Entities\Queries\TopFavourites;
-use BookStack\Entities\Repos\BookRepo;
-use BookStack\Entities\Repos\BookshelfRepo;
-use BookStack\Entities\Tools\PageContent;
 use BookStack\Http\Controller;
-use BookStack\Uploads\FaviconHandler;
-use BookStack\Util\SimpleListOptions;
-use Illuminate\Http\Request;
 
 class PwaManifestBuilder extends Controller
 {
     private function GenerateManifest()
     {
+        dump(setting()->getForCurrentUser('dark-mode-enabled'));
+        dump(setting('app-color-dark'));
+        dump(setting('app-color'));
+
         return [
             "name" => setting('app-name'),
             "short_name" => setting('app-name'),
@@ -27,7 +20,7 @@ class PwaManifestBuilder extends Controller
             "display" => "standalone",
             "background_color" => (setting()->getForCurrentUser('dark-mode-enabled') ? setting('app-color-dark') : setting('app-color')),
             "description" => setting('app-name'),
-            "theme_color" => setting('app-color'),
+            "theme_color" => (setting()->getForCurrentUser('dark-mode-enabled') ? setting('app-color-dark') : setting('app-color')),
             "launch_handler" => [
                 "client_mode" => "focus-existing"
             ],
@@ -59,12 +52,12 @@ class PwaManifestBuilder extends Controller
                     "type" => "image/png"
                 ],
                 [
-                    "src" => "icon.ico",
+                    "src" => public_path('icon.ico'),
                     "sizes" => "48x48",
                     "type" => "image/vnd.microsoft.icon"
                 ],
                 [
-                    "src" => "favicon.ico",
+                    "src" => public_path('favicon.ico'),
                     "sizes" => "48x48",
                     "type" => "image/vnd.microsoft.icon"
                 ],
