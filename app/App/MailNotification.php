@@ -1,15 +1,22 @@
 <?php
 
-namespace BookStack\Notifications;
+namespace BookStack\App;
 
+use BookStack\Translation\LocaleDefinition;
+use BookStack\Users\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MailNotification extends Notification implements ShouldQueue
+abstract class MailNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    /**
+     * Get the mail representation of the notification.
+     */
+    abstract public function toMail(User $notifiable): MailMessage;
 
     /**
      * Get the notification's channels.
@@ -25,14 +32,14 @@ class MailNotification extends Notification implements ShouldQueue
 
     /**
      * Create a new mail message.
-     *
-     * @return MailMessage
      */
-    protected function newMailMessage()
+    protected function newMailMessage(?LocaleDefinition $locale = null): MailMessage
     {
+        $data = ['locale' => $locale ?? user()->getLocale()];
+
         return (new MailMessage())->view([
             'html' => 'vendor.notifications.email',
             'text' => 'vendor.notifications.email-plain',
-        ]);
+        ], $data);
     }
 }

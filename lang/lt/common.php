@@ -42,6 +42,7 @@ return [
     'remove' => 'Pašalinti',
     'add' => 'Pridėti',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'Visas ekranas',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',

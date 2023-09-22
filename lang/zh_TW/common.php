@@ -42,6 +42,7 @@ return [
     'remove' => '移除',
     'add' => '新增',
     'configure' => '配置',
+    'manage' => 'Manage',
     'fullscreen' => '全螢幕',
     'favourite' => '最愛',
     'unfavourite' => '取消最愛',

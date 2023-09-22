@@ -2,8 +2,8 @@
 
 namespace BookStack\Access;
 
+use BookStack\Access\Notifications\ConfirmEmailNotification;
 use BookStack\Exceptions\ConfirmationEmailException;
-use BookStack\Notifications\ConfirmEmail;
 use BookStack\Users\Models\User;
 
 class EmailConfirmationService extends UserTokenService
@@ -26,7 +26,7 @@ class EmailConfirmationService extends UserTokenService
         $this->deleteByUser($user);
         $token = $this->createTokenForUser($user);
 
-        $user->notify(new ConfirmEmail($token));
+        $user->notify(new ConfirmEmailNotification($token));
     }
 
     /**

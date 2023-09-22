@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'đã khôi phục trang',
     'page_restore_notification'   => 'Trang đã được khôi phục thành công',
     'page_move'                   => 'đã di chuyển trang',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Đã di chuyển trang thành công',
 
     // Chapters
     'chapter_create'              => 'đã tạo chương',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'đã xóa chương',
     'chapter_delete_notification' => 'Chương đã được xóa thành công',
     'chapter_move'                => 'đã di chuyển chương',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Đã chuyển chương thành công',
 
     // Books
     'book_create'                 => 'đã tạo sách',
@@ -50,28 +50,31 @@ return [
     'bookshelf_delete_notification'    => 'Xoá giá sách thành công',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'đã khôi phục sửa đổi',
+    'revision_delete' => 'đã xóa bản sửa đổi',
+    'revision_delete_notification' => 'Bản sửa đổi đã được xóa thành công',
 
     // Favourites
     'favourite_add_notification' => '":name" đã được thêm vào danh sách yêu thích của bạn',
     'favourite_remove_notification' => '":name" đã được gỡ khỏi danh sách yêu thích của bạn',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'đăng nhập',
+    'auth_register' => 'đã đăng ký như người dùng mới',
+    'auth_password_reset_request' => 'yêu cầu người dùng đặt lại mật khẩu',
+    'auth_password_reset_update' => 'đặt lại mật khẩu người dùng',
+    'mfa_setup_method' => 'đã định cấu hình phương thức MFA',
     'mfa_setup_method_notification' => 'Cấu hình xác thực nhiều bước thành công',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'loại bỏ phương thức MFA',
     'mfa_remove_method_notification' => 'Đã gỡ xác thực nhiều bước',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'cập nhật cài đặt',
+    'settings_update_notification' => 'Cài đặt đã cập nhật thành công',
+    'maintenance_action_run' => 'chạy hành động bảo trì',
 
     // Webhooks
     'webhook_create' => 'đã tạo webhook',
@@ -82,11 +85,11 @@ return [
     'webhook_delete_notification' => 'Webhook đã được xóa thành công',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'người dùng đã tạo',
+    'user_create_notification' => 'Người dùng được tạo thành công',
+    'user_update' => 'người dùng được cập nhật',
     'user_update_notification' => 'Người dùng được cập nhật thành công',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'người dùng đã bị xóa',
     'user_delete_notification' => 'Người dùng đã được xóa thành công',
 
     // API Tokens
@@ -102,15 +105,20 @@ return [
     'role_create_notification' => 'Vai trò mới đã được tạo thành công',
     'role_update' => 'updated role',
     'role_update_notification' => 'Vai trò đã được cập nhật thành công',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'đã xóa vai trò',
     'role_delete_notification' => 'Vai trò đã được xóa thành công',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'làm trống thùng rác',
+    'recycle_bin_restore' => 'khôi phục từ thùng rác',
+    'recycle_bin_destroy' => 'đã xóa khỏi thùng rác',
+
+    // Comments
+    'commented_on'                => 'đã bình luận về',
+    'comment_create'              => 'thêm bình luận',
+    'comment_update'              => 'cập nhật bình luận',
+    'comment_delete'              => 'đã xóa bình luận',
 
     // Other
-    'commented_on'                => 'đã bình luận về',
     'permissions_update'          => 'các quyền đã được cập nhật',
 ];

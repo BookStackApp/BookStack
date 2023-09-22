@@ -13,11 +13,9 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    protected PermissionsRepo $permissionsRepo;
-
-    public function __construct(PermissionsRepo $permissionsRepo)
-    {
-        $this->permissionsRepo = $permissionsRepo;
+    public function __construct(
+        protected PermissionsRepo $permissionsRepo
+    ) {
     }
 
     /**

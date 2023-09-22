@@ -33,7 +33,7 @@ body:
     attributes:
       label: Exact BookStack Version
       description: This can be found in the settings view of BookStack. Please provide an exact version.
-      placeholder: (eg. v21.08.5)
+      placeholder: (eg. v23.06.7)
     validations:
       required: true
   - type: textarea
@@ -44,19 +44,11 @@ body:
       placeholder: Be sure to remove any confidential details in your logs
     validations:
       required: false
-  - type: input
-    id: phpversion
-    attributes:
-      label: PHP Version
-      description: Keep in mind your command-line PHP version may differ to that of your webserver. Provide that most relevant to the issue.
-      placeholder: (eg. 7.4)
-    validations:
-      required: false
   - type: textarea
     id: hosting
     attributes:
       label: Hosting Environment
       description: Describe your hosting environment as much as possible including any proxies used (If applicable).
-      placeholder: (eg. Ubuntu 20.04 VPS, installed using official installation script)
+      placeholder: (eg. PHP8.1 on Ubuntu 22.04 VPS, installed using official installation script)
     validations:
       required: true

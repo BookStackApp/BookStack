@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'ניהול הגדרות יישום',
     'role_export_content' => 'Export content',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'הרשאות משאבים',
     'roles_system_warning' => 'שימו לב לכך שגישה לכל אחת משלושת ההרשאות הנ"ל יכולה לאפשר למשתמש לשנות את הפריווילגיות שלהם או של אחרים במערכת. הגדירו תפקידים להרשאות אלה למשתמשים בהם אתם בוטחים בלבד.',
     'role_asset_desc' => 'הרשאות אלו שולטות בגישת ברירת המחדל למשאבים בתוך המערכת. הרשאות של ספרים, פרקים ודפים יגברו על הרשאות אלו.',

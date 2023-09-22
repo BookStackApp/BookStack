@@ -5,7 +5,6 @@ namespace BookStack\Settings;
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Http\Controller;
-use BookStack\Notifications\TestEmail;
 use BookStack\References\ReferenceStore;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\Request;
@@ -69,7 +68,7 @@ class MaintenanceController extends Controller
         $this->logActivity(ActivityType::MAINTENANCE_ACTION_RUN, 'send-test-email');
 
         try {
-            user()->notifyNow(new TestEmail());
+            user()->notifyNow(new TestEmailNotification());
             $this->showSuccessNotification(trans('settings.maint_send_test_email_success', ['address' => user()->email]));
         } catch (\Exception $exception) {
             $errorMessage = trans('errors.maintenance_test_email_failure') . "\n" . $exception->getMessage();

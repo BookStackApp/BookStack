@@ -42,6 +42,7 @@ return [
     'remove' => '제거',
     'add' => '추가',
     'configure' => '설정',
+    'manage' => 'Manage',
     'fullscreen' => '전체화면',
     'favourite' => '즐겨찾기',
     'unfavourite' => '즐겨찾기 해제',

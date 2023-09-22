@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" favorilerinize eklendi',
     'favourite_remove_notification' => '":name" favorilerinizden çıkarıldı',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'oturum açıldı',
     'auth_register' => 'yeni kullanıcı olarak kayıt yapıldı',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => 'yorum yaptı',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'güncellenmiş izinler',
 ];

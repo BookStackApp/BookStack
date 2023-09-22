@@ -6,7 +6,7 @@
 	"slug": "my-api-page",
 	"html": "<p id=\"bkmrk-my-new-api-page\">my new API page</p>",
 	"raw_html": "<p id=\"bkmrk-my-new-api-page\">my new API page</p>",
-	"priority": 14,
+	"priority": 15,
 	"created_at": "2020-11-28T15:01:39.000000Z",
 	"updated_at": "2020-11-28T15:01:39.000000Z",
 	"created_by": {

@@ -2,8 +2,8 @@
 
 namespace Tests\Auth;
 
+use BookStack\Access\Notifications\UserInviteNotification;
 use BookStack\Access\UserInviteService;
-use BookStack\Notifications\UserInvite;
 use BookStack\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -29,7 +29,7 @@ class UserInviteTest extends TestCase
 
         $newUser = User::query()->where('email', '=', $email)->orderBy('id', 'desc')->first();
 
-        Notification::assertSentTo($newUser, UserInvite::class);
+        Notification::assertSentTo($newUser, UserInviteNotification::class);
         $this->assertDatabaseHas('user_invites', [
             'user_id' => $newUser->id,
         ]);
@@ -50,7 +50,7 @@ class UserInviteTest extends TestCase
         $resp->assertRedirect('/settings/users');
 
         $newUser = User::query()->where('email', '=', $email)->orderBy('id', 'desc')->first();
-        Notification::assertSentTo($newUser, UserInvite::class, function ($notification, $channels, $notifiable) {
+        Notification::assertSentTo($newUser, UserInviteNotification::class, function ($notification, $channels, $notifiable) {
             /** @var MailMessage $mail */
             $mail = $notification->toMail($notifiable);
 

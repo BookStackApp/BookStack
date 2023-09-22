@@ -9,7 +9,7 @@ return [
     // General editor terms
     'general' => 'Általános',
     'advanced' => 'Haladó',
-    'none' => 'None',
+    'none' => 'Egyik sem',
     'cancel' => 'Mégsem',
     'save' => 'Mentés',
     'close' => 'Bezárás',
@@ -24,7 +24,7 @@ return [
     'width' => 'Szélesség',
     'height' => 'Magasság',
     'More' => 'Több',
-    'select' => 'Select...',
+    'select' => 'Kiválasztás...',
 
     // Toolbar
     'formats' => 'Formátumok',
@@ -66,7 +66,7 @@ return [
     'insert_link_title' => 'Hivatkozás Beszúrása/Szerkesztése',
     'insert_horizontal_line' => 'Vízszintes vonal beszúrása',
     'insert_code_block' => 'Kódrészlet beszúrása',
-    'edit_code_block' => 'Edit code block',
+    'edit_code_block' => 'Kódrészlet beszúrása',
     'insert_drawing' => 'Rajz beszúrása/szerkesztése',
     'drawing_manager' => 'Rajzkezelő',
     'insert_media' => 'Media beszúrása/szerkesztése',
