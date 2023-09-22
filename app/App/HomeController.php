@@ -148,8 +148,12 @@ class HomeController extends Controller
     public function manifest()
     {   
         $manifest =  config('manifest');
-        
-        $manifest["background_color"] = setting('app-color');
+
+        if (setting()->getForCurrentUser('dark-mode-enabled')){
+            $manifest["background_color"] = setting('app-color-dark');
+        }else{
+            $manifest["background_color"] = setting('app-color');
+        }
 
         return response()->json($manifest);
     }
