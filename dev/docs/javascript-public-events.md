@@ -42,7 +42,7 @@ This event is called before the markdown input editor CodeMirror instance is cre
 
 #### Event Data
 
-- `editorViewConfig` - An [EditorViewConfig](https://codemirror.net/docs/ref/#view.EditorViewConfig) object that will eventially be passed when creating the CodeMirror EditorView instance.
+- `editorViewConfig` - An [EditorViewConfig](https://codemirror.net/docs/ref/#view.EditorViewConfig) object that will eventually be passed when creating the CodeMirror EditorView instance.
 
 ##### Example
 

@@ -22,7 +22,7 @@ return [
 
     // Global "From" address & name
     'from' => [
-        'address' => env('MAIL_FROM', 'mail@bookstackapp.com'),
+        'address' => env('MAIL_FROM', 'bookstack@example.com'),
         'name'    => env('MAIL_FROM_NAME', 'BookStack'),
     ],
 

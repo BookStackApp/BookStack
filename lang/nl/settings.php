@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Beheer app instellingen',
     'role_export_content' => 'Exporteer inhoud',
     'role_editor_change' => 'Wijzig pagina bewerker',
+    'role_notifications' => 'Meldingen ontvangen & beheren',
     'role_asset' => 'Asset Machtigingen',
     'roles_system_warning' => 'Wees ervan bewust dat toegang tot een van de bovengenoemde drie machtigingen een gebruiker in staat kan stellen zijn eigen machtigingen of de machtigingen van anderen in het systeem kan wijzigen. Wijs alleen rollen toe met deze machtigingen aan vertrouwde gebruikers.',
     'role_asset_desc' => 'Deze machtigingen bepalen de standaard toegang tot de assets binnen het systeem. Machtigingen op boeken, hoofdstukken en pagina\'s overschrijven deze instelling.',

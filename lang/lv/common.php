@@ -42,6 +42,7 @@ return [
     'remove' => 'Noņemt',
     'add' => 'Pievienot',
     'configure' => 'Mainīt konfigurāciju',
+    'manage' => 'Manage',
     'fullscreen' => 'Pilnekrāns',
     'favourite' => 'Pievienot favorītiem',
     'unfavourite' => 'Noņemt no favorītiem',

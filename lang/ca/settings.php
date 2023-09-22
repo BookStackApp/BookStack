@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Gestiona la configuració de l\'aplicació',
     'role_export_content' => 'Export content',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Permisos de recursos',
     'roles_system_warning' => 'Tingueu en compte que l\'accés a qualsevol dels tres permisos de dalt pot permetre que un usuari alteri els seus propis permisos o els privilegis d\'altres usuaris del sistema. Assigneu rols amb aquests permisos només a usuaris de confiança.',
     'role_asset_desc' => 'Aquests permisos controlen l\'accés per defecte als recursos del sistema. Els permisos de llibres, capítols i pàgines tindran més importància que aquests permisos.',

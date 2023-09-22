@@ -4,6 +4,7 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\CommentTree;
+use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\BookContents;
@@ -151,6 +152,7 @@ class PageController extends Controller
             'sidebarTree'     => $sidebarTree,
             'commentTree'     => $commentTree,
             'pageNav'         => $pageNav,
+            'watchOptions'    => new UserEntityWatchOptions(user(), $page),
             'next'            => $nextPreviousLocator->getNext(),
             'previous'        => $nextPreviousLocator->getPrevious(),
             'referenceCount'  => $this->referenceFetcher->getPageReferenceCountToEntity($page),

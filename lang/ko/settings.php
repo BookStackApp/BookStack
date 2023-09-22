@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => '사이트 설정 관리',
     'role_export_content' => '항목 내보내기',
     'role_editor_change' => '페이지 편집기 변경',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => '권한 항목',
     'roles_system_warning' => '위 세 권한은 자신의 권한이나 다른 유저의 권한을 바꿀 수 있습니다.',
     'role_asset_desc' => '책, 챕터, 문서별 권한은 이 설정에 우선합니다.',

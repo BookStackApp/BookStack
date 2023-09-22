@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Tvarkyti programos nustatymus',
     'role_export_content' => 'Export content',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Nuosavybės leidimai',
     'roles_system_warning' => 'Būkite sąmoningi, kad prieiga prie bet kurio iš trijų leidimų viršuje gali leisti naudotojui pakeisti jų pačių privilegijas arba kitų privilegijas sistemoje. Paskirkite vaidmenis su šiais leidimais tik patikimiems naudotojams.',
     'role_asset_desc' => 'Šie leidimai kontroliuoja numatytą prieigą į nuosavybę, esančią sistemoje. Knygų, skyrių ir puslapių leidimai nepaisys šių leidimų.',

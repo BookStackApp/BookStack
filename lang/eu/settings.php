@@ -163,6 +163,7 @@ return [
     'role_manage_settings' => 'Kudeatu aplikazio ezarpenak',
     'role_export_content' => 'Exportatu edukia',
     'role_editor_change' => 'Change page editor',
+    'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Fitxategi baimenak',
     'roles_system_warning' => 'Be aware that access to any of the above three permissions can allow a user to alter their own privileges or the privileges of others in the system. Only assign roles with these permissions to trusted users.',
     'role_asset_desc' => 'These permissions control default access to the assets within the system. Permissions on Books, Chapters and Pages will override these permissions.',

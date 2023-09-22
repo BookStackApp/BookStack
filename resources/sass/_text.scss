@@ -365,6 +365,7 @@ li.checkbox-item, li.task-list-item {
 }
 
 .break-text {
+  white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }

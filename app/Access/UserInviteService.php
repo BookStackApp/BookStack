@@ -2,7 +2,7 @@
 
 namespace BookStack\Access;
 
-use BookStack\Notifications\UserInvite;
+use BookStack\Access\Notifications\UserInviteNotification;
 use BookStack\Users\Models\User;
 
 class UserInviteService extends UserTokenService
@@ -18,6 +18,6 @@ class UserInviteService extends UserTokenService
     {
         $this->deleteByUser($user);
         $token = $this->createTokenForUser($user);
-        $user->notify(new UserInvite($token));
+        $user->notify(new UserInviteNotification($token));
     }
 }

@@ -111,4 +111,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => '发送测试电子邮件时出现错误：',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'URL 与已配置的 SSR 主机不匹配',
 ];

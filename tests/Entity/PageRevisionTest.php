@@ -136,7 +136,7 @@ class PageRevisionTest extends TestCase
         $page = $this->entities->page();
         $this->createRevisions($page, 2);
 
-        $pageView = $this->get($page->getUrl());
+        $pageView = $this->asViewer()->get($page->getUrl());
         $pageView->assertSee('Revision #' . $page->revision_count);
     }
 

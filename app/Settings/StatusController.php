@@ -20,10 +20,11 @@ class StatusController extends Controller
                 return DB::table('migrations')->count() > 0;
             }),
             'cache' => $this->trueWithoutError(function () {
-                $rand = Str::random();
-                Cache::add('status_test', $rand);
+                $rand = Str::random(12);
+                $key = "status_test_{$rand}";
+                Cache::add($key, $rand);
 
-                return Cache::pull('status_test') === $rand;
+                return Cache::pull($key) === $rand;
             }),
             'session' => $this->trueWithoutError(function () {
                 $rand = Str::random();

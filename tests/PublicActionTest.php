@@ -103,7 +103,7 @@ class PublicActionTest extends TestCase
         $resp = $this->post($chapter->getUrl('/create-guest-page'), ['name' => 'My guest page']);
         $resp->assertRedirect($chapter->book->getUrl('/page/my-guest-page/edit'));
 
-        $user = User::getDefault();
+        $user = $this->users->guest();
         $this->assertDatabaseHas('pages', [
             'name'       => 'My guest page',
             'chapter_id' => $chapter->id,
@@ -197,7 +197,7 @@ class PublicActionTest extends TestCase
     public function test_public_view_can_take_on_other_roles()
     {
         $this->setSettings(['app-public' => 'true']);
-        $newRole = $this->users->attachNewRole(User::getDefault(), []);
+        $newRole = $this->users->attachNewRole($this->users->guest(), []);
         $page = $this->entities->page();
         $this->permissions->disableEntityInheritedPermissions($page);
         $this->permissions->addEntityPermission($page, ['view', 'update'], $newRole);
@@ -206,5 +206,17 @@ class PublicActionTest extends TestCase
         $resp->assertOk();
 
         $this->withHtml($resp)->assertLinkExists($page->getUrl('/edit'));
+    }
+
+    public function test_public_user_cannot_view_or_update_their_profile()
+    {
+        $this->setSettings(['app-public' => 'true']);
+        $guest = $this->users->guest();
+
+        $resp = $this->get($guest->getEditUrl());
+        $this->assertPermissionError($resp);
+
+        $resp = $this->put($guest->getEditUrl(), ['name' => 'My new guest name']);
+        $this->assertPermissionError($resp);
     }
 }

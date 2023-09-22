@@ -132,6 +132,7 @@ export class Dropdown extends Component {
 
         onSelect(this.toggle, event => {
             event.stopPropagation();
+            event.preventDefault();
             this.show(event);
             if (event instanceof KeyboardEvent) {
                 keyboardNavHandler.focusNext();
