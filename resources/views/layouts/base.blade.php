@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="token" content="{{ csrf_token() }}">
     <meta name="base-url" content="{{ url('/') }}">
-    <meta name="theme-color" content="{{ setting('app-color') }}"/>
+    <meta name="theme-color" content="{{(setting()->getForCurrentUser('dark-mode-enabled') ? setting('app-color-dark') : setting('app-color'))}}"/>
 
     <!-- Social Cards Meta -->
     <meta property="og:title" content="{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}">
@@ -31,7 +31,7 @@
 
     <!-- PWA -->
     <link rel="manifest" href="{{ url('/manifest.json') }}" />
-    <meta name="mobile-web-app-capable" content="yes" /> 
+    <meta name="mobile-web-app-capable" content="yes" />
 
     @yield('head')
 
