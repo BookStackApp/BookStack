@@ -10,7 +10,8 @@
 [![Repo Stats](https://img.shields.io/static/v1?label=GitHub+project&message=stats&color=f27e3f)](https://gh-stats.bookstackapp.com/)
 [![Discord](https://img.shields.io/static/v1?label=Discord&message=chat&color=738adb&logo=discord)](https://discord.gg/ztkBqR2)
 [![Mastodon](https://img.shields.io/static/v1?label=Mastodon&message=@bookstack&color=595aff&logo=mastodon)](https://fosstodon.org/@bookstack)
-[![Twitter](https://img.shields.io/static/v1?label=Twitter&message=@bookstack_app&color=1d9bf0&logo=twitter)](https://twitter.com/bookstack_app)
+[![X - Formerly Twitter](https://img.shields.io/static/v1?label=Follow&message=@bookstack_app&color=1d9bf0&logo=x)](https://x.com/bookstack_app)
+
 [![PeerTube](https://img.shields.io/static/v1?label=PeerTube&message=bookstack@foss.video&color=f2690d&logo=peertube)](https://foss.video/c/bookstack)
 [![YouTube](https://img.shields.io/static/v1?label=YouTube&message=bookstackapp&color=ff0000&logo=youtube)](https://www.youtube.com/bookstackapp)
 
@@ -24,6 +25,7 @@ A platform for storing and organising information and documentation. Details for
 * [BookStack Blog](https://www.bookstackapp.com/blog)
 * [Issue List](https://github.com/BookStackApp/BookStack/issues)
 * [Discord Chat](https://discord.gg/ztkBqR2)
+* [Support Options](https://www.bookstackapp.com/support/)
 
 ## 📚 Project Definition
 
@@ -56,6 +58,10 @@ Note: Listed services are not tested, vetted nor supported by the official BookS
 </a></td>
 <td><a href="https://www.practicali.be" target="_blank">
     <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/practicali.png" alt="Practicali">
+</a></td>
+</tr><tr>
+<td><a href="https://www.stellarhosted.com/bookstack/" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted">
 </a></td>
 <td><a href="https://torutec.com/" target="_blank">
     <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/torutec.png" alt="Torutec">
