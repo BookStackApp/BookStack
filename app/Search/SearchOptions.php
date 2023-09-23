@@ -78,7 +78,7 @@ class SearchOptions
         ];
 
         $patterns = [
-            'exacts'  => '/"(.*?)(?<!\\\)"/',
+            'exacts'  => '/"((?:\\\\.|[^"\\\\])*)"/',
             'tags'    => '/\[(.*?)\]/',
             'filters' => '/\{(.*?)\}/',
         ];
@@ -93,9 +93,9 @@ class SearchOptions
             }
         }
 
-        // Unescape exacts
+        // Unescape exacts and backslash escapes
         foreach ($terms['exacts'] as $index => $exact) {
-            $terms['exacts'][$index] = str_replace('\"', '"', $exact);
+            $terms['exacts'][$index] = static::decodeEscapes($exact);
         }
 
         // Parse standard terms
@@ -116,6 +116,28 @@ class SearchOptions
         $terms['searches'] = array_filter($terms['searches']);
 
         return $terms;
+    }
+
+    /**
+     * Decode backslash escaping within the input string.
+     */
+    protected static function decodeEscapes(string $input): string
+    {
+        $decoded = "";
+        $escaping = false;
+
+        foreach (str_split($input) as $char) {
+            if ($escaping) {
+                $decoded .= $char;
+                $escaping = false;
+            } else if ($char === '\\') {
+                $escaping = true;
+            } else {
+                $decoded .= $char;
+            }
+        }
+
+        return $decoded;
     }
 
     /**
@@ -156,7 +178,8 @@ class SearchOptions
         $parts = $this->searches;
 
         foreach ($this->exacts as $term) {
-            $escaped = str_replace('"', '\"', $term);
+            $escaped = str_replace('\\', '\\\\', $term);
+            $escaped = str_replace('"', '\"', $escaped);
             $parts[] = '"' . $escaped . '"';
         }
 
