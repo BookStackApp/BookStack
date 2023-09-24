@@ -254,17 +254,20 @@ class ExportFormatter
      * Converts the page contents into simple plain text.
      * This method filters any bad looking content to provide a nice final output.
      */
-    public function pageToPlainText(Page $page): string
+    public function pageToPlainText(Page $page, bool $pageRendered = false, bool $fromParent = false): string
     {
-        $html = (new PageContent($page))->render();
-        $text = strip_tags($html);
+        $html = $pageRendered ? $page->html : (new PageContent($page))->render();
+        // Add proceeding spaces before tags so spaces remain between
+        // text within elements after stripping tags.
+        $html = str_replace('<', " <", $html);
+        $text = trim(strip_tags($html));
         // Replace multiple spaces with single spaces
-        $text = preg_replace('/\ {2,}/', ' ', $text);
+        $text = preg_replace('/ {2,}/', ' ', $text);
         // Reduce multiple horrid whitespace characters.
         $text = preg_replace('/(\x0A|\xA0|\x0A|\r|\n){2,}/su', "\n\n", $text);
         $text = html_entity_decode($text);
         // Add title
-        $text = $page->name . "\n\n" . $text;
+        $text = $page->name . ($fromParent ? "\n" : "\n\n") . $text;
 
         return $text;
     }
@@ -274,13 +277,15 @@ class ExportFormatter
      */
     public function chapterToPlainText(Chapter $chapter): string
     {
-        $text = $chapter->name . "\n\n";
-        $text .= $chapter->description . "\n\n";
+        $text = $chapter->name . "\n" . $chapter->description;
+        $text = trim($text) . "\n\n";
+
+        $parts = [];
         foreach ($chapter->getVisiblePages() as $page) {
-            $text .= $this->pageToPlainText($page);
+            $parts[] = $this->pageToPlainText($page, false, true);
         }
 
-        return $text;
+        return $text . implode("\n\n", $parts);
     }
 
     /**
@@ -288,17 +293,20 @@ class ExportFormatter
      */
     public function bookToPlainText(Book $book): string
     {
-        $bookTree = (new BookContents($book))->getTree(false, false);
-        $text = $book->name . "\n\n";
+        $bookTree = (new BookContents($book))->getTree(false, true);
+        $text = $book->name . "\n" . $book->description;
+        $text = rtrim($text) . "\n\n";
+
+        $parts = [];
         foreach ($bookTree as $bookChild) {
             if ($bookChild->isA('chapter')) {
-                $text .= $this->chapterToPlainText($bookChild);
+                $parts[] = $this->chapterToPlainText($bookChild);
             } else {
-                $text .= $this->pageToPlainText($bookChild);
+                $parts[] = $this->pageToPlainText($bookChild, true, true);
             }
         }
 
-        return $text;
+        return $text . implode("\n\n", $parts);
     }
 
     /**
