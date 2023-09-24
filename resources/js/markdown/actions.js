@@ -68,11 +68,12 @@ export class Actions {
 
         /** @type {EntitySelectorPopup} * */
         const selector = window.$components.first('entity-selector-popup');
+        const selectionText = this.#getSelectionText(selectionRange);
         selector.show(entity => {
-            const selectedText = this.#getSelectionText(selectionRange) || entity.name;
+            const selectedText = selectionText || entity.name;
             const newText = `[${selectedText}](${entity.link})`;
             this.#replaceSelection(newText, newText.length, selectionRange);
-        });
+        }, selectionText);
     }
 
     // Show draw.io if enabled and handle save.
