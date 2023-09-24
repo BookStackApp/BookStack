@@ -32,8 +32,8 @@
     @yield('head')
 
     <!-- Custom Styles & Head Content -->
-    @include('common.custom-styles')
-    @include('common.custom-head')
+    @include('layouts.parts.custom-styles')
+    @include('layouts.parts.custom-head')
 
     @stack('head')
 
@@ -48,15 +48,15 @@
       class="@stack('body-class')">
 
     @include('layouts.parts.base-body-start')
-    @include('common.skip-to-content')
-    @include('common.notifications')
-    @include('common.header')
+    @include('layouts.parts.skip-to-content')
+    @include('layouts.parts.notifications')
+    @include('layouts.parts.header')
 
     <div id="content" components="@yield('content-components')" class="block">
         @yield('content')
     </div>
 
-    @include('common.footer')
+    @include('layouts.parts.footer')
 
     <div component="back-to-top" class="back-to-top print-hidden">
         <div class="inner">

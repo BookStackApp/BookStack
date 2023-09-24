@@ -366,6 +366,20 @@ class ThemeTest extends TestCase
         });
     }
 
+    public function test_header_links_start_template_file_can_be_used()
+    {
+        $content = 'This is added text in the header bar';
+
+        $this->usingThemeFolder(function (string $folder) use ($content) {
+            $viewDir = theme_path('layouts/parts');
+            mkdir($viewDir, 0777, true);
+            file_put_contents($viewDir . '/header-links-start.blade.php', $content);
+            $this->setSettings(['registration-enabled' => 'true']);
+
+            $this->get('/login')->assertSee($content);
+        });
+    }
+
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
