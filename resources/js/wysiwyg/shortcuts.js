@@ -48,6 +48,7 @@ export function register(editor) {
     editor.shortcuts.add('meta+shift+K', '', () => {
         /** @var {EntitySelectorPopup} * */
         const selectorPopup = window.$components.first('entity-selector-popup');
+        const selectionText = editor.selection.getContent({format: 'text'}).trim();
         selectorPopup.show(entity => {
             if (editor.selection.isCollapsed()) {
                 editor.insertContent(editor.dom.createHTML('a', {href: entity.link}, editor.dom.encode(entity.name)));
@@ -57,6 +58,6 @@ export function register(editor) {
 
             editor.selection.collapse(false);
             editor.focus();
-        });
+        }, selectionText);
     });
 }

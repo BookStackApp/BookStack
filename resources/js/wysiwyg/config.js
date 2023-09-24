@@ -78,12 +78,13 @@ function filePickerCallback(callback, value, meta) {
     if (meta.filetype === 'file') {
         /** @type {EntitySelectorPopup} * */
         const selector = window.$components.first('entity-selector-popup');
+        const selectionText = this.selection.getContent({format: 'text'}).trim();
         selector.show(entity => {
             callback(entity.link, {
                 text: entity.name,
                 title: entity.name,
             });
-        });
+        }, selectionText);
     }
 
     if (meta.filetype === 'image') {
