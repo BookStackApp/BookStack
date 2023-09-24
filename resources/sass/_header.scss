@@ -2,12 +2,12 @@
  * Includes the main navigation header and the faded toolbar.
  */
 
-header .grid {
+header.grid {
   grid-template-columns: minmax(max-content, 2fr) 1fr minmax(max-content, 2fr);
 }
 
 @include smaller-than($l) {
-  header .grid {
+  header.grid {
     grid-template-columns: 1fr;
     grid-row-gap: 0;
   }

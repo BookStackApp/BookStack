@@ -14,8 +14,8 @@
     <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
     <!-- Custom Styles & Head Content -->
-    @include('common.custom-styles')
-    @include('common.custom-head')
+    @include('layouts.parts.custom-styles')
+    @include('layouts.parts.custom-head')
 </head>
 <body>
     @yield('content')
