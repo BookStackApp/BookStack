@@ -8,10 +8,6 @@ class PwaManifestBuilder extends Controller
 {
     private function GenerateManifest()
     {
-        dump(setting()->getForCurrentUser('dark-mode-enabled'));
-        dump(setting('app-color-dark'));
-        dump(setting('app-color'));
-
         return [
             "name" => setting('app-name'),
             "short_name" => setting('app-name'),
