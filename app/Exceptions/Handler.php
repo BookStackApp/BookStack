@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -59,6 +60,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
+        if ($e instanceof PostTooLargeException) {
+            $e = new NotifyException(trans('errors.server_post_limit'), '/', 413);
+        }
+
         if ($this->isApiRequest($request)) {
             return $this->renderApiException($e);
         }
@@ -71,7 +76,7 @@ class Handler extends ExceptionHandler
      */
     protected function isApiRequest(Request $request): bool
     {
-        return strpos($request->path(), 'api/') === 0;
+        return str_starts_with($request->path(), 'api/');
     }
 
     /**

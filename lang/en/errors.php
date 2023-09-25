@@ -44,6 +44,7 @@ return [
     'cannot_get_image_from_url' => 'Cannot get image from :url',
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
 
     // Drawing & Images
