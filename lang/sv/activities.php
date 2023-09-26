@@ -62,7 +62,7 @@ return [
     'watch_update_level_notification' => 'Inställningarna för bevakning har uppdaterats',
 
     // Auth
-    'auth_login' => 'logged in',
+    'auth_login' => 'loggade in',
     'auth_register' => 'registrerad som ny användare',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
