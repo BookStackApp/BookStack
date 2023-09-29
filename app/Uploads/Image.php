@@ -45,11 +45,11 @@ class Image extends Model
     }
 
     /**
-     * Get a thumbnail for this image.
+     * Get an (already existing) thumbnail for this image.
      *
      * @throws \Exception
      */
-    public function getThumb(?int $width, ?int $height, bool $keepRatio = false): string
+    public function getThumb(?int $width, ?int $height, bool $keepRatio = false): ?string
     {
         return app()->make(ImageService::class)->getThumbnail($this, $width, $height, $keepRatio);
     }

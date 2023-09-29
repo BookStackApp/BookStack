@@ -6,6 +6,8 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controller;
 use BookStack\Uploads\ImageRepo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class GalleryImageController extends Controller

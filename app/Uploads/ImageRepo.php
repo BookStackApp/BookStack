@@ -29,14 +29,14 @@ class ImageRepo
      * Execute a paginated query, returning in a standard format.
      * Also runs the query through the restriction system.
      */
-    private function returnPaginated($query, $page = 1, $pageSize = 24): array
+    private function returnPaginated(Builder $query, int $page = 1, int $pageSize = 24): array
     {
         $images = $query->orderBy('created_at', 'desc')->skip($pageSize * ($page - 1))->take($pageSize + 1)->get();
         $hasMore = count($images) > $pageSize;
 
         $returnImages = $images->take($pageSize);
         $returnImages->each(function (Image $image) {
-            $this->loadThumbs($image);
+            $this->loadThumbs($image, false);
         });
 
         return [
@@ -119,7 +119,7 @@ class ImageRepo
         $image = $this->imageService->saveNewFromUpload($uploadFile, $type, $uploadedTo, $resizeWidth, $resizeHeight, $keepRatio);
 
         if ($type !== 'system') {
-            $this->loadThumbs($image);
+            $this->loadThumbs($image, true);
         }
 
         return $image;
@@ -133,7 +133,7 @@ class ImageRepo
     public function saveNewFromData(string $imageName, string $imageData, string $type, int $uploadedTo = 0): Image
     {
         $image = $this->imageService->saveNew($imageName, $imageData, $type, $uploadedTo);
-        $this->loadThumbs($image);
+        $this->loadThumbs($image, true);
 
         return $image;
     }
@@ -160,7 +160,7 @@ class ImageRepo
         $image->fill($updateDetails);
         $image->updated_by = user()->id;
         $image->save();
-        $this->loadThumbs($image);
+        $this->loadThumbs($image, false);
 
         return $image;
     }
@@ -179,6 +179,7 @@ class ImageRepo
         $image->updated_by = user()->id;
         $image->touch();
         $image->save();
+
         $this->imageService->replaceExistingFromUpload($image->path, $image->type, $file);
         $this->loadThumbs($image, true);
     }
@@ -215,11 +216,11 @@ class ImageRepo
     /**
      * Load thumbnails onto an image object.
      */
-    public function loadThumbs(Image $image, bool $forceCreate = false): void
+    public function loadThumbs(Image $image, bool $shouldCreate): void
     {
         $image->setAttribute('thumbs', [
-            'gallery' => $this->getThumbnail($image, 150, 150, false, $forceCreate),
-            'display' => $this->getThumbnail($image, 1680, null, true, $forceCreate),
+            'gallery' => $this->getThumbnail($image, 150, 150, false, $shouldCreate),
+            'display' => $this->getThumbnail($image, 1680, null, true, $shouldCreate),
         ]);
     }
 
@@ -228,10 +229,10 @@ class ImageRepo
      * If $keepRatio is true only the width will be used.
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
      */
-    protected function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio, bool $forceCreate): ?string
+    protected function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio, bool $shouldCreate): ?string
     {
         try {
-            return $this->imageService->getThumbnail($image, $width, $height, $keepRatio, $forceCreate);
+            return $this->imageService->getThumbnail($image, $width, $height, $keepRatio, $shouldCreate);
         } catch (Exception $exception) {
             return null;
         }
