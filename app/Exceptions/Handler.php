@@ -10,6 +10,7 @@ use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
@@ -37,6 +38,15 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * A function to run upon out of memory.
+     * If it returns a response, that will be provided back to the request
+     * upon an out of memory event.
+     *
+     * @var ?callable<?\Illuminate\Http\Response>
+     */
+    protected $onOutOfMemory = null;
+
+    /**
      * Report or log an exception.
      *
      * @param \Throwable $exception
@@ -60,6 +70,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
+        if ($e instanceof FatalError && str_contains($e->getMessage(), 'bytes exhausted (tried to allocate') && $this->onOutOfMemory) {
+            $response = call_user_func($this->onOutOfMemory);
+            if ($response) {
+                return $response;
+            }
+        }
+
         if ($e instanceof PostTooLargeException) {
             $e = new NotifyException(trans('errors.server_post_limit'), '/', 413);
         }
@@ -69,6 +86,24 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $e);
+    }
+
+    /**
+     * Provide a function to be called when an out of memory event occurs.
+     * If the callable returns a response, this response will be returned
+     * to the request upon error.
+     */
+    public function prepareForOutOfMemory(callable $onOutOfMemory)
+    {
+        $this->onOutOfMemory = $onOutOfMemory;
+    }
+
+    /**
+     * Forget the current out of memory handler, if existing.
+     */
+    public function forgetOutOfMemoryHandler()
+    {
+        $this->onOutOfMemory = null;
     }
 
     /**

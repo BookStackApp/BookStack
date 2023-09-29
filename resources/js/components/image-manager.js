@@ -90,6 +90,15 @@ export class ImageManager extends Component {
             }
         });
 
+        // Rebuild thumbs click
+        onChildEvent(this.formContainer, '#image-manager-rebuild-thumbs', 'click', async (_, button) => {
+            button.disabled = true;
+            if (this.lastSelected) {
+                await this.rebuildThumbnails(this.lastSelected.id);
+            }
+            button.disabled = false;
+        });
+
         // Edit form submit
         this.formContainer.addEventListener('ajax-form-success', () => {
             this.refreshGallery();
@@ -266,6 +275,16 @@ export class ImageManager extends Component {
 
     canLoadMore() {
         return this.loadMore.querySelector('button') && !this.loadMore.hasAttribute('hidden');
+    }
+
+    async rebuildThumbnails(imageId) {
+        try {
+            const response = await window.$http.put(`/images/${imageId}/rebuild-thumbnails`);
+            window.$events.success(response.data);
+            this.refreshGallery();
+        } catch (err) {
+            window.$events.showResponseError(err);
+        }
     }
 
 }

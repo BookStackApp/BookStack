@@ -142,6 +142,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/images/drawio', [UploadControllers\DrawioImageController::class, 'create']);
     Route::get('/images/edit/{id}', [UploadControllers\ImageController::class, 'edit']);
     Route::put('/images/{id}/file', [UploadControllers\ImageController::class, 'updateFile']);
+    Route::put('/images/{id}/rebuild-thumbnails', [UploadControllers\ImageController::class, 'rebuildThumbnails']);
     Route::put('/images/{id}', [UploadControllers\ImageController::class, 'update']);
     Route::delete('/images/{id}', [UploadControllers\ImageController::class, 'destroy']);
 
