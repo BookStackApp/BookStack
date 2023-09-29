@@ -130,7 +130,7 @@ class ImageGalleryApiController extends ApiController
      */
     protected function formatForSingleResponse(Image $image): array
     {
-        $this->imageRepo->loadThumbs($image);
+        $this->imageRepo->loadThumbs($image, false);
         $data = $image->toArray();
         $data['created_by'] = $image->createdBy;
         $data['updated_by'] = $image->updatedBy;

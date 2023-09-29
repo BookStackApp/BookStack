@@ -259,7 +259,7 @@ class ImageService
 
         $initialHeader = substr($imageData, 0, strpos($imageData, 'IDAT'));
 
-        return strpos($initialHeader, 'acTL') !== false;
+        return str_contains($initialHeader, 'acTL');
     }
 
     /**
@@ -268,9 +268,8 @@ class ImageService
      * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
      *
      * @throws Exception
-     * @throws InvalidArgumentException
      */
-    public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false, bool $forceCreate = false): string
+    public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false, bool $shouldCreate = false): ?string
     {
         // Do not resize GIF images where we're not cropping
         if ($keepRatio && $this->isGif($image)) {
@@ -285,13 +284,13 @@ class ImageService
 
         // Return path if in cache
         $cachedThumbPath = $this->cache->get($thumbCacheKey);
-        if ($cachedThumbPath && !$forceCreate) {
+        if ($cachedThumbPath && !$shouldCreate) {
             return $this->getPublicUrl($cachedThumbPath);
         }
 
         // If thumbnail has already been generated, serve that and cache path
         $storage = $this->getStorageDisk($image->type);
-        if (!$forceCreate && $storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
+        if (!$shouldCreate && $storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
             $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
 
             return $this->getPublicUrl($thumbFilePath);
@@ -304,6 +303,10 @@ class ImageService
             $this->cache->put($thumbCacheKey, $image->path, 60 * 60 * 72);
 
             return $this->getPublicUrl($image->path);
+        }
+
+        if (!$shouldCreate) {
+            return null;
         }
 
         // If not in cache and thumbnail does not exist, generate thumb and cache path

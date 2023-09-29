@@ -44,7 +44,7 @@ class ImageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->validate($request, [
+        $data = $this->validate($request, [
             'name' => ['required', 'min:2', 'string'],
         ]);
 
@@ -52,9 +52,7 @@ class ImageController extends Controller
         $this->checkImagePermission($image);
         $this->checkOwnablePermission('image-update', $image);
 
-        $image = $this->imageRepo->updateImageDetails($image, $request->all());
-
-        $this->imageRepo->loadThumbs($image);
+        $image = $this->imageRepo->updateImageDetails($image, $data);
 
         return view('pages.parts.image-manager-form', [
             'image'          => $image,
@@ -99,7 +97,7 @@ class ImageController extends Controller
             $dependantPages = $this->imageRepo->getPagesUsingImage($image);
         }
 
-        $this->imageRepo->loadThumbs($image);
+        $this->imageRepo->loadThumbs($image, false);
 
         return view('pages.parts.image-manager-form', [
             'image'          => $image,
