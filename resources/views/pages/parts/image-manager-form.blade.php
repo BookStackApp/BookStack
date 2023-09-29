@@ -44,6 +44,9 @@
                                     id="image-manager-replace"
                                     refs="dropzone@select-button"
                                     class="text-item">{{ trans('components.image_replace') }}</button>
+                            <button type="button"
+                                    id="image-manager-rebuild-thumbs"
+                                    class="text-item">{{ trans('components.image_rebuild_thumbs') }}</button>
                         @endif
                     </div>
                 </div>

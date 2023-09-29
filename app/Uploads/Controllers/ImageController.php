@@ -8,6 +8,7 @@ use BookStack\Http\Controller;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
+use BookStack\Util\OutOfMemoryHandler;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -119,6 +120,24 @@ class ImageController extends Controller
         $this->imageRepo->destroyImage($image);
 
         return response('');
+    }
+
+    /**
+     * Rebuild the thumbnails for the given image.
+     */
+    public function rebuildThumbnails(string $id)
+    {
+        $image = $this->imageRepo->getById($id);
+        $this->checkImagePermission($image);
+        $this->checkOwnablePermission('image-update', $image);
+
+        new OutOfMemoryHandler(function () {
+            return $this->jsonError(trans('errors.image_thumbnail_memory_limit'));
+        });
+
+        $this->imageRepo->loadThumbs($image, true);
+
+        return response(trans('components.image_rebuild_thumbs_success'));
     }
 
     /**
