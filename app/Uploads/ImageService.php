@@ -21,23 +21,18 @@ use Intervention\Image\Exception\NotSupportedException;
 use Intervention\Image\Image as InterventionImage;
 use Intervention\Image\ImageManager;
 use League\Flysystem\WhitespacePathNormalizer;
-use Psr\SimpleCache\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ImageService
 {
-    protected ImageManager $imageTool;
-    protected Cache $cache;
-    protected FilesystemManager $fileSystem;
-
     protected static array $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-    public function __construct(ImageManager $imageTool, FilesystemManager $fileSystem, Cache $cache)
-    {
-        $this->imageTool = $imageTool;
-        $this->fileSystem = $fileSystem;
-        $this->cache = $cache;
+    public function __construct(
+        protected ImageManager $imageTool,
+        protected FilesystemManager $fileSystem,
+        protected Cache $cache
+    ) {
     }
 
     /**
@@ -206,7 +201,7 @@ class ImageService
      * Save image data for the given path in the public space, if possible,
      * for the provided storage mechanism.
      */
-    protected function saveImageDataInPublicSpace(Storage $storage, string $path, string $data)
+    protected function saveImageDataInPublicSpace(Storage $storage, string $path, string $data): void
     {
         $storage->put($path, $data);
 
@@ -269,8 +264,14 @@ class ImageService
      *
      * @throws Exception
      */
-    public function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio = false, bool $shouldCreate = false): ?string
-    {
+    public function getThumbnail(
+        Image $image,
+        ?int $width,
+        ?int $height,
+        bool $keepRatio = false,
+        bool $shouldCreate = false,
+        bool $canCreate = false,
+    ): ?string {
         // Do not resize GIF images where we're not cropping
         if ($keepRatio && $this->isGif($image)) {
             return $this->getPublicUrl($image->path);
@@ -305,7 +306,7 @@ class ImageService
             return $this->getPublicUrl($image->path);
         }
 
-        if (!$shouldCreate) {
+        if (!$shouldCreate && !$canCreate) {
             return null;
         }
 
@@ -559,7 +560,7 @@ class ImageService
             // Check the image file exists
             && $disk->exists($imagePath)
             // Check the file is likely an image file
-            && strpos($disk->mimeType($imagePath), 'image/') === 0;
+            && str_starts_with($disk->mimeType($imagePath), 'image/');
     }
 
     /**
@@ -568,14 +569,14 @@ class ImageService
      */
     protected function checkUserHasAccessToRelationOfImageAtPath(string $path): bool
     {
-        if (strpos($path, '/uploads/images/') === 0) {
+        if (str_starts_with($path, '/uploads/images/')) {
             $path = substr($path, 15);
         }
 
         // Strip thumbnail element from path if existing
         $originalPathSplit = array_filter(explode('/', $path), function (string $part) {
-            $resizedDir = (strpos($part, 'thumbs-') === 0 || strpos($part, 'scaled-') === 0);
-            $missingExtension = strpos($part, '.') === false;
+            $resizedDir = (str_starts_with($part, 'thumbs-') || str_starts_with($part, 'scaled-'));
+            $missingExtension = !str_contains($part, '.');
 
             return !($resizedDir && $missingExtension);
         });
@@ -641,9 +642,9 @@ class ImageService
         $url = ltrim(trim($url), '/');
 
         // Handle potential relative paths
-        $isRelative = strpos($url, 'http') !== 0;
+        $isRelative = !str_starts_with($url, 'http');
         if ($isRelative) {
-            if (strpos(strtolower($url), 'uploads/images') === 0) {
+            if (str_starts_with(strtolower($url), 'uploads/images')) {
                 return trim($url, '/');
             }
 
@@ -658,7 +659,7 @@ class ImageService
 
         foreach ($potentialHostPaths as $potentialBasePath) {
             $potentialBasePath = strtolower($potentialBasePath);
-            if (strpos(strtolower($url), $potentialBasePath) === 0) {
+            if (str_starts_with(strtolower($url), $potentialBasePath)) {
                 return 'uploads/images/' . trim(substr($url, strlen($potentialBasePath)), '/');
             }
         }
@@ -679,7 +680,7 @@ class ImageService
         // region-based url will be used to prevent http issues.
         if (!$storageUrl && config('filesystems.images') === 's3') {
             $storageDetails = config('filesystems.disks.s3');
-            if (strpos($storageDetails['bucket'], '.') === false) {
+            if (!str_contains($storageDetails['bucket'], '.')) {
                 $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
             } else {
                 $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];

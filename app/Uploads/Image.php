@@ -45,13 +45,14 @@ class Image extends Model
     }
 
     /**
-     * Get an (already existing) thumbnail for this image.
+     * Get a thumbnail URL for this image.
+     * Attempts to generate the thumbnail if not already existing.
      *
      * @throws \Exception
      */
     public function getThumb(?int $width, ?int $height, bool $keepRatio = false): ?string
     {
-        return app()->make(ImageService::class)->getThumbnail($this, $width, $height, $keepRatio);
+        return app()->make(ImageService::class)->getThumbnail($this, $width, $height, $keepRatio, false, true);
     }
 
     /**

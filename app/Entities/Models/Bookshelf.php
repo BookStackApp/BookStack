@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Uploads\Image;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -49,28 +50,21 @@ class Bookshelf extends Entity implements HasCoverImage
     }
 
     /**
-     * Returns BookShelf cover image, if cover does not exists return default cover image.
-     *
-     * @param int $width  - Width of the image
-     * @param int $height - Height of the image
-     *
-     * @return string
+     * Returns shelf cover image, if cover not exists return default cover image.
      */
-    public function getBookCover($width = 440, $height = 250)
+    public function getBookCover(int $width = 440, int $height = 250): string
     {
         // TODO - Make generic, focused on books right now, Perhaps set-up a better image
         $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (!$this->image_id) {
+        if (!$this->image_id || !$this->cover) {
             return $default;
         }
 
         try {
-            $cover = $this->cover ? url($this->cover->getThumb($width, $height, false)) : $default;
-        } catch (\Exception $err) {
-            $cover = $default;
+            return $this->cover->getThumb($width, $height, false) ?? $default;
+        } catch (Exception $err) {
+            return $default;
         }
-
-        return $cover;
     }
 
     /**
