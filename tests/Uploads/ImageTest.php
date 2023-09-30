@@ -557,6 +557,7 @@ class ImageTest extends TestCase
         $this->asEditor();
         $imageName = 'first-image.png';
         $relPath = $this->files->expectedImagePath('gallery', $imageName);
+        $this->files->deleteAtRelativePath($relPath);
 
         $this->files->uploadGalleryImage($this, $imageName, $this->entities->page()->id);
         $image = Image::first();
