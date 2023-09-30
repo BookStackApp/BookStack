@@ -382,7 +382,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .image-manager-list {
   padding: 3px;
   display: grid;
-  grid-template-columns: repeat( auto-fit, minmax(140px, 1fr) );
+  grid-template-columns: repeat( auto-fill, minmax(max(140px, 17%), 1fr) );
   gap: 3px;
   z-index: 3;
   > div {
