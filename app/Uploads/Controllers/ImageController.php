@@ -11,7 +11,6 @@ use BookStack\Uploads\ImageService;
 use BookStack\Util\OutOfMemoryHandler;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class ImageController extends Controller
 {
@@ -39,9 +38,6 @@ class ImageController extends Controller
 
     /**
      * Update image details.
-     *
-     * @throws ImageUploadException
-     * @throws ValidationException
      */
     public function update(Request $request, string $id)
     {
@@ -74,6 +70,10 @@ class ImageController extends Controller
         $this->checkImagePermission($image);
         $this->checkOwnablePermission('image-update', $image);
         $file = $request->file('file');
+
+        new OutOfMemoryHandler(function () {
+            return $this->jsonError(trans('errors.image_upload_memory_limit'));
+        });
 
         try {
             $this->imageRepo->updateImageFile($image, $file);

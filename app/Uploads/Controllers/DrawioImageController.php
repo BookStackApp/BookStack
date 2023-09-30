@@ -10,11 +10,9 @@ use Illuminate\Http\Request;
 
 class DrawioImageController extends Controller
 {
-    protected $imageRepo;
-
-    public function __construct(ImageRepo $imageRepo)
-    {
-        $this->imageRepo = $imageRepo;
+    public function __construct(
+        protected ImageRepo $imageRepo
+    ) {
     }
 
     /**
