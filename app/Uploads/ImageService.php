@@ -9,9 +9,6 @@ use BookStack\Exceptions\ImageUploadException;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Contracts\Filesystem\Filesystem as StorageDisk;
-use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -85,7 +82,7 @@ class ImageService
 
         $imagePath = '/uploads/images/' . $type . '/' . date('Y-m') . '/';
 
-        while ($disk->exists($this->storage->adjustPathForDisk($imagePath . $fileName, $type))) {
+        while ($disk->exists($imagePath . $fileName)) {
             $fileName = Str::random(3) . $fileName;
         }
 
@@ -95,7 +92,7 @@ class ImageService
         }
 
         try {
-            $this->storage->storeInPublicSpace($disk, $this->storage->adjustPathForDisk($fullPath, $type), $imageData);
+            $disk->put($fullPath, $imageData, true);
         } catch (Exception $e) {
             Log::error('Error when attempting image upload:' . $e->getMessage());
 
@@ -129,10 +126,8 @@ class ImageService
     {
         $imageData = file_get_contents($file->getRealPath());
         $disk = $this->storage->getDisk($type);
-        $adjustedPath = $this->storage->adjustPathForDisk($path, $type);
-        $disk->put($adjustedPath, $imageData);
+        $disk->put($path, $imageData);
     }
-
 
     /**
      * Checks if the image is a gif. Returns true if it is, else false.
@@ -191,13 +186,13 @@ class ImageService
 
         // If thumbnail has already been generated, serve that and cache path
         $disk = $this->storage->getDisk($image->type);
-        if (!$shouldCreate && $disk->exists($this->storage->adjustPathForDisk($thumbFilePath, $image->type))) {
+        if (!$shouldCreate && $disk->exists($thumbFilePath)) {
             $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
 
             return $this->storage->getPublicUrl($thumbFilePath);
         }
 
-        $imageData = $disk->get($this->storage->adjustPathForDisk($imagePath, $image->type));
+        $imageData = $disk->get($imagePath);
 
         // Do not resize apng images where we're not cropping
         if ($keepRatio && $this->isApngData($image, $imageData)) {
@@ -212,7 +207,7 @@ class ImageService
 
         // If not in cache and thumbnail does not exist, generate thumb and cache path
         $thumbData = $this->resizeImage($imageData, $width, $height, $keepRatio);
-        $this->storage->storeInPublicSpace($disk, $this->storage->adjustPathForDisk($thumbFilePath, $image->type), $thumbData);
+        $disk->put($thumbFilePath, $thumbData, true);
         $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
 
         return $this->storage->getPublicUrl($thumbFilePath);
@@ -253,7 +248,6 @@ class ImageService
         return $thumbData;
     }
 
-
     /**
      * Get the raw data content from an image.
      *
@@ -263,7 +257,7 @@ class ImageService
     {
         $disk = $this->storage->getDisk();
 
-        return $disk->get($this->storage->adjustPathForDisk($image->path, $image->type));
+        return $disk->get($image->path);
     }
 
     /**
@@ -271,51 +265,11 @@ class ImageService
      *
      * @throws Exception
      */
-    public function destroy(Image $image)
+    public function destroy(Image $image): void
     {
-        $this->destroyImagesFromPath($image->path, $image->type);
+        $disk = $this->storage->getDisk($image->type);
+        $disk->destroyAllMatchingNameFromPath($image->path);
         $image->delete();
-    }
-
-    /**
-     * Destroys an image at the given path.
-     * Searches for image thumbnails in addition to main provided path.
-     */
-    protected function destroyImagesFromPath(string $path, string $imageType): bool
-    {
-        $path = $this->storage->adjustPathForDisk($path, $imageType);
-        $disk = $this->storage->getDisk($imageType);
-
-        $imageFolder = dirname($path);
-        $imageFileName = basename($path);
-        $allImages = collect($disk->allFiles($imageFolder));
-
-        // Delete image files
-        $imagesToDelete = $allImages->filter(function ($imagePath) use ($imageFileName) {
-            return basename($imagePath) === $imageFileName;
-        });
-        $disk->delete($imagesToDelete->all());
-
-        // Cleanup of empty folders
-        $foldersInvolved = array_merge([$imageFolder], $disk->directories($imageFolder));
-        foreach ($foldersInvolved as $directory) {
-            if ($this->isFolderEmpty($disk, $directory)) {
-                $disk->deleteDirectory($directory);
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Check whether a folder is empty.
-     */
-    protected function isFolderEmpty(StorageDisk $storage, string $path): bool
-    {
-        $files = $storage->files($path);
-        $folders = $storage->directories($path);
-
-        return count($files) === 0 && count($folders) === 0;
     }
 
     /**
@@ -325,7 +279,7 @@ class ImageService
      *
      * Returns the path of the images that would be/have been deleted.
      */
-    public function deleteUnusedImages(bool $checkRevisions = true, bool $dryRun = true)
+    public function deleteUnusedImages(bool $checkRevisions = true, bool $dryRun = true): array
     {
         $types = ['gallery', 'drawio'];
         $deletedPaths = [];
@@ -361,8 +315,6 @@ class ImageService
      * Attempts to convert the URL to a system storage url then
      * fetch the data from the disk or storage location.
      * Returns null if the image data cannot be fetched from storage.
-     *
-     * @throws FileNotFoundException
      */
     public function imageUrlToBase64(string $url): ?string
     {
@@ -370,8 +322,6 @@ class ImageService
         if (empty($url) || is_null($storagePath)) {
             return null;
         }
-
-        $storagePath = $this->storage->adjustPathForDisk($storagePath);
 
         // Apply access control when local_secure_restricted images are active
         if ($this->storage->usingSecureRestrictedImages()) {
@@ -412,8 +362,7 @@ class ImageService
         }
 
         // Check local_secure is active
-        return $this->storage->usingSecureImages()
-            && $disk instanceof FilesystemAdapter
+        return $disk->usingSecureImages()
             // Check the image file exists
             && $disk->exists($imagePath)
             // Check the file is likely an image file
