@@ -6,15 +6,10 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ImageUploadException;
-use ErrorException;
 use Exception;
-use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Intervention\Image\Exception\NotSupportedException;
-use Intervention\Image\ImageManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -23,10 +18,8 @@ class ImageService
     protected static array $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     public function __construct(
-        protected ImageManager $imageTool,
-        protected FilesystemManager $fileSystem,
-        protected Cache $cache,
         protected ImageStorage $storage,
+        protected ImageResizer $resizer,
     ) {
     }
 
@@ -47,7 +40,7 @@ class ImageService
         $imageData = file_get_contents($uploadedFile->getRealPath());
 
         if ($resizeWidth !== null || $resizeHeight !== null) {
-            $imageData = $this->resizeImage($imageData, $resizeWidth, $resizeHeight, $keepRatio);
+            $imageData = $this->resizer->resizeImageData($imageData, $resizeWidth, $resizeHeight, $keepRatio);
         }
 
         return $this->saveNew($imageName, $imageData, $type, $uploadedTo);
@@ -127,125 +120,6 @@ class ImageService
         $imageData = file_get_contents($file->getRealPath());
         $disk = $this->storage->getDisk($type);
         $disk->put($path, $imageData);
-    }
-
-    /**
-     * Checks if the image is a gif. Returns true if it is, else false.
-     */
-    protected function isGif(Image $image): bool
-    {
-        return strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'gif';
-    }
-
-    /**
-     * Check if the given image and image data is apng.
-     */
-    protected function isApngData(Image $image, string &$imageData): bool
-    {
-        $isPng = strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'png';
-        if (!$isPng) {
-            return false;
-        }
-
-        $initialHeader = substr($imageData, 0, strpos($imageData, 'IDAT'));
-
-        return str_contains($initialHeader, 'acTL');
-    }
-
-    /**
-     * Get the thumbnail for an image.
-     * If $keepRatio is true only the width will be used.
-     * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
-     *
-     * @throws Exception
-     */
-    public function getThumbnail(
-        Image $image,
-        ?int $width,
-        ?int $height,
-        bool $keepRatio = false,
-        bool $shouldCreate = false,
-        bool $canCreate = false,
-    ): ?string {
-        // Do not resize GIF images where we're not cropping
-        if ($keepRatio && $this->isGif($image)) {
-            return $this->storage->getPublicUrl($image->path);
-        }
-
-        $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
-        $imagePath = $image->path;
-        $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
-
-        $thumbCacheKey = 'images::' . $image->id . '::' . $thumbFilePath;
-
-        // Return path if in cache
-        $cachedThumbPath = $this->cache->get($thumbCacheKey);
-        if ($cachedThumbPath && !$shouldCreate) {
-            return $this->storage->getPublicUrl($cachedThumbPath);
-        }
-
-        // If thumbnail has already been generated, serve that and cache path
-        $disk = $this->storage->getDisk($image->type);
-        if (!$shouldCreate && $disk->exists($thumbFilePath)) {
-            $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
-
-            return $this->storage->getPublicUrl($thumbFilePath);
-        }
-
-        $imageData = $disk->get($imagePath);
-
-        // Do not resize apng images where we're not cropping
-        if ($keepRatio && $this->isApngData($image, $imageData)) {
-            $this->cache->put($thumbCacheKey, $image->path, 60 * 60 * 72);
-
-            return $this->storage->getPublicUrl($image->path);
-        }
-
-        if (!$shouldCreate && !$canCreate) {
-            return null;
-        }
-
-        // If not in cache and thumbnail does not exist, generate thumb and cache path
-        $thumbData = $this->resizeImage($imageData, $width, $height, $keepRatio);
-        $disk->put($thumbFilePath, $thumbData, true);
-        $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
-
-        return $this->storage->getPublicUrl($thumbFilePath);
-    }
-
-    /**
-     * Resize the image of given data to the specified size, and return the new image data.
-     *
-     * @throws ImageUploadException
-     */
-    protected function resizeImage(string $imageData, ?int $width, ?int $height, bool $keepRatio): string
-    {
-        try {
-            $thumb = $this->imageTool->make($imageData);
-        } catch (ErrorException | NotSupportedException $e) {
-            throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
-        }
-
-        $this->orientImageToOriginalExif($thumb, $imageData);
-
-        if ($keepRatio) {
-            $thumb->resize($width, $height, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-        } else {
-            $thumb->fit($width, $height);
-        }
-
-        $thumbData = (string) $thumb->encode();
-
-        // Use original image data if we're keeping the ratio
-        // and the resizing does not save any space.
-        if ($keepRatio && strlen($thumbData) > strlen($imageData)) {
-            return $imageData;
-        }
-
-        return $thumbData;
     }
 
     /**
@@ -375,7 +249,7 @@ class ImageService
      */
     protected function checkUserHasAccessToRelationOfImageAtPath(string $path): bool
     {
-        if (str_starts_with($path, '/uploads/images/')) {
+        if (str_starts_with($path, 'uploads/images/')) {
             $path = substr($path, 15);
         }
 

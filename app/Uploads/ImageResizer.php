@@ -3,16 +3,79 @@
 namespace BookStack\Uploads;
 
 use BookStack\Exceptions\ImageUploadException;
+use Exception;
 use GuzzleHttp\Psr7\Utils;
-use Intervention\Image\Exception\NotSupportedException;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Image as InterventionImage;
 use Intervention\Image\ImageManager;
 
 class ImageResizer
 {
     public function __construct(
-        protected ImageManager $intervention
+        protected ImageManager $intervention,
+        protected ImageStorage $storage,
     ) {
+    }
+
+    /**
+     * Get the thumbnail for an image.
+     * If $keepRatio is true only the width will be used.
+     * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
+     *
+     * @throws Exception
+     */
+    public function resizeToThumbnailUrl(
+        Image $image,
+        ?int $width,
+        ?int $height,
+        bool $keepRatio = false,
+        bool $shouldCreate = false,
+        bool $canCreate = false,
+    ): ?string {
+        // Do not resize GIF images where we're not cropping
+        if ($keepRatio && $this->isGif($image)) {
+            return $this->storage->getPublicUrl($image->path);
+        }
+
+        $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
+        $imagePath = $image->path;
+        $thumbFilePath = dirname($imagePath) . $thumbDirName . basename($imagePath);
+
+        $thumbCacheKey = 'images::' . $image->id . '::' . $thumbFilePath;
+
+        // Return path if in cache
+        $cachedThumbPath = Cache::get($thumbCacheKey);
+        if ($cachedThumbPath && !$shouldCreate) {
+            return $this->storage->getPublicUrl($cachedThumbPath);
+        }
+
+        // If thumbnail has already been generated, serve that and cache path
+        $disk = $this->storage->getDisk($image->type);
+        if (!$shouldCreate && $disk->exists($thumbFilePath)) {
+            Cache::put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
+
+            return $this->storage->getPublicUrl($thumbFilePath);
+        }
+
+        $imageData = $disk->get($imagePath);
+
+        // Do not resize apng images where we're not cropping
+        if ($keepRatio && $this->isApngData($image, $imageData)) {
+            Cache::put($thumbCacheKey, $image->path, 60 * 60 * 72);
+
+            return $this->storage->getPublicUrl($image->path);
+        }
+
+        if (!$shouldCreate && !$canCreate) {
+            return null;
+        }
+
+        // If not in cache and thumbnail does not exist, generate thumb and cache path
+        $thumbData = $this->resizeImageData($imageData, $width, $height, $keepRatio);
+        $disk->put($thumbFilePath, $thumbData, true);
+        Cache::put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
+
+        return $this->storage->getPublicUrl($thumbFilePath);
     }
 
     /**
@@ -20,11 +83,11 @@ class ImageResizer
      *
      * @throws ImageUploadException
      */
-    protected function resizeImageData(string $imageData, ?int $width, ?int $height, bool $keepRatio): string
+    public function resizeImageData(string $imageData, ?int $width, ?int $height, bool $keepRatio): string
     {
         try {
             $thumb = $this->intervention->make($imageData);
-        } catch (NotSupportedException $e) {
+        } catch (Exception $e) {
             throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
         }
 
@@ -91,5 +154,28 @@ class ImageResizer
                 $image->rotate(90);
                 break;
         }
+    }
+
+    /**
+     * Checks if the image is a gif. Returns true if it is, else false.
+     */
+    protected function isGif(Image $image): bool
+    {
+        return strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'gif';
+    }
+
+    /**
+     * Check if the given image and image data is apng.
+     */
+    protected function isApngData(Image $image, string &$imageData): bool
+    {
+        $isPng = strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'png';
+        if (!$isPng) {
+            return false;
+        }
+
+        $initialHeader = substr($imageData, 0, strpos($imageData, 'IDAT'));
+
+        return str_contains($initialHeader, 'acTL');
     }
 }

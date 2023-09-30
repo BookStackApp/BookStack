@@ -52,7 +52,7 @@ class Image extends Model
      */
     public function getThumb(?int $width, ?int $height, bool $keepRatio = false): ?string
     {
-        return app()->make(ImageService::class)->getThumbnail($this, $width, $height, $keepRatio, false, true);
+        return app()->make(ImageResizer::class)->resizeToThumbnailUrl($this, $width, $height, $keepRatio, false, true);
     }
 
     /**

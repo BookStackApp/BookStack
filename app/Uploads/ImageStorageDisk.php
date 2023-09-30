@@ -50,7 +50,7 @@ class ImageStorageDisk
     /**
      * Get the file at the given path.
      */
-    public function get(string $path): bool
+    public function get(string $path): ?string
     {
         return $this->filesystem->get($this->adjustPathForDisk($path));
     }
@@ -106,6 +106,7 @@ class ImageStorageDisk
      */
     public function mimeType(string $path): string
     {
+        $path = $this->adjustPathForDisk($path);
         return $this->filesystem instanceof FilesystemAdapter ? $this->filesystem->mimeType($path) : '';
     }
 
@@ -114,7 +115,7 @@ class ImageStorageDisk
      */
     public function response(string $path): StreamedResponse
     {
-        return $this->filesystem->response($path);
+        return $this->filesystem->response($this->adjustPathForDisk($path));
     }
 
     /**

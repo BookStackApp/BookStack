@@ -13,7 +13,8 @@ class ImageRepo
 {
     public function __construct(
         protected ImageService $imageService,
-        protected PermissionApplicator $permissions
+        protected PermissionApplicator $permissions,
+        protected ImageResizer $imageResizer,
     ) {
     }
 
@@ -225,14 +226,12 @@ class ImageRepo
     }
 
     /**
-     * Get the thumbnail for an image.
-     * If $keepRatio is true only the width will be used.
-     * Checks the cache then storage to avoid creating / accessing the filesystem on every check.
+     * Get a thumbnail URL for the given image.
      */
     protected function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio, bool $shouldCreate): ?string
     {
         try {
-            return $this->imageService->getThumbnail($image, $width, $height, $keepRatio, $shouldCreate);
+            return $this->imageResizer->resizeToThumbnailUrl($image, $width, $height, $keepRatio, $shouldCreate);
         } catch (Exception $exception) {
             return null;
         }
