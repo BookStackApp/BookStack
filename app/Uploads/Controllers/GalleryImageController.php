@@ -5,6 +5,7 @@ namespace BookStack\Uploads\Controllers;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controller;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Util\OutOfMemoryHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -52,6 +53,10 @@ class GalleryImageController extends Controller
         } catch (ValidationException $exception) {
             return $this->jsonError(implode("\n", $exception->errors()['file']));
         }
+
+        new OutOfMemoryHandler(function () {
+            return $this->jsonError(trans('errors.image_upload_memory_limit'));
+        });
 
         try {
             $imageUpload = $request->file('file');

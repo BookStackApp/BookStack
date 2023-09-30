@@ -222,7 +222,7 @@ class ExportFormatter
             foreach ($imageTagsOutput[0] as $index => $imgMatch) {
                 $oldImgTagString = $imgMatch;
                 $srcString = $imageTagsOutput[2][$index];
-                $imageEncoded = $this->imageService->imageUriToBase64($srcString);
+                $imageEncoded = $this->imageService->imageUrlToBase64($srcString);
                 if ($imageEncoded === null) {
                     $imageEncoded = $srcString;
                 }

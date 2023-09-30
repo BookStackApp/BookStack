@@ -8,19 +8,16 @@ use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ImageUploadException;
 use ErrorException;
 use Exception;
-use GuzzleHttp\Psr7\Utils;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Contracts\Filesystem\Filesystem as Storage;
+use Illuminate\Contracts\Filesystem\Filesystem as StorageDisk;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Intervention\Image\Exception\NotSupportedException;
-use Intervention\Image\Image as InterventionImage;
 use Intervention\Image\ImageManager;
-use League\Flysystem\WhitespacePathNormalizer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -31,79 +28,15 @@ class ImageService
     public function __construct(
         protected ImageManager $imageTool,
         protected FilesystemManager $fileSystem,
-        protected Cache $cache
+        protected Cache $cache,
+        protected ImageStorage $storage,
     ) {
-    }
-
-    /**
-     * Get the storage that will be used for storing images.
-     */
-    protected function getStorageDisk(string $imageType = ''): Storage
-    {
-        return $this->fileSystem->disk($this->getStorageDiskName($imageType));
-    }
-
-    /**
-     * Check if local secure image storage (Fetched behind authentication)
-     * is currently active in the instance.
-     */
-    protected function usingSecureImages(string $imageType = 'gallery'): bool
-    {
-        return $this->getStorageDiskName($imageType) === 'local_secure_images';
-    }
-
-    /**
-     * Check if "local secure restricted" (Fetched behind auth, with permissions enforced)
-     * is currently active in the instance.
-     */
-    protected function usingSecureRestrictedImages()
-    {
-        return config('filesystems.images') === 'local_secure_restricted';
-    }
-
-    /**
-     * Change the originally provided path to fit any disk-specific requirements.
-     * This also ensures the path is kept to the expected root folders.
-     */
-    protected function adjustPathForStorageDisk(string $path, string $imageType = ''): string
-    {
-        $path = (new WhitespacePathNormalizer())->normalizePath(str_replace('uploads/images/', '', $path));
-
-        if ($this->usingSecureImages($imageType)) {
-            return $path;
-        }
-
-        return 'uploads/images/' . $path;
-    }
-
-    /**
-     * Get the name of the storage disk to use.
-     */
-    protected function getStorageDiskName(string $imageType): string
-    {
-        $storageType = config('filesystems.images');
-        $localSecureInUse = ($storageType === 'local_secure' || $storageType === 'local_secure_restricted');
-
-        // Ensure system images (App logo) are uploaded to a public space
-        if ($imageType === 'system' && $localSecureInUse) {
-            return 'local';
-        }
-
-        // Rename local_secure options to get our image specific storage driver which
-        // is scoped to the relevant image directories.
-        if ($localSecureInUse) {
-            return 'local_secure_images';
-        }
-
-        return $storageType;
     }
 
     /**
      * Saves a new image from an upload.
      *
      * @throws ImageUploadException
-     *
-     * @return mixed
      */
     public function saveNewFromUpload(
         UploadedFile $uploadedFile,
@@ -112,7 +45,7 @@ class ImageService
         int $resizeWidth = null,
         int $resizeHeight = null,
         bool $keepRatio = true
-    ) {
+    ): Image {
         $imageName = $uploadedFile->getClientOriginalName();
         $imageData = file_get_contents($uploadedFile->getRealPath());
 
@@ -146,13 +79,13 @@ class ImageService
      */
     public function saveNew(string $imageName, string $imageData, string $type, int $uploadedTo = 0): Image
     {
-        $storage = $this->getStorageDisk($type);
+        $disk = $this->storage->getDisk($type);
         $secureUploads = setting('app-secure-images');
-        $fileName = $this->cleanImageFileName($imageName);
+        $fileName = $this->storage->cleanImageFileName($imageName);
 
         $imagePath = '/uploads/images/' . $type . '/' . date('Y-m') . '/';
 
-        while ($storage->exists($this->adjustPathForStorageDisk($imagePath . $fileName, $type))) {
+        while ($disk->exists($this->storage->adjustPathForDisk($imagePath . $fileName, $type))) {
             $fileName = Str::random(3) . $fileName;
         }
 
@@ -162,7 +95,7 @@ class ImageService
         }
 
         try {
-            $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($fullPath, $type), $imageData);
+            $this->storage->storeInPublicSpace($disk, $this->storage->adjustPathForDisk($fullPath, $type), $imageData);
         } catch (Exception $e) {
             Log::error('Error when attempting image upload:' . $e->getMessage());
 
@@ -172,7 +105,7 @@ class ImageService
         $imageDetails = [
             'name'        => $imageName,
             'path'        => $fullPath,
-            'url'         => $this->getPublicUrl($fullPath),
+            'url'         => $this->storage->getPublicUrl($fullPath),
             'type'        => $type,
             'uploaded_to' => $uploadedTo,
         ];
@@ -189,50 +122,17 @@ class ImageService
         return $image;
     }
 
+    /**
+     * Replace an existing image file in the system using the given file.
+     */
     public function replaceExistingFromUpload(string $path, string $type, UploadedFile $file): void
     {
         $imageData = file_get_contents($file->getRealPath());
-        $storage = $this->getStorageDisk($type);
-        $adjustedPath = $this->adjustPathForStorageDisk($path, $type);
-        $storage->put($adjustedPath, $imageData);
+        $disk = $this->storage->getDisk($type);
+        $adjustedPath = $this->storage->adjustPathForDisk($path, $type);
+        $disk->put($adjustedPath, $imageData);
     }
 
-    /**
-     * Save image data for the given path in the public space, if possible,
-     * for the provided storage mechanism.
-     */
-    protected function saveImageDataInPublicSpace(Storage $storage, string $path, string $data): void
-    {
-        $storage->put($path, $data);
-
-        // Set visibility when a non-AWS-s3, s3-like storage option is in use.
-        // Done since this call can break s3-like services but desired for other image stores.
-        // Attempting to set ACL during above put request requires different permissions
-        // hence would technically be a breaking change for actual s3 usage.
-        $usingS3 = strtolower(config('filesystems.images')) === 's3';
-        $usingS3Like = $usingS3 && !is_null(config('filesystems.disks.s3.endpoint'));
-        if (!$usingS3Like) {
-            $storage->setVisibility($path, 'public');
-        }
-    }
-
-    /**
-     * Clean up an image file name to be both URL and storage safe.
-     */
-    protected function cleanImageFileName(string $name): string
-    {
-        $name = str_replace(' ', '-', $name);
-        $nameParts = explode('.', $name);
-        $extension = array_pop($nameParts);
-        $name = implode('-', $nameParts);
-        $name = Str::slug($name);
-
-        if (strlen($name) === 0) {
-            $name = Str::random(10);
-        }
-
-        return $name . '.' . $extension;
-    }
 
     /**
      * Checks if the image is a gif. Returns true if it is, else false.
@@ -274,7 +174,7 @@ class ImageService
     ): ?string {
         // Do not resize GIF images where we're not cropping
         if ($keepRatio && $this->isGif($image)) {
-            return $this->getPublicUrl($image->path);
+            return $this->storage->getPublicUrl($image->path);
         }
 
         $thumbDirName = '/' . ($keepRatio ? 'scaled-' : 'thumbs-') . $width . '-' . $height . '/';
@@ -286,24 +186,24 @@ class ImageService
         // Return path if in cache
         $cachedThumbPath = $this->cache->get($thumbCacheKey);
         if ($cachedThumbPath && !$shouldCreate) {
-            return $this->getPublicUrl($cachedThumbPath);
+            return $this->storage->getPublicUrl($cachedThumbPath);
         }
 
         // If thumbnail has already been generated, serve that and cache path
-        $storage = $this->getStorageDisk($image->type);
-        if (!$shouldCreate && $storage->exists($this->adjustPathForStorageDisk($thumbFilePath, $image->type))) {
+        $disk = $this->storage->getDisk($image->type);
+        if (!$shouldCreate && $disk->exists($this->storage->adjustPathForDisk($thumbFilePath, $image->type))) {
             $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
 
-            return $this->getPublicUrl($thumbFilePath);
+            return $this->storage->getPublicUrl($thumbFilePath);
         }
 
-        $imageData = $storage->get($this->adjustPathForStorageDisk($imagePath, $image->type));
+        $imageData = $disk->get($this->storage->adjustPathForDisk($imagePath, $image->type));
 
         // Do not resize apng images where we're not cropping
         if ($keepRatio && $this->isApngData($image, $imageData)) {
             $this->cache->put($thumbCacheKey, $image->path, 60 * 60 * 72);
 
-            return $this->getPublicUrl($image->path);
+            return $this->storage->getPublicUrl($image->path);
         }
 
         if (!$shouldCreate && !$canCreate) {
@@ -312,10 +212,10 @@ class ImageService
 
         // If not in cache and thumbnail does not exist, generate thumb and cache path
         $thumbData = $this->resizeImage($imageData, $width, $height, $keepRatio);
-        $this->saveImageDataInPublicSpace($storage, $this->adjustPathForStorageDisk($thumbFilePath, $image->type), $thumbData);
+        $this->storage->storeInPublicSpace($disk, $this->storage->adjustPathForDisk($thumbFilePath, $image->type), $thumbData);
         $this->cache->put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
 
-        return $this->getPublicUrl($thumbFilePath);
+        return $this->storage->getPublicUrl($thumbFilePath);
     }
 
     /**
@@ -353,59 +253,17 @@ class ImageService
         return $thumbData;
     }
 
-    /**
-     * Orientate the given intervention image based upon the given original image data.
-     * Intervention does have an `orientate` method but the exif data it needs is lost before it
-     * can be used (At least when created using binary string data) so we need to do some
-     * implementation on our side to use the original image data.
-     * Bulk of logic taken from: https://github.com/Intervention/image/blob/b734a4988b2148e7d10364b0609978a88d277536/src/Intervention/Image/Commands/OrientateCommand.php
-     * Copyright (c) Oliver Vogel, MIT License.
-     */
-    protected function orientImageToOriginalExif(InterventionImage $image, string $originalData): void
-    {
-        if (!extension_loaded('exif')) {
-            return;
-        }
-
-        $stream = Utils::streamFor($originalData)->detach();
-        $exif = @exif_read_data($stream);
-        $orientation = $exif ? ($exif['Orientation'] ?? null) : null;
-
-        switch ($orientation) {
-            case 2:
-                $image->flip();
-                break;
-            case 3:
-                $image->rotate(180);
-                break;
-            case 4:
-                $image->rotate(180)->flip();
-                break;
-            case 5:
-                $image->rotate(270)->flip();
-                break;
-            case 6:
-                $image->rotate(270);
-                break;
-            case 7:
-                $image->rotate(90)->flip();
-                break;
-            case 8:
-                $image->rotate(90);
-                break;
-        }
-    }
 
     /**
      * Get the raw data content from an image.
      *
-     * @throws FileNotFoundException
+     * @throws Exception
      */
     public function getImageData(Image $image): string
     {
-        $storage = $this->getStorageDisk();
+        $disk = $this->storage->getDisk();
 
-        return $storage->get($this->adjustPathForStorageDisk($image->path, $image->type));
+        return $disk->get($this->storage->adjustPathForDisk($image->path, $image->type));
     }
 
     /**
@@ -425,24 +283,24 @@ class ImageService
      */
     protected function destroyImagesFromPath(string $path, string $imageType): bool
     {
-        $path = $this->adjustPathForStorageDisk($path, $imageType);
-        $storage = $this->getStorageDisk($imageType);
+        $path = $this->storage->adjustPathForDisk($path, $imageType);
+        $disk = $this->storage->getDisk($imageType);
 
         $imageFolder = dirname($path);
         $imageFileName = basename($path);
-        $allImages = collect($storage->allFiles($imageFolder));
+        $allImages = collect($disk->allFiles($imageFolder));
 
         // Delete image files
         $imagesToDelete = $allImages->filter(function ($imagePath) use ($imageFileName) {
             return basename($imagePath) === $imageFileName;
         });
-        $storage->delete($imagesToDelete->all());
+        $disk->delete($imagesToDelete->all());
 
         // Cleanup of empty folders
-        $foldersInvolved = array_merge([$imageFolder], $storage->directories($imageFolder));
+        $foldersInvolved = array_merge([$imageFolder], $disk->directories($imageFolder));
         foreach ($foldersInvolved as $directory) {
-            if ($this->isFolderEmpty($storage, $directory)) {
-                $storage->deleteDirectory($directory);
+            if ($this->isFolderEmpty($disk, $directory)) {
+                $disk->deleteDirectory($directory);
             }
         }
 
@@ -452,7 +310,7 @@ class ImageService
     /**
      * Check whether a folder is empty.
      */
-    protected function isFolderEmpty(Storage $storage, string $path): bool
+    protected function isFolderEmpty(StorageDisk $storage, string $path): bool
     {
         $files = $storage->files($path);
         $folders = $storage->directories($path);
@@ -506,33 +364,33 @@ class ImageService
      *
      * @throws FileNotFoundException
      */
-    public function imageUriToBase64(string $uri): ?string
+    public function imageUrlToBase64(string $url): ?string
     {
-        $storagePath = $this->imageUrlToStoragePath($uri);
-        if (empty($uri) || is_null($storagePath)) {
+        $storagePath = $this->storage->urlToPath($url);
+        if (empty($url) || is_null($storagePath)) {
             return null;
         }
 
-        $storagePath = $this->adjustPathForStorageDisk($storagePath);
+        $storagePath = $this->storage->adjustPathForDisk($storagePath);
 
         // Apply access control when local_secure_restricted images are active
-        if ($this->usingSecureRestrictedImages()) {
+        if ($this->storage->usingSecureRestrictedImages()) {
             if (!$this->checkUserHasAccessToRelationOfImageAtPath($storagePath)) {
                 return null;
             }
         }
 
-        $storage = $this->getStorageDisk();
+        $disk = $this->storage->getDisk();
         $imageData = null;
-        if ($storage->exists($storagePath)) {
-            $imageData = $storage->get($storagePath);
+        if ($disk->exists($storagePath)) {
+            $imageData = $disk->get($storagePath);
         }
 
         if (is_null($imageData)) {
             return null;
         }
 
-        $extension = pathinfo($uri, PATHINFO_EXTENSION);
+        $extension = pathinfo($url, PATHINFO_EXTENSION);
         if ($extension === 'svg') {
             $extension = 'svg+xml';
         }
@@ -547,15 +405,14 @@ class ImageService
      */
     public function pathAccessibleInLocalSecure(string $imagePath): bool
     {
-        /** @var FilesystemAdapter $disk */
-        $disk = $this->getStorageDisk('gallery');
+        $disk = $this->storage->getDisk('gallery');
 
-        if ($this->usingSecureRestrictedImages() && !$this->checkUserHasAccessToRelationOfImageAtPath($imagePath)) {
+        if ($this->storage->usingSecureRestrictedImages() && !$this->checkUserHasAccessToRelationOfImageAtPath($imagePath)) {
             return false;
         }
 
         // Check local_secure is active
-        return $this->usingSecureImages()
+        return $this->storage->usingSecureImages()
             && $disk instanceof FilesystemAdapter
             // Check the image file exists
             && $disk->exists($imagePath)
@@ -617,7 +474,7 @@ class ImageService
      */
     public function streamImageFromStorageResponse(string $imageType, string $path): StreamedResponse
     {
-        $disk = $this->getStorageDisk($imageType);
+        $disk = $this->storage->getDisk($imageType);
 
         return $disk->response($path);
     }
@@ -630,65 +487,5 @@ class ImageService
     public static function isExtensionSupported(string $extension): bool
     {
         return in_array($extension, static::$supportedExtensions);
-    }
-
-    /**
-     * Get a storage path for the given image URL.
-     * Ensures the path will start with "uploads/images".
-     * Returns null if the url cannot be resolved to a local URL.
-     */
-    private function imageUrlToStoragePath(string $url): ?string
-    {
-        $url = ltrim(trim($url), '/');
-
-        // Handle potential relative paths
-        $isRelative = !str_starts_with($url, 'http');
-        if ($isRelative) {
-            if (str_starts_with(strtolower($url), 'uploads/images')) {
-                return trim($url, '/');
-            }
-
-            return null;
-        }
-
-        // Handle local images based on paths on the same domain
-        $potentialHostPaths = [
-            url('uploads/images/'),
-            $this->getPublicUrl('/uploads/images/'),
-        ];
-
-        foreach ($potentialHostPaths as $potentialBasePath) {
-            $potentialBasePath = strtolower($potentialBasePath);
-            if (str_starts_with(strtolower($url), $potentialBasePath)) {
-                return 'uploads/images/' . trim(substr($url, strlen($potentialBasePath)), '/');
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets a public facing url for an image by checking relevant environment variables.
-     * If s3-style store is in use it will default to guessing a public bucket URL.
-     */
-    private function getPublicUrl(string $filePath): string
-    {
-        $storageUrl = config('filesystems.url');
-
-        // Get the standard public s3 url if s3 is set as storage type
-        // Uses the nice, short URL if bucket name has no periods in otherwise the longer
-        // region-based url will be used to prevent http issues.
-        if (!$storageUrl && config('filesystems.images') === 's3') {
-            $storageDetails = config('filesystems.disks.s3');
-            if (!str_contains($storageDetails['bucket'], '.')) {
-                $storageUrl = 'https://' . $storageDetails['bucket'] . '.s3.amazonaws.com';
-            } else {
-                $storageUrl = 'https://s3-' . $storageDetails['region'] . '.amazonaws.com/' . $storageDetails['bucket'];
-            }
-        }
-
-        $basePath = $storageUrl ?: url('/');
-
-        return rtrim($basePath, '/') . $filePath;
     }
 }
