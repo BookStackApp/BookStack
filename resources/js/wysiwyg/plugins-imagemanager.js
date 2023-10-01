@@ -11,7 +11,7 @@ function register(editor) {
             /** @type {ImageManager} * */
             const imageManager = window.$components.first('image-manager');
             imageManager.show(image => {
-                const imageUrl = image.thumbs.display || image.url;
+                const imageUrl = image.thumbs?.display || image.url;
                 let html = `<a href="${image.url}" target="_blank">`;
                 html += `<img src="${imageUrl}" alt="${image.name}">`;
                 html += '</a>';

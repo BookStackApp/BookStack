@@ -244,7 +244,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
 
         try {
-            $avatar = $this->avatar ? url($this->avatar->getThumb($size, $size, false)) : $default;
+            $avatar = $this->avatar?->getThumb($size, $size, false) ?? $default;
         } catch (Exception $err) {
             $avatar = $default;
         }

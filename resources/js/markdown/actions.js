@@ -34,7 +34,7 @@ export class Actions {
         const imageManager = window.$components.first('image-manager');
 
         imageManager.show(image => {
-            const imageUrl = image.thumbs.display || image.url;
+            const imageUrl = image.thumbs?.display || image.url;
             const selectedText = this.#getSelectionText();
             const newText = `[![${selectedText || image.name}](${imageUrl})](${image.url})`;
             this.#replaceSelection(newText, newText.length);
@@ -417,7 +417,7 @@ export class Actions {
             const newContent = `[![](${data.thumbs.display})](${data.url})`;
             this.#findAndReplaceContent(placeHolderText, newContent);
         } catch (err) {
-            window.$events.emit('error', this.editor.config.text.imageUploadError);
+            window.$events.error(err?.data?.message || this.editor.config.text.imageUploadError);
             this.#findAndReplaceContent(placeHolderText, '');
             console.error(err);
         }
