@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => ':url dan rasmni olib boʻlmadi',
     'cannot_create_thumbs' => 'Server eskiz yarata olmaydi. GD PHP kengaytmasi oʻrnatilganligini tekshiring.',
     'server_upload_limit' => 'Server bunday hajmdagi yuklashga ruxsat bermaydi. Kichikroq fayl hajmini sinab koʻring.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Server bunday hajmdagi yuklashga ruxsat bermaydi. Kichikroq fayl hajmini sinab koʻring.',
 
     // Drawing & Images
     'image_upload_error' => 'Rasmni yuklashda xatolik yuz berdi',
     'image_upload_type_error' => 'Yuklanayotgan rasm turi yaroqsiz',
     'image_upload_replace_type' => 'Tasvir faylini almashtirish bir xil turdagi boʻlishi kerak',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Chizma maʼlumotlarini yuklab boʻlmadi. Chizma fayli endi mavjud boʻlmasligi yoki unga kirishga ruxsatingiz boʻlmasligi mumkin.',
 
     // Attachments
