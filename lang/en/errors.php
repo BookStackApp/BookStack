@@ -51,8 +51,9 @@ return [
     'image_upload_error' => 'An error occurred uploading the image',
     'image_upload_type_error' => 'The image type being uploaded is invalid',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments

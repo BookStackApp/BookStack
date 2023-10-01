@@ -11,10 +11,40 @@ use Intervention\Image\ImageManager;
 
 class ImageResizer
 {
+    protected const THUMBNAIL_CACHE_TIME = 604_800; // 1 week
+
     public function __construct(
         protected ImageManager $intervention,
         protected ImageStorage $storage,
     ) {
+    }
+
+    /**
+     * Load gallery thumbnails for a set of images.
+     * @param iterable<Image> $images
+     */
+    public function loadGalleryThumbnailsForMany(iterable $images, bool $shouldCreate = false): void
+    {
+        foreach ($images as $image) {
+            $this->loadGalleryThumbnailsForImage($image, $shouldCreate);
+        }
+    }
+
+    /**
+     * Load gallery thumbnails into the given image instance.
+     */
+    public function loadGalleryThumbnailsForImage(Image $image, bool $shouldCreate): void
+    {
+        $thumbs = ['gallery' => null, 'display' => null];
+
+        try {
+            $thumbs['gallery'] = $this->resizeToThumbnailUrl($image, 150, 150, false, $shouldCreate);
+            $thumbs['display'] = $this->resizeToThumbnailUrl($image, 1680, null, true, $shouldCreate);
+        } catch (Exception $exception) {
+            // Prevent thumbnail errors from stopping execution
+        }
+
+        $image->setAttribute('thumbs', $thumbs);
     }
 
     /**
@@ -29,8 +59,7 @@ class ImageResizer
         ?int $width,
         ?int $height,
         bool $keepRatio = false,
-        bool $shouldCreate = false,
-        bool $canCreate = false,
+        bool $shouldCreate = false
     ): ?string {
         // Do not resize GIF images where we're not cropping
         if ($keepRatio && $this->isGif($image)) {
@@ -52,7 +81,7 @@ class ImageResizer
         // If thumbnail has already been generated, serve that and cache path
         $disk = $this->storage->getDisk($image->type);
         if (!$shouldCreate && $disk->exists($thumbFilePath)) {
-            Cache::put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
+            Cache::put($thumbCacheKey, $thumbFilePath, static::THUMBNAIL_CACHE_TIME);
 
             return $this->storage->getPublicUrl($thumbFilePath);
         }
@@ -61,19 +90,15 @@ class ImageResizer
 
         // Do not resize apng images where we're not cropping
         if ($keepRatio && $this->isApngData($image, $imageData)) {
-            Cache::put($thumbCacheKey, $image->path, 60 * 60 * 72);
+            Cache::put($thumbCacheKey, $image->path, static::THUMBNAIL_CACHE_TIME);
 
             return $this->storage->getPublicUrl($image->path);
-        }
-
-        if (!$shouldCreate && !$canCreate) {
-            return null;
         }
 
         // If not in cache and thumbnail does not exist, generate thumb and cache path
         $thumbData = $this->resizeImageData($imageData, $width, $height, $keepRatio);
         $disk->put($thumbFilePath, $thumbData, true);
-        Cache::put($thumbCacheKey, $thumbFilePath, 60 * 60 * 72);
+        Cache::put($thumbCacheKey, $thumbFilePath, static::THUMBNAIL_CACHE_TIME);
 
         return $this->storage->getPublicUrl($thumbFilePath);
     }

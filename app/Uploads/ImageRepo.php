@@ -30,19 +30,13 @@ class ImageRepo
      * Execute a paginated query, returning in a standard format.
      * Also runs the query through the restriction system.
      */
-    private function returnPaginated(Builder $query, int $page = 1, int $pageSize = 24): array
+    protected function returnPaginated(Builder $query, int $page = 1, int $pageSize = 24): array
     {
         $images = $query->orderBy('created_at', 'desc')->skip($pageSize * ($page - 1))->take($pageSize + 1)->get();
-        $hasMore = count($images) > $pageSize;
-
-        $returnImages = $images->take($pageSize);
-        $returnImages->each(function (Image $image) {
-            $this->loadThumbs($image, false);
-        });
 
         return [
-            'images'   => $returnImages,
-            'has_more' => $hasMore,
+            'images'   => $images->take($pageSize),
+            'has_more' => count($images) > $pageSize,
         ];
     }
 
@@ -120,7 +114,7 @@ class ImageRepo
         $image = $this->imageService->saveNewFromUpload($uploadFile, $type, $uploadedTo, $resizeWidth, $resizeHeight, $keepRatio);
 
         if ($type !== 'system') {
-            $this->loadThumbs($image, true);
+            $this->imageResizer->loadGalleryThumbnailsForImage($image, true);
         }
 
         return $image;
@@ -134,7 +128,7 @@ class ImageRepo
     public function saveNewFromData(string $imageName, string $imageData, string $type, int $uploadedTo = 0): Image
     {
         $image = $this->imageService->saveNew($imageName, $imageData, $type, $uploadedTo);
-        $this->loadThumbs($image, true);
+        $this->imageResizer->loadGalleryThumbnailsForImage($image, true);
 
         return $image;
     }
@@ -161,7 +155,7 @@ class ImageRepo
         $image->fill($updateDetails);
         $image->updated_by = user()->id;
         $image->save();
-        $this->loadThumbs($image, false);
+        $this->imageResizer->loadGalleryThumbnailsForImage($image, false);
 
         return $image;
     }
@@ -182,7 +176,7 @@ class ImageRepo
         $image->save();
 
         $this->imageService->replaceExistingFromUpload($image->path, $image->type, $file);
-        $this->loadThumbs($image, true);
+        $this->imageResizer->loadGalleryThumbnailsForImage($image, true);
     }
 
     /**
@@ -211,29 +205,6 @@ class ImageRepo
 
         foreach ($images as $image) {
             $this->destroyImage($image);
-        }
-    }
-
-    /**
-     * Load thumbnails onto an image object.
-     */
-    public function loadThumbs(Image $image, bool $shouldCreate): void
-    {
-        $image->setAttribute('thumbs', [
-            'gallery' => $this->getThumbnail($image, 150, 150, false, $shouldCreate),
-            'display' => $this->getThumbnail($image, 1680, null, true, $shouldCreate),
-        ]);
-    }
-
-    /**
-     * Get a thumbnail URL for the given image.
-     */
-    protected function getThumbnail(Image $image, ?int $width, ?int $height, bool $keepRatio, bool $shouldCreate): ?string
-    {
-        try {
-            return $this->imageResizer->resizeToThumbnailUrl($image, $width, $height, $keepRatio, $shouldCreate);
-        } catch (Exception $exception) {
-            return null;
         }
     }
 

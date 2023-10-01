@@ -61,7 +61,7 @@ function paste(editor, options, event) {
                 editor.dom.replace(newEl, id);
             }).catch(err => {
                 editor.dom.remove(id);
-                window.$events.emit('error', options.translations.imageUploadErrorText);
+                window.$events.error(err?.data?.message || options.translations.imageUploadErrorText);
                 console.error(err);
             });
         }, 10);
