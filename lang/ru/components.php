@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Изображение успешно удалено',
     'image_replace' => 'Заменить изображение',
     'image_replace_success' => 'Файл изображения успешно обновлён',
+    'image_rebuild_thumbs' => 'Regenerate Size Variations',
+    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
 
     // Code Editor
     'code_editor' => 'Изменить код',
