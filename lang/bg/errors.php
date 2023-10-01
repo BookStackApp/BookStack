@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Не мога да взема съобщението от :url',
     'cannot_create_thumbs' => 'Сървърът не може да създаде малки изображения. Моля, увери се, че разширението GD PHP е инсталирано.',
     'server_upload_limit' => 'Сървърът не позволява качвания с такъв размер. Моля, пробвайте файл с по-малък размер.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Сървърът не позволява качвания с такъв размер. Моля, пробвайте файл с по-малък размер.',
 
     // Drawing & Images
     'image_upload_error' => 'Възникна грешка при качването на изображението',
     'image_upload_type_error' => 'Типът на качваното изображение е невалиден',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
