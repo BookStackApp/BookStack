@@ -552,6 +552,30 @@ class ImageTest extends TestCase
         $this->files->deleteAtRelativePath($relPath);
     }
 
+    public function test_image_manager_regen_thumbnails()
+    {
+        $this->asEditor();
+        $imageName = 'first-image.png';
+        $relPath = $this->files->expectedImagePath('gallery', $imageName);
+        $this->files->deleteAtRelativePath($relPath);
+
+        $this->files->uploadGalleryImage($this, $imageName, $this->entities->page()->id);
+        $image = Image::first();
+
+        $resp = $this->get("/images/edit/{$image->id}");
+        $this->withHtml($resp)->assertElementExists('button#image-manager-rebuild-thumbs');
+
+        $expectedThumbPath = dirname($relPath) . '/scaled-1680-/' . basename($relPath);
+        $this->files->deleteAtRelativePath($expectedThumbPath);
+        $this->assertFileDoesNotExist($this->files->relativeToFullPath($expectedThumbPath));
+
+        $resp = $this->put("/images/{$image->id}/rebuild-thumbnails");
+        $resp->assertOk();
+
+        $this->assertFileExists($this->files->relativeToFullPath($expectedThumbPath));
+        $this->files->deleteAtRelativePath($relPath);
+    }
+
     protected function getTestProfileImage()
     {
         $imageName = 'profile.png';

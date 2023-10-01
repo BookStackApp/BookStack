@@ -5,23 +5,23 @@ namespace BookStack\Uploads\Controllers;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controller;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Uploads\ImageResizer;
+use BookStack\Util\OutOfMemoryHandler;
 use Exception;
 use Illuminate\Http\Request;
 
 class DrawioImageController extends Controller
 {
-    protected $imageRepo;
-
-    public function __construct(ImageRepo $imageRepo)
-    {
-        $this->imageRepo = $imageRepo;
+    public function __construct(
+        protected ImageRepo $imageRepo
+    ) {
     }
 
     /**
      * Get a list of gallery images, in a list.
      * Can be paged and filtered by entity.
      */
-    public function list(Request $request)
+    public function list(Request $request, ImageResizer $resizer)
     {
         $page = $request->get('page', 1);
         $searchTerm = $request->get('search', null);
@@ -29,11 +29,20 @@ class DrawioImageController extends Controller
         $parentTypeFilter = $request->get('filter_type', null);
 
         $imgData = $this->imageRepo->getEntityFiltered('drawio', $parentTypeFilter, $page, 24, $uploadedToFilter, $searchTerm);
-
-        return view('pages.parts.image-manager-list', [
+        $viewData = [
+            'warning' => '',
             'images'  => $imgData['images'],
             'hasMore' => $imgData['has_more'],
-        ]);
+        ];
+
+        new OutOfMemoryHandler(function () use ($viewData) {
+            $viewData['warning'] = trans('errors.image_gallery_thumbnail_memory_limit');
+            return response()->view('pages.parts.image-manager-list', $viewData, 200);
+        });
+
+        $resizer->loadGalleryThumbnailsForMany($imgData['images']);
+
+        return view('pages.parts.image-manager-list', $viewData);
     }
 
     /**

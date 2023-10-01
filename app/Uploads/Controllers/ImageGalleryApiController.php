@@ -6,6 +6,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Http\ApiController;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Uploads\ImageResizer;
 use Illuminate\Http\Request;
 
 class ImageGalleryApiController extends ApiController
@@ -15,7 +16,8 @@ class ImageGalleryApiController extends ApiController
     ];
 
     public function __construct(
-        protected ImageRepo $imageRepo
+        protected ImageRepo $imageRepo,
+        protected ImageResizer $imageResizer,
     ) {
     }
 
@@ -130,7 +132,7 @@ class ImageGalleryApiController extends ApiController
      */
     protected function formatForSingleResponse(Image $image): array
     {
-        $this->imageRepo->loadThumbs($image);
+        $this->imageResizer->loadGalleryThumbnailsForImage($image, false);
         $data = $image->toArray();
         $data['created_by'] = $image->createdBy;
         $data['updated_by'] = $image->updatedBy;
@@ -138,6 +140,7 @@ class ImageGalleryApiController extends ApiController
 
         $escapedUrl = htmlentities($image->url);
         $escapedName = htmlentities($image->name);
+
         if ($image->type === 'drawio') {
             $data['content']['html'] = "<div drawio-diagram=\"{$image->id}\"><img src=\"{$escapedUrl}\"></div>";
             $data['content']['markdown'] = $data['content']['html'];
