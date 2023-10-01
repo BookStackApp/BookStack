@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Rasm muvaffaqiyatli oʻchirildi',
     'image_replace' => 'Rasmni almashtirish',
     'image_replace_success' => 'Rasm fayli muvaffaqiyatli yangilandi',
+    'image_rebuild_thumbs' => 'Regenerate Size Variations',
+    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
 
     // Code Editor
     'code_editor' => 'Kodni tahrirlash',
