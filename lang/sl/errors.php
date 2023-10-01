@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Ne morem pridobiti slike z :url',
     'cannot_create_thumbs' => 'Strežnik ne more izdelati sličice. Prosimo preverite če imate GD PHP razširitev nameščeno.',
     'server_upload_limit' => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite z manjšo velikostjo datoteke.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Strežnik ne dovoli nalaganj take velikosti. Prosimo poskusite zmanjšati velikost datoteke.',
 
     // Drawing & Images
     'image_upload_error' => 'Prišlo je do napake med nalaganjem slike',
     'image_upload_type_error' => 'Napačen tip (format) slike',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
