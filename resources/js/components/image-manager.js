@@ -1,6 +1,4 @@
-import {
-    onChildEvent, onSelect, removeLoading, showLoading,
-} from '../services/dom';
+import {onChildEvent, onSelect, removeLoading, showLoading,} from '../services/dom';
 import {Component} from './component';
 
 export class ImageManager extends Component {
@@ -229,8 +227,8 @@ export class ImageManager extends Component {
         this.loadGallery();
     }
 
-    onImageSelectEvent(event) {
-        const image = JSON.parse(event.detail.data);
+    async onImageSelectEvent(event) {
+        let image = JSON.parse(event.detail.data);
         const isDblClick = ((image && image.id === this.lastSelected.id)
             && Date.now() - this.lastSelectedTime < 400);
         const alreadySelected = event.target.classList.contains('selected');
@@ -238,12 +236,15 @@ export class ImageManager extends Component {
             el.classList.remove('selected');
         });
 
-        if (!alreadySelected) {
+        if (!alreadySelected && !isDblClick) {
             event.target.classList.add('selected');
-            this.loadImageEditForm(image.id);
-        } else {
+            image = await this.loadImageEditForm(image.id);
+        } else if (!isDblClick) {
             this.resetEditForm();
+        } else if (isDblClick) {
+            image = this.lastSelected;
         }
+
         this.selectButton.classList.toggle('hidden', alreadySelected);
 
         if (isDblClick && this.callback) {
@@ -265,6 +266,9 @@ export class ImageManager extends Component {
         this.formContainer.innerHTML = formHtml;
         this.formContainerPlaceholder.setAttribute('hidden', '');
         window.$components.init(this.formContainer);
+
+        const imageDataEl = this.formContainer.querySelector('#image-manager-form-image-data');
+        return JSON.parse(imageDataEl.text);
     }
 
     runLoadMore() {

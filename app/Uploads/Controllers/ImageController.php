@@ -4,9 +4,11 @@ namespace BookStack\Uploads\Controllers;
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Http\Controller;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Uploads\ImageResizer;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\OutOfMemoryHandler;
 use Exception;
@@ -16,7 +18,8 @@ class ImageController extends Controller
 {
     public function __construct(
         protected ImageRepo $imageRepo,
-        protected ImageService $imageService
+        protected ImageService $imageService,
+        protected ImageResizer $imageResizer,
     ) {
     }
 
@@ -98,12 +101,20 @@ class ImageController extends Controller
             $dependantPages = $this->imageRepo->getPagesUsingImage($image);
         }
 
-        $this->imageRepo->loadThumbs($image, false);
-
-        return view('pages.parts.image-manager-form', [
+        $viewData = [
             'image'          => $image,
             'dependantPages' => $dependantPages ?? null,
-        ]);
+            'warning'        => '',
+        ];
+
+        new OutOfMemoryHandler(function () use ($viewData) {
+            $viewData['warning'] = trans('errors.image_thumbnail_memory_limit');
+            return response()->view('pages.parts.image-manager-form', $viewData);
+        });
+
+        $this->imageResizer->loadGalleryThumbnailsForImage($image, false);
+
+        return view('pages.parts.image-manager-form', $viewData);
     }
 
     /**
@@ -135,15 +146,16 @@ class ImageController extends Controller
             return $this->jsonError(trans('errors.image_thumbnail_memory_limit'));
         });
 
-        $this->imageRepo->loadThumbs($image, true);
+        $this->imageResizer->loadGalleryThumbnailsForImage($image, true);
 
         return response(trans('components.image_rebuild_thumbs_success'));
     }
 
     /**
      * Check related page permission and ensure type is drawio or gallery.
+     * @throws NotifyException
      */
-    protected function checkImagePermission(Image $image)
+    protected function checkImagePermission(Image $image): void
     {
         if ($image->type !== 'drawio' && $image->type !== 'gallery') {
             $this->showPermissionError();

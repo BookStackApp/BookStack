@@ -1,3 +1,9 @@
+@if($warning ?? '')
+    <div class="image-manager-list-warning image-manager-warning px-m py-xs flex-container-row gap-xs items-center">
+        <div>@icon('warning')</div>
+        <div class="flex">{{ $warning }}</div>
+    </div>
+@endif
 @foreach($images as $index => $image)
 <div>
     <button component="event-emit-select"
@@ -5,7 +11,7 @@
          option:event-emit-select:data="{{ json_encode($image) }}"
          class="image anim fadeIn text-link"
          style="animation-delay: {{ min($index * 10, 260) . 'ms' }};">
-        <img src="{{ $image->thumbs['gallery'] }}"
+        <img src="{{ $image->thumbs['gallery'] ?? '' }}"
              alt="{{ $image->name }}"
              role="none"
              width="150"
