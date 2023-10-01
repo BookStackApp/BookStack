@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Kan ikke finde billede på :url',
     'cannot_create_thumbs' => 'Serveren kan ikke oprette miniaturer. Kontroller, at GD PHP-udvidelsen er installeret.',
     'server_upload_limit' => 'Serveren tillader ikke uploads af denne størrelse. Prøv en mindre filstørrelse.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Serveren tillader ikke uploads af denne størrelse. Prøv en mindre filstørrelse.',
 
     // Drawing & Images
     'image_upload_error' => 'Der opstod en fejl ved upload af billedet',
     'image_upload_type_error' => 'Billedtypen, der uploades, er ugyldig',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
