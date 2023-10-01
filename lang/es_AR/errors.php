@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'No se puede obtener la imagen desde :url',
     'cannot_create_thumbs' => 'El servidor no puede crear la imagen miniatura. Por favor chequee que tiene la extensión GD instalada.',
     'server_upload_limit' => 'El servidor no permite la subida de ficheros de este tamañ. Por favor intente con un fichero de menor tamañ.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'El servidor no permite subir archivos de este tamaño. Por favor intente un tamaño menor.',
 
     // Drawing & Images
     'image_upload_error' => 'Ha ocurrido un error al subir la imagen',
     'image_upload_type_error' => 'El tipo de imagen subida es inválido.',
     'image_upload_replace_type' => 'Los reemplazos de archivos de imágenes deben ser del mismo tipo',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'No se pudieron cargar los datos del dibujo. Es probable que el archivo de dibujo ya no exista o que no tenga permiso para acceder a él.',
 
     // Attachments
