@@ -20,6 +20,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 Route::get('/status', [SettingControllers\StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
 Route::get('/favicon.ico', [HomeController::class, 'favicon']);
+Route::get('/manifest.json', [HomeController::class, 'pwaManifest']);
 
 // Authenticated routes...
 Route::middleware('auth')->group(function () {
