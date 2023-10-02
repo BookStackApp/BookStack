@@ -140,4 +140,12 @@ class HomeController extends Controller
         $exists = $favicons->restoreOriginalIfNotExists();
         return response()->file($exists ? $favicons->getPath() : $favicons->getOriginalPath());
     }
+
+    /**
+     * Serve a PWA application manifest.
+     */
+    public function pwaManifest(PwaManifestBuilder $manifestBuilder)
+    {
+        return response()->json($manifestBuilder->build());
+    }
 }

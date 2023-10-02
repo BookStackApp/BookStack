@@ -2,34 +2,35 @@
 
 namespace BookStack\App;
 
-use BookStack\Http\Controller;
-
-class PwaManifestBuilder extends Controller
+class PwaManifestBuilder
 {
-    private function GenerateManifest()
+    public function build(): array
     {
+        $darkMode = (bool) setting()->getForCurrentUser('dark-mode-enabled');
+        $appName = setting('app-name');
+
         return [
-            "name" => setting('app-name'),
-            "short_name" => setting('app-name'),
+            "name" => $appName,
+            "short_name" => $appName,
             "start_url" => "./",
             "scope" => "/",
             "display" => "standalone",
-            "background_color" => (setting()->getForCurrentUser('dark-mode-enabled') ? setting('app-color-dark') : setting('app-color')),
-            "description" => setting('app-name'),
-            "theme_color" => (setting()->getForCurrentUser('dark-mode-enabled') ? setting('app-color-dark') : setting('app-color')),
+            "background_color" => $darkMode ? '#111111' : '#F2F2F2',
+            "description" => $appName,
+            "theme_color" => ($darkMode ? setting('app-color-dark') : setting('app-color')),
             "launch_handler" => [
                 "client_mode" => "focus-existing"
             ],
             "orientation" => "portrait",
             "icons" => [
                 [
-                    "src" => setting('app-icon-64') ?: url('/icon-64.png'),
-                    "sizes" => "64x64",
+                    "src" => setting('app-icon-32') ?: url('/icon-32.png'),
+                    "sizes" => "32x32",
                     "type" => "image/png"
                 ],
                 [
-                    "src" => setting('app-icon-32') ?: url('/icon-32.png'),
-                    "sizes" => "32x32",
+                    "src" => setting('app-icon-64') ?: url('/icon-64.png'),
+                    "sizes" => "64x64",
                     "type" => "image/png"
                 ],
                 [
@@ -48,25 +49,11 @@ class PwaManifestBuilder extends Controller
                     "type" => "image/png"
                 ],
                 [
-                    "src" => public_path('icon.ico'),
-                    "sizes" => "48x48",
-                    "type" => "image/vnd.microsoft.icon"
-                ],
-                [
-                    "src" => public_path('favicon.ico'),
+                    "src" => url('favicon.ico'),
                     "sizes" => "48x48",
                     "type" => "image/vnd.microsoft.icon"
                 ],
             ],
         ];
-    }
-
-    /**
-     * Serve the application manifest.
-     * Ensures a 'manifest.json'
-     */
-    public function manifest()
-    {
-        return response()->json($this->GenerateManifest());
     }
 }

@@ -30,8 +30,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ setting('app-icon-32') ?: url('/icon-32.png') }}">
 
     <!-- PWA -->
-    <link rel="manifest" href="{{ url('/manifest.json') }}" />
-    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="{{ url('/manifest.json') }}" crossorigin="use-credentials">
+    <meta name="mobile-web-app-capable" content="yes">
 
     @yield('head')
 
