@@ -29,7 +29,7 @@
 
     @if ($commentTree->enabled())
         @if(($previous || $next))
-            <div class="px-xl">
+            <div class="px-xl print-hidden">
                 <hr class="darker">
             </div>
         @endif
