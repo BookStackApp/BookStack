@@ -66,6 +66,11 @@ Note: Listed services are not tested, vetted nor supported by the official BookS
 <td><a href="https://torutec.com/" target="_blank">
     <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/torutec.png" alt="Torutec">
 </a></td>
+</tr>
+<tr>
+<td colspan="2" align="center" style="text-align: center"><a href="https://nws.netways.de/apps/bookstack/" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/netways.png" alt="NETWAYS Web Services">
+</a></td>
 </tr></tbody></table>
 
 ## 🛣️ Road Map
