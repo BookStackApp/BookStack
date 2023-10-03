@@ -1,4 +1,4 @@
-<header id="header" component="header-mobile-toggle" class="primary-background px-xl grid">
+<header id="header" component="header-mobile-toggle" class="primary-background px-xl grid print-hidden">
     <div>
         @include('layouts.parts.header-logo')
         <button type="button"
