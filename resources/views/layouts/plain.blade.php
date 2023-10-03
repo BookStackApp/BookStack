@@ -9,9 +9,8 @@
     <meta name="viewport" content="width=device-width">
     <meta charset="utf-8">
 
-    <!-- Styles and Fonts -->
+    <!-- Styles -->
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
-    <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
     <!-- Custom Styles & Head Content -->
     @include('layouts.parts.custom-styles')

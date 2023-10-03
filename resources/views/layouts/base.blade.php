@@ -17,9 +17,8 @@
     <meta property="og:url" content="{{ url()->current() }}">
     @stack('social-meta')
 
-    <!-- Styles and Fonts -->
+    <!-- Styles -->
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
-    <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
     <!-- Icons -->
     <link rel="icon" type="image/png" sizes="256x256" href="{{ setting('app-icon') ?: url('/icon.png') }}">
