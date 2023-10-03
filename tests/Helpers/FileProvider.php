@@ -159,4 +159,12 @@ class FileProvider
             $fileService->deleteFile($file);
         }
     }
+
+    /**
+     * Reset the application favicon image in the public path.
+     */
+    public function resetAppFavicon(): void
+    {
+        file_put_contents(public_path('favicon.ico'), file_get_contents(public_path('icon.ico')));
+    }
 }

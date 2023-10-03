@@ -32,6 +32,8 @@ class PwaManifestTest extends TestCase
 
     public function test_manifest_uses_configured_icons_if_existing()
     {
+        $this->beforeApplicationDestroyed(fn() => $this->files->resetAppFavicon());
+
         $resp = $this->get('/manifest.json');
         $resp->assertJson([
             'icons' => [[
