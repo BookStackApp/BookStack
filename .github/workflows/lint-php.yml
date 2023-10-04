@@ -1,6 +1,12 @@
 name: lint-php
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '**.php'
+  pull_request:
+    paths:
+      - '**.php'
 
 jobs:
   build:
