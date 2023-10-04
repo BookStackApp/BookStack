@@ -31,7 +31,10 @@ export class AutoSuggest extends Component {
             },
             event => {
                 event.preventDefault();
-                this.selectSuggestion(event.target.textContent);
+                const selectionValue = event.target.textContent;
+                if (selectionValue) {
+                    this.selectSuggestion(selectionValue);
+                }
             },
         );
         navHandler.shareHandlingToEl(this.input);
