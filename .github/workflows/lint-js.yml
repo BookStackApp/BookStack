@@ -1,6 +1,14 @@
 name: lint-js
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '**.js'
+      - '**.json'
+  pull_request:
+    paths:
+      - '**.js'
+      - '**.json'
 
 jobs:
   build:

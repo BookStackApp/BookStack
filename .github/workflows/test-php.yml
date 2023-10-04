@@ -1,6 +1,14 @@
 name: test-php
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '**.php'
+      - 'composer.*'
+  pull_request:
+    paths:
+      - '**.php'
+      - 'composer.*'
 
 jobs:
   build:
