@@ -184,6 +184,14 @@ $loadingSize: 10px;
   z-index: 150;
 }
 
+@include between($s, $m) {
+  #home-default > .grid.third {
+    display: block;
+    columns: 2;
+    column-gap: $-l !important;
+  }
+}
+
 .list-sort-container {
   display: inline-block;
   form {
