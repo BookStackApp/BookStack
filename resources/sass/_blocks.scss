@@ -6,6 +6,7 @@
   @include lightDark(background-color, #FFF, #222);
   box-shadow: $bs-card;
   border-radius: 3px;
+  break-inside: avoid;
   .body, p.empty-text {
     padding: $-m;
   }
