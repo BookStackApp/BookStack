@@ -1,4 +1,4 @@
-<div component="page-editor" class="page-editor flex-fill flex"
+<div component="page-editor" class="page-editor flex-fill flex bg-white"
      option:page-editor:drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}"
      @if(config('services.drawio'))
         drawio-url="{{ is_string(config('services.drawio')) ? config('services.drawio') : 'https://embed.diagrams.net/?embed=1&proto=json&spin=1&configure=1' }}"
@@ -27,19 +27,23 @@
         </div>
     </div>
 
-    {{--Editors--}}
-    <div class="edit-area flex-fill flex">
+    <div class="flex-fill flex">
+        {{--Editors--}}
+        <div class="edit-area flex-fill flex">
 
-        {{--WYSIWYG Editor--}}
-        @if($editor === 'wysiwyg')
-            @include('pages.parts.wysiwyg-editor', ['model' => $model])
-        @endif
+            {{--WYSIWYG Editor--}}
+            @if($editor === 'wysiwyg')
+                @include('pages.parts.wysiwyg-editor', ['model' => $model])
+            @endif
 
-        {{--Markdown Editor--}}
-        @if($editor === 'markdown')
-            @include('pages.parts.markdown-editor', ['model' => $model])
-        @endif
+            {{--Markdown Editor--}}
+            @if($editor === 'markdown')
+                @include('pages.parts.markdown-editor', ['model' => $model])
+            @endif
 
+        </div>
+
+        @include('pages.parts.editor-toolbox')
     </div>
 
     {{--Mobile Save Button--}}

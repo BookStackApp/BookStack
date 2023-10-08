@@ -19,6 +19,10 @@
   }
 }
 
+.page-edit-toolbar .text-button {
+  font-size: $fs-m;
+}
+
 body.tox-fullscreen .page-editor .edit-area,
 body.markdown-fullscreen .page-editor .edit-area {
   z-index: 12;
@@ -151,17 +155,15 @@ body.tox-fullscreen, body.markdown-fullscreen {
 
 // Attribute form
 .floating-toolbox {
-  border: 1px solid #DDD;
-  @include lightDark(background-color, #fff, #222);
+  //border-left: 1px solid #CCC;
+  @include lightDark(background-color, #FFF, #222);
   @include lightDark(border-color, #DDD, #000);
   right: $-xl*2;
-  width: 48px;
+  width: 40px;
   overflow: hidden;
   align-items: stretch;
   flex-direction: row;
   display: flex;
-  transition: width ease-in-out 180ms;
-  margin-top: -1px;
   min-height: 0;
   &.open {
     width: 480px;
@@ -183,24 +185,30 @@ body.tox-fullscreen, body.markdown-fullscreen {
     position: relative;
   }
   .tabs {
-    display: block;
-    border-inline-end: 1px solid #DDD;
-    @include lightDark(border-color, #ddd, #000);
-    width: 48px;
+    border: 1px solid #CCC;
+    width: 40px;
     flex: 0 1 auto;
+    margin-right: -1px;
+  }
+  .tabs-inner {
+    //box-shadow: $bs-large;
+    @include lightDark(background-color, #FFFFFF, #222);
+    //border-radius: 8px;
+    overflow: hidden;
   }
   .tabs svg {
     padding: 0;
     margin: 0;
   }
-  .tabs > button {
-    @include lightDark(color, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+  .tabs-inner > button {
+    //border-block-end: 1px solid #CCC;
+    //@include lightDark(border-color, #CCC, #000);
+    @include lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.5));
     display: block;
     cursor: pointer;
-    padding: $-s $-m;
+    padding: 10px $-xs;
     font-size: 16px;
     line-height: 1.6;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
   &.open .tabs > button.active {
     @include lightDark(color, #444, #EEE);
@@ -241,6 +249,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   display: none;
   overflow-y: auto;
   padding-bottom: 45px;
+  border-block-start: 1px solid #CCC;
 }
 
 .suggestion-box {
