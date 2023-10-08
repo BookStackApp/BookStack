@@ -10,7 +10,6 @@
 
             @if(!$isDraft) {{ method_field('PUT') }} @endif
             @include('pages.parts.form', ['model' => $page])
-            @include('pages.parts.editor-toolbox')
         </form>
     </div>
     

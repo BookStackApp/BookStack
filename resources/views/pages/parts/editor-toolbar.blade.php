@@ -1,4 +1,4 @@
-<div class="primary-background-light toolbar page-edit-toolbar">
+<div class="primary-background-light toolbar page-edit-toolbar px-l">
     <div class="grid third no-break v-center">
 
         <div class="action-buttons text-left px-m py-xs">
