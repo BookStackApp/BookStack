@@ -51,8 +51,8 @@ return [
     'image_upload_error' => 'Beim Hochladen des Bildes trat ein Fehler auf.',
     'image_upload_type_error' => 'Der Bildtyp der hochgeladenen Datei ist ungültig.',
     'image_upload_replace_type' => 'Bild-Ersetzungen müssen vom gleichen Typ sein',
-    'image_upload_memory_limit' => 'Bildupload und/oder Thumbnails konnten aufgrund von Systemressourcenbeschränkungen nicht verarbeitet werden.',
-    'image_thumbnail_memory_limit' => 'Bildgrößenvariationen konnten aufgrund von Systemressourcenbeschränkungen nicht erstellt werden.',
+    'image_upload_memory_limit' => 'Bildupload und/oder Thumbnailerstellung konnten aufgrund von Systemressourcenbeschränkungen nicht verarbeitet werden.',
+    'image_thumbnail_memory_limit' => 'Fehler beim Erstellen der Thumbnails aufgrund von Systemressourcenbeschränkungen.',
     'image_gallery_thumbnail_memory_limit' => 'Fehler beim Erstellen der Galerie Thumbnails aufgrund von Systemressourcenbeschränkungen.',
     'drawing_data_not_found' => 'Zeichnungsdaten konnten nicht geladen werden. Die Zeichnungsdatei existiert möglicherweise nicht mehr oder Sie haben nicht die Berechtigung, darauf zuzugreifen.',
 
