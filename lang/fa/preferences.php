@@ -5,7 +5,7 @@
  */
 
 return [
-    'preferences' => 'Preferences',
+    'preferences' => 'پیکربندی',
 
     'shortcuts' => 'میانبرها',
     'shortcuts_interface' => 'میانبرهای صفحه کلید',
@@ -17,17 +17,17 @@ return [
     'shortcuts_save' => 'ذخیره کلیدهای میانبر',
     'shortcuts_overlay_desc' => 'توجه: هنگامی که میانبرها فعال هستند، یک رابط کمکی با فشار دادن "؟" در دسترس است که میانبرهای موجود برای اقداماتی که در حال حاضر روی صفحه قابل مشاهده است را برجسته می‌کند.',
     'shortcuts_update_success' => 'تنظیمات میانبر به روز شده است!',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => 'میانبرهای صفحه کلید را که می توانید برای پیمایش در رابط کاربری سیستم استفاده کنید، مدیریت کنید.',
 
-    'notifications' => 'Notification Preferences',
-    'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
-    'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
-    'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
-    'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
-    'notifications_save' => 'Save Preferences',
-    'notifications_update_success' => 'Notification preferences have been updated!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications' => 'تنظیمات اعلان',
+    'notifications_desc' => 'اعلان‌های ایمیلی را که هنگام انجام فعالیت خاصی در سیستم دریافت می‌کنید، کنترل کنید.',
+    'notifications_opt_own_page_changes' => 'در صورت تغییرات در صفحاتی که متعلق به من هستند، اطلاع بده',
+    'notifications_opt_own_page_comments' => 'در صورت ثبت نظرات در صفحاتی که متعلق به من هستند، اطلاع بده',
+    'notifications_opt_comment_replies' => 'پس از پاسخ به نظرات من اطلاع بده',
+    'notifications_save' => 'ذخیره پیکربندی',
+    'notifications_update_success' => 'تنظیمات اعلان ها به روز گردید!',
+    'notifications_watched' => 'آیتم های تحت نظر و چشم پوشی قرار گرفته شده',
+    'notifications_watched_desc' => ' در زیر مواردی برای تنظیمات زیر نطر گرفتن سفارشی وجود دارد. برای به‌روزرسانی این تنظیمات، آیتم را مشاهده و سپس گزینه‌های زیرنظر گرفتن را در نوار کناری پیدا کنید.',
 
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => ' جزئیات حساب کاربری خود از جمله زبان ترجیحی و گزینه های احراز هویت را مدیریت کنید.',
 ];
