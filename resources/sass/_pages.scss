@@ -19,8 +19,21 @@
   }
 }
 
-.page-edit-toolbar .text-button {
-  font-size: $fs-m;
+.page-editor-page-area {
+  width: 100%;
+  max-width: 1140px;
+  border-radius: 8px;
+  box-shadow: $bs-card;
+  overflow: hidden;
+}
+
+.page-edit-toolbar {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(max-content, 2fr) 1.5fr minmax(max-content, 2fr);
+  align-items: center;
 }
 
 body.tox-fullscreen .page-editor .edit-area,
@@ -155,18 +168,25 @@ body.tox-fullscreen, body.markdown-fullscreen {
 
 // Attribute form
 .floating-toolbox {
-  //border-left: 1px solid #CCC;
   @include lightDark(background-color, #FFF, #222);
-  @include lightDark(border-color, #DDD, #000);
-  right: $-xl*2;
-  width: 40px;
   overflow: hidden;
   align-items: stretch;
   flex-direction: row;
   display: flex;
-  min-height: 0;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: $bs-card;
+  position: fixed;
+  right: $-s;
+  margin-bottom: auto;
   &.open {
-    width: 480px;
+    right: 0;
+    position: relative;
+    max-width: 480px;
+    margin-bottom: 0;
+  }
+  &:not(.open) .toolbox-tab-content {
+    display: none !important;
   }
   .toolbox-toggle svg {
     transition: transform ease-in-out 180ms;
@@ -185,7 +205,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
     position: relative;
   }
   .tabs {
-    border: 1px solid #CCC;
+    border-right: 1px solid #DDD;
     width: 40px;
     flex: 0 1 auto;
     margin-right: -1px;
@@ -210,9 +230,9 @@ body.tox-fullscreen, body.markdown-fullscreen {
     font-size: 16px;
     line-height: 1.6;
   }
-  &.open .tabs > button.active {
-    @include lightDark(color, #444, #EEE);
-    background-color: rgba(0, 0, 0, 0.1);
+  &.open .tabs-inner > button.active {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary)
   }
   h4 {
     font-size: 24px;
@@ -249,7 +269,6 @@ body.tox-fullscreen, body.markdown-fullscreen {
   display: none;
   overflow-y: auto;
   padding-bottom: 45px;
-  border-block-start: 1px solid #CCC;
 }
 
 .suggestion-box {
