@@ -269,7 +269,7 @@ return [
     'pages_revisions_none' => 'Sellel lehel ei ole redaktsioone',
     'pages_copy_link' => 'Kopeeri link',
     'pages_edit_content_link' => 'Hüppa redaktoris sektsioonini',
-    'pages_pointer_enter_mode' => 'Enter section select mode',
+    'pages_pointer_enter_mode' => 'Ava sektsiooni valiku režiim',
     'pages_pointer_label' => 'Lehe sektsiooni valikud',
     'pages_pointer_permalink' => 'Lehe sektsiooni permalink',
     'pages_pointer_include_tag' => 'Lehe sektsiooni viitesilt',
