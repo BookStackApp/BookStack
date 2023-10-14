@@ -8,6 +8,8 @@
     flex: 1;
     flex-direction: column;
     z-index: 10;
+    overflow: hidden;
+    border-radius: 0 0 8px 8px;
   }
 
   .mce-tinymce {
@@ -17,6 +19,69 @@
   .mce-top-part::before {
     box-shadow: none;
   }
+}
+
+.page-editor-page-area {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: $bs-card;
+  @include lightDark(background-color, #FFF, #333)
+}
+
+.page-edit-toolbar {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(max-content, 2fr) 1.5fr minmax(max-content, 2fr);
+  align-items: center;
+}
+
+@include larger-than($xxl) {
+  .page-editor-wysiwyg .page-edit-toolbar,
+  .page-editor-wysiwyg .page-editor-page-area {
+    max-width: 1140px;
+  }
+
+  .page-editor-wysiwyg .floating-toolbox {
+    position: absolute;
+  }
+}
+
+@include smaller-than($m) {
+  .page-edit-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.title-input.page-title {
+  font-size: 0.8em;
+  .input {
+    border: 0;
+    margin-bottom: -1px;
+  }
+  input[type="text"] {
+    max-width: 840px;
+    margin: 0 auto;
+    border: none;
+    height: auto;
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    border-radius: 8px;
+  }
+  input[type="text"]:focus {
+    position: relative;
+    outline-offset: -1px;
+    outline: 1px dashed var(--color-primary);
+    box-shadow: $bs-card;
+    z-index: 50;
+  }
+}
+
+.page-editor-markdown .title-input.page-title input[type="text"] {
+  max-width: 100%;
 }
 
 body.tox-fullscreen .page-editor .edit-area,
@@ -35,8 +100,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
     overflow-x: scroll;
     overflow-y: visible;
   }
-  .page-edit-toolbar .grid.third {
-    display: block;
+  .page-edit-toolbar {
     white-space: nowrap;
     > div {
       display: inline-block;
@@ -48,10 +112,10 @@ body.tox-fullscreen, body.markdown-fullscreen {
   position: fixed;
   z-index: 30;
   border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  font-size: 24px;
-  right: $-m;
+  width: 52px;
+  height: 52px;
+  font-size: 26px;
+  right: $-xs;
   bottom: $-s;
   box-shadow: $bs-hover;
   background-color: currentColor;
@@ -149,22 +213,27 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 }
 
-// Attribute form
+// Page editor sidebar toolbox
 .floating-toolbox {
-  border: 1px solid #DDD;
-  @include lightDark(background-color, #fff, #222);
-  @include lightDark(border-color, #DDD, #000);
-  right: $-xl*2;
-  width: 48px;
+  @include lightDark(background-color, #FFF, #222);
   overflow: hidden;
   align-items: stretch;
   flex-direction: row;
   display: flex;
-  transition: width ease-in-out 180ms;
-  margin-top: -1px;
-  min-height: 0;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: $bs-card;
+  margin-bottom: auto;
+  margin-left: $-l;
+  position: relative;
   &.open {
-    width: 480px;
+    position: relative;
+    right: 0;
+    max-width: 480px;
+    margin-bottom: 0;
+  }
+  &:not(.open) .toolbox-tab-content {
+    display: none !important;
   }
   .toolbox-toggle svg {
     transition: transform ease-in-out 180ms;
@@ -173,7 +242,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
     transition: background-color ease-in-out 180ms;
   }
   &.open .toolbox-toggle {
-    background-color: rgba(255, 0, 0, 0.29);
+    background-color: rgba(255, 0, 0, 0.20);
   }
   &.open .toolbox-toggle svg {
     transform: rotate(180deg);
@@ -183,28 +252,34 @@ body.tox-fullscreen, body.markdown-fullscreen {
     position: relative;
   }
   .tabs {
-    display: block;
-    border-inline-end: 1px solid #DDD;
-    @include lightDark(border-color, #ddd, #000);
-    width: 48px;
+    border-right: 1px solid #DDD;
+    @include lightDark(border-right-color, #DDD, #000);
+    width: 40px;
     flex: 0 1 auto;
+    margin-right: -1px;
+  }
+  .tabs-inner {
+    @include lightDark(background-color, #FFFFFF, #222);
   }
   .tabs svg {
     padding: 0;
     margin: 0;
   }
-  .tabs > button {
-    @include lightDark(color, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+  .tabs-inner > button {
+    @include lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.5));
     display: block;
     cursor: pointer;
-    padding: $-s $-m;
-    font-size: 16px;
+    padding: 10px $-xs;
+    font-size: 18px;
     line-height: 1.6;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
-  &.open .tabs > button.active {
-    @include lightDark(color, #444, #EEE);
-    background-color: rgba(0, 0, 0, 0.1);
+  .tabs-inner > button:hover,  &.open .tabs-inner > button.active {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+  &.open .tabs-inner > button.active {
+    border-inline-end: 1px solid var(--color-primary);
+    margin-inline-end: -1px;
   }
   h4 {
     font-size: 24px;
@@ -234,6 +309,33 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
   table td, table th {
     overflow: visible;
+  }
+}
+
+@include smaller-than($xxl) {
+  .floating-toolbox {
+    margin-left: $-s;
+  }
+}
+
+@include smaller-than($s) {
+  .page-editor-page-area-wrap {
+    margin: 4px !important;
+  }
+  .floating-toolbox {
+    margin-left: 4px;
+  }
+  .floating-toolbox .tabs {
+    width: 32px;
+  }
+  .floating-toolbox .tabs-inner > button {
+    font-size: 12px;
+  }
+  .page-edit-toolbar {
+    padding-block: 0 !important;
+  }
+  .page-editor.toolbox-open .page-editor-page-area {
+    display: none;
   }
 }
 
