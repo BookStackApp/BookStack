@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Oldalsablon',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Oldal címkék',
     'chapter_tags' => 'Fejezet címkék',
     'book_tags' => 'Könyv címkék',
