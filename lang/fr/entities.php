@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Modèle de page',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Mots-clés de la page',
     'chapter_tags' => 'Mots-clés du chapitre',
     'book_tags' => 'Mots-clés du livre',
