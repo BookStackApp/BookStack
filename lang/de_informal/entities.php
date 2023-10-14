@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Seitenvorlage',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Seiten-Schlagwörter',
     'chapter_tags' => 'Kapitel-Schlagwörter',
     'book_tags' => 'Buch-Schlagwörter',
