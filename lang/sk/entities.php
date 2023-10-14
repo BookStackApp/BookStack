@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Šablóna stránky',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Štítky stránok',
     'chapter_tags' => 'Štítky kapitol',
     'book_tags' => 'Štítky kníh',
