@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Biểu mẫu trang',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Các Thẻ Trang',
     'chapter_tags' => 'Các Thẻ Chương',
     'book_tags' => 'Các Thẻ Sách',
