@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Sahifa shabloni',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Sahifa teglari',
     'chapter_tags' => 'Bo\'lim teglari',
     'book_tags' => 'Kitob teglari',
