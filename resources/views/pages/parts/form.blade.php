@@ -20,7 +20,7 @@
     {{--Header Toolbar--}}
     @include('pages.parts.editor-toolbar', ['model' => $model, 'editor' => $editor, 'isDraft' => $isDraft, 'draftsEnabled' => $draftsEnabled])
 
-    <div class="flex flex-fill mx-s mb-s justify-center">
+    <div class="flex flex-fill mx-s mb-s justify-center page-editor-page-area-wrap">
         <div class="page-editor-page-area flex-container-column flex flex-fill">
             {{--Title input--}}
             <div class="title-input page-title clearfix">

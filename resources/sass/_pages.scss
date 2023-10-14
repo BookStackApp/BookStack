@@ -23,7 +23,7 @@
   width: 100%;
   border-radius: 8px;
   box-shadow: $bs-card;
-  background-color: #FFF;
+  @include lightDark(background-color, #FFF, #333)
 }
 
 .page-edit-toolbar {
@@ -34,13 +34,23 @@
   align-items: center;
 }
 
-.page-editor-wysiwyg .page-edit-toolbar,
-.page-editor-wysiwyg .page-editor-page-area {
-  max-width: 1140px;
+@include larger-than($xxl) {
+  .page-editor-wysiwyg .page-edit-toolbar,
+  .page-editor-wysiwyg .page-editor-page-area {
+    max-width: 1140px;
+  }
+
+  .page-editor-wysiwyg .floating-toolbox {
+    position: absolute;
+  }
 }
 
-.page-editor-markdown .floating-toolbox {
-  position: relative;
+@include smaller-than($m) {
+  .page-edit-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .title-input.page-title {
@@ -88,8 +98,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
     overflow-x: scroll;
     overflow-y: visible;
   }
-  .page-edit-toolbar .grid.third {
-    display: block;
+  .page-edit-toolbar {
     white-space: nowrap;
     > div {
       display: inline-block;
@@ -101,10 +110,10 @@ body.tox-fullscreen, body.markdown-fullscreen {
   position: fixed;
   z-index: 30;
   border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  font-size: 24px;
-  right: $-m;
+  width: 52px;
+  height: 52px;
+  font-size: 26px;
+  right: $-xs;
   bottom: $-s;
   box-shadow: $bs-hover;
   background-color: currentColor;
@@ -202,7 +211,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 }
 
-// Attribute form
+// Page editor sidebar toolbox
 .floating-toolbox {
   @include lightDark(background-color, #FFF, #222);
   overflow: hidden;
@@ -214,7 +223,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   box-shadow: $bs-card;
   margin-bottom: auto;
   margin-left: $-l;
-  position: absolute;
+  position: relative;
   &.open {
     position: relative;
     right: 0;
@@ -242,6 +251,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
   .tabs {
     border-right: 1px solid #DDD;
+    @include lightDark(border-right-color, #DDD, #000);
     width: 40px;
     flex: 0 1 auto;
     margin-right: -1px;
@@ -297,6 +307,33 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
   table td, table th {
     overflow: visible;
+  }
+}
+
+@include smaller-than($xxl) {
+  .floating-toolbox {
+    margin-left: $-s;
+  }
+}
+
+@include smaller-than($s) {
+  .page-editor-page-area-wrap {
+    margin: 4px !important;
+  }
+  .floating-toolbox {
+    margin-left: 4px;
+  }
+  .floating-toolbox .tabs {
+    width: 32px;
+  }
+  .floating-toolbox .tabs-inner > button {
+    font-size: 12px;
+  }
+  .page-edit-toolbar {
+    padding-block: 0 !important;
+  }
+  .page-editor.toolbox-open .page-editor-page-area {
+    display: none;
   }
 }
 
