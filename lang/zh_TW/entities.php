@@ -295,6 +295,7 @@ return [
     'pages_is_template' => '頁面模板',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => '頁面標籤',
     'chapter_tags' => '章節標籤',
     'book_tags' => '書本標籤',
