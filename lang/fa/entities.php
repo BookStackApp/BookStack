@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'الگوی صفحه',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'برچسب‌های صفحه',
     'chapter_tags' => 'برچسب های فصل',
     'book_tags' => 'برچسب های کتاب',
