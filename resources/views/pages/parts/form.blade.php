@@ -1,4 +1,4 @@
-<div component="page-editor" class="page-editor flex-fill flex"
+<div component="page-editor" class="page-editor page-editor-{{ $editor }} flex-fill flex"
      option:page-editor:drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}"
      @if(config('services.drawio'))
         drawio-url="{{ is_string(config('services.drawio')) ? config('services.drawio') : 'https://embed.diagrams.net/?embed=1&proto=json&spin=1&configure=1' }}"
@@ -20,7 +20,7 @@
     {{--Header Toolbar--}}
     @include('pages.parts.editor-toolbar', ['model' => $model, 'editor' => $editor, 'isDraft' => $isDraft, 'draftsEnabled' => $draftsEnabled])
 
-    <div class="flex flex-fill mx-s mb-xs gap-m justify-center">
+    <div class="flex flex-fill mx-s mb-s justify-center">
         <div class="page-editor-page-area flex-container-column flex flex-fill">
             {{--Title input--}}
             <div class="title-input page-title clearfix">
@@ -48,7 +48,9 @@
             </div>
         </div>
 
-        @include('pages.parts.editor-toolbox')
+        <div class="relative flex-fill">
+            @include('pages.parts.editor-toolbox')
+        </div>
     </div>
 
     {{--Mobile Save Button--}}
