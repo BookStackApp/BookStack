@@ -21,19 +21,55 @@
 
 .page-editor-page-area {
   width: 100%;
-  max-width: 1140px;
   border-radius: 8px;
   box-shadow: $bs-card;
-  overflow: hidden;
+  background-color: #FFF;
 }
 
 .page-edit-toolbar {
   width: 100%;
-  max-width: 1140px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(max-content, 2fr) 1.5fr minmax(max-content, 2fr);
   align-items: center;
+}
+
+.page-editor-wysiwyg .page-edit-toolbar,
+.page-editor-wysiwyg .page-editor-page-area {
+  max-width: 1140px;
+}
+
+.page-editor-markdown .floating-toolbox {
+  position: relative;
+}
+
+.title-input.page-title {
+  font-size: 0.8em;
+  .input {
+    border: 0;
+    margin-bottom: -1px;
+  }
+  input[type="text"] {
+    max-width: 840px;
+    margin: 0 auto;
+    border: none;
+    height: auto;
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    border-radius: 4px;
+  }
+  input[type="text"]:focus {
+    position: relative;
+    outline-offset: -1px;
+    outline: 1px dashed var(--color-primary);
+    box-shadow: $bs-card;
+    z-index: 50;
+  }
+}
+
+.page-editor-markdown .title-input.page-title input[type="text"] {
+  max-width: 100%;
 }
 
 body.tox-fullscreen .page-editor .edit-area,
@@ -176,12 +212,12 @@ body.tox-fullscreen, body.markdown-fullscreen {
   max-height: 100%;
   border-radius: 8px;
   box-shadow: $bs-card;
-  position: fixed;
-  right: $-s;
   margin-bottom: auto;
+  margin-left: $-l;
+  position: absolute;
   &.open {
-    right: 0;
     position: relative;
+    right: 0;
     max-width: 480px;
     margin-bottom: 0;
   }
@@ -195,7 +231,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
     transition: background-color ease-in-out 180ms;
   }
   &.open .toolbox-toggle {
-    background-color: rgba(255, 0, 0, 0.29);
+    background-color: rgba(255, 0, 0, 0.20);
   }
   &.open .toolbox-toggle svg {
     transform: rotate(180deg);
@@ -211,28 +247,27 @@ body.tox-fullscreen, body.markdown-fullscreen {
     margin-right: -1px;
   }
   .tabs-inner {
-    //box-shadow: $bs-large;
     @include lightDark(background-color, #FFFFFF, #222);
-    //border-radius: 8px;
-    overflow: hidden;
   }
   .tabs svg {
     padding: 0;
     margin: 0;
   }
   .tabs-inner > button {
-    //border-block-end: 1px solid #CCC;
-    //@include lightDark(border-color, #CCC, #000);
     @include lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.5));
     display: block;
     cursor: pointer;
     padding: 10px $-xs;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.6;
   }
-  &.open .tabs-inner > button.active {
+  .tabs-inner > button:hover,  &.open .tabs-inner > button.active {
     background-color: var(--color-primary-light);
-    color: var(--color-primary)
+    color: var(--color-primary);
+  }
+  &.open .tabs-inner > button.active {
+    border-inline-end: 1px solid var(--color-primary);
+    margin-inline-end: -1px;
   }
   h4 {
     font-size: 24px;
