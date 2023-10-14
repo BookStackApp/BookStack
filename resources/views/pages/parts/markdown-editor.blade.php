@@ -7,7 +7,7 @@
 
     <div class="markdown-editor-wrap active flex-container-column">
         <div class="editor-toolbar flex-container-row items-stretch justify-space-between">
-            <div class="editor-toolbar-label text-mono px-m py-xs flex-container-row items-center flex">
+            <div class="editor-toolbar-label text-mono bold px-m py-xs flex-container-row items-center flex">
                 <span>{{ trans('entities.pages_md_editor') }}</span>
             </div>
             <div component="dropdown" class="buttons flex-container-row items-stretch">
@@ -44,7 +44,7 @@
         <div refs="markdown-editor@divider" class="markdown-panel-divider flex-fill"></div>
         <div class="flex-container-column flex flex-fill">
             <div class="editor-toolbar">
-                <div class="editor-toolbar-label text-mono px-m py-xs">{{ trans('entities.pages_md_preview') }}</div>
+                <div class="editor-toolbar-label text-mono bold px-m py-xs">{{ trans('entities.pages_md_preview') }}</div>
             </div>
             <iframe src="about:blank"
                     refs="markdown-editor@display"

@@ -148,10 +148,9 @@ html.markdown-editor-display.dark-mode {
   width: 100%;
   font-size: 11px;
   line-height: 1.6;
-  border-bottom: 1px solid #DDD;
-  background-color: #EEE;
-  @include lightDark(background-color, #eee, #111);
-  @include lightDark(border-color, #ddd, #000);
+  border-bottom: 1px solid #CCC;
+  //background-color: var(--color-primary-light);
+  @include lightDark(border-color, #CCC, #000);
   flex: none;
   @include whenDark {
     button {
@@ -398,27 +397,6 @@ input[type=color] {
   height: auto;
 }
 
-.title-input.page-title {
-  font-size: 0.8em;
-  @include lightDark(background-color, #fff, #333);
-  .input {
-    border: 0;
-    margin-bottom: -1px;
-  }
-  input[type="text"] {
-    max-width: 840px;
-    margin: 0 auto;
-    border: none;
-    height: auto;
-  }
-}
-
-.page-title input {
-  display: block;
-  width: 100%;
-  font-size: 1.4em;
-}
-
 .description-input textarea {
   display: block;
   width: 100%;
@@ -426,11 +404,6 @@ input[type=color] {
   font-size: $fs-m;
   color: #666;
   height: auto;
-}
-
-div[editor-type="markdown"] .title-input.page-title input[type="text"] {
-  max-width: 100%;
-  border-radius: 0;
 }
 
 .search-box {

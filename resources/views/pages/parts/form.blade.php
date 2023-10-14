@@ -1,4 +1,4 @@
-<div component="page-editor" class="page-editor flex-fill flex"
+<div component="page-editor" class="page-editor page-editor-{{ $editor }} flex-fill flex"
      option:page-editor:drafts-enabled="{{ $draftsEnabled ? 'true' : 'false' }}"
      @if(config('services.drawio'))
         drawio-url="{{ is_string(config('services.drawio')) ? config('services.drawio') : 'https://embed.diagrams.net/?embed=1&proto=json&spin=1&configure=1' }}"
@@ -20,26 +20,37 @@
     {{--Header Toolbar--}}
     @include('pages.parts.editor-toolbar', ['model' => $model, 'editor' => $editor, 'isDraft' => $isDraft, 'draftsEnabled' => $draftsEnabled])
 
-    {{--Title input--}}
-    <div class="title-input page-title clearfix">
-        <div refs="page-editor@titleContainer" class="input">
-            @include('form.text', ['name' => 'name', 'model' => $model, 'placeholder' => trans('entities.pages_title')])
+    <div class="flex flex-fill mx-s mb-s justify-center page-editor-page-area-wrap">
+        <div class="page-editor-page-area flex-container-column flex flex-fill">
+            {{--Title input--}}
+            <div class="title-input page-title clearfix">
+                <div refs="page-editor@titleContainer" class="input">
+                    @include('form.text', ['name' => 'name', 'model' => $model, 'placeholder' => trans('entities.pages_title')])
+                </div>
+            </div>
+
+            <div class="flex-fill flex">
+                {{--Editors--}}
+                <div class="edit-area flex-fill flex">
+
+                    {{--WYSIWYG Editor--}}
+                    @if($editor === 'wysiwyg')
+                        @include('pages.parts.wysiwyg-editor', ['model' => $model])
+                    @endif
+
+                    {{--Markdown Editor--}}
+                    @if($editor === 'markdown')
+                        @include('pages.parts.markdown-editor', ['model' => $model])
+                    @endif
+
+                </div>
+
+            </div>
         </div>
-    </div>
 
-    {{--Editors--}}
-    <div class="edit-area flex-fill flex">
-
-        {{--WYSIWYG Editor--}}
-        @if($editor === 'wysiwyg')
-            @include('pages.parts.wysiwyg-editor', ['model' => $model])
-        @endif
-
-        {{--Markdown Editor--}}
-        @if($editor === 'markdown')
-            @include('pages.parts.markdown-editor', ['model' => $model])
-        @endif
-
+        <div class="relative flex-fill">
+            @include('pages.parts.editor-toolbox')
+        </div>
     </div>
 
     {{--Mobile Save Button--}}
