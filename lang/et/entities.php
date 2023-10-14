@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Lehe mall',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Lehe sildid',
     'chapter_tags' => 'Peatüki sildid',
     'book_tags' => 'Raamatu sildid',
