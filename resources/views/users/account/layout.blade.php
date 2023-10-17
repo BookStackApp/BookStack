@@ -9,9 +9,10 @@
                 <div class="sticky-top-m">
                     <h5>{{ trans('preferences.my_account') }}</h5>
                     <nav class="active-link-list in-sidebar">
-                        <a href="{{ url('/my-account/shortcuts') }}" class="{{ 'shortcuts' === 'shortcuts' ? 'active' : '' }}">@icon('shortcuts') {{ trans('preferences.shortcuts_interface') }}</a>
-                        <a href="{{ url('/my-account/notifications') }}" class="{{ '' === 'notifications' ? 'active' : '' }}">@icon('notifications') {{ trans('preferences.notifications') }}</a>
-                        <a href="{{ url('/my-account/auth') }}" class="{{ '' === 'auth' ? 'active' : '' }}">@icon('lock') {{ 'Access & Security' }}</a>
+                        <a href="{{ url('/my-account/profile') }}" class="{{ $category === 'profile' ? 'active' : '' }}">@icon('user') {{ trans('preferences.profile') }}</a>
+                        <a href="{{ url('/my-account/auth') }}" class="{{ $category === 'auth' ? 'active' : '' }}">@icon('security') {{ trans('preferences.auth') }}</a>
+                        <a href="{{ url('/my-account/shortcuts') }}" class="{{ $category === 'shortcuts' ? 'active' : '' }}">@icon('shortcuts') {{ trans('preferences.shortcuts_interface') }}</a>
+                        <a href="{{ url('/my-account/notifications') }}" class="{{ $category === 'notifications' ? 'active' : '' }}">@icon('notifications') {{ trans('preferences.notifications') }}</a>
                     </nav>
                 </div>
             </div>

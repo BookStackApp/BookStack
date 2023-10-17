@@ -64,7 +64,7 @@
         @endif
 
         <div refs="new-user-password@input-container" @if(!isset($model)) style="display: none;" @endif>
-            <p class="small">{{ trans('settings.users_password_desc') }}</p>
+            <p class="small mb-none">{{ trans('settings.users_password_desc') }}</p>
             @if(isset($model))
                 <p class="small">
                     {{ trans('settings.users_password_warning') }}

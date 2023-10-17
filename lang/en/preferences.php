@@ -29,5 +29,11 @@ return [
     'notifications_watched' => 'Watched & Ignored Items',
     'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
+    'auth' => 'Access & Security',
+    'auth_change_password' => 'Change Password',
+    'auth_change_password_desc' => 'Change the password you use to log-in to the application. This must be at least 8 characters long.',
+    'auth_change_password_success' => 'Password has been updated!',
+
+    'profile' => 'Profile Details',
     'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
 ];
