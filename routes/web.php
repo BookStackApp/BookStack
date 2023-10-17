@@ -238,6 +238,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/my-account/shortcuts', [UserControllers\UserAccountController::class, 'updateShortcuts']);
     Route::get('/my-account/notifications', [UserControllers\UserAccountController::class, 'showNotifications']);
     Route::put('/my-account/notifications', [UserControllers\UserAccountController::class, 'updateNotifications']);
+    Route::get('/my-account/auth', [UserControllers\UserAccountController::class, 'showAuth']);
+    Route::put('/my-account/auth/password', [UserControllers\UserAccountController::class, 'updatePassword']);
     Route::patch('/preferences/change-view/{type}', [UserControllers\UserPreferencesController::class, 'changeView']);
     Route::patch('/preferences/change-sort/{type}', [UserControllers\UserPreferencesController::class, 'changeSort']);
     Route::patch('/preferences/change-expansion/{type}', [UserControllers\UserPreferencesController::class, 'changeExpansion']);

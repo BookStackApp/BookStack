@@ -214,6 +214,7 @@ class SocialAuthService
 
     /**
      * Gets the names of the active social drivers.
+     * @returns array<string, string>
      */
     public function getActiveDrivers(): array
     {

@@ -2,18 +2,25 @@
 
 namespace BookStack\Users\Controllers;
 
+use BookStack\Access\SocialAuthService;
 use BookStack\Http\Controller;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\UserNotificationPreferences;
 use BookStack\Settings\UserShortcutMap;
 use BookStack\Users\UserRepo;
+use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Password;
 
 class UserAccountController extends Controller
 {
     public function __construct(
-        protected UserRepo $userRepo
+        protected UserRepo $userRepo,
     ) {
+        $this->middleware(function (Request $request, Closure $next) {
+            $this->preventGuestAccess();
+            return $next($request);
+        });
     }
 
     /**
@@ -21,8 +28,7 @@ class UserAccountController extends Controller
      */
     public function index()
     {
-        $guest = user()->isGuest();
-        $mfaMethods = $guest ? [] : user()->mfaValues->groupBy('method');
+        $mfaMethods = user()->mfaValues->groupBy('method');
 
         return view('users.account.index', [
             'mfaMethods' => $mfaMethods,
@@ -40,6 +46,7 @@ class UserAccountController extends Controller
         $this->setPageTitle(trans('preferences.shortcuts_interface'));
 
         return view('users.account.shortcuts', [
+            'category' => 'shortcuts',
             'shortcuts' => $shortcuts,
             'enabled' => $enabled,
         ]);
@@ -68,7 +75,6 @@ class UserAccountController extends Controller
     public function showNotifications(PermissionApplicator $permissions)
     {
         $this->checkPermission('receive-notifications');
-        $this->preventGuestAccess();
 
         $preferences = (new UserNotificationPreferences(user()));
 
@@ -79,6 +85,7 @@ class UserAccountController extends Controller
 
         $this->setPageTitle(trans('preferences.notifications'));
         return view('users.account.notifications', [
+            'category' => 'notifications',
             'preferences' => $preferences,
             'watches' => $watches,
         ]);
@@ -90,7 +97,6 @@ class UserAccountController extends Controller
     public function updateNotifications(Request $request)
     {
         $this->checkPermission('receive-notifications');
-        $this->preventGuestAccess();
         $data = $this->validate($request, [
            'preferences' => ['required', 'array'],
            'preferences.*' => ['required', 'string'],
@@ -101,5 +107,43 @@ class UserAccountController extends Controller
         $this->showSuccessNotification(trans('preferences.notifications_update_success'));
 
         return redirect('/my-account/notifications');
+    }
+
+    /**
+     * Show the view for the "Access & Security" account options.
+     */
+    public function showAuth(SocialAuthService $socialAuthService)
+    {
+        $mfaMethods = user()->mfaValues->groupBy('method');
+
+        $this->setPageTitle(trans('preferences.auth'));
+
+        return view('users.account.auth', [
+            'category' => 'auth',
+            'mfaMethods' => $mfaMethods,
+            'authMethod' => config('auth.method'),
+            'activeSocialDrivers' => $socialAuthService->getActiveDrivers(),
+        ]);
+    }
+
+    /**
+     * Handle the submission for the auth change password form.
+     */
+    public function updatePassword(Request $request)
+    {
+        if (config('auth.method') !== 'standard') {
+            $this->showPermissionError();
+        }
+
+        $validated = $this->validate($request, [
+            'password'         => ['required_with:password_confirm', Password::default()],
+            'password-confirm' => ['same:password', 'required_with:password'],
+        ]);
+
+        $this->userRepo->update(user(), $validated, false);
+
+        $this->showSuccessNotification(trans('preferences.auth_change_password_success'));
+
+        return redirect('/my-account/auth');
     }
 }

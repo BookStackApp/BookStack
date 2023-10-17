@@ -8,6 +8,7 @@
             @endif
         </div>
     </div>
+    <p class="text-small text-muted">{{ trans('settings.users_api_tokens_desc') }}</p>
     @if (count($user->apiTokens) > 0)
         <div class="item-list my-m">
             @foreach($user->apiTokens as $token)
