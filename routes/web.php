@@ -232,18 +232,17 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/users/{id}', [UserControllers\UserController::class, 'update']);
     Route::delete('/settings/users/{id}', [UserControllers\UserController::class, 'destroy']);
 
-    // User Preferences
-    Route::get('/preferences', [UserControllers\UserPreferencesController::class, 'index']);
-    Route::get('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'showShortcuts']);
-    Route::put('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'updateShortcuts']);
-    Route::get('/preferences/notifications', [UserControllers\UserPreferencesController::class, 'showNotifications']);
-    Route::put('/preferences/notifications', [UserControllers\UserPreferencesController::class, 'updateNotifications']);
+    // User Account
+    Route::get('/my-account', [UserControllers\UserAccountController::class, 'index']);
+    Route::get('/my-account/shortcuts', [UserControllers\UserAccountController::class, 'showShortcuts']);
+    Route::put('/my-account/shortcuts', [UserControllers\UserAccountController::class, 'updateShortcuts']);
+    Route::get('/my-account/notifications', [UserControllers\UserAccountController::class, 'showNotifications']);
+    Route::put('/my-account/notifications', [UserControllers\UserAccountController::class, 'updateNotifications']);
     Route::patch('/preferences/change-view/{type}', [UserControllers\UserPreferencesController::class, 'changeView']);
     Route::patch('/preferences/change-sort/{type}', [UserControllers\UserPreferencesController::class, 'changeSort']);
     Route::patch('/preferences/change-expansion/{type}', [UserControllers\UserPreferencesController::class, 'changeExpansion']);
     Route::patch('/preferences/toggle-dark-mode', [UserControllers\UserPreferencesController::class, 'toggleDarkMode']);
     Route::patch('/preferences/update-code-language-favourite', [UserControllers\UserPreferencesController::class, 'updateCodeLanguageFavourite']);
-    Route::patch('/preferences/update-boolean', [UserControllers\UserPreferencesController::class, 'updateBooleanPreference']);
 
     // User API Tokens
     Route::get('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);
