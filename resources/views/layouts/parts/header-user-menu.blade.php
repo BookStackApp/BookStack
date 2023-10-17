@@ -35,9 +35,9 @@
         </li>
         <li><hr></li>
         <li>
-            <a href="{{ url('/preferences') }}" class="icon-item">
+            <a href="{{ url('/my-account') }}" class="icon-item">
                 @icon('user-preferences')
-                <div>{{ trans('preferences.preferences') }}</div>
+                <div>{{ trans('preferences.my_account') }}</div>
             </a>
         </li>
         <li>
