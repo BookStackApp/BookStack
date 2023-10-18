@@ -7,6 +7,7 @@ use BookStack\Http\Controller;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\UserNotificationPreferences;
 use BookStack\Settings\UserShortcutMap;
+use BookStack\Uploads\ImageRepo;
 use BookStack\Users\UserRepo;
 use Closure;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class UserAccountController extends Controller
     ) {
         $this->middleware(function (Request $request, Closure $next) {
             $this->preventGuestAccess();
+            $this->preventAccessInDemoMode();
             return $next($request);
         });
     }
@@ -33,6 +35,51 @@ class UserAccountController extends Controller
         return view('users.account.index', [
             'mfaMethods' => $mfaMethods,
         ]);
+    }
+
+    /**
+     * Show the profile form interface.
+     */
+    public function showProfile()
+    {
+        return view('users.account.profile', [
+            'model' => user(),
+            'category' => 'profile',
+        ]);
+    }
+
+    /**
+     * Handle the submission of the user profile form.
+     */
+    public function updateProfile(Request $request, ImageRepo $imageRepo)
+    {
+        $user = user();
+        $validated = $this->validate($request, [
+            'name'             => ['min:2', 'max:100'],
+            'email'            => ['min:2', 'email', 'unique:users,email,' . $user->id],
+            'language'         => ['string', 'max:15', 'alpha_dash'],
+            'profile_image'    => array_merge(['nullable'], $this->getImageValidationRules()),
+        ]);
+
+        $this->userRepo->update($user, $validated, userCan('users-manage'));
+
+        // Save profile image if in request
+        if ($request->hasFile('profile_image')) {
+            $imageUpload = $request->file('profile_image');
+            $imageRepo->destroyImage($user->avatar);
+            $image = $imageRepo->saveNew($imageUpload, 'user', $user->id);
+            $user->image_id = $image->id;
+            $user->save();
+        }
+
+        // Delete the profile image if reset option is in request
+        if ($request->has('profile_image_reset')) {
+            $imageRepo->destroyImage($user->avatar);
+            $user->image_id = 0;
+            $user->save();
+        }
+
+        return redirect('/my-account/profile');
     }
 
     /**

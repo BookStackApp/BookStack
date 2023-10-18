@@ -35,5 +35,5 @@ return [
     'auth_change_password_success' => 'Password has been updated!',
 
     'profile' => 'Profile Details',
-    'profile_overview_desc' => ' Manage your user profile details including preferred language and authentication options.',
+    'profile_overview_desc' => 'Manage your user profile details including preferred language and authentication options.',
 ];

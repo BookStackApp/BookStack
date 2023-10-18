@@ -234,6 +234,8 @@ Route::middleware('auth')->group(function () {
 
     // User Account
     Route::get('/my-account', [UserControllers\UserAccountController::class, 'index']);
+    Route::get('/my-account/profile', [UserControllers\UserAccountController::class, 'showProfile']);
+    Route::put('/my-account/profile', [UserControllers\UserAccountController::class, 'updateProfile']);
     Route::get('/my-account/shortcuts', [UserControllers\UserAccountController::class, 'showShortcuts']);
     Route::put('/my-account/shortcuts', [UserControllers\UserAccountController::class, 'updateShortcuts']);
     Route::get('/my-account/notifications', [UserControllers\UserAccountController::class, 'showNotifications']);
