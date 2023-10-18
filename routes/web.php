@@ -233,7 +233,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/settings/users/{id}', [UserControllers\UserController::class, 'destroy']);
 
     // User Account
-    Route::get('/my-account', [UserControllers\UserAccountController::class, 'index']);
+    Route::get('/my-account', [UserControllers\UserAccountController::class, 'redirect']);
     Route::get('/my-account/profile', [UserControllers\UserAccountController::class, 'showProfile']);
     Route::put('/my-account/profile', [UserControllers\UserAccountController::class, 'updateProfile']);
     Route::get('/my-account/shortcuts', [UserControllers\UserAccountController::class, 'showShortcuts']);

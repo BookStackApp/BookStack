@@ -26,15 +26,13 @@ class UserAccountController extends Controller
     }
 
     /**
-     * Show the overview for user preferences.
+     * Redirect the root my-account path to the main/first category.
+     * Required as a controller method, instead of the Route::redirect helper,
+     * to ensure the URL is generated correctly.
      */
-    public function index()
+    public function redirect()
     {
-        $mfaMethods = user()->mfaValues->groupBy('method');
-
-        return view('users.account.index', [
-            'mfaMethods' => $mfaMethods,
-        ]);
+        return redirect('/my-account/profile');
     }
 
     /**
