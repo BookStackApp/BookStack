@@ -31,6 +31,8 @@ class ApiDocsController extends ApiController
 
     /**
      * Redirect to the API docs page.
+     *  Required as a controller method, instead of the Route::redirect helper,
+     *  to ensure the URL is generated correctly.
      */
     public function redirect()
     {
