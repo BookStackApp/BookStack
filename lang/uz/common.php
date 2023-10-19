@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Filtrni tozalash',
     'download' => 'Yuklab olish',
     'open_in_tab' => 'Tabda ochish',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Saralash opsiyalari',
