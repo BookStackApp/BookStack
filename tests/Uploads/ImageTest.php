@@ -607,7 +607,7 @@ class ImageTest extends TestCase
         $this->actingAs($editor);
 
         $file = $this->getTestProfileImage();
-        $this->call('PUT', '/settings/users/' . $editor->id, [], [], ['profile_image' => $file], []);
+        $this->call('PUT', '/my-account/profile', [], [], ['profile_image' => $file], []);
 
         $profileImages = Image::where('type', '=', 'user')->where('created_by', '=', $editor->id)->get();
         $this->assertTrue($profileImages->count() === 1, 'Found profile images does not match upload count');
@@ -615,7 +615,7 @@ class ImageTest extends TestCase
         $imagePath = public_path($profileImages->first()->path);
         $this->assertTrue(file_exists($imagePath));
 
-        $userDelete = $this->asAdmin()->delete("/settings/users/{$editor->id}");
+        $userDelete = $this->asAdmin()->delete($editor->getEditUrl());
         $userDelete->assertStatus(302);
 
         $this->assertDatabaseMissing('images', [

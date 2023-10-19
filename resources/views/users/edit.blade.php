@@ -89,9 +89,9 @@
                                 <div role="presentation">@icon('auth/'. $driver, ['style' => 'width: 56px;height: 56px;'])</div>
                                 <p class="my-none bold">{{ $driverName }}</p>
                                 @if($user->hasSocialAccount($driver))
-                                    <p class="text-pos bold text-small my-none">Connected</p>
+                                    <p class="text-pos bold text-small my-none">{{ trans('settings.users_social_status_connected') }}</p>
                                 @else
-                                    <p class="text-neg bold text-small my-none">Disconnected</p>
+                                    <p class="text-neg bold text-small my-none">{{ trans('settings.users_social_status_disconnected') }}</p>
                                 @endif
                             </div>
                         @endforeach

@@ -244,6 +244,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/my-account/auth/password', [UserControllers\UserAccountController::class, 'updatePassword']);
     Route::get('/my-account/delete', [UserControllers\UserAccountController::class, 'delete']);
     Route::delete('/my-account', [UserControllers\UserAccountController::class, 'destroy']);
+
+    // User Preference Endpoints
     Route::patch('/preferences/change-view/{type}', [UserControllers\UserPreferencesController::class, 'changeView']);
     Route::patch('/preferences/change-sort/{type}', [UserControllers\UserPreferencesController::class, 'changeSort']);
     Route::patch('/preferences/change-expansion/{type}', [UserControllers\UserPreferencesController::class, 'changeExpansion']);

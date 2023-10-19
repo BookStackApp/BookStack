@@ -51,7 +51,7 @@ class WebhookCallTest extends TestCase
     {
         // This test must not fake the queue/bus since this covers an issue
         // around handling and serialization of items now deleted from the database.
-        $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
+        $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
         $this->mockHttpClient([new Response(500)]);
 
         $user = $this->users->newUser();
@@ -61,8 +61,10 @@ class WebhookCallTest extends TestCase
         /** @var ApiToken $apiToken */
         $editor = $this->users->editor();
         $apiToken = ApiToken::factory()->create(['user_id' => $editor]);
-        $resp = $this->delete($editor->getEditUrl('/api-tokens/' . $apiToken->id));
-        $resp->assertRedirect($editor->getEditUrl('#api_tokens'));
+        $this->delete($apiToken->getUrl())->assertRedirect();
+
+        $webhook->refresh();
+        $this->assertEquals('Response status from endpoint was 500', $webhook->last_error);
     }
 
     public function test_failed_webhook_call_logs_error()
