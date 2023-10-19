@@ -40,6 +40,8 @@ class UserAccountController extends Controller
      */
     public function showProfile()
     {
+        $this->setPageTitle(trans('preferences.profile'));
+
         return view('users.account.profile', [
             'model' => user(),
             'category' => 'profile',
