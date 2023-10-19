@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Poništi Filter',
     'download' => 'Preuzmi',
     'open_in_tab' => 'Otvori u Kartici',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Razvrstaj opcije',
