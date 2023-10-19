@@ -22,6 +22,8 @@ class UserApiTokenController extends Controller
 
         $user = User::query()->findOrFail($userId);
 
+        $this->setPageTitle(trans('settings.user_api_token_create'));
+
         return view('users.api-tokens.create', [
             'user' => $user,
             'back' => $this->getRedirectPath($user),
@@ -74,6 +76,8 @@ class UserApiTokenController extends Controller
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
         $secret = session()->pull('api-token-secret:' . $token->id, null);
 
+        $this->setPageTitle(trans('settings.user_api_token'));
+
         return view('users.api-tokens.edit', [
             'user'   => $user,
             'token'  => $token,
@@ -110,6 +114,8 @@ class UserApiTokenController extends Controller
     public function delete(int $userId, int $tokenId)
     {
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
+
+        $this->setPageTitle(trans('settings.user_api_token_delete'));
 
         return view('users.api-tokens.delete', [
             'user'  => $user,
