@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="text-right">
-                    <a href="{{  url(userCan('users-manage') ? "/settings/users" : "/") }}"
+                    <a href="{{  url("/settings/users") }}"
                        class="button outline">{{ trans('common.cancel') }}</a>
                     @if($authMethod !== 'system')
                         <a href="{{ url("/settings/users/{$user->id}/delete") }}"
@@ -100,9 +100,7 @@
             </section>
         @endif
 
-        @if((user()->id === $user->id && userCan('access-api')) || userCan('users-manage'))
-            @include('users.api-tokens.parts.list', ['user' => $user])
-        @endif
+        @include('users.api-tokens.parts.list', ['user' => $user])
     </div>
 
 @stop
