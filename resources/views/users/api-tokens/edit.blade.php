@@ -7,9 +7,9 @@
         <main class="card content-wrap auto-height">
             <h1 class="list-heading">{{ trans('settings.user_api_token') }}</h1>
 
-            <form action="{{ $user->getEditUrl('/api-tokens/' . $token->id) }}" method="post">
-                {!! method_field('put') !!}
-                {!! csrf_field() !!}
+            <form action="{{ $token->getUrl() }}" method="post">
+                {{ method_field('put') }}
+                {{ csrf_field() }}
 
                 <div class="setting-list">
 
@@ -52,8 +52,8 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <a href="{{  $user->getEditUrl('#api_tokens') }}" class="button outline">{{ trans('common.back') }}</a>
-                        <a href="{{  $user->getEditUrl('/api-tokens/' . $token->id . '/delete') }}" class="button outline">{{ trans('settings.user_api_token_delete') }}</a>
+                        <a href="{{  $back }}" class="button outline">{{ trans('common.back') }}</a>
+                        <a href="{{  $token->getUrl('/delete') }}" class="button outline">{{ trans('settings.user_api_token_delete') }}</a>
                         <button class="button" type="submit">{{ trans('common.save') }}</button>
                     </div>
                 </div>

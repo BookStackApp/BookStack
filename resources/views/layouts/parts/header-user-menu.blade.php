@@ -18,11 +18,16 @@
             </a>
         </li>
         <li>
-            <a href="{{ $user->getEditUrl() }}" class="icon-item">
-                @icon('edit')
-                <div>{{ trans('common.edit_profile') }}</div>
+            <a href="{{ url('/my-account') }}" class="icon-item">
+                @icon('user-preferences')
+                <div>{{ trans('preferences.my_account') }}</div>
             </a>
         </li>
+        <li><hr></li>
+        <li>
+            @include('common.dark-mode-toggle', ['classes' => 'icon-item'])
+        </li>
+        <li><hr></li>
         <li>
             <form action="{{ url(config('auth.method') === 'saml2' ? '/saml2/logout' : '/logout') }}"
                   method="post">
@@ -32,16 +37,6 @@
                     <div>{{ trans('auth.logout') }}</div>
                 </button>
             </form>
-        </li>
-        <li><hr></li>
-        <li>
-            <a href="{{ url('/preferences') }}" class="icon-item">
-                @icon('user-preferences')
-                <div>{{ trans('preferences.preferences') }}</div>
-            </a>
-        </li>
-        <li>
-            @include('common.dark-mode-toggle', ['classes' => 'icon-item'])
         </li>
     </ul>
 </div>

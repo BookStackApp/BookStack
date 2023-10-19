@@ -154,21 +154,21 @@ class SocialAuthService
             $currentUser->socialAccounts()->save($account);
             session()->flash('success', trans('settings.users_social_connected', ['socialAccount' => $titleCaseDriver]));
 
-            return redirect($currentUser->getEditUrl());
+            return redirect('/my-account/auth#social_accounts');
         }
 
         // When a user is logged in and the social account exists and is already linked to the current user.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id === $currentUser->id) {
             session()->flash('error', trans('errors.social_account_existing', ['socialAccount' => $titleCaseDriver]));
 
-            return redirect($currentUser->getEditUrl());
+            return redirect('/my-account/auth#social_accounts');
         }
 
         // When a user is logged in, A social account exists but the users do not match.
         if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
             session()->flash('error', trans('errors.social_account_already_used_existing', ['socialAccount' => $titleCaseDriver]));
 
-            return redirect($currentUser->getEditUrl());
+            return redirect('/my-account/auth#social_accounts');
         }
 
         // Otherwise let the user know this social account is not used by anyone.
@@ -214,6 +214,7 @@ class SocialAuthService
 
     /**
      * Gets the names of the active social drivers.
+     * @returns array<string, string>
      */
     public function getActiveDrivers(): array
     {

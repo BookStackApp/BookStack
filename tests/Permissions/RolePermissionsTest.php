@@ -44,14 +44,13 @@ class RolePermissionsTest extends TestCase
 
     public function test_user_cannot_change_email_unless_they_have_manage_users_permission()
     {
-        $userProfileUrl = '/settings/users/' . $this->user->id;
         $originalEmail = $this->user->email;
         $this->actingAs($this->user);
 
-        $resp = $this->get($userProfileUrl)
-            ->assertOk();
+        $resp = $this->get('/my-account/profile')->assertOk();
         $this->withHtml($resp)->assertElementExists('input[name=email][disabled]');
-        $this->put($userProfileUrl, [
+        $resp->assertSee('Unfortunately you don\'t have permission to change your email address.');
+        $this->put('/my-account/profile', [
             'name'  => 'my_new_name',
             'email' => 'new_email@example.com',
         ]);
@@ -63,11 +62,12 @@ class RolePermissionsTest extends TestCase
 
         $this->permissions->grantUserRolePermissions($this->user, ['users-manage']);
 
-        $resp = $this->get($userProfileUrl)
-            ->assertOk();
-        $this->withHtml($resp)->assertElementNotExists('input[name=email][disabled]')
+        $resp = $this->get('/my-account/profile')->assertOk();
+        $this->withHtml($resp)
+            ->assertElementNotExists('input[name=email][disabled]')
             ->assertElementExists('input[name=email]');
-        $this->put($userProfileUrl, [
+
+        $this->put('/my-account/profile', [
             'name'  => 'my_new_name_2',
             'email' => 'new_email@example.com',
         ]);
