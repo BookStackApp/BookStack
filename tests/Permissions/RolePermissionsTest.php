@@ -49,6 +49,7 @@ class RolePermissionsTest extends TestCase
 
         $resp = $this->get('/my-account/profile')->assertOk();
         $this->withHtml($resp)->assertElementExists('input[name=email][disabled]');
+        $resp->assertSee('Unfortunately you don\'t have permission to change your email address.');
         $this->put('/my-account/profile', [
             'name'  => 'my_new_name',
             'email' => 'new_email@example.com',

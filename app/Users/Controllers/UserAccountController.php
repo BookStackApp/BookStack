@@ -161,7 +161,7 @@ class UserAccountController extends Controller
      */
     public function showAuth(SocialAuthService $socialAuthService)
     {
-        $mfaMethods = user()->mfaValues->groupBy('method');
+        $mfaMethods = user()->mfaValues()->get()->groupBy('method');
 
         $this->setPageTitle(trans('preferences.auth'));
 
