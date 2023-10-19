@@ -37,7 +37,7 @@
                 </li>
             @endforeach
             <li>
-                <a href="{{ url('/preferences/notifications') }}"
+                <a href="{{ url('/my-account/notifications') }}"
                    target="_blank"
                    class="text-item text-muted text-small break-text">{{ trans('entities.watch_change_default') }}</a>
             </li>

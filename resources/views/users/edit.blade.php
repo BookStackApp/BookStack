@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="text-right">
-                    <a href="{{  url(userCan('users-manage') ? "/settings/users" : "/") }}"
+                    <a href="{{  url("/settings/users") }}"
                        class="button outline">{{ trans('common.cancel') }}</a>
                     @if($authMethod !== 'system')
                         <a href="{{ url("/settings/users/{$user->id}/delete") }}"
@@ -51,7 +51,7 @@
 
         <section class="card content-wrap auto-height">
             <h2 class="list-heading">{{ trans('settings.users_mfa') }}</h2>
-            <p>{{ trans('settings.users_mfa_desc') }}</p>
+            <p class="text-small">{{ trans('settings.users_mfa_desc') }}</p>
             <div class="grid half gap-xl v-center pb-s">
                 <div>
                     @if ($mfaMethods->count() > 0)
@@ -71,28 +71,28 @@
 
         </section>
 
-        @if(user()->id === $user->id && count($activeSocialDrivers) > 0)
+        @if(count($activeSocialDrivers) > 0)
             <section class="card content-wrap auto-height">
-                <h2 class="list-heading">{{ trans('settings.users_social_accounts') }}</h2>
-                <p class="text-muted">{{ trans('settings.users_social_accounts_info') }}</p>
+                <div class="flex-container-row items-center justify-space-between wrap">
+                    <h2 class="list-heading">{{ trans('settings.users_social_accounts') }}</h2>
+                    <div>
+                        @if(user()->id === $user->id)
+                            <a class="button outline" href="{{ url('/my-account/auth#social-accounts') }}">{{ trans('common.manage') }}</a>
+                        @endif
+                    </div>
+                </div>
+                <p class="text-muted text-small">{{ trans('settings.users_social_accounts_desc') }}</p>
                 <div class="container">
                     <div class="grid third">
-                        @foreach($activeSocialDrivers as $driver => $enabled)
+                        @foreach($activeSocialDrivers as $driver => $driverName)
                             <div class="text-center mb-m">
                                 <div role="presentation">@icon('auth/'. $driver, ['style' => 'width: 56px;height: 56px;'])</div>
-                                <div>
-                                    @if($user->hasSocialAccount($driver))
-                                        <form action="{{ url("/login/service/{$driver}/detach") }}" method="POST">
-                                            {{ csrf_field() }}
-                                            <button aria-label="{{ trans('settings.users_social_disconnect') }} - {{ $driver }}"
-                                                    class="button small outline">{{ trans('settings.users_social_disconnect') }}</button>
-                                        </form>
-                                    @else
-                                        <a href="{{ url("/login/service/{$driver}") }}"
-                                           aria-label="{{ trans('settings.users_social_connect') }} - {{ $driver }}"
-                                           class="button small outline">{{ trans('settings.users_social_connect') }}</a>
-                                    @endif
-                                </div>
+                                <p class="my-none bold">{{ $driverName }}</p>
+                                @if($user->hasSocialAccount($driver))
+                                    <p class="text-pos bold text-small my-none">{{ trans('settings.users_social_status_connected') }}</p>
+                                @else
+                                    <p class="text-neg bold text-small my-none">{{ trans('settings.users_social_status_disconnected') }}</p>
+                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -100,9 +100,7 @@
             </section>
         @endif
 
-        @if((user()->id === $user->id && userCan('access-api')) || userCan('users-manage'))
-            @include('users.api-tokens.parts.list', ['user' => $user])
-        @endif
+        @include('users.api-tokens.parts.list', ['user' => $user, 'context' => 'settings'])
     </div>
 
 @stop
