@@ -166,7 +166,7 @@ class UserApiTokenController extends Controller
     protected function getRedirectPath(User $relatedUser): string
     {
         $context = session()->get('api-token-context');
-        if ($context === 'settings') {
+        if ($context === 'settings' || user()->id !== $relatedUser->id) {
             return $relatedUser->getEditUrl('#api_tokens');
         }
 

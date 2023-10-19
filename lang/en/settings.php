@@ -214,6 +214,8 @@ return [
     'users_social_accounts_info' => 'Here you can connect your other accounts for quicker and easier login. Disconnecting an account here does not revoke previously authorized access. Revoke access from your profile settings on the connected social account.',
     'users_social_connect' => 'Connect Account',
     'users_social_disconnect' => 'Disconnect Account',
+    'users_social_status_connected' => 'Connected',
+    'users_social_status_disconnected' => 'Disconnected',
     'users_social_connected' => ':socialAccount account was successfully attached to your profile.',
     'users_social_disconnected' => ':socialAccount account was successfully disconnected from your profile.',
     'users_api_tokens' => 'API Tokens',
