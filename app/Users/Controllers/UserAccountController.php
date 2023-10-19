@@ -191,4 +191,31 @@ class UserAccountController extends Controller
 
         return redirect('/my-account/auth');
     }
+
+    /**
+     * Show the user self-delete page.
+     */
+    public function delete()
+    {
+        $this->setPageTitle(trans('preferences.delete_my_account'));
+
+        return view('users.account.delete', [
+            'category' => 'profile',
+        ]);
+    }
+
+    /**
+     * Remove the current user from the system.
+     */
+    public function destroy(Request $request)
+    {
+        $this->preventAccessInDemoMode();
+
+        $requestNewOwnerId = intval($request->get('new_owner_id')) ?: null;
+        $newOwnerId = userCan('users-manage') ? $requestNewOwnerId : null;
+
+        $this->userRepo->destroy(user(), $newOwnerId);
+
+        return redirect('/');
+    }
 }

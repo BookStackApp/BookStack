@@ -43,4 +43,9 @@ return [
     'profile_avatar_desc' => 'Select an image which will be used to represent yourself to others in the system. Ideally this image should be square and about 256px in width and height.',
     'profile_admin_options' => 'Administrator Options',
     'profile_admin_options_desc' => 'Additional administrator-level options, like those to manage role assignments, can be found for your user account in the "Settings > Users" area of the application.',
+
+    'delete_account' => 'Delete Account',
+    'delete_my_account' => 'Delete My Account',
+    'delete_my_account_desc' => 'This will fully delete your user account from the system. You will not be able to recover this account or revert this action. Content you\'ve created, such as created pages and uploaded images, will remain.',
+    'delete_my_account_warning' => 'Are you sure you want to delete your account?',
 ];
