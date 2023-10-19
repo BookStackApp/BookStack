@@ -193,7 +193,7 @@ return [
     'users_send_invite_text' => 'You can choose to send this user an invitation email which allows them to set their own password otherwise you can set their password yourself.',
     'users_send_invite_option' => 'Send user invite email',
     'users_external_auth_id' => 'External Authentication ID',
-    'users_external_auth_id_desc' => 'This is the ID used to match this user when communicating with your external authentication system.',
+    'users_external_auth_id_desc' => 'When an external authentication system is in use (such as SAML2, OIDC or LDAP) this is the ID which links this BookStack user to the authentication system account. You can ignore this field if using the default email-based authentication.',
     'users_password_warning' => 'Only fill the below if you would like to change the password for this user.',
     'users_system_public' => 'This user represents any guest users that visit your instance. It cannot be used to log in but is assigned automatically.',
     'users_delete' => 'Delete User',
