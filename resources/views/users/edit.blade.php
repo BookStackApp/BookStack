@@ -100,7 +100,7 @@
             </section>
         @endif
 
-        @include('users.api-tokens.parts.list', ['user' => $user])
+        @include('users.api-tokens.parts.list', ['user' => $user, 'context' => 'settings'])
     </div>
 
 @stop

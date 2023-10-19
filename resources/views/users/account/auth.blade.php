@@ -82,6 +82,6 @@
     @endif
 
     @if(userCan('access-api'))
-        @include('users.api-tokens.parts.list', ['user' => user()])
+        @include('users.api-tokens.parts.list', ['user' => user(), 'context' => 'my-account'])
     @endif
 @stop
