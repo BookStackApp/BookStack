@@ -251,12 +251,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/preferences/update-code-language-favourite', [UserControllers\UserPreferencesController::class, 'updateCodeLanguageFavourite']);
 
     // User API Tokens
-    Route::get('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);
-    Route::post('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'store']);
-    Route::get('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'edit']);
-    Route::put('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'update']);
-    Route::get('/settings/users/{userId}/api-tokens/{tokenId}/delete', [UserApiTokenController::class, 'delete']);
-    Route::delete('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'destroy']);
+    Route::get('/api-tokens/{userId}/create', [UserApiTokenController::class, 'create']);
+    Route::post('/api-tokens/{userId}/create', [UserApiTokenController::class, 'store']);
+    Route::get('/api-tokens/{userId}/{tokenId}', [UserApiTokenController::class, 'edit']);
+    Route::put('/api-tokens/{userId}/{tokenId}', [UserApiTokenController::class, 'update']);
+    Route::get('/api-tokens/{userId}/{tokenId}/delete', [UserApiTokenController::class, 'delete']);
+    Route::delete('/api-tokens/{userId}/{tokenId}', [UserApiTokenController::class, 'destroy']);
 
     // Roles
     Route::get('/settings/roles', [UserControllers\RoleController::class, 'index']);

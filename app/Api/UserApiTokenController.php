@@ -14,16 +14,17 @@ class UserApiTokenController extends Controller
     /**
      * Show the form to create a new API token.
      */
-    public function create(int $userId)
+    public function create(Request $request, int $userId)
     {
-        // Ensure user is has access-api permission and is the current user or has permission to manage the current user.
         $this->checkPermission('access-api');
         $this->checkPermissionOrCurrentUser('users-manage', $userId);
+        $this->updateContext($request);
 
         $user = User::query()->findOrFail($userId);
 
         return view('users.api-tokens.create', [
             'user' => $user,
+            'back' => $this->getRedirectPath($user),
         ]);
     }
 
@@ -60,14 +61,16 @@ class UserApiTokenController extends Controller
         session()->flash('api-token-secret:' . $token->id, $secret);
         $this->logActivity(ActivityType::API_TOKEN_CREATE, $token);
 
-        return redirect($user->getEditUrl('/api-tokens/' . $token->id));
+        return redirect($token->getUrl());
     }
 
     /**
      * Show the details for a user API token, with access to edit.
      */
-    public function edit(int $userId, int $tokenId)
+    public function edit(Request $request, int $userId, int $tokenId)
     {
+        $this->updateContext($request);
+
         [$user, $token] = $this->checkPermissionAndFetchUserToken($userId, $tokenId);
         $secret = session()->pull('api-token-secret:' . $token->id, null);
 
@@ -76,6 +79,7 @@ class UserApiTokenController extends Controller
             'token'  => $token,
             'model'  => $token,
             'secret' => $secret,
+            'back' => $this->getRedirectPath($user),
         ]);
     }
 
@@ -97,7 +101,7 @@ class UserApiTokenController extends Controller
 
         $this->logActivity(ActivityType::API_TOKEN_UPDATE, $token);
 
-        return redirect($user->getEditUrl('/api-tokens/' . $token->id));
+        return redirect($token->getUrl());
     }
 
     /**
@@ -123,7 +127,7 @@ class UserApiTokenController extends Controller
 
         $this->logActivity(ActivityType::API_TOKEN_DELETE, $token);
 
-        return redirect($user->getEditUrl('#api_tokens'));
+        return redirect($this->getRedirectPath($user));
     }
 
     /**
@@ -141,5 +145,31 @@ class UserApiTokenController extends Controller
         $token = ApiToken::query()->where('user_id', '=', $user->id)->where('id', '=', $tokenId)->firstOrFail();
 
         return [$user, $token];
+    }
+
+    /**
+     * Update the context for where the user is coming from to manage API tokens.
+     * (Track of location for correct return redirects)
+     */
+    protected function updateContext(Request $request): void
+    {
+        $context = $request->query('context');
+        if ($context) {
+            session()->put('api-token-context', $context);
+        }
+    }
+
+    /**
+     * Get the redirect path for the current api token editing session.
+     * Attempts to recall the context of where the user is editing from.
+     */
+    protected function getRedirectPath(User $relatedUser): string
+    {
+        $context = session()->get('api-token-context');
+        if ($context === 'settings') {
+            return $relatedUser->getEditUrl('#api_tokens');
+        }
+
+        return url('/my-account/auth#api_tokens');
     }
 }
