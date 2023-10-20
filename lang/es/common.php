@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Limpiar filtro',
     'download' => 'Descargar',
     'open_in_tab' => 'Abrir en una nueva pestaña',
-    'open' => 'Open',
+    'open' => 'Abrir',
 
     // Sort Options
     'sort_options' => 'Opciones de ordenación',
