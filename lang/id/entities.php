@@ -172,7 +172,7 @@ return [
     'chapters_popular' => 'Bab Populer',
     'chapters_new' => 'Bab Baru',
     'chapters_create' => 'Buat Bab Baru',
-    'chapters_delete' => 'Hapur Bab',
+    'chapters_delete' => 'Hapus Bab',
     'chapters_delete_named' => 'Hapus bab dengan nama :chapterName',
     'chapters_delete_explain' => 'Ini akan menghapus chapter dengan nama \':chapterName\'. Semua halaman yang ada dalam bab ini juga akan dihapus.',
     'chapters_delete_confirm' => 'Anda yakin ingin menghapus bab ini?',
