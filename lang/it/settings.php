@@ -193,7 +193,7 @@ return [
     'users_send_invite_text' => 'Puoi scegliere di inviare a questo utente un\'email di invito che permette loro di impostare la propria password altrimenti puoi impostare la password tu stesso.',
     'users_send_invite_option' => 'Invia email di invito',
     'users_external_auth_id' => 'ID Autenticazioni Esterna',
-    'users_external_auth_id_desc' => 'When an external authentication system is in use (such as SAML2, OIDC or LDAP) this is the ID which links this BookStack user to the authentication system account. You can ignore this field if using the default email-based authentication.',
+    'users_external_auth_id_desc' => 'Quando è in uso un sistema di autenticazione esterno (come SAML2, OIDC o LDAP) questo è l\'ID che collega questo utente BookStack all\'account del sistema di autenticazione. È possibile ignorare questo campo se si utilizza l\'autenticazione predefinita basata su email.',
     'users_password_warning' => 'Compila la parte sottostante solo se desideri cambiare la password per questo utente.',
     'users_system_public' => 'Questo utente rappresente qualsiasi ospite che visita il sito. Non può essere usato per effettuare il login ma è assegnato automaticamente.',
     'users_delete' => 'Elimina Utente',
