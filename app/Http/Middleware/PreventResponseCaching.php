@@ -5,7 +5,7 @@ namespace BookStack\Http\Middleware;
 use Closure;
 use Symfony\Component\HttpFoundation\Response;
 
-class PreventAuthenticatedResponseCaching
+class PreventResponseCaching
 {
     /**
      * Handle an incoming request.
@@ -20,11 +20,8 @@ class PreventAuthenticatedResponseCaching
         /** @var Response $response */
         $response = $next($request);
 
-        if (!user()->isGuest()) {
-            $response->headers->set('Cache-Control', 'max-age=0, no-store, private');
-            $response->headers->set('Pragma', 'no-cache');
-            $response->headers->set('Expires', 'Sun, 12 Jul 2015 19:01:00 GMT');
-        }
+        $response->headers->set('Cache-Control', 'no-cache, no-store, private');
+        $response->headers->set('Expires', 'Sun, 12 Jul 2015 19:01:00 GMT');
 
         return $response;
     }
