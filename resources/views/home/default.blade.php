@@ -60,14 +60,18 @@
                         'emptyText' => trans('entities.no_pages_recently_updated'),
                         ])
                     </div>
-                    <a href="{{ url("/pages/recently-updated") }}" class="card-footer-link">{{ trans('common.view_all') }}</a>
+                    @if(count($recentlyUpdatedPages) > 0)
+                        <a href="{{ url("/pages/recently-updated") }}" class="card-footer-link">{{ trans('common.view_all') }}</a>
+                    @endif
                 </div>
             </div>
 
             <div>
                 <div id="recent-activity" class="card mb-xl">
                     <h3 class="card-title">{{ trans('entities.recent_activity') }}</h3>
-                    @include('common.activity-list', ['activity' => $activity])
+                    <div class="px-m">
+                        @include('common.activity-list', ['activity' => $activity])
+                    </div>
                 </div>
             </div>
 

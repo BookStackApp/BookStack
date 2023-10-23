@@ -8,7 +8,7 @@
   border-radius: 3px;
   break-inside: avoid;
   .body, p.empty-text {
-    padding: $-m;
+    padding-block: $-m;
   }
   a, p {
     word-wrap: break-word;
