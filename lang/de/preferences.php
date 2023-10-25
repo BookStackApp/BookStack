@@ -5,10 +5,10 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => 'Mein Account',
 
     'shortcuts' => 'Tastenkürzel',
-    'shortcuts_interface' => 'UI Shortcut Preferences',
+    'shortcuts_interface' => 'Einstellungen zu UI Abkürzungen',
     'shortcuts_toggle_desc' => 'Hier können Sie Tastaturkürzel für die Systemoberfläche für Navigation und Aktionen aktivieren oder deaktivieren.',
     'shortcuts_customize_desc' => 'Unten können Sie alle Tastenkürzel anpassen. Drücken Sie einfach die gewünschte Tastenkombination, nachdem Sie die Eingabe für eine Tastenkombination ausgewählt haben.',
     'shortcuts_toggle_label' => 'Tastaturkürzel aktiviert',
@@ -29,8 +29,8 @@ return [
     'notifications_watched' => 'Beobachtete und ignorierte Elemente',
     'notifications_watched_desc' => ' Nachfolgend finden Sie die Elemente, für die benutzerdefinierten Überwachungspräferenzen gelten. Um Ihre Einstellungen für diese Elemente zu aktualisieren, sehen Sie sich das Element an und suchen dann die Überwachungsoptionen in der Seitenleiste.',
 
-    'auth' => 'Access & Security',
-    'auth_change_password' => 'Change Password',
+    'auth' => 'Zugang & Sicherheit',
+    'auth_change_password' => 'Passwort ändern',
     'auth_change_password_desc' => 'Change the password you use to log-in to the application. This must be at least 8 characters long.',
     'auth_change_password_success' => 'Password has been updated!',
 
