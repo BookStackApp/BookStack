@@ -48,7 +48,7 @@ return [
     'app_disable_comments_desc' => '在應用程式的所有頁面停用評論。<br>既有的評論將不會顯示。',
 
     // Color settings
-    'color_scheme' => 'Application Color Scheme',
+    'color_scheme' => '應用程式配色',
     'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
     'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
     'app_color' => '主要顏色',
@@ -178,7 +178,7 @@ return [
 
     // Users
     'users' => '使用者',
-    'users_index_desc' => 'Create & manage individual user accounts within the system. User accounts are used for login and attribution of content & activity. Access permissions are primarily role-based but user content ownership, among other factors, may also affect permissions & access.',
+    'users_index_desc' => '在系統中創建和管理使用者帳號。使用者帳號用於紀錄登入與編輯活動；訪問權限則由使用者所歸屬的角色群組決定，但使用者是否具備內容的所有權以及其他因素，都可能會影響到存取權限。',
     'user_profile' => '使用者個人資料',
     'users_add_new' => '新增使用者',
     'users_search' => '搜尋使用者',
