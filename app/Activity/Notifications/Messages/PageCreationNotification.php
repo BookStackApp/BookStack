@@ -16,17 +16,17 @@ class PageCreationNotification extends BaseActivityNotification
         $page = $this->detail;
         $book = $this->detail;
 
-        $language = $notifiable->getLanguage();
+        $locale = $notifiable->getLocale();
 
-        return $this->newMailMessage($language)
-            ->subject(trans('notifications.new_page_subject', ['pageName' => $page->getShortName()], $language))
-            ->line(trans('notifications.new_page_intro', ['appName' => setting('app-name')], $language))
+        return $this->newMailMessage($locale)
+            ->subject(trans('notifications.new_page_subject', ['pageName' => $page->getShortName()], $locale))
+            ->line(trans('notifications.new_page_intro', ['appName' => setting('app-name')], $locale))
             ->line(new ListMessageLine([
-                trans('notifications.detail_book_name', [], $language) => $book->name,
-                trans('notifications.detail_page_name', [], $language) => $page->name,
-                trans('notifications.detail_created_by', [], $language) => $this->user->name,
+                trans('notifications.detail_book_name', [], $locale) => $book->name,
+                trans('notifications.detail_page_name', [], $locale) => $page->name,
+                trans('notifications.detail_created_by', [], $locale) => $this->user->name,
             ]))
-            ->action(trans('notifications.action_view_page', [], $language), $page->getUrl())
-            ->line($this->buildReasonFooterLine($language));
+            ->action(trans('notifications.action_view_page', [], $locale), $page->getUrl())
+            ->line($this->buildReasonFooterLine($locale));
     }
 }
