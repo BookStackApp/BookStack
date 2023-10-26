@@ -4,6 +4,7 @@ namespace BookStack\Activity\Notifications\Messages;
 
 use BookStack\Activity\Notifications\MessageParts\ListMessageLine;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\Book;
 use BookStack\Users\Models\User;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -13,18 +14,20 @@ class PageUpdateNotification extends BaseActivityNotification
     {
         /** @var Page $page */
         $page = $this->detail;
+        $book = $this->detail;
 
-        $locale = $notifiable->getLocale();
+        $language = $notifiable->getLanguage();
 
-        return $this->newMailMessage($locale)
-            ->subject($locale->trans('notifications.updated_page_subject', ['pageName' => $page->getShortName()]))
-            ->line($locale->trans('notifications.updated_page_intro', ['appName' => setting('app-name')]))
+        return $this->newMailMessage($language)
+            ->subject(trans('notifications.updated_page_subject', ['pageName' => $page->getShortName()], $language))
+            ->line(trans('notifications.updated_page_intro', ['appName' => setting('app-name')], $language))
             ->line(new ListMessageLine([
-                $locale->trans('notifications.detail_page_name') => $page->name,
-                $locale->trans('notifications.detail_updated_by') => $this->user->name,
+                trans('notifications.detail_book_name', [], $language) => $book->name,
+                trans('notifications.detail_page_name', [], $language) => $page->name,
+                trans('notifications.detail_updated_by', [], $language) => $this->user->name,
             ]))
-            ->line($locale->trans('notifications.updated_page_debounce'))
-            ->action($locale->trans('notifications.action_view_page'), $page->getUrl())
-            ->line($this->buildReasonFooterLine($locale));
+            ->line(trans('notifications.updated_page_debounce', [], $language))
+            ->action(trans('notifications.action_view_page', [], $language), $page->getUrl())
+            ->line($this->buildReasonFooterLine($language));
     }
 }
