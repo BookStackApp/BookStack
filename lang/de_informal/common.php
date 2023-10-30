@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Filter löschen',
     'download' => 'Herunterladen',
     'open_in_tab' => 'In Tab öffnen',
-    'open' => 'Open',
+    'open' => 'Öffnen',
 
     // Sort Options
     'sort_options' => 'Sortieroptionen',
