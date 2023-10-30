@@ -20,7 +20,6 @@ class UserAccountController extends Controller
     ) {
         $this->middleware(function (Request $request, Closure $next) {
             $this->preventGuestAccess();
-            $this->preventAccessInDemoMode();
             return $next($request);
         });
     }
@@ -53,6 +52,8 @@ class UserAccountController extends Controller
      */
     public function updateProfile(Request $request, ImageRepo $imageRepo)
     {
+        $this->preventAccessInDemoMode();
+
         $user = user();
         $validated = $this->validate($request, [
             'name'             => ['min:2', 'max:100'],
@@ -143,6 +144,7 @@ class UserAccountController extends Controller
      */
     public function updateNotifications(Request $request)
     {
+        $this->preventAccessInDemoMode();
         $this->checkPermission('receive-notifications');
         $data = $this->validate($request, [
            'preferences' => ['required', 'array'],
@@ -178,6 +180,8 @@ class UserAccountController extends Controller
      */
     public function updatePassword(Request $request)
     {
+        $this->preventAccessInDemoMode();
+
         if (config('auth.method') !== 'standard') {
             $this->showPermissionError();
         }
