@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
 
     'detail_book_name' => 'Book Name:',
+    'detail_chapter_name' => 'Chapter Name:',
     'detail_page_name' => 'Page Name:',
     'detail_commenter' => 'Commenter:',
     'detail_comment' => 'Comment:',
