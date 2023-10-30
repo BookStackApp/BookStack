@@ -295,7 +295,7 @@ return [
     'pages_is_template' => 'Sidemal',
 
     // Editor Sidebar
-    'toggle_sidebar' => 'Toggle Sidebar',
+    'toggle_sidebar' => 'Bytt sidestolpe',
     'page_tags' => 'Sidemerker',
     'chapter_tags' => 'Kapittelmerker',
     'book_tags' => 'Bokmerker',
