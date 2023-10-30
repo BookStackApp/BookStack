@@ -160,7 +160,7 @@
             @if($watchOptions->canWatch() && !$watchOptions->isWatching())
                 @include('entities.watch-action', ['entity' => $chapter])
             @endif
-            @if(signedInUser())
+            @if(!user()->isGuest())
                 @include('entities.favourite-action', ['entity' => $chapter])
             @endif
             @if(userCan('content-export'))

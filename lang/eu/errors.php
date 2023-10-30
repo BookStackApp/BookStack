@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Cannot get image from :url',
     'cannot_create_thumbs' => 'The server cannot create thumbnails. Please check you have the GD PHP extension installed.',
     'server_upload_limit' => 'The server does not allow uploads of this size. Please try a smaller file size.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'The server does not allow uploads of this size. Please try a smaller file size.',
 
     // Drawing & Images
     'image_upload_error' => 'Errorea gertatu da irudia igotzerakoan',
     'image_upload_type_error' => 'The image type being uploaded is invalid',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments

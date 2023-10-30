@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Modelo de Página',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Etiquetas de Página',
     'chapter_tags' => 'Etiquetas do Capítulo',
     'book_tags' => 'Etiquetas do Livro',

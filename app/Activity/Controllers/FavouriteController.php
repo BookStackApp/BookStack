@@ -6,11 +6,17 @@ use BookStack\Activity\Models\Favouritable;
 use BookStack\App\Model;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Queries\TopFavourites;
+use BookStack\Entities\Tools\MixedEntityRequestHelper;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
 class FavouriteController extends Controller
 {
+    public function __construct(
+        protected MixedEntityRequestHelper $entityHelper,
+    ) {
+    }
+
     /**
      * Show a listing of all favourite items for the current user.
      */
@@ -36,13 +42,14 @@ class FavouriteController extends Controller
      */
     public function add(Request $request)
     {
-        $favouritable = $this->getValidatedModelFromRequest($request);
-        $favouritable->favourites()->firstOrCreate([
+        $modelInfo = $this->validate($request, $this->entityHelper->validationRules());
+        $entity = $this->entityHelper->getVisibleEntityFromRequestData($modelInfo);
+        $entity->favourites()->firstOrCreate([
             'user_id' => user()->id,
         ]);
 
         $this->showSuccessNotification(trans('activities.favourite_add_notification', [
-            'name' => $favouritable->name,
+            'name' => $entity->name,
         ]));
 
         return redirect()->back();
@@ -53,48 +60,16 @@ class FavouriteController extends Controller
      */
     public function remove(Request $request)
     {
-        $favouritable = $this->getValidatedModelFromRequest($request);
-        $favouritable->favourites()->where([
+        $modelInfo = $this->validate($request, $this->entityHelper->validationRules());
+        $entity = $this->entityHelper->getVisibleEntityFromRequestData($modelInfo);
+        $entity->favourites()->where([
             'user_id' => user()->id,
         ])->delete();
 
         $this->showSuccessNotification(trans('activities.favourite_remove_notification', [
-            'name' => $favouritable->name,
+            'name' => $entity->name,
         ]));
 
         return redirect()->back();
-    }
-
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     * @throws \Exception
-     */
-    protected function getValidatedModelFromRequest(Request $request): Entity
-    {
-        $modelInfo = $this->validate($request, [
-            'type' => ['required', 'string'],
-            'id'   => ['required', 'integer'],
-        ]);
-
-        if (!class_exists($modelInfo['type'])) {
-            throw new \Exception('Model not found');
-        }
-
-        /** @var Model $model */
-        $model = new $modelInfo['type']();
-        if (!$model instanceof Favouritable) {
-            throw new \Exception('Model not favouritable');
-        }
-
-        $modelInstance = $model->newQuery()
-            ->where('id', '=', $modelInfo['id'])
-            ->first(['id', 'name', 'owned_by']);
-
-        $inaccessibleEntity = ($modelInstance instanceof Entity && !userCan('view', $modelInstance));
-        if (is_null($modelInstance) || $inaccessibleEntity) {
-            throw new \Exception('Model instance not found');
-        }
-
-        return $modelInstance;
     }
 }

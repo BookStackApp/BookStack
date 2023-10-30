@@ -87,6 +87,11 @@ export class EntitySelector extends Component {
         this.searchInput.focus();
     }
 
+    searchText(queryText) {
+        this.searchInput.value = queryText;
+        this.searchEntities(queryText);
+    }
+
     showLoading() {
         this.loading.style.display = 'block';
         this.resultsContainer.style.display = 'none';

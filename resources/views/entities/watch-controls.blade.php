@@ -7,7 +7,7 @@
     <form action="{{ url('/watching/update') }}" method="POST">
         {{ method_field('PUT') }}
         {{ csrf_field() }}
-        <input type="hidden" name="type" value="{{ get_class($entity) }}">
+        <input type="hidden" name="type" value="{{ $entity->getMorphClass() }}">
         <input type="hidden" name="id" value="{{ $entity->id }}">
 
         <ul refs="dropdown@menu" class="dropdown-menu xl-limited anchor-left pb-none">
@@ -37,7 +37,7 @@
                 </li>
             @endforeach
             <li>
-                <a href="{{ url('/preferences/notifications') }}"
+                <a href="{{ url('/my-account/notifications') }}"
                    target="_blank"
                    class="text-item text-muted text-small break-text">{{ trans('entities.watch_change_default') }}</a>
             </li>

@@ -17,7 +17,7 @@
 
 @section('body')
 
-    <div class="mb-s">
+    <div class="mb-s print-hidden">
         @include('entities.breadcrumbs', ['crumbs' => [
             $book,
         ]])
@@ -142,7 +142,7 @@
             @if($watchOptions->canWatch() && !$watchOptions->isWatching())
                 @include('entities.watch-action', ['entity' => $book])
             @endif
-            @if(signedInUser())
+            @if(!user()->isGuest())
                 @include('entities.favourite-action', ['entity' => $book])
             @endif
             @if(userCan('content-export'))
@@ -171,7 +171,7 @@
     @endif
 
     @if(count($activity) > 0)
-        <div class="mb-xl">
+        <div id="recent-activity" class="mb-xl">
             <h5>{{ trans('entities.recent_activity') }}</h5>
             @include('common.activity-list', ['activity' => $activity])
         </div>

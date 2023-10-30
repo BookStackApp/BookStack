@@ -29,7 +29,7 @@
 
     @if ($commentTree->enabled())
         @if(($previous || $next))
-            <div class="px-xl">
+            <div class="px-xl print-hidden">
                 <hr class="darker">
             </div>
         @endif
@@ -188,7 +188,7 @@
             @if($watchOptions->canWatch() && !$watchOptions->isWatching())
                 @include('entities.watch-action', ['entity' => $page])
             @endif
-            @if(signedInUser())
+            @if(!user()->isGuest())
                 @include('entities.favourite-action', ['entity' => $page])
             @endif
             @if(userCan('content-export'))

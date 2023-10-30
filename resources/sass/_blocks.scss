@@ -6,8 +6,9 @@
   @include lightDark(background-color, #FFF, #222);
   box-shadow: $bs-card;
   border-radius: 3px;
+  break-inside: avoid;
   .body, p.empty-text {
-    padding: $-m;
+    padding-block: $-m;
   }
   a, p {
     word-wrap: break-word;
@@ -154,6 +155,7 @@
   margin-bottom: $-l;
   overflow: initial;
   min-height: 60vh;
+  border-radius: 8px;
   &.auto-height {
     min-height: 0;
   }

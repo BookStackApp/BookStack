@@ -295,6 +295,7 @@ return [
     'pages_is_template' => '템플릿',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => '문서 꼬리표',
     'chapter_tags' => '챕터 꼬리표',
     'book_tags' => '책 꼬리표',

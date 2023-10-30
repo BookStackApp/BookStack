@@ -552,6 +552,30 @@ class ImageTest extends TestCase
         $this->files->deleteAtRelativePath($relPath);
     }
 
+    public function test_image_manager_regen_thumbnails()
+    {
+        $this->asEditor();
+        $imageName = 'first-image.png';
+        $relPath = $this->files->expectedImagePath('gallery', $imageName);
+        $this->files->deleteAtRelativePath($relPath);
+
+        $this->files->uploadGalleryImage($this, $imageName, $this->entities->page()->id);
+        $image = Image::first();
+
+        $resp = $this->get("/images/edit/{$image->id}");
+        $this->withHtml($resp)->assertElementExists('button#image-manager-rebuild-thumbs');
+
+        $expectedThumbPath = dirname($relPath) . '/scaled-1680-/' . basename($relPath);
+        $this->files->deleteAtRelativePath($expectedThumbPath);
+        $this->assertFileDoesNotExist($this->files->relativeToFullPath($expectedThumbPath));
+
+        $resp = $this->put("/images/{$image->id}/rebuild-thumbnails");
+        $resp->assertOk();
+
+        $this->assertFileExists($this->files->relativeToFullPath($expectedThumbPath));
+        $this->files->deleteAtRelativePath($relPath);
+    }
+
     protected function getTestProfileImage()
     {
         $imageName = 'profile.png';
@@ -583,7 +607,7 @@ class ImageTest extends TestCase
         $this->actingAs($editor);
 
         $file = $this->getTestProfileImage();
-        $this->call('PUT', '/settings/users/' . $editor->id, [], [], ['profile_image' => $file], []);
+        $this->call('PUT', '/my-account/profile', [], [], ['profile_image' => $file], []);
 
         $profileImages = Image::where('type', '=', 'user')->where('created_by', '=', $editor->id)->get();
         $this->assertTrue($profileImages->count() === 1, 'Found profile images does not match upload count');
@@ -591,7 +615,7 @@ class ImageTest extends TestCase
         $imagePath = public_path($profileImages->first()->path);
         $this->assertTrue(file_exists($imagePath));
 
-        $userDelete = $this->asAdmin()->delete("/settings/users/{$editor->id}");
+        $userDelete = $this->asAdmin()->delete($editor->getEditUrl());
         $userDelete->assertStatus(302);
 
         $this->assertDatabaseMissing('images', [

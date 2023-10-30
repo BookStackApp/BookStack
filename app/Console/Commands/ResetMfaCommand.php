@@ -2,11 +2,13 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Users\Models\User;
+use Exception;
 use Illuminate\Console\Command;
 
 class ResetMfaCommand extends Command
 {
+    use HandlesSingleUser;
+
     /**
      * The name and signature of the console command.
      *
@@ -29,25 +31,10 @@ class ResetMfaCommand extends Command
      */
     public function handle(): int
     {
-        $id = $this->option('id');
-        $email = $this->option('email');
-        if (!$id && !$email) {
-            $this->error('Either a --id=<number> or --email=<email> option must be provided.');
-
-            return 1;
-        }
-
-        $field = $id ? 'id' : 'email';
-        $value = $id ?: $email;
-
-        /** @var User $user */
-        $user = User::query()
-            ->where($field, '=', $value)
-            ->first();
-
-        if (!$user) {
-            $this->error("A user where {$field}={$value} could not be found.");
-
+        try {
+            $user = $this->fetchProvidedUser();
+        } catch (Exception $exception) {
+            $this->error($exception->getMessage());
             return 1;
         }
 

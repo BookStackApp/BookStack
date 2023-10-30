@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Orrialde txantiloia',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Orrialde etiketak',
     'chapter_tags' => 'Kapitulu etiketak',
     'book_tags' => 'Liburu etiketak',

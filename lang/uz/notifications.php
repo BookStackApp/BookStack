@@ -4,23 +4,23 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => ':pageName sahifada yangi izoh',
+    'new_comment_intro' => ':appName ichida foydalanuvchi izoh qoldirdi:',
+    'new_page_subject' => ':pageName yangi sahifa.',
+    'new_page_intro' => ':appName ichida yangi sahifa yaratildi:',
+    'updated_page_subject' => ':pageName sahifasi yangilandi',
+    'updated_page_intro' => ':appName ichida sahifa yangilandi:',
+    'updated_page_debounce' => 'Xabarnomalar koʻp boʻlishining oldini olish uchun bir muncha vaqt oʻsha muharrir tomonidan ushbu sahifaga keyingi tahrirlar haqida bildirishnomalar yuborilmaydi.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'Sahifa nomi:',
+    'detail_commenter' => 'Izoh egasi:',
+    'detail_comment' => 'Izoh:',
+    'detail_created_by' => 'Tomonidan yaratildi:',
+    'detail_updated_by' => 'Tomonidan tahrirlandi:',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'Izohlarni ko‘rish',
+    'action_view_page' => 'Sahifani ko‘rish',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => ':link ushbu element uchun ushbu turdagi faoliyatni qamrab olgani uchun sizga bildirishnoma yuborildi.',
+    'footer_reason_link' => 'Bildirishnoma sozlamalari',
 ];

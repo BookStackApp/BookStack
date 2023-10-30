@@ -32,7 +32,7 @@ return [
     'header_medium' => 'Mittlere Überschrift',
     'header_small' => 'Kleine Überschrift',
     'header_tiny' => 'Sehr kleine Überschrift',
-    'paragraph' => 'Paragraph',
+    'paragraph' => 'Absatz',
     'blockquote' => 'Blockzitat',
     'inline_code' => 'Inline-Code',
     'callouts' => 'Anmerkungen',

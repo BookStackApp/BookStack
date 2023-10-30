@@ -1,7 +1,7 @@
 <form action="{{ url('/watching/update') }}" method="POST">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
-    <input type="hidden" name="type" value="{{ get_class($entity) }}">
+    <input type="hidden" name="type" value="{{ $entity->getMorphClass() }}">
     <input type="hidden" name="id" value="{{ $entity->id }}">
     <button type="submit"
             name="level"

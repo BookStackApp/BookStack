@@ -32,7 +32,7 @@
                         <h6>{{ trans('entities.search_tags') }}</h6>
                         @include('search.parts.term-list', ['type' => 'tags', 'currentList' => $options->tags])
 
-                        @if(signedInUser())
+                        @if(!user()->isGuest())
                             <h6>{{ trans('entities.search_options') }}</h6>
 
                             @component('search.parts.boolean-filter', ['filters' => $options->filters, 'name' => 'viewed_by_me', 'value' => null])

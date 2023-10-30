@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Шаблон сторінки',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Теги сторінки',
     'chapter_tags' => 'Теги розділів',
     'book_tags' => 'Теги книг',

@@ -1,7 +1,14 @@
 name: Bug Report
-description: Create a report to help us improve or fix things
+description: Create a report to help us fix bugs & issues in existing supported functionality
 labels: [":bug: Bug"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out a bug report!
+        Please note that this form is for reporting bugs in existing supported functionality.
+        
+        If you are reporting something that's not an issue in functionality we've previously supported and/or is simply something different to your expectations, then it may be more appropriate to raise via a feature or support request instead.
   - type: textarea
     id: description
     attributes:
@@ -13,7 +20,7 @@ body:
     id: reproduction
     attributes:
       label: Steps to Reproduce
-      description: Detail the steps that would replicate this issue
+      description: Detail the steps that would replicate this issue.
       placeholder: |
         1. Go to '...'
         2. Click on '....'
@@ -32,7 +39,7 @@ body:
     id: context
     attributes:
       label: Screenshots or Additional Context
-      description: Provide any additional context and screenshots here to help us solve this issue
+      description: Provide any additional context and screenshots here to help us solve this issue.
     validations:
       required: false
   - type: input
@@ -48,23 +55,7 @@ body:
     id: bsversion
     attributes:
       label: Exact BookStack Version
-      description: This can be found in the settings view of BookStack. Please provide an exact version.
-      placeholder: (eg. v21.08.5)
-    validations:
-      required: true
-  - type: input
-    id: phpversion
-    attributes:
-      label: PHP Version
-      description: Keep in mind your command-line PHP version may differ to that of your webserver. Provide that relevant to the issue.
-      placeholder: (eg. 7.4)
-    validations:
-      required: false
-  - type: textarea
-    id: hosting
-    attributes:
-      label: Hosting Environment
-      description: Describe your hosting environment as much as possible including any proxies used (If applicable).
-      placeholder: (eg. Ubuntu 20.04 VPS, installed using official installation script)
+      description: This can be found in the settings view of BookStack. Please provide an exact version(s) you've tested on.
+      placeholder: (eg. v23.06.7)
     validations:
       required: true

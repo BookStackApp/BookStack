@@ -1,0 +1,29 @@
+html, body {
+  font-size: 12px;
+  background-color: #FFF;
+}
+
+.page-content {
+  margin: 0 auto;
+}
+
+.print-hidden {
+  display: none !important;
+}
+
+.tri-layout-container {
+  grid-template-columns: 1fr;
+  grid-template-areas: "b";
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  display: block;
+}
+
+.card {
+  box-shadow: none;
+}
+
+.content-wrap.card {
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}

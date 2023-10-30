@@ -4,7 +4,8 @@ namespace BookStack\Activity\Notifications\Messages;
 
 use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Notifications\MessageParts\LinkedMailMessageLine;
-use BookStack\Notifications\MailNotification;
+use BookStack\App\MailNotification;
+use BookStack\Translation\LocaleDefinition;
 use BookStack\Users\Models\User;
 use Illuminate\Bus\Queueable;
 
@@ -35,12 +36,12 @@ abstract class BaseActivityNotification extends MailNotification
     /**
      * Build the common reason footer line used in mail messages.
      */
-    protected function buildReasonFooterLine(string $language): LinkedMailMessageLine
+    protected function buildReasonFooterLine(LocaleDefinition $locale): LinkedMailMessageLine
     {
         return new LinkedMailMessageLine(
             url('/preferences/notifications'),
-            trans('notifications.footer_reason', [], $language),
-            trans('notifications.footer_reason_link', [], $language),
+            $locale->trans('notifications.footer_reason'),
+            $locale->trans('notifications.footer_reason_link'),
         );
     }
 }

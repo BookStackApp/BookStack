@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Support\Facades\Log;
 
 class ErrorTest extends TestCase
@@ -44,5 +45,17 @@ class ErrorTest extends TestCase
         $resp = $this->actingAs($this->users->viewer())->get('/uploads/images/gallery/2021-05/anonexistingimage.png');
         $resp->assertStatus(404);
         $resp->assertSeeText('Image Not Found');
+    }
+
+    public function test_posts_above_php_limit_shows_friendly_error()
+    {
+        // Fake super large JSON request
+        $resp = $this->asEditor()->call('GET', '/books', [], [], [], [
+            'CONTENT_LENGTH' => '10000000000',
+            'HTTP_ACCEPT' => 'application/json',
+        ]);
+
+        $resp->assertStatus(413);
+        $resp->assertJson(['error' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.']);
     }
 }

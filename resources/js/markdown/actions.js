@@ -34,7 +34,7 @@ export class Actions {
         const imageManager = window.$components.first('image-manager');
 
         imageManager.show(image => {
-            const imageUrl = image.thumbs.display || image.url;
+            const imageUrl = image.thumbs?.display || image.url;
             const selectedText = this.#getSelectionText();
             const newText = `[![${selectedText || image.name}](${imageUrl})](${image.url})`;
             this.#replaceSelection(newText, newText.length);
@@ -68,11 +68,12 @@ export class Actions {
 
         /** @type {EntitySelectorPopup} * */
         const selector = window.$components.first('entity-selector-popup');
+        const selectionText = this.#getSelectionText(selectionRange);
         selector.show(entity => {
-            const selectedText = this.#getSelectionText(selectionRange) || entity.name;
+            const selectedText = selectionText || entity.name;
             const newText = `[${selectedText}](${entity.link})`;
             this.#replaceSelection(newText, newText.length, selectionRange);
-        });
+        }, selectionText);
     }
 
     // Show draw.io if enabled and handle save.
@@ -416,7 +417,7 @@ export class Actions {
             const newContent = `[![](${data.thumbs.display})](${data.url})`;
             this.#findAndReplaceContent(placeHolderText, newContent);
         } catch (err) {
-            window.$events.emit('error', this.editor.config.text.imageUploadError);
+            window.$events.error(err?.data?.message || this.editor.config.text.imageUploadError);
             this.#findAndReplaceContent(placeHolderText, '');
             console.error(err);
         }

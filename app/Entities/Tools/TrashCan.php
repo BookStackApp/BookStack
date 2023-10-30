@@ -197,7 +197,7 @@ class TrashCan
         $page->allRevisions()->delete();
 
         // Delete Attached Files
-        $attachmentService = app(AttachmentService::class);
+        $attachmentService = app()->make(AttachmentService::class);
         foreach ($page->attachments as $attachment) {
             $attachmentService->deleteFile($attachment);
         }

@@ -55,7 +55,7 @@ class UserRoleProvider
      */
     public function guest(): User
     {
-        return User::getDefault();
+        return User::getGuest();
     }
 
     /**

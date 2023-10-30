@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Template Pagina',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Attiva/Disattiva Barra Laterale',
     'page_tags' => 'Tag Pagina',
     'chapter_tags' => 'Tag Capitolo',
     'book_tags' => 'Tag Libro',

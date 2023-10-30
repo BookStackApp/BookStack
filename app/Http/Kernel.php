@@ -15,6 +15,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \BookStack\Http\Middleware\TrimStrings::class,
         \BookStack\Http\Middleware\TrustProxies::class,
+        \BookStack\Http\Middleware\PreventResponseCaching::class,
     ];
 
     /**
@@ -30,7 +31,6 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \BookStack\Http\Middleware\VerifyCsrfToken::class,
-            \BookStack\Http\Middleware\PreventAuthenticatedResponseCaching::class,
             \BookStack\Http\Middleware\CheckEmailConfirmed::class,
             \BookStack\Http\Middleware\RunThemeActions::class,
             \BookStack\Http\Middleware\Localization::class,
@@ -40,7 +40,6 @@ class Kernel extends HttpKernel
             \BookStack\Http\Middleware\EncryptCookies::class,
             \BookStack\Http\Middleware\StartSessionIfCookieExists::class,
             \BookStack\Http\Middleware\ApiAuthenticate::class,
-            \BookStack\Http\Middleware\PreventAuthenticatedResponseCaching::class,
             \BookStack\Http\Middleware\CheckEmailConfirmed::class,
         ],
     ];

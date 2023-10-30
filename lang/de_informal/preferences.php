@@ -5,10 +5,10 @@
  */
 
 return [
-    'preferences' => 'Profil-Einstellungen',
+    'my_account' => 'Mein Account',
 
     'shortcuts' => 'Kürzel',
-    'shortcuts_interface' => 'Oberflächen-Tastaturkürzel',
+    'shortcuts_interface' => 'Einstellungen zu UI Abkürzungen',
     'shortcuts_toggle_desc' => 'Hier kannst du Tastaturkürzel für die Systemoberfläche für Navigation und Aktionen aktivieren oder deaktivieren.',
     'shortcuts_customize_desc' => 'Unten kannst du alle Tastenkürzel anpassen. Drücke einfach die gewünschte Tastenkombination, nachdem du die Eingabe für eine Tastenkombination ausgewählt hast.',
     'shortcuts_toggle_label' => 'Tastaturkürzel aktiviert',
@@ -29,5 +29,23 @@ return [
     'notifications_watched' => 'Beobachtete und ignorierte Elemente',
     'notifications_watched_desc' => ' Nachfolgend finden Sie die Elemente, für die benutzerdefinierten Überwachungspräferenzen gelten. Um deine Einstellungen für diese Elemente zu aktualisieren, sieh dir das Element an und suche dann die Überwachungsoptionen in der Seitenleiste.',
 
-    'profile_overview_desc' => ' Verwalte die Details deines Benutzerprofils, einschließlich bevorzugter Sprache und Authentifizierungsoptionen.',
+    'auth' => 'Zugang & Sicherheit',
+    'auth_change_password' => 'Passwort ändern',
+    'auth_change_password_desc' => 'Legen Sie ein Passwort für die Anmeldung in der Anwendung fest. Dieses muss mindestens 8 Zeichen lang sein.',
+    'auth_change_password_success' => 'Das Passwort wurde aktualisiert!',
+
+    'profile' => 'Profildetails',
+    'profile_desc' => 'Verwalten Sie die Details Ihres Kontos welche Sie gegenüber anderen Benutzern repräsentiert, zusätzlich zu den Details die für die Kommunikation und Personalisierung des Systems genutzt werden.',
+    'profile_view_public' => 'Öffentliches Profil zeigen',
+    'profile_name_desc' => 'Konfigurieren Sie Ihren Anzeigenamen, der durch die Aktivität, die Sie ausführen, für andere Benutzer und Ihre eigenen Inhalte im System sichtbar ist.',
+    'profile_email_desc' => 'Diese E-Mail wird für Benachrichtigungen und, je nach aktiver Systemauthentifizierung, den Systemzugriff verwendet.',
+    'profile_email_no_permission' => 'Leider haben Sie nicht die Berechtigung, Ihre E-Mail-Adresse zu ändern. Wenn Sie diese ändern möchten, wenden Sie sich bitte an Ihren Administrator.',
+    'profile_avatar_desc' => 'Wählen Sie ein Bild, dass anderen im System angezeigt wird, um Sie zu repräsentieren. Idealerweise sollte dieses Bild quadratisch und etwa 256px breit und hoch sein.',
+    'profile_admin_options' => 'Administratoroptionen',
+    'profile_admin_options_desc' => 'Weitere Administrator-Optionen wie zum Beispiel die Verwaltung von Rollenzuweisungen für Ihr Benutzerkonto finden Sie im Bereich "Einstellungen > Benutzer" der Anwendung.',
+
+    'delete_account' => 'Konto löschen',
+    'delete_my_account' => 'Meine Konto löschen',
+    'delete_my_account_desc' => 'Dadurch wird Ihr Benutzerkonto vollständig vom System gelöscht. Sie können dieses Konto nicht wiederherstellen oder diese Aktion rückgängig machen. Inhalte, die Sie erstellt haben, wie erstellte Seiten und hochgeladene Bilder, bleiben erhalten.',
+    'delete_my_account_warning' => 'Sind Sie sicher, dass Sie Ihr Benutzerkonto löschen möchten?',
 ];

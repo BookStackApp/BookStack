@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Șterge filtru',
     'download' => 'Descarcă',
     'open_in_tab' => 'Deschide in tab',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Opțiuni ordonare',

@@ -57,8 +57,7 @@ class UserSearchTest extends TestCase
     public function test_select_requires_logged_in_user()
     {
         $this->setSettings(['app-public' => true]);
-        $defaultUser = User::getDefault();
-        $this->permissions->grantUserRolePermissions($defaultUser, ['users-manage']);
+        $this->permissions->grantUserRolePermissions($this->users->guest(), ['users-manage']);
 
         $resp = $this->get('/search/users/select?search=a');
         $this->assertPermissionError($resp);

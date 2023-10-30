@@ -9,13 +9,13 @@ use BookStack\Exceptions\JsonDebugException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Facades\Theme;
+use BookStack\Http\HttpRequestService;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use Psr\Http\Client\ClientInterface as HttpClient;
 
 /**
  * Class OpenIdConnectService
@@ -26,7 +26,7 @@ class OidcService
     public function __construct(
         protected RegistrationService $registrationService,
         protected LoginService $loginService,
-        protected HttpClient $httpClient,
+        protected HttpRequestService $http,
         protected GroupSyncService $groupService
     ) {
     }
@@ -94,7 +94,7 @@ class OidcService
         // Run discovery
         if ($config['discover'] ?? false) {
             try {
-                $settings->discoverFromIssuer($this->httpClient, Cache::store(null), 15);
+                $settings->discoverFromIssuer($this->http->buildClient(5), Cache::store(null), 15);
             } catch (OidcIssuerDiscoveryException $exception) {
                 throw new OidcException('OIDC Discovery Error: ' . $exception->getMessage());
             }
@@ -111,7 +111,7 @@ class OidcService
     protected function getProvider(OidcProviderSettings $settings): OidcOAuthProvider
     {
         $provider = new OidcOAuthProvider($settings->arrayForProvider(), [
-            'httpClient'     => $this->httpClient,
+            'httpClient'     => $this->http->buildClient(5),
             'optionProvider' => new HttpBasicAuthOptionProvider(),
         ]);
 
@@ -142,10 +142,11 @@ class OidcService
      */
     protected function getUserDisplayName(OidcIdToken $token, string $defaultValue): string
     {
-        $displayNameAttr = $this->config()['display_name_claims'];
+        $displayNameAttrString = $this->config()['display_name_claims'] ?? '';
+        $displayNameAttrs = explode('|', $displayNameAttrString);
 
         $displayName = [];
-        foreach ($displayNameAttr as $dnAttr) {
+        foreach ($displayNameAttrs as $dnAttr) {
             $dnComponent = $token->getClaim($dnAttr) ?? '';
             if ($dnComponent !== '') {
                 $displayName[] = $dnComponent;

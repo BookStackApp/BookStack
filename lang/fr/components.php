@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Image supprimée avec succès',
     'image_replace' => 'Remplacer l\'image',
     'image_replace_success' => 'Image mise à jour avec succès',
+    'image_rebuild_thumbs' => 'Régénérer les variantes de taille',
+    'image_rebuild_thumbs_success' => 'Les variantes de taille d\'image ont été reconstruites avec succès !',
 
     // Code Editor
     'code_editor' => 'Éditer le code',
