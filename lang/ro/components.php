@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Imaginea a fost ștearsă',
     'image_replace' => 'Înlocuiți imaginea',
     'image_replace_success' => 'Imaginea a fost actualizată',
+    'image_rebuild_thumbs' => 'Regenerate Size Variations',
+    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
 
     // Code Editor
     'code_editor' => 'Editare cod',

@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Шаблон страницы',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Теги страницы',
     'chapter_tags' => 'Теги главы',
     'book_tags' => 'Теги книги',
@@ -408,13 +409,13 @@ return [
 
     // Watch Options
     'watch' => 'Watch',
-    'watch_title_default' => 'Default Preferences',
+    'watch_title_default' => 'Свойства по умолчанию',
     'watch_desc_default' => 'Revert watching to just your default notification preferences.',
-    'watch_title_ignore' => 'Ignore',
-    'watch_desc_ignore' => 'Ignore all notifications, including those from user-level preferences.',
-    'watch_title_new' => 'New Pages',
-    'watch_desc_new' => 'Notify when any new page is created within this item.',
-    'watch_title_updates' => 'All Page Updates',
+    'watch_title_ignore' => 'Игнорировать',
+    'watch_desc_ignore' => 'Игнорировать все уведомления, включая уведомления из пользовательского уровня.',
+    'watch_title_new' => 'Новые страницы',
+    'watch_desc_new' => 'Уведомлять при создании новой страницы внутри этого элемента.',
+    'watch_title_updates' => 'Все обновления страницы',
     'watch_desc_updates' => 'Notify upon all new pages and page changes.',
     'watch_desc_updates_page' => 'Notify upon all page changes.',
     'watch_title_comments' => 'All Page Updates & Comments',

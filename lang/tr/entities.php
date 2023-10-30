@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Sayfa Şablonu',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Sayfa Etiketleri',
     'chapter_tags' => 'Bölüm Etiketleri',
     'book_tags' => 'Kitap Etiketleri',

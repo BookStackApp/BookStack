@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => ':url에서 이미지를 불러올 수 없습니다.',
     'cannot_create_thumbs' => '섬네일을 못 만들었습니다. PHP에 GD 확장 도구를 설치하세요.',
     'server_upload_limit' => '파일 크기가 서버에서 허용하는 수치를 넘습니다.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => '파일 크기가 서버에서 허용하는 수치를 넘습니다.',
 
     // Drawing & Images
     'image_upload_error' => '이미지를 올리다 문제가 생겼습니다.',
     'image_upload_type_error' => '유효하지 않은 이미지 형식입니다.',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments

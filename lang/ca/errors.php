@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'No s\'ha pogut obtenir la imatge de :url',
     'cannot_create_thumbs' => 'El servidor no pot crear miniatures. Reviseu que tingueu instal·lada l\'extensió GD del PHP.',
     'server_upload_limit' => 'El servidor no permet pujades d\'aquesta mida. Proveu-ho amb una mida de fitxer més petita.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'El servidor no permet pujades d\'aquesta mida. Proveu-ho amb una mida de fitxer més petita.',
 
     // Drawing & Images
     'image_upload_error' => 'S\'ha produït un error en pujar la imatge',
     'image_upload_type_error' => 'El tipus d\'imatge que heu pujat no és vàlid',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments

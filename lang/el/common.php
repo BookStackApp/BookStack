@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Διαγραφή φίλτρου',
     'download' => 'Λήψη',
     'open_in_tab' => 'Άνοιγμα σε Καρτέλα',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Επιλογές ταξινόμησης',

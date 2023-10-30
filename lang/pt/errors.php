@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Não foi possível obter a imagem a partir de :url',
     'cannot_create_thumbs' => 'O servidor não pôde criar as miniaturas de imagem. Por favor, verifique se a extensão GD PHP está instalada.',
     'server_upload_limit' => 'O servidor não permite o carregamento de arquivos com esse tamanho. Por favor, tente fazer o carregamento de arquivos mais pequenos.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'O servidor não permite o carregamento de arquivos com esse tamanho. Por favor, tente fazer o carregamento de arquivos mais pequenos.',
 
     // Drawing & Images
     'image_upload_error' => 'Ocorreu um erro no carregamento da imagem',
     'image_upload_type_error' => 'O tipo de imagem enviada é inválida',
     'image_upload_replace_type' => 'A imagem de substituição deverá ser do mesmo tipo que a anterior',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Dados de desenho não puderam ser carregados. Talvez o arquivo de desenho não exista mais ou não tenha permissão para aceder-lhe.',
 
     // Attachments

@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'återställde sidan',
     'page_restore_notification'   => 'Sidan har återställts',
     'page_move'                   => 'flyttade sidan',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Sidan har flyttats',
 
     // Chapters
     'chapter_create'              => 'skapade kapitlet',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'tog bort kapitlet',
     'chapter_delete_notification' => 'Kapitlet har tagits bort',
     'chapter_move'                => 'flyttade kapitlet',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Kapitlet har flyttats',
 
     // Books
     'book_create'                 => 'skapade boken',
@@ -50,19 +50,19 @@ return [
     'bookshelf_delete_notification'    => 'Hyllan har tagits bort',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'återställde version',
+    'revision_delete' => 'tog bort version',
+    'revision_delete_notification' => 'Versionen har tagits bort',
 
     // Favourites
     'favourite_add_notification' => '":name" har lagts till i dina favoriter',
     'favourite_remove_notification' => '":name" har tagits bort från dina favoriter',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Inställningarna för bevakning har uppdaterats',
 
     // Auth
-    'auth_login' => 'logged in',
+    'auth_login' => 'loggade in',
     'auth_register' => 'registrerad som ny användare',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',

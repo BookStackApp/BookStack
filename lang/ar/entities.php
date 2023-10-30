@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'قالب الصفحة',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'وسوم الصفحة',
     'chapter_tags' => 'وسوم الفصل',
     'book_tags' => 'وسوم الكتاب',

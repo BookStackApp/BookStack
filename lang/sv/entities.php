@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Sidmall',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Sidtaggar',
     'chapter_tags' => 'Kapiteltaggar',
     'book_tags' => 'Boktaggar',

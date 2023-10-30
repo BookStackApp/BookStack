@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Template Halaman',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Halaman Tag',
     'chapter_tags' => 'Bab Tag',
     'book_tags' => 'Tag Buku',

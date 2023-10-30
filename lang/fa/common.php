@@ -42,7 +42,7 @@ return [
     'remove' => 'حذف',
     'add' => 'ﺍﻓﺰﻭﺩﻥ',
     'configure' => 'پیکربندی کنید',
-    'manage' => 'Manage',
+    'manage' => 'مدیریت تنظیمات',
     'fullscreen' => 'تمام صفحه',
     'favourite' => 'علاقه‌مندی',
     'unfavourite' => 'حذف از علاقه‌مندی',
@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'پاک کردن فیلتر',
     'download' => 'دانلود',
     'open_in_tab' => 'باز کردن در تب جدید',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'گزینه‌های مرتب سازی',

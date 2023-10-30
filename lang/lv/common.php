@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Notīrīt filtru',
     'download' => 'Lejupielādēt',
     'open_in_tab' => 'Atvērt cilnē',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Kārtošanas Opcijas',

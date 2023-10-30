@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Неможливо отримати зображення з :url',
     'cannot_create_thumbs' => 'Сервер не може створювати ескізи. Будь ласка, перевірте, чи встановлено розширення GD PHP.',
     'server_upload_limit' => 'Сервер не дозволяє завантажувати файли такого розміру. Спробуйте менший розмір файлу.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Сервер не дозволяє завантажувати файли такого розміру. Спробуйте менший розмір файлу.',
 
     // Drawing & Images
     'image_upload_error' => 'Виникла помилка під час завантаження зображення',
     'image_upload_type_error' => 'Тип завантаженого зображення недійсний',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Не вдалося завантажити дані малюнка. Файл малюнка може більше не існувати або у вас немає дозволу на доступ до нього.',
 
     // Attachments

@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Szablon strony',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Tagi strony',
     'chapter_tags' => 'Tagi rozdziału',
     'book_tags' => 'Tagi książki',

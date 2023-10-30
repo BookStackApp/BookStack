@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Xóa bộ lọc',
     'download' => 'Tải về',
     'open_in_tab' => 'Mở trong thẻ mới',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',

@@ -73,7 +73,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => '設定更新成功',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks

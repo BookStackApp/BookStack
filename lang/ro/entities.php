@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Şablon pagină',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Etichete pagină',
     'chapter_tags' => 'Etichete capitol',
     'book_tags' => 'Etichete carte',

@@ -295,6 +295,7 @@ return [
     'pages_is_template' => '頁面模板',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => '頁面標籤',
     'chapter_tags' => '章節標籤',
     'book_tags' => '書本標籤',
@@ -351,7 +352,7 @@ return [
     'templates_prepend_content' => '前置頁面內容',
 
     // Profile View
-    'profile_user_for_x' => '來這裡:time了',
+    'profile_user_for_x' => '來這裡 :time 了',
     'profile_created_content' => '已建立內容',
     'profile_not_created_pages' => ':userName 尚未建立任何頁面',
     'profile_not_created_chapters' => ':userName 尚未建立任何章節',
@@ -408,7 +409,7 @@ return [
 
     // Watch Options
     'watch' => 'Watch',
-    'watch_title_default' => 'Default Preferences',
+    'watch_title_default' => '預設偏好設定',
     'watch_desc_default' => 'Revert watching to just your default notification preferences.',
     'watch_title_ignore' => 'Ignore',
     'watch_desc_ignore' => 'Ignore all notifications, including those from user-level preferences.',

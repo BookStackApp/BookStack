@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Lapas šablons',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Lapas birkas',
     'chapter_tags' => 'Nodaļas birkas',
     'book_tags' => 'Grāmatas birkas',

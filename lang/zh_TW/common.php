@@ -52,6 +52,7 @@ return [
     'filter_clear' => '清理過濾',
     'download' => '下載',
     'open_in_tab' => '在新分頁中開啟',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => '排序選項',

@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Bez filtrovania',
     'download' => 'Stiahnuť',
     'open_in_tab' => 'Otvoriť na novej karte',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Možnosti triedenia',

@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Filtreyi Kaldır',
     'download' => 'İndir',
     'open_in_tab' => 'Sekmede aç',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Sıralama Seçenekleri',

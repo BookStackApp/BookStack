@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Puslapio šablonas',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Puslapio žymos',
     'chapter_tags' => 'Skyriaus žymos',
     'book_tags' => 'Knygos žymos',

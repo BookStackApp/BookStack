@@ -296,6 +296,7 @@ return [
     'pages_is_template' => 'ページテンプレート',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'タグ',
     'chapter_tags' => 'チャプターのタグ',
     'book_tags' => 'ブックのタグ',

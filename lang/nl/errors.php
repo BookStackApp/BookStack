@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Kon geen afbeelding verkrijgen van :url',
     'cannot_create_thumbs' => 'De server kon geen miniaturen maken. Controleer of je de GD PHP extensie geïnstalleerd hebt.',
     'server_upload_limit' => 'De server staat geen uploads van deze grootte toe. Probeer een kleinere bestandsgrootte.',
+    'server_post_limit' => 'De server kan de opgegeven hoeveelheid gegevens niet ontvangen. Probeer het opnieuw met minder gegevens of een kleiner bestand.',
     'uploaded'  => 'De server staat geen uploads van deze grootte toe. Probeer een kleinere bestandsgrootte.',
 
     // Drawing & Images
     'image_upload_error' => 'Er is een fout opgetreden bij het uploaden van de afbeelding',
     'image_upload_type_error' => 'Het geüploade afbeeldingstype is ongeldig',
     'image_upload_replace_type' => 'Afbeeldingen moeten van hetzelfde type zijn',
+    'image_upload_memory_limit' => 'Het uploaden van afbeeldingen en/of het maken van miniaturen is mislukt vanwege te beperkte systeemmiddelen.',
+    'image_thumbnail_memory_limit' => 'Het maken van variaties in afbeeldingsgrootte is mislukt vanwege te beperkte systeemmiddelen.',
+    'image_gallery_thumbnail_memory_limit' => 'Het maken van galerij miniaturen is mislukt vanwege te beperkte systeemmiddelen.',
     'drawing_data_not_found' => 'De gegevens van de tekening konden niet worden geladen. Het tekenbestand bestaat misschien niet meer of u hebt geen machtiging om het te openen.',
 
     // Attachments

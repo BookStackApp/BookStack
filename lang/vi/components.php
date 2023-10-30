@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Ảnh đã được xóa thành công',
     'image_replace' => 'Thay thế hình ảnh',
     'image_replace_success' => 'Đã cập nhật thành công tệp hình ảnh',
+    'image_rebuild_thumbs' => 'Regenerate Size Variations',
+    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
 
     // Code Editor
     'code_editor' => 'Sửa Mã',

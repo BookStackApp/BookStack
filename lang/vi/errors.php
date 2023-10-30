@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Không thể lấy ảnh từ :url',
     'cannot_create_thumbs' => 'Máy chủ không thể tạo ảnh nhỏ. Vui lòng kiểm tra bạn đã cài đặt tiện ích mở rộng GD PHP.',
     'server_upload_limit' => 'Máy chủ không cho phép tải lên kích thước này. Vui lòng thử lại với tệp tin nhỏ hơn.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Máy chủ không cho phép tải lên kích thước này. Vui lòng thử lại với tệp tin nhỏ hơn.',
 
     // Drawing & Images
     'image_upload_error' => 'Đã xảy ra lỗi khi đang tải lên ảnh',
     'image_upload_type_error' => 'Ảnh đang được tải lên không hợp lệ',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments

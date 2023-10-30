@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Sideskabelon',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Sidetags',
     'chapter_tags' => 'Kapiteltags',
     'book_tags' => 'Bogtags',

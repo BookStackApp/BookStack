@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Imagen borrada exitosamente',
     'image_replace' => 'Reemplazar imagen',
     'image_replace_success' => 'Imagen actualizada correctamente',
+    'image_rebuild_thumbs' => 'Regenerar distintos tamaños',
+    'image_rebuild_thumbs_success' => '¡Imágenes de distinto tamaño regeneradas correctamente!',
 
     // Code Editor
     'code_editor' => 'Editar Código',

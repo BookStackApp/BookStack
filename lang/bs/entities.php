@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Predložak stranice',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Oznake stranice',
     'chapter_tags' => 'Oznake poglavlja',
     'book_tags' => 'Oznake knjige',

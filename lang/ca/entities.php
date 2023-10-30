@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Plantilla de pàgina',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Etiquetes de la pàgina',
     'chapter_tags' => 'Etiquetes del capítol',
     'book_tags' => 'Etiquetes del llibre',

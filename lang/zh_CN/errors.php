@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => '无法从 :url 中获取图片',
     'cannot_create_thumbs' => '服务器无法创建缩略图，请检查您是否安装了GD PHP扩展。',
     'server_upload_limit' => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
 
     // Drawing & Images
     'image_upload_error' => '上传图片时发生错误',
     'image_upload_type_error' => '上传的图像类型无效',
     'image_upload_replace_type' => '图片文件替换必须为相同的类型',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => '无法加载绘图数据。绘图文件可能不再存在，或者您可能没有权限访问它。',
 
     // Attachments

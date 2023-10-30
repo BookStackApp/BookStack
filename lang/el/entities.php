@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Πρότυπο σελίδας',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Ετικέτες Σελίδας',
     'chapter_tags' => 'Ετικέτες Κεφαλαίου',
     'book_tags' => 'Ετικέτες Βιβλίου',

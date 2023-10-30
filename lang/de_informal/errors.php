@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Bild konnte nicht von der URL :url geladen werden.',
     'cannot_create_thumbs' => 'Der Server kann keine Vorschau-Bilder erzeugen. Bitte prüfe, ob die GD PHP-Erweiterung installiert ist.',
     'server_upload_limit' => 'Der Server verbietet das Hochladen von Dateien mit dieser Dateigröße. Bitte versuche es mit einer kleineren Datei.',
+    'server_post_limit' => 'Der Server kann die angegebene Datenmenge nicht empfangen. Versuche es erneut mit weniger Daten oder einer kleineren Datei.',
     'uploaded'  => 'Der Server verbietet das Hochladen von Dateien mit dieser Dateigröße. Bitte versuche es mit einer kleineren Datei.',
 
     // Drawing & Images
     'image_upload_error' => 'Beim Hochladen des Bildes trat ein Fehler auf.',
     'image_upload_type_error' => 'Der Bildtyp der hochgeladenen Datei ist ungültig.',
     'image_upload_replace_type' => 'Bild-Ersetzungen müssen vom gleichen Typ sein',
+    'image_upload_memory_limit' => 'Bildupload und/oder Thumbnailerstellung konnten aufgrund von Systemressourcenbeschränkungen nicht verarbeitet werden.',
+    'image_thumbnail_memory_limit' => 'Fehler beim Erstellen der Thumbnails aufgrund von Systemressourcenbeschränkungen.',
+    'image_gallery_thumbnail_memory_limit' => 'Fehler beim Erstellen der Galerie Thumbnails aufgrund von Systemressourcenbeschränkungen.',
     'drawing_data_not_found' => 'Zeichnungsdaten konnten nicht geladen werden. Die Zeichnungsdatei existiert möglicherweise nicht mehr oder du hast nicht die Berechtigung, darauf zuzugreifen.',
 
     // Attachments

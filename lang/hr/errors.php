@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Nemoguće preuzeti sliku sa :url',
     'cannot_create_thumbs' => 'Provjerite imate li instaliranu GD PHP ekstenziju.',
     'server_upload_limit' => 'Prevelika količina za server. Pokušajte prenijeti manju veličinu.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Prevelika količina za server. Pokušajte prenijeti manju veličinu.',
 
     // Drawing & Images
     'image_upload_error' => 'Problem s prenosom slike',
     'image_upload_type_error' => 'Nepodržani format slike',
     'image_upload_replace_type' => 'Zamjene slikovnih datoteka moraju biti iste vrste',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Podaci o crtežu se ne mogu učitati. Datoteka crteža možda više ne postoji ili nemate dozvolu za pristupanje istoj.',
 
     // Attachments

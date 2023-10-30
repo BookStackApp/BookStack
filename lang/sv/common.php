@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Rensa filter',
     'download' => 'Ladda ner',
     'open_in_tab' => 'Öppna i flik',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativ',

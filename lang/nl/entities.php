@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Paginasjabloon',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Zijbalk Tonen/Verbergen',
     'page_tags' => 'Pagina Labels',
     'chapter_tags' => 'Hoofdstuk Labels',
     'book_tags' => 'Boek Labels',

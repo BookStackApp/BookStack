@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Plantilla de Página',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Mostrar/ocultar barra lateral',
     'page_tags' => 'Etiquetas de página',
     'chapter_tags' => 'Etiquetas de capítulo',
     'book_tags' => 'Etiquetas de libro',

@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Сбросить фильтр',
     'download' => 'Загрузить',
     'open_in_tab' => 'Открыть во вкладке',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',
