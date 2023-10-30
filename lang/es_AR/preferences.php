@@ -5,10 +5,10 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => 'Mi cuenta',
 
     'shortcuts' => 'Atajos',
-    'shortcuts_interface' => 'UI Shortcut Preferences',
+    'shortcuts_interface' => 'Preferencias de acceso directo en la interfaz',
     'shortcuts_toggle_desc' => 'Aquí puede activar o desactivar los accesos rápidos de la interfaz, utilizados para la navegación y las acciones.',
     'shortcuts_customize_desc' => 'Puede personalizar cada uno de los atajos a continuación. Simplemente pulse la combinación de teclas deseada después de seleccionar la entrada para un atajo.',
     'shortcuts_toggle_label' => 'Atajos de teclado habilitados',
@@ -29,23 +29,23 @@ return [
     'notifications_watched' => 'Elementos vistos e ignorados',
     'notifications_watched_desc' => ' A continuación se muestran los elementos que tienen preferencias personalizadas de monitorización. Para actualizar sus preferencias, vea el artículo y las opciones se mostrarán en la barra lateral.',
 
-    'auth' => 'Access & Security',
-    'auth_change_password' => 'Change Password',
-    'auth_change_password_desc' => 'Change the password you use to log-in to the application. This must be at least 8 characters long.',
-    'auth_change_password_success' => 'Password has been updated!',
+    'auth' => 'Acceso y seguridad',
+    'auth_change_password' => 'Cambiar contraseña',
+    'auth_change_password_desc' => 'Cambie la contraseña que utiliza para iniciar sesión en la aplicación. Debe tener al menos 8 caracteres.',
+    'auth_change_password_success' => '¡La contraseña ha sido actualizada!',
 
-    'profile' => 'Profile Details',
-    'profile_desc' => 'Manage the details of your account which represents you to other users, in addition to details that are used for communication and system personalisation.',
-    'profile_view_public' => 'View Public Profile',
-    'profile_name_desc' => 'Configure your display name which will be visible to other users in the system through the activity you perform, and content you own.',
-    'profile_email_desc' => 'This email will be used for notifications and, depending on active system authentication, system access.',
-    'profile_email_no_permission' => 'Unfortunately you don\'t have permission to change your email address. If you want to change this, you\'d need to ask an administrator to change this for you.',
-    'profile_avatar_desc' => 'Select an image which will be used to represent yourself to others in the system. Ideally this image should be square and about 256px in width and height.',
-    'profile_admin_options' => 'Administrator Options',
-    'profile_admin_options_desc' => 'Additional administrator-level options, like those to manage role assignments, can be found for your user account in the "Settings > Users" area of the application.',
+    'profile' => 'Detalles del perfil',
+    'profile_desc' => 'Administre los detalles de su cuenta que le representa a otros usuarios, además de los detalles que se utilizan para la comunicación y la personalización del sistema.',
+    'profile_view_public' => 'Ver perfil público',
+    'profile_name_desc' => 'Configure el nombre que será visible para otros usuarios del sistema a través de la actividad que realiza, y el contenido que posee.',
+    'profile_email_desc' => 'Este correo electrónico se utilizará para las notificaciones y, dependiendo de la autenticación activa del sistema, el acceso del sistema.',
+    'profile_email_no_permission' => 'Lamentablemente no tiene permiso para cambiar su dirección de correo electrónico. Si desea cambiar esto, necesitará pedir a un administrador que lo cambie por usted.',
+    'profile_avatar_desc' => 'Seleccione una imagen pública que verán los demás en el sistema. Idealmente esta imagen debe ser cuadrada y alrededor de 256px de anchura y altura.',
+    'profile_admin_options' => 'Opciones de administrador',
+    'profile_admin_options_desc' => 'Opciones adicionales de administrador, como por ejemplo administrar asignaciones de rol, se pueden encontrar para su cuenta de usuario en el área de "Ajustes > Usuarios" de la aplicación.',
 
-    'delete_account' => 'Delete Account',
-    'delete_my_account' => 'Delete My Account',
-    'delete_my_account_desc' => 'This will fully delete your user account from the system. You will not be able to recover this account or revert this action. Content you\'ve created, such as created pages and uploaded images, will remain.',
-    'delete_my_account_warning' => 'Are you sure you want to delete your account?',
+    'delete_account' => 'Eliminar cuenta',
+    'delete_my_account' => 'Eliminar mi cuenta',
+    'delete_my_account_desc' => 'Esto eliminará completamente su cuenta de usuario del sistema. No podrá recuperar esta cuenta o revertir esta acción. El contenido que ha creado, como páginas creadas e imágenes subidas, permanecerá.',
+    'delete_my_account_warning' => '¿Está seguro de que desea eliminar su cuenta?',
 ];
