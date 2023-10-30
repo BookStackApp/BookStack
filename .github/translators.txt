@@ -177,7 +177,7 @@ Alexander Predl (Harveyhase68) :: German
 Rem (Rem9000) :: Dutch
 Michał Stelmach (stelmach-web) :: Polish
 arniom :: French
-REMOVED_USER :: ; French; Dutch; Turkish
+REMOVED_USER :: French; Dutch; Turkish; 
 林祖年 (contagion) :: Chinese Traditional
 Siamak Guodarzi (siamakgoudarzi88) :: Persian
 Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
@@ -270,7 +270,7 @@ mcgong (GongMingCai) :: Chinese Simplified; Chinese Traditional
 Nanang Setia Budi (sefidananang) :: Indonesian
 Андрей Павлов (andrei.pavlov) :: Russian
 Alex Navarro (alex.n.navarro) :: Portuguese, Brazilian
-Ji-Hyeon Gim (PotatoGim) :: Korean
+Jihyeon Gim (PotatoGim) :: Korean
 Mihai Ochian (soulstorm19) :: Romanian
 HeartCore :: German Informal; German
 simon.pct :: French
@@ -360,3 +360,10 @@ TWME :: Chinese Traditional
 Sascha (Man-in-Black) :: German
 Mohammadreza Madadi (madadi.efl) :: Persian
 Konstantin Kovacheli (kkovacheli) :: Ukrainian
+link1183 :: French
+Renan (rfpe) :: Portuguese, Brazilian
+Lowkey (bbsweb) :: Chinese Simplified
+ZZnOB (zznobzz) :: Russian
+rupus :: Swedish
+developernecsys :: Norwegian Nynorsk
+xuan LI (xuanli233) :: Chinese Simplified
