@@ -21,7 +21,7 @@ class PageUpdateNotification extends BaseActivityNotification
         $locale = $notifiable->getLocale();
 
         $listMessageData = [
-             $locale->trans('notifications.detail_page_name') => $page->name,
+            $locale->trans('notifications.detail_page_name') => $page->name,
             '' => '',
         ];
     
@@ -34,7 +34,7 @@ class PageUpdateNotification extends BaseActivityNotification
             $locale->trans('notifications.detail_updated_by') => $this->user->name,
         ];
 
-        return $this->newMailMessage($language)
+        return $this->newMailMessage($locale)
             ->subject($locale->trans('notifications.updated_page_subject', ['pageName' => $page->getShortName()]))
             ->line($locale->trans('notifications.updated_page_intro', ['appName' => setting('app-name')]))
             ->line(new ListMessageLine($listMessageData))
