@@ -26,7 +26,9 @@ class PageUpdateNotification extends BaseActivityNotification
         ];
     
         if ($chapter) {
-            $listMessageData[$locale->trans('notifications.detail_chapter_name') => $chapter->name;
+            $listMessageData += [
+                $locale->trans('notifications.detail_chapter_name') => $chapter->name,
+            ];
         }
     
         $listMessageData += [
