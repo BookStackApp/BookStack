@@ -4,23 +4,23 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
+    'new_comment_subject' => 'Nový komentář na stránce: :pageName',
+    'new_comment_intro' => 'Uživatel okomentoval stránku v :appName:',
     'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_page_intro' => 'Nová stránka byla vytvořena v :appName:',
+    'updated_page_subject' => 'Aktualizovaná stránka: :pageName',
+    'updated_page_intro' => 'Stránka byla aktualizována v :appName:',
+    'updated_page_debounce' => 'Aby se zabránilo hromadnému zasílání upozornění, na nějakou dobu nebudete posílat oznámení o dalších úpravách této stránky stejným editorem.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'Název stránky:',
+    'detail_commenter' => 'Komentoval:',
+    'detail_comment' => 'Komentář:',
+    'detail_created_by' => 'Vytvořil:',
+    'detail_updated_by' => 'Aktualizoval(a):',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'Zobrazit komentář',
+    'action_view_page' => 'Zobrazit stránku',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'Toto oznámení vám bylo zasláno, protože :link pokrývá tento typ aktivity pro tuto položku.',
+    'footer_reason_link' => 'nastavení upozornění',
 ];

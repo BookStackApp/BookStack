@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Page Template',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Page Tags',
     'chapter_tags' => 'Chapter Tags',
     'book_tags' => 'Book Tags',

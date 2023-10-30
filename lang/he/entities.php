@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'תבנית דף',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'תגיות דף',
     'chapter_tags' => 'תגיות פרק',
     'book_tags' => 'תגיות ספר',

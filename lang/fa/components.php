@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'تصویر با موفقیت حذف شد',
     'image_replace' => 'جایگزینی تصویر',
     'image_replace_success' => 'تصویر با موفقیت به روز شد',
+    'image_rebuild_thumbs' => 'Regenerate Size Variations',
+    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
 
     // Code Editor
     'code_editor' => 'ویرایش کد',

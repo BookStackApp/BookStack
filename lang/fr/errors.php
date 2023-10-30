@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Impossible de récupérer l\'image depuis :url',
     'cannot_create_thumbs' => 'Le serveur ne peut pas créer de miniature, vérifier que l\'extension PHP GD est installée.',
     'server_upload_limit' => 'La taille du fichier est trop grande.',
+    'server_post_limit' => 'Le serveur ne peut pas recevoir la quantité de données fournie. Réessayez avec moins de données ou un fichier plus petit.',
     'uploaded'  => 'Le serveur n\'autorise pas l\'envoi d\'un fichier de cette taille. Veuillez essayer avec une taille de fichier réduite.',
 
     // Drawing & Images
     'image_upload_error' => 'Une erreur est survenue pendant l\'envoi de l\'image',
     'image_upload_type_error' => 'Le format de l\'image envoyée n\'est pas valide',
     'image_upload_replace_type' => 'Le fichier image doit être remplacé par une image du même type',
+    'image_upload_memory_limit' => 'Impossible de gérer le chargement de l\'image et/ou la création de miniatures en raison de limitations de ressources du système.',
+    'image_thumbnail_memory_limit' => 'Impossible de créer les variations de taille d\'image en raison des limitations de ressources du système.',
+    'image_gallery_thumbnail_memory_limit' => 'Impossible de créer les vignettes de la galerie en raison de limitations de ressources du système.',
     'drawing_data_not_found' => 'Les données de dessin n\'ont pas pu être chargées. Le fichier de dessin peut ne plus exister ou vous n\'avez pas la permission d\'y accéder.',
 
     // Attachments

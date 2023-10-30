@@ -239,8 +239,8 @@ return [
     'pages_md_insert_drawing' => 'Inserir Desenho',
     'pages_md_show_preview' => 'Mostrar pré-visualização',
     'pages_md_sync_scroll' => 'Sincronizar pré-visualização',
-    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
-    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
+    'pages_drawing_unsaved' => 'Desenho não-salvo encontrado',
+    'pages_drawing_unsaved_confirm' => 'Foram encontrados dados não-salvos de uma tentativa anterior de salvar o desenho. Você gostaria de restaurá-los e continuar editando este desenho?',
     'pages_not_in_chapter' => 'Página não está dentro de um capítulo',
     'pages_move' => 'Mover Página',
     'pages_copy' => 'Copiar Página',
@@ -295,6 +295,7 @@ return [
     'pages_is_template' => 'Modelo de Página',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => 'Tags de Página',
     'chapter_tags' => 'Tags de Capítulo',
     'book_tags' => 'Tags de Livro',
@@ -425,8 +426,8 @@ return [
     'watch_detail_new' => 'Acompanhando para novas páginas',
     'watch_detail_updates' => 'Acompanhando novas páginas e atualizações',
     'watch_detail_comments' => 'Acompanhando novas páginas, atualizações e comentários',
-    'watch_detail_parent_book' => 'Watching via parent book',
-    'watch_detail_parent_book_ignore' => 'Ignoring via parent book',
-    'watch_detail_parent_chapter' => 'Watching via parent chapter',
-    'watch_detail_parent_chapter_ignore' => 'Ignoring via parent chapter',
+    'watch_detail_parent_book' => 'Acompanhando através do livro pai',
+    'watch_detail_parent_book_ignore' => 'Ignorando através do livro pai',
+    'watch_detail_parent_chapter' => 'Acompanhando através do capítulo pai',
+    'watch_detail_parent_chapter_ignore' => 'Ignorando através do capítulo pai',
 ];

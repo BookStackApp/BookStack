@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Nu se poate obține imaginea de la :url',
     'cannot_create_thumbs' => 'Serverul nu poate crea miniaturi. Verifică dacă este instalată extensia GD PHP.',
     'server_upload_limit' => 'Serverul nu permite încărcarea acestei dimensiuni. Te rog să încerci o dimensiune mai mică a fișierului.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Serverul nu permite încărcarea acestei dimensiuni. Te rog să încerci o dimensiune mai mică a fișierului.',
 
     // Drawing & Images
     'image_upload_error' => 'A apărut o eroare la încărcarea imaginii',
     'image_upload_type_error' => 'Tipul de imagine încărcat nu este valid',
     'image_upload_replace_type' => 'Inlocuirea fisierului de imagine trebuie sa fie de acelasi tip',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments

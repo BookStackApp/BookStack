@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Ei suutnud laadida pilti aadressilt :url',
     'cannot_create_thumbs' => 'Server ei saa piltide eelvaateid tekitada. Veendu, et PHP GD laiendus on paigaldatud.',
     'server_upload_limit' => 'Server ei luba nii suurte failide üleslaadimist. Proovi väiksema failiga.',
+    'server_post_limit' => 'Server ei saa etteantud andmemahtu vastu võtta. Proovi uuesti väiksema failiga.',
     'uploaded'  => 'Server ei luba nii suurte failide üleslaadimist. Proovi väiksema failiga.',
 
     // Drawing & Images
     'image_upload_error' => 'Pildi üleslaadimisel tekkis viga',
     'image_upload_type_error' => 'Pildifaili tüüp ei ole korrektne',
     'image_upload_replace_type' => 'Pildifaili asendused peavad olema sama tüüpi',
+    'image_upload_memory_limit' => 'Pildi üleslaadimine ja/või eelvaadete tekitamine ebaõnnestus süsteemsete ressursipiirangute tõttu.',
+    'image_thumbnail_memory_limit' => 'Pildi eelvaadete tekitamine ebaõnnestus süsteemsete ressursipiirangute tõttu.',
+    'image_gallery_thumbnail_memory_limit' => 'Galerii eelvaadete tekitamine ebaõnnestus süsteemsete ressursipiirangute tõttu.',
     'drawing_data_not_found' => 'Joonise andmeid ei õnnestunud laadida. Joonist ei pruugi enam eksisteerida, või sul puuduvad õigused selle vaatamiseks.',
 
     // Attachments

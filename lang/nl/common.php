@@ -52,6 +52,7 @@ return [
     'filter_clear' => 'Wis Filter',
     'download' => 'Download',
     'open_in_tab' => 'Open als Tabblad',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Sorteeropties',

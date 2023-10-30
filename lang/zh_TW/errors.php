@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => '無法從 :url 取得圖片',
     'cannot_create_thumbs' => '伺服器無法建立縮圖。請檢查您是否安裝了 PHP 的 GD 擴充程式。',
     'server_upload_limit' => '伺服器不允許上傳這個大的檔案。請嘗試較小的檔案。',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => '伺服器不允許上傳這個大的檔案。請嘗試較小的檔案。',
 
     // Drawing & Images
     'image_upload_error' => '上傳圖片時發生錯誤',
     'image_upload_type_error' => '上傳圖片類型無效',
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => '無法載入繪圖資料，繪圖檔案可能不存在，或您可能沒有權限存取它。',
 
     // Attachments
