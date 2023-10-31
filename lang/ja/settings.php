@@ -210,7 +210,7 @@ return [
     'users_preferred_language' => '使用言語',
     'users_preferred_language_desc' => 'このオプションは、アプリケーションのユーザーインターフェイスに使用される言語を変更します。これは、ユーザーが作成したコンテンツには影響しません。',
     'users_social_accounts' => 'ソーシャルアカウント',
-    'users_social_accounts_desc' => 'View the status of the connected social accounts for this user. Social accounts can be used in addition to the primary authentication system for system access.',
+    'users_social_accounts_desc' => 'このユーザーのソーシャルアカウントのステータスを表示します。システムアクセスのためのプライマリ認証システムに加えて ソーシャルアカウントを使用することができます。',
     'users_social_accounts_info' => 'アカウントを接続すると、ログインが簡単になります。ここでアカウントの接続を解除すると、そのアカウントを経由したログインを禁止できます。接続解除後、各ソーシャルアカウントの設定にてこのアプリケーションへのアクセス許可を解除してください。',
     'users_social_connect' => 'アカウントを接続',
     'users_social_disconnect' => 'アカウントを接続解除',
