@@ -64,7 +64,7 @@ return [
     'search_content_type' => 'Innholdstype',
     'search_exact_matches' => 'Eksakte ord',
     'search_tags' => 'Søk på merker',
-    'search_options' => 'ALternativer',
+    'search_options' => 'Alternativer',
     'search_viewed_by_me' => 'Sett av meg',
     'search_not_viewed_by_me' => 'Ikke sett av meg',
     'search_permissions_set' => 'Tilganger er angitt',
