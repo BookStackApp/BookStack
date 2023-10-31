@@ -34,8 +34,8 @@ return [
     'image_delete_success' => '画像が削除されました',
     'image_replace' => '画像の差し替え',
     'image_replace_success' => '画像を更新しました',
-    'image_rebuild_thumbs' => 'Regenerate Size Variations',
-    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
+    'image_rebuild_thumbs' => 'サイズバリエーションを再生成',
+    'image_rebuild_thumbs_success' => '画像サイズバリエーションの再構築に成功しました！',
 
     // Code Editor
     'code_editor' => 'コードを編集する',
