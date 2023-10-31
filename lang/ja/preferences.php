@@ -5,10 +5,10 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => 'マイアカウント',
 
     'shortcuts' => 'ショートカット',
-    'shortcuts_interface' => 'UI Shortcut Preferences',
+    'shortcuts_interface' => 'UIショートカット設定',
     'shortcuts_toggle_desc' => 'ここでは、ナビゲーションやアクションに使用されるキーボードシステムインターフェイスのショートカットを有効または無効にすることができます。',
     'shortcuts_customize_desc' => '以下の各ショートカットをカスタマイズできます。ショートカットの入力を選択した後、希望のキーの組み合わせを押してください。',
     'shortcuts_toggle_label' => 'キーボードショートカットを有効にする',
