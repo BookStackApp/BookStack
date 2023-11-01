@@ -37,32 +37,32 @@ return [
     'book_delete'                 => 'sletta bok',
     'book_delete_notification'    => 'Boka vart sletta',
     'book_sort'                   => 'sorterte bok',
-    'book_sort_notification'      => 'Boken ble omsortert',
+    'book_sort_notification'      => 'Sorteringa vart endra',
 
     // Bookshelves
-    'bookshelf_create'            => 'opprettet hylle',
-    'bookshelf_create_notification'    => 'Hylllen ble opprettet',
-    'bookshelf_create_from_book'    => 'endret fra bok til hylle',
-    'bookshelf_create_from_book_notification'    => 'Boken ble konvertert til en bokhylle',
-    'bookshelf_update'                 => 'oppdatert hylle',
-    'bookshelf_update_notification'    => 'Hyllen ble oppdatert',
-    'bookshelf_delete'                 => 'slettet hylle',
-    'bookshelf_delete_notification'    => 'Hyllen ble slettet',
+    'bookshelf_create'            => 'oppretta hylle',
+    'bookshelf_create_notification'    => 'Hylla vart opprettet',
+    'bookshelf_create_from_book'    => 'endra frå bok til hylle',
+    'bookshelf_create_from_book_notification'    => 'Boka vart konvertert til ei bokhylle',
+    'bookshelf_update'                 => 'oppdaterte hylle',
+    'bookshelf_update_notification'    => 'Hylla vart oppdatert',
+    'bookshelf_delete'                 => 'sletta hylle',
+    'bookshelf_delete_notification'    => 'Hylla vart sletta',
 
     // Revisions
-    'revision_restore' => 'gjenopprettet revisjon',
-    'revision_delete' => 'slettet revisjon',
-    'revision_delete_notification' => 'Revisjon slettet',
+    'revision_restore' => 'gjenoppretta revisjon',
+    'revision_delete' => 'sletta revisjon',
+    'revision_delete_notification' => 'Revisjon sletta',
 
     // Favourites
-    'favourite_add_notification' => '«:name» ble lagt til i dine favoritter',
-    'favourite_remove_notification' => '«:name» ble fjernet fra dine favoritter',
+    'favourite_add_notification' => '«:name» vart lagt til i dine favorittar',
+    'favourite_remove_notification' => '«:name» vart fjerna frå dine favorittar',
 
     // Watching
-    'watch_update_level_notification' => 'Overvåkingsinnstillingene ble oppdatert',
+    'watch_update_level_notification' => 'Overvåkingsinnstillingene vart oppdatert',
 
     // Auth
-    'auth_login' => 'logget inn',
+    'auth_login' => 'logga inn',
     'auth_register' => 'registrert som ny bruker',
     'auth_password_reset_request' => 'etterspurt tilbakestilling av passord',
     'auth_password_reset_update' => 'tilbakestill bruker passord',
