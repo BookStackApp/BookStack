@@ -34,8 +34,8 @@ return [
     'image_delete_success' => 'Bilde ble slettet',
     'image_replace' => 'Erstatt bilde',
     'image_replace_success' => 'Bildefil ble oppdatert',
-    'image_rebuild_thumbs' => 'Regenerate Size Variations',
-    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
+    'image_rebuild_thumbs' => 'Regenerer størrelsesvarianter',
+    'image_rebuild_thumbs_success' => 'Variasjoner i bildestørrelse var gjenoppbygget!',
 
     // Code Editor
     'code_editor' => 'Endre kode',

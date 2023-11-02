@@ -253,3 +253,69 @@ window.addEventListener('library-cm6::configure-theme', event => {
 });
 ```
 </details>
+
+### `library-cm6::pre-init`
+
+This event is called just before any CodeMirror instances are initialised so that the instance configuration can be viewed and altered before the instance is created.
+
+#### Event Data
+
+- `usage` - A string label to identify the usage type of the CodeMirror instance in BookStack.
+- `editorViewConfig` - A reference to the [EditorViewConfig](https://codemirror.net/docs/ref/#view.EditorViewConfig) that will be used to create the instance.
+- `libEditorView` - The CodeMirror [EditorView](https://codemirror.net/docs/ref/#view.EditorView) class object, provided for convenience.
+- `libEditorState` - The CodeMirror [EditorState](https://codemirror.net/docs/ref/#state.EditorState) class object, provided for convenience.
+- `libCompartment` - The CodeMirror [Compartment](https://codemirror.net/docs/ref/#state.Compartment) class object, provided for convenience.
+
+##### Example
+
+The below shows how you'd enable the built-in line wrapping extension for page content code blocks: 
+
+<details>
+<summary>Show Example</summary>
+
+```javascript
+window.addEventListener('library-cm6::pre-init', event => {
+    const detail = event.detail;
+    const config = detail.editorViewConfig;
+    const EditorView = detail.libEditorView;
+    
+    if (detail.usage === 'content-code-block') {
+        config.extensions.push(EditorView.lineWrapping);
+    }
+});
+```
+</details>
+
+### `library-cm6::post-init`
+
+This event is called just after any CodeMirror instances are initialised so that you're able to gain a reference to the CodeMirror EditorView instance.
+
+#### Event Data
+
+- `usage` - A string label to identify the usage type of the CodeMirror instance in BookStack.
+- `editorView` - A reference to the [EditorView](https://codemirror.net/docs/ref/#view.EditorView) instance that has been created.
+- `editorViewConfig` - A reference to the [EditorViewConfig](https://codemirror.net/docs/ref/#view.EditorViewConfig) that was used to create the instance.
+- `libEditorView` - The CodeMirror [EditorView](https://codemirror.net/docs/ref/#view.EditorView) class object, provided for convenience.
+- `libEditorState` - The CodeMirror [EditorState](https://codemirror.net/docs/ref/#state.EditorState) class object, provided for convenience.
+- `libCompartment` - The CodeMirror [Compartment](https://codemirror.net/docs/ref/#state.Compartment) class object, provided for convenience.
+
+##### Example
+
+The below shows how you'd prepend some default text to all content (page) code blocks.
+
+<details>
+<summary>Show Example</summary>
+
+```javascript
+window.addEventListener('library-cm6::post-init', event => {
+    const detail = event.detail;
+    const editorView = detail.editorView;
+    
+    if (detail.usage === 'content-code-block') {
+        editorView.dispatch({
+          changes: {from: 0, to: 0, insert: 'Copyright 2023\n\n'}
+        });
+    }
+});
+```
+</details>

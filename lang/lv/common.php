@@ -42,7 +42,7 @@ return [
     'remove' => 'Noņemt',
     'add' => 'Pievienot',
     'configure' => 'Mainīt konfigurāciju',
-    'manage' => 'Manage',
+    'manage' => 'Pārvaldīt',
     'fullscreen' => 'Pilnekrāns',
     'favourite' => 'Pievienot favorītiem',
     'unfavourite' => 'Noņemt no favorītiem',
@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Notīrīt filtru',
     'download' => 'Lejupielādēt',
     'open_in_tab' => 'Atvērt cilnē',
-    'open' => 'Open',
+    'open' => 'Atvērt',
 
     // Sort Options
     'sort_options' => 'Kārtošanas Opcijas',

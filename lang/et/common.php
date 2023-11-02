@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Tühjenda filter',
     'download' => 'Laadi alla',
     'open_in_tab' => 'Ava vahelehel',
-    'open' => 'Open',
+    'open' => 'Ava',
 
     // Sort Options
     'sort_options' => 'Sorteerimise valikud',

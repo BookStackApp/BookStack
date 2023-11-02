@@ -336,7 +336,10 @@ class WatchTest extends TestCase
         $activities = [
             ActivityType::PAGE_CREATE => $entities['page'],
             ActivityType::PAGE_UPDATE => $entities['page'],
-            ActivityType::COMMENT_CREATE => (new Comment([]))->forceFill(['entity_id' => $entities['page']->id, 'entity_type' => $entities['page']->getMorphClass()]),
+            ActivityType::COMMENT_CREATE => Comment::factory()->make([
+                'entity_id' => $entities['page']->id,
+                'entity_type' => $entities['page']->getMorphClass(),
+            ]),
         ];
 
         $notifications = Notification::fake();

@@ -44,16 +44,16 @@ return [
     'cannot_get_image_from_url' => 'Kan ikke hente bilde fra :url',
     'cannot_create_thumbs' => 'Kan ikke opprette miniatyrbilder. GD PHP er ikke installert.',
     'server_upload_limit' => 'Vedlegget er for stort, forsøk med et mindre vedlegg.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Serveren kan ikkje ta i mot denne mengda med data. Prøv igjen med mindre data eller ei mindre fil.',
     'uploaded'  => 'Tjenesten aksepterer ikke vedlegg som er så stor.',
 
     // Drawing & Images
     'image_upload_error' => 'Bildet kunne ikke lastes opp, forsøk igjen.',
     'image_upload_type_error' => 'Bildeformatet støttes ikke, forsøk med et annet format.',
     'image_upload_replace_type' => 'Bildeerstatning må være av samme type',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_upload_memory_limit' => 'Klarte ikkje å ta i mot bilete og lage miniatyrbilete grunna grenser knytt til systemet.',
+    'image_thumbnail_memory_limit' => 'Klarte ikkje å lage miniatyrbilete grunna grenser knytt til systemet.',
+    'image_gallery_thumbnail_memory_limit' => 'Klarte ikkje å lage miniatyrbilete grunna grenser knytt til systemet.',
     'drawing_data_not_found' => 'Tegningsdata kunne ikke lastes. Det er mulig at tegningsfilen ikke finnes lenger, eller du har ikke rettigheter til å få tilgang til den.',
 
     // Attachments
