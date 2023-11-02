@@ -149,7 +149,7 @@ html.markdown-editor-display.dark-mode {
   font-size: 11px;
   line-height: 1.6;
   border-bottom: 1px solid #CCC;
-  //background-color: var(--color-primary-light);
+  @include lightDark(background-color, #FFF, #333);
   @include lightDark(border-color, #CCC, #000);
   flex: none;
   @include whenDark {
