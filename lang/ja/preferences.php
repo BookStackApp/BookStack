@@ -5,10 +5,10 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => 'マイアカウント',
 
     'shortcuts' => 'ショートカット',
-    'shortcuts_interface' => 'UI Shortcut Preferences',
+    'shortcuts_interface' => 'UIショートカット設定',
     'shortcuts_toggle_desc' => 'ここでは、ナビゲーションやアクションに使用されるキーボードシステムインターフェイスのショートカットを有効または無効にすることができます。',
     'shortcuts_customize_desc' => '以下の各ショートカットをカスタマイズできます。ショートカットの入力を選択した後、希望のキーの組み合わせを押してください。',
     'shortcuts_toggle_label' => 'キーボードショートカットを有効にする',
@@ -29,23 +29,23 @@ return [
     'notifications_watched' => 'ウォッチ/通知無効 項目',
     'notifications_watched_desc' => ' 以下はカスタムウォッチの設定が適用されている項目です。 これらの設定を更新するには、項目を表示してサイドバーのウォッチオプションを参照してください。',
 
-    'auth' => 'Access & Security',
-    'auth_change_password' => 'Change Password',
-    'auth_change_password_desc' => 'Change the password you use to log-in to the application. This must be at least 8 characters long.',
-    'auth_change_password_success' => 'Password has been updated!',
+    'auth' => 'アクセス & セキュリティ',
+    'auth_change_password' => 'パスワードの変更',
+    'auth_change_password_desc' => 'アプリケーションにログインするために使用するパスワードを変更します。これは少なくとも8文字以上でなければなりません。',
+    'auth_change_password_success' => 'パスワードが更新されました！',
 
-    'profile' => 'Profile Details',
-    'profile_desc' => 'Manage the details of your account which represents you to other users, in addition to details that are used for communication and system personalisation.',
-    'profile_view_public' => 'View Public Profile',
-    'profile_name_desc' => 'Configure your display name which will be visible to other users in the system through the activity you perform, and content you own.',
-    'profile_email_desc' => 'This email will be used for notifications and, depending on active system authentication, system access.',
-    'profile_email_no_permission' => 'Unfortunately you don\'t have permission to change your email address. If you want to change this, you\'d need to ask an administrator to change this for you.',
-    'profile_avatar_desc' => 'Select an image which will be used to represent yourself to others in the system. Ideally this image should be square and about 256px in width and height.',
-    'profile_admin_options' => 'Administrator Options',
-    'profile_admin_options_desc' => 'Additional administrator-level options, like those to manage role assignments, can be found for your user account in the "Settings > Users" area of the application.',
+    'profile' => 'プロフィール詳細',
+    'profile_desc' => 'コミュニケーションやシステムのパーソナライズでの使用および、他のユーザーに表示されるアカウントの詳細を管理します。',
+    'profile_view_public' => '公開プロフィールを表示',
+    'profile_name_desc' => '実行したアクティビティや所有しているコンテンツを通じて、システム内で他のユーザーに表示される表示名を設定します。',
+    'profile_email_desc' => 'このメールアドレスは通知、アクティブなシステム認証、システムアクセスに使用されます。',
+    'profile_email_no_permission' => '残念ながらメールアドレスを変更する権限がありません。 これを変更したい場合は管理者に変更を依頼する必要があります。',
+    'profile_avatar_desc' => 'システム内で他のユーザーに自分を表現するために使用される画像を選択します。 この画像は幅と高さが256pxの正方形が最適です。',
+    'profile_admin_options' => '管理者オプション',
+    'profile_admin_options_desc' => '役割の割り当て管理など、管理者レベルの追加オプションはアプリケーションの「設定 > ユーザー」エリアにあります。',
 
-    'delete_account' => 'Delete Account',
-    'delete_my_account' => 'Delete My Account',
-    'delete_my_account_desc' => 'This will fully delete your user account from the system. You will not be able to recover this account or revert this action. Content you\'ve created, such as created pages and uploaded images, will remain.',
-    'delete_my_account_warning' => 'Are you sure you want to delete your account?',
+    'delete_account' => 'アカウントを削除',
+    'delete_my_account' => '自身のアカウント削除',
+    'delete_my_account_desc' => 'システムからユーザーアカウントを完全に削除します。このアカウントを復元したり、この操作を元に戻したりすることはできません。 作成されたページやアップロードされた画像などのコンテンツは残ります。',
+    'delete_my_account_warning' => '本当にアカウントを削除しますか？',
 ];

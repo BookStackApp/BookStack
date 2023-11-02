@@ -37,88 +37,88 @@ return [
     'book_delete'                 => 'sletta bok',
     'book_delete_notification'    => 'Boka vart sletta',
     'book_sort'                   => 'sorterte bok',
-    'book_sort_notification'      => 'Boken ble omsortert',
+    'book_sort_notification'      => 'Sorteringa vart endra',
 
     // Bookshelves
-    'bookshelf_create'            => 'opprettet hylle',
-    'bookshelf_create_notification'    => 'Hylllen ble opprettet',
-    'bookshelf_create_from_book'    => 'endret fra bok til hylle',
-    'bookshelf_create_from_book_notification'    => 'Boken ble konvertert til en bokhylle',
-    'bookshelf_update'                 => 'oppdatert hylle',
-    'bookshelf_update_notification'    => 'Hyllen ble oppdatert',
-    'bookshelf_delete'                 => 'slettet hylle',
-    'bookshelf_delete_notification'    => 'Hyllen ble slettet',
+    'bookshelf_create'            => 'oppretta hylle',
+    'bookshelf_create_notification'    => 'Hylla vart opprettet',
+    'bookshelf_create_from_book'    => 'endra frå bok til hylle',
+    'bookshelf_create_from_book_notification'    => 'Boka vart konvertert til ei bokhylle',
+    'bookshelf_update'                 => 'oppdaterte hylle',
+    'bookshelf_update_notification'    => 'Hylla vart oppdatert',
+    'bookshelf_delete'                 => 'sletta hylle',
+    'bookshelf_delete_notification'    => 'Hylla vart sletta',
 
     // Revisions
-    'revision_restore' => 'gjenopprettet revisjon',
-    'revision_delete' => 'slettet revisjon',
-    'revision_delete_notification' => 'Revisjon slettet',
+    'revision_restore' => 'gjenoppretta revisjon',
+    'revision_delete' => 'sletta revisjon',
+    'revision_delete_notification' => 'Revisjon sletta',
 
     // Favourites
-    'favourite_add_notification' => '«:name» ble lagt til i dine favoritter',
-    'favourite_remove_notification' => '«:name» ble fjernet fra dine favoritter',
+    'favourite_add_notification' => '«:name» vart lagt til i dine favorittar',
+    'favourite_remove_notification' => '«:name» vart fjerna frå dine favorittar',
 
     // Watching
-    'watch_update_level_notification' => 'Overvåkingsinnstillingene ble oppdatert',
+    'watch_update_level_notification' => 'Overvåkingsinnstillingene vart oppdatert',
 
     // Auth
-    'auth_login' => 'logget inn',
-    'auth_register' => 'registrert som ny bruker',
-    'auth_password_reset_request' => 'etterspurt tilbakestilling av passord',
-    'auth_password_reset_update' => 'tilbakestill bruker passord',
+    'auth_login' => 'logga inn',
+    'auth_register' => 'registrert som ny brukar',
+    'auth_password_reset_request' => 'ba om tilbakestilling av passord',
+    'auth_password_reset_update' => 'tilbakestill brukarpassord',
     'mfa_setup_method' => 'konfigurert MFA-metode',
-    'mfa_setup_method_notification' => 'Flerfaktor-metoden ble konfigurert',
-    'mfa_remove_method' => 'fjernet MFA-metode',
-    'mfa_remove_method_notification' => 'Flerfaktor-metoden ble fjernet',
+    'mfa_setup_method_notification' => 'Fleirfaktor-metoden vart konfigurert',
+    'mfa_remove_method' => 'fjerna MFA-metode',
+    'mfa_remove_method_notification' => 'Fleirfaktor-metoden vart fjerna',
 
     // Settings
-    'settings_update' => 'oppdaterte innstillinger',
-    'settings_update_notification' => 'Innstillingene er oppdatert',
-    'maintenance_action_run' => 'kjørte vedlikeholdshandling',
+    'settings_update' => 'oppdaterte innstillingar',
+    'settings_update_notification' => 'Innstillingane er oppdatert',
+    'maintenance_action_run' => 'kjørte vedlikehaldshandling',
 
     // Webhooks
-    'webhook_create' => 'opprettet webhook',
-    'webhook_create_notification' => 'Webhook ble opprettet',
+    'webhook_create' => 'oppretta webhook',
+    'webhook_create_notification' => 'Webhook vart oppretta',
     'webhook_update' => 'oppdatert webhook',
-    'webhook_update_notification' => 'Webhook ble oppdatert',
-    'webhook_delete' => 'slettet webhook',
-    'webhook_delete_notification' => 'Webhook ble slettet',
+    'webhook_update_notification' => 'Webhook vart oppdatert',
+    'webhook_delete' => 'sletta webhook',
+    'webhook_delete_notification' => 'Webhook vart sletta',
 
     // Users
-    'user_create' => 'opprettet bruker',
-    'user_create_notification' => 'Bruker ble opprettet',
-    'user_update' => 'oppdatert bruker',
-    'user_update_notification' => 'Brukeren ble oppdatert',
-    'user_delete' => 'slettet bruker',
-    'user_delete_notification' => 'Brukeren ble fjernet',
+    'user_create' => 'oppretta brukar',
+    'user_create_notification' => 'Brukar vart oppretta',
+    'user_update' => 'oppdatert brukar',
+    'user_update_notification' => 'Brukaren vart oppdatert',
+    'user_delete' => 'sletta brukar',
+    'user_delete_notification' => 'Brukaren vart fjerna',
 
     // API Tokens
-    'api_token_create' => 'opprettet api token',
-    'api_token_create_notification' => 'API-token er opprettet',
+    'api_token_create' => 'oppretta api token',
+    'api_token_create_notification' => 'API-token er oppretta',
     'api_token_update' => 'oppdatert api token',
     'api_token_update_notification' => 'API-token oppdatert',
-    'api_token_delete' => 'slettet api token',
+    'api_token_delete' => 'sletta api token',
     'api_token_delete_notification' => 'API-token vart sletta',
 
     // Roles
-    'role_create' => 'opprettet rolle',
-    'role_create_notification' => 'Rollen ble opprettet',
-    'role_update' => 'oppdatert rolle',
-    'role_update_notification' => 'Rollen ble oppdatert',
-    'role_delete' => 'slettet rolle',
-    'role_delete_notification' => 'Rollen ble fjernet',
+    'role_create' => 'oppretta rolle',
+    'role_create_notification' => 'Rolla vart oppretta',
+    'role_update' => 'oppdatert rolla',
+    'role_update_notification' => 'Rolla vart oppdatert',
+    'role_delete' => 'sletta rolla',
+    'role_delete_notification' => 'Rolla vart fjerna',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'tømt resirkulering bin',
-    'recycle_bin_restore' => 'gjenopprettet fra papirkurven',
-    'recycle_bin_destroy' => 'fjernet fra papirkurven',
+    'recycle_bin_empty' => 'tømt søppelbøtta',
+    'recycle_bin_restore' => 'gjenoppretta frå søppelbøtta',
+    'recycle_bin_destroy' => 'fjerna frå søppelbøtta',
 
     // Comments
     'commented_on'                => 'kommenterte på',
     'comment_create'              => 'lagt til kommentar',
     'comment_update'              => 'oppdatert kommentar',
-    'comment_delete'              => 'slettet kommentar',
+    'comment_delete'              => 'sletta kommentar',
 
     // Other
-    'permissions_update'          => 'oppdaterte tilganger',
+    'permissions_update'          => 'oppdaterte tilgangar',
 ];
