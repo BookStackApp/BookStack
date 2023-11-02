@@ -41,7 +41,7 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_notification'    => 'Könyvespolc sikeresen létrehozva',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'updated shelf',
@@ -85,9 +85,9 @@ return [
     'webhook_delete_notification' => 'Webhook successfully deleted',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'felhasználó létrehozása',
+    'user_create_notification' => 'Felhasználó sikeresen létrehozva',
+    'user_update' => 'felhasználó módosítása',
     'user_update_notification' => 'Felhasználó sikeresen frissítve',
     'user_delete' => 'deleted user',
     'user_delete_notification' => 'Felhasználó sikeresen eltávolítva',
@@ -117,8 +117,8 @@ return [
     'commented_on'                => 'megjegyzést fűzött hozzá:',
     'comment_create'              => 'added comment',
     'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_delete'              => 'megjegyzés törlése',
 
     // Other
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'engedélyek frissítve',
 ];
