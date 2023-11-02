@@ -274,11 +274,22 @@ body.tox-fullscreen, body.markdown-fullscreen {
     line-height: 1.6;
   }
   .tabs-inner > button:hover,  &.open .tabs-inner > button.active {
-    background-color: var(--color-primary-light);
-    color: var(--color-primary);
+    color: var(--color-link) !important;
+    position: relative;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 0;
+      height: 100%;
+      background-color: currentColor;
+      opacity: .075;
+    }
   }
   &.open .tabs-inner > button.active {
-    border-inline-end: 1px solid var(--color-primary);
+    border-inline-end: 1px solid var(--color-link);
     margin-inline-end: -1px;
   }
   h4 {
