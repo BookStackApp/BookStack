@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'відновив сторінку',
     'page_restore_notification'   => 'Сторінка успішно відновлена',
     'page_move'                   => 'перемістив сторінку',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Сторінку успішно перенесено',
 
     // Chapters
     'chapter_create'              => 'створив розділ',

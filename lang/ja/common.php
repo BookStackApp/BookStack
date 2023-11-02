@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'フィルターを解除',
     'download' => 'ダウンロード',
     'open_in_tab' => 'タブで開く',
-    'open' => 'Open',
+    'open' => '開く',
 
     // Sort Options
     'sort_options' => '並べ替えオプション',
