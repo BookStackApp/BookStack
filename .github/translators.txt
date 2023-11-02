@@ -348,7 +348,7 @@ robing29 :: German
 Bruno Eduardo de Jesus Barroso (brunoejb) :: Portuguese, Brazilian
 Igor V Belousov (biv) :: Russian
 David Bauer (davbauer) :: German
-Guttorm Hveem (guttormhveem) :: Norwegian Bokmal; Norwegian Nynorsk
+Guttorm Hveem (guttormhveem) :: Norwegian Nynorsk; Norwegian Bokmal
 Minh Giang Truong (minhgiang1204) :: Vietnamese
 Ioannis Ioannides (i.ioannides) :: Greek
 Vadim (vadrozh) :: Russian
@@ -357,9 +357,9 @@ Paulo Henrique (paulohsantos114) :: Portuguese, Brazilian
 Dženan (Dzenan) :: Swedish
 Péter Péli (peter.peli) :: Hungarian
 TWME :: Chinese Traditional
-Sascha (Man-in-Black) :: German
+Sascha (Man-in-Black) :: German; German Informal
 Mohammadreza Madadi (madadi.efl) :: Persian
-Konstantin Kovacheli (kkovacheli) :: Ukrainian
+Konstantin (kkovacheli) :: Ukrainian; Russian
 link1183 :: French
 Renan (rfpe) :: Portuguese, Brazilian
 Lowkey (bbsweb) :: Chinese Simplified
@@ -367,3 +367,5 @@ ZZnOB (zznobzz) :: Russian
 rupus :: Swedish
 developernecsys :: Norwegian Nynorsk
 xuan LI (xuanli233) :: Chinese Simplified
+LameeQS :: Latvian
+Sorin T. (trimbitassorin) :: Romanian
