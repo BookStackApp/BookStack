@@ -34,8 +34,8 @@ return [
     'image_delete_success' => '图片删除成功',
     'image_replace' => '替换图片',
     'image_replace_success' => '图片文件更新成功',
-    'image_rebuild_thumbs' => 'Regenerate Size Variations',
-    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
+    'image_rebuild_thumbs' => '重新生成大小变化',
+    'image_rebuild_thumbs_success' => '图像大小变化成功重建！',
 
     // Code Editor
     'code_editor' => '编辑代码',
