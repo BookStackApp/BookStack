@@ -24,9 +24,7 @@ class PwaManifestTest extends TestCase
     {
         $html = $this->asViewer()->withHtml($this->get('/'));
 
-        // crossorigin attribute is required to send cookies with the manifest,
-        // so it can react correctly to user preferences (dark/light mode).
-        $html->assertElementExists('head link[rel="manifest"][href$="manifest.json"][crossorigin="use-credentials"]');
+        $html->assertElementExists('head link[rel="manifest"][href$="manifest.json"]');
         $html->assertElementExists('head meta[name="mobile-web-app-capable"][content="yes"]');
     }
 

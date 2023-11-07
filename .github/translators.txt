@@ -369,3 +369,5 @@ developernecsys :: Norwegian Nynorsk
 xuan LI (xuanli233) :: Chinese Simplified
 LameeQS :: Latvian
 Sorin T. (trimbitassorin) :: Romanian
+poesty :: Chinese Simplified
+balmag :: Hungarian
