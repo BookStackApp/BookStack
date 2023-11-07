@@ -295,7 +295,7 @@ return [
     'pages_is_template' => '页面模板',
 
     // Editor Sidebar
-    'toggle_sidebar' => 'Toggle Sidebar',
+    'toggle_sidebar' => '切换侧边栏',
     'page_tags' => '页面标签',
     'chapter_tags' => '章节标签',
     'book_tags' => '图书标签',
