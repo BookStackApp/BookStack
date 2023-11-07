@@ -71,7 +71,7 @@ return [
     'back_to_top' => 'بازگشت به بالا',
     'skip_to_main_content' => 'رفتن به محتوای اصلی',
     'toggle_details' => 'معکوس کردن اطلاعات',
-    'toggle_thumbnails' => 'معکوس ریز عکس ها',
+    'toggle_thumbnails' => 'معکوس کردن ریزعکس‌ها',
     'details' => 'جزییات',
     'grid_view' => 'نمایش شبکه‌ای',
     'list_view' => 'نمای لیست',
