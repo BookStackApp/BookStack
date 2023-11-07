@@ -6,6 +6,11 @@ class PwaManifestBuilder
 {
     public function build(): array
     {
+        // Note, while we attempt to use the user's preference here, the request to the manifest
+        // does not start a session, so we won't have current user context.
+        // This was attempted but removed since manifest calls could affect user session
+        // history tracking and back redirection.
+        // Context: https://github.com/BookStackApp/BookStack/issues/4649
         $darkMode = (bool) setting()->getForCurrentUser('dark-mode-enabled');
         $appName = setting('app-name');
 
