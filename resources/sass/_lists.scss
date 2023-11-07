@@ -672,7 +672,7 @@ ul.pagination {
   @include lightDark(color, #555, #eee);
   fill: currentColor;
   text-align: start !important;
-  max-height: 80vh;
+  max-height: 500px;
   overflow-y: auto;
   &.anchor-left {
     inset-inline-end: auto;
