@@ -16,7 +16,7 @@
                     <input type="hidden" name="{{ $key }}" value="{{ $val }}">
                 @endforeach
 
-                <div component="dropdown" class="list-sort-type dropdown-container">
+                <div component="dropdown" class="list-sort-type dropdown-container relative">
                     <label for="">{{ trans('settings.audit_event_filter') }}</label>
                     <button refs="dropdown@toggle"
                             type="button"
