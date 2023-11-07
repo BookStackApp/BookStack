@@ -52,7 +52,7 @@ return [
     'filter_clear' => '清除过滤器',
     'download' => '下载',
     'open_in_tab' => '在标签页中打开。',
-    'open' => 'Open',
+    'open' => '打开',
 
     // Sort Options
     'sort_options' => '排序选项',
