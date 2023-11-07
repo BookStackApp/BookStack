@@ -10,7 +10,7 @@ return [
     'settings' => 'تنظیمات',
     'settings_save' => 'تنظیمات را ذخیره کن',
     'system_version' => 'نسخه سیستم',
-    'categories' => 'دسته بندی ها',
+    'categories' => 'دسته‌بندی‌ها',
 
     // App Settings
     'app_customization' => 'سفارشی‌سازی',
@@ -134,8 +134,8 @@ return [
     'audit_date_to' => 'محدوده تاریخ تا',
 
     // Role Settings
-    'roles' => 'نقش ها',
-    'role_user_roles' => 'نقش های کاربر',
+    'roles' => 'نقش‌ها',
+    'role_user_roles' => 'نقش‌های کاربر',
     'roles_index_desc' => 'نقش‌ها برای گروه‌بندی کاربران و ارائه مجوز سیستم به اعضای آن‌ها استفاده می‌شوند. هنگامی که یک کاربر عضو چندین نقش باشد، امتیازات اعطا شده روی هم قرار می‌گیرند و کاربر تمام مجوزها را به ارث می‌برد.',
     'roles_x_users_assigned' => ':count کاربر اختصاص داده شده|:count کاربر اختصاص داده شده',
     'roles_x_permissions_provided' => ':count مجوز|:count مجوز',
