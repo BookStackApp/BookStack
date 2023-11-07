@@ -13,8 +13,8 @@ return [
     'categories' => 'دسته بندی ها',
 
     // App Settings
-    'app_customization' => 'سفارشی سازی',
-    'app_features_security' => 'ویژگی ها و امنیت',
+    'app_customization' => 'سفارشی‌سازی',
+    'app_features_security' => 'ویژگی‌ها و امنیت',
     'app_name' => 'نام نرم افزار',
     'app_name_desc' => 'این نام در هدر و در هر ایمیل ارسال شده توسط سیستم نشان داده شده است.',
     'app_name_header' => 'نمایش نام در هدر',
