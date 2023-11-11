@@ -66,10 +66,10 @@ return [
     'auth_register' => 's’ha registrat com a usuari nou',
     'auth_password_reset_request' => 'ha sol·licitat un restabliment de la contrasenya',
     'auth_password_reset_update' => 'ha restablert la contrasenya de l’usuari',
-    'mfa_setup_method' => 'ha configurat un mètode d’autenticació de doble factor',
-    'mfa_setup_method_notification' => 'Mètode d’autenticació de doble factor configurat correctament',
-    'mfa_remove_method' => 'ha suprimit un mètode d’autenticació de doble factor',
-    'mfa_remove_method_notification' => 'Mètode d’autenticació de doble factor suprimit correctament',
+    'mfa_setup_method' => 'ha configurat un mètode d’autenticació de múltiple factor',
+    'mfa_setup_method_notification' => 'Mètode d’autenticació de múltiple factor configurat correctament',
+    'mfa_remove_method' => 'ha suprimit un mètode d’autenticació de múltiple factor',
+    'mfa_remove_method_notification' => 'Mètode d’autenticació de múltiple factor suprimit correctament',
 
     // Settings
     'settings_update' => 'ha actualitzat la configuració',
