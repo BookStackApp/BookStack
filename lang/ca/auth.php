@@ -60,7 +60,7 @@ return [
     'email_confirm_action' => 'Confirma el correu',
     'email_confirm_send_error' => 'Cal confirmar l’adreça electrònica, però el sistema no ha pogut enviar el correu electrònic. Poseu-vos en contacte amb l’administrador perquè s’asseguri que el correu electrònic està ben configurat.',
     'email_confirm_success' => 'Heu confirmat el vostre correu electrònic! Ara hauríeu de poder iniciar la sessió fent servir aquesta adreça electrònica.',
-    'email_confirm_resent' => 'S’ha tornat a enviar el correu electrònic de confirmació. Reviseu la vostra safata d\'entrada.',
+    'email_confirm_resent' => 'S’ha tornat a enviar el correu electrònic de confirmació. Reviseu la vostra safata d’entrada.',
     'email_confirm_thanks' => 'Gràcies per la confirmació!',
     'email_confirm_thanks_desc' => 'Espereu uns instants mentre gestionem la confirmació. Si no se us redirigeix d’aquí a 3 segons, premeu l’enllaç «Continua» de sota per a continuar.',
 
