@@ -15,7 +15,7 @@ return [
     // App Settings
     'app_customization' => 'Personalització',
     'app_features_security' => 'Funcionalitats i seguretat',
-    'app_name' => 'Nom de l\'aplicació',
+    'app_name' => 'Nom de l’aplicació',
     'app_name_desc' => 'Aquest nom es mostra a la capçalera i en tots els correus electrònics enviats pel sistema.',
     'app_name_header' => 'Mostra el nom a la capçalera',
     'app_public_access' => 'Accés públic',
@@ -71,13 +71,13 @@ return [
     'reg_email_confirmation_toggle' => 'Requereix la confirmació per correu electrònic',
     'reg_confirm_email_desc' => 'Si s’utilitza la restricció de dominis, serà obligatòria la confirmació per correu electrònic, i s’ignorarà aquesta opció.',
     'reg_confirm_restrict_domain' => 'Restricció de dominis',
-    'reg_confirm_restrict_domain_desc' => 'Introduïu una llista separada per comes de dominis de correu electrònic als quals voleu restringir els registres. S’enviarà un correu electrònic als usuaris perquè confirmin la seva adreça abans de permetre’ls interactuar amb l\'aplicació. <br> Tingueu en compte que els usuaris podran canviar les seves adreces electròniques després de registrar-se correctament.',
+    'reg_confirm_restrict_domain_desc' => 'Introduïu una llista separada per comes de dominis de correu electrònic als quals voleu restringir els registres. S’enviarà un correu electrònic als usuaris perquè confirmin la seva adreça abans de permetre’ls interactuar amb l’aplicació. <br> Tingueu en compte que els usuaris podran canviar les seves adreces electròniques després de registrar-se correctament.',
     'reg_confirm_restrict_domain_placeholder' => 'No hi ha cap restricció',
 
     // Maintenance settings
     'maint' => 'Manteniment',
     'maint_image_cleanup' => 'Neteja les imatges',
-    'maint_image_cleanup_desc' => 'Escaneja el contingut de les pàgines i les revisions per a comprovar quines imatges i diagrames estan en ús actualment i quines imatges són redundants. Assegureu-vos de crear una còpia de seguretat completa de la base de dades i de les imatges abans d\'executar això.',
+    'maint_image_cleanup_desc' => 'Escaneja el contingut de les pàgines i les revisions per a comprovar quines imatges i diagrames estan en ús actualment i quines imatges són redundants. Assegureu-vos de crear una còpia de seguretat completa de la base de dades i de les imatges abans d’executar això.',
     'maint_delete_images_only_in_revisions' => 'Suprimeix també les imatges que només existeixin en revisions antigues de pàgines',
     'maint_image_cleanup_run' => 'Executa la neteja',
     'maint_image_cleanup_warning' => 'S’han trobat :count imatges potencialment no utilitzades. Segur que voleu suprimir aquestes imatges?',
@@ -119,7 +119,7 @@ return [
     'recycle_bin_restore_notification' => 'S’han restaurat :count elements en total de la paperera de reciclatge.',
 
     // Audit Log
-    'audit' => 'Registre d\'auditoria',
+    'audit' => 'Registre d’auditoria',
     'audit_desc' => 'Aquest registre d’auditoria mostra una llista d’activitats registrades al sistema. Aquesta llista no té cap filtre, al contrari que altres llistes d’activitat similars en què es tenen en compte els filtres de permisos.',
     'audit_event_filter' => 'Filtre d’esdeveniments',
     'audit_event_filter_no_filter' => 'Sense filtre',
@@ -135,7 +135,7 @@ return [
 
     // Role Settings
     'roles' => 'Rols',
-    'role_user_roles' => 'Rols d\'usuari',
+    'role_user_roles' => 'Rols d’usuari',
     'roles_index_desc' => 'Els rols s’utilitzen per a agrupar usuaris i proporcionar permisos del sistema a llurs membres. Quan un usuari és membre de múltiples rols, els privilegis que li concedeixin s’acumularan i l’usuari heretarà totes les habilitats.',
     'roles_x_users_assigned' => ':count usuari assignat|:count usuaris assignats',
     'roles_x_permissions_provided' => ':count permís|:count permisos',
@@ -211,7 +211,7 @@ return [
     'users_preferred_language_desc' => 'Aquesta opció canviarà la llengua utilitzada a la interfície d’usuari de l’aplicació. No afectarà el contingut creat pels usuaris.',
     'users_social_accounts' => 'Comptes socials',
     'users_social_accounts_desc' => 'Vegeu l’estat dels comptes socials connectats d’aquest usuari. Els comptes socials es poden fer servir per a accedir al sistema de manera addicional al sistema d’autenticació principal.',
-    'users_social_accounts_info' => 'Aquí podeu connectar altres comptes per a un inici de sessió més ràpid i còmode. Si desconnecteu un compte aquí, no en revoqueu l’accés d\'autorització donat amb anterioritat. Revoqueu-hi l’accés a la configuració del perfil del compte social que hàgiu connectat.',
+    'users_social_accounts_info' => 'Aquí podeu connectar altres comptes per a un inici de sessió més ràpid i còmode. Si desconnecteu un compte aquí, no en revoqueu l’accés d’autorització donat amb anterioritat. Revoqueu-hi l’accés a la configuració del perfil del compte social que hàgiu connectat.',
     'users_social_connect' => 'Connecta un compte',
     'users_social_disconnect' => 'Desconnecta el compte',
     'users_social_status_connected' => 'Connectat',
@@ -220,7 +220,7 @@ return [
     'users_social_disconnected' => 'El compte de :socialAccount ’ha desassociat correctament del vostre perfil.',
     'users_api_tokens' => 'Testimonis de l’API',
     'users_api_tokens_desc' => 'Creeu i gestioneu els testimonis d’accés que s’utilitzen per a autenticar-vos a l’API REST del BookStack. Els permisos de l’API es gestionen fent servir l’usuari al qual pertany el testimoni.',
-    'users_api_tokens_none' => 'No s’ha creat cap testimoni de l\'API per a aquest usuari',
+    'users_api_tokens_none' => 'No s’ha creat cap testimoni de l’API per a aquest usuari',
     'users_api_tokens_create' => 'Crea un testimoni',
     'users_api_tokens_expires' => 'Caducitat',
     'users_api_tokens_docs' => 'Documentació de l’API',
