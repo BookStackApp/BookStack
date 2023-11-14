@@ -125,7 +125,7 @@ class HtmlDocument
      */
     public function getHtml(): string
     {
-        return $this->document->saveHTML();
+        return $this->document->saveHTML($this->document->documentElement);
     }
 
     /**
