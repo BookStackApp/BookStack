@@ -12,8 +12,6 @@ return [
     'updated_page_intro' => 'Eine Seite wurde in :appName aktualisiert:',
     'updated_page_debounce' => 'Um eine Flut von Benachrichtigungen zu vermeiden, wirst du für eine gewisse Zeit keine Benachrichtigungen für weitere Bearbeitungen dieser Seite durch denselben Bearbeiter erhalten.',
 
-    'detail_book_name' => 'Buchname:',
-    'detail_chapter_name' => 'Kapitelname:',
     'detail_page_name' => 'Seitenname:',
     'detail_commenter' => 'Kommentator:',
     'detail_comment' => 'Kommentar:',
