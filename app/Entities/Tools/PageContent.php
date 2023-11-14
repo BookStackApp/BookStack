@@ -10,11 +10,10 @@ use BookStack\Theming\ThemeEvents;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\HtmlContentFilter;
-use DOMDocument;
+use BookStack\Util\HtmlDocument;
 use DOMElement;
 use DOMNode;
 use DOMNodeList;
-use DOMXPath;
 use Illuminate\Support\Str;
 
 class PageContent
@@ -56,27 +55,17 @@ class PageContent
             return $htmlText;
         }
 
-        $doc = $this->loadDocumentFromHtml($htmlText);
-        $container = $doc->documentElement;
-        $body = $container->childNodes->item(0);
-        $childNodes = $body->childNodes;
-        $xPath = new DOMXPath($doc);
+        $doc = new HtmlDocument($htmlText);
 
         // Get all img elements with image data blobs
-        $imageNodes = $xPath->query('//img[contains(@src, \'data:image\')]');
+        $imageNodes = $doc->queryXPath('//img[contains(@src, \'data:image\')]');
         foreach ($imageNodes as $imageNode) {
             $imageSrc = $imageNode->getAttribute('src');
             $newUrl = $this->base64ImageUriToUploadedImageUrl($imageSrc);
             $imageNode->setAttribute('src', $newUrl);
         }
 
-        // Generate inner html as a string
-        $html = '';
-        foreach ($childNodes as $childNode) {
-            $html .= $doc->saveHTML($childNode);
-        }
-
-        return $html;
+        return $doc->getBodyInnerHtml();
     }
 
     /**
@@ -172,27 +161,18 @@ class PageContent
             return $htmlText;
         }
 
-        $doc = $this->loadDocumentFromHtml($htmlText);
-        $container = $doc->documentElement;
-        $body = $container->childNodes->item(0);
-        $childNodes = $body->childNodes;
-        $xPath = new DOMXPath($doc);
+        $doc = new HtmlDocument($htmlText);
 
         // Map to hold used ID references
         $idMap = [];
         // Map to hold changing ID references
         $changeMap = [];
 
-        $this->updateIdsRecursively($body, 0, $idMap, $changeMap);
-        $this->updateLinks($xPath, $changeMap);
+        $this->updateIdsRecursively($doc->getBody(), 0, $idMap, $changeMap);
+        $this->updateLinks($doc, $changeMap);
 
-        // Generate inner html as a string
-        $html = '';
-        foreach ($childNodes as $childNode) {
-            $html .= $doc->saveHTML($childNode);
-        }
-
-        // Perform required string-level tweaks
+        // Generate inner html as a string & perform required string-level tweaks
+        $html = $doc->getBodyInnerHtml();
         $html = str_replace(' ', '&nbsp;', $html);
 
         return $html;
@@ -225,13 +205,13 @@ class PageContent
      * Update the all links in the given xpath to apply requires changes within the
      * given $changeMap array.
      */
-    protected function updateLinks(DOMXPath $xpath, array $changeMap): void
+    protected function updateLinks(HtmlDocument $doc, array $changeMap): void
     {
         if (empty($changeMap)) {
             return;
         }
 
-        $links = $xpath->query('//body//*//*[@href]');
+        $links = $doc->queryXPath('//body//*//*[@href]');
         /** @var DOMElement $domElem */
         foreach ($links as $domElem) {
             $href = ltrim($domElem->getAttribute('href'), '#');
@@ -321,11 +301,10 @@ class PageContent
             return [];
         }
 
-        $doc = $this->loadDocumentFromHtml($htmlContent);
-        $xPath = new DOMXPath($doc);
-        $headers = $xPath->query('//h1|//h2|//h3|//h4|//h5|//h6');
+        $doc = new HtmlDocument($htmlContent);
+        $headers = $doc->queryXPath('//h1|//h2|//h3|//h4|//h5|//h6');
 
-        return $headers ? $this->headerNodesToLevelList($headers) : [];
+        return $headers->count() === 0 ? [] : $this->headerNodesToLevelList($headers);
     }
 
     /**
@@ -420,7 +399,7 @@ class PageContent
     protected function fetchSectionOfPage(Page $page, string $sectionId): string
     {
         $topLevelTags = ['table', 'ul', 'ol', 'pre'];
-        $doc = $this->loadDocumentFromHtml($page->html);
+        $doc = new HtmlDocument($page->html);
 
         // Search included content for the id given and blank out if not exists.
         $matchingElem = $doc->getElementById($sectionId);
@@ -430,30 +409,11 @@ class PageContent
 
         // Otherwise replace the content with the found content
         // Checks if the top-level wrapper should be included by matching on tag types
-        $innerContent = '';
         $isTopLevel = in_array(strtolower($matchingElem->nodeName), $topLevelTags);
         if ($isTopLevel) {
-            $innerContent .= $doc->saveHTML($matchingElem);
-        } else {
-            foreach ($matchingElem->childNodes as $childNode) {
-                $innerContent .= $doc->saveHTML($childNode);
-            }
+            return $doc->getNodeOuterHtml($matchingElem);
         }
-        libxml_clear_errors();
 
-        return $innerContent;
-    }
-
-    /**
-     * Create and load a DOMDocument from the given html content.
-     */
-    protected function loadDocumentFromHtml(string $html): DOMDocument
-    {
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
-        $doc->loadHTML($html);
-
-        return $doc;
+        return $doc->getNodeInnerHtml($matchingElem);
     }
 }

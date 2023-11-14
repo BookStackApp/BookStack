@@ -6,7 +6,7 @@ use BookStack\Activity\Models\Tag;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
-use DOMDocument;
+use BookStack\Util\HtmlDocument;
 use DOMNode;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -138,16 +138,11 @@ class SearchIndex
             'h6' => 1.5,
         ];
 
-        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
         $html = str_ireplace(['<br>', '<br />', '<br/>'], "\n", $html);
+        $doc = new HtmlDocument($html);
 
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML($html);
-
-        $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
         /** @var DOMNode $child */
-        foreach ($topElems as $child) {
+        foreach ($doc->getBodyChildren() as $child) {
             $nodeName = $child->nodeName;
             $termCounts = $this->textToTermCountMap(trim($child->textContent));
             foreach ($termCounts as $term => $count) {
@@ -168,7 +163,6 @@ class SearchIndex
      */
     protected function generateTermScoreMapFromTags(array $tags): array
     {
-        $scoreMap = [];
         $names = [];
         $values = [];
 

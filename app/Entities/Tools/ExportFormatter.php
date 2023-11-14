@@ -8,9 +8,8 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\CspService;
-use DOMDocument;
+use BookStack\Util\HtmlDocument;
 use DOMElement;
-use DOMXPath;
 use Exception;
 use Throwable;
 
@@ -151,45 +150,36 @@ class ExportFormatter
     protected function htmlToPdf(string $html): string
     {
         $html = $this->containHtml($html);
-        $html = $this->replaceIframesWithLinks($html);
-        $html = $this->openDetailElements($html);
+        $doc = new HtmlDocument();
+        $doc->loadCompleteHtml($html);
 
-        return $this->pdfGenerator->fromHtml($html);
+        $this->replaceIframesWithLinks($doc);
+        $this->openDetailElements($doc);
+        $cleanedHtml = $doc->getHtml();
+
+        return $this->pdfGenerator->fromHtml($cleanedHtml);
     }
 
     /**
      * Within the given HTML content, Open any detail blocks.
      */
-    protected function openDetailElements(string $html): string
+    protected function openDetailElements(HtmlDocument $doc): void
     {
-        libxml_use_internal_errors(true);
-
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        $xPath = new DOMXPath($doc);
-
-        $details = $xPath->query('//details');
+        $details = $doc->queryXPath('//details');
         /** @var DOMElement $detail */
         foreach ($details as $detail) {
             $detail->setAttribute('open', 'open');
         }
-
-        return $doc->saveHTML();
     }
 
     /**
-     * Within the given HTML content, replace any iframe elements
+     * Within the given HTML document, replace any iframe elements
      * with anchor links within paragraph blocks.
      */
-    protected function replaceIframesWithLinks(string $html): string
+    protected function replaceIframesWithLinks(HtmlDocument $doc): void
     {
-        libxml_use_internal_errors(true);
+        $iframes = $doc->queryXPath('//iframe');
 
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        $xPath = new DOMXPath($doc);
-
-        $iframes = $xPath->query('//iframe');
         /** @var DOMElement $iframe */
         foreach ($iframes as $iframe) {
             $link = $iframe->getAttribute('src');
@@ -203,8 +193,6 @@ class ExportFormatter
             $paragraph->appendChild($anchor);
             $iframe->parentNode->replaceChild($paragraph, $iframe);
         }
-
-        return $doc->saveHTML();
     }
 
     /**
