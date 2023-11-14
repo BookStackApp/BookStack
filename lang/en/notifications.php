@@ -12,9 +12,8 @@ return [
     'updated_page_intro' => 'A page has been updated in :appName:',
     'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
 
-    'detail_book_name' => 'Book Name:',
-    'detail_chapter_name' => 'Chapter Name:',
     'detail_page_name' => 'Page Name:',
+    'detail_page_path' => 'Page Path:',
     'detail_commenter' => 'Commenter:',
     'detail_comment' => 'Comment:',
     'detail_created_by' => 'Created By:',
