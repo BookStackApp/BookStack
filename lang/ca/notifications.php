@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Per a evitar les notificacions massives, no us enviarem notificacions si hi ha més edicions en aquesta pàgina fetes pel mateix editor.',
 
     'detail_page_name' => 'Nom de la pàgina:',
+    'detail_page_path' => 'Page Path:',
     'detail_commenter' => 'Autor del comentari:',
     'detail_comment' => 'Comentari:',
     'detail_created_by' => 'Creat per:',
