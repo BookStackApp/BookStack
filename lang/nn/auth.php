@@ -18,7 +18,7 @@ return [
 
     'name' => 'Namn',
     'username' => 'Brukarnamn',
-    'email' => 'E-post',
+    'email' => 'Epost',
     'password' => 'Passord',
     'password_confirm' => 'Stadfest passord',
     'password_hint' => 'Må vere minst 8 teikn',
@@ -58,7 +58,7 @@ return [
     'email_confirm_greeting' => 'Takk for at du registrerte deg på :appName!',
     'email_confirm_text' => 'Stadfest e-posten din ved å trykke på knappen under:',
     'email_confirm_action' => 'Stadfest e-post',
-    'email_confirm_send_error' => 'Bekreftelse er krevd av systemet, men systemet kan ikke sende disse. Kontakt admin for å løse problemet.',
+    'email_confirm_send_error' => 'Stadfesting er krevd av systemet, men systemet kan ikkje sende desse. Kontakt admin for å løys problemet.',
     'email_confirm_success' => 'Epost-adressen din er verifisert! Du kan nå logge inn ved å bruke denne ved innlogging.',
     'email_confirm_resent' => 'Bekreftelsespost ble sendt, sjekk innboksen din.',
     'email_confirm_thanks' => 'Takk for verifiseringen!',
