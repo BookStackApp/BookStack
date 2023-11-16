@@ -74,51 +74,51 @@ return [
     // Settings
     'settings_update' => 'päivitti asetukset',
     'settings_update_notification' => 'Asetukset päivitettiin onnistuneesti',
-    'maintenance_action_run' => 'ran maintenance action',
+    'maintenance_action_run' => 'suoritti huoltotoimenpiteen',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'loi toimintokutsun',
+    'webhook_create_notification' => 'Toimintokutsu luotiin onnistuneesti',
+    'webhook_update' => 'päivitti toimintokutsun',
+    'webhook_update_notification' => 'Toimintokutsu päivitettiin onnistuneesti',
+    'webhook_delete' => 'poisti toimintokutsun',
+    'webhook_delete_notification' => 'Toimintokutsu poistettiin onnistuneesti',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
-    'user_update_notification' => 'User successfully updated',
-    'user_delete' => 'deleted user',
-    'user_delete_notification' => 'User successfully removed',
+    'user_create' => 'loi käyttäjän',
+    'user_create_notification' => 'Käyttäjä luotiin onnistuneesti',
+    'user_update' => 'päivitti käyttäjän',
+    'user_update_notification' => 'Käyttäjä päivitettiin onnistuneesti',
+    'user_delete' => 'poisti käyttäjän',
+    'user_delete_notification' => 'Käyttäjä poistettiin onnistuneesti',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'loi API-tunnisteen',
+    'api_token_create_notification' => 'API-tunniste luotiin onnistuneesti',
+    'api_token_update' => 'päivitti API-tunnisteen',
+    'api_token_update_notification' => 'API-tunniste päivitettiin onnistuneesti',
+    'api_token_delete' => 'poisti API-tunnisteen',
+    'api_token_delete_notification' => 'API-tunniste poistettiin onnistuneesti',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'loi roolin',
+    'role_create_notification' => 'Rooli luotiin onnistuneesti',
+    'role_update' => 'päivitti roolin',
+    'role_update_notification' => 'Rooli päivitettiin onnistuneesti',
+    'role_delete' => 'poisti roolin',
+    'role_delete_notification' => 'Rooli poistettiin onnistuneesti',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'tyhjensi roskakorin',
+    'recycle_bin_restore' => 'palautti roskakorista',
+    'recycle_bin_destroy' => 'poisti roskakorista',
 
     // Comments
-    'commented_on'                => 'commented on',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'commented_on'                => 'kommentoi',
+    'comment_create'              => 'lisäsi kommentin',
+    'comment_update'              => 'päivitti kommentin',
+    'comment_delete'              => 'poisti kommentin',
 
     // Other
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'päivitti käyttöoikeudet',
 ];
