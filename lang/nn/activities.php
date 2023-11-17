@@ -41,7 +41,7 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'oppretta hylle',
-    'bookshelf_create_notification'    => 'Hylla vart opprettet',
+    'bookshelf_create_notification'    => 'Hylla vart oppretta',
     'bookshelf_create_from_book'    => 'endra frå bok til hylle',
     'bookshelf_create_from_book_notification'    => 'Boka vart konvertert til ei bokhylle',
     'bookshelf_update'                 => 'oppdaterte hylle',
