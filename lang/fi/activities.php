@@ -64,8 +64,8 @@ return [
     // Auth
     'auth_login' => 'kirjautui sisään',
     'auth_register' => 'rekisteröityi uudeksi käyttäjäksi',
-    'auth_password_reset_request' => 'pyysi käyttäjän salasanan nollausta',
-    'auth_password_reset_update' => 'nollasi käyttäjän salasana',
+    'auth_password_reset_request' => 'pyysi käyttäjän salasanan palautusta',
+    'auth_password_reset_update' => 'palautti käyttäjän salasana',
     'mfa_setup_method' => 'määritti monivaiheisen tunnistaumisen menetelmän',
     'mfa_setup_method_notification' => 'Monivaiheisen tunnistautumisen määrittäminen onnistui',
     'mfa_remove_method' => 'poisti monivaiheisen tunnistaumisen menetelmän',
