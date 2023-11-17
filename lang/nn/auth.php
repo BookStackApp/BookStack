@@ -47,11 +47,11 @@ return [
     'reset_password' => 'Nullstill passord',
     'reset_password_send_instructions' => 'Oppgi e-posten kobla til kontoen din, så sender me ein e-post der du kan nullstille passordet.',
     'reset_password_send_button' => 'Send nullstillingslenke',
-    'reset_password_sent' => 'Ein nullstillingslenke vart sendt til :email om den eksisterer i systemet.',
+    'reset_password_sent' => 'Ei nullstillingslenke vart sendt til :email om den eksisterer i systemet.',
     'reset_password_success' => 'Passordet vart nullstilt.',
     'email_reset_subject' => 'Nullstill ditt :appName passord',
     'email_reset_text' => 'Du mottar denne e-posten fordi det er blitt bedt om ei nullstilling av passord for denne kontoen.',
-    'email_reset_not_requested' => 'Om det ikkje var deg, så trenger du ikkje gjere noko.',
+    'email_reset_not_requested' => 'Om det ikkje var deg, så treng du ikkje gjere noko.',
 
     // Email Confirmation
     'email_confirm_subject' => 'Stadfest epost-adressa for :appName',
