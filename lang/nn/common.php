@@ -97,7 +97,7 @@ return [
     'tab_info' => 'Informasjon',
     'tab_info_label' => 'Fane: Vis tilleggsinfo',
     'tab_content' => 'Innhald',
-    'tab_content_label' => 'Fane: Vis hovedinnhold',
+    'tab_content_label' => 'Fane: Vis hovudinnhald',
 
     // Email Content
     'email_action_help' => 'Om du har problem med å trykkja på ":actionText"-knappen, bruk nettadressa under for å gå direkte dit:',
