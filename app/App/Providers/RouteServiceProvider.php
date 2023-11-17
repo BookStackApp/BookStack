@@ -2,9 +2,12 @@
 
 namespace BookStack\App\Providers;
 
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
@@ -46,8 +49,15 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'web',
             'namespace'  => $this->namespace,
-        ], function ($router) {
+        ], function (Router $router) {
             require base_path('routes/web.php');
+            Theme::dispatch(ThemeEvents::ROUTES_REGISTER_WEB, $router);
+        });
+
+        Route::group([
+            'middleware' => ['web', 'auth'],
+        ], function (Router $router) {
+            Theme::dispatch(ThemeEvents::ROUTES_REGISTER_WEB_AUTH, $router);
         });
     }
 

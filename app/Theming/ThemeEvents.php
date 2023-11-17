@@ -99,6 +99,25 @@ class ThemeEvents
     const PAGE_INCLUDE_PARSE = 'page_include_parse';
 
     /**
+     * Routes register web event.
+     * Called when standard web (browser/non-api) app routes are registered.
+     * Provides an app router, so you can register your own web routes.
+     *
+     * @param \Illuminate\Routing\Router
+     */
+    const ROUTES_REGISTER_WEB = 'routes_register_web';
+
+    /**
+     * Routes register web auth event.
+     * Called when auth-required web (browser/non-api) app routes can be registered.
+     * These are routes that typically require login to access (unless the instance is made public).
+     * Provides an app router, so you can register your own web routes.
+     *
+     * @param \Illuminate\Routing\Router
+     */
+    const ROUTES_REGISTER_WEB_AUTH = 'routes_register_web_auth';
+
+    /**
      * Web before middleware action.
      * Runs before the request is handled but after all other middleware apart from those
      * that depend on the current session user (Localization for example).
