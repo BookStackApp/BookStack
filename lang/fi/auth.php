@@ -82,8 +82,8 @@ return [
 
     // Multi-factor Authentication
     'mfa_setup' => 'Määritä monivaiheinen tunnistautuminen',
-    'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'mfa_setup_configured' => 'Already configured',
+    'mfa_setup_desc' => 'Määritä monivaiheinen tunnistautuminen käyttäjätilisi turvallisuuden parantamiseksi.',
+    'mfa_setup_configured' => 'Määritetty',
     'mfa_setup_reconfigure' => 'Reconfigure',
     'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
     'mfa_setup_action' => 'Setup',
