@@ -30,7 +30,7 @@ return [
     'create' => 'Luo',
     'update' => 'Päivitä',
     'edit' => 'Muokkaa',
-    'sort' => 'Lajittele',
+    'sort' => 'Järjestä',
     'move' => 'Siirrä',
     'copy' => 'Kopioi',
     'reply' => 'Vastaa',
@@ -55,10 +55,10 @@ return [
     'open' => 'Avaa',
 
     // Sort Options
-    'sort_options' => 'Lajitteluasetukset',
-    'sort_direction_toggle' => 'Lajittelusuunnan vaihto',
-    'sort_ascending' => 'Lajittele nousevasti',
-    'sort_descending' => 'Lajittele laskevasti',
+    'sort_options' => 'Järjestyksen asetukset',
+    'sort_direction_toggle' => 'Järjestyssuunnan vaihto',
+    'sort_ascending' => 'Järjestä nousevasti',
+    'sort_descending' => 'Järjestä laskevasti',
     'sort_name' => 'Nimi',
     'sort_default' => 'Oletus',
     'sort_created_at' => 'Luotu päivämäärä',
