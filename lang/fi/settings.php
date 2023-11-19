@@ -158,7 +158,7 @@ return [
     'role_manage_roles' => 'Manage roles & role permissions',
     'role_manage_entity_permissions' => 'Manage all book, chapter & page permissions',
     'role_manage_own_entity_permissions' => 'Manage permissions on own book, chapter & pages',
-    'role_manage_page_templates' => 'Manage page templates',
+    'role_manage_page_templates' => 'Hallitse mallipohjia',
     'role_access_api' => 'Access system API',
     'role_manage_settings' => 'Manage app settings',
     'role_export_content' => 'Export content',
