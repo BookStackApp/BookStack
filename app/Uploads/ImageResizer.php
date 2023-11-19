@@ -105,11 +105,17 @@ class ImageResizer
 
     /**
      * Resize the image of given data to the specified size, and return the new image data.
+     * Format will remain the same as the input format, unless specified.
      *
      * @throws ImageUploadException
      */
-    public function resizeImageData(string $imageData, ?int $width, ?int $height, bool $keepRatio): string
-    {
+    public function resizeImageData(
+        string $imageData,
+        ?int $width,
+        ?int $height,
+        bool $keepRatio,
+        ?string $format = null,
+    ): string {
         try {
             $thumb = $this->intervention->make($imageData);
         } catch (Exception $e) {
@@ -127,7 +133,7 @@ class ImageResizer
             $thumb->fit($width, $height);
         }
 
-        $thumbData = (string) $thumb->encode();
+        $thumbData = (string) $thumb->encode($format);
 
         // Use original image data if we're keeping the ratio
         // and the resizing does not save any space.
