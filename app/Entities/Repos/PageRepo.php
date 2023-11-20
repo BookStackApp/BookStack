@@ -211,13 +211,13 @@ class PageRepo
         $inputEmpty = empty($input['markdown']) && empty($input['html']);
 
         if ($haveInput && $inputEmpty) {
-            $pageContent->setNewHTML('');
+            $pageContent->setNewHTML('', user());
         } elseif (!empty($input['markdown']) && is_string($input['markdown'])) {
             $newEditor = 'markdown';
-            $pageContent->setNewMarkdown($input['markdown']);
+            $pageContent->setNewMarkdown($input['markdown'], user());
         } elseif (isset($input['html'])) {
             $newEditor = 'wysiwyg';
-            $pageContent->setNewHTML($input['html']);
+            $pageContent->setNewHTML($input['html'], user());
         }
 
         if ($newEditor !== $currentEditor && userCan('editor-change')) {
@@ -284,9 +284,9 @@ class PageRepo
         $content = new PageContent($page);
 
         if (!empty($revision->markdown)) {
-            $content->setNewMarkdown($revision->markdown);
+            $content->setNewMarkdown($revision->markdown, user());
         } else {
-            $content->setNewHTML($revision->html);
+            $content->setNewHTML($revision->html, user());
         }
 
         $page->updated_by = user()->id;
