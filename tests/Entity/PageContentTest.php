@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class PageContentTest extends TestCase
 {
-    protected $base64Jpeg = '/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=';
+    protected string $base64Jpeg = '/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=';
 
     public function test_page_includes()
     {
@@ -649,6 +649,35 @@ class PageContentTest extends TestCase
         }
     }
 
+    public function test_base64_images_within_html_blanked_if_no_image_create_permission()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $this->permissions->removeUserRolePermissions($editor, ['image-create-all']);
+
+        $this->actingAs($editor)->put($page->getUrl(), [
+            'name' => $page->name,
+            'html' => '<p>test<img src="data:image/jpeg;base64,' . $this->base64Jpeg . '"/></p>',
+        ]);
+
+        $page->refresh();
+        $this->assertStringMatchesFormat('%A<p%A>test<img src="">%A</p>%A', $page->html);
+    }
+
+    public function test_base64_images_within_html_blanked_if_content_does_not_appear_like_an_image()
+    {
+        $page = $this->entities->page();
+
+        $imgContent = base64_encode('file://test/a/b/c');
+        $this->asEditor()->put($page->getUrl(), [
+            'name' => $page->name,
+            'html' => '<p>test<img src="data:image/jpeg;base64,' . $imgContent . '"/></p>',
+        ]);
+
+        $page->refresh();
+        $this->assertStringMatchesFormat('%A<p%A>test<img src="">%A</p>%A', $page->html);
+    }
+
     public function test_base64_images_get_extracted_from_markdown_page_content()
     {
         $this->asEditor();
@@ -682,7 +711,7 @@ class PageContentTest extends TestCase
         ini_set('pcre.backtrack_limit', '500');
         ini_set('pcre.recursion_limit', '500');
 
-        $content = str_repeat('a', 5000);
+        $content = str_repeat(base64_decode($this->base64Jpeg), 50);
         $base64Content = base64_encode($content);
 
         $this->put($page->getUrl(), [
@@ -713,6 +742,34 @@ class PageContentTest extends TestCase
             'markdown' => 'test ![test](data:image/jiff;base64,' . $this->base64Jpeg . ')',
         ]);
 
+        $this->assertStringContainsString('<img src=""', $page->refresh()->html);
+    }
+
+    public function test_base64_images_within_markdown_blanked_if_no_image_create_permission()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $this->permissions->removeUserRolePermissions($editor, ['image-create-all']);
+
+        $this->actingAs($editor)->put($page->getUrl(), [
+            'name' => $page->name,
+            'markdown' => 'test ![test](data:image/jpeg;base64,' . $this->base64Jpeg . ')',
+        ]);
+
+        $this->assertStringContainsString('<img src=""', $page->refresh()->html);
+    }
+
+    public function test_base64_images_within_markdown_blanked_if_content_does_not_appear_like_an_image()
+    {
+        $page = $this->entities->page();
+
+        $imgContent = base64_encode('file://test/a/b/c');
+        $this->asEditor()->put($page->getUrl(), [
+            'name' => $page->name,
+            'markdown' => 'test ![test](data:image/jpeg;base64,' . $imgContent . ')',
+        ]);
+
+        $page->refresh();
         $this->assertStringContainsString('<img src=""', $page->refresh()->html);
     }
 
