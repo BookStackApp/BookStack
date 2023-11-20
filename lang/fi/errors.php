@@ -5,15 +5,15 @@
 return [
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
-    'permissionJson' => 'You do not have permission to perform the requested action.',
+    'permission' => 'Sinulla ei ole pääsyoikeutta pyydettyyn sivuun.',
+    'permissionJson' => 'Sinulla ei ole oikeutta suorittaa pyydettyä toimintoa.',
 
     // Auth
-    'error_user_exists_different_creds' => 'A user with the email :email already exists but with different credentials.',
-    'email_already_confirmed' => 'Email has already been confirmed, Try logging in.',
-    'email_confirmation_invalid' => 'This confirmation token is not valid or has already been used, Please try registering again.',
-    'email_confirmation_expired' => 'The confirmation token has expired, A new confirmation email has been sent.',
-    'email_confirmation_awaiting' => 'The email address for the account in use needs to be confirmed',
+    'error_user_exists_different_creds' => 'Sähköpostiosoite :email on jo käytössä toisessa käyttäjätunnuksessa.',
+    'email_already_confirmed' => 'Sähköposti on jo vahvistettu, yritä kirjautua sisään.',
+    'email_confirmation_invalid' => 'Tämä vahvistuslinkki ei ole voimassa tai sitä on jo käytetty, yritä rekisteröityä uudelleen.',
+    'email_confirmation_expired' => 'Vahvistuslinkki on vanhentunut, uusi vahvistussähköposti on lähetetty.',
+    'email_confirmation_awaiting' => 'Tämän tilin sähköpostiosoite pitää vahvistaa',
     'ldap_fail_anonymous' => 'LDAP access failed using anonymous bind',
     'ldap_fail_authed' => 'LDAP access failed using given dn & password details',
     'ldap_extension_not_installed' => 'LDAP PHP extension not installed',
