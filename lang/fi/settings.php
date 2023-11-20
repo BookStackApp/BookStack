@@ -7,17 +7,17 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'settings' => 'Asetukset',
+    'settings_save' => 'Tallenna asetukset',
+    'system_version' => 'Järjestelmän versio',
+    'categories' => 'Kategoriat',
 
     // App Settings
-    'app_customization' => 'Customization',
-    'app_features_security' => 'Features & Security',
-    'app_name' => 'Application Name',
-    'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
-    'app_name_header' => 'Show name in header',
+    'app_customization' => 'Mukauttaminen',
+    'app_features_security' => 'Ominaisuudet ja turvallisuus',
+    'app_name' => 'Sivuston nimi',
+    'app_name_desc' => 'Tämä nimi näkyy ylätunnisteessa ja kaikissa järjestelmän lähettämissä sähköpostiviesteissä.',
+    'app_name_header' => 'Näytä nimi ylätunnisteessa',
     'app_public_access' => 'Public Access',
     'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
     'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
