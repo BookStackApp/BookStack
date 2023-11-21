@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Zrušit filtr',
     'download' => 'Stáhnout',
     'open_in_tab' => 'Otevřít v nové záložce',
-    'open' => 'Open',
+    'open' => 'Otevřít',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',
