@@ -61,8 +61,8 @@ return [
     'sort_descending' => 'Järjestä laskevasti',
     'sort_name' => 'Nimi',
     'sort_default' => 'Oletus',
-    'sort_created_at' => 'Luotu päivämäärä',
-    'sort_updated_at' => 'Päivitetty päivämäärä',
+    'sort_created_at' => 'Luontipäiväys',
+    'sort_updated_at' => 'Päivityksen päiväys',
 
     // Misc
     'deleted_user' => 'Poistettu käyttäjä',
