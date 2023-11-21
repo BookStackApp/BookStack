@@ -69,7 +69,7 @@ return [
     'reg_enable_external_warning' => 'Yllä olevaa vaihtoehtoa ei oteta huomioon, kun ulkoinen LDAP- tai SAML-todennus on käytössä. Käyttäjätilit luodaan automaattisesti, jos tunnistautuminen käytössä olevaan ulkoiseen järjestelmään onnistuu.',
     'reg_email_confirmation' => 'Sähköpostivahvistus',
     'reg_email_confirmation_toggle' => 'Vaadi sähköpostivahvistus',
-    'reg_confirm_email_desc' => 'Jos verkkotunnusrajoitusta käytetään, sähköpostivahvistus vaaditaan, eikä tätä valintaa oteta huomioon.',
+    'reg_confirm_email_desc' => 'Jos domain-rajoitus on käytössä, sähköpostivahvistus on oletuksena päällä, eikä tätä valintaa oteta huomioon.',
     'reg_confirm_restrict_domain' => 'Domain-rajoitus',
     'reg_confirm_restrict_domain_desc' => 'Kirjoita pilkulla erotettu luettelo sähköpostien domain-nimistä, joihin haluat rajoittaa rekisteröitymisen. Käyttäjille lähetetään sähköpostiviesti osoitteen vahvistamiseksi, ennen kuin he pääsevät käyttämään sivustoa. <br> Huomaa, että käyttäjät voivat muuttaa sähköpostiosoitteensa onnistuneen rekisteröinnin jälkeen.',
     'reg_confirm_restrict_domain_placeholder' => 'Ei rajoituksia',
