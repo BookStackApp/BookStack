@@ -40,7 +40,7 @@ return [
 
     // Login auto-initiation
     'auto_init_starting' => 'Prøver innlogging',
-    'auto_init_starting_desc' => 'Me kontaktar autentiseringssystemet ditt for å starte innloggingsprosessen. Dersom det ikkje er noko fremdrift i løpet av fem sekunder kan du trykke på lenka under.',
+    'auto_init_starting_desc' => 'Me kontaktar autentiseringssystemet ditt for å starte innloggingsprosessen. Dersom det ikkje er noko framdrift i løpet av fem sekunder kan du trykke på lenka under.',
     'auto_init_start_link' => 'Fortsett med autentisering',
 
     // Password Reset
