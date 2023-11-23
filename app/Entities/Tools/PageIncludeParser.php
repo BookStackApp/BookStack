@@ -4,6 +4,8 @@ namespace BookStack\Entities\Tools;
 
 use BookStack\Util\HtmlDocument;
 use Closure;
+use DOMNode;
+use DOMText;
 
 class PageIncludeParser
 {
@@ -17,14 +19,25 @@ class PageIncludeParser
 
     public function parse(): string
     {
-        $html = new HtmlDocument($this->pageHtml);
+        $doc = new HtmlDocument($this->pageHtml);
 
-        $includeHosts = $html->queryXPath("//body//*[contains(text(), '{{@')]");
-        $node = $includeHosts->item(0);
+        $tags = $this->locateAndIsolateIncludeTags($doc);
 
-        // One of the direct child textnodes of the "$includeHosts" should be
-        // the one with the include tag within.
-        $textNode = $node->childNodes->item(0);
+        foreach ($tags as $tag) {
+            $htmlContent = $this->pageContentForId->call($this, $tag->getPageId());
+            $content = new PageIncludeContent($htmlContent, $tag);
+
+            if ($content->isInline()) {
+                $adopted = $doc->adoptNodes($content->toDomNodes());
+                foreach ($adopted as $adoptedContentNode) {
+                    $tag->domNode->parentNode->insertBefore($adoptedContentNode, $tag->domNode);
+                }
+                $tag->domNode->parentNode->removeChild($tag->domNode);
+                continue;
+            }
+
+            // TODO - Non-inline
+        }
 
         // TODO:
         // Hunt down the specific text nodes with matches
@@ -52,6 +65,64 @@ class PageIncludeParser
         // in changes affecting the next tag, where tags may be in the same/adjacent nodes.
 
 
-        return $html->getBodyInnerHtml();
+        return $doc->getBodyInnerHtml();
+    }
+
+    /**
+     * Locate include tags within the given document, isolating them to their
+     * own nodes in the DOM for future targeted manipulation.
+     * @return PageIncludeTag[]
+     */
+    protected function locateAndIsolateIncludeTags(HtmlDocument $doc): array
+    {
+        $includeHosts = $doc->queryXPath("//body//*[contains(text(), '{{@')]");
+        $includeTags = [];
+
+        /** @var DOMNode $node */
+        /** @var DOMNode $childNode */
+        foreach ($includeHosts as $node) {
+            foreach ($node->childNodes as $childNode) {
+                if ($childNode->nodeName === '#text') {
+                    array_push($includeTags, ...$this->splitTextNodesAtTags($childNode));
+                }
+            }
+        }
+
+        return $includeTags;
+    }
+
+    /**
+     * Takes a text DOMNode and splits its text content at include tags
+     * into multiple text nodes within the original parent.
+     * Returns found PageIncludeTag references.
+     * @return PageIncludeTag[]
+     */
+    protected function splitTextNodesAtTags(DOMNode $textNode): array
+    {
+        $includeTags = [];
+        $text = $textNode->textContent;
+        preg_match_all(static::$includeTagRegex, $text, $matches, PREG_OFFSET_CAPTURE);
+
+        $currentOffset = 0;
+        foreach ($matches[0] as $index => $fullTagMatch) {
+            $tagOuterContent = $fullTagMatch[0];
+            $tagInnerContent = $matches[1][$index][0];
+            $tagStartOffset = $fullTagMatch[1];
+
+            if ($currentOffset < $tagStartOffset) {
+                $previousText = substr($text, $currentOffset, $tagStartOffset - $currentOffset);
+                $textNode->parentNode->insertBefore(new DOMText($previousText), $textNode);
+            }
+
+            $node = $textNode->parentNode->insertBefore(new DOMText($tagOuterContent), $textNode);
+            $includeTags[] = new PageIncludeTag($tagInnerContent, $node);
+            $currentOffset = $tagStartOffset + strlen($tagOuterContent);
+        }
+
+        if ($currentOffset > 0) {
+            $textNode->textContent = substr($text, $currentOffset);
+        }
+
+        return $includeTags;
     }
 }

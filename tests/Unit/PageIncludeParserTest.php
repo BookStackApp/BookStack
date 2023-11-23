@@ -37,7 +37,7 @@ class PageIncludeParserTest extends TestCase
     protected function runParserTest(string $html, array $contentById, string $expected)
     {
         $parser = new PageIncludeParser($html, function (int $id) use ($contentById) {
-            return $contentById[strval($id)] ?? null;
+            return $contentById[strval($id)] ?? '';
         });
 
         $result = $parser->parse();
