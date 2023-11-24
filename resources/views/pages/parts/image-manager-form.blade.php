@@ -8,7 +8,16 @@
      option:dropzone:file-accept="image/*"
      class="image-manager-details">
 
+    @if($warning ?? '')
+        <div class="image-manager-warning px-m py-xs flex-container-row gap-xs items-center mb-l">
+            <div>@icon('warning')</div>
+            <div class="flex">{{ $warning }}</div>
+        </div>
+    @endif
+
     <div refs="dropzone@status-area dropzone@drop-target"></div>
+
+    <script id="image-manager-form-image-data" type="application/json">@json($image)</script>
 
     <form component="ajax-form"
           option:ajax-form:success-message="{{ trans('components.image_update_success') }}"
@@ -44,6 +53,9 @@
                                     id="image-manager-replace"
                                     refs="dropzone@select-button"
                                     class="text-item">{{ trans('components.image_replace') }}</button>
+                            <button type="button"
+                                    id="image-manager-rebuild-thumbs"
+                                    class="text-item">{{ trans('components.image_rebuild_thumbs') }}</button>
                         @endif
                     </div>
                 </div>

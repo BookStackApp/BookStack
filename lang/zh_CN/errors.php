@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => '无法从 :url 中获取图片',
     'cannot_create_thumbs' => '服务器无法创建缩略图，请检查您是否安装了GD PHP扩展。',
     'server_upload_limit' => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
+    'server_post_limit' => '服务器无法接收所提供的数据量。请尝试使用较少的数据或较小的文件。',
     'uploaded'  => '服务器不允许上传此大小的文件。 请尝试较小的文件。',
 
     // Drawing & Images
     'image_upload_error' => '上传图片时发生错误',
     'image_upload_type_error' => '上传的图像类型无效',
     'image_upload_replace_type' => '图片文件替换必须为相同的类型',
+    'image_upload_memory_limit' => '由于系统资源限制，无法处理图像上传和/或创建缩略图。',
+    'image_thumbnail_memory_limit' => '由于系统资源限制，无法创建图像大小变化。',
+    'image_gallery_thumbnail_memory_limit' => '由于系统资源限制，无法创建相册缩略图。',
     'drawing_data_not_found' => '无法加载绘图数据。绘图文件可能不再存在，或者您可能没有权限访问它。',
 
     // Attachments
@@ -111,4 +115,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => '发送测试电子邮件时出现错误：',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'URL 与已配置的 SSR 主机不匹配',
 ];

@@ -78,14 +78,14 @@ class HomeController extends Controller
         }
 
         if ($homepageOption === 'bookshelves') {
-            $shelves = app(BookshelfRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
+            $shelves = app()->make(BookshelfRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
             $data = array_merge($commonData, ['shelves' => $shelves]);
 
             return view('home.shelves', $data);
         }
 
         if ($homepageOption === 'books') {
-            $books = app(BookRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
+            $books = app()->make(BookRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
             $data = array_merge($commonData, ['books' => $books]);
 
             return view('home.books', $data);
@@ -139,5 +139,13 @@ class HomeController extends Controller
     {
         $exists = $favicons->restoreOriginalIfNotExists();
         return response()->file($exists ? $favicons->getPath() : $favicons->getOriginalPath());
+    }
+
+    /**
+     * Serve a PWA application manifest.
+     */
+    public function pwaManifest(PwaManifestBuilder $manifestBuilder)
+    {
+        return response()->json($manifestBuilder->build());
     }
 }

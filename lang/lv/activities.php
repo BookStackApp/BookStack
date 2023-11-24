@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'atjaunoja lapu',
     'page_restore_notification'   => 'Lapa veiksmīgi atjaunota',
     'page_move'                   => 'pārvietoja lapu',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Lapa veiksmīgi pārvietota',
 
     // Chapters
     'chapter_create'              => 'izveidoja nodaļu',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'izdzēsa nodaļu',
     'chapter_delete_notification' => 'Nodaļa veiksmīgi dzēsta',
     'chapter_move'                => 'pārvietoja nodaļu',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Nodaļa veiksmīgi pārvietota',
 
     // Books
     'book_create'                 => 'izveidoja grāmatu',
@@ -50,13 +50,16 @@ return [
     'bookshelf_delete_notification'    => 'Plaukts veiksmīgi dzēsts',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'versija atjaunota',
+    'revision_delete' => 'versija dzēsta',
+    'revision_delete_notification' => 'Versija veiksmīgi dzēsta',
 
     // Favourites
     'favourite_add_notification' => '":name" ir pievienots jūsu favorītiem',
     'favourite_remove_notification' => '":name" ir izņemts no jūsu favorītiem',
+
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
 
     // Auth
     'auth_login' => 'logged in',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => 'komentēts',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => 'atjaunoja atļaujas',
 ];

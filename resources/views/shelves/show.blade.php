@@ -11,7 +11,7 @@
 
 @section('body')
 
-    <div class="mb-s">
+    <div class="mb-s print-hidden">
         @include('entities.breadcrumbs', ['crumbs' => [
             $shelf,
         ]])
@@ -79,7 +79,7 @@
     <div id="details" class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
-            @include('entities.meta', ['entity' => $shelf])
+            @include('entities.meta', ['entity' => $shelf, 'watchOptions' => null])
             @if($shelf->hasPermissions())
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $shelf))
@@ -99,7 +99,7 @@
     </div>
 
     @if(count($activity) > 0)
-        <div class="mb-xl">
+        <div id="recent-activity" class="mb-xl">
             <h5>{{ trans('entities.recent_activity') }}</h5>
             @include('common.activity-list', ['activity' => $activity])
         </div>
@@ -143,7 +143,7 @@
                 </a>
             @endif
 
-            @if(signedInUser())
+            @if(!user()->isGuest())
                 <hr class="primary-background">
                 @include('entities.favourite-action', ['entity' => $shelf])
             @endif

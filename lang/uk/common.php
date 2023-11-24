@@ -42,6 +42,7 @@ return [
     'remove' => 'Видалити',
     'add' => 'Додати',
     'configure' => 'Налаштувати',
+    'manage' => 'Manage',
     'fullscreen' => 'На весь екран',
     'favourite' => 'Улюблене',
     'unfavourite' => 'Прибрати з обраного',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Очистити фільтр',
     'download' => 'Завантажити',
     'open_in_tab' => 'Відкрити в новій вкладці',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Параметри сортування',

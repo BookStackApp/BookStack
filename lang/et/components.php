@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Pildifail kustutatud',
     'image_replace' => 'Asenda pilt',
     'image_replace_success' => 'Pildifail on uuendatud',
+    'image_rebuild_thumbs' => 'Taastekita eelvaated',
+    'image_rebuild_thumbs_success' => 'Pildi eelvaated edukalt taastekitatud!',
 
     // Code Editor
     'code_editor' => 'Muuda koodi',

@@ -42,6 +42,7 @@ return [
     'remove' => 'Ezabatu',
     'add' => 'Gehitu',
     'configure' => 'Konfiguratu',
+    'manage' => 'Manage',
     'fullscreen' => 'Pantaila osoa',
     'favourite' => 'Gogokoa',
     'unfavourite' => 'Desatsegina',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Iragazkia garbitu',
     'download' => 'Download',
     'open_in_tab' => 'Open in Tab',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Ordenatzeko aukerak',

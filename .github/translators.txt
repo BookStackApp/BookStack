@@ -57,6 +57,7 @@ Name :: Languages
 @Jokuna :: Korean
 @smartshogu :: German; German Informal
 @samadha56 :: Persian
+@mrmuminov :: Uzbek
 cipi1965 :: Italian
 Mykola Ronik (Mantikor) :: Ukrainian
 furkanoyk :: Turkish
@@ -176,7 +177,7 @@ Alexander Predl (Harveyhase68) :: German
 Rem (Rem9000) :: Dutch
 Michał Stelmach (stelmach-web) :: Polish
 arniom :: French
-REMOVED_USER :: ; French; Dutch; Turkish
+REMOVED_USER :: French; Dutch; Turkish; 
 林祖年 (contagion) :: Chinese Traditional
 Siamak Guodarzi (siamakgoudarzi88) :: Persian
 Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
@@ -269,7 +270,7 @@ mcgong (GongMingCai) :: Chinese Simplified; Chinese Traditional
 Nanang Setia Budi (sefidananang) :: Indonesian
 Андрей Павлов (andrei.pavlov) :: Russian
 Alex Navarro (alex.n.navarro) :: Portuguese, Brazilian
-Ji-Hyeon Gim (PotatoGim) :: Korean
+Jihyeon Gim (PotatoGim) :: Korean
 Mihai Ochian (soulstorm19) :: Romanian
 HeartCore :: German Informal; German
 simon.pct :: French
@@ -289,7 +290,7 @@ Ismael Mesquita (mesquitoliveira) :: Portuguese, Brazilian
 LiZerui (CNLiZerui) :: Chinese Traditional
 Fabrice Boyer (FabriceBoyer) :: French
 mikael (bitcanon) :: Swedish
-Matthias Mai (schnapsidee) :: German; German Informal
+Matthias Mai (schnapsidee) :: German Informal; German
 Ufuk Ayyıldız (ufukayyildiz) :: Turkish
 Jan Mitrof (jan.kachlik) :: Czech
 edwardsmirnov :: Russian
@@ -344,3 +345,29 @@ hamidreza amini (hamidrezaamini2022) :: Persian
 Tomislav Kraljević (tomislav.kraljevic) :: Croatian
 Taygun Yıldırım (yildirimtaygun) :: Turkish
 robing29 :: German
+Bruno Eduardo de Jesus Barroso (brunoejb) :: Portuguese, Brazilian
+Igor V Belousov (biv) :: Russian
+David Bauer (davbauer) :: German
+Guttorm Hveem (guttormhveem) :: Norwegian Nynorsk; Norwegian Bokmal
+Minh Giang Truong (minhgiang1204) :: Vietnamese
+Ioannis Ioannides (i.ioannides) :: Greek
+Vadim (vadrozh) :: Russian
+Flip333 :: German Informal; German
+Paulo Henrique (paulohsantos114) :: Portuguese, Brazilian
+Dženan (Dzenan) :: Swedish
+Péter Péli (peter.peli) :: Hungarian
+TWME :: Chinese Traditional
+Sascha (Man-in-Black) :: German; German Informal
+Mohammadreza Madadi (madadi.efl) :: Persian
+Konstantin (kkovacheli) :: Ukrainian; Russian
+link1183 :: French
+Renan (rfpe) :: Portuguese, Brazilian
+Lowkey (bbsweb) :: Chinese Simplified
+ZZnOB (zznobzz) :: Russian
+rupus :: Swedish
+developernecsys :: Norwegian Nynorsk
+xuan LI (xuanli233) :: Chinese Simplified
+LameeQS :: Latvian
+Sorin T. (trimbitassorin) :: Romanian
+poesty :: Chinese Simplified
+balmag :: Hungarian

@@ -42,6 +42,7 @@ return [
     'remove' => 'Fjern',
     'add' => 'Legg til',
     'configure' => 'Konfigurer',
+    'manage' => 'Administrer',
     'fullscreen' => 'Fullskjerm',
     'favourite' => 'Favorisér',
     'unfavourite' => 'Avfavorisér',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Tøm filter',
     'download' => 'Last ned',
     'open_in_tab' => 'Åpne i fane',
+    'open' => 'Åpne',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativer',

@@ -34,7 +34,7 @@ export class Actions {
         const imageManager = window.$components.first('image-manager');
 
         imageManager.show(image => {
-            const imageUrl = image.thumbs.display || image.url;
+            const imageUrl = image.thumbs?.display || image.url;
             const selectedText = this.#getSelectionText();
             const newText = `[![${selectedText || image.name}](${imageUrl})](${image.url})`;
             this.#replaceSelection(newText, newText.length);
@@ -68,11 +68,12 @@ export class Actions {
 
         /** @type {EntitySelectorPopup} * */
         const selector = window.$components.first('entity-selector-popup');
+        const selectionText = this.#getSelectionText(selectionRange);
         selector.show(entity => {
-            const selectedText = this.#getSelectionText(selectionRange) || entity.name;
+            const selectedText = selectionText || entity.name;
             const newText = `[${selectedText}](${entity.link})`;
             this.#replaceSelection(newText, newText.length, selectionRange);
-        });
+        }, selectionText);
     }
 
     // Show draw.io if enabled and handle save.
@@ -82,18 +83,20 @@ export class Actions {
 
         const selectionRange = this.#getSelectionRange();
 
-        DrawIO.show(url, () => Promise.resolve(''), pngData => {
+        DrawIO.show(url, () => Promise.resolve(''), async pngData => {
             const data = {
                 image: pngData,
                 uploaded_to: Number(this.editor.config.pageId),
             };
 
-            window.$http.post('/images/drawio', data).then(resp => {
+            try {
+                const resp = await window.$http.post('/images/drawio', data);
                 this.#insertDrawing(resp.data, selectionRange);
                 DrawIO.close();
-            }).catch(err => {
+            } catch (err) {
                 this.handleDrawingUploadError(err);
-            });
+                throw new Error(`Failed to save image with error: ${err}`);
+            }
         });
     }
 
@@ -112,13 +115,14 @@ export class Actions {
         const selectionRange = this.#getSelectionRange();
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
-        DrawIO.show(drawioUrl, () => DrawIO.load(drawingId), pngData => {
+        DrawIO.show(drawioUrl, () => DrawIO.load(drawingId), async pngData => {
             const data = {
                 image: pngData,
                 uploaded_to: Number(this.editor.config.pageId),
             };
 
-            window.$http.post('/images/drawio', data).then(resp => {
+            try {
+                const resp = await window.$http.post('/images/drawio', data);
                 const newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
                 const newContent = this.#getText().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
@@ -128,9 +132,10 @@ export class Actions {
                 }).join('\n');
                 this.#setText(newContent, selectionRange);
                 DrawIO.close();
-            }).catch(err => {
+            } catch (err) {
                 this.handleDrawingUploadError(err);
-            });
+                throw new Error(`Failed to save image with error: ${err}`);
+            }
         });
     }
 
@@ -412,7 +417,7 @@ export class Actions {
             const newContent = `[![](${data.thumbs.display})](${data.url})`;
             this.#findAndReplaceContent(placeHolderText, newContent);
         } catch (err) {
-            window.$events.emit('error', this.editor.config.text.imageUploadError);
+            window.$events.error(err?.data?.message || this.editor.config.text.imageUploadError);
             this.#findAndReplaceContent(placeHolderText, '');
             console.error(err);
         }

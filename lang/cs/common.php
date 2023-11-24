@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Zrušit',
-    'close' => 'Close',
+    'close' => 'Zavřít‏',
     'confirm' => 'Potvrdit',
     'back' => 'Zpět',
     'save' => 'Uložit',
@@ -42,6 +42,7 @@ return [
     'remove' => 'Odebrat',
     'add' => 'Přidat',
     'configure' => 'Nastavit',
+    'manage' => 'Spravovat',
     'fullscreen' => 'Celá obrazovka',
     'favourite' => 'Přidat do oblíbených',
     'unfavourite' => 'Odebrat z oblíbených',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Zrušit filtr',
     'download' => 'Stáhnout',
     'open_in_tab' => 'Otevřít v nové záložce',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',

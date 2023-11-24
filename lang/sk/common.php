@@ -42,6 +42,7 @@ return [
     'remove' => 'Odstrániť',
     'add' => 'Pridať',
     'configure' => 'Konfigurácia',
+    'manage' => 'Manage',
     'fullscreen' => 'Celá obrazovka',
     'favourite' => 'Pridať do obľúbených',
     'unfavourite' => 'Odstrániť z obľúbených',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Bez filtrovania',
     'download' => 'Stiahnuť',
     'open_in_tab' => 'Otvoriť na novej karte',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Možnosti triedenia',

@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Cancelar',
-    'close' => 'Close',
+    'close' => 'Fechar',
     'confirm' => 'Confirmar',
     'back' => 'Voltar',
     'save' => 'Salvar',
@@ -42,6 +42,7 @@ return [
     'remove' => 'Remover',
     'add' => 'Adicionar',
     'configure' => 'Configurar',
+    'manage' => 'Administrar',
     'fullscreen' => 'Tela cheia',
     'favourite' => 'Favoritos',
     'unfavourite' => 'Remover dos Favoritos',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Limpar Filtro',
     'download' => 'Baixar',
     'open_in_tab' => 'Abrir na aba',
+    'open' => 'Abrir',
 
     // Sort Options
     'sort_options' => 'Opções de Ordenação',

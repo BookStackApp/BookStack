@@ -42,6 +42,7 @@ return [
     'remove' => 'Entfernen',
     'add' => 'Hinzufügen',
     'configure' => 'Konfigurieren',
+    'manage' => 'Verwalten',
     'fullscreen' => 'Vollbild',
     'favourite' => 'Favoriten',
     'unfavourite' => 'Kein Favorit',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Filter löschen',
     'download' => 'Herunterladen',
     'open_in_tab' => 'In Tab öffnen',
+    'open' => 'Öffnen',
 
     // Sort Options
     'sort_options' => 'Sortieroptionen',
@@ -98,7 +100,7 @@ return [
     'tab_content_label' => 'Tab: Hauptinhalt anzeigen',
 
     // Email Content
-    'email_action_help' => 'Sollte es beim Anklicken der Schaltfläche ":action_text" Probleme geben, öffne die folgende URL in Deinem Browser:',
+    'email_action_help' => 'Sollte es beim Anklicken der Schaltfläche ":actionText" Probleme geben, öffne die folgende URL in Deinem Browser:',
     'email_rights' => 'Alle Rechte vorbehalten',
 
     // Footer Link Options

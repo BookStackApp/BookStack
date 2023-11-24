@@ -3,19 +3,23 @@
 namespace BookStack\Theming;
 
 use BookStack\Access\SocialAuthService;
+use BookStack\Exceptions\ThemeException;
 use Illuminate\Console\Application;
 use Illuminate\Console\Application as Artisan;
 use Symfony\Component\Console\Command\Command;
 
 class ThemeService
 {
-    protected $listeners = [];
+    /**
+     * @var array<string, callable[]>
+     */
+    protected array $listeners = [];
 
     /**
      * Listen to a given custom theme event,
      * setting up the action to be ran when the event occurs.
      */
-    public function listen(string $event, callable $action)
+    public function listen(string $event, callable $action): void
     {
         if (!isset($this->listeners[$event])) {
             $this->listeners[$event] = [];
@@ -31,10 +35,8 @@ class ThemeService
      *
      * If a callback returns a non-null value, this method will
      * stop and return that value itself.
-     *
-     * @return mixed
      */
-    public function dispatch(string $event, ...$args)
+    public function dispatch(string $event, ...$args): mixed
     {
         foreach ($this->listeners[$event] ?? [] as $action) {
             $result = call_user_func_array($action, $args);
@@ -49,7 +51,7 @@ class ThemeService
     /**
      * Register a new custom artisan command to be available.
      */
-    public function registerCommand(Command $command)
+    public function registerCommand(Command $command): void
     {
         Artisan::starting(function (Application $application) use ($command) {
             $application->addCommands([$command]);
@@ -59,18 +61,22 @@ class ThemeService
     /**
      * Read any actions from the set theme path if the 'functions.php' file exists.
      */
-    public function readThemeActions()
+    public function readThemeActions(): void
     {
         $themeActionsFile = theme_path('functions.php');
         if ($themeActionsFile && file_exists($themeActionsFile)) {
-            require $themeActionsFile;
+            try {
+                require $themeActionsFile;
+            } catch (\Error $exception) {
+                throw new ThemeException("Failed loading theme functions file at \"{$themeActionsFile}\" with error: {$exception->getMessage()}");
+            }
         }
     }
 
     /**
      * @see SocialAuthService::addSocialDriver
      */
-    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler, callable $configureForRedirect = null)
+    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler, callable $configureForRedirect = null): void
     {
         $socialAuthService = app()->make(SocialAuthService::class);
         $socialAuthService->addSocialDriver($driverName, $config, $socialiteHandler, $configureForRedirect);

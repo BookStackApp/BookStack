@@ -44,21 +44,25 @@ return [
     'cannot_get_image_from_url' => 'Nelze získat obrázek z adresy :url',
     'cannot_create_thumbs' => 'Server nedokáže udělat náhledy. Zkontrolujte, že rozšíření GD pro PHP je nainstalováno.',
     'server_upload_limit' => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.',
+    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
     'uploaded'  => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.',
 
     // Drawing & Images
     'image_upload_error' => 'Nastala chyba během nahrávání souboru',
     'image_upload_type_error' => 'Typ nahrávaného obrázku je neplatný.',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_replace_type' => 'Náhrady souboru obrázku musí být stejného typu',
+    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
+    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Data výkresu nelze načíst. Výkresový soubor již nemusí existovat nebo nemusí mít oprávnění k němu přistupovat.',
 
     // Attachments
     'attachment_not_found' => 'Příloha nenalezena',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Nastala chyba během nahrávání přiloženého souboru',
 
     // Pages
     'page_draft_autosave_fail' => 'Nepovedlo se uložit koncept. Než stránku uložíte, ujistěte se, že jste připojeni k internetu.',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Nepodařilo se odstranit koncept stránky a načíst její aktuální obsah',
     'page_custom_home_deletion' => 'Nelze odstranit tuto stránku, protože je nastavena jako uvítací stránka',
 
     // Entities
@@ -111,4 +115,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Při posílání testovacího e-mailu nastala chyba:',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'URL adresa neodpovídá povoleným SSR poskytovatelům',
 ];

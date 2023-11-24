@@ -4,6 +4,7 @@ import {scrollToQueryString} from './scrolling';
 import {listenForDragAndPaste} from './drop-paste-handling';
 import {getPrimaryToolbar, registerAdditionalToolbars} from './toolbars';
 import {registerCustomIcons} from './icons';
+import {setupFilters} from './filters';
 
 import {getPlugin as getCodeeditorPlugin} from './plugin-codeeditor';
 import {getPlugin as getDrawioPlugin} from './plugin-drawio';
@@ -77,12 +78,13 @@ function filePickerCallback(callback, value, meta) {
     if (meta.filetype === 'file') {
         /** @type {EntitySelectorPopup} * */
         const selector = window.$components.first('entity-selector-popup');
+        const selectionText = this.selection.getContent({format: 'text'}).trim();
         selector.show(entity => {
             callback(entity.link, {
                 text: entity.name,
                 title: entity.name,
             });
-        });
+        }, selectionText);
     }
 
     if (meta.filetype === 'image') {
@@ -148,23 +150,6 @@ function fetchCustomHeadContent() {
 }
 
 /**
- * Setup a serializer filter for <br> tags to ensure they're not rendered
- * within code blocks and that we use newlines there instead.
- * @param {Editor} editor
- */
-function setupBrFilter(editor) {
-    editor.serializer.addNodeFilter('br', nodes => {
-        for (const node of nodes) {
-            if (node.parent && node.parent.name === 'code') {
-                const newline = window.tinymce.html.Node.create('#text');
-                newline.value = '\n';
-                node.replace(newline);
-            }
-        }
-    });
-}
-
-/**
  * @param {WysiwygConfigOptions} options
  * @return {function(Editor)}
  */
@@ -189,7 +174,7 @@ function getSetupCallback(options) {
         });
 
         editor.on('PreInit', () => {
-            setupBrFilter(editor);
+            setupFilters(editor);
         });
 
         // Custom handler hook

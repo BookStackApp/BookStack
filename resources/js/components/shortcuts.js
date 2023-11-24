@@ -29,17 +29,16 @@ export class Shortcuts extends Component {
                 return;
             }
 
-            this.handleShortcutPress(event);
-        });
-
-        window.addEventListener('keydown', event => {
             if (event.key === '?') {
                 if (this.hintsShowing) {
                     this.hideHints();
                 } else {
                     this.showHints();
                 }
+                return;
             }
+
+            this.handleShortcutPress(event);
         });
     }
 

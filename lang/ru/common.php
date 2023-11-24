@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Отмена',
-    'close' => 'Close',
+    'close' => 'Закрыть',
     'confirm' => 'Применить',
     'back' => 'Назад',
     'save' => 'Сохранить',
@@ -42,6 +42,7 @@ return [
     'remove' => 'Удалить',
     'add' => 'Добавить',
     'configure' => 'Настройка',
+    'manage' => 'Управлять',
     'fullscreen' => 'На весь экран',
     'favourite' => 'Избранное',
     'unfavourite' => 'Убрать из избранного',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Сбросить фильтр',
     'download' => 'Загрузить',
     'open_in_tab' => 'Открыть во вкладке',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Параметры сортировки',

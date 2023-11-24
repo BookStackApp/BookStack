@@ -42,6 +42,7 @@ return [
     'remove' => 'Αφαίρεση',
     'add' => 'Προσθήκη',
     'configure' => 'Διαμόρφωση',
+    'manage' => 'Manage',
     'fullscreen' => 'Πλήρης οθόνη',
     'favourite' => 'Αγαπημένα',
     'unfavourite' => 'Αφαίρεση από Αγαπημένα',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Διαγραφή φίλτρου',
     'download' => 'Λήψη',
     'open_in_tab' => 'Άνοιγμα σε Καρτέλα',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Επιλογές ταξινόμησης',

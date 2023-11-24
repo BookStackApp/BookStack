@@ -20,6 +20,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 Route::get('/status', [SettingControllers\StatusController::class, 'show']);
 Route::get('/robots.txt', [HomeController::class, 'robots']);
 Route::get('/favicon.ico', [HomeController::class, 'favicon']);
+Route::get('/manifest.json', [HomeController::class, 'pwaManifest']);
 
 // Authenticated routes...
 Route::middleware('auth')->group(function () {
@@ -142,6 +143,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/images/drawio', [UploadControllers\DrawioImageController::class, 'create']);
     Route::get('/images/edit/{id}', [UploadControllers\ImageController::class, 'edit']);
     Route::put('/images/{id}/file', [UploadControllers\ImageController::class, 'updateFile']);
+    Route::put('/images/{id}/rebuild-thumbnails', [UploadControllers\ImageController::class, 'rebuildThumbnails']);
     Route::put('/images/{id}', [UploadControllers\ImageController::class, 'update']);
     Route::delete('/images/{id}', [UploadControllers\ImageController::class, 'destroy']);
 
@@ -194,6 +196,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/favourites/add', [ActivityControllers\FavouriteController::class, 'add']);
     Route::post('/favourites/remove', [ActivityControllers\FavouriteController::class, 'remove']);
 
+    // Watching
+    Route::put('/watching/update', [ActivityControllers\WatchController::class, 'update']);
+
     // Other Pages
     Route::get('/', [EntityControllers\BookshelfController::class, 'index']);
     Route::get('/home', [EntityControllers\BookshelfController::class, 'index']);
@@ -228,24 +233,33 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/users/{id}', [UserControllers\UserController::class, 'update']);
     Route::delete('/settings/users/{id}', [UserControllers\UserController::class, 'destroy']);
 
-    // User Preferences
-    Route::redirect('/preferences', '/');
-    Route::get('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'showShortcuts']);
-    Route::put('/preferences/shortcuts', [UserControllers\UserPreferencesController::class, 'updateShortcuts']);
+    // User Account
+    Route::get('/my-account', [UserControllers\UserAccountController::class, 'redirect']);
+    Route::get('/my-account/profile', [UserControllers\UserAccountController::class, 'showProfile']);
+    Route::put('/my-account/profile', [UserControllers\UserAccountController::class, 'updateProfile']);
+    Route::get('/my-account/shortcuts', [UserControllers\UserAccountController::class, 'showShortcuts']);
+    Route::put('/my-account/shortcuts', [UserControllers\UserAccountController::class, 'updateShortcuts']);
+    Route::get('/my-account/notifications', [UserControllers\UserAccountController::class, 'showNotifications']);
+    Route::put('/my-account/notifications', [UserControllers\UserAccountController::class, 'updateNotifications']);
+    Route::get('/my-account/auth', [UserControllers\UserAccountController::class, 'showAuth']);
+    Route::put('/my-account/auth/password', [UserControllers\UserAccountController::class, 'updatePassword']);
+    Route::get('/my-account/delete', [UserControllers\UserAccountController::class, 'delete']);
+    Route::delete('/my-account', [UserControllers\UserAccountController::class, 'destroy']);
+
+    // User Preference Endpoints
     Route::patch('/preferences/change-view/{type}', [UserControllers\UserPreferencesController::class, 'changeView']);
     Route::patch('/preferences/change-sort/{type}', [UserControllers\UserPreferencesController::class, 'changeSort']);
     Route::patch('/preferences/change-expansion/{type}', [UserControllers\UserPreferencesController::class, 'changeExpansion']);
     Route::patch('/preferences/toggle-dark-mode', [UserControllers\UserPreferencesController::class, 'toggleDarkMode']);
     Route::patch('/preferences/update-code-language-favourite', [UserControllers\UserPreferencesController::class, 'updateCodeLanguageFavourite']);
-    Route::patch('/preferences/update-boolean', [UserControllers\UserPreferencesController::class, 'updateBooleanPreference']);
 
     // User API Tokens
-    Route::get('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'create']);
-    Route::post('/settings/users/{userId}/create-api-token', [UserApiTokenController::class, 'store']);
-    Route::get('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'edit']);
-    Route::put('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'update']);
-    Route::get('/settings/users/{userId}/api-tokens/{tokenId}/delete', [UserApiTokenController::class, 'delete']);
-    Route::delete('/settings/users/{userId}/api-tokens/{tokenId}', [UserApiTokenController::class, 'destroy']);
+    Route::get('/api-tokens/{userId}/create', [UserApiTokenController::class, 'create']);
+    Route::post('/api-tokens/{userId}/create', [UserApiTokenController::class, 'store']);
+    Route::get('/api-tokens/{userId}/{tokenId}', [UserApiTokenController::class, 'edit']);
+    Route::put('/api-tokens/{userId}/{tokenId}', [UserApiTokenController::class, 'update']);
+    Route::get('/api-tokens/{userId}/{tokenId}/delete', [UserApiTokenController::class, 'delete']);
+    Route::delete('/api-tokens/{userId}/{tokenId}', [UserApiTokenController::class, 'destroy']);
 
     // Roles
     Route::get('/settings/roles', [UserControllers\RoleController::class, 'index']);

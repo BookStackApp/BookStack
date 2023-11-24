@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Avbryt',
-    'close' => 'Close',
+    'close' => 'Stäng',
     'confirm' => 'Bekräfta',
     'back' => 'Bakåt',
     'save' => 'Spara',
@@ -42,6 +42,7 @@ return [
     'remove' => 'Radera',
     'add' => 'Lägg till',
     'configure' => 'Konfigurera',
+    'manage' => 'Hantera',
     'fullscreen' => 'Helskärm',
     'favourite' => 'Favorit',
     'unfavourite' => 'Ta bort favorit',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Rensa filter',
     'download' => 'Ladda ner',
     'open_in_tab' => 'Öppna i flik',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativ',

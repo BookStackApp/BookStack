@@ -6,7 +6,7 @@
  */
 return [
 
-    'previous' => '&laquo; Avvalgi',
-    'next'     => 'Keyingi &raquo;',
+    'previous' => '&laquo; Oldingi',
+    'next'     => 'Kegingi &raquo;',
 
 ];

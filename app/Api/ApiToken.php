@@ -52,4 +52,12 @@ class ApiToken extends Model implements Loggable
     {
         return "({$this->id}) {$this->name}; User: {$this->user->logDescriptor()}";
     }
+
+    /**
+     * Get the URL for managing this token.
+     */
+    public function getUrl(string $path = ''): string
+    {
+        return url("/api-tokens/{$this->user_id}/{$this->id}/" . trim($path, '/'));
+    }
 }

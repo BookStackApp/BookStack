@@ -23,7 +23,7 @@
         "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.0",
-        "laravel/socialite": "^5.2",
+        "laravel/socialite": "^5.8",
         "laravel/tinker": "^2.6",
         "league/commonmark": "^2.3",
         "league/flysystem-aws-s3-v3": "^3.0",
@@ -37,7 +37,6 @@
         "socialiteproviders/gitlab": "^4.1",
         "socialiteproviders/microsoft-azure": "^5.1",
         "socialiteproviders/okta": "^4.2",
-        "socialiteproviders/slack": "^4.1",
         "socialiteproviders/twitch": "^5.3",
         "ssddanbrown/htmldiff": "^1.0.2"
     },

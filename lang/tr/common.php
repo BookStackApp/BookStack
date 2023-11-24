@@ -42,6 +42,7 @@ return [
     'remove' => 'Kaldır',
     'add' => 'Ekle',
     'configure' => 'Yapılandır',
+    'manage' => 'Manage',
     'fullscreen' => 'Tam Ekran',
     'favourite' => 'Favoriye ekle',
     'unfavourite' => 'Favorilerden çıkar',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Filtreyi Kaldır',
     'download' => 'İndir',
     'open_in_tab' => 'Sekmede aç',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Sıralama Seçenekleri',

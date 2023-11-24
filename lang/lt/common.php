@@ -42,6 +42,7 @@ return [
     'remove' => 'Pašalinti',
     'add' => 'Pridėti',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'Visas ekranas',
     'favourite' => 'Favourite',
     'unfavourite' => 'Unfavourite',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Clear Filter',
     'download' => 'Download',
     'open_in_tab' => 'Open in Tab',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Rūšiuoti pasirinkimus',

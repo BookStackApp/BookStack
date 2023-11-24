@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'відновив сторінку',
     'page_restore_notification'   => 'Сторінка успішно відновлена',
     'page_move'                   => 'перемістив сторінку',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Сторінку успішно перенесено',
 
     // Chapters
     'chapter_create'              => 'створив розділ',
@@ -57,6 +57,9 @@ return [
     // Favourites
     'favourite_add_notification' => '":ім\'я" було додане до ваших улюлених',
     'favourite_remove_notification' => '":ім\'я" було видалено з ваших улюблених',
+
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
 
     // Auth
     'auth_login' => 'logged in',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => 'прокоментував',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'видалений коментар',
+
+    // Other
     'permissions_update'          => 'оновив дозволи',
 ];

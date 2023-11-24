@@ -18,17 +18,12 @@ use Illuminate\Support\Str;
 
 class UserRepo
 {
-    protected UserAvatars $userAvatar;
-    protected UserInviteService $inviteService;
-
-    /**
-     * UserRepo constructor.
-     */
-    public function __construct(UserAvatars $userAvatar, UserInviteService $inviteService)
-    {
-        $this->userAvatar = $userAvatar;
-        $this->inviteService = $inviteService;
+    public function __construct(
+        protected UserAvatars $userAvatar,
+        protected UserInviteService $inviteService
+    ) {
     }
+
 
     /**
      * Get a user by their email address.
@@ -155,6 +150,7 @@ class UserRepo
         $user->apiTokens()->delete();
         $user->favourites()->delete();
         $user->mfaValues()->delete();
+        $user->watches()->delete();
         $user->delete();
 
         // Delete user profile images

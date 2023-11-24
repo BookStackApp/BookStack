@@ -382,7 +382,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .image-manager-list {
   padding: 3px;
   display: grid;
-  grid-template-columns: repeat( auto-fit, minmax(140px, 1fr) );
+  grid-template-columns: repeat( auto-fill, minmax(max(140px, 17%), 1fr) );
   gap: 3px;
   z-index: 3;
   > div {
@@ -455,6 +455,18 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager .loading-container {
   text-align: center;
+}
+
+.image-manager-list .image-manager-list-warning {
+  grid-column: 1 / -1;
+  aspect-ratio: auto;
+}
+
+.image-manager-warning {
+  @include lightDark(background, #FFF, #333);
+  color: var(--color-warning);
+  font-weight: bold;
+  border-inline: 3px solid var(--color-warning);
 }
 
 .image-manager-sidebar {

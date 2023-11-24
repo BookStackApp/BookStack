@@ -3,48 +3,17 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Http\Controller;
+use BookStack\Permissions\PermissionApplicator;
+use BookStack\Settings\UserNotificationPreferences;
 use BookStack\Settings\UserShortcutMap;
 use BookStack\Users\UserRepo;
 use Illuminate\Http\Request;
 
 class UserPreferencesController extends Controller
 {
-    protected UserRepo $userRepo;
-
-    public function __construct(UserRepo $userRepo)
-    {
-        $this->userRepo = $userRepo;
-    }
-
-    /**
-     * Show the user-specific interface shortcuts.
-     */
-    public function showShortcuts()
-    {
-        $shortcuts = UserShortcutMap::fromUserPreferences();
-        $enabled = setting()->getForCurrentUser('ui-shortcuts-enabled', false);
-
-        return view('users.preferences.shortcuts', [
-            'shortcuts' => $shortcuts,
-            'enabled' => $enabled,
-        ]);
-    }
-
-    /**
-     * Update the user-specific interface shortcuts.
-     */
-    public function updateShortcuts(Request $request)
-    {
-        $enabled = $request->get('enabled') === 'true';
-        $providedShortcuts = $request->get('shortcut', []);
-        $shortcuts = new UserShortcutMap($providedShortcuts);
-
-        setting()->putForCurrentUser('ui-shortcuts', $shortcuts->toJson());
-        setting()->putForCurrentUser('ui-shortcuts-enabled', $enabled);
-
-        $this->showSuccessNotification(trans('preferences.shortcuts_update_success'));
-
-        return redirect('/preferences/shortcuts');
+    public function __construct(
+        protected UserRepo $userRepo
+    ) {
     }
 
     /**
@@ -94,7 +63,7 @@ class UserPreferencesController extends Controller
      */
     public function toggleDarkMode()
     {
-        $enabled = setting()->getForCurrentUser('dark-mode-enabled', false);
+        $enabled = setting()->getForCurrentUser('dark-mode-enabled');
         setting()->putForCurrentUser('dark-mode-enabled', $enabled ? 'false' : 'true');
 
         return redirect()->back();
@@ -123,7 +92,7 @@ class UserPreferencesController extends Controller
     {
         $validated = $this->validate($request, [
             'language' => ['required', 'string', 'max:20'],
-            'active'   => ['required', 'bool'],
+            'active' => ['required', 'bool'],
         ]);
 
         $currentFavoritesStr = setting()->getForCurrentUser('code-language-favourites', '');

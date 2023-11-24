@@ -29,7 +29,7 @@
 
     @if ($commentTree->enabled())
         @if(($previous || $next))
-            <div class="px-xl">
+            <div class="px-xl print-hidden">
                 <hr class="darker">
             </div>
         @endif
@@ -81,7 +81,7 @@
     <div id="page-details" class="entity-details mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
-            @include('entities.meta', ['entity' => $page])
+            @include('entities.meta', ['entity' => $page, 'watchOptions' => $watchOptions])
 
             @if($book->hasPermissions())
                 <div class="active-restriction">
@@ -185,7 +185,10 @@
 
             <hr class="primary-background"/>
 
-            @if(signedInUser())
+            @if($watchOptions->canWatch() && !$watchOptions->isWatching())
+                @include('entities.watch-action', ['entity' => $page])
+            @endif
+            @if(!user()->isGuest())
                 @include('entities.favourite-action', ['entity' => $page])
             @endif
             @if(userCan('content-export'))

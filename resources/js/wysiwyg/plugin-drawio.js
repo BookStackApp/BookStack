@@ -1,4 +1,5 @@
 import * as DrawIO from '../services/drawio';
+import {wait} from '../services/util';
 
 let pageEditor = null;
 let currentNode = null;
@@ -33,7 +34,6 @@ function showDrawingManager(mceEditor, selectedNode = null) {
 }
 
 async function updateContent(pngData) {
-    const id = `image-${Math.random().toString(16).slice(2)}`;
     const loadingImage = window.baseUrl('/loading.gif');
 
     const handleUploadError = error => {
@@ -57,24 +57,29 @@ async function updateContent(pngData) {
             });
         } catch (err) {
             handleUploadError(err);
+            throw new Error(`Failed to save image with error: ${err}`);
         }
         return;
     }
 
-    setTimeout(async () => {
-        pageEditor.insertContent(`<div drawio-diagram contenteditable="false"><img src="${loadingImage}" id="${id}"></div>`);
-        DrawIO.close();
-        try {
-            const img = await DrawIO.upload(pngData, options.pageId);
-            pageEditor.undoManager.transact(() => {
-                pageEditor.dom.setAttrib(id, 'src', img.url);
-                pageEditor.dom.get(id).parentNode.setAttribute('drawio-diagram', img.id);
-            });
-        } catch (err) {
-            pageEditor.dom.remove(id);
-            handleUploadError(err);
-        }
-    }, 5);
+    await wait(5);
+
+    const id = `drawing-${Math.random().toString(16).slice(2)}`;
+    const wrapId = `drawing-wrap-${Math.random().toString(16).slice(2)}`;
+    pageEditor.insertContent(`<div drawio-diagram contenteditable="false" id="${wrapId}"><img src="${loadingImage}" id="${id}"></div>`);
+    DrawIO.close();
+
+    try {
+        const img = await DrawIO.upload(pngData, options.pageId);
+        pageEditor.undoManager.transact(() => {
+            pageEditor.dom.setAttrib(id, 'src', img.url);
+            pageEditor.dom.setAttrib(wrapId, 'drawio-diagram', img.id);
+        });
+    } catch (err) {
+        pageEditor.dom.remove(wrapId);
+        handleUploadError(err);
+        throw new Error(`Failed to save image with error: ${err}`);
+    }
 }
 
 function drawingInit() {

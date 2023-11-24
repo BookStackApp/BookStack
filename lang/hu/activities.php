@@ -41,7 +41,7 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
+    'bookshelf_create_notification'    => 'Könyvespolc sikeresen létrehozva',
     'bookshelf_create_from_book'    => 'converted book to shelf',
     'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
     'bookshelf_update'                 => 'updated shelf',
@@ -57,6 +57,9 @@ return [
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',
     'favourite_remove_notification' => '":name" has been removed from your favourites',
+
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
 
     // Auth
     'auth_login' => 'logged in',
@@ -82,9 +85,9 @@ return [
     'webhook_delete_notification' => 'Webhook successfully deleted',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'felhasználó létrehozása',
+    'user_create_notification' => 'Felhasználó sikeresen létrehozva',
+    'user_update' => 'felhasználó módosítása',
     'user_update_notification' => 'Felhasználó sikeresen frissítve',
     'user_delete' => 'deleted user',
     'user_delete_notification' => 'Felhasználó sikeresen eltávolítva',
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => 'megjegyzést fűzött hozzá:',
-    'permissions_update'          => 'updated permissions',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'megjegyzés törlése',
+
+    // Other
+    'permissions_update'          => 'engedélyek frissítve',
 ];

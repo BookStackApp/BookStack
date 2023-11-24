@@ -11,7 +11,7 @@
     @if($authMethod === 'ldap' || $authMethod === 'system')
         <p class="small">{{ trans('settings.users_details_desc_no_email') }}</p>
     @endif
-    <div class="grid half mt-m gap-xl">
+    <div class="grid half mt-m gap-xl mb-l">
         <div>
             <label for="name">{{ trans('auth.name') }}</label>
             @include('form.text', ['name' => 'name'])
@@ -23,29 +23,26 @@
             @endif
         </div>
     </div>
+    <div>
+        <div class="form-group collapsible mb-none" component="collapsible" id="external-auth-field">
+            <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
+                <label for="external-auth">{{ trans('settings.users_external_auth_id') }}</label>
+            </button>
+            <div refs="collapsible@content" class="collapse-content stretch-inputs">
+                <p class="small">{{ trans('settings.users_external_auth_id_desc') }}</p>
+                @include('form.text', ['name' => 'external_auth_id'])
+            </div>
+        </div>
+    </div>
 </div>
 
-@if(in_array($authMethod, ['ldap', 'saml2', 'oidc']) && userCan('users-manage'))
-    <div class="grid half gap-xl v-center">
-        <div>
-            <label class="setting-list-label">{{ trans('settings.users_external_auth_id') }}</label>
-            <p class="small">{{ trans('settings.users_external_auth_id_desc') }}</p>
-        </div>
-        <div>
-            @include('form.text', ['name' => 'external_auth_id'])
-        </div>
+<div>
+    <label for="role" class="setting-list-label">{{ trans('settings.users_role') }}</label>
+    <p class="small">{{ trans('settings.users_role_desc') }}</p>
+    <div class="mt-m">
+        @include('form.role-checkboxes', ['name' => 'roles', 'roles' => $roles])
     </div>
-@endif
-
-@if(userCan('users-manage'))
-    <div>
-        <label for="role" class="setting-list-label">{{ trans('settings.users_role') }}</label>
-        <p class="small">{{ trans('settings.users_role_desc') }}</p>
-        <div class="mt-m">
-            @include('form.role-checkboxes', ['name' => 'roles', 'roles' => $roles])
-        </div>
-    </div>
-@endif
+</div>
 
 @if($authMethod === 'standard')
     <div component="new-user-password">
@@ -64,7 +61,7 @@
         @endif
 
         <div refs="new-user-password@input-container" @if(!isset($model)) style="display: none;" @endif>
-            <p class="small">{{ trans('settings.users_password_desc') }}</p>
+            <p class="small mb-none">{{ trans('settings.users_password_desc') }}</p>
             @if(isset($model))
                 <p class="small">
                     {{ trans('settings.users_password_warning') }}

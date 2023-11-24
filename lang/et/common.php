@@ -42,6 +42,7 @@ return [
     'remove' => 'Eemalda',
     'add' => 'Lisa',
     'configure' => 'Seadista',
+    'manage' => 'Halda',
     'fullscreen' => 'Täisekraan',
     'favourite' => 'Lemmik',
     'unfavourite' => 'Eemalda lemmik',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Tühjenda filter',
     'download' => 'Laadi alla',
     'open_in_tab' => 'Ava vahelehel',
+    'open' => 'Ava',
 
     // Sort Options
     'sort_options' => 'Sorteerimise valikud',

@@ -42,6 +42,7 @@ return [
     'remove' => 'הסר',
     'add' => 'הוסף',
     'configure' => 'הגדרות',
+    'manage' => 'Manage',
     'fullscreen' => 'מסך מלא',
     'favourite' => 'מועדף',
     'unfavourite' => 'בטל מועדף',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'נקה מסננים',
     'download' => 'הורדה',
     'open_in_tab' => 'פתח בכרטיסייה חדשה',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'אפשרויות מיון',

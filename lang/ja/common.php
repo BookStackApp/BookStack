@@ -42,6 +42,7 @@ return [
     'remove' => '削除',
     'add' => '追加',
     'configure' => '設定',
+    'manage' => '管理',
     'fullscreen' => '全画面',
     'favourite' => 'お気に入り',
     'unfavourite' => 'お気に入りから削除',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'フィルターを解除',
     'download' => 'ダウンロード',
     'open_in_tab' => 'タブで開く',
+    'open' => '開く',
 
     // Sort Options
     'sort_options' => '並べ替えオプション',

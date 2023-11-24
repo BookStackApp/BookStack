@@ -5,11 +5,11 @@
  * leading edge, instead of the trailing.
  * @attribution https://davidwalsh.name/javascript-debounce-function
  * @param {Function} func
- * @param {Number} wait
+ * @param {Number} waitMs
  * @param {Boolean} immediate
  * @returns {Function}
  */
-export function debounce(func, wait, immediate) {
+export function debounce(func, waitMs, immediate) {
     let timeout;
     return function debouncedWrapper(...args) {
         const context = this;
@@ -19,7 +19,7 @@ export function debounce(func, wait, immediate) {
         };
         const callNow = immediate && !timeout;
         clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
+        timeout = setTimeout(later, waitMs);
         if (callNow) func.apply(context, args);
     };
 }
@@ -30,19 +30,29 @@ export function debounce(func, wait, immediate) {
  */
 export function scrollAndHighlightElement(element) {
     if (!element) return;
+
+    const parentDetails = element.closest('details');
+    if (parentDetails && !parentDetails.open) {
+        parentDetails.open = true;
+    }
+
     element.scrollIntoView({behavior: 'smooth'});
 
-    const color = getComputedStyle(document.body).getPropertyValue('--color-primary-light');
-    const initColor = window.getComputedStyle(element).getPropertyValue('background-color');
-    element.style.backgroundColor = color;
+    const highlight = getComputedStyle(document.body).getPropertyValue('--color-link');
+    element.style.outline = `2px dashed ${highlight}`;
+    element.style.outlineOffset = '5px';
+    element.style.transition = null;
     setTimeout(() => {
-        element.classList.add('selectFade');
-        element.style.backgroundColor = initColor;
-    }, 10);
-    setTimeout(() => {
-        element.classList.remove('selectFade');
-        element.style.backgroundColor = '';
-    }, 3000);
+        element.style.transition = 'outline linear 3s';
+        element.style.outline = '2px dashed rgba(0, 0, 0, 0)';
+        const listener = () => {
+            element.removeEventListener('transitionend', listener);
+            element.style.transition = null;
+            element.style.outline = null;
+            element.style.outlineOffset = null;
+        };
+        element.addEventListener('transitionend', listener);
+    }, 1000);
 }
 
 /**
@@ -69,4 +79,15 @@ export function uniqueId() {
     // eslint-disable-next-line no-bitwise
     const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     return (`${S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`);
+}
+
+/**
+ * Create a promise that resolves after the given time.
+ * @param {int} timeMs
+ * @returns {Promise}
+ */
+export function wait(timeMs) {
+    return new Promise(res => {
+        setTimeout(res, timeMs);
+    });
 }

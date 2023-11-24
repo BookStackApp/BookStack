@@ -2,49 +2,12 @@
 
 namespace Tests\User;
 
+use BookStack\Activity\Tools\UserEntityWatchOptions;
+use BookStack\Activity\WatchLevels;
 use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
 {
-    public function test_interface_shortcuts_updating()
-    {
-        $this->asEditor();
-
-        // View preferences with defaults
-        $resp = $this->get('/preferences/shortcuts');
-        $resp->assertSee('Interface Keyboard Shortcuts');
-
-        $html = $this->withHtml($resp);
-        $html->assertFieldHasValue('enabled', 'false');
-        $html->assertFieldHasValue('shortcut[home_view]', '1');
-
-        // Update preferences
-        $resp = $this->put('/preferences/shortcuts', [
-            'enabled' => 'true',
-            'shortcut' => ['home_view' => 'Ctrl + 1'],
-        ]);
-
-        $resp->assertRedirect('/preferences/shortcuts');
-        $resp->assertSessionHas('success', 'Shortcut preferences have been updated!');
-
-        // View updates to preferences page
-        $resp = $this->get('/preferences/shortcuts');
-        $html = $this->withHtml($resp);
-        $html->assertFieldHasValue('enabled', 'true');
-        $html->assertFieldHasValue('shortcut[home_view]', 'Ctrl + 1');
-    }
-
-    public function test_body_has_shortcuts_component_when_active()
-    {
-        $editor = $this->users->editor();
-        $this->actingAs($editor);
-
-        $this->withHtml($this->get('/'))->assertElementNotExists('body[component="shortcuts"]');
-
-        setting()->putUser($editor, 'ui-shortcuts-enabled', 'true');
-        $this->withHtml($this->get('/'))->assertElementExists('body[component="shortcuts"]');
-    }
-
     public function test_update_sort_preference()
     {
         $editor = $this->users->editor();
@@ -129,6 +92,22 @@ class UserPreferencesTest extends TestCase
         $this->assertEquals(true, setting()->getForCurrentUser('dark-mode-enabled'));
         $home = $this->get('/login');
         $this->withHtml($home)->assertElementExists('.dark-mode');
+    }
+
+    public function test_dark_mode_toggle_endpoint_changes_to_light_when_dark_by_default()
+    {
+        config()->set('setting-defaults.user.dark-mode-enabled', true);
+        $editor = $this->users->editor();
+
+        $this->assertEquals(true, setting()->getUser($editor, 'dark-mode-enabled'));
+        $prefChange = $this->actingAs($editor)->patch('/preferences/toggle-dark-mode');
+        $prefChange->assertRedirect();
+        $this->assertEquals(false, setting()->getUser($editor, 'dark-mode-enabled'));
+
+        $home = $this->get('/');
+        $this->withHtml($home)->assertElementNotExists('.dark-mode');
+        $home->assertDontSee('Light Mode');
+        $home->assertSee('Dark Mode');
     }
 
     public function test_books_view_type_preferences_when_list()

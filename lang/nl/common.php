@@ -42,6 +42,7 @@ return [
     'remove' => 'Verwijder',
     'add' => 'Voeg toe',
     'configure' => 'Configureer',
+    'manage' => 'Beheer',
     'fullscreen' => 'Volledig scherm',
     'favourite' => 'Favoriet',
     'unfavourite' => 'Verwijderen als favoriet',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Wis Filter',
     'download' => 'Download',
     'open_in_tab' => 'Open als Tabblad',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Sorteeropties',

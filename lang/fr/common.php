@@ -42,6 +42,7 @@ return [
     'remove' => 'Enlever',
     'add' => 'Ajouter',
     'configure' => 'Configurer',
+    'manage' => 'Gérer',
     'fullscreen' => 'Plein écran',
     'favourite' => 'Favoris',
     'unfavourite' => 'Supprimer des favoris',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Effacer le filtre',
     'download' => 'Télécharger',
     'open_in_tab' => 'Ouvrir dans un onglet',
+    'open' => 'Ouvert',
 
     // Sort Options
     'sort_options' => 'Options de tri',

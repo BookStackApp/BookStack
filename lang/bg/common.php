@@ -42,6 +42,7 @@ return [
     'remove' => 'Премахване',
     'add' => 'Добавяне',
     'configure' => 'Конфигуриране',
+    'manage' => 'Manage',
     'fullscreen' => 'Цял екран',
     'favourite' => 'Любимо',
     'unfavourite' => 'Не е любимо',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Изчистване на филтрите',
     'download' => 'Изтегляне',
     'open_in_tab' => 'Отваряне в раздел',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Опции за сортиране',

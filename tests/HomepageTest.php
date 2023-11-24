@@ -126,9 +126,6 @@ class HomepageTest extends TestCase
         $homeVisit->assertSee('grid-card-content');
         $homeVisit->assertSee('grid-card-footer');
         $homeVisit->assertSee('featured-image-container');
-
-        $this->setSettings(['app-homepage-type' => false]);
-        $this->test_default_homepage_visible();
     }
 
     public function test_set_bookshelves_homepage()
@@ -145,9 +142,19 @@ class HomepageTest extends TestCase
         $homeVisit->assertSee('grid-card-content');
         $homeVisit->assertSee('featured-image-container');
         $this->withHtml($homeVisit)->assertElementContains('.grid-card', $shelf->name);
+    }
 
-        $this->setSettings(['app-homepage-type' => false]);
-        $this->test_default_homepage_visible();
+    public function test_books_and_bookshelves_homepage_has_expected_actions()
+    {
+        $this->asEditor();
+
+        foreach (['bookshelves', 'books'] as $homepageType) {
+            $this->setSettings(['app-homepage-type' => $homepageType]);
+
+            $html = $this->withHtml($this->get('/'));
+            $html->assertElementContains('.actions button', 'Dark Mode');
+            $html->assertElementContains('.actions a[href$="/tags"]', 'View Tags');
+        }
     }
 
     public function test_shelves_list_homepage_adheres_to_book_visibility_permissions()

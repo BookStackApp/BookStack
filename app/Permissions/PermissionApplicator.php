@@ -3,19 +3,25 @@
 namespace BookStack\Permissions;
 
 use BookStack\App\Model;
+use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Users\Models\HasCreatorAndUpdater;
 use BookStack\Users\Models\HasOwner;
-use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Query\JoinClause;
 use InvalidArgumentException;
 
 class PermissionApplicator
 {
+    public function __construct(
+        protected ?User $user = null
+    ) {
+    }
+
     /**
      * Checks if an entity has a restriction set upon it.
      *
@@ -144,6 +150,42 @@ class PermissionApplicator
     }
 
     /**
+     * Filter out items that have related entity relations where
+     * the entity is marked as deleted.
+     */
+    public function filterDeletedFromEntityRelationQuery(Builder $query, string $tableName, string $entityIdColumn, string $entityTypeColumn): Builder
+    {
+        $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
+        $entityProvider = new EntityProvider();
+
+        $joinQuery = function ($query) use ($entityProvider) {
+            $first = true;
+            /** @var Builder $query */
+            foreach ($entityProvider->all() as $entity) {
+                $entityQuery = function ($query) use ($entity) {
+                    /** @var Builder $query */
+                    $query->select(['id', 'deleted_at'])
+                        ->selectRaw("'{$entity->getMorphClass()}' as type")
+                        ->from($entity->getTable())
+                        ->whereNotNull('deleted_at');
+                };
+
+                if ($first) {
+                    $entityQuery($query);
+                    $first = false;
+                } else {
+                    $query->union($entityQuery);
+                }
+            }
+        };
+
+        return $query->leftJoinSub($joinQuery, 'deletions', function (JoinClause $join) use ($tableDetails) {
+            $join->on($tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'], '=', 'deletions.id')
+                ->on($tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'], '=', 'deletions.type');
+        })->whereNull('deletions.deleted_at');
+    }
+
+    /**
      * Add conditions to a query for a model that's a relation of a page, so only the model results
      * on visible pages are returned by the query.
      * Is effectively the same as "restrictEntityRelationQuery" but takes into account page drafts
@@ -173,7 +215,7 @@ class PermissionApplicator
      */
     protected function currentUser(): User
     {
-        return user();
+        return $this->user ?? user();
     }
 
     /**

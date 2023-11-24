@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Gambar berhasil dihapus',
     'image_replace' => 'Replace Image',
     'image_replace_success' => 'Image file successfully updated',
+    'image_rebuild_thumbs' => 'Regenerate Size Variations',
+    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
 
     // Code Editor
     'code_editor' => 'Edit Kode',

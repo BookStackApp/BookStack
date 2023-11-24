@@ -42,6 +42,7 @@ return [
     'remove' => '제거',
     'add' => '추가',
     'configure' => '설정',
+    'manage' => 'Manage',
     'fullscreen' => '전체화면',
     'favourite' => '즐겨찾기',
     'unfavourite' => '즐겨찾기 해제',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => '모든 필터 해제',
     'download' => '내려받기',
     'open_in_tab' => '탭에서 열기',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => '정렬 기준',

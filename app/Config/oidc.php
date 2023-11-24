@@ -9,7 +9,7 @@ return [
     'dump_user_details' => env('OIDC_DUMP_USER_DETAILS', false),
 
     // Claim, within an OpenId token, to find the user's display name
-    'display_name_claims' => explode('|', env('OIDC_DISPLAY_NAME_CLAIMS', 'name')),
+    'display_name_claims' => env('OIDC_DISPLAY_NAME_CLAIMS', 'name'),
 
     // Claim, within an OpenID token, to use to connect a BookStack user to the OIDC user.
     'external_id_claim' => env('OIDC_EXTERNAL_ID_CLAIM', 'sub'),

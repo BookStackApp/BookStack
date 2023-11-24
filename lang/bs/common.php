@@ -42,6 +42,7 @@ return [
     'remove' => 'Ukloni',
     'add' => 'Dodaj',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'Prikaz preko čitavog ekrana',
     'favourite' => 'Favorit',
     'unfavourite' => 'Ukloni favorit',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Clear Filter',
     'download' => 'Download',
     'open_in_tab' => 'Open in Tab',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Opcije sortiranja',

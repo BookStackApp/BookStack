@@ -9,7 +9,7 @@ return [
     'image_list' => 'Attēlu saraksts',
     'image_details' => 'Attēla dati',
     'image_upload' => 'Augšuplādēt attēlu',
-    'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
+    'image_intro' => 'Šeit jūs varat izvēlēties un pārvaldīt attēlus, kuri iepriekš tika aplugšupielādēti sistēmā.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
     'image_all' => 'Visi',
     'image_all_title' => 'Skatīt visus attēlus',
@@ -34,6 +34,8 @@ return [
     'image_delete_success' => 'Attēls veiksmīgi dzēsts',
     'image_replace' => 'Nomainīt bildi',
     'image_replace_success' => 'Image file successfully updated',
+    'image_rebuild_thumbs' => 'Regenerate Size Variations',
+    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
 
     // Code Editor
     'code_editor' => 'Rediģēt kodu',

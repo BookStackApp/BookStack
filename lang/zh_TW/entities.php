@@ -239,6 +239,8 @@ return [
     'pages_md_insert_drawing' => '插入繪圖',
     'pages_md_show_preview' => '顯示預覽',
     'pages_md_sync_scroll' => 'Sync preview scroll',
+    'pages_drawing_unsaved' => 'Unsaved Drawing Found',
+    'pages_drawing_unsaved_confirm' => 'Unsaved drawing data was found from a previous failed drawing save attempt. Would you like to restore and continue editing this unsaved drawing?',
     'pages_not_in_chapter' => '頁面不在章節中',
     'pages_move' => '移動頁面',
     'pages_copy' => '複製頁面',
@@ -293,6 +295,7 @@ return [
     'pages_is_template' => '頁面模板',
 
     // Editor Sidebar
+    'toggle_sidebar' => 'Toggle Sidebar',
     'page_tags' => '頁面標籤',
     'chapter_tags' => '章節標籤',
     'book_tags' => '書本標籤',
@@ -349,7 +352,7 @@ return [
     'templates_prepend_content' => '前置頁面內容',
 
     // Profile View
-    'profile_user_for_x' => '來這裡:time了',
+    'profile_user_for_x' => '來這裡 :time 了',
     'profile_created_content' => '已建立內容',
     'profile_not_created_pages' => ':userName 尚未建立任何頁面',
     'profile_not_created_chapters' => ':userName 尚未建立任何章節',
@@ -403,4 +406,28 @@ return [
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
     'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+
+    // Watch Options
+    'watch' => 'Watch',
+    'watch_title_default' => '預設偏好設定',
+    'watch_desc_default' => 'Revert watching to just your default notification preferences.',
+    'watch_title_ignore' => 'Ignore',
+    'watch_desc_ignore' => 'Ignore all notifications, including those from user-level preferences.',
+    'watch_title_new' => 'New Pages',
+    'watch_desc_new' => 'Notify when any new page is created within this item.',
+    'watch_title_updates' => 'All Page Updates',
+    'watch_desc_updates' => 'Notify upon all new pages and page changes.',
+    'watch_desc_updates_page' => 'Notify upon all page changes.',
+    'watch_title_comments' => 'All Page Updates & Comments',
+    'watch_desc_comments' => 'Notify upon all new pages, page changes and new comments.',
+    'watch_desc_comments_page' => 'Notify upon page changes and new comments.',
+    'watch_change_default' => 'Change default notification preferences',
+    'watch_detail_ignore' => 'Ignoring notifications',
+    'watch_detail_new' => 'Watching for new pages',
+    'watch_detail_updates' => 'Watching new pages and updates',
+    'watch_detail_comments' => 'Watching new pages, updates & comments',
+    'watch_detail_parent_book' => 'Watching via parent book',
+    'watch_detail_parent_book_ignore' => 'Ignoring via parent book',
+    'watch_detail_parent_chapter' => 'Watching via parent chapter',
+    'watch_detail_parent_chapter_ignore' => 'Ignoring via parent chapter',
 ];

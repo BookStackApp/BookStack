@@ -466,10 +466,10 @@ class EntitySearchTest extends TestCase
         $search = $this->asEditor()->get('/search?term=' . urlencode('\\\\cat\\dog'));
         $search->assertSee($page->getUrl(), false);
 
-        $search = $this->asEditor()->get('/search?term=' . urlencode('"\\dog\\"'));
+        $search = $this->asEditor()->get('/search?term=' . urlencode('"\\dog\\\\"'));
         $search->assertSee($page->getUrl(), false);
 
-        $search = $this->asEditor()->get('/search?term=' . urlencode('"\\badger\\"'));
+        $search = $this->asEditor()->get('/search?term=' . urlencode('"\\badger\\\\"'));
         $search->assertDontSee($page->getUrl(), false);
 
         $search = $this->asEditor()->get('/search?term=' . urlencode('[\\Categorylike%\\fluffy]'));

@@ -45,6 +45,7 @@ class PagesApiTest extends TestCase
                     'value' => 'tagvalue',
                 ],
             ],
+            'priority' => 15,
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
@@ -207,6 +208,7 @@ class PagesApiTest extends TestCase
                     'value' => 'freshtagval',
                 ],
             ],
+            'priority' => 15,
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);

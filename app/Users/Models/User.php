@@ -3,14 +3,17 @@
 namespace BookStack\Users\Models;
 
 use BookStack\Access\Mfa\MfaValue;
+use BookStack\Access\Notifications\ResetPasswordNotification;
 use BookStack\Access\SocialAccount;
 use BookStack\Activity\Models\Favourite;
 use BookStack\Activity\Models\Loggable;
+use BookStack\Activity\Models\Watch;
 use BookStack\Api\ApiToken;
 use BookStack\App\Model;
 use BookStack\App\Sluggable;
 use BookStack\Entities\Tools\SlugGenerator;
-use BookStack\Notifications\ResetPassword;
+use BookStack\Translation\LocaleDefinition;
+use BookStack\Translation\LocaleManager;
 use BookStack\Uploads\Image;
 use Carbon\Carbon;
 use Exception;
@@ -87,32 +90,28 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected string $avatarUrl = '';
 
     /**
-     * This holds the default user when loaded.
-     *
-     * @var null|User
-     */
-    protected static ?User $defaultUser = null;
-
-    /**
      * Returns the default public user.
+     * Fetches from the container as a singleton to effectively cache at an app level.
      */
-    public static function getDefault(): self
+    public static function getGuest(): self
     {
-        if (!is_null(static::$defaultUser)) {
-            return static::$defaultUser;
-        }
-
-        static::$defaultUser = static::query()->where('system_name', '=', 'public')->first();
-
-        return static::$defaultUser;
+        return app()->make('users.default');
     }
 
     /**
      * Check if the user is the default public user.
      */
-    public function isDefault(): bool
+    public function isGuest(): bool
     {
         return $this->system_name === 'public';
+    }
+
+    /**
+     * Check if the user has general access to the application.
+     */
+    public function hasAppAccess(): bool
+    {
+        return !$this->isGuest() || setting('app-public');
     }
 
     /**
@@ -161,10 +160,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function can(string $permissionName): bool
     {
-        if ($this->email === 'guest') {
-            return false;
-        }
-
         return $this->permissions()->contains($permissionName);
     }
 
@@ -245,7 +240,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
 
         try {
-            $avatar = $this->avatar ? url($this->avatar->getThumb($size, $size, false)) : $default;
+            $avatar = $this->avatar?->getThumb($size, $size, false) ?? $default;
         } catch (Exception $err) {
             $avatar = $default;
         }
@@ -285,6 +280,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function mfaValues(): HasMany
     {
         return $this->hasMany(MfaValue::class);
+    }
+
+    /**
+     * Get the tracked entity watches for this user.
+     */
+    public function watches(): HasMany
+    {
+        return $this->hasMany(Watch::class);
     }
 
     /**
@@ -332,7 +335,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $splitName[0];
         }
 
-        return '';
+        return mb_substr($this->name, 0, max($chars - 2, 0)) . '…';
+    }
+
+    /**
+     * Get the locale for this user.
+     */
+    public function getLocale(): LocaleDefinition
+    {
+        return app()->make(LocaleManager::class)->getForUser($this);
     }
 
     /**
@@ -344,7 +355,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPassword($token));
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     /**
@@ -360,7 +371,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function refreshSlug(): string
     {
-        $this->slug = app(SlugGenerator::class)->generate($this);
+        $this->slug = app()->make(SlugGenerator::class)->generate($this);
 
         return $this->slug;
     }

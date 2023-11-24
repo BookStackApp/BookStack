@@ -9,6 +9,7 @@ use BookStack\Access\LdapService;
 use BookStack\Access\LoginService;
 use BookStack\Access\RegistrationService;
 use BookStack\Api\ApiTokenGuard;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -64,6 +65,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         Auth::provider('external-users', function ($app, array $config) {
             return new ExternalBaseUserProvider($config['model']);
+        });
+
+        // Bind and provide the default system user as a singleton to the app instance when needed.
+        // This effectively "caches" fetching the user at an app-instance level.
+        $this->app->singleton('users.default', function () {
+            return User::query()->where('system_name', '=', 'public')->first();
         });
     }
 }

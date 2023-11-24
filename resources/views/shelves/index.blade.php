@@ -40,7 +40,7 @@
         @if(count($popular) > 0)
             @include('entities.list', ['entities' => $popular, 'style' => 'compact'])
         @else
-            <div class="text-muted">{{ trans('entities.shelves_popular_empty') }}</div>
+            <p class="text-muted pb-l mb-none">{{ trans('entities.shelves_popular_empty') }}</p>
         @endif
     </div>
 
@@ -49,7 +49,7 @@
         @if(count($new) > 0)
             @include('entities.list', ['entities' => $new, 'style' => 'compact'])
         @else
-            <div class="text-muted">{{ trans('entities.shelves_new_empty') }}</div>
+            <p class="text-muted pb-l mb-none">{{ trans('entities.shelves_new_empty') }}</p>
         @endif
     </div>
 @stop

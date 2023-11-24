@@ -191,7 +191,7 @@ class UserManagementTest extends TestCase
 
     public function test_guest_profile_shows_limited_form()
     {
-        $guest = User::getDefault();
+        $guest = $this->users->guest();
         $resp = $this->asAdmin()->get('/settings/users/' . $guest->id);
         $resp->assertSee('Guest');
         $this->withHtml($resp)->assertElementNotExists('#password');
@@ -199,7 +199,7 @@ class UserManagementTest extends TestCase
 
     public function test_guest_profile_cannot_be_deleted()
     {
-        $guestUser = User::getDefault();
+        $guestUser = $this->users->guest();
         $resp = $this->asAdmin()->get('/settings/users/' . $guestUser->id . '/delete');
         $resp->assertSee('Delete User');
         $resp->assertSee('Guest');
@@ -215,7 +215,7 @@ class UserManagementTest extends TestCase
     {
         $langs = ['en', 'fr', 'hr'];
         foreach ($langs as $lang) {
-            config()->set('app.locale', $lang);
+            config()->set('app.default_locale', $lang);
             $resp = $this->asAdmin()->get('/settings/users/create');
             $this->withHtml($resp)->assertElementExists('select[name="language"] option[value="' . $lang . '"][selected]');
         }

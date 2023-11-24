@@ -42,6 +42,7 @@ return [
     'remove' => 'Hapus',
     'add' => 'Tambah',
     'configure' => 'Configure',
+    'manage' => 'Manage',
     'fullscreen' => 'Layar Penuh',
     'favourite' => 'Favorit',
     'unfavourite' => 'Batal favorit',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => 'Clear Filter',
     'download' => 'Download',
     'open_in_tab' => 'Open in Tab',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => 'Opsi Sortir',

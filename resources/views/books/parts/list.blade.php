@@ -24,8 +24,14 @@
         </div>
     @else
         <p class="text-muted">{{ trans('entities.books_empty') }}</p>
-        @if(userCan('books-create-all'))
-            <a href="{{ url("/create-book") }}" class="text-pos">@icon('edit'){{ trans('entities.create_now') }}</a>
+        @if(userCan('book-create-all'))
+            <div class="icon-list block inline">
+                <a href="{{ url("/create-book") }}"
+                   class="icon-list-item text-book">
+                    <span>@icon('add')</span>
+                    <span>{{ trans('entities.create_now') }}</span>
+                </a>
+            </div>
         @endif
     @endif
 </main>

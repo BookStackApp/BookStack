@@ -42,6 +42,7 @@ return [
     'remove' => '移除',
     'add' => '新增',
     'configure' => '配置',
+    'manage' => 'Manage',
     'fullscreen' => '全螢幕',
     'favourite' => '最愛',
     'unfavourite' => '取消最愛',
@@ -51,6 +52,7 @@ return [
     'filter_clear' => '清理過濾',
     'download' => '下載',
     'open_in_tab' => '在新分頁中開啟',
+    'open' => 'Open',
 
     // Sort Options
     'sort_options' => '排序選項',

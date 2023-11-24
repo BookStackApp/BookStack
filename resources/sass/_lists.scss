@@ -342,7 +342,7 @@ details.sort-box[open] summary .caret-container svg {
   font-size: 0.9em;
 }
 .card .activity-list-item {
-  padding: $-s $-m;
+  padding-block: $-s;
 }
 
 .user-list-item {
@@ -681,6 +681,10 @@ ul.pagination {
   &.wide {
     min-width: 220px;
   }
+  &.xl-limited {
+    width: 280px;
+    max-width: 100%;
+  }
   .text-muted {
     color: #999;
     fill: #999;
@@ -705,6 +709,11 @@ ul.pagination {
     white-space: nowrap;
     line-height: 1.4;
     cursor: pointer;
+    &.break-text {
+      white-space: normal;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
     &:hover, &:focus {
       text-decoration: none;
       background-color: var(--color-primary-light);

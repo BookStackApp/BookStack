@@ -139,12 +139,17 @@ class SecurityHeaderTest extends TestCase
         $this->assertEquals('frame-src \'self\' https://example.com https://diagrams.example.com', $scriptHeader);
     }
 
-    public function test_cache_control_headers_are_strict_on_responses_when_logged_in()
+    public function test_cache_control_headers_are_set_on_responses()
     {
+        // Public access
+        $resp = $this->get('/');
+        $resp->assertHeader('Cache-Control', 'no-cache, no-store, private');
+        $resp->assertHeader('Expires', 'Sun, 12 Jul 2015 19:01:00 GMT');
+
+        // Authed access
         $this->asEditor();
         $resp = $this->get('/');
-        $resp->assertHeader('Cache-Control', 'max-age=0, no-store, private');
-        $resp->assertHeader('Pragma', 'no-cache');
+        $resp->assertHeader('Cache-Control', 'no-cache, no-store, private');
         $resp->assertHeader('Expires', 'Sun, 12 Jul 2015 19:01:00 GMT');
     }
 

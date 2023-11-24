@@ -37,7 +37,6 @@ export class PageDisplay extends Component {
 
         window.importVersioned('code').then(Code => Code.highlight());
         this.setupNavHighlighting();
-        this.setupDetailsCodeBlockRefresh();
 
         // Check the hash on load
         if (window.location.hash) {
@@ -85,16 +84,6 @@ export class PageDisplay extends Component {
         if (headings.length > 0 && pageNav !== null) {
             addNavObserver(headings);
         }
-    }
-
-    setupDetailsCodeBlockRefresh() {
-        const onToggle = event => {
-            const codeMirrors = [...event.target.querySelectorAll('.CodeMirror')];
-            codeMirrors.forEach(cm => cm.CodeMirror && cm.CodeMirror.refresh());
-        };
-
-        const details = [...this.container.querySelectorAll('details')];
-        details.forEach(detail => detail.addEventListener('toggle', onToggle));
     }
 
 }

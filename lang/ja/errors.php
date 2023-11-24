@@ -44,12 +44,16 @@ return [
     'cannot_get_image_from_url' => ':url から画像を取得できませんでした。',
     'cannot_create_thumbs' => 'このサーバはサムネイルを作成できません。GD PHP extensionがインストールされていることを確認してください。',
     'server_upload_limit' => 'このサイズの画像をアップロードすることは許可されていません。ファイルサイズを小さくし、再試行してください。',
+    'server_post_limit' => 'サーバーは提供されたデータ量を受け取ることができません。少ないデータまたは小さいファイルでもう一度お試しください。',
     'uploaded'  => 'このサイズの画像をアップロードすることは許可されていません。ファイルサイズを小さくし、再試行してください。',
 
     // Drawing & Images
     'image_upload_error' => '画像アップロード時にエラーが発生しました。',
     'image_upload_type_error' => 'アップロード中の画像の種類が無効です',
     'image_upload_replace_type' => '画像ファイルの置き換えは同じ種類でなければなりません',
+    'image_upload_memory_limit' => 'システムリソースの制限により、画像のアップロードやサムネイルの作成に失敗しました。',
+    'image_thumbnail_memory_limit' => 'システムリソース制限のため、画像サイズのバリエーションを作成できませんでした。',
+    'image_gallery_thumbnail_memory_limit' => 'システムリソース制限のため、ギャラリーのサムネイルを作成できませんでした。',
     'drawing_data_not_found' => '描画データを読み込めませんでした。描画ファイルが存在しないか、アクセス権限がありません。',
 
     // Attachments
@@ -111,4 +115,6 @@ return [
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'テストメール送信時にエラーが発生しました:',
 
+    // HTTP errors
+    'http_ssr_url_no_match' => 'URLはサーバサイドリクエストが許可されたホストではありません。',
 ];

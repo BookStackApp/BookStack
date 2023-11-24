@@ -15,7 +15,7 @@ return [
     'page_restore'                => '已還原頁面',
     'page_restore_notification'   => '頁面已還原成功',
     'page_move'                   => '已移動頁面',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => '頁面已成功移動',
 
     // Chapters
     'chapter_create'              => '已建立章節',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => '已刪除章節',
     'chapter_delete_notification' => '章節已刪除成功',
     'chapter_move'                => '已移動章節',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => '章節已移動成功',
 
     // Books
     'book_create'                 => '已建立書本',
@@ -58,6 +58,9 @@ return [
     'favourite_add_notification' => '":name" 已加入到你的最愛',
     'favourite_remove_notification' => '":name" 已從你的最愛移除',
 
+    // Watching
+    'watch_update_level_notification' => 'Watch preferences successfully updated',
+
     // Auth
     'auth_login' => 'logged in',
     'auth_register' => 'registered as new user',
@@ -70,7 +73,7 @@ return [
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update_notification' => '設定更新成功',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -110,7 +113,12 @@ return [
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
-    // Other
+    // Comments
     'commented_on'                => '評論',
+    'comment_create'              => 'added comment',
+    'comment_update'              => 'updated comment',
+    'comment_delete'              => 'deleted comment',
+
+    // Other
     'permissions_update'          => '更新權限',
 ];

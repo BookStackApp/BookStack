@@ -16,14 +16,9 @@ use Exception;
 
 class ChapterRepo
 {
-    protected $baseRepo;
-
-    /**
-     * ChapterRepo constructor.
-     */
-    public function __construct(BaseRepo $baseRepo)
-    {
-        $this->baseRepo = $baseRepo;
+    public function __construct(
+        protected BaseRepo $baseRepo
+    ) {
     }
 
     /**
