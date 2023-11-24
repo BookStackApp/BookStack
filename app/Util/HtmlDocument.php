@@ -149,19 +149,4 @@ class HtmlDocument
     {
         return $this->document->saveHTML($node);
     }
-
-    /**
-     * Adopt the given nodes into this document.
-     * @param DOMNode[] $nodes
-     * @return DOMNode[]
-     */
-    public function adoptNodes(array $nodes): array
-    {
-        $adopted = [];
-        foreach ($nodes as $node) {
-            $adopted[] = $this->document->importNode($node, true);
-        }
-
-        return $adopted;
-    }
 }

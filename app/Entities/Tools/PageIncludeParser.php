@@ -4,6 +4,8 @@ namespace BookStack\Entities\Tools;
 
 use BookStack\Util\HtmlDocument;
 use Closure;
+use DOMDocument;
+use DOMElement;
 use DOMNode;
 use DOMText;
 
@@ -22,48 +24,26 @@ class PageIncludeParser
         $doc = new HtmlDocument($this->pageHtml);
 
         $tags = $this->locateAndIsolateIncludeTags($doc);
+        $topLevel = [...$doc->getBodyChildren()];
 
         foreach ($tags as $tag) {
             $htmlContent = $this->pageContentForId->call($this, $tag->getPageId());
             $content = new PageIncludeContent($htmlContent, $tag);
 
-            if ($content->isInline()) {
-                $adopted = $doc->adoptNodes($content->toDomNodes());
-                foreach ($adopted as $adoptedContentNode) {
-                    $tag->domNode->parentNode->insertBefore($adoptedContentNode, $tag->domNode);
+            if (!$content->isInline()) {
+                $isParentTopLevel = in_array($tag->domNode->parentNode, $topLevel, true);
+                if ($isParentTopLevel) {
+                    $this->splitNodeAtChildNode($tag->domNode->parentNode, $tag->domNode);
+                } else {
+                    $this->promoteTagNodeToBody($tag, $doc->getBody());
                 }
-                $tag->domNode->parentNode->removeChild($tag->domNode);
-                continue;
             }
 
-            // TODO - Non-inline
+            $this->replaceNodeWithNodes($tag->domNode, $content->toDomNodes());
         }
 
-        // TODO:
-        // Hunt down the specific text nodes with matches
-        // Split out tag text node from rest of content
-        // Fetch tag content->
-          // If range or top-block: delete tag text node, [Promote to top-block], delete old top-block if empty
-          // If inline: Replace current text node with new text or elem
-        // !! "Range" or "inline" status should come from tag parser and content fetcher, not guessed direct from content
-        //     since we could have a range of inline elements
-
-        // [Promote to top-block]
-        // Tricky operation.
-        // Can throw in before or after current top-block depending on relative position
-        // Could [Split] top-block but complex past a single level depth.
-        // Maybe [Split] if one level depth, otherwise default to before/after block
-        // Should work for the vast majority of cases, and not for those which would
-        // technically be invalid in-editor anyway.
-
-        // [Split]
-        // Copy original top-block node type and attrs (apart from ID)
-        // Move nodes after promoted tag-node into copy
-        // Insert copy after original (after promoted top-block eventually)
-
-        // Notes: May want to eventually parse through backwards, which should avoid issues
-        // in changes affecting the next tag, where tags may be in the same/adjacent nodes.
-
+        // TODO Notes: May want to eventually parse through backwards, which should avoid issues
+        //   in changes affecting the next tag, where tags may be in the same/adjacent nodes.
 
         return $doc->getBodyInnerHtml();
     }
@@ -124,5 +104,72 @@ class PageIncludeParser
         }
 
         return $includeTags;
+    }
+
+    /**
+     * @param DOMNode[] $replacements
+     */
+    protected function replaceNodeWithNodes(DOMNode $toReplace, array $replacements): void
+    {
+        /** @var DOMDocument $targetDoc */
+        $targetDoc = $toReplace->ownerDocument;
+
+        foreach ($replacements as $replacement) {
+            if ($replacement->ownerDocument !== $targetDoc) {
+                $replacement = $targetDoc->adoptNode($replacement);
+            }
+
+            $toReplace->parentNode->insertBefore($replacement, $toReplace);
+        }
+
+        $toReplace->parentNode->removeChild($toReplace);
+    }
+
+    protected function promoteTagNodeToBody(PageIncludeTag $tag, DOMNode $body): void
+    {
+        /** @var DOMNode $topParent */
+        $topParent = $tag->domNode->parentNode;
+        while ($topParent->parentNode !== $body) {
+            $topParent = $topParent->parentNode;
+        }
+
+        $parentText = $topParent->textContent;
+        $tagPos = strpos($parentText, $tag->tagContent);
+        $before = $tagPos < (strlen($parentText) / 2);
+
+        if ($before) {
+            $body->insertBefore($tag->domNode, $topParent);
+        } else {
+            $body->insertBefore($tag->domNode, $topParent->nextSibling);
+        }
+    }
+
+    protected function splitNodeAtChildNode(DOMElement $parentNode, DOMNode $domNode): void
+    {
+        $children = [...$parentNode->childNodes];
+        $splitPos = array_search($domNode, $children, true) ?: count($children);
+        $parentClone = $parentNode->cloneNode();
+        $parentClone->removeAttribute('id');
+
+        /** @var DOMNode $child */
+        for ($i = 0; $i < $splitPos; $i++) {
+            $child = $children[0];
+            $parentClone->appendChild($child);
+        }
+
+        if ($parentClone->hasChildNodes()) {
+            $parentNode->parentNode->insertBefore($parentClone, $parentNode);
+        }
+
+        $parentNode->parentNode->insertBefore($domNode, $parentNode);
+
+        $parentClone->normalize();
+        $parentNode->normalize();
+        if (!$parentNode->hasChildNodes()) {
+            $parentNode->remove();
+        }
+        if (!$parentClone->hasChildNodes()) {
+            $parentClone->remove();
+        }
     }
 }
