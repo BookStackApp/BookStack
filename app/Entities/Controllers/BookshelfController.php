@@ -41,7 +41,7 @@ class BookshelfController extends Controller
             'updated_at' => trans('common.sort_updated_at'),
         ]);
 
-        $shelves = $this->shelfRepo->getAllPaginated(18, $listOptions->getSort(), $listOptions->getOrder());
+        $shelves = $this->shelfRepo->getAllPaginated(30, $listOptions->getSort(), $listOptions->getOrder());
         $recents = $this->isSignedIn() ? $this->shelfRepo->getRecentlyViewed(4) : false;
         $popular = $this->shelfRepo->getPopular(4);
         $new = $this->shelfRepo->getRecentlyCreated(4);
