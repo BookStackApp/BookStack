@@ -194,7 +194,7 @@ return [
     'users_send_invite_option' => 'Lähetä kutsu',
     'users_external_auth_id' => 'Ulkoisen tunnistautumisen tunnus',
     'users_external_auth_id_desc' => 'Tätä tunnusta käytetään BookStack-käyttäjätilin ja ulkoisen tunnistautumisen (kuten SAML2, OIDC tai LDAP) kautta käytettävän tilin yhdistämiseen. Voit jättää tämän kentän huomiotta, jos käytät oletuksena sähköpostipohjaista todennusta.',
-    'users_password_warning' => 'Only fill the below if you would like to change the password for this user.',
+    'users_password_warning' => 'Täytä alla oleva kenttä vain, jos haluat vaihtaa tämän käyttäjän salasanan.',
     'users_system_public' => 'This user represents any guest users that visit your instance. It cannot be used to log in but is assigned automatically.',
     'users_delete' => 'Delete User',
     'users_delete_named' => 'Delete user :userName',
