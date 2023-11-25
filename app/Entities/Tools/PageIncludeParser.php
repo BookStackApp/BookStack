@@ -13,37 +13,45 @@ class PageIncludeParser
 {
     protected static string $includeTagRegex = "/{{@\s?([0-9].*?)}}/";
 
+    /**
+     * Elements to clean up and remove if left empty after a parsing operation.
+     * @var DOMElement[]
+     */
+    protected array $toCleanup = [];
+
     public function __construct(
         protected string $pageHtml,
         protected Closure $pageContentForId,
     ) {
     }
 
+    /**
+     * Parse out the include tags.
+     */
     public function parse(): string
     {
         $doc = new HtmlDocument($this->pageHtml);
 
         $tags = $this->locateAndIsolateIncludeTags($doc);
-        $topLevel = [...$doc->getBodyChildren()];
 
         foreach ($tags as $tag) {
             $htmlContent = $this->pageContentForId->call($this, $tag->getPageId());
             $content = new PageIncludeContent($htmlContent, $tag);
 
             if (!$content->isInline()) {
-                $isParentTopLevel = in_array($tag->domNode->parentNode, $topLevel, true);
-                if ($isParentTopLevel) {
+                $parentP = $this->getParentParagraph($tag->domNode);
+                $isWithinParentP = $parentP === $tag->domNode->parentNode;
+                if ($parentP && $isWithinParentP) {
                     $this->splitNodeAtChildNode($tag->domNode->parentNode, $tag->domNode);
-                } else {
-                    $this->promoteTagNodeToBody($tag, $doc->getBody());
+                } else if ($parentP) {
+                    $this->moveTagNodeToBesideParent($tag, $parentP);
                 }
             }
 
             $this->replaceNodeWithNodes($tag->domNode, $content->toDomNodes());
         }
 
-        // TODO Notes: May want to eventually parse through backwards, which should avoid issues
-        //   in changes affecting the next tag, where tags may be in the same/adjacent nodes.
+        $this->cleanup();
 
         return $doc->getBodyInnerHtml();
     }
@@ -55,7 +63,7 @@ class PageIncludeParser
      */
     protected function locateAndIsolateIncludeTags(HtmlDocument $doc): array
     {
-        $includeHosts = $doc->queryXPath("//body//*[contains(text(), '{{@')]");
+        $includeHosts = $doc->queryXPath("//body//*[text()[contains(., '{{@')]]");
         $includeTags = [];
 
         /** @var DOMNode $node */
@@ -107,6 +115,7 @@ class PageIncludeParser
     }
 
     /**
+     * Replace the given node with all those in $replacements
      * @param DOMNode[] $replacements
      */
     protected function replaceNodeWithNodes(DOMNode $toReplace, array $replacements): void
@@ -125,51 +134,79 @@ class PageIncludeParser
         $toReplace->parentNode->removeChild($toReplace);
     }
 
-    protected function promoteTagNodeToBody(PageIncludeTag $tag, DOMNode $body): void
+    /**
+     * Move a tag node to become a sibling of the given parent.
+     * Will attempt to guess a position based upon the tag content within the parent.
+     */
+    protected function moveTagNodeToBesideParent(PageIncludeTag $tag, DOMNode $parent): void
     {
-        /** @var DOMNode $topParent */
-        $topParent = $tag->domNode->parentNode;
-        while ($topParent->parentNode !== $body) {
-            $topParent = $topParent->parentNode;
-        }
-
-        $parentText = $topParent->textContent;
+        $parentText = $parent->textContent;
         $tagPos = strpos($parentText, $tag->tagContent);
         $before = $tagPos < (strlen($parentText) / 2);
 
         if ($before) {
-            $body->insertBefore($tag->domNode, $topParent);
+            $parent->parentNode->insertBefore($tag->domNode, $parent);
         } else {
-            $body->insertBefore($tag->domNode, $topParent->nextSibling);
+            $parent->parentNode->insertBefore($tag->domNode, $parent->nextSibling);
         }
     }
 
+    /**
+     * Splits the given $parentNode at the location of the $domNode within it.
+     * Attempts replicate the original $parentNode, moving some of their parent
+     * children in where needed, before adding the $domNode between.
+     */
     protected function splitNodeAtChildNode(DOMElement $parentNode, DOMNode $domNode): void
     {
         $children = [...$parentNode->childNodes];
-        $splitPos = array_search($domNode, $children, true) ?: count($children);
+        $splitPos = array_search($domNode, $children, true);
+        if ($splitPos === false) {
+            $splitPos = count($children) - 1;
+        }
+
         $parentClone = $parentNode->cloneNode();
+        $parentNode->parentNode->insertBefore($parentClone, $parentNode);
         $parentClone->removeAttribute('id');
 
         /** @var DOMNode $child */
         for ($i = 0; $i < $splitPos; $i++) {
-            $child = $children[0];
+            $child = $children[$i];
             $parentClone->appendChild($child);
-        }
-
-        if ($parentClone->hasChildNodes()) {
-            $parentNode->parentNode->insertBefore($parentClone, $parentNode);
         }
 
         $parentNode->parentNode->insertBefore($domNode, $parentNode);
 
-        $parentClone->normalize();
-        $parentNode->normalize();
-        if (!$parentNode->hasChildNodes()) {
-            $parentNode->remove();
-        }
-        if (!$parentClone->hasChildNodes()) {
-            $parentClone->remove();
+        $this->toCleanup[] = $parentNode;
+        $this->toCleanup[] = $parentClone;
+    }
+
+    /**
+     * Get the parent paragraph of the given node, if existing.
+     */
+    protected function getParentParagraph(DOMNode $parent): ?DOMNode
+    {
+        do {
+            if (strtolower($parent->nodeName) === 'p') {
+                return $parent;
+            }
+
+            $parent = $parent->parentElement;
+        } while ($parent !== null);
+
+        return null;
+    }
+
+    /**
+     * Cleanup after a parse operation.
+     * Removes stranded elements we may have left during the parse.
+     */
+    protected function cleanup(): void
+    {
+        foreach ($this->toCleanup as $element) {
+            $element->normalize();
+            if ($element->parentNode && !$element->hasChildNodes()) {
+                $element->parentNode->removeChild($element);
+            }
         }
     }
 }
