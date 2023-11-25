@@ -34,6 +34,15 @@ class PageIncludeParserTest extends TestCase
         );
     }
 
+    public function test_complex_inline_text_within_other_text()
+    {
+        $this->runParserTest(
+            '<p>Hello {{@45#content}}there!</p>',
+            ['45' => '<p id="content"><strong>Testing</strong> with<em>some</em><i>extra</i>tags</p>'],
+            '<p>Hello <strong>Testing</strong> with<em>some</em><i>extra</i>tagsthere!</p>',
+        );
+    }
+
     public function test_block_content_types()
     {
         $inputs = [
@@ -97,6 +106,51 @@ class PageIncludeParserTest extends TestCase
         );
     }
 
+    public function test_block_content_in_allowable_parent_element()
+    {
+        $this->runParserTest(
+            '<div>{{@45#content}}</div>',
+            ['45' => '<pre id="content">doggos</pre>'],
+            '<div><pre id="content">doggos</pre></div>',
+        );
+    }
+
+    public function test_block_content_in_paragraph_origin_with_allowable_grandparent()
+    {
+        $this->runParserTest(
+            '<div><p>{{@45#content}}</p></div>',
+            ['45' => '<pre id="content">doggos</pre>'],
+            '<div><pre id="content">doggos</pre></div>',
+        );
+    }
+
+    public function test_block_content_in_paragraph_origin_with_allowable_grandparent_with_adjacent_content()
+    {
+        $this->runParserTest(
+            '<div><p>Cute {{@45#content}} over there!</p></div>',
+            ['45' => '<pre id="content">doggos</pre>'],
+            '<div><p>Cute </p><pre id="content">doggos</pre><p> over there!</p></div>',
+        );
+    }
+
+    public function test_block_content_in_child_within_paragraph_origin_with_allowable_grandparent_with_adjacent_content()
+    {
+        $this->runParserTest(
+            '<div><p><strong>Cute {{@45#content}} over there!</strong></p></div>',
+            ['45' => '<pre id="content">doggos</pre>'],
+            '<div><pre id="content">doggos</pre><p><strong>Cute  over there!</strong></p></div>',
+        );
+    }
+
+    public function test_block_content_in_paragraph_origin_within_details()
+    {
+        $this->runParserTest(
+            '<details><p>{{@45#content}}</p></details>',
+            ['45' => '<pre id="content">doggos</pre>'],
+            '<details><pre id="content">doggos</pre></details>',
+        );
+    }
+
     public function test_simple_whole_document()
     {
         $this->runParserTest(
@@ -121,6 +175,42 @@ class PageIncludeParserTest extends TestCase
             '<p>This is {{@45}} some text</p>',
             ['45' => '<p>Testing</p><blockquote>This</blockquote>'],
             '<p>This is </p><p>Testing</p><blockquote>This</blockquote><p> some text</p>',
+        );
+    }
+
+    public function test_multiple_tags_in_same_origin_with_inline_content()
+    {
+        $this->runParserTest(
+            '<p>This {{@45#content}}{{@45#content}} content is {{@45#content}}</p>',
+            ['45' => '<p id="content">inline</p>'],
+            '<p>This inlineinline content is inline</p>',
+        );
+    }
+
+    public function test_multiple_tags_in_same_origin_with_block_content()
+    {
+        $this->runParserTest(
+            '<p>This {{@45#content}}{{@45#content}} content is {{@45#content}}</p>',
+            ['45' => '<pre id="content">block</pre>'],
+            '<p>This </p><pre id="content">block</pre><pre id="content">block</pre><p> content is </p><pre id="content">block</pre>',
+        );
+    }
+
+    public function test_multiple_tags_in_differing_origin_levels_with_block_content()
+    {
+        $this->runParserTest(
+            '<div><p>This <strong>{{@45#content}}</strong> content is {{@45#content}}</p>{{@45#content}}</div>',
+            ['45' => '<pre id="content">block</pre>'],
+            '<div><pre id="content">block</pre><p>This <strong></strong> content is </p><pre id="content">block</pre><pre id="content">block</pre></div>',
+        );
+    }
+
+    public function test_multiple_tags_in_shallow_origin_with_multi_block_content()
+    {
+        $this->runParserTest(
+            '<p>{{@45}}C{{@45}}</p><div>{{@45}}{{@45}}</div>',
+            ['45' => '<p>A</p><p>B</p>'],
+            '<p>A</p><p>B</p><p>C</p><p>A</p><p>B</p><div><p>A</p><p>B</p><p>A</p><p>B</p></div>',
         );
     }
 
