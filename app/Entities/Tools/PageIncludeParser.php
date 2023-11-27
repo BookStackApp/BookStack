@@ -19,6 +19,9 @@ class PageIncludeParser
      */
     protected array $toCleanup = [];
 
+    /**
+     * @param Closure(PageIncludeTag $tag): PageContent $pageContentForId
+     */
     public function __construct(
         protected HtmlDocument $doc,
         protected Closure $pageContentForId,
@@ -35,8 +38,8 @@ class PageIncludeParser
         $tags = $this->locateAndIsolateIncludeTags();
 
         foreach ($tags as $tag) {
-            $htmlContent = $this->pageContentForId->call($this, $tag->getPageId());
-            $content = new PageIncludeContent($htmlContent, $tag);
+            /** @var PageIncludeContent $content */
+            $content = $this->pageContentForId->call($this, $tag);
 
             if (!$content->isInline()) {
                 $parentP = $this->getParentParagraph($tag->domNode);

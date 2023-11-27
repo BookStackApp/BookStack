@@ -5,10 +5,13 @@ namespace BookStack\Entities\Tools;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\HtmlContentFilter;
 use BookStack\Util\HtmlDocument;
+use Closure;
 use DOMElement;
 use DOMNode;
 use DOMNodeList;
@@ -280,18 +283,11 @@ class PageContent
         }
 
         $doc = new HtmlDocument($html);
-
-        $contentProvider = function (int $id) use ($blankIncludes) {
-            if ($blankIncludes) {
-                return '';
-            }
-            return Page::visible()->find($id)->html ?? '';
-        };
-
+        $contentProvider = $this->getContentProviderClosure($blankIncludes);
         $parser = new PageIncludeParser($doc, $contentProvider);
-        $nodesAdded = 1;
 
-        for ($includeDepth = 0; $includeDepth < 1 && $nodesAdded !== 0; $includeDepth++) {
+        $nodesAdded = 1;
+        for ($includeDepth = 0; $includeDepth < 3 && $nodesAdded !== 0; $includeDepth++) {
             $nodesAdded = $parser->parse();
         }
 
@@ -306,6 +302,39 @@ class PageContent
         }
 
         return $doc->getBodyInnerHtml();
+    }
+
+    /**
+     * Get the closure used to fetch content for page includes.
+     */
+    protected function getContentProviderClosure(bool $blankIncludes): Closure
+    {
+        $contextPage = $this->page;
+
+        return function (PageIncludeTag $tag) use ($blankIncludes, $contextPage): PageIncludeContent {
+            if ($blankIncludes) {
+                return PageIncludeContent::fromHtmlAndTag('', $tag);
+            }
+
+            $matchedPage = Page::visible()->find($tag->getPageId());
+            $content = PageIncludeContent::fromHtmlAndTag($matchedPage->html ?? '', $tag);
+
+            if (Theme::hasListeners(ThemeEvents::PAGE_INCLUDE_PARSE)) {
+                $themeReplacement = Theme::dispatch(
+                    ThemeEvents::PAGE_INCLUDE_PARSE,
+                    $tag->tagContent,
+                    $content->toHtml(),
+                    clone $contextPage,
+                    $matchedPage ? (clone $matchedPage) : null,
+                );
+
+                if ($themeReplacement !== null) {
+                    $content = PageIncludeContent::fromInlineHtml(strval($themeReplacement));
+                }
+            }
+
+            return $content;
+        };
     }
 
     /**

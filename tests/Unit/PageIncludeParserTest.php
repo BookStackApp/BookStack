@@ -2,7 +2,9 @@
 
 namespace Tests\Unit;
 
+use BookStack\Entities\Tools\PageIncludeContent;
 use BookStack\Entities\Tools\PageIncludeParser;
+use BookStack\Entities\Tools\PageIncludeTag;
 use BookStack\Util\HtmlDocument;
 use Tests\TestCase;
 
@@ -227,8 +229,9 @@ class PageIncludeParserTest extends TestCase
     protected function runParserTest(string $html, array $contentById, string $expected): void
     {
         $doc = new HtmlDocument($html);
-        $parser = new PageIncludeParser($doc, function (int $id) use ($contentById) {
-            return $contentById[strval($id)] ?? '';
+        $parser = new PageIncludeParser($doc, function (PageIncludeTag $tag) use ($contentById): PageIncludeContent {
+            $html = $contentById[strval($tag->getPageId())] ?? '';
+            return PageIncludeContent::fromHtmlAndTag($html, $tag);
         });
 
         $parser->parse();
