@@ -60,7 +60,7 @@ return [
     'email_confirm_action' => 'Stadfest e-post',
     'email_confirm_send_error' => 'Stadfesting er krevd av systemet, men systemet kan ikkje sende desse. Kontakt admin for å løys problemet.',
     'email_confirm_success' => 'Epost-adressa di er verifisert! Du kan no logge inn ved å bruke denne ved innlogging.',
-    'email_confirm_resent' => 'Stadfesting sendt på epost, sjekk innboksen din.',
+    'email_confirm_resent' => 'Stadfesting sendt på e-post, sjekk innboksen din.',
     'email_confirm_thanks' => 'Takk for verifiseringa!',
     'email_confirm_thanks_desc' => 'Vent litt medan me verifiserer. Om du ikkje vert sendt vidare i løpet av tre sekunder, kan du klikke på "Fortsett" under.',
 
