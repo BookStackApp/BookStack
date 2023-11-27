@@ -49,6 +49,14 @@ class ThemeService
     }
 
     /**
+     * Check if there are listeners registered for the given event name.
+     */
+    public function hasListeners(string $event): bool
+    {
+        return count($this->listeners[$event] ?? []) > 0;
+    }
+
+    /**
      * Register a new custom artisan command to be available.
      */
     public function registerCommand(Command $command): void
