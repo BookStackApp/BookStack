@@ -5,8 +5,6 @@ namespace BookStack\Entities\Tools;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 use BookStack\Exceptions\ImageUploadException;
-use BookStack\Facades\Theme;
-use BookStack\Theming\ThemeEvents;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\HtmlContentFilter;
@@ -293,8 +291,14 @@ class PageContent
         $parser = new PageIncludeParser($doc, $contentProvider);
         $nodesAdded = 1;
 
-        for ($includeDepth = 0; $includeDepth < 3 && $nodesAdded !== 0; $includeDepth++) {
+        for ($includeDepth = 0; $includeDepth < 1 && $nodesAdded !== 0; $includeDepth++) {
             $nodesAdded = $parser->parse();
+        }
+
+        if ($includeDepth > 1) {
+            $idMap = [];
+            $changeMap = [];
+            $this->updateIdsRecursively($doc->getBody(), 0, $idMap, $changeMap);
         }
 
         if (!config('app.allow_content_scripts')) {
