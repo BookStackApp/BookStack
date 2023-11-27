@@ -67,8 +67,8 @@ return [
     'auth_password_reset_request' => 'pyysi käyttäjän salasanan palautusta',
     'auth_password_reset_update' => 'palautti käyttäjän salasana',
     'mfa_setup_method' => 'määritti monivaiheisen tunnistaumisen menetelmän',
-    'mfa_setup_method_notification' => 'Monivaiheisen tunnistautumisen määrittäminen onnistui',
-    'mfa_remove_method' => 'poisti monivaiheisen tunnistaumisen menetelmän',
+    'mfa_setup_method_notification' => 'Monivaiheisen tunnistautumisen menetelmän määrittäminen onnistui',
+    'mfa_remove_method' => 'poisti monivaiheisen tunnistautumisen menetelmän',
     'mfa_remove_method_notification' => 'Monivaiheisen tunnistautumisen menetelmä poistettiin onnistuneesti',
 
     // Settings
