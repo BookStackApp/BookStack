@@ -41,16 +41,16 @@ return [
 
     // System
     'path_not_writable' => 'Filstien :filePath aksepterer ikkje filer, du må sjekke filstitilganger i systemet.',
-    'cannot_get_image_from_url' => 'Kan ikke hente bilde fra :url',
-    'cannot_create_thumbs' => 'Kan ikke opprette miniatyrbilder. GD PHP er ikke installert.',
+    'cannot_get_image_from_url' => 'Kan ikkje hente bilete frå :url',
+    'cannot_create_thumbs' => 'Kan ikkje opprette miniatyrbilete. GD PHP er ikkje installert.',
     'server_upload_limit' => 'Vedlegget er for stort, forsøk med et mindre vedlegg.',
     'server_post_limit' => 'Serveren kan ikkje ta i mot denne mengda med data. Prøv igjen med mindre data eller ei mindre fil.',
     'uploaded'  => 'Tjenesten aksepterer ikke vedlegg som er så stor.',
 
     // Drawing & Images
-    'image_upload_error' => 'Bildet kunne ikke lastes opp, forsøk igjen.',
-    'image_upload_type_error' => 'Bildeformatet støttes ikke, forsøk med et annet format.',
-    'image_upload_replace_type' => 'Bildeerstatning må være av samme type',
+    'image_upload_error' => 'Biletet kunne ikkje lastast opp, prøv igjen',
+    'image_upload_type_error' => 'Bileteformatet er ikkje støtta, prøv med eit anna format',
+    'image_upload_replace_type' => 'Bileteerstatning må vere av same type',
     'image_upload_memory_limit' => 'Klarte ikkje å ta i mot bilete og lage miniatyrbilete grunna grenser knytt til systemet.',
     'image_thumbnail_memory_limit' => 'Klarte ikkje å lage miniatyrbilete grunna grenser knytt til systemet.',
     'image_gallery_thumbnail_memory_limit' => 'Klarte ikkje å lage miniatyrbilete grunna grenser knytt til systemet.',
@@ -96,7 +96,7 @@ return [
     '404_page_not_found' => 'Siden finnes ikke',
     'sorry_page_not_found' => 'Beklager, siden du leter etter ble ikke funnet.',
     'sorry_page_not_found_permission_warning' => 'Hvis du forventet at denne siden skulle eksistere, har du kanskje ikke tillatelse til å se den.',
-    'image_not_found' => 'Bildet ble ikke funnet',
+    'image_not_found' => 'Bilete vart ikkje funne',
     'image_not_found_subtitle' => 'Beklager, bildefilen du ser etter ble ikke funnet.',
     'image_not_found_details' => 'Om du forventet at dette bildet skal eksistere, er det mulig det er slettet.',
     'return_home' => 'Gå til hovedside',
