@@ -234,7 +234,7 @@ return [
     'pages_name' => 'Sidenamn',
     'pages_md_editor' => 'Tekstbehandlar',
     'pages_md_preview' => 'Førehandsvising',
-    'pages_md_insert_image' => 'Sett in bilete',
+    'pages_md_insert_image' => 'Sett inn bilete',
     'pages_md_insert_link' => 'Sett inn lenke',
     'pages_md_insert_drawing' => 'Sett inn tegning',
     'pages_md_show_preview' => 'Førhandsvisning',
