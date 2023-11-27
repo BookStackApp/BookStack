@@ -88,6 +88,19 @@ class PageContentTest extends TestCase
         $this->withHtml($pageResp)->assertElementNotContains('#bkmrk-test', 'Hello Barry Hello Barry Hello Barry Hello Barry Hello Barry ' . $tag);
     }
 
+    public function test_page_includes_to_nonexisting_pages_does_not_error()
+    {
+        $page = $this->entities->page();
+        $missingId = Page::query()->max('id') + 1;
+        $tag = "{{@{$missingId}}}";
+        $page->html = '<p id="bkmrk-test">Hello Barry ' . $tag . '</p>';
+        $page->save();
+
+        $pageResp = $this->asEditor()->get($page->getUrl());
+        $pageResp->assertOk();
+        $pageResp->assertSee('Hello Barry');
+    }
+
     public function test_page_content_scripts_removed_by_default()
     {
         $this->asEditor();

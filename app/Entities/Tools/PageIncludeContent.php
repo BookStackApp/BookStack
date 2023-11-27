@@ -10,47 +10,53 @@ class PageIncludeContent
     protected static array $topLevelTags = ['table', 'ul', 'ol', 'pre'];
 
     /**
-     * @var DOMNode[]
+     * @param DOMNode[] $contents
+     * @param bool $isInline
      */
-    protected array $contents = [];
-
-    protected bool $isTopLevel = false;
-
     public function __construct(
-        string $html,
-        PageIncludeTag $tag,
+        protected array $contents,
+        protected bool $isInline,
     ) {
-        $this->parseHtml($html, $tag);
     }
 
-    protected function parseHtml(string $html, PageIncludeTag $tag): void
+    public static function fromHtmlAndTag(string $html, PageIncludeTag $tag): self
     {
         if (empty($html)) {
-            return;
+            return new self([], true);
         }
 
         $doc = new HtmlDocument($html);
 
         $sectionId = $tag->getSectionId();
         if (!$sectionId) {
-            $this->contents = [...$doc->getBodyChildren()];
-            $this->isTopLevel = true;
-            return;
+            $contents = [...$doc->getBodyChildren()];
+            return new self($contents, false);
         }
 
         $section = $doc->getElementById($sectionId);
         if (!$section) {
-            return;
+            return new self([], true);
         }
 
         $isTopLevel = in_array(strtolower($section->nodeName), static::$topLevelTags);
-        $this->isTopLevel = $isTopLevel;
-        $this->contents = $isTopLevel ? [$section] : [...$section->childNodes];
+        $contents = $isTopLevel ? [$section] : [...$section->childNodes];
+        return new self($contents, !$isTopLevel);
+    }
+
+    public static function fromInlineHtml(string $html): self
+    {
+        if (empty($html)) {
+            return new self([], true);
+        }
+
+        $doc = new HtmlDocument($html);
+
+        return new self([...$doc->getBodyChildren()], true);
     }
 
     public function isInline(): bool
     {
-        return !$this->isTopLevel;
+        return $this->isInline;
     }
 
     public function isEmpty(): bool
@@ -64,5 +70,16 @@ class PageIncludeContent
     public function toDomNodes(): array
     {
         return $this->contents;
+    }
+
+    public function toHtml(): string
+    {
+        $html = '';
+
+        foreach ($this->contents as $content) {
+            $html .= $content->ownerDocument->saveHTML($content);
+        }
+
+        return $html;
     }
 }
