@@ -179,6 +179,15 @@ class PageIncludeParserTest extends TestCase
         );
     }
 
+    public function test_multi_source_elem_whole_document_with_nested_content_origin()
+    {
+        $this->runParserTest(
+            '<p><strong>{{@45}}</strong></p>',
+            ['45' => '<p>Testing</p><blockquote>This</blockquote>'],
+            '<p>Testing</p><blockquote>This</blockquote>',
+        );
+    }
+
     public function test_multiple_tags_in_same_origin_with_inline_content()
     {
         $this->runParserTest(
@@ -202,7 +211,7 @@ class PageIncludeParserTest extends TestCase
         $this->runParserTest(
             '<div><p>This <strong>{{@45#content}}</strong> content is {{@45#content}}</p>{{@45#content}}</div>',
             ['45' => '<pre id="content">block</pre>'],
-            '<div><pre id="content">block</pre><p>This <strong></strong> content is </p><pre id="content">block</pre><pre id="content">block</pre></div>',
+            '<div><pre id="content">block</pre><p>This  content is </p><pre id="content">block</pre><pre id="content">block</pre></div>',
         );
     }
 

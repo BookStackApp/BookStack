@@ -145,6 +145,7 @@ class PageIncludeParser
         $parentText = $parent->textContent;
         $tagPos = strpos($parentText, $tag->tagContent);
         $before = $tagPos < (strlen($parentText) / 2);
+        $this->toCleanup[] = $tag->domNode->parentNode;
 
         if ($before) {
             $parent->parentNode->insertBefore($tag->domNode, $parent);
@@ -206,8 +207,10 @@ class PageIncludeParser
     {
         foreach ($this->toCleanup as $element) {
             $element->normalize();
-            if ($element->parentNode && !$element->hasChildNodes()) {
-                $element->parentNode->removeChild($element);
+            while ($element->parentNode && !$element->hasChildNodes()) {
+                $parent = $element->parentNode;
+                $parent->removeChild($element);
+                $element = $parent;
             }
         }
     }
