@@ -9,16 +9,10 @@ use DOMNodeList;
 class HtmlContentFilter
 {
     /**
-     * Remove all the script elements from the given HTML.
+     * Remove all the script elements from the given HTML document.
      */
-    public static function removeScripts(string $html): string
+    public static function removeScriptsFromDocument(HtmlDocument $doc)
     {
-        if (empty($html)) {
-            return $html;
-        }
-
-        $doc = new HtmlDocument($html);
-
         // Remove standard script tags
         $scriptElems = $doc->queryXPath('//script');
         static::removeNodes($scriptElems);
@@ -53,6 +47,19 @@ class HtmlContentFilter
         // Remove 'on*' attributes
         $onAttributes = $doc->queryXPath('//@*[starts-with(name(), \'on\')]');
         static::removeAttributes($onAttributes);
+    }
+
+    /**
+     * Remove scripts from the given HTML string.
+     */
+    public static function removeScriptsFromHtmlString(string $html): string
+    {
+        if (empty($html)) {
+            return $html;
+        }
+
+        $doc = new HtmlDocument($html);
+        static::removeScriptsFromDocument($doc);
 
         return $doc->getBodyInnerHtml();
     }

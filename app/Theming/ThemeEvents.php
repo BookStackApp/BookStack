@@ -2,8 +2,6 @@
 
 namespace BookStack\Theming;
 
-use BookStack\Entities\Models\Page;
-
 /**
  * The ThemeEvents used within BookStack.
  *
@@ -93,8 +91,8 @@ class ThemeEvents
      *
      * @param string $tagReference
      * @param string $replacementHTML
-     * @param Page   $currentPage
-     * @param ?Page  $referencedPage
+     * @param \BookStack\Entities\Models\Page   $currentPage
+     * @param ?\BookStack\Entities\Models\Page  $referencedPage
      */
     const PAGE_INCLUDE_PARSE = 'page_include_parse';
 
