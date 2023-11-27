@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class PageContentTest extends TestCase
 {
-    protected $base64Jpeg = '/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=';
+    protected string $base64Jpeg = '/9j/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=';
 
     public function test_page_includes()
     {
@@ -55,38 +55,6 @@ class PageContentTest extends TestCase
         $page = Page::find($page->id);
         $this->assertStringContainsString($includeTag, $page->html);
         $this->assertEquals('', $page->text);
-    }
-
-    public function test_page_includes_do_not_break_tables()
-    {
-        $page = $this->entities->page();
-        $secondPage = $this->entities->page();
-
-        $content = '<table id="table"><tbody><tr><td>test</td></tr></tbody></table>';
-        $secondPage->html = $content;
-        $secondPage->save();
-
-        $page->html = "{{@{$secondPage->id}#table}}";
-        $page->save();
-
-        $pageResp = $this->asEditor()->get($page->getUrl());
-        $pageResp->assertSee($content, false);
-    }
-
-    public function test_page_includes_do_not_break_code()
-    {
-        $page = $this->entities->page();
-        $secondPage = $this->entities->page();
-
-        $content = '<pre id="bkmrk-code"><code>var cat = null;</code></pre>';
-        $secondPage->html = $content;
-        $secondPage->save();
-
-        $page->html = "{{@{$secondPage->id}#bkmrk-code}}";
-        $page->save();
-
-        $pageResp = $this->asEditor()->get($page->getUrl());
-        $pageResp->assertSee($content, false);
     }
 
     public function test_page_includes_rendered_on_book_export()

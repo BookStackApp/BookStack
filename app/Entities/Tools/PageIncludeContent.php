@@ -14,7 +14,7 @@ class PageIncludeContent
      */
     protected array $contents = [];
 
-    protected bool $isTopLevel;
+    protected bool $isTopLevel = false;
 
     public function __construct(
         string $html,

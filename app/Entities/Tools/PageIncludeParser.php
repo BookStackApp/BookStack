@@ -20,19 +20,19 @@ class PageIncludeParser
     protected array $toCleanup = [];
 
     public function __construct(
-        protected string $pageHtml,
+        protected HtmlDocument $doc,
         protected Closure $pageContentForId,
     ) {
     }
 
     /**
      * Parse out the include tags.
+     * Returns the count of new content DOM nodes added to the document.
      */
-    public function parse(): string
+    public function parse(): int
     {
-        $doc = new HtmlDocument($this->pageHtml);
-
-        $tags = $this->locateAndIsolateIncludeTags($doc);
+        $nodesAdded = 0;
+        $tags = $this->locateAndIsolateIncludeTags();
 
         foreach ($tags as $tag) {
             $htmlContent = $this->pageContentForId->call($this, $tag->getPageId());
@@ -48,12 +48,14 @@ class PageIncludeParser
                 }
             }
 
-            $this->replaceNodeWithNodes($tag->domNode, $content->toDomNodes());
+            $replacementNodes = $content->toDomNodes();
+            $nodesAdded += count($replacementNodes);
+            $this->replaceNodeWithNodes($tag->domNode, $replacementNodes);
         }
 
         $this->cleanup();
 
-        return $doc->getBodyInnerHtml();
+        return $nodesAdded;
     }
 
     /**
@@ -61,9 +63,9 @@ class PageIncludeParser
      * own nodes in the DOM for future targeted manipulation.
      * @return PageIncludeTag[]
      */
-    protected function locateAndIsolateIncludeTags(HtmlDocument $doc): array
+    protected function locateAndIsolateIncludeTags(): array
     {
-        $includeHosts = $doc->queryXPath("//body//*[text()[contains(., '{{@')]]");
+        $includeHosts = $this->doc->queryXPath("//*[text()[contains(., '{{@')]]");
         $includeTags = [];
 
         /** @var DOMNode $node */
@@ -125,7 +127,7 @@ class PageIncludeParser
 
         foreach ($replacements as $replacement) {
             if ($replacement->ownerDocument !== $targetDoc) {
-                $replacement = $targetDoc->adoptNode($replacement);
+                $replacement = $targetDoc->importNode($replacement, true);
             }
 
             $toReplace->parentNode->insertBefore($replacement, $toReplace);
@@ -190,7 +192,7 @@ class PageIncludeParser
                 return $parent;
             }
 
-            $parent = $parent->parentElement;
+            $parent = $parent->parentNode;
         } while ($parent !== null);
 
         return null;
