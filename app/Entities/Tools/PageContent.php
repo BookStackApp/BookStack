@@ -275,21 +275,33 @@ class PageContent
      */
     public function render(bool $blankIncludes = false): string
     {
-        $content = $this->page->html ?? '';
+        $html = $this->page->html ?? '';
+
+        if (empty($html)) {
+            return $html;
+        }
+
+        $doc = new HtmlDocument($html);
+
+        $contentProvider = function (int $id) use ($blankIncludes) {
+            if ($blankIncludes) {
+                return '';
+            }
+            return Page::visible()->find($id)->html ?? '';
+        };
+
+        $parser = new PageIncludeParser($doc, $contentProvider);
+        $nodesAdded = 1;
+
+        for ($includeDepth = 0; $includeDepth < 3 && $nodesAdded !== 0; $includeDepth++) {
+            $nodesAdded = $parser->parse();
+        }
 
         if (!config('app.allow_content_scripts')) {
-            $content = HtmlContentFilter::removeScripts($content);
+            HtmlContentFilter::removeScriptsFromDocument($doc);
         }
 
-        if ($blankIncludes) {
-            $content = $this->blankPageIncludes($content);
-        } else {
-            for ($includeDepth = 0; $includeDepth < 3; $includeDepth++) {
-                $content = $this->parsePageIncludes($content);
-            }
-        }
-
-        return $content;
+        return $doc->getBodyInnerHtml();
     }
 
     /**
@@ -336,84 +348,5 @@ class PageContent
         });
 
         return $tree->toArray();
-    }
-
-    /**
-     * Remove any page include tags within the given HTML.
-     */
-    protected function blankPageIncludes(string $html): string
-    {
-        return preg_replace("/{{@\s?([0-9].*?)}}/", '', $html);
-    }
-
-    /**
-     * Parse any include tags "{{@<page_id>#section}}" to be part of the page.
-     */
-    protected function parsePageIncludes(string $html): string
-    {
-        $matches = [];
-        preg_match_all("/{{@\s?([0-9].*?)}}/", $html, $matches);
-
-        foreach ($matches[1] as $index => $includeId) {
-            $fullMatch = $matches[0][$index];
-            $splitInclude = explode('#', $includeId, 2);
-
-            // Get page id from reference
-            $pageId = intval($splitInclude[0]);
-            if (is_nan($pageId)) {
-                continue;
-            }
-
-            // Find page to use, and default replacement to empty string for non-matches.
-            /** @var ?Page $matchedPage */
-            $matchedPage = Page::visible()->find($pageId);
-            $replacement = '';
-
-            if ($matchedPage && count($splitInclude) === 1) {
-                // If we only have page id, just insert all page html and continue.
-                $replacement = $matchedPage->html;
-            } elseif ($matchedPage && count($splitInclude) > 1) {
-                // Otherwise, if our include tag defines a section, load that specific content
-                $innerContent = $this->fetchSectionOfPage($matchedPage, $splitInclude[1]);
-                $replacement = trim($innerContent);
-            }
-
-            $themeReplacement = Theme::dispatch(
-                ThemeEvents::PAGE_INCLUDE_PARSE,
-                $includeId,
-                $replacement,
-                clone $this->page,
-                $matchedPage ? (clone $matchedPage) : null,
-            );
-
-            // Perform the content replacement
-            $html = str_replace($fullMatch, $themeReplacement ?? $replacement, $html);
-        }
-
-        return $html;
-    }
-
-    /**
-     * Fetch the content from a specific section of the given page.
-     */
-    protected function fetchSectionOfPage(Page $page, string $sectionId): string
-    {
-        $topLevelTags = ['table', 'ul', 'ol', 'pre'];
-        $doc = new HtmlDocument($page->html);
-
-        // Search included content for the id given and blank out if not exists.
-        $matchingElem = $doc->getElementById($sectionId);
-        if ($matchingElem === null) {
-            return '';
-        }
-
-        // Otherwise replace the content with the found content
-        // Checks if the top-level wrapper should be included by matching on tag types
-        $isTopLevel = in_array(strtolower($matchingElem->nodeName), $topLevelTags);
-        if ($isTopLevel) {
-            return $doc->getNodeOuterHtml($matchingElem);
-        }
-
-        return $doc->getNodeInnerHtml($matchingElem);
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use BookStack\Entities\Tools\PageIncludeParser;
+use BookStack\Util\HtmlDocument;
 use Tests\TestCase;
 
 class PageIncludeParserTest extends TestCase
@@ -214,13 +215,14 @@ class PageIncludeParserTest extends TestCase
         );
     }
 
-    protected function runParserTest(string $html, array $contentById, string $expected)
+    protected function runParserTest(string $html, array $contentById, string $expected): void
     {
-        $parser = new PageIncludeParser($html, function (int $id) use ($contentById) {
+        $doc = new HtmlDocument($html);
+        $parser = new PageIncludeParser($doc, function (int $id) use ($contentById) {
             return $contentById[strval($id)] ?? '';
         });
 
-        $result = $parser->parse();
-        $this->assertEquals($expected, $result);
+        $parser->parse();
+        $this->assertEquals($expected, $doc->getBodyInnerHtml());
     }
 }
