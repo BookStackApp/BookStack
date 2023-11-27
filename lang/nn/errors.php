@@ -24,7 +24,7 @@ return [
     'saml_invalid_response_id' => 'Forespørselen fra det eksterne autentiseringssystemet gjenkjennes ikke av en prosess som startes av dette programmet. Å navigere tilbake etter pålogging kan forårsake dette problemet.',
     'saml_fail_authed' => 'Innlogging gjennom :system feilet. Fikk ikke kontakt med autentiseringstjeneren.',
     'oidc_already_logged_in' => 'Allerede logget inn',
-    'oidc_user_not_registered' => 'Brukeren :name er ikke registrert og automatisk registrering er deaktivert',
+    'oidc_user_not_registered' => 'Brukeren :name er ikkje registrert og automatisk registrering er deaktivert',
     'oidc_no_email_address' => 'Finner ikke en e-postadresse, for denne brukeren, i dataene som leveres av det eksterne autentiseringssystemet',
     'oidc_fail_authed' => 'Innlogging ved hjelp av :system feilet, systemet ga ikke vellykket godkjenning',
     'social_no_action_defined' => 'Ingen handlinger er definert',
@@ -40,7 +40,7 @@ return [
     'invite_token_expired' => 'Invitasjonslenken har utgått, du kan forsøke å be om nytt passord istede.',
 
     // System
-    'path_not_writable' => 'Filstien :filePath aksepterer ikke filer, du må sjekke filstitilganger i systemet.',
+    'path_not_writable' => 'Filstien :filePath aksepterer ikkje filer, du må sjekke filstitilganger i systemet.',
     'cannot_get_image_from_url' => 'Kan ikke hente bilde fra :url',
     'cannot_create_thumbs' => 'Kan ikke opprette miniatyrbilder. GD PHP er ikke installert.',
     'server_upload_limit' => 'Vedlegget er for stort, forsøk med et mindre vedlegg.',
