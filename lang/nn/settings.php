@@ -76,7 +76,7 @@ return [
 
     // Maintenance settings
     'maint' => 'Vedlikehold',
-    'maint_image_cleanup' => 'Bildeopprydding',
+    'maint_image_cleanup' => 'Rydd opp bilete',
     'maint_image_cleanup_desc' => 'Skanner side og revisjonsinnhold for å sjekke kva bilete og teikninar som for er i bruk no, og kva bilete som er til overs. Sørg for å tryggleikskopiere heile databasen og alle bilete før du kjører denne.',
     'maint_delete_images_only_in_revisions' => 'Slett også bilder som bare finnes i game siderevisjoner',
     'maint_image_cleanup_run' => 'Kjør opprydding',
