@@ -9,7 +9,7 @@ return [
     // Common Messages
     'settings' => 'Nastavení',
     'settings_save' => 'Uložit nastavení',
-    'system_version' => 'Verze systému: ',
+    'system_version' => 'Verze systému',
     'categories' => 'Kategorie',
 
     // App Settings
