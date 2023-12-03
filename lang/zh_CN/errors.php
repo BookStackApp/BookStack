@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => '未安装LDAP PHP扩展程序',
     'ldap_cannot_connect' => '无法连接到ldap服务器，初始连接失败',
     'saml_already_logged_in' => '您已经登陆了',
-    'saml_user_not_registered' => '用户 :name 未注册且自动注册功能已被禁用',
     'saml_no_email_address' => '无法找到有效Email地址，此用户数据由外部身份验证系统托管',
     'saml_invalid_response_id' => '来自外部身份验证系统的请求没有被本应用程序认证，在登录后返回上一页可能会导致此问题。',
     'saml_fail_authed' => '使用 :system 登录失败，登录系统未返回成功登录授权信息。',
