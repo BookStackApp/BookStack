@@ -160,10 +160,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function can(string $permissionName): bool
     {
-        if ($this->email === 'guest') {
-            return false;
-        }
-
         return $this->permissions()->contains($permissionName);
     }
 

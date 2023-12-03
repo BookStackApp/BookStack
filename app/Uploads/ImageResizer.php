@@ -6,15 +6,14 @@ use BookStack\Exceptions\ImageUploadException;
 use Exception;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\Cache;
+use Intervention\Image\Gd\Driver;
 use Intervention\Image\Image as InterventionImage;
-use Intervention\Image\ImageManager;
 
 class ImageResizer
 {
     protected const THUMBNAIL_CACHE_TIME = 604_800; // 1 week
 
     public function __construct(
-        protected ImageManager $intervention,
         protected ImageStorage $storage,
     ) {
     }
@@ -105,13 +104,19 @@ class ImageResizer
 
     /**
      * Resize the image of given data to the specified size, and return the new image data.
+     * Format will remain the same as the input format, unless specified.
      *
      * @throws ImageUploadException
      */
-    public function resizeImageData(string $imageData, ?int $width, ?int $height, bool $keepRatio): string
-    {
+    public function resizeImageData(
+        string $imageData,
+        ?int $width,
+        ?int $height,
+        bool $keepRatio,
+        ?string $format = null,
+    ): string {
         try {
-            $thumb = $this->intervention->make($imageData);
+            $thumb = $this->interventionFromImageData($imageData);
         } catch (Exception $e) {
             throw new ImageUploadException(trans('errors.cannot_create_thumbs'));
         }
@@ -127,7 +132,7 @@ class ImageResizer
             $thumb->fit($width, $height);
         }
 
-        $thumbData = (string) $thumb->encode();
+        $thumbData = (string) $thumb->encode($format);
 
         // Use original image data if we're keeping the ratio
         // and the resizing does not save any space.
@@ -136,6 +141,17 @@ class ImageResizer
         }
 
         return $thumbData;
+    }
+
+    /**
+     * Create an intervention image instance from the given image data.
+     * Performs some manual library usage to ensure image is specifically loaded
+     * from given binary data instead of data being misinterpreted.
+     */
+    protected function interventionFromImageData(string $imageData): InterventionImage
+    {
+        $driver = new Driver();
+        return $driver->decoder->initFromBinary($imageData);
     }
 
     /**
