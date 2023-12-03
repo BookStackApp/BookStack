@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Estyniad PHP LDAP heb ei osod',
     'ldap_cannot_connect' => 'Methu cysylltu i weinydd ldap, cysylltiad cychwynnol wedi methu',
     'saml_already_logged_in' => 'Wedi mewngofnodi yn barod',
-    'saml_user_not_registered' => 'Nid yw\'r defnyddiwr :name wedi\'i gofrestru ac mae cofrestriad awtomatig wedi\'i analluogi',
     'saml_no_email_address' => 'Methu dod o hyd i gyfeiriad e-bost, ar gyfer y defnyddiwr hwn, yn y data a ddarparwyd gan y system ddilysu allanol',
     'saml_invalid_response_id' => 'Nid yw\'r cais o\'r system ddilysu allanol yn cael ei gydnabod gan broses a ddechreuwyd gan y cais hwn. Gallai llywio yn ôl ar ôl mewngofnodi achosi\'r broblem hon.',
     'saml_fail_authed' => 'Wedi methu mewngofnodi gan ddefnyddio :system, ni roddodd y system awdurdodiad llwyddiannus',
