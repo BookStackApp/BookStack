@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Není nainstalováno rozšíření LDAP pro PHP',
     'ldap_cannot_connect' => 'Nelze se připojit k adresáři LDAP. Prvotní připojení selhalo.',
     'saml_already_logged_in' => 'Již jste přihlášeni',
-    'saml_user_not_registered' => 'Uživatel :name není registrován a automatická registrace je zakázána',
     'saml_no_email_address' => 'Nelze najít e-mailovou adresu pro tohoto uživatele v datech poskytnutých externím přihlašovacím systémem',
     'saml_invalid_response_id' => 'Požadavek z externího ověřovacího systému nebyl rozpoznám procesem, který tato aplikace spustila. Tento problém může způsobit stisknutí tlačítka Zpět po přihlášení.',
     'saml_fail_authed' => 'Přihlášení pomocí :system selhalo, systém neposkytl úspěšnou autorizaci',
